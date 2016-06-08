@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="AstrophotographyBuddy.View.CameraView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AstrophotographyBuddy.View"  
+             xmlns:chartingToolkit=	"clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"             
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid IsEnabled="{Binding Cam.Connected}">
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <GroupBox Header="Camera Infos">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Camera State:</TextBlock>
+                    <TextBlock Text="{Binding Cam.CameraStateString}" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Cam.HasShutter}" IsEnabled="False"/>
+                    <TextBlock Text="Has Shutter" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Cam.CanAbortExposure}" IsEnabled="False" />
+                    <TextBlock Text="Can Abort Exposure" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Cam.CanStopExposure}" IsEnabled="False" />
+                    <TextBlock Text="Can Stop Exposure" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Cam.CanPulseGuide}" IsEnabled="False" />
+                    <TextBlock Text="Can Pulse Guide" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Cam.CanAsymmetricBin}" IsEnabled="False" />
+                    <TextBlock Text="Can Bin Asymmetric" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Cam.CanGetCoolerPower}" IsEnabled="False" />
+                    <TextBlock Text="Can Get Cooler Power Information" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Cam.CanSetCCDTemperature}" IsEnabled="False" />
+                    <TextBlock Text="Can Set CCD Temperature" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Cam.CanFastReadout}" IsEnabled="False" />
+                    <TextBlock Text="Fast Readout Mode Available" Margin="5,0,0,0" />
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header="Temperature Control">
+            <StackPanel Orientation="Vertical">                
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>Heat Sink Temperature</TextBlock>
+                    <TextBlock Text="{Binding Cam.HeatSinkTemperature}" Margin="5,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox IsChecked="{Binding Cam.CoolerOn}" />
+                    <TextBlock Margin="5,0,0,0">Cooler On</TextBlock>
+                </StackPanel> 
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>CoolerPower</TextBlock>
+                    <TextBlock Text="{Binding Cam.CoolerPower}" Margin="5,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>CCDTemperature</TextBlock>
+                    <TextBlock Text="{Binding Cam.CCDTemperature}" Margin="5,0,0,0"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>SetCCDTemperature</TextBlock>
+                    <TextBox Text="{Binding Cam.SetCCDTemperature}" Margin="5,0,0,0" MinWidth="20"/>
+                </StackPanel>
+                
+                <chartingToolkit:Chart DataContext="{Binding Cam.CoolerPowerHistory}" Name="lineChart" Title="Line Series Demo">
+                    <chartingToolkit:LineSeries  DependentValuePath="Value" 
+		                 IndependentValuePath="Key" ItemsSource="{Binding}" 
+		                IsSelectionEnabled="True"/>         
+                </chartingToolkit:Chart>
+            </StackPanel>
+        </GroupBox>
+        
+    </Grid>
+</UserControl>
