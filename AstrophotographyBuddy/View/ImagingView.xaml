@@ -21,8 +21,18 @@
             <Button Width="50" Height="50" Command="{Binding SeqVM.AddSequenceCommand}">+</Button>
             
         </StackPanel>
-
-        <Image Grid.Column="1" Source="{Binding ImgSource}"/>
+        <Grid Grid.Column="1" Visibility="{Binding SnapCommand.Execution,
+              Converter={StaticResource NullToVisibilityConverter}}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
+                                Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">
+                <local:LoadingAnimation   />
+                <TextBlock>Capuring Image...</TextBlock>
+            </StackPanel>
+            
+        </Grid>
+        
+        <Image Grid.Column="1" Source="{Binding SnapCommand.Execution.Result}" 
+               Visibility="{Binding SnapCommand.Execution.IsSuccessfullyCompleted, Converter={StaticResource VisibilityConverter}}" />
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" FlowDirection="RightToLeft" >
             <Button Width="50" Height="50"  IsEnabled="{Binding Cam.Connected}" Command="{Binding SnapCommand}">Preview</Button>
         </StackPanel>

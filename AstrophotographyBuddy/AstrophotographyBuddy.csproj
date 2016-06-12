@@ -85,9 +85,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\SequenceModel.cs" />
+    <Compile Include="Model\UIColorsModel.cs" />
+    <Compile Include="Utility\AsyncCommand.cs" />
     <Compile Include="Utility\BaseINPC.cs" />
     <Compile Include="Utility\BoolToVisibilityConverter.cs" />
     <Compile Include="Utility\NotifyTaskCompletion.cs" />
+    <Compile Include="Utility\NullToVisibilityConverter.cs" />
     <Compile Include="Utility\RelayCommand.cs" />
     <Compile Include="Utility\Utility.cs" />
     <Compile Include="ViewModel\BaseVM.cs" />
@@ -106,6 +109,9 @@
     </Compile>
     <Compile Include="View\ImagingView.xaml.cs">
       <DependentUpon>ImagingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\LoadingAnimation.xaml.cs">
+      <DependentUpon>LoadingAnimation.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
@@ -142,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ImagingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LoadingAnimation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

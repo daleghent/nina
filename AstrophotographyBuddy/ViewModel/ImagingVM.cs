@@ -6,6 +6,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
@@ -15,8 +16,9 @@ namespace AstrophotographyBuddy.ViewModel {
 
         public ImagingVM() {
             Name = "Imaging";
-            SnapCommand = new RelayCommand(capture);
-        }
+            SnapCommand = new AsyncCommand<BitmapSource>(() =>
+             captureImage());        
+    }
 
         private SequenceVM _seqVM;
         public SequenceVM SeqVM {
@@ -43,7 +45,7 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
-        private BitmapSource _imgSource;
+        /*private BitmapSource _imgSource;
         public BitmapSource ImgSource {
             get {
                 return _imgSource;
@@ -52,10 +54,10 @@ namespace AstrophotographyBuddy.ViewModel {
                 _imgSource = value;
                 RaisePropertyChanged();
             }
-        }
+        }*/
 
-        private ICommand _snapCommand;
-        public ICommand SnapCommand {
+        private IAsyncCommand _snapCommand;
+        public IAsyncCommand SnapCommand {
             get {
                 return _snapCommand;
             }
@@ -65,7 +67,7 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
-
+        /*
         private void capture(object o) {
             ImgSource =  Cam.snap(30, true);
 
@@ -75,9 +77,25 @@ namespace AstrophotographyBuddy.ViewModel {
                 encoder.Frames.Add(BitmapFrame.Create(ImgSource));
                 encoder.Save(fs);
             }
+        }*/
+
+        
+
+        private async Task<BitmapSource> captureImage(CancellationToken token = new CancellationToken()) {            
+            var arr = await Task.Run<Int16[]>(() => {                
+                return Cam.snap(5, true);                
+            });
+            BitmapSource tmp = Cam.createSourceFromArray(arr);
+            tmp = Cam.NormalizeTiffTo8BitImage(tmp);
+            return tmp;
         }
 
-
+        //test
+        private BitmapSource load() {
+            FileStream ImageStream = new FileStream(@"E:\Astrofotografie\2015-03-07 Oriongürtel\Oriongürtel1.tif", FileMode.Open, FileAccess.Read, FileShare.Read);
+            TiffBitmapDecoder ImageDecoder = new TiffBitmapDecoder(ImageStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
+            return ImageDecoder.Frames.FirstOrDefault();
+        }
 
 
         /*public void snap(object o) {
@@ -116,6 +134,6 @@ namespace AstrophotographyBuddy.ViewModel {
         }*/
 
 
-        
+
     }
 }

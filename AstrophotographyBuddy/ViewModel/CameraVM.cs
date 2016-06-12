@@ -19,7 +19,7 @@ namespace AstrophotographyBuddy {
             DisconnectCommand = new RelayCommand(disconnectCamera);
             Cam = new CameraModel();
             updateCamera = new DispatcherTimer();
-            updateCamera.Interval = TimeSpan.FromMilliseconds(300);
+            updateCamera.Interval = TimeSpan.FromMilliseconds(1000);
             updateCamera.Tick += updateCamera_Tick;
             
         }

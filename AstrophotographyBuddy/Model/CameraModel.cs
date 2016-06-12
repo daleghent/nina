@@ -21,21 +21,27 @@ namespace AstrophotographyBuddy
         private void init() {
             CameraStateString = "disconnected";
             //ProgId = string.Empty;
+
             AscomCamera = null;
+
+            CanAbortExposure = false;
+            CanAsymmetricBin = false;
+            CanFastReadout = false;
+            CanGetCoolerPower = false;
+            CanPulseGuide = false;
+            CanCoolerOn = false;
+            CanStopExposure = false;
+            CanSetCCDTemperature = false;
+
             BayerOffsetX = -1;
             BayerOffsetY = -1;
             CameraState = ASCOM.DeviceInterface.CameraStates.cameraIdle;
             CameraXSize = -1;
             CameraYSize = -1;
             CCDTemperature = double.MinValue;
-            CanAbortExposure = false;
-            CanAsymmetricBin = false;
-            CanFastReadout = false;
-            CanGetCoolerPower = false;
-            CanPulseGuide = false;
+            
             HasShutter = false;
-            CanStopExposure = false;
-            CanSetCCDTemperature = false;
+            
 
             CoolerPower = -1;
             Description = string.Empty;
@@ -71,7 +77,7 @@ namespace AstrophotographyBuddy
             BinX = -1;
             BinY = -1;
 
-            Connected = false;
+            
 
 
             CoolerOn = false;
@@ -283,6 +289,20 @@ namespace AstrophotographyBuddy
             }
         }
 
+        ObservableCollection<KeyValuePair<DateTime, double>> _cCDTemperatureHistory;
+        public ObservableCollection<KeyValuePair<DateTime, double>> CCDTemperatureHistory {
+            get {
+                if (_cCDTemperatureHistory == null) {
+                    _cCDTemperatureHistory = new ObservableCollection<KeyValuePair<DateTime, double>>();
+                }
+                return _cCDTemperatureHistory;
+            }
+            set {
+                _cCDTemperatureHistory = value;
+                RaisePropertyChanged();
+            }
+        }
+
         ObservableCollection<KeyValuePair<DateTime, double>> _coolerPowerHistory;            
         public ObservableCollection<KeyValuePair<DateTime, double>> CoolerPowerHistory {
             get {
@@ -296,18 +316,6 @@ namespace AstrophotographyBuddy
                 RaisePropertyChanged();
             }
         }
-
-        private int _coolerPowerHistoryIndex;
-        public int CoolerPowerHistoryIndex {
-            get {
-                return _coolerPowerHistoryIndex;
-            } set {
-                _coolerPowerHistoryIndex = value;
-                RaisePropertyChanged();
-            }
-
-        }
-
 
         string _description;
         public string Description {
@@ -1135,6 +1143,12 @@ namespace AstrophotographyBuddy
             CameraState = AscomCamera.CameraState;
             if( HasCCDTemperature) {
                 CCDTemperature = AscomCamera.CCDTemperature;
+
+                if (CCDTemperatureHistory.Count > 100) {
+                    CCDTemperatureHistory.RemoveAt(0);                    
+                }
+                CCDTemperatureHistory.Add(new KeyValuePair<DateTime, double>(DateTime.Now, CCDTemperature));               
+
             }
             
             if( HasFullWellCapacity) {
@@ -1149,15 +1163,11 @@ namespace AstrophotographyBuddy
 
             if ( CanGetCoolerPower) { 
                  CoolerPower = AscomCamera.CoolerPower;
-                if(CoolerPowerHistoryIndex > 100) {
-                    CoolerPowerHistory.RemoveAt(0);
-                    CoolerPowerHistory.Add(new KeyValuePair<DateTime, double>(DateTime.Now, CoolerPower));
+                if(CoolerPowerHistory.Count > 100) {
+                    CoolerPowerHistory.RemoveAt(0);                    
                 }
-                else {
-                    CoolerPowerHistory.Insert(CoolerPowerHistoryIndex, new KeyValuePair<DateTime, double>(DateTime.Now, CoolerPower));
-                }
+                CoolerPowerHistory.Add(new KeyValuePair<DateTime, double>(DateTime.Now, CoolerPower));
                 
-                CoolerPowerHistoryIndex++;
             }
 
             if (CanPulseGuide) {
@@ -1178,7 +1188,7 @@ namespace AstrophotographyBuddy
             bool con = false;
             string oldProgId = this.ProgId;
             ProgId = Camera.Choose("ASCOM.Simulator.Camera");
-            if(!Connected && oldProgId != ProgId) {
+            if(!Connected || oldProgId != ProgId) {
 
             init();
             try {
@@ -1200,7 +1210,7 @@ namespace AstrophotographyBuddy
             return con;
         }
 
-        public BitmapSource snap(double exposureTime, bool isLightFrame) {
+        public Int16[] snap(double exposureTime, bool isLightFrame) {
             ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
             AscomCamera.StartExposure(exposureTime, isLightFrame);
             while (!ImageReady) {
@@ -1212,8 +1222,13 @@ namespace AstrophotographyBuddy
             
             Int16[] flatArray = Utility.Utility.flattenArray<Int16>(camArray);
             
-            System.Windows.Media.PixelFormat pf = System.Windows.Media.PixelFormats.Gray16;
             
+            return flatArray;
+        }
+
+        public BitmapSource createSourceFromArray(Array flatArray) {
+            System.Windows.Media.PixelFormat pf = System.Windows.Media.PixelFormats.Gray16;
+
             List<System.Windows.Media.Color> colors = new List<System.Windows.Media.Color>();
             colors.Add(System.Windows.Media.Colors.Gray);
             BitmapPalette pallet = new BitmapPalette(colors);
@@ -1221,7 +1236,8 @@ namespace AstrophotographyBuddy
             int stride = (CameraXSize * pf.BitsPerPixel + 7) / 8;
             double dpi = 96;
 
-            return BitmapSource.Create(CameraXSize, CameraYSize, dpi, dpi, pf, null, flatArray, stride);
+            BitmapSource source = BitmapSource.Create(CameraXSize, CameraYSize, dpi, dpi, pf, null, flatArray, stride);
+            return source;
         }
 
 

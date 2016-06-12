@@ -7,12 +7,13 @@ using System.Threading.Tasks;
 
 namespace AstrophotographyBuddy.Utility {
     public sealed class NotifyTaskCompletion<TResult> : INotifyPropertyChanged {
+
         public NotifyTaskCompletion(Task<TResult> task) {
             Task = task;
-            if (!task.IsCompleted) {
-                var _ = WatchTaskAsync(task);
-            }
+            if (!task.IsCompleted)
+                TaskCompletion = WatchTaskAsync(task);
         }
+        public Task TaskCompletion { get; private set; }
         private async Task WatchTaskAsync(Task task) {
             try {
                 await task;

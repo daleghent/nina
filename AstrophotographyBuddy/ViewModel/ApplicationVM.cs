@@ -1,4 +1,5 @@
-﻿using AstrophotographyBuddy.Utility;
+﻿using AstrophotographyBuddy.Model;
+using AstrophotographyBuddy.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -38,6 +39,22 @@ namespace AstrophotographyBuddy.ViewModel {
 
         private ObservableCollection<BaseVM> _views;
         private BaseVM _activeView;
+
+
+        private UIColorsModel _uiColorsModel;
+        public UIColorsModel UiColorsModel {
+            get {
+                if(_uiColorsModel == null) {
+                    _uiColorsModel = new UIColorsModel();
+                }
+                return _uiColorsModel;
+
+            } set {
+                _uiColorsModel = value;
+                RaisePropertyChanged();
+            }
+        }
+
 
         private CameraVM _cameraVM;
         public CameraVM CameraVM {
