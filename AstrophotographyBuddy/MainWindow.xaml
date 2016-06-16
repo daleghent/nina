@@ -21,10 +21,10 @@
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0" Height="50" Width="50" Command="{Binding ToggleViewCommand}" CommandParameter="{Binding Name}" Content="{Binding Name}" ></Button>
             <Button Grid.Column="1" Height="50" Width="50"  Command="{Binding PrevViewCommand}">&lt;</Button>
-            <Button Grid.Column="2" Height="50" Width="50" Command="{Binding CameraVM.ChooseCameraCommand}" 
-                    Visibility="{Binding CameraVM.Visibility, Converter={StaticResource VisibilityConverter}}">Connect</Button>
+            <Button Grid.Column="2" Height="50" Width="50" Command="{Binding CameraVM.ChooseCameraCommand}"  IsEnabled="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBooleanConverter}}"
+                    Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">Connect</Button>
             <Button Grid.Column="3" Height="50" Width="50" Command="{Binding CameraVM.DisconnectCommand}" IsEnabled="{Binding CameraVM.Cam.Connected}"
-                    Visibility="{Binding CameraVM.Visibility, Converter={StaticResource VisibilityConverter}}">Disconnect</Button>
+                    Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource VisibilityConverter}}">Disconnect</Button>
             <Button Grid.Column="5" Height="50" Width="50" Command="{Binding NextViewCommand}">&gt;</Button>
         </Grid>
         <view:ApplicationMenu Grid.Row="1" DataContext="{Binding}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:ApplicationMenu>

@@ -1074,19 +1074,6 @@ namespace AstrophotographyBuddy
             }
 
             try {
-                
-                CanSetCCDTemperature = AscomCamera.CanSetCCDTemperature;
-                 SetCCDTemperature = AscomCamera.SetCCDTemperature;
-                 
-            }
-            catch (Exception ex) {
-                
-                CanSetCCDTemperature = false;
-                 SetCCDTemperature = double.MinValue;
-                 
-            }
-
-            try {
                 CCDTemperature = AscomCamera.CCDTemperature; /*Watch!*/
                 HasCCDTemperature = true;
             }
@@ -1095,7 +1082,26 @@ namespace AstrophotographyBuddy
                 HasCCDTemperature = false;
             }
 
-                try {
+
+            try {
+
+                CanSetCCDTemperature = AscomCamera.CanSetCCDTemperature;
+                
+                if(HasCCDTemperature) { 
+                SetCCDTemperature = AscomCamera.CCDTemperature;
+                } else {
+                    SetCCDTemperature = AscomCamera.SetCCDTemperature;
+                }
+
+            }
+            catch (Exception ex) {
+
+                CanSetCCDTemperature = false;
+                SetCCDTemperature = double.MinValue;
+
+            }
+
+            try {
                  FullWellCapacity = AscomCamera.FullWellCapacity;/*Watch!*/
                  HasFullWellCapacity = true;
             }
@@ -1219,8 +1225,13 @@ namespace AstrophotographyBuddy
             }
 
             Array camArray = (Array)AscomCamera.ImageArray;
+            Int16[] flatArray;
+            if (camArray.Rank == 2) {
+                flatArray = Utility.Utility.flatten2DArray<Int16>(camArray);
+            } else {
+                flatArray = Utility.Utility.flatten3DArray<Int16>(camArray);
+            }
             
-            Int16[] flatArray = Utility.Utility.flattenArray<Int16>(camArray);
             
             
             return flatArray;
@@ -1228,10 +1239,7 @@ namespace AstrophotographyBuddy
 
         public BitmapSource createSourceFromArray(Array flatArray) {
             System.Windows.Media.PixelFormat pf = System.Windows.Media.PixelFormats.Gray16;
-
-            List<System.Windows.Media.Color> colors = new List<System.Windows.Media.Color>();
-            colors.Add(System.Windows.Media.Colors.Gray);
-            BitmapPalette pallet = new BitmapPalette(colors);
+            
             //int stride = C.CameraYSize * ((Convert.ToString(C.MaxADU, 2)).Length + 7) / 8;
             int stride = (CameraXSize * pf.BitsPerPixel + 7) / 8;
             double dpi = 96;

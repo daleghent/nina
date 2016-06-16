@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AstrophotographyBuddy.View"  
+             
              xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:chartingToolkit=	"clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"             
              xmlns:Primitives="clr-namespace:System.Windows.Controls.DataVisualization.Charting.Primitives;assembly=System.Windows.Controls.DataVisualization.Toolkit" x:Class="AstrophotographyBuddy.View.CameraView"             
@@ -68,6 +69,10 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="2*" />
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical">
                     <!--<StackPanel Orientation="Horizontal">
                         <TextBlock>Heat Sink Temperature</TextBlock>
@@ -85,26 +90,53 @@
                         <TextBlock><Run Text="CCDTemperature"/></TextBlock>
                         <TextBlock Text="{Binding Cam.CCDTemperature, StringFormat=\{0:#.00\}}" Margin="5,0,0,0" Visibility="{Binding Cam.Connected, Converter={StaticResource VisibilityConverter}}"/>
                     </StackPanel>
-                    <StackPanel Orientation="Vertical">
-                        <TextBlock><Run Text="SetCCDTemperature"/></TextBlock>
-                        <Slider Value="{Binding Cam.SetCCDTemperature}" Minimum="-50" Maximum="20" />
+                    <StackPanel Orientation="Horizontal" IsEnabled="False">
+                        <TextBlock><Run Text="Target Temperature"/></TextBlock>
+                        <!--<Slider Value="{Binding Cam.SetCCDTemperature}" Minimum="-50" Maximum="20" SmallChange=".1" TickPlacement="BottomRight"/>-->
                         <TextBlock Text="{Binding Cam.SetCCDTemperature, StringFormat=\{0:#.00\}}" Margin="5,0,0,0" MinWidth="20" />
-                    </StackPanel>
-                
+                    </StackPanel>                
                 </StackPanel>
-                <UniformGrid Columns="2" Grid.Row="1">
-                    <chartingToolkit:Chart Grid.Row="2" Grid.Column="0" DataContext="{Binding Cam.CoolerPowerHistory}"  Title="Cooler Power" Style="{StaticResource ChartStyle}">
-                        <chartingToolkit:LineSeries  DependentValuePath="Value" 
-				        IndependentValuePath="Key" ItemsSource="{Binding}" 
-				        IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}">
-                        </chartingToolkit:LineSeries>
-                    </chartingToolkit:Chart>
-                    <chartingToolkit:Chart Grid.Row="2" Grid.Column="1" DataContext="{Binding Cam.CCDTemperatureHistory}"  Title="Camera Temperature" Style="{StaticResource ChartStyle}">
-                        <chartingToolkit:LineSeries  DependentValuePath="Value" 
-				        IndependentValuePath="Key" ItemsSource="{Binding}" 
-				        IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}"/>
-                    </chartingToolkit:Chart>
-                </UniformGrid>
+
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="20" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+                   
+                    <TextBlock>Target Temp.</TextBlock>
+                    <TextBlock  Grid.Row="1">Duration</TextBlock>
+
+                    <Slider Grid.Column="1" Minimum="-50" Maximum="20" SmallChange="1" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Value="{Binding TargetTemp}" IsEnabled="{Binding CoolingRunning, Converter={StaticResource InverseBooleanConverter}}"></Slider>
+                    <TextBlock Grid.Column="2" Text="{Binding TargetTemp, StringFormat=\{0:#.0\}}" ></TextBlock>
+                    <Slider  Grid.Row="1" Grid.Column="1" Minimum="0" Maximum="30" SmallChange="1" TickPlacement="BottomRight" IsSnapToTickEnabled="True" Value="{Binding Duration}" IsEnabled="{Binding CoolingRunning , Converter={StaticResource InverseBooleanConverter}}"></Slider>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Duration, StringFormat=\{0:#.0\}}"/>
+
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="3" >
+                        <local:LoadingAnimation Visibility="{Binding CoolingRunning, Converter={StaticResource VisibilityConverter}}" />
+                        <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning , Converter={StaticResource InverseBooleanConverter}}" Command="{Binding CoolCamCommand}" >Apply</Button>
+                        <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning}"  Command="{Binding CancelCoolCamCommand}">Cancel</Button>
+                    </StackPanel>
+
+                </Grid>
+                
+                <chartingToolkit:Chart Grid.Row="2" Grid.Column="0" DataContext="{Binding Cam.CoolerPowerHistory}"  Title="Cooler Power" Style="{StaticResource ChartStyle}">
+                    <chartingToolkit:LineSeries  DependentValuePath="Value" 
+				    IndependentValuePath="Key" ItemsSource="{Binding}" 
+				    IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}">
+                    </chartingToolkit:LineSeries>
+                </chartingToolkit:Chart>
+                <chartingToolkit:Chart Grid.Row="2" Grid.Column="1" DataContext="{Binding Cam.CCDTemperatureHistory}"  Title="Camera Temperature" Style="{StaticResource ChartStyle}">
+                    <chartingToolkit:LineSeries  DependentValuePath="Value" 
+				    IndependentValuePath="Key" ItemsSource="{Binding}" 
+				    IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}"/>
+                </chartingToolkit:Chart>
+
             </Grid>
         </GroupBox>
 

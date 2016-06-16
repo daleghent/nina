@@ -83,7 +83,7 @@ namespace AstrophotographyBuddy.ViewModel {
 
         private async Task<BitmapSource> captureImage(CancellationToken token = new CancellationToken()) {            
             var arr = await Task.Run<Int16[]>(() => {                
-                return Cam.snap(5, true);                
+                return Cam.snap(1, true);                
             });
             BitmapSource tmp = Cam.createSourceFromArray(arr);
             tmp = Cam.NormalizeTiffTo8BitImage(tmp);

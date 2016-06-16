@@ -11,10 +11,17 @@
     <Application.Resources>        
         <vm:ApplicationVM x:Key="AppVM" />
         <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
+        <util:InverseBooleanConverter x:Key="InverseBooleanConverter" />
+        <util:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
         <util:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
 
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="MinWidth" Value="40"></Setter>
+            
+        </Style>
+        
+        
         <!-- Chart Styles -->
-
         <Style x:Key="ChartStyle" TargetType="{x:Type chartingToolkit:Chart}">
             <Setter Property="Template">
                 <Setter.Value>
