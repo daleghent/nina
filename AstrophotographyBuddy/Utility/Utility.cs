@@ -6,6 +6,24 @@ using System.Threading.Tasks;
 
 namespace AstrophotographyBuddy.Utility {
     class Utility {
+        public static Int16[] flatten2DArray(Array arr) {
+            int width = arr.GetLength(0);
+            int height = arr.GetLength(1);
+            Int16[] flatArray = new Int16[width * height];
+            Int16 val;
+            int idx = 0;
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    val = (Int16)( Int16.MinValue + Convert.ToInt16(arr.GetValue(j, i)));
+                     
+                    flatArray[idx] = val;
+                    idx++;
+                }
+            }
+            return flatArray;
+        }
+
+
         public static T[] flatten2DArray<T>(Array arr) {
             int width = arr.GetLength(0);
             int height = arr.GetLength(1);
@@ -33,6 +51,7 @@ namespace AstrophotographyBuddy.Utility {
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     for(int k=0; k<depth; k++) {
+                        
                         val = (T)Convert.ChangeType(arr.GetValue(j, i, k), typeof(T));
 
                         flatArray[idx] = val;

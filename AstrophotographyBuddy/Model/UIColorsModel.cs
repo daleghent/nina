@@ -11,9 +11,15 @@ namespace AstrophotographyBuddy.Model {
     class UIColorsModel : BaseINPC {
 
         public UIColorsModel() {
+            /*
             PrimaryColor = new SolidColorBrush(Colors.Red);
             SecondaryColor = new SolidColorBrush(Colors.OrangeRed);
             BackgroundColor = new SolidColorBrush(Colors.Black);
+            BorderColor = new SolidColorBrush(Colors.Orange);
+            */
+            PrimaryColor = new SolidColorBrush(Colors.Black);
+            SecondaryColor = new SolidColorBrush(Colors.OrangeRed);
+            BackgroundColor = new SolidColorBrush(Colors.White);
             BorderColor = new SolidColorBrush(Colors.Orange);
         }
 

@@ -48,6 +48,9 @@ namespace AstrophotographyBuddy {
             Cam.SetCCDTemperature = newTemp;
 
             Duration = Duration - ((double)delta.TotalMilliseconds / (1000 * 60));
+
+            CoolingProgress = 1 - (Duration / _initalDuration);
+
             deltaT = DateTime.Now;
 
             if (Duration <= 0) {
@@ -58,6 +61,20 @@ namespace AstrophotographyBuddy {
                 
             }
         }
+
+        private double _initalDuration;
+        private double _coolingProgress;
+        public double CoolingProgress {
+            get {
+                return _coolingProgress;
+            }
+
+            set {
+                _coolingProgress = value;
+                RaisePropertyChanged();
+            }
+        }
+
 
         private DateTime deltaT;
 
@@ -78,7 +95,8 @@ namespace AstrophotographyBuddy {
             } else {
                 deltaT = DateTime.Now;
                 double currentTemp = Cam.CCDTemperature;
-                Cam.SetCCDTemperature = currentTemp;                
+                Cam.SetCCDTemperature = currentTemp;
+                _initalDuration = Duration;
                 CoolCameraTimer.Start();
                 CoolingRunning = true;
             }
@@ -213,5 +231,7 @@ namespace AstrophotographyBuddy {
         public ICommand CancelCoolCamCommand {
             get { return _cancelCoolCommand; }
             private set { _cancelCoolCommand = value; RaisePropertyChanged(); } }
+
+        
     }
 }

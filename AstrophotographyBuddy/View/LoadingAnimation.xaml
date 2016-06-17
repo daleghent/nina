@@ -329,307 +329,311 @@
             <BeginStoryboard x:Name="ProgressAnimation_BeginStoryboard" Storyboard="{StaticResource ProgressAnimation}"/>
         </EventTrigger>
     </UserControl.Triggers>
+    <Grid>
+        
+        <Canvas x:Name="LayoutRoot" VerticalAlignment="Top" Height="40" Width="40">
+       
+            <Grid Width="10.734" Height="10.004" >
+                <!-- FIRST ROW -->
+                <Path x:Name="block11" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="5" OffsetY="0" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block12" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="10" OffsetY="-77" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block13" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="15" OffsetY="0" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block14" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="20" OffsetY="-77" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block15" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="25" OffsetY="0" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
 
-    <Canvas x:Name="LayoutRoot" VerticalAlignment="Top" Height="40" Width="40">
+                <!-- SECOND ROW -->
+                <Path x:Name="block21" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="0" OffsetY="10" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block22" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="5" OffsetY="-67" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block23" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="10" OffsetY="10" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block24" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="15" OffsetY="-67" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block25" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="20" OffsetY="10" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block26" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="25" OffsetY="-67" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block27" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="30" OffsetY="10" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
 
-        <Grid Width="10.734" Height="10.004" >
-            <!-- FIRST ROW -->
-            <Path x:Name="block11" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="5" OffsetY="0" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block12" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="10" OffsetY="-77" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block13" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="15" OffsetY="0" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block14" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="20" OffsetY="-77" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block15" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="25" OffsetY="0" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
+                <!-- THIRD ROW -->
 
-            <!-- SECOND ROW -->
-            <Path x:Name="block21" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="0" OffsetY="10" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block22" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="5" OffsetY="-67" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block23" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="10" OffsetY="10" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block24" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="15" OffsetY="-67" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block25" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="20" OffsetY="10" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block26" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="25" OffsetY="-67" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block27" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="30" OffsetY="10" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-
-            <!-- THIRD ROW -->
-
-            <Path x:Name="block31" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="0" OffsetY="-57" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block32" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="5" OffsetY="20" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block33" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="10" OffsetY="-57" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block34" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="15" OffsetY="20" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block35" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="20" OffsetY="-57" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block36" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="25" OffsetY="20" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block37" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="30" OffsetY="-57" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <!-- FOURTH ROW -->
+                <Path x:Name="block31" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="0" OffsetY="-57" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block32" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="5" OffsetY="20" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block33" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="10" OffsetY="-57" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block34" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="15" OffsetY="20" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block35" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="20" OffsetY="-57" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block36" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="25" OffsetY="20" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block37" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="30" OffsetY="-57" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <!-- FOURTH ROW -->
 
 
-            <Path x:Name="block41" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="5" OffsetY="-47" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block42" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="10" OffsetY="30" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block43" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="15" OffsetY="-47" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block44" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="0"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="20" OffsetY="30" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <Path x:Name="block45" OpacityMask="#FF000000">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <RotateTransform Angle="180"/>
-                        <MatrixTransform>
-                            <MatrixTransform.Matrix>
-                                <Matrix OffsetX="25" OffsetY="-47" />
-                            </MatrixTransform.Matrix>
-                        </MatrixTransform>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-        </Grid>
-    </Canvas>
+                <Path x:Name="block41" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="5" OffsetY="-47" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block42" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="10" OffsetY="30" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block43" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="15" OffsetY="-47" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block44" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="0"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="20" OffsetY="30" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+                <Path x:Name="block45" OpacityMask="#FF000000">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <RotateTransform Angle="180"/>
+                            <MatrixTransform>
+                                <MatrixTransform.Matrix>
+                                    <Matrix OffsetX="25" OffsetY="-47" />
+                                </MatrixTransform.Matrix>
+                            </MatrixTransform>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+            </Grid>
+        
+        </Canvas>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Text}" Background="Transparent"></TextBlock>
+    </Grid>
 </UserControl>

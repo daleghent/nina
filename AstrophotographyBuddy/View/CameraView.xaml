@@ -27,7 +27,7 @@
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Camera Infos" Grid.Column="1">
-            <StackPanel Orientation="Vertical">
+            <UniformGrid Columns="2" >
 
                 <StackPanel Orientation="Horizontal">
                     <CheckBox IsChecked="{Binding Cam.HasShutter}" IsEnabled="False"/>
@@ -61,7 +61,7 @@
                     <CheckBox IsChecked="{Binding Cam.CanFastReadout}" IsEnabled="False" />
                     <TextBlock Text="Fast Readout Mode Available" Margin="5,0,0,0" />
                 </StackPanel>
-            </StackPanel>
+            </UniformGrid>
         </GroupBox>
         <GroupBox Grid.Row="1" Grid.ColumnSpan="2" Header="Temperature Control">
             <Grid>
@@ -118,8 +118,13 @@
                     <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Duration, StringFormat=\{0:#.0\}}"/>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="3" >
-                        <local:LoadingAnimation Visibility="{Binding CoolingRunning, Converter={StaticResource VisibilityConverter}}" />
-                        <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning , Converter={StaticResource InverseBooleanConverter}}" Command="{Binding CoolCamCommand}" >Apply</Button>
+                        
+                        <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning , Converter={StaticResource InverseBooleanConverter}}" Command="{Binding CoolCamCommand}" >
+                            <Grid>
+                                <TextBlock Visibility="{Binding CoolingRunning, Converter={StaticResource InverseBoolToVisibilityConverter}}">Apply</TextBlock>
+                                <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding CoolingRunning, Converter={StaticResource VisibilityConverter}}" Text="{Binding CoolingProgress , StringFormat=\{0:#%\}}" />
+                            </Grid>
+                        </Button>
                         <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning}"  Command="{Binding CancelCoolCamCommand}">Cancel</Button>
                     </StackPanel>
 

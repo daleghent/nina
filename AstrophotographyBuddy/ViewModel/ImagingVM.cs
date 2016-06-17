@@ -1,4 +1,6 @@
 ﻿using AstrophotographyBuddy.Utility;
+using nom.tam.fits;
+using nom.tam.util;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -82,11 +84,43 @@ namespace AstrophotographyBuddy.ViewModel {
         
 
         private async Task<BitmapSource> captureImage(CancellationToken token = new CancellationToken()) {            
-            var arr = await Task.Run<Int16[]>(() => {                
+            var arr = await Task.Run<Array>(() => {                
                 return Cam.snap(1, true);                
             });
-            BitmapSource tmp = Cam.createSourceFromArray(arr);
+
+
+            var flatarr = await Task.Run<Int16[]>(() => {
+                Int16[] flatArray;
+                if (arr.Rank == 2) {
+                    //flatArray = Utility.Utility.flatten2DArray<Int16>(arr);
+                    flatArray = Utility.Utility.flatten2DArray(arr);                    
+                }
+                else {
+                    flatArray = Utility.Utility.flatten3DArray<Int16>(arr);
+                }
+                return flatArray;
+            });
+            
+
+            BitmapSource tmp = Cam.createSourceFromArray(flatarr);
             tmp = Cam.NormalizeTiffTo8BitImage(tmp);
+
+            int[] dim = new int[2];
+            dim[0] = arr.GetUpperBound(1) + 1;
+            dim[1] = arr.GetUpperBound(0) + 1;
+
+            await Task.Run(() => {
+                BasicHDU imageHdu = FitsFactory.HDUFactory(ArrayFuncs.Curl(flatarr, dim));
+                imageHdu.AddValue("BZERO", 32768, "");
+                Fits f = new Fits();
+                f.AddHDU(imageHdu);
+                FileStream fs = File.Create("test.fit");
+                f.Write(fs);
+                fs.Close();
+            });
+            
+
+
             return tmp;
         }
 

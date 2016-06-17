@@ -1216,7 +1216,7 @@ namespace AstrophotographyBuddy
             return con;
         }
 
-        public Int16[] snap(double exposureTime, bool isLightFrame) {
+        public Array snap(double exposureTime, bool isLightFrame) {
             ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
             AscomCamera.StartExposure(exposureTime, isLightFrame);
             while (!ImageReady) {
@@ -1224,17 +1224,10 @@ namespace AstrophotographyBuddy
                 U.WaitForMilliseconds(100);
             }
 
-            Array camArray = (Array)AscomCamera.ImageArray;
-            Int16[] flatArray;
-            if (camArray.Rank == 2) {
-                flatArray = Utility.Utility.flatten2DArray<Int16>(camArray);
-            } else {
-                flatArray = Utility.Utility.flatten3DArray<Int16>(camArray);
-            }
+            Array camArray = (Array)AscomCamera.ImageArray;                     
             
             
-            
-            return flatArray;
+            return camArray;
         }
 
         public BitmapSource createSourceFromArray(Array flatArray) {
