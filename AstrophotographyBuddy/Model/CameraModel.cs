@@ -1217,10 +1217,29 @@ namespace AstrophotographyBuddy
             return con;
         }
 
+        public void startExposure(double exposureTime, bool isLightFrame) {
+            AscomCamera.StartExposure(exposureTime, isLightFrame);
+        }
+
+        public void stopExposure() {
+            AscomCamera.StopExposure();
+        }
+
+        public Int32[,] downloadExposure() {
+            ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
+            while (!ImageReady) {
+                //Console.Write(".");
+                U.WaitForMilliseconds(100);
+            }
+            Int32[,] camArray = (Int32[,])AscomCamera.ImageArray;
+            
+            return camArray;
+        }
+
         public Int32[,] snap(double exposureTime, bool isLightFrame) {
             ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
             AscomCamera.StartExposure(exposureTime, isLightFrame);
-            
+                
             while (!ImageReady) {
                 //Console.Write(".");
                 U.WaitForMilliseconds(100);

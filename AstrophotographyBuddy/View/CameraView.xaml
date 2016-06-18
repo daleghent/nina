@@ -91,7 +91,7 @@
                         <TextBlock Text="{Binding Cam.CCDTemperature, StringFormat=\{0:#.00\}}" Margin="5,0,0,0" Visibility="{Binding Cam.Connected, Converter={StaticResource VisibilityConverter}}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" IsEnabled="False">
-                        <TextBlock><Run Text="Target Temperature"/></TextBlock>
+                        <TextBlock Text="Target Temperature" />
                         <!--<Slider Value="{Binding Cam.SetCCDTemperature}" Minimum="-50" Maximum="20" SmallChange=".1" TickPlacement="BottomRight"/>-->
                         <TextBlock Text="{Binding Cam.SetCCDTemperature, StringFormat=\{0:#.00\}}" Margin="5,0,0,0" MinWidth="20" />
                     </StackPanel>                

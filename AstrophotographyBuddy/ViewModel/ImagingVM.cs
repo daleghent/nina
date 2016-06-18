@@ -19,6 +19,7 @@ namespace AstrophotographyBuddy.ViewModel {
 
         public ImagingVM() {
             Name = "Imaging";
+            SnapExposureDuration = 1;
             SnapCommand = new AsyncCommand<BitmapSource>(() =>
              captureImage());        
     }
@@ -48,6 +49,41 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
+        private double _snapExposureDuration;
+        public double SnapExposureDuration {
+            get {
+                return _snapExposureDuration;
+            }
+
+            set {
+                _snapExposureDuration = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private int _exposureSeconds; 
+        public int ExposureSeconds {
+            get {
+                return _exposureSeconds;
+            }
+            set {
+                _exposureSeconds = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private String _expStatus;
+        public String ExpStatus {
+            get {
+                return _expStatus;
+            }
+
+            set {
+                _expStatus = value;
+                RaisePropertyChanged();
+            }
+        }
+
         /*private BitmapSource _imgSource;
         public BitmapSource ImgSource {
             get {
@@ -70,6 +106,10 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
+        
+
+
+
         /*
         private void capture(object o) {
             ImgSource =  Cam.snap(30, true);
@@ -82,12 +122,46 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }*/
 
-        
+
 
         private async Task<BitmapSource> captureImage(CancellationToken token = new CancellationToken()) {
+            ExpStatus = ExposureStatus.CAPTURING;
+            Cam.startExposure(SnapExposureDuration, true);
+            ExposureSeconds = 1;
+            if (SnapExposureDuration >= 1) {
+                await Task.Run(async () => {
+                    do {
+                        await Task.Delay(1000);
+                        ExposureSeconds += 1;
+                    } while (ExposureSeconds < SnapExposureDuration);
+                });
+            }            
+
+            //await Task.Delay((int)(SnapExposureDuration * 1000));
+
+            ExpStatus = ExposureStatus.DOWNLOADING;
+            Int32[,] arr = await Task.Run<Int32[,]>(() => {
+                return Cam.downloadExposure();
+            });
+
+            ExpStatus = ExposureStatus.PREPARING;
+            Utility.Utility.ImageArray iarr = await Task.Run<Utility.Utility.ImageArray>(() => {
+                return Utility.Utility.convert2DArray(arr);
+            });
+
+            BitmapSource tmp = Utility.Utility.createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y);
+            tmp = Cam.NormalizeTiffTo8BitImage(tmp);
+
+            ExpStatus = ExposureStatus.SAVING;
+            await Task.Run(() => {
+                Utility.Utility.saveTiff(iarr);
+            });
+
+            return tmp;
+            /*
             Stopwatch sw = Stopwatch.StartNew();
             Int32[,] arr = await Task.Run<Int32[,]>(() => {                
-                return Cam.snap(1, true);                
+                return Cam.snap(SnapExposureDuration, true);                
             });
             sw.Stop();
             Console.WriteLine("Camerasnap: "  + sw.Elapsed);
@@ -115,8 +189,14 @@ namespace AstrophotographyBuddy.ViewModel {
             sw.Stop();
             Console.WriteLine("SaveFits: " + sw.Elapsed);
 
-            return tmp;
+            return tmp;*/
         }
-        
+
+        public static class ExposureStatus {
+            public const string CAPTURING = "Capturing...";
+            public const string DOWNLOADING = "Downloading...";
+            public const string PREPARING = "Preparing...";
+            public const string SAVING = "Saving...";
+        }
     }
 }
