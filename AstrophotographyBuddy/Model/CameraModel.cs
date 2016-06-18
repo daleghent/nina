@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -1216,30 +1217,22 @@ namespace AstrophotographyBuddy
             return con;
         }
 
-        public Array snap(double exposureTime, bool isLightFrame) {
+        public Int32[,] snap(double exposureTime, bool isLightFrame) {
             ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
             AscomCamera.StartExposure(exposureTime, isLightFrame);
+            
             while (!ImageReady) {
                 //Console.Write(".");
                 U.WaitForMilliseconds(100);
             }
-
-            Array camArray = (Array)AscomCamera.ImageArray;                     
+            
+            Int32[,] camArray = (Int32[,])AscomCamera.ImageArray;
             
             
             return camArray;
         }
 
-        public BitmapSource createSourceFromArray(Array flatArray) {
-            System.Windows.Media.PixelFormat pf = System.Windows.Media.PixelFormats.Gray16;
-            
-            //int stride = C.CameraYSize * ((Convert.ToString(C.MaxADU, 2)).Length + 7) / 8;
-            int stride = (CameraXSize * pf.BitsPerPixel + 7) / 8;
-            double dpi = 96;
-
-            BitmapSource source = BitmapSource.Create(CameraXSize, CameraYSize, dpi, dpi, pf, null, flatArray, stride);
-            return source;
-        }
+        
 
 
         public BitmapSource NormalizeTiffTo8BitImage(BitmapSource source) {

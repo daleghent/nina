@@ -18,7 +18,7 @@ namespace AstrophotographyBuddy.Utility {
             try {
                 await task;
             }
-            catch {
+            catch (Exception ex) {
             }
             var propertyChanged = PropertyChanged;
             if (propertyChanged == null)

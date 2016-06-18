@@ -30,9 +30,11 @@
             </StackPanel>
             
         </Grid>
-        
+
         <Image Grid.Column="1" Source="{Binding SnapCommand.Execution.Result}" 
-               Visibility="{Binding SnapCommand.Execution.IsSuccessfullyCompleted, Converter={StaticResource VisibilityConverter}}" />
+               Visibility="{Binding SnapCommand.Execution.IsSuccessfullyCompleted, Converter={StaticResource VisibilityConverter}}">
+            
+        </Image>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" FlowDirection="RightToLeft" >
             <Button Width="50" Height="50"  IsEnabled="{Binding Cam.Connected}" Command="{Binding SnapCommand}">Preview</Button>
         </StackPanel>

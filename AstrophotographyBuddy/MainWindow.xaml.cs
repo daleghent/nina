@@ -22,26 +22,10 @@ namespace AstrophotographyBuddy {
     public partial class MainWindow : Window {
         public MainWindow() {
             InitializeComponent();
-            //CameraControllerPOC tst = new CameraControllerPOC();
-           // if (tst.source != null) {
-            //    imagebox.Source = tst.source;//BitmapToImageSource(tst.b);
-            //}
+            //nom.tam.fits.Fits t = new nom.tam.fits.Fits(@"C:\Users\Isbeorn\Desktop\SharpCap Captures\2016-06-17\Capture\18_58_52\0001.fits");
         }
 
-        /*ImageSource BitmapToImageSource(Bitmap bitmap) {
-            
-            using (MemoryStream memory = new MemoryStream()) {
-                bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
-                memory.Position = 0;
-                BitmapImage bitmapimage = new BitmapImage();
-                bitmapimage.BeginInit();
-                bitmapimage.StreamSource = memory;
-                bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
-                bitmapimage.EndInit();
-
-                return bitmapimage;
-            }
-        }*/
+        
 
     }
 }

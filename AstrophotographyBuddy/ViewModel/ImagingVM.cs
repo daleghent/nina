@@ -3,6 +3,7 @@ using nom.tam.fits;
 using nom.tam.util;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -83,91 +84,39 @@ namespace AstrophotographyBuddy.ViewModel {
 
         
 
-        private async Task<BitmapSource> captureImage(CancellationToken token = new CancellationToken()) {            
-            var arr = await Task.Run<Array>(() => {                
+        private async Task<BitmapSource> captureImage(CancellationToken token = new CancellationToken()) {
+            Stopwatch sw = Stopwatch.StartNew();
+            Int32[,] arr = await Task.Run<Int32[,]>(() => {                
                 return Cam.snap(1, true);                
             });
-
-
-            var flatarr = await Task.Run<Int16[]>(() => {
-                Int16[] flatArray;
-                if (arr.Rank == 2) {
-                    //flatArray = Utility.Utility.flatten2DArray<Int16>(arr);
-                    flatArray = Utility.Utility.flatten2DArray(arr);                    
-                }
-                else {
-                    flatArray = Utility.Utility.flatten3DArray<Int16>(arr);
-                }
-                return flatArray;
-            });
+            sw.Stop();
+            Console.WriteLine("Camerasnap: "  + sw.Elapsed);
             
+            sw = Stopwatch.StartNew();
+            Utility.Utility.ImageArray iarr = await Task.Run<Utility.Utility.ImageArray>(() => {
+                return Utility.Utility.convert2DArray(arr);
+            });           
+            sw.Stop();
+            Console.WriteLine("Arrayconversion: " + sw.Elapsed);
 
-            BitmapSource tmp = Cam.createSourceFromArray(flatarr);
+            sw = Stopwatch.StartNew();
+            
+            BitmapSource tmp = Utility.Utility.createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y);
             tmp = Cam.NormalizeTiffTo8BitImage(tmp);
 
-            int[] dim = new int[2];
-            dim[0] = arr.GetUpperBound(1) + 1;
-            dim[1] = arr.GetUpperBound(0) + 1;
+            sw.Stop();
+            Console.WriteLine("ImageSource: " + sw.Elapsed);
 
+            sw = Stopwatch.StartNew();
             await Task.Run(() => {
-                BasicHDU imageHdu = FitsFactory.HDUFactory(ArrayFuncs.Curl(flatarr, dim));
-                imageHdu.AddValue("BZERO", 32768, "");
-                Fits f = new Fits();
-                f.AddHDU(imageHdu);
-                FileStream fs = File.Create("test.fit");
-                f.Write(fs);
-                fs.Close();
+                //int[] dim = Utility.Utility.getDim(arr);
+                Utility.Utility.saveTiff(iarr);
             });
-            
-
+            sw.Stop();
+            Console.WriteLine("SaveFits: " + sw.Elapsed);
 
             return tmp;
         }
-
-        //test
-        private BitmapSource load() {
-            FileStream ImageStream = new FileStream(@"E:\Astrofotografie\2015-03-07 Oriongürtel\Oriongürtel1.tif", FileMode.Open, FileAccess.Read, FileShare.Read);
-            TiffBitmapDecoder ImageDecoder = new TiffBitmapDecoder(ImageStream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.Default);
-            return ImageDecoder.Frames.FirstOrDefault();
-        }
-
-
-        /*public void snap(object o) {
-            ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
-            Cam.AscomCamera.StartExposure(5.151, true);
-            while (!Cam.ImageReady) {
-                //Console.Write(".");
-                U.WaitForMilliseconds(100);
-            }
-
-            Array camArray = (Array)Cam.AscomCamera.ImageArray;
-
-            Int16[] flatArray = flattenArray<Int16>(camArray);
-
-            System.Windows.Media.PixelFormat pf = System.Windows.Media.PixelFormats.Gray16;
-
-            List<System.Windows.Media.Color> colors = new List<System.Windows.Media.Color>();
-            colors.Add(System.Windows.Media.Colors.Gray);
-            BitmapPalette pallet = new BitmapPalette(colors);
-            //int stride = C.CameraYSize * ((Convert.ToString(C.MaxADU, 2)).Length + 7) / 8;
-            int stride = (Cam.CameraXSize * pf.BitsPerPixel + 7) / 8;
-            double dpi = 96;
-
-
-            ImgSource = BitmapSource.Create(Cam.CameraXSize, Cam.CameraYSize, dpi, dpi, pf, null, flatArray, stride);
-
-            
-            using (FileStream fs = new FileStream("test.tif", FileMode.Create)) {
-                TiffBitmapEncoder encoder = new TiffBitmapEncoder();
-                encoder.Compression = TiffCompressOption.None;
-                encoder.Frames.Add(BitmapFrame.Create(bmpSource));
-                encoder.Save(fs);
-            }
-
-            
-        }*/
-
-
-
+        
     }
 }

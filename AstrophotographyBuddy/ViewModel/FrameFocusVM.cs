@@ -59,11 +59,11 @@ namespace AstrophotographyBuddy.ViewModel {
 
         /*http://stackoverflow.com/questions/17187113/how-can-i-use-async-in-an-mvvmcross-view-model*/
         private void capture(object o) {
-            ImgSource = new NotifyTaskCompletion<BitmapSource>(Task<BitmapSource>.Run(() => {
+            /*ImgSource = new NotifyTaskCompletion<BitmapSource>(Task<BitmapSource>.Run(() => {
                 var arr = Cam.snap(1, true);
-                return Cam.createSourceFromArray(arr);
+                return Utility.Utility.createSourceFromArray(arr, );
            })
-           );
+           );*/
             
 
 
