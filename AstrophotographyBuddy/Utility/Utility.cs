@@ -165,11 +165,11 @@ namespace AstrophotographyBuddy.Utility {
             Console.WriteLine("Save FITS: " + sw.Elapsed);
         }*/
 
-        public static void saveTiff(ImageArray iarr) {         
+        public static void saveTiff(ImageArray iarr, String path) {         
             
             try {
                 BitmapSource bmpSource = createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y);
-                using (FileStream fs = new FileStream("test.tif", FileMode.Create)) {
+                using (FileStream fs = new FileStream(path, FileMode.Create)) {
                     TiffBitmapEncoder encoder = new TiffBitmapEncoder();
                     encoder.Compression = TiffCompressOption.None;
                     encoder.Frames.Add(BitmapFrame.Create(bmpSource));

@@ -26,9 +26,9 @@
             <Button Grid.Column="2" Height="50" Width="50" Command="{Binding CameraVM.DisconnectCommand}" IsEnabled="{Binding CameraVM.Cam.Connected}"
                     Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource VisibilityConverter}}">Disconnect</Button>
             <Button Grid.Column="3" Height="50" Width="50" Command="{Binding FilterWheelVM.ChooseFWCommand}"  IsEnabled="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBooleanConverter}}"
-                    Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">ConnectFW</Button>
+                    Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">ConnectFW</Button>
             <Button Grid.Column="3" Height="50" Width="50" Command="{Binding FilterWheelVM.DisconnectCommand}" IsEnabled="{Binding FilterWheelVM.FW.Connected}"
-                    Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource VisibilityConverter}}">DisconnectFW</Button>
+                    Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource VisibilityConverter}}">DisconnectFW</Button>
             <Button Grid.Column="5" Height="50" Width="50" Command="{Binding NextViewCommand}">&gt;</Button>
         </Grid>
         <view:ApplicationMenu Grid.Row="1" DataContext="{Binding}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:ApplicationMenu>

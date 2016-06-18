@@ -19,22 +19,24 @@
         <view:SequenceView DataContext="{Binding SeqVM}" />
         <StackPanel Grid.Row="1"  Orientation="Horizontal">
             <Button Width="50" Height="50" Command="{Binding SeqVM.AddSequenceCommand}">+</Button>
-            <Button Width="50" Height="50" >Start Sequence</Button>
+            <Button Width="50" Height="50" Command="{Binding StartSequenceCommand}" >
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Start Seq</TextBlock>
+                    <Grid Visibility="{Binding StartSequenceCommand.Execution,
+              Converter={StaticResource NullToVisibilityConverter}}" >
+                        <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
+                    </Grid>
+                </Grid>
+            </Button>
         </StackPanel>
-        <Grid Grid.Column="1" Visibility="{Binding SnapCommand.Execution,
-              Converter={StaticResource NullToVisibilityConverter}}">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
-                                Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">
-                <local:LoadingAnimation Text="{Binding ExposureSeconds}"  />
-                <TextBlock Text="{Binding ExpStatus}"></TextBlock>
-            </StackPanel>
-            
-        </Grid>
+        
 
-        <Image Grid.Column="1" Source="{Binding SnapCommand.Execution.Result}" 
-               Visibility="{Binding SnapCommand.Execution.IsSuccessfullyCompleted, Converter={StaticResource VisibilityConverter}}">
-            
-        </Image>
+        <!--<Image Grid.Column="1" Source="{Binding SnapCommand.Execution.Result}" 
+               Visibility="{Binding SnapCommand.Execution.IsSuccessfullyCompleted, Converter={StaticResource VisibilityConverter}}">-->
+        <Image Grid.Column="1" Source="{Binding Image}" />
+
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="100" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ExpStatus}"></TextBlock>
+
         <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding Cam.Connected}" HorizontalAlignment="Right" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -45,7 +47,15 @@
                 <TextBox Margin="5" MinWidth="50" Height="30" Text="{Binding SnapExposureDuration}" IsEnabled="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}}"></TextBox>
             </StackPanel>
             
-            <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}">Snap</Button>
+            <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Snap</TextBlock>
+                    <Grid Visibility="{Binding SnapCommand.Execution,
+              Converter={StaticResource NullToVisibilityConverter}}" >
+                        <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
+                    </Grid>
+                </Grid>
+            </Button>
             <!--<Button Width="50" Height="50" Grid.Column="1" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Cancel</Button>-->
         </Grid>
     </Grid>

@@ -200,7 +200,7 @@ namespace AstrophotographyBuddy {
             }
             
         }
-
+        
         /*private ICommand _connectCameraCommand;
         public ICommand ConnectCameraCommand {
             get {

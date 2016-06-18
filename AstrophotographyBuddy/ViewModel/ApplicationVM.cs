@@ -24,7 +24,9 @@ namespace AstrophotographyBuddy.ViewModel {
             
             addListeners();
             var cam = this.CameraVM;
+            var fw = this.FilterWheelVM;
             this.ImagingVM.Cam = cam.Cam;
+            this.ImagingVM.FW = fw.FW;
             this.FrameFocusVM.Cam = cam.Cam;
         }
 
