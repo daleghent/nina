@@ -1197,21 +1197,21 @@ namespace AstrophotographyBuddy
             ProgId = Camera.Choose("ASCOM.Simulator.Camera");
             if(!Connected || oldProgId != ProgId) {
 
-            init();
-            try {
-                AscomCamera = new Camera(ProgId);
-                //AscomCamera.Connected = true;
-                Connected = true;
-                getCameraInfos();
-                con = true;
-            }
-            catch (ASCOM.DriverAccessCOMException ex) {
-                CameraStateString = "Unable to connect to camera";
-                Connected = false;
-            }
-            catch (Exception ex) {
-                Connected = false;
-            }
+                init();
+                try {
+                    AscomCamera = new Camera(ProgId);
+                    //AscomCamera.Connected = true;
+                    Connected = true;
+                    getCameraInfos();
+                    con = true;
+                }
+                catch (ASCOM.DriverAccessCOMException ex) {
+                    CameraStateString = "Unable to connect to camera";
+                    Connected = false;
+                }
+                catch (Exception ex) {
+                    Connected = false;
+                }
 
             }
             return con;

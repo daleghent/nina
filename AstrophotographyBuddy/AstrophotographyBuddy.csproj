@@ -84,7 +84,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\FilterWheelModel.cs" />
     <Compile Include="Model\SequenceModel.cs" />
+    <Compile Include="Model\TelescopeModel.cs" />
     <Compile Include="Model\UIColorsModel.cs" />
     <Compile Include="Utility\AsyncCommand.cs" />
     <Compile Include="Utility\BaseINPC.cs" />
@@ -94,8 +96,10 @@
     <Compile Include="Utility\RelayCommand.cs" />
     <Compile Include="Utility\Utility.cs" />
     <Compile Include="ViewModel\BaseVM.cs" />
+    <Compile Include="ViewModel\FilterWheelVM.cs" />
     <Compile Include="ViewModel\FrameFocusVM.cs" />
     <Compile Include="ViewModel\ImagingVM.cs" />
+    <Compile Include="ViewModel\OptionsVM.cs" />
     <Compile Include="ViewModel\SequenceVM.cs" />
     <Compile Include="ViewModel\TelescopeVM.cs" />
     <Compile Include="View\ApplicationMenu.xaml.cs">
@@ -103,6 +107,9 @@
     </Compile>
     <Compile Include="View\CameraView.xaml.cs">
       <DependentUpon>CameraView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\FilterWheelView.xaml.cs">
+      <DependentUpon>FilterWheelView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\FrameFocusView.xaml.cs">
       <DependentUpon>FrameFocusView.xaml</DependentUpon>
@@ -112,6 +119,9 @@
     </Compile>
     <Compile Include="View\LoadingAnimation.xaml.cs">
       <DependentUpon>LoadingAnimation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OptionsView.xaml.cs">
+      <DependentUpon>OptionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
@@ -143,6 +153,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\FilterWheelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\FrameFocusView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -152,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoadingAnimation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OptionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

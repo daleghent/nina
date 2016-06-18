@@ -39,16 +39,11 @@ namespace AstrophotographyBuddy {
             DateTime now = DateTime.Now;
             TimeSpan delta = now.Subtract(deltaT);
 
-            double tempStep = deltaTemp / (Duration * ((1000*60)/ (double)delta.TotalMilliseconds));
-
-            double newTemp = Cam.SetCCDTemperature - tempStep;
-            if((deltaTemp < 0 && newTemp > TargetTemp) || (deltaTemp > 0 && newTemp < TargetTemp)) {
-                newTemp = TargetTemp;
-            }
-            Cam.SetCCDTemperature = newTemp;
-
             Duration = Duration - ((double)delta.TotalMilliseconds / (1000 * 60));
 
+            double newTemp = GetY(_startPoint, _endPoint, Duration);
+            Cam.SetCCDTemperature = newTemp;
+           
             CoolingProgress = 1 - (Duration / _initalDuration);
 
             deltaT = DateTime.Now;
@@ -61,6 +56,26 @@ namespace AstrophotographyBuddy {
                 
             }
         }
+
+        private class Vector2 {
+            public double X;
+            public double Y;
+
+            public Vector2(double x, double y) {
+                X = x;
+                Y = y;
+            }
+        }
+
+        private double GetY(Vector2 point1, Vector2 point2, double x) {
+            var m = (point2.Y - point1.Y) / (point2.X - point1.X);
+            var b = point1.Y - (m * point1.X);
+
+            return m * x + b;
+        }
+
+        private Vector2 _startPoint;
+        private Vector2 _endPoint;
 
         private double _initalDuration;
         private double _coolingProgress;
@@ -95,6 +110,8 @@ namespace AstrophotographyBuddy {
             } else {
                 deltaT = DateTime.Now;
                 double currentTemp = Cam.CCDTemperature;
+                _startPoint = new Vector2(Duration, currentTemp);
+                _endPoint = new Vector2(0, TargetTemp);
                 Cam.SetCCDTemperature = currentTemp;
                 _initalDuration = Duration;
                 CoolCameraTimer.Start();

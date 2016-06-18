@@ -102,6 +102,36 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
+        private OptionsVM _optionsVM;
+        public OptionsVM OptionsVM {
+            get {
+                if (_optionsVM == null) {
+                    _optionsVM = new OptionsVM();
+                    Views.Add(_optionsVM);
+                }
+                return _optionsVM;
+            }
+            set {
+                _optionsVM = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private FilterWheelVM _filterWheelVM;
+        public FilterWheelVM FilterWheelVM {
+            get {
+                if (_filterWheelVM == null) {
+                    _filterWheelVM = new FilterWheelVM();
+                    Views.Add(_filterWheelVM);
+                }
+                return _filterWheelVM;
+            }
+            set {
+                _filterWheelVM = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private FrameFocusVM _frameFocusVM;
         public FrameFocusVM FrameFocusVM {
             get {
