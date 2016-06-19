@@ -163,7 +163,7 @@ namespace AstrophotographyBuddy.ViewModel {
                     if (Cam.HasShutter) {
                         isLight = true;
                     }
-                    Cam.startExposure(SnapExposureDuration, isLight);
+                    Cam.startExposure(duration, isLight);
                     ExposureSeconds = 1;
 
                     /* Wait for Capture */
@@ -208,7 +208,7 @@ namespace AstrophotographyBuddy.ViewModel {
 
                     /*Prepare Image for UI*/
                     BitmapSource tmp = Utility.Utility.createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y);
-                    tmp = Cam.NormalizeTiffTo8BitImage(tmp);
+                    //tmp = Cam.NormalizeTiffTo8BitImage(tmp);
 
                     /*Save to disk*/
                     ExpStatus = ExposureStatus.SAVING;
@@ -318,7 +318,7 @@ namespace AstrophotographyBuddy.ViewModel {
         private async Task<bool> captureImage() {
             _captureImageToken = new CancellationTokenSource();
             List<SequenceModel> seq = new List<SequenceModel>();
-            seq.Add(new SequenceModel(ExposureSeconds, "", SnapFilter, SnapBin, 1));
+            seq.Add(new SequenceModel(SnapExposureDuration, "", SnapFilter, SnapBin, 1));
             return await startSequence(seq, _captureImageToken);     
         }
 
