@@ -223,14 +223,13 @@ namespace AstrophotographyBuddy.Utility {
         }
 
         public static string getImageFileString(ICollection<ViewModel.OptionsVM.ImagePattern> patterns) {
-            string s = ImageFilePattern;
+            string s = Settings.ImageFilePattern;
             foreach(ViewModel.OptionsVM.ImagePattern p in patterns) {
                 s = s.Replace(p.Key, p.Value);
             }
             return s;
         }
 
-        public static string ImageFilePath = "";
-        public static string ImageFilePattern = "";
+        
     }
 }

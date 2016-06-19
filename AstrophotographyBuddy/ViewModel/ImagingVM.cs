@@ -233,7 +233,7 @@ namespace AstrophotographyBuddy.ViewModel {
                         p.Add(new OptionsVM.ImagePattern("$$SENSORTEMP$$", "Temperature of the Camera", string.Format("{0:00}", Cam.CCDTemperature)));
 
                         string filename = Utility.Utility.getImageFileString(p);
-                        string completefilename = Utility.Utility.ImageFilePath + filename;
+                        string completefilename = Settings.ImageFilePath + filename;
                         Utility.Utility.saveTiff(iarr, string.Format(completefilename, seq.ExposureCount));
                     });
 

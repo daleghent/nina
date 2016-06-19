@@ -5,16 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AstrophotographyBuddy.View"
              xmlns:model="clr-namespace:AstrophotographyBuddy.Model"
+             xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <Style x:Key="HighlightRow" TargetType="{x:Type DataGridRow}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Active}" Value="True">
-                    <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.SecondaryColor}" />
+                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.SecondaryColor}}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Active}" Value="False">
-                    <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BackgroundColor}" />
+                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>

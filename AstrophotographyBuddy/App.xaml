@@ -21,8 +21,8 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="MinHeight" Value="30" />
-            <Setter Property="Foreground" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.PrimaryColor}" />
-            <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BackgroundColor}" />
+            <Setter Property="Foreground" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}" />
+            <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="Opacity" Value="1" />
             <Setter Property="Height" Value="Auto" />
@@ -31,8 +31,8 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="MinHeight" Value="30" />
-            <Setter Property="Foreground" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.PrimaryColor}" />
-            <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BackgroundColor}" />
+            <Setter Property="Foreground" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}" />
+            <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="Opacity" Value="1" />
             <Setter Property="BorderThickness" Value="0" />
@@ -40,8 +40,8 @@
         </Style>
 
         <Style TargetType="{x:Type GroupBox}" BasedOn="{StaticResource {x:Type GroupBox}}">
-            <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.PrimaryColor}" />
-            <Setter Property="BorderBrush" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BorderColor}"/>
+            <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}" />
+            <Setter Property="BorderBrush" Value="{Binding Source={x:Static util:Settings.BorderColor}}"/>
             <Setter Property="HeaderTemplate">
                 <Setter.Value>
                     <DataTemplate>
@@ -65,7 +65,7 @@
                                 <RowDefinition Height="6" />
                             </Grid.RowDefinitions>
 
-                            <Border Background="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BackgroundColor}" BorderBrush="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BorderColor}" BorderThickness="0,2,0,2"  CornerRadius="0" Grid.Row="0" Grid.RowSpan="4"  />
+                            <Border Background="{Binding Source={x:Static util:Settings.BackgroundColor}}" BorderBrush="{Binding Source={x:Static util:Settings.BorderColor}}" BorderThickness="0,2,0,2"  CornerRadius="0" Grid.Row="0" Grid.RowSpan="4"  />
                             <ContentPresenter  Margin="{TemplateBinding Padding}" Grid.Row="2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                             <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                       Grid.Row="1"  
@@ -80,9 +80,9 @@
         </Style>
 
         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-            <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BackgroundColor}" />
+            <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
             <Setter Property="Opacity" Value="1" />
-            <Setter Property="BorderBrush" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BorderColor}" />
+            <Setter Property="BorderBrush" Value="{Binding Source={x:Static util:Settings.BorderColor}}" />
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="Template">
                 <Setter.Value>
@@ -95,7 +95,7 @@
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.SecondaryColor}"/>
+                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.SecondaryColor}}"/>
                 </Trigger>
             </Style.Triggers>
         </Style>-->
@@ -104,12 +104,12 @@
         <Style x:Key="TextBlockWithMouseOver" TargetType="{x:Type TextBlock}">           
             <Style.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                    <Setter Property="Foreground" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.PrimaryColor}" />
-                    <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.SecondaryColor}" />
+                    <Setter Property="Foreground" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}" />
+                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.SecondaryColor}}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type MenuItem}}, Path=IsMouseOver}" Value="True">
-                    <Setter Property="Foreground" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.PrimaryColor}" />
-                    <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.SecondaryColor}" />
+                    <Setter Property="Foreground" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}" />
+                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.SecondaryColor}}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -131,8 +131,8 @@
                                             <Setter Property="FontSize" Value="12"/>
                                             <Setter Property="HorizontalAlignment" Value="Left"/>
                                             <Setter Property="Margin" Value="0"/>
-                                            <Setter Property="Foreground" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.PrimaryColor}" />
-                                            <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BackgroundColor}" />
+                                            <Setter Property="Foreground" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}" />
+                                            <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
                                         </Style>
                                     </datavis:Title.Style>
                                 </datavis:Title>
@@ -145,11 +145,11 @@
                                         <Grid Panel.ZIndex="-1">
                                             <Grid.Style>
                                                 <Style TargetType="{x:Type Grid}">
-                                                    <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BackgroundColor}" />
+                                                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
                                                 </Style>
                                             </Grid.Style>
                                         </Grid>
-                                        <Border BorderBrush="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BorderColor}" BorderThickness="1" Panel.ZIndex="10"/>
+                                        <Border BorderBrush="{Binding Source={x:Static util:Settings.BorderColor}}" BorderThickness="1" Panel.ZIndex="10"/>
                                     </Primitives:EdgePanel>
                                 </Grid>
                             </Grid>
@@ -169,7 +169,7 @@
                             <Polyline Points="{TemplateBinding Points}">
                                 <Polyline.Style>
                                     <Style TargetType="{x:Type Polyline}">
-                                        <Setter Property="Stroke" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.SecondaryColor}" />
+                                        <Setter Property="Stroke" Value="{Binding Source={x:Static util:Settings.SecondaryColor}}" />
                                         <Setter Property="StrokeThickness" Value="2"/>
                                         <Setter Property="StrokeMiterLimit" Value="1"/>
                                     </Style>
@@ -192,8 +192,8 @@
                                     <Ellipse>
                                         <Ellipse.Style>
                                             <Style TargetType="{x:Type Ellipse}">
-                                                <Setter Property="Fill" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.PrimaryColor}"></Setter>
-                                                <Setter Property="Stroke" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.PrimaryColor}"></Setter>
+                                                <Setter Property="Fill" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}"></Setter>
+                                                <Setter Property="Stroke" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}"></Setter>
                                                 <Setter Property="Height" Value="5"></Setter>
                                                 <Setter Property="Width" Value="5"></Setter>
                                             </Style>
@@ -212,8 +212,8 @@
         <Style x:Key="ChartLegendStyle" TargetType="{x:Type datavis:Legend}">
             <Setter Property="Margin" Value="15,0"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BorderColor}"/>
-            <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BackgroundColor}" />
+            <Setter Property="BorderBrush" Value="{Binding Source={x:Static util:Settings.BorderColor}}"/>
+            <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
         </Style>
 
     </Application.Resources>

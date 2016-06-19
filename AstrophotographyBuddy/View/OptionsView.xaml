@@ -4,10 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AstrophotographyBuddy.View"
+             xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <GroupBox Header="Settings">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <GroupBox Header="File Settings">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100"/>
@@ -22,12 +27,12 @@
                 </Grid.RowDefinitions>
             
                 <TextBlock VerticalAlignment="Center" Grid.Column="0">Image File Path:</TextBlock>
-                <TextBox VerticalAlignment="Center" Grid.Column="1"></TextBox>
-                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="40" Grid.Column="2">...</Button>
+                <TextBox VerticalAlignment="Center" Grid.Column="1" Text="{Binding ImageFilePath}"></TextBox>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="40" Grid.Column="2" Command="{Binding OpenFileDiagCommand}">...</Button>
 
                 <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2">Image File Pattern:</TextBlock>
                 <TextBox Text="{Binding ImageFilePattern}" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"></TextBox>
-                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="40" Grid.Column="2" Grid.Row="2">Preview</Button>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="40" Grid.Column="2" Grid.Row="2" Command="{Binding PreviewFileCommand}">Preview</Button>
 
                 <ListView Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding ImagePatterns}">
                     <ListView.View>
@@ -38,6 +43,31 @@
                     </ListView.View>
                 </ListView>
             </Grid>
+        </GroupBox>
+        <GroupBox Grid.Row="1" Header="UI Colors">
+            <UniformGrid Columns="1">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Width="100">Primary Color: </TextBlock>
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static util:Settings.PrimaryColor}, Path=Color}" />
+                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{Binding Source={x:Static util:Settings.PrimaryColor}}"></Button>                    
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" >
+                    <TextBlock VerticalAlignment="Center" Width="100">Secondary Color:</TextBlock>
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static util:Settings.SecondaryColor}, Path=Color}" />
+                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{Binding Source={x:Static util:Settings.SecondaryColor}}"></Button>                                        
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Width="100">Border Color:</TextBlock>
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static util:Settings.BorderColor}, Path=Color}" />
+                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{Binding Source={x:Static util:Settings.BorderColor}}"></Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Width="100">Background Color:</TextBlock>
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static util:Settings.BackgroundColor}, Path=Color}" />
+                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{Binding Source={x:Static util:Settings.BackgroundColor}}"></Button>
+                </StackPanel>
+            </UniformGrid>
+
         </GroupBox>
     </Grid>
 </UserControl>

@@ -1,15 +1,18 @@
-﻿using System;
+﻿using AstrophotographyBuddy.Utility;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace AstrophotographyBuddy.ViewModel {
     class OptionsVM :BaseVM {
         public OptionsVM() {
             Name = "Options";
-
+            PreviewFileCommand = new RelayCommand(previewFile);
+            OpenFileDiagCommand = new RelayCommand(openFileDiag);
             ImageFilePattern = "$$IMAGETYPE$$\\$$DATE$$_$$FILTER$$_$$SENSORTEMP$$_$$FRAMENR$$";
 
             HashSet<ImagePattern> p = new HashSet<ImagePattern>();
@@ -22,23 +25,57 @@ namespace AstrophotographyBuddy.ViewModel {
             ImagePatterns = p;
         }
 
-        private string _imageFilePath;
-        public string ImageFilePath {
-            get {
-                return _imageFilePath;
-            }
-            set {
-                _imageFilePath = value;
+        private void openFileDiag(object o) {
+            var diag = new System.Windows.Forms.FolderBrowserDialog();
+            System.Windows.Forms.DialogResult result = diag.ShowDialog();
+            if(result == System.Windows.Forms.DialogResult.OK) {
+                ImageFilePath = diag.SelectedPath + "\\";
             }
         }
 
-        private string _imageFilePattern;
-        public string ImageFilePattern {
+        private ICommand _openFileDiagCommand;
+        public ICommand OpenFileDiagCommand {
             get {
-                return _imageFilePattern;
+                return _openFileDiagCommand;
             }
             set {
-                _imageFilePattern = value;
+                _openFileDiagCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private void previewFile(object o) {
+            System.Windows.MessageBox.Show(Utility.Utility.getImageFileString(ImagePatterns), "Example File Name", System.Windows.MessageBoxButton.OK);
+        }
+
+        private ICommand _previewFileCommand;
+        public ICommand PreviewFileCommand {
+            get {
+                return _previewFileCommand;
+            }
+            set {
+                _previewFileCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+        
+        public string ImageFilePath {
+            get {
+                return Settings.ImageFilePath;
+            }
+            set {
+                Settings.ImageFilePath = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        
+        public string ImageFilePattern {
+            get {
+                return Settings.ImageFilePattern;                
+            }
+            set {
+                Settings.ImageFilePattern  = value;
                 RaisePropertyChanged();
             }
         }

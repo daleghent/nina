@@ -28,50 +28,20 @@ namespace AstrophotographyBuddy.ViewModel {
             this.ImagingVM.Cam = cam.Cam;
             this.ImagingVM.FW = fw.FW;
             this.FrameFocusVM.Cam = cam.Cam;
-            var a = this.TelescopeVM;
+           // var a = this.TelescopeVM;
 
-            addListeners();
+            //addListeners();
         }
 
         private void addListeners() {
-            this.OptionsVM.PropertyChanged += new PropertyChangedEventHandler(syncOptions);
-            Utility.Utility.ImageFilePath = this.OptionsVM.ImageFilePath;
-            Utility.Utility.ImageFilePattern = this.OptionsVM.ImageFilePattern;
-            //this.FilterWheelVM.FW.Filters.PropertyChanged += new PropertyChangedEventHandler(syncModel);
-            //this.CameraVM.Cam.PropertyChanged +=
-            //   new PropertyChangedEventHandler(syncModel);
         }
-        protected void syncOptions(object sender, PropertyChangedEventArgs e) {
-            var o = (OptionsVM)sender;
-            if(e.PropertyName == "ImageFilePath") {
-                Utility.Utility.ImageFilePath = o.ImageFilePath;
-            }
-            else if(e.PropertyName == "ImageFilePattern") {
-                Utility.Utility.ImageFilePattern = o.ImageFilePattern;
-            }
-        }
+        
         // protected void syncModel(object sender, PropertyChangedEventArgs e) {
         //this.ImagingVM.Cam = this.CameraVM.Cam;            
         //  }
 
         private ObservableCollection<BaseVM> _views;
         private BaseVM _activeView;
-
-
-        private UIColorsModel _uiColorsModel;
-        public UIColorsModel UiColorsModel {
-            get {
-                if(_uiColorsModel == null) {
-                    _uiColorsModel = new UIColorsModel();
-                }
-                return _uiColorsModel;
-
-            } set {
-                _uiColorsModel = value;
-                RaisePropertyChanged();
-            }
-        }
-
 
         private CameraVM _cameraVM;
         public CameraVM CameraVM {
