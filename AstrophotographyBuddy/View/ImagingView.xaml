@@ -22,12 +22,14 @@
             <Button Width="50" Height="50" Command="{Binding StartSequenceCommand}" >
                 <Grid>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Start Seq</TextBlock>
-                    <Grid Visibility="{Binding StartSequenceCommand.Execution,
-              Converter={StaticResource NullToVisibilityConverter}}" >
+                    <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                         <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
                     </Grid>
                 </Grid>
             </Button>
+            <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
+                <Button Width="50" Height="50" Command="{Binding CancelSequenceCommand}" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" >Cancel Sequence</Button>
+            </Grid>
         </StackPanel>
         
 
@@ -46,12 +48,14 @@
                 <TextBlock VerticalAlignment="Center">Snap Exposure Time in seconds:</TextBlock>
                 <TextBox Margin="5" MinWidth="50" Height="30" Text="{Binding SnapExposureDuration}" IsEnabled="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}}"></TextBox>
             </StackPanel>
+            <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">
+                <Button Command="{Binding CancelSnapCommand}" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">Cancel</Button>
+            </Grid>
             
             <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}">
                 <Grid>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Snap</TextBlock>
-                    <Grid Visibility="{Binding SnapCommand.Execution,
-              Converter={StaticResource NullToVisibilityConverter}}" >
+                    <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                         <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
                     </Grid>
                 </Grid>

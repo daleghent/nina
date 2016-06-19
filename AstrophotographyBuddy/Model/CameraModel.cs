@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -1222,14 +1223,19 @@ namespace AstrophotographyBuddy
         }
 
         public void stopExposure() {
-            AscomCamera.StopExposure();
+            if(AscomCamera.CanStopExposure) { 
+                AscomCamera.StopExposure();
+            }
         }
 
-        public Int32[,] downloadExposure() {
+        public Int32[,] downloadExposure(CancellationTokenSource token) {
             ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
             while (!ImageReady) {
                 //Console.Write(".");
-                U.WaitForMilliseconds(100);
+                U.WaitForMilliseconds(10);
+                if(token.IsCancellationRequested) {
+                    return null;
+                }
             }
             Int32[,] camArray = (Int32[,])AscomCamera.ImageArray;
             
