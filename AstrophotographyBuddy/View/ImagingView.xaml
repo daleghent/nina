@@ -47,11 +47,23 @@
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center">Snap Exposure Time in seconds:</TextBlock>
                 <TextBox Margin="5" MinWidth="50" Height="30" Text="{Binding SnapExposureDuration}" IsEnabled="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}}"></TextBox>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Filter:</TextBlock>
+                    <ComboBox VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" ItemsSource="{Binding Source={StaticResource AppVM}, Path=FilterWheelVM.FW.Filters}" DisplayMemberPath="Name" SelectedItem="{Binding SnapFilter, Mode=TwoWay}" SelectedValuePath="Name"></ComboBox>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Binning:</TextBlock>
+                    <ComboBox VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}" DisplayMemberPath="Name" SelectedItem="{Binding SnapBin}" SelectedValuePath="Name"></ComboBox>
+                </StackPanel>
             </StackPanel>
             <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">
                 <Button Command="{Binding CancelSnapCommand}" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">Cancel</Button>
             </Grid>
-            
+
+           
+
+
+
             <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}">
                 <Grid>
                     <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Snap</TextBlock>

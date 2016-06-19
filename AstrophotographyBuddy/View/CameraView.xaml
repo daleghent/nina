@@ -20,46 +20,82 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="Camera Status">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock><Run Text="Camera State:"/></TextBlock>
-                <TextBlock Text="{Binding Cam.CameraStateString}" Margin="5,0,0,0" />
+        <GroupBox Header="Camera">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock><Run Text="Camera State:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.CameraStateString}" Margin="5,0,0,0" />
+                </StackPanel>
+                
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock><Run Text="Name:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.Name}" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock><Run Text="Description:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.Description}" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock><Run Text="Driver Info:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.DriverInfo}" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock><Run Text="Driver Version:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.DriverVersion}" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock><Run Text="Sensor Name:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.SensorName}" Margin="5,0,0,0" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock><Run Text="Sensor Type:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.SensorType}" Margin="5,0,0,0" />
+                </StackPanel>
+
             </StackPanel>
         </GroupBox>
         <GroupBox Header="Camera Infos" Grid.Column="1">
             <UniformGrid Columns="2" >
 
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Cam.HasShutter}" IsEnabled="False"/>
-                    <TextBlock Text="Has Shutter" Margin="5,0,0,0" />
+                    <TextBlock><Run Text="CameraXSize:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.CameraXSize}" Margin="5,0,0,0" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Cam.CanAbortExposure}" IsEnabled="False" />
-                    <TextBlock Text="Can Abort Exposure" Margin="5,0,0,0" />
+                    <TextBlock><Run Text="CameraYSize:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.CameraYSize}" Margin="5,0,0,0" />
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Cam.CanStopExposure}" IsEnabled="False" />
-                    <TextBlock Text="Can Stop Exposure" Margin="5,0,0,0" />
+                    <TextBlock><Run Text="ExposureMin:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.ExposureMin}" Margin="5,0,0,0" />
                 </StackPanel>
+                
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Cam.CanPulseGuide}" IsEnabled="False" />
-                    <TextBlock Text="Can Pulse Guide" Margin="5,0,0,0" />
+                    <TextBlock><Run Text="ExposureMax:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.ExposureMax}" Margin="5,0,0,0" />
                 </StackPanel>
+
+                
+
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Cam.CanAsymmetricBin}" IsEnabled="False" />
-                    <TextBlock Text="Can Bin Asymmetric" Margin="5,0,0,0" />
+                    <TextBlock><Run Text="MaxBinX:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.MaxBinX}" Margin="5,0,0,0" />
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Cam.CanGetCoolerPower}" IsEnabled="False" />
-                    <TextBlock Text="Can Get Cooler Power Information" Margin="5,0,0,0" />
+                    <TextBlock><Run Text="MaxBinY:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.MaxBinY}" Margin="5,0,0,0" />
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Cam.CanSetCCDTemperature}" IsEnabled="False" />
-                    <TextBlock Text="Can Set CCD Temperature" Margin="5,0,0,0" />
+                    <TextBlock><Run Text="PixelSizeX:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.PixelSizeX}" Margin="5,0,0,0" />
                 </StackPanel>
+
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox IsChecked="{Binding Cam.CanFastReadout}" IsEnabled="False" />
-                    <TextBlock Text="Fast Readout Mode Available" Margin="5,0,0,0" />
+                    <TextBlock><Run Text="PixelSizeY:"/></TextBlock>
+                    <TextBlock Text="{Binding Cam.PixelSizeY}" Margin="5,0,0,0" />
                 </StackPanel>
             </UniformGrid>
         </GroupBox>

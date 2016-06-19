@@ -11,8 +11,8 @@ namespace AstrophotographyBuddy.Model {
         public SequenceModel() {
             ExposureTime = 1;
             ImageType = "Light";
-            FilterType = "L";
-            Binning = "1x1";
+            //FilterType = "L";
+            //Binning = "1x1";
             ExposureCount = 1;
         }
 
@@ -20,7 +20,7 @@ namespace AstrophotographyBuddy.Model {
             return "Model";
         }
 
-        public SequenceModel(double exposureTime, string imageType, string filterType, string binning, int exposureCount) {
+        public SequenceModel(double exposureTime, string imageType, FilterWheelModel.FilterInfo filterType, CameraModel.BinningMode binning, int exposureCount) {
             ExposureTime = exposureTime;
             ImageType = imageType;
             FilterType = filterType;
@@ -30,9 +30,20 @@ namespace AstrophotographyBuddy.Model {
 
         private double _exposureTime;
         private string _imageType;
-        private string _filterType;
-        private string _binning;
+        private FilterWheelModel.FilterInfo _filterType;
+        private CameraModel.BinningMode _binning;
         private int _exposureCount;
+        private bool _active;
+
+        public bool Active {
+            get {
+                return _active;
+            }
+            set {
+                _active = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public double ExposureTime {
             get {
@@ -56,7 +67,7 @@ namespace AstrophotographyBuddy.Model {
             }
         }
 
-        public string FilterType {
+        public FilterWheelModel.FilterInfo FilterType {
             get {
                 return _filterType;
             }
@@ -67,7 +78,7 @@ namespace AstrophotographyBuddy.Model {
             }
         }
 
-        public string Binning {
+        public CameraModel.BinningMode Binning {
             get {
                 return _binning;
             }

@@ -79,7 +79,7 @@ namespace AstrophotographyBuddy
             BinX = -1;
             BinY = -1;
 
-            
+            BinningModes = new ObservableCollection<BinningMode>();
 
 
             CoolerOn = false;
@@ -150,6 +150,11 @@ namespace AstrophotographyBuddy
                 CameraStateString = _cameraState.ToString();
                 RaisePropertyChanged();                
             }
+        }
+
+        public void setBinning(short x, short y) {
+            BinX = x;
+            BinY = y;
         }
 
         private string _cameraStateString;
@@ -475,6 +480,57 @@ namespace AstrophotographyBuddy
                 RaisePropertyChanged();
             }
         }
+
+        public class BinningMode :BaseINPC {
+            public BinningMode(short x, short y) {
+                X = x;
+                Y = y;
+            }
+            private short _x;
+            private short _y;
+            public string Name {
+                get {
+                    return string.Join("x", X, Y);
+                }
+            }
+            public short X {
+                get {
+                    return _x;                    
+                }
+
+                set {
+                    _x = value;
+                    RaisePropertyChanged();
+                }
+            }
+
+            public short Y {
+                get {
+                    return _y;
+                }
+
+                set {
+                    _y = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        ObservableCollection<BinningMode> _binningModes;
+        public ObservableCollection<BinningMode> BinningModes {
+            get {
+                if(_binningModes == null) {
+                    _binningModes = new ObservableCollection<BinningMode>();
+                }
+                return _binningModes;
+            }
+
+            set {
+                _binningModes = value;
+                RaisePropertyChanged();
+            }
+        }
+
         short _maxBinX;
         public short MaxBinX {
             get {
@@ -594,6 +650,10 @@ namespace AstrophotographyBuddy
 
             set {
                 _binX = value;
+                if(AscomCamera != null && AscomCamera.Connected) {
+                    AscomCamera.BinX = value;
+                    AscomCamera.NumX = AscomCamera.CameraXSize / value;
+                }
                 RaisePropertyChanged();
             }
         }
@@ -607,6 +667,11 @@ namespace AstrophotographyBuddy
 
             set {
                 _binY = value;
+                if (AscomCamera != null && AscomCamera.Connected) {
+                    AscomCamera.BinY = value;
+                    
+                    AscomCamera.NumY = AscomCamera.CameraYSize / value;
+                }
                 RaisePropertyChanged();
             }
         }
@@ -849,6 +914,7 @@ namespace AstrophotographyBuddy
             }
         }
 
+        
 
         public void getCameraInfos () {
            // Connected = AscomCamera.Connected;
@@ -962,8 +1028,20 @@ namespace AstrophotographyBuddy
             try {
                  MaxBinX = AscomCamera.MaxBinX;
                  MaxBinY = AscomCamera.MaxBinY;
+                for(short i = 1; i<=MaxBinX; i++) {
+                    if(CanAsymmetricBin) {
+                        for (short j = 1; j <= MaxBinY; j++) {
+                            BinningModes.Add(new BinningMode(i, j));
+                        }
+                    } else {
+                        BinningModes.Add(new BinningMode(i, i));
+                    }
+                    
+                    
+                }
             }
             catch (Exception ex) {
+                BinningModes.Add(new BinningMode(1, 1));
                  MaxBinX = -1;
                  MaxBinY = -1;
             }

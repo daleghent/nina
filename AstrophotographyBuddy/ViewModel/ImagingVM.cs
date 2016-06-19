@@ -126,16 +126,44 @@ namespace AstrophotographyBuddy.ViewModel {
 
         
 
-        private async Task<bool> startSequence(CancellationToken token = new CancellationToken()) {
-            _cancelSequenceToken = new CancellationTokenSource();
-            foreach (SequenceModel seq in SeqVM.Sequence) {
-                int exposures = seq.ExposureCount;
+        private async Task<bool> startSequence(ICollection<SequenceModel> sequence, CancellationTokenSource tokenSource) {          
+            foreach (SequenceModel seq in sequence) {
+                seq.Active = true;
                 double duration = seq.ExposureTime;
-                for(int i = 0; i< exposures; i++) {
+                while (seq.ExposureCount > 0) {
+
+                    if (seq.FilterType != null && FW.Connected) {
+                        FW.Position = seq.FilterType.Position;
+                        ExpStatus = ExposureStatus.FILTERCHANGE;
+
+                        await Task.Run(() => {
+                            while (FW.Position == -1) {
+                                //Wait for filter change;
+                                if (tokenSource.IsCancellationRequested) {
+                                    return;
+                                }
+                            }
+                        });
+                        if (tokenSource.IsCancellationRequested) {
+                            return false;
+                        }
+                    }
+
+                    if(seq.Binning == null) {
+                        Cam.setBinning(1,1);
+                    } else {
+                        Cam.setBinning(seq.Binning.X, seq.Binning.Y);
+                    }
+                    
+
 
                     /*Capture*/
                     ExpStatus = ExposureStatus.CAPTURING;
-                    Cam.startExposure(duration, true);
+                    bool isLight = false;
+                    if (Cam.HasShutter) {
+                        isLight = true;
+                    }
+                    Cam.startExposure(SnapExposureDuration, isLight);
                     ExposureSeconds = 1;
 
                     /* Wait for Capture */
@@ -143,14 +171,14 @@ namespace AstrophotographyBuddy.ViewModel {
                         await Task.Run(async () => {
                             do {
                                 await Task.Delay(1000);
-                                if (_captureImageToken.IsCancellationRequested) {
+                                if (tokenSource.IsCancellationRequested) {
                                     return;
                                 }
                                 ExposureSeconds += 1;
                             } while (ExposureSeconds < duration);
                         });
                     }
-                    if (_cancelSequenceToken.IsCancellationRequested) {
+                    if (tokenSource.IsCancellationRequested) {
                         ExpStatus = ExposureStatus.IDLE;
                         Cam.stopExposure();
                         return false;
@@ -159,11 +187,11 @@ namespace AstrophotographyBuddy.ViewModel {
                     /*Download Image */
                     ExpStatus = ExposureStatus.DOWNLOADING;
                     Int32[,] arr = await Task.Run<Int32[,]>(() => {
-                        return Cam.downloadExposure(_cancelSequenceToken);
+                        return Cam.downloadExposure(tokenSource);
                     });
 
-                    if (_cancelSequenceToken.IsCancellationRequested) {
-                        ExpStatus = ExposureStatus.IDLE;                       
+                    if (tokenSource.IsCancellationRequested) {
+                        ExpStatus = ExposureStatus.IDLE;
                         return false;
                     }
 
@@ -173,7 +201,7 @@ namespace AstrophotographyBuddy.ViewModel {
                         return Utility.Utility.convert2DArray(arr);
                     });
 
-                    if (_cancelSequenceToken.IsCancellationRequested) {
+                    if (tokenSource.IsCancellationRequested) {
                         ExpStatus = ExposureStatus.IDLE;
                         return false;
                     }
@@ -185,19 +213,27 @@ namespace AstrophotographyBuddy.ViewModel {
                     /*Save to disk*/
                     ExpStatus = ExposureStatus.SAVING;
                     await Task.Run(() => {
-                        Utility.Utility.saveTiff(iarr, string.Format("test{0}.tif", i));
+                        Utility.Utility.saveTiff(iarr, string.Format("test{0}.tif", seq.ExposureCount));
                     });
 
-                    if (_cancelSequenceToken.IsCancellationRequested) {
+                    if (tokenSource.IsCancellationRequested) {
                         ExpStatus = ExposureStatus.IDLE;
                         return false;
                     }
 
                     Image = tmp;
+                    seq.ExposureCount -= 1;
                 }
+                seq.Active = false;
             }
-            return true;
-            
+
+            ExpStatus = ExposureStatus.IDLE;
+            return await Task.Run<bool>(() => { return true; });
+        }
+
+        private async Task<bool> startSequence(CancellationToken token = new CancellationToken()) {
+            _cancelSequenceToken = new CancellationTokenSource();
+            return await startSequence(SeqVM.Sequence, _cancelSequenceToken);           
         }
 
         BitmapSource _image;
@@ -251,69 +287,45 @@ namespace AstrophotographyBuddy.ViewModel {
         CancellationTokenSource _captureImageToken;
         private RelayCommand _cancelSnapCommand;
 
+        private FilterWheelModel.FilterInfo _snapFilter;
+        public FilterWheelModel.FilterInfo SnapFilter {
+            get {
+                if(_snapFilter == null) {
+                    _snapFilter = new FilterWheelModel.FilterInfo("Default", 0, 0);
+                }
+                return _snapFilter;
+            }
+            set {
+                _snapFilter = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private CameraModel.BinningMode _snapBin;
+        public CameraModel.BinningMode SnapBin {
+            get {
+                if(_snapBin == null) {
+                    _snapBin = new CameraModel.BinningMode(1, 1);
+                }
+                return _snapBin;
+            }
+            set {
+                _snapBin = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private async Task<bool> captureImage() {
             _captureImageToken = new CancellationTokenSource();
-            ExpStatus = ExposureStatus.CAPTURING;
-            Cam.startExposure(SnapExposureDuration, true);
-            ExposureSeconds = 1;
-            if (SnapExposureDuration >= 1) {
-                await Task.Run(async () => {
-                    do {
-                        await Task.Delay(1000);
-                        if (_captureImageToken.IsCancellationRequested) {
-                            return;
-                        }
-                       ExposureSeconds += 1;
-                    } while (ExposureSeconds < SnapExposureDuration);
-                });
-            }            
-            if (_captureImageToken.IsCancellationRequested) {
-                ExpStatus = ExposureStatus.IDLE;
-                Cam.stopExposure();
-                return false;
-            }
-
-            ExpStatus = ExposureStatus.DOWNLOADING;
-            Int32[,] arr = await Task.Run<Int32[,]>(() => {
-                return Cam.downloadExposure(_captureImageToken);
-            });
-
-            if (_captureImageToken.IsCancellationRequested) {
-                ExpStatus = ExposureStatus.IDLE;
-                return false;
-            }
-
-            ExpStatus = ExposureStatus.PREPARING;
-            Utility.Utility.ImageArray iarr = await Task.Run<Utility.Utility.ImageArray>(() => {
-                return Utility.Utility.convert2DArray(arr);
-            });
-
-            if (_captureImageToken.IsCancellationRequested) {
-                ExpStatus = ExposureStatus.IDLE;
-                return false;
-            }
-
-            BitmapSource tmp = Utility.Utility.createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y);
-            tmp = Cam.NormalizeTiffTo8BitImage(tmp);
-
-            ExpStatus = ExposureStatus.SAVING;
-            await Task.Run(() => {
-                Utility.Utility.saveTiff(iarr, "test.tif");
-            });
-
-            if (_captureImageToken.IsCancellationRequested) {
-                ExpStatus = ExposureStatus.IDLE;
-                return false;
-            }
-
-            Image = tmp;
-            ExpStatus = ExposureStatus.IDLE;
-            return true;            
+            List<SequenceModel> seq = new List<SequenceModel>();
+            seq.Add(new SequenceModel(ExposureSeconds, "", SnapFilter, SnapBin, 1));
+            return await startSequence(seq, _captureImageToken);     
         }
 
         public static class ExposureStatus {
             public const string CAPTURING = "Capturing...";
             public const string DOWNLOADING = "Downloading...";
+            public const string FILTERCHANGE = "Switching Filter...";
             public const string PREPARING = "Preparing...";
             public const string SAVING = "Saving...";
             public const string IDLE = "Idle";

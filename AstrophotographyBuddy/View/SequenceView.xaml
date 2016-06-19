@@ -7,10 +7,27 @@
              xmlns:model="clr-namespace:AstrophotographyBuddy.Model"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-
+    <UserControl.Resources>
+        <Style x:Key="HighlightRow" TargetType="{x:Type DataGridRow}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Active}" Value="True">
+                    <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.SecondaryColor}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Active}" Value="False">
+                    <Setter Property="Background" Value="{Binding Source={StaticResource AppVM}, Path=UiColorsModel.BackgroundColor}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-       
-        <DataGrid  x:Name="grd" ItemsSource="{Binding Sequence}" AutoGenerateColumns="True"  CanUserAddRows="False">
+
+        <DataGrid  x:Name="grd" ItemsSource="{Binding Sequence}" AutoGenerateColumns="False"  CanUserAddRows="False" RowStyle="{StaticResource HighlightRow}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#" Binding="{Binding ExposureCount}"></DataGridTextColumn>
+                <DataGridTextColumn Header="Exposure Time" Binding="{Binding ExposureTime}"></DataGridTextColumn>
+                <DataGridComboBoxColumn Header="Filter" ItemsSource="{Binding Source={StaticResource AppVM}, Path=FilterWheelVM.FW.Filters}" DisplayMemberPath="Name" SelectedItemBinding="{Binding FilterType, Mode=TwoWay}" SelectedValuePath="Name"></DataGridComboBoxColumn>
+                <DataGridComboBoxColumn Header="Binning" ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}" DisplayMemberPath="Name" SelectedItemBinding="{Binding Binning}" SelectedValuePath="Name"></DataGridComboBoxColumn>
+            </DataGrid.Columns>
             
         </DataGrid>
         

@@ -149,7 +149,7 @@ namespace AstrophotographyBuddy.Model {
 
         public short Position {
             get {
-                if(FW != null) {
+                if(FW != null && FW.Connected) {
                     return FW.Position;
                 } else {
                     return -1;
@@ -211,6 +211,7 @@ namespace AstrophotographyBuddy.Model {
 
         public void disconnect() {
             Connected = false;
+            Position = -1;
             Filters.Clear();
             FW.Dispose();
             init();            
@@ -239,8 +240,8 @@ namespace AstrophotographyBuddy.Model {
                 Position = FW.Position;
 
                 var l = new ObservableCollection<FilterInfo>();
-                for (int i = 0; i < Names.Length; i++) {
-                    l.Add(new FilterInfo(Names[i], FocusOffsets[i]));
+                for (int i = 0; i < Names.Length; i++) {                    
+                    l.Add(new FilterInfo(Names[i], FocusOffsets[i], (short)i));
                 }
                 Filters = l;
                 
@@ -258,7 +259,7 @@ namespace AstrophotographyBuddy.Model {
 
         private ObservableCollection<FilterInfo> _filters;
         public ObservableCollection<FilterInfo> Filters {
-            get {
+            get {                
                 return _filters;
             }
             set {
@@ -270,6 +271,7 @@ namespace AstrophotographyBuddy.Model {
         public class FilterInfo :BaseINPC {
             private string _name;
             private int _focusOffset;
+            private short _position;
 
             public string Name {
                 get {
@@ -293,9 +295,21 @@ namespace AstrophotographyBuddy.Model {
                 }
             }
 
-            public FilterInfo(string n, int offset) {
+            public short Position {
+                get {
+                    return _position;
+                }
+
+                set {
+                    _position = value;
+                    RaisePropertyChanged();
+                }
+            }
+
+            public FilterInfo(string n, int offset, short position) {
                 Name = n;
                 FocusOffset = offset;
+                Position = position;
             }              
         }
     }

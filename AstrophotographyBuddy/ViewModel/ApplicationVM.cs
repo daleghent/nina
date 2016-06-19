@@ -31,13 +31,14 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         private void addListeners() {
+            //this.FilterWheelVM.FW.Filters.PropertyChanged += new PropertyChangedEventHandler(syncModel);
             //this.CameraVM.Cam.PropertyChanged +=
             //   new PropertyChangedEventHandler(syncModel);
         }
 
-       /* protected void syncModel(object sender, PropertyChangedEventArgs e) {
-            this.ImagingVM.Cam = this.CameraVM.Cam;            
-        }*/
+       // protected void syncModel(object sender, PropertyChangedEventArgs e) {
+            //this.ImagingVM.Cam = this.CameraVM.Cam;            
+      //  }
 
         private ObservableCollection<BaseVM> _views;
         private BaseVM _activeView;
