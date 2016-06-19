@@ -19,16 +19,18 @@
         <view:SequenceView DataContext="{Binding SeqVM}" />
         <StackPanel Grid.Row="1"  Orientation="Horizontal">
             <Button Width="50" Height="50" Command="{Binding SeqVM.AddSequenceCommand}">+</Button>
-            <Button Width="50" Height="50" Command="{Binding StartSequenceCommand}" >
-                <Grid>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Start Seq</TextBlock>
-                    <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
-                        <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
+            <Grid  IsEnabled="{Binding Cam.Connected}">
+                <Button Width="50" Height="50" Command="{Binding StartSequenceCommand}"  >
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Start Seq</TextBlock>
+                        <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
+                            <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
+                        </Grid>
                     </Grid>
+                </Button>
+                <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
+                    <Button Width="50" Height="50" Command="{Binding CancelSequenceCommand}" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" >Cancel Sequence</Button>
                 </Grid>
-            </Button>
-            <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
-                <Button Width="50" Height="50" Command="{Binding CancelSequenceCommand}" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" >Cancel Sequence</Button>
             </Grid>
         </StackPanel>
         

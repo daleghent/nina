@@ -7,6 +7,37 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <GroupBox Header="Settings">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="50"/>            
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
             
+                <TextBlock VerticalAlignment="Center" Grid.Column="0">Image File Path:</TextBlock>
+                <TextBox VerticalAlignment="Center" Grid.Column="1"></TextBox>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="40" Grid.Column="2">...</Button>
+
+                <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2">Image File Pattern:</TextBlock>
+                <TextBox Text="{Binding ImageFilePattern}" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"></TextBox>
+                <Button VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="40" Grid.Column="2" Grid.Row="2">Preview</Button>
+
+                <ListView Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding ImagePatterns}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="PatternName" Width="Auto" DisplayMemberBinding="{Binding Key}" />
+                            <GridViewColumn Header="Description" Width="Auto" DisplayMemberBinding="{Binding Description}" />
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>

@@ -169,7 +169,10 @@ namespace AstrophotographyBuddy.Utility {
             
             try {
                 BitmapSource bmpSource = createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y);
-                using (FileStream fs = new FileStream(path, FileMode.Create)) {
+
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+
+                using (FileStream fs = new FileStream(path + ".tif", FileMode.Create)) {
                     TiffBitmapEncoder encoder = new TiffBitmapEncoder();
                     encoder.Compression = TiffCompressOption.None;
                     encoder.Frames.Add(BitmapFrame.Create(bmpSource));
@@ -218,5 +221,16 @@ namespace AstrophotographyBuddy.Utility {
             dim[1] = arr.GetUpperBound(0) + 1;
             return dim;
         }
+
+        public static string getImageFileString(ICollection<ViewModel.OptionsVM.ImagePattern> patterns) {
+            string s = ImageFilePattern;
+            foreach(ViewModel.OptionsVM.ImagePattern p in patterns) {
+                s = s.Replace(p.Key, p.Value);
+            }
+            return s;
+        }
+
+        public static string ImageFilePath = "";
+        public static string ImageFilePattern = "";
     }
 }

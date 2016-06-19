@@ -126,7 +126,8 @@ namespace AstrophotographyBuddy.ViewModel {
 
         
 
-        private async Task<bool> startSequence(ICollection<SequenceModel> sequence, CancellationTokenSource tokenSource) {          
+        private async Task<bool> startSequence(ICollection<SequenceModel> sequence, CancellationTokenSource tokenSource) {
+            short i = 1;
             foreach (SequenceModel seq in sequence) {
                 seq.Active = true;
                 double duration = seq.ExposureTime;
@@ -208,12 +209,32 @@ namespace AstrophotographyBuddy.ViewModel {
 
                     /*Prepare Image for UI*/
                     BitmapSource tmp = Utility.Utility.createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y);
-                    //tmp = Cam.NormalizeTiffTo8BitImage(tmp);
+                    tmp = Cam.NormalizeTiffTo8BitImage(tmp);
 
                     /*Save to disk*/
                     ExpStatus = ExposureStatus.SAVING;
                     await Task.Run(() => {
-                        Utility.Utility.saveTiff(iarr, string.Format("test{0}.tif", seq.ExposureCount));
+
+                        List<OptionsVM.ImagePattern> p = new List<OptionsVM.ImagePattern>();
+                        if(FW.Filters != null) {
+                            p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", FW.Filters.ElementAt(FW.Position).Name));
+                        } else {
+                            p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", ""));
+                        }                    
+                        p.Add(new OptionsVM.ImagePattern("$$DATE$$", "Date with format YYYY-MM-DD", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")));
+                        p.Add(new OptionsVM.ImagePattern("$$FRAMENR$$", "# of the Frame with format ####", string.Format("{0:0000}", i)));
+                        p.Add(new OptionsVM.ImagePattern("$$IMAGETYPE$$", "Light, Flat, Dark, Bias", "Light"));
+                        if(seq.Binning == null) {
+                            p.Add(new OptionsVM.ImagePattern("$$BINNING$$", "Binning of the camera", "1x1"));
+                        } else {
+                            p.Add(new OptionsVM.ImagePattern("$$BINNING$$", "Binning of the camera", seq.Binning.Name));
+                        }
+                        
+                        p.Add(new OptionsVM.ImagePattern("$$SENSORTEMP$$", "Temperature of the Camera", string.Format("{0:00}", Cam.CCDTemperature)));
+
+                        string filename = Utility.Utility.getImageFileString(p);
+                        string completefilename = Utility.Utility.ImageFilePath + filename;
+                        Utility.Utility.saveTiff(iarr, string.Format(completefilename, seq.ExposureCount));
                     });
 
                     if (tokenSource.IsCancellationRequested) {
@@ -223,6 +244,7 @@ namespace AstrophotographyBuddy.ViewModel {
 
                     Image = tmp;
                     seq.ExposureCount -= 1;
+                    i++;
                 }
                 seq.Active = false;
             }
