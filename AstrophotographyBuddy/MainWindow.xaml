@@ -26,15 +26,17 @@
                     Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">Connect</Button>
             <Button Grid.Column="2" Height="50" Width="50" Command="{Binding CameraVM.DisconnectCommand}" IsEnabled="{Binding CameraVM.Cam.Connected}"
                     Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource VisibilityConverter}}">Disconnect</Button>
-            <Button Grid.Column="3" Height="50" Width="50" Command="{Binding FilterWheelVM.ChooseFWCommand}"  IsEnabled="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBooleanConverter}}"
+            <Grid Grid.Column="3" DataContext="{Binding CameraVM}">
+                <Button Grid.Column="3" Height="50" Width="50" Command="{Binding FilterWheelVM.ChooseFWCommand}"  IsEnabled="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBooleanConverter}}"
                     Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">ConnectFW</Button>
-            <Button Grid.Column="3" Height="50" Width="50" Command="{Binding FilterWheelVM.DisconnectCommand}" IsEnabled="{Binding FilterWheelVM.FW.Connected}"
+
+                <Button Grid.Column="3" Height="50" Width="50" Command="{Binding FilterWheelVM.DisconnectCommand}" IsEnabled="{Binding FilterWheelVM.FW.Connected}"
                     Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource VisibilityConverter}}">DisconnectFW</Button>
+            </Grid>
             <Button Grid.Column="5" Height="50" Width="50" Command="{Binding NextViewCommand}">&gt;</Button>
         </Grid>
         <view:ApplicationMenu Grid.Row="1" DataContext="{Binding}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:ApplicationMenu>
-        <view:CameraView Grid.Row="1" DataContext="{Binding CameraVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:CameraView>
-        <view:FilterWheelView Grid.Row="1" DataContext="{Binding FilterWheelVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:FilterWheelView>
+        <view:CameraView Grid.Row="1" DataContext="{Binding CameraVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:CameraView>        
         <view:ImagingView Grid.Row="1" DataContext="{Binding ImagingVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:ImagingView>
         <view:FrameFocusView Grid.Row="1" DataContext="{Binding FrameFocusVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:FrameFocusView>
         <view:TelescopeView Grid.Row="1" DataContext="{Binding TelescopeVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:TelescopeView>        

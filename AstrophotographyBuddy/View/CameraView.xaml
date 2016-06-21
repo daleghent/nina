@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AstrophotographyBuddy.View"  
+             xmlns:view="clr-namespace:AstrophotographyBuddy.View"
              xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
              xmlns:datavis="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"
              xmlns:chartingToolkit=	"clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"             
@@ -16,11 +17,19 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="2*" />            
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
+        <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <GroupBox Header="Camera">
+            <ColumnDefinition Width="*"/>            
+        </Grid.ColumnDefinitions>-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Header="Camera">
+           
+            
             <StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock><Run Text="Camera State:"/></TextBlock>
@@ -53,52 +62,57 @@
                 </StackPanel>
 
             </StackPanel>
-        </GroupBox>
-        <GroupBox Header="Camera Infos" Grid.Column="1">
-            <UniformGrid Columns="2" >
+            
+            </GroupBox>
+            <GroupBox Header="Camera Infos" Grid.Column="1">
+                <UniformGrid Columns="2" >
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="CameraXSize:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.CameraXSize}" Margin="5,0,0,0" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="CameraYSize:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.CameraYSize}" Margin="5,0,0,0" />
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="CameraXSize:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.CameraXSize}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="CameraYSize:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.CameraYSize}" Margin="5,0,0,0" />
+                    </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="ExposureMin:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.ExposureMin}" Margin="5,0,0,0" />
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="ExposureMin:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.ExposureMin}" Margin="5,0,0,0" />
+                    </StackPanel>
                 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="ExposureMax:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.ExposureMax}" Margin="5,0,0,0" />
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="ExposureMax:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.ExposureMax}" Margin="5,0,0,0" />
+                    </StackPanel>
 
                 
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="MaxBinX:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.MaxBinX}" Margin="5,0,0,0" />
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="MaxBinX:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.MaxBinX}" Margin="5,0,0,0" />
+                    </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="MaxBinY:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.MaxBinY}" Margin="5,0,0,0" />
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="MaxBinY:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.MaxBinY}" Margin="5,0,0,0" />
+                    </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="PixelSizeX:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.PixelSizeX}" Margin="5,0,0,0" />
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="PixelSizeX:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.PixelSizeX}" Margin="5,0,0,0" />
+                    </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="PixelSizeY:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.PixelSizeY}" Margin="5,0,0,0" />
-                </StackPanel>
-            </UniformGrid>
-        </GroupBox>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="PixelSizeY:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.PixelSizeY}" Margin="5,0,0,0" />
+                    </StackPanel>
+                </UniformGrid>
+            </GroupBox>
+            <GroupBox Header="Filter Wheel" Grid.Column="2">
+                <view:FilterWheelView Grid.Row="1" DataContext="{Binding FilterWheelVM}"></view:FilterWheelView>
+            </GroupBox>
+        </Grid>
         <GroupBox Grid.Row="1" Grid.ColumnSpan="2" Header="Temperature Control">
             <Grid>
                 <Grid.RowDefinitions>

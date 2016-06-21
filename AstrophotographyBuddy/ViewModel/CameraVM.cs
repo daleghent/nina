@@ -41,7 +41,8 @@ namespace AstrophotographyBuddy {
 
             Duration = Duration - ((double)delta.TotalMilliseconds / (1000 * 60));
 
-            double newTemp = GetY(_startPoint, _endPoint, Duration);
+            //double newTemp = GetY(_startPoint, _endPoint, Duration);
+            double newTemp = GetY(_startPoint, _endPoint, new Vector2(-_startPoint.X, _startPoint.Y), Duration);
             Cam.SetCCDTemperature = newTemp;
            
             CoolingProgress = 1 - (Duration / _initalDuration);
@@ -72,6 +73,29 @@ namespace AstrophotographyBuddy {
             var b = point1.Y - (m * point1.X);
 
             return m * x + b;
+        }
+
+        private FilterWheelVM _filterWheelVM;
+        public FilterWheelVM FilterWheelVM {
+            get {
+                if (_filterWheelVM == null) {
+                    _filterWheelVM = new FilterWheelVM();                    
+                }
+                return _filterWheelVM;
+            }
+            set {
+                _filterWheelVM = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double GetY(Vector2 point1, Vector2 point2, Vector2 point3, double x) {            
+            double denom = (point1.X - point2.X) * (point1.X - point3.X) * (point2.X - point3.X);
+            double A = (point3.X * (point2.Y - point1.Y) + point2.X * (point1.Y - point3.Y) + point1.X * (point3.Y - point2.Y)) / denom;
+            double B = (point3.X * point3.X * (point1.Y - point2.Y) + point2.X * point2.X * (point3.Y - point1.Y) + point1.X * point1.X * (point2.Y - point3.Y)) / denom;
+            double C = (point2.X * point3.X * (point2.X - point3.X) * point1.Y + point3.X * point1.X * (point3.X - point1.X) * point2.Y + point1.X * point2.X * (point1.X - point2.X) * point3.Y) / denom;
+            
+            return (A * Math.Pow(x, 2) + B * x + C);
         }
 
         private Vector2 _startPoint;

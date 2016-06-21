@@ -9,6 +9,8 @@ namespace AstrophotographyBuddy.Utility {
     static class Settings {
         public static string ImageFilePath = "";
         public static string ImageFilePattern = "";
+        public static string PHD2ServerUrl = "localhost";
+        public static int PHD2ServerPort = 4400;
 
         public static SolidColorBrush PrimaryColor = new SolidColorBrush(Colors.Black);
         public static SolidColorBrush SecondaryColor = new SolidColorBrush(Colors.OrangeRed);

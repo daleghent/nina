@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
@@ -229,7 +230,57 @@ namespace AstrophotographyBuddy.Utility {
             }
             return s;
         }
-
         
+        public static void Connect(string serverIP, int port, string message) {
+            string output = "";
+
+            try {
+                // Create a TcpClient.
+                // The client requires a TcpServer that is connected
+                // to the same address specified by the server and port
+                // combination.
+                TcpClient client = new TcpClient(serverIP, port);
+
+                // Translate the passed message into ASCII and store it as a byte array.
+                Byte[] data = new Byte[1024];
+                data = System.Text.Encoding.ASCII.GetBytes(message);
+
+                // Get a client stream for reading and writing.
+                // Stream stream = client.GetStream();
+                NetworkStream stream = client.GetStream();
+
+                // Send the message to the connected TcpServer. 
+                stream.Write(data, 0, data.Length);
+
+                output = "Sent: " + message;
+                System.Windows.MessageBox.Show(output);
+
+                // Buffer to store the response bytes.
+                data = new Byte[1024];
+
+                // String to store the response ASCII representation.
+                String responseData = String.Empty;
+
+                // Read the first batch of the TcpServer response bytes.
+                Int32 bytes = stream.Read(data, 0, data.Length);
+                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                output = "Received: " + responseData;
+                System.Windows.MessageBox.Show(output);
+
+                // Close everything.
+                stream.Close();
+                client.Close();
+            }
+            catch (ArgumentNullException e) {
+                output = "ArgumentNullException: " + e;
+                System.Windows.MessageBox.Show(output);
+            }
+            catch (SocketException e) {
+                output = "SocketException: " + e.ToString();
+                System.Windows.MessageBox.Show(output);
+            }
+        }
     }
+
+
 }

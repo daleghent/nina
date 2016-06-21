@@ -7,11 +7,11 @@
              xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.RowDefinitions>
+    <UniformGrid Columns="2" Rows="2"> 
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+        </Grid.RowDefinitions>-->
         <GroupBox Header="File Settings">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -69,5 +69,35 @@
             </UniformGrid>
 
         </GroupBox>
-    </Grid>
+
+        <GroupBox Header="PHD2 Settings">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock  VerticalAlignment="Center" Width="100">PHD2ServerUrl</TextBlock>
+                <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding PHD2ServerUrl}" />
+
+
+                <TextBlock Grid.Row="1" VerticalAlignment="Center" Width="100">PHD2ServerPort </TextBlock>
+                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding PHD2ServerPort}" />
+
+                <Button Grid.ColumnSpan="2" HorizontalAlignment="Right" Grid.Row="2" Height="50" Width="100" Command="{Binding TestPHDConnectionCommand}">
+                    <Grid>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding TestPHDConnectionCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Test Connection</TextBlock>
+                        <Grid Visibility="{Binding TestPHDConnectionCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
+                            <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding TestPHDConnectionCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="Connecting..." />
+                        </Grid>
+                    </Grid>
+                </Button>
+           
+            </Grid>
+        </GroupBox>
+    </UniformGrid>
 </UserControl>

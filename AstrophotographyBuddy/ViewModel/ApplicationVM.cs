@@ -24,9 +24,9 @@ namespace AstrophotographyBuddy.ViewModel {
             
             
             var cam = this.CameraVM;
-            var fw = this.FilterWheelVM;
+            
             this.ImagingVM.Cam = cam.Cam;
-            this.ImagingVM.FW = fw.FW;
+            this.ImagingVM.FW = cam.FilterWheelVM.FW;
             this.FrameFocusVM.Cam = cam.Cam;
            // var a = this.TelescopeVM;
 
@@ -104,20 +104,7 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
-        private FilterWheelVM _filterWheelVM;
-        public FilterWheelVM FilterWheelVM {
-            get {
-                if (_filterWheelVM == null) {
-                    _filterWheelVM = new FilterWheelVM();
-                    Views.Add(_filterWheelVM);
-                }
-                return _filterWheelVM;
-            }
-            set {
-                _filterWheelVM = value;
-                RaisePropertyChanged();
-            }
-        }
+       
 
         private FrameFocusVM _frameFocusVM;
         public FrameFocusVM FrameFocusVM {

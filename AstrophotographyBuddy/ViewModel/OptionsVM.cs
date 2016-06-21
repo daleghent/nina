@@ -13,6 +13,7 @@ namespace AstrophotographyBuddy.ViewModel {
             Name = "Options";
             PreviewFileCommand = new RelayCommand(previewFile);
             OpenFileDiagCommand = new RelayCommand(openFileDiag);
+            TestPHDConnectionCommand = new AsyncCommand<bool>(() => testPHDConnection());
             ImageFilePattern = "$$IMAGETYPE$$\\$$DATE$$_$$FILTER$$_$$SENSORTEMP$$_$$FRAMENR$$";
 
             HashSet<ImagePattern> p = new HashSet<ImagePattern>();
@@ -48,6 +49,11 @@ namespace AstrophotographyBuddy.ViewModel {
             System.Windows.MessageBox.Show(Utility.Utility.getImageFileString(ImagePatterns), "Example File Name", System.Windows.MessageBoxButton.OK);
         }
 
+        private async Task<bool> testPHDConnection() {
+            await Task.Run(() =>  Utility.Utility.Connect(Settings.PHD2ServerUrl, Settings.PHD2ServerPort, "Hello"));
+            return true;
+        }
+
         private ICommand _previewFileCommand;
         public ICommand PreviewFileCommand {
             get {
@@ -58,7 +64,18 @@ namespace AstrophotographyBuddy.ViewModel {
                 RaisePropertyChanged();
             }
         }
-        
+
+        private Utility.AsyncCommand<bool> _testPHDConnectionCommand;
+        public Utility.AsyncCommand<bool> TestPHDConnectionCommand {
+            get {
+                return _testPHDConnectionCommand;
+            }
+            set {
+                _testPHDConnectionCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public string ImageFilePath {
             get {
                 return Settings.ImageFilePath;
@@ -76,6 +93,26 @@ namespace AstrophotographyBuddy.ViewModel {
             }
             set {
                 Settings.ImageFilePattern  = value;
+                RaisePropertyChanged();
+            }
+        }
+        
+        public string PHD2ServerUrl {
+            get {
+                return Settings.PHD2ServerUrl;
+            }
+            set {
+                Settings.PHD2ServerUrl = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int PHD2ServerPort {
+            get {
+                return Settings.PHD2ServerPort;
+            }
+            set {
+                Settings.PHD2ServerPort = value;
                 RaisePropertyChanged();
             }
         }
