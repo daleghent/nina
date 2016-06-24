@@ -220,7 +220,8 @@ namespace AstrophotographyBuddy.ViewModel {
                             p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", FW.Filters.ElementAt(FW.Position).Name));
                         } else {
                             p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", ""));
-                        }                    
+                        }
+                        p.Add(new OptionsVM.ImagePattern("$$EXPOSURETIME$$", "Exposure Time in seconds", string.Format("{0:0.00}", seq.ExposureTime)));     
                         p.Add(new OptionsVM.ImagePattern("$$DATE$$", "Date with format YYYY-MM-DD", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")));
                         p.Add(new OptionsVM.ImagePattern("$$FRAMENR$$", "# of the Frame with format ####", string.Format("{0:0000}", i)));
                         p.Add(new OptionsVM.ImagePattern("$$IMAGETYPE$$", "Light, Flat, Dark, Bias", "Light"));
@@ -237,6 +238,24 @@ namespace AstrophotographyBuddy.ViewModel {
                         Utility.Utility.saveTiff(iarr, string.Format(completefilename, seq.ExposureCount));
                     });
 
+                    if (tokenSource.IsCancellationRequested) {
+                        ExpStatus = ExposureStatus.IDLE;
+                        return false;
+                    }
+
+                    if(seq.Dither) {
+                        ExpStatus = ExposureStatus.DITHERING;
+                        await Utility.Utility.ConnectPHD2(String.Format(PHD2Methods.DITHER, 5,false.ToString().ToLower()));
+                        await Task.Run(async () => {
+                            for(int d = 15; d>=0;d--) {
+                                await Task.Delay(1000);
+                                if (tokenSource.IsCancellationRequested) {
+                                    return;
+                                }
+                                ExpStatus = String.Format(ExposureStatus.DITHERINGCD, d);
+                            }
+                        });
+                    }
                     if (tokenSource.IsCancellationRequested) {
                         ExpStatus = ExposureStatus.IDLE;
                         return false;
@@ -312,9 +331,6 @@ namespace AstrophotographyBuddy.ViewModel {
         private FilterWheelModel.FilterInfo _snapFilter;
         public FilterWheelModel.FilterInfo SnapFilter {
             get {
-                if(_snapFilter == null) {
-                    _snapFilter = new FilterWheelModel.FilterInfo("Default", 0, 0);
-                }
                 return _snapFilter;
             }
             set {
@@ -351,6 +367,8 @@ namespace AstrophotographyBuddy.ViewModel {
             public const string PREPARING = "Preparing...";
             public const string SAVING = "Saving...";
             public const string IDLE = "Idle";
+            public const string DITHERING = "Dithering...";
+            public const string DITHERINGCD = "Cool Down {0}...";
         }
     }
 }

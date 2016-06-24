@@ -15,7 +15,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="2*" />            
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <!--<Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -28,41 +28,41 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <GroupBox Header="Camera">
-           
-            
-            <StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="Camera State:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.CameraStateString}" Margin="5,0,0,0" />
-                </StackPanel>
-                
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="Name:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.Name}" Margin="5,0,0,0" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="Description:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.Description}" Margin="5,0,0,0" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="Driver Info:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.DriverInfo}" Margin="5,0,0,0" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="Driver Version:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.DriverVersion}" Margin="5,0,0,0" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="Sensor Name:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.SensorName}" Margin="5,0,0,0" />
-                </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock><Run Text="Sensor Type:"/></TextBlock>
-                    <TextBlock Text="{Binding Cam.SensorType}" Margin="5,0,0,0" />
+
+
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Camera State:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.CameraStateString}" Margin="5,0,0,0" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Name:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.Name}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Description:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.Description}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Driver Info:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.DriverInfo}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Driver Version:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.DriverVersion}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Sensor Name:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.SensorName}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Sensor Type:"/></TextBlock>
+                        <TextBlock Text="{Binding Cam.SensorType}" Margin="5,0,0,0" />
+                    </StackPanel>
+
                 </StackPanel>
 
-            </StackPanel>
-            
             </GroupBox>
             <GroupBox Header="Camera Infos" Grid.Column="1">
                 <UniformGrid Columns="2" >
@@ -80,13 +80,13 @@
                         <TextBlock><Run Text="ExposureMin:"/></TextBlock>
                         <TextBlock Text="{Binding Cam.ExposureMin}" Margin="5,0,0,0" />
                     </StackPanel>
-                
+
                     <StackPanel Orientation="Horizontal">
                         <TextBlock><Run Text="ExposureMax:"/></TextBlock>
                         <TextBlock Text="{Binding Cam.ExposureMax}" Margin="5,0,0,0" />
                     </StackPanel>
 
-                
+
 
                     <StackPanel Orientation="Horizontal">
                         <TextBlock><Run Text="MaxBinX:"/></TextBlock>
@@ -144,7 +144,7 @@
                         <TextBlock Text="Target Temperature" />
                         <!--<Slider Value="{Binding Cam.SetCCDTemperature}" Minimum="-50" Maximum="20" SmallChange=".1" TickPlacement="BottomRight"/>-->
                         <TextBlock Text="{Binding Cam.SetCCDTemperature, StringFormat=\{0:#.00\}}" Margin="5,0,0,0" MinWidth="20" />
-                    </StackPanel>                
+                    </StackPanel>
                 </StackPanel>
 
                 <Grid Grid.Column="1">
@@ -158,7 +158,7 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
-                   
+
                     <TextBlock>Target Temp.</TextBlock>
                     <TextBlock  Grid.Row="1">Duration</TextBlock>
 
@@ -168,7 +168,7 @@
                     <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Duration, StringFormat=\{0:#.0\}}"/>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="3" >
-                        
+
                         <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning , Converter={StaticResource InverseBooleanConverter}}" Command="{Binding CoolCamCommand}" >
                             <Grid>
                                 <TextBlock Visibility="{Binding CoolingRunning, Converter={StaticResource InverseBoolToVisibilityConverter}}">Apply</TextBlock>
@@ -179,7 +179,7 @@
                     </StackPanel>
 
                 </Grid>
-                
+
                 <chartingToolkit:Chart Grid.Row="2" Grid.Column="0" DataContext="{Binding Cam.CoolerPowerHistory}"  Title="Cooler Power" Style="{StaticResource ChartStyle}">
                     <chartingToolkit:LineSeries  DependentValuePath="Value" 
 				    IndependentValuePath="Key" ItemsSource="{Binding}" 
@@ -195,7 +195,7 @@
             </Grid>
         </GroupBox>
 
-        
+
 
     </Grid>
 </UserControl>

@@ -9,7 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <Style TargetType="Path">
-            <Setter Property="Fill" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}" />
+            <Setter Property="Fill" Value="{StaticResource PrimaryBrush}" />
             <Setter Property="Stretch" Value="Fill" />
             <Setter Property="RenderTransformOrigin" Value="0.5,4.3689" />
             <!--<Setter Property="Data" Value="M291.15499,85.897525 C291.15499,85.897525 301.88917,85.87921 301.88917,85.87921 301.88917,85.87921 300.38339,94.355061 300.38339,94.355061 300.38339,94.355061 292.85366,94.355042 292.85366,94.355042 292.85366,94.355042 291.15499,85.897525 291.15499,85.897525 z" />-->
@@ -18,10 +18,8 @@
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="Height" Value="10.00" />
         </Style>
-        <Storyboard x:Key="ProgressAnimation" RepeatBehavior="Forever"  >
-            <!-- FIRST BLOCK -->
-
-            <!-- FIRST BLOCK -->
+       <!-- <Storyboard x:Key="ProgressAnimation" RepeatBehavior="Forever"   >
+            
 
             <ColorAnimation BeginTime="00:00:00.000" Duration="00:00:00.500" 
 	From="#FF000000" To="#00000000" 
@@ -59,8 +57,8 @@
 	Storyboard.TargetName="block41" 
 	Storyboard.TargetProperty="(UIElement.OpacityMask).(SolidColorBrush.Color)" />
 
-            <!-- SECOND BLOCK -->
-
+        
+        
             <ColorAnimation BeginTime="00:00:00.000" Duration="00:00:00.3125"
 	From="#AA000000" To="#00000000" 
 	Storyboard.TargetName="block34" 
@@ -113,7 +111,8 @@
 	Storyboard.TargetName="block44" 
 	Storyboard.TargetProperty="(UIElement.OpacityMask).(SolidColorBrush.Color)" />
 
-            <!-- THIRD BLOCK -->
+      
+        
 
             <ColorAnimation BeginTime="00:00:00.000" Duration="00:00:00.15625" 
 	From="#55000000" To="#00000000" 
@@ -168,7 +167,8 @@
 	Storyboard.TargetProperty="(UIElement.OpacityMask).(SolidColorBrush.Color)" />
 
 
-            <!-- FOURTH BLOCK -->
+          
+        
 
             <ColorAnimation BeginTime="00:00:00.000" Duration="00:00:00.500" 
 	From="#00000000" To="#FF000000" 
@@ -208,8 +208,7 @@
 
 
 
-            <!-- FIFTH BLOCK -->
-
+           
 
             <ColorAnimation BeginTime="00:00:00.000" Duration="00:00:00.34375" 
 	From="#55000000" To="#FF000000" 
@@ -265,7 +264,8 @@
 
 
 
-            <!-- SIXTH BLOCK -->
+         
+        
             <ColorAnimation BeginTime="00:00:00.000" Duration="00:00:00.1875"
 	From="#AA000000" To="#FF000000" 
 	Storyboard.TargetName="block11" 
@@ -323,19 +323,18 @@
 
 
 
-        </Storyboard>
+        </Storyboard>-->
     </UserControl.Resources>
-    <UserControl.Triggers>
+  <!--  <UserControl.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded">
             <BeginStoryboard x:Name="ProgressAnimation_BeginStoryboard" Storyboard="{StaticResource ProgressAnimation}"/>
         </EventTrigger>
-    </UserControl.Triggers>
+    </UserControl.Triggers>-->
     <Grid>
         
-        <Canvas x:Name="LayoutRoot" VerticalAlignment="Top" Height="40" Width="40">
+        <!--<Canvas x:Name="LayoutRoot" VerticalAlignment="Top" Height="40" Width="40">
        
             <Grid Width="10.734" Height="10.004" >
-                <!-- FIRST ROW -->
                 <Path x:Name="block11" OpacityMask="#FF000000">
                     <Path.RenderTransform>
                         <TransformGroup>
@@ -397,7 +396,7 @@
                     </Path.RenderTransform>
                 </Path>
 
-                <!-- SECOND ROW -->
+        
                 <Path x:Name="block21" OpacityMask="#FF000000">
                     <Path.RenderTransform>
                         <TransformGroup>
@@ -483,7 +482,8 @@
                     </Path.RenderTransform>
                 </Path>
 
-                <!-- THIRD ROW -->
+           
+        
 
                 <Path x:Name="block31" OpacityMask="#FF000000">
                     <Path.RenderTransform>
@@ -569,7 +569,8 @@
                         </TransformGroup>
                     </Path.RenderTransform>
                 </Path>
-                <!-- FOURTH ROW -->
+     
+        
 
 
                 <Path x:Name="block41" OpacityMask="#FF000000">
@@ -634,7 +635,7 @@
                 </Path>
             </Grid>
         
-        </Canvas>
+        </Canvas>-->
         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Text}" Background="Transparent"></TextBlock>
     </Grid>
 </UserControl>

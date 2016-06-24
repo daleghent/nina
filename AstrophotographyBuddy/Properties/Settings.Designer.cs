@@ -9,17 +9,137 @@
 //------------------------------------------------------------------------------
 
 namespace AstrophotographyBuddy.Properties {
-
-
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "11.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "14.0.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-
+        
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-
+        
         public static Settings Default {
             get {
                 return defaultInstance;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ASCOM.Simulator.Camera")]
+        public string CameraId {
+            get {
+                return ((string)(this["CameraId"]));
+            }
+            set {
+                this["CameraId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ASCOM.Simulator.FilterWheel")]
+        public string FilterWheelId {
+            get {
+                return ((string)(this["FilterWheelId"]));
+            }
+            set {
+                this["FilterWheelId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ImageFilePath {
+            get {
+                return ((string)(this["ImageFilePath"]));
+            }
+            set {
+                this["ImageFilePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("$$IMAGETYPE$$\\\\$$DATE$$_$$FILTER$$_$$SENSORTEMP$$_$$EXPOSURETIME$$s_$$FRAMENR$$")]
+        public string ImageFilePattern {
+            get {
+                return ((string)(this["ImageFilePattern"]));
+            }
+            set {
+                this["ImageFilePattern"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("localhost")]
+        public string PHD2ServerUrl {
+            get {
+                return ((string)(this["PHD2ServerUrl"]));
+            }
+            set {
+                this["PHD2ServerUrl"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4400")]
+        public int PHD2ServerPort {
+            get {
+                return ((int)(this["PHD2ServerPort"]));
+            }
+            set {
+                this["PHD2ServerPort"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF000000")]
+        public global::System.Windows.Media.Color PrimaryColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["PrimaryColor"]));
+            }
+            set {
+                this["PrimaryColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFF4500")]
+        public global::System.Windows.Media.Color SecondaryColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["SecondaryColor"]));
+            }
+            set {
+                this["SecondaryColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFA500")]
+        public global::System.Windows.Media.Color BorderColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["BorderColor"]));
+            }
+            set {
+                this["BorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFFFFF")]
+        public global::System.Windows.Media.Color BackgroundColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["BackgroundColor"]));
+            }
+            set {
+                this["BackgroundColor"] = value;
             }
         }
     }

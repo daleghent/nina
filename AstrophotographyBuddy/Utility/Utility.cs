@@ -11,13 +11,26 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace AstrophotographyBuddy.Utility {
-    class Utility {
+    static class Utility {
 
         public class ImageArray {
             public Array SourceArray;
             public Int16[] FlatArray;
             public int X;
             public int Y;
+        }
+
+        private static PHD2Client _pHDClient;
+        public static PHD2Client PHDClient {
+            get {
+                if (_pHDClient == null) {
+                    _pHDClient = new PHD2Client();
+                }
+                return _pHDClient;
+            }
+            set {
+                _pHDClient = value;
+            }
         }
 
         public static ImageArray convert2DArray(Int32[,] arr) {
@@ -46,12 +59,12 @@ namespace AstrophotographyBuddy.Utility {
             int height = arr.GetLength(1);
             iarr.Y = width;
             iarr.X = height;
-            Int16[] flatArray = new Int16[width * height];
+            Int16[] flatArray = new Int16[arr.Length];
             
             unsafe { 
                 fixed (Int32* ptr = arr)
                 {
-                    for (int i = 0; i < arr.Length; ++i) {
+                    for (int i = 0; i < arr.Length; i++) {
                         Int16 b = (Int16)ptr[i];
                         
                         flatArray[i] = b;
@@ -230,15 +243,19 @@ namespace AstrophotographyBuddy.Utility {
             }
             return s;
         }
-        
-        public static void Connect(string serverIP, int port, string message) {
+
+        public async static Task<string> ConnectPHD2(string message) {
+            return await Connect(Settings.PHD2ServerUrl, Settings.PHD2ServerPort, message);
+        }
+                
+        public async static Task<string> Connect(string serverIP, int port, string message) {
             string output = "";
 
             try {
                 // Create a TcpClient.
                 // The client requires a TcpServer that is connected
                 // to the same address specified by the server and port
-                // combination.
+                // combination.                
                 TcpClient client = new TcpClient(serverIP, port);
 
                 // Translate the passed message into ASCII and store it as a byte array.
@@ -253,7 +270,7 @@ namespace AstrophotographyBuddy.Utility {
                 stream.Write(data, 0, data.Length);
 
                 output = "Sent: " + message;
-                System.Windows.MessageBox.Show(output);
+                //System.Windows.MessageBox.Show(output);
 
                 // Buffer to store the response bytes.
                 data = new Byte[1024];
@@ -261,24 +278,36 @@ namespace AstrophotographyBuddy.Utility {
                 // String to store the response ASCII representation.
                 String responseData = String.Empty;
 
+
                 // Read the first batch of the TcpServer response bytes.
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-                output = "Received: " + responseData;
-                System.Windows.MessageBox.Show(output);
+
+                string resp = "";
+                do {
+                    Int32 bytes = await stream.ReadAsync(data, 0, data.Length);
+                    resp = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                    responseData += resp;
+                } while (resp.Trim() != string.Empty);
+                
+                
+                    
+
+                //responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
+                output = responseData;
+                //System.Windows.MessageBox.Show(output);
 
                 // Close everything.
                 stream.Close();
                 client.Close();
             }
             catch (ArgumentNullException e) {
-                output = "ArgumentNullException: " + e;
-                System.Windows.MessageBox.Show(output);
+                output = e.Message;
+                //System.Windows.MessageBox.Show(output);
             }
             catch (SocketException e) {
-                output = "SocketException: " + e.ToString();
-                System.Windows.MessageBox.Show(output);
+                output = e.Message;
+                //System.Windows.MessageBox.Show(output);
             }
+            return output;
         }
     }
 

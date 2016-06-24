@@ -22,6 +22,7 @@ namespace AstrophotographyBuddy.View {
         public LoadingAnimation() {
             InitializeComponent();
             (this.Content as FrameworkElement).DataContext = this;
+
         }
 
         public string Text {

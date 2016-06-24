@@ -29,9 +29,9 @@
                         </Grid>
                     </Grid>
                 </Button>
-                <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
-                    <Button Width="50" Height="50" Command="{Binding CancelSequenceCommand}" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" >Cancel Sequence</Button>
-                </Grid>
+            </Grid>
+            <Grid IsEnabled="{Binding Cam.Connected}" Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
+                <Button Width="50" Height="50" Command="{Binding CancelSequenceCommand}" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" >Cancel Sequence</Button>
             </Grid>
         </StackPanel>
         
@@ -52,7 +52,7 @@
                 <TextBox Margin="5" MinWidth="50" Height="30" Text="{Binding SnapExposureDuration}" IsEnabled="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}}"></TextBox>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Filter:</TextBlock>
-                    <ComboBox VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" ItemsSource="{Binding Source={StaticResource AppVM}, Path=FilterWheelVM.FW.Filters}" DisplayMemberPath="Name" SelectedItem="{Binding SnapFilter, Mode=TwoWay}" SelectedValuePath="Name"></ComboBox>
+                    <ComboBox VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.FilterWheelVM.FW.Filters}" DisplayMemberPath="Name" SelectedItem="{Binding SnapFilter, Mode=TwoWay}" SelectedValuePath="Name"></ComboBox>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Binning:</TextBlock>

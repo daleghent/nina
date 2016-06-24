@@ -16,6 +16,8 @@ namespace AstrophotographyBuddy.ViewModel {
             PrevViewCommand = new RelayCommand(getPrevView);
             NextViewCommand = new RelayCommand(getNextView);
             ToggleViewCommand = new RelayCommand(toggleView);
+            ConnectPHDClientCommand = new AsyncCommand<bool>(async () => await Task.Run<bool>(() => PHD2Client.connect()));
+            DisconnectPHDClientCommand = new AsyncCommand<bool>(async () => await Task.Run<bool>(() => PHD2Client.disconnect()));
             Visibility = true;
             Views = new ObservableCollection<BaseVM>();
             //Views.Add(this);
@@ -39,6 +41,12 @@ namespace AstrophotographyBuddy.ViewModel {
         // protected void syncModel(object sender, PropertyChangedEventArgs e) {
         //this.ImagingVM.Cam = this.CameraVM.Cam;            
         //  }
+
+       public PHD2Client PHD2Client {
+            get {
+                return Utility.Utility.PHDClient;
+            }
+        }
 
         private ObservableCollection<BaseVM> _views;
         private BaseVM _activeView;
@@ -202,6 +210,30 @@ namespace AstrophotographyBuddy.ViewModel {
 
             set {
                 _toggleViewCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private AsyncCommand<bool> _connectPHDClientCommand;
+        public AsyncCommand<bool> ConnectPHDClientCommand {
+            get {
+                return _connectPHDClientCommand;
+            }
+
+            set {
+                _connectPHDClientCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private Utility.AsyncCommand<bool> _disconnectPHDClientCommand;
+        public Utility.AsyncCommand<bool> DisconnectPHDClientCommand {
+            get {
+                return _disconnectPHDClientCommand;
+            }
+
+            set {
+                _disconnectPHDClientCommand = value;
                 RaisePropertyChanged();
             }
         }

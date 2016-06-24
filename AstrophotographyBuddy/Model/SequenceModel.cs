@@ -99,5 +99,16 @@ namespace AstrophotographyBuddy.Model {
                 RaisePropertyChanged();
             }
         }
+
+        private bool _dither;
+        public bool Dither {
+            get {
+                return _dither;
+            }
+            set {
+                _dither = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

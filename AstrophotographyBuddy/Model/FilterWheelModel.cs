@@ -186,7 +186,8 @@ namespace AstrophotographyBuddy.Model {
         public bool connect() {            
             bool con = false;
             string oldProgId = this.ProgId;
-            ProgId = FilterWheel.Choose("ASCOM.Simulator.FilterWheel");
+            string filterwheelid = Settings.FilterWheelId;
+            ProgId = FilterWheel.Choose(filterwheelid);
             if (!Connected || oldProgId != ProgId) {
 
                 init();
@@ -195,6 +196,7 @@ namespace AstrophotographyBuddy.Model {
                     
                     //AscomCamera.Connected = true;
                     Connected = true;
+                    Settings.FilterWheelId = ProgId;
                     getFWInfos();
                     con = true;
                 }

@@ -1,7 +1,36 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AstrophotographyBuddy.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="CameraId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ASCOM.Simulator.Camera</Value>
+    </Setting>
+    <Setting Name="FilterWheelId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ASCOM.Simulator.FilterWheel</Value>
+    </Setting>
+    <Setting Name="ImageFilePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ImageFilePattern" Type="System.String" Scope="User">
+      <Value Profile="(Default)">$$IMAGETYPE$$\\$$DATE$$_$$FILTER$$_$$SENSORTEMP$$_$$EXPOSURETIME$$s_$$FRAMENR$$</Value>
+    </Setting>
+    <Setting Name="PHD2ServerUrl" Type="System.String" Scope="User">
+      <Value Profile="(Default)">localhost</Value>
+    </Setting>
+    <Setting Name="PHD2ServerPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">4400</Value>
+    </Setting>
+    <Setting Name="PrimaryColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF000000</Value>
+    </Setting>
+    <Setting Name="SecondaryColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFFF4500</Value>
+    </Setting>
+    <Setting Name="BorderColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFFFA500</Value>
+    </Setting>
+    <Setting Name="BackgroundColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFFFFFFF</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:view="clr-namespace:AstrophotographyBuddy.View"
         xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
+        xmlns:local="clr-namespace:AstrophotographyBuddy.View"
         Title="MainWindow" Height="720" Width="1280">
     <Grid DataContext="{StaticResource AppVM}">
         <!--<Image Name="imagebox"></Image>-->
@@ -15,6 +16,7 @@
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="50" />
 
+                <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="50" />
                 <ColumnDefinition Width="*" />
@@ -33,7 +35,26 @@
                 <Button Grid.Column="3" Height="50" Width="50" Command="{Binding FilterWheelVM.DisconnectCommand}" IsEnabled="{Binding FilterWheelVM.FW.Connected}"
                     Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource VisibilityConverter}}">DisconnectFW</Button>
             </Grid>
-            <Button Grid.Column="5" Height="50" Width="50" Command="{Binding NextViewCommand}">&gt;</Button>
+
+            <Button Grid.Column="4" Height="50" Width="50" Command="{Binding ConnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">PHD</TextBlock>
+                    <Grid Visibility="{Binding ConnectPHDClientCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
+                        <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="Connecting..." />
+                    </Grid>
+                </Grid>
+            </Button>
+            <Button Grid.Column="4" Height="50" Width="50" Command="{Binding DisconnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource VisibilityConverter}}">
+                <Grid>
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding DisconnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">!PHD</TextBlock>
+                    <Grid Visibility="{Binding DisconnectPHDClientCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
+                        <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding DisconnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="Disonnecting..." />
+                    </Grid>
+                </Grid>
+            </Button>
+            <!--<Button Grid.Column="4" Command="{Binding ConnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">PHD</Button>
+            <Button Grid.Column="4" Command="{Binding DisconnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource VisibilityConverter}}">Disconnect PHD</Button>-->
+            <Button Grid.Column="6" Height="50" Width="50" Command="{Binding NextViewCommand}">&gt;</Button>
         </Grid>
         <view:ApplicationMenu Grid.Row="1" DataContext="{Binding}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:ApplicationMenu>
         <view:CameraView Grid.Row="1" DataContext="{Binding CameraVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:CameraView>        

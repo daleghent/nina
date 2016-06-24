@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace AstrophotographyBuddy.ViewModel {
     class OptionsVM :BaseVM {
@@ -14,7 +15,11 @@ namespace AstrophotographyBuddy.ViewModel {
             PreviewFileCommand = new RelayCommand(previewFile);
             OpenFileDiagCommand = new RelayCommand(openFileDiag);
             TestPHDConnectionCommand = new AsyncCommand<bool>(() => testPHDConnection());
-            ImageFilePattern = "$$IMAGETYPE$$\\$$DATE$$_$$FILTER$$_$$SENSORTEMP$$_$$FRAMENR$$";
+
+            ImageFilePath = Settings.ImageFilePath;
+            ImageFilePattern = Settings.ImageFilePattern;
+            PHD2ServerUrl = Settings.PHD2ServerUrl;
+            PHD2ServerPort = Settings.PHD2ServerPort;
 
             HashSet<ImagePattern> p = new HashSet<ImagePattern>();
             p.Add(new ImagePattern("$$FILTER$$", "Filtername", "L"));
@@ -23,6 +28,7 @@ namespace AstrophotographyBuddy.ViewModel {
             p.Add(new ImagePattern("$$IMAGETYPE$$", "Light, Flat, Dark, Bias", "Light"));
             p.Add(new ImagePattern("$$BINNING$$", "Binning of the camera", "1x1"));
             p.Add(new ImagePattern("$$SENSORTEMP$$", "Temperature of the Camera", "-15"));
+            p.Add(new ImagePattern("$$EXPOSURETIME$$", "Exposure Time in seconds", string.Format("{0:0.00}", 10.21234)));
             ImagePatterns = p;
         }
 
@@ -50,7 +56,8 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         private async Task<bool> testPHDConnection() {
-            await Task.Run(() =>  Utility.Utility.Connect(Settings.PHD2ServerUrl, Settings.PHD2ServerPort, "Hello"));
+            string msg = await Task.Run<string>(async () =>  await Utility.Utility.ConnectPHD2(""));//Hello
+            System.Windows.MessageBox.Show(msg, "PHD2 Answer", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
             return true;
         }
 
@@ -117,6 +124,47 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
+        public Color PrimaryColor {
+            get {
+                return Settings.PrimaryColor;
+            }
+            set {
+                Settings.PrimaryColor = value;
+                RaisePropertyChanged();
+            }
+            
+        }
+        public Color SecondaryColor {
+            get {
+                return Settings.SecondaryColor;
+            }
+            set {
+                Settings.SecondaryColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+        public Color BorderColor {
+            get {
+                return Settings.BorderColor;
+            }
+            set {
+                Settings.BorderColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+        public Color BackgroundColor {
+            get {
+                return Settings.BackgroundColor;
+            }
+            set {
+                Settings.BackgroundColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
         private HashSet<ImagePattern> _imagePatterns;
         public HashSet<ImagePattern> ImagePatterns {
             get {
@@ -127,6 +175,8 @@ namespace AstrophotographyBuddy.ViewModel {
                 RaisePropertyChanged();
             }
         }
+
+
 
         public class ImagePattern {
             public ImagePattern(string k, string d, string v) {

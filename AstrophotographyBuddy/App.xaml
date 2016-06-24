@@ -15,7 +15,11 @@
         <util:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
         <util:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
 
-        
+        <SolidColorBrush x:Key="PrimaryBrush" Color="{Binding Source={StaticResource AppVM}, Path=OptionsVM.PrimaryColor}"/>
+        <SolidColorBrush x:Key="SecondaryBrush" Color="{Binding Source={StaticResource AppVM}, Path=OptionsVM.SecondaryColor}"/>
+        <SolidColorBrush x:Key="BorderBrush" Color="{Binding Source={StaticResource AppVM}, Path=OptionsVM.BorderColor}"/>
+        <SolidColorBrush x:Key="BackgroundBrush" Color="{Binding Source={StaticResource AppVM}, Path=OptionsVM.BackgroundColor}"/>
+
         <!-- Standard Styles -->
         <!--<Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource {x:Type TextBlock}}">
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -104,12 +108,12 @@
         <Style x:Key="TextBlockWithMouseOver" TargetType="{x:Type TextBlock}">           
             <Style.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}, Path=IsMouseOver}" Value="True">
-                    <Setter Property="Foreground" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}" />
-                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.SecondaryColor}}" />
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+                    <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type MenuItem}}, Path=IsMouseOver}" Value="True">
-                    <Setter Property="Foreground" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}" />
-                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.SecondaryColor}}" />
+                    <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+                    <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -131,8 +135,8 @@
                                             <Setter Property="FontSize" Value="12"/>
                                             <Setter Property="HorizontalAlignment" Value="Left"/>
                                             <Setter Property="Margin" Value="0"/>
-                                            <Setter Property="Foreground" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}" />
-                                            <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
+                                            <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+                                            <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
                                         </Style>
                                     </datavis:Title.Style>
                                 </datavis:Title>
@@ -145,11 +149,11 @@
                                         <Grid Panel.ZIndex="-1">
                                             <Grid.Style>
                                                 <Style TargetType="{x:Type Grid}">
-                                                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
+                                                    <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
                                                 </Style>
                                             </Grid.Style>
                                         </Grid>
-                                        <Border BorderBrush="{Binding Source={x:Static util:Settings.BorderColor}}" BorderThickness="1" Panel.ZIndex="10"/>
+                                        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Panel.ZIndex="10"/>
                                     </Primitives:EdgePanel>
                                 </Grid>
                             </Grid>
@@ -169,7 +173,7 @@
                             <Polyline Points="{TemplateBinding Points}">
                                 <Polyline.Style>
                                     <Style TargetType="{x:Type Polyline}">
-                                        <Setter Property="Stroke" Value="{Binding Source={x:Static util:Settings.SecondaryColor}}" />
+                                        <Setter Property="Stroke" Value="{StaticResource SecondaryBrush}" />
                                         <Setter Property="StrokeThickness" Value="2"/>
                                         <Setter Property="StrokeMiterLimit" Value="1"/>
                                     </Style>
@@ -192,8 +196,8 @@
                                     <Ellipse>
                                         <Ellipse.Style>
                                             <Style TargetType="{x:Type Ellipse}">
-                                                <Setter Property="Fill" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}"></Setter>
-                                                <Setter Property="Stroke" Value="{Binding Source={x:Static util:Settings.PrimaryColor}}"></Setter>
+                                                <Setter Property="Fill" Value="{StaticResource PrimaryBrush}"></Setter>
+                                                <Setter Property="Stroke" Value="{StaticResource PrimaryBrush}"></Setter>
                                                 <Setter Property="Height" Value="5"></Setter>
                                                 <Setter Property="Width" Value="5"></Setter>
                                             </Style>
@@ -211,9 +215,9 @@
         
         <Style x:Key="ChartLegendStyle" TargetType="{x:Type datavis:Legend}">
             <Setter Property="Margin" Value="15,0"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="BorderBrush" Value="{Binding Source={x:Static util:Settings.BorderColor}}"/>
-            <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
+            <Setter Property="VerticalAlignment" Value="Center"/>            
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}"/>
+            <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
         </Style>
 
     </Application.Resources>

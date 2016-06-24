@@ -1273,7 +1273,8 @@ namespace AstrophotographyBuddy
         public bool connect() {
             bool con = false;
             string oldProgId = this.ProgId;
-            ProgId = Camera.Choose("ASCOM.Simulator.Camera");
+            string cameraId = Settings.CameraId;
+            ProgId = Camera.Choose(cameraId);
             if(!Connected || oldProgId != ProgId) {
 
                 init();
@@ -1281,6 +1282,7 @@ namespace AstrophotographyBuddy
                     AscomCamera = new Camera(ProgId);
                     //AscomCamera.Connected = true;
                     Connected = true;
+                    Settings.CameraId = ProgId;                    
                     getCameraInfos();
                     con = true;
                 }

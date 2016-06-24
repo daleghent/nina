@@ -1,20 +1,105 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace AstrophotographyBuddy.Utility {
-    static class Settings {
-        public static string ImageFilePath = "";
-        public static string ImageFilePattern = "";
-        public static string PHD2ServerUrl = "localhost";
-        public static int PHD2ServerPort = 4400;
+    static class Settings  {
+        public static string CameraId {
+            get {
+                return Properties.Settings.Default.CameraId;
+            }
+            set {
+                Properties.Settings.Default.CameraId = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+        public static string FilterWheelId {
+            get {
+                return Properties.Settings.Default.FilterWheelId;
+            }
+            set {
+                Properties.Settings.Default.FilterWheelId = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+        public static string ImageFilePath {
+            get {
+                return Properties.Settings.Default.ImageFilePath;
+            }
+            set {
+                Properties.Settings.Default.ImageFilePath = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+        public static string ImageFilePattern {
+            get {
+                return Properties.Settings.Default.ImageFilePattern;
+            }
+            set {
+                Properties.Settings.Default.ImageFilePattern = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+        public static string PHD2ServerUrl {
+            get {
+                return Properties.Settings.Default.PHD2ServerUrl;
+            }
+            set {
+                Properties.Settings.Default.PHD2ServerUrl = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+        public static int PHD2ServerPort {
+            get {
+                return Properties.Settings.Default.PHD2ServerPort;
+            }
+            set {
+                Properties.Settings.Default.PHD2ServerPort = value;
+                Properties.Settings.Default.Save();
+            }
+        }
 
-        public static SolidColorBrush PrimaryColor = new SolidColorBrush(Colors.Black);
-        public static SolidColorBrush SecondaryColor = new SolidColorBrush(Colors.OrangeRed);
-        public static SolidColorBrush BackgroundColor = new SolidColorBrush(Colors.White);
-        public static SolidColorBrush BorderColor = new SolidColorBrush(Colors.Orange);
+        public static Color PrimaryColor {
+            get {
+                return Properties.Settings.Default.PrimaryColor;
+            }
+            set {
+                Properties.Settings.Default.PrimaryColor = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public static Color SecondaryColor {
+            get {
+                return Properties.Settings.Default.SecondaryColor;
+            }
+            set {
+                Properties.Settings.Default.SecondaryColor = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public static Color BorderColor {
+            get {
+                return Properties.Settings.Default.BorderColor;
+            }
+            set {
+                Properties.Settings.Default.BorderColor = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public static Color BackgroundColor {
+            get {
+                return Properties.Settings.Default.BackgroundColor;
+            }
+            set {
+                Properties.Settings.Default.BackgroundColor = value;
+                Properties.Settings.Default.Save();
+
+            }
+        }
+
+        
+
     }
+
 }

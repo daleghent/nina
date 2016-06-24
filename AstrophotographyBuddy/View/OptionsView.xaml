@@ -48,23 +48,23 @@
             <UniformGrid Columns="1">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Width="100">Primary Color: </TextBlock>
-                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static util:Settings.PrimaryColor}, Path=Color}" />
-                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{Binding Source={x:Static util:Settings.PrimaryColor}}"></Button>                    
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding PrimaryColor}" />
+                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{StaticResource PrimaryBrush}"></Button>                    
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <TextBlock VerticalAlignment="Center" Width="100">Secondary Color:</TextBlock>
-                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static util:Settings.SecondaryColor}, Path=Color}" />
-                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{Binding Source={x:Static util:Settings.SecondaryColor}}"></Button>                                        
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding SecondaryColor}" />
+                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{StaticResource SecondaryBrush}"></Button>                                        
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Width="100">Border Color:</TextBlock>
-                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static util:Settings.BorderColor}, Path=Color}" />
-                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{Binding Source={x:Static util:Settings.BorderColor}}"></Button>
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding BorderColor}" />
+                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{StaticResource BorderBrush}"></Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Width="100">Background Color:</TextBlock>
-                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Source={x:Static util:Settings.BackgroundColor}, Path=Color}" />
-                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{Binding Source={x:Static util:Settings.BackgroundColor}}"></Button>
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding BackgroundColor}" />
+                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{StaticResource BackgroundBrush}"></Button>
                 </StackPanel>
             </UniformGrid>
 

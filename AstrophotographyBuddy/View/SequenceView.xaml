@@ -12,10 +12,10 @@
         <Style x:Key="HighlightRow" TargetType="{x:Type DataGridRow}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Active}" Value="True">
-                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.SecondaryColor}}" />
+                    <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Active}" Value="False">
-                    <Setter Property="Background" Value="{Binding Source={x:Static util:Settings.BackgroundColor}}" />
+                    <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
                 </DataTrigger>
             </Style.Triggers>
         </Style>
@@ -26,8 +26,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="#" Binding="{Binding ExposureCount}"></DataGridTextColumn>
                 <DataGridTextColumn Header="Exposure Time" Binding="{Binding ExposureTime}"></DataGridTextColumn>
-                <DataGridComboBoxColumn Header="Filter" ItemsSource="{Binding Source={StaticResource AppVM}, Path=FilterWheelVM.FW.Filters}" DisplayMemberPath="Name" SelectedItemBinding="{Binding FilterType, Mode=TwoWay}" SelectedValuePath="Name"></DataGridComboBoxColumn>
+                <DataGridComboBoxColumn Header="Image Type" ItemsSource="{Binding Source={StaticResource AppVM}, Path=ImagingVM.SeqVM.ImageTypes}" SelectedItemBinding="{Binding ImageType, Mode=TwoWay}" />
+                <DataGridComboBoxColumn Header="Filter" ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.FilterWheelVM.FW.Filters}" DisplayMemberPath="Name" SelectedItemBinding="{Binding FilterType, Mode=TwoWay}" SelectedValuePath="Name"></DataGridComboBoxColumn>
                 <DataGridComboBoxColumn Header="Binning" ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}" DisplayMemberPath="Name" SelectedItemBinding="{Binding Binning}" SelectedValuePath="Name"></DataGridComboBoxColumn>
+                <DataGridCheckBoxColumn Header="Dither" Binding="{Binding Dither}" ></DataGridCheckBoxColumn>
             </DataGrid.Columns>
             
         </DataGrid>
