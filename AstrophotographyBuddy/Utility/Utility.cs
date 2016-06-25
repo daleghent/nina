@@ -281,13 +281,13 @@ namespace AstrophotographyBuddy.Utility {
 
                 // Read the first batch of the TcpServer response bytes.
 
-                string resp = "";
+                /*string resp = "";
                 do {
                     Int32 bytes = await stream.ReadAsync(data, 0, data.Length);
                     resp = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
                     responseData += resp;
                 } while (resp.Trim() != string.Empty);
-                
+                */
                 
                     
 

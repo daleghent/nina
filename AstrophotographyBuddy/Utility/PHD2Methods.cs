@@ -15,6 +15,8 @@ namespace AstrophotographyBuddy.Utility {
         /// 4: SETTLE TIMEOUT: int - time limit before settling is considered to have failed
         /// </summary>
         public static string DITHER = "{{\"method\": \"dither\", \"params\": [{0}, {1}, {{\"pixels\": 1.5, \"time\": 8, \"timeout\": 40}}], \"id\": 5}}\r\n";
+        public const string DITHERID = "5";
+
 
         public static string LOOP = "{\"method\": \"loop\", \"id\": 1}\r\n";
 

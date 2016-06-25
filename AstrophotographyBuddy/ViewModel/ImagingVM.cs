@@ -27,7 +27,11 @@ namespace AstrophotographyBuddy.ViewModel {
             CancelSequenceCommand = new RelayCommand(cancelSequence);
     }
 
-        
+        public PHD2Client PHD2Client {
+            get {
+                return Utility.Utility.PHDClient;
+            }
+        }
 
         private SequenceVM _seqVM;
         public SequenceVM SeqVM {
@@ -245,8 +249,24 @@ namespace AstrophotographyBuddy.ViewModel {
 
                     if(seq.Dither) {
                         ExpStatus = ExposureStatus.DITHERING;
-                        await Utility.Utility.ConnectPHD2(String.Format(PHD2Methods.DITHER, 5,false.ToString().ToLower()));
-                        await Task.Run(async () => {
+                        await PHD2Client.dither();
+                        // await Utility.Utility.ConnectPHD2(String.Format(PHD2Methods.DITHER, 5,false.ToString().ToLower()));
+                        
+                        ExpStatus = ExposureStatus.SETTLING;
+                        await Task.Run<bool>(() => {
+                            while (PHD2Client.IsDithering) {
+                                if (tokenSource.IsCancellationRequested) {
+                                    ExpStatus = ExposureStatus.IDLE;
+                                    return false;
+                                }
+                            }
+                            return true;
+                        });
+                        
+                        
+                       
+                        
+                       /* await Task.Run(async () => {
                             for(int d = 15; d>=0;d--) {
                                 await Task.Delay(1000);
                                 if (tokenSource.IsCancellationRequested) {
@@ -254,7 +274,7 @@ namespace AstrophotographyBuddy.ViewModel {
                                 }
                                 ExpStatus = String.Format(ExposureStatus.DITHERINGCD, d);
                             }
-                        });
+                        });*/
                     }
                     if (tokenSource.IsCancellationRequested) {
                         ExpStatus = ExposureStatus.IDLE;
@@ -368,7 +388,7 @@ namespace AstrophotographyBuddy.ViewModel {
             public const string SAVING = "Saving...";
             public const string IDLE = "Idle";
             public const string DITHERING = "Dithering...";
-            public const string DITHERINGCD = "Cool Down {0}...";
+            public const string SETTLING = "Settling...";
         }
     }
 }
