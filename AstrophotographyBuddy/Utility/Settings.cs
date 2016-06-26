@@ -11,6 +11,16 @@ namespace AstrophotographyBuddy.Utility {
                 Properties.Settings.Default.Save();
             }
         }
+
+        public static int LogLevel {
+            get {
+                return Properties.Settings.Default.LogLevel;
+            }
+            set {
+                Properties.Settings.Default.LogLevel = value;
+                Properties.Settings.Default.Save();
+            }
+        }
         public static string FilterWheelId {
             get {
                 return Properties.Settings.Default.FilterWheelId;

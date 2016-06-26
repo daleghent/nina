@@ -9,6 +9,7 @@ namespace AstrophotographyBuddy.ViewModel {
     class TelescopeVM : BaseVM {
         public TelescopeVM() {
             Name = "Telescope";
+            ImageURI = @"/AstrophotographyBuddy;component/Resources/Telescope.png";
         }
     }
 }

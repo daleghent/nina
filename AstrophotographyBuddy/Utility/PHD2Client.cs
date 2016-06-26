@@ -256,7 +256,7 @@ namespace AstrophotographyBuddy.Utility {
                     }
                     
                 }catch (Exception ex) {
-
+                    Logger.error(ex.Message);
                 }
                 
             }
@@ -328,7 +328,7 @@ namespace AstrophotographyBuddy.Utility {
     }
 
     public class PhdEventLoopingExposures : PhdEvent {
-        int Frame;
+        public int Frame;
     }
 
     public class PhdEventLoopingExposuresStopped : PhdEvent {

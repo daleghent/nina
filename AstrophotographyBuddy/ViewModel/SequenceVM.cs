@@ -36,10 +36,10 @@ namespace AstrophotographyBuddy.ViewModel{
             get {
                 if(_imageTypes == null) {
                     _imageTypes = new ObservableCollection<string>();
-                    _imageTypes.Add("LIGHT");
-                    _imageTypes.Add("DARK");
-                    _imageTypes.Add("FLAT");
-                    _imageTypes.Add("BIAS");
+                    _imageTypes.Add(Model.SequenceModel.ImageTypes.LIGHT);
+                    _imageTypes.Add(Model.SequenceModel.ImageTypes.DARK);
+                    _imageTypes.Add(Model.SequenceModel.ImageTypes.FLAT);
+                    _imageTypes.Add(Model.SequenceModel.ImageTypes.BIAS);
                 }
                 return _imageTypes;
             }

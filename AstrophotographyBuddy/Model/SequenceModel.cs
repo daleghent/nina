@@ -7,10 +7,17 @@ using System.Threading.Tasks;
 
 namespace AstrophotographyBuddy.Model {
     class SequenceModel :BaseINPC {
+        public static class ImageTypes {
+            public const string LIGHT = "LIGHT";
+            public const string FLAT = "FLAT";
+            public const string DARK = "DARK";
+            public const string BIAS = "BIAS";
+            public const string SNAP = "SNAP";
+        }
 
         public SequenceModel() {
             ExposureTime = 1;
-            ImageType = "Light";
+            ImageType = ImageTypes.LIGHT;
             ExposureCount = 1;            
             Dither = false;
             DitherAmount = 1;

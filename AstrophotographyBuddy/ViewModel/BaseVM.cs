@@ -23,13 +23,24 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
-        private String _name;
-        public String Name {
+        private string _name;
+        public string Name {
             get {
                 return _name;
             }
             set {
                 _name = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string _imageURI;
+        public string ImageURI {
+            get {
+                return _imageURI;
+            }
+            set {
+                _imageURI = value;
                 RaisePropertyChanged();
             }
         }

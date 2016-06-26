@@ -866,7 +866,6 @@ namespace AstrophotographyBuddy
                 RaisePropertyChanged();
             }
         }
-        bool _imageReady;
         
         public bool ImageReady {
             get {
@@ -922,6 +921,8 @@ namespace AstrophotographyBuddy
                  BayerOffsetX = AscomCamera.BayerOffsetX;
                  BayerOffsetY = AscomCamera.BayerOffsetY;
             } catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement BayerOffsets");
+                Logger.trace(ex.Message);
                  BayerOffsetX = -1;
                 BayerOffsetY = -1;
             }
@@ -933,7 +934,9 @@ namespace AstrophotographyBuddy
                  CameraYSize = AscomCamera.CameraYSize;
             }
             catch (Exception ex) {
-                 CameraXSize = -1;
+                Logger.warning("Used Camera AscomDriver does not implement CameraSizes");
+                Logger.trace(ex.Message);
+                CameraXSize = -1;
                 CameraYSize = -1;
             }
             
@@ -941,6 +944,8 @@ namespace AstrophotographyBuddy
                 CanAbortExposure = AscomCamera.CanAbortExposure;
             }
             catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement CanAbortExposure");
+                Logger.trace(ex.Message);
                 CanAbortExposure = false;
             }
 
@@ -948,6 +953,8 @@ namespace AstrophotographyBuddy
                 CanAsymmetricBin = AscomCamera.CanAsymmetricBin;
             }
             catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement CanAsymmetricBin");
+                Logger.trace(ex.Message);
                 CanAsymmetricBin = false;
             }
 
@@ -957,6 +964,8 @@ namespace AstrophotographyBuddy
                 CanStopExposure = AscomCamera.CanStopExposure;
             }
             catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement CanStopExposure");
+                Logger.trace(ex.Message);
                 CanStopExposure = false;
             }
 
@@ -964,6 +973,8 @@ namespace AstrophotographyBuddy
                 HasShutter = AscomCamera.HasShutter;
             }
             catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement HasShutter");
+                Logger.trace(ex.Message);
                 HasShutter = false;
             }
                         
@@ -971,28 +982,36 @@ namespace AstrophotographyBuddy
                  Description = AscomCamera.Description;
             }
             catch (Exception ex) {
-                 Description = "n.A.";
+                Logger.warning("Used Camera AscomDriver does not implement Description");
+                Logger.trace(ex.Message);
+                Description = "n.A.";
             }
 
             try {
                  DriverInfo = AscomCamera.DriverInfo;
             }
             catch (Exception ex) {
-                 DriverInfo = "n.A.";
+                Logger.warning("Used Camera AscomDriver does not implement DriverInfo");
+                Logger.trace(ex.Message);
+                DriverInfo = "n.A.";
             }
 
             try {
                  DriverVersion = AscomCamera.DriverVersion;
             }
             catch (Exception ex) {
-                 DriverVersion = "n.A.";
+                Logger.warning("Used Camera AscomDriver does not implement DriverVersion");
+                Logger.trace(ex.Message);
+                DriverVersion = "n.A.";
             }
 
             try {
                  ElectronsPerADU = AscomCamera.ElectronsPerADU;
             }
             catch (Exception ex) {
-                 ElectronsPerADU = -1;
+                Logger.warning("Used Camera AscomDriver does not implement ElectronsPerADU");
+                Logger.trace(ex.Message);
+                ElectronsPerADU = -1;
             }
 
             try {
@@ -1000,7 +1019,9 @@ namespace AstrophotographyBuddy
                  ExposureMin = AscomCamera.ExposureMin;
             }
             catch (Exception ex) {
-                 ExposureMax = -1;
+                Logger.warning("Used Camera AscomDriver does not implement ExposureMax/ExposureMin");
+                Logger.trace(ex.Message);
+                ExposureMax = -1;
                  ExposureMin = -1;
             }
 
@@ -1008,7 +1029,9 @@ namespace AstrophotographyBuddy
                  ExposureResolution = AscomCamera.ExposureResolution;
             }
             catch (Exception ex) {
-                 ExposureResolution = -1;
+                Logger.warning("Used Camera AscomDriver does not implement ExposureResolution");
+                Logger.trace(ex.Message);
+                ExposureResolution = -1;
             }
                         
             
@@ -1016,14 +1039,18 @@ namespace AstrophotographyBuddy
                  InterfaceVersion = AscomCamera.InterfaceVersion;
             }
             catch (Exception ex) {
-                 InterfaceVersion = -1;
+                Logger.warning("Used Camera AscomDriver does not implement InterfaceVersion");
+                Logger.trace(ex.Message);
+                InterfaceVersion = -1;
             }
             
             try {
                  MaxADU = AscomCamera.MaxADU;
             }
             catch (Exception ex) {
-                 MaxADU = -1;
+                Logger.warning("Used Camera AscomDriver does not implement MaxADU");
+                Logger.trace(ex.Message);
+                MaxADU = -1;
             }
             try {
                  MaxBinX = AscomCamera.MaxBinX;
@@ -1041,6 +1068,8 @@ namespace AstrophotographyBuddy
                 }
             }
             catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement MaxBinning");
+                Logger.trace(ex.Message);
                 BinningModes.Add(new BinningMode(1, 1));
                  MaxBinX = -1;
                  MaxBinY = -1;
@@ -1049,7 +1078,9 @@ namespace AstrophotographyBuddy
                  Name = AscomCamera.Name;
             }
             catch (Exception ex) {
-                 Name = "n.A.";
+                Logger.warning("Used Camera AscomDriver does not implement Name");
+                Logger.trace(ex.Message);
+                Name = "n.A.";
             }
                         
             try {
@@ -1057,7 +1088,9 @@ namespace AstrophotographyBuddy
                  PixelSizeY = AscomCamera.PixelSizeY;
             }
             catch (Exception ex) {
-                 PixelSizeX = -1;
+                Logger.warning("Used Camera AscomDriver does not implement PixelSize");
+                Logger.trace(ex.Message);
+                PixelSizeX = -1;
                  PixelSizeY = -1;
             }
             try {
@@ -1065,7 +1098,9 @@ namespace AstrophotographyBuddy
                  ReadoutModes = AscomCamera.ReadoutModes;
             }
             catch (Exception ex) {
-                 ReadoutMode = -1;
+                Logger.warning("Used Camera AscomDriver does not implement Readoutmodes");
+                Logger.trace(ex.Message);
+                ReadoutMode = -1;
                  ReadoutModes = null;
             }
             
@@ -1073,13 +1108,17 @@ namespace AstrophotographyBuddy
                  SensorName = AscomCamera.SensorName;
             }
             catch (Exception ex) {
-                 SensorName = "n.A.";
+                Logger.warning("Used Camera AscomDriver does not implement SensorName");
+                Logger.trace(ex.Message);
+                SensorName = "n.A.";
             }
             try {
                  SensorType = AscomCamera.SensorType;
             }
             catch (Exception ex) {
-                 SensorType = ASCOM.DeviceInterface.SensorType.Monochrome;
+                Logger.warning("Used Camera AscomDriver does not implement SensorType");
+                Logger.trace(ex.Message);
+                SensorType = ASCOM.DeviceInterface.SensorType.Monochrome;
             }
 
             try {
@@ -1087,14 +1126,18 @@ namespace AstrophotographyBuddy
                  StartY = AscomCamera.StartY;
             }
             catch (Exception ex) {
-                 StartX = -1;
+                Logger.warning("Used Camera AscomDriver does not implement StartX/StartY");
+                Logger.trace(ex.Message);
+                StartX = -1;
                  StartY = -1;
             }
             try {
                  SupportedActions = AscomCamera.SupportedActions;
             }
             catch (Exception ex) {
-                 SupportedActions = null;
+                Logger.warning("Used Camera AscomDriver does not implement SupportedActions");
+                Logger.trace(ex.Message);
+                SupportedActions = null;
             }
 
             /*----*/
@@ -1104,7 +1147,9 @@ namespace AstrophotographyBuddy
                  BinY = AscomCamera.BinY;
             }
             catch (Exception ex) {
-                 BinX = -1;
+                Logger.warning("Used Camera AscomDriver does not implement Binning");
+                Logger.trace(ex.Message);
+                BinX = -1;
                  BinY = -1;
             }
 
@@ -1113,7 +1158,9 @@ namespace AstrophotographyBuddy
                  NumY = AscomCamera.NumY;
             }
             catch (Exception ex) {
-                 NumX = -1;
+                Logger.warning("Used Camera AscomDriver does not implement NumX/NumY");
+                Logger.trace(ex.Message);
+                NumX = -1;
                  NumY = -1;
             }
 
@@ -1122,7 +1169,9 @@ namespace AstrophotographyBuddy
                 CanFastReadout = AscomCamera.CanFastReadout;
             }
             catch (Exception ex) {
-                 FastReadout = false;
+                Logger.warning("Used Camera AscomDriver does not implement FastReadout");
+                Logger.trace(ex.Message);
+                FastReadout = false;
                 CanFastReadout = false;
             }
 
@@ -1131,7 +1180,9 @@ namespace AstrophotographyBuddy
                  Gains = AscomCamera.Gains;
             }
             catch (Exception ex) {
-                 Gain = -1;
+                Logger.warning("Used Camera AscomDriver does not implement Gain");
+                Logger.trace(ex.Message);
+                Gain = -1;
                  Gains = null;
             }
 
@@ -1139,9 +1190,13 @@ namespace AstrophotographyBuddy
                 GainMax = AscomCamera.GainMax;
                 GainMin = AscomCamera.GainMin;
             } catch (ASCOM.InvalidOperationException ex) {
+                Logger.warning("Used Camera AscomDriver does not implement Gain");
+                Logger.trace(ex.Message);
                 GainMax = -1;
                 GainMin = -1;
             } catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement Gain");
+                Logger.trace(ex.Message);
                 GainMax = -1;
                 GainMin = -1;
             }
@@ -1150,6 +1205,8 @@ namespace AstrophotographyBuddy
                 CameraState = AscomCamera.CameraState;/*Watch!*/
             }
             catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement CameraState");
+                Logger.trace(ex.Message);
                 CameraState = ASCOM.DeviceInterface.CameraStates.cameraError;
             }
 
@@ -1158,6 +1215,8 @@ namespace AstrophotographyBuddy
                 HasCCDTemperature = true;
             }
             catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement CCDTemperature");
+                Logger.trace(ex.Message);
                 CCDTemperature = double.MinValue;
                 HasCCDTemperature = false;
             }
@@ -1175,7 +1234,8 @@ namespace AstrophotographyBuddy
 
             }
             catch (Exception ex) {
-
+                Logger.warning("Used Camera AscomDriver does not implement Temperature Control");
+                Logger.trace(ex.Message);
                 CanSetCCDTemperature = false;
                 SetCCDTemperature = double.MinValue;
 
@@ -1186,7 +1246,9 @@ namespace AstrophotographyBuddy
                  HasFullWellCapacity = true;
             }
             catch (Exception ex) {
-                 FullWellCapacity = -1;
+                Logger.warning("Used Camera AscomDriver does not implement FullWellCapacity");
+                Logger.trace(ex.Message);
+                FullWellCapacity = -1;
                  HasFullWellCapacity = false;
             }
 
@@ -1198,6 +1260,8 @@ namespace AstrophotographyBuddy
                 
             }
             catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement Cooler Info");
+                Logger.trace(ex.Message);
                 CanCoolerOn = false;
                 CoolerOn = false;
                 CanGetCoolerPower = false;
@@ -1211,6 +1275,8 @@ namespace AstrophotographyBuddy
                 
             }
             catch (Exception ex) {
+                Logger.warning("Used Camera AscomDriver does not implement PulseGuiding");
+                Logger.trace(ex.Message);
                 CanPulseGuide = false;
                 IsPulseGuiding = false;
                 
@@ -1220,7 +1286,9 @@ namespace AstrophotographyBuddy
                  HasHeatSinkTemperature = true;
             }
             catch (Exception ex) {
-                 HeatSinkTemperature = double.MinValue;
+                Logger.warning("Used Camera AscomDriver does not implement HeatSink");
+                Logger.trace(ex.Message);
+                HeatSinkTemperature = double.MinValue;
                  HasHeatSinkTemperature = false;
             }
         }
@@ -1287,10 +1355,14 @@ namespace AstrophotographyBuddy
                     con = true;
                 }
                 catch (ASCOM.DriverAccessCOMException ex) {
+                    Logger.error("Unable to connect to camera");
+                    Logger.trace(ex.Message);
                     CameraStateString = "Unable to connect to camera";
                     Connected = false;
                 }
                 catch (Exception ex) {
+                    Logger.error("Unable to connect to camera");
+                    Logger.trace(ex.Message);
                     Connected = false;
                 }
 
@@ -1308,18 +1380,18 @@ namespace AstrophotographyBuddy
             }
         }
 
-        public Int32[,] downloadExposure(CancellationTokenSource token) {
-            ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
-            while (!ImageReady) {
-                //Console.Write(".");
-                U.WaitForMilliseconds(10);
-                if(token.IsCancellationRequested) {
-                    return null;
+        public async Task<Int32[,]> downloadExposure(CancellationTokenSource tokenSource) {
+            return await Task<Int32[,]>.Run(() => {
+                ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
+                while (!ImageReady) {
+                    //Console.Write(".");
+                    U.WaitForMilliseconds(10);
+                    tokenSource.Token.ThrowIfCancellationRequested();
                 }
-            }
-            Int32[,] camArray = (Int32[,])AscomCamera.ImageArray;
-            
-            return camArray;
+                Int32[,] camArray = (Int32[,])AscomCamera.ImageArray;
+
+                return camArray;
+            });            
         }
 
         public Int32[,] snap(double exposureTime, bool isLightFrame) {
@@ -1340,49 +1412,49 @@ namespace AstrophotographyBuddy
         
 
 
-        public BitmapSource NormalizeTiffTo8BitImage(BitmapSource source) {
-            // allocate buffer & copy image bytes.
-            var rawStride = source.PixelWidth * source.Format.BitsPerPixel / 8;
-            var rawImage = new byte[rawStride * source.PixelHeight];
-            source.CopyPixels(rawImage, rawStride, 0);
+        //public BitmapSource NormalizeTiffTo8BitImage(BitmapSource source) {
+        //    // allocate buffer & copy image bytes.
+        //    var rawStride = source.PixelWidth * source.Format.BitsPerPixel / 8;
+        //    var rawImage = new byte[rawStride * source.PixelHeight];
+        //    source.CopyPixels(rawImage, rawStride, 0);
 
-            // get both max values of first & second byte of pixel as scaling bounds.
-            var max1 = 0;
-            int max2 = 1;
-            for (int i = 0; i < rawImage.Length; i++) {
-                if ((i & 1) == 0) {
-                    if (rawImage[i] > max1)
-                        max1 = rawImage[i];
-                }
-                else if (rawImage[i] > max2)
-                    max2 = rawImage[i];
-            }
+        //    // get both max values of first & second byte of pixel as scaling bounds.
+        //    var max1 = 0;
+        //    int max2 = 1;
+        //    for (int i = 0; i < rawImage.Length; i++) {
+        //        if ((i & 1) == 0) {
+        //            if (rawImage[i] > max1)
+        //                max1 = rawImage[i];
+        //        }
+        //        else if (rawImage[i] > max2)
+        //            max2 = rawImage[i];
+        //    }
 
-            // determine normalization factors.
-            var normFactor = max2 == 0 ? 0.0d : 128.0d / max2;
-            var factor = max1 > 0 ? 255.0d / max1 : 0.0d;
-            max2 = Math.Max(max2, 1);
+        //    // determine normalization factors.
+        //    var normFactor = max2 == 0 ? 0.0d : 128.0d / max2;
+        //    var factor = max1 > 0 ? 255.0d / max1 : 0.0d;
+        //    max2 = Math.Max(max2, 1);
 
-            // normalize each pixel to output buffer.
-            var buffer8Bit = new byte[rawImage.Length / 2];
-            for (int src = 0, dst = 0; src < rawImage.Length; dst++) {
-                int value16 = rawImage[src++];
-                double value8 = ((value16 * factor) / max2) - normFactor;
+        //    // normalize each pixel to output buffer.
+        //    var buffer8Bit = new byte[rawImage.Length / 2];
+        //    for (int src = 0, dst = 0; src < rawImage.Length; dst++) {
+        //        int value16 = rawImage[src++];
+        //        double value8 = ((value16 * factor) / max2) - normFactor;
 
-                if (rawImage[src] > 0) {
-                    int b = rawImage[src] << 8;
-                    value8 = ((value16 + b) / max2) - normFactor;
-                }
-                buffer8Bit[dst] = (byte)Math.Min(255, Math.Max(value8, 0));
-                src++;
-            }
+        //        if (rawImage[src] > 0) {
+        //            int b = rawImage[src] << 8;
+        //            value8 = ((value16 + b) / max2) - normFactor;
+        //        }
+        //        buffer8Bit[dst] = (byte)Math.Min(255, Math.Max(value8, 0));
+        //        src++;
+        //    }
 
-            // return new bitmap source.
-            return BitmapSource.Create(
-                source.PixelWidth, source.PixelHeight,
-                source.DpiX, source.DpiY,
-                PixelFormats.Gray8, BitmapPalettes.Gray256,
-                buffer8Bit, rawStride / 2);
-        }
+        //    // return new bitmap source.
+        //    return BitmapSource.Create(
+        //        source.PixelWidth, source.PixelHeight,
+        //        source.DpiX, source.DpiY,
+        //        PixelFormats.Gray8, BitmapPalettes.Gray256,
+        //        buffer8Bit, rawStride / 2);
+        //}
     }
 }

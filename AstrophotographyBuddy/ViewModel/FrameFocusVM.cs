@@ -14,6 +14,7 @@ namespace AstrophotographyBuddy.ViewModel {
     class FrameFocusVM : BaseVM {
         public FrameFocusVM() {
             Name = "Frame & Focus";
+            ImageURI = @"/AstrophotographyBuddy;component/Resources/Focus.png";
 
             SnapCommand = new RelayCommand(capture);
             ApplyImageParamsCommand = new RelayCommand(applyImageParams);

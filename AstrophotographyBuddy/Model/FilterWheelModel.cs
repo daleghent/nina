@@ -65,7 +65,6 @@ namespace AstrophotographyBuddy.Model {
         private short _interfaceVersion;
         private int[] _focusOffsets;
         private string[] _names;
-        private short _position;
         private ArrayList _supportedActions;
 
 
@@ -162,6 +161,7 @@ namespace AstrophotographyBuddy.Model {
                     try {                 
                         FW.Position = value;                        
                     } catch (Exception ex) {
+                        Logger.trace(ex.Message);
                     
                     }
                     
@@ -201,10 +201,13 @@ namespace AstrophotographyBuddy.Model {
                     con = true;
                 }
                 catch (ASCOM.DriverAccessCOMException ex) {
-                    //CameraStateString = "Unable to connect to camera";
+                    Logger.error("Unable to connect to FilterWheel");
+                    Logger.trace(ex.Message);
                     Connected = false;
                 }
                 catch (Exception ex) {
+                    Logger.error("Unable to connect to FilterWheel");
+                    Logger.trace(ex.Message);
                     Connected = false;
                 }
             }
@@ -225,6 +228,9 @@ namespace AstrophotographyBuddy.Model {
                 Description = FW.Description;
                 Name = FW.Name;
             } catch (Exception ex) {
+                Logger.error("Unable to connect to FilterWheel");
+                Logger.trace(ex.Message);
+
 
             }
 
@@ -233,7 +239,8 @@ namespace AstrophotographyBuddy.Model {
                 DriverVersion = FW.DriverVersion;
                 InterfaceVersion = FW.InterfaceVersion;
             }catch (Exception ex) {
-
+                Logger.warning("Used FilterWheel AscomDriver does not implement DriverInfo");
+                Logger.trace(ex.Message);
             }
             
             try {
@@ -248,13 +255,16 @@ namespace AstrophotographyBuddy.Model {
                 Filters = l;
                 
             } catch (Exception ex) {
-
+                Logger.warning("Used FilterWheel AscomDriver does not implement FocusOffsets, Names or Positions");
+                Logger.trace(ex.Message);
             }
 
             
             try {
                 SupportedActions = FW.SupportedActions;
             } catch (Exception ex) {
+                Logger.warning("Used FilterWheel AscomDriver does not implement SupportedActions");
+                Logger.trace(ex.Message);
 
             }
         }

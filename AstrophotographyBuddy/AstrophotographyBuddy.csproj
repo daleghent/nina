@@ -116,6 +116,7 @@
     <Compile Include="Utility\AsyncCommand.cs" />
     <Compile Include="Utility\BaseINPC.cs" />
     <Compile Include="Utility\Converters.cs" />
+    <Compile Include="Utility\Logger.cs" />
     <Compile Include="Utility\NotifyTaskCompletion.cs" />
     <Compile Include="Utility\NullToVisibilityConverter.cs" />
     <Compile Include="Utility\PHD2Client.cs" />
@@ -251,6 +252,24 @@
   <ItemGroup>
     <Resource Include="Resources\CamActive.png" />
     <Resource Include="Resources\CamInactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\FW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Options.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Focus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Imaging.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Telescope.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

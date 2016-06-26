@@ -81,7 +81,6 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBlock  VerticalAlignment="Center" Width="100">PHD2ServerUrl</TextBlock>
                 <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding PHD2ServerUrl}" />
@@ -98,17 +97,6 @@
                 
                 <TextBlock Grid.Row="3" VerticalAlignment="Center" Width="100">Dither RA Only?</TextBlock>
                 <CheckBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  IsChecked="{Binding DitherRAOnly}" />
-
-
-
-                <Button Grid.ColumnSpan="2" HorizontalAlignment="Right" Grid.Row="4" Height="50" Width="100" Command="{Binding TestPHDConnectionCommand}">
-                    <Grid>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding TestPHDConnectionCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Test Connection</TextBlock>
-                        <Grid Visibility="{Binding TestPHDConnectionCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
-                            <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding TestPHDConnectionCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="Connecting..." />
-                        </Grid>
-                    </Grid>
-                </Button>
            
             </Grid>
         </GroupBox>

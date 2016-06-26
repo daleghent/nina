@@ -14,12 +14,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using static AstrophotographyBuddy.Model.SequenceModel;
 
 namespace AstrophotographyBuddy.ViewModel {
     class ImagingVM : BaseVM{
 
         public ImagingVM() {
             Name = "Imaging";
+            ImageURI = @"/AstrophotographyBuddy;component/Resources/Imaging.png";
             SnapExposureDuration = 1;
             SnapCommand = new AsyncCommand<bool>(() => captureImage());
             CancelSnapCommand = new RelayCommand(cancelCaptureImage);
@@ -130,152 +132,171 @@ namespace AstrophotographyBuddy.ViewModel {
 
         
 
-        private async Task<bool> startSequence(ICollection<SequenceModel> sequence, CancellationTokenSource tokenSource) {
-            short i = 1;
-            foreach (SequenceModel seq in sequence) {
-                seq.Active = true;
-                double duration = seq.ExposureTime;
-                while (seq.ExposureCount > 0) {
+        private async Task changeFilter(SequenceModel seq, CancellationTokenSource tokenSource) {
+            if (seq.FilterType != null && FW.Connected) {
+                FW.Position = seq.FilterType.Position;
+                ExpStatus = ExposureStatus.FILTERCHANGE;
 
-                    if (seq.FilterType != null && FW.Connected) {
-                        FW.Position = seq.FilterType.Position;
-                        ExpStatus = ExposureStatus.FILTERCHANGE;
-
-                        await Task.Run(() => {
-                            while (FW.Position == -1) {
-                                //Wait for filter change;
-                                if (tokenSource.IsCancellationRequested) {
-                                    return;
-                                }
-                            }
-                        });
-                        if (tokenSource.IsCancellationRequested) {
-                            return false;
-                        }
+                await Task.Run(() => {
+                    while (FW.Position == -1) {
+                        //Wait for filter change;
+                        tokenSource.Token.ThrowIfCancellationRequested();
                     }
-
-                    if(seq.Binning == null) {
-                        Cam.setBinning(1,1);
-                    } else {
-                        Cam.setBinning(seq.Binning.X, seq.Binning.Y);
-                    }
-                    
-
-
-                    /*Capture*/
-                    ExpStatus = ExposureStatus.CAPTURING;
-                    bool isLight = false;
-                    if (Cam.HasShutter) {
-                        isLight = true;
-                    }
-                    Cam.startExposure(duration, isLight);
-                    ExposureSeconds = 1;
-
-                    /* Wait for Capture */
-                    if (duration >= 1) {
-                        await Task.Run(async () => {
-                            do {
-                                await Task.Delay(1000);
-                                if (tokenSource.IsCancellationRequested) {
-                                    return;
-                                }
-                                ExposureSeconds += 1;
-                            } while (ExposureSeconds < duration);
-                        });
-                    }
-                    if (tokenSource.IsCancellationRequested) {
-                        ExpStatus = ExposureStatus.IDLE;
-                        Cam.stopExposure();
-                        return false;
-                    }
-
-                    /*Download Image */
-                    ExpStatus = ExposureStatus.DOWNLOADING;
-                    Int32[,] arr = await Task.Run<Int32[,]>(() => {
-                        return Cam.downloadExposure(tokenSource);
-                    });
-
-                    if (tokenSource.IsCancellationRequested) {
-                        ExpStatus = ExposureStatus.IDLE;
-                        return false;
-                    }
-
-                    /*Convert Array to Int16*/
-                    ExpStatus = ExposureStatus.PREPARING;
-                    Utility.Utility.ImageArray iarr = await Task.Run<Utility.Utility.ImageArray>(() => {
-                        return Utility.Utility.convert2DArray(arr);
-                    });
-
-                    if (tokenSource.IsCancellationRequested) {
-                        ExpStatus = ExposureStatus.IDLE;
-                        return false;
-                    }
-
-                    /*Prepare Image for UI*/
-                    BitmapSource tmp = Utility.Utility.createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y);
-                    tmp = Cam.NormalizeTiffTo8BitImage(tmp);
-
-                    /*Save to disk*/
-                    ExpStatus = ExposureStatus.SAVING;
-                    await Task.Run(() => {
-
-                        List<OptionsVM.ImagePattern> p = new List<OptionsVM.ImagePattern>();
-                        if(FW.Filters != null) {
-                            p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", FW.Filters.ElementAt(FW.Position).Name));
-                        } else {
-                            p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", ""));
-                        }
-                        p.Add(new OptionsVM.ImagePattern("$$EXPOSURETIME$$", "Exposure Time in seconds", string.Format("{0:0.00}", seq.ExposureTime)));     
-                        p.Add(new OptionsVM.ImagePattern("$$DATE$$", "Date with format YYYY-MM-DD", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")));
-                        p.Add(new OptionsVM.ImagePattern("$$FRAMENR$$", "# of the Frame with format ####", string.Format("{0:0000}", i)));
-                        p.Add(new OptionsVM.ImagePattern("$$IMAGETYPE$$", "Light, Flat, Dark, Bias", seq.ImageType));
-                        if(seq.Binning == null) {
-                            p.Add(new OptionsVM.ImagePattern("$$BINNING$$", "Binning of the camera", "1x1"));
-                        } else {
-                            p.Add(new OptionsVM.ImagePattern("$$BINNING$$", "Binning of the camera", seq.Binning.Name));
-                        }
-                        
-                        p.Add(new OptionsVM.ImagePattern("$$SENSORTEMP$$", "Temperature of the Camera", string.Format("{0:00}", Cam.CCDTemperature)));
-
-                        string filename = Utility.Utility.getImageFileString(p);
-                        string completefilename = Settings.ImageFilePath + filename;
-                        Utility.Utility.saveTiff(iarr, string.Format(completefilename, seq.ExposureCount));
-                    });
-
-                    if (tokenSource.IsCancellationRequested) {
-                        ExpStatus = ExposureStatus.IDLE;
-                        return false;
-                    }
-
-                    if(seq.Dither && ((seq.ExposureCount % seq.DitherAmount) == 0)) {
-                        ExpStatus = ExposureStatus.DITHERING;
-                        await PHD2Client.dither();
-                        
-                        ExpStatus = ExposureStatus.SETTLING;
-                        await Task.Run<bool>(async () => {
-                            while (PHD2Client.IsDithering) {
-                                await Task.Delay(100);
-                                if (tokenSource.IsCancellationRequested) {
-                                    ExpStatus = ExposureStatus.IDLE;
-                                    return false;
-                                }
-                            }
-                            return true;
-                        });
-                    }
-                    if (tokenSource.IsCancellationRequested) {
-                        ExpStatus = ExposureStatus.IDLE;
-                        return false;
-                    }
-
-                    Image = tmp;
-                    seq.ExposureCount -= 1;
-                    i++;
-                }
-                seq.Active = false;
+                });
+                tokenSource.Token.ThrowIfCancellationRequested();                
             }
+        }
 
-            ExpStatus = ExposureStatus.IDLE;
+        private void setBinning(SequenceModel seq) {
+            if (seq.Binning == null) {
+                Cam.setBinning(1, 1);
+            }
+            else {
+                Cam.setBinning(seq.Binning.X, seq.Binning.Y);
+            }
+        }
+
+        private async Task capture(SequenceModel seq, CancellationTokenSource tokenSource) {
+            ExpStatus = ExposureStatus.CAPTURING;
+            double duration = seq.ExposureTime;
+            bool isLight = false;
+            if (Cam.HasShutter) {
+                isLight = true;
+            }
+            Cam.startExposure(duration, isLight);
+            ExposureSeconds = 1;
+
+            /* Wait for Capture */
+            if (duration >= 1) {
+                await Task.Run(async () => {
+                    do {
+                        await Task.Delay(1000);
+                        tokenSource.Token.ThrowIfCancellationRequested();
+                        ExposureSeconds += 1;
+                    } while (ExposureSeconds < duration);
+                });
+            }
+            tokenSource.Token.ThrowIfCancellationRequested();
+        }
+
+        private async Task<Int32[,]> download(CancellationTokenSource tokenSource) {
+            ExpStatus = ExposureStatus.DOWNLOADING;
+            return await Cam.downloadExposure(tokenSource);
+        }
+
+        private async Task<Utility.Utility.ImageArray> convert(Int32[,] arr, CancellationTokenSource tokenSource) {
+            ExpStatus = ExposureStatus.PREPARING;
+            Utility.Utility.ImageArray iarr = await Utility.Utility.convert2DArray(arr);
+            tokenSource.Token.ThrowIfCancellationRequested();
+            return iarr;
+        }
+
+        private BitmapSource prepare(Utility.Utility.ImageArray iarr) {
+            ExpStatus = ExposureStatus.PREPARING;
+            BitmapSource src= Utility.Utility.createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y, System.Windows.Media.PixelFormats.Gray16);
+            return Utility.Utility.NormalizeTiffTo8BitImage(src);
+
+
+        }
+
+        private async Task<bool> save(SequenceModel seq, Utility.Utility.ImageArray iarr, short framenr,  CancellationTokenSource tokenSource) {
+            ExpStatus = ExposureStatus.SAVING;
+            await Task.Run(() => {
+
+                List<OptionsVM.ImagePattern> p = new List<OptionsVM.ImagePattern>();
+                if (FW.Filters != null) {
+                    p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", FW.Filters.ElementAt(FW.Position).Name));
+                }
+                else {
+                    p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", ""));
+                }
+                p.Add(new OptionsVM.ImagePattern("$$EXPOSURETIME$$", "Exposure Time in seconds", string.Format("{0:0.00}", seq.ExposureTime)));
+                p.Add(new OptionsVM.ImagePattern("$$DATE$$", "Date with format YYYY-MM-DD", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")));
+                p.Add(new OptionsVM.ImagePattern("$$FRAMENR$$", "# of the Frame with format ####", string.Format("{0:0000}", framenr)));
+                p.Add(new OptionsVM.ImagePattern("$$IMAGETYPE$$", "Light, Flat, Dark, Bias", seq.ImageType));
+                if (seq.Binning == null) {
+                    p.Add(new OptionsVM.ImagePattern("$$BINNING$$", "Binning of the camera", "1x1"));
+                }
+                else {
+                    p.Add(new OptionsVM.ImagePattern("$$BINNING$$", "Binning of the camera", seq.Binning.Name));
+                }
+
+                p.Add(new OptionsVM.ImagePattern("$$SENSORTEMP$$", "Temperature of the Camera", string.Format("{0:00}", Cam.CCDTemperature)));
+
+                string filename = Utility.Utility.getImageFileString(p);
+                string completefilename = Settings.ImageFilePath + filename;
+                Utility.Utility.saveTiff(iarr, string.Format(completefilename, seq.ExposureCount));
+            });
+
+            tokenSource.Token.ThrowIfCancellationRequested();
+            return true;
+        }
+
+        private async Task<bool> dither(SequenceModel seq, CancellationTokenSource tokenSource) {
+            if (seq.Dither && ((seq.ExposureCount % seq.DitherAmount) == 0)) {
+                ExpStatus = ExposureStatus.DITHERING;
+                await PHD2Client.dither();
+
+                ExpStatus = ExposureStatus.SETTLING;
+                await Task.Run<bool>(async () => {
+                    while (PHD2Client.IsDithering) {
+                        await Task.Delay(100);
+                        tokenSource.Token.ThrowIfCancellationRequested();
+                    }
+                    return true;
+                });
+            }
+            tokenSource.Token.ThrowIfCancellationRequested();
+            return true;
+        }
+
+        private async Task<bool> startSequence(ICollection<SequenceModel> sequence, CancellationTokenSource tokenSource) {
+            try {
+
+
+                short framenr = 1;
+                foreach (SequenceModel seq in sequence) {
+                    seq.Active = true;
+                    
+                    while (seq.ExposureCount > 0) {
+
+                        /*Change Filter*/
+                        await changeFilter(seq, tokenSource);
+
+                        /*Set Camera Binning*/
+                        setBinning(seq);
+                        
+                        /*Capture*/
+                        await capture(seq, tokenSource);
+
+                        /*Download Image */                        
+                        Int32[,] arr = await download(tokenSource);
+                        
+                        /*Convert Array to Int16*/
+                        Utility.Utility.ImageArray iarr = await convert(arr, tokenSource);
+                        
+                        /*Prepare Image for UI*/
+                        BitmapSource tmp = prepare(iarr);                        
+
+                        /*Save to disk*/                       
+                        await save(seq, iarr, framenr, tokenSource);
+
+                        /*Dither*/
+                        await dither(seq, tokenSource);
+
+                        Image = tmp;
+                        seq.ExposureCount -= 1;
+                        framenr++;
+                    }
+                    seq.Active = false;
+                }
+            }
+            catch (System.OperationCanceledException ex) {
+                Logger.trace(ex.Message);
+            }
+            finally {
+                ExpStatus = ExposureStatus.IDLE;
+            }            
             return await Task.Run<bool>(() => { return true; });
         }
 
@@ -363,7 +384,7 @@ namespace AstrophotographyBuddy.ViewModel {
         private async Task<bool> captureImage() {
             _captureImageToken = new CancellationTokenSource();
             List<SequenceModel> seq = new List<SequenceModel>();
-            seq.Add(new SequenceModel(SnapExposureDuration, "Snap", SnapFilter, SnapBin, 1));
+            seq.Add(new SequenceModel(SnapExposureDuration, ImageTypes.SNAP, SnapFilter, SnapBin, 1));
             return await startSequence(seq, _captureImageToken);     
         }
 

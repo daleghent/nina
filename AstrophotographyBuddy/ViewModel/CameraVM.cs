@@ -14,6 +14,7 @@ namespace AstrophotographyBuddy {
 
         public CameraVM() {
             Name = "Camera";
+            ImageURI = @"/AstrophotographyBuddy;component/Resources/Camera.png";
             //ConnectCameraCommand = new RelayCommand(connectCamera);
             ChooseCameraCommand = new RelayCommand(chooseCamera);
             DisconnectCommand = new RelayCommand(disconnectCamera);

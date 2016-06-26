@@ -11,6 +11,7 @@ namespace AstrophotographyBuddy.ViewModel {
     class FilterWheelVM: BaseVM {
         public FilterWheelVM() {
             Name = "Filter Wheel";
+            ImageURI = "/AstrophotographyBuddy;component/Resources/FW.png";
             FW = new FilterWheelModel();
             ChooseFWCommand = new RelayCommand(chooseFW);
             DisconnectCommand = new RelayCommand(disconnectFW);

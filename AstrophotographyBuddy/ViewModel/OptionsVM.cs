@@ -12,9 +12,10 @@ namespace AstrophotographyBuddy.ViewModel {
     class OptionsVM :BaseVM {
         public OptionsVM() {
             Name = "Options";
+
+            ImageURI = @"/AstrophotographyBuddy;component/Resources/Options.png";
             PreviewFileCommand = new RelayCommand(previewFile);
             OpenFileDiagCommand = new RelayCommand(openFileDiag);
-            TestPHDConnectionCommand = new AsyncCommand<bool>(() => testPHDConnection());
 
             ImageFilePath = Settings.ImageFilePath;
             ImageFilePattern = Settings.ImageFilePattern;
@@ -55,13 +56,7 @@ namespace AstrophotographyBuddy.ViewModel {
             System.Windows.MessageBox.Show(Utility.Utility.getImageFileString(ImagePatterns), "Example File Name", System.Windows.MessageBoxButton.OK);
         }
 
-        private async Task<bool> testPHDConnection() {
-            string msg = await Task.Run<string>(async () =>  await Utility.Utility.ConnectPHD2(""));//Hello
-            System.Windows.MessageBox.Show(msg, "PHD2 Answer", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Information);
-            return true;
-        }
-
-        private ICommand _previewFileCommand;
+                private ICommand _previewFileCommand;
         public ICommand PreviewFileCommand {
             get {
                 return _previewFileCommand;
@@ -72,18 +67,7 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
-        private Utility.AsyncCommand<bool> _testPHDConnectionCommand;
-        public Utility.AsyncCommand<bool> TestPHDConnectionCommand {
-            get {
-                return _testPHDConnectionCommand;
-            }
-            set {
-                _testPHDConnectionCommand = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string ImageFilePath {
+     public string ImageFilePath {
             get {
                 return Settings.ImageFilePath;
             }

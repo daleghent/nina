@@ -166,5 +166,17 @@ namespace AstrophotographyBuddy.Properties {
                 this["DitherRAOnly"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int LogLevel {
+            get {
+                return ((int)(this["LogLevel"]));
+            }
+            set {
+                this["LogLevel"] = value;
+            }
+        }
     }
 }
