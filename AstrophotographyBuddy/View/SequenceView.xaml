@@ -30,6 +30,7 @@
                 <DataGridComboBoxColumn Header="Filter" ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.FilterWheelVM.FW.Filters}" DisplayMemberPath="Name" SelectedItemBinding="{Binding FilterType, Mode=TwoWay}" SelectedValuePath="Name"></DataGridComboBoxColumn>
                 <DataGridComboBoxColumn Header="Binning" ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}" DisplayMemberPath="Name" SelectedItemBinding="{Binding Binning}" SelectedValuePath="Name"></DataGridComboBoxColumn>
                 <DataGridCheckBoxColumn Header="Dither" Binding="{Binding Dither}" ></DataGridCheckBoxColumn>
+                <DataGridTextColumn Header="Dither Every # Frame" Binding="{Binding DitherAmount}"></DataGridTextColumn>
             </DataGrid.Columns>
             
         </DataGrid>

@@ -25,20 +25,29 @@
             <Button Grid.Column="0" Height="50" Width="50" Command="{Binding ToggleViewCommand}" CommandParameter="{Binding Name}" Content="{Binding Name}" ></Button>
             <Button Grid.Column="1" Height="50" Width="50"  Command="{Binding PrevViewCommand}">&lt;</Button>
             <Button Grid.Column="2" Height="50" Width="50" Command="{Binding CameraVM.ChooseCameraCommand}"  IsEnabled="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBooleanConverter}}"
-                    Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">Connect</Button>
+                    Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <Image Source="/AstrophotographyBuddy;component/Resources/CamInactive.png"></Image>
+            </Button>
             <Button Grid.Column="2" Height="50" Width="50" Command="{Binding CameraVM.DisconnectCommand}" IsEnabled="{Binding CameraVM.Cam.Connected}"
-                    Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource VisibilityConverter}}">Disconnect</Button>
+                    Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource VisibilityConverter}}">
+                <Image Source="/AstrophotographyBuddy;component/Resources/CamActive.png"></Image>
+            </Button>
             <Grid Grid.Column="3" DataContext="{Binding CameraVM}">
                 <Button Grid.Column="3" Height="50" Width="50" Command="{Binding FilterWheelVM.ChooseFWCommand}"  IsEnabled="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBooleanConverter}}"
-                    Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">ConnectFW</Button>
+                    Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Image Source="/AstrophotographyBuddy;component/Resources/FWInactive.png"></Image>                    
+                </Button>
 
                 <Button Grid.Column="3" Height="50" Width="50" Command="{Binding FilterWheelVM.DisconnectCommand}" IsEnabled="{Binding FilterWheelVM.FW.Connected}"
-                    Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource VisibilityConverter}}">DisconnectFW</Button>
+                    Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource VisibilityConverter}}">
+                    <Image Source="/AstrophotographyBuddy;component/Resources/FWActive.png"></Image>
+                </Button>
             </Grid>
 
             <Button Grid.Column="4" Height="50" Width="50" Command="{Binding ConnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <Grid>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">PHD</TextBlock>
+                    <!--<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">PHD</TextBlock>-->
+                    <Image HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}"  Source="/AstrophotographyBuddy;component/Resources/PHD2Inactive.png"></Image>
                     <Grid Visibility="{Binding ConnectPHDClientCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                         <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="Connecting..." />
                     </Grid>
@@ -46,14 +55,13 @@
             </Button>
             <Button Grid.Column="4" Height="50" Width="50" Command="{Binding DisconnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource VisibilityConverter}}">
                 <Grid>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding DisconnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">!PHD</TextBlock>
+                    <!--<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding DisconnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">!PHD</TextBlock>-->
+                    <Image HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding DisconnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}" Source="/AstrophotographyBuddy;component/Resources/PHD2Active.png"></Image>
                     <Grid Visibility="{Binding DisconnectPHDClientCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                         <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding DisconnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="Disonnecting..." />
                     </Grid>
                 </Grid>
             </Button>
-            <!--<Button Grid.Column="4" Command="{Binding ConnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">PHD</Button>
-            <Button Grid.Column="4" Command="{Binding DisconnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource VisibilityConverter}}">Disconnect PHD</Button>-->
             <Button Grid.Column="6" Height="50" Width="50" Command="{Binding NextViewCommand}">&gt;</Button>
         </Grid>
         <view:ApplicationMenu Grid.Row="1" DataContext="{Binding}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:ApplicationMenu>

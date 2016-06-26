@@ -165,6 +165,28 @@ namespace AstrophotographyBuddy.ViewModel {
 
         }
 
+        public double DitherPixels {
+            get {
+                return Settings.DitherPixels;
+            }
+            set {
+                Settings.DitherPixels = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
+        public bool DitherRAOnly {
+            get {
+                return Settings.DitherRAOnly;
+            }
+            set {
+                Settings.DitherRAOnly = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
         private HashSet<ImagePattern> _imagePatterns;
         public HashSet<ImagePattern> ImagePatterns {
             get {

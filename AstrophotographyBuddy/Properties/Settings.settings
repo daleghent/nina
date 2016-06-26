@@ -32,5 +32,11 @@
     <Setting Name="BackgroundColor" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FFFFFFFF</Value>
     </Setting>
+    <Setting Name="DitherPixels" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1.5</Value>
+    </Setting>
+    <Setting Name="DitherRAOnly" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

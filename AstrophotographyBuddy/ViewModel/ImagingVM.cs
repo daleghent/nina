@@ -228,7 +228,7 @@ namespace AstrophotographyBuddy.ViewModel {
                         p.Add(new OptionsVM.ImagePattern("$$EXPOSURETIME$$", "Exposure Time in seconds", string.Format("{0:0.00}", seq.ExposureTime)));     
                         p.Add(new OptionsVM.ImagePattern("$$DATE$$", "Date with format YYYY-MM-DD", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")));
                         p.Add(new OptionsVM.ImagePattern("$$FRAMENR$$", "# of the Frame with format ####", string.Format("{0:0000}", i)));
-                        p.Add(new OptionsVM.ImagePattern("$$IMAGETYPE$$", "Light, Flat, Dark, Bias", "Light"));
+                        p.Add(new OptionsVM.ImagePattern("$$IMAGETYPE$$", "Light, Flat, Dark, Bias", seq.ImageType));
                         if(seq.Binning == null) {
                             p.Add(new OptionsVM.ImagePattern("$$BINNING$$", "Binning of the camera", "1x1"));
                         } else {
@@ -247,14 +247,14 @@ namespace AstrophotographyBuddy.ViewModel {
                         return false;
                     }
 
-                    if(seq.Dither) {
+                    if(seq.Dither && ((seq.ExposureCount % seq.DitherAmount) == 0)) {
                         ExpStatus = ExposureStatus.DITHERING;
                         await PHD2Client.dither();
-                        // await Utility.Utility.ConnectPHD2(String.Format(PHD2Methods.DITHER, 5,false.ToString().ToLower()));
                         
                         ExpStatus = ExposureStatus.SETTLING;
-                        await Task.Run<bool>(() => {
+                        await Task.Run<bool>(async () => {
                             while (PHD2Client.IsDithering) {
+                                await Task.Delay(100);
                                 if (tokenSource.IsCancellationRequested) {
                                     ExpStatus = ExposureStatus.IDLE;
                                     return false;
@@ -262,19 +262,6 @@ namespace AstrophotographyBuddy.ViewModel {
                             }
                             return true;
                         });
-                        
-                        
-                       
-                        
-                       /* await Task.Run(async () => {
-                            for(int d = 15; d>=0;d--) {
-                                await Task.Delay(1000);
-                                if (tokenSource.IsCancellationRequested) {
-                                    return;
-                                }
-                                ExpStatus = String.Format(ExposureStatus.DITHERINGCD, d);
-                            }
-                        });*/
                     }
                     if (tokenSource.IsCancellationRequested) {
                         ExpStatus = ExposureStatus.IDLE;
@@ -376,7 +363,7 @@ namespace AstrophotographyBuddy.ViewModel {
         private async Task<bool> captureImage() {
             _captureImageToken = new CancellationTokenSource();
             List<SequenceModel> seq = new List<SequenceModel>();
-            seq.Add(new SequenceModel(SnapExposureDuration, "", SnapFilter, SnapBin, 1));
+            seq.Add(new SequenceModel(SnapExposureDuration, "Snap", SnapFilter, SnapBin, 1));
             return await startSequence(seq, _captureImageToken);     
         }
 

@@ -11,9 +11,9 @@ namespace AstrophotographyBuddy.Model {
         public SequenceModel() {
             ExposureTime = 1;
             ImageType = "Light";
-            //FilterType = "L";
-            //Binning = "1x1";
-            ExposureCount = 1;
+            ExposureCount = 1;            
+            Dither = false;
+            DitherAmount = 1;
         }
 
         public override string ToString() {
@@ -107,6 +107,17 @@ namespace AstrophotographyBuddy.Model {
             }
             set {
                 _dither = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private int _ditherAmount;
+        public int DitherAmount {
+            get {
+                return _ditherAmount;
+            }
+            set {
+                _ditherAmount = value;
                 RaisePropertyChanged();
             }
         }

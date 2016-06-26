@@ -142,5 +142,29 @@ namespace AstrophotographyBuddy.Properties {
                 this["BackgroundColor"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1.5")]
+        public double DitherPixels {
+            get {
+                return ((double)(this["DitherPixels"]));
+            }
+            set {
+                this["DitherPixels"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DitherRAOnly {
+            get {
+                return ((bool)(this["DitherRAOnly"]));
+            }
+            set {
+                this["DitherRAOnly"] = value;
+            }
+        }
     }
 }

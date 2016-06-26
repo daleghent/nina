@@ -131,7 +131,7 @@ namespace AstrophotographyBuddy.Utility {
         public async Task<bool> dither() {
             if(Connected) {
                 IsDithering = true;
-                await sendMessage(String.Format(PHD2Methods.DITHER, 5, false.ToString().ToLower()));
+                await sendMessage(String.Format(PHD2Methods.DITHER, Settings.DitherPixels.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture), Settings.DitherRAOnly.ToString().ToLower()));
             }
 
             return IsDithering;
@@ -148,7 +148,7 @@ namespace AstrophotographyBuddy.Utility {
 
                 // Send the message to the connected TcpServer. 
                 await _stream.WriteAsync(data, 0, data.Length);
-                await Task.Delay(200);
+                
             }
             return true;            
         }
@@ -166,13 +166,9 @@ namespace AstrophotographyBuddy.Utility {
         }
         
         private async void startListener(CancellationToken token) {
-
-            //StreamReader sr = new StreamReader(_stream);
-           
+            
             while(Connected) {
                 try {
-                    //token.ThrowIfCancellationRequested();
-                    
                     if (_stream.DataAvailable) {
                         token.ThrowIfCancellationRequested();
                         byte[] resp = new byte[2048];
@@ -188,9 +184,7 @@ namespace AstrophotographyBuddy.Utility {
                                 rows.Add(line);
                             }
                         }
-
-
-                        //buffer = sr.ReadLine();
+                        
                         foreach(string row in rows) {
                             JObject o = JObject.Parse(row);
                             JToken t = o.GetValue("Event");
@@ -244,6 +238,9 @@ namespace AstrophotographyBuddy.Utility {
                                         Settling = null;
                                         IsDithering = false;
                                         SettleDone = o.ToObject<PhdEventSettleDone>();
+                                        if(SettleDone.Error != null) {
+                                            System.Windows.MessageBox.Show(SettleDone.Error, "PHD2 Dither Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                                        }
                                         break;
                                     }
                                 default: {

@@ -57,6 +57,26 @@ namespace AstrophotographyBuddy.Utility {
             }
         }
 
+        public static double DitherPixels {
+            get {
+                return Properties.Settings.Default.DitherPixels;
+            }
+            set {
+                Properties.Settings.Default.DitherPixels = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public static bool DitherRAOnly {
+            get {
+                return Properties.Settings.Default.DitherRAOnly;
+            }
+            set {
+                Properties.Settings.Default.DitherRAOnly = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
         public static Color PrimaryColor {
             get {
                 return Properties.Settings.Default.PrimaryColor;
