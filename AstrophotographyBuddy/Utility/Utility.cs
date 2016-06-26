@@ -35,21 +35,37 @@ namespace AstrophotographyBuddy.Utility {
         }
 
         public static async Task<ImageArray> convert2DArray(Int32[,] arr) {
-            return await Task<ImageArray>.Run(() => { 
+            return await Task<ImageArray>.Run(() => {
                 ImageArray iarr = new ImageArray();
                 iarr.SourceArray = arr;
                 int width = arr.GetLength(0);
                 int height = arr.GetLength(1);
-                iarr.Y = width;
-                iarr.X = height;
+                //iarr.Y = width;
+                //iarr.X = height;
+                iarr.X = width;
+                iarr.Y = height;
                 Int16[] flatArray = new Int16[arr.Length];
                 unsafe
                 {
-                    fixed (Int32* ptr = arr)
-                    {
-                        for (int i = 0; i < arr.Length; i++) {
+                fixed (Int32* ptr = arr)
+                {
+                        int row = 0;
+                    for (int i = 0; i < arr.Length; i++) {
+                            
+                            var idx = ((i%height) * width) + row ;
+
+                            if ((i % (height)) == (height - 1))
+                                row++;
+
+
+
+                            //var idx = i;
+
+
                             Int16 b = (Int16)ptr[i];
-                            flatArray[i] = b;                            
+                        flatArray[idx] = b;
+                        
+                            
                         }
                     }
                 }
