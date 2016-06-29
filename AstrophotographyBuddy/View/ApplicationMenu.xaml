@@ -34,11 +34,4 @@
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>
-    <!--<UniformGrid Columns="2">
-        <Button Margin="10" CommandParameter="{Binding Path=Camera, Source={StaticResource ViewNames}}" Command="{Binding ToggleViewCommand}">Camera</Button>
-        <Button Margin="10" CommandParameter="{Binding Path=Imaging, Source={StaticResource ViewNames}}" Command="{Binding ToggleViewCommand}">Imaging</Button>
-        <Button Margin="10" CommandParameter="{Binding Path=Telescope, Source={StaticResource ViewNames}}" Command="{Binding ToggleViewCommand}">Telescope</Button>
-        <Button Margin="10" CommandParameter="{Binding Path=Filterwheel, Source={StaticResource ViewNames}}" Command="{Binding ToggleViewCommand}">Filter Wheel</Button>
-        <Button Margin="10" CommandParameter="{Binding Path=Options, Source={StaticResource ViewNames}}" Command="{Binding ToggleViewCommand}">Options</Button>        
-    </UniformGrid>-->
 </UserControl>

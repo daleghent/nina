@@ -178,5 +178,17 @@ namespace AstrophotographyBuddy.Properties {
                 this["LogLevel"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("ASCOM.Simulator.Telescope")]
+        public string TelescopeId {
+            get {
+                return ((string)(this["TelescopeId"]));
+            }
+            set {
+                this["TelescopeId"] = value;
+            }
+        }
     }
 }

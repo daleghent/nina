@@ -14,6 +14,17 @@ using System.Windows.Media.Imaging;
 namespace AstrophotographyBuddy.Utility {
     static class Utility {
 
+        private static ASCOM.Utilities.Util _ascomUtil;
+        public static ASCOM.Utilities.Util AscomUtil {
+            get {
+                if(_ascomUtil == null) {
+                    _ascomUtil = new ASCOM.Utilities.Util();
+                }
+                return _ascomUtil;
+
+            }
+        }
+
         public class ImageArray {
             public Array SourceArray;
             public Int16[] FlatArray;

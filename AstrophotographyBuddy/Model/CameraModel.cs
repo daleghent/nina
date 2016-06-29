@@ -21,7 +21,7 @@ namespace AstrophotographyBuddy
         }
 
         private void init() {
-            CameraStateString = "disconnected";
+            //CameraStateString = "disconnected";
             //ProgId = string.Empty;
 
             AscomCamera = null;
@@ -143,12 +143,13 @@ namespace AstrophotographyBuddy
 
         ASCOM.DeviceInterface.CameraStates _cameraState;
         ASCOM.DeviceInterface.CameraStates CameraState {
-            get {
+            get {                
                 return _cameraState;
             } set {
                 _cameraState = value;
-                CameraStateString = _cameraState.ToString();
-                RaisePropertyChanged();                
+                //CameraStateString = _cameraState.ToString();
+                RaisePropertyChanged();
+                RaisePropertyChanged("CameraStateString");
             }
         }
 
@@ -157,14 +158,14 @@ namespace AstrophotographyBuddy
             BinY = y;
         }
 
-        private string _cameraStateString;
+        //private string _cameraStateString;
         public string CameraStateString {
             get {
-                return _cameraStateString;
-            } set {
+                return CameraState.ToString();
+            } /*set {
                 _cameraStateString = value;
                 RaisePropertyChanged();   
-            }
+            }*/
         }
 
 
@@ -915,8 +916,7 @@ namespace AstrophotographyBuddy
 
         
 
-        public void getCameraInfos () {
-           // Connected = AscomCamera.Connected;
+        public void getCameraInfo () {
             try {
                  BayerOffsetX = AscomCamera.BayerOffsetX;
                  BayerOffsetY = AscomCamera.BayerOffsetY;
@@ -1331,11 +1331,12 @@ namespace AstrophotographyBuddy
         }
 
         public void disconnect() {
-            //AscomCamera.Connected = false;
-            Connected = false;            
-            AscomCamera.Dispose();
-            init();
-            CameraStateString = "disconnected";
+            if(AscomCamera != null && Connected) { 
+                Connected = false;            
+                AscomCamera.Dispose();
+                init();
+                //CameraStateString = "disconnected";
+            }
         }
 
         public bool connect() {
@@ -1351,13 +1352,13 @@ namespace AstrophotographyBuddy
                     //AscomCamera.Connected = true;
                     Connected = true;
                     Settings.CameraId = ProgId;                    
-                    getCameraInfos();
+                    getCameraInfo();
                     con = true;
                 }
                 catch (ASCOM.DriverAccessCOMException ex) {
                     Logger.error("Unable to connect to camera");
                     Logger.trace(ex.Message);
-                    CameraStateString = "Unable to connect to camera";
+                    //CameraStateString = "Unable to connect to camera";
                     Connected = false;
                 }
                 catch (Exception ex) {

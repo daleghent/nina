@@ -41,5 +41,8 @@
     <Setting Name="LogLevel" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
+    <Setting Name="TelescopeId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">ASCOM.Simulator.Telescope</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

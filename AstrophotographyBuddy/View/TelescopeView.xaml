@@ -5,9 +5,186 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AstrophotographyBuddy.View"
              xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Label>TelescopeView</Label>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+            
+            <GroupBox Header="Telescope">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Name:"/></TextBlock>
+                        <TextBlock Text="{Binding Telescope.Name}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Description:"/></TextBlock>
+                            <TextBlock Text="{Binding Telescope.Description}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Driver Info:"/></TextBlock>
+                            <TextBlock Text="{Binding Telescope.DriverInfo}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Driver Version:"/></TextBlock>
+                            <TextBlock Text="{Binding Telescope.DriverVersion}" Margin="5,0,0,0" />
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Grid.Column="1" Header="Position">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Sidereal Time:"/></TextBlock>
+                        <TextBlock Text="{Binding Telescope.SiderealTimeString}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Right Ascension:"/></TextBlock>
+                        <TextBlock Text="{Binding Telescope.RightAscensionString}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Declination:"/></TextBlock>
+                        <TextBlock Text="{Binding Telescope.DeclinationString}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Altitude:"/></TextBlock>
+                        <TextBlock Text="{Binding Telescope.AltitudeString}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock><Run Text="Azimuth:"/></TextBlock>
+                        <TextBlock Text="{Binding Telescope.AzimuthString}" Margin="5,0,0,0" />
+                    </StackPanel>
+                    
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Grid.Column="2" Header="Settings">
+
+            </GroupBox>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <GroupBox Grid.Row="1" Header="Control">
+
+                <UniformGrid Columns="2">
+                    <Grid>
+                        
+                    </Grid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="100"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Button Grid.Row="1" Grid.Column="0" Height="80" Width="80" HorizontalAlignment="Right" Content="W" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewStylusDown">
+                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>                            
+                                <i:EventTrigger EventName="PreviewStylusUp"> 
+                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewTouchDown">
+                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>                            
+                                <i:EventTrigger EventName="PreviewTouchUp">  
+                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
+                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            
+                        </Button>
+                        <Button Grid.Row="1" Grid.Column="2" Height="80" Width="80" HorizontalAlignment="Left" Content="O">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewStylusDown">
+                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>                            
+                                <i:EventTrigger EventName="PreviewStylusUp"> 
+                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewTouchDown">
+                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>                            
+                                <i:EventTrigger EventName="PreviewTouchUp">  
+                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
+                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>                            
+                        </Button>
+                        <Button Grid.Row="0" Grid.Column="1" Height="80" Width="80" VerticalAlignment="Bottom" Content="N">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewStylusDown">
+                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>                            
+                                <i:EventTrigger EventName="PreviewStylusUp"> 
+                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewTouchDown">
+                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>                            
+                                <i:EventTrigger EventName="PreviewTouchUp">  
+                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
+                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button Grid.Row="2" Grid.Column="1" Height="80" Width="80" VerticalAlignment="Top" Content="S">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PreviewStylusDown">
+                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewStylusUp">
+                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewTouchDown">
+                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewTouchUp">
+                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                                
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding MoveCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
+                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding StopMoveCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Button>
+                        <Button Grid.Row="1" Grid.Column="1" Height="80" Width="80" Content="STOP" Command="{Binding StopSlewCommand}"></Button>
+                    </Grid>
+                </UniformGrid>
+            </GroupBox>
+
+        </Grid>
     </Grid>
 </UserControl>

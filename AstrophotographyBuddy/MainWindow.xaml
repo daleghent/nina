@@ -19,6 +19,7 @@
                 <ColumnDefinition Width="60" />
                 <ColumnDefinition Width="60" />
                 <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="60" />
             </Grid.ColumnDefinitions>
@@ -62,7 +63,16 @@
                     </Grid>
                 </Grid>
             </Button>
-            <Button Grid.Column="6" Height="50" Width="50" Command="{Binding NextViewCommand}">&gt;</Button>
+            <Button Grid.Column="5" Height="50" Width="50" Command="{Binding TelescopeVM.ChooseTelescopeCommand}"  IsEnabled="{Binding TelescopeVM.Telescope.Connected, Converter={StaticResource InverseBooleanConverter}}"
+                    Visibility="{Binding TelescopeVM.Telescope.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                <Image Source="/AstrophotographyBuddy;component/Resources/TelescopeInactive.png"></Image>
+            </Button>
+            <Button Grid.Column="5" Height="50" Width="50" Command="{Binding TelescopeVM.DisconnectCommand}" IsEnabled="{Binding TelescopeVM.Telescope.Connected}"
+                    Visibility="{Binding TelescopeVM.Telescope.Connected, Converter={StaticResource VisibilityConverter}}">
+                <Image Source="/AstrophotographyBuddy;component/Resources/TelescopeActive.png"></Image>
+            </Button>
+
+            <Button Grid.Column="7" Height="50" Width="50" Command="{Binding NextViewCommand}">&gt;</Button>
         </Grid>
         <Grid Grid.Row="1" Margin="0,10,0,0">
             <view:ApplicationMenu Grid.Row="1" DataContext="{Binding}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:ApplicationMenu>

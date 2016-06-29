@@ -197,7 +197,7 @@ namespace AstrophotographyBuddy.Model {
                     //AscomCamera.Connected = true;
                     Connected = true;
                     Settings.FilterWheelId = ProgId;
-                    getFWInfos();
+                    getFWInfo();
                     con = true;
                 }
                 catch (ASCOM.DriverAccessCOMException ex) {
@@ -223,7 +223,7 @@ namespace AstrophotographyBuddy.Model {
         }
 
 
-        private void getFWInfos() {
+        private void getFWInfo() {
             try {
                 Description = FW.Description;
                 Name = FW.Name;

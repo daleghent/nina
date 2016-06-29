@@ -296,6 +296,7 @@ namespace AstrophotographyBuddy.ViewModel {
             }
             finally {
                 ExpStatus = ExposureStatus.IDLE;
+                Cam.stopExposure();
             }            
             return await Task.Run<bool>(() => { return true; });
         }

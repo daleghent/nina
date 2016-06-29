@@ -12,6 +12,16 @@ namespace AstrophotographyBuddy.Utility {
             }
         }
 
+        public static string TelescopeId {
+            get {
+                return Properties.Settings.Default.TelescopeId;
+            }
+            set {
+                Properties.Settings.Default.TelescopeId = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
         public static int LogLevel {
             get {
                 return Properties.Settings.Default.LogLevel;
