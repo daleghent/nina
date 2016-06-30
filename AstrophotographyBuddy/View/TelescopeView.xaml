@@ -72,117 +72,122 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <GroupBox Grid.Row="1" Header="Control">
+            <GroupBox Grid.Column="1" Header="Control" IsEnabled="{Binding Telescope.CanSlew}">
 
-                <UniformGrid Columns="2">
-                    <Grid>
-                        
-                    </Grid>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="100"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="100"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Button Grid.Row="1" Grid.Column="0" Height="80" Width="80" HorizontalAlignment="Right" Content="W" >
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewStylusDown">
-                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>                            
-                                <i:EventTrigger EventName="PreviewStylusUp"> 
-                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewTouchDown">
-                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>                            
-                                <i:EventTrigger EventName="PreviewTouchUp">  
-                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
-                                    <i:InvokeCommandAction CommandParameter="W" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
+              
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal">
+                        <TextBlock Margin="0,0,5,0" VerticalAlignment="Center"><Run Text="Rate:"/></TextBlock>
+                        <RepeatButton Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding StepperMoveRateCommand}" CommandParameter="-">&#x25BC;</RepeatButton>
+                        <TextBox VerticalAlignment="Center" Text="{Binding Telescope.MovingRate}" MinWidth="40" />
+                        <RepeatButton VerticalAlignment="Center" Width="50" HorizontalAlignment="Center" Command="{Binding StepperMoveRateCommand}" CommandParameter="+">&#x25B2;</RepeatButton>
+                    </StackPanel>
+                    <Button Grid.Row="1" Grid.Column="0" Height="80" Width="80" HorizontalAlignment="Right" Content="W" >
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewStylusDown">
+                                <i:InvokeCommandAction CommandParameter="W" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>                            
+                            <i:EventTrigger EventName="PreviewStylusUp"> 
+                                <i:InvokeCommandAction CommandParameter="W" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewTouchDown">
+                                <i:InvokeCommandAction CommandParameter="W" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>                            
+                            <i:EventTrigger EventName="PreviewTouchUp">  
+                                <i:InvokeCommandAction CommandParameter="W" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction CommandParameter="W" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
+                                <i:InvokeCommandAction CommandParameter="W" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                             
-                        </Button>
-                        <Button Grid.Row="1" Grid.Column="2" Height="80" Width="80" HorizontalAlignment="Left" Content="O">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewStylusDown">
-                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>                            
-                                <i:EventTrigger EventName="PreviewStylusUp"> 
-                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewTouchDown">
-                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>                            
-                                <i:EventTrigger EventName="PreviewTouchUp">  
-                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
-                                    <i:InvokeCommandAction CommandParameter="O" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>                            
-                        </Button>
-                        <Button Grid.Row="0" Grid.Column="1" Height="80" Width="80" VerticalAlignment="Bottom" Content="N">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewStylusDown">
-                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>                            
-                                <i:EventTrigger EventName="PreviewStylusUp"> 
-                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewTouchDown">
-                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>                            
-                                <i:EventTrigger EventName="PreviewTouchUp">  
-                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
-                                    <i:InvokeCommandAction CommandParameter="N" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button Grid.Row="2" Grid.Column="1" Height="80" Width="80" VerticalAlignment="Top" Content="S">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewStylusDown">
-                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewStylusUp">
-                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewTouchDown">
-                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewTouchUp">
-                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
+                    </Button>
+                    <Button Grid.Row="1" Grid.Column="2" Height="80" Width="80" HorizontalAlignment="Left" Content="O">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewStylusDown">
+                                <i:InvokeCommandAction CommandParameter="O" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>                            
+                            <i:EventTrigger EventName="PreviewStylusUp"> 
+                                <i:InvokeCommandAction CommandParameter="O" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewTouchDown">
+                                <i:InvokeCommandAction CommandParameter="O" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>                            
+                            <i:EventTrigger EventName="PreviewTouchUp">  
+                                <i:InvokeCommandAction CommandParameter="O" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction CommandParameter="O" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
+                                <i:InvokeCommandAction CommandParameter="O" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>                            
+                    </Button>
+                    <Button Grid.Row="0" Grid.Column="1" Height="80" Width="80" VerticalAlignment="Bottom" Content="N">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewStylusDown">
+                                <i:InvokeCommandAction CommandParameter="N" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>                            
+                            <i:EventTrigger EventName="PreviewStylusUp"> 
+                                <i:InvokeCommandAction CommandParameter="N" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewTouchDown">
+                                <i:InvokeCommandAction CommandParameter="N" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>                            
+                            <i:EventTrigger EventName="PreviewTouchUp">  
+                                <i:InvokeCommandAction CommandParameter="N" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction CommandParameter="N" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
+                                <i:InvokeCommandAction CommandParameter="N" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Grid.Row="2" Grid.Column="1" Height="80" Width="80" VerticalAlignment="Top" Content="S">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="PreviewStylusDown">
+                                <i:InvokeCommandAction CommandParameter="S" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewStylusUp">
+                                <i:InvokeCommandAction CommandParameter="S" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewTouchDown">
+                                <i:InvokeCommandAction CommandParameter="S" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewTouchUp">
+                                <i:InvokeCommandAction CommandParameter="S" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
                                 
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding MoveCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
-                                    <i:InvokeCommandAction CommandParameter="S" Command="{Binding StopMoveCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button Grid.Row="1" Grid.Column="1" Height="80" Width="80" Content="STOP" Command="{Binding StopSlewCommand}"></Button>
-                    </Grid>
-                </UniformGrid>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
+                                <i:InvokeCommandAction CommandParameter="S" Command="{Binding MoveCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="PreviewMouseLeftButtonUp" >
+                                <i:InvokeCommandAction CommandParameter="S" Command="{Binding StopMoveCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Button>
+                    <Button Grid.Row="1" Grid.Column="1" Height="80" Width="80" Content="STOP" Command="{Binding StopSlewCommand}"></Button>
+                </Grid>
+             
             </GroupBox>
 
         </Grid>

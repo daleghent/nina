@@ -16,13 +16,14 @@ namespace AstrophotographyBuddy.ViewModel {
             Telescope = new TelescopeModel();
             ChooseTelescopeCommand = new RelayCommand(chooseTelescope);
             DisconnectCommand = new RelayCommand(disconnectTelescope);
-            
+            StepperMoveRateCommand = new RelayCommand(stepMoveRate);
+
             MoveCommand = new RelayCommand(move);
             StopMoveCommand = new RelayCommand(stopMove);
             StopSlewCommand = new RelayCommand(stopSlew);
 
             _updateTelescope = new DispatcherTimer();
-            _updateTelescope.Interval = TimeSpan.FromMilliseconds(1000);
+            _updateTelescope.Interval = TimeSpan.FromMilliseconds(300);
             _updateTelescope.Tick += updateTelescope_Tick;
         }
 
@@ -34,7 +35,7 @@ namespace AstrophotographyBuddy.ViewModel {
 
         private DispatcherTimer _updateTelescope;
 
-        private TelescopeModel _telescope;
+       private TelescopeModel _telescope;
         public TelescopeModel Telescope {
             get {
                 return _telescope;
@@ -55,6 +56,15 @@ namespace AstrophotographyBuddy.ViewModel {
         private void disconnectTelescope(object obj) {
             _updateTelescope.Stop();
             Telescope.disconnect();
+        }
+
+        private void stepMoveRate(object obj) {
+            string cmd = obj.ToString();
+            if(cmd == "+") {
+                Telescope.MovingRate++;
+            } else {
+                Telescope.MovingRate--;
+            }
         }
 
         private void move(object obj) {
@@ -144,6 +154,17 @@ namespace AstrophotographyBuddy.ViewModel {
             }
             set {
                 _stopSlewCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private ICommand _stepperMoveRateCommand;
+        public ICommand StepperMoveRateCommand {
+            get {
+                return _stepperMoveRateCommand;
+            }
+            set {
+                _stepperMoveRateCommand = value;
                 RaisePropertyChanged();
             }
         }

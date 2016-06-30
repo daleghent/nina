@@ -11,7 +11,7 @@ using ASCOM.DeviceInterface;
 namespace AstrophotographyBuddy.Model {
     class TelescopeModel :BaseINPC {
         public TelescopeModel() {
-            MovingRate = 1;
+           
             init();
         }
 
@@ -711,10 +711,43 @@ namespace AstrophotographyBuddy.Model {
                 return _movingRate;
             }
             set {
-                _movingRate = value;
-                RaisePropertyChanged();
+                if (Telescope != null && Telescope.Connected) {
+                    double result = value;                
+                    if (result < 0) result = 0;
+                    bool incr = result > _movingRate;
+               
+                        double max = double.MinValue;
+                        double min = double.MaxValue;
+                        IAxisRates r = Telescope.AxisRates(TelescopeAxes.axisSecondary);
+                        IEnumerator e = r.GetEnumerator();
+                        foreach (IRate item in r) {
+                            if(min > item.Minimum) {
+                                min = item.Minimum;
+                            }
+                            if (max < item.Maximum) {
+                                max = item.Maximum;
+                            }
+                        
+                            if (item.Minimum <= value && value <= item.Maximum) {
+                                result = value;
+                                break;
+                            }
+                            else if (incr && value < item.Minimum) {
+                                result = item.Minimum;
+                            }
+                            else if (!incr && value > item.Maximum) {
+                                result = item.Maximum;
+                            }
+                        }
+                        if (result > max) result = max;
+                        if (result < min) result = min;
+                
+                    _movingRate = result;
+                    RaisePropertyChanged();
+                }
             }
         }
+             
         
 
         private ASCOM.DeviceInterface.AlignmentModes _alignmentMode;
@@ -777,7 +810,7 @@ namespace AstrophotographyBuddy.Model {
 
             /*getters exclusive */
             
-            
+
             try {                
                 Altitude = Telescope.Altitude;
                 RightAscension = Telescope.RightAscension;
@@ -883,6 +916,7 @@ namespace AstrophotographyBuddy.Model {
                 CanSlewAltAzAsync = Telescope.CanSlewAltAzAsync;
                 CanSlewAsync = Telescope.CanSlewAsync;
                 Slewing = Telescope.Slewing;
+                MovingRate = 1;
             }
             catch (Exception ex) {
                 Logger.warning("Used Camera AscomDriver does not implement Slewing");

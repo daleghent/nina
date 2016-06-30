@@ -30,7 +30,8 @@ namespace AstrophotographyBuddy.ViewModel {
             this.ImagingVM.Cam = cam.Cam;
             this.ImagingVM.FW = cam.FilterWheelVM.FW;
             this.FrameFocusVM.Cam = cam.Cam;
-           // var a = this.TelescopeVM;
+            this.FrameFocusVM.FW = cam.FilterWheelVM.FW;
+            // var a = this.TelescopeVM;
 
             //addListeners();
         }
