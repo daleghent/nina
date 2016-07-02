@@ -14,19 +14,39 @@ using System.Windows.Media.Imaging;
 
 namespace AstrophotographyBuddy.ViewModel {
     class FrameFocusVM : BaseVM {
-        /* Todo: Refactor so it uses same codebase as ImagingVM without duplicating code! */
-
-
         public FrameFocusVM() {
             Name = "Frame & Focus";
             ImageURI = @"/AstrophotographyBuddy;component/Resources/Focus.png";
             CancelSnapCommand = new RelayCommand(cancelCaptureImage);
             SnapCommand = new AsyncCommand<bool>(() => snap());
-            ApplyImageParamsCommand = new RelayCommand(applyImageParams);
+            ApplyImageParamsCommand = new AsyncCommand<bool>(() => applyImageParams());
+            AutoStretchCommand = new AsyncCommand<bool>(() => ImagingVM.stretch());
             Gamma = 1;
             Contrast = 1;
             Brightness = 1;
             Zoom = 1;
+
+        }
+        private ImagingVM _imagingVM;
+        public ImagingVM ImagingVM {
+            get {
+                return _imagingVM;
+            }
+            set {
+                _imagingVM = value;
+                RaisePropertyChanged();
+            }
+        }
+                
+        private bool _loop;
+        public bool Loop {
+            get {
+                return _loop;
+            }
+            set {
+                _loop = value;
+                RaisePropertyChanged();
+            }
 
         }
 
@@ -40,51 +60,7 @@ namespace AstrophotographyBuddy.ViewModel {
                 RaisePropertyChanged();
             }
         }
-
-        private CameraModel _cam;
-        public CameraModel Cam {
-            get {
-                return _cam;
-            }
-            set {
-                _cam = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private FilterWheelModel _fW;
-        public FilterWheelModel FW {
-            get {
-                return _fW;
-            }
-            set {
-                _fW = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private string _expStatus;
-        public string ExpStatus {
-            get {
-                return _expStatus;
-            }
-            set {
-                _expStatus = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private int _exposureSeconds;
-        public int ExposureSeconds {
-            get {
-                return _exposureSeconds;
-            }
-            set {
-                _exposureSeconds = value;
-                RaisePropertyChanged();
-            }
-        }
-
+                
         private double _snapExposureDuration;
         public double SnapExposureDuration {
             get {
@@ -156,167 +132,39 @@ namespace AstrophotographyBuddy.ViewModel {
                 RaisePropertyChanged();
             }
         }
+        
 
 
-        BitmapSource _image;
-        public BitmapSource Image {
-            get {
-                return _image;
-            }
-            set {
-                _image = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private void setBinning(SequenceModel seq) {
-            if (seq.Binning == null) {
-                Cam.setBinning(1, 1);
-            }
-            else {
-                Cam.setBinning(seq.Binning.X, seq.Binning.Y);
-            }
-        }
-
-        private async Task changeFilter(SequenceModel seq, CancellationTokenSource tokenSource) {
-            if (seq.FilterType != null && FW.Connected) {
-                FW.Position = seq.FilterType.Position;
-                ExpStatus = ImagingVM.ExposureStatus.FILTERCHANGE;
-
-                await Task.Run(() => {
-                    while (FW.Position == -1) {
-                        //Wait for filter change;
-                        tokenSource.Token.ThrowIfCancellationRequested();
-                    }
-                });
-                tokenSource.Token.ThrowIfCancellationRequested();
-            }
-        }
-
-        private async Task capture(SequenceModel seq, CancellationTokenSource tokenSource) {
-            ExpStatus = ImagingVM.ExposureStatus.CAPTURING;
-            double duration = seq.ExposureTime;
-            bool isLight = false;
-            if (Cam.HasShutter) {
-                isLight = true;
-            }
-            Cam.startExposure(duration, isLight);
-            ExposureSeconds = 1;
-
-            /* Wait for Capture */
-            if (duration >= 1) {
-                await Task.Run(async () => {
-                    do {
-                        await Task.Delay(1000);
-                        tokenSource.Token.ThrowIfCancellationRequested();
-                        ExposureSeconds += 1;
-                    } while (ExposureSeconds < duration);
-                });
-            }
-            tokenSource.Token.ThrowIfCancellationRequested();
-        }
-
-        private async Task<Int32[,]> download(CancellationTokenSource tokenSource) {
-            ExpStatus = ImagingVM.ExposureStatus.DOWNLOADING;
-            return await Cam.downloadExposure(tokenSource);
-        }
-
-        private async Task<Utility.Utility.ImageArray> convert(Int32[,] arr, CancellationTokenSource tokenSource) {
-            ExpStatus = ImagingVM.ExposureStatus.PREPARING;
-            Utility.Utility.ImageArray iarr = await Utility.Utility.convert2DArray(arr);
-            tokenSource.Token.ThrowIfCancellationRequested();
-            return iarr;
-        }
-
-        private BitmapSource prepare(Utility.Utility.ImageArray iarr) {
-            ExpStatus = ImagingVM.ExposureStatus.PREPARING;
-            BitmapSource src = Utility.Utility.createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y, System.Windows.Media.PixelFormats.Gray16);
-            return Utility.Utility.NormalizeTiffTo8BitImage(src);
-        }
-
-        private async Task<bool> startSequence(ICollection<SequenceModel> sequence, CancellationTokenSource tokenSource) {
-            try {
-                short framenr = 1;
-                foreach (SequenceModel seq in sequence) {
-                    seq.Active = true;
-
-                    while (seq.ExposureCount > 0) {
-
-                        /*Change Filter*/
-                        await changeFilter(seq, tokenSource);
-
-                        /*Set Camera Binning*/
-                        setBinning(seq);                        
-
-                        /*Capture*/
-                        await capture(seq, tokenSource);
-
-                        /*Download Image */
-                        Int32[,] arr = await download(tokenSource);
-
-                        /*Convert Array to Int16*/
-                        Utility.Utility.ImageArray iarr = await convert(arr, tokenSource);
-
-                        /*Prepare Image for UI*/
-                        BitmapSource tmp = prepare(iarr);
-                       
-                        Image = tmp;
-                        seq.ExposureCount -= 1;
-                        framenr++;
-                    }
-                    seq.Active = false;
-                }
-            }
-            catch (System.OperationCanceledException ex) {
-                Logger.trace(ex.Message);
-            }
-            finally {
-                ExpStatus = ImagingVM.ExposureStatus.IDLE;
-                Cam.stopExposure();
-            }
+        private async Task<bool> snap() {
+            do {
+                _captureImageToken = new CancellationTokenSource();
+                List<SequenceModel> seq = new List<SequenceModel>();
+                seq.Add(new SequenceModel(SnapExposureDuration, SequenceModel.ImageTypes.SNAP, SnapFilter, SnapBin, 1));
+                await ImagingVM.startSequence(seq, false, _captureImageToken);
+                _captureImageToken.Token.ThrowIfCancellationRequested();
+            } while (Loop);
             return await Task.Run<bool>(() => { return true; });
         }
 
 
-        private async Task<bool> snap() {
-            _captureImageToken = new CancellationTokenSource();
-            List<SequenceModel> seq = new List<SequenceModel>();
-            seq.Add(new SequenceModel(SnapExposureDuration, SequenceModel.ImageTypes.SNAP, SnapFilter, SnapBin, 1));
-            return await startSequence(seq, _captureImageToken);
-        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-        
-
-
-
-        private void applyImageParams(object o) {            
-            if(Image != null) {
                 
-               Bitmap b = BitmapFromSource(Image);
-                //adjustBrightness(b, Brightness);
-                //adjustContrast(b, Contrast);
-                b = adjustImage(b);
-                
-                Image = ConvertBitmap(b);
-                b.Dispose();
+        private async Task<bool> applyImageParams() {            
+            if(ImagingVM.Image != null) {
 
-                //b = AdjustGamma(b, 4);
-                //adjustGamma(b, Gamma, Gamma, Gamma);          
-               // Image  = ConvertBitmap(b);
+                Bitmap bmp = await Task.Run<Bitmap>(() => {
+                        BitmapSource bs = ImagingVM.prepare(ImagingVM.SourceArray.FlatArray, ImagingVM.SourceArray.X, ImagingVM.SourceArray.Y);
+                        Bitmap b = BitmapFromSource(bs);
+                        b = adjustImage(b);
+                        return b;
+                    });
+               
+                ImagingVM.Image = ConvertBitmap(bmp);
+                bmp.Dispose();                
                 
-            }            
+            }
+            bool run = await Task.Run<bool>(() => { return true; });
+            return run ;            
         }
 
 
@@ -348,16 +196,7 @@ namespace AstrophotographyBuddy.ViewModel {
             source.Dispose();
             return adjustedImage;
         }
-
-
-
-
-
-
-       
-
-
-
+        
         private AsyncCommand<bool> _snapCommand;
         public AsyncCommand<bool> SnapCommand {
             get {
@@ -369,15 +208,25 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
-        private ICommand _applyImageParamsCommand;
+        private AsyncCommand<bool> _applyImageParamsCommand;
         private CancellationTokenSource _captureImageToken;
 
-        public ICommand ApplyImageParamsCommand {
+        public AsyncCommand<bool> ApplyImageParamsCommand {
             get {
                 return _applyImageParamsCommand;
             }
             set {
                 _applyImageParamsCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private AsyncCommand<bool> _autoStretchCommand;
+        public AsyncCommand<bool> AutoStretchCommand {
+            get {
+                return _autoStretchCommand;
+            } set {
+                _autoStretchCommand = value;
                 RaisePropertyChanged();
             }
         }

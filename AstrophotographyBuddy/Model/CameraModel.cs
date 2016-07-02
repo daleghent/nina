@@ -75,14 +75,15 @@ namespace AstrophotographyBuddy
             SensorName = string.Empty;
             SensorType = ASCOM.DeviceInterface.SensorType.Monochrome;
             SupportedActions = null;
-            
+
             BinX = -1;
             BinY = -1;
 
             BinningModes = new ObservableCollection<BinningMode>();
+            CCDTemperatureHistory.Clear();
+            CoolerPowerHistory.Clear();
 
-
-            CoolerOn = false;
+           CoolerOn = false;
             FastReadout = false;
             Gain = -1;
             NumX = -1;
@@ -310,7 +311,7 @@ namespace AstrophotographyBuddy
                 RaisePropertyChanged();
             }
         }
-
+       
         ObservableCollection<KeyValuePair<DateTime, double>> _coolerPowerHistory;            
         public ObservableCollection<KeyValuePair<DateTime, double>> CoolerPowerHistory {
             get {
@@ -771,11 +772,12 @@ namespace AstrophotographyBuddy
             }
 
             set {
-                if(CanSetCCDTemperature) { 
-                    _setCCDTemperature = value;
-                    AscomCamera.SetCCDTemperature = value;
-                    RaisePropertyChanged();
+
+                _setCCDTemperature = value;
+                if (CanSetCCDTemperature) {
+                    AscomCamera.SetCCDTemperature = value;                    
                 }
+                RaisePropertyChanged();
             }
         }
         int _startX;
@@ -1349,9 +1351,17 @@ namespace AstrophotographyBuddy
                 init();
                 try {
                     AscomCamera = new Camera(ProgId);
+                    
                     //AscomCamera.Connected = true;
                     Connected = true;
-                    Settings.CameraId = ProgId;                    
+                    Settings.CameraId = ProgId;
+
+                    if (AscomCamera.SensorType != ASCOM.DeviceInterface.SensorType.Monochrome) {
+                        System.Windows.MessageBox.Show("Only Monochrome Sensors supported currently", "Sorry!", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Exclamation);
+                        disconnect();
+                        return false; ;
+                    }
+
                     getCameraInfo();
                     con = true;
                 }

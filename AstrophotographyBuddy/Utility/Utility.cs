@@ -27,9 +27,11 @@ namespace AstrophotographyBuddy.Utility {
 
         public class ImageArray {
             public Array SourceArray;
-            public Int16[] FlatArray;
+            public short[] FlatArray;
             public int X;
             public int Y;
+            public short minValue;
+            public short maxValue;
         }
 
         private static PHD2Client _pHDClient;
@@ -56,31 +58,33 @@ namespace AstrophotographyBuddy.Utility {
                 iarr.X = width;
                 iarr.Y = height;
                 Int16[] flatArray = new Int16[arr.Length];
+                short value, min = 0, max = 0;
                 unsafe
                 {
-                fixed (Int32* ptr = arr)
-                {
+                    fixed (Int32* ptr = arr)
+                    {
                         int row = 0;
-                    for (int i = 0; i < arr.Length; i++) {
+                        
+                        for (int i = 0; i < arr.Length; i++) {
                             
                             var idx = ((i%height) * width) + row ;
 
-                            if ((i % (height)) == (height - 1))
-                                row++;
+                            if ((i % (height)) == (height - 1)) row++;
 
+                            value = (short)ptr[i];
+                            if (value < min) min = value;
+                            if (value > max) max = value;
 
-
-                            //var idx = i;
-
-
-                            Int16 b = (Int16)ptr[i];
-                        flatArray[idx] = b;
+                            short b = value;
+                            flatArray[idx] = b;
                         
                             
                         }
                     }
                 }
                 iarr.FlatArray = flatArray;
+                iarr.minValue = min;
+                iarr.maxValue = max;
                 return iarr;
             });           
         }
@@ -139,6 +143,21 @@ namespace AstrophotographyBuddy.Utility {
                 }
             }
             return flatArray;
+        }
+
+        public static async Task<short[]> stretchArray(ImageArray source) {
+            return await Task.Run<short[]>(() => {
+                short maxVal = source.maxValue;
+                short minVal = source.minValue;
+                short dynamic = (short)(maxVal - minVal);
+
+                short[] stretchedArr = new short[source.FlatArray.Length];
+
+                for (int i = 0; i < source.FlatArray.Length; i++) {
+                    stretchedArr[i] = (short)(((float)(source.FlatArray[i] - minVal) / dynamic) * short.MaxValue);
+                }
+                return stretchedArr;
+            });
         }
 
         /*public static void saveFits(ImageArray iarr) {

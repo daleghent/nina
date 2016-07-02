@@ -156,16 +156,16 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
-        private async Task capture(SequenceModel seq, CancellationTokenSource tokenSource) {
-            ExpStatus = ExposureStatus.CAPTURING;
+        private async Task capture(SequenceModel seq, CancellationTokenSource tokenSource) {            
             double duration = seq.ExposureTime;
+            ExpStatus = string.Format(ExposureStatus.EXPOSING, 0, duration);
             bool isLight = false;
             if (Cam.HasShutter) {
                 isLight = true;
             }
             Cam.startExposure(duration, isLight);
             ExposureSeconds = 1;
-
+            ExpStatus = string.Format(ExposureStatus.EXPOSING, 1, duration);
             /* Wait for Capture */
             if (duration >= 1) {
                 await Task.Run(async () => {
@@ -173,6 +173,7 @@ namespace AstrophotographyBuddy.ViewModel {
                         await Task.Delay(1000);
                         tokenSource.Token.ThrowIfCancellationRequested();
                         ExposureSeconds += 1;
+                        ExpStatus = string.Format(ExposureStatus.EXPOSING, ExposureSeconds, duration);
                     } while (ExposureSeconds < duration);
                 });
             }
@@ -191,12 +192,9 @@ namespace AstrophotographyBuddy.ViewModel {
             return iarr;
         }
 
-        private BitmapSource prepare(Utility.Utility.ImageArray iarr) {
-            ExpStatus = ExposureStatus.PREPARING;
-            BitmapSource src= Utility.Utility.createSourceFromArray(iarr.FlatArray, iarr.X, iarr.Y, System.Windows.Media.PixelFormats.Gray16);
-            return Utility.Utility.NormalizeTiffTo8BitImage(src);
-
-
+        public BitmapSource prepare(short[] arr, int x, int y) {
+            BitmapSource src = Utility.Utility.createSourceFromArray(arr, x, y, System.Windows.Media.PixelFormats.Gray16);
+            return src;// Utility.Utility.NormalizeTiffTo8BitImage(src);
         }
 
         private async Task<bool> save(SequenceModel seq, Utility.Utility.ImageArray iarr, short framenr,  CancellationTokenSource tokenSource) {
@@ -250,7 +248,7 @@ namespace AstrophotographyBuddy.ViewModel {
             return true;
         }
 
-        private async Task<bool> startSequence(ICollection<SequenceModel> sequence, CancellationTokenSource tokenSource) {
+        public  async Task<bool> startSequence(ICollection<SequenceModel> sequence, bool bSave, CancellationTokenSource tokenSource) {
             try {
 
 
@@ -271,20 +269,27 @@ namespace AstrophotographyBuddy.ViewModel {
 
                         /*Download Image */                        
                         Int32[,] arr = await download(tokenSource);
-                        
-                        /*Convert Array to Int16*/
-                        Utility.Utility.ImageArray iarr = await convert(arr, tokenSource);
-                        
-                        /*Prepare Image for UI*/
-                        BitmapSource tmp = prepare(iarr);                        
 
-                        /*Save to disk*/                       
-                        await save(seq, iarr, framenr, tokenSource);
+                        /*Convert Array to Int16*/
+                        SourceArray = await convert(arr, tokenSource);
+
+                        /*Prepare Image for UI*/
+                        ExpStatus = ImagingVM.ExposureStatus.PREPARING;
+                        BitmapSource tmp = prepare(SourceArray.FlatArray, SourceArray.X, SourceArray.Y);
+                        Image = tmp;
+
+                        /*Save to disk*/
+                        if (bSave) { 
+                            await save(seq, SourceArray, framenr, tokenSource);
+                        }
 
                         /*Dither*/
                         await dither(seq, tokenSource);
 
-                        Image = tmp;
+                        if (AutoStretch) {
+                            await stretch();
+                        }
+
                         seq.ExposureCount -= 1;
                         framenr++;
                     }
@@ -303,9 +308,41 @@ namespace AstrophotographyBuddy.ViewModel {
 
         private async Task<bool> startSequence(CancellationToken token = new CancellationToken()) {
             _cancelSequenceToken = new CancellationTokenSource();
-            return await startSequence(SeqVM.Sequence, _cancelSequenceToken);           
+            return await startSequence(SeqVM.Sequence, true, _cancelSequenceToken);           
         }
 
+
+        private bool _autoStretch;
+        public bool AutoStretch {
+            get {
+                return _autoStretch;
+            }
+            set {
+                _autoStretch = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
+        public async Task<bool> stretch() {
+            if (Image != null) {
+                short[] arr = await Utility.Utility.stretchArray(_sourceArray);
+                BitmapSource bs = prepare(arr, _sourceArray.X, _sourceArray.Y);
+                Image = bs;
+            }
+            bool run = await Task.Run<bool>(() => { return true; });
+            return run;
+        }
+
+        private Utility.Utility.ImageArray _sourceArray;
+        public Utility.Utility.ImageArray SourceArray {
+            get {
+                return _sourceArray;
+            }
+            private set {
+                _sourceArray = value;
+            }
+        }
         BitmapSource _image;
         public BitmapSource Image {
             get {
@@ -386,11 +423,11 @@ namespace AstrophotographyBuddy.ViewModel {
             _captureImageToken = new CancellationTokenSource();
             List<SequenceModel> seq = new List<SequenceModel>();
             seq.Add(new SequenceModel(SnapExposureDuration, ImageTypes.SNAP, SnapFilter, SnapBin, 1));
-            return await startSequence(seq, _captureImageToken);     
+            return await startSequence(seq, true, _captureImageToken);     
         }
 
         public static class ExposureStatus {
-            public const string CAPTURING = "Capturing...";
+            public const string EXPOSING = "Exposing {0}/{1}s...";
             public const string DOWNLOADING = "Downloading...";
             public const string FILTERCHANGE = "Switching Filter...";
             public const string PREPARING = "Preparing...";

@@ -122,6 +122,7 @@
     <Compile Include="Model\SequenceModel.cs" />
     <Compile Include="Model\TelescopeModel.cs" />
     <Compile Include="Utility\AsyncCommand.cs" />
+    <Compile Include="Utility\AsyncObservableCollection.cs" />
     <Compile Include="Utility\BaseINPC.cs" />
     <Compile Include="Utility\Converters.cs" />
     <Compile Include="Utility\Logger.cs" />
@@ -137,10 +138,14 @@
     <Compile Include="ViewModel\FrameFocusVM.cs" />
     <Compile Include="ViewModel\ImagingVM.cs" />
     <Compile Include="ViewModel\OptionsVM.cs" />
+    <Compile Include="ViewModel\PHD2VM.cs" />
     <Compile Include="ViewModel\SequenceVM.cs" />
     <Compile Include="ViewModel\TelescopeVM.cs" />
     <Compile Include="View\ApplicationMenu.xaml.cs">
       <DependentUpon>ApplicationMenu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\CameraCoolingChartsView.xaml.cs">
+      <DependentUpon>CameraCoolingChartsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CameraView.xaml.cs">
       <DependentUpon>CameraView.xaml</DependentUpon>
@@ -159,6 +164,15 @@
     </Compile>
     <Compile Include="View\OptionsView.xaml.cs">
       <DependentUpon>OptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OverView.xaml.cs">
+      <DependentUpon>OverView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PHD2Graph.xaml.cs">
+      <DependentUpon>PHD2Graph.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PHD2View.xaml.cs">
+      <DependentUpon>PHD2View.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
@@ -186,6 +200,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CameraCoolingChartsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\CameraView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -207,6 +225,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\OptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\OverView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PHD2Graph.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PHD2View.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -282,6 +312,53 @@
   <ItemGroup>
     <Resource Include="Resources\TelescopeActive.png" />
     <Resource Include="Resources\TelescopeInactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Brightness.png" />
+    <Resource Include="Resources\Contrast.png" />
+    <Resource Include="Resources\Gamma.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\PHD2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\back.png" />
+    <Resource Include="Resources\next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\picture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\loop_active.png" />
+    <Resource Include="Resources\loop_inactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\dots.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\checked.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\HistogramStretch.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\AutoStretch_active.png" />
+    <Resource Include="Resources\AutoStretch_inactive.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

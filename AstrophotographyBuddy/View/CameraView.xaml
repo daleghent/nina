@@ -68,43 +68,43 @@
                 <UniformGrid Columns="2" >
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="CameraXSize:"/></TextBlock>
+                        <TextBlock><Run Text="Camera X Size:"/></TextBlock>
                         <TextBlock Text="{Binding Cam.CameraXSize}" Margin="5,0,0,0" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="CameraYSize:"/></TextBlock>
+                        <TextBlock><Run Text="Camera Y Size:"/></TextBlock>
                         <TextBlock Text="{Binding Cam.CameraYSize}" Margin="5,0,0,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="ExposureMin:"/></TextBlock>
+                        <TextBlock><Run Text="Minimum Exposure Time:"/></TextBlock>
                         <TextBlock Text="{Binding Cam.ExposureMin}" Margin="5,0,0,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="ExposureMax:"/></TextBlock>
+                        <TextBlock><Run Text="Maximum Exposure Time:"/></TextBlock>
                         <TextBlock Text="{Binding Cam.ExposureMax}" Margin="5,0,0,0" />
                     </StackPanel>
 
 
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="MaxBinX:"/></TextBlock>
+                        <TextBlock><Run Text="Max Binning X:"/></TextBlock>
                         <TextBlock Text="{Binding Cam.MaxBinX}" Margin="5,0,0,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="MaxBinY:"/></TextBlock>
+                        <TextBlock><Run Text="Max Binning Y:"/></TextBlock>
                         <TextBlock Text="{Binding Cam.MaxBinY}" Margin="5,0,0,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="PixelSizeX:"/></TextBlock>
+                        <TextBlock><Run Text="Pixel Size X:"/></TextBlock>
                         <TextBlock Text="{Binding Cam.PixelSizeX}" Margin="5,0,0,0" />
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="PixelSizeY:"/></TextBlock>
+                        <TextBlock><Run Text="Pixel Size Y:"/></TextBlock>
                         <TextBlock Text="{Binding Cam.PixelSizeY}" Margin="5,0,0,0" />
                     </StackPanel>
                 </UniformGrid>
@@ -113,7 +113,7 @@
                 <view:FilterWheelView Grid.Row="1" DataContext="{Binding FilterWheelVM}"></view:FilterWheelView>
             </GroupBox>
         </Grid>
-        <GroupBox Grid.Row="1" Grid.ColumnSpan="2" Header="Temperature Control">
+        <GroupBox Grid.Row="1" Grid.ColumnSpan="2" Header="Temperature Control" IsEnabled="{Binding Cam.CanSetCCDTemperature}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -133,17 +133,17 @@
                         <TextBlock Margin="5,0,0,0" ><Run Text="Cooler On"/></TextBlock>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="CoolerPower"/></TextBlock>
+                        <TextBlock><Run Text="Cooler Power"/></TextBlock>
                         <TextBlock Text="{Binding Cam.CoolerPower, StringFormat=\{0:#.00\}}" Margin="5,0,0,0" Visibility="{Binding Cam.Connected, Converter={StaticResource VisibilityConverter}}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="CCDTemperature"/></TextBlock>
+                        <TextBlock><Run Text="CCD Temperature"/></TextBlock>
                         <TextBlock Text="{Binding Cam.CCDTemperature, StringFormat=\{0:#.00\}}" Margin="5,0,0,0" Visibility="{Binding Cam.Connected, Converter={StaticResource VisibilityConverter}}"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" IsEnabled="False">
                         <TextBlock Text="Target Temperature" />
                         <!--<Slider Value="{Binding Cam.SetCCDTemperature}" Minimum="-50" Maximum="20" SmallChange=".1" TickPlacement="BottomRight"/>-->
-                        <TextBlock Text="{Binding Cam.SetCCDTemperature, StringFormat=\{0:#.00\}}" Margin="5,0,0,0" MinWidth="20" />
+                        <TextBlock Text="{Binding Cam.SetCCDTemperature, StringFormat=\{0:#.00\}}" Margin="5,0,0,0" MinWidth="20" Visibility="{Binding Cam.Connected, Converter={StaticResource VisibilityConverter}}"/>
                     </StackPanel>
                 </StackPanel>
 
@@ -168,19 +168,23 @@
                     <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding Duration, StringFormat=\{0:#.0\}}"/>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="3" >
-
+                        <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning}"  Command="{Binding CancelCoolCamCommand}" Visibility="{Binding CoolingRunning, Converter={StaticResource VisibilityConverter}}">
+                            <Image Margin="10" Source="/AstrophotographyBuddy;component/Resources/cancel.png" ></Image>
+                        </Button>
                         <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning , Converter={StaticResource InverseBooleanConverter}}" Command="{Binding CoolCamCommand}" >
                             <Grid>
-                                <TextBlock Visibility="{Binding CoolingRunning, Converter={StaticResource InverseBoolToVisibilityConverter}}">Apply</TextBlock>
+                                <TextBlock Visibility="{Binding CoolingRunning, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                                    <Image Margin="10" Source="/AstrophotographyBuddy;component/Resources/checked.png" ></Image>
+                                </TextBlock>
                                 <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding CoolingRunning, Converter={StaticResource VisibilityConverter}}" Text="{Binding CoolingProgress , StringFormat=\{0:#%\}}" />
                             </Grid>
                         </Button>
-                        <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning}"  Command="{Binding CancelCoolCamCommand}">Cancel</Button>
+                        
                     </StackPanel>
 
                 </Grid>
-
-                <chartingToolkit:Chart Grid.Row="2" Grid.Column="0" DataContext="{Binding Cam.CoolerPowerHistory}"  Title="Cooler Power" Style="{StaticResource ChartStyle}">
+                <local:CameraCoolingChartsView DataContext="{Binding}" Grid.Row="1" Grid.ColumnSpan="2"></local:CameraCoolingChartsView>
+                <!--<chartingToolkit:Chart Grid.Row="2" Grid.Column="0" DataContext="{Binding Cam.CoolerPowerHistory}"  Title="Cooler Power" Style="{StaticResource ChartStyle}">
                     <chartingToolkit:LineSeries  DependentValuePath="Value" 
 				    IndependentValuePath="Key" ItemsSource="{Binding}" 
 				    IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}">
@@ -190,7 +194,7 @@
                     <chartingToolkit:LineSeries  DependentValuePath="Value" 
 				    IndependentValuePath="Key" ItemsSource="{Binding}" 
 				    IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}"/>
-                </chartingToolkit:Chart>
+                </chartingToolkit:Chart>-->
 
             </Grid>
         </GroupBox>

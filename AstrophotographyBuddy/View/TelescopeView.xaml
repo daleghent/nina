@@ -8,7 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid IsEnabled="{Binding Telescope.Connected}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -65,7 +65,7 @@
                     
                 </StackPanel>
             </GroupBox>
-            <GroupBox Grid.Column="2" Header="Settings">
+            <GroupBox Grid.Column="2" Header="...">
 
             </GroupBox>
         </Grid>
@@ -74,6 +74,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <GroupBox Header="..."></GroupBox>
             <GroupBox Grid.Column="1" Header="Control" IsEnabled="{Binding Telescope.CanSlew}">
 
               

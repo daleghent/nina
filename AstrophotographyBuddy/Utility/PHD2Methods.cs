@@ -39,12 +39,13 @@ namespace AstrophotographyBuddy.Utility {
 
 
 
+        public static string GET_STAR_IMAGE = "{\"method\": \"get_star_image\",\"id\": 97}\r\n";
+        public const string GET_STAR_IMAGE_ID = "97";
 
 
-
-        public static string GET_EXPOSURE = "{\"method\": \"get_exposure\",\"id\": 99}\r\n";
+        public static string GET_EXPOSURE = "{\"method\": \"get_exposure\",\"id\": 98}\r\n";
         public static string GET_APP_STATE = "{\"method\": \"get_app_state\",\"id\": 99}\r\n";
-
+        public const string GET_APP_STATE_ID = "99";
         
 
 

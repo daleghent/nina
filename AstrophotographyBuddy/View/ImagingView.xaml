@@ -11,7 +11,7 @@
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="5*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -19,11 +19,13 @@
         </Grid.RowDefinitions>
         <view:SequenceView DataContext="{Binding SeqVM}" />
         <StackPanel Grid.Row="1"  Orientation="Horizontal">
-            <Button Width="50" Height="50" Command="{Binding SeqVM.AddSequenceCommand}">+</Button>
+            <Button Width="50" Height="50" Command="{Binding SeqVM.AddSequenceCommand}">
+                <Image Margin="10" Source="/AstrophotographyBuddy;component/Resources/add.png"></Image>
+            </Button>
             <Grid  IsEnabled="{Binding Cam.Connected}">
                 <Button Width="50" Height="50" Command="{Binding StartSequenceCommand}"  >
-                    <Grid>
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Start Seq</TextBlock>
+                    <Grid>                        
+                        <Image Margin="10" Source="/AstrophotographyBuddy;component/Resources/play.png" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}"></Image>
                         <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                             <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
                         </Grid>
@@ -48,6 +50,8 @@
                 <ColumnDefinition Width="50" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
+
+               
                 <TextBlock VerticalAlignment="Center">Snap Exposure Time in seconds:</TextBlock>
                 <TextBox Margin="5" MinWidth="50" Height="30" Text="{Binding SnapExposureDuration}" IsEnabled="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}}"></TextBox>
                 <StackPanel Orientation="Horizontal">
@@ -58,9 +62,33 @@
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Binning:</TextBlock>
                     <ComboBox VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}" DisplayMemberPath="Name" SelectedItem="{Binding SnapBin}" SelectedValuePath="Name"></ComboBox>
                 </StackPanel>
+                <ToggleButton Height="50" Width="50" IsChecked="{Binding AutoStretch}" >
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_active.png" ></Image>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="False">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_inactive.png" ></Image>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
             </StackPanel>
             <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">
-                <Button Command="{Binding CancelSnapCommand}" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">Cancel</Button>
+                <Button Command="{Binding CancelSnapCommand}" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">
+                    <Image Margin="10" Source="/AstrophotographyBuddy;component/Resources/cancel.png" ></Image>
+                </Button>
             </Grid>
 
            
@@ -69,7 +97,7 @@
 
             <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}">
                 <Grid>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Snap</TextBlock>
+                    <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/picture.png" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}"></Image>                    
                     <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                         <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
                     </Grid>

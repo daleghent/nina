@@ -42,17 +42,17 @@
                     </Style.Triggers>-->
                 </Style>
             </ScrollViewer.Style>
-            <Image Grid.Column="0" Grid.Row="0" Source="{Binding Image}" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Image Grid.Column="0" Grid.Row="0" Source="{Binding ImagingVM.Image}" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <Image.LayoutTransform>
                     <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}" />
                 </Image.LayoutTransform>
             </Image>
         </ScrollViewer>
-        <Grid Grid.Column="0" Grid.Row="2" IsEnabled="{Binding Cam.Connected}">
+        <Grid Grid.Column="0" Grid.Row="2" IsEnabled="{Binding ImagingVM.Cam.Connected}">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />               
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="150" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center">Snap Exposure Time in seconds:</TextBlock>
@@ -67,18 +67,67 @@
                 </StackPanel>
             </StackPanel>
             <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">
-                <Button Command="{Binding CancelSnapCommand}" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">Cancel</Button>
+                <Button Command="{Binding CancelSnapCommand}" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">
+                    <Image Margin="10" Source="/AstrophotographyBuddy;component/Resources/cancel.png" ></Image>
+                </Button>
             </Grid>
 
-            <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}" HorizontalAlignment="Left">
-                <Grid>
-                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">Snap</TextBlock>
-                    <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
-                        <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
+            <UniformGrid Columns="3" Grid.Column="2">
+                <Button Width="50" Height="50"  Command="{Binding SnapCommand}" HorizontalAlignment="Left">
+                    <Grid>
+                        <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/picture.png" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}"></Image>                        
+                        <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
+                            <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ImagingVM.ExposureSeconds}" />
+                        </Grid>
                     </Grid>
-                </Grid>
-            </Button>
-            <TextBlock Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ExpStatus}"></TextBlock>
+                </Button>
+                <ToggleButton IsChecked="{Binding Loop}">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/loop_active.png" ></Image>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="False">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/loop_inactive.png" ></Image>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+
+                </ToggleButton>
+                <ToggleButton IsChecked="{Binding ImagingVM.AutoStretch}">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton">
+                            <Style.Triggers>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_active.png" ></Image>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="False">
+                                    <Setter Property="Content">
+                                        <Setter.Value>
+                                            <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_inactive.png" ></Image>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ToggleButton.Style>
+                </ToggleButton>
+           </UniformGrid>
+            <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ImagingVM.ExpStatus}"></TextBlock>
         </Grid>
         <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" >
             <Grid.ColumnDefinitions>
@@ -92,19 +141,28 @@
                 <RowDefinition Height="50"/>
             </Grid.RowDefinitions>
 
-            <TextBlock Text="Brightness" />
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Brightness.png"></Image>            
             <Slider Grid.Row="1" Orientation="Vertical" Width="30" Value="{Binding Brightness}"   Maximum="2" Minimum="0" SmallChange="0.1"></Slider>
             <TextBlock Grid.Row="2" Text="{Binding Brightness}"></TextBlock>
 
-            <TextBlock Grid.Column="1" Text="Contrast" />
+            <Image Margin="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Contrast.png">                
+            </Image>
+            
             <Slider Grid.Row="1" Grid.Column="1" Orientation="Vertical" Width="30" Value="{Binding Contrast}" Maximum="10" Minimum="0" SmallChange="0.1"></Slider>
             <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Contrast}"></TextBlock>
 
-            <TextBlock Grid.Column="2" Text="Gamma" />
-            <Slider Grid.Row="1" Grid.Column="2" Orientation="Vertical" Width="30" Value="{Binding Gamma}" Maximum="5" Minimum="0.2" SmallChange="0.1"></Slider>
+            <Image Margin="0,0,0,5" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Gamma.png"></Image>            
+            <Slider HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" Orientation="Vertical" Width="30" Value="{Binding Gamma}" Maximum="5" Minimum="0.2" SmallChange="0.1"></Slider>
             <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Gamma}"></TextBlock>
         </Grid>
 
-        <Button Grid.Column="1" Grid.Row="2" Command="{Binding ApplyImageParamsCommand}">Apply</Button>
+        <UniformGrid Rows="2" Grid.Column="1" Grid.Row="2" >
+            <Button Command="{Binding ApplyImageParamsCommand}">
+                <Image Margin="0" Source="/AstrophotographyBuddy;component/Resources/checked.png" ></Image>
+            </Button>
+            <Button Command="{Binding AutoStretchCommand}">
+                <Image Source="/AstrophotographyBuddy;component/Resources/HistogramStretch.png" ></Image>
+            </Button>
+        </UniformGrid>
     </Grid>
 </UserControl>

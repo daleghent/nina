@@ -29,8 +29,11 @@ namespace AstrophotographyBuddy.ViewModel {
             
             this.ImagingVM.Cam = cam.Cam;
             this.ImagingVM.FW = cam.FilterWheelVM.FW;
-            this.FrameFocusVM.Cam = cam.Cam;
-            this.FrameFocusVM.FW = cam.FilterWheelVM.FW;
+            this.FrameFocusVM.ImagingVM = this.ImagingVM;
+            var tele = this.TelescopeVM;
+            var phd2 = this.PHD2VM;
+            //this.FrameFocusVM.Cam = cam.Cam;
+            //this.FrameFocusVM.FW = cam.FilterWheelVM.FW;
             // var a = this.TelescopeVM;
 
             //addListeners();
@@ -46,6 +49,17 @@ namespace AstrophotographyBuddy.ViewModel {
        public PHD2Client PHD2Client {
             get {
                 return Utility.Utility.PHDClient;
+            }
+        }
+
+        private bool _overViewVisibility;
+        public bool OverViewVisibility {
+            get {
+                return _overViewVisibility;
+            }
+            set {
+                _overViewVisibility = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -98,6 +112,21 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
+        private PHD2VM _phd2VM;
+        public PHD2VM PHD2VM {
+            get {
+                if (_phd2VM == null) {
+                    _phd2VM = new PHD2VM();
+                    Views.Add(_phd2VM);
+                }
+                return _phd2VM;
+            }
+            set {                
+                _phd2VM = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private OptionsVM _optionsVM;
         public OptionsVM OptionsVM {
             get {
@@ -133,15 +162,21 @@ namespace AstrophotographyBuddy.ViewModel {
         private void toggleView(object o) {
             if (o != null) {
                 BaseVM a = _activeView;
-                BaseVM b;
+                BaseVM b = null;
                 if (o.ToString() == this.Name) {
                     b = this;
+                    this.OverViewVisibility = false;
+                }
+                else if (o.ToString() == "OverView") {
+                    a.Visibility = false;
+                    this.OverViewVisibility = true;
                 }
                 else {
+                    this.OverViewVisibility = false;
                     b = getViewByName(o.ToString());
                 }
-
-                if (a != null && b != null && a != b) {
+                
+                if (a != null && b != null ) {
                     a.Visibility = false;
                     b.Visibility = true;
                     _activeView = b;
@@ -151,6 +186,7 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         private void getNextView(object o) {
+            this.OverViewVisibility = false;
             BaseVM a = _activeView;
             a.Visibility = false;
             int idx = Views.IndexOf(a);
@@ -160,6 +196,7 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         private void getPrevView(object o) {
+            this.OverViewVisibility = false;
             BaseVM a = _activeView;
             a.Visibility = false;
             int idx = Views.IndexOf(a);

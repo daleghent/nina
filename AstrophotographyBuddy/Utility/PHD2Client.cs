@@ -5,15 +5,21 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Threading;
+using System.Windows;
 
 namespace AstrophotographyBuddy.Utility {
     class PHD2Client : BaseINPC {
         public PHD2Client() {
-
         }
+
+        private Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
         private PhdEventVersion _version;
         public PhdEventVersion Version {
@@ -24,6 +30,17 @@ namespace AstrophotographyBuddy.Utility {
                 _version = value;
                 RaisePropertyChanged();
             }
+        }
+
+        private ImageSource _image;
+        public ImageSource Image { 
+            get {
+                return _image;
+            } set {
+                _image = value;
+                RaisePropertyChanged();
+            }
+
         }
 
         private PhdEventAppState _appState;
@@ -70,11 +87,11 @@ namespace AstrophotographyBuddy.Utility {
             }
         }
 
-        private ObservableCollection<PhdEventGuideStep> _guideSteps;
-        public ObservableCollection<PhdEventGuideStep> GuideSteps {
+        private AsyncObservableCollection<PhdEventGuideStep> _guideSteps;
+        public AsyncObservableCollection<PhdEventGuideStep> GuideSteps {
             get {
                 if (_guideSteps == null) {
-                    _guideSteps = new ObservableCollection<PhdEventGuideStep>();
+                    _guideSteps = new AsyncObservableCollection<PhdEventGuideStep>();
                 }
                 return _guideSteps;
             }
@@ -83,6 +100,8 @@ namespace AstrophotographyBuddy.Utility {
                 RaisePropertyChanged();
             }
         }
+
+        
 
         private TcpClient _client;
         private NetworkStream _stream;
@@ -110,17 +129,13 @@ namespace AstrophotographyBuddy.Utility {
 
         public async Task<bool> connect() {
             
-            try {
-                
+            try {                
                 _client = new TcpClient();
                 await _client.ConnectAsync(Settings.PHD2ServerUrl, Settings.PHD2ServerPort);
                 _stream = _client.GetStream();
                 RaisePropertyChanged("Connected");
                 _tokenSource = new CancellationTokenSource();
                 startListener(_tokenSource.Token);
-                    
-
-
             }
             catch (SocketException e) {
                 System.Windows.MessageBox.Show(e.Message);
@@ -140,7 +155,7 @@ namespace AstrophotographyBuddy.Utility {
         private async Task<bool> sendMessage(string msg) {
             if(Connected) {
                 // Translate the passed message into ASCII and store it as a byte array.
-                Byte[] data = new Byte[1024];
+                Byte[] data = new Byte[10240];
                 data = System.Text.Encoding.ASCII.GetBytes(msg);
 
                 // Get a client stream for reading and writing.
@@ -166,12 +181,11 @@ namespace AstrophotographyBuddy.Utility {
         }
         
         private async void startListener(CancellationToken token) {
-            
             while(Connected) {
                 try {
                     if (_stream.DataAvailable) {
                         token.ThrowIfCancellationRequested();
-                        byte[] resp = new byte[2048];
+                        byte[] resp = new byte[4096];
                         var memStream = new MemoryStream();
                         var bytes = 0;
                         bytes = await _stream.ReadAsync(resp, 0, resp.Length);
@@ -186,97 +200,159 @@ namespace AstrophotographyBuddy.Utility {
                         }
                         
                         foreach(string row in rows) {
-                            JObject o = JObject.Parse(row);
-                            JToken t = o.GetValue("Event");
-                            string phdevent = "";
-                            if (t != null) {
-                                phdevent = t.ToString();
-                            } else {
-                                t = o.GetValue("id");
-                                if(t!= null) {
-                                    phdevent = t.ToString();
-                                }
-                            }
+                            if(!string.IsNullOrEmpty(row)) {
 
-                            switch (phdevent) {
-                                case PHD2Methods.DITHERID: {
-                                        PhdMethodResponse phdresp = o.ToObject<PhdMethodResponse>();
-                                        if (phdresp.error != null) {
-                                                IsDithering = false;
+                            
+                                JObject o  = JObject.Parse(row);                            
+                                JToken t = o.GetValue("Event");
+                                string phdevent = "";
+                                if (t != null) {
+                                    phdevent = t.ToString();
+                                } else {
+                                    t = o.GetValue("id");
+                                    if(t!= null) {
+                                        phdevent = t.ToString();
+                                    }
+                                }
+
+                                switch (phdevent) {
+                                    case PHD2Methods.DITHERID: {
+                                            PhdMethodResponse phdresp = o.ToObject<PhdMethodResponse>();
+                                            if (phdresp.error != null) {
+                                                    IsDithering = false;
+                                                }
+                                        
+                                        
+                                            break;
+                                        }
+                                    case PHD2Methods.GET_APP_STATE_ID: {
+                                            PhdMethodResponse phdresp = o.ToObject<PhdMethodResponse>();
+                                            if (phdresp.error == null) {
+                                                AppState.State = phdresp.result.ToString() ;
+                                            }
+                                        
+                                            break;
+                                        }
+                                    case PHD2Methods.GET_STAR_IMAGE_ID: {
+                                            PhdMethodResponse phdresp = o.ToObject<PhdMethodResponse>();                                        
+
+                                            if(phdresp.error == null) {
+                                                PhdImageResult img = JObject.Parse(phdresp.result.ToString()).ToObject<PhdImageResult>();
+                                                byte[] p = Convert.FromBase64String(img.pixels.Trim('\0'));      
+                                                BitmapSource bmp = Utility.createSourceFromArray(p, img.width, img.height, System.Windows.Media.PixelFormats.Gray16);
+                                                bmp.Freeze();
+                                                await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                                                    Image = bmp;
+                                                }));                                            
                                             }
                                         
                                         
-                                        break;
-                                    }
-                                case "Version": {
-                                        Version = o.ToObject<PhdEventVersion>();                                        
-                                        break;
-                                    }
-                                case "AppState": {
-                                        AppState = o.ToObject<PhdEventAppState>();
-                                        break;
-                                    }
-                                case "GuideStep": {
-                                        if (GuideSteps.Count > 100) {
-                                            GuideSteps.RemoveAt(0);
+                                            break;
                                         }
-                                        GuideSteps.Add(o.ToObject<PhdEventGuideStep>());
-                                        break;
-                                    }
-                                case "GuidingDithered": {
-                                        SettleDone = null;
-                                        GuidingDithered = o.ToObject<PhdEventGuidingDithered>();
-                                        break;
-                                    }
-                                case "Settling": {
-                                        SettleDone = null;
-                                        Settling = o.ToObject<PhdEventSettling>();
-                                        break;
-                                    }
-                                case "SettleDone": {
-                                        GuidingDithered = null;
-                                        Settling = null;
-                                        IsDithering = false;
-                                        SettleDone = o.ToObject<PhdEventSettleDone>();
-                                        if(SettleDone.Error != null) {
-                                            System.Windows.MessageBox.Show(SettleDone.Error, "PHD2 Dither Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                                    case "Version": {
+                                            Version = o.ToObject<PhdEventVersion>();                                        
+                                            break;
                                         }
-                                        break;
-                                    }
-                                default: {
-                                        break;
-                                    }
-                            }
+                                    case "AppState": {
+                                            AppState = o.ToObject<PhdEventAppState>();
+                                            break;
+                                        }
+                                    case "GuideStep": {
+                                            if (GuideSteps.Count > 100) {
+                                                GuideSteps.RemoveAt(0);
+                                            }
+                                            PhdEventGuideStep step = o.ToObject<PhdEventGuideStep>();
+                                            GuideSteps.Add(step);
+                                            break;
+                                        }
+                                    case "GuidingDithered": {
+                                            SettleDone = null;
+                                            GuidingDithered = o.ToObject<PhdEventGuidingDithered>();
+                                            break;
+                                        }
+                                    case "Settling": {
+                                            SettleDone = null;
+                                            Settling = o.ToObject<PhdEventSettling>();
+                                            break;
+                                        }
+                                    case "SettleDone": {
+                                            GuidingDithered = null;
+                                            Settling = null;
+                                            IsDithering = false;
+                                            SettleDone = o.ToObject<PhdEventSettleDone>();
+                                            if(SettleDone.Error != null) {
+                                                System.Windows.MessageBox.Show(SettleDone.Error, "PHD2 Dither Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                                            }
+                                            break;
+                                        }
+                                    case "Paused": {
+                                            break;
+                                        }
+                                    case "StartCalibration": {
+                                            break;
+                                        }
+                                    case "LoopingExposures": {
+                                            break;
+                                        }
+                                    case "LoopingExposuresStopped": {
+                                            break;
+                                        }
+                                    case "StarLost": {
+                                            break;
+                                        }
+                                    default: {
+                                            break;
+                                        }
+                                }
+                            }                            
                         }
-                        
-                        
+                        await Task.Delay(500);
                     }
                     else {
                         await Task.Delay(1000);
+                       
                     }
+
                     
-                }catch (Exception ex) {
+                    await sendMessage(PHD2Methods.GET_APP_STATE);
+                    await sendMessage(PHD2Methods.GET_STAR_IMAGE);
+                }
+                catch (Exception ex) {
                     Logger.error(ex.Message);
                 }
                 
             }
         }
+
         
     }
 
+
+   
+
     public class PhdMethodResponse {
         public string jsonrpc;
-        public string result;
+        public object result;
         public PhdError error;
         public int id;
     }
+
+    public class PhdImageResult {
+        public int frame;
+        public int width;
+        public int height;
+        public double[] star_pos;
+        public string pixels;
+    }
+
+
 
     public class PhdError {
         public int code;
         public string message;
     }
 
-    public class PhdEvent {
+    public class PhdEvent : BaseINPC {
         public string Event;
         public string TimeStamp;
         public string Host;
@@ -316,7 +392,18 @@ namespace AstrophotographyBuddy.Utility {
     }
 
     public class PhdEventAppState : PhdEvent {
-        public string State;
+        private string state;
+
+        public string State {
+            get {
+                return state;
+            }
+
+            set {
+                state = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 
     public class PhdEventCalibrationFailed : PhdEvent {
@@ -366,25 +453,215 @@ namespace AstrophotographyBuddy.Utility {
     }
 
     public class PhdEventGuideStep : PhdEvent {
-        public int Frame;
-        public int Time;
-        public string Mount;
-        public int dx;
-        public int dy;
-        public int RADistanceRaw;
-        public int DecDistanceRaw;
-        public int RADistanceGuide;
-        public int DecDistanceGuide;
-        public int RADuration;
-        public string RADirection;
-        public int DECDuration;
-        public string DecDirection;
-        public int StarMass;
-        public int SNR;
-        public int AvgDist;
-        public bool RALimited;
-        public bool DecLimited;
-        public int ErrorCode;
+        private double frame;
+        private double time;
+        private string mount;
+        private double dx;
+        private double dy;
+        private double rADistanceRaw;
+        private double decDistanceRaw;
+        private double rADistanceGuide;
+        private double decDistanceGuide;
+        private double rADuration;
+        private string rADirection;
+        private double dECDuration;
+        private string decDirection;
+        private double starMass;
+        private double sNR;
+        private double avgDist;
+        private bool rALimited;
+        private bool decLimited;
+        private double errorCode;
+
+        public double Frame {
+            get {
+                return frame;
+            }
+
+            set {
+                frame = value;
+            }
+        }
+
+        public double Time {
+            get {
+                return time;
+            }
+
+            set {
+                time = value;
+            }
+        }
+
+        public string Mount {
+            get {
+                return mount;
+            }
+
+            set {
+                mount = value;
+            }
+        }
+
+        public double Dx {
+            get {
+                return dx;
+            }
+
+            set {
+                dx = value;
+            }
+        }
+
+        public double Dy {
+            get {
+                return dy;
+            }
+
+            set {
+                dy = value;
+            }
+        }
+
+        public double RADistanceRaw {
+            get {
+                return -rADistanceRaw;
+            }
+
+            set {
+                rADistanceRaw = value;
+            }
+        }
+
+        public double DecDistanceRaw {
+            get {
+                return -decDistanceRaw;
+            }
+
+            set {
+                decDistanceRaw = value;
+            }
+        }
+
+        public double RADistanceGuide {
+            get {
+                return rADistanceGuide;
+            }
+
+            set {
+                rADistanceGuide = value;
+            }
+        }
+
+        public double DecDistanceGuide {
+            get {
+                return decDistanceGuide;
+            }
+
+            set {
+                decDistanceGuide = value;
+            }
+        }
+
+        public double RADuration {
+            get {
+                return rADuration;
+            }
+
+            set {
+                rADuration = value;
+            }
+        }
+
+        public string RADirection {
+            get {
+                return rADirection;
+            }
+
+            set {
+                rADirection = value;
+            }
+        }
+
+        public double DECDuration {
+            get {
+                return dECDuration;
+            }
+
+            set {
+                dECDuration = value;
+            }
+        }
+
+        public string DecDirection {
+            get {
+                return decDirection;
+            }
+
+            set {
+                decDirection = value;
+            }
+        }
+
+        public double StarMass {
+            get {
+                return starMass;
+            }
+
+            set {
+                starMass = value;
+            }
+        }
+
+        public double SNR {
+            get {
+                return sNR;
+            }
+
+            set {
+                sNR = value;
+            }
+        }
+
+        public double AvgDist {
+            get {
+                return avgDist;
+            }
+
+            set {
+                avgDist = value;
+            }
+        }
+
+        public bool RALimited {
+            get {
+                return rALimited;
+            }
+
+            set {
+                rALimited = value;
+            }
+        }
+
+        public bool DecLimited {
+            get {
+                return decLimited;
+            }
+
+            set {
+                decLimited = value;
+            }
+        }
+
+        public double ErrorCode {
+            get {
+                return errorCode;
+            }
+
+            set {
+                errorCode = value;
+            }
+        }
     }
 
     public class PhdEventGuidingDithered : PhdEvent {
@@ -402,5 +679,6 @@ namespace AstrophotographyBuddy.Utility {
     }
 
 
+    
 
 }
