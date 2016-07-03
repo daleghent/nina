@@ -192,12 +192,12 @@ namespace AstrophotographyBuddy.ViewModel {
             return iarr;
         }
 
-        public BitmapSource prepare(short[] arr, int x, int y) {
+        public BitmapSource prepare(ushort[] arr, int x, int y) {
             BitmapSource src = Utility.Utility.createSourceFromArray(arr, x, y, System.Windows.Media.PixelFormats.Gray16);
             return src;// Utility.Utility.NormalizeTiffTo8BitImage(src);
         }
 
-        private async Task<bool> save(SequenceModel seq, Utility.Utility.ImageArray iarr, short framenr,  CancellationTokenSource tokenSource) {
+        private async Task<bool> save(SequenceModel seq, Utility.Utility.ImageArray iarr, ushort framenr,  CancellationTokenSource tokenSource) {
             ExpStatus = ExposureStatus.SAVING;
             await Task.Run(() => {
 
@@ -252,7 +252,7 @@ namespace AstrophotographyBuddy.ViewModel {
             try {
 
 
-                short framenr = 1;
+                ushort framenr = 1;
                 foreach (SequenceModel seq in sequence) {
                     seq.Active = true;
                     
@@ -270,7 +270,7 @@ namespace AstrophotographyBuddy.ViewModel {
                         /*Download Image */                        
                         Int32[,] arr = await download(tokenSource);
 
-                        /*Convert Array to Int16*/
+                        /*Convert Array to ushort*/
                         SourceArray = await convert(arr, tokenSource);
 
                         /*Prepare Image for UI*/
@@ -326,7 +326,7 @@ namespace AstrophotographyBuddy.ViewModel {
 
         public async Task<bool> stretch() {
             if (Image != null) {
-                short[] arr = await Utility.Utility.stretchArray(_sourceArray);
+                ushort[] arr = await Utility.Utility.stretchArray(_sourceArray);
                 BitmapSource bs = prepare(arr, _sourceArray.X, _sourceArray.Y);
                 Image = bs;
             }

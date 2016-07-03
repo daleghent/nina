@@ -140,7 +140,7 @@ namespace AstrophotographyBuddy {
 //                for (int i = 0; i <= iarr.GetUpperBound(1); i++) {
 
 //                    for (int j = 0; j <= iarr.GetUpperBound(0); j++) {
-//                        arrb[j] = short.MinValue + Convert.ToInt16(iarr[j, i]);
+//                        arrb[j] = ushort.MinValue + Convert.Toushort(iarr[j, i]);
 //                    }
 //                    arra.SetValue(arrb, i);
 
@@ -177,14 +177,14 @@ namespace AstrophotographyBuddy {
 //                /*
 //                int width = camArray.GetLength(0);
 //                int height = camArray.GetLength(1);
-//                Int16[] flatArray = new Int16[width * height];
-//                Int16 val;
+//                ushort[] flatArray = new ushort[width * height];
+//                ushort val;
 //                int idx = 0;
 //                for (int i = 0; i < height; i++)
 //                {
 //                    for (int j = 0; j < width; j++)
 //                    {
-//                        val = Convert.ToInt16(camArray[j, i]);
+//                        val = Convert.Toushort(camArray[j, i]);
 //                        flatArray[idx] = val;
 //                        idx++;
 //                    }
@@ -240,11 +240,11 @@ namespace AstrophotographyBuddy {
                 
 //                int[] dims = ArrayFuncs.GetDimensions(C.ImageArray);
 
-//                Int16[] test2 = new Int16[imageData.Length];
-//                Int16 val2;
+//                ushort[] test2 = new ushort[imageData.Length];
+//                ushort val2;
 //                for (int i = 0; i < imageData.Length; i++)
 //                {
-//                    val2 = Convert.ToInt16(imageData.GetValue(i));
+//                    val2 = Convert.Toushort(imageData.GetValue(i));
 //                    test2.SetValue(val2, i);
 //                }
 

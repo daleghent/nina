@@ -27,11 +27,12 @@ namespace AstrophotographyBuddy.Utility {
 
         public class ImageArray {
             public Array SourceArray;
-            public short[] FlatArray;
+            public ushort[] FlatArray;
             public int X;
             public int Y;
-            public short minValue;
-            public short maxValue;
+            public ushort minStDev;
+            public ushort maxStDev;
+            public Dictionary<ushort, int> Histogram;
         }
 
         private static PHD2Client _pHDClient;
@@ -57,8 +58,9 @@ namespace AstrophotographyBuddy.Utility {
                 //iarr.X = height;
                 iarr.X = width;
                 iarr.Y = height;
-                Int16[] flatArray = new Int16[arr.Length];
-                short value, min = 0, max = 0;
+                ushort[] flatArray = new ushort[arr.Length];
+                ushort value;
+                Dictionary<ushort, int> histogram = new Dictionary<ushort, int>();
                 unsafe
                 {
                     fixed (Int32* ptr = arr)
@@ -71,33 +73,61 @@ namespace AstrophotographyBuddy.Utility {
 
                             if ((i % (height)) == (height - 1)) row++;
 
-                            value = (short)ptr[i];
-                            if (value < min) min = value;
-                            if (value > max) max = value;
+                            value = (ushort)ptr[i];
+                            if(histogram.ContainsKey(value)) {
+                                histogram[value] += 1;
+                            }else {
+                                histogram.Add(value, 1);
+                            }
 
-                            short b = value;
+                            ushort b = value;
                             flatArray[idx] = b;
                         
                             
                         }
                     }
                 }
+
+                /*Calculate StDev and Min/Max Values for Stretch */
+                double average = flatArray.Average(x => x);
+                double sumOfSquaresOfDifferences = flatArray.Select(val => (val - average) * (val - average)).Sum();
+                double sd = Math.Sqrt(sumOfSquaresOfDifferences / flatArray.Length);
+                ushort min = 0, max = 0;
+                double factor = 2.5;
+
+                if (average - factor * sd < 0) {
+                    min = 0;
+                }
+                else {
+                    min = (ushort)(average - factor * sd);
+                }
+
+                if (average - factor * sd > ushort.MaxValue) {
+                    max = ushort.MaxValue;
+                }
+                else {
+                    max = (ushort)(average + factor * sd);
+                }
+
+
+
                 iarr.FlatArray = flatArray;
-                iarr.minValue = min;
-                iarr.maxValue = max;
+                iarr.minStDev = min;
+                iarr.maxStDev = max;
+                iarr.Histogram = histogram;
                 return iarr;
             });           
         }
 
-        public static Int16[] flatten2DArray(Array arr) {
+        public static ushort[] flatten2DArray(Array arr) {
             int width = arr.GetLength(0);
             int height = arr.GetLength(1);
-            Int16[] flatArray = new Int16[width * height];
-            Int16 val;
+            ushort[] flatArray = new ushort[width * height];
+            ushort val;
             int idx = 0;
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
-                    val = (Int16)(Int16.MinValue + Convert.ToInt16(arr.GetValue(j, i)));
+                    val = (ushort)(ushort.MinValue + Convert.ToUInt16(arr.GetValue(j, i)));
 
                     flatArray[idx] = val;
                     idx++;
@@ -145,16 +175,22 @@ namespace AstrophotographyBuddy.Utility {
             return flatArray;
         }
 
-        public static async Task<short[]> stretchArray(ImageArray source) {
-            return await Task.Run<short[]>(() => {
-                short maxVal = source.maxValue;
-                short minVal = source.minValue;
-                short dynamic = (short)(maxVal - minVal);
+        public static async Task<ushort[]> stretchArray(ImageArray source) {
+            return await Task.Run<ushort[]>(() => {
+                ushort maxVal = source.maxStDev;
+                ushort minVal = source.minStDev;
+                ushort dynamic = (ushort)(maxVal - minVal);
 
-                short[] stretchedArr = new short[source.FlatArray.Length];
+                ushort[] stretchedArr = new ushort[source.FlatArray.Length];
 
                 for (int i = 0; i < source.FlatArray.Length; i++) {
-                    stretchedArr[i] = (short)(((float)(source.FlatArray[i] - minVal) / dynamic) * short.MaxValue);
+
+                    float val = (((float)(source.FlatArray[i] - minVal) / dynamic) * (ushort.MaxValue));
+                    if (val > ushort.MaxValue) {
+                        val = ushort.MaxValue;
+                    }
+                    stretchedArr[i] = (ushort)val;
+
                 }
                 return stretchedArr;
             });
