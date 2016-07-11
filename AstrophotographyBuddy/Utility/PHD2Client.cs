@@ -300,6 +300,10 @@ namespace AstrophotographyBuddy.Utility {
                                     case "StarLost": {
                                             break;
                                         }
+                                    case "LockPositionLost": {
+                                            GuideSteps.Clear();
+                                            break;
+                                        }
                                     default: {
                                             break;
                                         }
@@ -315,7 +319,14 @@ namespace AstrophotographyBuddy.Utility {
 
                     
                     await sendMessage(PHD2Methods.GET_APP_STATE);
-                    await sendMessage(PHD2Methods.GET_STAR_IMAGE);
+                    //await sendMessage(PHD2Methods.GET_STAR_IMAGE); 
+                }
+                catch(System.IO.IOException ex) {
+                    Logger.trace(ex.Message);
+                    _stream.Close();
+                    _client.Close();
+                    IsDithering = false;
+                    RaisePropertyChanged("Connected");
                 }
                 catch (Exception ex) {
                     Logger.error(ex.Message);

@@ -3,19 +3,42 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:vm="clr-namespace:AstrophotographyBuddy.ViewModel"
              xmlns:local="clr-namespace:AstrophotographyBuddy.View"
              xmlns:chartingToolkit=	"clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"          
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid >
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+
             <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <chartingToolkit:Chart  DataContext="{Binding PHD2Client.GuideSteps}"  Title="Guide Graph"  Style="{StaticResource ChartStyle}" Margin="0,1,0,0">
-            <chartingToolkit:LineSeries  DependentValuePath="RADistanceRaw" 
+        <!--<Border Grid.Column="0" BorderBrush="{StaticResource PrimaryBrush}" BorderThickness="0.5" Margin="0,1,0,0" >
+            <Image Source="{Binding PHD2Client.Image}" />
+        </Border>-->
+
+        <StackPanel>
+            <TextBlock Text="Y-Axis-Scale"></TextBlock>
+            <ComboBox             
+                                SelectedValue="{Binding MaxY}"
+                                SelectedValuePath="Content">
+                <ComboBoxItem>1</ComboBoxItem>
+                <ComboBoxItem>2</ComboBoxItem>
+                <ComboBoxItem>4</ComboBoxItem>
+                <ComboBoxItem>8</ComboBoxItem>
+                <ComboBoxItem>16</ComboBoxItem>
+            </ComboBox>           
+        </StackPanel>
+        
+        <chartingToolkit:Chart Grid.Column="1"  DataContext="{Binding PHD2Client.GuideSteps}"  Title="Guide Graph"  Style="{StaticResource ChartStyle}" Margin="0,1,0,0">
+            <chartingToolkit:Chart.Axes>
+                <chartingToolkit:LinearAxis Orientation="Y" ShowGridLines="False"  Interval="1" Minimum="{Binding Source={StaticResource AppVM}, Path=PHD2VM.MinY }" Maximum="{Binding Source={StaticResource AppVM}, Path=PHD2VM.MaxY }" >                    
+                </chartingToolkit:LinearAxis>
+            </chartingToolkit:Chart.Axes>
+            <chartingToolkit:LineSeries  DependentValuePath="RADistanceRaw"  
 				            IndependentValuePath="Time" ItemsSource="{Binding}"  Name="RA"
-				            IsSelectionEnabled="True" >
+				            IsSelectionEnabled="True" >                
                 <chartingToolkit:LineSeries.Style>
                     <Style TargetType="{x:Type chartingToolkit:LineSeries}">
                         <Style.Setters>
@@ -188,9 +211,7 @@
 
 
         </chartingToolkit:Chart>
-        <Border Grid.Column="1" BorderBrush="{StaticResource PrimaryBrush}" BorderThickness="0.5" Margin="0,1,0,0" >
-            <Image Source="{Binding PHD2Client.Image}" />
-        </Border>
+       
 
     </Grid>
 </UserControl>
