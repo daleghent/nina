@@ -44,5 +44,11 @@
     <Setting Name="TelescopeId" Type="System.String" Scope="User">
       <Value Profile="(Default)">ASCOM.Simulator.Telescope</Value>
     </Setting>
+    <Setting Name="ButtonBackgroundColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFC0C0C0</Value>
+    </Setting>
+    <Setting Name="ButtonBackgroundSelectedColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#F79D3600</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

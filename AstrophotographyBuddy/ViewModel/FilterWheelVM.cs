@@ -35,7 +35,10 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         private void disconnectFW(object obj) {
-            FW.disconnect();
+            System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show("Disconnect Filter Wheel?", "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxImage.Question, System.Windows.MessageBoxResult.Cancel);
+            if (result == System.Windows.MessageBoxResult.OK) {
+                FW.disconnect();
+            }
         }
 
         private ICommand _chooseFWCommand;

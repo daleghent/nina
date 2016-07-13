@@ -138,7 +138,29 @@ namespace AstrophotographyBuddy.Utility {
             }
         }
 
-        
+        public static Color ButtonBackgroundColor {
+            get {
+                return Properties.Settings.Default.ButtonBackgroundColor;
+            }
+            set {
+                Properties.Settings.Default.ButtonBackgroundColor = value;
+                Properties.Settings.Default.Save();
+
+            }
+        }
+
+        public static Color ButtonBackgroundSelectedColor {
+            get {
+                return Properties.Settings.Default.ButtonBackgroundSelectedColor;
+            }
+            set {
+                Properties.Settings.Default.ButtonBackgroundSelectedColor = value;
+                Properties.Settings.Default.Save();
+
+            }
+        }
+
+
 
     }
 

@@ -214,9 +214,12 @@ namespace AstrophotographyBuddy {
         }
 
         private void disconnectCamera(object obj) {
-            updateCamera.Stop();
-            CoolCameraTimer.Stop();   
-            Cam.disconnect();            
+            System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show("Disconnect Camera?", "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxImage.Question, System.Windows.MessageBoxResult.Cancel);
+            if(result == System.Windows.MessageBoxResult.OK) {
+                updateCamera.Stop();
+                CoolCameraTimer.Stop();
+                Cam.disconnect();
+            }
         }
 
         void updateCamera_Tick(object sender, EventArgs e) {

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AstrophotographyBuddy.View"
              xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" Background="{StaticResource BackgroundBrush}">
     <UniformGrid Columns="2" Rows="2"> 
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -51,24 +51,34 @@
         <GroupBox Grid.Row="1" Header="UI Colors">
             <UniformGrid Columns="1">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Width="100">Primary Color: </TextBlock>
+                    <TextBlock VerticalAlignment="Center" Width="200">Primary Color: </TextBlock>
                     <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding PrimaryColor}" />
                     <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{StaticResource PrimaryBrush}"></Button>                    
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
-                    <TextBlock VerticalAlignment="Center" Width="100">Secondary Color:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Width="200">Secondary Color:</TextBlock>
                     <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding SecondaryColor}" />
                     <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{StaticResource SecondaryBrush}"></Button>                                        
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Width="100">Border Color:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Width="200">Border Color:</TextBlock>
                     <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding BorderColor}" />
                     <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{StaticResource BorderBrush}"></Button>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Width="100">Background Color:</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Width="200">Background Color:</TextBlock>
                     <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding BackgroundColor}" />
                     <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{StaticResource BackgroundBrush}"></Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Width="200">Button Background Color:</TextBlock>
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ButtonBackgroundColor}" />
+                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{StaticResource ButtonBackgroundBrush}"></Button>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Width="200">Button Background Selected Color:</TextBlock>
+                    <TextBox HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ButtonBackgroundSelectedColor}" />
+                    <Button Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,0,0,0" Background="{StaticResource ButtonBackgroundSelectedBrush}"></Button>
                 </StackPanel>
             </UniformGrid>
 

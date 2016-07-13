@@ -5,22 +5,25 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AstrophotographyBuddy.View"
              xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
+              xmlns:chartingToolkit=	"clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"             
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="90"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="30" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="40" />
+            
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="50" />
             </Grid.ColumnDefinitions>
@@ -28,7 +31,21 @@
             <Slider Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Value="{Binding Zoom}" TickPlacement="BottomRight" TickFrequency="0.1" IsSnapToTickEnabled="True"  Maximum="20" Minimum="0" SmallChange="0.1"></Slider>
             <TextBlock Grid.Column="2" Text="{Binding Zoom}" VerticalAlignment="Center"></TextBlock>
         </Grid>
-        
+        <Expander Grid.Row="2" IsExpanded="True" Header="Histogram">
+        <chartingToolkit:Chart DataContext="{Binding ImagingVM}" Grid.Row="2"  Title="" Margin="0,0,1,0" Style="{StaticResource ChartStyle}">
+            <chartingToolkit:Chart.Axes>
+                <chartingToolkit:LinearAxis Visibility="Hidden"
+                            Orientation="X"                            
+                            Minimum="0"
+                            Maximum="65535" FontSize="6"/>
+            </chartingToolkit:Chart.Axes>
+            <chartingToolkit:LineSeries  DependentValuePath="Value" 
+				    IndependentValuePath="Key" ItemsSource="{Binding SourceArray.Histogram}" 
+				    IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}">               
+            </chartingToolkit:LineSeries>
+
+        </chartingToolkit:Chart>
+        </Expander>
         <ScrollViewer Grid.Row="1">
             <ScrollViewer.Style>
                 <Style TargetType="{x:Type ScrollViewer}">
@@ -48,7 +65,7 @@
                 </Image.LayoutTransform>
             </Image>
         </ScrollViewer>
-        <Grid Grid.Column="0" Grid.Row="2" IsEnabled="{Binding ImagingVM.Cam.Connected}">
+        <Grid Grid.Column="0" Grid.Row="3" IsEnabled="{Binding ImagingVM.Cam.Connected}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />               
                 <ColumnDefinition Width="*" />
@@ -129,40 +146,66 @@
            </UniformGrid>
             <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ImagingVM.ExpStatus}"></TextBlock>
         </Grid>
-        <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" >
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
+        <Expander ExpandDirection="Right" Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" IsExpanded="True">
+            <Expander.Header>
+                <TextBlock Text="Image Manipulation" TextOptions.TextFormattingMode="Display"
+TextOptions.TextRenderingMode="ClearType"
+UseLayoutRounding="true">
+                    <TextBlock.LayoutTransform>
+                        <RotateTransform Angle="-90"/>
+                    </TextBlock.LayoutTransform>
+                </TextBlock>
+            </Expander.Header>
+            <Grid  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
 
-            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Brightness.png"></Image>            
-            <Slider Grid.Row="1" Orientation="Vertical" Width="30" Value="{Binding Brightness}"   Maximum="2" Minimum="0" SmallChange="0.1"></Slider>
-            <TextBlock Grid.Row="2" Text="{Binding Brightness}"></TextBlock>
+                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Brightness.png" RenderTransformOrigin="0.5, 0.5">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"></ScaleTransform>
+                    </Image.RenderTransform>
+                </Image>
+                <Slider Grid.Row="1" Orientation="Vertical" Width="25" Value="{Binding Brightness}"   Maximum="2" Minimum="0" SmallChange="0.1"></Slider>
+                <TextBlock HorizontalAlignment="Center" Grid.Row="2" Text="{Binding Brightness}"></TextBlock>
 
-            <Image Margin="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Contrast.png">                
-            </Image>
+                <Image Margin="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Contrast.png" RenderTransformOrigin="0.5, 0.5">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"></ScaleTransform>
+                    </Image.RenderTransform>
+                </Image>
+
+                <Slider  Grid.Row="1" Grid.Column="1" Orientation="Vertical" Width="25" Value="{Binding Contrast}" Maximum="10" Minimum="0" SmallChange="0.1"></Slider>
+                <TextBlock HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Text="{Binding Contrast}"></TextBlock>
+
+                <Image Margin="0,0,0,5" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Gamma.png" RenderTransformOrigin="0.5, 0.5">
+                    <Image.RenderTransform>
+                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"></ScaleTransform>
+                    </Image.RenderTransform>
+                </Image>
+                <Slider HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" Orientation="Vertical" Width="25" Value="{Binding Gamma}" Maximum="5" Minimum="0.2" SmallChange="0.1"></Slider>
+                <TextBlock HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" Text="{Binding Gamma}"></TextBlock>
+                
+                <UniformGrid Grid.Row="3" Rows="2" Columns="1" Grid.ColumnSpan="99" >
+                    <Button Command="{Binding ApplyImageParamsCommand}">
+                        <Image Margin="0" Source="/AstrophotographyBuddy;component/Resources/checked.png" ></Image>
+                    </Button>
+                    <Button Command="{Binding AutoStretchCommand}">
+                        <Image Source="/AstrophotographyBuddy;component/Resources/HistogramStretch.png" ></Image>
+                    </Button>
+                </UniformGrid>
+            </Grid>
+
             
-            <Slider Grid.Row="1" Grid.Column="1" Orientation="Vertical" Width="30" Value="{Binding Contrast}" Maximum="10" Minimum="0" SmallChange="0.1"></Slider>
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Contrast}"></TextBlock>
-
-            <Image Margin="0,0,0,5" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Gamma.png"></Image>            
-            <Slider HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" Orientation="Vertical" Width="30" Value="{Binding Gamma}" Maximum="5" Minimum="0.2" SmallChange="0.1"></Slider>
-            <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding Gamma}"></TextBlock>
-        </Grid>
-
-        <UniformGrid Rows="2" Grid.Column="1" Grid.Row="2" >
-            <Button Command="{Binding ApplyImageParamsCommand}">
-                <Image Margin="0" Source="/AstrophotographyBuddy;component/Resources/checked.png" ></Image>
-            </Button>
-            <Button Command="{Binding AutoStretchCommand}">
-                <Image Source="/AstrophotographyBuddy;component/Resources/HistogramStretch.png" ></Image>
-            </Button>
-        </UniformGrid>
+        </Expander>
+        
     </Grid>
 </UserControl>

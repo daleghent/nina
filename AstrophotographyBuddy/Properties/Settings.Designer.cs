@@ -190,5 +190,29 @@ namespace AstrophotographyBuddy.Properties {
                 this["TelescopeId"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFC0C0C0")]
+        public global::System.Windows.Media.Color ButtonBackgroundColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["ButtonBackgroundColor"]));
+            }
+            set {
+                this["ButtonBackgroundColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#F79D3600")]
+        public global::System.Windows.Media.Color ButtonBackgroundSelectedColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["ButtonBackgroundSelectedColor"]));
+            }
+            set {
+                this["ButtonBackgroundSelectedColor"] = value;
+            }
+        }
     }
 }

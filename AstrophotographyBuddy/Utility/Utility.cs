@@ -32,7 +32,17 @@ namespace AstrophotographyBuddy.Utility {
             public int Y;
             public ushort minStDev;
             public ushort maxStDev;
-            public Dictionary<ushort, int> Histogram;
+            private Dictionary<ushort, int> _histogram;
+
+            public Dictionary<ushort, int> Histogram {
+                get {
+                    return _histogram;
+                }
+
+                set {
+                    _histogram = value;
+                }
+            }
         }
 
         private static PHD2Client _pHDClient;
@@ -114,7 +124,7 @@ namespace AstrophotographyBuddy.Utility {
                 iarr.FlatArray = flatArray;
                 iarr.minStDev = min;
                 iarr.maxStDev = max;
-                iarr.Histogram = histogram;
+                iarr.Histogram = histogram;                                    
                 return iarr;
             });           
         }

@@ -148,6 +148,26 @@ namespace AstrophotographyBuddy.ViewModel {
             }
 
         }
+        public Color ButtonBackgroundColor {
+            get {
+                return Settings.ButtonBackgroundColor;
+            }
+            set {
+                Settings.ButtonBackgroundColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+        public Color ButtonBackgroundSelectedColor {
+            get {
+                return Settings.ButtonBackgroundSelectedColor;
+            }
+            set {
+                Settings.ButtonBackgroundSelectedColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
 
         public double DitherPixels {
             get {

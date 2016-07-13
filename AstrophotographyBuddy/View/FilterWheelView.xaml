@@ -7,7 +7,7 @@
              xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid Background="{StaticResource BackgroundBrush}">
         <ListView ItemsSource="{Binding FW.Filters}" SelectedIndex="{Binding FW.Position}">
             <ListView.View>
                 <GridView>

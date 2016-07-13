@@ -341,6 +341,7 @@ namespace AstrophotographyBuddy.ViewModel {
             }
             private set {
                 _sourceArray = value;
+                RaisePropertyChanged();
             }
         }
         BitmapSource _image;

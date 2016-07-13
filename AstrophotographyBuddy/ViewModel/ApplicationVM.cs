@@ -16,13 +16,15 @@ namespace AstrophotographyBuddy.ViewModel {
             PrevViewCommand = new RelayCommand(getPrevView);
             NextViewCommand = new RelayCommand(getNextView);
             ToggleViewCommand = new RelayCommand(toggleView);
+            ToggleMenuCommand = new RelayCommand(toggleMenu);
+            ToggleOverviewCommand = new RelayCommand(toggleOverview);
             ConnectPHDClientCommand = new AsyncCommand<bool>(async () => await Task.Run<bool>(() => PHD2Client.connect()));
             DisconnectPHDClientCommand = new AsyncCommand<bool>(async () => await Task.Run<bool>(() => PHD2Client.disconnect()));
             Visibility = true;
             Views = new ObservableCollection<BaseVM>();
             //Views.Add(this);
             Name = "Menu";
-            _activeView = this;
+            _activeView = this.CameraVM;
             
             
             var cam = this.CameraVM;
@@ -161,21 +163,14 @@ namespace AstrophotographyBuddy.ViewModel {
 
         private void toggleView(object o) {
             if (o != null) {
+                this.Visibility = false;
+                this.OverViewVisibility = false;
                 BaseVM a = _activeView;
                 BaseVM b = null;
-                if (o.ToString() == this.Name) {
-                    b = this;
-                    this.OverViewVisibility = false;
-                }
-                else if (o.ToString() == "OverView") {
-                    a.Visibility = false;
-                    this.OverViewVisibility = true;
-                }
-                else {
-                    this.OverViewVisibility = false;
-                    b = getViewByName(o.ToString());
-                }
                 
+                this.OverViewVisibility = false;
+                b = getViewByName(o.ToString());
+                                
                 if (a != null && b != null ) {
                     a.Visibility = false;
                     b.Visibility = true;
@@ -185,7 +180,32 @@ namespace AstrophotographyBuddy.ViewModel {
 
         }
 
+        private void toggleMenu(object o) {
+            this.OverViewVisibility = false;
+            if (this.Visibility) {
+                _activeView.Visibility = true;
+                this.Visibility = false;
+            }
+            else {
+                _activeView.Visibility = false;
+                this.Visibility = true;
+            }
+        }
+
+        private void toggleOverview(object o) {
+            this.Visibility = false;
+            if(this.OverViewVisibility) {
+                _activeView.Visibility = true;
+                this.OverViewVisibility = false;
+            } else {
+                _activeView.Visibility = false;
+                this.OverViewVisibility = true;
+            }
+            
+        }
+
         private void getNextView(object o) {
+            this.Visibility = false;
             this.OverViewVisibility = false;
             BaseVM a = _activeView;
             a.Visibility = false;
@@ -196,6 +216,7 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         private void getPrevView(object o) {
+            this.Visibility = false;         
             this.OverViewVisibility = false;
             BaseVM a = _activeView;
             a.Visibility = false;
@@ -248,6 +269,30 @@ namespace AstrophotographyBuddy.ViewModel {
 
             set {
                 _toggleViewCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private ICommand _toggleMenuCommand;
+        public ICommand ToggleMenuCommand {
+            get {
+                return _toggleMenuCommand;
+            }
+
+            set {
+                _toggleMenuCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private ICommand _toggleOverviewCommand;
+        public ICommand ToggleOverviewCommand {
+            get {
+                return _toggleOverviewCommand;
+            }
+
+            set {
+                _toggleOverviewCommand = value;
                 RaisePropertyChanged();
             }
         }

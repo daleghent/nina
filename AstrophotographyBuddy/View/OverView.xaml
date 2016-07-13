@@ -28,6 +28,6 @@
         </Border>
         <local:SequenceView Grid.Column="1" IsEnabled="False" DataContext="{Binding ImagingVM.SeqVM}" Margin="0,0,0,1" />
         <local:CameraCoolingChartsView Grid.Row="1" Grid.ColumnSpan="2" DataContext="{Binding CameraVM}"></local:CameraCoolingChartsView>
-        <local:PHD2Graph Grid.Row="2" Grid.ColumnSpan="2" DataContext="{Binding}" />
+        <local:PHD2Graph Grid.Row="2" Grid.ColumnSpan="2" DataContext="{Binding PHD2VM}" />
     </Grid>
 </UserControl>

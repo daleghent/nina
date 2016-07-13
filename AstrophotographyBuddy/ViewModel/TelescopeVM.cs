@@ -54,8 +54,11 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         private void disconnectTelescope(object obj) {
-            _updateTelescope.Stop();
-            Telescope.disconnect();
+            System.Windows.MessageBoxResult result = System.Windows.MessageBox.Show("Disconnect Telescope?", "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxImage.Question, System.Windows.MessageBoxResult.Cancel);
+            if (result == System.Windows.MessageBoxResult.OK) {
+                _updateTelescope.Stop();
+                Telescope.disconnect();
+            }
         }
 
         private void stepMoveRate(object obj) {
