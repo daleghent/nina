@@ -99,7 +99,11 @@
                     </Grid>
                 </Button>
                 <ToggleButton IsChecked="{Binding Loop}">
-                    <ToggleButton.Style>
+                    <Grid>
+                        <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/loop_active.png" Visibility="{Binding Loop, Converter={StaticResource VisibilityConverter}}" ></Image>
+                        <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/loop_inactive.png" Visibility="{Binding Loop, Converter={StaticResource InverseBoolToVisibilityConverter}}"></Image>
+                    </Grid>
+                    <!--<ToggleButton.Style>
                         <Style TargetType="ToggleButton">
                             <Style.Triggers>
                                 <Trigger Property="IsChecked" Value="True">
@@ -118,11 +122,15 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </ToggleButton.Style>
+                    </ToggleButton.Style>-->
 
                 </ToggleButton>
                 <ToggleButton IsChecked="{Binding ImagingVM.AutoStretch}">
-                    <ToggleButton.Style>
+                    <Grid>
+                        <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_active.png" Visibility="{Binding ImagingVM.AutoStretch, Converter={StaticResource VisibilityConverter}}" ></Image>
+                        <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_inactive.png" Visibility="{Binding ImagingVM.AutoStretch, Converter={StaticResource InverseBoolToVisibilityConverter}}"></Image>
+                    </Grid>
+                    <!--<ToggleButton.Style>
                         <Style TargetType="ToggleButton">
                             <Style.Triggers>
                                 <Trigger Property="IsChecked" Value="True">
@@ -141,7 +149,7 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </ToggleButton.Style>
+                    </ToggleButton.Style>-->
                 </ToggleButton>
            </UniformGrid>
             <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ImagingVM.ExpStatus}"></TextBlock>

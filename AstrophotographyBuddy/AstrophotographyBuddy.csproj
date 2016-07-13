@@ -121,6 +121,9 @@
     <Compile Include="Model\FilterWheelModel.cs" />
     <Compile Include="Model\SequenceModel.cs" />
     <Compile Include="Model\TelescopeModel.cs" />
+    <Compile Include="Resources\SVGDictionary.xaml.cs">
+      <DependentUpon>SVGDictionary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utility\AsyncCommand.cs" />
     <Compile Include="Utility\AsyncObservableCollection.cs" />
     <Compile Include="Utility\BaseINPC.cs" />
@@ -196,6 +199,13 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\Camera.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\SVGDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\ApplicationMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

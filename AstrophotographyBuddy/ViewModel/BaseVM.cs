@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace AstrophotographyBuddy.ViewModel {
     class BaseVM :BaseINPC {
@@ -44,5 +45,20 @@ namespace AstrophotographyBuddy.ViewModel {
                 RaisePropertyChanged();
             }
         }
+
+        private GeometryGroup _imageGeometry;
+        public GeometryGroup ImageGeometry {
+            get {
+                return _imageGeometry;
+            }
+            set {
+                _imageGeometry = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        
+
+
     }
 }

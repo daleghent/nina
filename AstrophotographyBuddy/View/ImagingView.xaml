@@ -86,7 +86,11 @@
                     <ComboBox VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}" DisplayMemberPath="Name" SelectedItem="{Binding SnapBin}" SelectedValuePath="Name"></ComboBox>
                 </StackPanel>
                 <ToggleButton Height="50" Width="50" IsChecked="{Binding AutoStretch}" >
-                    <ToggleButton.Style>
+                    <Grid>
+                        <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_active.png" Visibility="{Binding AutoStretch, Converter={StaticResource VisibilityConverter}}" ></Image>
+                        <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_inactive.png" Visibility="{Binding AutoStretch, Converter={StaticResource InverseBoolToVisibilityConverter}}"></Image>
+                    </Grid>
+                   <!-- <ToggleButton.Style>
                         <Style TargetType="ToggleButton">
                             <Style.Triggers>
                                 <Trigger Property="IsChecked" Value="True">
@@ -105,7 +109,7 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </ToggleButton.Style>
+                    </ToggleButton.Style>-->
                 </ToggleButton>
             </StackPanel>
             <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">

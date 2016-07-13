@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:view="clr-namespace:AstrophotographyBuddy.View"
         xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
-        xmlns:local="clr-namespace:AstrophotographyBuddy.View"
+        xmlns:local="clr-namespace:AstrophotographyBuddy.View"   
     Title="Astrophotography Buddy" Height="720" Width="1280" Icon="/AstrophotographyBuddy;component/Resources/observatory.png" Background="{StaticResource BackgroundBrush}">
     
     <Grid DataContext="{StaticResource AppVM}">
@@ -37,12 +37,21 @@
             <Button Grid.Column="3" Height="50" Width="50" Command="{Binding CameraVM.ChooseCameraCommand}"  IsEnabled="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBooleanConverter}}"
                     Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <Grid>
-                    <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/CamInactive.png"></Image>
+                    <!--<Rectangle Fill="{StaticResource CameraSVG}" Width="45" Height="45" />-->
+
+                    <Path Fill="Aqua" Data="{StaticResource CameraSVG}" >
+                        <Path.LayoutTransform>
+                            <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                        </Path.LayoutTransform>
+                    </Path>
+                   
+
+                    <!--<Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/CamInactive.png"></Image>
                     <Image Source="/AstrophotographyBuddy;component/Resources/unplugged.png">
                         <Image.RenderTransform>
                             <ScaleTransform CenterX="45" CenterY="45" ScaleX="0.3" ScaleY="0.3"/>
                         </Image.RenderTransform>
-                    </Image>
+                    </Image>-->
                 </Grid>
             </Button>
             <Button Grid.Column="3" Height="50" Width="50" Command="{Binding CameraVM.DisconnectCommand}" IsEnabled="{Binding CameraVM.Cam.Connected}"
