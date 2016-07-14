@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace AstrophotographyBuddy.ViewModel {
@@ -18,6 +19,9 @@ namespace AstrophotographyBuddy.ViewModel {
             ToggleViewCommand = new RelayCommand(toggleView);
             ToggleMenuCommand = new RelayCommand(toggleMenu);
             ToggleOverviewCommand = new RelayCommand(toggleOverview);
+            ExitCommand = new RelayCommand(exitApplication);
+            MinimizeWindowCommand = new RelayCommand(minimizeWindow);
+            MaximizeWindowCommand = new RelayCommand(maximizeWindow);
             ConnectPHDClientCommand = new AsyncCommand<bool>(async () => await Task.Run<bool>(() => PHD2Client.connect()));
             DisconnectPHDClientCommand = new AsyncCommand<bool>(async () => await Task.Run<bool>(() => PHD2Client.disconnect()));
             Visibility = true;
@@ -41,6 +45,42 @@ namespace AstrophotographyBuddy.ViewModel {
             //addListeners();
         }
 
+        public new bool Visibility {
+            get {
+                return _visibility;
+            } set {
+                _visibility = value;
+
+                if(_visibility == true) {
+                    this.OverViewVisibility = false;
+                    if (_activeView != null)
+                        _activeView.Visibility = false;
+                } else {
+                    if (_activeView != null)
+                        _activeView.Visibility = true;
+                }
+
+                RaisePropertyChanged();                
+            }
+        }
+
+        private void maximizeWindow(object obj) {
+            if (Application.Current.MainWindow.WindowState == WindowState.Maximized) {
+                Application.Current.MainWindow.WindowState = WindowState.Normal;
+            }
+            else {
+                Application.Current.MainWindow.WindowState = WindowState.Maximized;
+            }
+        }
+
+        private void minimizeWindow(object obj) {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        private void exitApplication(object obj) {
+            Application.Current.Shutdown();
+        }
+
         private void addListeners() {
         }
         
@@ -61,9 +101,17 @@ namespace AstrophotographyBuddy.ViewModel {
             }
             set {
                 _overViewVisibility = value;
+                if (_overViewVisibility == true) {
+                    this.Visibility = false;
+                    if(_activeView != null) 
+                        _activeView.Visibility = false;
+                } else {
+                    if (_activeView != null)
+                        _activeView.Visibility = true;
+                }                
                 RaisePropertyChanged();
             }
-        }
+        }        
 
         private ObservableCollection<BaseVM> _views;
         private BaseVM _activeView;
@@ -297,6 +345,42 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
+        private ICommand _minimizeWindowCommand;
+        private ICommand _maximizeWindowCommand;
+        private ICommand _exitCommand;
+        public ICommand MinimizeWindowCommand {
+            get {
+                return _minimizeWindowCommand;
+            }
+
+            set {
+                _minimizeWindowCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public ICommand MaximizeWindowCommand {
+            get {
+                return _maximizeWindowCommand;
+            }
+
+            set {
+                _maximizeWindowCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public ICommand ExitCommand {
+            get {
+                return _exitCommand;
+            }
+
+            set {
+                _exitCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private AsyncCommand<bool> _connectPHDClientCommand;
         public AsyncCommand<bool> ConnectPHDClientCommand {
             get {
@@ -331,5 +415,7 @@ namespace AstrophotographyBuddy.ViewModel {
                 RaisePropertyChanged();
             }
         }
+
+        
     }
 }

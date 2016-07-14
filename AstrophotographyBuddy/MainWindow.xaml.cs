@@ -25,7 +25,11 @@ namespace AstrophotographyBuddy {
             //nom.tam.fits.Fits t = new nom.tam.fits.Fits(@"C:\Users\Isbeorn\Desktop\SharpCap Captures\2016-06-17\Capture\18_58_52\0001.fits");
         }
 
-        
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
+            if (e.LeftButton == MouseButtonState.Pressed) {
+                DragMove();
+            }
+        }
 
     }
 }

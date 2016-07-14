@@ -14,7 +14,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition Height="40" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="50" />
@@ -134,35 +134,33 @@
 
                 </ToggleButton>
                 <ToggleButton IsChecked="{Binding ImagingVM.AutoStretch}">
-                    <Grid>
-                        <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_active.png" Visibility="{Binding ImagingVM.AutoStretch, Converter={StaticResource VisibilityConverter}}" ></Image>
-                        <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_inactive.png" Visibility="{Binding ImagingVM.AutoStretch, Converter={StaticResource InverseBoolToVisibilityConverter}}"></Image>
-                    </Grid>
-                    <!--<ToggleButton.Style>
-                        <Style TargetType="ToggleButton">
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton" BasedOn="{StaticResource TB}" >
                             <Style.Triggers>
                                 <Trigger Property="IsChecked" Value="True">
                                     <Setter Property="Content">
                                         <Setter.Value>
-                                            <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_active.png" ></Image>
+                                            <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource WandSVG}" Stretch="Uniform" Margin="5">
+                                            </Path>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
                                 <Trigger Property="IsChecked" Value="False">
                                     <Setter Property="Content">
                                         <Setter.Value>
-                                            <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/AutoStretch_inactive.png" ></Image>
+                                            <Path Fill="{StaticResource ButtonForegroundDisabledBrush}" Data="{StaticResource WandSVG}" Stretch="Uniform" Margin="5">
+                                            </Path>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </ToggleButton.Style>-->
+                    </ToggleButton.Style>
                 </ToggleButton>
            </UniformGrid>
             <TextBlock Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ImagingVM.ExpStatus}"></TextBlock>
         </Grid>
-        <Expander ExpandDirection="Right" Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" IsExpanded="True">
+        <Expander ExpandDirection="Right"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" IsExpanded="True">
             <Expander.Header>
                 <TextBlock Text="Image Manipulation" TextOptions.TextFormattingMode="Display"
 TextOptions.TextRenderingMode="ClearType"
@@ -187,27 +185,24 @@ UseLayoutRounding="true">
 
                 <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource BrightnessSVG}" Stretch="Uniform" Margin="5">
                 </Path>
-                <Slider Grid.Row="1" Orientation="Vertical" Width="25" Value="{Binding Brightness}"   Maximum="2" Minimum="0" SmallChange="0.1"></Slider>
+                <Slider Grid.Row="1" Orientation="Vertical" Width="25" Value="{Binding Brightness}" MinWidth="50"   Maximum="2" Minimum="0" SmallChange="0.1"></Slider>
                 <TextBlock HorizontalAlignment="Center" Grid.Row="2" Text="{Binding Brightness}"></TextBlock>
 
                 <Path Grid.Column="1" Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource ContrastSVG}" Stretch="Uniform" Margin="5">
-                </Path>               
+                </Path>
 
-                <Slider  Grid.Row="1" Grid.Column="1" Orientation="Vertical" Width="25" Value="{Binding Contrast}" Maximum="10" Minimum="0" SmallChange="0.1"></Slider>
+                <Slider  Grid.Row="1" Grid.Column="1" Orientation="Vertical" Width="25" Value="{Binding Contrast}" MinWidth="50" Maximum="10" Minimum="0" SmallChange="0.1"></Slider>
                 <TextBlock HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Text="{Binding Contrast}"></TextBlock>
 
                 <Path Fill="{StaticResource ButtonForegroundBrush}" Grid.Column="2" Data="{StaticResource GammaSVG}" Stretch="Uniform" Margin="5">
                 </Path>
-                <Slider HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" Orientation="Vertical" Width="25" Value="{Binding Gamma}" Maximum="5" Minimum="0.2" SmallChange="0.1"></Slider>
+                <Slider HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" Orientation="Vertical" Width="25" MinWidth="50" Value="{Binding Gamma}" Maximum="5" Minimum="0.2" SmallChange="0.1"></Slider>
                 <TextBlock HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" Text="{Binding Gamma}"></TextBlock>
                 
-                <UniformGrid Grid.Row="3" Rows="2" Columns="1" Grid.ColumnSpan="99" >
-                    <Button Command="{Binding ApplyImageParamsCommand}">
+                <UniformGrid Grid.Row="3" Columns="1" Grid.ColumnSpan="99" >
+                    <Button Command="{Binding ApplyImageParamsCommand}" Width="50" Height="50" HorizontalAlignment="Right">
                         <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CheckedSVG}" Stretch="Uniform" Margin="5">
                         </Path>
-                    </Button>
-                    <Button Command="{Binding AutoStretchCommand}">
-                        <Image Source="/AstrophotographyBuddy;component/Resources/HistogramStretch.png" ></Image>
                     </Button>
                 </UniformGrid>
             </Grid>

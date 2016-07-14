@@ -13,7 +13,7 @@ namespace AstrophotographyBuddy.ViewModel {
             Visibility = false;
         }
 
-        private bool _visibility;
+        protected bool _visibility;
         public bool Visibility {
             get {
                 return _visibility;

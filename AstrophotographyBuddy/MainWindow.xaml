@@ -4,16 +4,39 @@
         xmlns:view="clr-namespace:AstrophotographyBuddy.View"
         xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
         xmlns:local="clr-namespace:AstrophotographyBuddy.View"   
-    Title="Astrophotography Buddy" Height="720" Width="1280" Background="{StaticResource BackgroundBrush}">
+    Title="Astrophotography Buddy" Height="720" Width="1280" Background="{StaticResource BackgroundBrush}" Icon="/AstrophotographyBuddy;component/Resources/observatory.png" WindowStyle="None" MouseDown="Window_MouseDown">
     <!-- ToDo Custom Title Bar With own icon-->
     
     <Grid DataContext="{StaticResource AppVM}">
         <!--<Image Name="imagebox"></Image>-->
         <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
             <RowDefinition Height="50" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid>
+        <StackPanel Orientation="Horizontal">            
+            <Rectangle HorizontalAlignment="Left" VerticalAlignment="Center" Fill="{StaticResource Observatory}" Width="30" Height="30"/>
+            <TextBlock Text="Astrophotography Buddy" VerticalAlignment="Center" Margin="4,0,0,0"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button HorizontalAlignment="Right" Height="30" Width="40" Command="{Binding MinimizeWindowCommand}">
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource MinimizeWindowSVG}" VerticalAlignment="Bottom" Stretch="Uniform" Margin="5,18,5,5">
+                </Path>
+                
+            </Button>
+            <Button HorizontalAlignment="Right" Height="30" Width="40" Command="{Binding MaximizeWindowCommand}">
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource MaximizeSVG}" Stretch="Uniform" Margin="5">
+                  
+                </Path>
+            </Button>
+            <Button HorizontalAlignment="Right" Height="30" Width="40" Command="{Binding ExitCommand}">
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
+                </Path>
+            </Button>
+
+        </StackPanel>
+
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="55" />
                 <ColumnDefinition Width="60" />
@@ -27,14 +50,56 @@
                 <ColumnDefinition Width="60" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Height="50" Width="50" Command="{Binding ToggleMenuCommand}" HorizontalAlignment="Left" VerticalAlignment="Center"   >
-                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource MenuSVG}" Stretch="Uniform" Margin="5" >
-                </Path>
-            </Button>
-            <Button  Grid.Column="2" Height="50" Width="50" Command="{Binding ToggleOverviewCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource MinimizeSVG}" Stretch="Uniform" Margin="5">
-                </Path>
-            </Button>
+            <ToggleButton Grid.Column="0" Height="50" Width="50"  IsChecked="{Binding Visibility}" HorizontalAlignment="Left" VerticalAlignment="Center"   >
+                
+                <ToggleButton.Style>
+                    <Style TargetType="ToggleButton" BasedOn="{StaticResource TB}" >
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource MenuSVG}" Stretch="Uniform" Margin="5" >
+                                        </Path>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource MenuSVG}" Stretch="Uniform" Margin="5" >
+                                        </Path>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+            </ToggleButton>
+            <ToggleButton  Grid.Column="2" Height="50" Width="50" IsChecked="{Binding OverViewVisibility}"  HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <ToggleButton.Style>
+                    <Style TargetType="ToggleButton" BasedOn="{StaticResource TB}" >
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource MinimizeSVG}" Stretch="Uniform" Margin="5">
+                                        </Path>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="Content">
+                                    <Setter.Value>
+                                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource MinimizeSVG}" Stretch="Uniform" Margin="5">
+                                        </Path>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+                
+            </ToggleButton>
             <Button Grid.Column="1" Height="50" Width="50"  Command="{Binding PrevViewCommand}" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource NextSVG}" Stretch="Uniform" Margin="5">
                     <Path.LayoutTransform>                     
@@ -173,7 +238,7 @@
                 </Path>
             </Button>
         </Grid>
-        <Grid Grid.Row="1" Margin="0,10,0,0">
+        <Grid Grid.Row="2" Margin="0,10,0,0">
             <view:ApplicationMenu DataContext="{Binding}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:ApplicationMenu>
             <view:OverView DataContext="{Binding}" Visibility="{Binding OverViewVisibility, Converter={StaticResource VisibilityConverter}}"> </view:OverView>
             <view:CameraView DataContext="{Binding CameraVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:CameraView>
