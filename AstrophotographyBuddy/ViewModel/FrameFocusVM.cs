@@ -16,7 +16,7 @@ namespace AstrophotographyBuddy.ViewModel {
     class FrameFocusVM : BaseVM {
         public FrameFocusVM() {
             Name = "Frame & Focus";
-            ImageURI = @"/AstrophotographyBuddy;component/Resources/Focus.png";
+            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["FocusSVG"];
             CancelSnapCommand = new RelayCommand(cancelCaptureImage);
             SnapCommand = new AsyncCommand<bool>(() => snap());
             ApplyImageParamsCommand = new AsyncCommand<bool>(() => applyImageParams());

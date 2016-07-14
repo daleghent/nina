@@ -85,44 +85,52 @@
             </StackPanel>
             <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">
                 <Button Command="{Binding CancelSnapCommand}" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">
-                    <Image Margin="10" Source="/AstrophotographyBuddy;component/Resources/cancel.png" ></Image>
+                    <Path Fill="Aqua" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
+                    </Path>
                 </Button>
             </Grid>
 
             <UniformGrid Columns="3" Grid.Column="2">
                 <Button Width="50" Height="50"  Command="{Binding SnapCommand}" HorizontalAlignment="Left">
                     <Grid>
-                        <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/picture.png" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}"></Image>                        
+                        <Path Fill="Aqua" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        </Path>                        
                         <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                             <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ImagingVM.ExposureSeconds}" />
                         </Grid>
                     </Grid>
                 </Button>
                 <ToggleButton IsChecked="{Binding Loop}">
-                    <Grid>
+                    <!--<Grid>
+                        <Path Fill="Aqua" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="5">
+                        </Path>
+                        
+                        
                         <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/loop_active.png" Visibility="{Binding Loop, Converter={StaticResource VisibilityConverter}}" ></Image>
                         <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/loop_inactive.png" Visibility="{Binding Loop, Converter={StaticResource InverseBoolToVisibilityConverter}}"></Image>
-                    </Grid>
-                    <!--<ToggleButton.Style>
-                        <Style TargetType="ToggleButton">
+                    </Grid>-->
+                    <ToggleButton.Style>
+                        <Style TargetType="ToggleButton" BasedOn="{StaticResource TB}" >
                             <Style.Triggers>
                                 <Trigger Property="IsChecked" Value="True">
                                     <Setter Property="Content">
                                         <Setter.Value>
-                                            <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/loop_active.png" ></Image>
+                                            <Path Fill="Aqua" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="5">
+                                            </Path>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
                                 <Trigger Property="IsChecked" Value="False">
                                     <Setter Property="Content">
                                         <Setter.Value>
-                                            <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/loop_inactive.png" ></Image>
+                                            <Path Fill="Plum" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="5">
+                                            </Path>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </ToggleButton.Style>-->
+                    </ToggleButton.Style>
 
                 </ToggleButton>
                 <ToggleButton IsChecked="{Binding ImagingVM.AutoStretch}">
@@ -177,34 +185,26 @@ UseLayoutRounding="true">
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
-                <Image HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Brightness.png" RenderTransformOrigin="0.5, 0.5">
-                    <Image.RenderTransform>
-                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"></ScaleTransform>
-                    </Image.RenderTransform>
-                </Image>
+                <Path Fill="Aqua" Data="{StaticResource BrightnessSVG}" Stretch="Uniform" Margin="5">
+                </Path>
                 <Slider Grid.Row="1" Orientation="Vertical" Width="25" Value="{Binding Brightness}"   Maximum="2" Minimum="0" SmallChange="0.1"></Slider>
                 <TextBlock HorizontalAlignment="Center" Grid.Row="2" Text="{Binding Brightness}"></TextBlock>
 
-                <Image Margin="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Contrast.png" RenderTransformOrigin="0.5, 0.5">
-                    <Image.RenderTransform>
-                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"></ScaleTransform>
-                    </Image.RenderTransform>
-                </Image>
+                <Path Grid.Column="1" Fill="Aqua" Data="{StaticResource ContrastSVG}" Stretch="Uniform" Margin="5">
+                </Path>               
 
                 <Slider  Grid.Row="1" Grid.Column="1" Orientation="Vertical" Width="25" Value="{Binding Contrast}" Maximum="10" Minimum="0" SmallChange="0.1"></Slider>
                 <TextBlock HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Text="{Binding Contrast}"></TextBlock>
 
-                <Image Margin="0,0,0,5" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Source="/AstrophotographyBuddy;component/Resources/Gamma.png" RenderTransformOrigin="0.5, 0.5">
-                    <Image.RenderTransform>
-                        <ScaleTransform ScaleX="0.5" ScaleY="0.5"></ScaleTransform>
-                    </Image.RenderTransform>
-                </Image>
+                <Path Fill="Aqua" Grid.Column="2" Data="{StaticResource GammaSVG}" Stretch="Uniform" Margin="5">
+                </Path>
                 <Slider HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" Orientation="Vertical" Width="25" Value="{Binding Gamma}" Maximum="5" Minimum="0.2" SmallChange="0.1"></Slider>
                 <TextBlock HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" Text="{Binding Gamma}"></TextBlock>
                 
                 <UniformGrid Grid.Row="3" Rows="2" Columns="1" Grid.ColumnSpan="99" >
                     <Button Command="{Binding ApplyImageParamsCommand}">
-                        <Image Margin="0" Source="/AstrophotographyBuddy;component/Resources/checked.png" ></Image>
+                        <Path Fill="Aqua" Data="{StaticResource CheckedSVG}" Stretch="Uniform" Margin="5">
+                        </Path>
                     </Button>
                     <Button Command="{Binding AutoStretchCommand}">
                         <Image Source="/AstrophotographyBuddy;component/Resources/HistogramStretch.png" ></Image>

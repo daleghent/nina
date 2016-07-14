@@ -11,12 +11,14 @@ using System.Windows.Threading;
 namespace AstrophotographyBuddy.ViewModel {
     class TelescopeVM : BaseVM {
         public TelescopeVM() {
-            Name = "Telescope";
-            ImageURI = @"/AstrophotographyBuddy;component/Resources/Telescope.png";
+            Name = "Telescope";            
+            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["TelescopeSVG"];
             Telescope = new TelescopeModel();
             ChooseTelescopeCommand = new RelayCommand(chooseTelescope);
             DisconnectCommand = new RelayCommand(disconnectTelescope);
             StepperMoveRateCommand = new RelayCommand(stepMoveRate);
+            ParkCommand = new AsyncCommand<bool>(parkTelescope);
+            UnparkCommand = new RelayCommand(unparkTelescope);
 
             MoveCommand = new RelayCommand(move);
             StopMoveCommand = new RelayCommand(stopMove);
@@ -31,6 +33,15 @@ namespace AstrophotographyBuddy.ViewModel {
             if (Telescope.Connected) {
                 Telescope.updateValues();
             }            
+        }
+
+        private async Task<bool> parkTelescope() {
+            return await Task.Run<bool>(() => { Telescope.park(); return true; }); 
+
+        }
+
+        private void unparkTelescope(object o) {
+            Telescope.unpark();
         }
 
         private DispatcherTimer _updateTelescope;
@@ -146,6 +157,28 @@ namespace AstrophotographyBuddy.ViewModel {
             }
             set {
                 _stopMoveCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private AsyncCommand<bool> _parkCommand;
+        public AsyncCommand<bool> ParkCommand {
+            get {
+                return _parkCommand;
+            }
+            set {
+                _parkCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private ICommand _unparkCommand;
+        public ICommand UnparkCommand {
+            get {
+                return _unparkCommand;
+            }
+            set {
+                _unparkCommand = value;
                 RaisePropertyChanged();
             }
         }

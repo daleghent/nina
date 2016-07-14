@@ -121,9 +121,6 @@
     <Compile Include="Model\FilterWheelModel.cs" />
     <Compile Include="Model\SequenceModel.cs" />
     <Compile Include="Model\TelescopeModel.cs" />
-    <Compile Include="Resources\SVGDictionary.xaml.cs">
-      <DependentUpon>SVGDictionary.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Utility\AsyncCommand.cs" />
     <Compile Include="Utility\AsyncObservableCollection.cs" />
     <Compile Include="Utility\BaseINPC.cs" />
@@ -199,10 +196,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Resources\Camera.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Resources\SVGDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -286,101 +279,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\PHD2Active.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\PHD2Inactive.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\FWActive.png" />
-    <Resource Include="Resources\FWInactive.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\CamActive.png" />
-    <Resource Include="Resources\CamInactive.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Camera.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\FW.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Options.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Focus.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Imaging.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Telescope.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\TelescopeActive.png" />
-    <Resource Include="Resources\TelescopeInactive.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Brightness.png" />
-    <Resource Include="Resources\Contrast.png" />
-    <Resource Include="Resources\Gamma.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\PHD2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Menu.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\back.png" />
-    <Resource Include="Resources\next.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\add.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\play.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\picture.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\loop_active.png" />
-    <Resource Include="Resources\loop_inactive.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\cancel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\dots.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\preview.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\checked.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\HistogramStretch.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\AutoStretch_active.png" />
-    <Resource Include="Resources\AutoStretch_inactive.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\observatory.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\unplugged.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\plugged.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\compact.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -11,9 +11,8 @@ using System.Windows.Media;
 namespace AstrophotographyBuddy.ViewModel {
     class OptionsVM :BaseVM {
         public OptionsVM() {
-            Name = "Options";
-
-            ImageURI = @"/AstrophotographyBuddy;component/Resources/Options.png";
+            Name = "Options";            
+            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
             PreviewFileCommand = new RelayCommand(previewFile);
             OpenFileDiagCommand = new RelayCommand(openFileDiag);
 

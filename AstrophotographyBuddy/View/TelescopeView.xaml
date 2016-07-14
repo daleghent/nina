@@ -92,11 +92,16 @@
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="3" Orientation="Horizontal">
                         <TextBlock Margin="0,0,5,0" VerticalAlignment="Center"><Run Text="Rate:"/></TextBlock>
-                        <RepeatButton Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding StepperMoveRateCommand}" CommandParameter="-">&#x25BC;</RepeatButton>
+                        <RepeatButton Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Command="{Binding StepperMoveRateCommand}" CommandParameter="-">
+                            <TextBlock Text ="&#x25BC;" Foreground="Aqua"></TextBlock>
+                            </RepeatButton>
                         <TextBox VerticalAlignment="Center" Text="{Binding Telescope.MovingRate}" MinWidth="40" />
-                        <RepeatButton VerticalAlignment="Center" Width="50" HorizontalAlignment="Center" Command="{Binding StepperMoveRateCommand}" CommandParameter="+">&#x25B2;</RepeatButton>
+                        <RepeatButton VerticalAlignment="Center" Width="50" HorizontalAlignment="Center" Command="{Binding StepperMoveRateCommand}" CommandParameter="+">
+                            <TextBlock Text ="&#x25B2;" Foreground="Aqua"></TextBlock>
+                        </RepeatButton>
                     </StackPanel>
-                    <Button Grid.Row="1" Grid.Column="0" Height="80" Width="80" HorizontalAlignment="Right" Content="W" >
+                    <Button Grid.Row="1" Grid.Column="0" Height="80" Width="80" HorizontalAlignment="Right"   >
+                        <TextBlock Text ="W" Foreground="Aqua"></TextBlock>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewStylusDown">
                                 <i:InvokeCommandAction CommandParameter="W" Command="{Binding MoveCommand}"/>
@@ -119,7 +124,8 @@
                         </i:Interaction.Triggers>
                             
                     </Button>
-                    <Button Grid.Row="1" Grid.Column="2" Height="80" Width="80" HorizontalAlignment="Left" Content="O">
+                    <Button Grid.Row="1" Grid.Column="2" Height="80" Width="80" HorizontalAlignment="Left"  >
+                        <TextBlock Text ="O" Foreground="Aqua"></TextBlock>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewStylusDown">
                                 <i:InvokeCommandAction CommandParameter="O" Command="{Binding MoveCommand}"/>
@@ -141,7 +147,8 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>                            
                     </Button>
-                    <Button Grid.Row="0" Grid.Column="1" Height="80" Width="80" VerticalAlignment="Bottom" Content="N">
+                    <Button Grid.Row="0" Grid.Column="1" Height="80" Width="80" VerticalAlignment="Bottom" >
+                        <TextBlock Text ="N" Foreground="Aqua"></TextBlock>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewStylusDown">
                                 <i:InvokeCommandAction CommandParameter="N" Command="{Binding MoveCommand}"/>
@@ -163,7 +170,8 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
-                    <Button Grid.Row="2" Grid.Column="1" Height="80" Width="80" VerticalAlignment="Top" Content="S">
+                    <Button Grid.Row="2" Grid.Column="1" Height="80" Width="80" VerticalAlignment="Top">
+                        <TextBlock Text ="S" Foreground="Aqua"></TextBlock>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="PreviewStylusDown">
                                 <i:InvokeCommandAction CommandParameter="S" Command="{Binding MoveCommand}"/>
@@ -186,7 +194,18 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Button>
-                    <Button Grid.Row="1" Grid.Column="1" Height="80" Width="80" Content="STOP" Command="{Binding StopSlewCommand}"></Button>
+                    <Button Grid.Row="1" Grid.Column="1" Height="80" Width="80" Command="{Binding StopSlewCommand}">
+                        <TextBlock Text ="STOP" Foreground="Aqua"></TextBlock>
+                    </Button>
+
+                    <Button Grid.Row="2" Grid.Column="3" Height="80" Width="80" Command="{Binding ParkCommand}" HorizontalAlignment="Right" Visibility="{Binding Telescope.AtPark, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <TextBlock Text ="PARK" Foreground="Aqua"></TextBlock>
+                    </Button>
+
+                    <Button Grid.Row="2" Grid.Column="3" Height="80" Width="80" Command="{Binding UnparkCommand}" HorizontalAlignment="Right" Visibility="{Binding Telescope.AtPark, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock Text ="UNPARK" Foreground="Aqua"></TextBlock>
+                    </Button>
+                    
                 </Grid>
              
             </GroupBox>

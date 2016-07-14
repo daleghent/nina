@@ -62,6 +62,7 @@ namespace AstrophotographyBuddy.Model {
             Declination = Telescope.Declination;
             RightAscension = Telescope.RightAscension;
             SiderealTime = Telescope.SiderealTime;
+            AtPark = Telescope.AtPark;
         }
 
         public AlignmentModes AlignmentMode {
@@ -1088,12 +1089,14 @@ namespace AstrophotographyBuddy.Model {
         public void park() {
             if(Connected && CanPark) {
                 Telescope.Park();
+                AtPark = true;
             }
         }
 
         public void unpark() {
             if(Connected && CanUnpark) {
                 Telescope.Unpark();
+                AtPark = false;
             }
         }
 
@@ -1105,7 +1108,7 @@ namespace AstrophotographyBuddy.Model {
 
         
         public void moveAxis(TelescopeAxes axis, double rate) {
-            if(Connected && CanSlew ) {
+            if(Connected && CanSlew && !AtPark ) {
                 Telescope.MoveAxis(axis, rate);
             }
         }

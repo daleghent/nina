@@ -10,7 +10,8 @@ namespace AstrophotographyBuddy.ViewModel {
     class PHD2VM :BaseVM {
         public PHD2VM() {
             Name = "PHD2";
-            ImageURI = @"/AstrophotographyBuddy;component/Resources/PHD2.png";
+
+            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PHD2SVG"];            
             MaxY = 4;      
         }
 

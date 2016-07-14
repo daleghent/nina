@@ -29,13 +29,13 @@
                 <TextBlock VerticalAlignment="Center" Grid.Column="0">Image File Path:</TextBlock>
                 <TextBox VerticalAlignment="Center" Grid.Column="1" Text="{Binding ImageFilePath}"></TextBox>
                 <Button VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="40" Grid.Column="2" Command="{Binding OpenFileDiagCommand}">
-                    <Image Margin="10" Source="/AstrophotographyBuddy;component/Resources/dots.png" ></Image>
+                    <Path Fill="Aqua" Data="{StaticResource DotsSVG}" Stretch="Uniform" Margin="5"/>
                 </Button>
 
                 <TextBlock VerticalAlignment="Center" Grid.Column="0" Grid.Row="2">Image File Pattern:</TextBlock>
                 <TextBox Text="{Binding ImageFilePattern}" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2"></TextBox>
                 <Button VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="40" Grid.Column="2" Grid.Row="2" Command="{Binding PreviewFileCommand}">
-                    <Image Margin="5" Source="/AstrophotographyBuddy;component/Resources/preview.png" ></Image>
+                    <Path Fill="Aqua" Data="{StaticResource PreviewSVG}" Stretch="Uniform" Margin="5"/>
                 </Button>
 
                 <ListView Grid.Row="3" Grid.ColumnSpan="3" ItemsSource="{Binding ImagePatterns}">

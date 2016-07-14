@@ -34,18 +34,7 @@ namespace AstrophotographyBuddy.ViewModel {
                 RaisePropertyChanged();
             }
         }
-
-        private string _imageURI;
-        public string ImageURI {
-            get {
-                return _imageURI;
-            }
-            set {
-                _imageURI = value;
-                RaisePropertyChanged();
-            }
-        }
-
+        
         private GeometryGroup _imageGeometry;
         public GeometryGroup ImageGeometry {
             get {

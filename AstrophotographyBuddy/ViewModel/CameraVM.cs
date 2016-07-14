@@ -14,7 +14,6 @@ namespace AstrophotographyBuddy {
 
         public CameraVM() {
             Name = "Camera";
-            ImageURI = @"/AstrophotographyBuddy;component/Resources/Camera.png";
             ImageGeometry  = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CameraSVG"];
 
             //ConnectCameraCommand = new RelayCommand(connectCamera);

@@ -21,7 +21,8 @@ namespace AstrophotographyBuddy.ViewModel {
 
         public ImagingVM() {
             Name = "Imaging";
-            ImageURI = @"/AstrophotographyBuddy;component/Resources/Imaging.png";
+            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ImagingSVG"];
+
             SnapExposureDuration = 1;
             SnapCommand = new AsyncCommand<bool>(() => captureImage());
             CancelSnapCommand = new RelayCommand(cancelCaptureImage);

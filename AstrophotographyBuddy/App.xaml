@@ -254,7 +254,7 @@
                 </Setter>
             </Style>
 
-            <Style TargetType="{x:Type ToggleButton}" >
+            <Style TargetType="{x:Type ToggleButton}" x:Key="TB" >
                 <Setter Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
                 <Setter Property="Foreground" Value="{StaticResource ButtonBackgroundBrush}" />
                 <Setter Property="FontSize" Value="15" />

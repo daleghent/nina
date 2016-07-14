@@ -26,11 +26,11 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="50" />
                         </Grid.RowDefinitions>
-                        <Path Fill="Aqua" Data="{Binding ImageGeometry}" Stretch="Uniform" />
+                        <Path Fill="Aqua" Data="{Binding ImageGeometry}" Stretch="Uniform" Margin="5"/>
 
 
                         <!--<Image Source="{Binding ImageURI}" />-->
-                        <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="{Binding Name}" FontSize="36" />
+                        <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="{Binding Name}" FontSize="36" Foreground="Aqua" />
                     </Grid>
                 </Button>
                 
