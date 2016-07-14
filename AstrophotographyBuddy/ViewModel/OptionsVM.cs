@@ -15,6 +15,7 @@ namespace AstrophotographyBuddy.ViewModel {
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
             PreviewFileCommand = new RelayCommand(previewFile);
             OpenFileDiagCommand = new RelayCommand(openFileDiag);
+            ToggleColorsCommand = new RelayCommand(toggleColors);
 
             ImageFilePath = Settings.ImageFilePath;
             ImageFilePattern = Settings.ImageFilePattern;
@@ -106,6 +107,35 @@ namespace AstrophotographyBuddy.ViewModel {
                 RaisePropertyChanged();
             }
         }
+    
+        private void toggleColors(object o) {
+            var a = PrimaryColor;
+            var b = SecondaryColor;
+            var c = BorderColor;
+            var d = BackgroundColor;
+            var e = ButtonBackgroundColor;
+            var f = ButtonBackgroundSelectedColor;
+            var g = ButtonForegroundColor;
+            var h = ButtonForegroundDisabledColor;
+
+            PrimaryColor = AltPrimaryColor;
+            SecondaryColor = AltSecondaryColor;
+            BorderColor = AltBorderColor;
+            BackgroundColor = AltBackgroundColor;
+            ButtonBackgroundColor = AltButtonBackgroundColor;
+            ButtonBackgroundSelectedColor = AltButtonBackgroundSelectedColor;
+            ButtonForegroundColor = AltButtonForegroundColor;
+            ButtonForegroundDisabledColor = AltButtonForegroundDisabledColor;
+
+            AltPrimaryColor = a;
+            AltSecondaryColor = b;
+            AltBorderColor = c;
+            AltBackgroundColor = d;
+            AltButtonBackgroundColor = e;
+            AltButtonBackgroundSelectedColor = f;
+            AltButtonForegroundColor = g;
+            AltButtonForegroundDisabledColor = h;
+        }
 
         public Color PrimaryColor {
             get {
@@ -168,6 +198,28 @@ namespace AstrophotographyBuddy.ViewModel {
 
         }
 
+        public Color ButtonForegroundColor {
+            get {
+                return Settings.ButtonForegroundColor;
+            }
+            set {
+                Settings.ButtonForegroundColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
+        public Color ButtonForegroundDisabledColor {
+            get {
+                return Settings.ButtonForegroundDisabledColor;
+            }
+            set {
+                Settings.ButtonForegroundDisabledColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
         public double DitherPixels {
             get {
                 return Settings.DitherPixels;
@@ -202,6 +254,17 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
 
+        private RelayCommand _toggleColorsCommand;
+        public RelayCommand ToggleColorsCommand {
+            get {
+                return _toggleColorsCommand;
+            }
+
+            set {
+                _toggleColorsCommand = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public class ImagePattern {
             public ImagePattern(string k, string d, string v) {
@@ -242,5 +305,91 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
 
+
+
+        public Color AltPrimaryColor {
+            get {
+                return Settings.AltPrimaryColor;
+            }
+            set {
+                Settings.AltPrimaryColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+        public Color AltSecondaryColor {
+            get {
+                return Settings.AltSecondaryColor;
+            }
+            set {
+                Settings.AltSecondaryColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+        public Color AltBorderColor {
+            get {
+                return Settings.AltBorderColor;
+            }
+            set {
+                Settings.AltBorderColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+        public Color AltBackgroundColor {
+            get {
+                return Settings.AltBackgroundColor;
+            }
+            set {
+                Settings.AltBackgroundColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+        public Color AltButtonBackgroundColor {
+            get {
+                return Settings.AltButtonBackgroundColor;
+            }
+            set {
+                Settings.AltButtonBackgroundColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+        public Color AltButtonBackgroundSelectedColor {
+            get {
+                return Settings.AltButtonBackgroundSelectedColor;
+            }
+            set {
+                Settings.AltButtonBackgroundSelectedColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
+        public Color AltButtonForegroundColor {
+            get {
+                return Settings.AltButtonForegroundColor;
+            }
+            set {
+                Settings.AltButtonForegroundColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
+        public Color AltButtonForegroundDisabledColor {
+            get {
+                return Settings.AltButtonForegroundDisabledColor;
+            }
+            set {
+                Settings.AltButtonForegroundDisabledColor = value;
+                RaisePropertyChanged();
+            }
+
+        }
+
+        
     }
 }

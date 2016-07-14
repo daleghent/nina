@@ -160,6 +160,113 @@ namespace AstrophotographyBuddy.Utility {
             }
         }
 
+        public static Color ButtonForegroundDisabledColor {
+            get {
+                return Properties.Settings.Default.ButtonForegroundDisabledColor;
+            }
+            set {
+                Properties.Settings.Default.ButtonForegroundDisabledColor = value;
+                Properties.Settings.Default.Save();
+
+            }
+        }
+
+        public static Color ButtonForegroundColor {
+            get {
+                return Properties.Settings.Default.ButtonForegroundColor;
+            }
+            set {
+                Properties.Settings.Default.ButtonForegroundColor = value;
+                Properties.Settings.Default.Save();
+
+            }
+        }
+
+
+        public static Color AltPrimaryColor {
+            get {
+                return Properties.Settings.Default.AltPrimaryColor;
+            }
+            set {
+                Properties.Settings.Default.AltPrimaryColor = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public static Color AltSecondaryColor {
+            get {
+                return Properties.Settings.Default.AltSecondaryColor;
+            }
+            set {
+                Properties.Settings.Default.AltSecondaryColor = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public static Color AltBorderColor {
+            get {
+                return Properties.Settings.Default.AltBorderColor;
+            }
+            set {
+                Properties.Settings.Default.AltBorderColor = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public static Color AltBackgroundColor {
+            get {
+                return Properties.Settings.Default.AltBackgroundColor;
+            }
+            set {
+                Properties.Settings.Default.AltBackgroundColor = value;
+                Properties.Settings.Default.Save();
+
+            }
+        }
+
+        public static Color AltButtonBackgroundColor {
+            get {
+                return Properties.Settings.Default.AltButtonBackgroundColor;
+            }
+            set {
+                Properties.Settings.Default.AltButtonBackgroundColor = value;
+                Properties.Settings.Default.Save();
+
+            }
+        }
+
+        public static Color AltButtonBackgroundSelectedColor {
+            get {
+                return Properties.Settings.Default.AltButtonBackgroundSelectedColor;
+            }
+            set {
+                Properties.Settings.Default.AltButtonBackgroundSelectedColor = value;
+                Properties.Settings.Default.Save();
+
+            }
+        }
+
+        public static Color AltButtonForegroundDisabledColor {
+            get {
+                return Properties.Settings.Default.AltButtonForegroundDisabledColor;
+            }
+            set {
+                Properties.Settings.Default.AltButtonForegroundDisabledColor = value;
+                Properties.Settings.Default.Save();
+
+            }
+        }
+
+        public static Color AltButtonForegroundColor {
+            get {
+                return Properties.Settings.Default.AltButtonForegroundColor;
+            }
+            set {
+                Properties.Settings.Default.AltButtonForegroundColor = value;
+                Properties.Settings.Default.Save();
+
+            }
+        }
 
 
     }

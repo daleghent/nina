@@ -636,6 +636,6 @@
             </Grid>
         
         </Canvas>-->
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Text}" Background="Transparent" Foreground="Aqua"></TextBlock>
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Text}" Background="Transparent" Foreground="{StaticResource ButtonForegroundBrush}"></TextBlock>
     </Grid>
 </UserControl>

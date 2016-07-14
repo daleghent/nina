@@ -21,13 +21,13 @@
       <Value Profile="(Default)">4400</Value>
     </Setting>
     <Setting Name="PrimaryColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FF000000</Value>
+      <Value Profile="(Default)">#FF02010A</Value>
     </Setting>
     <Setting Name="SecondaryColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FFFF4500</Value>
+      <Value Profile="(Default)">#FFA1C6EA</Value>
     </Setting>
     <Setting Name="BorderColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FFFFA500</Value>
+      <Value Profile="(Default)">#FFBBD1EA</Value>
     </Setting>
     <Setting Name="BackgroundColor" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FFFFFFFF</Value>
@@ -45,10 +45,40 @@
       <Value Profile="(Default)">ASCOM.Simulator.Telescope</Value>
     </Setting>
     <Setting Name="ButtonBackgroundColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FFC0C0C0</Value>
+      <Value Profile="(Default)">#FF9DB4C0</Value>
     </Setting>
     <Setting Name="ButtonBackgroundSelectedColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#F79D3600</Value>
+      <Value Profile="(Default)">#FF507DBC</Value>
+    </Setting>
+    <Setting Name="ButtonForegroundColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF02010A</Value>
+    </Setting>
+    <Setting Name="ButtonForegroundDisabledColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FFDAE3E5</Value>
+    </Setting>
+    <Setting Name="AltPrimaryColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF550C18</Value>
+    </Setting>
+    <Setting Name="AltSecondaryColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF1B2A41</Value>
+    </Setting>
+    <Setting Name="AltBorderColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF550C18</Value>
+    </Setting>
+    <Setting Name="AltBackgroundColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF02010A</Value>
+    </Setting>
+    <Setting Name="AltButtonBackgroundColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF550C18</Value>
+    </Setting>
+    <Setting Name="AltButtonBackgroundSelectedColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF96031A</Value>
+    </Setting>
+    <Setting Name="AltButtonForegroundColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF02010A</Value>
+    </Setting>
+    <Setting Name="AltButtonForegroundDisabledColor" Type="System.Windows.Media.Color" Scope="User">
+      <Value Profile="(Default)">#FF443730</Value>
     </Setting>
   </Settings>
 </SettingsFile>

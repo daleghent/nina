@@ -169,13 +169,13 @@
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="3" Grid.ColumnSpan="3" >
                         <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning}"  Command="{Binding CancelCoolCamCommand}" Visibility="{Binding CoolingRunning, Converter={StaticResource VisibilityConverter}}">
-                            <Path Fill="Aqua" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
+                            <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
                             </Path>
                         </Button>
                         <Button Width="50" Height="50" IsEnabled="{Binding CoolingRunning , Converter={StaticResource InverseBooleanConverter}}" Command="{Binding CoolCamCommand}" >
                             <Grid>
                                 <TextBlock Visibility="{Binding CoolingRunning, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                                     <Path Fill="Aqua" Data="{StaticResource CheckedSVG}" Stretch="Uniform" Margin="5">
+                                     <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CheckedSVG}" Stretch="Uniform" Margin="5">
                                     </Path>
                                 </TextBlock>
                                 <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding CoolingRunning, Converter={StaticResource VisibilityConverter}}" Text="{Binding CoolingProgress , StringFormat=\{0:#%\}}" />

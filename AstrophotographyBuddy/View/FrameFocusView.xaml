@@ -28,7 +28,7 @@
                 <ColumnDefinition Width="50" />
             </Grid.ColumnDefinitions>
             <TextBlock Text="Zoom" VerticalAlignment="Center" />
-            <Slider Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Value="{Binding Zoom}" TickPlacement="BottomRight" TickFrequency="0.1" IsSnapToTickEnabled="True"  Maximum="20" Minimum="0" SmallChange="0.1"></Slider>
+            <Slider Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Value="{Binding Zoom}" TickPlacement="BottomRight" TickFrequency="0.1" IsSnapToTickEnabled="True"  Maximum="10" Minimum="0.1" SmallChange="0.1"></Slider>
             <TextBlock Grid.Column="2" Text="{Binding Zoom}" VerticalAlignment="Center"></TextBlock>
         </Grid>
         <Expander Grid.Row="2" IsExpanded="True" Header="Histogram">
@@ -85,7 +85,7 @@
             </StackPanel>
             <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">
                 <Button Command="{Binding CancelSnapCommand}" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">
-                    <Path Fill="Aqua" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
+                    <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
                     </Path>
                 </Button>
             </Grid>
@@ -93,7 +93,7 @@
             <UniformGrid Columns="3" Grid.Column="2">
                 <Button Width="50" Height="50"  Command="{Binding SnapCommand}" HorizontalAlignment="Left">
                     <Grid>
-                        <Path Fill="Aqua" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         </Path>                        
                         <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                             <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ImagingVM.ExposureSeconds}" />
@@ -102,7 +102,7 @@
                 </Button>
                 <ToggleButton IsChecked="{Binding Loop}">
                     <!--<Grid>
-                        <Path Fill="Aqua" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="5">
+                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="5">
                         </Path>
                         
                         
@@ -115,7 +115,7 @@
                                 <Trigger Property="IsChecked" Value="True">
                                     <Setter Property="Content">
                                         <Setter.Value>
-                                            <Path Fill="Aqua" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="5">
+                                            <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="5">
                                             </Path>
                                         </Setter.Value>
                                     </Setter>
@@ -123,7 +123,7 @@
                                 <Trigger Property="IsChecked" Value="False">
                                     <Setter Property="Content">
                                         <Setter.Value>
-                                            <Path Fill="Plum" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="5">
+                                            <Path Fill="{StaticResource ButtonForegroundDisabledBrush}" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="5">
                                             </Path>
                                         </Setter.Value>
                                     </Setter>
@@ -185,25 +185,25 @@ UseLayoutRounding="true">
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
 
-                <Path Fill="Aqua" Data="{StaticResource BrightnessSVG}" Stretch="Uniform" Margin="5">
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource BrightnessSVG}" Stretch="Uniform" Margin="5">
                 </Path>
                 <Slider Grid.Row="1" Orientation="Vertical" Width="25" Value="{Binding Brightness}"   Maximum="2" Minimum="0" SmallChange="0.1"></Slider>
                 <TextBlock HorizontalAlignment="Center" Grid.Row="2" Text="{Binding Brightness}"></TextBlock>
 
-                <Path Grid.Column="1" Fill="Aqua" Data="{StaticResource ContrastSVG}" Stretch="Uniform" Margin="5">
+                <Path Grid.Column="1" Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource ContrastSVG}" Stretch="Uniform" Margin="5">
                 </Path>               
 
                 <Slider  Grid.Row="1" Grid.Column="1" Orientation="Vertical" Width="25" Value="{Binding Contrast}" Maximum="10" Minimum="0" SmallChange="0.1"></Slider>
                 <TextBlock HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Text="{Binding Contrast}"></TextBlock>
 
-                <Path Fill="Aqua" Grid.Column="2" Data="{StaticResource GammaSVG}" Stretch="Uniform" Margin="5">
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Grid.Column="2" Data="{StaticResource GammaSVG}" Stretch="Uniform" Margin="5">
                 </Path>
                 <Slider HorizontalAlignment="Center" Grid.Row="1" Grid.Column="2" Orientation="Vertical" Width="25" Value="{Binding Gamma}" Maximum="5" Minimum="0.2" SmallChange="0.1"></Slider>
                 <TextBlock HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" Text="{Binding Gamma}"></TextBlock>
                 
                 <UniformGrid Grid.Row="3" Rows="2" Columns="1" Grid.ColumnSpan="99" >
                     <Button Command="{Binding ApplyImageParamsCommand}">
-                        <Path Fill="Aqua" Data="{StaticResource CheckedSVG}" Stretch="Uniform" Margin="5">
+                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CheckedSVG}" Stretch="Uniform" Margin="5">
                         </Path>
                     </Button>
                     <Button Command="{Binding AutoStretchCommand}">

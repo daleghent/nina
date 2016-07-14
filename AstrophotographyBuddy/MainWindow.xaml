@@ -24,29 +24,30 @@
                 <ColumnDefinition Width="60" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="60" />
             </Grid.ColumnDefinitions>
 
-            <Button Grid.Column="0" Height="50" Width="50" Command="{Binding ToggleMenuCommand}" HorizontalAlignment="Left"   >
-                <Path Fill="Aqua" Data="{StaticResource MenuSVG}" Stretch="Uniform" Margin="5" >
+            <Button Grid.Column="0" Height="50" Width="50" Command="{Binding ToggleMenuCommand}" HorizontalAlignment="Left" VerticalAlignment="Center"   >
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource MenuSVG}" Stretch="Uniform" Margin="5" >
                 </Path>
             </Button>
-            <Button  Grid.Column="2" Height="50" Width="50" Command="{Binding ToggleOverviewCommand}" HorizontalAlignment="Center" >
-                <Path Fill="Aqua" Data="{StaticResource MinimizeSVG}" Stretch="Uniform" Margin="5">
+            <Button  Grid.Column="2" Height="50" Width="50" Command="{Binding ToggleOverviewCommand}" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource MinimizeSVG}" Stretch="Uniform" Margin="5">
                 </Path>
             </Button>
-            <Button Grid.Column="1" Height="50" Width="50"  Command="{Binding PrevViewCommand}" HorizontalAlignment="Center">
-                <Path Fill="Aqua" Data="{StaticResource NextSVG}" Stretch="Uniform" Margin="5">
+            <Button Grid.Column="1" Height="50" Width="50"  Command="{Binding PrevViewCommand}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource NextSVG}" Stretch="Uniform" Margin="5">
                     <Path.LayoutTransform>                     
                             <RotateTransform Angle="180"></RotateTransform>
                     </Path.LayoutTransform>
                 </Path>
             </Button>
-            <Button Grid.Column="3" Height="50" Width="50" Command="{Binding CameraVM.ChooseCameraCommand}"  IsEnabled="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBooleanConverter}}"
+            <Button Grid.Column="3" Height="50" Width="50" Command="{Binding CameraVM.ChooseCameraCommand}"  IsEnabled="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBooleanConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <Grid>
                     <!--<Rectangle Fill="{StaticResource CameraSVG}" Width="45" Height="45" />-->
 
-                    <Path Fill="Plum" Data="{StaticResource CameraSVG}" Stretch="Uniform" Margin="5">
+                    <Path Fill="{StaticResource ButtonForegroundDisabledBrush}" Data="{StaticResource CameraSVG}" Stretch="Uniform" Margin="5">
                     </Path>
                    
 
@@ -58,10 +59,10 @@
                     </Image>-->
                 </Grid>
             </Button>
-            <Button Grid.Column="3" Height="50" Width="50" Command="{Binding CameraVM.DisconnectCommand}" IsEnabled="{Binding CameraVM.Cam.Connected}"
+            <Button Grid.Column="3" Height="50" Width="50" Command="{Binding CameraVM.DisconnectCommand}" IsEnabled="{Binding CameraVM.Cam.Connected}" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Visibility="{Binding CameraVM.Cam.Connected, Converter={StaticResource VisibilityConverter}}">
                 <Grid>
-                    <Path Fill="Aqua" Data="{StaticResource CameraSVG}" Stretch="Uniform" Margin="5">
+                    <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CameraSVG}" Stretch="Uniform" Margin="5">
                     </Path>
                     <Image Source="/AstrophotographyBuddy;component/Resources/plugged.png">
                         <Image.RenderTransform>
@@ -71,10 +72,10 @@
                 </Grid>
             </Button>
             <Grid Grid.Column="4" DataContext="{Binding CameraVM}">
-                <Button Grid.Column="4" Height="50" Width="50" Command="{Binding FilterWheelVM.ChooseFWCommand}"  IsEnabled="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBooleanConverter}}"
+                <Button Grid.Column="4" Height="50" Width="50" Command="{Binding FilterWheelVM.ChooseFWCommand}"  IsEnabled="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBooleanConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     <Grid>
-                        <Path Fill="Plum" Data="{StaticResource FWSVG}" Stretch="Uniform" Margin="5">
+                        <Path Fill="{StaticResource ButtonForegroundDisabledBrush}" Data="{StaticResource FWSVG}" Stretch="Uniform" Margin="5">
                         </Path>
                         
                         <!--<Image Source="/AstrophotographyBuddy;component/Resources/unplugged.png">
@@ -85,10 +86,10 @@
                     </Grid>
                 </Button>
 
-                <Button Grid.Column="4" Height="50" Width="50" Command="{Binding FilterWheelVM.DisconnectCommand}" IsEnabled="{Binding FilterWheelVM.FW.Connected}"
+                <Button Grid.Column="4" Height="50" Width="50" Command="{Binding FilterWheelVM.DisconnectCommand}" IsEnabled="{Binding FilterWheelVM.FW.Connected}" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Visibility="{Binding FilterWheelVM.FW.Connected, Converter={StaticResource VisibilityConverter}}">
                     <Grid>
-                        <Path Fill="Aqua" Data="{StaticResource FWSVG}" Stretch="Uniform" Margin="5">
+                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource FWSVG}" Stretch="Uniform" Margin="5">
                         </Path>
                         <!--<Image Source="/AstrophotographyBuddy;component/Resources/plugged.png">
                             <Image.RenderTransform>
@@ -99,11 +100,11 @@
                 </Button>
             </Grid>
 
-            <Button Grid.Column="5" Height="50" Width="50" Command="{Binding ConnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+            <Button Grid.Column="5" Height="50" Width="50" Command="{Binding ConnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid>
                     <!--<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">PHD</TextBlock>-->
 
-                    <Path Fill="Plum" Data="{StaticResource PHD2SVG}" Stretch="Uniform" Margin="5" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Path Fill="{StaticResource ButtonForegroundDisabledBrush}" Data="{StaticResource PHD2SVG}" Stretch="Uniform" Margin="5" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     </Path>
                     <!--<Image  Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}"  Source="/AstrophotographyBuddy;component/Resources/PHD2Inactive.png"></Image>-->
                     <!--<Image Source="/AstrophotographyBuddy;component/Resources/unplugged.png">
@@ -116,10 +117,10 @@
                     </Grid>
                 </Grid>
             </Button>
-            <Button Grid.Column="5" Height="50" Width="50" Command="{Binding DisconnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource VisibilityConverter}}">
+            <Button Grid.Column="5" Height="50" Width="50" Command="{Binding DisconnectPHDClientCommand}" Visibility="{Binding PHD2Client.Connected, Converter={StaticResource VisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Grid>
                     <!--<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding DisconnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">!PHD</TextBlock>-->
-                    <Path Fill="Aqua" Data="{StaticResource PHD2SVG}" Stretch="Uniform" Margin="5" Visibility="{Binding DisconnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PHD2SVG}" Stretch="Uniform" Margin="5" Visibility="{Binding DisconnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     </Path>
                     <!--<Image Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding DisconnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}" Source="/AstrophotographyBuddy;component/Resources/PHD2Active.png"></Image>
                     <Image Source="/AstrophotographyBuddy;component/Resources/unplugged.png">
@@ -132,10 +133,10 @@
                     </Grid>
                 </Grid>
             </Button>
-            <Button Grid.Column="6" Height="50" Width="50" Command="{Binding TelescopeVM.ChooseTelescopeCommand}"  IsEnabled="{Binding TelescopeVM.Telescope.Connected, Converter={StaticResource InverseBooleanConverter}}"
+            <Button Grid.Column="6" Height="50" Width="50" Command="{Binding TelescopeVM.ChooseTelescopeCommand}"  IsEnabled="{Binding TelescopeVM.Telescope.Connected, Converter={StaticResource InverseBooleanConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Visibility="{Binding TelescopeVM.Telescope.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                 <Grid>
-                    <Path Fill="Plum" Data="{StaticResource TelescopeSVG}" Stretch="Uniform" Margin="5">
+                    <Path Fill="{StaticResource ButtonForegroundDisabledBrush}" Data="{StaticResource TelescopeSVG}" Stretch="Uniform" Margin="5">
                         
                     </Path>
                     <!--<Image Source="/AstrophotographyBuddy;component/Resources/unplugged.png">
@@ -145,11 +146,11 @@
                     </Image>-->
                 </Grid>
             </Button>
-            <Button Grid.Column="6" Height="50" Width="50" Command="{Binding TelescopeVM.DisconnectCommand}" IsEnabled="{Binding TelescopeVM.Telescope.Connected}"
+            <Button Grid.Column="6" Height="50" Width="50" Command="{Binding TelescopeVM.DisconnectCommand}" IsEnabled="{Binding TelescopeVM.Telescope.Connected}" HorizontalAlignment="Center" VerticalAlignment="Center"
                     Visibility="{Binding TelescopeVM.Telescope.Connected, Converter={StaticResource VisibilityConverter}}">
                 <Grid>
 
-                    <Path Fill="Aqua" Data="{StaticResource TelescopeSVG}" Stretch="Uniform" Margin="5">
+                    <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource TelescopeSVG}" Stretch="Uniform" Margin="5">
 
                     </Path>
                     <Image Source="/AstrophotographyBuddy;component/Resources/plugged.png">
@@ -162,8 +163,13 @@
 
             <TextBlock Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ImagingVM.ExpStatus}"></TextBlock>
 
-            <Button Grid.Column="8" Height="50" Width="50" Command="{Binding NextViewCommand}">
-                <Path Fill="Aqua" Data="{StaticResource NextSVG}" Stretch="Uniform" Margin="5">                  
+            <Button Grid.Column="8" Height="50" Width="50" Command="{Binding OptionsVM.ToggleColorsCommand}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource EyeSVG}" Stretch="Uniform" Margin="5">
+                </Path>
+            </Button>
+
+            <Button Grid.Column="9" Height="50" Width="50" Command="{Binding NextViewCommand}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource NextSVG}" Stretch="Uniform" Margin="5">                  
                 </Path>
             </Button>
         </Grid>

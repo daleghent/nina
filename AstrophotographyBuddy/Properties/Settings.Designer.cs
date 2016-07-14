@@ -97,7 +97,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF000000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF02010A")]
         public global::System.Windows.Media.Color PrimaryColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["PrimaryColor"]));
@@ -109,7 +109,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FFFF4500")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFA1C6EA")]
         public global::System.Windows.Media.Color SecondaryColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["SecondaryColor"]));
@@ -121,7 +121,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFA500")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFBBD1EA")]
         public global::System.Windows.Media.Color BorderColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["BorderColor"]));
@@ -193,7 +193,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FFC0C0C0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF9DB4C0")]
         public global::System.Windows.Media.Color ButtonBackgroundColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["ButtonBackgroundColor"]));
@@ -205,13 +205,133 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#F79D3600")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF507DBC")]
         public global::System.Windows.Media.Color ButtonBackgroundSelectedColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["ButtonBackgroundSelectedColor"]));
             }
             set {
                 this["ButtonBackgroundSelectedColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF02010A")]
+        public global::System.Windows.Media.Color ButtonForegroundColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["ButtonForegroundColor"]));
+            }
+            set {
+                this["ButtonForegroundColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFDAE3E5")]
+        public global::System.Windows.Media.Color ButtonForegroundDisabledColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["ButtonForegroundDisabledColor"]));
+            }
+            set {
+                this["ButtonForegroundDisabledColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF550C18")]
+        public global::System.Windows.Media.Color AltPrimaryColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["AltPrimaryColor"]));
+            }
+            set {
+                this["AltPrimaryColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF1B2A41")]
+        public global::System.Windows.Media.Color AltSecondaryColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["AltSecondaryColor"]));
+            }
+            set {
+                this["AltSecondaryColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF550C18")]
+        public global::System.Windows.Media.Color AltBorderColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["AltBorderColor"]));
+            }
+            set {
+                this["AltBorderColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF02010A")]
+        public global::System.Windows.Media.Color AltBackgroundColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["AltBackgroundColor"]));
+            }
+            set {
+                this["AltBackgroundColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF550C18")]
+        public global::System.Windows.Media.Color AltButtonBackgroundColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["AltButtonBackgroundColor"]));
+            }
+            set {
+                this["AltButtonBackgroundColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF96031A")]
+        public global::System.Windows.Media.Color AltButtonBackgroundSelectedColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["AltButtonBackgroundSelectedColor"]));
+            }
+            set {
+                this["AltButtonBackgroundSelectedColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF02010A")]
+        public global::System.Windows.Media.Color AltButtonForegroundColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["AltButtonForegroundColor"]));
+            }
+            set {
+                this["AltButtonForegroundColor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF443730")]
+        public global::System.Windows.Media.Color AltButtonForegroundDisabledColor {
+            get {
+                return ((global::System.Windows.Media.Color)(this["AltButtonForegroundDisabledColor"]));
+            }
+            set {
+                this["AltButtonForegroundDisabledColor"] = value;
             }
         }
     }

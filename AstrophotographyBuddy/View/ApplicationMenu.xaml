@@ -20,17 +20,17 @@
         <ItemsControl.ItemTemplate>
             <DataTemplate DataType="{x:Type vm:BaseVM}">
                 
-                <Button Command="{Binding ToggleViewCommand, Source={StaticResource AppVM}}" CommandParameter="{Binding Name}"  >
+                <Button Command="{Binding ToggleViewCommand, Source={StaticResource AppVM}}" CommandParameter="{Binding Name}"  Margin="1">
                     <Grid  VerticalAlignment="Center">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="50" />
                         </Grid.RowDefinitions>
-                        <Path Fill="Aqua" Data="{Binding ImageGeometry}" Stretch="Uniform" Margin="5"/>
+                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{Binding ImageGeometry}" Stretch="Uniform" Margin="5"/>
 
 
                         <!--<Image Source="{Binding ImageURI}" />-->
-                        <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="{Binding Name}" FontSize="36" Foreground="Aqua" />
+                        <TextBlock Grid.Row="1" HorizontalAlignment="Center" Text="{Binding Name}" FontSize="36" Foreground="{StaticResource ButtonForegroundBrush}" />
                     </Grid>
                 </Button>
                 

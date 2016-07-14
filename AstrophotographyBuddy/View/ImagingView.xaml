@@ -43,13 +43,13 @@
         
         <StackPanel Grid.Row="1"  Orientation="Horizontal">
             <Button Width="50" Height="50" Command="{Binding SeqVM.AddSequenceCommand}">
-                <Path Fill="Aqua" Data="{StaticResource AddSVG}" Stretch="Uniform" Margin="5">
+                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource AddSVG}" Stretch="Uniform" Margin="5">
                 </Path>
             </Button>
             <Grid  IsEnabled="{Binding Cam.Connected}">
                 <Button Width="50" Height="50" Command="{Binding StartSequenceCommand}"  >
                     <Grid>
-                        <Path Fill="Aqua" Data="{StaticResource PlaySVG}" Stretch="Uniform" Margin="5" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PlaySVG}" Stretch="Uniform" Margin="5" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         </Path>                        
                         <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                             <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
@@ -59,7 +59,7 @@
             </Grid>
             <Grid IsEnabled="{Binding Cam.Connected}" Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                 <Button Width="50" Height="50" Command="{Binding CancelSequenceCommand}" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" >
-                    <Path Fill="Aqua" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
+                    <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
                     </Path>
                 </Button>
             </Grid>
@@ -119,7 +119,7 @@
             </StackPanel>
             <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">
                 <Button Command="{Binding CancelSnapCommand}" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">
-                    <Path Fill="Aqua" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
+                    <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
                     </Path>
                 </Button>
             </Grid>
@@ -131,7 +131,7 @@
             <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}">
                 <Grid>
 
-                    <Path Fill="Aqua" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                     </Path>                    
                     <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
                         <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ExposureSeconds}" />
