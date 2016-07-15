@@ -21,6 +21,12 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
+        public double Interval {
+            get {
+                return MaxY / 4;
+            }
+        }
+
         public double MaxY {
             get {
                 return _maxY;
@@ -30,6 +36,7 @@ namespace AstrophotographyBuddy.ViewModel {
                 _maxY = value;
                 _minY = -value;
                 RaisePropertyChanged("MinY");
+                RaisePropertyChanged("Interval");
                 RaisePropertyChanged();
             }
         }
@@ -44,6 +51,7 @@ namespace AstrophotographyBuddy.ViewModel {
                 _maxY = -value;
                 RaisePropertyChanged();
                 RaisePropertyChanged("MaxY");
+                RaisePropertyChanged("Interval");
             }
         }
 

@@ -67,8 +67,7 @@
         </ScrollViewer>
         <Grid Grid.Column="0" Grid.Row="3" IsEnabled="{Binding ImagingVM.Cam.Connected}">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />               
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />                               
                 <ColumnDefinition Width="150" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
@@ -90,7 +89,7 @@
                 </Button>
             </Grid>
 
-            <UniformGrid Columns="3" Grid.Column="2">
+            <UniformGrid Columns="3" Grid.Column="1">
                 <Button Width="50" Height="50"  Command="{Binding SnapCommand}" HorizontalAlignment="Left" IsEnabled="{Binding ImagingVM.IsExposing, Converter={StaticResource InverseBooleanConverter}}">
                     <Grid>
                         <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">

@@ -25,6 +25,7 @@ namespace AstrophotographyBuddy.ViewModel {
             Contrast = 1;
             Brightness = 1;
             Zoom = 1;
+            SnapExposureDuration = 1;
 
         }
         private ImagingVM _imagingVM;

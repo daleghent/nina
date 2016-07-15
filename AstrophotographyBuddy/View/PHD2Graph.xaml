@@ -23,6 +23,8 @@
             <ComboBox             
                                 SelectedValue="{Binding MaxY}"
                                 SelectedValuePath="Content">
+                <ComboBoxItem>0.25</ComboBoxItem>
+                <ComboBoxItem>0.5</ComboBoxItem>
                 <ComboBoxItem>1</ComboBoxItem>
                 <ComboBoxItem>2</ComboBoxItem>
                 <ComboBoxItem>4</ComboBoxItem>
@@ -33,7 +35,7 @@
         
         <chartingToolkit:Chart Grid.Column="1"  DataContext="{Binding PHD2Client.GuideSteps}"  Title="Guide Graph"  Style="{StaticResource ChartStyle}" Margin="0,1,0,0">
             <chartingToolkit:Chart.Axes>
-                <chartingToolkit:LinearAxis Orientation="Y" ShowGridLines="False"  Interval="1" Minimum="{Binding Source={StaticResource AppVM}, Path=PHD2VM.MinY }" Maximum="{Binding Source={StaticResource AppVM}, Path=PHD2VM.MaxY }" >                    
+                <chartingToolkit:LinearAxis Orientation="Y" ShowGridLines="False"  Interval="{Binding Source={StaticResource AppVM}, Path=PHD2VM.Interval }" Minimum="{Binding Source={StaticResource AppVM}, Path=PHD2VM.MinY }" Maximum="{Binding Source={StaticResource AppVM}, Path=PHD2VM.MaxY }" >                    
                 </chartingToolkit:LinearAxis>
             </chartingToolkit:Chart.Axes>
             <chartingToolkit:LineSeries  DependentValuePath="RADistanceRaw"  
