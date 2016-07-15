@@ -177,6 +177,16 @@ namespace AstrophotographyBuddy.ViewModel {
             }
 
         }
+
+        public FileTypeEnum FileType {
+            get {
+                return Settings.FileType;
+            } set {
+                Settings.FileType = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public Color ButtonBackgroundColor {
             get {
                 return Settings.ButtonBackgroundColor;

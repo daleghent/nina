@@ -75,15 +75,17 @@ namespace AstrophotographyBuddy.Utility {
                 {
                     fixed (Int32* ptr = arr)
                     {
-                        int row = 0;
-                        
+                        int idx = 0, row = 0;
                         for (int i = 0; i < arr.Length; i++) {
-                            
-                            var idx = ((i%height) * width) + row ;
+                            value = (ushort)ptr[i];
 
+                            
+                           
+
+                            idx = ((i % height) * width) + row;
                             if ((i % (height)) == (height - 1)) row++;
 
-                            value = (ushort)ptr[i];
+                            
                             if(histogram.ContainsKey(value)) {
                                 histogram[value] += 1;
                             }else {
@@ -120,69 +122,13 @@ namespace AstrophotographyBuddy.Utility {
                 }
 
 
-
+                
                 iarr.FlatArray = flatArray;
                 iarr.minStDev = min;
                 iarr.maxStDev = max;
                 iarr.Histogram = histogram;                                    
                 return iarr;
             });           
-        }
-
-        public static ushort[] flatten2DArray(Array arr) {
-            int width = arr.GetLength(0);
-            int height = arr.GetLength(1);
-            ushort[] flatArray = new ushort[width * height];
-            ushort val;
-            int idx = 0;
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    val = (ushort)(ushort.MinValue + Convert.ToUInt16(arr.GetValue(j, i)));
-
-                    flatArray[idx] = val;
-                    idx++;
-                }
-            }
-            return flatArray;
-        }
-
-
-        public static T[] flatten2DArray<T>(Array arr) {
-            int width = arr.GetLength(0);
-            int height = arr.GetLength(1);
-            T[] flatArray = new T[width * height];
-            T val;
-            int idx = 0;
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    val = (T)Convert.ChangeType(arr.GetValue(j, i), typeof(T));
-
-                    flatArray[idx] = val;
-                    idx++;
-                }
-            }
-            return flatArray;
-        }
-
-        public static T[] flatten3DArray<T>(Array arr) {
-            int width = arr.GetLength(0);
-            int height = arr.GetLength(1);
-            int depth = arr.GetLength(2);
-            T[] flatArray = new T[width * height * depth];
-            T val;
-            int idx = 0;
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    for (int k = 0; k < depth; k++) {
-
-                        val = (T)Convert.ChangeType(arr.GetValue(j, i, k), typeof(T));
-
-                        flatArray[idx] = val;
-                        idx++;
-                    }
-                }
-            }
-            return flatArray;
         }
 
         public static async Task<ushort[]> stretchArray(ImageArray source) {
@@ -206,51 +152,42 @@ namespace AstrophotographyBuddy.Utility {
             });
         }
 
-        /*public static void saveFits(ImageArray iarr) {
-            Stopwatch sw = Stopwatch.StartNew();
-
-            Header h = new Header();
-            h.AddValue("SIMPLE", "T", "C# FITS");
-            h.AddValue("BITPIX", 16, "");
-            h.AddValue("NAXIS", 2, "Dimensionality");
-            h.AddValue("NAXIS1", iarr.SourceArray.GetUpperBound(0)+1, "" );
-            h.AddValue("NAXIS2", iarr.SourceArray.GetUpperBound(1) + 1, "");
-            h.AddValue("BZERO", 32768, "");
-            h.AddValue("EXTEND", "T", "Extensions are permitted");
-
-            ImageData d = new ImageData(iarr.CurledArray);
-            d = new ImageData();            
-            sw.Stop();
-            Console.WriteLine("CreateDataForHDU: " + sw.Elapsed);
-            
-            sw = Stopwatch.StartNew();
-            ImageHDU imageHdu = new ImageHDU(h,d);
-
-            //BasicHDU imageHdu = FitsFactory.HDUFactory(iarr.CurledArray);
-            sw.Stop();
-            Console.WriteLine("CreateHDU: " + sw.Elapsed);
-
-
-            //imageHdu.AddValue("BZERO", 32768, "");
-
-            sw = Stopwatch.StartNew();
-            Fits f = new Fits();
-            f.AddHDU(imageHdu);
-            sw.Stop();
-            Console.WriteLine("Create FITS: " + sw.Elapsed);
-
-            sw = Stopwatch.StartNew();
+        public static void saveFits(ImageArray iarr, string path) {
             try {
-                FileStream fs = File.Create("test.fit");
-                f.Write(fs);
-                fs.Close();
+                Header h = new Header();
+                h.AddValue("SIMPLE", "T", "C# FITS");
+                h.AddValue("BITPIX", 16, "");
+                h.AddValue("NAXIS", 2, "Dimensionality");
+                h.AddValue("NAXIS1", iarr.X, "");
+                h.AddValue("NAXIS2", iarr.Y, "");
+                h.AddValue("BZERO", 32768, "");
+                h.AddValue("EXTEND", "T", "Extensions are permitted");
 
-            } catch(Exception ex) {
+                short[][] curl = new short[iarr.Y][];
+                int idx = 0;
+                for (int i = 0; i < iarr.Y; i++) {
+                    curl[i] = new short[iarr.X];
+                    for (int j = 0; j < iarr.X; j++) {
+                        curl[i][j] = (short)(short.MinValue + iarr.FlatArray[idx]);
+                        idx++;
+                    }
+                }
+                ImageData d = new ImageData(curl);
+
+                Fits fits = new Fits();
+                BasicHDU hdu = FitsFactory.HDUFactory(h, d);
+                fits.AddHDU(hdu);
+
+                using (FileStream fs = new FileStream(path + ".fits", FileMode.Create)) {
+                    fits.Write(fs);
+                }
 
             }
-            sw.Stop();
-            Console.WriteLine("Save FITS: " + sw.Elapsed);
-        }*/
+            catch (Exception ex) {
+                Logger.error(ex.Message);
+
+            }
+        }
 
         public static void saveTiff(ImageArray iarr, String path) {         
             
@@ -342,6 +279,10 @@ namespace AstrophotographyBuddy.Utility {
             return s;
         }
         
+    }
+    public enum FileTypeEnum {
+        TIFF,
+        FITS
     }
 
 

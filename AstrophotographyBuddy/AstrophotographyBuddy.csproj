@@ -130,6 +130,7 @@
     <Compile Include="Utility\AsyncObservableCollection.cs" />
     <Compile Include="Utility\BaseINPC.cs" />
     <Compile Include="Utility\Converters.cs" />
+    <Compile Include="Utility\EnumBindingSourceExtension.cs" />
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="Utility\NotifyTaskCompletion.cs" />
     <Compile Include="Utility\NullToVisibilityConverter.cs" />

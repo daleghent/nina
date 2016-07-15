@@ -80,5 +80,8 @@
     <Setting Name="AltButtonForegroundDisabledColor" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FF443730</Value>
     </Setting>
+    <Setting Name="FileType" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

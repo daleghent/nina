@@ -108,6 +108,16 @@ namespace AstrophotographyBuddy.ViewModel {
                 RaisePropertyChanged();
             }
         }
+
+        private bool _isExposing; 
+        public bool IsExposing {
+            get {
+                return _isExposing;
+            } set {
+                _isExposing = value;
+                RaisePropertyChanged();
+            }
+        }
         
         private IAsyncCommand _snapCommand;
         public IAsyncCommand SnapCommand {
@@ -224,7 +234,16 @@ namespace AstrophotographyBuddy.ViewModel {
 
                 string filename = Utility.Utility.getImageFileString(p);
                 string completefilename = Settings.ImageFilePath + filename;
-                Utility.Utility.saveTiff(iarr, string.Format(completefilename, seq.ExposureCount));
+
+                if (Settings.FileType == FileTypeEnum.FITS) {
+                    Utility.Utility.saveFits(iarr, string.Format(completefilename, seq.ExposureCount));
+                } else if (Settings.FileType == FileTypeEnum.TIFF) {
+                    Utility.Utility.saveTiff(iarr, string.Format(completefilename, seq.ExposureCount));
+                } else {
+                    Utility.Utility.saveTiff(iarr, string.Format(completefilename, seq.ExposureCount));
+                }
+                
+                
             });
 
             tokenSource.Token.ThrowIfCancellationRequested();
@@ -251,7 +270,7 @@ namespace AstrophotographyBuddy.ViewModel {
 
         public  async Task<bool> startSequence(ICollection<SequenceModel> sequence, bool bSave, CancellationTokenSource tokenSource) {
             try {
-
+                IsExposing = true;
 
                 ushort framenr = 1;
                 foreach (SequenceModel seq in sequence) {
@@ -303,6 +322,7 @@ namespace AstrophotographyBuddy.ViewModel {
             finally {
                 ExpStatus = ExposureStatus.IDLE;
                 Cam.stopExposure();
+                IsExposing = false;
             }            
             return await Task.Run<bool>(() => { return true; });
         }

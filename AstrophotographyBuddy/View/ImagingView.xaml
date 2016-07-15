@@ -47,7 +47,7 @@
                 </Path>
             </Button>
             <Grid  IsEnabled="{Binding Cam.Connected}">
-                <Button Width="50" Height="50" Command="{Binding StartSequenceCommand}"  >
+                <Button Width="50" Height="50" Command="{Binding StartSequenceCommand}" IsEnabled="{Binding IsExposing, Converter={StaticResource InverseBooleanConverter}}" >
                     <Grid>
                         <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PlaySVG}" Stretch="Uniform" Margin="5" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                         </Path>                        
@@ -70,7 +70,6 @@
                Visibility="{Binding SnapCommand.Execution.IsSuccessfullyCompleted, Converter={StaticResource VisibilityConverter}}">-->
         <Image Grid.Column="1" Source="{Binding Image}" />
 
-        <TextBlock Grid.Row="1" Grid.ColumnSpan="100" HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding ExpStatus}"></TextBlock>
 
         <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding Cam.Connected}" HorizontalAlignment="Right" >
             <Grid.ColumnDefinitions>
@@ -122,11 +121,11 @@
                 </Button>
             </Grid>
 
-           
 
 
 
-            <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}">
+
+            <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}" IsEnabled="{Binding IsExposing, Converter={StaticResource InverseBooleanConverter}}">
                 <Grid>
 
                     <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">

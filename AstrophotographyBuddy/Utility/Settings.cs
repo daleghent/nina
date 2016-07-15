@@ -2,6 +2,18 @@
 
 namespace AstrophotographyBuddy.Utility {
     static class Settings  {
+               
+
+        public static FileTypeEnum FileType {
+            get {
+                return (FileTypeEnum)Properties.Settings.Default.FileType;
+            } set {
+                Properties.Settings.Default.FileType = (int)value;
+                Properties.Settings.Default.Save();
+            }
+
+        }
+
         public static string CameraId {
             get {
                 return Properties.Settings.Default.CameraId;

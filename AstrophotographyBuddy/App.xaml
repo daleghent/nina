@@ -957,7 +957,7 @@
                     <Trigger Property="IsEnabled" Value="False">
                         <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
                         <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource BorderBrush}" />
-                        <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+                        <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}"/>
                         <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource ButtonForegroundDisabledBrush}" />
                     </Trigger>
                 </ControlTemplate.Triggers>
