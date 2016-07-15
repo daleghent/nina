@@ -152,7 +152,7 @@ namespace AstrophotographyBuddy.Utility {
             });
         }
 
-        public static void saveFits(ImageArray iarr, string path) {
+        public static void saveFits(ImageArray iarr, string path, string imagetype, double duration, string filter, CameraModel.BinningMode binning, double temp) {
             try {
                 Header h = new Header();
                 h.AddValue("SIMPLE", "T", "C# FITS");
@@ -162,6 +162,25 @@ namespace AstrophotographyBuddy.Utility {
                 h.AddValue("NAXIS2", iarr.Y, "");
                 h.AddValue("BZERO", 32768, "");
                 h.AddValue("EXTEND", "T", "Extensions are permitted");
+
+                if(!string.IsNullOrEmpty(filter)) {
+                    h.AddValue("FILTER", filter, "");
+                }
+
+                h.AddValue("CCDXBIN", binning.X, "");
+                h.AddValue("CCDYBIN", binning.Y, "");
+                h.AddValue("XBINNING", binning.X, "");
+                h.AddValue("YBINNING", binning.Y, "");
+
+                h.AddValue("TEMPERAT", temp, "");
+
+                h.AddValue("IMAGETYP", imagetype, "");
+
+                h.AddValue("EXPOSURE", duration, "");
+                /*
+                 
+                 h.AddValue("OBJECT", 32768, "");
+                 */
 
                 short[][] curl = new short[iarr.Y][];
                 int idx = 0;

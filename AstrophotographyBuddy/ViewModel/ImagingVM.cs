@@ -213,16 +213,19 @@ namespace AstrophotographyBuddy.ViewModel {
             await Task.Run(() => {
 
                 List<OptionsVM.ImagePattern> p = new List<OptionsVM.ImagePattern>();
+                string filter = string.Empty;
                 if (FW.Filters != null) {
-                    p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", FW.Filters.ElementAt(FW.Position).Name));
+                    filter = FW.Filters.ElementAt(FW.Position).Name;
+                    p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", filter));
                 }
                 else {
-                    p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", ""));
+                    p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", filter));
                 }
                 p.Add(new OptionsVM.ImagePattern("$$EXPOSURETIME$$", "Exposure Time in seconds", string.Format("{0:0.00}", seq.ExposureTime)));
                 p.Add(new OptionsVM.ImagePattern("$$DATE$$", "Date with format YYYY-MM-DD", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")));
                 p.Add(new OptionsVM.ImagePattern("$$FRAMENR$$", "# of the Frame with format ####", string.Format("{0:0000}", framenr)));
                 p.Add(new OptionsVM.ImagePattern("$$IMAGETYPE$$", "Light, Flat, Dark, Bias", seq.ImageType));
+                
                 if (seq.Binning == null) {
                     p.Add(new OptionsVM.ImagePattern("$$BINNING$$", "Binning of the camera", "1x1"));
                 }
@@ -234,13 +237,14 @@ namespace AstrophotographyBuddy.ViewModel {
 
                 string filename = Utility.Utility.getImageFileString(p);
                 string completefilename = Settings.ImageFilePath + filename;
-
-                if (Settings.FileType == FileTypeEnum.FITS) {
-                    Utility.Utility.saveFits(iarr, string.Format(completefilename, seq.ExposureCount));
+                if (Settings.FileType == FileTypeEnum.FITS) {                    
+                    string imagetype = seq.ImageType;
+                    if (imagetype == "SNAP") imagetype = "LIGHT";
+                    Utility.Utility.saveFits(iarr, completefilename, seq.ImageType, seq.ExposureTime, filter, seq.Binning, Cam.CCDTemperature);
                 } else if (Settings.FileType == FileTypeEnum.TIFF) {
-                    Utility.Utility.saveTiff(iarr, string.Format(completefilename, seq.ExposureCount));
+                    Utility.Utility.saveTiff(iarr, completefilename);
                 } else {
-                    Utility.Utility.saveTiff(iarr, string.Format(completefilename, seq.ExposureCount));
+                    Utility.Utility.saveTiff(iarr, completefilename);
                 }
                 
                 

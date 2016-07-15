@@ -78,7 +78,15 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         private void exitApplication(object obj) {
-            Application.Current.Shutdown();
+            if(CameraVM.Cam.Connected) {
+                System.Windows.MessageBoxResult diag = System.Windows.MessageBox.Show("Camera still connected. Exit anyway?", "", MessageBoxButton.OKCancel, MessageBoxImage.Question, MessageBoxResult.Cancel);
+                if(diag == MessageBoxResult.OK) {
+                    Application.Current.Shutdown();
+                }
+            } else {
+                Application.Current.Shutdown();
+            }
+            
         }
 
         private void addListeners() {
