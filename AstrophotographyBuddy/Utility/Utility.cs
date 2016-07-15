@@ -197,6 +197,7 @@ namespace AstrophotographyBuddy.Utility {
                 BasicHDU hdu = FitsFactory.HDUFactory(h, d);
                 fits.AddHDU(hdu);
 
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
                 using (FileStream fs = new FileStream(path + ".fits", FileMode.Create)) {
                     fits.Write(fs);
                 }
