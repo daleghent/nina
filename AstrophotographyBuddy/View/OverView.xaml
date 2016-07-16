@@ -9,11 +9,14 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="3*" />
+            <RowDefinition Height="5" />
             <RowDefinition Height="2*"/>
+            <RowDefinition Height="5" />
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
         <Border BorderThickness="0.5" BorderBrush="Black" Margin="0,0,1,1">
@@ -26,8 +29,11 @@
             <TextBlock Text="{Binding ImagingVM.ExpStatus}" HorizontalAlignment="Center" Grid.Row="1"/>
             </Grid>
         </Border>
-        <local:SequenceView Grid.Column="1" IsEnabled="False" DataContext="{Binding ImagingVM.SeqVM}" Margin="0,0,0,1" />
-        <local:CameraCoolingChartsView Grid.Row="1" Grid.ColumnSpan="2" DataContext="{Binding CameraVM}"></local:CameraCoolingChartsView>
-        <local:PHD2Graph Grid.Row="2" Grid.ColumnSpan="2" DataContext="{Binding PHD2VM}" />
+        <GridSplitter Grid.Column="1"  HorizontalAlignment="Stretch" />
+        <GridSplitter Grid.ColumnSpan="3" Grid.Row="1" HorizontalAlignment="Stretch" />
+        <local:SequenceView Grid.Column="2" IsEnabled="False" DataContext="{Binding ImagingVM.SeqVM}" Margin="0,0,0,1" />
+        <local:CameraCoolingChartsView Grid.Row="2" Grid.ColumnSpan="3" DataContext="{Binding CameraVM}"></local:CameraCoolingChartsView>
+        <GridSplitter Grid.ColumnSpan="3" Grid.Row="3" HorizontalAlignment="Stretch" />
+        <local:PHD2Graph Grid.Row="4" Grid.ColumnSpan="3" DataContext="{Binding PHD2VM}" />
     </Grid>
 </UserControl>

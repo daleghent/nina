@@ -7,17 +7,23 @@
              xmlns:chartingToolkit=	"clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"             
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <UniformGrid Columns="2">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <chartingToolkit:Chart   DataContext="{Binding Cam.CoolerPowerHistory}"  Title="Cooler Power" Style="{StaticResource ChartStyle}" Margin="0,0,1,0">
             <chartingToolkit:LineSeries  DependentValuePath="Value" 
 				    IndependentValuePath="Key" ItemsSource="{Binding}" 
 				    IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}">
             </chartingToolkit:LineSeries>
         </chartingToolkit:Chart>
-        <chartingToolkit:Chart DataContext="{Binding Cam.CCDTemperatureHistory}"  Title="Camera Temperature" Style="{StaticResource ChartStyle}" Margin="0,0,0,0">
+        <GridSplitter HorizontalAlignment="Stretch" Grid.Column="1" />
+        <chartingToolkit:Chart Grid.Column="2" DataContext="{Binding Cam.CCDTemperatureHistory}"  Title="Camera Temperature" Style="{StaticResource ChartStyle}" Margin="0,0,0,0">
             <chartingToolkit:LineSeries  DependentValuePath="Value" 
 				    IndependentValuePath="Key" ItemsSource="{Binding}" 
 				    IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}"/>
         </chartingToolkit:Chart>
-    </UniformGrid>
+    </Grid>
 </UserControl>
