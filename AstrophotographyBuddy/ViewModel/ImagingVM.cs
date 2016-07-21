@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using static AstrophotographyBuddy.Model.SequenceModel;
 
 namespace AstrophotographyBuddy.ViewModel {
@@ -35,6 +36,8 @@ namespace AstrophotographyBuddy.ViewModel {
                 return Utility.Utility.PHDClient;
             }
         }
+
+        private Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
         private SequenceVM _seqVM;
         public SequenceVM SeqVM {
@@ -145,7 +148,10 @@ namespace AstrophotographyBuddy.ViewModel {
 
         private async Task changeFilter(SequenceModel seq, CancellationTokenSource tokenSource) {
             if (seq.FilterType != null && FW.Connected) {
-                FW.Position = seq.FilterType.Position;
+                await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                    FW.Position = seq.FilterType.Position;
+                }));
+                
                 ExpStatus = ExposureStatus.FILTERCHANGE;
 
                 await Task.Run(() => {
@@ -203,9 +209,12 @@ namespace AstrophotographyBuddy.ViewModel {
             return iarr;
         }
 
-        public BitmapSource prepare(ushort[] arr, int x, int y) {
-            BitmapSource src = Utility.Utility.createSourceFromArray(arr, x, y, System.Windows.Media.PixelFormats.Gray16);
-            return src;// Utility.Utility.NormalizeTiffTo8BitImage(src);
+        public async Task<BitmapSource> prepare(ushort[] arr, int x, int y) {
+            return await Task.Run<BitmapSource>(() => {
+                BitmapSource src = Utility.Utility.createSourceFromArray(arr, x, y, System.Windows.Media.PixelFormats.Gray16);
+                src.Freeze();
+                return src;
+            });                
         }
 
         private async Task<bool> save(SequenceModel seq, Utility.Utility.ImageArray iarr, ushort framenr,  CancellationTokenSource tokenSource) {
@@ -273,62 +282,88 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         public  async Task<bool> startSequence(ICollection<SequenceModel> sequence, bool bSave, CancellationTokenSource tokenSource) {
-            try {
-                IsExposing = true;
+            return await Task.Run<bool>(async () => {
+                try {
+                    IsExposing = true;
 
-                ushort framenr = 1;
-                foreach (SequenceModel seq in sequence) {
-                    seq.Active = true;
-                    
-                    while (seq.ExposureCount > 0) {
+                    ushort framenr = 1;
+                    foreach (SequenceModel seq in sequence) {
+                        seq.Active = true;
 
-                        /*Change Filter*/
-                        await changeFilter(seq, tokenSource);
+                        while (seq.ExposureCount > 0) {
+                            
 
-                        /*Set Camera Binning*/
-                        setBinning(seq);
-                        
-                        /*Capture*/
-                        await capture(seq, tokenSource);
+                            /*Change Filter*/
+                            await changeFilter(seq, tokenSource);
 
-                        /*Download Image */                        
-                        Int32[,] arr = await download(tokenSource);
+                            /*Set Camera Binning*/
+                            setBinning(seq);
 
-                        /*Convert Array to ushort*/
-                        SourceArray = await convert(arr, tokenSource);
+                            /*Capture*/
+                            await capture(seq, tokenSource);
 
-                        /*Prepare Image for UI*/
-                        ExpStatus = ImagingVM.ExposureStatus.PREPARING;
-                        BitmapSource tmp = prepare(SourceArray.FlatArray, SourceArray.X, SourceArray.Y);
-                        Image = tmp;
+                            /*Download Image */
+                            Int32[,] arr = await download(tokenSource);
 
-                        /*Save to disk*/
-                        if (bSave) { 
-                            await save(seq, SourceArray, framenr, tokenSource);
+                            await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                                /* Free Memory for new Image */
+                                SourceArray = null;
+                                System.GC.Collect();                                
+                            }));
+
+                            /*Convert Array to ushort*/
+                            Utility.Utility.ImageArray iarr = await convert(arr, tokenSource);
+
+                            await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                                /* Free Memory for new Image */
+                                SourceArray = null;
+                                System.GC.Collect();
+                                SourceArray = iarr;
+                            }));                            
+
+                            /*Prepare Image for UI*/
+                            ExpStatus = ImagingVM.ExposureStatus.PREPARING;
+                            BitmapSource tmp;
+                            if (AutoStretch) {
+                                tmp = await stretch(iarr);
+                            }
+                            else {
+                                tmp = await prepare(iarr.FlatArray, iarr.X, iarr.Y);
+                            }
+                            await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                                /* Free Memory for new Image */
+                                Image = null;
+                                System.GC.Collect();
+                                Image = tmp;
+                            }));
+
+
+                            /*Save to disk*/
+                            if (bSave) {
+                                await save(seq, iarr, framenr, tokenSource);
+                            }
+
+                            /*Dither*/
+                            await dither(seq, tokenSource);
+
+
+
+                            seq.ExposureCount -= 1;
+                            framenr++;
                         }
-
-                        /*Dither*/
-                        await dither(seq, tokenSource);
-
-                        if (AutoStretch) {
-                            await stretch();
-                        }
-
-                        seq.ExposureCount -= 1;
-                        framenr++;
+                        seq.Active = false;
                     }
-                    seq.Active = false;
                 }
-            }
-            catch (System.OperationCanceledException ex) {
-                Logger.trace(ex.Message);
-            }
-            finally {
-                ExpStatus = ExposureStatus.IDLE;
-                Cam.stopExposure();
-                IsExposing = false;
-            }            
-            return await Task.Run<bool>(() => { return true; });
+                catch (System.OperationCanceledException ex) {
+                    Logger.trace(ex.Message);
+                }
+                finally {
+                    ExpStatus = ExposureStatus.IDLE;
+                    Cam.stopExposure();
+                    IsExposing = false;
+                }
+                return true;
+            });
         }
 
         private async Task<bool> startSequence(CancellationToken token = new CancellationToken()) {
@@ -349,14 +384,12 @@ namespace AstrophotographyBuddy.ViewModel {
 
         }
 
-        public async Task<bool> stretch() {
-            if (Image != null) {
-                ushort[] arr = await Utility.Utility.stretchArray(_sourceArray);
-                BitmapSource bs = prepare(arr, _sourceArray.X, _sourceArray.Y);
-                Image = bs;
-            }
-            bool run = await Task.Run<bool>(() => { return true; });
-            return run;
+        public async Task<BitmapSource> stretch(Utility.Utility.ImageArray sourceArray) {
+            
+            ushort[] arr = await Utility.Utility.stretchArray(sourceArray);
+            BitmapSource bs = await prepare(arr, sourceArray.X, sourceArray.Y);
+            bs.Freeze();
+            return bs;
         }
 
         private Utility.Utility.ImageArray _sourceArray;

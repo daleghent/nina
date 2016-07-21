@@ -1367,6 +1367,7 @@ namespace AstrophotographyBuddy
                 }
                 catch (ASCOM.DriverAccessCOMException ex) {
                     Logger.error("Unable to connect to camera");
+                    System.Windows.MessageBox.Show("Unable to connect to camera", "Connection Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     Logger.trace(ex.Message);
                     //CameraStateString = "Unable to connect to camera";
                     Connected = false;

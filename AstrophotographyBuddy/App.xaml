@@ -15,7 +15,7 @@
                 <ResourceDictionary Source="/AstrophotographyBuddy;component/Resources/SVGDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
-            <vm:ApplicationVM x:Key="AppVM" />
+            <vm:ApplicationVM x:Key="AppVM" />            
             <BooleanToVisibilityConverter x:Key="VisibilityConverter"/>
             <util:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <util:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />

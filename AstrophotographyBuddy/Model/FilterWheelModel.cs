@@ -203,6 +203,7 @@ namespace AstrophotographyBuddy.Model {
                 catch (ASCOM.DriverAccessCOMException ex) {
                     Logger.error("Unable to connect to FilterWheel");
                     Logger.trace(ex.Message);
+                    System.Windows.MessageBox.Show("Unable to connect to filter wheel", "Connection Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     Connected = false;
                 }
                 catch (Exception ex) {

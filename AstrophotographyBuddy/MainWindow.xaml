@@ -240,6 +240,7 @@
                 </Path>
             </Button>
         </Grid>
+        
         <Grid Grid.Row="2" Margin="0,10,0,0">
             <view:ApplicationMenu DataContext="{Binding}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:ApplicationMenu>
             <view:OverView DataContext="{Binding}" Visibility="{Binding OverViewVisibility, Converter={StaticResource VisibilityConverter}}"> </view:OverView>

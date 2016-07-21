@@ -46,11 +46,12 @@
 
         </chartingToolkit:Chart>
         </Expander>
-        <ScrollViewer Grid.Row="1">
+        <ScrollViewer Grid.Row="1" PanningMode="Both">
             <ScrollViewer.Style>
                 <Style TargetType="{x:Type ScrollViewer}">
-                    <Setter Property="HorizontalScrollBarVisibility" Value="Visible"/>
-                    <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+                    <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+                    <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+                    
                     <!--<Style.Triggers>
                         <DataTrigger Binding="{Binding IsChecked, ElementName=chkActualSize}" Value="True">
                             <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>

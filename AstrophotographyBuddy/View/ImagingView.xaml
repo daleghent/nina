@@ -23,7 +23,9 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <view:SequenceView DataContext="{Binding SeqVM}" />
+            <Grid IsEnabled="{Binding IsExposing, Converter={StaticResource InverseBooleanConverter}}" >
+                <view:SequenceView DataContext="{Binding SeqVM}" />
+            </Grid>            
             <Expander Grid.Row="1" IsExpanded="True" Header="Histogram">
                 <chartingToolkit:Chart   Title="" Margin="0,0,1,0" Style="{StaticResource ChartStyle}">
                     <chartingToolkit:Chart.Axes>

@@ -19,8 +19,7 @@ namespace AstrophotographyBuddy.ViewModel {
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["FocusSVG"];
             CancelSnapCommand = new RelayCommand(cancelCaptureImage);
             SnapCommand = new AsyncCommand<bool>(() => snap());
-            ApplyImageParamsCommand = new AsyncCommand<bool>(() => applyImageParams());
-            AutoStretchCommand = new AsyncCommand<bool>(() => ImagingVM.stretch());
+            ApplyImageParamsCommand = new AsyncCommand<bool>(() => applyImageParams());            
             Gamma = 1;
             Contrast = 1;
             Brightness = 1;
@@ -153,8 +152,8 @@ namespace AstrophotographyBuddy.ViewModel {
         private async Task<bool> applyImageParams() {            
             if(ImagingVM.Image != null) {
 
-                Bitmap bmp = await Task.Run<Bitmap>(() => {
-                        BitmapSource bs = ImagingVM.prepare(ImagingVM.SourceArray.FlatArray, ImagingVM.SourceArray.X, ImagingVM.SourceArray.Y);
+                Bitmap bmp = await Task.Run<Bitmap>(async () => {
+                        BitmapSource bs = await ImagingVM.prepare(ImagingVM.SourceArray.FlatArray, ImagingVM.SourceArray.X, ImagingVM.SourceArray.Y);
                         Bitmap b = BitmapFromSource(bs);
                         b = adjustImage(b);
                         return b;

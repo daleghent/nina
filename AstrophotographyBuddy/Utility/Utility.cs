@@ -204,6 +204,7 @@ namespace AstrophotographyBuddy.Utility {
 
             }
             catch (Exception ex) {
+                System.Windows.MessageBox.Show(ex.Message, "Error while writing image file!", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 Logger.error(ex.Message);
 
             }
@@ -223,6 +224,7 @@ namespace AstrophotographyBuddy.Utility {
                     encoder.Save(fs);
                 }
             } catch(Exception ex) {
+                System.Windows.MessageBox.Show(ex.Message, "Error while writing image file!", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                 Logger.error(ex.Message);
 
             }

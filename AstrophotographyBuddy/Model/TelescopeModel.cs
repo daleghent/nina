@@ -694,6 +694,7 @@ namespace AstrophotographyBuddy.Model {
                 catch (ASCOM.DriverAccessCOMException ex) {
                     Logger.error("Unable to connect to telescope");
                     Logger.trace(ex.Message);
+                    System.Windows.MessageBox.Show("Unable to connect to telescope", "Connection Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     Connected = false;
                 }
                 catch (Exception ex) {

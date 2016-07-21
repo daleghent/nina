@@ -44,14 +44,11 @@ namespace AstrophotographyBuddy.ViewModel {
 
             //addListeners();
         }
+        
 
         public string Version {
-            get {
-                string version = string.Empty;
-                if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed) {
-                    version = "v. " + System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString();
-                }
-                return version;
+            get {               
+                return "v. 0.0.1";
             }
         }
 
