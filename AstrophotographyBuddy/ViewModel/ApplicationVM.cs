@@ -36,7 +36,10 @@ namespace AstrophotographyBuddy.ViewModel {
             this.ImagingVM.Cam = cam.Cam;
             this.ImagingVM.FW = cam.FilterWheelVM.FW;
             this.FrameFocusVM.ImagingVM = this.ImagingVM;
+            var ps = this.PlatesolveVM;
+            ps.ImagingVM = this.ImagingVM;            
             var tele = this.TelescopeVM;
+            ps.Telescope = tele.Telescope;
             var phd2 = this.PHD2VM;
             //this.FrameFocusVM.Cam = cam.Cam;
             //this.FrameFocusVM.FW = cam.FilterWheelVM.FW;
@@ -158,6 +161,21 @@ namespace AstrophotographyBuddy.ViewModel {
             }
             set {
                 _imagingVM = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private PlatesolveVM _platesolveVM;
+        public PlatesolveVM PlatesolveVM {
+            get {
+                if (_platesolveVM == null) {
+                    _platesolveVM = new PlatesolveVM();
+                    Views.Add(_platesolveVM);
+                }
+                return _platesolveVM;
+            }
+            set {
+                _platesolveVM = value;
                 RaisePropertyChanged();
             }
         }

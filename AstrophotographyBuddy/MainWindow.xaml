@@ -5,8 +5,6 @@
         xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
         xmlns:local="clr-namespace:AstrophotographyBuddy.View"   
     Title="Astrophotography Buddy" Height="720" Width="1280" Background="{StaticResource BackgroundBrush}" Icon="/AstrophotographyBuddy;component/Resources/observatory.png" WindowStyle="None" MouseDown="Window_MouseDown"  AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
-    <!-- ToDo Custom Title Bar With own icon-->
-
     <Grid DataContext="{StaticResource AppVM}">
         <!--<Image Name="imagebox"></Image>-->
         <Grid.RowDefinitions>
@@ -247,6 +245,7 @@
             <view:CameraView DataContext="{Binding CameraVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:CameraView>
             <view:ImagingView DataContext="{Binding ImagingVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:ImagingView>
             <view:FrameFocusView DataContext="{Binding FrameFocusVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:FrameFocusView>
+            <view:PlateSolveView DataContext="{Binding PlatesolveVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:PlateSolveView>
             <view:TelescopeView DataContext="{Binding TelescopeVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:TelescopeView>
             <view:PHD2View DataContext="{Binding PHD2VM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:PHD2View>
             <view:OptionsView DataContext="{Binding OptionsVM}" Visibility="{Binding Visibility, Converter={StaticResource VisibilityConverter}}"></view:OptionsView>

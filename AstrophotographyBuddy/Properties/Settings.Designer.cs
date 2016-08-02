@@ -346,5 +346,17 @@ namespace AstrophotographyBuddy.Properties {
                 this["FileType"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string AstrometryAPIKey {
+            get {
+                return ((string)(this["AstrometryAPIKey"]));
+            }
+            set {
+                this["AstrometryAPIKey"] = value;
+            }
+        }
     }
 }

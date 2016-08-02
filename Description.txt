@@ -1,0 +1,96 @@
+Hello everybody,
+
+As I stepped into the area of mono imaging with the new ASI 1600 MMC I had to change my software for imaging. Additionally I was looking for a new private project to work on when it's cloudy and I thought heck why not building that new software all by myself :D
+
+Now after some cloudy weekends of programming I am satisfied with the first version and thought about sharing it with you all. (Hoping that everything works on other machines, too :undecided: )
+
+This project will be an open source project under the GNU LESSER GENERAL PUBLIC LICENSE.
+
+You can download the setup here: https://bitbucket.org/Isbeorn/astrophotographybuddy/downloads/AstrophotographyBuddy.zip
+Source code can be found here: https://bitbucket.org/Isbeorn/astrophotographybuddy/src
+
+Feel free to use it, but keep in mind that this is a personal project of mine and if you run into issues I cannot guarantee to fix them. Anyway I appreciate every suggestion for improvement!
+
+
+System Requirements
+64-bit Windows 7 or later
+.NET Framework 4.5 or later
+ASCOM Platform 6.2 or later
+
+Features
+All Equipment connected via ASCOM
+Monochrome camera control
+Temperature control (including a cool down routine for a set amount of time)
+Set up sequences for imaging
+Dithering (via PHD2)
+Dithering after a set amount of images
+Auto-Stretch image
+Image manipulation with gamma, brightness & contrast sliders 
+Filter wheel control (either manually or automatically during imaging)
+Basic control of telescope movements
+Macros to set up custom file names
+Supported Image formats: FITS & TIFF
+Fully customizable UI colors for both Night mode and Daylight mode
+
+Known Issues
+Color Cameras are not supported yet (that's not a priority for me as I only have mono cams)
+PHD2 Listener sometimes not getting the settle finish event or even loses connection. Just reconnect and it should work fine again.
+When setting up a custom image file name which is not unique an existing file will be overwritten
+Not all controls apply every custom UI color
+
+HowTo
+Top Buttons (from left to right):
+Menu button: Activates/Deactivates the menu overview to select a specific screen
+Left arrow button: Cycles to the previous screen
+Four arrows button: Activates/Deactivates the overview screen which will give you an overview about the current image, sequence, temperature and guide graph. Personally I use this when everything is running.
+Camera button: Opens a dialoge to choose the ASCOM Camera
+Filter wheel button: Opens a dialoge to choose the ASCOM filter wheel
+PHD2 button: Tries to connect to the PHD2 Server
+Telescope button: Opens a dialoge to choose the ASCOM telescope
+Eye button: Toggle color mode. Will swap to the alternative colors set up in the options screen
+Right arrow button: Cycles through the next screen
+Camera Screen:
+Camera: Basic information about the camera
+Camera Infos: Special info about the camera
+Filter wheel: when connected shows a list of filters to choose frome. When clicking on an item in the list the filter will be changed to the selected one
+Temperature control: Left side gives you info about the current temp and target temp. Additionally you can activate the cooler
+                                  Right side: choose a target temp and a duration (duration is optional). Click on the check button to run the cooldown. If no duration is selected the chosen temperature will be set directly
+Diagrams: A brief history about the cooler power and camera temperature will be displayed
+Imaging Screen:
+Sequence Setup: Click the + button to add an additional sequence. Click into the sequence grid to edit the sequence parameters.
+                             #: Number of images to take
+                            Time: Exposure time
+                            Type: Type of your image
+                             Filer: Combobox to select the desired filter (will be populated when a filter wheel is connected (default: filter won't be changed)
+                            Binning: Select a binning mode out of available modes (default: 1x1)
+                            Dither: If checked, dithering will be triggered
+                            Dither Every # Frame: If you want to dither only after # frames you can set that up there
+Histogram: Shows a histogram of the current image
+Play button: Will start the sequence
+Bottom left:  Controls to take a single exposure.
+Wand toggle button: Activates/Deactivates Auto-Stretch
+
+Frame & Focus Screen:
+Images which are triggered from this screen will not be saved to disk!
+Zoom slider: Zoom out or into the image displayed below
+Bottom part: Similar to bottom left part of Imaging screen except that the image will not be stored to disk.
+Right part: Basic control for brightness, contrast and gamma. Slide to desired values and click the check button (this feature is experimental and not very fast currently)
+
+Telescope Screen:
+Information: Basic information about Telescope and position
+Control: Move telescope to displayed directions by the set rate. Additionally there is an option to park the scope.
+
+PHD2 Screen:
+Status: Status of PHD connection
+Guide Graph: Similar to the guide graph in PHD2. Will be displayed in pixel scale.
+
+Options Screen:
+Save Image As: Desired output format. Supported are TIFF and FITS - TIFF will be stored in 16 bit and is faster
+Image File Path: Select a folder where your images should be stored
+Image File Pattern: Choose an image pattern. The available macros are listed below
+PHD2 Settings: Set the Url and Port for your PHD2 Server and the amount of pixels to be dithered
+UI Colors Current/Alternative: Define the UI colors for the daylight and night mode
+
+Hope you guys enjoy it, and more features will come over time!
+
+PS: I'm not sure if this is the right sub-forum, feel free to move it to the proper one.

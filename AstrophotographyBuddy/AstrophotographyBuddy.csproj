@@ -140,6 +140,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WPFToolkit.DataVisualization.3.5.50211.1\lib\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
       <Private>True</Private>
@@ -178,7 +179,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="PlateSolving\AstrometryPlateSolver.cs" />
     <Compile Include="Model\FilterWheelModel.cs" />
+    <Compile Include="PlateSolving\IPlateSolver.cs" />
     <Compile Include="Model\SequenceModel.cs" />
     <Compile Include="Model\TelescopeModel.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -205,6 +208,7 @@
     <Compile Include="ViewModel\ImagingVM.cs" />
     <Compile Include="ViewModel\OptionsVM.cs" />
     <Compile Include="ViewModel\PHD2VM.cs" />
+    <Compile Include="ViewModel\PlatesolveVM.cs" />
     <Compile Include="ViewModel\SequenceVM.cs" />
     <Compile Include="ViewModel\TelescopeVM.cs" />
     <Compile Include="View\ApplicationMenu.xaml.cs">
@@ -239,6 +243,9 @@
     </Compile>
     <Compile Include="View\PHD2View.xaml.cs">
       <DependentUpon>PHD2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PlateSolveView.xaml.cs">
+      <DependentUpon>PlateSolveView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
@@ -306,6 +313,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PHD2View.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PlateSolveView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

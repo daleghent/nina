@@ -98,6 +98,16 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
+        public string AstrometryAPIKey {
+            get {
+                return Settings.AstrometryAPIKey;
+            }
+            set {
+                Settings.AstrometryAPIKey = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public int PHD2ServerPort {
             get {
                 return Settings.PHD2ServerPort;

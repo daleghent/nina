@@ -32,46 +32,53 @@
             <TextBlock Grid.Column="2" Text="{Binding Zoom}" VerticalAlignment="Center"></TextBlock>
         </Grid>
         <Expander Grid.Row="2" IsExpanded="True" Header="Histogram">
-        <chartingToolkit:Chart DataContext="{Binding ImagingVM}" Grid.Row="2"  Title="" Margin="0,0,1,0" Style="{StaticResource ChartStyle}">
-            <chartingToolkit:Chart.Axes>
-                <chartingToolkit:LinearAxis Visibility="Hidden"
+            <chartingToolkit:Chart DataContext="{Binding ImagingVM}" Grid.Row="2"  Title="" Margin="0,0,1,0" Style="{StaticResource ChartStyle}">
+                <chartingToolkit:Chart.Axes>
+                    <chartingToolkit:LinearAxis Visibility="Hidden"
                             Orientation="X"                            
                             Minimum="0"
                             Maximum="65535" FontSize="6"/>
-            </chartingToolkit:Chart.Axes>
-            <chartingToolkit:LineSeries  DependentValuePath="Value" 
+                </chartingToolkit:Chart.Axes>
+                <chartingToolkit:LineSeries  DependentValuePath="Value" 
 				    IndependentValuePath="Key" ItemsSource="{Binding SourceArray.Histogram}" 
-				    IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}">               
-            </chartingToolkit:LineSeries>
+				    IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}">
+                    <chartingToolkit:LineSeries.DataPointStyle>
+                        <Style TargetType="chartingToolkit:LineDataPoint">
+                            <Setter Property="Template" Value="{x:Null}" />
+                        </Style>
+                    </chartingToolkit:LineSeries.DataPointStyle>
+                </chartingToolkit:LineSeries>
 
-        </chartingToolkit:Chart>
+            </chartingToolkit:Chart>
         </Expander>
-        <ScrollViewer Grid.Row="1" PanningMode="Both">
-            <ScrollViewer.Style>
-                <Style TargetType="{x:Type ScrollViewer}">
-                    <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
-                    <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+        <Border Grid.Row="1" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+            <ScrollViewer  PanningMode="Both">
+                <ScrollViewer.Style>
+                    <Style TargetType="{x:Type ScrollViewer}">
+                        <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+                        <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
                     
-                    <!--<Style.Triggers>
-                        <DataTrigger Binding="{Binding IsChecked, ElementName=chkActualSize}" Value="True">
-                            <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
-                            <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
-                        </DataTrigger>
-                    </Style.Triggers>-->
-                </Style>
-            </ScrollViewer.Style>
-            <Image Grid.Column="0" Grid.Row="0" Source="{Binding ImagingVM.Image}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Image.LayoutTransform>
-                    <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}" />
-                </Image.LayoutTransform>
-            </Image>
-        </ScrollViewer>
+                        <!--<Style.Triggers>
+                            <DataTrigger Binding="{Binding IsChecked, ElementName=chkActualSize}" Value="True">
+                                <Setter Property="HorizontalScrollBarVisibility" Value="Auto"/>
+                                <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+                            </DataTrigger>
+                        </Style.Triggers>-->
+                    </Style>
+                </ScrollViewer.Style>
+                <Image Grid.Column="0" Grid.Row="0" Source="{Binding ImagingVM.Image}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image.LayoutTransform>
+                        <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}" />
+                    </Image.LayoutTransform>
+                </Image>
+            </ScrollViewer>
+        </Border>
         <Grid Grid.Column="0" Grid.Row="3" IsEnabled="{Binding ImagingVM.Cam.Connected}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />                               
-                <ColumnDefinition Width="150" />
+                <ColumnDefinition Width="180" />
             </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <TextBlock VerticalAlignment="Center">Snap Exposure Time in seconds:</TextBlock>
                 <TextBox Margin="5" MinWidth="50" Height="30" Text="{Binding SnapExposureDuration}" IsEnabled="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}}"></TextBox>
                 <StackPanel Orientation="Horizontal">
@@ -91,16 +98,8 @@
             </Grid>
 
             <UniformGrid Columns="3" Grid.Column="1">
-                <Button Width="50" Height="50"  Command="{Binding SnapCommand}" HorizontalAlignment="Left" IsEnabled="{Binding ImagingVM.IsExposing, Converter={StaticResource InverseBooleanConverter}}">
-                    <Grid>
-                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                        </Path>                        
-                        <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
-                            <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ImagingVM.ExposureSeconds}" />
-                        </Grid>
-                    </Grid>
-                </Button>
-                <ToggleButton IsChecked="{Binding Loop}">
+                
+                <ToggleButton IsChecked="{Binding Loop}"  Margin="5,0,5,0">
                     <!--<Grid>
                         <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="5">
                         </Path>
@@ -133,7 +132,7 @@
                     </ToggleButton.Style>
 
                 </ToggleButton>
-                <ToggleButton IsChecked="{Binding ImagingVM.AutoStretch}">
+                <ToggleButton IsChecked="{Binding ImagingVM.AutoStretch}"  Margin="5,0,5,0">
                     <ToggleButton.Style>
                         <Style TargetType="ToggleButton" BasedOn="{StaticResource TB}" >
                             <Style.Triggers>
@@ -157,7 +156,16 @@
                         </Style>
                     </ToggleButton.Style>
                 </ToggleButton>
-           </UniformGrid>
+                <Button Width="50" Height="50"  Command="{Binding SnapCommand}" HorizontalAlignment="Left" IsEnabled="{Binding ImagingVM.IsExposing, Converter={StaticResource InverseBooleanConverter}}"  Margin="5,0,5,0">
+                    <Grid>
+                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                        </Path>
+                        <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
+                            <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="{Binding ImagingVM.ExposureSeconds}" />
+                        </Grid>
+                    </Grid>
+                </Button>
+            </UniformGrid>
         </Grid>
         <Expander ExpandDirection="Right"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" IsExpanded="True">
             <Expander.Header>
@@ -199,7 +207,7 @@ UseLayoutRounding="true">
                 <TextBlock HorizontalAlignment="Center" Grid.Row="2" Grid.Column="2" Text="{Binding Gamma}"></TextBlock>
                 
                 <UniformGrid Grid.Row="3" Columns="1" Grid.ColumnSpan="99" >
-                    <Button Command="{Binding ApplyImageParamsCommand}" Width="50" Height="50" HorizontalAlignment="Right">
+                    <Button Command="{Binding ApplyImageParamsCommand}" Width="50" Height="50" HorizontalAlignment="Right" Margin="5,0,5,0"> 
                         <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CheckedSVG}" Stretch="Uniform" Margin="5">
                         </Path>
                     </Button>

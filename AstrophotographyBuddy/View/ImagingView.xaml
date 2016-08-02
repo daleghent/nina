@@ -25,7 +25,7 @@
             </Grid.RowDefinitions>
             <Grid IsEnabled="{Binding IsExposing, Converter={StaticResource InverseBooleanConverter}}" >
                 <view:SequenceView DataContext="{Binding SeqVM}" />
-            </Grid>            
+            </Grid>
             <Expander Grid.Row="1" IsExpanded="True" Header="Histogram">
                 <chartingToolkit:Chart   Title="" Margin="0,0,1,0" Style="{StaticResource ChartStyle}">
                     <chartingToolkit:Chart.Axes>
@@ -37,18 +37,23 @@
                     <chartingToolkit:LineSeries  DependentValuePath="Value" 
 				    IndependentValuePath="Key" ItemsSource="{Binding SourceArray.Histogram}" 
 				    IsSelectionEnabled="True" Style="{StaticResource LineSeriesStyle}">
+                        <chartingToolkit:LineSeries.DataPointStyle>
+                            <Style TargetType="chartingToolkit:LineDataPoint">
+                                <Setter Property="Template" Value="{x:Null}" />
+                            </Style>
+                        </chartingToolkit:LineSeries.DataPointStyle>
                     </chartingToolkit:LineSeries>
                 </chartingToolkit:Chart>
             </Expander>
-           
+
         </Grid>
         
         <StackPanel Grid.Row="1"  Orientation="Horizontal">
-            <Button Width="50" Height="50" Command="{Binding SeqVM.AddSequenceCommand}">
+            <Button Width="50" Height="50" Command="{Binding SeqVM.AddSequenceCommand}"  Margin="5,0,5,0">
                 <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource AddSVG}" Stretch="Uniform" Margin="5">
                 </Path>
             </Button>
-            <Grid  IsEnabled="{Binding Cam.Connected}">
+            <Grid  IsEnabled="{Binding Cam.Connected}"  Margin="5,0,5,0">
                 <Button Width="50" Height="50" Command="{Binding StartSequenceCommand}" IsEnabled="{Binding IsExposing, Converter={StaticResource InverseBooleanConverter}}" >
                     <Grid>
                         <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PlaySVG}" Stretch="Uniform" Margin="5" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
@@ -59,7 +64,7 @@
                     </Grid>
                 </Button>
             </Grid>
-            <Grid IsEnabled="{Binding Cam.Connected}" Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
+            <Grid IsEnabled="{Binding Cam.Connected}" Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}"  Margin="5,0,5,0">
                 <Button Width="50" Height="50" Command="{Binding CancelSequenceCommand}" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" >
                     <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
                     </Path>
@@ -70,13 +75,14 @@
 
         <!--<Image Grid.Column="1" Source="{Binding SnapCommand.Execution.Result}" 
                Visibility="{Binding SnapCommand.Execution.IsSuccessfullyCompleted, Converter={StaticResource VisibilityConverter}}">-->
-        <Image Grid.Column="1" Source="{Binding Image}" />
-
+        <Border Grid.Column="1"  BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+            <Image Source="{Binding Image}" />
+        </Border>
 
         <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding Cam.Connected}" HorizontalAlignment="Right" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="50" />
+                <ColumnDefinition Width="60" />
             </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
 
@@ -91,7 +97,7 @@
                     <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">Binning:</TextBlock>
                     <ComboBox VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}" DisplayMemberPath="Name" SelectedItem="{Binding SnapBin}" SelectedValuePath="Name"></ComboBox>
                 </StackPanel>
-                <ToggleButton Height="50" Width="50" IsChecked="{Binding AutoStretch}" >
+                <ToggleButton Height="50" Width="50" IsChecked="{Binding AutoStretch}"  Margin="5,0,5,0">
                     <ToggleButton.Style>
                         <Style TargetType="ToggleButton" BasedOn="{StaticResource TB}" >
                             <Style.Triggers>
@@ -116,7 +122,7 @@
                     </ToggleButton.Style>
                 </ToggleButton>
             </StackPanel>
-            <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">
+            <Grid Visibility="{Binding SnapCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}"  Margin="5,0,5,0">
                 <Button Command="{Binding CancelSnapCommand}" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">
                     <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
                     </Path>
@@ -127,7 +133,7 @@
 
 
 
-            <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}" IsEnabled="{Binding IsExposing, Converter={StaticResource InverseBooleanConverter}}">
+            <Button Width="50" Height="50" Grid.Column="1" Command="{Binding SnapCommand}" IsEnabled="{Binding IsExposing, Converter={StaticResource InverseBooleanConverter}}"  Margin="5,0,5,0">
                 <Grid>
 
                     <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" Visibility="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">

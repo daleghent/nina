@@ -456,7 +456,7 @@ namespace AstrophotographyBuddy.Model {
         }
         public string RightAscensionString {
             get {
-                return Utility.Utility.AscomUtil.DegreesToDMS(RightAscension);
+                return Utility.Utility.AscomUtil.DegreesToHMS(RightAscension);
             }
         }
 
@@ -1091,6 +1091,12 @@ namespace AstrophotographyBuddy.Model {
             if(Connected && CanPark) {
                 Telescope.Park();
                 AtPark = true;
+            }
+        }
+
+        public void sync(string ra, string dec) {
+            if (Connected && CanSync) {
+                Telescope.SyncToCoordinates(Utility.Utility.AscomUtil.HMSToHours(ra), Utility.Utility.AscomUtil.DMSToDegrees(dec));                
             }
         }
 

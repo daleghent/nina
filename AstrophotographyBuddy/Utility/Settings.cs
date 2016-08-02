@@ -14,6 +14,17 @@ namespace AstrophotographyBuddy.Utility {
 
         }
 
+        public static string AstrometryAPIKey {
+            get {
+                return Properties.Settings.Default.AstrometryAPIKey;
+            }
+            set {
+                Properties.Settings.Default.AstrometryAPIKey = value;
+                Properties.Settings.Default.Save();
+            }
+
+        }
+
         public static string CameraId {
             get {
                 return Properties.Settings.Default.CameraId;

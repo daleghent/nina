@@ -7,7 +7,7 @@
              xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Background="{StaticResource BackgroundBrush}">
-    <UniformGrid Columns="2" Rows="2"> 
+    <UniformGrid Columns="2" Rows="3"> 
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -98,7 +98,16 @@
             </UniformGrid>
 
         </GroupBox>
-
+        <GroupBox Header="Plate Solving">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock  VerticalAlignment="Center" Width="100">API Key</TextBlock>
+                <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding AstrometryAPIKey}" />
+            </Grid>
+        </GroupBox>
         <GroupBox Header="PHD2 Settings">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -111,20 +120,20 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <TextBlock  VerticalAlignment="Center" Width="100">PHD2ServerUrl</TextBlock>
+                <TextBlock  VerticalAlignment="Center" Width="100">PHD2 Server Url:</TextBlock>
                 <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding PHD2ServerUrl}" />
 
 
-                <TextBlock Grid.Row="1" VerticalAlignment="Center" Width="100">PHD2 Server Port </TextBlock>
+                <TextBlock Grid.Row="1" VerticalAlignment="Center" Width="100">PHD2 Server Port:</TextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding PHD2ServerPort}" />
                 
-                <TextBlock Grid.Row="1" VerticalAlignment="Center" Width="100">PHD2 Server Port </TextBlock>
+                <TextBlock Grid.Row="1" VerticalAlignment="Center" Width="100">PHD2 Server Port:</TextBlock>
                 <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding PHD2ServerPort}" />
                 
-                <TextBlock Grid.Row="2" VerticalAlignment="Center" Width="100">Dither Pixels </TextBlock>
+                <TextBlock Grid.Row="2" VerticalAlignment="Center" Width="100">Dither Pixels:</TextBlock>
                 <TextBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding DitherPixels}" />
                 
-                <TextBlock Grid.Row="3" VerticalAlignment="Center" Width="100">Dither RA Only?</TextBlock>
+                <TextBlock Grid.Row="3" VerticalAlignment="Center" Width="100">Dither RA Only:</TextBlock>
                 <CheckBox Grid.Row="3" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"  IsChecked="{Binding DitherRAOnly}" />
            
             </Grid>
