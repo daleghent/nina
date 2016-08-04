@@ -358,5 +358,17 @@ namespace AstrophotographyBuddy.Properties {
                 this["AstrometryAPIKey"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UseFullResolutionPlateSolve {
+            get {
+                return ((bool)(this["UseFullResolutionPlateSolve"]));
+            }
+            set {
+                this["UseFullResolutionPlateSolve"] = value;
+            }
+        }
     }
 }

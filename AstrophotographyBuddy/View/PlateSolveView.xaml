@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AstrophotographyBuddy.View"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+    <Grid IsEnabled="{Binding ImagingVM.Image, Converter={StaticResource InverseNullToBooleanConverter}}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="*" />            
@@ -18,7 +18,8 @@
         <Border Grid.RowSpan="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
             <Grid>
                 <!--<Image Source="{Binding ImagingVM.Image}"/>-->
-                <Image Source="{Binding PlateSolveResult.SolvedImage}" />
+                <Image Source="{Binding PlateSolveResult.SolvedImage}" Visibility="{Binding PlateSolveResult, Converter={StaticResource NullToVisibilityConverter}}" />
+                <Image Source="{Binding ImagingVM.Image}" Visibility="{Binding PlateSolveResult, Converter={StaticResource InverseNullToVisibilityConverter}}" />
             </Grid>
             
         </Border>
@@ -59,10 +60,20 @@
         </Border>
 
         <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" >
-            <Button  Width="50" Height="50" Command="{Binding BlindSolveCommand}" Margin="5,0,5,0">
-                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PlatesolveSVG}" Stretch="Uniform" Margin="5">
-                </Path>
-            </Button>
+            <TextBlock Text="{Binding Progress}" VerticalAlignment="Center" />
+            <Grid>
+                <Button  Width="50" Height="50" Command="{Binding BlindSolveCommand}" Margin="5,0,5,0">
+                    <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource PlatesolveSVG}" Stretch="Uniform" Margin="5">
+                    </Path>
+                </Button>
+                <Grid Visibility="{Binding BlindSolveCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}"  Margin="5,0,5,0">
+                    <Button Width="50" Height="50" Command="{Binding CancelBlindSolveCommand}" Visibility="{Binding BlindSolveCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" >
+                        <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CancelSVG}" Stretch="Uniform" Margin="5">
+                        </Path>
+                    </Button>
+                </Grid>
+            </Grid>
+           
             <Button  Width="50" Height="50" Command="{Binding SyncCommand}" Margin="5,0,5,0">
                 <Grid>
                     <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource LoopSVG}" Stretch="Uniform" Margin="25,25,5,5">

@@ -100,12 +100,18 @@
         </GroupBox>
         <GroupBox Header="Plate Solving">
             <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <TextBlock  VerticalAlignment="Center" Width="100">API Key</TextBlock>
+                <TextBlock  VerticalAlignment="Center" Width="100">API Key:</TextBlock>
                 <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding AstrometryAPIKey}" />
+                <TextBlock Grid.Row="1"  VerticalAlignment="Center" Width="100">Use full resolution:</TextBlock>
+                <CheckBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding UseFullResolutionPlateSolve}" />
             </Grid>
         </GroupBox>
         <GroupBox Header="PHD2 Settings">

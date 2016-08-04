@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
 namespace AstrophotographyBuddy.Model {
     interface IPlateSolver {
-        Task<PlateSolveResult> blindSolve(BitmapSource source);
+        Task<PlateSolveResult> blindSolve(MemoryStream image, IProgress<string> progress, CancellationTokenSource canceltoken);
     }
     public class PlateSolveResult {
         BitmapSource _solvedImage;

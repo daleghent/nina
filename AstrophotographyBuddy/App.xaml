@@ -20,7 +20,10 @@
             <util:InverseBooleanConverter x:Key="InverseBooleanConverter" />
             <util:InverseBoolToVisibilityConverter x:Key="InverseBoolToVisibilityConverter" />
             <util:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+            <util:InverseNullToVisibilityConverter x:Key="InverseNullToVisibilityConverter"/>
             <util:DatabindingDebugConverter x:Key="DebugConverter" />
+            <util:InverseNullToBooleanConverter x:Key="InverseNullToBooleanConverter" />
+            
 
             <SolidColorBrush x:Key="PrimaryBrush" Color="{Binding Source={StaticResource AppVM}, Path=OptionsVM.PrimaryColor}"/>
             <SolidColorBrush x:Key="SecondaryBrush" Color="{Binding Source={StaticResource AppVM}, Path=OptionsVM.SecondaryColor}"/>

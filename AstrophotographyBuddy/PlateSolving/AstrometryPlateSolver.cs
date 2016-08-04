@@ -6,13 +6,14 @@ using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace AstrophotographyBuddy.Model {
-    class AstrometryPlateSolver : BaseINPC, IPlateSolver  {
+    class AstrometryPlateSolver : BaseINPC, IPlateSolver {
 
         const string AUTHURL = "http://nova.astrometry.net/api/login";
         const string UPLOADURL = "http://nova.astrometry.net/api/upload";
@@ -22,164 +23,157 @@ namespace AstrophotographyBuddy.Model {
         const string ANNOTATEDIMAGEURL = "http://nova.astrometry.net/annotated_display/{0}";
 
 
+
         public AstrometryPlateSolver() {
-        
+
         }
 
-        private async Task<JObject> authenticate() {            
+        private async Task<JObject> authenticate(CancellationTokenSource canceltoken) {
             string apikey = Settings.AstrometryAPIKey;
 
             string json = "{\"apikey\":\"" + apikey + "\"}";
             json = Utility.Utility.encodeUrl(json);
             string body = "request-json=" + json;
 
-            string response = await Utility.Utility.httpPostRequest(AUTHURL, body);
+            string response = await Utility.Utility.httpPostRequest(AUTHURL, body, canceltoken);
 
             JObject o = JObject.Parse(response);
 
             return o;
         }
 
-        private async Task<JObject> submitImage(BitmapFrame image, string session) {       
-            /* Read image into memorystream */
-            var ms = new MemoryStream();
-            JpegBitmapEncoder encoder = new JpegBitmapEncoder();
-            encoder.Frames.Add(image);
-            encoder.QualityLevel = 90;
-            encoder.Save(ms);
-            ms.Seek(0, SeekOrigin.Begin);
-
+        private async Task<JObject> submitImage(MemoryStream ms, string session, CancellationTokenSource canceltoken) {
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("request-json", "{\"publicly_visible\": \"n\", \"allow_modifications\": \"d\", \"session\": \"" + session + "\", \"allow_commercial_use\": \"d\"}");
-            string response = await Utility.Utility.httpUploadFile(UPLOADURL, ms, "file", "image/jpeg", nvc);
+            string response = await Utility.Utility.httpUploadFile(UPLOADURL, ms, "file", "image/jpeg", nvc, canceltoken);
             JObject o = JObject.Parse(response);
 
             return o;
         }
 
-        private async Task<JObject> getSubmissionStatus(string subid) {    
-            string response = await Utility.Utility.httpGetRequest(SUBMISSIONURL, subid);
+        private async Task<JObject> getSubmissionStatus(string subid, CancellationTokenSource canceltoken) {
+            string response = await Utility.Utility.httpGetRequest(canceltoken,SUBMISSIONURL, subid);
             JObject o = JObject.Parse(response);
 
             return o;
         }
 
-        private async Task<JObject> getJobStatus(string jobid) {
-            string response = await Utility.Utility.httpGetRequest(JOBSTATUSURL, jobid);
+        private async Task<JObject> getJobStatus(string jobid, CancellationTokenSource canceltoken) {
+            string response = await Utility.Utility.httpGetRequest(canceltoken,JOBSTATUSURL, jobid);
             JObject o = JObject.Parse(response);
 
             return o;
         }
 
-        private async Task<JObject> getJobInfo(string jobid) {
-            string response = await Utility.Utility.httpGetRequest(JOBINFOURL, jobid);
+        private async Task<JObject> getJobInfo(string jobid, CancellationTokenSource canceltoken) {
+            string response = await Utility.Utility.httpGetRequest(canceltoken, JOBINFOURL, jobid);
             JObject o = JObject.Parse(response);
 
             return o;
         }
 
-        private async Task<BitmapImage> getJobImage(string jobid) {
-            return await Utility.Utility.httpGetImage(ANNOTATEDIMAGEURL, jobid);
+        private async Task<BitmapImage> getJobImage(string jobid, CancellationTokenSource canceltoken) {
+            return await Utility.Utility.httpGetImage(canceltoken, ANNOTATEDIMAGEURL, jobid);
         }
 
-        public async Task<PlateSolveResult> blindSolve(BitmapSource source) {
-            PlateSolveResult result = new PlateSolveResult(); 
-            BitmapFrame image = null;
-            /* Resize Image */
-            if (source.Width > 1400) {
-                int width = (int)source.Width / 3;
-                int height = (int)source.Height / 3;
-                var margin = 0;
-                var rect = new Rect(margin, margin, width - margin * 2, height - margin * 2);
+        public async Task<PlateSolveResult> blindSolve(MemoryStream image, IProgress<string> progress, CancellationTokenSource canceltoken) {
+            PlateSolveResult result = new PlateSolveResult();
 
-                var group = new DrawingGroup();
-                RenderOptions.SetBitmapScalingMode(group, BitmapScalingMode.HighQuality);
-                group.Children.Add(new ImageDrawing(source, rect));
+            try {
 
-                var drawingVisual = new DrawingVisual();
-                using (var drawingContext = drawingVisual.RenderOpen())
-                    drawingContext.DrawDrawing(group);
+                progress.Report("Authenticating...");
+                JObject authentication = await authenticate(canceltoken);
+                var status = authentication.GetValue("status");
+                string session = string.Empty;
+                if (status != null && status.ToString() == "success") {
+                    session = authentication.GetValue("session").ToString();
 
-                var resizedImage = new RenderTargetBitmap(
-                    width, height,         // Resized dimensions
-                    96, 96,                // Default DPI values
-                    PixelFormats.Default); // Default pixel format
-                resizedImage.Render(drawingVisual);
+                    progress.Report("Uploading Image...");
+                    JObject imagesubmission = await submitImage(image, session, canceltoken);
 
-                image = BitmapFrame.Create(resizedImage);
-            } else {
-                image = BitmapFrame.Create(source);
-            }
-            
-            
-            JObject authentication = await authenticate();
-            var status = authentication.GetValue("status");
-            string session = string.Empty;
-            if (status != null && status.ToString() == "success") {
-                session = authentication.GetValue("session").ToString();
+                    string subid = string.Empty;
+                    string jobid = string.Empty;
+                    if (imagesubmission.GetValue("status") != null && imagesubmission.GetValue("status").ToString() == "success") {
+                        subid = imagesubmission.GetValue("subid").ToString();
 
-                JObject imagesubmission = await submitImage(image, session);
-
-                string subid = string.Empty;
-                string jobid = string.Empty;
-                if (imagesubmission.GetValue("status") != null && imagesubmission.GetValue("status").ToString() == "success") {
-                    subid = imagesubmission.GetValue("subid").ToString();
-
-                    var attempts = 0;
-                    while (true) {
                         
-                        JObject submissionstatus = await getSubmissionStatus(subid);
-
-                        JArray jobids;
-                        jobids = (JArray)submissionstatus.GetValue("jobs");
-                        if (jobids.Count > 0) {                            
-                            jobid = jobids.First.ToString();
-                            if(jobid != "") {
-                                break;
-                            }
-                            
-                        }
-                        await Task.Delay(1000);
-                        attempts++;
-                        if(attempts > 30) {
-                            break;
-                        }
-                    };
-                    
-                    if(!string.IsNullOrWhiteSpace(jobid)) {
-                        attempts = 0;
-                        string jobstatus = string.Empty;
+                        progress.Report("Waiting for plate solve to start ...");
                         while (true) {
-                            JObject ojobstatus = await getJobStatus(jobid);
-                            jobstatus = ojobstatus.GetValue("status").ToString();
+                            canceltoken.Token.ThrowIfCancellationRequested();
 
-                            if ((jobstatus == "failure") || (jobstatus == "success")) {
-                                break;
+                            JObject submissionstatus = await getSubmissionStatus(subid, canceltoken);
+
+                            JArray jobids;
+                            jobids = (JArray)submissionstatus.GetValue("jobs");
+                            if (jobids.Count > 0) {
+                                jobid = jobids.First.ToString();
+                                if (jobid != "") {
+                                    break;
+                                }
+
                             }
                             await Task.Delay(1000);
-                            attempts++;
-                            if (attempts > 60) {
-                                break;
-                            }
+
                         };
 
-                        if(jobstatus == "success") {
-                            JObject job = await getJobInfo(jobid);
-                            JobResult jobinfo = job.ToObject<JobResult>();
+                        if (!string.IsNullOrWhiteSpace(jobid)) {
 
-                            result.Dec = jobinfo.calibration.dec;
-                            result.Orientation = jobinfo.calibration.orientation;
-                            result.Pixscale = jobinfo.calibration.pixscale;
-                            result.Ra = jobinfo.calibration.ra;
-                            result.Radius = jobinfo.calibration.radius;
+                            string jobstatus = string.Empty;
+                            progress.Report("Solving ...");
+                            while (true) {
+                                canceltoken.Token.ThrowIfCancellationRequested();
+                                JObject ojobstatus = await getJobStatus(jobid, canceltoken);
+                                jobstatus = ojobstatus.GetValue("status").ToString();
 
-                            result.SolvedImage = await getJobImage(jobid);         
+                                if ((jobstatus == "failure") || (jobstatus == "success")) {
+                                    break;
+                                }
+                                await Task.Delay(1000);
+
+                            };
+
+                            if (jobstatus == "success") {
+                                progress.Report("Getting plate solve result ...");
+                                JObject job = await getJobInfo(jobid, canceltoken);
+                                JobResult jobinfo = job.ToObject<JobResult>();
+
+                                result.Dec = jobinfo.calibration.dec;
+                                result.Orientation = jobinfo.calibration.orientation;
+                                result.Pixscale = jobinfo.calibration.pixscale;
+                                result.Ra = jobinfo.calibration.ra;
+                                result.Radius = jobinfo.calibration.radius;
+
+                                result.SolvedImage = await getJobImage(jobid, canceltoken);
+                                progress.Report("Done");
+                            }
+                            else {
+                                progress.Report("Plate solve failed");
+                            }
+                        }
+                        else {
+                            progress.Report("Failed to get job result");
                         }
                     }
+                    else {
+                        progress.Report("Failed to get submission");
+                    }
                 }
+                else {
+                    progress.Report("Authorization failed ...");
+                }
+
+            }
+
+            catch (System.OperationCanceledException ex) {
+                Logger.trace(ex.Message);
+                progress.Report("Cancelled");
+            }
+            finally {
+               
             }
             return result;
         }
+
     }
 
     public class JobResult {

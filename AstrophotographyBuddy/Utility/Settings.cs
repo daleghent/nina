@@ -25,6 +25,16 @@ namespace AstrophotographyBuddy.Utility {
 
         }
 
+        public static bool UseFullResolutionPlateSolve {
+            get {
+                return Properties.Settings.Default.UseFullResolutionPlateSolve;
+            }
+            set {
+                Properties.Settings.Default.UseFullResolutionPlateSolve = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
         public static string CameraId {
             get {
                 return Properties.Settings.Default.CameraId;

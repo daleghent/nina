@@ -108,6 +108,16 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
+        public bool UseFullResolutionPlateSolve {
+            get {
+                return Settings.UseFullResolutionPlateSolve;
+            }
+            set {
+                Settings.UseFullResolutionPlateSolve = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public int PHD2ServerPort {
             get {
                 return Settings.PHD2ServerPort;

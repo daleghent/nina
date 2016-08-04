@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Windows.Media;
@@ -134,6 +135,7 @@ namespace AstrophotographyBuddy.Utility {
                 return iarr;
             });           
         }
+
         
         public static async Task<ushort[]> stretchArray(ImageArray source) {
             return await Task.Run<ushort[]>(() => {
@@ -306,7 +308,7 @@ namespace AstrophotographyBuddy.Utility {
         }
 
 
-        public static async Task<string> httpGetRequest(string url, params object[] parameters) {
+        public static async Task<string> httpGetRequest(CancellationTokenSource canceltoken, string url, params object[] parameters) {
             string result = string.Empty;
 
             url = string.Format(url, parameters);
@@ -314,7 +316,7 @@ namespace AstrophotographyBuddy.Utility {
             HttpWebResponse response = null;
             try {
                 request = (HttpWebRequest)WebRequest.Create(url);
-
+                canceltoken.Token.ThrowIfCancellationRequested();
                 response = (HttpWebResponse)await request.GetResponseAsync();
 
                 using (var streamReader = new StreamReader(response.GetResponseStream())) {
@@ -340,7 +342,7 @@ namespace AstrophotographyBuddy.Utility {
         }
 
 
-        public static async Task<BitmapImage> httpGetImage(string url, params object[] parameters) {
+        public static async Task<BitmapImage> httpGetImage(CancellationTokenSource canceltoken, string url, params object[] parameters) {
             BitmapImage bitmap = null;
 
             url = string.Format(url, parameters);
@@ -350,6 +352,8 @@ namespace AstrophotographyBuddy.Utility {
                 request = (HttpWebRequest)WebRequest.Create(url);
 
                 response = (HttpWebResponse)await request.GetResponseAsync();
+
+                canceltoken.Token.ThrowIfCancellationRequested();
 
                 using (BinaryReader reader = new BinaryReader(response.GetResponseStream())) {
                     Byte[] lnByte = reader.ReadBytes(1 * 1024 * 1024 * 10);
@@ -378,7 +382,7 @@ namespace AstrophotographyBuddy.Utility {
             return bitmap;
         }
 
-        public static async Task<string> httpPostRequest(string url, string body ) {
+        public static async Task<string> httpPostRequest(string url, string body, CancellationTokenSource canceltoken) {
             string result = string.Empty;
             
             HttpWebRequest request = null;
@@ -393,8 +397,8 @@ namespace AstrophotographyBuddy.Utility {
                     streamWriter.Flush();
                     streamWriter.Close();
                 }
-
-                response =  (HttpWebResponse)await request.GetResponseAsync();
+                canceltoken.Token.ThrowIfCancellationRequested();
+                response = (HttpWebResponse)await request.GetResponseAsync();
                 using (var streamReader = new StreamReader(response.GetResponseStream())) {
                     result = streamReader.ReadToEnd();
                 }
@@ -415,7 +419,7 @@ namespace AstrophotographyBuddy.Utility {
 
         }
 
-        public static async Task<string> httpUploadFile(string url, MemoryStream file, string paramName, string contentType, NameValueCollection nvc) {
+        public static async Task<string> httpUploadFile(string url, MemoryStream file, string paramName, string contentType, NameValueCollection nvc, CancellationTokenSource canceltoken) {
             string result = string.Empty;            
             string boundary = "---------------------------" + DateTime.Now.Ticks.ToString("x");
             byte[] boundarybytes = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "\r\n");
@@ -447,17 +451,18 @@ namespace AstrophotographyBuddy.Utility {
             int bytesRead = 0;
             while ((bytesRead = file.Read(buffer, 0, buffer.Length)) != 0) {
                 rs.Write(buffer, 0, bytesRead);
+                canceltoken.Token.ThrowIfCancellationRequested();
             }
             file.Close();
 
             byte[] trailer = System.Text.Encoding.ASCII.GetBytes("\r\n--" + boundary + "--\r\n");
             rs.Write(trailer, 0, trailer.Length);
             rs.Close();
-
+            canceltoken.Token.ThrowIfCancellationRequested();
             WebResponse wresp = null;
             try {
                 wresp = await wr.GetResponseAsync();
-
+                canceltoken.Token.ThrowIfCancellationRequested();
                 using (var streamReader = new StreamReader(wresp.GetResponseStream())) {
                     result = streamReader.ReadToEnd();                    
                 }
