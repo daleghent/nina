@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstrophotographyBuddy", "AstrophotographyBuddy\AstrophotographyBuddy.csproj", "{7DEC1B46-9701-4E49-90C1-F4427845669E}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "AstrophotographyBuddySetup", "AstrophotographyBuddySetup\AstrophotographyBuddySetup.vdproj", "{70575A85-A413-4E3F-B65A-8C52BD469CE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstrophotographyBuddyTest", "AstrophotographyBuddyTest\AstrophotographyBuddyTest.csproj", "{102E88D0-82E9-4DA5-919A-94FC68E32F3E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,14 @@ Global
 		{70575A85-A413-4E3F-B65A-8C52BD469CE9}.Release|Any CPU.ActiveCfg = Release
 		{70575A85-A413-4E3F-B65A-8C52BD469CE9}.Release|x64.ActiveCfg = Release
 		{70575A85-A413-4E3F-B65A-8C52BD469CE9}.Release|x64.Build.0 = Release
+		{102E88D0-82E9-4DA5-919A-94FC68E32F3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{102E88D0-82E9-4DA5-919A-94FC68E32F3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{102E88D0-82E9-4DA5-919A-94FC68E32F3E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{102E88D0-82E9-4DA5-919A-94FC68E32F3E}.Debug|x64.Build.0 = Debug|Any CPU
+		{102E88D0-82E9-4DA5-919A-94FC68E32F3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{102E88D0-82E9-4DA5-919A-94FC68E32F3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{102E88D0-82E9-4DA5-919A-94FC68E32F3E}.Release|x64.ActiveCfg = Release|Any CPU
+		{102E88D0-82E9-4DA5-919A-94FC68E32F3E}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

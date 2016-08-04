@@ -63,6 +63,7 @@ namespace AstrophotographyBuddy.Model {
             RightAscension = Telescope.RightAscension;
             SiderealTime = Telescope.SiderealTime;
             AtPark = Telescope.AtPark;
+            Tracking = Telescope.Tracking;
         }
 
         public AlignmentModes AlignmentMode {
@@ -1095,8 +1096,15 @@ namespace AstrophotographyBuddy.Model {
         }
 
         public void sync(string ra, string dec) {
+            
             if (Connected && CanSync) {
-                Telescope.SyncToCoordinates(Utility.Utility.AscomUtil.HMSToHours(ra), Utility.Utility.AscomUtil.DMSToDegrees(dec));                
+                if (Tracking) {
+                    Telescope.SyncToCoordinates(Utility.Utility.AscomUtil.HMSToHours(ra), Utility.Utility.AscomUtil.DMSToDegrees(dec));
+                } else {
+                    System.Windows.MessageBox.Show("Telescope is not tracking. Sync is only available when tracking.", "Sync unavailable", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
+
+                }
+                
             }
         }
 

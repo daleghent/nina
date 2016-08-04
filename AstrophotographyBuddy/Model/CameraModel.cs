@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 
 namespace AstrophotographyBuddy
 {
-    class CameraModel : BaseINPC {
+    public class CameraModel : BaseINPC {
 
         public CameraModel() {
             init();

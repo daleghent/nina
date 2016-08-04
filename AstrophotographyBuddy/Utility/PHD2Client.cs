@@ -15,7 +15,7 @@ using System.Windows.Threading;
 using System.Windows;
 
 namespace AstrophotographyBuddy.Utility {
-    class PHD2Client : BaseINPC {
+    public class PHD2Client : BaseINPC {
         public PHD2Client() {
         }
 

@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace AstrophotographyBuddy.Utility {
-    static class Utility {
+    public static class Utility {
 
         private static ASCOM.Utilities.Util _ascomUtil;
         public static ASCOM.Utilities.Util AscomUtil {
@@ -40,6 +41,26 @@ namespace AstrophotographyBuddy.Utility {
             private Dictionary<ushort, int> _histogram;
 
             public Dictionary<ushort, int> Histogram {
+                get {
+                    return _histogram;
+                }
+
+                set {
+                    _histogram = value;
+                }
+            }
+        }
+
+        public class TImageArray<T> {
+            public Array SourceArray;
+            public T[] FlatArray;
+            public int X;
+            public int Y;
+            public T minStDev;
+            public T maxStDev;
+            private Dictionary<T, int> _histogram;
+
+            public Dictionary<T, int> Histogram {
                 get {
                     return _histogram;
                 }
@@ -119,7 +140,7 @@ namespace AstrophotographyBuddy.Utility {
                     min = (ushort)(average - factor * sd);
                 }
 
-                if (average - factor * sd > ushort.MaxValue) {
+                if (average + factor * sd > ushort.MaxValue) {
                     max = ushort.MaxValue;
                 }
                 else {
@@ -136,7 +157,6 @@ namespace AstrophotographyBuddy.Utility {
             });           
         }
 
-        
         public static async Task<ushort[]> stretchArray(ImageArray source) {
             return await Task.Run<ushort[]>(() => {
                 ushort maxVal = source.maxStDev;
@@ -152,6 +172,33 @@ namespace AstrophotographyBuddy.Utility {
                         val = ushort.MaxValue;
                     }
                     stretchedArr[i] = (ushort)val;
+
+                }
+                return stretchedArr;
+            });
+        }
+        
+        public static async Task<T[]> TstretchArray<T>(TImageArray<T> source) {
+            return await Task.Run<T[]>(() => {
+                dynamic maxVal = source.maxStDev;
+                dynamic minVal = source.minStDev;
+                dynamic d = (T)Convert.ChangeType((maxVal - minVal), typeof(T));
+
+                FieldInfo maxValueField = typeof(T).GetField("MaxValue", BindingFlags.Public | BindingFlags.Static);
+                if (maxValueField == null)
+                    throw new NotSupportedException(typeof(T).Name);
+                dynamic maxValue = (T)maxValueField.GetValue(null);
+                
+
+                T[] stretchedArr = new T[source.FlatArray.Length];
+
+                for (int i = 0; i < source.FlatArray.Length; i++) {
+
+                    dynamic val = (((float)(source.FlatArray[i] - minVal) / d) * (maxValue));
+                    if (val > maxValue) {
+                        val = maxValue;
+                    }
+                    stretchedArr[i] = (T)Convert.ChangeType(val, typeof(T));
 
                 }
                 return stretchedArr;
@@ -237,50 +284,50 @@ namespace AstrophotographyBuddy.Utility {
         }
 
 
-        public static BitmapSource NormalizeTiffTo8BitImage(BitmapSource source) {
-            // allocate buffer & copy image bytes.
-            var rawStride = source.PixelWidth * source.Format.BitsPerPixel / 8;
-            var rawImage = new byte[rawStride * source.PixelHeight];
-            source.CopyPixels(rawImage, rawStride, 0);
+        //public static BitmapSource NormalizeTiffTo8BitImage(BitmapSource source) {
+        //    // allocate buffer & copy image bytes.
+        //    var rawStride = source.PixelWidth * source.Format.BitsPerPixel / 8;
+        //    var rawImage = new byte[rawStride * source.PixelHeight];
+        //    source.CopyPixels(rawImage, rawStride, 0);
 
-            // get both max values of first & second byte of pixel as scaling bounds.
-            var max1 = 0;
-            int max2 = 1;
-            for (int i = 0; i < rawImage.Length; i++) {
-                if ((i & 1) == 0) {
-                    if (rawImage[i] > max1)
-                        max1 = rawImage[i];
-                }
-                else if (rawImage[i] > max2)
-                    max2 = rawImage[i];
-            }
+        //    // get both max values of first & second byte of pixel as scaling bounds.
+        //    var max1 = 0;
+        //    int max2 = 1;
+        //    for (int i = 0; i < rawImage.Length; i++) {
+        //        if ((i & 1) == 0) {
+        //            if (rawImage[i] > max1)
+        //                max1 = rawImage[i];
+        //        }
+        //        else if (rawImage[i] > max2)
+        //            max2 = rawImage[i];
+        //    }
 
-            // determine normalization factors.
-            var normFactor = max2 == 0 ? 0.0d : 128.0d / max2;
-            var factor = max1 > 0 ? 255.0d / max1 : 0.0d;
-            max2 = Math.Max(max2, 1);
+        //    // determine normalization factors.
+        //    var normFactor = max2 == 0 ? 0.0d : 128.0d / max2;
+        //    var factor = max1 > 0 ? 255.0d / max1 : 0.0d;
+        //    max2 = Math.Max(max2, 1);
 
-            // normalize each pixel to output buffer.
-            var buffer8Bit = new byte[rawImage.Length / 2];
-            for (int src = 0, dst = 0; src < rawImage.Length; dst++) {
-                int value16 = rawImage[src++];
-                double value8 = ((value16 * factor) / max2) - normFactor;
+        //    // normalize each pixel to output buffer.
+        //    var buffer8Bit = new byte[rawImage.Length / 2];
+        //    for (int src = 0, dst = 0; src < rawImage.Length; dst++) {
+        //        int value16 = rawImage[src++];
+        //        double value8 = ((value16 * factor) / max2) - normFactor;
 
-                if (rawImage[src] > 0) {
-                    int b = rawImage[src] << 8;
-                    value8 = ((value16 + b) / max2) - normFactor;
-                }
-                buffer8Bit[dst] = (byte)Math.Min(255, Math.Max(value8, 0));
-                src++;
-            }
+        //        if (rawImage[src] > 0) {
+        //            int b = rawImage[src] << 8;
+        //            value8 = ((value16 + b) / max2) - normFactor;
+        //        }
+        //        buffer8Bit[dst] = (byte)Math.Min(255, Math.Max(value8, 0));
+        //        src++;
+        //    }
 
-            // return new bitmap source.
-            return BitmapSource.Create(
-                source.PixelWidth, source.PixelHeight,
-                source.DpiX, source.DpiY,
-                PixelFormats.Gray8, BitmapPalettes.Gray256,
-                buffer8Bit, rawStride / 2);
-        }
+        //    // return new bitmap source.
+        //    return BitmapSource.Create(
+        //        source.PixelWidth, source.PixelHeight,
+        //        source.DpiX, source.DpiY,
+        //        PixelFormats.Gray8, BitmapPalettes.Gray256,
+        //        buffer8Bit, rawStride / 2);
+        //}
 
         public static BitmapSource createSourceFromArray(Array flatArray, int x, int y, System.Windows.Media.PixelFormat pf) {
             
@@ -290,13 +337,6 @@ namespace AstrophotographyBuddy.Utility {
 
             BitmapSource source = BitmapSource.Create(x, y, dpi, dpi, pf, null, flatArray, stride);
             return source;
-        }
-
-        public static int[] getDim(Array arr) {
-            int[] dim = new int[2];
-            dim[0] = arr.GetUpperBound(1) + 1;
-            dim[1] = arr.GetUpperBound(0) + 1;
-            return dim;
         }
 
         public static string getImageFileString(ICollection<ViewModel.OptionsVM.ImagePattern> patterns) {

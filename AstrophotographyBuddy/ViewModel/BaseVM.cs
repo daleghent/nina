@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace AstrophotographyBuddy.ViewModel {
-    class BaseVM :BaseINPC {
+    public class BaseVM :BaseINPC {
 
         public BaseVM() {
             Visibility = false;
