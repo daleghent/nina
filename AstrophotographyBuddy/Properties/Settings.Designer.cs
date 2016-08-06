@@ -370,5 +370,29 @@ namespace AstrophotographyBuddy.Properties {
                 this["UseFullResolutionPlateSolve"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PlateSolverType {
+            get {
+                return ((int)(this["PlateSolverType"]));
+            }
+            set {
+                this["PlateSolverType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8080")]
+        public int AnsvrPort {
+            get {
+                return ((int)(this["AnsvrPort"]));
+            }
+            set {
+                this["AnsvrPort"] = value;
+            }
+        }
     }
 }

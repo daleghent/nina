@@ -20,7 +20,7 @@ namespace AstrophotographyBuddy.ViewModel {
             Name = "Plate Solving";
             Progress = "Idle...";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PlatesolveSVG"];
-            Platesolver = new AstrometryPlateSolver();
+            
             BlindSolveCommand = new AsyncCommand<bool>(() => blindSolve());
             CancelBlindSolveCommand = new RelayCommand(cancelBlindSolve);
             SyncCommand = new RelayCommand(syncTelescope);
@@ -55,6 +55,13 @@ namespace AstrophotographyBuddy.ViewModel {
         
 
         private async Task<bool> blindSolve() {
+            if(Settings.PlateSolverType == PlateSolverEnum.ASTROMETRY_NET) {
+                Platesolver = new AstrometryPlateSolver("http://nova.astrometry.net", Settings.AstrometryAPIKey);
+            } else if (Settings.PlateSolverType == PlateSolverEnum.ANSVR) {
+                Platesolver = new AstrometryPlateSolver(string.Format("http://127.0.0.1:{0}", Settings.AnsvrPort), "");
+            }
+            
+
             BitmapSource source = ImagingVM.Image;
             BitmapFrame image = null;
             /* Resize Image */

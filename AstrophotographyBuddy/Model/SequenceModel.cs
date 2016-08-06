@@ -20,7 +20,7 @@ namespace AstrophotographyBuddy.Model {
             ImageType = ImageTypes.LIGHT;
             ExposureCount = 1;            
             Dither = false;
-            DitherAmount = 1;
+            DitherAmount = 1; 
         }
 
         public override string ToString() {

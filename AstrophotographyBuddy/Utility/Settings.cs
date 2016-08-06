@@ -1,4 +1,5 @@
-﻿using System.Windows.Media;
+﻿using AstrophotographyBuddy.Model;
+using System.Windows.Media;
 
 namespace AstrophotographyBuddy.Utility {
     static class Settings  {
@@ -15,7 +16,7 @@ namespace AstrophotographyBuddy.Utility {
         }
 
         public static string AstrometryAPIKey {
-            get {
+            get {                
                 return Properties.Settings.Default.AstrometryAPIKey;
             }
             set {
@@ -23,6 +24,26 @@ namespace AstrophotographyBuddy.Utility {
                 Properties.Settings.Default.Save();
             }
 
+        }
+
+        public static PlateSolverEnum PlateSolverType {
+            get {
+                return (PlateSolverEnum)Properties.Settings.Default.PlateSolverType;
+            }
+            set {
+                Properties.Settings.Default.PlateSolverType = (int)value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+        public static int AnsvrPort {
+            get {
+                return Properties.Settings.Default.AnsvrPort;
+            }
+            set {
+                Properties.Settings.Default.AnsvrPort = value;
+                Properties.Settings.Default.Save();
+            }
         }
 
         public static bool UseFullResolutionPlateSolve {

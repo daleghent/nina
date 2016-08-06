@@ -11,6 +11,9 @@ namespace AstrophotographyBuddy.Model {
     interface IPlateSolver {
         Task<PlateSolveResult> blindSolve(MemoryStream image, IProgress<string> progress, CancellationTokenSource canceltoken);
     }
+
+    
+
     public class PlateSolveResult {
         BitmapSource _solvedImage;
         double _orientation;

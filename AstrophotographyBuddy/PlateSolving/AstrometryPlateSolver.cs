@@ -15,27 +15,29 @@ using System.Windows.Media.Imaging;
 namespace AstrophotographyBuddy.Model {
     class AstrometryPlateSolver : BaseINPC, IPlateSolver {
 
-        const string AUTHURL = "http://nova.astrometry.net/api/login";
-        const string UPLOADURL = "http://nova.astrometry.net/api/upload";
-        const string SUBMISSIONURL = "http://nova.astrometry.net/api/submissions/{0}";
-        const string JOBSTATUSURL = "http://nova.astrometry.net/api/jobs/{0}";
-        const string JOBINFOURL = "http://nova.astrometry.net/api/jobs/{0}/info/";
-        const string ANNOTATEDIMAGEURL = "http://nova.astrometry.net/annotated_display/{0}";
+        const string AUTHURL = "/api/login/";
+        const string UPLOADURL = "/api/upload";
+        const string SUBMISSIONURL = "/api/submissions/{0}";
+        const string JOBSTATUSURL = "/api/jobs/{0}";
+        const string JOBINFOURL = "/api/jobs/{0}/info/";
+        const string ANNOTATEDIMAGEURL = "/annotated_display/{0}";
 
+        string domain;
+        string apikey;
 
-
-        public AstrometryPlateSolver() {
+        public AstrometryPlateSolver(string domain, string apikey) {
+            this.domain = domain;
+            this.apikey = apikey; 
 
         }
 
         private async Task<JObject> authenticate(CancellationTokenSource canceltoken) {
-            string apikey = Settings.AstrometryAPIKey;
 
+            string response = string.Empty;            
             string json = "{\"apikey\":\"" + apikey + "\"}";
             json = Utility.Utility.encodeUrl(json);
             string body = "request-json=" + json;
-
-            string response = await Utility.Utility.httpPostRequest(AUTHURL, body, canceltoken);
+            response = await Utility.Utility.httpPostRequest(domain + AUTHURL, body, canceltoken);
 
             JObject o = JObject.Parse(response);
 
@@ -45,35 +47,35 @@ namespace AstrophotographyBuddy.Model {
         private async Task<JObject> submitImage(MemoryStream ms, string session, CancellationTokenSource canceltoken) {
             NameValueCollection nvc = new NameValueCollection();
             nvc.Add("request-json", "{\"publicly_visible\": \"n\", \"allow_modifications\": \"d\", \"session\": \"" + session + "\", \"allow_commercial_use\": \"d\"}");
-            string response = await Utility.Utility.httpUploadFile(UPLOADURL, ms, "file", "image/jpeg", nvc, canceltoken);
+            string response = await Utility.Utility.httpUploadFile(domain + UPLOADURL, ms, "file", "image/jpeg", nvc, canceltoken);
             JObject o = JObject.Parse(response);
 
             return o;
         }
 
         private async Task<JObject> getSubmissionStatus(string subid, CancellationTokenSource canceltoken) {
-            string response = await Utility.Utility.httpGetRequest(canceltoken,SUBMISSIONURL, subid);
+            string response = await Utility.Utility.httpGetRequest(canceltoken, domain + SUBMISSIONURL, subid);
             JObject o = JObject.Parse(response);
 
             return o;
         }
 
         private async Task<JObject> getJobStatus(string jobid, CancellationTokenSource canceltoken) {
-            string response = await Utility.Utility.httpGetRequest(canceltoken,JOBSTATUSURL, jobid);
+            string response = await Utility.Utility.httpGetRequest(canceltoken, domain + JOBSTATUSURL, jobid);
             JObject o = JObject.Parse(response);
 
             return o;
         }
 
         private async Task<JObject> getJobInfo(string jobid, CancellationTokenSource canceltoken) {
-            string response = await Utility.Utility.httpGetRequest(canceltoken, JOBINFOURL, jobid);
+            string response = await Utility.Utility.httpGetRequest(canceltoken, domain + JOBINFOURL, jobid);
             JObject o = JObject.Parse(response);
 
             return o;
         }
 
         private async Task<BitmapImage> getJobImage(string jobid, CancellationTokenSource canceltoken) {
-            return await Utility.Utility.httpGetImage(canceltoken, ANNOTATEDIMAGEURL, jobid);
+            return await Utility.Utility.httpGetImage(canceltoken, domain + ANNOTATEDIMAGEURL, jobid);
         }
 
         public async Task<PlateSolveResult> blindSolve(MemoryStream image, IProgress<string> progress, CancellationTokenSource canceltoken) {

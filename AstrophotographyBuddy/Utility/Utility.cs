@@ -4,6 +4,7 @@ using nom.tam.util;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -354,25 +355,32 @@ namespace AstrophotographyBuddy.Utility {
             url = string.Format(url, parameters);
             HttpWebRequest request = null;
             HttpWebResponse response = null;
-            try {
-                request = (HttpWebRequest)WebRequest.Create(url);
-                canceltoken.Token.ThrowIfCancellationRequested();
-                response = (HttpWebResponse)await request.GetResponseAsync();
-
-                using (var streamReader = new StreamReader(response.GetResponseStream())) {
-                    result = streamReader.ReadToEnd();
+            using (canceltoken.Token.Register(() => request.Abort(), useSynchronizationContext: false)) {
+                try {
+                    request = (HttpWebRequest)WebRequest.Create(url);
+                    
+                    response = (HttpWebResponse)await request.GetResponseAsync();
+             
+                    using (var streamReader = new StreamReader(response.GetResponseStream())) {
+                        result = streamReader.ReadToEnd();
+                    }
+                }
+                catch (Exception ex) {
+                    if (canceltoken.Token.IsCancellationRequested) {
+                        throw new OperationCanceledException(ex.Message, ex, canceltoken.Token);
+                    }
+                    Logger.error(ex.Message);
+                    System.Windows.MessageBox.Show(string.Format("Unable to connect to {0}", url), "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    if (response != null) {
+                        response.Close();
+                        response = null;
+                    }
+                    
+                    
+                } finally {
+                    request = null;
                 }
             }
-            catch (Exception ex) {
-                Logger.error(ex.Message);
-                System.Windows.MessageBox.Show(string.Format("Unable to connect to {0}", url), "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                if (response != null) {
-                    response.Close();
-                    response = null;
-                }
-            } finally {
-                request = null;
-            }            
 
             return result;
         }
@@ -388,37 +396,40 @@ namespace AstrophotographyBuddy.Utility {
             url = string.Format(url, parameters);
             HttpWebRequest request = null;
             HttpWebResponse response = null;
-            try {
-                request = (HttpWebRequest)WebRequest.Create(url);
+            using (canceltoken.Token.Register(() => request.Abort(), useSynchronizationContext: false)) {
+                try {
+                    request = (HttpWebRequest)WebRequest.Create(url);
 
-                response = (HttpWebResponse)await request.GetResponseAsync();
+                    response = (HttpWebResponse)await request.GetResponseAsync();                    
 
-                canceltoken.Token.ThrowIfCancellationRequested();
-
-                using (BinaryReader reader = new BinaryReader(response.GetResponseStream())) {
-                    Byte[] lnByte = reader.ReadBytes(1 * 1024 * 1024 * 10);
-                    using (var stream = new MemoryStream(lnByte)) {
-                        bitmap = new BitmapImage();
-                        bitmap.BeginInit();
-                        bitmap.StreamSource = stream;
-                        bitmap.CacheOption = BitmapCacheOption.OnLoad;
-                        bitmap.EndInit();
-                        bitmap.Freeze();
+                    using (BinaryReader reader = new BinaryReader(response.GetResponseStream())) {
+                        Byte[] lnByte = reader.ReadBytes(1 * 1024 * 1024 * 10);
+                        using (var stream = new MemoryStream(lnByte)) {
+                            bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.StreamSource = stream;
+                            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                            bitmap.EndInit();
+                            bitmap.Freeze();
+                        }
                     }
                 }
-            }
-            catch (Exception ex) {
-                Logger.error(ex.Message);
-                System.Windows.MessageBox.Show(string.Format("Unable to connect to {0}", url), "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                if (response != null) {
-                    response.Close();
-                    response = null;
+                catch (Exception ex) {
+                    if (canceltoken.Token.IsCancellationRequested) {
+                        throw new OperationCanceledException(ex.Message, ex, canceltoken.Token);
+                    }
+                    Logger.error(ex.Message);
+                    System.Windows.MessageBox.Show(string.Format("Unable to connect to {0}", url), "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    if (response != null) {
+                        response.Close();
+                        response = null;
+                    }
+                    
+                }
+                finally {
+                    request = null;
                 }
             }
-            finally {
-                request = null;
-            }
-
             return bitmap;
         }
 
@@ -427,32 +438,36 @@ namespace AstrophotographyBuddy.Utility {
             
             HttpWebRequest request = null;
             HttpWebResponse response = null;
-            try {
-                request = (HttpWebRequest)WebRequest.Create(url);
-                request.ContentType = "application/x-www-form-urlencoded";
-                request.Method = "POST";
+            using (canceltoken.Token.Register(() => request.Abort(), useSynchronizationContext: false)) {
+                try {
+                    request = (HttpWebRequest)WebRequest.Create(url);
+                    request.ContentType = "application/x-www-form-urlencoded";
+                    request.Method = "POST";
 
-                using (var streamWriter = new StreamWriter(request.GetRequestStream())) {
-                    streamWriter.Write(body);
-                    streamWriter.Flush();
-                    streamWriter.Close();
+                    using (var streamWriter = new StreamWriter(request.GetRequestStream())) {
+                        streamWriter.Write(body);
+                        streamWriter.Flush();
+                        streamWriter.Close();
+                    }
+                    response = (HttpWebResponse)await request.GetResponseAsync();
+                    using (var streamReader = new StreamReader(response.GetResponseStream())) {
+                        result = streamReader.ReadToEnd();
+                    }
                 }
-                canceltoken.Token.ThrowIfCancellationRequested();
-                response = (HttpWebResponse)await request.GetResponseAsync();
-                using (var streamReader = new StreamReader(response.GetResponseStream())) {
-                    result = streamReader.ReadToEnd();
+                catch (Exception ex) {
+                    if (canceltoken.Token.IsCancellationRequested) {
+                        throw new OperationCanceledException(ex.Message, ex, canceltoken.Token);
+                    }
+                    Logger.error(ex.Message);
+                    System.Windows.MessageBox.Show(string.Format("Unable to connect to {0}", url), "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    if (response != null) {
+                        response.Close();
+                        response = null;
+                    }
                 }
-            }
-            catch (Exception ex) {
-                Logger.error(ex.Message);
-                System.Windows.MessageBox.Show(string.Format("Unable to connect to {0}", url), "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                if (response != null) {
-                    response.Close();
-                    response = null;
+                finally {
+                    request = null;
                 }
-            }
-            finally {
-                request = null;
             }
 
             return result;
@@ -500,23 +515,27 @@ namespace AstrophotographyBuddy.Utility {
             rs.Close();
             canceltoken.Token.ThrowIfCancellationRequested();
             WebResponse wresp = null;
-            try {
-                wresp = await wr.GetResponseAsync();
-                canceltoken.Token.ThrowIfCancellationRequested();
-                using (var streamReader = new StreamReader(wresp.GetResponseStream())) {
-                    result = streamReader.ReadToEnd();                    
+            using (canceltoken.Token.Register(() => wr.Abort(), useSynchronizationContext: false)) {
+                try {
+                    wresp = await wr.GetResponseAsync();
+                    using (var streamReader = new StreamReader(wresp.GetResponseStream())) {
+                        result = streamReader.ReadToEnd();
+                    }
                 }
-            }
-            catch (Exception ex) {
-                Logger.error(ex.Message);
-                System.Windows.MessageBox.Show(string.Format("Unable to connect to {0}", url), "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
-                if (wresp != null) {
-                    wresp.Close();
-                    wresp = null;
+                catch (Exception ex) {
+                    if (canceltoken.Token.IsCancellationRequested) {
+                        throw new OperationCanceledException(ex.Message, ex, canceltoken.Token);
+                    }
+                    Logger.error(ex.Message);
+                    System.Windows.MessageBox.Show(string.Format("Unable to connect to {0}", url), "Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    if (wresp != null) {
+                        wresp.Close();
+                        wresp = null;
+                    }
                 }
-            }
-            finally {
-                wr = null;
+                finally {
+                    wr = null;
+                }
             }
             return result;
         }
@@ -527,7 +546,15 @@ namespace AstrophotographyBuddy.Utility {
         FITS
     }
 
+    [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+    public enum PlateSolverEnum {
+        [Description("Astrometry.net")]
+        ASTROMETRY_NET,
+        [Description("Ansvr")]
+        ANSVR
+    }
 
-   
+
+
 
 }

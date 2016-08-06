@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AstrophotographyBuddy.View"
+             xmlns:model="clr-namespace:AstrophotographyBuddy.Model"
              xmlns:util="clr-namespace:AstrophotographyBuddy.Utility"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" Background="{StaticResource BackgroundBrush}">
@@ -99,20 +100,48 @@
 
         </GroupBox>
         <GroupBox Header="Plate Solving">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock  VerticalAlignment="Center" Width="100">API Key:</TextBlock>
-                <TextBox Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding AstrometryAPIKey}" />
-                <TextBlock Grid.Row="1"  VerticalAlignment="Center" Width="100">Use full resolution:</TextBlock>
-                <CheckBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding UseFullResolutionPlateSolve}" />
-            </Grid>
+            <UniformGrid Rows="2">
+                
+                <ComboBox Name="platesolvecombo" ItemsSource="{Binding Source={util:EnumBindingSource {x:Type util:PlateSolverEnum}}}" SelectedItem="{Binding PlateSolverType}" Grid.ColumnSpan="2"/>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock   VerticalAlignment="Center" Width="100">API Key:</TextBlock>
+                        <TextBox  Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding AstrometryAPIKey}" />
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Style.Triggers>
+                                    <DataTrigger  Binding="{Binding ElementName=platesolvecombo, Path=SelectedItem}" Value="1">
+                                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock   VerticalAlignment="Center" Width="100">Ansvr Port:</TextBlock>
+                        <TextBox   HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding AnsvrPort}" />
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Style.Triggers>
+                                    <DataTrigger  Binding="{Binding ElementName=platesolvecombo, Path=SelectedItem}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                    </StackPanel>
+                    <StackPanel  Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock Grid.Row="1"  VerticalAlignment="Center" Width="100">Use full resolution:</TextBlock>
+                        <CheckBox  HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding UseFullResolutionPlateSolve}" />
+                    </StackPanel>
+                </Grid>
+                
+            </UniformGrid>
         </GroupBox>
         <GroupBox Header="PHD2 Settings">
             <Grid>

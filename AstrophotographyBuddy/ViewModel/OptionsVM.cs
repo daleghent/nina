@@ -1,4 +1,5 @@
-﻿using AstrophotographyBuddy.Utility;
+﻿using AstrophotographyBuddy.Model;
+using AstrophotographyBuddy.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -94,6 +95,26 @@ namespace AstrophotographyBuddy.ViewModel {
             }
             set {
                 Settings.PHD2ServerUrl = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public PlateSolverEnum PlateSolverType {
+            get {
+                return Settings.PlateSolverType;
+            }
+            set {
+                Settings.PlateSolverType = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public int AnsvrPort {
+            get {
+                return Settings.AnsvrPort;
+            }
+            set {
+                Settings.AnsvrPort = value;
                 RaisePropertyChanged();
             }
         }
