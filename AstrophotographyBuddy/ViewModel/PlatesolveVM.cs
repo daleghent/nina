@@ -1,4 +1,5 @@
 ﻿using AstrophotographyBuddy.Model;
+using AstrophotographyBuddy.PlateSolving;
 using AstrophotographyBuddy.Utility;
 using System;
 using System.Collections.Generic;
@@ -55,17 +56,20 @@ namespace AstrophotographyBuddy.ViewModel {
         
 
         private async Task<bool> blindSolve() {
+            bool fullresolution = true;
             if(Settings.PlateSolverType == PlateSolverEnum.ASTROMETRY_NET) {
+                fullresolution = Settings.UseFullResolutionPlateSolve;
                 Platesolver = new AstrometryPlateSolver("http://nova.astrometry.net", Settings.AstrometryAPIKey);
             } else if (Settings.PlateSolverType == PlateSolverEnum.ANSVR) {
-                Platesolver = new AstrometryPlateSolver(string.Format("http://127.0.0.1:{0}", Settings.AnsvrPort), "");
+               
+                Platesolver = new AnsvrPlateSolver(Settings.AnsvrFocalLength, Settings.AnsvrPixelSize * ImagingVM.Cam.BinX);
             }
             
 
             BitmapSource source = ImagingVM.Image;
             BitmapFrame image = null;
             /* Resize Image */
-            if (!Settings.UseFullResolutionPlateSolve && source.Width > 1400) {
+            if (!fullresolution && source.Width > 1400) {
                 var factor = 1400 / source.Width;
                 int width = (int)(source.Width * factor);
                 int height = (int)(source.Height * factor);

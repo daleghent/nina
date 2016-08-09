@@ -385,13 +385,25 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8080")]
-        public int AnsvrPort {
+        [global::System.Configuration.DefaultSettingValueAttribute("750")]
+        public int AnsvrFocalLength {
             get {
-                return ((int)(this["AnsvrPort"]));
+                return ((int)(this["AnsvrFocalLength"]));
             }
             set {
-                this["AnsvrPort"] = value;
+                this["AnsvrFocalLength"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3.8")]
+        public double AnsvrPixelSize {
+            get {
+                return ((double)(this["AnsvrPixelSize"]));
+            }
+            set {
+                this["AnsvrPixelSize"] = value;
             }
         }
     }

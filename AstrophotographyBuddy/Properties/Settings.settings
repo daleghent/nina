@@ -92,8 +92,11 @@
     <Setting Name="PlateSolverType" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="AnsvrPort" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">8080</Value>
+    <Setting Name="AnsvrFocalLength" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">750</Value>
+    </Setting>
+    <Setting Name="AnsvrPixelSize" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">3.8</Value>
     </Setting>
   </Settings>
 </SettingsFile>

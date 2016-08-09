@@ -36,15 +36,28 @@ namespace AstrophotographyBuddy.Utility {
             }
         }
 
-        public static int AnsvrPort {
+        public static int AnsvrFocalLength {
             get {
-                return Properties.Settings.Default.AnsvrPort;
+                return Properties.Settings.Default.AnsvrFocalLength;
             }
             set {
-                Properties.Settings.Default.AnsvrPort = value;
+                Properties.Settings.Default.AnsvrFocalLength = value;
                 Properties.Settings.Default.Save();
             }
         }
+
+        public static double AnsvrPixelSize {
+            get {
+                return Properties.Settings.Default.AnsvrPixelSize;
+            }
+            set {
+                Properties.Settings.Default.AnsvrPixelSize = value;
+                Properties.Settings.Default.Save();
+            }
+        }
+
+
+        
 
         public static bool UseFullResolutionPlateSolve {
             get {

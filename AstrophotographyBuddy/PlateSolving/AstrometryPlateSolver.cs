@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace AstrophotographyBuddy.Model {
-    class AstrometryPlateSolver : BaseINPC, IPlateSolver {
+    class AstrometryPlateSolver : IPlateSolver {
 
         const string AUTHURL = "/api/login/";
         const string UPLOADURL = "/api/upload";
@@ -146,7 +146,7 @@ namespace AstrophotographyBuddy.Model {
                                 result.Radius = jobinfo.calibration.radius;
 
                                 result.SolvedImage = await getJobImage(jobid, canceltoken);
-                                progress.Report("Done");
+                                progress.Report("Solved");
                             }
                             else {
                                 progress.Report("Plate solve failed");

@@ -15,7 +15,7 @@
             <RowDefinition />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
-        <Border Grid.RowSpan="2" BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
+        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
             <Grid>
                 <!--<Image Source="{Binding ImagingVM.Image}"/>-->
                 <Image Source="{Binding PlateSolveResult.SolvedImage}" Visibility="{Binding PlateSolveResult, Converter={StaticResource NullToVisibilityConverter}}" />
@@ -59,7 +59,7 @@
             </UniformGrid>
         </Border>
 
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" >
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" >
             <TextBlock Text="{Binding Progress}" VerticalAlignment="Center" />
             <Grid>
                 <Button  Width="50" Height="50" Command="{Binding BlindSolveCommand}" Margin="5,0,5,0">

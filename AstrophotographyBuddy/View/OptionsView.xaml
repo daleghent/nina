@@ -123,8 +123,21 @@
                         </StackPanel.Style>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock   VerticalAlignment="Center" Width="100">Ansvr Port:</TextBlock>
-                        <TextBox   HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding AnsvrPort}" />
+                        <TextBlock   VerticalAlignment="Center" Width="100">Focal Length:</TextBlock>
+                        <TextBox   HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding AnsvrFocalLength}" />
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Style.Triggers>
+                                    <DataTrigger  Binding="{Binding ElementName=platesolvecombo, Path=SelectedItem}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
+                    </StackPanel>
+                    <StackPanel Grid.Row="1" Orientation="Horizontal">
+                        <TextBlock   VerticalAlignment="Center" Width="100">Pixel Size:</TextBlock>
+                        <TextBox   HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="{Binding AnsvrPixelSize}" />
                         <StackPanel.Style>
                             <Style TargetType="{x:Type StackPanel}">
                                 <Style.Triggers>
@@ -138,6 +151,15 @@
                     <StackPanel  Grid.Row="1" Orientation="Horizontal">
                         <TextBlock Grid.Row="1"  VerticalAlignment="Center" Width="100">Use full resolution:</TextBlock>
                         <CheckBox  HorizontalAlignment="Stretch" VerticalAlignment="Center" IsChecked="{Binding UseFullResolutionPlateSolve}" />
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Style.Triggers>
+                                    <DataTrigger  Binding="{Binding ElementName=platesolvecombo, Path=SelectedItem}" Value="1">
+                                        <Setter Property="Visibility" Value="Collapsed"></Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </StackPanel.Style>
                     </StackPanel>
                 </Grid>
                 

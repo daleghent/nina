@@ -109,16 +109,28 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
-        public int AnsvrPort {
+        public int AnsvrFocalLength {
             get {
-                return Settings.AnsvrPort;
+                return Settings.AnsvrFocalLength;
             }
             set {
-                Settings.AnsvrPort = value;
+                Settings.AnsvrFocalLength = value;
                 RaisePropertyChanged();
             }
         }
 
+        public double AnsvrPixelSize {
+            get {
+                return Settings.AnsvrPixelSize;
+            }
+            set {
+                Settings.AnsvrPixelSize = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
+        
         public string AstrometryAPIKey {
             get {
                 return Settings.AstrometryAPIKey;
