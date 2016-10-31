@@ -10,6 +10,7 @@ A simple tool to control various Astrophotography Equipment using the ASCOM Inte
 
 
 **Features**
+
 * All Equipment connected via ASCOM
 
 * Monochrome camera control
