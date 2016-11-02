@@ -20,7 +20,7 @@ using System.Windows.Media.Imaging;
 
 namespace AstrophotographyBuddy.Utility {
     public static class Utility {
-
+        
         private static ASCOM.Utilities.Util _ascomUtil;
         public static ASCOM.Utilities.Util AscomUtil {
             get {
@@ -33,6 +33,8 @@ namespace AstrophotographyBuddy.Utility {
         }
 
         public class ImageArray {
+            public const ushort HistogramResolution = 200;
+
             public Array SourceArray;
             public ushort[] FlatArray;
             public int X;
@@ -96,7 +98,7 @@ namespace AstrophotographyBuddy.Utility {
                 iarr.X = width;
                 iarr.Y = height;
                 ushort[] flatArray = new ushort[arr.Length];
-                ushort value;
+                ushort value, histogramkey;
                 Dictionary<ushort, int> histogram = new Dictionary<ushort, int>();
                 unsafe
                 {
@@ -112,11 +114,11 @@ namespace AstrophotographyBuddy.Utility {
                             idx = ((i % height) * width) + row;
                             if ((i % (height)) == (height - 1)) row++;
 
-                            
-                            if(histogram.ContainsKey(value)) {
-                                histogram[value] += 1;
+                            histogramkey = Convert.ToUInt16(Math.Round(((double)ImageArray.HistogramResolution / ushort.MaxValue) * value));
+                            if (histogram.ContainsKey(histogramkey)) {
+                                histogram[histogramkey] += 1;
                             }else {
-                                histogram.Add(value, 1);
+                                histogram.Add(histogramkey, 1);
                             }
 
                             ushort b = value;

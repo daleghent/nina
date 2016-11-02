@@ -1357,23 +1357,25 @@ namespace AstrophotographyBuddy
                     Settings.CameraId = ProgId;
 
                     if (AscomCamera.SensorType != ASCOM.DeviceInterface.SensorType.Monochrome) {
-                        System.Windows.MessageBox.Show("Only Monochrome Sensors supported currently", "Sorry!", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Exclamation);
+                        Notification.ShowError("Sorry! Only monochromatic sensors are currently supported");                        
                         disconnect();
                         return false; ;
                     }
-
+                                        
                     getCameraInfo();
+                    Notification.ShowSuccess("Camera connected.");
                     con = true;
                 }
                 catch (ASCOM.DriverAccessCOMException ex) {
-                    Logger.error("Unable to connect to camera");
-                    System.Windows.MessageBox.Show("Unable to connect to camera", "Connection Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+                    Logger.error("Unable to connect to camera");                    
+                    Notification.ShowError("Unable to connect to camera");
                     Logger.trace(ex.Message);
                     //CameraStateString = "Unable to connect to camera";
                     Connected = false;
                 }
                 catch (Exception ex) {
                     Logger.error("Unable to connect to camera");
+                    Notification.ShowError("Unable to connect to camera");
                     Logger.trace(ex.Message);
                     Connected = false;
                 }

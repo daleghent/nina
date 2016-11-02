@@ -9,28 +9,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ToastNotifications;
 
 namespace AstrophotographyBuddy.ViewModel {
     class ApplicationVM : BaseVM {
 
         public ApplicationVM() {
-            PrevViewCommand = new RelayCommand(getPrevView);
-            NextViewCommand = new RelayCommand(getNextView);
-            ToggleViewCommand = new RelayCommand(toggleView);
-            ToggleMenuCommand = new RelayCommand(toggleMenu);
-            ToggleOverviewCommand = new RelayCommand(toggleOverview);
+            
+
             ExitCommand = new RelayCommand(exitApplication);
             MinimizeWindowCommand = new RelayCommand(minimizeWindow);
             MaximizeWindowCommand = new RelayCommand(maximizeWindow);
-            ConnectPHDClientCommand = new AsyncCommand<bool>(async () => await Task.Run<bool>(() => PHD2Client.connect()));
-            DisconnectPHDClientCommand = new AsyncCommand<bool>(async () => await Task.Run<bool>(() => PHD2Client.disconnect()));
             Visibility = true;
             Views = new ObservableCollection<BaseVM>();
             //Views.Add(this);
             Name = "Menu";
             _activeView = this.CameraVM;
             
-            
+
             var cam = this.CameraVM;
             
             this.ImagingVM.Cam = cam.Cam;
@@ -44,10 +40,11 @@ namespace AstrophotographyBuddy.ViewModel {
             //this.FrameFocusVM.Cam = cam.Cam;
             //this.FrameFocusVM.FW = cam.FilterWheelVM.FW;
             // var a = this.TelescopeVM;
-
             //addListeners();
-        }
-        
+            
+            
+        }     
+
 
         public string Version {
             get {               
@@ -73,8 +70,11 @@ namespace AstrophotographyBuddy.ViewModel {
                 RaisePropertyChanged();                
             }
         }
+        
 
-        private void maximizeWindow(object obj) {
+
+
+        private static void maximizeWindow(object obj) {
             if (Application.Current.MainWindow.WindowState == WindowState.Maximized) {
                 Application.Current.MainWindow.WindowState = WindowState.Normal;
             }
@@ -100,13 +100,17 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         private void addListeners() {
+            
         }
         
+
+
+
         // protected void syncModel(object sender, PropertyChangedEventArgs e) {
         //this.ImagingVM.Cam = this.CameraVM.Cam;            
         //  }
 
-       public PHD2Client PHD2Client {
+        public PHD2Client PHD2Client {
             get {
                 return Utility.Utility.PHDClient;
             }
@@ -414,29 +418,7 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
-        private AsyncCommand<bool> _connectPHDClientCommand;
-        public AsyncCommand<bool> ConnectPHDClientCommand {
-            get {
-                return _connectPHDClientCommand;
-            }
-
-            set {
-                _connectPHDClientCommand = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Utility.AsyncCommand<bool> _disconnectPHDClientCommand;
-        public Utility.AsyncCommand<bool> DisconnectPHDClientCommand {
-            get {
-                return _disconnectPHDClientCommand;
-            }
-
-            set {
-                _disconnectPHDClientCommand = value;
-                RaisePropertyChanged();
-            }
-        }
+        
 
         public ObservableCollection<BaseVM> Views {
             get {

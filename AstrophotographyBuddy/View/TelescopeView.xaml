@@ -8,7 +8,7 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid IsEnabled="{Binding Telescope.Connected}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
@@ -16,29 +16,60 @@
         <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>            
         </Grid.ColumnDefinitions>
             
             <GroupBox Header="Telescope">
-                <StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="Name:"/></TextBlock>
-                        <TextBlock Text="{Binding Telescope.Name}" Margin="5,0,0,0" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="Description:"/></TextBlock>
+                <Grid>
+                    <Grid Height="50" Width="50" HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Button Command="{Binding ChooseTelescopeCommand}"  IsEnabled="{Binding Telescope.Connected, Converter={StaticResource InverseBooleanConverter}}" 
+                    Visibility="{Binding Telescope.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                            <Grid>
+                                <Path Fill="{StaticResource ButtonForegroundDisabledBrush}" Data="{StaticResource TelescopeSVG}" Stretch="Uniform" Margin="5">
+
+                                </Path>
+                                <!--<Image Source="/AstrophotographyBuddy;component/Resources/unplugged.png">
+                        <Image.RenderTransform>
+                            <ScaleTransform CenterX="45" CenterY="45" ScaleX="0.3" ScaleY="0.3"/>
+                        </Image.RenderTransform>
+                    </Image>-->
+                            </Grid>
+                        </Button>
+                        <Button Grid.Column="6" Height="50" Width="50" Command="{Binding DisconnectCommand}" IsEnabled="{Binding Telescope.Connected}"
+                    Visibility="{Binding Telescope.Connected, Converter={StaticResource VisibilityConverter}}">
+                            <Grid>
+
+                                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource TelescopeSVG}" Stretch="Uniform" Margin="5">
+
+                                </Path>
+                                <!--<Image Source="/AstrophotographyBuddy;component/Resources/plugged.png">
+                                    <Image.RenderTransform>
+                                        <ScaleTransform CenterX="45" CenterY="45" ScaleX="0.3" ScaleY="0.3"/>
+                                    </Image.RenderTransform>
+                                </Image>-->
+                            </Grid>
+                        </Button>
+                    </Grid>
+
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock><Run Text="Name:"/></TextBlock>
+                            <TextBlock Text="{Binding Telescope.Name}" Margin="5,0,0,0" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock><Run Text="Description:"/></TextBlock>
                             <TextBlock Text="{Binding Telescope.Description}" Margin="5,0,0,0" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="Driver Info:"/></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock><Run Text="Driver Info:"/></TextBlock>
                             <TextBlock Text="{Binding Telescope.DriverInfo}" Margin="5,0,0,0" />
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock><Run Text="Driver Version:"/></TextBlock>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock><Run Text="Driver Version:"/></TextBlock>
                             <TextBlock Text="{Binding Telescope.DriverVersion}" Margin="5,0,0,0" />
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
+                </Grid>
             </GroupBox>
             <GroupBox Grid.Column="1" Header="Position">
                 <StackPanel>
@@ -62,14 +93,11 @@
                         <TextBlock><Run Text="Azimuth:"/></TextBlock>
                         <TextBlock Text="{Binding Telescope.AzimuthString}" Margin="5,0,0,0" />
                     </StackPanel>
-                    
+
                 </StackPanel>
             </GroupBox>
-            <GroupBox Grid.Column="2" Header="...">
-
-            </GroupBox>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" IsEnabled="{Binding Telescope.Connected}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

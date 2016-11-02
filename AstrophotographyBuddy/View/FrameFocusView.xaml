@@ -37,7 +37,7 @@
                     <chartingToolkit:LinearAxis Visibility="Hidden"
                             Orientation="X"                            
                             Minimum="0"
-                            Maximum="65535" FontSize="6"/>
+                            Maximum="200" FontSize="6"/>
                 </chartingToolkit:Chart.Axes>
                 <chartingToolkit:LineSeries  DependentValuePath="Value" 
 				    IndependentValuePath="Key" ItemsSource="{Binding SourceArray.Histogram}" 

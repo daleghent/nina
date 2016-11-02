@@ -12,7 +12,10 @@ namespace AstrophotographyBuddy.ViewModel {
             Name = "PHD2";
 
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PHD2SVG"];            
-            MaxY = 4;      
+            MaxY = 4;
+
+            ConnectPHDClientCommand = new AsyncCommand<bool>(async () => await Task.Run<bool>(() => PHD2Client.connect()));
+            DisconnectPHDClientCommand = new AsyncCommand<bool>(async () => await Task.Run<bool>(() => PHD2Client.disconnect()));
         }
 
         public PHD2Client PHD2Client {
@@ -55,7 +58,31 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
-        
+        private AsyncCommand<bool> _connectPHDClientCommand;
+        public AsyncCommand<bool> ConnectPHDClientCommand {
+            get {
+                return _connectPHDClientCommand;
+            }
+
+            set {
+                _connectPHDClientCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private Utility.AsyncCommand<bool> _disconnectPHDClientCommand;
+        public Utility.AsyncCommand<bool> DisconnectPHDClientCommand {
+            get {
+                return _disconnectPHDClientCommand;
+            }
+
+            set {
+                _disconnectPHDClientCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
+
 
         private double _maxY;
         private double _minY;

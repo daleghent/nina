@@ -108,6 +108,9 @@ namespace AstrophotographyBuddy.ViewModel {
 
             set {
                 _expStatus = value;
+                dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                    Notification.ShowInformation(value);
+                }));
                 RaisePropertyChanged();
             }
         }

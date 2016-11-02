@@ -198,16 +198,18 @@ namespace AstrophotographyBuddy.Model {
                     Connected = true;
                     Settings.FilterWheelId = ProgId;
                     getFWInfo();
+                    Notification.ShowSuccess("Filter wheel connected");
                     con = true;
                 }
                 catch (ASCOM.DriverAccessCOMException ex) {
-                    Logger.error("Unable to connect to FilterWheel");
+                    Notification.ShowError("Unable to connect to filter wheel");
+                    Logger.error("Unable to connect to filter wheel");
                     Logger.trace(ex.Message);
-                    System.Windows.MessageBox.Show("Unable to connect to filter wheel", "Connection Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     Connected = false;
                 }
                 catch (Exception ex) {
-                    Logger.error("Unable to connect to FilterWheel");
+                    Notification.ShowError("Unable to connect to filter wheel");
+                    Logger.error("Unable to connect to filter wheel");
                     Logger.trace(ex.Message);
                     Connected = false;
                 }

@@ -688,17 +688,20 @@ namespace AstrophotographyBuddy.Model {
                 try {                    
                     Telescope = new Telescope(ProgId);                    
                     Connected = true;
-                    Settings.TelescopeId = ProgId;                    
-                    con = true;
+                    Settings.TelescopeId = ProgId;                                        
                     getTelescopeInfo();
+                    Notification.ShowSuccess("Telescope connected.");
+                    con = true;
                 }
                 catch (ASCOM.DriverAccessCOMException ex) {
+                    Notification.ShowError("Unable to connect to telescope");
                     Logger.error("Unable to connect to telescope");
                     Logger.trace(ex.Message);
                     System.Windows.MessageBox.Show("Unable to connect to telescope", "Connection Error", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
                     Connected = false;
                 }
                 catch (Exception ex) {
+                    Notification.ShowError("Unable to connect to telescope");
                     Logger.error("Unable to connect to telescope");
                     Logger.trace(ex.Message);
                     Connected = false;
