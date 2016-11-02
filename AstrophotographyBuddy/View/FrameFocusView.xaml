@@ -66,11 +66,15 @@
                         </Style.Triggers>-->
                     </Style>
                 </ScrollViewer.Style>
-                <Image Grid.Column="0" Grid.Row="0" Source="{Binding ImagingVM.Image}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Image.LayoutTransform>
-                        <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}" />
-                    </Image.LayoutTransform>
-                </Image>
+                <Grid>
+                    <Path Fill="{StaticResource ButtonForegroundDisabledBrush}" Opacity="0.2" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100">
+                    </Path>
+                    <Image Grid.Column="0" Grid.Row="0" Source="{Binding ImagingVM.Image}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Image.LayoutTransform>
+                            <ScaleTransform ScaleX="{Binding Zoom}" ScaleY="{Binding Zoom}" />
+                        </Image.LayoutTransform>
+                    </Image>
+                </Grid>                
             </ScrollViewer>
         </Border>
         <Grid Grid.Column="0" Grid.Row="3" IsEnabled="{Binding ImagingVM.Cam.Connected}">
@@ -167,7 +171,7 @@
                 </Button>
             </UniformGrid>
         </Grid>
-        <Expander ExpandDirection="Right"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" IsExpanded="True">
+        <Expander ExpandDirection="Right"  Grid.Column="1" Grid.Row="0" Grid.RowSpan="4" IsExpanded="False">
             <Expander.Header>
                 <TextBlock Text="Image Manipulation" TextOptions.TextFormattingMode="Display"
 TextOptions.TextRenderingMode="ClearType"

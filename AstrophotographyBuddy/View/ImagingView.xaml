@@ -76,7 +76,11 @@
         <!--<Image Grid.Column="1" Source="{Binding SnapCommand.Execution.Result}" 
                Visibility="{Binding SnapCommand.Execution.IsSuccessfullyCompleted, Converter={StaticResource VisibilityConverter}}">-->
         <Border Grid.Column="1"  BorderBrush="{StaticResource BorderBrush}" BorderThickness="1">
-            <Image Source="{Binding Image}" />
+            <Grid>
+                <Path Fill="{StaticResource ButtonForegroundDisabledBrush}" Opacity="0.2" Data="{StaticResource PictureSVG}" Stretch="Uniform" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center" Height="100" Width="100">
+                </Path>
+                <Image Source="{Binding Image}" />
+            </Grid>
         </Border>
 
         <Grid Grid.Row="1" Grid.Column="1" IsEnabled="{Binding Cam.Connected}" HorizontalAlignment="Right" >

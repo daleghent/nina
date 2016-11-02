@@ -25,7 +25,8 @@ namespace AstrophotographyBuddy.ViewModel {
 
             HashSet<ImagePattern> p = new HashSet<ImagePattern>();
             p.Add(new ImagePattern("$$FILTER$$", "Filtername", "L"));
-            p.Add(new ImagePattern("$$DATE$$", "Date with format YYYY-MM-DD", "2016-01-01-12-00-00"));
+            p.Add(new ImagePattern("$$DATE$$", "Date with format YYYY-MM-DD", "2016-01-01"));
+            p.Add(new ImagePattern("$$DATETIME$$", "Date with format YYYY-MM-DD_HH-mm-ss", "2016-01-01_12-00-00"));
             p.Add(new ImagePattern("$$FRAMENR$$", "# of the Frame with format ####", "0001"));
             p.Add(new ImagePattern("$$IMAGETYPE$$", "Light, Flat, Dark, Bias", "Light"));
             p.Add(new ImagePattern("$$BINNING$$", "Binning of the camera", "1x1"));

@@ -29,19 +29,29 @@ namespace AstrophotographyBuddy.Utility {
         public static event EventHandler NotificationChanged;
 
         public static void ShowInformation(string message) {
-            NotificationSource.Show(message, NotificationType.Information);
+            Show(message, TimeSpan.FromSeconds(3), NotificationType.Information);            
+        }
+
+        public static void ShowInformation(string message, TimeSpan lifetime) {
+            Show(message, lifetime, NotificationType.Information);
         }
 
         public static void ShowSuccess(string message) {
-            NotificationSource.Show(message, NotificationType.Success);
+            Show(message, TimeSpan.FromSeconds(3), NotificationType.Success);
         }
 
         public static void ShowWarning(string message) {
-            NotificationSource.Show(message, NotificationType.Warning);
+            Show(message, TimeSpan.FromSeconds(3), NotificationType.Warning);
         }
 
         public static void ShowError(string message) {
-            NotificationSource.Show(message, NotificationType.Error);
+            Show(message, TimeSpan.FromSeconds(3), NotificationType.Error);
+        }
+
+
+        private static void Show(string message, TimeSpan lifetime, NotificationType type) {
+            NotificationSource.NotificationLifeTime = lifetime;
+            NotificationSource.Show(message, type);
         }
 
     }

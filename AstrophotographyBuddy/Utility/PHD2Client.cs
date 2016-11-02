@@ -135,10 +135,21 @@ namespace AstrophotographyBuddy.Utility {
                 _stream = _client.GetStream();
                 RaisePropertyChanged("Connected");
                 _tokenSource = new CancellationTokenSource();
+
+                await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                    Notification.ShowSuccess("Connected to PHD2 Server");
+                }));
+                
+
                 startListener(_tokenSource.Token);
             }
             catch (SocketException e) {
-                System.Windows.MessageBox.Show(e.Message);
+
+                await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                    Notification.ShowError(e.Message);
+                }));
+
+                //System.Windows.MessageBox.Show(e.Message);
             }
             return Connected;
         }

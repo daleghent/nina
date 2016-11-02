@@ -109,7 +109,7 @@ namespace AstrophotographyBuddy.ViewModel {
             set {
                 _expStatus = value;
                 dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                    Notification.ShowInformation(value);
+                    Notification.ShowInformation(value, ToastNotifications.NotificationsSource.NeverEndingNotification);
                 }));
                 RaisePropertyChanged();
             }
@@ -150,16 +150,16 @@ namespace AstrophotographyBuddy.ViewModel {
         
 
         private async Task changeFilter(SequenceModel seq, CancellationTokenSource tokenSource) {
-            if (seq.FilterType != null && FW.Connected) {
+            if (seq.FilterType != null && FW.Connected && FW.Position != seq.FilterType.Position) {
                 await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                     FW.Position = seq.FilterType.Position;
                 }));
-                
-                ExpStatus = ExposureStatus.FILTERCHANGE;
 
+
+                ExpStatus = ExposureStatus.FILTERCHANGE;
                 await Task.Run(() => {
                     while (FW.Position == -1) {
-                        //Wait for filter change;
+                        //Wait for filter change;                        
                         tokenSource.Token.ThrowIfCancellationRequested();
                     }
                 });
@@ -178,14 +178,14 @@ namespace AstrophotographyBuddy.ViewModel {
 
         private async Task capture(SequenceModel seq, CancellationTokenSource tokenSource) {            
             double duration = seq.ExposureTime;
-            ExpStatus = string.Format(ExposureStatus.EXPOSING, 0, duration);
+            ExpStatus = ExposureStatus.EXPOSING;
             bool isLight = false;
             if (Cam.HasShutter) {
                 isLight = true;
             }
             Cam.startExposure(duration, isLight);
             ExposureSeconds = 1;
-            ExpStatus = string.Format(ExposureStatus.EXPOSING, 1, duration);
+            //ExpStatus = string.Format(ExposureStatus.EXPOSING, 1, duration);
             /* Wait for Capture */
             if (duration >= 1) {
                 await Task.Run(async () => {
@@ -193,7 +193,7 @@ namespace AstrophotographyBuddy.ViewModel {
                         await Task.Delay(1000);
                         tokenSource.Token.ThrowIfCancellationRequested();
                         ExposureSeconds += 1;
-                        ExpStatus = string.Format(ExposureStatus.EXPOSING, ExposureSeconds, duration);
+                        //ExpStatus = string.Format(ExposureStatus.EXPOSING, ExposureSeconds, duration);
                     } while (ExposureSeconds < duration);
                 });
             }
@@ -234,7 +234,8 @@ namespace AstrophotographyBuddy.ViewModel {
                     p.Add(new OptionsVM.ImagePattern("$$FILTER$$", "Filtername", filter));
                 }
                 p.Add(new OptionsVM.ImagePattern("$$EXPOSURETIME$$", "Exposure Time in seconds", string.Format("{0:0.00}", seq.ExposureTime)));
-                p.Add(new OptionsVM.ImagePattern("$$DATE$$", "Date with format YYYY-MM-DD", DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss")));
+                p.Add(new OptionsVM.ImagePattern("$$DATE$$", "Date with format YYYY-MM-DD", DateTime.Now.ToString("yyyy-MM-dd")));
+                p.Add(new OptionsVM.ImagePattern("$$DATETIME$$", "Date with format YYYY-MM-DD_HH-mm-ss", DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")));
                 p.Add(new OptionsVM.ImagePattern("$$FRAMENR$$", "# of the Frame with format ####", string.Format("{0:0000}", framenr)));
                 p.Add(new OptionsVM.ImagePattern("$$IMAGETYPE$$", "Light, Flat, Dark, Bias", seq.ImageType));
                 
@@ -489,7 +490,7 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         public static class ExposureStatus {
-            public const string EXPOSING = "Exposing {0}/{1}s...";
+            public const string EXPOSING = "Exposing ...";
             public const string DOWNLOADING = "Downloading...";
             public const string FILTERCHANGE = "Switching Filter...";
             public const string PREPARING = "Preparing...";

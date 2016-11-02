@@ -33,7 +33,7 @@
                             </Image.RenderTransform>
                         </Image>-->
                                     <Grid Visibility="{Binding ConnectPHDClientCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}" >
-                                        <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="Connecting..." />
+                                        <local:LoadingAnimation HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ConnectPHDClientCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}" Text="..." />
                                     </Grid>
                                 </Grid>
                             </Button>
