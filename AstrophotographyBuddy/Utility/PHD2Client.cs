@@ -146,7 +146,7 @@ namespace AstrophotographyBuddy.Utility {
             catch (SocketException e) {
 
                 await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                    Notification.ShowError(e.Message);
+                    Notification.ShowError("PHD2 Error: " + e.Message);
                 }));
 
                 //System.Windows.MessageBox.Show(e.Message);
@@ -227,7 +227,7 @@ namespace AstrophotographyBuddy.Utility {
                                 }
 
                                 switch (phdevent) {
-                                    case PHD2Methods.DITHERID: {
+                                    case PHD2EventId.DITHER: {
                                             PhdMethodResponse phdresp = o.ToObject<PhdMethodResponse>();
                                             if (phdresp.error != null) {
                                                     IsDithering = false;
@@ -236,7 +236,7 @@ namespace AstrophotographyBuddy.Utility {
                                         
                                             break;
                                         }
-                                    case PHD2Methods.GET_APP_STATE_ID: {
+                                    case PHD2EventId.GET_APP_STATE: {
                                             PhdMethodResponse phdresp = o.ToObject<PhdMethodResponse>();
                                             if (phdresp.error == null) {
                                                 AppState.State = phdresp.result.ToString() ;
@@ -244,7 +244,7 @@ namespace AstrophotographyBuddy.Utility {
                                         
                                             break;
                                         }
-                                    case PHD2Methods.GET_STAR_IMAGE_ID: {
+                                    case PHD2EventId.GET_STAR_IMAGE: {
                                             PhdMethodResponse phdresp = o.ToObject<PhdMethodResponse>();                                        
 
                                             if(phdresp.error == null) {
@@ -337,10 +337,16 @@ namespace AstrophotographyBuddy.Utility {
                     _stream.Close();
                     _client.Close();
                     IsDithering = false;
+                    await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                        Notification.ShowError("PHD2 Error: " + ex.Message);
+                    }));
                     RaisePropertyChanged("Connected");
                 }
                 catch (Exception ex) {
                     Logger.error(ex.Message);
+                    await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                        Notification.ShowError("PHD2 Error: " + ex.Message);
+                    }));
                 }
                 
             }

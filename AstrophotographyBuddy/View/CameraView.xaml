@@ -193,7 +193,7 @@
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock><Run Text="Cooler Power"/></TextBlock>
-                            <TextBlock Text="{Binding Cam.CoolerPower, StringFormat=\{0:#.00\}}" Margin="5,0,0,0" Visibility="{Binding Cam.Connected, Converter={StaticResource VisibilityConverter}}"/>
+                            <TextBlock Text="{Binding Cam.CoolerPower, StringFormat=\{0:#.00\}%}" Margin="5,0,0,0" Visibility="{Binding Cam.Connected, Converter={StaticResource VisibilityConverter}}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <TextBlock><Run Text="CCD Temperature"/></TextBlock>

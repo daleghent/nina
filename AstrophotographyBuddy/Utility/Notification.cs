@@ -45,7 +45,7 @@ namespace AstrophotographyBuddy.Utility {
         }
 
         public static void ShowError(string message) {
-            Show(message, TimeSpan.FromSeconds(3), NotificationType.Error);
+            Show(message, NotificationsSource.NeverEndingNotification, NotificationType.Error);
         }
 
 

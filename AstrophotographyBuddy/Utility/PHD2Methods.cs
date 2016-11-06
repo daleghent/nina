@@ -5,6 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace AstrophotographyBuddy.Utility {
+
+    class PHD2EventId {
+        public const string LOOP = "1";
+        public const string AUTO_SELECT_STAR = "2";
+        public const string GUIDE = "3";
+        public const string CLEAR_CALIBRATION = "4";
+        public const string DITHER = "5";
+
+
+        public const string GET_STAR_IMAGE = "97";
+        public const string GET_EXPOSURE = "98";
+        public const string GET_APP_STATE = "99";
+    }
+
     class PHD2Methods {
         /// <summary>
         /// 0: PIXELS TO MOVE: int
@@ -14,13 +28,12 @@ namespace AstrophotographyBuddy.Utility {
         /// 3: SETTLE TIME: int - minimum time to be in-range before considering guiding to be stable
         /// 4: SETTLE TIMEOUT: int - time limit before settling is considered to have failed
         /// </summary>
-        public static string DITHER = "{{\"method\": \"dither\", \"params\": [{0}, {1}, {{\"pixels\": 1.5, \"time\": 8, \"timeout\": 40}}], \"id\": 5}}\r\n";
-        public const string DITHERID = "5";
+        public static string DITHER = "{{\"method\": \"dither\", \"params\": [{0}, {1}, {{\"pixels\": 1.5, \"time\": 8, \"timeout\": 40}}], \"id\": " + PHD2EventId.DITHER + "}}\r\n";        
 
 
-        public static string LOOP = "{\"method\": \"loop\", \"id\": 1}\r\n";
+        public static string LOOP = "{\"method\": \"loop\", \"id\": " + PHD2EventId.LOOP + "}\r\n";
 
-        public static string AUTO_SELECT_STAR = "{\"method\": \"find_star\", \"params\": [], \"id\": 2}\r\n";
+        public static string AUTO_SELECT_STAR = "{\"method\": \"find_star\", \"params\": [], \"id\": " + PHD2EventId.AUTO_SELECT_STAR + "}\r\n";
 
         /// <summary>
         /// 0: RECALIBRATE: true/false
@@ -30,22 +43,20 @@ namespace AstrophotographyBuddy.Utility {
         /// 3: SETTLE TIMEOUT: int - time limit before settling is considered to have failed
         /// 
         /// </summary>
-        public static string GUIDE = "{\"method\": \"guide\", \"params\": [{\"pixels\": 1.5, \"time\": 8, \"timeout\": 40}, {0}], \"id\": 3}\r\n";
+        public static string GUIDE = "{\"method\": \"guide\", \"params\": [{\"pixels\": 1.5, \"time\": 8, \"timeout\": 40}, {0}], \"id\": " + PHD2EventId.GUIDE + "}\r\n";
 
-        public static string CLEAR_CALIBRATION = "{\"method\": \"clear_calibration\", \"params\": [\"both\"], \"id\": 4}\r\n";
-
-
+        public static string CLEAR_CALIBRATION = "{\"method\": \"clear_calibration\", \"params\": [\"both\"], \"id\": " + PHD2EventId.CLEAR_CALIBRATION + "}\r\n";
 
 
 
 
-        public static string GET_STAR_IMAGE = "{\"method\": \"get_star_image\",\"id\": 97}\r\n";
-        public const string GET_STAR_IMAGE_ID = "97";
 
 
-        public static string GET_EXPOSURE = "{\"method\": \"get_exposure\",\"id\": 98}\r\n";
-        public static string GET_APP_STATE = "{\"method\": \"get_app_state\",\"id\": 99}\r\n";
-        public const string GET_APP_STATE_ID = "99";
+        public static string GET_STAR_IMAGE = "{\"method\": \"get_star_image\",\"id\": " + PHD2EventId.GET_STAR_IMAGE + "}\r\n";        
+
+
+        public static string GET_EXPOSURE = "{\"method\": \"get_exposure\",\"id\": " + PHD2EventId.GET_EXPOSURE + "}\r\n";
+        public static string GET_APP_STATE = "{\"method\": \"get_app_state\",\"id\": " + PHD2EventId.GET_APP_STATE + "}\r\n";        
         
 
 
