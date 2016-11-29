@@ -12,7 +12,7 @@
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="ImageFilePattern" Type="System.String" Scope="User">
-      <Value Profile="(Default)">$$IMAGETYPE$$\\$$DATE$$_$$FILTER$$_$$SENSORTEMP$$_$$EXPOSURETIME$$s_$$FRAMENR$$</Value>
+      <Value Profile="(Default)">$$IMAGETYPE$$\\$$DATETIME$$_$$FILTER$$_$$SENSORTEMP$$_$$EXPOSURETIME$$s_$$FRAMENR$$</Value>
     </Setting>
     <Setting Name="PHD2ServerUrl" Type="System.String" Scope="User">
       <Value Profile="(Default)">localhost</Value>
@@ -21,13 +21,13 @@
       <Value Profile="(Default)">4400</Value>
     </Setting>
     <Setting Name="PrimaryColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FF02010A</Value>
+      <Value Profile="(Default)">#FF000000</Value>
     </Setting>
     <Setting Name="SecondaryColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FFA1C6EA</Value>
+      <Value Profile="(Default)">#FF1D2731</Value>
     </Setting>
     <Setting Name="BorderColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FFBBD1EA</Value>
+      <Value Profile="(Default)">#AA0B3C5D</Value>
     </Setting>
     <Setting Name="BackgroundColor" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FFFFFFFF</Value>
@@ -45,16 +45,16 @@
       <Value Profile="(Default)">ASCOM.Simulator.Telescope</Value>
     </Setting>
     <Setting Name="ButtonBackgroundColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FF9DB4C0</Value>
+      <Value Profile="(Default)">#FF0B3C5D</Value>
     </Setting>
     <Setting Name="ButtonBackgroundSelectedColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FF507DBC</Value>
+      <Value Profile="(Default)">#FFC49F66</Value>
     </Setting>
     <Setting Name="ButtonForegroundColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FF02010A</Value>
+      <Value Profile="(Default)">#FFFFFFFF</Value>
     </Setting>
     <Setting Name="ButtonForegroundDisabledColor" Type="System.Windows.Media.Color" Scope="User">
-      <Value Profile="(Default)">#FFDAE3E5</Value>
+      <Value Profile="(Default)">#FF1D2731</Value>
     </Setting>
     <Setting Name="AltPrimaryColor" Type="System.Windows.Media.Color" Scope="User">
       <Value Profile="(Default)">#FF550C18</Value>

@@ -61,7 +61,8 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("$$IMAGETYPE$$\\\\$$DATE$$_$$FILTER$$_$$SENSORTEMP$$_$$EXPOSURETIME$$s_$$FRAMENR$$")]
+        [global::System.Configuration.DefaultSettingValueAttribute("$$IMAGETYPE$$\\\\$$DATETIME$$_$$FILTER$$_$$SENSORTEMP$$_$$EXPOSURETIME$$s_$$FRAMENR" +
+            "$$")]
         public string ImageFilePattern {
             get {
                 return ((string)(this["ImageFilePattern"]));
@@ -97,7 +98,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF02010A")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF000000")]
         public global::System.Windows.Media.Color PrimaryColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["PrimaryColor"]));
@@ -109,7 +110,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FFA1C6EA")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF1D2731")]
         public global::System.Windows.Media.Color SecondaryColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["SecondaryColor"]));
@@ -121,7 +122,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FFBBD1EA")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#AA0B3C5D")]
         public global::System.Windows.Media.Color BorderColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["BorderColor"]));
@@ -193,7 +194,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF9DB4C0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF0B3C5D")]
         public global::System.Windows.Media.Color ButtonBackgroundColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["ButtonBackgroundColor"]));
@@ -205,7 +206,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF507DBC")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFC49F66")]
         public global::System.Windows.Media.Color ButtonBackgroundSelectedColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["ButtonBackgroundSelectedColor"]));
@@ -217,7 +218,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FF02010A")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFFFFFFF")]
         public global::System.Windows.Media.Color ButtonForegroundColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["ButtonForegroundColor"]));
@@ -229,7 +230,7 @@ namespace AstrophotographyBuddy.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("#FFDAE3E5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("#FF1D2731")]
         public global::System.Windows.Media.Color ButtonForegroundDisabledColor {
             get {
                 return ((global::System.Windows.Media.Color)(this["ButtonForegroundDisabledColor"]));

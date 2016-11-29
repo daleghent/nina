@@ -107,10 +107,7 @@ namespace AstrophotographyBuddy.ViewModel {
             }
 
             set {
-                _expStatus = value;
-                dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                    Notification.ShowInformation(value, ToastNotifications.NotificationsSource.NeverEndingNotification);
-                }));
+                _expStatus = value;                
                 RaisePropertyChanged();
             }
         }
@@ -178,14 +175,14 @@ namespace AstrophotographyBuddy.ViewModel {
 
         private async Task capture(SequenceModel seq, CancellationTokenSource tokenSource) {            
             double duration = seq.ExposureTime;
-            ExpStatus = ExposureStatus.EXPOSING;
+            ExpStatus = string.Format(ExposureStatus.EXPOSING, 0, duration);
             bool isLight = false;
             if (Cam.HasShutter) {
                 isLight = true;
             }
             Cam.startExposure(duration, isLight);
             ExposureSeconds = 1;
-            //ExpStatus = string.Format(ExposureStatus.EXPOSING, 1, duration);
+            ExpStatus = string.Format(ExposureStatus.EXPOSING, 1, duration);
             /* Wait for Capture */
             if (duration >= 1) {
                 await Task.Run(async () => {
@@ -193,7 +190,7 @@ namespace AstrophotographyBuddy.ViewModel {
                         await Task.Delay(1000);
                         tokenSource.Token.ThrowIfCancellationRequested();
                         ExposureSeconds += 1;
-                        //ExpStatus = string.Format(ExposureStatus.EXPOSING, ExposureSeconds, duration);
+                        ExpStatus = string.Format(ExposureStatus.EXPOSING, ExposureSeconds, duration);
                     } while (ExposureSeconds < duration);
                 });
             }
@@ -490,7 +487,7 @@ namespace AstrophotographyBuddy.ViewModel {
         }
 
         public static class ExposureStatus {
-            public const string EXPOSING = "Exposing ...";
+            public const string EXPOSING = "Exposing {0}/{1}...";
             public const string DOWNLOADING = "Downloading...";
             public const string FILTERCHANGE = "Switching Filter...";
             public const string PREPARING = "Preparing...";

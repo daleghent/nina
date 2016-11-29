@@ -185,7 +185,8 @@ namespace AstrophotographyBuddy.Utility {
                 _tokenSource.Cancel();
                 _stream.Close();
                 _client.Close();
-                IsDithering = false;            
+                IsDithering = false;
+                GuideSteps.Clear();
                 RaisePropertyChanged("Connected");
             }
             return !Connected;
@@ -337,6 +338,7 @@ namespace AstrophotographyBuddy.Utility {
                     _stream.Close();
                     _client.Close();
                     IsDithering = false;
+                    GuideSteps.Clear();
                     await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                         Notification.ShowError("PHD2 Error: " + ex.Message);
                     }));
@@ -344,6 +346,7 @@ namespace AstrophotographyBuddy.Utility {
                 }
                 catch (Exception ex) {
                     Logger.error(ex.Message);
+                    GuideSteps.Clear();
                     await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                         Notification.ShowError("PHD2 Error: " + ex.Message);
                     }));

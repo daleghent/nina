@@ -71,6 +71,38 @@
                 <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
             </Style>
 
+            <Style TargetType="{x:Type util:TabControlEx}">
+                
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TabControl}">
+                            <Grid  Background="{StaticResource BackgroundBrush}" ClipToBounds="True" KeyboardNavigation.TabNavigation="Local" SnapsToDevicePixels="True">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition x:Name="ColumnDefinition0" Width="*"/>
+                                    <ColumnDefinition x:Name="ColumnDefinition1" Width="0" />
+                                </Grid.ColumnDefinitions>
+                                <!--<Grid.RowDefinitions>
+                                    <RowDefinition x:Name="RowDefinition0" Height="Auto" />
+                                    <RowDefinition x:Name="RowDefinition1" Height="*" />
+                                </Grid.RowDefinitions>-->
+                                <DockPanel Margin="2,2,0,0" LastChildFill="False"  Background="{StaticResource BackgroundBrush}">
+                                    <TabPanel x:Name="HeaderPanel" Margin="0,0,0,-1" VerticalAlignment="Top" Panel.ZIndex="1" DockPanel.Dock="Left"
+                                  IsItemsHost="True" KeyboardNavigation.TabIndex="1" />
+                                </DockPanel>
+                                <Border x:Name="ContentPanel" Grid.Column="1"
+                            Background="{StaticResource BackgroundBrush}"
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
+                                    <Grid x:Name="PART_ItemsHolder" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                </Border>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
             <Style TargetType="{x:Type TabItem}">
                 <Setter Property="Template">
                     <Setter.Value>

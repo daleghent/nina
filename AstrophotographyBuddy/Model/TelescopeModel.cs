@@ -1098,17 +1098,23 @@ namespace AstrophotographyBuddy.Model {
             }
         }
 
-        public void sync(string ra, string dec) {
-            
+        public bool sync(string ra, string dec) {
+            bool success = false;
             if (Connected && CanSync) {
                 if (Tracking) {
-                    Telescope.SyncToCoordinates(Utility.Utility.AscomUtil.HMSToHours(ra), Utility.Utility.AscomUtil.DMSToDegrees(dec));
-                } else {
-                    System.Windows.MessageBox.Show("Telescope is not tracking. Sync is only available when tracking.", "Sync unavailable", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Warning);
 
+                    try {
+                        Telescope.SyncToCoordinates(Utility.Utility.AscomUtil.HMSToHours(ra), Utility.Utility.AscomUtil.DMSToDegrees(dec));
+                        success = true;
+                    } catch(Exception ex) {
+                        Notification.ShowError(ex.Message);
+                    }
+                } else {
+                    Notification.ShowError("Telescope is not tracking. Sync is only available when tracking!");
                 }
                 
             }
+            return success;
         }
 
         public void unpark() {

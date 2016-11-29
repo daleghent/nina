@@ -40,18 +40,17 @@
 
                 </StackPanel>
             </Grid>
-            
-            
-            <TabControl Grid.Row="1" TabStripPlacement="Left">
+
+
+            <util:TabControlEx Grid.Row="1" TabStripPlacement="Left">
 
                
-                <TabItem>
-                    <TabItem.Header>
-                        <Grid  Height="50" Width="50">
-                            <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CameraSVG}" Stretch="Uniform" Margin="5"  >
-                            </Path>
-                        </Grid>
-                        
+                <TabItem >
+                    <TabItem.Header>                       
+                            <Grid  Height="50" Width="50">
+                                <Path Fill="{StaticResource ButtonForegroundBrush}" Data="{StaticResource CameraSVG}" Stretch="Uniform" Margin="5"  >
+                                </Path>                                
+                            </Grid>
                     </TabItem.Header>
                     <TabItem.Content>
                         <view:CameraView DataContext="{Binding CameraVM}" ></view:CameraView>
@@ -120,7 +119,7 @@
                         <view:OptionsView DataContext="{Binding OptionsVM}" ></view:OptionsView>
                     </TabItem.Content>
                 </TabItem>
-            </TabControl>
+            </util:TabControlEx>
 
             <toast:NotificationTray Grid.Row="1" NotificationsSource="{Binding Source={x:Static util:Notification.NotificationSource}}"
                         PopupFlowDirection="RightUp"

@@ -220,6 +220,7 @@
     <Compile Include="Utility\Converters.cs" />
     <Compile Include="Utility\EnumBindingSourceExtension.cs" />
     <Compile Include="Utility\Logger.cs" />
+    <Compile Include="Utility\TabControlEx.cs" />
     <Compile Include="Utility\Notification.cs" />
     <Compile Include="Utility\NotifyTaskCompletion.cs" />
     <Compile Include="Utility\PHD2Client.cs" />

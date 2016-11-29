@@ -38,7 +38,15 @@ namespace AstrophotographyBuddy.ViewModel {
 
         private void syncTelescope(object obj) {
             if(PlateSolveResult != null) {
-                Telescope.sync(PlateSolveResult.RaString, PlateSolveResult.DecString);
+
+                if(Telescope.sync(PlateSolveResult.RaString, PlateSolveResult.DecString)) {
+                    Notification.ShowSuccess("Telescope synced to coordinates");
+                } else {
+                    Notification.ShowWarning("Telescope sync failed!");
+                }
+
+            } else {
+                Notification.ShowWarning("No coordinates available to sync telescope!");
             }
         }
 
