@@ -36,3 +36,6 @@ A simple tool to control various Astrophotography Equipment using the ASCOM Inte
 * Supported Image formats: FITS & TIFF
 
 * Fully customizable UI colors for both Night mode and Daylight mode
+
+** Feedback**
+Mail to: isbeorn86+astrophotographybuddy@googlemail.com
