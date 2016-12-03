@@ -191,7 +191,7 @@ namespace AstrophotographyBuddy.ViewModel {
                         tokenSource.Token.ThrowIfCancellationRequested();
                         ExposureSeconds += 1;
                         ExpStatus = string.Format(ExposureStatus.EXPOSING, ExposureSeconds, duration);
-                    } while (ExposureSeconds < duration);
+                    } while ((ExposureSeconds < duration) && Cam.Connected);
                 });
             }
             tokenSource.Token.ThrowIfCancellationRequested();
@@ -297,11 +297,23 @@ namespace AstrophotographyBuddy.ViewModel {
                             /*Change Filter*/
                             await changeFilter(seq, tokenSource);
 
+                            if (!Cam.Connected) {
+                                throw new OperationCanceledException();
+                            }
+
                             /*Set Camera Binning*/
                             setBinning(seq);
 
+                            if (!Cam.Connected) {
+                                throw new OperationCanceledException();
+                            }
+
                             /*Capture*/
                             await capture(seq, tokenSource);
+
+                            if(!Cam.Connected) {
+                                throw new OperationCanceledException();
+                            }
 
                             /*Download Image */
                             Int32[,] arr = await download(tokenSource);

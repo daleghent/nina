@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:AstrophotographyBuddy.View"   
         xmlns:toast="clr-namespace:ToastNotifications;assembly=ToastNotifications"
     Title="Astrophotography Buddy" Height="720" Width="1280" Background="{StaticResource BackgroundBrush}" Icon="/AstrophotographyBuddy;component/Resources/observatory.png" WindowStyle="None" MouseDown="Window_MouseDown"  AllowsTransparency="True" ResizeMode="CanResizeWithGrip">
+    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" >
     <Grid DataContext="{StaticResource AppVM}">
         <Grid>
             <Grid.RowDefinitions>
@@ -126,9 +127,9 @@
                         VerticalAlignment="Top"
                         HorizontalAlignment="Right" />
         </Grid>
+  
 
-
-<!--        <Grid  Visibility="Collapsed">
+    <!--        <Grid  Visibility="Collapsed">
             <Grid.RowDefinitions>
             <RowDefinition Height="35" />
             <RowDefinition Height="50" />
@@ -340,4 +341,5 @@
 
     </Grid>-->
     </Grid>
+    </Border>
 </Window>

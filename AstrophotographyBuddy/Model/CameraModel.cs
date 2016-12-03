@@ -1397,7 +1397,7 @@ namespace AstrophotographyBuddy
         public async Task<Int32[,]> downloadExposure(CancellationTokenSource tokenSource) {
             return await Task<Int32[,]>.Run(() => {
                 ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
-                while (!ImageReady) {
+                while (!ImageReady && Connected) {
                     //Console.Write(".");
                     U.WaitForMilliseconds(10);
                     tokenSource.Token.ThrowIfCancellationRequested();
@@ -1412,7 +1412,7 @@ namespace AstrophotographyBuddy
             ASCOM.Utilities.Util U = new ASCOM.Utilities.Util();
             AscomCamera.StartExposure(exposureTime, isLightFrame);
                 
-            while (!ImageReady) {
+            while (!ImageReady && Connected) {
                 //Console.Write(".");
                 U.WaitForMilliseconds(100);
             }

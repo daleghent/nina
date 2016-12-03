@@ -48,7 +48,7 @@ namespace AstrophotographyBuddy.ViewModel {
 
         public string Version {
             get {               
-                return "v. 0.0.3";
+                return "v. 0.1.0";
             }
         }
 
