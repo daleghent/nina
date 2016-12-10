@@ -135,19 +135,16 @@ namespace AstrophotographyBuddy.Utility {
                 _stream = _client.GetStream();
                 RaisePropertyChanged("Connected");
                 _tokenSource = new CancellationTokenSource();
-
-                await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                    Notification.ShowSuccess("Connected to PHD2 Server");
-                }));
+                
+                Notification.ShowSuccess("Connected to PHD2 Server");
+               
                 
 
                 startListener(_tokenSource.Token);
             }
             catch (SocketException e) {
-
-                await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                    Notification.ShowError("PHD2 Error: " + e.Message);
-                }));
+                
+                 Notification.ShowError("PHD2 Error: " + e.Message);
 
                 //System.Windows.MessageBox.Show(e.Message);
             }
@@ -339,17 +336,13 @@ namespace AstrophotographyBuddy.Utility {
                     _client.Close();
                     IsDithering = false;
                     GuideSteps.Clear();
-                    await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                        Notification.ShowError("PHD2 Error: " + ex.Message);
-                    }));
+                    Notification.ShowError("PHD2 Error: " + ex.Message);
                     RaisePropertyChanged("Connected");
                 }
                 catch (Exception ex) {
                     Logger.error(ex.Message);
                     GuideSteps.Clear();
-                    await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                        Notification.ShowError("PHD2 Error: " + ex.Message);
-                    }));
+                    Notification.ShowError("PHD2 Error: " + ex.Message);
                 }
                 
             }

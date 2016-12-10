@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 using ToastNotifications;
 
 namespace AstrophotographyBuddy.Utility {
     static class Notification {
 
         private static NotificationsSource _notificationSource;
+
+        private static Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
 
         public static NotificationsSource NotificationSource {
             get {
@@ -50,8 +53,11 @@ namespace AstrophotographyBuddy.Utility {
 
 
         private static void Show(string message, TimeSpan lifetime, NotificationType type) {
-            NotificationSource.NotificationLifeTime = lifetime;
-            NotificationSource.Show(message, type);
+            dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+                NotificationSource.NotificationLifeTime = lifetime;
+                NotificationSource.Show(message, type);
+            }));
+            
         }
 
     }

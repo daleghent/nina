@@ -1296,40 +1296,46 @@ namespace AstrophotographyBuddy
         }
 
         public void updateValues() {
-            CameraState = AscomCamera.CameraState;
-            if( HasCCDTemperature) {
-                CCDTemperature = AscomCamera.CCDTemperature;
+            try {
+            
+                CameraState = AscomCamera.CameraState;
+                if( HasCCDTemperature) {
+                    CCDTemperature = AscomCamera.CCDTemperature;
 
-                if (CCDTemperatureHistory.Count > 100) {
-                    CCDTemperatureHistory.RemoveAt(0);                    
+                    if (CCDTemperatureHistory.Count > 100) {
+                        CCDTemperatureHistory.RemoveAt(0);                    
+                    }
+                    CCDTemperatureHistory.Add(new KeyValuePair<DateTime, double>(DateTime.Now, CCDTemperature));               
+
                 }
-                CCDTemperatureHistory.Add(new KeyValuePair<DateTime, double>(DateTime.Now, CCDTemperature));               
-
-            }
             
-            if( HasFullWellCapacity) {
-                 FullWellCapacity = AscomCamera.FullWellCapacity;
-            }
-
-            if ( HasHeatSinkTemperature) {
-                 HeatSinkTemperature = AscomCamera.HeatSinkTemperature;
-            }
-            
-            
-
-            if ( CanGetCoolerPower) { 
-                 CoolerPower = AscomCamera.CoolerPower;
-                if(CoolerPowerHistory.Count > 100) {
-                    CoolerPowerHistory.RemoveAt(0);                    
+                if( HasFullWellCapacity) {
+                     FullWellCapacity = AscomCamera.FullWellCapacity;
                 }
-                CoolerPowerHistory.Add(new KeyValuePair<DateTime, double>(DateTime.Now, CoolerPower));
+
+                if ( HasHeatSinkTemperature) {
+                     HeatSinkTemperature = AscomCamera.HeatSinkTemperature;
+                }
+            
+            
+
+                if ( CanGetCoolerPower) { 
+                     CoolerPower = AscomCamera.CoolerPower;
+                    if(CoolerPowerHistory.Count > 100) {
+                        CoolerPowerHistory.RemoveAt(0);                    
+                    }
+                    CoolerPowerHistory.Add(new KeyValuePair<DateTime, double>(DateTime.Now, CoolerPower));
                 
+                }
+
+                if (CanPulseGuide) {
+                     IsPulseGuiding = AscomCamera.IsPulseGuiding;
+                }
+            }
+            catch (Exception e) {
+                Notification.ShowError(e.Message);
             }
 
-            if (CanPulseGuide) {
-                 IsPulseGuiding = AscomCamera.IsPulseGuiding;
-            }
-            
         }
 
         public void disconnect() {
@@ -1390,7 +1396,12 @@ namespace AstrophotographyBuddy
 
         public void stopExposure() {
             if(AscomCamera.CanStopExposure) { 
-                AscomCamera.StopExposure();
+                try {
+                    AscomCamera.StopExposure();
+                } catch (Exception e) {
+                    Notification.ShowError(e.Message);
+                }
+                
             }
         }
 

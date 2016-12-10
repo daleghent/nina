@@ -285,6 +285,7 @@ namespace AstrophotographyBuddy.ViewModel {
         public  async Task<bool> startSequence(ICollection<SequenceModel> sequence, bool bSave, CancellationTokenSource tokenSource) {
             return await Task.Run<bool>(async () => {
                 try {
+                    Notification.ShowError("Test");
                     IsExposing = true;
 
                     ushort framenr = 1;

@@ -19,6 +19,7 @@ namespace AstrophotographyBuddy.ViewModel {
             StepperMoveRateCommand = new RelayCommand(stepMoveRate);
             ParkCommand = new AsyncCommand<bool>(parkTelescope);
             UnparkCommand = new RelayCommand(unparkTelescope);
+            SlewToCoordinatesCommand = new RelayCommand(slewToCoordinates);
 
             MoveCommand = new RelayCommand(move);
             StopMoveCommand = new RelayCommand(stopMove);
@@ -117,6 +118,45 @@ namespace AstrophotographyBuddy.ViewModel {
             Telescope.stopSlew();
         }
 
+        private double _targetDeclination;
+        private double _targetRightAscencion;
+        public double TargetDeclination {
+            get {
+                return _targetDeclination;
+            }
+
+            set {
+                _targetDeclination = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public double TargetRightAscencion {
+            get {
+                return _targetRightAscencion;
+            }
+
+            set {
+                _targetRightAscencion = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private void slewToCoordinates(object obj) {
+            Telescope.slewToCoordinates(TargetRightAscencion, TargetDeclination);
+        }
+
+        private ICommand _slewToCoordinatesCommand;
+        public ICommand SlewToCoordinatesCommand {
+            get {
+                return _slewToCoordinatesCommand;
+            }
+            set {
+                _slewToCoordinatesCommand = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private ICommand _chooseTelescopeCommand;
         public ICommand ChooseTelescopeCommand {
             get {
@@ -205,5 +245,6 @@ namespace AstrophotographyBuddy.ViewModel {
             }
         }
 
+        
     }
 }

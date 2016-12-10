@@ -57,13 +57,18 @@ namespace AstrophotographyBuddy.Model {
         }
 
         internal void updateValues() {
-            Altitude = Telescope.Altitude;
-            Azimuth = Telescope.Azimuth;
-            Declination = Telescope.Declination;
-            RightAscension = Telescope.RightAscension;
-            SiderealTime = Telescope.SiderealTime;
-            AtPark = Telescope.AtPark;
-            Tracking = Telescope.Tracking;
+            try {
+                Altitude = Telescope.Altitude;
+                Azimuth = Telescope.Azimuth;
+                Declination = Telescope.Declination;
+                RightAscension = Telescope.RightAscension;
+                SiderealTime = Telescope.SiderealTime;
+                AtPark = Telescope.AtPark;
+                Tracking = Telescope.Tracking;
+            } catch (Exception e) {
+                Notification.ShowError(e.Message);
+            }
+            
         }
 
         public AlignmentModes AlignmentMode {
@@ -1093,8 +1098,17 @@ namespace AstrophotographyBuddy.Model {
 
         public void park() {
             if(Connected && CanPark) {
-                Telescope.Park();
-                AtPark = true;
+                try {
+                    Telescope.Park();
+                    AtPark = true;
+                }
+                catch (Exception e) {
+                    Notification.ShowError(e.Message);
+                } finally {
+                    
+                }
+                
+                
             }
         }
 
@@ -1119,22 +1133,57 @@ namespace AstrophotographyBuddy.Model {
 
         public void unpark() {
             if(Connected && CanUnpark) {
-                Telescope.Unpark();
-                AtPark = false;
+                try {
+                    Telescope.Unpark();
+                    AtPark = false;
+                }
+                catch (Exception e) {
+                    Notification.ShowError(e.Message);
+                } finally {
+                    
+                }
+                
+                
             }
         }
 
         public void setpark() {
             if(Connected && CanSetPark) {
-                Telescope.SetPark();
+                try {
+                    Telescope.SetPark();
+                }
+                catch (Exception e) {
+                    Notification.ShowError(e.Message);
+                }
+                
             }
         }
 
         
         public void moveAxis(TelescopeAxes axis, double rate) {
             if(Connected && CanSlew && !AtPark ) {
-                Telescope.MoveAxis(axis, rate);
+                try {
+                    Telescope.MoveAxis(axis, rate);
+                }
+                catch (Exception e) {
+                    Notification.ShowError(e.Message);
+                }
+
             }
+        }
+
+        public void slewToCoordinates(double ra, double dec) {
+            if(Connected && CanSlew && !AtPark) {
+                try { 
+                    Telescope.SlewToCoordinatesAsync(ra, dec);
+                } catch(Exception e) {
+                    Notification.ShowError(e.Message);
+                }
+
+
+
+            }
+            
         }
 
         public void disconnect() {
