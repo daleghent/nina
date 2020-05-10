@@ -26,6 +26,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using NINA.Model.MyFilterWheel;
 
 namespace NINA.Profile {
 
@@ -163,9 +164,36 @@ namespace NINA.Profile {
             return result.Distinct();
         }
 
-        public void ClearBrightnessInfo() {
-            FilterSettings =
-                new Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue>();
+        public void RemoveGain(int gain, ICollection<FilterInfo> filters) {
+            var filterNames = filters?.Select(filter => filter.Name) ?? new List<string> { null };
+            var keysToRemove = FilterSettings.Keys
+                .Where(key => key.Gain == gain && filterNames.Contains(key.FilterName)).ToList();
+
+            foreach (var key in keysToRemove) {
+                FilterSettings.Remove(key);
+            }
+            RaisePropertyChanged(nameof(FilterSettings));
+        }
+
+        public void RemoveBinning(BinningMode binning, ICollection<FilterInfo> filters) {
+            var filterNames = filters?.Select(filter => filter.Name).ToList() ?? new List<string> { null };
+            var keysToRemove = new List<FlatDeviceFilterSettingsKey>();
+            foreach (var key in FilterSettings.Keys) {
+                switch (key.Binning) {
+                    case null when binning is null && filterNames.Contains(key.FilterName):
+                        keysToRemove.Add(key);
+                        break;
+
+                    case BinningMode mode when mode.Equals(binning) && filterNames.Contains(key.FilterName):
+                        keysToRemove.Add(key);
+                        break;
+                }
+            }
+
+            foreach (var key in keysToRemove) {
+                FilterSettings.Remove(key);
+            }
+            RaisePropertyChanged(nameof(FilterSettings));
         }
     }
 

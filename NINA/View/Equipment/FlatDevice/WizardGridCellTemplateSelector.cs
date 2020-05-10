@@ -21,26 +21,30 @@
 
 #endregion "copyright"
 
+using NINA.ViewModel.Equipment.FlatDevice;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace NINA.View.Equipment.Switch {
+namespace NINA.View.Equipment.FlatDevice {
 
-    internal class SwitchHubTemplateSelector : DataTemplateSelector {
-        public DataTemplate Generic { get; set; }
-        public DataTemplate Eagle { get; set; }
-        public DataTemplate UltimatePowerBoxV2 { get; set; }
+    internal class WizardGridCellTemplateSelector : DataTemplateSelector {
+        public DataTemplate FilterNameCell { get; set; }
+        public DataTemplate TimingCell { get; set; }
+        public DataTemplate EmptyCell { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
             switch (item) {
-                case Model.MySwitch.Eagle _:
-                    return Eagle;
+                case FilterTiming timing when timing.ShowFilterNameOnly:
+                    return FilterNameCell;
 
-                case Model.MySwitch.UltimatePowerBoxV2 _:
-                    return UltimatePowerBoxV2;
+                case FilterTiming timing when timing.IsEmpty:
+                    return EmptyCell;
+
+                case FilterTiming _:
+                    return TimingCell;
 
                 default:
-                    return Generic;
+                    return EmptyCell;
             }
         }
     }

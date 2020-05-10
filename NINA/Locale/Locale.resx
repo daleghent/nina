@@ -3572,4 +3572,22 @@ The method can only be changed when the focuser is not connected!</value>
   <data name="LblIncompatibleOffsetsInSequence" xml:space="preserve">
     <value>Sequence cotains items using incompatible Offset settings. These will be ignored!</value>
   </data>
+  <data name="LblFlatDeviceAddBinningMode" xml:space="preserve">
+    <value>Add Binning</value>
+  </data>
+  <data name="LblFlatDeviceAddGain" xml:space="preserve">
+    <value>Add Gain</value>
+  </data>
+  <data name="LblFlatDeviceAreYouSureBinning" xml:space="preserve">
+    <value>Are you sure you want to delete all values for binning</value>
+  </data>
+  <data name="LblFlatDeviceAreYouSureGain" xml:space="preserve">
+    <value>Are you sure you want to delete all values for gain</value>
+  </data>
+  <data name="LblFlatDeviceDeleteBinningMode" xml:space="preserve">
+    <value>Delete Binning</value>
+  </data>
+  <data name="LblFlatDeviceDeleteGain" xml:space="preserve">
+    <value>Delete Gain</value>
+  </data>
 </root>

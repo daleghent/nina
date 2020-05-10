@@ -23,6 +23,7 @@
 
 using NINA.Model.MyCamera;
 using System.Collections.Generic;
+using NINA.Model.MyFilterWheel;
 
 namespace NINA.Profile {
 
@@ -44,6 +45,8 @@ namespace NINA.Profile {
 
         IEnumerable<int> GetBrightnessInfoGains();
 
-        void ClearBrightnessInfo();
+        void RemoveGain(int gain, ICollection<FilterInfo> getAllFilters);
+
+        void RemoveBinning(BinningMode binningMode, ICollection<FilterInfo> getAllFilters);
     }
 }

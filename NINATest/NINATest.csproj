@@ -180,6 +180,7 @@
     <Compile Include="FlatDevice\FlatDeviceInfoTest.cs" />
     <Compile Include="FlatDevice\FlatDeviceSdkTest.cs" />
     <Compile Include="FlatDevice\FlatmasterCommandTest.cs" />
+    <Compile Include="FlatDevice\FilterTimingTest.cs" />
     <Compile Include="FlatDevice\PegasusAstroFlatmasterTest.cs" />
     <Compile Include="FlatDevice\PegasusFlatMasterTest.cs" />
     <Compile Include="FlatDevice\PegasusResponseTest.cs" />
