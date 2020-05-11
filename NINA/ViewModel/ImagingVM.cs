@@ -30,7 +30,6 @@ using NINA.Utility.Notification;
 using NINA.Profile;
 using NINA.ViewModel.Interfaces;
 using System;
-using System.Collections.Async;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -43,6 +42,7 @@ using NINA.Model.MyFocuser;
 using NINA.Model.MyRotator;
 using NINA.Model.MyWeatherData;
 using NINA.Utility.Mediator;
+using Dasync.Collections;
 
 namespace NINA.ViewModel {
 

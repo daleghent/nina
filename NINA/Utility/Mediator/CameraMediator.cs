@@ -26,7 +26,7 @@ using NINA.Model.MyCamera;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Equipment.Camera;
 using System;
-using System.Collections.Async;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 

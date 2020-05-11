@@ -28,7 +28,6 @@ using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Profile;
 using System;
-using System.Collections.Async;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -36,6 +35,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Accord.Statistics.Models.Regression.Linear;
+using Dasync.Collections;
 
 namespace NINA.ViewModel.Equipment.Camera {
 
