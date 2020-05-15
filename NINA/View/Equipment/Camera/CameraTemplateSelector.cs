@@ -21,20 +21,27 @@
 
 #endregion "copyright"
 
+using NINA.Model.MyCamera;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
-namespace NINA.Profile {
+namespace NINA.View.Equipment {
 
-    public interface IExposureCalculatorSettings : ISettings {
-        int Gain { get; set; }
-        double ExposureDuration { get; set; }
-        double FullWellCapacity { get; set; }
-        double ReadNoise { get; set; }
-        double BiasMedian { get; set; }
+    internal class CameraTemplateSelector : DataTemplateSelector {
+        public DataTemplate Default { get; set; }
+        public DataTemplate Touptek { get; set; }
+
+        public override DataTemplate SelectTemplate(object item, DependencyObject container) {
+            if (item is AltairCamera || item is OmegonCamera || item is ToupTekCamera) {
+                return Touptek;
+            } else {
+                return Default;
+            }
+        }
     }
 }

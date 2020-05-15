@@ -1124,6 +1124,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BIAS median value (in 16bit).
+        /// </summary>
+        internal static string LblBiasMedian {
+            get {
+                return ResourceManager.GetString("LblBiasMedian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Binning.
         /// </summary>
         internal static string LblBinning {
@@ -4848,6 +4857,24 @@ namespace NINA.Locale {
         internal static string LblHighest {
             get {
                 return ResourceManager.GetString("LblHighest", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to High Gain Mode.
+        /// </summary>
+        internal static string LblHighGainMode {
+            get {
+                return ResourceManager.GetString("LblHighGainMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the camera to high gain mode. This gain mode has less read noise compared to low gain and it is advised for most cams to activate always, except when you want to use the lowest possible gain with the highest dynamic range..
+        /// </summary>
+        internal static string LblHighGainModeTooltip {
+            get {
+                return ResourceManager.GetString("LblHighGainModeTooltip", resourceCulture);
             }
         }
         
