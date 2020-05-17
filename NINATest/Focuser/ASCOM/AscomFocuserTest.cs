@@ -40,11 +40,18 @@ namespace NINATest.Focuser.ASCOM {
         private const string ID = "focuser";
         private const string NAME = "name";
 
-        [SetUp]
-        public async Task Init() {
+        [OneTimeSetUp]
+        public void OneTimeSetup() {
             _mockFocuserProvider = new Mock<IAscomFocuserProvider>();
             _mockFocuser = new Mock<IFocuserV3>();
+        }
+
+        [SetUp]
+        public async Task Init() {
+            _mockFocuserProvider.Reset();
+            _mockFocuser.Reset();
             _mockFocuser.SetupProperty(m => m.Connected, false);
+            _mockFocuser.Setup(m => m.Absolute).Returns(true);
             _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>())).Returns(_mockFocuser.Object);
             _sut = new AscomFocuser(ID, NAME) { FocuserProvider = _mockFocuserProvider.Object };
             var result = await _sut.Connect(new CancellationToken());
