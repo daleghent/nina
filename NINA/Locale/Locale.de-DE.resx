@@ -3634,4 +3634,10 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
   <data name="LblRelativeFocuserNotSupported" xml:space="preserve">
     <value>Focusers without the capability to use absolute positions are currently not supported</value>
   </data>
+  <data name="LblQhyIncludeOverscan" xml:space="preserve">
+    <value>Include Overscan Area</value>
+  </data>
+  <data name="LblQhyIncludeOverscanTooltip" xml:space="preserve">
+    <value>Setting to On will the include any optical black and overscan areas of the sensor in images</value>
+  </data>
 </root>
