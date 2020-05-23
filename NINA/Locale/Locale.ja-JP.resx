@@ -3613,4 +3613,10 @@ The default of Auto uses any pattern that the camera driver might provide. Does 
   <data name="LblRelativeFocuserNotSupported" xml:space="preserve">
     <value>絶対位置の機能がないフォーカサーは現在サポートされていません</value>
   </data>
+  <data name="LblQhyIncludeOverscan" xml:space="preserve">
+    <value>Include Overscan Area</value>
+  </data>
+  <data name="LblQhyIncludeOverscanTooltip" xml:space="preserve">
+    <value>Setting to On will the include any optical black and overscan areas of the sensor in images</value>
+  </data>
 </root>

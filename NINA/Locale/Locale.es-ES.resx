@@ -3635,4 +3635,10 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
   <data name="LblRelativeFocuserNotSupported" xml:space="preserve">
     <value>Actualmente no están soportados los enfocadores que no tengan la capacidad de usar posiciones absolutas</value>
   </data>
+  <data name="LblQhyIncludeOverscan" xml:space="preserve">
+    <value>Include Overscan Area</value>
+  </data>
+  <data name="LblQhyIncludeOverscanTooltip" xml:space="preserve">
+    <value>Setting to On will the include any optical black and overscan areas of the sensor in images</value>
+  </data>
 </root>
