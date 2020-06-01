@@ -32,6 +32,7 @@ namespace NINA.Model.MySwitch {
         private readonly IProfileService _profileService;
         private const string AUTO = "AUTO";
         private IPegasusDevice _sdk;
+        private double _firmwareVersion = 1.3;
 
         public IPegasusDevice Sdk {
             get => _sdk ?? (Sdk = PegasusDevice.Instance);
@@ -118,6 +119,7 @@ namespace NINA.Model.MySwitch {
                 try {
                     var response = await Sdk.SendCommand<FirmwareVersionResponse>(fwCommand);
                     Description += $"{response.FirmwareVersion}";
+                    _firmwareVersion = response.FirmwareVersion;
                 } catch (InvalidDeviceResponseException ex) {
                     LogAndNotify(fwCommand, ex);
                     Description += Loc.Instance["LblNoValidFirmwareVersion"];
@@ -126,70 +128,81 @@ namespace NINA.Model.MySwitch {
                 }
 
                 var powerSwitch = new PegasusAstroPowerSwitch(0) {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2PowerName1
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2PowerName1,
+                    FirmwareVersion = _firmwareVersion
                 };
                 PowerSwitches.Add(powerSwitch);
                 Switches.Add(powerSwitch);
                 powerSwitch = new PegasusAstroPowerSwitch(1) {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2PowerName2
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2PowerName2,
+                    FirmwareVersion = _firmwareVersion
                 };
                 PowerSwitches.Add(powerSwitch);
                 Switches.Add(powerSwitch);
                 powerSwitch = new PegasusAstroPowerSwitch(2) {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2PowerName3
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2PowerName3,
+                    FirmwareVersion = _firmwareVersion
                 };
                 PowerSwitches.Add(powerSwitch);
                 Switches.Add(powerSwitch);
                 powerSwitch = new PegasusAstroPowerSwitch(3) {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2PowerName4
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2PowerName4,
+                    FirmwareVersion = _firmwareVersion
                 };
                 PowerSwitches.Add(powerSwitch);
                 Switches.Add(powerSwitch);
 
                 var variablePowerSwitch = new VariablePowerSwitch {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2PowerName5
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2PowerName5,
+                    FirmwareVersion = _firmwareVersion
                 };
                 PowerSwitches.Add(variablePowerSwitch);
                 Switches.Add(variablePowerSwitch);
 
                 var usbSwitch = new PegasusAstroUsbSwitch(0) {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName1
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName1,
+                    FirmwareVersion = _firmwareVersion
                 };
                 UsbSwitches.Add(usbSwitch);
                 Switches.Add(usbSwitch);
                 usbSwitch = new PegasusAstroUsbSwitch(1) {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName2
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName2,
+                    FirmwareVersion = _firmwareVersion
                 };
                 UsbSwitches.Add(usbSwitch);
                 Switches.Add(usbSwitch);
                 usbSwitch = new PegasusAstroUsbSwitch(2) {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName3
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName3,
+                    FirmwareVersion = _firmwareVersion
                 };
                 UsbSwitches.Add(usbSwitch);
                 Switches.Add(usbSwitch);
                 usbSwitch = new PegasusAstroUsbSwitch(3) {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName4
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName4,
+                    FirmwareVersion = _firmwareVersion
                 };
                 UsbSwitches.Add(usbSwitch);
                 Switches.Add(usbSwitch);
                 usbSwitch = new PegasusAstroUsbSwitch(4) {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName5
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName5,
+                    FirmwareVersion = _firmwareVersion
                 };
                 UsbSwitches.Add(usbSwitch);
                 Switches.Add(usbSwitch);
                 usbSwitch = new PegasusAstroUsbSwitch(5) {
-                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName6
+                    Name = _profileService.ActiveProfile.SwitchSettings.Upbv2UsbName6,
+                    FirmwareVersion = _firmwareVersion
                 };
                 UsbSwitches.Add(usbSwitch);
                 Switches.Add(usbSwitch);
 
                 for (short i = 0; i < 3; i++) {
-                    var dewHeater = new DewHeater(i);
+                    var dewHeater = new DewHeater(i) { FirmwareVersion = _firmwareVersion };
                     DewHeaters.Add(dewHeater);
                     Switches.Add(dewHeater);
                 }
 
-                DataProvider = new DataProviderSwitch();
+                DataProvider = new DataProviderSwitch() { FirmwareVersion = _firmwareVersion };
                 Switches.Add(DataProvider);
 
                 Connected = true;

@@ -20,62 +20,86 @@ namespace NINATest.SerialCommunication {
 
     [TestFixture]
     internal class ResponseCacheTest {
+
+        internal class CachableResponse : Response {
+            public override int Ttl => 500;
+        }
+
+        internal class CachableSubclassResponse : CachableResponse {
+        }
+
+        internal class NonCachableResponse : Response {
+            public override int Ttl => 0;
+        }
+
         private Mock<ICommand> _mockCommand;
-        private Mock<Response> _mockResponse;
-        private Mock<Response> _mockResponse2;
+        private CachableResponse _cachableResponse;
+        private CachableResponse _cachableResponse2;
+        private NonCachableResponse _nonCachableResponse;
+        private CachableSubclassResponse _cachableSubclassResponse;
         private ResponseCache _sut;
+
+        [OneTimeSetUp]
+        public void OneTimeSetup() {
+            _mockCommand = new Mock<ICommand>();
+        }
 
         [SetUp]
         public void Init() {
-            _mockCommand = new Mock<ICommand>();
-            _mockResponse = new Mock<Response>();
-            _mockResponse2 = new Mock<Response>();
+            _mockCommand.Reset();
             _sut = new ResponseCache();
+            _cachableResponse = new CachableResponse();
+            _cachableResponse2 = new CachableResponse();
+            _nonCachableResponse = new NonCachableResponse();
+            _cachableSubclassResponse = new CachableSubclassResponse();
         }
 
         [Test]
         public void TestAddNewCacheableResponse() {
-            _mockResponse.Setup(m => m.Ttl).Returns(50);
+            _sut.Add(_mockCommand.Object, _cachableResponse);
+            var result = _sut.Get(_mockCommand.Object.GetType(), _cachableResponse.GetType());
 
-            _sut.Add(_mockCommand.Object, _mockResponse.Object);
-            var result = _sut.Get(_mockCommand.Object.GetType());
-
-            Assert.That(_sut.HasValidResponse(_mockCommand.Object.GetType()), Is.True);
+            Assert.That(_sut.HasValidResponse(_mockCommand.Object.GetType(), _cachableResponse.GetType()), Is.True);
             Assert.That(result, Is.Not.Null);
-            Assert.That(result, Is.EqualTo(_mockResponse.Object));
+            Assert.That(result, Is.EqualTo(_cachableResponse));
         }
 
         [Test]
         public void TestAddOverExistingCacheableResponse() {
-            _mockResponse.Setup(m => m.Ttl).Returns(50);
-            _mockResponse2.Setup(m => m.Ttl).Returns(50);
+            _sut.Add(_mockCommand.Object, _cachableResponse);
+            _sut.Add(_mockCommand.Object, _cachableResponse2);
+            var result = _sut.Get(_mockCommand.Object.GetType(), _cachableResponse.GetType());
 
-            _sut.Add(_mockCommand.Object, _mockResponse.Object);
-            _sut.Add(_mockCommand.Object, _mockResponse2.Object);
-            var result = _sut.Get(_mockCommand.Object.GetType());
-
-            Assert.That(_sut.HasValidResponse(_mockCommand.Object.GetType()), Is.True);
+            Assert.That(_sut.HasValidResponse(_mockCommand.Object.GetType(), _cachableResponse.GetType()), Is.True);
             Assert.That(result, Is.Not.Null);
-            Assert.That(result, Is.EqualTo(_mockResponse2.Object));
+            Assert.That(result, Is.EqualTo(_cachableResponse2));
         }
 
         [Test]
         public void TestAddNewNonCacheableResponse() {
-            _mockResponse.Setup(m => m.Ttl).Returns(0);
+            _sut.Add(_mockCommand.Object, _nonCachableResponse);
+            var result = _sut.Get(_mockCommand.Object.GetType(), _nonCachableResponse.GetType());
 
-            _sut.Add(_mockCommand.Object, _mockResponse.Object);
-            var result = _sut.Get(_mockCommand.Object.GetType());
+            Assert.That(_sut.HasValidResponse(_mockCommand.Object.GetType(), _nonCachableResponse.GetType()), Is.False);
+            Assert.That(result, Is.Null);
+        }
 
-            Assert.That(_sut.HasValidResponse(_mockCommand.Object.GetType()), Is.False);
+        [Test]
+        public void TestAddDifferentResponseTypesForSameCommandType() {
+            _sut.Add(_mockCommand.Object, _cachableResponse);
+            var result = _sut.Get(_mockCommand.Object.GetType(), _cachableSubclassResponse.GetType());
+
+            Assert.That(_sut.HasValidResponse(_mockCommand.Object.GetType(), _cachableResponse.GetType()), Is.True);
+            Assert.That(_sut.HasValidResponse(_mockCommand.Object.GetType(), _cachableSubclassResponse.GetType()), Is.False);
             Assert.That(result, Is.Null);
         }
 
         [Test]
         public void TestNullInputs() {
-            Assert.That(_sut.HasValidResponse(null), Is.False);
-            Assert.That(_sut.Get(null), Is.Null);
+            Assert.That(_sut.HasValidResponse(null, null), Is.False);
+            Assert.That(_sut.Get(null, null), Is.Null);
             //below should not throw an exception
-            _sut.Add(null, _mockResponse.Object);
+            _sut.Add(null, _cachableResponse);
             _sut.Add(_mockCommand.Object, null);
         }
     }

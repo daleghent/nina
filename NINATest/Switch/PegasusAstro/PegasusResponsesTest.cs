@@ -81,6 +81,7 @@ namespace NINATest.Switch.PegasusAstro {
         [TestCase(null)]
         public void TestInvalidStatusResponse(string deviceResponse) {
             Assert.That(() => new StatusResponse { DeviceResponse = deviceResponse }, Throws.TypeOf<InvalidDeviceResponseException>());
+            Assert.That(() => new StatusResponseV14() { DeviceResponse = deviceResponse }, Throws.TypeOf<InvalidDeviceResponseException>());
         }
 
         [Test]
@@ -139,11 +140,35 @@ namespace NINATest.Switch.PegasusAstro {
         }
 
         [Test]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:480:0:0:0:0:0:0:0000000:0", 1, 0, 0, 0)]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:960:0:0:0:0:0:0000000:0", 0, 2, 0, 0)]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:1440:0:0:0:0:0000000:0", 0, 0, 3, 0)]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:1920:0:0:0:0000000:0", 0, 0, 0, 4)]
+        public void TestValidStatusResponsePortPowerFlowV14(string deviceResponse, double port0, double port1, double port2, double port3) {
+            var sut = new StatusResponseV14 { DeviceResponse = deviceResponse };
+            Assert.That(sut.PortPowerFlow[0], Is.EqualTo(port0));
+            Assert.That(sut.PortPowerFlow[1], Is.EqualTo(port1));
+            Assert.That(sut.PortPowerFlow[2], Is.EqualTo(port2));
+            Assert.That(sut.PortPowerFlow[3], Is.EqualTo(port3));
+        }
+
+        [Test]
         [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:300:0:0:0000000:0", 1, 0, 0)]
         [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:600:0:0000000:0", 0, 2, 0)]
         [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:0:1200:0000000:0", 0, 0, 2)]
         public void TestValidStatusResponseDewHeaterPowerFlow(string deviceResponse, double port0, double port1, double port2) {
             var sut = new StatusResponse { DeviceResponse = deviceResponse };
+            Assert.That(sut.DewHeaterPowerFlow[0], Is.EqualTo(port0));
+            Assert.That(sut.DewHeaterPowerFlow[1], Is.EqualTo(port1));
+            Assert.That(sut.DewHeaterPowerFlow[2], Is.EqualTo(port2));
+        }
+
+        [Test]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:480:0:0:0000000:0", 1, 0, 0)]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:960:0:0000000:0", 0, 2, 0)]
+        [TestCase("UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:0:1400:0000000:0", 0, 0, 2)]
+        public void TestValidStatusResponseDewHeaterPowerFlowV14(string deviceResponse, double port0, double port1, double port2) {
+            var sut = new StatusResponseV14 { DeviceResponse = deviceResponse };
             Assert.That(sut.DewHeaterPowerFlow[0], Is.EqualTo(port0));
             Assert.That(sut.DewHeaterPowerFlow[1], Is.EqualTo(port1));
             Assert.That(sut.DewHeaterPowerFlow[2], Is.EqualTo(port2));

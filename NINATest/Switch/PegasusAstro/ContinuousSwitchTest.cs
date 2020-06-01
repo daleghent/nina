@@ -35,7 +35,7 @@ namespace NINATest.Switch.PegasusAstro {
         [SetUp]
         public void Init() {
             _mockSdk.Reset();
-            _sut = new VariablePowerSwitch { Sdk = _mockSdk.Object };
+            _sut = new VariablePowerSwitch { Sdk = _mockSdk.Object, FirmwareVersion = 1.3 };
         }
 
         [Test]
@@ -128,6 +128,24 @@ namespace NINATest.Switch.PegasusAstro {
         }
 
         [Test]
+        [TestCase(0, "UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:0:0:0000000:0", 0d, 0d, false, false)]
+        [TestCase(0, "UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:128:0:0:0:0:0:0:480:0:0:0000100:0", 50d, 1d, true, false)]
+        [TestCase(2, "UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:128:0:0:0:0:0:0:700:0000000:4", 50d, 1d, false, true)]
+        public async Task TestPollV14(short heater, string deviceResponse, double dutyCycle, double amps, bool overCurrent, bool autoDewOn) {
+            _sut = new DewHeater(heater) { Sdk = _mockSdk.Object };
+            var response = new StatusResponseV14 { DeviceResponse = deviceResponse };
+            _mockSdk.Setup(m => m.SendCommand<StatusResponseV14>(It.IsAny<StatusCommand>()))
+                .Returns(Task.FromResult(response));
+            _sut.FirmwareVersion = 1.4;
+            var result = await _sut.Poll();
+            Assert.That(result, Is.True);
+            Assert.That(_sut.Value, Is.EqualTo(dutyCycle));
+            Assert.That(_sut.CurrentAmps, Is.EqualTo(amps));
+            Assert.That(_sut.ExcessCurrent, Is.EqualTo(overCurrent));
+            Assert.That(_sut.AutoDewOn, Is.EqualTo(autoDewOn));
+        }
+
+        [Test]
         public async Task TestPollInvalidResponse() {
             _sut = new DewHeater(0) { Sdk = _mockSdk.Object };
             _mockSdk.Setup(m => m.SendCommand<StatusResponse>(It.IsAny<StatusCommand>()))
@@ -163,6 +181,30 @@ namespace NINATest.Switch.PegasusAstro {
                 .Callback<ICommand>(arg => { autoDewCommand = arg.CommandString; });
             _sut.TargetValue = value;
             _sut.AutoDewOnTarget = autoDew;
+            await _sut.SetValue();
+            Assert.That(dewCommand, Is.EqualTo(expectedDewHeaterCommand));
+            Assert.That(autoDewCommand, Is.EqualTo(expectedAutoDewCommand));
+        }
+
+        [Test]
+        [TestCase(0, 50d, false, "P5:128\n", "PD:0\n")]
+        [TestCase(0, 0d, true, "P5:000\n", "PD:2\n")]
+        [TestCase(1, 50d, true, "P6:128\n", "PD:3\n")]
+        [TestCase(2, 50d, true, "P7:128\n", "PD:4\n")]
+        public async Task TestSetValueV14(short heater, double value, bool autoDew, string expectedDewHeaterCommand, string expectedAutoDewCommand) {
+            _sut = new DewHeater(heater) { Sdk = _mockSdk.Object };
+            var dewCommand = string.Empty;
+            var autoDewCommand = string.Empty;
+            _mockSdk.Setup(m => m.SendCommand<SetDewHeaterPowerResponse>(It.IsAny<SetDewHeaterPowerCommand>()))
+                .Callback<ICommand>(arg => { dewCommand = arg.CommandString; });
+            var response = new StatusResponseV14 { DeviceResponse = "UPB:12.2:0.0:0:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:0:0:0000000:0" };
+            _mockSdk.Setup(m => m.SendCommand<StatusResponseV14>(It.IsAny<StatusCommand>()))
+                .Returns(Task.FromResult(response));
+            _mockSdk.Setup(m => m.SendCommand<SetAutoDewResponse>(It.IsAny<SetAutoDewCommand>()))
+                .Callback<ICommand>(arg => { autoDewCommand = arg.CommandString; });
+            _sut.TargetValue = value;
+            _sut.AutoDewOnTarget = autoDew;
+            _sut.FirmwareVersion = 1.4;
             await _sut.SetValue();
             Assert.That(dewCommand, Is.EqualTo(expectedDewHeaterCommand));
             Assert.That(autoDewCommand, Is.EqualTo(expectedAutoDewCommand));

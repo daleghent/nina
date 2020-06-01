@@ -66,8 +66,8 @@ namespace NINA.Utility.SerialCommunication {
                 if (command == null) throw new ArgumentNullException(nameof(command));
                 ssSerial.Wait();
                 TResult response;
-                if (_cache.HasValidResponse(command.GetType())) {
-                    response = (TResult)_cache.Get(command.GetType());
+                if (_cache.HasValidResponse(command.GetType(), typeof(TResult))) {
+                    response = (TResult)_cache.Get(command.GetType(), typeof(TResult));
                     ssSerial.Release();
                     return response;
                 }

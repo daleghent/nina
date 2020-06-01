@@ -16,6 +16,7 @@ using NINA.Utility;
 using NINA.Utility.SwitchSDKs.PegasusAstro;
 using System;
 using System.Threading.Tasks;
+using NINA.Utility.SerialCommunication;
 
 namespace NINA.Model.MySwitch.PegasusAstro {
 
@@ -28,6 +29,8 @@ namespace NINA.Model.MySwitch.PegasusAstro {
             get => _sdk ?? (_sdk = PegasusDevice.Instance);
             set => _sdk = value;
         }
+
+        public double FirmwareVersion { get; set; } = 1.3;
 
         private string _name;
 
@@ -59,6 +62,19 @@ namespace NINA.Model.MySwitch.PegasusAstro {
                 if (Math.Abs(_value - value) < Tolerance) return;
                 _value = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        public virtual async Task<StatusResponse> GetStatus(ICommand command) {
+            switch (FirmwareVersion) {
+                case double version when version >= 1.4:
+                    return await Sdk.SendCommand<StatusResponseV14>(command);
+
+                case double version when version >= 1.3 && version < 1.4:
+                    return await Sdk.SendCommand<StatusResponse>(command);
+
+                default:
+                    return await Sdk.SendCommand<StatusResponse>(command);
             }
         }
 

@@ -135,7 +135,7 @@ namespace NINA.Model.MySwitch.PegasusAstro {
             return await Task.Run(async () => {
                 var command = new StatusCommand();
                 try {
-                    var statusResponse = await Sdk.SendCommand<StatusResponse>(command);
+                    var statusResponse = await GetStatus(command);
                     VoltageHistory.Add(
                         new KeyValuePair<DateTime, double>(DateTime.Now, statusResponse.DeviceInputVoltage));
                     AmpereHistory.Add(

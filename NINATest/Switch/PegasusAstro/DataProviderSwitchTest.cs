@@ -36,7 +36,7 @@ namespace NINATest.Switch.PegasusAstro {
         [SetUp]
         public void Init() {
             _mockSdk.Reset();
-            _sut = new DataProviderSwitch { Sdk = _mockSdk.Object };
+            _sut = new DataProviderSwitch { Sdk = _mockSdk.Object, FirmwareVersion = 1.3 };
         }
 
         [Test]
@@ -47,6 +47,34 @@ namespace NINATest.Switch.PegasusAstro {
             var powerConsumptionResponse = new PowerConsumptionResponse { DeviceResponse = "0.23:123.4:734.6:86400000" };
             _mockSdk.Setup(m => m.SendCommand<PowerConsumptionResponse>(It.IsAny<PowerConsumptionCommand>()))
                 .Returns(Task.FromResult(powerConsumptionResponse));
+            var result = await _sut.Poll();
+            Assert.That(result, Is.True);
+            Assert.That(_sut.Voltage, Is.EqualTo(12.2));
+            Assert.That(_sut.Current, Is.EqualTo(0.2));
+            Assert.That(_sut.Power, Is.EqualTo(2));
+            Assert.That(_sut.Temperature, Is.EqualTo(23.2));
+            Assert.That(_sut.Humidity, Is.EqualTo(59));
+            Assert.That(_sut.DewPoint, Is.EqualTo(14.7));
+            Assert.That(_sut.AveragePower, Is.EqualTo(0.23));
+            Assert.That(_sut.AmpereHours, Is.EqualTo(123.4));
+            Assert.That(_sut.WattHours, Is.EqualTo(734.6));
+            Assert.That(_sut.AmpereHistory.Count, Is.EqualTo(1));
+            Assert.That(_sut.VoltageHistory.Count, Is.EqualTo(1));
+            Assert.That(_sut.UpTime, Is.EqualTo(
+                $"{powerConsumptionResponse.UpTime.Days} {Loc.Instance["LblDays"]}, " +
+                $"{powerConsumptionResponse.UpTime.Hours} {Loc.Instance["LblHours"]}, " +
+                $"{powerConsumptionResponse.UpTime.Minutes} {Loc.Instance["LblMinutes"]}"));
+        }
+
+        [Test]
+        public async Task TestPollV14() {
+            var statusResponse = new StatusResponseV14 { DeviceResponse = "UPB:12.2:0.2:2:23.2:59:14.7:1111:111111:0:0:0:0:0:0:0:0:0:0:0000000:0" };
+            _mockSdk.Setup(m => m.SendCommand<StatusResponseV14>(It.IsAny<StatusCommand>()))
+                .Returns(Task.FromResult(statusResponse));
+            var powerConsumptionResponse = new PowerConsumptionResponse { DeviceResponse = "0.23:123.4:734.6:86400000" };
+            _mockSdk.Setup(m => m.SendCommand<PowerConsumptionResponse>(It.IsAny<PowerConsumptionCommand>()))
+                .Returns(Task.FromResult(powerConsumptionResponse));
+            _sut.FirmwareVersion = 1.4;
             var result = await _sut.Poll();
             Assert.That(result, Is.True);
             Assert.That(_sut.Voltage, Is.EqualTo(12.2));

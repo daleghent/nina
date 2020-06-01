@@ -63,7 +63,7 @@ namespace NINA.Model.MySwitch.PegasusAstro {
             return await Task.Run(async () => {
                 var command = new StatusCommand();
                 try {
-                    var response = await Sdk.SendCommand<StatusResponse>(command);
+                    var response = await GetStatus(command);
                     Value = response.PowerPortOn[Id] ? 1d : 0d;
                     CurrentAmps = response.PortPowerFlow[Id];
                     ExcessCurrent = response.PortOverCurrent[Id];
@@ -105,7 +105,7 @@ namespace NINA.Model.MySwitch.PegasusAstro {
             return await Task.Run(async () => {
                 var command = new StatusCommand();
                 try {
-                    var response = await Sdk.SendCommand<StatusResponse>(command);
+                    var response = await GetStatus(command);
                     Value = response.UsbPortOn[Id] ? 1d : 0d;
                     return true;
                 } catch (InvalidDeviceResponseException ex) {

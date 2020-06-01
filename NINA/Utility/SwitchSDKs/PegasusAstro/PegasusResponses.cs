@@ -130,21 +130,7 @@ namespace NINA.Utility.SwitchSDKs.PegasusAstro {
             }
             DewHeaterDutyCycle = new ReadOnlyCollection<short>(tempShort);
 
-            var tempDouble = new double[4];
-            for (var i = 0; i < 4; i++) {
-                if (!TryParseDouble(tokens[i + 12], "power port current", out tempDouble[i])) throw new InvalidDeviceResponseException(value);
-                tempDouble[i] /= 300d;
-            }
-            PortPowerFlow = new ReadOnlyCollection<double>(tempDouble);
-
-            tempDouble = new double[3];
-            for (var i = 0; i < 3; i++) {
-                if (!TryParseDouble(tokens[i + 16], "dew heater port current", out tempDouble[i])) throw new InvalidDeviceResponseException(value);
-                tempDouble[i] /= 300d;
-            }
-            tempDouble[2] /= 2d;// different MOSFET, needs to be divided by 600
-
-            DewHeaterPowerFlow = new ReadOnlyCollection<double>(tempDouble);
+            ParsePowerFlows(value, tokens);
 
             tempBool = new bool[4];
             for (var i = 0; i < 4; i++) {
@@ -160,6 +146,56 @@ namespace NINA.Utility.SwitchSDKs.PegasusAstro {
 
             if (!TryParseShort(tokens[20], "auto-dew status", out var autoDewStatus)) throw new InvalidDeviceResponseException(value);
             AutoDewStatus = ParseAutoDewStatus(autoDewStatus);
+        }
+
+        protected virtual void ParsePowerFlows(string value, string[] tokens) {
+            var tempDouble = new double[4];
+            for (var i = 0; i < 4; i++) {
+                if (!TryParseDouble(tokens[i + 12], "power port current", out tempDouble[i]))
+                    throw new InvalidDeviceResponseException(value);
+                tempDouble[i] /= 300d;
+            }
+
+            PortPowerFlow = new ReadOnlyCollection<double>(tempDouble);
+
+            tempDouble = new double[3];
+            for (var i = 0; i < 3; i++) {
+                if (!TryParseDouble(tokens[i + 16], "dew heater port current", out tempDouble[i]))
+                    throw new InvalidDeviceResponseException(value);
+                tempDouble[i] /= 300d;
+            }
+
+            tempDouble[2] /= 2d; // different MOSFET, needs to be divided by 600
+
+            DewHeaterPowerFlow = new ReadOnlyCollection<double>(tempDouble);
+        }
+    }
+
+    public class StatusResponseV14 : StatusResponse {
+
+        protected override void ParsePowerFlows(string value, string[] tokens) {
+            var tempDouble = new double[4];
+            for (var i = 0; i < 4; i++) {
+                if (!TryParseDouble(tokens[i + 12], "power port current", out tempDouble[i]))
+                    throw new InvalidDeviceResponseException(value);
+                tempDouble[i] /= 480d;
+            }
+
+            PortPowerFlow = new ReadOnlyCollection<double>(tempDouble);
+
+            tempDouble = new double[3];
+            for (var i = 0; i < 2; i++) {
+                if (!TryParseDouble(tokens[i + 16], "dew heater port current", out tempDouble[i]))
+                    throw new InvalidDeviceResponseException(value);
+                tempDouble[i] /= 480d;
+            }
+
+            // different MOSFET, needs to be divided by 700
+            if (!TryParseDouble(tokens[18], "dew heater port current", out tempDouble[2]))
+                throw new InvalidDeviceResponseException(value);
+            tempDouble[2] /= 700d;
+
+            DewHeaterPowerFlow = new ReadOnlyCollection<double>(tempDouble);
         }
     }
 

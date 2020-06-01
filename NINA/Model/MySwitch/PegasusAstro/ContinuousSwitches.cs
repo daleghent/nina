@@ -134,7 +134,7 @@ namespace NINA.Model.MySwitch.PegasusAstro {
             return await Task.Run(async () => {
                 var command = new StatusCommand();
                 try {
-                    var response = await Sdk.SendCommand<StatusResponse>(command);
+                    var response = await GetStatus(command);
                     Value = Math.Round(response.DewHeaterDutyCycle[Id] / 255d * 100d);
                     CurrentAmps = response.DewHeaterPowerFlow[Id];
                     ExcessCurrent = response.DewHeaterOverCurrent[Id];
@@ -158,7 +158,7 @@ namespace NINA.Model.MySwitch.PegasusAstro {
                     Logger.Trace($"Trying to set value {TargetValue}, {AutoDewOn} for dew heater {Id}");
                     _ = await Sdk.SendCommand<SetDewHeaterPowerResponse>(command);
                     command = new StatusCommand();
-                    var response = await Sdk.SendCommand<StatusResponse>(command);
+                    var response = await GetStatus(command);
                     command = new SetAutoDewCommand(response.AutoDewStatus, Id, AutoDewOnTarget);
                     _ = await Sdk.SendCommand<SetAutoDewResponse>(command);
                 } catch (InvalidDeviceResponseException ex) {
