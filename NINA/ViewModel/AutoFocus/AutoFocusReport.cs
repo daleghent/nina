@@ -12,8 +12,11 @@
 
 #endregion "copyright"
 
+using Accord;
 using Newtonsoft.Json;
 using NINA.Utility.Enum;
+using OxyPlot;
+using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +24,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace NINA.ViewModel.AutoFocus {
-
     public class AutoFocusReport {
-
         [JsonProperty]
         public DateTime Timestamp { get; set; }
 
@@ -50,6 +51,53 @@ namespace NINA.ViewModel.AutoFocus {
 
         [JsonProperty]
         public Intersections Intersections { get; set; }
+
+        /// <summary>
+        /// Generates a JSON report into %localappdata%\NINA\AutoFocus for the complete autofocus run containing all the measurements
+        /// </summary>
+        /// <param name="initialFocusPosition"></param>
+        /// <param name="initialHFR"></param>
+        public static AutoFocusReport GenerateReport(
+            ICollection<ScatterErrorPoint> FocusPoints,
+            double initialFocusPosition,
+            double initialHFR,
+            DataPoint focusPoint,
+            AutoFocusPoint lastFocusPoint,
+            AFMethodEnum method,
+            AFCurveFittingEnum fitting,
+            TrendlineFitting trendlineFitting,
+            QuadraticFitting quadraticFitting,
+            HyperbolicFitting hyperbolicFitting,
+            GaussianFitting gaussianFitting,
+            double temperature) {
+            var report = new AutoFocusReport() {
+                Timestamp = DateTime.Now,
+                Temperature = temperature,
+                InitialFocusPoint = new FocusPoint() {
+                    Position = initialFocusPosition,
+                    Value = initialHFR
+                },
+                CalculatedFocusPoint = new FocusPoint() {
+                    Position = focusPoint.X,
+                    Value = focusPoint.Y
+                },
+                PreviousFocusPoint = new FocusPoint() {
+                    Position = lastFocusPoint?.Focuspoint.X ?? double.NaN,
+                    Value = lastFocusPoint?.Focuspoint.Y ?? double.NaN
+                },
+                Method = method.ToString(),
+                Fitting = method == AFMethodEnum.STARHFR ? fitting.ToString() : "GAUSSIAN",
+                MeasurePoints = FocusPoints.Select(x => new FocusPoint() { Position = x.X, Value = x.Y, Error = x.ErrorY }),
+                Intersections = new Intersections() {
+                    TrendLineIntersection = new FocusPoint() { Position = trendlineFitting.Intersection.X, Value = trendlineFitting.Intersection.Y },
+                    GaussianMaximum = new FocusPoint() { Position = gaussianFitting.Maximum.X, Value = gaussianFitting.Maximum.Y },
+                    HyperbolicMinimum = new FocusPoint() { Position = hyperbolicFitting.Minimum.X, Value = hyperbolicFitting.Minimum.Y },
+                    QuadraticMinimum = new FocusPoint() { Position = quadraticFitting.Minimum.X, Value = quadraticFitting.Minimum.Y }
+                }
+            };
+
+            return report;
+        }
     }
 
     public class Intersections {
@@ -60,7 +108,6 @@ namespace NINA.ViewModel.AutoFocus {
     }
 
     public class FocusPoint {
-
         [JsonProperty]
         public double Position { get; set; }
 

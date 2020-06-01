@@ -54,7 +54,7 @@ namespace NINA.ViewModel.FlatWizard {
         }
 
         public double GetExpectedExposureTime(FlatWizardFilterSettingsWrapper wrapper) {
-            var trendLine = new TrendLine(dataPoints);
+            var trendLine = new Trendline(dataPoints);
 
             return (wrapper.Settings.HistogramMeanTarget * CameraBitDepthToAdu(wrapper.BitDepth) - trendLine.Offset) / trendLine.Slope;
         }

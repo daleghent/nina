@@ -22,9 +22,9 @@ using System.Text;
 
 namespace NINA.ViewModel {
 
-    public class TrendLine {
+    public class Trendline {
 
-        public TrendLine(IEnumerable<ScatterErrorPoint> l) {
+        public Trendline(IEnumerable<ScatterErrorPoint> l) {
             DataPoints = l;
 
             if (DataPoints.Count() > 1) {
@@ -49,7 +49,7 @@ namespace NINA.ViewModel {
             return Slope * x + Offset;
         }
 
-        public DataPoint Intersect(TrendLine line) {
+        public DataPoint Intersect(Trendline line) {
             if (this.Slope == line.Slope) {
                 //Lines are parallel
                 return new DataPoint(0, 0);

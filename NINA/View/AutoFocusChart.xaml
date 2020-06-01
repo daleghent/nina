@@ -75,7 +75,7 @@
                     Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
             </oxy:Plot.Series>
             <oxy:Plot.Annotations>
-                <oxy:LineAnnotation Intercept="{Binding LeftTrend.Offset}" Slope="{Binding LeftTrend.Slope}">
+                <oxy:LineAnnotation Intercept="{Binding TrendlineFitting.LeftTrend.Offset}" Slope="{Binding TrendlineFitting.LeftTrend.Slope}">
                     <oxy:LineAnnotation.Color>
                         <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
                             <Binding>
@@ -88,7 +88,7 @@
                         </MultiBinding>
                     </oxy:LineAnnotation.Color>
                 </oxy:LineAnnotation>
-                <oxy:LineAnnotation Intercept="{Binding RightTrend.Offset}" Slope="{Binding RightTrend.Slope}">
+                <oxy:LineAnnotation Intercept="{Binding TrendlineFitting.RightTrend.Offset}" Slope="{Binding TrendlineFitting.RightTrend.Slope}">
                     <oxy:LineAnnotation.Color>
                         <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
                             <Binding>
@@ -101,7 +101,7 @@
                         </MultiBinding>
                     </oxy:LineAnnotation.Color>
                 </oxy:LineAnnotation>
-                <oxy:FunctionAnnotation Equation="{Binding QuadraticFitting}">
+                <oxy:FunctionAnnotation Equation="{Binding QuadraticFitting.Fitting}">
                     <oxy:FunctionAnnotation.Color>
                         <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
                             <Binding>
@@ -114,7 +114,7 @@
                         </MultiBinding>
                     </oxy:FunctionAnnotation.Color>
                 </oxy:FunctionAnnotation>
-                <oxy:FunctionAnnotation Equation="{Binding HyperbolicFitting}">
+                <oxy:FunctionAnnotation Equation="{Binding HyperbolicFitting.Fitting}">
                     <oxy:FunctionAnnotation.Color>
                         <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
                             <Binding>
@@ -127,7 +127,7 @@
                         </MultiBinding>
                     </oxy:FunctionAnnotation.Color>
                 </oxy:FunctionAnnotation>
-                <oxy:FunctionAnnotation Equation="{Binding GaussianFitting}">
+                <oxy:FunctionAnnotation Equation="{Binding GaussianFitting.Fitting}">
                     <oxy:FunctionAnnotation.Color>
                         <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
                             <Binding>
@@ -148,8 +148,8 @@
                     Y="{Binding FinalFocusPoint.Y}" />
                 <oxy:PointAnnotation
                     Shape="Circle"
-                    X="{Binding QuadraticMinimum.X}"
-                    Y="{Binding QuadraticMinimum.Y}">
+                    X="{Binding QuadraticFitting.Minimum.X}"
+                    Y="{Binding QuadraticFitting.Minimum.Y}">
                     <oxy:PointAnnotation.Fill>
                         <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
                             <Binding>
@@ -175,8 +175,8 @@
                 </oxy:PointAnnotation>
                 <oxy:PointAnnotation
                     Shape="Circle"
-                    X="{Binding HyperbolicMinimum.X}"
-                    Y="{Binding HyperbolicMinimum.Y}">
+                    X="{Binding HyperbolicFitting.Minimum.X}"
+                    Y="{Binding HyperbolicFitting.Minimum.Y}">
                     <oxy:PointAnnotation.Fill>
                         <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
                             <Binding>
@@ -202,8 +202,8 @@
                 </oxy:PointAnnotation>
                 <oxy:PointAnnotation
                     Shape="Circle"
-                    X="{Binding GaussianMaximum.X}"
-                    Y="{Binding GaussianMaximum.Y}">
+                    X="{Binding GaussianFitting.Maximum.X}"
+                    Y="{Binding GaussianFitting.Maximum.Y}">
                     <oxy:PointAnnotation.Fill>
                         <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
                             <Binding>
@@ -229,8 +229,8 @@
                 </oxy:PointAnnotation>
                 <oxy:PointAnnotation
                     Shape="Circle"
-                    X="{Binding TrendLineIntersection.X}"
-                    Y="{Binding TrendLineIntersection.Y}">
+                    X="{Binding TrendlineFitting.TrendLineIntersection.X}"
+                    Y="{Binding TrendlineFitting.TrendLineIntersection.Y}">
                     <oxy:PointAnnotation.Fill>
                         <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
                             <Binding>

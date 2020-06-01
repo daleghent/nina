@@ -22,7 +22,6 @@ using NINA.Utility.Notification;
 using NINA.Profile;
 using OxyPlot;
 using OxyPlot.Series;
-using Accord.Statistics.Models.Regression.Linear;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,12 +30,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using NINA.Utility.ImageAnalysis;
 using NINA.Model.ImageData;
-using Accord.Statistics.Models.Regression.Fitting;
 using NINA.Utility.Enum;
 using NINA.Utility.Mediator;
-using System.Text;
 using NINA.ViewModel.AutoFocus;
-using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
 using System.IO;
 
@@ -136,9 +132,6 @@ namespace NINA.ViewModel {
             }
         }
 
-        private ScatterErrorPoint _minimum;
-        private ScatterErrorPoint _maximum;
-
         private ApplicationStatus _status;
 
         public ApplicationStatus Status {
@@ -154,57 +147,29 @@ namespace NINA.ViewModel {
             }
         }
 
-        private TrendLine _leftTrend;
+        private TrendlineFitting _trendLineFitting;
 
-        public TrendLine LeftTrend {
-            get {
-                return _leftTrend;
-            }
+        public TrendlineFitting TrendlineFitting {
+            get => _trendLineFitting;
             set {
-                _leftTrend = value;
+                _trendLineFitting = value;
                 RaisePropertyChanged();
             }
         }
 
-        private TrendLine _rightTrend;
+        private QuadraticFitting _quadraticFitting;
 
-        public TrendLine RightTrend {
-            get {
-                return _rightTrend;
-            }
-            set {
-                _rightTrend = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Func<double, double> _quadraticFitting;
-
-        public Func<double, double> QuadraticFitting {
-            get {
-                return _quadraticFitting;
-            }
+        public QuadraticFitting QuadraticFitting {
+            get => _quadraticFitting;
             set {
                 _quadraticFitting = value;
                 RaisePropertyChanged();
             }
         }
 
-        private DataPoint _quadraticMinimum;
+        private HyperbolicFitting _hyperbolicFitting;
 
-        public DataPoint QuadraticMinimum {
-            get {
-                return _quadraticMinimum;
-            }
-            set {
-                _quadraticMinimum = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Func<double, double> _hyperbolicFitting;
-
-        public Func<double, double> HyperbolicFitting {
+        public HyperbolicFitting HyperbolicFitting {
             get {
                 return _hyperbolicFitting;
             }
@@ -214,50 +179,14 @@ namespace NINA.ViewModel {
             }
         }
 
-        private DataPoint _hyperbolicMinimum;
+        private GaussianFitting _gaussianFitting;
 
-        public DataPoint HyperbolicMinimum {
-            get {
-                return _hyperbolicMinimum;
-            }
-            set {
-                _hyperbolicMinimum = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private DataPoint _trendLineIntersection;
-
-        public DataPoint TrendLineIntersection {
-            get {
-                return _trendLineIntersection;
-            }
-            set {
-                _trendLineIntersection = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Func<double, double> _gaussianFitting;
-
-        public Func<double, double> GaussianFitting {
+        public GaussianFitting GaussianFitting {
             get {
                 return _gaussianFitting;
             }
             set {
                 _gaussianFitting = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private DataPoint _gaussianMaximum;
-
-        public DataPoint GaussianMaximum {
-            get {
-                return _gaussianMaximum;
-            }
-            set {
-                _gaussianMaximum = value;
                 RaisePropertyChanged();
             }
         }
@@ -317,12 +246,22 @@ namespace NINA.ViewModel {
                 }
 
                 token.ThrowIfCancellationRequested();
-                CalculateTrends();
+
+                TrendlineFitting = new TrendlineFitting().Calculate(FocusPoints);
+
                 if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR) {
-                    if (FocusPoints.Count() >= 3 && (profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.PARABOLIC || profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.TRENDPARABOLIC)) { CalculateQuadraticFitting(); }
-                    if (FocusPoints.Count() >= 3 && (profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.HYPERBOLIC || profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.TRENDHYPERBOLIC)) { CalculateHyperbolicFitting(); }
+                    if (FocusPoints.Count() >= 3
+                        && (profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.PARABOLIC
+                        || profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.TRENDPARABOLIC)) {
+                        QuadraticFitting = new QuadraticFitting().Calculate(FocusPoints);
+                    }
+                    if (FocusPoints.Count() >= 3
+                        && (profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.HYPERBOLIC
+                        || profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.TRENDHYPERBOLIC)) {
+                        HyperbolicFitting = new HyperbolicFitting().Calculate(FocusPoints);
+                    }
                 } else if (FocusPoints.Count() >= 3) {
-                    CalculateGaussianFitting();
+                    GaussianFitting = new GaussianFitting().Calculate(FocusPoints);
                 }
             }
         }
@@ -437,163 +376,6 @@ namespace NINA.ViewModel {
             return true;
         }
 
-        /// <summary>
-        /// Calculate HFR from position and perfectfocusposition using hyperbola parameters
-        /// The HFR of the imaged star disk as function of the focuser position can be described as hyperbola
-        /// A hyperbola is defined as:
-        /// x=b*sinh(t)
-        /// y=a*cosh(t)
-        /// Using the arccosh and arsinh functions it is possible to inverse
-        /// above calculations and convert x=>t and t->y or y->t and t->x
-        /// </summary>
-        /// <param name="position">Current focuser position</param>
-        /// <param name="perfectFocusPosition">Focuser position where HFR is lowest</param>
-        /// <param name="a">Hyperbola parameter a, lowest HFR value at focus position</param>
-        /// <param name="b">Hyperbola parameter b, defining the asymptotes, y = +-x*a/b</param>
-        /// <returns></returns>
-        private double HyperbolicFittingHfrCalc(double position, double perfectFocusPosition, double a, double b) {
-            double x = perfectFocusPosition - position;
-            double t = MathHelper.HArcsin(x / b); //calculate t-position in hyperbola
-            return a * MathHelper.HCos(t); //convert t-position to y/hfd value
-        }
-
-        private double ScaledErrorHyperbola(double perfectFocusPosition, double a, double b) {
-            return Math.Sqrt(FocusPoints.Sum((dp) => Math.Pow((HyperbolicFittingHfrCalc(dp.X, perfectFocusPosition, a, b) - dp.Y) / dp.ErrorY, 2)));
-        }
-
-        /// <summary>
-        /// The routine will try to find the best hyperbola curve fit. The focuser position p at the hyperbola minimum is the expected best focuser position
-        /// The FocusPoints List will be used as input to the fitting
-        /// </summary>
-        private void CalculateHyperbolicFitting() {
-            double error1, oldError, pRange, aRange, bRange, highestHfr, lowestHfr, highestPosition, lowestPosition, a, b, p, a1, b1, p1, a0, b0, p0;
-            double lowestError = double.MaxValue; //scaled RMS (square root of the mean square) of the HFD errors after curve fitting
-            int n = FocusPoints.Count();
-            ScatterErrorPoint lowestPoint = FocusPoints.Where((dp) => dp.Y >= 0.1).Aggregate((l, r) => l.Y < r.Y ? l : r); // Get lowest non-zero datapoint
-            ScatterErrorPoint highestPoint = FocusPoints.Aggregate((l, r) => l.Y > r.Y ? l : r); // Get highest datapoint
-            highestPosition = highestPoint.X;
-            highestHfr = highestPoint.Y;
-            lowestPosition = lowestPoint.X;
-            lowestHfr = lowestPoint.Y;
-            oldError = double.MaxValue;
-
-            if (highestPosition < lowestPosition) { highestPosition = 2 * lowestPosition - highestPosition; } // Always go up
-
-            //get good starting values for a, b and p
-            a = lowestHfr; // a is near the lowest HFR value
-            //Alternative hyperbola formula: sqr(y)/sqr(a)-sqr(x)/sqr(b)=1 ==>  sqr(b)=sqr(x)*sqr(a)/(sqr(y)-sqr(a)
-            b = Math.Sqrt((highestPosition - lowestPosition) * (highestPosition - lowestPosition) * a * a / (highestHfr * highestHfr - a * a));
-            p = lowestPosition;
-
-            int iterationCycles = 0; //how many cycles where used for curve fitting
-
-            //set starting test range
-            aRange = a;
-            bRange = b;
-            pRange = highestPosition - lowestPosition; //large steps since slope could contain some error
-
-            do {
-                p0 = p;
-                b0 = b;
-                a0 = a;
-
-                //Reduce range by 50%
-                aRange = aRange * 0.5;
-                bRange = bRange * 0.5;
-                pRange = pRange * 0.5;
-
-                p1 = p0 - pRange; //Start value
-
-                while (p1 <= p0 + pRange) { //Position loop
-                    a1 = a0 - aRange; //Start value
-                    while (a1 <= a0 + aRange) { //a loop
-                        b1 = b0 - bRange; // Start value
-                        while (b1 <= b0 + bRange) { //b loop
-                            error1 = ScaledErrorHyperbola(p1, a1, b1);
-                            if (error1 < lowestError) { //Better position found
-                                oldError = lowestError;
-                                lowestError = error1;
-                                //Best value up to now
-                                a = a1;
-                                b = b1;
-                                p = p1;
-                            }
-                            b1 = b1 + bRange * 0.1; //do 20 steps within range, many steps guarantees convergence
-                        }
-                        a1 = a1 + aRange * 0.1; //do 20 steps within range
-                    }
-                    p1 = p1 + pRange * 0.1; //do 20 steps within range
-                }
-                iterationCycles++;
-            } while (oldError - lowestError >= 0.0001 && lowestError > 0.0001 && iterationCycles < 30);
-            HyperbolicFitting = (x) => a * MathHelper.HCos(MathHelper.HArcsin((p - x) / b));
-            HyperbolicMinimum = new DataPoint((int)Math.Round(p), a);
-        }
-
-        private void CalculateGaussianFitting() {
-            double[][] inputs = Accord.Math.Matrix.ToJagged(FocusPoints.ToList().ConvertAll((dp) => dp.X).ToArray());
-            double[] outputs = FocusPoints.ToList().ConvertAll((dp) => dp.Y).ToArray();
-
-            ScatterErrorPoint lowestPoint = FocusPoints.Where((dp) => dp.Y >= 0.1).Aggregate((l, r) => l.Y < r.Y ? l : r); // Get lowest non-zero datapoint
-            ScatterErrorPoint highestPoint = FocusPoints.Aggregate((l, r) => l.Y > r.Y ? l : r); // Get highest datapoint
-            double highestPosition = highestPoint.X;
-            double highestContrast = highestPoint.Y;
-            double lowestPosition = lowestPoint.X;
-            double lowestContrast = lowestPoint.Y;
-            double sigma = Accord.Statistics.Measures.StandardDeviation(FocusPoints.ToList().ConvertAll((dp) => dp.X).ToArray());
-
-            var nls = new NonlinearLeastSquares() {
-                NumberOfParameters = 4,
-                StartValues = new[] { highestPosition, sigma, highestContrast, lowestContrast },
-                Function = (w, x) => w[2] * Math.Exp(-1 * (x[0] - w[0]) * (x[0] - w[0]) / (2 * w[1] * w[1])) + w[3],
-                Gradient = (w, x, r) => {
-                    r[0] = w[2] * (x[0] - w[0]) * Math.Exp(-1 * (x[0] - w[0]) * (x[0] - w[0]) / (2 * w[1] * w[1])) / (w[1] * w[1]);
-                    r[1] = w[2] * (x[0] - w[0]) * (x[0] - w[0]) * Math.Exp(-1 * (x[0] - w[0]) * (x[0] - w[0]) / (2 * w[1] * w[1])) / (w[1] * w[1] * w[1]);
-                    r[2] = Math.Exp(-1 * (x[0] - w[0]) * (x[0] - w[0]) / (2 * w[1] * w[1]));
-                    r[3] = 1;
-                },
-                Algorithm = new Accord.Math.Optimization.LevenbergMarquardt() {
-                    MaxIterations = 30,
-                    Tolerance = 0
-                }
-            };
-
-            var regression = nls.Learn(inputs, outputs);
-            GaussianFitting = (x) => regression.Coefficients[2] * Math.Exp(-1 * (x - regression.Coefficients[0]) * (x - regression.Coefficients[0]) / (2 * regression.Coefficients[1] * regression.Coefficients[1])) + regression.Coefficients[3];
-            GaussianMaximum = new DataPoint((int)Math.Round(regression.Coefficients[0]), regression.Coefficients[2] + regression.Coefficients[3]);
-        }
-
-        private void CalculateTrendLineIntersection() {
-            //Get Trendline Intersection
-            TrendLineIntersection = LeftTrend.Intersect(RightTrend);
-        }
-
-        private void CalculateQuadraticFitting() {
-            var fitting = new PolynomialLeastSquares() { Degree = 2 };
-            PolynomialRegression poly = fitting.Learn(FocusPoints.Select((dp) => dp.X).ToArray(), FocusPoints.Select((dp) => dp.Y).ToArray(), FocusPoints.Select((dp) => 1 / (dp.ErrorY * dp.ErrorY)).ToArray());
-            QuadraticFitting = (x) => (poly.Weights[0] * x * x + poly.Weights[1] * x + poly.Intercept);
-            int minimumX = (int)Math.Round(poly.Weights[1] / (2 * poly.Weights[0]) * -1);
-            double minimumY = QuadraticFitting(minimumX);
-            QuadraticMinimum = new DataPoint(minimumX, minimumY);
-        }
-
-        private void CalculateTrends() {
-            if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR) {
-                //Get the minimum based on HFR and Error, rather than just HFR. This ensures 0 HFR is never used, and low HFR / High error numbers are also ignored
-                _minimum = FocusPoints.Aggregate((l, r) => l.Y + l.ErrorY < r.Y + r.ErrorY ? l : r);
-                IEnumerable<ScatterErrorPoint> leftTrendPoints = FocusPoints.Where((x) => x.X < _minimum.X && x.Y > (_minimum.Y + 0.1));
-                IEnumerable<ScatterErrorPoint> rightTrendPoints = FocusPoints.Where((x) => x.X > _minimum.X && x.Y > (_minimum.Y + 0.1));
-                LeftTrend = new TrendLine(leftTrendPoints);
-                RightTrend = new TrendLine(rightTrendPoints);
-            } else {
-                _maximum = FocusPoints.Aggregate((l, r) => l.Y - l.ErrorY > r.Y - r.ErrorY ? l : r);
-                IEnumerable<ScatterErrorPoint> leftTrendPoints = FocusPoints.Where((x) => x.X < _maximum.X && x.Y < (_maximum.Y - 0.01));
-                IEnumerable<ScatterErrorPoint> rightTrendPoints = FocusPoints.Where((x) => x.X > _maximum.X && x.Y < (_maximum.Y - 0.01));
-                LeftTrend = new TrendLine(leftTrendPoints);
-                RightTrend = new TrendLine(rightTrendPoints);
-            }
-        }
-
         private async Task<MeasureAndError> GetAverageMeasurement(FilterInfo filter, int exposuresPerFocusPoint, CancellationToken token, IProgress<ApplicationStatus> progress) {
             //Average HFR  of multiple exposures (if configured this way)
             double sumMeasure = 0;
@@ -614,14 +396,10 @@ namespace NINA.ViewModel {
             Logger.Trace("Starting Autofocus");
             FocusPoints.Clear();
             PlotFocusPoints.Clear();
-            LeftTrend = null;
-            RightTrend = null;
-            _minimum = new ScatterErrorPoint(0, 0, 0, 0);
-            TrendLineIntersection = new DataPoint(0, 0);
+            TrendlineFitting = null;
             QuadraticFitting = null;
-            QuadraticMinimum = new DataPoint(0, 0);
             HyperbolicFitting = null;
-            HyperbolicMinimum = new DataPoint(0, 0);
+            GaussianFitting = null;
             FinalFocusPoint = new DataPoint(0, 0);
             int numberOfAttempts = 0;
             int initialFocusPosition = focuserInfo.Position;
@@ -692,7 +470,7 @@ namespace NINA.ViewModel {
 
                     var laststeps = offset;
 
-                    int leftcount = LeftTrend.DataPoints.Count(), rightcount = RightTrend.DataPoints.Count();
+                    int leftcount = TrendlineFitting.LeftTrend.DataPoints.Count(), rightcount = TrendlineFitting.RightTrend.DataPoints.Count();
                     //When datapoints are not sufficient analyze and take more
                     do {
                         if (leftcount == 0 && rightcount == 0) {
@@ -704,7 +482,7 @@ namespace NINA.ViewModel {
                         }
 
                         // Let's keep moving in, one step at a time, until we have enough left trend points. Then we can think about moving out to fill in the right trend points
-                        if (LeftTrend.DataPoints.Count() < offsetSteps && FocusPoints.Where(dp => dp.X < _minimum.X && dp.Y == 0).Count() < offsetSteps) {
+                        if (TrendlineFitting.LeftTrend.DataPoints.Count() < offsetSteps && FocusPoints.Where(dp => dp.X < TrendlineFitting.Minimum.X && dp.Y == 0).Count() < offsetSteps) {
                             Logger.Trace("More datapoints needed to the left of the minimum");
                             //Move to the leftmost point - this should never be necessary since we're already there, but just in case
                             if (focuserInfo.Position != (int)Math.Round(FocusPoints.FirstOrDefault().X)) {
@@ -712,7 +490,7 @@ namespace NINA.ViewModel {
                             }
                             //More points needed to the left
                             await GetFocusPoints(filter, 1, progress, token, -1);
-                        } else if (RightTrend.DataPoints.Count() < offsetSteps && FocusPoints.Where(dp => dp.X > _minimum.X && dp.Y == 0).Count() < offsetSteps) { //Now we can go to the right, if necessary
+                        } else if (TrendlineFitting.RightTrend.DataPoints.Count() < offsetSteps && FocusPoints.Where(dp => dp.X > TrendlineFitting.Minimum.X && dp.Y == 0).Count() < offsetSteps) { //Now we can go to the right, if necessary
                             Logger.Trace("More datapoints needed to the right of the minimum");
                             //More points needed to the right. Let's get to the rightmost point, and keep going right one point at a time
                             if (focuserInfo.Position != (int)Math.Round(FocusPoints.LastOrDefault().X)) {
@@ -721,11 +499,11 @@ namespace NINA.ViewModel {
                             await GetFocusPoints(filter, 1, progress, token, 1);
                         }
 
-                        leftcount = LeftTrend.DataPoints.Count();
-                        rightcount = RightTrend.DataPoints.Count();
+                        leftcount = TrendlineFitting.LeftTrend.DataPoints.Count();
+                        rightcount = TrendlineFitting.RightTrend.DataPoints.Count();
 
                         token.ThrowIfCancellationRequested();
-                    } while (rightcount + FocusPoints.Where(dp => dp.X > _minimum.X && dp.Y == 0).Count() < offsetSteps || leftcount + FocusPoints.Where(dp => dp.X < _minimum.X && dp.Y == 0).Count() < offsetSteps);
+                    } while (rightcount + FocusPoints.Where(dp => dp.X > TrendlineFitting.Minimum.X && dp.Y == 0).Count() < offsetSteps || leftcount + FocusPoints.Where(dp => dp.X < TrendlineFitting.Minimum.X && dp.Y == 0).Count() < offsetSteps);
 
                     token.ThrowIfCancellationRequested();
 
@@ -749,14 +527,10 @@ namespace NINA.ViewModel {
                             Logger.Warning("Potentially bad auto-focus. Reattempting.");
                             FocusPoints.Clear();
                             PlotFocusPoints.Clear();
-                            LeftTrend = null;
-                            RightTrend = null;
-                            _minimum = new ScatterErrorPoint(0, 0, 0, 0);
-                            TrendLineIntersection = new DataPoint(0, 0);
+                            TrendlineFitting = null;
                             QuadraticFitting = null;
-                            QuadraticMinimum = new DataPoint(0, 0);
                             HyperbolicFitting = null;
-                            HyperbolicMinimum = new DataPoint(0, 0);
+                            GaussianFitting = null;
                             FinalFocusPoint = new DataPoint(0, 0);
                             reattempt = true;
                         } else {
@@ -810,37 +584,40 @@ namespace NINA.ViewModel {
             using (MyStopWatch.Measure()) {
                 var method = profileService.ActiveProfile.FocuserSettings.AutoFocusMethod;
 
-                CalculateTrendLineIntersection();
-                CalculateHyperbolicFitting();
-                CalculateQuadraticFitting();
-                CalculateGaussianFitting();
+                TrendlineFitting = new TrendlineFitting().Calculate(FocusPoints);
+
+                HyperbolicFitting = new HyperbolicFitting().Calculate(FocusPoints);
+
+                QuadraticFitting = new QuadraticFitting().Calculate(FocusPoints);
+
+                GaussianFitting = new GaussianFitting().Calculate(FocusPoints);
 
                 if (method == AFMethodEnum.STARHFR) {
                     var fitting = profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting;
                     if (fitting == Utility.Enum.AFCurveFittingEnum.TRENDLINES) {
-                        return TrendLineIntersection;
+                        return TrendlineFitting.Intersection;
                     }
 
                     if (fitting == Utility.Enum.AFCurveFittingEnum.HYPERBOLIC) {
-                        return HyperbolicMinimum;
+                        return HyperbolicFitting.Minimum;
                     }
 
                     if (fitting == Utility.Enum.AFCurveFittingEnum.PARABOLIC) {
-                        return QuadraticMinimum;
+                        return QuadraticFitting.Minimum;
                     }
 
                     if (fitting == Utility.Enum.AFCurveFittingEnum.TRENDPARABOLIC) {
-                        return new DataPoint(Math.Round((TrendLineIntersection.X + QuadraticMinimum.X) / 2), (TrendLineIntersection.Y + QuadraticMinimum.Y) / 2);
+                        return new DataPoint(Math.Round((TrendlineFitting.Intersection.X + QuadraticFitting.Minimum.X) / 2), (TrendlineFitting.Intersection.Y + QuadraticFitting.Minimum.Y) / 2);
                     }
 
                     if (fitting == Utility.Enum.AFCurveFittingEnum.TRENDHYPERBOLIC) {
-                        return new DataPoint(Math.Round((TrendLineIntersection.X + HyperbolicMinimum.X) / 2), (TrendLineIntersection.Y + HyperbolicMinimum.Y) / 2);
+                        return new DataPoint(Math.Round((TrendlineFitting.Intersection.X + HyperbolicFitting.Minimum.X) / 2), (TrendlineFitting.Intersection.Y + HyperbolicFitting.Minimum.Y) / 2);
                     }
 
                     Logger.Error($"Invalid AutoFocus Fitting {fitting} for method {method}");
                     return new DataPoint();
                 } else {
-                    return GaussianMaximum;
+                    return GaussianFitting.Maximum;
                 }
             }
         }
@@ -853,32 +630,22 @@ namespace NINA.ViewModel {
         private AutoFocusReport GenerateReport(double initialFocusPosition, double initialHFR) {
             try {
                 var method = profileService.ActiveProfile.FocuserSettings.AutoFocusMethod;
+                var fitting = profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting;
 
-                var report = new AutoFocusReport() {
-                    Timestamp = DateTime.Now,
-                    Temperature = focuserInfo.Temperature,
-                    InitialFocusPoint = new FocusPoint() {
-                        Position = initialFocusPosition,
-                        Value = initialHFR
-                    },
-                    CalculatedFocusPoint = new FocusPoint() {
-                        Position = FinalFocusPoint.X,
-                        Value = FinalFocusPoint.Y
-                    },
-                    PreviousFocusPoint = new FocusPoint() {
-                        Position = LastAutoFocusPoint?.Focuspoint.X ?? double.NaN,
-                        Value = LastAutoFocusPoint?.Focuspoint.Y ?? double.NaN
-                    },
-                    Method = method.ToString(),
-                    Fitting = method == AFMethodEnum.STARHFR ? profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting.ToString() : "GAUSSIAN",
-                    MeasurePoints = FocusPoints.Select(x => new FocusPoint() { Position = x.X, Value = x.Y, Error = x.ErrorY }),
-                    Intersections = new Intersections() {
-                        TrendLineIntersection = new FocusPoint() { Position = TrendLineIntersection.X, Value = TrendLineIntersection.Y },
-                        GaussianMaximum = new FocusPoint() { Position = GaussianMaximum.X, Value = GaussianMaximum.Y },
-                        HyperbolicMinimum = new FocusPoint() { Position = HyperbolicMinimum.X, Value = HyperbolicMinimum.Y },
-                        QuadraticMinimum = new FocusPoint() { Position = QuadraticMinimum.X, Value = QuadraticMinimum.Y }
-                    }
-                };
+                var report = AutoFocusReport.GenerateReport(
+                    FocusPoints,
+                    initialFocusPosition,
+                    initialHFR,
+                    FinalFocusPoint,
+                    LastAutoFocusPoint,
+                    method,
+                    fitting,
+                    TrendlineFitting,
+                    QuadraticFitting,
+                    HyperbolicFitting,
+                    GaussianFitting,
+                    focuserInfo.Temperature
+                );
 
                 File.WriteAllText(Path.Combine(ReportDirectory, DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss") + ".json"), JsonConvert.SerializeObject(report));
                 return report;
