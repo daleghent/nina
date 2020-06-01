@@ -156,9 +156,9 @@ namespace NINA.Profile {
         }
 
         public void RemoveGain(int gain, ICollection<FilterInfo> filters) {
-            var filterNames = filters?.Select(filter => filter.Name) ?? new List<string> { null };
+            var filterNames = filters?.Select(filter => filter?.Position) ?? new List<short?> { null };
             var keysToRemove = FilterSettings.Keys
-                .Where(key => key.Gain == gain && filterNames.Contains(key.FilterName)).ToList();
+                .Where(key => key.Gain == gain && filterNames.Contains(key.Position)).ToList();
 
             foreach (var key in keysToRemove) {
                 FilterSettings.Remove(key);
@@ -167,15 +167,15 @@ namespace NINA.Profile {
         }
 
         public void RemoveBinning(BinningMode binning, ICollection<FilterInfo> filters) {
-            var filterNames = filters?.Select(filter => filter.Name).ToList() ?? new List<string> { null };
+            var filterNames = filters?.Select(filter => filter?.Position).ToList() ?? new List<short?> { null };
             var keysToRemove = new List<FlatDeviceFilterSettingsKey>();
             foreach (var key in FilterSettings.Keys) {
                 switch (key.Binning) {
-                    case null when binning is null && filterNames.Contains(key.FilterName):
+                    case null when binning is null && filterNames.Contains(key.Position):
                         keysToRemove.Add(key);
                         break;
 
-                    case BinningMode mode when mode.Equals(binning) && filterNames.Contains(key.FilterName):
+                    case BinningMode mode when mode.Equals(binning) && filterNames.Contains(key.Position):
                         keysToRemove.Add(key);
                         break;
                 }

@@ -225,7 +225,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
                 ?.ActiveProfile?.FlatDeviceSettings?.GetBrightnessInfoBinnings()
                 ?.OrderBy(mode => mode?.Name ?? "").FirstOrDefault();
 
-            var key = new FlatDeviceFilterSettingsKey(Filters.FirstOrDefault()?.Name, binning, gain);
+            var key = new FlatDeviceFilterSettingsKey(Filters.FirstOrDefault()?.Position, binning, gain);
             var value = new FlatDeviceFilterSettingsValue(1d, 1d);
             profileService?.ActiveProfile?.FlatDeviceSettings?.AddBrightnessInfo(key, value);
             _wizardGrid = GetWizardValueBlocks();
@@ -236,7 +236,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             if (!(binning is BinningMode)) return;
             var gain = Gains.FirstOrDefault();
 
-            var key = new FlatDeviceFilterSettingsKey(Filters.FirstOrDefault()?.Name,
+            var key = new FlatDeviceFilterSettingsKey(Filters.FirstOrDefault()?.Position,
                 (BinningMode)binning, gain);
             var value = new FlatDeviceFilterSettingsValue(1d, 1d);
             profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(key, value);
@@ -421,7 +421,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
                 block.Binning = binningMode?.Name ?? Loc.Instance["LblNone"];
                 var column = new WizardGridColumn { ColumnNumber = counter, Header = $"{Loc.Instance["LblFilter"]}" };
                 foreach (var filter in Filters) {
-                    var key = new FlatDeviceFilterSettingsKey(filter.Name, null, 0);
+                    var key = new FlatDeviceFilterSettingsKey(filter.Position, null, 0);
                     column.Settings.Add(new FilterTiming(0d, 0d, profileService, key, true, false));
                 }
                 block.Columns.Add(column);
@@ -430,7 +430,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
                 foreach (var gain in Gains) {
                     column = new WizardGridColumn { ColumnNumber = counter, Header = $"{Loc.Instance["LblGain"]} {gain}" };
                     foreach (var filter in Filters) {
-                        var key = new FlatDeviceFilterSettingsKey(filter.Name, binningMode, gain);
+                        var key = new FlatDeviceFilterSettingsKey(filter.Position, binningMode, gain);
                         var value = profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(key);
                         atLeastOneValue |= value != null;
                         column.Settings.Add(value != null
