@@ -18,7 +18,6 @@ using NINA.ViewModel.Equipment.FlatDevice;
 using NUnit.Framework;
 
 namespace NINATest.FlatDevice {
-
     [TestFixture]
     public class FilterTimingTest {
         private Mock<IProfileService> _mockProfileService;
@@ -40,33 +39,13 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        public void TestDoNotStoreIfTimeIsZero() {
-            var sut = new FilterTiming(0d, 0d, _mockProfileService.Object, _key, false, true);
-            _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings).Returns(_mockSettings.Object);
-
-            sut.Brightness = BRIGHTNESS;
-            _mockSettings.Verify(m =>
-                m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Never);
-            Assert.That(sut.IsEmpty, Is.True);
-        }
-
-        [Test]
-        public void TestDoNotStoreIfBrightnessIsZero() {
-            var sut = new FilterTiming(0d, 0d, _mockProfileService.Object, _key, false, true);
-            _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings).Returns(_mockSettings.Object);
-
-            sut.Time = TIME;
-            _mockSettings.Verify(m =>
-                m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Never);
-            Assert.That(sut.IsEmpty, Is.True);
-        }
-
-        [Test]
-        public void TestStoreIfTimeIsNotZero() {
+        public void TestStoreBrightness() {
             FlatDeviceFilterSettingsKey keyUsed = null;
             FlatDeviceFilterSettingsValue valueUsed = null;
-            var sut = new FilterTiming(0d, TIME, _mockProfileService.Object, _key, false, false);
+            var sut = new FilterTiming(_mockProfileService.Object, _key, false);
             _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings).Returns(_mockSettings.Object);
+            _mockSettings.Setup(m => m.GetBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>()))
+                .Returns(new FlatDeviceFilterSettingsValue(BRIGHTNESS, TIME));
             _mockSettings.Setup(m =>
                     m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(),
                         It.IsAny<FlatDeviceFilterSettingsValue>()))
@@ -84,11 +63,13 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        public void TestStoreIfBrightnessIsNotZero() {
+        public void TestStoreTime() {
             FlatDeviceFilterSettingsKey keyUsed = null;
             FlatDeviceFilterSettingsValue valueUsed = null;
-            var sut = new FilterTiming(BRIGHTNESS, 0d, _mockProfileService.Object, _key, false, false);
+            var sut = new FilterTiming(_mockProfileService.Object, _key, false);
             _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings).Returns(_mockSettings.Object);
+            _mockSettings.Setup(m => m.GetBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>()))
+                .Returns(new FlatDeviceFilterSettingsValue(BRIGHTNESS, TIME));
             _mockSettings.Setup(m =>
                     m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(),
                         It.IsAny<FlatDeviceFilterSettingsValue>()))

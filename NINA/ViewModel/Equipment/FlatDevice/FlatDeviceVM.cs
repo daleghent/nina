@@ -30,19 +30,15 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace NINA.ViewModel.Equipment.FlatDevice {
-
-    internal class FlatDeviceVM : DockableVM, IFlatDeviceVM, IFilterWheelConsumer {
+    internal class FlatDeviceVM : DockableVM, IFlatDeviceVM {
         private IFlatDevice _flatDevice;
         private IFlatDeviceSettings _flatDeviceSettings;
         private readonly IApplicationStatusMediator _applicationStatusMediator;
-        private readonly IFilterWheelMediator _filterWheelMediator;
         private readonly IFlatDeviceMediator _flatDeviceMediator;
         private readonly DeviceUpdateTimer _updateTimer;
 
-        public FlatDeviceVM(IProfileService profileService, IFlatDeviceMediator flatDeviceMediator, IApplicationStatusMediator applicationStatusMediator, IFilterWheelMediator filterWheelMediator) : base(profileService) {
+        public FlatDeviceVM(IProfileService profileService, IFlatDeviceMediator flatDeviceMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             _applicationStatusMediator = applicationStatusMediator;
-            _filterWheelMediator = filterWheelMediator;
-            _filterWheelMediator.RegisterConsumer(this);
             _flatDeviceMediator = flatDeviceMediator;
             _flatDeviceMediator.RegisterHandler(this);
 
@@ -70,15 +66,31 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             );
 
             _flatDeviceSettings = profileService.ActiveProfile.FlatDeviceSettings;
-            _flatDeviceSettings.PropertyChanged += SettingsChanged;
-            profileService.ProfileChanged += (object sender, EventArgs e) => {
-                _flatDeviceSettings.PropertyChanged -= SettingsChanged;
-                RefreshFlatDeviceList(null);
-                _flatDeviceSettings = profileService.ActiveProfile.FlatDeviceSettings;
-                _flatDeviceSettings.PropertyChanged += SettingsChanged;
-                _wizardGrid = GetWizardValueBlocks();
-                RaiseWizardValuesChanged();
-            };
+            _flatDeviceSettings.PropertyChanged += FlatDeviceSettingsChanged;
+            profileService.ProfileChanged += ProfileChanged;
+            profileService.ActiveProfile.FilterWheelSettings.PropertyChanged += FilterWheelSettingsChanged;
+            UpdateWizardValueBlocks();
+        }
+
+        private void FlatDeviceSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            RaisePropertyChanged(nameof(Gains));
+            RaisePropertyChanged(nameof(BinningModes));
+            UpdateWizardValueBlocks();
+        }
+
+        private void FilterWheelSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            UpdateWizardValueBlocks();
+        }
+
+        private void ProfileChanged(object sender, EventArgs e) {
+            _flatDeviceSettings.PropertyChanged -= FlatDeviceSettingsChanged;
+            profileService.ActiveProfile.FilterWheelSettings.PropertyChanged += FilterWheelSettingsChanged;
+            RefreshFlatDeviceList(null);
+            _flatDeviceSettings = profileService.ActiveProfile.FlatDeviceSettings;
+            _flatDeviceSettings.PropertyChanged += FlatDeviceSettingsChanged;
+            RaisePropertyChanged(nameof(Gains));
+            RaisePropertyChanged(nameof(BinningModes));
+            UpdateWizardValueBlocks();
         }
 
         private void BroadcastFlatDeviceInfo() {
@@ -124,7 +136,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
                 }
 
                 _applicationStatusMediator.StatusUpdate(
-                    new ApplicationStatus() {
+                    new ApplicationStatus {
                         Source = Title,
                         Status = Loc.Instance["LblConnecting"]
                     }
@@ -162,7 +174,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
 
                         profileService.ActiveProfile.FlatDeviceSettings.Id = flatDevice.Id;
 
-                        Logger.Info(
+                        Logger.Trace(
                             $"Successfully connected Flatdevice. Id: {flatDevice.Id} Name: {flatDevice.Name} Driver Version: {flatDevice.DriverVersion}");
 
                         return true;
@@ -205,7 +217,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             _flatDevice = null;
             FlatDeviceInfo = DeviceInfo.CreateDefaultInstance<FlatDeviceInfo>();
             BroadcastFlatDeviceInfo();
-            Logger.Info("Disconnected Flat Device");
+            Logger.Trace("Disconnected Flat Device");
         }
 
         private async Task<bool> DisconnectFlatDeviceDialog() {
@@ -221,27 +233,30 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             if (!(o is string)) return;
             if (!int.TryParse((string)o, out var gain)) return;
             if (Gains.Contains(gain)) return;
-            var binning = profileService
-                ?.ActiveProfile?.FlatDeviceSettings?.GetBrightnessInfoBinnings()
+            var binning = profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings()
                 ?.OrderBy(mode => mode?.Name ?? "").FirstOrDefault();
+            var filters = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
+            if (filters.Count == 0) filters = new ObserveAllCollection<FilterInfo> { new FilterInfo() };
 
-            var key = new FlatDeviceFilterSettingsKey(Filters.FirstOrDefault()?.Position, binning, gain);
+            var key = new FlatDeviceFilterSettingsKey(filters.FirstOrDefault()?.Position, binning, gain);
             var value = new FlatDeviceFilterSettingsValue(1d, 1d);
-            profileService?.ActiveProfile?.FlatDeviceSettings?.AddBrightnessInfo(key, value);
-            _wizardGrid = GetWizardValueBlocks();
-            RaiseWizardValuesChanged();
+            profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(key, value);
+            RaisePropertyChanged(nameof(Gains));
+            UpdateWizardValueBlocks();
         }
 
         private void AddBinning(object binning) {
             if (!(binning is BinningMode)) return;
             var gain = Gains.FirstOrDefault();
+            var filters = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
+            if (filters.Count == 0) filters = new ObserveAllCollection<FilterInfo> { new FilterInfo() };
 
-            var key = new FlatDeviceFilterSettingsKey(Filters.FirstOrDefault()?.Position,
+            var key = new FlatDeviceFilterSettingsKey(filters.FirstOrDefault()?.Position,
                 (BinningMode)binning, gain);
             var value = new FlatDeviceFilterSettingsValue(1d, 1d);
             profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(key, value);
-            _wizardGrid = GetWizardValueBlocks();
-            RaiseWizardValuesChanged();
+            RaisePropertyChanged(nameof(BinningModes));
+            UpdateWizardValueBlocks();
         }
 
         private void DeleteGainDialog(object gain) {
@@ -251,9 +266,9 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
                 "", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No);
             if (dialog != System.Windows.MessageBoxResult.Yes) return;
 
-            profileService.ActiveProfile.FlatDeviceSettings.RemoveGain((int)gain, _filterWheelMediator.GetAllFilters());
-            _wizardGrid = GetWizardValueBlocks();
-            RaiseWizardValuesChanged();
+            profileService.ActiveProfile.FlatDeviceSettings.RemoveGain((int)gain);
+            RaisePropertyChanged(nameof(Gains));
+            UpdateWizardValueBlocks();
         }
 
         private void DeleteBinningDialog(object o) {
@@ -269,9 +284,10 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             var dialog = MyMessageBox.MyMessageBox.Show($"{Loc.Instance["LblFlatDeviceAreYouSureBinning"]} {binningMode}?",
                 "", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No);
             if (dialog != System.Windows.MessageBoxResult.Yes) return;
-            profileService.ActiveProfile.FlatDeviceSettings.RemoveBinning(binningMode, _filterWheelMediator.GetAllFilters());
-            _wizardGrid = GetWizardValueBlocks();
-            RaiseWizardValuesChanged();
+
+            profileService.ActiveProfile.FlatDeviceSettings.RemoveBinning(binningMode);
+            RaisePropertyChanged(nameof(BinningModes));
+            UpdateWizardValueBlocks();
         }
 
         private readonly SemaphoreSlim ssOpen = new SemaphoreSlim(1, 1);
@@ -375,74 +391,88 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             _flatDevice.LightOn = o is bool b && b;
         }
 
-        private FilterWheelInfo _filterWheelInfo;
-
-        public void UpdateDeviceInfo(FilterWheelInfo info) {
-            if (info == null) return;
-            if (info.Equals(_filterWheelInfo)) return;
-            _filterWheelInfo = info;
-            RaisePropertyChanged(nameof(Filters));
-            _wizardGrid = GetWizardValueBlocks();
-            RaiseWizardValuesChanged();
-        }
-
-        private void RaiseWizardValuesChanged() {
-            RaisePropertyChanged(nameof(WizardGrid));
-            RaisePropertyChanged(nameof(BinningModes));
-            RaisePropertyChanged(nameof(Gains));
-        }
-
-        private void SettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            _wizardGrid = GetWizardValueBlocks();
-            RaiseWizardValuesChanged();
-        }
-
-        private ObservableCollection<WizardValueBlock> _wizardGrid;
-        public ObservableCollection<WizardValueBlock> WizardGrid => _wizardGrid ?? (_wizardGrid = GetWizardValueBlocks());
+        public WizardGrid WizardGrid { get; } = new WizardGrid();
 
         public ObservableCollection<int> Gains =>
-            new ObservableCollection<int>(profileService?.ActiveProfile?.FlatDeviceSettings?.GetBrightnessInfoGains()?.OrderBy(g => g).ToList()
-                                          ?? new List<int>());
+                new ObservableCollection<int>(profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoGains()?
+                    .OrderBy(g => g)
+                    .ToList() ?? new List<int>());
 
-        public ICollection<FilterInfo> Filters =>
-            _filterWheelMediator?.GetAllFilters() ?? new List<FilterInfo> { new FilterInfo() };
+        public ObservableCollection<string> BinningModes =>
+                new ObservableCollection<string>(profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings()
+                    ?.OrderBy(mode => mode?.Name ?? "")
+                    .Select(mode => mode?.Name ?? Loc.Instance["LblNone"])
+                    .ToList() ?? new List<string>());
 
-        public ObservableCollection<string> BinningModes => new ObservableCollection<string>(profileService
-            ?.ActiveProfile?.FlatDeviceSettings?.GetBrightnessInfoBinnings()
-            ?.OrderBy(mode => mode?.Name ?? "").Select(mode => mode?.Name ?? Loc.Instance["LblNone"]).ToList() ?? new List<string>());
-
-        private ObservableCollection<WizardValueBlock> GetWizardValueBlocks() {
-            var result = new ObservableCollection<WizardValueBlock>();
-
-            foreach (var binningMode in profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings()) {
-                var block = new WizardValueBlock();
-                var counter = 0;
-
-                block.Binning = binningMode?.Name ?? Loc.Instance["LblNone"];
-                var column = new WizardGridColumn { ColumnNumber = counter, Header = $"{Loc.Instance["LblFilter"]}" };
-                foreach (var filter in Filters) {
-                    var key = new FlatDeviceFilterSettingsKey(filter.Position, null, 0);
-                    column.Settings.Add(new FilterTiming(0d, 0d, profileService, key, true, false));
-                }
-                block.Columns.Add(column);
-                counter++;
-                var atLeastOneValue = false;
-                foreach (var gain in Gains) {
-                    column = new WizardGridColumn { ColumnNumber = counter, Header = $"{Loc.Instance["LblGain"]} {gain}" };
-                    foreach (var filter in Filters) {
-                        var key = new FlatDeviceFilterSettingsKey(filter.Position, binningMode, gain);
-                        var value = profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(key);
-                        atLeastOneValue |= value != null;
-                        column.Settings.Add(value != null
-                            ? new FilterTiming(value.Brightness, value.Time, profileService, key, false, false)
-                            : new FilterTiming(0d, 0d, profileService, key, false, true));
-                    }
-                    block.Columns.Add(column);
-                    counter++;
-                }
-                if (atLeastOneValue) result.Add(block);
+        private void UpdateWizardValueBlocks() {
+            var binningModes = profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings()
+                ?.OrderBy(m => m?.Name ?? "");
+            var existingBlocks = WizardGrid.Blocks.ToList();
+            if (binningModes == null) {
+                WizardGrid.RemoveBlocks(existingBlocks);
+                RaisePropertyChanged(nameof(WizardGrid));
+                return;
             }
-            return result;
+
+            foreach (var binningMode in binningModes) {
+                var block = WizardGrid.Blocks.FirstOrDefault(b => Equals(b?.Binning, binningMode));
+                if (block == null) {
+                    block = new WizardValueBlock { Binning = binningMode };
+                    WizardGrid.AddBlock(block);
+                } else {
+                    existingBlocks.Remove(block);
+                }
+
+                var filters = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
+                if (filters.Count == 0) filters = new ObserveAllCollection<FilterInfo> { null };
+                var existingColumns = block.Columns.ToList();
+
+                //filter name column
+                FindOrCreateColumnAndUpdateRows(block, ref existingColumns, filters, binningMode, 0, -1, true);
+
+                //gain columns
+                var newGains =
+                profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoGains()?.OrderBy(g => g)
+                    .ToList() ?? new List<int>();
+                for (var i = 1; i <= newGains.Count; i++) {
+                    FindOrCreateColumnAndUpdateRows(block, ref existingColumns, filters, binningMode, i, newGains[i - 1], false);
+                }
+                block.RemoveColumns(existingColumns);
+            }
+            WizardGrid.RemoveBlocks(existingBlocks);
+            RaisePropertyChanged(nameof(WizardGrid));
+        }
+
+        private void FindOrCreateColumnAndUpdateRows(WizardValueBlock block, ref List<WizardGridColumn> existingColumns,
+                IEnumerable<FilterInfo> filters, BinningMode binningMode, int newColumnNumber, int gain, bool isFilterNameColumn) {
+            var column = isFilterNameColumn
+                ? block.Columns.FirstOrDefault(c => c?.ColumnNumber == 0)
+                : block.Columns.FirstOrDefault(c => c?.Gain == gain);
+            if (column == null) {
+                column = isFilterNameColumn
+                    ? new WizardGridColumn { ColumnNumber = 0, Header = $"{Loc.Instance["LblFilter"]}", Gain = -1 }
+                    : new WizardGridColumn { ColumnNumber = newColumnNumber, Header = null, Gain = gain };
+                block.AddColumn(column);
+            } else {
+                column.ColumnNumber = newColumnNumber;
+                column.RaiseChanged();
+                existingColumns.Remove(column);
+            }
+            var existingFilterKeys = column.Settings?.Select(s => s.Key).ToList();
+            var newFilterKeys = filters.Select(f => new FlatDeviceFilterSettingsKey(f?.Position, binningMode, isFilterNameColumn ? 0 : gain))
+                .ToList();
+
+            foreach (var key in newFilterKeys) {
+                var timing = column.Settings?.FirstOrDefault(s => Equals(s.Key, key));
+                if (timing == null) {
+                    timing = new FilterTiming(profileService, key, isFilterNameColumn);
+                    column.AddFilterTiming(timing);
+                } else {
+                    timing.RaiseChanged();
+                    existingFilterKeys?.Remove(key);
+                }
+            }
+            column.RemoveFilterTimingByKeys(existingFilterKeys);
         }
 
         public ICommand RefreshFlatDeviceListCommand { get; }
@@ -459,7 +489,6 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
         public ICommand DeleteBinningCommand { get; }
 
         public void Dispose() {
-            _filterWheelMediator.RemoveConsumer(this);
         }
     }
 }

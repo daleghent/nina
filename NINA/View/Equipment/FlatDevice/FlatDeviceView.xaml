@@ -306,6 +306,7 @@
                             Visibility="{Binding FlatDeviceInfo.Connected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
 
                             <TextBlock Text="{ns:Loc LblFlatDeviceUseWizardTrainedValues}" />
+
                             <CheckBox
                                 Width="120"
                                 Height="25"
@@ -335,6 +336,7 @@
                         Margin="5,0,5,0"
                         HorizontalAlignment="Center"
                         Orientation="Horizontal">
+
                         <TextBlock
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
@@ -363,21 +365,34 @@
                             Margin="5,0,5,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            Text="{Binding Key.FilterName}"
-                            Visibility="{Binding Key.FilterName, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
+                            Text="{Binding FilterName}"
+                            Visibility="{Binding Key.Position, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
                         <TextBlock
                             Margin="5,0,5,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Text="{ns:Loc LblNoFilterwheel}"
-                            Visibility="{Binding Key.FilterName, Converter={StaticResource InverseNullToVisibilityConverter}}" />
+                            Visibility="{Binding Key.Position, Converter={StaticResource InverseNullToVisibilityCollapsedConverter}}" />
                     </StackPanel>
                 </DataTemplate>
                 <DataTemplate x:Key="HeaderTemplate">
-                    <TextBlock
-                        Margin="5,0,5,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding Path=DataContext.Header, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" />
+                    <StackPanel VerticalAlignment="Center">
+                        <TextBlock
+                            Margin="5,0,5,0"
+                            VerticalAlignment="Center"
+                            Text="{Binding Path=DataContext.Header, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                            Visibility="{Binding Path=DataContext.Header, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
+                        <StackPanel Orientation="Horizontal" Visibility="{Binding Path=DataContext.Header, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Converter={StaticResource InverseNullToVisibilityCollapsedConverter}}">
+                            <TextBlock
+                                Margin="5,0,5,0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblGain}" />
+                            <TextBlock
+                                Margin="5,0,5,0"
+                                VerticalAlignment="Center"
+                                Text="{Binding Path=DataContext.Gain, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}" />
+                        </StackPanel>
+                    </StackPanel>
                 </DataTemplate>
                 <DataTemplate x:Key="EmptyCellTemplate">
                     <TextBlock
@@ -402,7 +417,7 @@
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <ItemsControl Grid.Row="0" ItemsSource="{Binding WizardGrid}">
+                    <ItemsControl Grid.Row="0" ItemsSource="{Binding WizardGrid.Blocks}">
                         <ItemsControl.Template>
                             <ControlTemplate TargetType="{x:Type ItemsControl}">
                                 <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
@@ -426,7 +441,8 @@
                                                 Orientation="Horizontal">
                                                 <TextBlock Text="{ns:Loc LblBinning}" />
                                                 <TextBlock Text=" " />
-                                                <TextBlock Text="{Binding Binning}" />
+                                                <TextBlock Text="{Binding Binning}" Visibility="{Binding Path=Binning, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
+                                                <TextBlock Text="{ns:Loc LblNone}" Visibility="{Binding Path=Binning, Converter={StaticResource InverseNullToVisibilityCollapsedConverter}}" />
                                             </StackPanel>
                                             <ItemsControl ItemsSource="{Binding Columns}">
                                                 <ItemsControl.ItemsPanel>

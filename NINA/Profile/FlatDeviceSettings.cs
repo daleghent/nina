@@ -20,11 +20,9 @@ using System.Runtime.Serialization;
 using NINA.Model.MyFilterWheel;
 
 namespace NINA.Profile {
-
-    [Serializable()]
+    [Serializable]
     [DataContract]
     internal class FlatDeviceSettings : Settings, IFlatDeviceSettings {
-
         public FlatDeviceSettings() {
             FilterSettings = new Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue>();
         }
@@ -155,10 +153,9 @@ namespace NINA.Profile {
             return result.Distinct();
         }
 
-        public void RemoveGain(int gain, ICollection<FilterInfo> filters) {
-            var filterNames = filters?.Select(filter => filter?.Position) ?? new List<short?> { null };
+        public void RemoveGain(int gain) {
             var keysToRemove = FilterSettings.Keys
-                .Where(key => key.Gain == gain && filterNames.Contains(key.Position)).ToList();
+                                                .Where(key => key.Gain == gain).ToList();
 
             foreach (var key in keysToRemove) {
                 FilterSettings.Remove(key);
@@ -166,20 +163,9 @@ namespace NINA.Profile {
             RaisePropertyChanged(nameof(FilterSettings));
         }
 
-        public void RemoveBinning(BinningMode binning, ICollection<FilterInfo> filters) {
-            var filterNames = filters?.Select(filter => filter?.Position).ToList() ?? new List<short?> { null };
-            var keysToRemove = new List<FlatDeviceFilterSettingsKey>();
-            foreach (var key in FilterSettings.Keys) {
-                switch (key.Binning) {
-                    case null when binning is null && filterNames.Contains(key.Position):
-                        keysToRemove.Add(key);
-                        break;
-
-                    case BinningMode mode when mode.Equals(binning) && filterNames.Contains(key.Position):
-                        keysToRemove.Add(key);
-                        break;
-                }
-            }
+        public void RemoveBinning(BinningMode binning) {
+            var keysToRemove = FilterSettings.Keys
+                                                .Where(key => Equals(key.Binning, binning)).ToList();
 
             foreach (var key in keysToRemove) {
                 FilterSettings.Remove(key);
@@ -188,18 +174,20 @@ namespace NINA.Profile {
         }
     }
 
-    [Serializable()]
+    [Serializable]
     [DataContract]
     public class FlatDeviceFilterSettingsKey {
+        [DataMember(IsRequired = false, EmitDefaultValue = false)]
+        public string FilterName { get; set; }
 
         [DataMember]
-        public short? Position { get; }
+        public short? Position { get; set; }
 
         [DataMember]
-        public BinningMode Binning { get; }
+        public BinningMode Binning { get; set; }
 
         [DataMember]
-        public int Gain { get; }
+        public int Gain { get; set; }
 
         public FlatDeviceFilterSettingsKey(short? position, BinningMode binning, int gain) {
             Position = position;
@@ -226,21 +214,18 @@ namespace NINA.Profile {
         }
 
         public override int GetHashCode() {
-            //see https://en.wikipedia.org/wiki/Hash_function
-            const int primeNumber = 397;
-            unchecked {
-                var hashCode = Position != null ? Position.GetHashCode() : 0;
-                hashCode = (hashCode * primeNumber) ^ (Binning != null ? Binning.GetHashCode() : 0);
-                hashCode = (hashCode * primeNumber) ^ Gain.GetHashCode();
-                return hashCode;
-            }
+            int hashCode = -1840063052;
+            hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(FilterName);
+            hashCode = hashCode * -1521134295 + Position.GetHashCode();
+            hashCode = hashCode * -1521134295 + EqualityComparer<BinningMode>.Default.GetHashCode(Binning);
+            hashCode = hashCode * -1521134295 + Gain.GetHashCode();
+            return hashCode;
         }
     }
 
-    [Serializable()]
+    [Serializable]
     [DataContract]
     public class FlatDeviceFilterSettingsValue {
-
         [DataMember]
         public double Brightness { get; set; }
 

@@ -18,6 +18,7 @@ using NINA.Model.MyCamera;
 using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFlatDevice;
 using NINA.Profile;
+using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Equipment.FlatDevice;
 using NUnit.Framework;
@@ -28,7 +29,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINATest.FlatDevice {
-
     [TestFixture]
     public class FlatDeviceVMTest {
         private FlatDeviceVM _sut;
@@ -37,39 +37,39 @@ namespace NINATest.FlatDevice {
         private Mock<IApplicationStatusMediator> _mockApplicationStatusMediator;
         private Mock<IFlatDevice> _mockFlatDevice;
         private Mock<IFlatDeviceChooserVM> _mockFlatDeviceChooserVM;
-        private Mock<IFilterWheelMediator> _mockFilterWheelMediator;
         private Mock<IFlatDeviceSettings> _mockFlatDeviceSettings;
+        private Mock<IFilterWheelSettings> _mockFilterWheelSettings;
 
         [OneTimeSetUp]
         public void OneTimeSetUp() {
             _mockProfileService = new Mock<IProfileService>();
             _mockFlatDeviceMediator = new Mock<IFlatDeviceMediator>();
-            _mockFilterWheelMediator = new Mock<IFilterWheelMediator>();
             _mockApplicationStatusMediator = new Mock<IApplicationStatusMediator>();
             _mockFlatDevice = new Mock<IFlatDevice>();
             _mockFlatDeviceChooserVM = new Mock<IFlatDeviceChooserVM>();
             _mockFlatDeviceSettings = new Mock<IFlatDeviceSettings>();
+            _mockFilterWheelSettings = new Mock<IFilterWheelSettings>();
         }
 
         [SetUp]
         public void Init() {
             _mockProfileService.Reset();
             _mockFlatDeviceMediator.Reset();
-            _mockFilterWheelMediator.Reset();
             _mockApplicationStatusMediator.Reset();
             _mockFlatDevice.Reset();
             _mockFlatDeviceChooserVM.Reset();
             _mockFlatDeviceSettings.Reset();
+            _mockFilterWheelSettings.Reset();
 
+            _mockFlatDeviceSettings.SetupProperty(m => m.Id, "mockDevice");
+
+            _mockProfileService.SetupProperty(m => m.ActiveProfile.FlatDeviceSettings, _mockFlatDeviceSettings.Object);
+            _mockFilterWheelSettings.Setup(m => m.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>());
+            _mockProfileService.SetupProperty(m => m.ActiveProfile.FilterWheelSettings, _mockFilterWheelSettings.Object);
             _mockProfileService.Setup(m => m.ActiveProfile.ApplicationSettings.DevicePollingInterval).Returns(200);
-            _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings.Id).Returns("mockDevice");
+            //            _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings.Id).Returns("mockDevice");
             _sut = new FlatDeviceVM(_mockProfileService.Object, _mockFlatDeviceMediator.Object,
-                _mockApplicationStatusMediator.Object, _mockFilterWheelMediator.Object);
-        }
-
-        [Test]
-        public void TestFilterWheelMediatorRegistered() {
-            _mockFilterWheelMediator.Verify(m => m.RegisterConsumer(It.IsAny<FlatDeviceVM>()), Times.Once);
+                _mockApplicationStatusMediator.Object);
         }
 
         [Test]
@@ -210,7 +210,7 @@ namespace NINATest.FlatDevice {
         public void TestWizardGridWithoutData() {
             var result = _sut.WizardGrid;
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Count, Is.EqualTo(0));
+            Assert.That(result.Blocks.Count, Is.EqualTo(0));
         }
 
         [Test]
@@ -220,38 +220,38 @@ namespace NINATest.FlatDevice {
             var settingsValue = new FlatDeviceFilterSettingsValue(0.7, 0.5);
             var settingsKey = new FlatDeviceFilterSettingsKey(null, binningMode, gain);
             _mockProfileService
-                    .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
-                    .Returns(new List<BinningMode> { binningMode });
+                        .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
+                        .Returns(new List<BinningMode> { binningMode });
             _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoGains())
-                .Returns(new List<int> { gain });
+                    .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoGains())
+                    .Returns(new List<int> { gain });
             _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(
-                    It.IsAny<FlatDeviceFilterSettingsKey>())).Returns(settingsValue);
-            _mockProfileService.Raise(m => m.ActiveProfile.FlatDeviceSettings.PropertyChanged += null,
-                new PropertyChangedEventArgs("FilterSettings"));
+                    .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(
+                        It.IsAny<FlatDeviceFilterSettingsKey>())).Returns(settingsValue);
+            _mockFilterWheelSettings.Raise(m => m.PropertyChanged += null,
+                    new PropertyChangedEventArgs("FilterWheelFilters"));
             var result = _sut.WizardGrid;
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result[0].Columns.Count, Is.EqualTo(2));
-            Assert.That(result[0].Binning, Is.EqualTo(binningMode.Name));
-            Assert.That(result[0].Columns[0].Header, Is.EqualTo(Loc.Instance["LblFilter"]));
-            Assert.That(result[0].Columns[0].Settings[0].ShowFilterNameOnly, Is.True);
-            Assert.That(result[0].Columns[0].Settings[0].Key.FilterName, Is.Null);
-            Assert.That(result[0].Columns[1].Header, Is.EqualTo($"{Loc.Instance["LblGain"]} {gain}"));
-            Assert.That(result[0].Columns[1].Settings[0].ShowFilterNameOnly, Is.False);
-            Assert.That(result[0].Columns[1].Settings[0].Key, Is.EqualTo(settingsKey));
-            Assert.That(result[0].Columns[1].Settings[0].Brightness, Is.EqualTo(settingsValue.Brightness));
-            Assert.That(result[0].Columns[1].Settings[0].Time, Is.EqualTo(settingsValue.Time));
+            Assert.That(result.Blocks.Count, Is.EqualTo(1));
+            Assert.That(result.Blocks[0].Columns.Count, Is.EqualTo(2));
+            Assert.That(result.Blocks[0].Binning, Is.EqualTo(binningMode));
+            Assert.That(result.Blocks[0].Columns[0].Header, Is.EqualTo(Loc.Instance["LblFilter"]));
+            Assert.That(result.Blocks[0].Columns[0].Settings[0].ShowFilterNameOnly, Is.True);
+            Assert.That(result.Blocks[0].Columns[0].Settings[0].Key.Position, Is.Null);
+            Assert.That(result.Blocks[0].Columns[1].Header, Is.Null);
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].ShowFilterNameOnly, Is.False);
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].Key, Is.EqualTo(settingsKey));
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].Brightness, Is.EqualTo(settingsValue.Brightness));
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].Time, Is.EqualTo(settingsValue.Time));
         }
 
         [Test]
         public void TestWizardGridWithFilters() {
             const int gain = 30;
-            const string filterName = "Blue";
+            const short position = 2;
             var binningMode = new BinningMode(1, 1);
             var settingsValue = new FlatDeviceFilterSettingsValue(0.7, 0.5);
-            var settingsKey = new FlatDeviceFilterSettingsKey(filterName, binningMode, gain);
+            var settingsKey = new FlatDeviceFilterSettingsKey(position, binningMode, gain);
 
             _mockProfileService
                 .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(
@@ -261,133 +261,98 @@ namespace NINATest.FlatDevice {
                 .Returns(new List<BinningMode> { binningMode });
             _mockProfileService
                 .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoGains())
-                .Returns(new List<int> { gain });
-            _mockFilterWheelMediator.Setup(m => m.GetAllFilters())
-                .Returns(new List<FilterInfo> { new FilterInfo { Name = filterName } });
-            _mockProfileService.Raise(m => m.ActiveProfile.FlatDeviceSettings.PropertyChanged += null,
-                new PropertyChangedEventArgs("FilterSettings"));
+                                .Returns(new List<int> { gain });
+            _mockFilterWheelSettings.Setup(m => m.FilterWheelFilters)
+                    .Returns(new ObserveAllCollection<FilterInfo> { new FilterInfo { Position = position } });
+            _mockFilterWheelSettings.Raise(m => m.PropertyChanged += null,
+                    new PropertyChangedEventArgs("FilterWheelFilters"));
             var result = _sut.WizardGrid;
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result[0].Columns.Count, Is.EqualTo(2));
-            Assert.That(result[0].Binning, Is.EqualTo(binningMode.Name));
-            Assert.That(result[0].Columns[0].Header, Is.EqualTo(Loc.Instance["LblFilter"]));
-            Assert.That(result[0].Columns[0].Settings[0].ShowFilterNameOnly, Is.True);
-            Assert.That(result[0].Columns[0].Settings[0].Key.FilterName, Is.EqualTo(filterName));
-            Assert.That(result[0].Columns[1].Header, Is.EqualTo($"{Loc.Instance["LblGain"]} {gain}"));
-            Assert.That(result[0].Columns[1].Settings[0].ShowFilterNameOnly, Is.False);
-            Assert.That(result[0].Columns[1].Settings[0].Key, Is.EqualTo(settingsKey));
-            Assert.That(result[0].Columns[1].Settings[0].Brightness, Is.EqualTo(settingsValue.Brightness));
-            Assert.That(result[0].Columns[1].Settings[0].Time, Is.EqualTo(settingsValue.Time));
+            Assert.That(result.Blocks.Count, Is.EqualTo(1));
+            Assert.That(result.Blocks[0].Columns.Count, Is.EqualTo(2));
+            Assert.That(result.Blocks[0].Binning, Is.EqualTo(binningMode));
+            Assert.That(result.Blocks[0].Columns[0].Header, Is.EqualTo(Loc.Instance["LblFilter"]));
+            Assert.That(result.Blocks[0].Columns[0].Settings[0].ShowFilterNameOnly, Is.True);
+            Assert.That(result.Blocks[0].Columns[0].Settings[0].Key.Position, Is.EqualTo(position));
+            Assert.That(result.Blocks[0].Columns[1].Header, Is.Null);
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].ShowFilterNameOnly, Is.False);
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].Key, Is.EqualTo(settingsKey));
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].Brightness, Is.EqualTo(settingsValue.Brightness));
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].Time, Is.EqualTo(settingsValue.Time));
         }
 
         [Test]
-        public void TestWizardGridMustNotChangeWithNewSelectedFilter() {
+        public void TestWizardGridMustChangeWithNewProfile() {
             const int gain = 30;
-            const string filterName = "Blue";
+            const short position = 2;
             var binningMode = new BinningMode(1, 1);
             var settingsValue = new FlatDeviceFilterSettingsValue(0.7, 0.5);
 
             _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(
-                    It.IsAny<FlatDeviceFilterSettingsKey>())).Returns(settingsValue);
+                    .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(
+                        It.IsAny<FlatDeviceFilterSettingsKey>())).Returns(settingsValue);
             _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
-                .Returns(new List<BinningMode> { binningMode });
+                    .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
+                    .Returns(new List<BinningMode> { binningMode });
             _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoGains())
-                .Returns(new List<int> { gain });
-            _mockFilterWheelMediator.Setup(m => m.GetAllFilters())
-                .Returns(new List<FilterInfo> { new FilterInfo { Name = filterName } });
-            _mockProfileService.Raise(m => m.ActiveProfile.FlatDeviceSettings.PropertyChanged += null,
-                new PropertyChangedEventArgs("FilterSettings"));
+                    .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoGains())
+                    .Returns(new List<int> { gain });
+            _mockFilterWheelSettings.Setup(m => m.FilterWheelFilters)
+                    .Returns(new ObserveAllCollection<FilterInfo> { new FilterInfo { Position = position } });
+            _mockFilterWheelSettings.Raise(m => m.PropertyChanged += null,
+                    new PropertyChangedEventArgs("FilterWheelFilters"));
 
-            var info = new FilterWheelInfo { SelectedFilter = new FilterInfo { Name = "Clear" } };
-            _sut.UpdateDeviceInfo(info);
             var result1 = _sut.WizardGrid;
-
             Assert.That(result1, Is.Not.Null);
-            Assert.That(result1.Count, Is.EqualTo(1));
+            Assert.That(result1.Blocks.Count, Is.EqualTo(1));
+            Assert.That(result1.Blocks[0].Columns[0].Settings[0].Key.Position, Is.EqualTo(position));
 
-            info.SelectedFilter = new FilterInfo { Name = "Red" };
-            _sut.UpdateDeviceInfo(info);
+            _mockFilterWheelSettings.Setup(m => m.FilterWheelFilters)
+            .Returns(new ObserveAllCollection<FilterInfo> { null });
+            _mockFilterWheelSettings.Raise(m => m.PropertyChanged += null,
+                    new PropertyChangedEventArgs("FilterWheelFilters"));
+
             var result2 = _sut.WizardGrid;
             Assert.That(result2, Is.Not.Null);
-            Assert.That(result2.Count, Is.EqualTo(1));
-            Assert.That(result1, Is.EqualTo(result2));
-        }
-
-        [Test]
-        public void TestWizardGridMustChangeWithNewFilterWheel() {
-            const int gain = 30;
-            const string filterName = "Blue";
-            var binningMode = new BinningMode(1, 1);
-            var settingsValue = new FlatDeviceFilterSettingsValue(0.7, 0.5);
-
-            _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(
-                    It.IsAny<FlatDeviceFilterSettingsKey>())).Returns(settingsValue);
-            _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
-                .Returns(new List<BinningMode> { binningMode });
-            _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoGains())
-                .Returns(new List<int> { gain });
-            _mockFilterWheelMediator.Setup(m => m.GetAllFilters())
-                .Returns(new List<FilterInfo> { new FilterInfo { Name = filterName } });
-            _mockProfileService.Raise(m => m.ActiveProfile.FlatDeviceSettings.PropertyChanged += null,
-                new PropertyChangedEventArgs("FilterSettings"));
-
-            var info = new FilterWheelInfo { SelectedFilter = new FilterInfo { Name = "Clear" } };
-            _sut.UpdateDeviceInfo(info);
-            var result1 = _sut.WizardGrid;
-
-            Assert.That(result1, Is.Not.Null);
-            Assert.That(result1.Count, Is.EqualTo(1));
-
-            info = new FilterWheelInfo { SelectedFilter = new FilterInfo { Name = "Clear" } };
-            _sut.UpdateDeviceInfo(info);
-            var result2 = _sut.WizardGrid;
-            Assert.That(result2, Is.Not.Null);
-            Assert.That(result2.Count, Is.EqualTo(1));
-            Assert.That(result1, Is.Not.EqualTo(result2));
+            Assert.That(result2.Blocks.Count, Is.EqualTo(1));
+            Assert.That(result2.Blocks[0].Columns[0].Settings[0].Key.Position, Is.Null);
         }
 
         [Test]
         public void TestWizardGridForCamerasWithoutBinning() {
             const int gain = 30;
-            const string filterName = "Blue";
+            const short position = 2;
             var settingsValue = new FlatDeviceFilterSettingsValue(0.7, 0.5);
-            var settingsKey = new FlatDeviceFilterSettingsKey(filterName, null, gain);
+            var settingsKey = new FlatDeviceFilterSettingsKey(position, null, gain);
 
             _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(
-                    It.IsAny<FlatDeviceFilterSettingsKey>())).Returns(settingsValue);
+                    .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(
+                        It.IsAny<FlatDeviceFilterSettingsKey>())).Returns(settingsValue);
             _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
-                .Returns(new List<BinningMode> { null });
+                    .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
+                    .Returns(new List<BinningMode> { null });
             _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoGains())
-                .Returns(new List<int> { gain });
-            _mockFilterWheelMediator.Setup(m => m.GetAllFilters())
-                .Returns(new List<FilterInfo> { new FilterInfo { Name = filterName } });
-            _mockProfileService.Raise(m => m.ActiveProfile.FlatDeviceSettings.PropertyChanged += null,
-                new PropertyChangedEventArgs("FilterSettings"));
+                    .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoGains())
+                    .Returns(new List<int> { gain });
+            _mockFilterWheelSettings.Setup(m => m.FilterWheelFilters)
+                    .Returns(new ObserveAllCollection<FilterInfo> { new FilterInfo { Position = position } });
+            _mockFilterWheelSettings.Raise(m => m.PropertyChanged += null,
+                    new PropertyChangedEventArgs("FilterWheelFilters"));
 
             var result = _sut.WizardGrid;
 
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result[0].Columns.Count, Is.EqualTo(2));
-            Assert.That(result[0].Binning, Is.EqualTo(Loc.Instance["LblNone"]));
-            Assert.That(result[0].Columns[0].Header, Is.EqualTo(Loc.Instance["LblFilter"]));
-            Assert.That(result[0].Columns[0].Settings[0].ShowFilterNameOnly, Is.True);
-            Assert.That(result[0].Columns[0].Settings[0].Key.FilterName, Is.EqualTo(filterName));
-            Assert.That(result[0].Columns[1].Header, Is.EqualTo($"{Loc.Instance["LblGain"]} {gain}"));
-            Assert.That(result[0].Columns[1].Settings[0].ShowFilterNameOnly, Is.False);
-            Assert.That(result[0].Columns[1].Settings[0].Key, Is.EqualTo(settingsKey));
-            Assert.That(result[0].Columns[1].Settings[0].Brightness, Is.EqualTo(settingsValue.Brightness));
-            Assert.That(result[0].Columns[1].Settings[0].Time, Is.EqualTo(settingsValue.Time));
+            Assert.That(result.Blocks.Count, Is.EqualTo(1));
+            Assert.That(result.Blocks[0].Columns.Count, Is.EqualTo(2));
+            Assert.That(result.Blocks[0].Binning, Is.Null);
+            Assert.That(result.Blocks[0].Columns[0].Header, Is.EqualTo(Loc.Instance["LblFilter"]));
+            Assert.That(result.Blocks[0].Columns[0].Settings[0].ShowFilterNameOnly, Is.True);
+            Assert.That(result.Blocks[0].Columns[0].Settings[0].Key.Position, Is.EqualTo(position));
+            Assert.That(result.Blocks[0].Columns[1].Header, Is.Null);
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].ShowFilterNameOnly, Is.False);
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].Key, Is.EqualTo(settingsKey));
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].Brightness, Is.EqualTo(settingsValue.Brightness));
+            Assert.That(result.Blocks[0].Columns[1].Settings[0].Time, Is.EqualTo(settingsValue.Time));
         }
 
         [Test]
@@ -436,18 +401,12 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        public void TestDispose() {
-            _sut.Dispose();
-            _mockFilterWheelMediator.Verify(m => m.RemoveConsumer(It.IsAny<FlatDeviceVM>()), Times.Once);
-        }
-
-        [Test]
         public void TestBinningModesReturnsCorrectName() {
             var binningMode = new BinningMode(1, 1);
 
             _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
-                .Returns(new List<BinningMode> { binningMode });
+            .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
+            .Returns(new List<BinningMode> { binningMode });
             var result = _sut.BinningModes;
 
             Assert.That(result.Count, Is.EqualTo(1));
@@ -457,8 +416,8 @@ namespace NINATest.FlatDevice {
         [Test]
         public void TestBinningModesReturnsCorrectNameForNullBinningMode() {
             _mockProfileService
-                .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
-                .Returns(new List<BinningMode> { null });
+                    .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
+                    .Returns(new List<BinningMode> { null });
             var result = _sut.BinningModes;
 
             Assert.That(result.Count, Is.EqualTo(1));
@@ -469,13 +428,13 @@ namespace NINATest.FlatDevice {
         public void TestAddGain() {
             var result = string.Empty;
             _mockFlatDeviceSettings.Setup(m =>
-                    m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()))
-                .Callback((FlatDeviceFilterSettingsKey key, FlatDeviceFilterSettingsValue value) => { result = key.Gain.ToString(); });
+                            m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()))
+                    .Callback((FlatDeviceFilterSettingsKey key, FlatDeviceFilterSettingsValue value) => { result = key.Gain.ToString(); });
             _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings).Returns(_mockFlatDeviceSettings.Object);
             _sut.AddGainCommand.Execute("25");
 
             _mockFlatDeviceSettings.Verify(m =>
-                m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Once);
+                    m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Once);
             Assert.That(result, Is.EqualTo("25"));
         }
 
@@ -484,13 +443,13 @@ namespace NINATest.FlatDevice {
             BinningMode result = null;
             var binning = new BinningMode(1, 1);
             _mockFlatDeviceSettings.Setup(m =>
-                    m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()))
-                .Callback((FlatDeviceFilterSettingsKey key, FlatDeviceFilterSettingsValue value) => { result = key.Binning; });
+                            m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()))
+                    .Callback((FlatDeviceFilterSettingsKey key, FlatDeviceFilterSettingsValue value) => { result = key.Binning; });
             _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings).Returns(_mockFlatDeviceSettings.Object);
             _sut.AddBinningCommand.Execute(binning);
 
             _mockFlatDeviceSettings.Verify(m =>
-                m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Once);
+                    m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Once);
             Assert.That(result, Is.EqualTo(binning));
         }
     }

@@ -17,7 +17,6 @@ using System.Collections.Generic;
 using NINA.Model.MyFilterWheel;
 
 namespace NINA.Profile {
-
     public interface IFlatDeviceSettings : ISettings {
         string Id { get; set; }
         string Name { get; set; }
@@ -36,8 +35,8 @@ namespace NINA.Profile {
 
         IEnumerable<int> GetBrightnessInfoGains();
 
-        void RemoveGain(int gain, ICollection<FilterInfo> getAllFilters);
+        void RemoveGain(int gain);
 
-        void RemoveBinning(BinningMode binningMode, ICollection<FilterInfo> getAllFilters);
+        void RemoveBinning(BinningMode binningMode);
     }
 }
