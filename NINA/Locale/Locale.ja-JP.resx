@@ -3674,4 +3674,22 @@
   <data name="LblWizardOperationMode" xml:space="preserve">
     <value>ウィザード動作モード</value>
   </data>
+  <data name="LblFlatDeviceAddBinningMode" xml:space="preserve">
+    <value>ビニングを増加</value>
+  </data>
+  <data name="LblFlatDeviceAddGain" xml:space="preserve">
+    <value>ゲインを増加</value>
+  </data>
+  <data name="LblFlatDeviceAreYouSureBinning" xml:space="preserve">
+    <value>ビニングの値をすべて削除していいですか？</value>
+  </data>
+  <data name="LblFlatDeviceAreYouSureGain" xml:space="preserve">
+    <value>ゲインの値を、全て削除していいですか？</value>
+  </data>
+  <data name="LblFlatDeviceDeleteBinningMode" xml:space="preserve">
+    <value>ビニングを削除</value>
+  </data>
+  <data name="LblFlatDeviceDeleteGain" xml:space="preserve">
+    <value>ゲインを削除</value>
+  </data>
 </root>
