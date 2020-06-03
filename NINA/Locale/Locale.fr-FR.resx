@@ -3515,7 +3515,7 @@ La valeur par défaut Auto utilise n'importe quel matrice que le pilote de la ca
     <value>Mise au point automatique après le retournement</value>
   </data>
   <data name="LblExposureFinished" xml:space="preserve">
-    <value>Exposure finished</value>
+    <value>Exposition terminée</value>
   </data>
   <data name="LblCameraTimeout" xml:space="preserve">
     <value>Délai de la caméra dépassé - La caméra n'a pas défini l'image comme prête après un temps d'exposition de + 15 secondes</value>
@@ -3633,26 +3633,26 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Les focusers sans possibilité d'utiliser des positions absolues ne sont actuellement pas pris en charge</value>
   </data>
   <data name="LblQhyIncludeOverscan" xml:space="preserve">
-    <value>Include Overscan Area</value>
+    <value>Inclure la zone Overscan</value>
   </data>
   <data name="LblQhyIncludeOverscanTooltip" xml:space="preserve">
-    <value>Setting to On will the include any optical black and overscan areas of the sensor in images</value>
+    <value>Activer ce réglage inclura toutes les zones optiques noires et les zones overscan du capteur dans les images</value>
   </data>
   <data name="LblSeconds" xml:space="preserve">
-    <value>Seconds</value>
+    <value>Secondes</value>
   </data>
   <data name="LblOecUnableToDetermine" xml:space="preserve">
-    <value>Unable to determine exposure time</value>
+    <value>Impossible de déterminer le temps d'exposition</value>
   </data>
   <data name="LblAbout" xml:space="preserve">
-    <value>About</value>
+    <value>À propos de</value>
     <comment>Header of about section for general info for N.I.N.A.</comment>
   </data>
   <data name="LblAboutNINA" xml:space="preserve">
-    <value>About N.I.N.A.</value>
+    <value>À propos de N.I.N.A.</value>
   </data>
   <data name="LblAuthors" xml:space="preserve">
-    <value>Authors</value>
+    <value>Auteurs</value>
   </data>
   <data name="LblChangelog" xml:space="preserve">
     <value>Changelog</value>
@@ -3661,36 +3661,36 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Documentation</value>
   </data>
   <data name="LblHomepage" xml:space="preserve">
-    <value>Homepage</value>
+    <value>Page d'accueil</value>
   </data>
   <data name="LblLicense" xml:space="preserve">
-    <value>License</value>
+    <value>Licence</value>
   </data>
   <data name="LblRepository" xml:space="preserve">
-    <value>Repository</value>
+    <value>Dépôt</value>
   </data>
   <data name="LblThirdPartyLicenses" xml:space="preserve">
-    <value>Third Party Licenses</value>
+    <value>Licences tierces</value>
   </data>
   <data name="LblASCOMPlatformOutdated" xml:space="preserve">
-    <value>ASCOM Platform Version is outdated. Please update to the latest ASCOM platform version. Otherwise the application might not be able to connect to all ASCOM devices.</value>
+    <value>La version de plateforme ASCOM est obsolète. Veuillez mettre à jour vers la dernière version de la plateforme ASCOM. Sinon, l'application pourrait ne pas être en mesure de se connecter à tous les périphériques ASCOM.</value>
   </data>
   <data name="LblDynamicBrightness" xml:space="preserve">
-    <value>Dynamic Brightness</value>
+    <value>Luminosité dynamique</value>
   </data>
   <data name="LblDynamicExposure" xml:space="preserve">
-    <value>Dynamic Exposure</value>
+    <value>Exposition dynamique</value>
   </data>
   <data name="LblFlatPanelBrightness" xml:space="preserve">
-    <value>Flat Panel Brightness</value>
+    <value>Luminosité du panneau à flats</value>
   </data>
   <data name="LblFlatPanelMaxBrightness" xml:space="preserve">
-    <value>Max Flat Panel Brightness</value>
+    <value>Luminosité max du panneau à flats</value>
   </data>
   <data name="LblFlatPanelMinBrightness" xml:space="preserve">
-    <value>Min Flat Panel Brightness</value>
+    <value>Luminosité min du panneau à flats</value>
   </data>
   <data name="LblWizardOperationMode" xml:space="preserve">
-    <value>Wizard Operation Mode</value>
+    <value>Assistant mode opération</value>
   </data>
 </root>

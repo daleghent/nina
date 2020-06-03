@@ -3253,7 +3253,7 @@ You can also calculate the bias by clicking the Snapshot button next to Bias Mea
     <value>Relative Humidity</value>
   </data>
   <data name="LblUPBV2Temperature" xml:space="preserve">
-    <value>Temperature</value>
+    <value>溫度</value>
   </data>
   <data name="LblUPBV2UpTime" xml:space="preserve">
     <value>Up-Time</value>

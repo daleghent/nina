@@ -3521,10 +3521,10 @@
     <value>曝光完成</value>
   </data>
   <data name="LblCameraTimeout" xml:space="preserve">
-    <value>Camera Timeout - Camera did not set image as ready after exposuretime + 15 seconds</value>
+    <value>摄像机超时——摄像机在曝光时间+15秒后没有设置就绪。</value>
   </data>
   <data name="LblImagePatternPreview" xml:space="preserve">
-    <value>Pattern Preview</value>
+    <value>图片名预览</value>
   </data>
   <data name="LblB1950" xml:space="preserve">
     <value>B1950</value>
@@ -3636,64 +3636,64 @@
     <value>当前调焦器不支持使用“绝对位置”的对焦方式</value>
   </data>
   <data name="LblQhyIncludeOverscan" xml:space="preserve">
-    <value>Include Overscan Area</value>
+    <value>包含过扫区（OverScan）</value>
   </data>
   <data name="LblQhyIncludeOverscanTooltip" xml:space="preserve">
-    <value>Setting to On will the include any optical black and overscan areas of the sensor in images</value>
+    <value>设置为“打开”，将包含图像中传感器的黑像元和过扫区。</value>
   </data>
   <data name="LblSeconds" xml:space="preserve">
-    <value>Seconds</value>
+    <value>秒</value>
   </data>
   <data name="LblOecUnableToDetermine" xml:space="preserve">
-    <value>Unable to determine exposure time</value>
+    <value>无法确定曝光时间</value>
   </data>
   <data name="LblAbout" xml:space="preserve">
-    <value>About</value>
+    <value>关于</value>
     <comment>Header of about section for general info for N.I.N.A.</comment>
   </data>
   <data name="LblAboutNINA" xml:space="preserve">
-    <value>About N.I.N.A.</value>
+    <value>关于N.I.N.A.</value>
   </data>
   <data name="LblAuthors" xml:space="preserve">
-    <value>Authors</value>
+    <value>作者</value>
   </data>
   <data name="LblChangelog" xml:space="preserve">
-    <value>Changelog</value>
+    <value>更新日志</value>
   </data>
   <data name="LblDocumentation" xml:space="preserve">
-    <value>Documentation</value>
+    <value>文件</value>
   </data>
   <data name="LblHomepage" xml:space="preserve">
-    <value>Homepage</value>
+    <value>主页</value>
   </data>
   <data name="LblLicense" xml:space="preserve">
-    <value>License</value>
+    <value>许可协议</value>
   </data>
   <data name="LblRepository" xml:space="preserve">
-    <value>Repository</value>
+    <value>知识库</value>
   </data>
   <data name="LblThirdPartyLicenses" xml:space="preserve">
-    <value>Third Party Licenses</value>
+    <value>第三方许可证</value>
   </data>
   <data name="LblASCOMPlatformOutdated" xml:space="preserve">
-    <value>ASCOM Platform Version is outdated. Please update to the latest ASCOM platform version. Otherwise the application might not be able to connect to all ASCOM devices.</value>
+    <value>ASCOM 平台版本已过期。请更新到最新的 ASCOM 平台版本。 否则应用程序可能无法连接到所有 ASCOM 设备。</value>
   </data>
   <data name="LblDynamicBrightness" xml:space="preserve">
-    <value>Dynamic Brightness</value>
+    <value>动态亮度</value>
   </data>
   <data name="LblDynamicExposure" xml:space="preserve">
-    <value>Dynamic Exposure</value>
+    <value>动态曝光</value>
   </data>
   <data name="LblFlatPanelBrightness" xml:space="preserve">
-    <value>Flat Panel Brightness</value>
+    <value>平场板亮度</value>
   </data>
   <data name="LblFlatPanelMaxBrightness" xml:space="preserve">
-    <value>Max Flat Panel Brightness</value>
+    <value>最大平场板亮度</value>
   </data>
   <data name="LblFlatPanelMinBrightness" xml:space="preserve">
-    <value>Min Flat Panel Brightness</value>
+    <value>最小平场板亮度</value>
   </data>
   <data name="LblWizardOperationMode" xml:space="preserve">
-    <value>Wizard Operation Mode</value>
+    <value>向导操作模式</value>
   </data>
 </root>
