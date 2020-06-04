@@ -18,6 +18,19 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style BasedOn="{StaticResource {x:Type TextBlock}}"
+                               TargetType="TextBlock"
+                               x:Key="IfMultipleTargets">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Targets.Count}" Value="1">
+                        <Setter Property="Visibility" Value="Collapsed"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.CameraInfo.Connected}" Orientation="Vertical">
 
@@ -36,7 +49,7 @@
                     <TextBlock Text="{Binding ElementName=pbSequences, Path=Maximum}" />
                 </StackPanel>
             </Grid>
-            <Grid Margin="5,6,0,6">
+            <Grid Margin="5,6,0,6" Name="g">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
@@ -46,14 +59,17 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblCurrentSequenceEstimates}" />
+                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblCurrentSequenceEstimates}" Style="{StaticResource ResourceKey=IfMultipleTargets}" />
+
                 <TextBlock
                     Grid.Column="1"
                     Margin="5,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Text="{Binding SequenceEstimatedEndTime, StringFormat=HH:mm:ss, Mode=OneWay}" />
-
+                    Text="{Binding SequenceEstimatedEndTime, StringFormat=HH:mm:ss, Mode=OneWay}" 
+                    Style="{StaticResource ResourceKey=IfMultipleTargets}" >
+                </TextBlock>
+                
                 <TextBlock
                     Grid.Row="1"
                     VerticalAlignment="Center"

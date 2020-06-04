@@ -979,7 +979,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Current Position</value>
   </data>
   <data name="LblCurrentSequenceEstimates" xml:space="preserve">
-    <value>Estimated time for this target</value>
+    <value>Est. finish time (this target)</value>
   </data>
   <data name="LblCurrentUIColorSchema" xml:space="preserve">
     <value>Current UI Color Schema</value>

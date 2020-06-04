@@ -402,6 +402,15 @@
                                 Margin="0,6,0,6"
                                 VerticalAlignment="Center"
                                 Columns="4">
+                                <UniformGrid.Style>
+                                        <Style TargetType="UniformGrid">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Targets.Count}" Value="1">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                </UniformGrid.Style>
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblCurrentSequenceEstimates}" />
                                 <UniformGrid
                                     Margin="0,0,0,0"

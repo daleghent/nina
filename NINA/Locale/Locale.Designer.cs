@@ -2828,7 +2828,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Estimated time for this target.
+        ///   Looks up a localized string similar to Est. finish time (this target).
         /// </summary>
         internal static string LblCurrentSequenceEstimates {
             get {
