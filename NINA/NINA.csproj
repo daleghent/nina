@@ -442,6 +442,9 @@
     <Compile Include="Model\MyCamera\Simulator\Settings.cs" />
     <Compile Include="Model\MyCamera\Simulator\SkySurveySettings.cs" />
     <Compile Include="Model\MyCamera\Simulator\CameraType.cs" />
+    <Compile Include="Model\MyFilterWheel\AtikFilterWheel.cs" />
+    <Compile Include="Model\MyFilterWheel\AtikFilterWheelBase.cs" />
+    <Compile Include="Model\MyFilterWheel\AtikInternalFilterWheel.cs" />
     <Compile Include="Model\MyFilterWheel\NullFilter.cs" />
     <Compile Include="Model\MyFilterWheel\QHYFilterWheel.cs" />
     <Compile Include="Model\MyFilterWheel\FLIFilterWheel.cs" />

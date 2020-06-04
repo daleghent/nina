@@ -20,6 +20,7 @@ using NINA.Profile;
 using QHYCCD;
 using System;
 using System.Collections.Generic;
+using NINA.Utility.AtikSDK;
 
 namespace NINA.ViewModel.Equipment.FilterWheel {
 
@@ -48,6 +49,36 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
                             Logger.Debug($"Adding FLI Filter Wheel {fwheel.Id} (as {fwheel.Name})");
                             Devices.Add(fwheel);
                         }
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
+            // Atik EFW
+            try {
+                Logger.Trace("Adding Atik EFW filter wheels");
+                for (int i = 0; i < 10; i++) {
+                    if (AtikCameraDll.ArtemisEfwIsPresent(i)) {
+                        var wheel = new AtikFilterWheel(i, profileService);
+                        Logger.Debug($"Adding Atik Filter Wheel {i} as {wheel.Name}");
+                        Devices.Add(wheel);
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
+            // Atik internal Wheels
+            try {
+                Logger.Trace("Adding Atik internal filter wheels");
+                var atikDevices = AtikCameraDll.GetDevicesCount();
+                Logger.Trace($"Cameras found: {atikDevices}");
+                for (int i = 0; i < atikDevices; i++) {
+                    var wheel = new AtikInternalFilterWheel(i, profileService);
+                    if (wheel.CameraHasInternalFilterWheel) {
+                        Logger.Debug($"Adding Atik internal Filter Wheel {i} as {wheel.Name}");
+                        Devices.Add(wheel);
                     }
                 }
             } catch (Exception ex) {

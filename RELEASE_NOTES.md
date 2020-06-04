@@ -1,4 +1,13 @@
-﻿# Version 1.10
+﻿# Version 1.11
+
+## New hardware support
+
+#### Native support for Atik EFW2/3 and internal Filterwheels
+- The integrated filter wheels for Atik cameras like the Atik One 9.0 are now natively supported
+- This allows usage of native camera drivers for Atik cameras with integrated filter wheels
+- The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver
+
+# Version 1.10
 
 ## New hardware support
 

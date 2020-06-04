@@ -202,6 +202,74 @@ namespace NINA.Utility.AtikSDK {
             return outstruct;
         }
 
+        public static IntPtr ConnectEfw(int id) {
+            Logger.Trace($"Trying to connect to Atik FW {id}");
+            if (ArtemisEfwIsPresent(id)) {
+                IntPtr fwP = ArtemisEfwConnect(id);
+                if (fwP == IntPtr.Zero) {
+                    Logger.Trace("Connection failed, retrying as wildcard");
+                    fwP = ArtemisEfwConnect(-1);
+                }
+                if (fwP == IntPtr.Zero) {
+                    throw new AtikCameraException("Unable to connect to FW", MethodBase.GetCurrentMethod(), new object[] { id });
+                }
+                Logger.Trace($"Connected as {fwP}");
+                return fwP;
+            }
+            return IntPtr.Zero;
+        }
+
+        public static void DisconnectEfw(IntPtr fw) {
+            CheckError(ArtemisEfwDisconnect(fw), MethodBase.GetCurrentMethod(), fw);
+        }
+
+        public static bool IsConnectedEfw(IntPtr fw) {
+            if (fw != null && fw != IntPtr.Zero) {
+                return ArtemisEfwIsConnected(fw);
+            } else {
+                return false;
+            }
+        }
+
+        public static int GetEfwPositions(IntPtr fw) {
+            CheckError(ArtemisEfwNmrPositions(fw, out int positions), MethodBase.GetCurrentMethod(), fw);
+            return positions;
+        }
+
+        public static short GetCurrentEfwPosition(IntPtr fw) {
+            CheckError(ArtemisEfwGetPosition(fw, out int position, out bool moving), MethodBase.GetCurrentMethod(), fw);
+            return (short)position;
+        }
+
+        public static bool GetCurrentEfwMoving(IntPtr fw) {
+            CheckError(ArtemisEfwGetPosition(fw, out int position, out bool moving), MethodBase.GetCurrentMethod(), fw);
+            return moving;
+        }
+
+        public static void SetCurrentEfwPosition(IntPtr fw, int position) {
+            CheckError(ArtemisEfwSetPosition(fw, position), MethodBase.GetCurrentMethod(), fw);
+        }
+
+        public static ArtemisEfwType GetArtemisEfwType(int deviceId) {
+            CheckError(ArtemisEfwGetDeviceDetails(deviceId, out var type, out char serial), MethodBase.GetCurrentMethod(), deviceId);
+            return type;
+        }
+
+        public static char GetArtemisEfwSerial(int deviceid) {
+            CheckError(ArtemisEfwGetDeviceDetails(deviceid, out var type, out char serial), MethodBase.GetCurrentMethod(), deviceid);
+            return serial;
+        }
+
+        public static ArtemisEfwType GetConnectedArtemisEfwType(IntPtr fw) {
+            CheckError(ArtemisEfwGetDetails(fw, out var type, out char serial), MethodBase.GetCurrentMethod(), fw);
+            return type;
+        }
+
+        public static char GetConnectedArtemisEfwSerial(IntPtr fw) {
+            CheckError(ArtemisEfwGetDetails(fw, out var type, out char serial), MethodBase.GetCurrentMethod(), fw);
+            return serial;
+        }
+
         public static ArtemisPropertiesStruct GetCameraProperties(IntPtr camera) {
             SensorType type = GetColorInformation(camera);
             ArtemisPropertiesStruct outstruct = new ArtemisPropertiesStruct();
@@ -216,6 +284,39 @@ namespace NINA.Utility.AtikSDK {
                 }
             }
             return outstruct;
+        }
+
+        public static int GetInternalFilterWheelPositions(IntPtr camera) {
+            if (camera != null && camera != IntPtr.Zero) {
+                CheckError(ArtemisFilterWheelInfo(camera, out int wheelCount, out int moving, out int curentPos, out int targetPos), MethodBase.GetCurrentMethod(), camera);
+                return wheelCount;
+            } else {
+                return -1;
+            }
+        }
+
+        public static bool GetInternalFilterWheelIsMoving(IntPtr camera) {
+            if (camera != null && camera != IntPtr.Zero) {
+                CheckError(ArtemisFilterWheelInfo(camera, out int wheelCount, out int moving, out int curentPos, out int targetPos), MethodBase.GetCurrentMethod(), camera);
+                return moving != 0;
+            } else {
+                return false;
+            }
+        }
+
+        public static short GetInternalFilterWheelCurrentPosition(IntPtr camera) {
+            if (camera != null && camera != IntPtr.Zero) {
+                CheckError(ArtemisFilterWheelInfo(camera, out int wheelCount, out int moving, out int curentPos, out int targetPos), MethodBase.GetCurrentMethod(), camera);
+                return (short)curentPos;
+            } else {
+                return -1;
+            }
+        }
+
+        public static void SetInternalFilterWheelTargetPosition(IntPtr camera, int position) {
+            if (camera != null && camera != IntPtr.Zero) {
+                CheckError(ArtemisFilterWheelMove(camera, position), MethodBase.GetCurrentMethod(), camera);
+            }
         }
 
         public static string DriverVersion {
@@ -527,6 +628,107 @@ namespace NINA.Utility.AtikSDK {
          * Not yet added: Internal and External Filter Wheel and Guiding Methods.
          */
 
+        /// <summary>
+        /// Check if an EFW is present on this device id
+        /// </summary>
+        /// <param name="deviceNr"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWIsPresent", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern bool ArtemisEfwIsPresent(int deviceId);
+
+        /// <summary>
+        /// Get device details of an artemis EFW
+        /// </summary>
+        /// <param name="deviceId"></param>
+        /// <param name="type"></param>
+        /// <param name="serialNumber"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWGetDeviceDetails", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern ArtemisErrorCode ArtemisEfwGetDeviceDetails(int deviceId, out ArtemisEfwType type, out char serialNumber);
+
+        /// <summary>
+        /// Get device details of an connected artemis EFW
+        /// </summary>
+        /// <param name="deviceId"></param>
+        /// <param name="type"></param>
+        /// <param name="serialNumber"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWGetDetails", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern ArtemisErrorCode ArtemisEfwGetDetails(IntPtr device, out ArtemisEfwType type, out char serialNumber);
+
+        /// <summary>
+        /// Connect to device with specified device id
+        /// </summary>
+        /// <param name="deviceId"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWConnect", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern IntPtr ArtemisEfwConnect(int deviceId);
+
+        /// <summary>
+        /// Disconnects connected device
+        /// </summary>
+        /// <param name="device"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWDisconnect", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern ArtemisErrorCode ArtemisEfwDisconnect(IntPtr device);
+
+        /// <summary>
+        /// Gets the number of filterwheel positions
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="positions"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWNmrPosition", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern ArtemisErrorCode ArtemisEfwNmrPositions(IntPtr device, out int positions);
+
+        /// <summary>
+        /// Gets the current position of the filterwheel + moving state
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="position"></param>
+        /// <param name="moving"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWGetPosition", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern ArtemisErrorCode ArtemisEfwGetPosition(IntPtr device, out int position, out bool moving);
+
+        /// <summary>
+        /// Gets the current position of the filterwheel + moving state
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="position"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWSetPosition", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern ArtemisErrorCode ArtemisEfwSetPosition(IntPtr device, int position);
+
+        /// <summary>
+        /// Checks if the device is connected
+        /// </summary>
+        /// <param name="device"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWIsConnected", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern bool ArtemisEfwIsConnected(IntPtr device);
+
+        /// <summary>
+        /// Information about internal filter wheel
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="filterNumbers"></param>
+        /// <param name="moving"></param>
+        /// <param name="currentPos"></param>
+        /// <param name="targetPos"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisFilterWheelInfo", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern ArtemisErrorCode ArtemisFilterWheelInfo(IntPtr device, out int filterNumbers, out int moving, out int currentPos, out int targetPos);
+
+        /// <summary>
+        /// Moves internal filter wheel
+        /// </summary>
+        /// <param name="device"></param>
+        /// <param name="targetPos"></param>
+        /// <returns></returns>
+        [DllImport(DLLNAME, EntryPoint = "ArtemisFilterWheelMove", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        public static extern ArtemisErrorCode ArtemisFilterWheelMove(IntPtr device, int targetPos);
+
         public enum ArtemisCameraStateEnum {
 
             /// <summary>
@@ -681,6 +883,11 @@ namespace NINA.Utility.AtikSDK {
             //[MarshalAs(UnmanagedType.LPStr)]
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 40)]
             public char[] Manufacturer;
+        }
+
+        public enum ArtemisEfwType {
+            EFW1 = 1,
+            EFW2 = 2
         }
 
         private static void CheckError(ArtemisErrorCode code, MethodBase callingMethod, params object[] parameters) {
