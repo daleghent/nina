@@ -3695,4 +3695,22 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
   <data name="LblWizardOperationMode" xml:space="preserve">
     <value>Wizard Operationsmodus</value>
   </data>
+  <data name="LblFlatDeviceAddBinningMode" xml:space="preserve">
+    <value>Binning hinzufügen</value>
+  </data>
+  <data name="LblFlatDeviceAddGain" xml:space="preserve">
+    <value>Gain hinzufügen</value>
+  </data>
+  <data name="LblFlatDeviceAreYouSureBinning" xml:space="preserve">
+    <value>Sollen alle Werte für Binnung gelöscht werden?</value>
+  </data>
+  <data name="LblFlatDeviceAreYouSureGain" xml:space="preserve">
+    <value>Sollen alle Werte für Gain gelöscht werden?</value>
+  </data>
+  <data name="LblFlatDeviceDeleteBinningMode" xml:space="preserve">
+    <value>Binning löschen</value>
+  </data>
+  <data name="LblFlatDeviceDeleteGain" xml:space="preserve">
+    <value>Gain löschen</value>
+  </data>
 </root>

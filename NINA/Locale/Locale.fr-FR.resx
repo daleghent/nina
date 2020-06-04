@@ -3693,4 +3693,22 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
   <data name="LblWizardOperationMode" xml:space="preserve">
     <value>Assistant mode opération</value>
   </data>
+  <data name="LblFlatDeviceAddBinningMode" xml:space="preserve">
+    <value>Ajouter un Binning</value>
+  </data>
+  <data name="LblFlatDeviceAddGain" xml:space="preserve">
+    <value>Ajouter un Gain</value>
+  </data>
+  <data name="LblFlatDeviceAreYouSureBinning" xml:space="preserve">
+    <value>Êtes-vous sûr de vouloir supprimer toutes les valeurs pour le binning</value>
+  </data>
+  <data name="LblFlatDeviceAreYouSureGain" xml:space="preserve">
+    <value>Êtes-vous sûr de vouloir supprimer toutes les valeurs pour le gain</value>
+  </data>
+  <data name="LblFlatDeviceDeleteBinningMode" xml:space="preserve">
+    <value>Supprimer le Binning</value>
+  </data>
+  <data name="LblFlatDeviceDeleteGain" xml:space="preserve">
+    <value>Supprimer le Gain</value>
+  </data>
 </root>

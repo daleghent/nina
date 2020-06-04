@@ -3696,4 +3696,22 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
   <data name="LblWizardOperationMode" xml:space="preserve">
     <value>Modo de Operación con Asistente</value>
   </data>
+  <data name="LblFlatDeviceAddBinningMode" xml:space="preserve">
+    <value>Añadir Binning</value>
+  </data>
+  <data name="LblFlatDeviceAddGain" xml:space="preserve">
+    <value>Añadir ganancia</value>
+  </data>
+  <data name="LblFlatDeviceAreYouSureBinning" xml:space="preserve">
+    <value>¿Estás seguro de que desea eliminar todos los valores para el binning?</value>
+  </data>
+  <data name="LblFlatDeviceAreYouSureGain" xml:space="preserve">
+    <value>¿Estás seguro que deseas eliminar todos los valores de ganancia?</value>
+  </data>
+  <data name="LblFlatDeviceDeleteBinningMode" xml:space="preserve">
+    <value>Eliminar Binning</value>
+  </data>
+  <data name="LblFlatDeviceDeleteGain" xml:space="preserve">
+    <value>Eliminar Ganancia</value>
+  </data>
 </root>
