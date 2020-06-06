@@ -7,6 +7,10 @@
 - This allows usage of native camera drivers for Atik cameras with integrated filter wheels
 - The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver
 
+## Application Improvements
+### Sequencer
+- Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter
+
 # Version 1.10
 
 ## New hardware support

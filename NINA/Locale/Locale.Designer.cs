@@ -8458,6 +8458,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Camera has no mechanical shutter, no automated flat panel is connected and sequence contains DARK/BIAS items mixed in with LIGHT..
+        /// </summary>
+        internal static string LblSequenceContainsDarksAndLights {
+            get {
+                return ResourceManager.GetString("LblSequenceContainsDarksAndLights", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Camera has no mechanical shutter, no automated flat panel is connected and sequence only contains DARK/BIAS items. Make sure camera is covered..
+        /// </summary>
+        internal static string LblSequenceContainsDarksOnly {
+            get {
+                return ResourceManager.GetString("LblSequenceContainsDarksOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delay start (seconds).
         /// </summary>
         internal static string LblSequenceDelay {

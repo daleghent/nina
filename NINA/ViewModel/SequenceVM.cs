@@ -1355,6 +1355,20 @@ namespace NINA.ViewModel {
                 displayMessage = true;
             }
 
+            if ((!cameraInfo.HasShutter || (!_flatDevice?.Connected ?? false))
+                && Targets.Any(t => t.Items.Any(s => s.ImageType == CaptureSequence.ImageTypes.DARK || s.ImageType == CaptureSequence.ImageTypes.DARKFLAT || s.ImageType == CaptureSequence.ImageTypes.BIAS))
+                && Targets.Any(t => !t.Items.All(s => s.ImageType == CaptureSequence.ImageTypes.DARK || s.ImageType == CaptureSequence.ImageTypes.DARKFLAT || s.ImageType == CaptureSequence.ImageTypes.BIAS))) {
+                messageStringBuilder.AppendLine(Locale.Loc.Instance["LblSequenceContainsDarksAndLights"]);
+                displayMessage = true;
+            }
+
+            if ((!cameraInfo.HasShutter || (!_flatDevice?.Connected ?? false))
+                && Targets.Any(t => t.Items.Any(s => s.ImageType == CaptureSequence.ImageTypes.DARK || s.ImageType == CaptureSequence.ImageTypes.DARKFLAT || s.ImageType == CaptureSequence.ImageTypes.BIAS))
+                && Targets.All(t => t.Items.All(s => s.ImageType == CaptureSequence.ImageTypes.DARK || s.ImageType == CaptureSequence.ImageTypes.DARKFLAT || s.ImageType == CaptureSequence.ImageTypes.BIAS))) {
+                messageStringBuilder.AppendLine(Locale.Loc.Instance["LblSequenceContainsDarksOnly"]);
+                displayMessage = true;
+            }
+
             if (telescopeInfo.Connected && telescopeInfo.AtPark) {
                 messageStringBuilder.AppendLine(Locale.Loc.Instance["LblWarnTelescopeParked"]);
                 displayMessage = true;
