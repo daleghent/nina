@@ -226,6 +226,45 @@
                         <Grid Width="50" Height="50">
                             <Path
                                 Margin="5"
+                                Data="{StaticResource ObservatorySVG}"
+                                Stretch="Uniform"
+                                Style="{StaticResource TabItemPath}" />
+                        </Grid>
+
+                        <Grid Visibility="{Binding DomeVM.Dome, Converter={StaticResource NullToVisibilityConverter}}">
+                            <Path
+                                Width="10"
+                                Height="10"
+                                Margin="0,0,0,4"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Data="{StaticResource PowerSVG}"
+                                Stretch="Uniform"
+                                Style="{StaticResource TabItemPath}"
+                                Visibility="{Binding DomeVM.Dome.Connected, Converter={StaticResource VisibilityConverter}}" />
+                        </Grid>
+                    </Grid>
+                    <TextBlock
+                        Grid.Row="1"
+                        Style="{StaticResource SideBarTextBlock}"
+                        Text="{ns:Loc LblDome}" />
+                </Grid>
+            </TabItem.Header>
+            <TabItem.Content>
+                <local:DomeView DataContext="{Binding DomeVM}" />
+            </TabItem.Content>
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition Height="10" />
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid Width="50" Height="50">
+                            <Path
+                                Margin="5"
                                 Data="{StaticResource GuiderSVG}"
                                 Stretch="Uniform"
                                 Style="{StaticResource TabItemPath}" />

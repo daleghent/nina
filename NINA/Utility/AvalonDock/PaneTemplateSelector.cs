@@ -14,6 +14,7 @@
 
 using NINA.ViewModel;
 using NINA.ViewModel.Equipment.Camera;
+using NINA.ViewModel.Equipment.Dome;
 using NINA.ViewModel.Equipment.FilterWheel;
 using NINA.ViewModel.Equipment.Focuser;
 using NINA.ViewModel.Equipment.Guider;
@@ -68,7 +69,10 @@ namespace NINA.Utility.AvalonDock {
         public DataTemplate FocusTargetsTemplate { get; set; }
 
         public DataTemplate SwitchTemplate { get; set; }
+
         public DataTemplate ExposureCalculatorTemplate { get; set; }
+
+        public DataTemplate DomeTemplate { get; set; }
 
         public override System.Windows.DataTemplate SelectTemplate(object item, System.Windows.DependencyObject container) {
             var itemAsLayoutContent = item as LayoutContent;
@@ -147,6 +151,10 @@ namespace NINA.Utility.AvalonDock {
 
             if (item is ExposureCalculatorVM) {
                 return ExposureCalculatorTemplate;
+            }
+
+            if (item is DomeVM) {
+                return DomeTemplate;
             }
 
             return base.SelectTemplate(item, container);

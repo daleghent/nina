@@ -28,6 +28,7 @@ namespace NINA.Profile {
     [KnownType(typeof(AstrometrySettings))]
     [KnownType(typeof(CameraSettings))]
     [KnownType(typeof(ColorSchemaSettings))]
+    [KnownType(typeof(DomeSettings))]
     [KnownType(typeof(FilterWheelSettings))]
     [KnownType(typeof(FocuserSettings))]
     [KnownType(typeof(FramingAssistantSettings))]
@@ -94,6 +95,7 @@ namespace NINA.Profile {
             AstrometrySettings = new AstrometrySettings();
             CameraSettings = new CameraSettings();
             ColorSchemaSettings = new ColorSchemaSettings();
+            DomeSettings = new DomeSettings();
             FilterWheelSettings = new FilterWheelSettings();
             FlatWizardSettings = new FlatWizardSettings();
             FocuserSettings = new FocuserSettings();
@@ -123,6 +125,7 @@ namespace NINA.Profile {
             AstrometrySettings.PropertyChanged += SettingsChanged;
             CameraSettings.PropertyChanged += SettingsChanged;
             ColorSchemaSettings.PropertyChanged += SettingsChanged;
+            DomeSettings.PropertyChanged += SettingsChanged;
             FilterWheelSettings.PropertyChanged += SettingsChanged;
             FlatWizardSettings.PropertyChanged += SettingsChanged;
             FocuserSettings.PropertyChanged += SettingsChanged;
@@ -174,9 +177,9 @@ namespace NINA.Profile {
         }
 
         [DataMember]
-
-        public Guid Id { get; set; } = Guid.NewGuid();[DataMember]
-
+        public Guid Id { get; set; } = Guid.NewGuid();
+        
+        [DataMember]
         public DateTime LastUsed { get; set; } = DateTime.MinValue;
 
         private string name = "Default";
@@ -212,6 +215,9 @@ namespace NINA.Profile {
 
         [DataMember]
         public IColorSchemaSettings ColorSchemaSettings { get; set; }
+
+        [DataMember]
+        public IDomeSettings DomeSettings { get; set; }
 
         [DataMember]
         public IFilterWheelSettings FilterWheelSettings { get; set; }

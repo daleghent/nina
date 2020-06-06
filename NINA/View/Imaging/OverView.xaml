@@ -271,11 +271,18 @@
                             <view:AnchorableCameraView />
                         </DataTemplate>
                     </util:PaneTemplateSelector.CameraTemplate>
+                    
                     <util:PaneTemplateSelector.TelescopeTemplate>
                         <DataTemplate>
                             <view:AnchorableTelescopeView />
                         </DataTemplate>
                     </util:PaneTemplateSelector.TelescopeTemplate>
+
+                    <util:PaneTemplateSelector.DomeTemplate>
+                        <DataTemplate>
+                            <view:AnchorableDomeView />
+                        </DataTemplate>
+                    </util:PaneTemplateSelector.DomeTemplate>
 
                     <util:PaneTemplateSelector.ImageControlTemplate>
                         <DataTemplate>

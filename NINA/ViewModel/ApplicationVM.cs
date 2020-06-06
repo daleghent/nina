@@ -19,6 +19,7 @@ using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.ViewModel.Equipment.Camera;
+using NINA.ViewModel.Equipment.Dome;
 using NINA.ViewModel.Equipment.FilterWheel;
 using NINA.ViewModel.Equipment.FlatDevice;
 using NINA.ViewModel.Equipment.Focuser;
@@ -62,6 +63,7 @@ namespace NINA.ViewModel {
 
             switchMediator = new SwitchMediator();
             weatherDataMediator = new WeatherDataMediator();
+            domeMediator = new DomeMediator();
 
             SwitchVM = new SwitchVM(profileService, applicationStatusMediator, switchMediator);
 
@@ -86,7 +88,8 @@ namespace NINA.ViewModel {
                         var guider = guiderMediator.Connect();
                         var weather = weatherDataMediator.Connect();
                         var swtch = switchMediator.Connect();
-                        await Task.WhenAll(cam, fw, telescope, focuser, rotator, flatdevice, guider, weather, swtch);
+                        var dome = domeMediator.Connect();
+                        await Task.WhenAll(cam, fw, telescope, focuser, rotator, flatdevice, guider, weather, swtch, dome);
                         return true;
                     });
                 } else {
@@ -144,6 +147,7 @@ namespace NINA.ViewModel {
         private IApplicationStatusMediator applicationStatusMediator;
         private SwitchMediator switchMediator;
         private IWeatherDataMediator weatherDataMediator;
+        private IDomeMediator domeMediator;
 
         private void LoadProfile(object obj) {
             if (profileService.Profiles.Count > 1) {
@@ -169,6 +173,7 @@ namespace NINA.ViewModel {
             DockManagerVM.Anchorables.Add(GuiderVM);
             DockManagerVM.Anchorables.Add(SwitchVM);
             DockManagerVM.Anchorables.Add(WeatherDataVM);
+            DockManagerVM.Anchorables.Add(DomeVM);
 
             DockManagerVM.Anchorables.Add(SeqVM);
             DockManagerVM.Anchorables.Add(ImagingVM.ImgStatisticsVM);
@@ -176,7 +181,6 @@ namespace NINA.ViewModel {
 
             DockManagerVM.Anchorables.Add(AnchorableSnapshotVM);
             DockManagerVM.Anchorables.Add(ThumbnailVM);
-            DockManagerVM.Anchorables.Add(WeatherDataVM);
             DockManagerVM.Anchorables.Add(PlatesolveVM);
             DockManagerVM.Anchorables.Add(PolarAlignVM);
             DockManagerVM.Anchorables.Add(AutoFocusVM);
@@ -193,6 +197,7 @@ namespace NINA.ViewModel {
             DockManagerVM.AnchorableInfoPanels.Add(SeqVM);
             DockManagerVM.AnchorableInfoPanels.Add(SwitchVM);
             DockManagerVM.AnchorableInfoPanels.Add(WeatherDataVM);
+            DockManagerVM.AnchorableInfoPanels.Add(DomeVM);
             DockManagerVM.AnchorableInfoPanels.Add(ImagingVM.ImgStatisticsVM);
             DockManagerVM.AnchorableInfoPanels.Add(SeqVM.ImgHistoryVM);
 
@@ -300,6 +305,12 @@ namespace NINA.ViewModel {
 
             try {
                 telescopeMediator.Disconnect();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
+            try {
+                domeMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
@@ -454,6 +465,21 @@ namespace NINA.ViewModel {
             }
             set {
                 _weatherDataVM = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private DomeVM _domeVM;
+
+        public DomeVM DomeVM {
+            get {
+                if (_domeVM == null) {
+                    _domeVM = new DomeVM(profileService, domeMediator, applicationStatusMediator);
+                }
+                return _domeVM;
+            }
+            set {
+                _domeVM = value;
                 RaisePropertyChanged();
             }
         }

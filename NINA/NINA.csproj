@@ -445,6 +445,9 @@
     <Compile Include="Model\MyFilterWheel\AtikFilterWheel.cs" />
     <Compile Include="Model\MyFilterWheel\AtikFilterWheelBase.cs" />
     <Compile Include="Model\MyFilterWheel\AtikInternalFilterWheel.cs" />
+    <Compile Include="Model\MyDome\AscomDome.cs" />
+    <Compile Include="Model\MyDome\DomeInfo.cs" />
+    <Compile Include="Model\MyDome\IDome.cs" />
     <Compile Include="Model\MyFilterWheel\NullFilter.cs" />
     <Compile Include="Model\MyFilterWheel\QHYFilterWheel.cs" />
     <Compile Include="Model\MyFilterWheel\FLIFilterWheel.cs" />
@@ -467,7 +470,9 @@
     <Compile Include="PlateSolving\ImageSolver.cs" />
     <Compile Include="PlateSolving\CaptureSolver.cs" />
     <Compile Include="PlateSolving\PlateSolveProgress.cs" />
+    <Compile Include="Profile\DomeSettings.cs" />
     <Compile Include="Profile\ExposureCalculatorSettings.cs" />
+    <Compile Include="Profile\Interfaces\IDomeSettings.cs" />
     <Compile Include="Profile\Interfaces\IExposureCalculatorSettings.cs" />
     <Compile Include="Profile\Interfaces\ISnapShotControlSettings.cs" />
     <Compile Include="Profile\SnapShotControlSettings.cs" />
@@ -487,6 +492,7 @@
     <Compile Include="Utility\Converters\ImagePatternToTextConverter.cs" />
     <Compile Include="Utility\Converters\IntNegativeOneToDoubleDashConverter.cs" />
     <Compile Include="Utility\Converters\InverseNullToVisibilityCollapsedConverter.cs" />
+    <Compile Include="Utility\Converters\ShutterStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\OptimalExposureCalculatorAnswerConverter.cs" />
     <Compile Include="Utility\Converters\NaNToDoubleDashConverter.cs" />
     <Compile Include="Utility\Converters\NaNToVisibilityCollapsedConverter.cs" />
@@ -519,6 +525,9 @@
     <Compile Include="Utility\FlatDeviceSDKs\Artesky\IArteskyFlatBox.cs" />
     <Compile Include="Utility\FlatDeviceSDKs\Artesky\ArteskyDevice.cs" />
     <Compile Include="Utility\FlatDeviceSDKs\AllPro\USBD.cs" />
+    <Compile Include="Utility\Mediator\DomeMediator.cs" />
+    <Compile Include="Utility\Mediator\Interfaces\IDomeConsumer.cs" />
+    <Compile Include="Utility\Mediator\Interfaces\IDomeMediator.cs" />
     <Compile Include="Utility\SerialCommunication\Exceptions.cs" />
     <Compile Include="Utility\ImageAnalysis\SharpCapSensorAnalysisReader.cs" />
     <Compile Include="Utility\SerialCommunication\ISerialSdk.cs" />
@@ -642,6 +651,7 @@
     <Compile Include="Utility\SwitchSDKs\PegasusAstro\PegasusCommands.cs" />
     <Compile Include="Utility\SwitchSDKs\PegasusAstro\PegasusDevice.cs" />
     <Compile Include="Utility\SwitchSDKs\PegasusAstro\PegasusResponses.cs" />
+    <Compile Include="Utility\ValidationRules\FullCircleDegreesRule.cs" />
     <Compile Include="Utility\ValidationRules\GreaterThanZeroRule.cs" />
     <Compile Include="Utility\ValidationRules\IntRangeRule.cs" />
     <Compile Include="Utility\ValidationRules\StrictGreaterZeroRule.cs" />
@@ -657,6 +667,9 @@
     <Compile Include="ViewModel\AutoFocus\Fitting\QuadraticFitting.cs" />
     <Compile Include="ViewModel\AutoFocus\Fitting\Trendline.cs" />
     <Compile Include="ViewModel\Equipment\Camera\CameraChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Dome\DomeChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Dome\DomeVM.cs" />
+    <Compile Include="ViewModel\Equipment\Dome\IDomeVM.cs" />
     <Compile Include="ViewModel\Equipment\FilterWheel\FilterWheelChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceVM.cs" />
@@ -697,6 +710,9 @@
     <Compile Include="View\Equipment\Camera\CameraTemplateSelector.cs" />
     <Compile Include="View\Equipment\Camera\FLICameraSetupView.xaml.cs">
       <DependentUpon>FLICameraSetupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Equipment\Dome\DomeView.xaml.cs">
+      <DependentUpon>DomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Equipment\FlatDevice\ArteskyFlatBoxSetupView.xaml.cs">
       <DependentUpon>ArteskyFlatBoxSetupView.xaml</DependentUpon>
@@ -1123,6 +1139,9 @@
     <Compile Include="View\Imaging\AnchorableTelescopeView.xaml.cs">
       <DependentUpon>AnchorableTelescopeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Imaging\AnchorableDomeView.xaml.cs">
+      <DependentUpon>AnchorableDomeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Imaging\AnchorableWeatherDataView.xaml.cs">
       <DependentUpon>AnchorableWeatherDataView.xaml</DependentUpon>
     </Compile>
@@ -1451,6 +1470,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Equipment\Dome\DomeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Equipment\FlatDevice\ArteskyFlatBoxSetupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -1558,6 +1581,10 @@
     <Page Include="View\Imaging\AnchorableTelescopeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Imaging\AnchorableDomeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Imaging\AnchorableWeatherDataView.xaml">
       <SubType>Designer</SubType>

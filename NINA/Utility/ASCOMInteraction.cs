@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Model.MyCamera;
+using NINA.Model.MyDome;
 using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFocuser;
 using NINA.Model.MyRotator;
@@ -127,6 +128,20 @@ namespace NINA.Utility {
                 try {
                     AscomObservingConditions obsdev = new AscomObservingConditions(device.Key, device.Value);
                     l.Add(obsdev);
+                } catch (Exception) {
+                }
+            }
+            return l;
+        }
+
+        public static List<IDome> GetDomes(IProfileService profileService) {
+            var l = new List<IDome>();
+            var ascomDevices = new ASCOM.Utilities.Profile();
+
+            foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("Dome")) {
+                try {
+                    AscomDome ascomDome = new AscomDome(device.Key, device.Value);
+                    l.Add(ascomDome);
                 } catch (Exception) {
                 }
             }

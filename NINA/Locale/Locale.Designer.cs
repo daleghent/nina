@@ -3369,6 +3369,267 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dome.
+        /// </summary>
+        internal static string LblDome {
+            get {
+                return ResourceManager.GetString("LblDome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to connect to ASCOM Dome driver:.
+        /// </summary>
+        internal static string LblDomeASCOMConnectFailed {
+            get {
+                return ResourceManager.GetString("LblDomeASCOMConnectFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to At home.
+        /// </summary>
+        internal static string LblDomeAtHome {
+            get {
+                return ResourceManager.GetString("LblDomeAtHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to At park.
+        /// </summary>
+        internal static string LblDomeAtPark {
+            get {
+                return ResourceManager.GetString("LblDomeAtPark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Azimuth.
+        /// </summary>
+        internal static string LblDomeAzimuth {
+            get {
+                return ResourceManager.GetString("LblDomeAzimuth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can find home.
+        /// </summary>
+        internal static string LblDomeCanFindHome {
+            get {
+                return ResourceManager.GetString("LblDomeCanFindHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome cannot find home.
+        /// </summary>
+        internal static string LblDomeCannotFindHome {
+            get {
+                return ResourceManager.GetString("LblDomeCannotFindHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome cannot park.
+        /// </summary>
+        internal static string LblDomeCannotPark {
+            get {
+                return ResourceManager.GetString("LblDomeCannotPark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome cannot set park position.
+        /// </summary>
+        internal static string LblDomeCannotSetPark {
+            get {
+                return ResourceManager.GetString("LblDomeCannotSetPark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome cannot set shutter.
+        /// </summary>
+        internal static string LblDomeCannotSetShutter {
+            get {
+                return ResourceManager.GetString("LblDomeCannotSetShutter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome cannot slew.
+        /// </summary>
+        internal static string LblDomeCannotSlew {
+            get {
+                return ResourceManager.GetString("LblDomeCannotSlew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome cannot sync azimuth.
+        /// </summary>
+        internal static string LblDomeCannotSyncAzimuth {
+            get {
+                return ResourceManager.GetString("LblDomeCannotSyncAzimuth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can park.
+        /// </summary>
+        internal static string LblDomeCanPark {
+            get {
+                return ResourceManager.GetString("LblDomeCanPark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can set azimuth.
+        /// </summary>
+        internal static string LblDomeCanSetAzimuth {
+            get {
+                return ResourceManager.GetString("LblDomeCanSetAzimuth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can set park.
+        /// </summary>
+        internal static string LblDomeCanSetPark {
+            get {
+                return ResourceManager.GetString("LblDomeCanSetPark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can set shutter.
+        /// </summary>
+        internal static string LblDomeCanSetShutter {
+            get {
+                return ResourceManager.GetString("LblDomeCanSetShutter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Can sync azimuth.
+        /// </summary>
+        internal static string LblDomeCanSyncAzimuth {
+            get {
+                return ResourceManager.GetString("LblDomeCanSyncAzimuth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome connected.
+        /// </summary>
+        internal static string LblDomeConnected {
+            get {
+                return ResourceManager.GetString("LblDomeConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome connection lost..
+        /// </summary>
+        internal static string LblDomeConnectionLost {
+            get {
+                return ResourceManager.GetString("LblDomeConnectionLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome disconnected.
+        /// </summary>
+        internal static string LblDomeDisconnect {
+            get {
+                return ResourceManager.GetString("LblDomeDisconnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Driver can slave.
+        /// </summary>
+        internal static string LblDomeDriverCanSlave {
+            get {
+                return ResourceManager.GetString("LblDomeDriverCanSlave", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slaved by driver.
+        /// </summary>
+        internal static string LblDomeDriverSlaved {
+            get {
+                return ResourceManager.GetString("LblDomeDriverSlaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No Dome Source.
+        /// </summary>
+        internal static string LblDomeNoSource {
+            get {
+                return ResourceManager.GetString("LblDomeNoSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome not connected.
+        /// </summary>
+        internal static string LblDomeNotConnected {
+            get {
+                return ResourceManager.GetString("LblDomeNotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string LblDomeShutterClose {
+            get {
+                return ResourceManager.GetString("LblDomeShutterClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        internal static string LblDomeShutterOpen {
+            get {
+                return ResourceManager.GetString("LblDomeShutterOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shutter status.
+        /// </summary>
+        internal static string LblDomeShutterStatus {
+            get {
+                return ResourceManager.GetString("LblDomeShutterStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slewing.
+        /// </summary>
+        internal static string LblDomeSlewing {
+            get {
+                return ResourceManager.GetString("LblDomeSlewing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synchronization.
+        /// </summary>
+        internal static string LblDomeSynchronization {
+            get {
+                return ResourceManager.GetString("LblDomeSynchronization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download.
         /// </summary>
         internal static string LblDownload {

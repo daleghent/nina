@@ -26,6 +26,7 @@ namespace NINA.Profile {
         IAstrometrySettings AstrometrySettings { get; set; }
         ICameraSettings CameraSettings { get; set; }
         IColorSchemaSettings ColorSchemaSettings { get; set; }
+        IDomeSettings DomeSettings { get; set; }
         IFilterWheelSettings FilterWheelSettings { get; set; }
         IFlatWizardSettings FlatWizardSettings { get; set; }
         IFocuserSettings FocuserSettings { get; set; }
