@@ -1185,7 +1185,7 @@
                                 SelectedValuePath="Text">
                                 <ComboBox.ItemsSource>
                                     <CompositeCollection>
-                                        <TextBlock Text="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Gain, UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
+                                        <TextBlock Text="{Binding Source={StaticResource AppVM}, Path=CameraVM.DefaultGain, UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
                                         <CollectionContainer Collection="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Gains, Converter={StaticResource IntListToTextBlockListConverter}}" />
                                     </CompositeCollection>
                                 </ComboBox.ItemsSource>
@@ -1200,7 +1200,7 @@
                                             UpdateSourceTrigger="PropertyChanged" />
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.Cam.Gain"
+                                            Path="CameraVM.DefaultGain"
                                             Source="{StaticResource AppVM}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
@@ -1222,7 +1222,7 @@
                                             UpdateSourceTrigger="PropertyChanged" />
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.Cam.Gain"
+                                            Path="CameraVM.DefaultGain"
                                             Source="{StaticResource AppVM}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
@@ -1264,7 +1264,7 @@
                                         </Binding>
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.Cam.Gain"
+                                            Path="CameraVM.DefaultGain"
                                             Source="{StaticResource AppVM}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
@@ -1286,7 +1286,7 @@
                                             UpdateSourceTrigger="PropertyChanged" />
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.Cam.Gain"
+                                            Path="CameraVM.DefaultGain"
                                             Source="{StaticResource AppVM}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
@@ -1328,7 +1328,7 @@
                                         </Binding>
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.Cam.Offset"
+                                            Path="CameraVM.DefaultOffset"
                                             Source="{StaticResource AppVM}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
@@ -1350,7 +1350,7 @@
                                             UpdateSourceTrigger="PropertyChanged" />
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.Cam.Offset"
+                                            Path="CameraVM.DefaultOffset"
                                             Source="{StaticResource AppVM}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
