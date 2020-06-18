@@ -30,9 +30,7 @@ using Dasync.Collections;
 using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel.Equipment.Camera {
-
     internal class CameraVM : DockableVM, ICameraVM {
-
         public CameraVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = "LblCamera";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CameraSVG"];
