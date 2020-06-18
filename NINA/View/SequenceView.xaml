@@ -22,9 +22,16 @@
     xmlns:util="clr-namespace:NINA.Utility"
     d:DesignHeight="500"
     d:DesignWidth="1000"
+    x:Name="UCSequenceView"
     mc:Ignorable="d">
-
+    <UserControl.Resources>
+        <util:BindingProxy x:Key="CameraInfo" Data="{Binding CameraInfo}" />
+        <util:BindingProxy x:Key="DataContext" Data="{Binding}" />
+    </UserControl.Resources>
     <Grid>
+        <Grid.Resources>
+            <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeCalculator}" />
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -331,7 +338,7 @@
                         <Border
                             BorderBrush="{StaticResource BorderBrush}"
                             BorderThickness="0"
-                            DataContext="{Binding Source={StaticResource AppVM}, Path=SeqVM}">
+                            DataContext="{Binding ElementName=UCSequenceView, Path=DataContext}">
                             <StackPanel Orientation="Vertical">
                                 <UniformGrid
                                     Margin="0,6,0,6"
@@ -396,19 +403,19 @@
                         <Border
                             BorderBrush="{StaticResource BorderBrush}"
                             BorderThickness="0"
-                            DataContext="{Binding Source={StaticResource AppVM}, Path=SeqVM}">
+                            DataContext="{Binding ElementName=UCSequenceView, Path=DataContext}">
                             <UniformGrid
                                 Margin="0,6,0,6"
                                 VerticalAlignment="Center"
                                 Columns="4">
                                 <UniformGrid.Style>
-                                        <Style TargetType="UniformGrid">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Targets.Count}" Value="1">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
+                                    <Style TargetType="UniformGrid">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Targets.Count}" Value="1">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
                                 </UniformGrid.Style>
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblCurrentSequenceEstimates}" />
                                 <UniformGrid
@@ -747,7 +754,7 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
-            <GroupBox DataContext="{Binding Sequence}" Visibility="{Binding DSO, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+            <GroupBox DataContext="{Binding Sequence}" Visibility="{Binding DSO, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
                 <GroupBox.Header>
                     <UniformGrid Columns="2">
                         <Grid Height="40" Margin="5">
@@ -798,9 +805,9 @@
                         Foreground="{StaticResource PrimaryBrush}"
                         HintText="{ns:Loc LblObjectNameHint}"
                         PopupBackground="{StaticResource TertiaryBackgroundBrush}"
-                        SearchResult="{Binding Source={StaticResource AppVM}, Path=SeqVM.DeepSkyObjectSearchVM.TargetSearchResult.Result}"
-                        SelectedSearchResult="{Binding Source={StaticResource AppVM}, Path=SeqVM.DeepSkyObjectSearchVM.SelectedTargetSearchResult, Mode=TwoWay}"
-                        ShowPopup="{Binding Source={StaticResource AppVM}, Path=SeqVM.DeepSkyObjectSearchVM.ShowPopup, Mode=TwoWay}"
+                        SearchResult="{Binding RelativeSource={RelativeSource AncestorType=local:SequenceView}, Path=DataContext.DeepSkyObjectSearchVM.TargetSearchResult.Result}"
+                        SelectedSearchResult="{Binding RelativeSource={RelativeSource AncestorType=local:SequenceView}, Path=DataContext.DeepSkyObjectSearchVM.SelectedTargetSearchResult, Mode=TwoWay}"
+                        ShowPopup="{Binding RelativeSource={RelativeSource AncestorType=local:SequenceView}, Path=DataContext.DeepSkyObjectSearchVM.ShowPopup, Mode=TwoWay}"
                         Text="{Binding TargetName, UpdateSourceTrigger=PropertyChanged}" />
 
                     <TextBlock
@@ -922,7 +929,8 @@
                         <local:AltitudeChart
                             Grid.Row="2"
                             Margin="0,0,0,-20"
-                            DataContext="{Binding DSO}" />
+                            DataContext="{Binding DSO}"
+                            NighttimeCalculator="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                     </Grid>
                 </Grid>
             </GroupBox>
@@ -1040,7 +1048,7 @@
                     Header="{ns:Loc LblType}">
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
-                            <ComboBox ItemsSource="{Binding Source={StaticResource AppVM}, Path=SeqVM.ImageTypes}" SelectedItem="{Binding ImageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <ComboBox ItemsSource="{Binding ElementName=UCSequenceView, Path=DataContext.ImageTypes}" SelectedItem="{Binding ImageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellEditingTemplate>
                     <DataGridTemplateColumn.CellTemplate>
@@ -1066,7 +1074,7 @@
                                 SelectedValuePath="Name"
                                 Visibility="{Binding Converter={StaticResource IsLightImageTypeToVisibilityConverter}}">
                                 <ComboBox.Resources>
-                                    <CollectionViewSource x:Key="Filters" Source="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}" />
+                                    <CollectionViewSource x:Key="Filters" Source="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}" />
                                 </ComboBox.Resources>
                                 <ComboBox.ItemsSource>
                                     <CompositeCollection>
@@ -1097,7 +1105,7 @@
                         <DataTemplate>
                             <ComboBox
                                 DisplayMemberPath="Name"
-                                ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}"
+                                ItemsSource="{Binding Source={StaticResource CameraInfo}, Path=Data.BinningModes}"
                                 SelectedItem="{Binding Binning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedValuePath="Name" />
                         </DataTemplate>
@@ -1122,7 +1130,7 @@
                             <CheckBox
                                 HorizontalAlignment="Center"
                                 IsChecked="{Binding Dither, UpdateSourceTrigger=PropertyChanged}"
-                                IsEnabled="{Binding Source={StaticResource AppVM}, Path=SeqVM.IsUsingSynchronizedGuider, Converter={StaticResource InverseBooleanConverter}}"
+                                IsEnabled="{Binding Source={StaticResource DataContext}, Path=Data.IsUsingSynchronizedGuider, Converter={StaticResource InverseBooleanConverter}}"
                                 Visibility="{Binding Converter={StaticResource IsLightImageTypeToVisibilityConverter}}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -1138,7 +1146,7 @@
                                 Margin="5,0,5,0"
                                 HorizontalAlignment="Stretch"
                                 AddSVG="{StaticResource AddSVG}"
-                                IsEnabled="{Binding Source={StaticResource AppVM}, Path=SeqVM.IsUsingSynchronizedGuider, Converter={StaticResource InverseBooleanConverter}}"
+                                IsEnabled="{Binding Source={StaticResource DataContext}, Path=Data.IsUsingSynchronizedGuider, Converter={StaticResource InverseBooleanConverter}}"
                                 MinValue="0"
                                 StepSize="1"
                                 SubstractSVG="{StaticResource SubstractSVG}"
@@ -1151,7 +1159,7 @@
                             <TextBlock
                                 Margin="5,0,5,0"
                                 VerticalAlignment="Center"
-                                IsEnabled="{Binding Source={StaticResource AppVM}, Path=SeqVM.IsUsingSynchronizedGuider, Converter={StaticResource InverseBooleanConverter}}"
+                                IsEnabled="{Binding Source={StaticResource DataContext}, Path=Data.IsUsingSynchronizedGuider, Converter={StaticResource InverseBooleanConverter}}"
                                 Text="{Binding DitherAmount}"
                                 TextAlignment="Center"
                                 Visibility="{Binding Converter={StaticResource IsLightImageTypeToVisibilityConverter}}" />
@@ -1168,12 +1176,13 @@
                         <PriorityBinding>
                             <Binding
                                 Converter="{StaticResource CollectionContainsItemsToVisibilityConverter}"
-                                Path="CameraVM.Cam.Gains"
-                                Source="{StaticResource AppVM}" />
+                                Path="Data.Gains"
+                                Source="{StaticResource CameraInfo}">
+                            </Binding>
                             <Binding
-                                Converter="{StaticResource NullToVisibilityConverter}"
-                                Path="CameraVM.Cam"
-                                Source="{StaticResource AppVM}" />
+                                Converter="{StaticResource BooleanToVisibilityCollapsedConverter}"
+                                Path="Data.Connected"
+                                Source="{StaticResource CameraInfo}" />
                         </PriorityBinding>
                     </DataGridTemplateColumn.Visibility>
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -1185,8 +1194,8 @@
                                 SelectedValuePath="Text">
                                 <ComboBox.ItemsSource>
                                     <CompositeCollection>
-                                        <TextBlock Text="{Binding Source={StaticResource AppVM}, Path=CameraVM.DefaultGain, UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
-                                        <CollectionContainer Collection="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Gains, Converter={StaticResource IntListToTextBlockListConverter}}" />
+                                        <TextBlock Text="{Binding Source={StaticResource CameraInfo}, Path=Data.DefaultGain,  UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
+                                        <CollectionContainer Collection="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource IntListToTextBlockListConverter}}" />
                                     </CompositeCollection>
                                 </ComboBox.ItemsSource>
                                 <ComboBox.SelectedValue>
@@ -1200,8 +1209,8 @@
                                             UpdateSourceTrigger="PropertyChanged" />
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.DefaultGain"
-                                            Source="{StaticResource AppVM}"
+                                            Path="Data.DefaultGain"
+                                            Source="{StaticResource CameraInfo}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
                                 </ComboBox.SelectedValue>
@@ -1219,11 +1228,12 @@
                                         <Binding
                                             Mode="TwoWay"
                                             Path="Gain"
+                                            Source="{StaticResource DataContext}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.DefaultGain"
-                                            Source="{StaticResource AppVM}"
+                                            Path="Data.DefaultGain"
+                                            Source="{StaticResource CameraInfo}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
                                 </TextBlock.Text>
@@ -1241,8 +1251,8 @@
                         <PriorityBinding FallbackValue="Visible">
                             <Binding
                                 Converter="{StaticResource InverseCollectionContainsItemsToVisibilityConverter}"
-                                Path="CameraVM.Cam.Gains"
-                                Source="{StaticResource AppVM}" />
+                                Path="Data.Gains"
+                                Source="{StaticResource CameraInfo}" />
                         </PriorityBinding>
                     </DataGridTemplateColumn.Visibility>
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -1257,15 +1267,16 @@
                                             <Binding.ValidationRules>
                                                 <util:ShortRangeRule>
                                                     <util:ShortRangeRule.ValidRange>
-                                                        <util:ShortRangeChecker Maximum="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMax}" Minimum="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMin}" />
+                                                        <util:ShortRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}"
+                                                                                Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
                                                     </util:ShortRangeRule.ValidRange>
                                                 </util:ShortRangeRule>
                                             </Binding.ValidationRules>
                                         </Binding>
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.DefaultGain"
-                                            Source="{StaticResource AppVM}"
+                                            Path="Data.DefaultGain"
+                                            Source="{StaticResource CameraInfo}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
                                 </TextBox.Text>
@@ -1286,8 +1297,8 @@
                                             UpdateSourceTrigger="PropertyChanged" />
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.DefaultGain"
-                                            Source="{StaticResource AppVM}"
+                                            Path="Data.DefaultGain"
+                                            Source="{StaticResource CameraInfo}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
                                 </TextBlock.Text>
@@ -1305,8 +1316,8 @@
                         <PriorityBinding FallbackValue="Visible">
                             <Binding
                                 Converter="{StaticResource BooleanToVisibilityHiddenConverter}"
-                                Path="CameraVM.Cam.CanSetOffset"
-                                Source="{StaticResource AppVM}" />
+                                Path="Data.CanSetOffset"
+                                Source="{StaticResource CameraInfo}" />
                         </PriorityBinding>
                     </DataGridTemplateColumn.Visibility>
                     <DataGridTemplateColumn.CellEditingTemplate>
@@ -1321,15 +1332,16 @@
                                             <Binding.ValidationRules>
                                                 <util:ShortRangeRule>
                                                     <util:ShortRangeRule.ValidRange>
-                                                        <util:ShortRangeChecker Maximum="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.OffsetMax}" Minimum="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.OffsetMin}" />
+                                                        <util:ShortRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.OffsetMax}"
+                                                                                Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.OffsetMin}" />
                                                     </util:ShortRangeRule.ValidRange>
                                                 </util:ShortRangeRule>
                                             </Binding.ValidationRules>
                                         </Binding>
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.DefaultOffset"
-                                            Source="{StaticResource AppVM}"
+                                            Path="Data.DefaultOffset"
+                                            Source="{StaticResource CameraInfo}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
                                 </TextBox.Text>
@@ -1350,8 +1362,8 @@
                                             UpdateSourceTrigger="PropertyChanged" />
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.DefaultOffset"
-                                            Source="{StaticResource AppVM}"
+                                            Path="Data.DefaultOffset"
+                                            Source="{StaticResource CameraInfo}"
                                             UpdateSourceTrigger="PropertyChanged" />
                                     </MultiBinding>
                                 </TextBlock.Text>
@@ -1501,15 +1513,15 @@
                 MinWidth="300"
                 HorizontalAlignment="Right"
                 DockPanel.Dock="Right"
-                IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.CameraInfo.Connected, FallbackValue=False}">
-                <Grid IsEnabled="{Binding Source={StaticResource AppVM}, Path=AnchorableSnapshotVM.IsLooping, Converter={StaticResource InverseBooleanConverter}}">
+                IsEnabled="{Binding Path=CameraInfo.Connected, FallbackValue=False}">
+                <!-- todo -->
+                <Grid>
                     <ninactrl:AsyncProcessButton
                         ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
                         ButtonImage="{StaticResource PlaySVG}"
                         CancelButtonImage="{StaticResource CancelSVG}"
                         CancelCommand="{Binding CancelSequenceCommand}"
                         Command="{Binding StartSequenceCommand}"
-                        IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
                         IsPaused="{Binding IsPaused}"
                         LoadingImageBrush="{StaticResource PrimaryBrush}"
                         PauseButtonImage="{StaticResource PauseSVG}"

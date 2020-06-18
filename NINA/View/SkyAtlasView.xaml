@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -21,8 +21,12 @@
     xmlns:vm="clr-namespace:NINA.ViewModel"
     d:DesignHeight="300"
     d:DesignWidth="300"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    x:Name="UC">
     <Grid>
+        <Grid.Resources>
+            <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeCalculator}" />
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition Width="4*" />
@@ -413,6 +417,7 @@
                     <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
                         <Setter Property="Visibility" Value="Collapsed" />
                     </Style>
+                    
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTemplateColumn
@@ -596,7 +601,7 @@
                         Header="{ns:Loc LblAltitude}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <local:AltitudeChart DataContext="{Binding}" />
+                                <local:AltitudeChart DataContext="{Binding}" NighttimeCalculator="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

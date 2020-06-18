@@ -115,7 +115,7 @@
                         Margin="0,5,0,0"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
-                        Visibility="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.TelescopeSettings.NoSync, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        Visibility="{Binding Path=ActiveProfile.TelescopeSettings.NoSync, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSync}" />
                             <CheckBox
@@ -165,14 +165,15 @@
                     </Border>
 
                     <local:CameraControlView
-                        MyBinningModes="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}"
-                        MyCanGetGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.CanGetGain}"
-                        MyCanSetGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.CanSetGain}"
+                        MyBinningModes="{Binding CameraInfo.BinningModes}"
+                        MyCanGetGain="{Binding CameraInfo.CanGetGain}"
+                        MyCanSetGain="{Binding CameraInfo.CanSetGain}"
                         MyExposureDuration="{Binding SnapExposureDuration, Mode=TwoWay}"
-                        MyFilters="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
-                        MyGains="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Gains}"
-                        MyMaxGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMax}"
-                        MyMinGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMin}"
+                        MyFilters="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
+                        MyGains="{Binding CameraInfo.Gains}"
+                        MyMaxGain="{Binding CameraInfo.GainMax}"
+                        MyMinGain="{Binding CameraInfo.GainMin}"
+                        MyDefaultGain="{Binding CameraInfo.DefaultGain}"
                         MyOrientation="Vertical"
                         MySelectedBinningMode="{Binding SnapBin, Mode=TwoWay}"
                         MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}"
@@ -185,7 +186,7 @@
                         CancelButtonImage="{StaticResource CancelSVG}"
                         CancelCommand="{Binding CancelSolveCommand}"
                         Command="{Binding SolveCommand}"
-                        IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
+                        IsEnabled="{Binding CameraInfo.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
                         ToolTip="{ns:Loc LblCaptureImageAndPlatesolve}" />
 
                     <DataGrid

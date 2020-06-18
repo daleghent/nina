@@ -26,21 +26,21 @@
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <local:ImageControlView Grid.Row="0" DataContext="{Binding Source={StaticResource AppVM}, Path=ImagingVM.ImageControl}" />
+        <local:ImageControlView Grid.Row="0" DataContext="{Binding ImageControlVM}" />
 
         <Grid
             Grid.Row="2"
             Grid.Column="0"
-            IsEnabled="{Binding Source={StaticResource AppVM}, Path=ImagingVM.CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
+            IsEnabled="{Binding CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
             <local:CameraControlView
-                IsEnabled="{Binding Source={StaticResource AppVM}, Path=ImagingVM.CameraInfo.Connected}"
-                MyBinningModes="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes, Mode=TwoWay}"
+                IsEnabled="{Binding CameraInfo.Connected}"
+                MyBinningModes="{Binding CameraInfo.BinningModes, Mode=TwoWay}"
                 MyButtonImage="{StaticResource PictureSVG}"
                 MyCancelButtonImage="{StaticResource CancelSVG}"
                 MyCancelCommand="{Binding CancelSnapCommand}"
                 MyCommand="{Binding SnapCommand}"
                 MyExposureDuration="{Binding SnapExposureDuration, Mode=TwoWay}"
-                MyFilters="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
+                MyFilters="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
                 MyLoop="{Binding Loop, Mode=TwoWay}"
                 MySelectedBinningMode="{Binding SnapBin, Mode=TwoWay}"
                 MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}" />

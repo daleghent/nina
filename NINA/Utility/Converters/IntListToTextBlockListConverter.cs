@@ -24,6 +24,7 @@ namespace NINA.Utility.Converters {
     public class IntListToTextBlockListConverter : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
+            if (value == null) return new List<int>();
             return ((List<int>)value).Select(r => new TextBlock() { Text = r.ToString() });
         }
 

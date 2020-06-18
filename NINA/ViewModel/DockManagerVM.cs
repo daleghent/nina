@@ -17,16 +17,78 @@ using NINA.Profile;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.ViewModel.Equipment.FilterWheel;
+using NINA.ViewModel.Equipment.Rotator;
+using NINA.ViewModel.Equipment.Guider;
+using NINA.ViewModel.Interfaces;
+using NINA.ViewModel.Equipment.Camera;
+using NINA.ViewModel.Equipment.Focuser;
+using NINA.ViewModel.Imaging;
+using NINA.ViewModel.Equipment.Dome;
+using NINA.ViewModel.Equipment.Switch;
+using NINA.ViewModel.Equipment.Telescope;
+using NINA.ViewModel.Equipment.WeatherData;
 
 namespace NINA.ViewModel {
 
-    public class DockManagerVM : BaseVM {
+    internal class DockManagerVM : BaseVM, IDockManagerVM {
 
-        public DockManagerVM(IProfileService profileService/*IEnumerable<DockableVM> dockWindowViewModels*/) : base(profileService) {
+        public DockManagerVM(IProfileService profileService, ICameraVM cameraVM, ISequenceVM seqVM,
+            IThumbnailVM thumbnailVM, ISwitchVM switchVM, IFilterWheelVM filterWheelVM, IFocuserVM focuserVM, IRotatorVM rotatorVM,
+            IWeatherDataVM weatherDataVM, IDomeVM domeVM, IAnchorableSnapshotVM snapshotVM,
+            IPolarAlignmentVM polarAlignmentVM, IAnchorablePlateSolverVM plateSolverVM, ITelescopeVM telescopeVM, IGuiderVM guiderVM,
+            IFocusTargetsVM focusTargetsVM, IAutoFocusVM autoFocusVM, IExposureCalculatorVM exposureCalculatorVM, IImageHistoryVM imageHistoryVM,
+            IImageControlVM imageControlVM, IImageStatisticsVM imageStatisticsVM) : base(profileService) {
             LoadAvalonDockLayoutCommand = new RelayCommand(LoadAvalonDockLayout);
             ResetDockLayoutCommand = new RelayCommand(ResetDockLayout, (object o) => _dockmanager != null);
+
+            Anchorables.Add(imageControlVM);
+            Anchorables.Add(cameraVM);
+            Anchorables.Add(filterWheelVM);
+            Anchorables.Add(focuserVM);
+            Anchorables.Add(rotatorVM);
+            Anchorables.Add(telescopeVM);
+            Anchorables.Add(guiderVM);
+            Anchorables.Add(switchVM);
+            Anchorables.Add(weatherDataVM);
+            Anchorables.Add(domeVM);
+
+            Anchorables.Add(seqVM);
+            Anchorables.Add(imageStatisticsVM);
+            Anchorables.Add(imageHistoryVM);
+
+            Anchorables.Add(snapshotVM);
+            Anchorables.Add(thumbnailVM);
+            Anchorables.Add(plateSolverVM);
+            Anchorables.Add(polarAlignmentVM);
+            Anchorables.Add(autoFocusVM);
+            Anchorables.Add(focusTargetsVM);
+            Anchorables.Add(exposureCalculatorVM);
+
+            AnchorableInfoPanels.Add(imageControlVM);
+            AnchorableInfoPanels.Add(cameraVM);
+            AnchorableInfoPanels.Add(filterWheelVM);
+            AnchorableInfoPanels.Add(focuserVM);
+            AnchorableInfoPanels.Add(rotatorVM);
+            AnchorableInfoPanels.Add(telescopeVM);
+            AnchorableInfoPanels.Add(guiderVM);
+            AnchorableInfoPanels.Add(seqVM);
+            AnchorableInfoPanels.Add(switchVM);
+            AnchorableInfoPanels.Add(weatherDataVM);
+            AnchorableInfoPanels.Add(domeVM);
+            AnchorableInfoPanels.Add(imageStatisticsVM);
+            AnchorableInfoPanels.Add(imageHistoryVM);
+
+            AnchorableTools.Add(snapshotVM);
+            AnchorableTools.Add(thumbnailVM);
+            AnchorableTools.Add(plateSolverVM);
+            AnchorableTools.Add(polarAlignmentVM);
+            AnchorableTools.Add(autoFocusVM);
+            AnchorableTools.Add(focusTargetsVM);
+            AnchorableTools.Add(exposureCalculatorVM);
+
+            ClosingCommand = new RelayCommand(ClosingApplication);
         }
 
         private void ResetDockLayout(object arg) {
@@ -46,12 +108,12 @@ namespace NINA.ViewModel {
             }
         }
 
-        private ObservableCollection<DockableVM> _anchorables;
+        private ObservableCollection<IDockableVM> _anchorables;
 
-        public ObservableCollection<DockableVM> Anchorables {
+        public ObservableCollection<IDockableVM> Anchorables {
             get {
                 if (_anchorables == null) {
-                    _anchorables = new ObservableCollection<DockableVM>();
+                    _anchorables = new ObservableCollection<IDockableVM>();
                 }
                 return _anchorables;
             }
@@ -61,12 +123,12 @@ namespace NINA.ViewModel {
             }
         }
 
-        private ObservableCollection<DockableVM> _anchorableTools;
+        private ObservableCollection<IDockableVM> _anchorableTools;
 
-        public ObservableCollection<DockableVM> AnchorableTools {
+        public ObservableCollection<IDockableVM> AnchorableTools {
             get {
                 if (_anchorableTools == null) {
-                    _anchorableTools = new ObservableCollection<DockableVM>();
+                    _anchorableTools = new ObservableCollection<IDockableVM>();
                 }
                 return _anchorableTools;
             }
@@ -76,12 +138,12 @@ namespace NINA.ViewModel {
             }
         }
 
-        private ObservableCollection<DockableVM> _anchorableInfoPanels;
+        private ObservableCollection<IDockableVM> _anchorableInfoPanels;
 
-        public ObservableCollection<DockableVM> AnchorableInfoPanels {
+        public ObservableCollection<IDockableVM> AnchorableInfoPanels {
             get {
                 if (_anchorableInfoPanels == null) {
-                    _anchorableInfoPanels = new ObservableCollection<DockableVM>();
+                    _anchorableInfoPanels = new ObservableCollection<IDockableVM>();
                 }
                 return _anchorableInfoPanels;
             }
@@ -140,7 +202,17 @@ namespace NINA.ViewModel {
             }
         }
 
+        private void ClosingApplication(object o) {
+            try {
+                SaveAvalonDockLayout();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+        }
+
         public ICommand LoadAvalonDockLayoutCommand { get; private set; }
         public ICommand ResetDockLayoutCommand { get; }
+
+        public ICommand ClosingCommand { get; private set; }
     }
 }

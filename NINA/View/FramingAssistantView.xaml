@@ -23,6 +23,7 @@
     xmlns:util="clr-namespace:NINA.Utility"
     d:DesignHeight="300"
     d:DesignWidth="300"
+    x:Name="UC"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,6 +31,9 @@
             <ColumnDefinition Width="5" />
             <ColumnDefinition Width="8*" />
         </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeCalculator}" />
+        </Grid.Resources>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <Grid>
                 <Grid.RowDefinitions>
@@ -422,7 +426,7 @@
                     Grid.Row="1"
                     Margin="5"
                     VerticalAlignment="Bottom">
-                    <local:AltitudeChart DataContext="{Binding DSO}" />
+                    <local:AltitudeChart DataContext="{Binding DSO}" NighttimeCalculator="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                 </Grid>
             </Grid>
         </ScrollViewer>
@@ -432,7 +436,10 @@
             VerticalAlignment="Stretch" />
 
         <Grid Grid.Column="2">
-            <local:ImageView Image="{Binding ImageParameter.Image, IsAsync=True}" ScrollEnabled="{Binding SkyMapAnnotator.DynamicFoV, Converter={StaticResource InverseBooleanConverter}}">
+            <local:ImageView Image="{Binding ImageParameter.Image, IsAsync=True}"
+                             ScrollEnabled="{Binding SkyMapAnnotator.DynamicFoV, Converter={StaticResource InverseBooleanConverter}}"
+                             RectangleOpacity="{Binding Opacity}"
+                             RectangleFontSize="{Binding FontSize}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SizeChanged" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=local:ImageView, Mode=FindAncestor}, Path=PART_ScrollViewerBinding}">
                         <i:InvokeCommandAction Command="{Binding ScrollViewerSizeChangedCommand}" />
@@ -606,7 +613,8 @@
                     </StackPanel>
                 </local:ImageView.ButtonHeaderContent>
                 <local:ImageView.ImageAreaContent>
-                    <Canvas Width="{Binding Path=FramingAssistantVM.ImageParameter.Image.PixelWidth, Source={StaticResource AppVM}}" Height="{Binding Path=FramingAssistantVM.ImageParameter.Image.PixelHeight, Source={StaticResource AppVM}}">
+                    <Canvas Width="{Binding ImageParameter.Image.PixelWidth}"
+                            Height="{Binding ImageParameter.Image.PixelHeight}">
                         <local:SkyMapOverlayView />
                         <Grid>
                             <Grid.Resources>
@@ -629,13 +637,14 @@
                                                     Stroke="{StaticResource SecondaryBrush}"
                                                     StrokeThickness="5">
                                                     <Rectangle.Fill>
-                                                        <SolidColorBrush Opacity="{Binding Path=FramingAssistantVM.Opacity, Source={StaticResource AppVM}}" Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
+                                                        <SolidColorBrush Opacity="{Binding RelativeSource={RelativeSource AncestorType=local:ImageView, Mode=FindAncestor}, Path=RectangleOpacity}"
+                                                                         Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
                                                     </Rectangle.Fill>
                                                 </Rectangle>
                                                 <TextBlock
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
-                                                    FontSize="{Binding Path=FramingAssistantVM.FontSize, Source={StaticResource AppVM}}"
+                                                    FontSize="{Binding RelativeSource={RelativeSource AncestorType=local:ImageView, Mode=FindAncestor}, Path=RectangleFontSize}"
                                                     FontStretch="ExtraExpanded"
                                                     Text="{Binding Id}"
                                                     Visibility="{Binding Id, Converter={StaticResource ZeroToVisibilityConverter}}" />

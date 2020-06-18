@@ -19,6 +19,7 @@
     xmlns:util="clr-namespace:NINA.Utility"
     d:DesignHeight="300"
     d:DesignWidth="300"
+    x:Name="UC"
     mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid>
@@ -58,7 +59,7 @@
                     Margin="5,0,0,0"
                     DataContext="{Binding GuideStepsHistory}"
                     ItemStringFormat="y: +/-{0}&quot;"
-                    SelectedValue="{Binding Source={StaticResource AppVM}, Path=GuiderVM.GuiderMaxY}"
+                    SelectedValue="{Binding ElementName=UC, Path=DataContext.GuiderMaxY}"
                     SelectedValuePath="Content">
                     <ComboBoxItem>0.25</ComboBoxItem>
                     <ComboBoxItem>0.5</ComboBoxItem>
@@ -78,7 +79,7 @@
                     Margin="5,0,0,0"
                     DataContext="{Binding GuideStepsHistory}"
                     ItemStringFormat="x: {0}"
-                    SelectedValue="{Binding Source={StaticResource AppVM}, Path=GuiderVM.HistorySize}"
+                    SelectedValue="{Binding ElementName=UC, Path=DataContext.HistorySize}"
                     SelectedValuePath="Content">
                     <ComboBoxItem>50</ComboBoxItem>
                     <ComboBoxItem>100</ComboBoxItem>
@@ -94,7 +95,7 @@
                     DataContext="{Binding GuideStepsHistory}"
                     ItemStringFormat="unit: {0}"
                     ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:GuiderScaleEnum}}}"
-                    SelectedItem="{Binding Source={StaticResource AppVM}, Path=GuiderVM.GuiderScale}" />
+                    SelectedItem="{Binding ElementName=UC, Path=DataContext.GuiderScale}" />
                 <Button
                     Grid.Column="3"
                     Height="25"

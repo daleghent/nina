@@ -16,6 +16,6 @@ using NINA.Model.MyDome;
 
 namespace NINA.ViewModel.Equipment.Dome {
 
-    public interface IDomeVM : IDeviceVM<DomeInfo> {
+    public interface IDomeVM : IDeviceVM<DomeInfo>, IDockableVM {
     }
 }

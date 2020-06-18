@@ -24,13 +24,14 @@
             <StackPanel Margin="5" VerticalAlignment="Top">
                 <TextBlock Text="{ns:Loc LblExposureCalculatorDescription}" TextWrapping="Wrap" />
                 <local:CameraControlView
-                    MyCanGetGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.CanGetGain}"
-                    MyCanSetGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.CanSetGain}"
+                    MyCanGetGain="{Binding CameraInfo.CanGetGain}"
+                    MyCanSetGain="{Binding CameraInfo.CanSetGain}"
                     MyExposureDuration="{Binding SnapExposureDuration, Mode=TwoWay}"
-                    MyFilters="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
-                    MyGains="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Gains}"
-                    MyMaxGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMax}"
-                    MyMinGain="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMin}"
+                    MyFilters="{Binding Source={StaticResource ProfileService},Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
+                    MyGains="{Binding CameraInfo.Gains}"
+                    MyMaxGain="{Binding CameraInfo.GainMax}"
+                    MyMinGain="{Binding CameraInfo.GainMin}"
+                    MyDefaultGain="{Binding CameraInfo.DefaultGain}"
                     MyOrientation="Vertical"
                     MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}"
                     MySelectedGain="{Binding SnapGain, Mode=TwoWay}" />
@@ -143,7 +144,7 @@
                             ButtonText="{ns:Loc LblCalculateBias}"
                             CancelCommand="{Binding CancelDetermineBiasCommand}"
                             Command="{Binding DetermineBiasCommand}"
-                            IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
+                            IsEnabled="{Binding CameraInfo.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
                             ToolTip="{ns:Loc LblCaptureImageCovered}" />
                         <TextBox
                             Grid.Column="1"
@@ -167,7 +168,7 @@
                     CancelButtonImage="{StaticResource CancelSVG}"
                     CancelCommand="{Binding CancelDetermineExposureTimeCommand}"
                     Command="{Binding DetermineExposureTimeCommand}"
-                    IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
+                    IsEnabled="{Binding CameraInfo.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
                     ToolTip="{ns:Loc LblCaptureImageUncovered}" />
 
                 <StackPanel Orientation="Vertical" Visibility="{Binding Statistics, Converter={StaticResource NullToVisibilityCollapsedConverter}}">

@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.Guider {
 
-    public interface IGuiderVM : IDeviceVM<GuiderInfo> {
+    public interface IGuiderVM : IDeviceVM<GuiderInfo>, IDockableVM {
 
         Task<bool> Dither(CancellationToken token);
 

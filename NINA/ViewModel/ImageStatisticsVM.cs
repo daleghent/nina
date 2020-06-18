@@ -14,12 +14,13 @@
 
 using NINA.Model.ImageData;
 using NINA.Profile;
+using NINA.ViewModel.Interfaces;
 using System;
 using System.Threading.Tasks;
 
 namespace NINA.ViewModel {
 
-    public class ImageStatisticsVM : DockableVM {
+    public class ImageStatisticsVM : DockableVM, IImageStatisticsVM {
         private AllImageStatistics _statistics;
 
         public ImageStatisticsVM(IProfileService profileService) : base(profileService) {

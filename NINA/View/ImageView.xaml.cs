@@ -84,6 +84,22 @@ namespace NINA.View {
             set { SetValue(ImageProperty, value); }
         }
 
+        public double RectangleOpacity {
+            get { return (double)GetValue(OpacityProperty); }
+            set { SetValue(OpacityProperty, value); }
+        }
+
+        public static readonly DependencyProperty RectangleOpacityProperty =
+            DependencyProperty.Register(nameof(RectangleOpacity), typeof(double), typeof(ImageView));
+
+        public double RectangleFontSize {
+            get { return (double)GetValue(OpacityProperty); }
+            set { SetValue(OpacityProperty, value); }
+        }
+
+        public static readonly DependencyProperty RectangleFontSizeProperty =
+            DependencyProperty.Register(nameof(RectangleFontSize), typeof(double), typeof(ImageView));
+
         private void Sv_SizeChanged(object sender, SizeChangedEventArgs e) {
             RecalculateScalingFactors();
         }

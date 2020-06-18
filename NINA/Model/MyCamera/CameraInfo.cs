@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,11 +41,18 @@ namespace NINA.Model.MyCamera {
             set { temperature = value; RaisePropertyChanged(); }
         }
 
-        private int gain;
+        private int gain = -1;
 
         public int Gain {
             get { return gain; }
             set { gain = value; RaisePropertyChanged(); }
+        }
+
+        private int defaultGain = -1;
+
+        public int DefaultGain {
+            get { return defaultGain; }
+            set { defaultGain = value; RaisePropertyChanged(); }
         }
 
         private double electronsPerADU;
@@ -87,6 +95,13 @@ namespace NINA.Model.MyCamera {
             set { canSetOffset = value; RaisePropertyChanged(); }
         }
 
+        private bool canGetGain;
+
+        public bool CanGetGain {
+            get { return canGetGain; }
+            set { canGetGain = value; RaisePropertyChanged(); }
+        }
+
         public int offsetMin;
 
         public int OffsetMin {
@@ -106,6 +121,13 @@ namespace NINA.Model.MyCamera {
         public int Offset {
             get { return offset; }
             set { offset = value; RaisePropertyChanged(); }
+        }
+
+        private int defaultOffset = -1;
+
+        public int DefaultOffset {
+            get { return defaultOffset; }
+            set { defaultOffset = value; RaisePropertyChanged(); }
         }
 
         private bool isSubSampleEnabled;
@@ -186,7 +208,7 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        private IList<int> gains;
+        private IList<int> gains = new List<int>();
 
         public IList<int> Gains {
             get {
@@ -382,6 +404,56 @@ namespace NINA.Model.MyCamera {
             get => bayerOffsetY;
             set {
                 bayerOffsetY = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private AsyncObservableCollection<BinningMode> binningModes = new AsyncObservableCollection<BinningMode>();
+
+        public AsyncObservableCollection<BinningMode> BinningModes {
+            get => binningModes;
+            set {
+                binningModes = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double exposureMax = 0;
+
+        public double ExposureMax {
+            get => exposureMax;
+            set {
+                exposureMax = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double exposureMin = 0;
+
+        public double ExposureMin {
+            get => exposureMin;
+            set {
+                exposureMin = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool liveViewEnabled = false;
+
+        public bool LiveViewEnabled {
+            get => liveViewEnabled;
+            set {
+                liveViewEnabled = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool canShowLiveView = false;
+
+        public bool CanShowLiveView {
+            get => canShowLiveView;
+            set {
+                canShowLiveView = value;
                 RaisePropertyChanged();
             }
         }

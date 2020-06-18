@@ -28,41 +28,44 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using NINA.Database;
+using NINA.ViewModel.Interfaces;
+using NINA.ViewModel.FramingAssistant;
 
 namespace NINA.ViewModel {
 
-    internal class SkyAtlasVM : BaseVM {
+    internal class SkyAtlasVM : BaseVM, ISkyAtlasVM {
 
-        public SkyAtlasVM(IProfileService profileService, ITelescopeMediator telescopeMediator) : base(profileService) {
-            // Not required to register to the mediator, as we don't need updates
-            this.telescopeMediator = telescopeMediator;
-
+        public SkyAtlasVM(IProfileService profileService, ITelescopeMediator telescopeMediator,
+            IFramingAssistantVM framingAssistantVM, ISequenceVM seqVM, INighttimeCalculator nighttimeCalculator, IApplicationVM appVM) : base(profileService) {
+            NighttimeCalculator = nighttimeCalculator;
             ResetFilters(null);
 
             SearchCommand = new AsyncCommand<bool>(() => Search());
             CancelSearchCommand = new RelayCommand(CancelSearch);
             ResetFiltersCommand = new RelayCommand(ResetFilters);
-            SetSequenceCoordinatesCommand = new AsyncCommand<bool>(() => SetSequenceCoordinates());
+            SetSequenceCoordinatesCommand = new AsyncCommand<bool>(async () => {
+                appVM.ChangeTab(ApplicationTab.SEQUENCE);
+                return await seqVM.SetSequenceCoordiantes(SearchResult.SelectedItem);
+            });
             SlewToCoordinatesCommand = new AsyncCommand<bool>(async () => {
                 return await telescopeMediator.SlewToCoordinatesAsync(SearchResult.SelectedItem.Coordinates);
             });
-            SetFramingAssistantCoordinatesCommand = new AsyncCommand<bool>(() => SetFramingAssistantCoordinates());
+            SetFramingAssistantCoordinatesCommand = new AsyncCommand<bool>(async () => {
+                appVM.ChangeTab(ApplicationTab.FRAMINGASSISTANT);
+                return await framingAssistantVM.SetCoordinates(SearchResult.SelectedItem);
+            });
 
             InitializeFilters();
             PageSize = 50;
 
             profileService.LocationChanged += (object sender, EventArgs e) => {
-                _nightDuration = null; //Clear cache
                 SelectedDate = DateTime.Now;
                 InitializeElevationFilters();
-                ResetRiseAndSetTimes();
             };
 
             profileService.LocaleChanged += (object sender, EventArgs e) => {
                 InitializeFilters();
             };
-
-            Ticker = new Ticker(TimeSpan.FromSeconds(30));
         }
 
         private void ResetFilters(object obj) {
@@ -101,195 +104,37 @@ namespace NINA.ViewModel {
             OrderByDirection = SkyAtlasOrderByDirectionEnum.DESC;
         }
 
-        private void ResetRiseAndSetTimes() {
-            MoonPhase = Astrometry.MoonPhase.Unknown;
-            Illumination = null;
-            MoonRiseAndSet = null;
-            SunRiseAndSet = null;
-            TwilightRiseAndSet = null;
-            _nightDuration = null;
-            _twilightDuration = null;
-        }
-
         private CancellationTokenSource _searchTokenSource;
 
         private void CancelSearch(object obj) {
             _searchTokenSource?.Cancel();
         }
 
-        private async Task<bool> SetSequenceCoordinates() {
-            // todo
-            var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
-            vm.ChangeTab(ApplicationTab.SEQUENCE);
-            return await vm.SeqVM.SetSequenceCoordiantes(SearchResult.SelectedItem);
-        }
+        public AsyncObservableCollection<DataPoint> NightDuration => NighttimeCalculator.NightDuration;
 
-        private async Task<bool> SetFramingAssistantCoordinates() {
-            // todo
-            var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
-            vm.ChangeTab(ApplicationTab.FRAMINGASSISTANT);
-            return await vm.FramingAssistantVM.SetCoordinates(SearchResult.SelectedItem);
-        }
+        public AsyncObservableCollection<DataPoint> TwilightDuration => NighttimeCalculator.TwilightDuration;
 
-        public Ticker Ticker { get; }
+        public RiseAndSetEvent TwilightRiseAndSet => NighttimeCalculator.TwilightRiseAndSet;
 
-        private AsyncObservableCollection<DataPoint> _nightDuration;
+        public RiseAndSetEvent MoonRiseAndSet => NighttimeCalculator.MoonRiseAndSet;
 
-        public AsyncObservableCollection<DataPoint> NightDuration {
-            get {
-                if (_nightDuration == null) {
-                    var twilight = TwilightRiseAndSet;
-                    if (twilight != null && twilight.Rise.HasValue && twilight.Set.HasValue) {
-                        var rise = twilight.Rise;
-                        var set = twilight.Set;
+        public double? Illumination => NighttimeCalculator.Illumination;
 
-                        _nightDuration = new AsyncObservableCollection<DataPoint>() {
-                        new DataPoint(DateTimeAxis.ToDouble(rise), 90),
-                        new DataPoint(DateTimeAxis.ToDouble(set), 90) };
-                    } else {
-                        _nightDuration = new AsyncObservableCollection<DataPoint>();
-                    }
-                }
-                return _nightDuration;
-            }
-        }
+        public Astrometry.MoonPhase MoonPhase => NighttimeCalculator.MoonPhase;
 
-        private AsyncObservableCollection<DataPoint> _twilightDuration;
+        public RiseAndSetEvent SunRiseAndSet => NighttimeCalculator.SunRiseAndSet;
 
-        public AsyncObservableCollection<DataPoint> TwilightDuration {
-            get {
-                if (_twilightDuration == null) {
-                    var twilight = SunRiseAndSet;
-                    var night = TwilightRiseAndSet;
-                    if (twilight != null && twilight.Rise.HasValue && twilight.Set.HasValue) {
-                        var twilightRise = twilight.Rise;
-                        var twilightSet = twilight.Set;
-                        var rise = night.Rise;
-                        var set = night.Set;
-
-                        _twilightDuration = new AsyncObservableCollection<DataPoint>();
-                        _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(twilightSet), 90));
-
-                        if (night != null && night.Rise.HasValue && night.Set.HasValue) {
-                            _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(set), 90));
-                            _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(set), 0));
-                            _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(rise), 0));
-                            _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(rise), 90));
-                        }
-
-                        _twilightDuration.Add(new DataPoint(DateTimeAxis.ToDouble(twilightRise), 90));
-                    } else {
-                        _twilightDuration = new AsyncObservableCollection<DataPoint>();
-                    }
-                }
-                return _twilightDuration;
-            }
-        }
-
-        private RiseAndSetEvent _twilightRiseAndSet;
-
-        public RiseAndSetEvent TwilightRiseAndSet {
-            get {
-                if (_twilightRiseAndSet == null) {
-                    var d = GetReferenceDate(SelectedDate);
-                    _twilightRiseAndSet = Astrometry.GetNightTimes(d, profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
-                }
-                return _twilightRiseAndSet;
-            }
-            private set {
-                _twilightRiseAndSet = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private RiseAndSetEvent _moonRiseAndSet;
-
-        public RiseAndSetEvent MoonRiseAndSet {
-            get {
-                if (_moonRiseAndSet == null) {
-                    var d = GetReferenceDate(SelectedDate);
-                    _moonRiseAndSet = Astrometry.GetMoonRiseAndSet(d, profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
-                }
-                return _moonRiseAndSet;
-            }
-            private set {
-                _moonRiseAndSet = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private double? _illumination;
-
-        public double? Illumination {
-            get {
-                if (_illumination == null) {
-                    var d = GetReferenceDate(SelectedDate);
-                    _illumination = Astrometry.GetMoonIllumination(d);
-                }
-                return _illumination.Value;
-            }
-            private set {
-                _illumination = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Astrometry.MoonPhase _moonPhase;
-
-        public Astrometry.MoonPhase MoonPhase {
-            get {
-                if (_moonPhase == Astrometry.MoonPhase.Unknown) {
-                    var d = GetReferenceDate(SelectedDate);
-                    _moonPhase = Astrometry.GetMoonPhase(d);
-                }
-                return _moonPhase;
-            }
-            private set {
-                _moonPhase = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private RiseAndSetEvent _sunRiseAndSet;
-
-        public RiseAndSetEvent SunRiseAndSet {
-            get {
-                if (_sunRiseAndSet == null) {
-                    var d = GetReferenceDate(SelectedDate);
-                    _sunRiseAndSet = Astrometry.GetSunRiseAndSet(d, profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
-                }
-                return _sunRiseAndSet;
-            }
-            private set {
-                _sunRiseAndSet = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private DateTime _selectedDate;
-        private ITelescopeMediator telescopeMediator;
+        public INighttimeCalculator NighttimeCalculator { get; }
 
         public DateTime SelectedDate {
             get {
-                return _selectedDate;
+                return NighttimeCalculator.SelectedDate;
             }
             set {
-                _selectedDate = value;
+                NighttimeCalculator.SelectedDate = value;
                 RaisePropertyChanged();
                 InitializeElevationFilters();
-                ResetRiseAndSetTimes();
             }
-        }
-
-        public static DateTime GetReferenceDate(DateTime reference) {
-            DateTime d = reference;
-            if (d.Hour > 12) {
-                d = new DateTime(d.Year, d.Month, d.Day, 12, 0, 0);
-            } else {
-                var tmp = d.AddDays(-1);
-                d = new DateTime(tmp.Year, tmp.Month, tmp.Day, 12, 0, 0);
-            }
-            return d;
         }
 
         private async Task<bool> Search() {
@@ -327,7 +172,7 @@ namespace NINA.ViewModel {
                     var longitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
                     var latitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
 
-                    DateTime d = GetReferenceDate(SelectedDate);
+                    DateTime d = Utility.Astrometry.NighttimeCalculator.GetReferenceDate(SelectedDate);
 
                     Parallel.ForEach(result, (obj) => {
                         var cloneDate = d;
@@ -372,7 +217,7 @@ namespace NINA.ViewModel {
             AltitudeTimesThrough = new AsyncObservableCollection<DateTime>();
             MinimumAltitudeDegrees = new AsyncObservableCollection<KeyValuePair<double, string>>();
 
-            var d = GetReferenceDate(SelectedDate);
+            var d = Utility.Astrometry.NighttimeCalculator.GetReferenceDate(SelectedDate);
 
             AltitudeTimesFrom.Add(DateTime.MinValue);
             AltitudeTimesThrough.Add(DateTime.MaxValue);

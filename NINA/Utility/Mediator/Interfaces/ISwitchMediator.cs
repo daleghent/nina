@@ -22,6 +22,6 @@ using System.Threading.Tasks;
 
 namespace NINA.Utility.Mediator.Interfaces {
 
-    internal interface ISwitchMediator : IDeviceMediator<ISwitchVM, ISwitchConsumer, SwitchInfo> {
+    public interface ISwitchMediator : IDeviceMediator<ISwitchVM, ISwitchConsumer, SwitchInfo> {
     }
 }

@@ -21,6 +21,6 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.Switch {
 
-    internal interface ISwitchVM : IDeviceVM<SwitchInfo> {
+    public interface ISwitchVM : IDeviceVM<SwitchInfo>, IDockableVM {
     }
 }

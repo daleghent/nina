@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.Camera {
 
-    public interface ICameraVM : IDeviceVM<CameraInfo> {
+    public interface ICameraVM : IDeviceVM<CameraInfo>, IDockableVM {
 
         void SetBinning(short x, short y);
 
@@ -45,5 +45,7 @@ namespace NINA.ViewModel.Equipment.Camera {
         Task<bool> CoolCamera(double temperature, TimeSpan duration, IProgress<ApplicationStatus> progress, CancellationToken ct);
 
         Task<bool> WarmCamera(TimeSpan duration, IProgress<ApplicationStatus> progress, CancellationToken ct);
+
+        Model.MyCamera.ICamera Cam { get; }
     }
 }

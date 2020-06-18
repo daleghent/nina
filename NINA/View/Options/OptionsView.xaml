@@ -24,8 +24,12 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     Background="{StaticResource BackgroundBrush}"
-    mc:Ignorable="d">
-    <TabControl x:Name="UC" TabStripPlacement="Top">
+    mc:Ignorable="d"
+    x:Name="UC">
+    <UserControl.Resources>
+        <util:BindingProxy x:Key="OptionsProxy" Data="{Binding}" />
+    </UserControl.Resources>
+    <TabControl TabStripPlacement="Top">
         <TabItem>
             <TabItem.Header>
                 <TextBlock Style="{StaticResource TabItemTextBox}" Text="{ns:Loc LblGeneral}" />
@@ -137,12 +141,14 @@
                                     </Button.Content>
                                     <Button.IsEnabled>
                                         <MultiBinding Converter="{StaticResource InverseMultiBooleanANDConverter}" FallbackValue="True">
-                                            <Binding Path="CameraVM.CameraInfo.Connected" Source="{StaticResource AppVM}" />
-                                            <Binding Path="FilterWheelVM.FilterWheelInfo.Connected" Source="{StaticResource AppVM}" />
-                                            <Binding Path="FocuserVM.FocuserInfo.Connected" Source="{StaticResource AppVM}" />
-                                            <Binding Path="RotatorVM.RotatorInfo.Connected" Source="{StaticResource AppVM}" />
-                                            <Binding Path="TelescopeVM.TelescopeInfo.Connected" Source="{StaticResource AppVM}" />
-                                            <Binding Path="GuiderVM.Guider.Connected" Source="{StaticResource AppVM}" />
+                                            <Binding Path="DeviceConsumer.CameraInfo.Connected" />
+                                            <Binding Path="DeviceConsumer.FilterWheelInfo.Connected" />
+                                            <Binding Path="DeviceConsumer.FocuserInfo.Connected" />
+                                            <Binding Path="DeviceConsumer.RotatorInfo.Connected" />
+                                            <Binding Path="DeviceConsumer.TelescopeInfo.Connected" />
+                                            <Binding Path="DeviceConsumer.GuiderInfo.Connected" />
+                                            <Binding Path="DeviceConsumer.DomeInfo.Connected" />
+                                            <Binding Path="DeviceConsumer.SwitchInfo.Connected" />
                                         </MultiBinding>
                                     </Button.IsEnabled>
                                 </Button>
@@ -414,7 +420,7 @@
                                     Height="30"
                                     Margin="5,5,0,0"
                                     HorizontalAlignment="Left"
-                                    Command="{Binding Source={StaticResource AppVM}, Path=OptionsVM.CopyToCustomSchemaCommand}"
+                                    Command="{Binding Source={StaticResource OptionsProxy}, Path=Data.CopyToCustomSchemaCommand}"
                                     DockPanel.Dock="Right">
                                     <Path
                                         Margin="5"
@@ -605,7 +611,7 @@
                                     Height="30"
                                     Margin="5,5,0,0"
                                     HorizontalAlignment="Left"
-                                    Command="{Binding Source={StaticResource AppVM}, Path=OptionsVM.CopyToAlternativeCustomSchemaCommand}">
+                                    Command="{Binding Source={StaticResource OptionsProxy}, Path=Data.CopyToAlternativeCustomSchemaCommand}">
                                     <Path
                                         Margin="5"
                                         Data="{StaticResource CopySVG}"
@@ -795,7 +801,7 @@
             <TabItem.Header>
                 <TextBlock Style="{StaticResource TabItemTextBox}" Text="{ns:Loc LblAbout}" />
             </TabItem.Header>
-            <about:AboutPageView />
+            <about:AboutPageView DataContext="{Binding}" />
         </TabItem>
     </TabControl>
 </UserControl>

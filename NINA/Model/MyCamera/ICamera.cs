@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Model.MyCamera {
 
-    internal interface ICamera : IDevice {
+    public interface ICamera : IDevice {
         bool HasShutter { get; }
         double Temperature { get; }
         double TemperatureSetPoint { get; set; }

@@ -31,7 +31,7 @@ using System.Windows.Input;
 
 namespace NINA.ViewModel {
 
-    internal class VersionCheckVM : BaseINPC {
+    internal class VersionCheckVM : BaseINPC, IVersionCheckVM {
         private const string BASEURL = "https://nighttime-imaging.eu/";
         private const string VERSIONSURL = BASEURL + "index.php/wp-json/nina/v1/versioninfo/{0}";
 
@@ -40,8 +40,10 @@ namespace NINA.ViewModel {
             DownloadCommand = new AsyncCommand<bool>(Download);
             CancelDownloadCommand = new RelayCommand(CancelDownload);
             UpdateCommand = new RelayCommand(Update);
+            CheckUpdateCommand = new AsyncCommand<bool>(() => CheckUpdate());
         }
 
+        public ICommand CheckUpdateCommand { get; set; }
         public ICommand UpdateCommand { get; set; }
         public ICommand CancelDownloadCommand { get; set; }
         public IAsyncCommand DownloadCommand { get; set; }

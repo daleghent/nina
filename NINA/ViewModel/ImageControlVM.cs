@@ -31,10 +31,11 @@ using NINA.Utility.ImageAnalysis;
 using NINA.Model.ImageData;
 using NINA.Utility.Mediator;
 using NINA.PlateSolving;
+using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel {
 
-    internal class ImageControlVM : DockableVM, ICameraConsumer {
+    internal class ImageControlVM : DockableVM, ICameraConsumer, IImageControlVM {
 
         public ImageControlVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = "LblImage";
@@ -588,8 +589,16 @@ namespace NINA.ViewModel {
             return processedImage;
         }
 
+        public CameraInfo CameraInfo {
+            get => cameraInfo;
+            set {
+                cameraInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public void UpdateDeviceInfo(CameraInfo cameraInfo) {
-            this.cameraInfo = cameraInfo;
+            CameraInfo = cameraInfo;
         }
 
         public void Dispose() {

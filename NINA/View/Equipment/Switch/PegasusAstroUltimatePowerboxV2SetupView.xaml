@@ -67,7 +67,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2PowerName1, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2PowerName1, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <TextBlock
             Grid.Row="2"
             Grid.Column="0"
@@ -82,7 +82,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2PowerName2, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2PowerName2, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <TextBlock
             Grid.Row="3"
             Grid.Column="0"
@@ -97,7 +97,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2PowerName3, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2PowerName3, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <TextBlock
             Grid.Row="4"
             Grid.Column="0"
@@ -112,7 +112,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2PowerName4, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2PowerName4, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <TextBlock
             Grid.Row="5"
             Grid.Column="0"
@@ -127,7 +127,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2PowerName5, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2PowerName5, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <TextBlock
             Grid.Row="6"
             Grid.Column="0"
@@ -142,7 +142,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName1, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName1, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <TextBlock
             Grid.Row="7"
             Grid.Column="0"
@@ -157,7 +157,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName2, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName2, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <TextBlock
             Grid.Row="8"
             Grid.Column="0"
@@ -172,7 +172,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName3, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName3, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <TextBlock
             Grid.Row="9"
             Grid.Column="0"
@@ -187,7 +187,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName4, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName4, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <TextBlock
             Grid.Row="10"
             Grid.Column="0"
@@ -202,7 +202,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName5, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName5, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <TextBlock
             Grid.Row="11"
             Grid.Column="0"
@@ -217,7 +217,7 @@
             MinWidth="200"
             Margin="0,0,5,0"
             VerticalAlignment="Center"
-            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName6, Source={StaticResource AppVM}, Mode=TwoWay}" />
+            Text="{Binding ActiveProfile.SwitchSettings.Upbv2UsbName6, Source={StaticResource ProfileService}, Mode=TwoWay}" />
         <Button
             Grid.Row="12"
             Grid.Column="0"

@@ -14,18 +14,17 @@
 
 using NINA.Utility;
 using NINA.Utility.Astrometry;
-using NINA.Utility.Enum;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
+using System.Windows;
 
 namespace NINA.Profile {
 
-    internal partial class ProfileService : IProfileService {
+    internal partial class ProfileService : BaseINPC, IProfileService {
         private static object lockobj = new object();
 
         public static string PROFILEFOLDER = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "Profiles");
@@ -278,7 +277,16 @@ namespace NINA.Profile {
             }
         }
 
-        public IProfile ActiveProfile { get; private set; }
+        private IProfile activeProfile;
+
+        public IProfile ActiveProfile {
+            get => activeProfile;
+            private set {
+                activeProfile = value;
+                Application.Current.Resources["ActiveProfile"] = activeProfile;
+                RaisePropertyChanged();
+            }
+        }
 
         public bool SelectProfile(ProfileMeta info) {
             lock (lockobj) {

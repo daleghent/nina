@@ -24,27 +24,6 @@ namespace NINA {
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application {
-
-        private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            Logger.Error(e.Exception);
-
-            if (Application.Current != null) {
-                var result = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblApplicationInBreakMode"], Locale.Loc.Instance["LblUnhandledException"], MessageBoxButton.YesNo, MessageBoxResult.No);
-                if (result == MessageBoxResult.Yes) {
-                    e.Handled = true;
-                } else {
-                    var appvm = (ApplicationVM)this.Resources["AppVM"];
-                    try {
-                        appvm.DisconnectEquipment();
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                    }
-                    e.Handled = true;
-                    Application.Current.Shutdown();
-                }
-            }
-        }
-
         protected override void OnStartup(StartupEventArgs e) {
             ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
 

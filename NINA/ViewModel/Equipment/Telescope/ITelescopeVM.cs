@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.Telescope {
 
-    public interface ITelescopeVM : IDeviceVM<TelescopeInfo> {
+    public interface ITelescopeVM : IDeviceVM<TelescopeInfo>, IDockableVM {
 
         Task<bool> SlewToCoordinatesAsync(Coordinates coords);
 

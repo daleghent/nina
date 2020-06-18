@@ -20,6 +20,6 @@ using System.Threading.Tasks;
 
 namespace NINA.Model.MySwitch {
 
-    internal class SwitchInfo : DeviceInfo {
+    public class SwitchInfo : DeviceInfo {
     }
 }

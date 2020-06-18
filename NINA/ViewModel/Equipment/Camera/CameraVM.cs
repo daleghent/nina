@@ -27,9 +27,12 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Accord.Statistics.Models.Regression.Linear;
 using Dasync.Collections;
+using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel.Equipment.Camera {
+
     internal class CameraVM : DockableVM, ICameraVM {
+
         public CameraVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = "LblCamera";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CameraSVG"];
@@ -331,8 +334,11 @@ namespace NINA.ViewModel.Equipment.Camera {
                             CameraInfo = new CameraInfo {
                                 BinX = Cam.BinX,
                                 BinY = Cam.BinY,
+                                BinningModes = Cam.BinningModes,
                                 CameraState = Cam.CameraState,
                                 CanSubSample = Cam.CanSubSample,
+                                ExposureMax = Cam.ExposureMax,
+                                ExposureMin = Cam.ExposureMin,
                                 SubSampleX = Cam.SubSampleX,
                                 SubSampleY = Cam.SubSampleY,
                                 SubSampleWidth = Cam.SubSampleWidth,
@@ -349,6 +355,9 @@ namespace NINA.ViewModel.Equipment.Camera {
                                 HasShutter = Cam.HasShutter,
                                 CanSetTemperature = Cam.CanSetTemperature,
                                 IsSubSampleEnabled = Cam.EnableSubSample,
+                                CanShowLiveView = Cam.CanShowLiveView,
+                                CanGetGain = Cam.CanGetGain,
+                                LiveViewEnabled = Cam.LiveViewEnabled,
                                 Name = Cam.Name,
                                 CanSetOffset = Cam.CanSetOffset,
                                 OffsetMin = Cam.OffsetMin,
@@ -368,7 +377,9 @@ namespace NINA.ViewModel.Equipment.Camera {
                                 ReadoutModes = Cam.ReadoutModes.Cast<string>().ToList(),
                                 SensorType = Cam.SensorType,
                                 BayerOffsetX = Cam.BayerOffsetX,
-                                BayerOffsetY = Cam.BayerOffsetY
+                                BayerOffsetY = Cam.BayerOffsetY,
+                                DefaultGain = DefaultGain,
+                                DefaultOffset = DefaultOffset
                             };
 
                             Notification.ShowSuccess(Locale.Loc.Instance["LblCameraConnected"]);
@@ -497,6 +508,15 @@ namespace NINA.ViewModel.Equipment.Camera {
             cameraValues.TryGetValue(nameof(CameraInfo.ReadoutMode), out o);
             CameraInfo.ReadoutMode = Convert.ToInt16(o ?? 0);
 
+            cameraValues.TryGetValue(nameof(CameraInfo.Gain), out o);
+            CameraInfo.Gain = (int)(o ?? -1);
+
+            cameraValues.TryGetValue(nameof(CameraInfo.DefaultGain), out o);
+            CameraInfo.DefaultGain = (int)(o ?? -1);
+
+            cameraValues.TryGetValue(nameof(CameraInfo.DefaultOffset), out o);
+            CameraInfo.DefaultOffset = (int)(o ?? -1);
+
             DateTime x = DateTime.Now;
             CoolerPowerHistory.Add(new KeyValuePair<DateTime, double>(x, CameraInfo.CoolerPower));
             CCDTemperatureHistory.Add(new KeyValuePair<DateTime, double>(x, CameraInfo.Temperature));
@@ -520,8 +540,14 @@ namespace NINA.ViewModel.Equipment.Camera {
             cameraValues.Add(nameof(CameraInfo.SubSampleHeight), _cam?.SubSampleHeight ?? -1);
             cameraValues.Add(nameof(CameraInfo.ReadoutMode), _cam?.ReadoutMode ?? 0);
 
+            if (_cam != null && _cam.CanSetGain) {
+                cameraValues.Add(nameof(CameraInfo.Gain), _cam?.Gain ?? -1);
+                cameraValues.Add(nameof(CameraInfo.DefaultGain), DefaultGain);
+            }
+
             if (_cam != null && _cam.CanSetOffset) {
                 cameraValues.Add(nameof(CameraInfo.Offset), _cam?.Offset ?? -1);
+                cameraValues.Add(nameof(CameraInfo.DefaultOffset), DefaultOffset);
             }
 
             if (_cam != null && _cam.HasBattery) {

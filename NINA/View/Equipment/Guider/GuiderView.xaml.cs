@@ -14,7 +14,7 @@
 
 using System.Windows.Controls;
 
-namespace NINA.View.Equipment {
+namespace NINA.View.Equipment.Guider {
 
     /// <summary>
     /// Interaction logic for GuiderView.xaml

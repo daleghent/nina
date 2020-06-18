@@ -218,8 +218,6 @@ namespace NINA.ViewModel.Equipment.Dome {
             BroadcastDomeInfo();
         }
 
-        public IProfile ActiveProfile => profileService.ActiveProfile;
-
         private DomeInfo domeInfo;
 
         public DomeInfo DomeInfo {
@@ -295,6 +293,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             }
             set => domeChooserVM = value;
         }
+
         public async Task<bool> OpenShutter() {
             if (Dome.CanSetShutter) {
                 Logger.Trace("Opening dome shutter");
@@ -330,6 +329,7 @@ namespace NINA.ViewModel.Equipment.Dome {
 
         private CancellationTokenSource domeManualRotationCTS;
         private Task domeManualRotationTask;
+
         private void DomeRotate(object p) {
             string direction = p.ToString();
             if (domeManualRotationCTS != null || domeManualRotationTask != null) {

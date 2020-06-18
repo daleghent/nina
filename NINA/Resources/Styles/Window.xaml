@@ -60,7 +60,7 @@
                                     Margin="4,0,0,0"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ButtonForegroundDisabledBrush}"
-                                    Text="{Binding Source={StaticResource AppVM}, Path=Version}" />
+                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.Version}" />
                                 <TextBlock
                                     Margin="4,0,0,0"
                                     VerticalAlignment="Center"
@@ -70,7 +70,7 @@
                                     Margin="4,0,0,0"
                                     VerticalAlignment="Center"
                                     Foreground="{StaticResource ButtonForegroundDisabledBrush}"
-                                    Text="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.Name}" />
+                                    Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.Name}" />
                             </StackPanel>
 
                             <StackPanel
@@ -80,15 +80,15 @@
                                 Orientation="Horizontal">
                                 <Button
                                     Height="15"
-                                    Command="{Binding Source={StaticResource AppVM}, Path=VersionCheckVM.ShowDownloadCommand}"
+                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.VersionCheckVM.ShowDownloadCommand}"
                                     Style="{StaticResource SecondaryBackgroundButton}"
-                                    Visibility="{Binding Source={StaticResource AppVM}, Path=VersionCheckVM.UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.VersionCheckVM.UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
                                     WindowChrome.IsHitTestVisibleInChrome="True">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock
                                             VerticalAlignment="Center"
                                             Style="{StaticResource WindowButtonTextBlock}"
-                                            Text="{Binding Source={StaticResource AppVM}, Path=VersionCheckVM.UpdateAvailableText}" />
+                                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.VersionCheckVM.UpdateAvailableText}" />
                                         <Path
                                             Margin="2"
                                             Data="{StaticResource DownloadSVG}"
@@ -101,7 +101,7 @@
                                     Height="15"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Right"
-                                    Command="{Binding Source={StaticResource AppVM}, Path=OptionsVM.ToggleColorsCommand}"
+                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.OptionsVM.ToggleColorsCommand}"
                                     Style="{StaticResource SecondaryBackgroundButton}"
                                     WindowChrome.IsHitTestVisibleInChrome="True">
                                     <Button.ToolTip>
@@ -120,7 +120,7 @@
                                     Height="15"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Right"
-                                    Command="{Binding Source={StaticResource AppVM}, Path=OpenManualCommand}"
+                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.OpenManualCommand}"
                                     Style="{StaticResource SecondaryBackgroundButton}"
                                     WindowChrome.IsHitTestVisibleInChrome="True">
                                     <Path
@@ -134,7 +134,7 @@
                                     Height="15"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Right"
-                                    Command="{Binding Source={StaticResource AppVM}, Path=MinimizeWindowCommand}"
+                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.MinimizeWindowCommand}"
                                     Style="{StaticResource SecondaryBackgroundButton}"
                                     WindowChrome.IsHitTestVisibleInChrome="True">
                                     <Path
@@ -149,7 +149,7 @@
                                     Height="15"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Right"
-                                    Command="{Binding Source={StaticResource AppVM}, Path=MaximizeWindowCommand}"
+                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.MaximizeWindowCommand}"
                                     Style="{StaticResource SecondaryBackgroundButton}"
                                     WindowChrome.IsHitTestVisibleInChrome="True">
                                     <Path
@@ -163,7 +163,7 @@
                                     Height="15"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Right"
-                                    Command="{Binding Source={StaticResource AppVM}, Path=ExitCommand}"
+                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.ExitCommand}"
                                     Style="{StaticResource SecondaryBackgroundButton}"
                                     WindowChrome.IsHitTestVisibleInChrome="True">
                                     <Path

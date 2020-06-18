@@ -1,5 +1,5 @@
 <!--
-    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -20,6 +20,7 @@
     xmlns:util="clr-namespace:NINA.Utility"
     d:DesignHeight="300"
     d:DesignWidth="400"
+    x:Name="UC"
     mc:Ignorable="d">
     <Grid IsEnabled="{Binding TelescopeInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
         <Border
@@ -91,11 +92,12 @@
                         IsEnabled="{Binding Cam, Converter={StaticResource InverseNullToBooleanConverter}}">
                         <local:CameraControlView
                             IsEnabled="{Binding CameraInfo.Connected}"
-                            MyBinningModes="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes, Mode=TwoWay}"
+                            MyBinningModes="{Binding ElementName=UC, Path=DataContext.CameraInfo.BinningModes, Mode=TwoWay}"
                             MyExposureDuration="{Binding SnapExposureDuration, Mode=TwoWay}"
-                            MyFilters="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
+                            MyFilters="{Binding Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
                             MySelectedBinningMode="{Binding SnapBin, Mode=TwoWay}"
-                            MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}" />
+                            MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}"
+                            MyDefaultGain="{Binding CameraInfo.DefaultGain}" />
                     </Grid>
 
                     <GroupBox Grid.Row="2" Header="Altitude Measurement">
@@ -166,7 +168,7 @@
                         <ColumnDefinition Width="140" />
                     </Grid.ColumnDefinitions>
                     <Grid>
-                        <local:ImageControlView DataContext="{Binding Source={StaticResource AppVM}, Path=ImagingVM.ImageControl}" />
+                        <local:ImageControlView DataContext="{Binding ElementName=UC, Path=DataContext.ImageControlVM}" />
                     </Grid>
                     <Grid Grid.Column="1" Margin="5,0,0,0">
                         <Grid.RowDefinitions>

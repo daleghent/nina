@@ -27,10 +27,11 @@ using System.Windows.Threading;
 using NINA.Model.ImageData;
 using NINA.Utility.Mediator;
 using NINA.Model.MyCamera;
+using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel {
 
-    internal class ThumbnailVM : DockableVM {
+    internal class ThumbnailVM : DockableVM, IThumbnailVM {
 
         public ThumbnailVM(IProfileService profileService, IImagingMediator imagingMediator) : base(profileService) {
             Title = "LblImageHistory";

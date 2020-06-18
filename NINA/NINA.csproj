@@ -191,6 +191,9 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.4.0.0-beta-0134\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="Nito.AsyncEx.Context, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.AsyncEx.Context.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Context.dll</HintPath>
     </Reference>
@@ -469,6 +472,7 @@
     <Compile Include="Model\MyFocuser\AscomFocuserProvider.cs" />
     <Compile Include="Model\MyFocuser\IAscomFocuserProvider.cs" />
     <Compile Include="Model\MyFlatDevice\ArteskyFlatBox.cs" />
+    <Compile Include="Model\MyPlanetarium\IPlanetariumFactory.cs" />
     <Compile Include="Model\MyWeatherData\UltimatePowerboxV2.cs" />
     <Compile Include="Model\MyFlatDevice\PegasusAstroFlatMaster.cs" />
     <Compile Include="PlateSolving\CaptureSolverParameter.cs" />
@@ -486,6 +490,7 @@
     <Compile Include="Profile\Interfaces\IExposureCalculatorSettings.cs" />
     <Compile Include="Profile\Interfaces\ISnapShotControlSettings.cs" />
     <Compile Include="Profile\SnapShotControlSettings.cs" />
+    <Compile Include="Utility\AllDeviceConsumer.cs" />
     <Compile Include="Utility\Astrometry\EarthRotationParameterUpdater.cs" />
     <Compile Include="Utility\Astrometry\WorldCoordinateSystem.cs" />
     <Compile Include="Utility\CameraSDKs\EDSDK\EDSDKLocal.cs" />
@@ -537,9 +542,13 @@
     <Compile Include="Utility\FlatDeviceSDKs\Artesky\IArteskyFlatBox.cs" />
     <Compile Include="Utility\FlatDeviceSDKs\Artesky\ArteskyDevice.cs" />
     <Compile Include="Utility\FlatDeviceSDKs\AllPro\USBD.cs" />
+    <Compile Include="Utility\IAllDeviceConsumer.cs" />
+    <Compile Include="Utility\IoCBindings.cs" />
+    <Compile Include="Utility\Astrometry\INighttimeCalculator.cs" />
     <Compile Include="Utility\Mediator\DomeMediator.cs" />
     <Compile Include="Utility\Mediator\Interfaces\IDomeConsumer.cs" />
     <Compile Include="Utility\Mediator\Interfaces\IDomeMediator.cs" />
+    <Compile Include="Utility\Astrometry\NighttimeCalculator.cs" />
     <Compile Include="Utility\SerialCommunication\Exceptions.cs" />
     <Compile Include="Utility\ImageAnalysis\SharpCapSensorAnalysisReader.cs" />
     <Compile Include="Utility\SerialCommunication\ISerialSdk.cs" />
@@ -667,17 +676,20 @@
     <Compile Include="Utility\ValidationRules\GreaterThanZeroRule.cs" />
     <Compile Include="Utility\ValidationRules\IntRangeRule.cs" />
     <Compile Include="Utility\ValidationRules\StrictGreaterZeroRule.cs" />
+    <Compile Include="ViewModel\ApplicationDeviceConnectionVM.cs" />
     <Compile Include="ViewModel\AutoFocus\AutoFocusPoint.cs" />
     <Compile Include="ViewModel\AutoFocus\AutoFocusReport.cs" />
     <Compile Include="ViewModel\AutoFocus\Fitting\GaussianFitting.cs" />
     <Compile Include="ViewModel\AutoFocus\Fitting\HyperbolicFitting.cs" />
     <Compile Include="ViewModel\AutoFocus\FocusPointComparer.cs" />
     <Compile Include="ViewModel\AutoFocus\Fitting\TrendlineFitting.cs" />
+    <Compile Include="ViewModel\AutoFocus\IAutoFocusVM.cs" />
     <Compile Include="ViewModel\AutoFocus\MathHelper.cs" />
     <Compile Include="ViewModel\AutoFocus\MeasureAndError.cs" />
     <Compile Include="ViewModel\AutoFocus\PlotPointComparer.cs" />
     <Compile Include="ViewModel\AutoFocus\Fitting\QuadraticFitting.cs" />
     <Compile Include="ViewModel\AutoFocus\Fitting\Trendline.cs" />
+    <Compile Include="ViewModel\EquipmentVM.cs" />
     <Compile Include="ViewModel\Equipment\Camera\CameraChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Dome\DomeChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Dome\DomeVM.cs" />
@@ -697,10 +709,30 @@
     <Compile Include="ViewModel\Equipment\WeatherData\IWeatherDataVM.cs" />
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataVM.cs" />
+    <Compile Include="ViewModel\FramingAssistant\IFramingAssistantVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IApplicationDeviceConnectionVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IDockableVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IDockManagerVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IEquipmentVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IFocusTargetsVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IImageControlVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IImageHistoryVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IImageStatisticsVM.cs" />
+    <Compile Include="ViewModel\Imaging\IAnchorablePlateSolverVM.cs" />
+    <Compile Include="ViewModel\Imaging\IAnchorableSnapshotVM.cs" />
+    <Compile Include="ViewModel\Imaging\IExposureCalculatorVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IApplicationVM.cs" />
     <Compile Include="ViewModel\Imaging\AnchorableSnapshotVM.cs" />
     <Compile Include="ViewModel\Imaging\ExposureTimeRecommendationVM.cs" />
     <Compile Include="ViewModel\Imaging\AnchorablePlateSolverVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IOptionsVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IPolarAlignmentVM.cs" />
+    <Compile Include="ViewModel\Interfaces\ISequenceVM.cs" />
+    <Compile Include="ViewModel\Interfaces\ISkyAtlasVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IThumbnailVM.cs" />
+    <Compile Include="ViewModel\Interfaces\IVersionCheckVM.cs" />
     <Compile Include="ViewModel\PlateSolvingStatusVM.cs" />
+    <Compile Include="ViewModel\VMInjector.cs" />
     <Compile Include="View\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>
@@ -1068,7 +1100,6 @@
     <Compile Include="Utility\ValidationRules.cs" />
     <Compile Include="ViewModel\BaseVM.cs" />
     <Compile Include="ViewModel\Equipment\FilterWheel\FilterWheelVM.cs" />
-    <Compile Include="ViewModel\FrameFocusVM.cs" />
     <Compile Include="ViewModel\ImageHistoryVM.cs" />
     <Compile Include="ViewModel\ImageStatisticsVM.cs" />
     <Compile Include="ViewModel\ImagingVM.cs" />
@@ -1159,9 +1190,6 @@
     <Compile Include="View\Imaging\AnchorableWeatherDataView.xaml.cs">
       <DependentUpon>AnchorableWeatherDataView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ApplicationMenu.xaml.cs">
-      <DependentUpon>ApplicationMenu.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\AutoFocusChart.xaml.cs">
       <DependentUpon>AutoFocusChart.xaml</DependentUpon>
     </Compile>
@@ -1225,9 +1253,6 @@
     </Compile>
     <Compile Include="View\ImageView.xaml.cs">
       <DependentUpon>ImageView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Imaging\ImagingView.xaml.cs">
-      <DependentUpon>ImagingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ManualRotatorView.xaml.cs">
       <DependentUpon>ManualRotatorView.xaml</DependentUpon>
@@ -1604,10 +1629,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ApplicationMenu.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\AutoFocusChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1693,10 +1714,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ImageView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Imaging\ImagingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

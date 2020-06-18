@@ -165,7 +165,7 @@
                         <Border
                             BorderBrush="{StaticResource BorderBrush}"
                             BorderThickness="0"
-                            Visibility="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.MeridianFlipSettings.Enabled, Converter={StaticResource VisibilityConverter}}">
+                            Visibility="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.MeridianFlipSettings.Enabled, Converter={StaticResource VisibilityConverter}}">
                             <UniformGrid Columns="2">
                                 <UniformGrid
                                     Margin="0,6,0,6"

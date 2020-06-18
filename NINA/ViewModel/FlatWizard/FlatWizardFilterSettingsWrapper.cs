@@ -12,7 +12,9 @@
 
 #endregion "copyright"
 
+using NINA.Model.MyCamera;
 using NINA.Model.MyFilterWheel;
+using NINA.Model.MyFlatDevice;
 using NINA.Utility;
 
 namespace NINA.ViewModel.FlatWizard {
@@ -24,11 +26,15 @@ namespace NINA.ViewModel.FlatWizard {
 
         private FlatWizardFilterSettings settings;
         private int bitDepth;
+        private CameraInfo cameraInfo;
+        private FlatDeviceInfo flatDeviceInfo;
 
-        public FlatWizardFilterSettingsWrapper(FilterInfo filterInfo, FlatWizardFilterSettings settings, int bitDepth) {
+        public FlatWizardFilterSettingsWrapper(FilterInfo filterInfo, FlatWizardFilterSettings settings, int bitDepth, CameraInfo cameraInfo, FlatDeviceInfo flatDeviceInfo) {
             this.filterInfo = filterInfo;
             this.settings = settings;
             this.bitDepth = bitDepth;
+            this.cameraInfo = cameraInfo;
+            this.flatDeviceInfo = flatDeviceInfo;
             settings.PropertyChanged += Settings_PropertyChanged;
         }
 
@@ -39,6 +45,22 @@ namespace NINA.ViewModel.FlatWizard {
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(HistogramMeanTargetADU));
                 RaisePropertyChanged(nameof(HistogramToleranceADU));
+            }
+        }
+
+        public CameraInfo CameraInfo {
+            get => cameraInfo;
+            set {
+                cameraInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public FlatDeviceInfo FlatDeviceInfo {
+            get => flatDeviceInfo;
+            set {
+                flatDeviceInfo = value;
+                RaisePropertyChanged();
             }
         }
 

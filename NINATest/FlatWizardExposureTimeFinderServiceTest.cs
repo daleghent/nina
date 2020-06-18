@@ -24,6 +24,8 @@ using System.Windows.Input;
 using NINA.Locale;
 using System.Windows.Threading;
 using NINA.Model.ImageData;
+using NINA.Model.MyCamera;
+using NINA.Model.MyFlatDevice;
 
 namespace NINATest {
 
@@ -47,7 +49,7 @@ namespace NINATest {
         public void GetNextExposureTime_WhenLessThanThreePoints_IncreaseByStepSize() {
             FlatWizardFilterSettingsWrapper wrapper = new FlatWizardFilterSettingsWrapper(new FilterInfo("Test", 0, 0), new FlatWizardFilterSettings() {
                 StepSize = 5
-            }, 8);
+            }, 8, new CameraInfo(), new FlatDeviceInfo());
 
             var result = _sut.GetNextExposureTime(1, wrapper);
             result.Should().Be(6);
@@ -60,7 +62,7 @@ namespace NINATest {
         public void GetNextExposureTime_WhenMoreThanThreePoints_IncreaseByLinearDataPlotCalculation() {
             FlatWizardFilterSettingsWrapper wrapper = new FlatWizardFilterSettingsWrapper(new FilterInfo("Test", 0, 0), new FlatWizardFilterSettings() {
                 HistogramMeanTarget = 0.5,
-            }, 8);
+            }, 8, new CameraInfo(), new FlatDeviceInfo());
 
             _sut.AddDataPoint(1, 10);
             _sut.AddDataPoint(2, 20);
@@ -78,7 +80,7 @@ namespace NINATest {
             FlatWizardFilterSettingsWrapper wrapper = new FlatWizardFilterSettingsWrapper(new FilterInfo("Test", 0, 0), new FlatWizardFilterSettings() {
                 MinFlatExposureTime = 0.1,
                 MaxFlatExposureTime = 30
-            }, 8);
+            }, 8, new CameraInfo(), new FlatDeviceInfo());
 
             var result = _sut.GetNextFlatExposureState(exposureTime, wrapper);
             result.Should().Be(state);
@@ -100,7 +102,7 @@ namespace NINATest {
             FlatWizardFilterSettingsWrapper wrapper = new FlatWizardFilterSettingsWrapper(new FilterInfo("Test", 0, 0), new FlatWizardFilterSettings() {
                 HistogramMeanTarget = meanTarget,
                 HistogramTolerance = tolerance
-            }, 8);
+            }, 8, new CameraInfo(), new FlatDeviceInfo());
 
             var test = new Mock<IFlatWizardExposureTimeFinderService>();
 
@@ -120,7 +122,7 @@ namespace NINATest {
             FlatWizardFilterSettingsWrapper wrapper = new FlatWizardFilterSettingsWrapper(new FilterInfo("Test", 0, 0), new FlatWizardFilterSettings() {
                 HistogramMeanTarget = 0.5,
                 HistogramTolerance = 0.1
-            }, 8);
+            }, 8, new CameraInfo(), new FlatDeviceInfo());
 
             DispatcherFrame frame = new DispatcherFrame();
 
@@ -151,7 +153,7 @@ namespace NINATest {
                 HistogramMeanTarget = 0.5,
                 HistogramTolerance = 0.1,
                 MinFlatExposureTime = 10
-            }, 8);
+            }, 8, new CameraInfo(), new FlatDeviceInfo());
 
             DispatcherFrame frame = new DispatcherFrame();
 
@@ -182,7 +184,7 @@ namespace NINATest {
                 HistogramMeanTarget = 0.5,
                 HistogramTolerance = 0.1,
                 MinFlatExposureTime = 10
-            }, 8);
+            }, 8, new CameraInfo(), new FlatDeviceInfo());
 
             DispatcherFrame frame = new DispatcherFrame();
 

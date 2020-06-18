@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using NINA.Utility.Astrometry;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace NINA.View {
@@ -23,6 +25,13 @@ namespace NINA.View {
 
         public AltitudeChart() {
             InitializeComponent();
+        }
+
+        public static DependencyProperty NighttimeCalculatorProperty = DependencyProperty.Register(nameof(NighttimeCalculator), typeof(INighttimeCalculator), typeof(AltitudeChart));
+
+        public INighttimeCalculator NighttimeCalculator {
+            get => (INighttimeCalculator)GetValue(NighttimeCalculatorProperty);
+            set => SetValue(NighttimeCalculatorProperty, value);
         }
     }
 }

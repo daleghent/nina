@@ -25,14 +25,14 @@
                                x:Key="IfMultipleTargets">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Targets.Count}" Value="1">
-                        <Setter Property="Visibility" Value="Collapsed"/>
+                        <Setter Property="Visibility" Value="Collapsed" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.CameraInfo.Connected}" Orientation="Vertical">
+        <StackPanel IsEnabled="{Binding CameraInfo.Connected}" Orientation="Vertical">
 
             <Grid Height="25" Margin="5">
                 <ProgressBar
@@ -66,10 +66,10 @@
                     Margin="5,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Text="{Binding SequenceEstimatedEndTime, StringFormat=HH:mm:ss, Mode=OneWay}" 
-                    Style="{StaticResource ResourceKey=IfMultipleTargets}" >
+                    Text="{Binding SequenceEstimatedEndTime, StringFormat=HH:mm:ss, Mode=OneWay}"
+                    Style="{StaticResource ResourceKey=IfMultipleTargets}">
                 </TextBlock>
-                
+
                 <TextBlock
                     Grid.Row="1"
                     VerticalAlignment="Center"
@@ -156,7 +156,7 @@
                 CancelButtonImage="{StaticResource CancelSVG}"
                 CancelCommand="{Binding CancelSequenceCommand}"
                 Command="{Binding StartSequenceCommand}"
-                IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
+                IsEnabled="{Binding CameraInfo.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
                 IsPaused="{Binding IsPaused}"
                 LoadingImageBrush="{StaticResource PrimaryBrush}"
                 PauseButtonImage="{StaticResource PauseSVG}"

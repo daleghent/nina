@@ -23,7 +23,7 @@ namespace NINA.Utility.Converters {
         public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture) {
             if (int.TryParse(value[0] + "", out var result)) {
                 if (result == -1) {
-                    if(value[1].ToString() == "{DependencyProperty.UnsetValue}") {
+                    if(value[1].ToString() == "-1") {
                         value[1] = Locale.Loc.Instance["LblCamera"];
                     }
                     return "(" + value[1] + ")";

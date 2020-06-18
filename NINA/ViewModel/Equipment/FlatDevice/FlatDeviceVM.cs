@@ -21,6 +21,7 @@ using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
+using NINA.ViewModel.Equipment.Camera;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,17 +32,21 @@ using System.Windows.Input;
 
 namespace NINA.ViewModel.Equipment.FlatDevice {
 
-    internal class FlatDeviceVM : DockableVM, IFlatDeviceVM {
+    internal class FlatDeviceVM : DockableVM, IFlatDeviceVM, ICameraConsumer {
         private IFlatDevice _flatDevice;
         private IFlatDeviceSettings _flatDeviceSettings;
         private readonly IApplicationStatusMediator _applicationStatusMediator;
+        private readonly ICameraMediator cameraMediator;
         private readonly IFlatDeviceMediator _flatDeviceMediator;
         private readonly DeviceUpdateTimer _updateTimer;
 
-        public FlatDeviceVM(IProfileService profileService, IFlatDeviceMediator flatDeviceMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public FlatDeviceVM(IProfileService profileService, IFlatDeviceMediator flatDeviceMediator, IApplicationStatusMediator applicationStatusMediator,
+            ICameraMediator cameraMediator) : base(profileService) {
             _applicationStatusMediator = applicationStatusMediator;
+            this.cameraMediator = cameraMediator;
             _flatDeviceMediator = flatDeviceMediator;
             _flatDeviceMediator.RegisterHandler(this);
+            cameraMediator.RegisterConsumer(this);
 
             ConnectCommand = new AsyncCommand<bool>(Connect);
             CancelConnectCommand = new RelayCommand(CancelConnectFlatDevice);
@@ -484,6 +489,20 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
         public ICommand DeleteBinningCommand { get; }
 
         public void Dispose() {
+        }
+
+        private CameraInfo cameraInfo;
+
+        public CameraInfo CameraInfo {
+            get => cameraInfo;
+            set {
+                cameraInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public void UpdateDeviceInfo(CameraInfo deviceInfo) {
+            CameraInfo = deviceInfo;
         }
     }
 }

@@ -25,6 +25,7 @@ using System.Windows.Media.Imaging;
 namespace NINA.ViewModel.Interfaces {
 
     public interface IImagingVM : ICameraConsumer, ITelescopeConsumer, IFilterWheelConsumer, IFocuserConsumer, IRotatorConsumer, IWeatherDataConsumer {
+        IImageControlVM ImageControl { get; }
 
         void DestroyImage();
 

@@ -14,6 +14,7 @@
 
 using NINA.Model;
 using NINA.Model.MyFilterWheel;
+using NINA.Model.MyFocuser;
 using NINA.Model.MyPlanetarium;
 using NINA.Profile;
 using NINA.Utility;
@@ -21,6 +22,8 @@ using NINA.Utility.Enum;
 using NINA.Utility.Exceptions;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
+using NINA.ViewModel.Imaging;
+using NINA.ViewModel.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -29,19 +32,25 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace NINA.ViewModel {
 
-    internal class OptionsVM : DockableVM {
+    internal class OptionsVM : DockableVM, IOptionsVM {
 
-        public OptionsVM(IProfileService profileService, IFilterWheelMediator filterWheelMediator) : base(profileService) {
+        public OptionsVM(IProfileService profileService, IFilterWheelMediator filterWheelMediator, IExposureCalculatorVM exposureCalculatorVM, IAllDeviceConsumer deviceConsumer,
+            IVersionCheckVM versionCheckVM, ProjectVersion projectVersion, IPlanetariumFactory planetariumFactory, IDockManagerVM dockManagerVM) : base(profileService) {
             Title = "LblOptions";
             CanClose = false;
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
 
+            this.exposureCalculatorVM = exposureCalculatorVM;
+            DeviceConsumer = deviceConsumer;
+            this.versionCheckVM = versionCheckVM;
+            this.projectVersion = projectVersion;
+            this.planetariumFactory = planetariumFactory;
             this.filterWheelMediator = filterWheelMediator;
+            DockManagerVM = dockManagerVM;
             OpenWebRequestCommand = new RelayCommand(OpenWebRequest);
             OpenImageFileDiagCommand = new RelayCommand(OpenImageFileDiag);
             OpenSharpCapSensorAnalysisFolderDiagCommand = new RelayCommand(OpenSharpCapSensorAnalysisFolderDiag);
@@ -92,6 +101,8 @@ namespace NINA.ViewModel {
             };
         }
 
+        public IAllDeviceConsumer DeviceConsumer { get; }
+
         private void OpenLogFolder(object obj) {
             var path = Environment.ExpandEnvironmentVariables(@"%LOCALAPPDATA%\NINA\Logs");
             Process.Start(path);
@@ -120,7 +131,7 @@ namespace NINA.ViewModel {
         }
 
         private async Task<bool> SiteFromPlanetarium() {
-            IPlanetarium s = PlanetariumFactory.GetPlanetarium(profileService);
+            IPlanetarium s = planetariumFactory.GetPlanetarium();
             Coords loc = null;
 
             try {
@@ -142,6 +153,8 @@ namespace NINA.ViewModel {
             return (loc != null);
         }
 
+        public string Version => projectVersion.ToString();
+
         private void CopyToCustomSchema(object obj) {
             ActiveProfile.ColorSchemaSettings.CopyToCustom();
         }
@@ -161,12 +174,6 @@ namespace NINA.ViewModel {
                 if (!profileService.RemoveProfile(SelectedProfile)) {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDeleteProfileInUseWarning"]);
                 }
-            }
-        }
-
-        public IProfile ActiveProfile {
-            get {
-                return profileService.ActiveProfile;
             }
         }
 
@@ -274,12 +281,14 @@ namespace NINA.ViewModel {
                 System.Windows.Forms.DialogResult result = diag.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK) {
                     ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder = diag.SelectedPath + "\\";
-                    var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
-                    var sensorAnalysisData = vm.ExposureCalculatorVM.LoadSensorAnalysisData(ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder);
+                    //var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
+                    var sensorAnalysisData = exposureCalculatorVM.LoadSensorAnalysisData(ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder);
                     Notification.ShowInformation(String.Format(Locale.Loc.Instance["LblSharpCapSensorAnalysisLoadedFormat"], sensorAnalysisData.Count));
                 }
             }
         }
+
+        public IDockManagerVM DockManagerVM { get; }
 
         private void OpenSequenceTemplateDiag(object o) {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
@@ -561,6 +570,7 @@ namespace NINA.ViewModel {
             set {
                 NINA.Properties.Settings.Default.AutoUpdateSource = (int)value;
                 NINA.Properties.Settings.Default.Save();
+                versionCheckVM.CheckUpdate();
                 RaisePropertyChanged();
             }
         }
@@ -590,6 +600,10 @@ namespace NINA.ViewModel {
 
         private ProfileMeta _selectedProfile;
         private IFilterWheelMediator filterWheelMediator;
+        private readonly IExposureCalculatorVM exposureCalculatorVM;
+        private readonly IVersionCheckVM versionCheckVM;
+        private readonly ProjectVersion projectVersion;
+        private readonly IPlanetariumFactory planetariumFactory;
 
         public ProfileMeta SelectedProfile {
             get {

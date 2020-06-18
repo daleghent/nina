@@ -16,9 +16,14 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
+    xmlns:util="clr-namespace:NINA.Utility"
     d:DesignHeight="300"
     d:DesignWidth="300"
+    x:Name="UC"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <util:BindingProxy x:Key="CameraInfo" Data="{Binding CameraInfo}" />
+    </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid IsEnabled="{Binding CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
             <StackPanel IsEnabled="{Binding CameraInfo.Connected}" Orientation="Vertical">
@@ -54,7 +59,7 @@
                                 SelectedItem="{Binding SnapFilter, Mode=TwoWay, Converter={StaticResource FilterWheelFilterConverter}}"
                                 SelectedValuePath="Name">
                                 <ComboBox.Resources>
-                                    <CollectionViewSource x:Key="Filters" Source="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}" />
+                                    <CollectionViewSource x:Key="Filters" Source="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}" />
                                 </ComboBox.Resources>
                                 <ComboBox.ItemsSource>
                                     <CompositeCollection>
@@ -75,7 +80,7 @@
                                 Height="25"
                                 Margin="5,0,0,0"
                                 DisplayMemberPath="Name"
-                                ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}"
+                                ItemsSource="{Binding ElementName=UC, Path=DataContext.CameraInfo.BinningModes}"
                                 SelectedItem="{Binding SnapBin, Mode=TwoWay}"
                                 SelectedValuePath="Name" />
                         </UniformGrid>
@@ -84,40 +89,34 @@
                         MinHeight="30"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
-                        Visibility="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.CanGetGain, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                        Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.CanGetGain, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblGain}" />
                             <Grid Margin="5,0,0,0">
-                                <TextBox IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.CanSetGain}" Visibility="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
+                                <TextBox IsEnabled="{Binding ElementName=UC, Path=DataContext.CameraInfo.CanSetGain}"
+                                         Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                             <Binding Mode="TwoWay" Path="SnapGain">
                                                 <Binding.ValidationRules>
                                                     <rules:IntRangeRule>
                                                         <rules:IntRangeRule.ValidRange>
-                                                            <rules:IntRangeChecker Maximum="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMax}" Minimum="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.GainMin}" />
+                                                            <rules:IntRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}"
+                                                                                   Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
                                                         </rules:IntRangeRule.ValidRange>
                                                     </rules:IntRangeRule>
                                                 </Binding.ValidationRules>
                                             </Binding>
-                                            <Binding
-                                                Mode="OneWay"
-                                                Path="CameraVM.DefaultGain"
-                                                Source="{StaticResource AppVM}"
-                                                UpdateSourceTrigger="PropertyChanged" />
+                                            <Binding ElementName="UC" Path="DataContext.CameraInfo.DefaultGain" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" />
                                         </MultiBinding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <ComboBox
-                                    Grid.Column="1"
-                                    DisplayMemberPath="Text"
-                                    IsSynchronizedWithCurrentItem="True"
-                                    SelectedValuePath="Text"
-                                    Visibility="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Gains, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
+                                <ComboBox Grid.Column="1" SelectedValuePath="Text" DisplayMemberPath="Text" IsSynchronizedWithCurrentItem="True"
+                                          Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.Gains, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
                                     <ComboBox.ItemsSource>
                                         <CompositeCollection>
-                                            <TextBlock Text="{Binding Source={StaticResource AppVM}, Path=CameraVM.DefaultGain, UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
-                                            <CollectionContainer Collection="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Gains, Converter={StaticResource IntListToTextBlockListConverter}}" />
+                                            <TextBlock Text="{Binding Source={StaticResource CameraInfo}, Path=Data.DefaultGain, UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
+                                            <CollectionContainer Collection="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource IntListToTextBlockListConverter}}" />
                                         </CompositeCollection>
                                     </ComboBox.ItemsSource>
                                     <ComboBox.SelectedValue>
@@ -126,14 +125,11 @@
                                             Mode="TwoWay"
                                             UpdateSourceTrigger="PropertyChanged">
                                             <Binding
-                                                Mode="TwoWay"
-                                                Path="SnapGain"
-                                                UpdateSourceTrigger="PropertyChanged" />
-                                            <Binding
-                                                Mode="OneWay"
-                                                Path="CameraVM.DefaultGain"
-                                                Source="{StaticResource AppVM}"
-                                                UpdateSourceTrigger="PropertyChanged" />
+                                            Path="SnapGain"
+                                            Mode="TwoWay"
+                                            UpdateSourceTrigger="PropertyChanged">
+                                            </Binding>
+                                            <Binding Source="{StaticResource CameraInfo}" Path="Data.DefaultGain" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" />
                                         </MultiBinding>
                                     </ComboBox.SelectedValue>
                                 </ComboBox>
@@ -172,7 +168,7 @@
                         MinHeight="30"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
-                        Visibility="{Binding Source={StaticResource AppVM}, Path=CameraVM.CameraInfo.CanSubSample, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.CanSubSample, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSubSample}" />
                             <CheckBox
@@ -192,10 +188,10 @@
                         CancelCommand="{Binding StopLiveViewCommand}"
                         Command="{Binding StartLiveViewCommand}"
                         ToolTip="{ns:Loc LblToolTipLiveView}"
-                        Visibility="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.CanShowLiveView, FallbackValue=Collapsed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                        Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.CanShowLiveView, FallbackValue=Collapsed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
                 </StackPanel>
 
-                <Grid IsEnabled="{Binding Source={StaticResource AppVM}, Path=SeqVM.IsRunning, Converter={StaticResource InverseBooleanConverter}}">
+                <Grid>
                     <ninactrl:CancellableButton
                         Height="25"
                         Margin="10,10,10,0"
@@ -203,7 +199,6 @@
                         CancelButtonImage="{StaticResource CancelSVG}"
                         CancelCommand="{Binding CancelSnapCommand}"
                         Command="{Binding SnapCommand}"
-                        IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.LiveViewEnabled, Converter={StaticResource InverseBooleanConverter}}"
                         ToolTip="{ns:Loc LblTooltipTakeExposure}"
                         Visibility="{Binding SnapCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
                 </Grid>

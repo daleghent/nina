@@ -48,5 +48,11 @@ namespace NINA.Utility.Mediator.Interfaces {
         Task<bool> CoolCamera(double temperature, TimeSpan duration, IProgress<ApplicationStatus> progress, CancellationToken ct);
 
         Task<bool> WarmCamera(TimeSpan duration, IProgress<ApplicationStatus> progress, CancellationToken ct);
+
+        void RegisterCaptureBlock(ICameraConsumer cameraConsumer);
+
+        void ReleaseCaptureBlock(ICameraConsumer cameraConsumer);
+
+        bool IsFreeToCapture(ICameraConsumer cameraConsumer);
     }
 }

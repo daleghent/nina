@@ -21,7 +21,7 @@ namespace NINA.Utility.WindowService {
         }
     }
 
-    internal interface IWindowServiceFactory {
+    public interface IWindowServiceFactory {
 
         IWindowService Create();
     }

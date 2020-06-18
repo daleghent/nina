@@ -34,6 +34,8 @@ using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Utility.WindowService;
+using NINA.ViewModel.Equipment.Camera;
+using NINA.ViewModel.Interfaces;
 using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
@@ -52,7 +54,7 @@ using System.Windows.Threading;
 
 namespace NINA.ViewModel {
 
-    internal class SequenceVM : DockableVM, ITelescopeConsumer, IFocuserConsumer, IFilterWheelConsumer, IRotatorConsumer, IFlatDeviceConsumer, IGuiderConsumer, ICameraConsumer, IWeatherDataConsumer {
+    internal class SequenceVM : DockableVM, ITelescopeConsumer, IFocuserConsumer, IFilterWheelConsumer, IRotatorConsumer, IFlatDeviceConsumer, IGuiderConsumer, ICameraConsumer, IWeatherDataConsumer, ISequenceVM {
 
         public SequenceVM(
                 IProfileService profileService,
@@ -65,7 +67,10 @@ namespace NINA.ViewModel {
                 IFlatDeviceMediator flatDeviceMediator,
                 IWeatherDataMediator weatherDataMediator,
                 IImagingMediator imagingMediator,
-                IApplicationStatusMediator applicationStatusMediator
+                IApplicationStatusMediator applicationStatusMediator,
+                INighttimeCalculator nighttimeCalculator,
+                IPlanetariumFactory planetariumFactory,
+                IImageHistoryVM imageHistoryVM
         ) : base(profileService) {
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterConsumer(this);
@@ -94,13 +99,15 @@ namespace NINA.ViewModel {
             this.imagingMediator = imagingMediator;
 
             this.applicationStatusMediator = applicationStatusMediator;
-
+            NighttimeCalculator = nighttimeCalculator;
+            this.planetariumFactory = planetariumFactory;
             this.DeepSkyObjectSearchVM = new DeepSkyObjectSearchVM();
             this.DeepSkyObjectSearchVM.PropertyChanged += DeepSkyObjectDetailVM_PropertyChanged;
 
             this.profileService = profileService;
             Title = "LblSequence";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current?.Resources["SequenceSVG"];
+            ImgHistoryVM = imageHistoryVM;
 
             AddSequenceRowCommand = new RelayCommand(AddSequenceRow);
             AddTargetCommand = new RelayCommand(AddTarget);
@@ -110,13 +117,21 @@ namespace NINA.ViewModel {
             PromoteSequenceRowCommand = new RelayCommand(PromoteSequenceRow);
             DemoteSequenceRowCommand = new RelayCommand(DemoteSequenceRow);
             ResetSequenceRowCommand = new RelayCommand(ResetSequenceRow, ResetSequenceRowEnabled);
-            StartSequenceCommand = new AsyncCommand<bool>(() => StartSequencing(new Progress<ApplicationStatus>(p => Status = p)));
+            StartSequenceCommand = new AsyncCommand<bool>(async () => {
+                cameraMediator.RegisterCaptureBlock(this);
+                try {
+                    var result = await StartSequencing(new Progress<ApplicationStatus>(p => Status = p));
+                    return result;
+                } finally {
+                    cameraMediator.ReleaseCaptureBlock(this);
+                }
+            }, (o) => cameraMediator.IsFreeToCapture(this));
             SaveSequenceCommand = new RelayCommand(SaveSequence);
             SaveAsSequenceCommand = new RelayCommand(SaveAsSequence);
             LoadSequenceCommand = new RelayCommand(LoadSequence);
             CancelSequenceCommand = new RelayCommand(CancelSequence);
             PauseSequenceCommand = new RelayCommand(PauseSequence, (object o) => !_pauseTokenSource?.IsPaused == true);
-            ResumeSequenceCommand = new RelayCommand(ResumeSequence);
+            ResumeSequenceCommand = new RelayCommand(ResumeSequence, (o) => cameraMediator.IsFreeToCapture(this));
             PromoteTargetCommand = new RelayCommand(PromoteTarget);
             DemoteTargetCommand = new RelayCommand(DemoteTarget);
             SaveTargetSetCommand = new RelayCommand(SaveTargetSet);
@@ -131,7 +146,7 @@ namespace NINA.ViewModel {
             profileService.LocationChanged += (object sender, EventArgs e) => {
                 foreach (var seq in this.Targets) {
                     var dso = new DeepSkyObject(seq.DSO.Name, seq.DSO.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
-                    dso.SetDateAndPosition(SkyAtlasVM.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
+                    dso.SetDateAndPosition(Utility.Astrometry.NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
                     seq.SetSequenceTarget(dso);
                 }
             };
@@ -147,20 +162,7 @@ namespace NINA.ViewModel {
                 ActiveSequenceChanged();
         }
 
-        private ImageHistoryVM imgHistoryVM;
-
-        public ImageHistoryVM ImgHistoryVM {
-            get {
-                if (imgHistoryVM == null) {
-                    imgHistoryVM = new ImageHistoryVM(profileService);
-                }
-                return imgHistoryVM;
-            }
-            set {
-                imgHistoryVM = value;
-                RaisePropertyChanged();
-            }
-        }
+        public IImageHistoryVM ImgHistoryVM { get; private set; }
 
         private void DeepSkyObjectDetailVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             if (e.PropertyName == nameof(DeepSkyObjectSearchVM.SelectedTargetSearchResult)) {
@@ -811,7 +813,7 @@ namespace NINA.ViewModel {
                 await StartGuiding(csl, progress);
 
                 //Set index as HFR reference frame
-                AfHfrIndex = imgHistoryVM.ImageHistory.Count();
+                AfHfrIndex = ImgHistoryVM.ImageHistory.Count();
 
                 return await ProcessSequence(csl, ct, pt, progress);
             } finally {
@@ -932,7 +934,7 @@ namespace NINA.ViewModel {
                             ImgHistoryVM.AppendAutoFocusPoint(report);
                             lastAutoFocusTime = DateTime.UtcNow;
                             lastAutoFocusTemperature = focuserInfo?.Temperature ?? double.NaN;
-                            AfHfrIndex = imgHistoryVM.ImageHistory.Count();
+                            AfHfrIndex = ImgHistoryVM.ImageHistory.Count();
                             progress.Report(new ApplicationStatus() { Status = " " });
                         }
 
@@ -1010,9 +1012,11 @@ namespace NINA.ViewModel {
                             IsPaused = true;
                             semaphoreSlim.Release();
                             progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPaused"] });
+                            cameraMediator.ReleaseCaptureBlock(this);
                             await pt.WaitWhilePausedAsync(ct);
                             progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblResuming"] });
                             await semaphoreSlim.WaitAsync(ct);
+                            cameraMediator.RegisterCaptureBlock(this);
                             Sequence = csl;
                             IsPaused = false;
                             csl.IsRunning = true;
@@ -1243,15 +1247,15 @@ namespace NINA.ViewModel {
             }
 
             if (csl.AutoFocusAfterHFRChange
-                && imgHistoryVM.ImageHistory.Count() - AfHfrIndex > 3) {
+                && ImgHistoryVM.ImageHistory.Count() - AfHfrIndex > 3) {
                 //Perform linear regression on HFR points since last AF run
-                double[] outputs = imgHistoryVM.ImageHistory.Skip(AfHfrIndex).Select(img => Double.IsNaN(img.HFR) ? 0 : img.HFR).ToArray();
-                double[] inputs = Enumerable.Range(AfHfrIndex, imgHistoryVM.ImageHistory.Count() - AfHfrIndex).Select(index => (double)index).ToArray();
+                double[] outputs = ImgHistoryVM.ImageHistory.Skip(AfHfrIndex).Select(img => Double.IsNaN(img.HFR) ? 0 : img.HFR).ToArray();
+                double[] inputs = Enumerable.Range(AfHfrIndex, ImgHistoryVM.ImageHistory.Count() - AfHfrIndex).Select(index => (double)index).ToArray();
                 OrdinaryLeastSquares ols = new OrdinaryLeastSquares();
                 SimpleLinearRegression regression = ols.Learn(inputs, outputs);
 
                 //Get current smoothed out HFR
-                double currentHfrTrend = regression.Transform(imgHistoryVM.ImageHistory.Count());
+                double currentHfrTrend = regression.Transform(ImgHistoryVM.ImageHistory.Count());
                 double originalHfr = regression.Transform(AfHfrIndex);
 
                 Logger.Debug($"Autofocus condition exrapolated original HFR: {originalHfr} extrapolated current HFR: {currentHfrTrend}");
@@ -1527,7 +1531,7 @@ namespace NINA.ViewModel {
             var sequenceDso = new DeepSkyObject(dso.AlsoKnownAs.FirstOrDefault() ?? dso.Name ?? string.Empty, dso.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
             sequenceDso.Rotation = dso.Rotation;
             await Task.Run(() => {
-                sequenceDso.SetDateAndPosition(SkyAtlasVM.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
+                sequenceDso.SetDateAndPosition(Utility.Astrometry.NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
             });
 
             Sequence.SetSequenceTarget(sequenceDso);
@@ -1590,7 +1594,7 @@ namespace NINA.ViewModel {
                 var seq = new CaptureSequence();
                 csl = new CaptureSequenceList(seq) { TargetName = "Target" };
                 csl.DSO?.SetDateAndPosition(
-                    SkyAtlasVM.GetReferenceDate(DateTime.Now),
+                    Utility.Astrometry.NighttimeCalculator.GetReferenceDate(DateTime.Now),
                     profileService.ActiveProfile.AstrometrySettings.Latitude,
                     profileService.ActiveProfile.AstrometrySettings.Longitude
                 );
@@ -1670,6 +1674,8 @@ namespace NINA.ViewModel {
         private ICameraMediator cameraMediator;
         private IImagingMediator imagingMediator;
         private IApplicationStatusMediator applicationStatusMediator;
+        public INighttimeCalculator NighttimeCalculator { get; }
+        private readonly IPlanetariumFactory planetariumFactory;
         private TelescopeInfo telescopeInfo = DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
         private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
         private IRotatorMediator rotatorMediator;
@@ -1747,8 +1753,16 @@ namespace NINA.ViewModel {
             this.telescopeInfo = telescopeInfo;
         }
 
+        public CameraInfo CameraInfo {
+            get => cameraInfo;
+            set {
+                cameraInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public void UpdateDeviceInfo(CameraInfo cameraInfo) {
-            this.cameraInfo = cameraInfo;
+            CameraInfo = cameraInfo;
         }
 
         public void UpdateDeviceInfo(RotatorInfo deviceInfo) {
@@ -1760,7 +1774,7 @@ namespace NINA.ViewModel {
         }
 
         private async Task<bool> CoordsFromPlanetarium() {
-            IPlanetarium s = PlanetariumFactory.GetPlanetarium(profileService);
+            IPlanetarium s = planetariumFactory.GetPlanetarium();
             DeepSkyObject resp = null;
 
             try {

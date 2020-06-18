@@ -12,6 +12,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:NINA.View.Equipment"
+    xmlns:guider="clr-namespace:NINA.View.Equipment.Guider"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ns="clr-namespace:NINA.Locale"
     d:DesignHeight="450"
@@ -290,7 +291,7 @@
                 </Grid>
             </TabItem.Header>
             <TabItem.Content>
-                <local:GuiderView DataContext="{Binding GuiderVM}" />
+                <guider:GuiderView DataContext="{Binding GuiderVM}" />
             </TabItem.Content>
         </TabItem>
         <TabItem>

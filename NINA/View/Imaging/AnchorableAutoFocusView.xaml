@@ -27,7 +27,7 @@
                 <RowDefinition Height="30" />
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
-            <view:AutoFocusChart />
+            <view:AutoFocusChart DataContext="{Binding}" />
 
             <ninactrl:CancellableButton
                 Grid.Row="2"

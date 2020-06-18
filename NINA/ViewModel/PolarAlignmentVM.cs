@@ -28,17 +28,20 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using NINA.Utility.Mediator;
 using NINA.PlateSolving;
+using NINA.ViewModel.Equipment.Camera;
+using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel {
 
-    internal class PolarAlignmentVM : DockableVM, ICameraConsumer, ITelescopeConsumer {
+    internal class PolarAlignmentVM : DockableVM, ICameraConsumer, ITelescopeConsumer, IPolarAlignmentVM {
 
         public PolarAlignmentVM(
                 IProfileService profileService,
                 ICameraMediator cameraMediator,
                 ITelescopeMediator telescopeMediator,
                 IImagingMediator imagingMediator,
-                IApplicationStatusMediator applicationStatusMediator
+                IApplicationStatusMediator applicationStatusMediator,
+                IImageControlVM imageControlVM
         ) : base(profileService) {
             Title = "LblPolarAlignment";
 
@@ -52,17 +55,33 @@ namespace NINA.ViewModel {
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterConsumer(this);
             this.applicationStatusMediator = applicationStatusMediator;
-
+            ImageControlVM = imageControlVM;
             updateValues = new DispatcherTimer();
             updateValues.Interval = TimeSpan.FromSeconds(10);
             updateValues.Tick += UpdateValues_Tick;
 
             MeasureAzimuthErrorCommand = new AsyncCommand<bool>(
-                () => MeasurePolarError(new Progress<ApplicationStatus>(p => AzimuthPolarErrorStatus = p), Direction.AZIMUTH),
-                (p) => (TelescopeInfo?.Connected == true && CameraInfo?.Connected == true));
+                async () => {
+                    cameraMediator.RegisterCaptureBlock(this);
+                    try {
+                        var result = await MeasurePolarError(new Progress<ApplicationStatus>(p => AzimuthPolarErrorStatus = p), Direction.AZIMUTH);
+                        return result;
+                    } finally {
+                        cameraMediator.ReleaseCaptureBlock(this);
+                    }
+                },
+                (p) => (TelescopeInfo?.Connected == true && CameraInfo?.Connected == true && cameraMediator.IsFreeToCapture(this)));
             MeasureAltitudeErrorCommand = new AsyncCommand<bool>(
-                () => MeasurePolarError(new Progress<ApplicationStatus>(p => AltitudePolarErrorStatus = p), Direction.ALTITUDE),
-                (p) => (TelescopeInfo?.Connected == true && CameraInfo?.Connected == true));
+                async () => {
+                    cameraMediator.RegisterCaptureBlock(this);
+                    try {
+                        var result = await MeasurePolarError(new Progress<ApplicationStatus>(p => AltitudePolarErrorStatus = p), Direction.ALTITUDE);
+                        return result;
+                    } finally {
+                        cameraMediator.ReleaseCaptureBlock(this);
+                    }
+                },
+                (p) => (TelescopeInfo?.Connected == true && CameraInfo?.Connected == true && cameraMediator.IsFreeToCapture(this)));
             SlewToAltitudeMeridianOffsetCommand = new AsyncCommand<bool>(
                 () => SlewToMeridianOffset(AltitudeMeridianOffset, AltitudeDeclination),
                 (p) => (TelescopeInfo?.Connected == true));
@@ -70,8 +89,16 @@ namespace NINA.ViewModel {
                 () => SlewToMeridianOffset(AzimuthMeridianOffset, AzimuthDeclination),
                 (p) => (TelescopeInfo?.Connected == true));
             DARVSlewCommand = new AsyncCommand<bool>(
-                () => Darvslew(new Progress<ApplicationStatus>(p => Status = p), new Progress<string>(p => DarvStatus = p)),
-                (p) => (TelescopeInfo?.Connected == true && CameraInfo?.Connected == true));
+                async () => {
+                    cameraMediator.RegisterCaptureBlock(this);
+                    try {
+                        var result = await Darvslew(new Progress<ApplicationStatus>(p => Status = p), new Progress<string>(p => DarvStatus = p));
+                        return result;
+                    } finally {
+                        cameraMediator.ReleaseCaptureBlock(this);
+                    }
+                },
+                (p) => (TelescopeInfo?.Connected == true && CameraInfo?.Connected == true && cameraMediator.IsFreeToCapture(this)));
             CancelDARVSlewCommand = new RelayCommand(
                 Canceldarvslew,
                 (p) => cancelDARVSlewToken != null);
@@ -245,6 +272,7 @@ namespace NINA.ViewModel {
         private string hourAngleTime;
         private ICameraMediator cameraMediator;
         private IApplicationStatusMediator applicationStatusMediator;
+        public IImageControlVM ImageControlVM { get; }
         private DispatcherTimer updateValues;
 
         private BinningMode snapBin;

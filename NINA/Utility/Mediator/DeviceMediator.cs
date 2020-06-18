@@ -14,7 +14,6 @@
 
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Equipment;
-using NINA.ViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

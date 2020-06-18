@@ -23,9 +23,7 @@ using NINA.ViewModel.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using static NINA.Model.CaptureSequence;
 using NINA.Model.ImageData;
 using NINA.Model.MyTelescope;
 using NINA.Model.MyFilterWheel;
@@ -42,7 +40,7 @@ namespace NINA.ViewModel {
         //Instantiate a Singleton of the Semaphore with a value of 1. This means that only 1 thread can be granted access at a time.
         private static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
-        private ImageControlVM _imageControl;
+        private IImageControlVM _imageControl;
 
         private Task<IRenderedImage> _imageProcessingTask;
 
@@ -66,8 +64,6 @@ namespace NINA.ViewModel {
 
         private IImagingMediator imagingMediator;
 
-        private ImageStatisticsVM imgStatisticsVM;
-
         private IProgress<ApplicationStatus> progress;
 
         private RotatorInfo rotatorInfo;
@@ -82,8 +78,7 @@ namespace NINA.ViewModel {
 
         private IWeatherDataMediator weatherDataMediator;
 
-        public ImagingVM(
-                                                                                                                                                                                        IProfileService profileService,
+        public ImagingVM(IProfileService profileService,
                 IImagingMediator imagingMediator,
                 ICameraMediator cameraMediator,
                 ITelescopeMediator telescopeMediator,
@@ -92,7 +87,9 @@ namespace NINA.ViewModel {
                 IRotatorMediator rotatorMediator,
                 IGuiderMediator guiderMediator,
                 IWeatherDataMediator weatherDataMediator,
-                IApplicationStatusMediator applicationStatusMediator
+                IApplicationStatusMediator applicationStatusMediator,
+                IImageControlVM imageControlVM,
+                IImageStatisticsVM imageStatisticsVM
         ) : base(profileService) {
             this.imagingMediator = imagingMediator;
             this.imagingMediator.RegisterHandler(this);
@@ -114,13 +111,13 @@ namespace NINA.ViewModel {
 
             this.guiderMediator = guiderMediator;
             this.applicationStatusMediator = applicationStatusMediator;
-
             this.weatherDataMediator = weatherDataMediator;
             this.weatherDataMediator.RegisterConsumer(this);
 
             progress = new Progress<ApplicationStatus>(p => Status = p);
 
-            ImageControl = new ImageControlVM(profileService, cameraMediator, telescopeMediator, applicationStatusMediator);
+            ImageControl = imageControlVM;
+            ImgStatisticsVM = imageStatisticsVM;
         }
 
         public CameraInfo CameraInfo {
@@ -133,23 +130,12 @@ namespace NINA.ViewModel {
             }
         }
 
-        public ImageControlVM ImageControl {
+        public IImageControlVM ImageControl {
             get { return _imageControl; }
             set { _imageControl = value; RaisePropertyChanged(); }
         }
 
-        public ImageStatisticsVM ImgStatisticsVM {
-            get {
-                if (imgStatisticsVM == null) {
-                    imgStatisticsVM = new ImageStatisticsVM(profileService);
-                }
-                return imgStatisticsVM;
-            }
-            set {
-                imgStatisticsVM = value;
-                RaisePropertyChanged();
-            }
-        }
+        public IImageStatisticsVM ImgStatisticsVM { get; }
 
         public ApplicationStatus Status {
             get {
@@ -339,7 +325,8 @@ namespace NINA.ViewModel {
         }
 
         public async Task<bool> StartLiveView(CancellationToken ct) {
-            ImageControl.IsLiveViewEnabled = true;
+            //todo: see if this is necessary
+            //ImageControl.IsLiveViewEnabled = true;
             try {
                 var liveViewEnumerable = cameraMediator.LiveView(ct);
                 await liveViewEnumerable.ForEachAsync(async exposureData => {
@@ -348,7 +335,7 @@ namespace NINA.ViewModel {
                 });
             } catch (OperationCanceledException) {
             } finally {
-                ImageControl.IsLiveViewEnabled = false;
+                //ImageControl.IsLiveViewEnabled = false;
             }
 
             return true;

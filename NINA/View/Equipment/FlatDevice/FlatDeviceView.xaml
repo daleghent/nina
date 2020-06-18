@@ -278,7 +278,7 @@
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
-                                IsChecked="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FlatDeviceSettings.OpenForDarkFlats, Mode=TwoWay}"
+                                IsChecked="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.OpenForDarkFlats, Mode=TwoWay}"
                                 IsEnabled="{Binding FlatDeviceInfo.Connected}" />
                         </UniformGrid>
                     </Border>
@@ -294,7 +294,7 @@
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
-                                IsChecked="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FlatDeviceSettings.CloseAtSequenceEnd, Mode=TwoWay}"
+                                IsChecked="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.CloseAtSequenceEnd, Mode=TwoWay}"
                                 IsEnabled="{Binding FlatDeviceInfo.Connected}" />
                         </UniformGrid>
                     </Border>
@@ -312,7 +312,7 @@
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
-                                IsChecked="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FlatDeviceSettings.UseWizardTrainedValues, Mode=TwoWay}" />
+                                IsChecked="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.UseWizardTrainedValues, Mode=TwoWay}" />
                         </UniformGrid>
                     </Border>
                 </StackPanel>
@@ -518,15 +518,15 @@
                                 x:Name="CameraBinningModesCombobox"
                                 Height="25"
                                 MinWidth="60"
-                                IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Connected, FallbackValue=false}"
-                                ItemsSource="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.BinningModes}" />
+                                IsEnabled="{Binding CameraInfo.Connected, FallbackValue=false}"
+                                ItemsSource="{Binding CameraInfo.BinningModes}" />
                             <Button
                                 Height="25"
                                 MinWidth="100"
                                 Margin="5"
                                 Command="{Binding AddBinningCommand}"
                                 CommandParameter="{Binding Path=SelectedItem, ElementName=CameraBinningModesCombobox}"
-                                IsEnabled="{Binding Source={StaticResource AppVM}, Path=CameraVM.Cam.Connected, FallbackValue=false}">
+                                IsEnabled="{Binding CameraInfo.Connected, FallbackValue=false}">
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblFlatDeviceAddBinningMode}" />
                             </Button>
                             <ComboBox

@@ -16,7 +16,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Model.MyPlanetarium {
 
-    internal interface IPlanetarium {
+    public interface IPlanetarium {
         string Name { get; }
 
         Task<DeepSkyObject> GetTarget();

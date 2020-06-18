@@ -98,7 +98,7 @@
                             <ComboBox.ItemsSource>
                                 <CompositeCollection>
                                     <filter:NullFilter />
-                                    <CollectionContainer Collection="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}" />
+                                    <CollectionContainer Collection="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}" />
                                 </CompositeCollection>
                             </ComboBox.ItemsSource>
                         </ComboBox>

@@ -20,6 +20,7 @@ using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
+using NINA.ViewModel.Equipment.Camera;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -29,7 +30,7 @@ using System.Windows.Input;
 
 namespace NINA.ViewModel.Imaging {
 
-    internal class AnchorablePlateSolverVM : DockableVM, ICameraConsumer, ITelescopeConsumer {
+    internal class AnchorablePlateSolverVM : DockableVM, ICameraConsumer, ITelescopeConsumer, IAnchorablePlateSolverVM {
         private PlateSolveResult _plateSolveResult;
 
         private ObservableCollection<PlateSolveResult> _plateSolveResultList;
@@ -72,10 +73,18 @@ namespace NINA.ViewModel.Imaging {
             this.telescopeMediator.RegisterConsumer(this);
             this.imagingMediator = imagingMediator;
             this.applicationStatusMediator = applicationStatusMediator;
-
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PlatesolveSVG"];
 
-            SolveCommand = new AsyncCommand<bool>(() => CaptureSolveSyncAndReslew(new Progress<ApplicationStatus>(p => Status = p)));
+            SolveCommand = new AsyncCommand<bool>(async () => {
+                cameraMediator.RegisterCaptureBlock(this);
+                try {
+                    var result = await CaptureSolveSyncAndReslew(new Progress<ApplicationStatus>(p => Status = p));
+                    return result;
+                } finally {
+                    cameraMediator.ReleaseCaptureBlock(this);
+                }
+            },
+            (o) => cameraMediator.IsFreeToCapture(this));
             CancelSolveCommand = new RelayCommand(CancelSolve);
 
             SnapExposureDuration = profileService.ActiveProfile.PlateSolveSettings.ExposureTime;

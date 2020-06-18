@@ -17,25 +17,29 @@
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:util="clr-namespace:NINA.Utility"
     xmlns:view="clr-namespace:NINA.View"
+    xmlns:vm="clr-namespace:NINA.ViewModel"
     Name="ThisWindow"
-    Title="{Binding Title}"
+    Title="{Binding AppVM.Title}"
     Background="{StaticResource BackgroundBrush}"
-    DataContext="{StaticResource AppVM}"
     Icon="/NINA;component/Resources/Logo_Nina.ico"
     Style="{StaticResource MainWindow}">
-
+    <Window.DataContext>
+        <vm:VMInjector />
+    </Window.DataContext>
     <Window.InputBindings>
-        <KeyBinding Key="F5" Command="{Binding Source={StaticResource AppVM}, Path=ConnectAllDevicesCommand}" />
-        <KeyBinding Key="F9" Command="{Binding Source={StaticResource AppVM}, Path=DisconnectAllDevicesCommand}" />
+        <KeyBinding Key="F5" Command="{Binding ApplicationDeviceConnectionVM.ConnectAllDevicesCommand}" />
+        <KeyBinding Key="F9" Command="{Binding ApplicationDeviceConnectionVM.DisconnectAllDevicesCommand}" />
     </Window.InputBindings>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding CheckProfileCommand}" />
-            <i:InvokeCommandAction Command="{Binding CheckUpdateCommand}" />
-            <i:InvokeCommandAction Command="{Binding CheckASCOMPlatformVersionCommand}" />
+            <i:InvokeCommandAction Command="{Binding AppVM.CheckProfileCommand}" />
+            <i:InvokeCommandAction Command="{Binding VersionCheckVM.CheckUpdateCommand}" />
+            <i:InvokeCommandAction Command="{Binding AppVM.CheckASCOMPlatformVersionCommand}" />
         </i:EventTrigger>
         <i:EventTrigger EventName="Closing">
-            <i:InvokeCommandAction Command="{Binding ClosingCommand}" />
+            <i:InvokeCommandAction Command="{Binding AppVM.ClosingCommand}" />
+            <i:InvokeCommandAction Command="{Binding ApplicationDeviceConnectionVM.ClosingCommand}" />
+            <i:InvokeCommandAction Command="{Binding DockManagerVM.ClosingCommand}" />
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
@@ -45,7 +49,7 @@
                 <RowDefinition Height="30" />
             </Grid.RowDefinitions>
             <Grid>
-                <TabControl SelectedIndex="{Binding TabIndex}" TabStripPlacement="Left">
+                <TabControl SelectedIndex="{Binding AppVM.TabIndex}" TabStripPlacement="Left">
                     <TabItem>
                         <TabItem.Header>
                             <Grid>
@@ -69,7 +73,7 @@
                             </Grid>
                         </TabItem.Header>
                         <TabItem.Content>
-                            <equip:TabPage DataContext="{Binding}" />
+                            <equip:TabPage DataContext="{Binding EquipmentVM}" />
                         </TabItem.Content>
                     </TabItem>
                     <TabItem>
@@ -236,14 +240,14 @@
                         ButtonForegroundBrush="{StaticResource ButtonForegroundDisabledBrush}"
                         ButtonImage="{StaticResource PowerSVG}"
                         ButtonStyle="{StaticResource SecondaryBackgroundButton}"
-                        Command="{Binding ConnectAllDevicesCommand}"
+                        Command="{Binding ApplicationDeviceConnectionVM.ConnectAllDevicesCommand}"
                         ToolTip="{ns:Loc LblConnect}" />
                     <ninactrl:LoadingControl
                         Width="40"
                         Height="40"
                         Margin="5"
                         LoadingImageBrush="{StaticResource PrimaryBrush}"
-                        Visibility="{Binding ConnectAllDevicesCommand.Execution.IsNotCompleted, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=Collapsed}" />
+                        Visibility="{Binding ApplicationDeviceConnectionVM.ConnectAllDevicesCommand.Execution.IsNotCompleted, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=Collapsed}" />
                 </Grid>
             </Grid>
             <Grid

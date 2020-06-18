@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 namespace NINA.Utility.Mediator {
 
     internal class CameraMediator : DeviceMediator<ICameraVM, ICameraConsumer, CameraInfo>, ICameraMediator {
+        private ICameraConsumer blockingConsumer;
 
         public Task Capture(CaptureSequence sequence, CancellationToken token,
             IProgress<ApplicationStatus> progress) {
@@ -60,6 +61,24 @@ namespace NINA.Utility.Mediator {
 
         public void SetSubSampleArea(int x, int y, int width, int height) {
             handler.SetSubSampleArea(x, y, width, height);
+        }
+
+        public void RegisterCaptureBlock(ICameraConsumer cameraConsumer) {
+            if (this.blockingConsumer != null) {
+                throw new Exception("CameraMediator already blocked by " + blockingConsumer);
+            }
+
+            blockingConsumer = cameraConsumer;
+        }
+
+        public void ReleaseCaptureBlock(ICameraConsumer cameraConsumer) {
+            if (this.blockingConsumer == cameraConsumer) {
+                blockingConsumer = null;
+            }
+        }
+
+        public bool IsFreeToCapture(ICameraConsumer cameraConsumer) {
+            return blockingConsumer == null ? true : cameraConsumer == blockingConsumer;
         }
 
         public bool AtTargetTemp {

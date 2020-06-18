@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.Rotator {
 
-    public interface IRotatorVM : IDeviceVM<RotatorInfo> {
+    public interface IRotatorVM : IDeviceVM<RotatorInfo>, IDockableVM {
 
         Task<float> Move(float position);
 

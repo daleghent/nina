@@ -38,7 +38,7 @@ using System.IO;
 
 namespace NINA.ViewModel {
 
-    internal class AutoFocusVM : DockableVM, ICameraConsumer, IFocuserConsumer, IFilterWheelConsumer {
+    internal class AutoFocusVM : DockableVM, ICameraConsumer, IFocuserConsumer, IFilterWheelConsumer, IAutoFocusVM {
         private static readonly string ReportDirectory = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "AutoFocus");
 
         static AutoFocusVM() {
@@ -93,10 +93,16 @@ namespace NINA.ViewModel {
                 () =>
                     Task.Run(
                         async () => {
-                            return await StartAutoFocus(CommandInitializization(), _autoFocusCancelToken.Token, new Progress<ApplicationStatus>(p => Status = p));
+                            cameraMediator.RegisterCaptureBlock(this);
+                            try {
+                                var result = await StartAutoFocus(CommandInitializization(), _autoFocusCancelToken.Token, new Progress<ApplicationStatus>(p => Status = p));
+                                return result;
+                            } finally {
+                                cameraMediator.ReleaseCaptureBlock(this);
+                            }
                         }
                     ),
-                (p) => { return focuserInfo?.Connected == true && cameraInfo?.Connected == true; }
+                (p) => { return focuserInfo?.Connected == true && cameraInfo?.Connected == true && cameraMediator.IsFreeToCapture(this); }
             );
             CancelAutoFocusCommand = new RelayCommand(CancelAutoFocus);
         }

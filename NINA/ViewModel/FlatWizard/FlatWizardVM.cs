@@ -26,6 +26,8 @@ using NINA.Utility.Enum;
 using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
+using NINA.ViewModel.Equipment.Camera;
+using NINA.ViewModel.Equipment.FlatDevice;
 using NINA.ViewModel.Interfaces;
 using Nito.AsyncEx;
 using System;
@@ -42,7 +44,7 @@ using System.Windows.Media.Imaging;
 
 namespace NINA.ViewModel.FlatWizard {
 
-    public class FlatWizardVM : DockableVM, IFlatWizardVM {
+    internal class FlatWizardVM : DockableVM, IFlatWizardVM {
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private BinningMode binningMode;
         private double calculatedExposureTime;
@@ -61,7 +63,7 @@ namespace NINA.ViewModel.FlatWizard {
         private ApplicationStatus status;
         private bool pauseBetweenFilters;
         private IFlatDeviceMediator _flatDeviceMediator;
-        private FlatDeviceInfo _flatDevice;
+        private FlatDeviceInfo flatDeviceInfo;
 
         public FlatWizardVM(IProfileService profileService,
                             IImagingVM imagingVM,
@@ -77,7 +79,6 @@ namespace NINA.ViewModel.FlatWizard {
             ImagingVM = imagingVM;
 
             this.applicationStatusMediator = applicationStatusMediator;
-
             flatSequenceCts?.Dispose();
             flatSequenceCts = new CancellationTokenSource();
             var pauseTokenSource = new PauseTokenSource();
@@ -179,7 +180,7 @@ namespace NINA.ViewModel.FlatWizard {
                 MaxFlatExposureTime = profileService.ActiveProfile.CameraSettings.MaxFlatExposureTime,
                 MinFlatExposureTime = profileService.ActiveProfile.CameraSettings.MinFlatExposureTime,
                 StepSize = profileService.ActiveProfile.FlatWizardSettings.StepSize
-            }, bitDepth);
+            }, bitDepth, cameraInfo, flatDeviceInfo);
             SingleFlatWizardFilterSettings.Settings.PropertyChanged += UpdateProfileValues;
         }
 
@@ -293,6 +294,8 @@ namespace NINA.ViewModel.FlatWizard {
         }
 
         public IImagingVM ImagingVM { get; }
+        public ICameraVM CameraVM { get; }
+        public IFlatDeviceVM FlatDeviceVM { get; }
 
         public bool IsPaused {
             get => isPaused;
@@ -322,6 +325,14 @@ namespace NINA.ViewModel.FlatWizard {
                 singleFlatWizardFilterSettings.Filter = value;
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(SingleFlatWizardFilterSettings));
+            }
+        }
+
+        public CameraInfo CameraInfo {
+            get => cameraInfo ?? DeviceInfo.CreateDefaultInstance<CameraInfo>();
+            set {
+                cameraInfo = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -399,7 +410,7 @@ namespace NINA.ViewModel.FlatWizard {
                 var exposureTimeState = FlatWizardExposureTimeFinderService.GetNextFlatExposureState(exposureTime, wrapper);
 
                 // Set flat panel brightness to static brightness
-                if (_flatDevice != null && _flatDevice.Connected) {
+                if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
                     _flatDeviceMediator.SetBrightness(wrapper.Settings.MaxFlatDeviceBrightness / 100d);
                 }
 
@@ -452,10 +463,10 @@ namespace NINA.ViewModel.FlatWizard {
                     case FlatWizardExposureAduState.ExposureFinished:
                         CalculatedHistogramMean = imageStatistics.Mean;
                         CalculatedExposureTime = exposureTime;
-                        if (_flatDevice != null && _flatDevice.Connected) {
+                        if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
                             profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(new FlatDeviceFilterSettingsKey(wrapper.Filter?.Position, BinningMode, Gain),
-                                new FlatDeviceFilterSettingsValue(_flatDevice.Brightness, exposureTime));
-                            Logger.Debug($"Recording flat settings as filter position {wrapper.Filter?.Position} ({wrapper.Filter?.Name}), binning: {BinningMode}, gain: {Gain}, panel brightness {_flatDevice.Brightness} and exposure time: {exposureTime}.");
+                                new FlatDeviceFilterSettingsValue(flatDeviceInfo.Brightness, exposureTime));
+                            Logger.Debug($"Recording flat settings as filter position {wrapper.Filter?.Position} ({wrapper.Filter?.Name}), binning: {BinningMode}, gain: {Gain}, panel brightness {flatDeviceInfo.Brightness} and exposure time: {exposureTime}.");
                         }
 
                         progress.Report(new ApplicationStatus { Status = string.Format(Locale["LblFlatExposureCalcFinished"], Math.Round(CalculatedHistogramMean, 2), CalculatedExposureTime), Source = Title });
@@ -520,11 +531,11 @@ namespace NINA.ViewModel.FlatWizard {
                     ProgressType2 = ApplicationStatus.StatusProgressType.ValueOfMaxValue,
                     Source = Title
                 });
-                if (_flatDevice != null && _flatDevice.Connected && _flatDevice.SupportsOpenClose) {
+                if (flatDeviceInfo != null && flatDeviceInfo.Connected && flatDeviceInfo.SupportsOpenClose) {
                     await _flatDeviceMediator.CloseCover();
                 }
 
-                if (_flatDevice != null && _flatDevice.Connected) {
+                if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
                     _flatDeviceMediator.ToggleLight((object)true);
                 }
 
@@ -558,7 +569,7 @@ namespace NINA.ViewModel.FlatWizard {
                 return false;
             } finally {
                 Cleanup(progress);
-                if (_flatDevice != null && _flatDevice.Connected) { _flatDeviceMediator.ToggleLight((object)false); }
+                if (flatDeviceInfo != null && flatDeviceInfo.Connected) { _flatDeviceMediator.ToggleLight((object)false); }
             }
 
             return true;
@@ -600,8 +611,8 @@ namespace NINA.ViewModel.FlatWizard {
         private async Task TakeDarkFlats(IProgress<ApplicationStatus> progress, PauseToken pt) {
             if (filterToExposureTime.Count > 0 && DarkFlatCount > 0) {
                 progress.Report(new ApplicationStatus() { Status = Locale["LblPreparingDarkFlatSequence"], Source = Title });
-                if (_flatDevice != null && _flatDevice.Connected) { _flatDeviceMediator.ToggleLight(false); }
-                if (_flatDevice != null && _flatDevice.Connected && _flatDevice.SupportsOpenClose && profileService.ActiveProfile.FlatDeviceSettings.OpenForDarkFlats) { await _flatDeviceMediator.OpenCover(); }
+                if (flatDeviceInfo != null && flatDeviceInfo.Connected) { _flatDeviceMediator.ToggleLight(false); }
+                if (flatDeviceInfo != null && flatDeviceInfo.Connected && flatDeviceInfo.SupportsOpenClose && profileService.ActiveProfile.FlatDeviceSettings.OpenForDarkFlats) { await _flatDeviceMediator.OpenCover(); }
                 var dialogResult = MyMessageBox.MyMessageBox.Show(
                     Locale["LblCoverScopeMsgBox"],
                     Locale["LblCoverScopeMsgBoxTitle"], MessageBoxButton.OKCancel, MessageBoxResult.OK);
@@ -704,7 +715,7 @@ namespace NINA.ViewModel.FlatWizard {
             using (MyStopWatch.Measure()) {
                 var selectedFilter = SelectedFilter;
                 var newList = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters
-                    .Select(s => new FlatWizardFilterSettingsWrapper(s, s.FlatWizardFilterSettings, GetBitDepth(profileService))).ToList();
+                    .Select(s => new FlatWizardFilterSettingsWrapper(s, s.FlatWizardFilterSettings, GetBitDepth(profileService), cameraInfo, flatDeviceInfo)).ToList();
                 var tempList = new FlatWizardFilterSettingsWrapper[Filters.Count];
                 Filters.CopyTo(tempList, 0);
                 foreach (var item in tempList) {
@@ -805,7 +816,7 @@ namespace NINA.ViewModel.FlatWizard {
 
         public void UpdateDeviceInfo(CameraInfo deviceInfo) {
             var prevBitDepth = cameraInfo?.BitDepth ?? 0;
-            cameraInfo = deviceInfo;
+            CameraInfo = deviceInfo;
             CameraConnected = cameraInfo.Connected;
 
             if (prevBitDepth != cameraInfo.BitDepth) {
@@ -825,7 +836,7 @@ namespace NINA.ViewModel.FlatWizard {
         }
 
         public void UpdateDeviceInfo(FlatDeviceInfo deviceInfo) {
-            this._flatDevice = deviceInfo;
+            this.flatDeviceInfo = deviceInfo;
         }
     }
 }

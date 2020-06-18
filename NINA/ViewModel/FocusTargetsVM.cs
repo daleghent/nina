@@ -25,10 +25,11 @@ using System.Threading.Tasks;
 using System.Timers;
 using NINA.Database;
 using Nito.AsyncEx;
+using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel {
 
-    public class FocusTargetsVM : DockableVM, ITelescopeConsumer {
+    public class FocusTargetsVM : DockableVM, ITelescopeConsumer, IFocusTargetsVM {
         private ObservableCollection<FocusTarget> focusTargets;
         private FocusTarget selectedFocusTarget;
         private bool telescopeConnected;

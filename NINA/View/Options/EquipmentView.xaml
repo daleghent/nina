@@ -22,6 +22,9 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <util:BindingProxy x:Key="proxy" Data="{Binding}" />
+    </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid DataContext="{Binding ActiveProfile}">
             <Grid.ColumnDefinitions>
@@ -391,7 +394,7 @@
                                 Width="*"
                                 CanUserSort="False"
                                 Header="{ns:Loc LblAutoFocusFilter}"
-                                Visibility="{Binding ActiveProfile.FocuserSettings.UseFilterWheelOffsets, Source={StaticResource AppVM}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                Visibility="{Binding ActiveProfile.FocuserSettings.UseFilterWheelOffsets, Source={StaticResource ProfileService}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <CheckBox
@@ -441,7 +444,7 @@
                                 Width="200"
                                 Margin="5"
                                 Command="{Binding SetAutoFocusFilterCommand}"
-                                Visibility="{Binding ActiveProfile.FocuserSettings.UseFilterWheelOffsets, Source={StaticResource AppVM}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                Visibility="{Binding ActiveProfile.FocuserSettings.UseFilterWheelOffsets, Source={StaticResource ProfileService}, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                                 <Button.Content>
                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSetAutoFocusFilter}" />
                                 </Button.Content>
@@ -688,7 +691,7 @@
                                 <UniformGrid
                                     Margin="0,5,0,0"
                                     Columns="2"
-                                    Visibility="{Binding ActiveProfile.FocuserSettings.AutoFocusMethod, Source={StaticResource AppVM}, Converter={StaticResource AutoFocusHFRToCollapsedVisibilityConverter}}">
+                                    Visibility="{Binding ActiveProfile.FocuserSettings.AutoFocusMethod, Source={StaticResource ProfileService}, Converter={StaticResource AutoFocusHFRToCollapsedVisibilityConverter}}">
                                     <TextBlock
                                         MinWidth="200"
                                         MinHeight="20"
@@ -718,7 +721,7 @@
                                 <UniformGrid
                                     Margin="0,5,0,0"
                                     Columns="2"
-                                    Visibility="{Binding ActiveProfile.FocuserSettings.AutoFocusMethod, Source={StaticResource AppVM}, Converter={StaticResource AutoFocusContrastDetectionToCollapsedVisibilityConverter}}">
+                                    Visibility="{Binding ActiveProfile.FocuserSettings.AutoFocusMethod, Source={StaticResource ProfileService}, Converter={StaticResource AutoFocusContrastDetectionToCollapsedVisibilityConverter}}">
                                     <TextBlock
                                         MinWidth="200"
                                         MinHeight="20"
@@ -752,7 +755,7 @@
                                 <UniformGrid
                                     Margin="0,5,0,0"
                                     Columns="2"
-                                    Visibility="{Binding ActiveProfile.FocuserSettings.AutoFocusMethod, Source={StaticResource AppVM}, Converter={StaticResource AutoFocusContrastDetectionToCollapsedVisibilityConverter}}">
+                                    Visibility="{Binding ActiveProfile.FocuserSettings.AutoFocusMethod, Source={StaticResource ProfileService}, Converter={StaticResource AutoFocusContrastDetectionToCollapsedVisibilityConverter}}">
                                     <TextBlock
                                         MinWidth="200"
                                         MinHeight="20"
@@ -795,7 +798,7 @@
                                 <UniformGrid
                                     Margin="0,5,0,0"
                                     Columns="2"
-                                    Visibility="{Binding ActiveProfile.FocuserSettings.AutoFocusMethod, Source={StaticResource AppVM}, Converter={StaticResource AutoFocusContrastDetectionToCollapsedVisibilityConverter}}">
+                                    Visibility="{Binding ActiveProfile.FocuserSettings.AutoFocusMethod, Source={StaticResource ProfileService}, Converter={StaticResource AutoFocusContrastDetectionToCollapsedVisibilityConverter}}">
                                     <TextBlock
                                         MinWidth="200"
                                         MinHeight="20"
@@ -826,15 +829,12 @@
                                         </TextBlock.ToolTip>
                                     </TextBlock>
                                     <TextBox Height="25" HorizontalAlignment="Stretch">
-                                        <TextBox.Resources>
-                                            <util:BindingProxy x:Key="proxy" Data="{Binding}" />
-                                        </TextBox.Resources>
                                         <TextBox.Text>
-                                            <Binding Path="AutoFocusInnerCropRatio" UpdateSourceTrigger="LostFocus">
+                                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio" UpdateSourceTrigger="LostFocus" Source="{StaticResource ProfileService}">
                                                 <Binding.ValidationRules>
                                                     <rules:DoubleRangeRule>
                                                         <rules:DoubleRangeRule.ValidRange>
-                                                            <rules:DoubleRangeChecker Maximum="{Binding Source={StaticResource proxy}, Path=Data.AutoFocusOuterCropRatio}" Minimum="0.2" />
+                                                            <rules:DoubleRangeChecker Maximum="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio}" Minimum="0.2" />
                                                         </rules:DoubleRangeRule.ValidRange>
                                                     </rules:DoubleRangeRule>
                                                 </Binding.ValidationRules>
@@ -845,22 +845,19 @@
                                 <UniformGrid
                                     Margin="0,5,0,0"
                                     Columns="2"
-                                    Visibility="{Binding ActiveProfile.FocuserSettings.AutoFocusMethod, Source={StaticResource AppVM}, Converter={StaticResource AutoFocusContrastDetectionToCollapsedVisibilityConverter}}">
+                                    Visibility="{Binding ActiveProfile.FocuserSettings.AutoFocusMethod, Source={StaticResource ProfileService}, Converter={StaticResource AutoFocusContrastDetectionToCollapsedVisibilityConverter}}">
                                     <TextBlock
                                         MinWidth="200"
                                         MinHeight="20"
                                         VerticalAlignment="Center"
                                         Text="{ns:Loc LblAutoFocusOuterCropRatio}" />
                                     <TextBox Height="25" HorizontalAlignment="Stretch">
-                                        <TextBox.Resources>
-                                            <util:BindingProxy x:Key="proxy" Data="{Binding}" />
-                                        </TextBox.Resources>
                                         <TextBox.Text>
-                                            <Binding Path="AutoFocusOuterCropRatio" UpdateSourceTrigger="LostFocus">
+                                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio" UpdateSourceTrigger="LostFocus" Source="{StaticResource ProfileService}">
                                                 <Binding.ValidationRules>
                                                     <rules:DoubleRangeRule>
                                                         <rules:DoubleRangeRule.ValidRange>
-                                                            <rules:DoubleRangeChecker Maximum="1" Minimum="{Binding Source={StaticResource proxy}, Path=Data.AutoFocusInnerCropRatio}" />
+                                                            <rules:DoubleRangeChecker Maximum="1" Minimum="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio}" />
                                                         </rules:DoubleRangeRule.ValidRange>
                                                     </rules:DoubleRangeRule>
                                                 </Binding.ValidationRules>
@@ -880,7 +877,7 @@
                                     </TextBlock>
                                     <ComboBox
                                         Name="cbBacklashMethod"
-                                        IsEnabled="{Binding Source={StaticResource AppVM}, Path=FocuserVM.FocuserInfo.Connected, Converter={StaticResource InverseBooleanConverter}, FallbackValue=true}"
+                                        IsEnabled="{Binding ElementName=UC, Path=DataContext.DeviceConsumer.FocuserInfo.Connected, Converter={StaticResource InverseBooleanConverter}, FallbackValue=true}"
                                         ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:BacklashCompensationModel}}}"
                                         SelectedItem="{Binding BacklashCompensationModel}">
 
@@ -1012,7 +1009,7 @@
                                     VerticalAlignment="Center"
                                     DockPanel.Dock="Right"
                                     Text="">
-                                    <Hyperlink Command="{Binding Source={StaticResource AppVM}, Path=OptionsVM.OpenWebRequestCommand}" CommandParameter="https://home.openweathermap.org/api_keys">
+                                    <Hyperlink Command="{Binding ElementName=UC, Path=DataContext.OpenWebRequestCommand}" CommandParameter="https://home.openweathermap.org/api_keys">
                                         <Run Text="?" />
                                     </Hyperlink>
                                 </TextBlock>

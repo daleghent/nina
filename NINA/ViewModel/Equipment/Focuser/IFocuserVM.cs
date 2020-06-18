@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.Focuser {
 
-    public interface IFocuserVM : IDeviceVM<FocuserInfo> {
+    public interface IFocuserVM : IDeviceVM<FocuserInfo>, IDockableVM {
 
         void ToggleTempComp(bool tempComp);
 

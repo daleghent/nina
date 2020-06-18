@@ -24,5 +24,7 @@ namespace NINA.ViewModel {
         }
 
         protected IProfileService profileService;
+
+        public IProfile ActiveProfile => profileService.ActiveProfile;
     }
 }

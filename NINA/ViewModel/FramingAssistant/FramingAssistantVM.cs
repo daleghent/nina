@@ -34,19 +34,22 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml.Linq;
-using NINA.Model.ImageData;
 using NINA.Utility.Exceptions;
+using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel.FramingAssistant {
 
-    internal class FramingAssistantVM : BaseVM, ICameraConsumer {
+    internal class FramingAssistantVM : BaseVM, ICameraConsumer, IFramingAssistantVM {
 
-        public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
+            IApplicationStatusMediator applicationStatusMediator, INighttimeCalculator nighttimeCalculator, IPlanetariumFactory planetariumFactory,
+            ISequenceVM sequenceVM, IApplicationVM appVM) : base(profileService) {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
             this.applicationStatusMediator = applicationStatusMediator;
-
+            NighttimeCalculator = nighttimeCalculator;
+            this.planetariumFactory = planetariumFactory;
             Opacity = 0.2;
 
             SkyMapAnnotator = new SkyMapAnnotator(telescopeMediator);
@@ -78,8 +81,7 @@ namespace NINA.ViewModel.FramingAssistant {
             DeepSkyObjectSearchVM.PropertyChanged += DeepSkyObjectSearchVM_PropertyChanged;
 
             SetSequenceCoordinatesCommand = new AsyncCommand<bool>(async (object parameter) => {
-                var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
-                vm.ChangeTab(ApplicationTab.SEQUENCE);
+                appVM.ChangeTab(ApplicationTab.SEQUENCE);
 
                 var deepSkyObjects = new List<DeepSkyObject>();
                 foreach (var rect in CameraRectangles) {
@@ -91,9 +93,9 @@ namespace NINA.ViewModel.FramingAssistant {
 
                 bool msgResult = false;
                 if (parameter.ToString() == "Replace") {
-                    msgResult = await vm.SeqVM.SetSequenceCoordiantes(deepSkyObjects);
+                    msgResult = await sequenceVM.SetSequenceCoordiantes(deepSkyObjects);
                 } else if (parameter.ToString() == "Add") {
-                    msgResult = await vm.SeqVM.SetSequenceCoordiantes(deepSkyObjects, false);
+                    msgResult = await sequenceVM.SetSequenceCoordiantes(deepSkyObjects, false);
                 }
 
                 ImageParameter = null;
@@ -308,7 +310,7 @@ namespace NINA.ViewModel.FramingAssistant {
             }
             set {
                 _dSO = value;
-                _dSO?.SetDateAndPosition(SkyAtlasVM.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
+                _dSO?.SetDateAndPosition(Utility.Astrometry.NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
                 RaisePropertyChanged();
             }
         }
@@ -316,6 +318,15 @@ namespace NINA.ViewModel.FramingAssistant {
         private ICameraMediator cameraMediator;
         private ITelescopeMediator telescopeMediator;
         private IApplicationStatusMediator applicationStatusMediator;
+        private INighttimeCalculator nighttimeCalculator;
+        public INighttimeCalculator NighttimeCalculator {
+            get => nighttimeCalculator;
+            set {
+                nighttimeCalculator = value;
+                RaisePropertyChanged();
+            }
+        }
+        private readonly IPlanetariumFactory planetariumFactory;
 
         public int RAHours {
             get {
@@ -903,7 +914,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private async Task<bool> CoordsFromPlanetarium() {
-            IPlanetarium s = PlanetariumFactory.GetPlanetarium(profileService);
+            IPlanetarium s = planetariumFactory.GetPlanetarium();
             DeepSkyObject resp = null;
 
             try {

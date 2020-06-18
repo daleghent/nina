@@ -16,9 +16,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:switch="clr-namespace:NINA.View.Equipment.Switch"
+    xmlns:util="clr-namespace:NINA.Utility"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <util:BindingProxy x:Key="SwitchProxy" Data="{Binding}" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -52,13 +56,13 @@
         <Grid Grid.Row="1">
             <Grid.Resources>
                 <DataTemplate x:Key="Eagle">
-                    <switch:Eagle />
+                    <switch:Eagle DataContext="{Binding}" />
                 </DataTemplate>
                 <DataTemplate x:Key="Generic">
                     <switch:Generic />
                 </DataTemplate>
                 <DataTemplate x:Key="UltimatePowerBoxV2">
-                    <switch:PegasusAstroUltimatePowerboxV2 />
+                    <switch:PegasusAstroUltimatePowerboxV2 DataContext="{Binding}" />
                 </DataTemplate>
                 <switch:SwitchHubTemplateSelector
                     x:Key="ContentSelector"
@@ -69,7 +73,7 @@
             <ContentControl
                 Content="{Binding}"
                 ContentTemplateSelector="{StaticResource ContentSelector}"
-                DataContext="{Binding SwitchHub}" />
+                DataContext="{Binding}" />
         </Grid>
     </Grid>
 </UserControl>

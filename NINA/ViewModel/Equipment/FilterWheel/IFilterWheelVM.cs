@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.FilterWheel {
 
-    public interface IFilterWheelVM : IDeviceVM<FilterWheelInfo> {
+    public interface IFilterWheelVM : IDeviceVM<FilterWheelInfo>, IDockableVM {
 
         Task<FilterInfo> ChangeFilter(FilterInfo inputFilter, CancellationToken token = new CancellationToken(), IProgress<ApplicationStatus> progress = null);
 

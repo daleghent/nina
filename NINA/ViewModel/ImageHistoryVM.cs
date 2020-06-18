@@ -20,10 +20,11 @@ using System.Windows.Input;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
+using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel {
 
-    public class ImageHistoryVM : DockableVM {
+    public class ImageHistoryVM : DockableVM, IImageHistoryVM {
 
         public ImageHistoryVM(IProfileService profileService) : base(profileService) {
             Title = "LblHFRHistory";

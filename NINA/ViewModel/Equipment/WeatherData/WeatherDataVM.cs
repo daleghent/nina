@@ -214,8 +214,6 @@ namespace NINA.ViewModel.Equipment.WeatherData {
             BroadcastWeatherDataInfo();
         }
 
-        public IProfile ActiveProfile => profileService.ActiveProfile;
-
         private WeatherDataInfo weatherDataInfo;
 
         public WeatherDataInfo WeatherDataInfo {

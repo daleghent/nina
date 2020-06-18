@@ -13,11 +13,18 @@
 #endregion "copyright"
 
 using NINA.Profile;
+using NINA.Utility.Astrometry;
 using NINA.Utility.Enum;
 
 namespace NINA.Model.MyPlanetarium {
 
-    internal static class PlanetariumFactory {
+    internal class PlanetariumFactory : IPlanetariumFactory {
+
+        public PlanetariumFactory(IProfileService profileService) {
+            this.profileService = profileService;
+        }
+
+        private IProfileService profileService;
 
         /// <summary>
         /// Overrides the default planetarium in the settings
@@ -25,7 +32,7 @@ namespace NINA.Model.MyPlanetarium {
         /// <param name="profileService"></param>
         /// <param name="planetarium"></param>
         /// <returns></returns>
-        public static IPlanetarium GetPlanetarium(IProfileService profileService, PlanetariumEnum planetarium) {
+        public IPlanetarium GetPlanetarium(PlanetariumEnum planetarium) {
             switch (planetarium) {
                 case PlanetariumEnum.CDC:
                     return new CartesDuCiel(profileService);
@@ -47,11 +54,9 @@ namespace NINA.Model.MyPlanetarium {
         /// <summary>
         /// returns the default planetarium
         /// </summary>
-        /// <param name="profileService"></param>
         /// <returns></returns>
-        public static IPlanetarium GetPlanetarium(IProfileService profileService) {
-            return GetPlanetarium(profileService,
-                                 profileService.ActiveProfile.PlanetariumSettings.PreferredPlanetarium);
+        public IPlanetarium GetPlanetarium() {
+            return GetPlanetarium(profileService.ActiveProfile.PlanetariumSettings.PreferredPlanetarium);
         }
     }
 }

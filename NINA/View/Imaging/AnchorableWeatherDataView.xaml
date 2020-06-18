@@ -52,7 +52,7 @@
                             <TextBlock.Text>
                                 <MultiBinding Converter="{StaticResource WeatherTemperatureConverter}">
                                     <Binding Path="WeatherDataInfo.Temperature" />
-                                    <Binding Path="WeatherDataVM.ActiveProfile.WeatherDataSettings.DisplayFahrenheit" Source="{StaticResource AppVM}" />
+                                    <Binding Path="ActiveProfile.WeatherDataSettings.DisplayFahrenheit" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -79,7 +79,7 @@
                             <TextBlock.Text>
                                 <MultiBinding Converter="{StaticResource WeatherTemperatureConverter}" NotifyOnSourceUpdated="True">
                                     <Binding Path="WeatherDataInfo.DewPoint" />
-                                    <Binding Path="WeatherDataVM.ActiveProfile.WeatherDataSettings.DisplayFahrenheit" Source="{StaticResource AppVM}" />
+                                    <Binding Path="ActiveProfile.WeatherDataSettings.DisplayFahrenheit" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -96,7 +96,7 @@
                             <TextBlock.Text>
                                 <MultiBinding Converter="{StaticResource WeatherPressureConverter}">
                                     <Binding Path="WeatherDataInfo.Pressure" />
-                                    <Binding Path="WeatherDataVM.ActiveProfile.WeatherDataSettings.DisplayImperial" Source="{StaticResource AppVM}" />
+                                    <Binding Path="ActiveProfile.WeatherDataSettings.DisplayImperial" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -113,7 +113,7 @@
                             <TextBlock.Text>
                                 <MultiBinding Converter="{StaticResource WeatherVelocityConverter}">
                                     <Binding Path="WeatherDataInfo.WindSpeed" />
-                                    <Binding Path="WeatherDataVM.ActiveProfile.WeatherDataSettings.DisplayImperial" Source="{StaticResource AppVM}" />
+                                    <Binding Path="ActiveProfile.WeatherDataSettings.DisplayImperial" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -140,7 +140,7 @@
                             <TextBlock.Text>
                                 <MultiBinding Converter="{StaticResource WeatherVelocityConverter}">
                                     <Binding Path="WeatherDataInfo.WindGust" />
-                                    <Binding Path="WeatherDataVM.ActiveProfile.WeatherDataSettings.DisplayImperial" Source="{StaticResource AppVM}" />
+                                    <Binding Path="ActiveProfile.WeatherDataSettings.DisplayImperial" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -167,7 +167,7 @@
                             <TextBlock.Text>
                                 <MultiBinding Converter="{StaticResource WeatherRainRateConverter}">
                                     <Binding Path="WeatherDataInfo.RainRate" />
-                                    <Binding Path="WeatherDataVM.ActiveProfile.WeatherDataSettings.DisplayImperial" Source="{StaticResource AppVM}" />
+                                    <Binding Path="ActiveProfile.WeatherDataSettings.DisplayImperial" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -184,7 +184,7 @@
                             <TextBlock.Text>
                                 <MultiBinding Converter="{StaticResource WeatherBrightnessConverter}">
                                     <Binding Path="WeatherDataInfo.SkyBrightness" />
-                                    <Binding Path="WeatherDataVM.ActiveProfile.WeatherDataSettings.DisplayImperial" Source="{StaticResource AppVM}" />
+                                    <Binding Path="ActiveProfile.WeatherDataSettings.DisplayImperial" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>
@@ -211,7 +211,7 @@
                             <TextBlock.Text>
                                 <MultiBinding Converter="{StaticResource WeatherTemperatureConverter}">
                                     <Binding Path="WeatherDataInfo.SkyTemperature" />
-                                    <Binding Path="WeatherDataVM.ActiveProfile.WeatherDataSettings.DisplayFahrenheit" Source="{StaticResource AppVM}" />
+                                    <Binding Path="ActiveProfile.WeatherDataSettings.DisplayFahrenheit" />
                                 </MultiBinding>
                             </TextBlock.Text>
                         </TextBlock>

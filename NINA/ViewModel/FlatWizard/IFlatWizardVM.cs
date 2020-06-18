@@ -24,7 +24,7 @@ using System.Windows.Media.Imaging;
 
 namespace NINA.ViewModel.FlatWizard {
 
-    public interface IFlatWizardVM : ICameraConsumer, IFilterWheelConsumer, ITelescopeConsumer, IFlatDeviceConsumer {
+    internal interface IFlatWizardVM : ICameraConsumer, IFilterWheelConsumer, ITelescopeConsumer, IFlatDeviceConsumer {
         BinningMode BinningMode { get; set; }
         double CalculatedExposureTime { get; set; }
         double CalculatedHistogramMean { get; set; }

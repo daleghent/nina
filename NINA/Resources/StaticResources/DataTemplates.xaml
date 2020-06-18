@@ -14,7 +14,6 @@
     xmlns:flatdevice="clr-namespace:NINA.Model.MyFlatDevice"
     xmlns:focuser="clr-namespace:NINA.Model.MyFocuser"
     xmlns:fw="clr-namespace:NINA.ViewModel.FlatWizard"
-    xmlns:local="clr-namespace:NINA.Resources.StaticResources"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:rotator="clr-namespace:NINA.Model.MyRotator"

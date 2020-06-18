@@ -27,7 +27,7 @@ using static NINA.Model.CaptureSequence;
 
 namespace NINA.ViewModel.Imaging {
 
-    internal class AnchorableSnapshotVM : DockableVM, ICameraConsumer {
+    internal class AnchorableSnapshotVM : DockableVM, ICameraConsumer, IAnchorableSnapshotVM {
         private CancellationTokenSource _captureImageToken;
         private CancellationTokenSource _liveViewCts;
         private bool _liveViewEnabled;
@@ -55,10 +55,26 @@ namespace NINA.ViewModel.Imaging {
             this.cameraMediator.RegisterConsumer(this);
             this.imagingMediator = imagingMediator;
             progress = new Progress<ApplicationStatus>(p => Status = p);
-            SnapCommand = new AsyncCommand<bool>(() => SnapImage(progress));
+            SnapCommand = new AsyncCommand<bool>(async () => {
+                cameraMediator.RegisterCaptureBlock(this);
+                try {
+                    var result = await SnapImage(progress);
+                    return result;
+                } finally {
+                    cameraMediator.ReleaseCaptureBlock(this);
+                }
+            }, (o) => cameraMediator.IsFreeToCapture(this) && !LiveViewEnabled);
             CancelSnapCommand = new RelayCommand(CancelSnapImage);
-            StartLiveViewCommand = new AsyncCommand<bool>(StartLiveView);
-            StopLiveViewCommand = new RelayCommand(StopLiveView);
+            StartLiveViewCommand = new AsyncCommand<bool>(async () => {
+                cameraMediator.RegisterCaptureBlock(this);
+                try {
+                    var result = await StartLiveView();
+                    return result;
+                } finally {
+                    cameraMediator.ReleaseCaptureBlock(this);
+                }
+            }, (o) => cameraMediator.IsFreeToCapture(this) && !IsLooping);
+            StopLiveViewCommand = new RelayCommand(StopLiveView, (o) => LiveViewEnabled);
         }
 
         /// <summary>
@@ -199,10 +215,13 @@ namespace NINA.ViewModel.Imaging {
 
         private async Task<bool> StartLiveView() {
             _liveViewCts?.Dispose();
+            LiveViewEnabled = true;
             _liveViewCts = new CancellationTokenSource();
             try {
                 await this.imagingMediator.StartLiveView(_liveViewCts.Token);
             } catch (OperationCanceledException) {
+            } finally {
+                LiveViewEnabled = false;
             }
 
             return true;
@@ -210,6 +229,7 @@ namespace NINA.ViewModel.Imaging {
 
         private void StopLiveView(object o) {
             _liveViewCts?.Cancel();
+            LiveViewEnabled = false;
         }
 
         public void Dispose() {

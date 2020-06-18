@@ -14,6 +14,7 @@
 
 using NINA.Model;
 using NINA.Model.ImageData;
+using NINA.Model.MyCamera;
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.ImageAnalysis;
@@ -25,7 +26,6 @@ using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Security.Permissions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -33,28 +33,48 @@ using System.Windows.Input;
 
 namespace NINA.ViewModel.Imaging {
 
-    public class ExposureCalculatorVM : DockableVM {
+    internal class ExposureCalculatorVM : DockableVM, IExposureCalculatorVM, ICameraConsumer {
         private double _recommendedExposureTime;
         private Model.MyFilterWheel.FilterInfo _snapFilter;
         private ISharpCapSensorAnalysisReader _sharpCapSensorAnalysisReader;
+        private readonly ICameraMediator cameraMediator;
         private CancellationTokenSource _cts;
         private string _sharpCapSensorAnalysisDisabledValue;
         private ImmutableDictionary<string, SharpCapSensorAnalysisData> _sharpCapSensorAnalysisData;
         private static double WARN_THRESHOLD_FOR_SHARPCAP_GOODNESS_OF_FIT = 0.8;
 
-        public ExposureCalculatorVM(IProfileService profileService, IImagingMediator imagingMediator, ISharpCapSensorAnalysisReader sharpCapSensorAnalysisReader)
+        public ExposureCalculatorVM(IProfileService profileService, IImagingMediator imagingMediator, ISharpCapSensorAnalysisReader sharpCapSensorAnalysisReader,
+            ICameraMediator cameraMediator)
             : base(profileService) {
             this._imagingMediator = imagingMediator;
             this.Title = "LblExposureCalculator";
             this._sharpCapSensorAnalysisReader = sharpCapSensorAnalysisReader;
-
+            this.cameraMediator = cameraMediator;
             if (Application.Current != null) {
                 ImageGeometry = (System.Windows.Media.GeometryGroup)Application.Current.Resources["CalculatorSVG"];
             }
 
-            DetermineExposureTimeCommand = new AsyncCommand<bool>(DetermineExposureTime);
+            cameraMediator.RegisterConsumer(this);
+
+            DetermineExposureTimeCommand = new AsyncCommand<bool>(async (o) => {
+                cameraMediator.RegisterCaptureBlock(this);
+                try {
+                    var result = await DetermineExposureTime(o);
+                    return result;
+                } finally {
+                    cameraMediator.ReleaseCaptureBlock(this);
+                }
+            }, (o) => cameraMediator.IsFreeToCapture(this));
             CancelDetermineExposureTimeCommand = new RelayCommand(TriggerCancelToken);
-            DetermineBiasCommand = new AsyncCommand<bool>(DetermineBias);
+            DetermineBiasCommand = new AsyncCommand<bool>(async (o) => {
+                cameraMediator.RegisterCaptureBlock(this);
+                try {
+                    var result = await DetermineBias(o);
+                    return result;
+                } finally {
+                    cameraMediator.ReleaseCaptureBlock(this);
+                }
+            }, (o) => cameraMediator.IsFreeToCapture(this));
             ReloadSensorAnalysisCommand = new AsyncCommand<bool>(ReloadSensorAnalysis);
             CancelDetermineBiasCommand = new RelayCommand(TriggerCancelToken);
 
@@ -300,6 +320,24 @@ Skyglow Flux per Second = {skyglowFluxPerSecond} electrons per pixel per second
 Recommended exposure time = 10 * Read Noise ^ 2 = {RecommendedExposureTime} seconds";
                 Logger.Debug(debugMessage);
             }
+        }
+
+        private CameraInfo cameraInfo;
+
+        public CameraInfo CameraInfo {
+            get => cameraInfo;
+            set {
+                cameraInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public void UpdateDeviceInfo(CameraInfo deviceInfo) {
+            CameraInfo = deviceInfo;
+        }
+
+        public void Dispose() {
+            throw new NotImplementedException();
         }
     }
 }

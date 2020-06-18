@@ -15,6 +15,7 @@
 using NINA.Model.MyCamera;
 using NINA.Utility;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -120,9 +121,9 @@ namespace NINA.View {
         public static readonly DependencyProperty MyFiltersProperty =
             DependencyProperty.Register(nameof(MyFilters), typeof(ObservableCollection<Model.MyFilterWheel.FilterInfo>), typeof(CameraControlView), new UIPropertyMetadata(null));
 
-        public ObservableCollection<Model.MyFilterWheel.FilterInfo> MyFilters {
+        public IEnumerable<Model.MyFilterWheel.FilterInfo> MyFilters {
             get {
-                return (ObservableCollection<Model.MyFilterWheel.FilterInfo>)GetValue(MyFiltersProperty);
+                return (IEnumerable<Model.MyFilterWheel.FilterInfo>)GetValue(MyFiltersProperty);
             }
             set {
                 SetValue(MyFiltersProperty, value);
@@ -246,6 +247,18 @@ namespace NINA.View {
             }
             set {
                 SetValue(MySelectedGainProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty MyDefaultGainProperty =
+    DependencyProperty.Register(nameof(MyDefaultGain), typeof(int), typeof(CameraControlView), new UIPropertyMetadata((int)-1));
+
+        public int MyDefaultGain {
+            get {
+                return (int)GetValue(MyDefaultGainProperty);
+            }
+            set {
+                SetValue(MyDefaultGainProperty, value);
             }
         }
     }

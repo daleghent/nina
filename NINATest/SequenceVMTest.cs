@@ -16,12 +16,14 @@ using Moq;
 using NINA.Model;
 using NINA.Model.MyFlatDevice;
 using NINA.Model.MyGuider;
+using NINA.Model.MyPlanetarium;
 using NINA.Model.MyTelescope;
 using NINA.Profile;
 using NINA.Utility.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel;
 using NINA.ViewModel.Equipment.FlatDevice;
+using NINA.ViewModel.Interfaces;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
@@ -43,6 +45,9 @@ namespace NINATest {
         private Mock<IImagingMediator> imagingMediatorMock;
         private Mock<IApplicationStatusMediator> applicationStatusMediatorMock;
         private Mock<IFlatDeviceMediator> _flatDeviceMediatorMock;
+        private Mock<INighttimeCalculator> nighttimeCalculatorMock;
+        private Mock<IPlanetariumFactory> planetariumFactoryMock;
+        private Mock<IImageHistoryVM> imageHistoryVMMock;
         private FlatDeviceInfo _flatDevice;
         private CaptureSequenceList _dummyList;
         private SequenceVM _sut;
@@ -66,6 +71,9 @@ namespace NINATest {
             weatherDataMediatorMock = new Mock<IWeatherDataMediator>();
             imagingMediatorMock = new Mock<IImagingMediator>();
             applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
+            nighttimeCalculatorMock = new Mock<INighttimeCalculator>();
+            planetariumFactoryMock = new Mock<IPlanetariumFactory>();
+            imageHistoryVMMock = new Mock<IImageHistoryVM>();
 
             _dummyList = new CaptureSequenceList();
             _dummyList.Add(new CaptureSequence() { TotalExposureCount = 10 });
@@ -88,7 +96,8 @@ namespace NINATest {
 
             _sut = new SequenceVM(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, focuserMediatorMock.Object,
                 filterWheelMediatorMock.Object, guiderMediatorMock.Object, rotatorMediatorMock.Object, _flatDeviceMediatorMock.Object,
-                weatherDataMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+                weatherDataMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, nighttimeCalculatorMock.Object,
+                planetariumFactoryMock.Object, imageHistoryVMMock.Object);
         }
 
         [TearDown]

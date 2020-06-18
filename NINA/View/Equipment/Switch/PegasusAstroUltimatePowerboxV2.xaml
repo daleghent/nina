@@ -16,10 +16,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:util="clr-namespace:NINA.Utility"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    x:Name="UC"
     mc:Ignorable="d">
-    <Grid Margin="10">
+    <UserControl.Resources>
+        <util:BindingProxy x:Key="SwitchProxy" Data="{Binding}" />
+    </UserControl.Resources>
+    <Grid Margin="10" DataContext="{Binding SwitchHub}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -91,7 +96,7 @@
                                         Height="25"
                                         Margin="5,0,0,0"
                                         HorizontalContentAlignment="Center"
-                                        Command="{Binding Path=SwitchVM.SetSwitchValueCommand, Source={StaticResource AppVM}}"
+                                        Command="{Binding Source={StaticResource SwitchProxy}, Path=Data.SetSwitchValueCommand}"
                                         CommandParameter="{Binding}"
                                         ToolTip="{ns:Loc LblSetNewValue}">
 
@@ -170,7 +175,7 @@
                                         Margin="4,0,0,0"
                                         VerticalAlignment="Center"
                                         HorizontalContentAlignment="Center"
-                                        Command="{Binding Path=SwitchVM.SetSwitchValueCommand, Source={StaticResource AppVM}}"
+                                        Command="{Binding Source={StaticResource SwitchProxy}, Path=Data.SetSwitchValueCommand}"
                                         CommandParameter="{Binding}"
                                         ToolTip="{ns:Loc LblSetNewValue}">
                                         <Path
@@ -259,7 +264,7 @@
                                         Margin="4,0,0,0"
                                         VerticalAlignment="Center"
                                         HorizontalContentAlignment="Center"
-                                        Command="{Binding Path=SwitchVM.SetSwitchValueCommand, Source={StaticResource AppVM}}"
+                                        Command="{Binding Source={StaticResource SwitchProxy}, Path=Data.SetSwitchValueCommand}"
                                         CommandParameter="{Binding}"
                                         ToolTip="{ns:Loc LblSetNewValue}">
                                         <Path
@@ -389,7 +394,7 @@
                                         Height="25"
                                         Margin="5,0,0,0"
                                         HorizontalContentAlignment="Center"
-                                        Command="{Binding Path=SwitchVM.SetSwitchValueCommand, Source={StaticResource AppVM}}"
+                                        Command="{Binding Source={StaticResource SwitchProxy}, Path=Data.SetSwitchValueCommand}"
                                         CommandParameter="{Binding}"
                                         ToolTip="{ns:Loc LblSetNewValue}">
 

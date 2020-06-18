@@ -83,8 +83,8 @@
                                     <s:String>Trendline</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:LineAnnotation.Color>
                 </oxy:LineAnnotation>
@@ -96,8 +96,8 @@
                                     <s:String>Trendline</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:LineAnnotation.Color>
                 </oxy:LineAnnotation>
@@ -109,8 +109,8 @@
                                     <s:String>QuadraticFitting</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:FunctionAnnotation.Color>
                 </oxy:FunctionAnnotation>
@@ -122,8 +122,8 @@
                                     <s:String>HyperbolicFitting</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:FunctionAnnotation.Color>
                 </oxy:FunctionAnnotation>
@@ -135,8 +135,8 @@
                                     <s:String>GaussianFitting</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:FunctionAnnotation.Color>
                 </oxy:FunctionAnnotation>
@@ -157,8 +157,8 @@
                                     <s:String>QuadraticFitting</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:PointAnnotation.Fill>
                     <oxy:PointAnnotation.Stroke>
@@ -168,8 +168,8 @@
                                     <s:String>QuadraticFitting</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:PointAnnotation.Stroke>
                 </oxy:PointAnnotation>
@@ -184,8 +184,8 @@
                                     <s:String>HyperbolicFitting</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:PointAnnotation.Fill>
                     <oxy:PointAnnotation.Stroke>
@@ -195,8 +195,8 @@
                                     <s:String>HyperbolicFitting</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:PointAnnotation.Stroke>
                 </oxy:PointAnnotation>
@@ -211,8 +211,8 @@
                                     <s:String>GaussianFitting</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:PointAnnotation.Fill>
                     <oxy:PointAnnotation.Stroke>
@@ -222,8 +222,8 @@
                                     <s:String>GaussianFitting</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:PointAnnotation.Stroke>
                 </oxy:PointAnnotation>
@@ -238,8 +238,8 @@
                                     <s:String>Trendline</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:PointAnnotation.Fill>
                     <oxy:PointAnnotation.Stroke>
@@ -249,8 +249,8 @@
                                     <s:String>Trendline</s:String>
                                 </Binding.Source>
                             </Binding>
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource AppVM}" />
-                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource AppVM}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusMethod" Source="{StaticResource ProfileService}" />
+                            <Binding Path="ActiveProfile.FocuserSettings.AutoFocusCurveFitting" Source="{StaticResource ProfileService}" />
                         </MultiBinding>
                     </oxy:PointAnnotation.Stroke>
                 </oxy:PointAnnotation>

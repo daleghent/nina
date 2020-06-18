@@ -685,7 +685,7 @@
                                     Width="120"
                                     Height="25"
                                     HorizontalAlignment="Left"
-                                    IsChecked="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FlatDeviceSettings.CloseAtSequenceEnd, Mode=TwoWay}" />
+                                    IsChecked="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.CloseAtSequenceEnd, Mode=TwoWay}" />
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
@@ -702,7 +702,7 @@
                             Width="75"
                             Height="30"
                             HorizontalAlignment="Left"
-                            Command="{Binding Source={StaticResource AppVM}, Path=DockManagerVM.ResetDockLayoutCommand}"
+                            Command="{Binding ElementName=UC, Path=DataContext.DockManagerVM.ResetDockLayoutCommand}"
                             ToolTip="{ns:Loc LblResetDockLayout}">
                             <Path
                                 Margin="5"

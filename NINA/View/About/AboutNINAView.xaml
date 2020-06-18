@@ -39,7 +39,7 @@
                 Margin="5,0,0,0"
                 Orientation="Horizontal">
                 <TextBlock FontSize="16" Text="Version" />
-                <TextBlock FontSize="16" Text="{Binding Source={StaticResource AppVM}, Path=Version}" />
+                <TextBlock FontSize="16" Text="{Binding Version}" />
             </StackPanel>
 
             <Grid
