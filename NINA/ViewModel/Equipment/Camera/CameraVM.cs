@@ -377,7 +377,8 @@ namespace NINA.ViewModel.Equipment.Camera {
                                 BayerOffsetX = Cam.BayerOffsetX,
                                 BayerOffsetY = Cam.BayerOffsetY,
                                 DefaultGain = DefaultGain,
-                                DefaultOffset = DefaultOffset
+                                DefaultOffset = DefaultOffset,
+                                USBLimit = Cam.USBLimit
                             };
 
                             Notification.ShowSuccess(Locale.Loc.Instance["LblCameraConnected"]);
@@ -485,6 +486,9 @@ namespace NINA.ViewModel.Equipment.Camera {
             cameraValues.TryGetValue(nameof(CameraInfo.Offset), out o);
             CameraInfo.Offset = (int)(o ?? -1);
 
+            cameraValues.TryGetValue(nameof(CameraInfo.USBLimit), out o);
+            CameraInfo.USBLimit = (int)(o ?? -1);
+
             cameraValues.TryGetValue(nameof(CameraInfo.TemperatureSetPoint), out o);
             CameraInfo.TemperatureSetPoint = (double)(o ?? double.NaN);
 
@@ -546,6 +550,10 @@ namespace NINA.ViewModel.Equipment.Camera {
             if (_cam != null && _cam.CanSetOffset) {
                 cameraValues.Add(nameof(CameraInfo.Offset), _cam?.Offset ?? -1);
                 cameraValues.Add(nameof(CameraInfo.DefaultOffset), DefaultOffset);
+            }
+
+            if (_cam != null && _cam.CanSetUSBLimit) {
+                cameraValues.Add(nameof(CameraInfo.USBLimit), _cam?.USBLimit ?? -1);
             }
 
             if (_cam != null && _cam.HasBattery) {

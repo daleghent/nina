@@ -37,7 +37,6 @@ using Newtonsoft.Json;
 using System.IO;
 
 namespace NINA.ViewModel {
-
     internal class AutoFocusVM : DockableVM, ICameraConsumer, IFocuserConsumer, IFilterWheelConsumer, IAutoFocusVM {
         private static readonly string ReportDirectory = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "AutoFocus");
 

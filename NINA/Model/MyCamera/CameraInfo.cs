@@ -18,7 +18,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace NINA.Model.MyCamera {
-
     public class CameraInfo : DeviceInfo {
         private bool canSetTemperature;
 
@@ -128,6 +127,13 @@ namespace NINA.Model.MyCamera {
         public int DefaultOffset {
             get { return defaultOffset; }
             set { defaultOffset = value; RaisePropertyChanged(); }
+        }
+
+        private int usbLimit;
+
+        public int USBLimit {
+            get { return usbLimit; }
+            set { usbLimit = value; RaisePropertyChanged(); }
         }
 
         private bool isSubSampleEnabled;

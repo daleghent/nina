@@ -10468,6 +10468,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Camera USB speed or traffic limit setting.
+        /// </summary>
+        internal static string LbLUsbLimitDescription {
+            get {
+                return ResourceManager.GetString("LbLUsbLimitDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plate solve failed. Try to solve using Blind Solver?.
         /// </summary>
         internal static string LblUseBlindSolveFailover {

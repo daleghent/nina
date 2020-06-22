@@ -195,6 +195,7 @@
     <Compile Include="Autofocus\TrendlineFittingTest.cs" />
     <Compile Include="Autofocus\TrendlineTest.cs" />
     <Compile Include="CaptureSequenceTest.cs" />
+    <Compile Include="Converters\IntNegativeOneToDoubleDashConverter.cs" />
     <Compile Include="CoordinatesTest.cs" />
     <Compile Include="FITSTest.cs" />
     <Compile Include="FlatDevice\AlnitakCommandTest.cs" />
