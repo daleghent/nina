@@ -20,11 +20,15 @@ using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NINA.ViewModel.AutoFocus {
+
     public class AutoFocusReport {
+
+        [JsonProperty]
+        public string Filter { get; set; }
+
         [JsonProperty]
         public DateTime Timestamp { get; set; }
 
@@ -69,8 +73,10 @@ namespace NINA.ViewModel.AutoFocus {
             QuadraticFitting quadraticFitting,
             HyperbolicFitting hyperbolicFitting,
             GaussianFitting gaussianFitting,
-            double temperature) {
+            double temperature,
+            string filter) {
             var report = new AutoFocusReport() {
+                Filter = filter,
                 Timestamp = DateTime.Now,
                 Temperature = temperature,
                 InitialFocusPoint = new FocusPoint() {
@@ -108,6 +114,7 @@ namespace NINA.ViewModel.AutoFocus {
     }
 
     public class FocusPoint {
+
         [JsonProperty]
         public double Position { get; set; }
 
