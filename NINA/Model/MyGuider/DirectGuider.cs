@@ -121,7 +121,7 @@ namespace NINA.Model.MyGuider {
 
         private double previousAngle = 0;
 
-        public event EventHandler<IGuideStep> GuideEvent;
+        public event EventHandler<IGuideStep> GuideEvent { add { } remove { } }
 
         public async Task<bool> Dither(CancellationToken ct) {
             State = "Dithering...";

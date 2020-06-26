@@ -35,7 +35,7 @@ namespace NINA.Model.MyGuider {
 
         private bool _connected;
 
-        public event EventHandler<IGuideStep> GuideEvent;
+        public event EventHandler<IGuideStep> GuideEvent { add { } remove { } }
 
         public bool Connected {
             get => _connected;

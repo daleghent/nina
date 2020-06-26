@@ -24,63 +24,29 @@ namespace NINA.Model {
             Name = name;
         }
 
-        public bool HasSetupDialog {
-            get {
-                return false;
-            }
-        }
+        public bool HasSetupDialog => false;
 
         public string Category { get; } = string.Empty;
 
-        public string Id {
-            get {
-                return "No_Device";
-            }
-        }
+        public string Id => "No_Device";
 
-        private string _name;
+        public string Name { get; private set; }
 
-        public string Name {
-            get {
-                return _name;
-            }
-            private set {
-                _name = value;
-            }
-        }
+        public bool Connected => false;
 
-        public bool Connected {
-            get {
-                return false;
-            }
-        }
+        public string Description => string.Empty;
 
-        public string Description {
-            get {
-                return string.Empty;
-            }
-        }
+        public string DriverInfo => string.Empty;
 
-        public string DriverInfo {
-            get {
-                return string.Empty;
-            }
-        }
+        public string DriverVersion => string.Empty;
 
-        public string DriverVersion {
-            get {
-                return string.Empty;
-            }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged { add { } remove { } }
 
         public async Task<bool> Connect(CancellationToken token) {
-            return await Task<bool>.Run(() => false);
+            return await Task.Run(() => false, token);
         }
 
         public void Disconnect() {
-            return;
         }
 
         public void SetupDialog() {
