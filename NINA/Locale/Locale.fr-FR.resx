@@ -3798,17 +3798,14 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
   <data name="LblFlatDeviceDeleteGain" xml:space="preserve">
     <value>Supprimer le Gain</value>
   </data>
-  <data name="LblDefaultGain" xml:space="preserve">
-    <value>Gain par défaut</value>
+  <data name="LblSequenceContainsDarksAndLights" xml:space="preserve">
+    <value>La caméra n'a pas d'obturateur mécanique, aucun panneau flat n'est connecté et la séquence contient des éléments DARK/BIAS mélangés avec LIGHT.</value>
   </data>
-  <data name="LblDefaultOffset" xml:space="preserve">
-    <value>Offset par défaut</value>
+  <data name="LblSequenceContainsDarksOnly" xml:space="preserve">
+    <value>La caméra n'a pas d'obturateur mécanique, aucun panneau flat n'est connecté et la séquence contient des éléments DARK/BIAS. Assurez vous que la caméra est obturée.</value>
   </data>
-  <data name="LblDefaultGainTooltip" xml:space="preserve">
-    <value>Cette valeur spécifie le gain par défaut qui doit être utilisé chaque fois qu'aucun gain n'a été défini explicitement</value>
-  </data>
-  <data name="LblDefaultOffsetTooltip" xml:space="preserve">
-    <value>Cette valeur spécifie l'offset par défaut qui doit être utilisé chaque fois qu'aucun offset n'a été défini explicitement</value>
+  <data name="LblMeridianFlipIn" xml:space="preserve">
+    <value>Retournement au méridien dans</value>
   </data>
   <data name="LblDefaultGain" xml:space="preserve">
     <value>Gain par défaut</value>
@@ -3821,5 +3818,8 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
   </data>
   <data name="LblDefaultOffsetTooltip" xml:space="preserve">
     <value>Cette valeur spécifie l'offset par défaut qui doit être utilisé chaque fois qu'aucun offset n'a été défini explicitement</value>
+  </data>
+  <data name="LbLUsbLimitDescription" xml:space="preserve">
+    <value>Camera USB speed or traffic limit setting</value>
   </data>
 </root>

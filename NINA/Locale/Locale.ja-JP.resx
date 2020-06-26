@@ -3779,17 +3779,14 @@
   <data name="LblFlatDeviceDeleteGain" xml:space="preserve">
     <value>ゲインを削除</value>
   </data>
-  <data name="LblDefaultGain" xml:space="preserve">
-    <value>デフォルトのゲイン</value>
+  <data name="LblSequenceContainsDarksAndLights" xml:space="preserve">
+    <value>カメラには機械式シャッターがなく、自動フラットパネルが接続されておらず、シーケンスにはダーク/BIASアイテムとLIGHTが混在しています。</value>
   </data>
-  <data name="LblDefaultOffset" xml:space="preserve">
-    <value>デフォルトのオフセット</value>
+  <data name="LblSequenceContainsDarksOnly" xml:space="preserve">
+    <value>カメラには機械式シャッターがなく、自動フラットパネルが接続されておらず、シーケンスにはダーク/BIASアイテムのみが含まれています。カメラがカバーされていることを確認してください。</value>
   </data>
-  <data name="LblDefaultGainTooltip" xml:space="preserve">
-    <value>この値はデフォルトのゲインを指定するもので、ゲインが明示的に設定されていないときに使用されます。</value>
-  </data>
-  <data name="LblDefaultOffsetTooltip" xml:space="preserve">
-    <value>この値はデフォルトのオフセットを指定するもので、オフセットが明示的に設定されていないときに使用されます。</value>
+  <data name="LblMeridianFlipIn" xml:space="preserve">
+    <value>Meridian Flip in</value>
   </data>
   <data name="LblDefaultGain" xml:space="preserve">
     <value>デフォルトのゲイン</value>
@@ -3802,5 +3799,8 @@
   </data>
   <data name="LblDefaultOffsetTooltip" xml:space="preserve">
     <value>この値はデフォルトのオフセットを指定するもので、オフセットが明示的に設定されていないときに使用されます。</value>
+  </data>
+  <data name="LbLUsbLimitDescription" xml:space="preserve">
+    <value>Camera USB speed or traffic limit setting</value>
   </data>
 </root>
