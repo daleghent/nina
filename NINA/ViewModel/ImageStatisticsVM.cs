@@ -40,7 +40,7 @@ namespace NINA.ViewModel {
 
         public async Task UpdateStatistics(IImageData imageData) {
             var exposureTime = imageData.MetaData.Image.ExposureTime;
-            var statistics = await AllImageStatistics.Create(imageData);
+            var statistics = AllImageStatistics.Create(imageData);
             statistics.PropertyChanged += Child_PropertyChanged;
             Statistics = statistics;
             if (exposureTime >= 0) {

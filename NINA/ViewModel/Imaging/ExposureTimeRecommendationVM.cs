@@ -125,7 +125,7 @@ namespace NINA.ViewModel.Imaging {
             seq.Gain = SnapGain;
             var prepareParameters = new PrepareImageParameters(autoStretch: true, detectStars: false);
             var capture = await _imagingMediator.CaptureAndPrepareImage(seq, prepareParameters, _cts.Token, null); //todo progress
-            return await AllImageStatistics.Create(capture.RawImageData);
+            return AllImageStatistics.Create(capture.RawImageData);
         }
 
         private async Task<bool> DetermineExposureTime(object arg) {

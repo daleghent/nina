@@ -37,7 +37,7 @@ namespace NINA.Model.ImageData {
             this.ChildChanged(sender, e);
         }
 
-        public async static Task<AllImageStatistics> Create(IImageData imageData) {
+        public static AllImageStatistics Create(IImageData imageData) {
             return new AllImageStatistics(imageData.Properties, imageData.Statistics.Task, imageData.StarDetectionAnalysis);
         }
     }

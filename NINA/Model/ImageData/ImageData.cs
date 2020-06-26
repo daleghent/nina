@@ -321,7 +321,7 @@ namespace NINA.Model.ImageData {
         /// <param name="rawConverter">Which type of raw converter to use, when image is in RAW format</param>
         /// <param name="ct">Token to cancel operation</param>
         /// <returns></returns>
-        public static Task<IImageData> FromFile(string path, int bitDepth, bool isBayered, RawConverterEnum rawConverter, CancellationToken ct = default(CancellationToken)) {
+        public static Task<IImageData> FromFile(string path, int bitDepth, bool isBayered, RawConverterEnum rawConverter, CancellationToken ct = default) {
             return Task.Run(async () => {
                 if (!File.Exists(path)) {
                     throw new FileNotFoundException();
@@ -330,21 +330,21 @@ namespace NINA.Model.ImageData {
                 switch (Path.GetExtension(path).ToLower()) {
                     case ".gif":
                         decoder = new GifBitmapDecoder(new Uri(path), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-                        return await BitmapToImageArray(decoder, isBayered);
+                        return BitmapToImageArray(decoder, isBayered);
 
                     case ".tif":
                     case ".tiff":
                         decoder = new TiffBitmapDecoder(new Uri(path), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-                        return await BitmapToImageArray(decoder, isBayered);
+                        return BitmapToImageArray(decoder, isBayered);
 
                     case ".jpg":
                     case ".jpeg":
                         decoder = new JpegBitmapDecoder(new Uri(path), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-                        return await BitmapToImageArray(decoder, isBayered);
+                        return BitmapToImageArray(decoder, isBayered);
 
                     case ".png":
                         decoder = new PngBitmapDecoder(new Uri(path), BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-                        return await BitmapToImageArray(decoder, isBayered);
+                        return BitmapToImageArray(decoder, isBayered);
 
                     case ".xisf":
                         return await XISF.Load(new Uri(path), isBayered);
@@ -366,13 +366,13 @@ namespace NINA.Model.ImageData {
                     default:
                         throw new NotSupportedException();
                 }
-            });
+            }, ct);
         }
 
         private static async Task<IImageData> RawToImageArray(string path, int bitDepth, RawConverterEnum rawConverter, CancellationToken ct) {
             using (var fs = new FileStream(path, FileMode.Open)) {
                 using (var ms = new System.IO.MemoryStream()) {
-                    fs.CopyTo(ms);
+                    await fs.CopyToAsync(ms);
                     var converter = RawConverter.CreateInstance(rawConverter);
                     var rawType = Path.GetExtension(path).ToLower().Substring(1);
                     var data = await converter.Convert(s: ms, bitDepth: bitDepth, rawType: rawType, metaData: new ImageMetaData(), token: ct);
@@ -381,16 +381,15 @@ namespace NINA.Model.ImageData {
             }
         }
 
-        private static async Task<IImageData> BitmapToImageArray(BitmapDecoder decoder, bool isBayered) {
+        private static IImageData BitmapToImageArray(BitmapDecoder decoder, bool isBayered) {
             var bmp = new FormatConvertedBitmap();
             bmp.BeginInit();
             bmp.Source = decoder.Frames[0];
             bmp.DestinationFormat = System.Windows.Media.PixelFormats.Gray16;
             bmp.EndInit();
 
-            int stride = (bmp.PixelWidth * bmp.Format.BitsPerPixel + 7) / 8;
-            int arraySize = stride * bmp.PixelHeight;
-            ushort[] pixels = new ushort[bmp.PixelWidth * bmp.PixelHeight];
+            var stride = (bmp.PixelWidth * bmp.Format.BitsPerPixel + 7) / 8;
+            var pixels = new ushort[bmp.PixelWidth * bmp.PixelHeight];
             bmp.CopyPixels(pixels, stride, 0);
             return new ImageData(pixels, bmp.PixelWidth, bmp.PixelHeight, 16, isBayered, new ImageMetaData());
         }
