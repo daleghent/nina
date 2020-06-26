@@ -697,6 +697,9 @@
       <Component Win64="$(var.Win64)" Id="External_x64_ASI_ASICamera2.lib" Guid="ac769d06-3151-42c7-8126-735376c905f8">
         <File Id="External_x64_ASI_ASICamera2.lib" Name="ASICamera2.lib" Source="$(var.NINA_ProjectDir)External\x64\ASI\ASICamera2.lib" />
       </Component>
+      <Component Win64="$(var.Win64)" Id="External_x64_ASI_EFW_filter.dll" Guid="e416c8c9-c2a2-47b9-9b53-d79812ebd9c6">
+        <File Id="External_x64_ASI_EFW_filter.dll" Name="EFW_filter.dll" Source="$(var.NINA_TargetDir)External\x64\ASI\EFW_filter.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
 
@@ -1020,6 +1023,9 @@
     <ComponentGroup Id="External_x86_ASI_files" Directory="External_x86_ASI">
       <Component Win64="$(var.Win64)" Id="External_x86_ASI_ASICamera2.dll" Guid="143f86b4-9d22-4026-b0b6-b4d3516da84a">
         <File Id="External_x86_ASI_ASICamera2.dll" Name="ASICamera2.dll" Source="$(var.NINA_ProjectDir)External\x86\ASI\ASICamera2.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="External_x86_ASI_EFW_filter.dll" Guid="ed7b126c-26cc-4f9d-9547-d8cd5406784c">
+        <File Id="External_x86_ASI_EFW_filter.dll" Name="EFW_filter.dll" Source="$(var.NINA_TargetDir)External\x86\ASI\EFW_filter.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
