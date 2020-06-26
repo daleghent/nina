@@ -21,11 +21,10 @@ using QHYCCD;
 using System;
 using System.Collections.Generic;
 using NINA.Utility.AtikSDK;
+using ZWOptical.EFWSDK;
 
 namespace NINA.ViewModel.Equipment.FilterWheel {
-
     internal class FilterWheelChooserVM : EquipmentChooserVM {
-
         public FilterWheelChooserVM(IProfileService profileService) : base(profileService) {
         }
 
@@ -101,6 +100,21 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
                             Devices.Add(fwheel);
                         }
                     }
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
+            /* ZWO filter wheels */
+            try {
+                Logger.Trace("Adding ZWOptical filter wheels");
+
+                var wheels = EFWdll.GetNum();
+
+                for (int i = 0; i < wheels; i++) {
+                    var fw = new ASIFilterWheel(i, profileService);
+                    Logger.Debug($"Adding ZWOptical Filter Wheel {i})");
+                    Devices.Add(fw);
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
