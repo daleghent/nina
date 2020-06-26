@@ -17,12 +17,12 @@ using NINA.Utility.WindowService;
 
 namespace NINA.ViewModel.Interfaces {
 
-    internal interface ISequenceVM : IDockableVM {
+    public interface ISequenceVM : IDockableVM {
         ICommand AddSequenceRowCommand { get; }
         ICommand AddTargetCommand { get; }
         ICommand CancelSequenceCommand { get; }
         ICommand CoordsFromPlanetariumCommand { get; set; }
-        DeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; }
+        IDeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; }
         ICommand DemoteSequenceRowCommand { get; }
         ICommand DemoteTargetCommand { get; }
         TimeSpan EstimatedDownloadTime { get; set; }

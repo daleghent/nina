@@ -70,8 +70,12 @@ namespace NINA.ViewModel {
                 IApplicationStatusMediator applicationStatusMediator,
                 INighttimeCalculator nighttimeCalculator,
                 IPlanetariumFactory planetariumFactory,
-                IImageHistoryVM imageHistoryVM
+                IImageHistoryVM imageHistoryVM,
+                IDeepSkyObjectSearchVM deepSkyObjectSearchVM,
+                ISequenceMediator sequenceMediator
         ) : base(profileService) {
+            sequenceMediator.RegisterHandler(this);
+
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterConsumer(this);
 
@@ -101,7 +105,7 @@ namespace NINA.ViewModel {
             this.applicationStatusMediator = applicationStatusMediator;
             NighttimeCalculator = nighttimeCalculator;
             this.planetariumFactory = planetariumFactory;
-            this.DeepSkyObjectSearchVM = new DeepSkyObjectSearchVM();
+            this.DeepSkyObjectSearchVM = deepSkyObjectSearchVM;
             this.DeepSkyObjectSearchVM.PropertyChanged += DeepSkyObjectDetailVM_PropertyChanged;
 
             this.profileService = profileService;
@@ -1629,7 +1633,7 @@ namespace NINA.ViewModel {
             }
         }
 
-        public DeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; private set; }
+        public IDeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; private set; }
 
         private void _sequence_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             if (e.PropertyName == nameof(CaptureSequenceList.TargetName)) {

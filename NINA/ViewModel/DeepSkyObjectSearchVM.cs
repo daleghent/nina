@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel {
 
-    internal class DeepSkyObjectSearchVM : BaseINPC {
+    internal class DeepSkyObjectSearchVM : BaseINPC, IDeepSkyObjectSearchVM {
 
         public DeepSkyObjectSearchVM() : base() {
         }

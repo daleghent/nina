@@ -23,7 +23,7 @@ namespace NINA.ViewModel.FramingAssistant {
         int DecDegrees { get; set; }
         int DecMinutes { get; set; }
         int DecSeconds { get; set; }
-        DeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; }
+        IDeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; }
         int DownloadProgressValue { get; set; }
         ICommand DragMoveCommand { get; }
         ICommand DragStartCommand { get; }

@@ -97,6 +97,8 @@ namespace NINA.Utility {
             Bind<ISwitchMediator>().To<SwitchMediator>().InSingletonScope();
             Bind<IDomeMediator>().To<DomeMediator>().InSingletonScope();
             Bind<IWeatherDataMediator>().To<WeatherDataMediator>().InSingletonScope();
+            Bind<IApplicationMediator>().To<ApplicationMediator>().InSingletonScope();
+            Bind<ISequenceMediator>().To<SequenceMediator>().InSingletonScope();
 
             Bind<IPlanetariumFactory>().To<PlanetariumFactory>().InSingletonScope();
             Bind<IAllDeviceConsumer>().To<AllDeviceConsumer>().InSingletonScope();
@@ -104,6 +106,7 @@ namespace NINA.Utility {
             Bind<ISharpCapSensorAnalysisReader>().To<DefaultSharpCapSensorAnalysisReader>();
             Bind<IApplicationResourceDictionary>().To<ApplicationResourceDictionary>();
             Bind<INighttimeCalculator>().To<NighttimeCalculator>();
+            Bind<IDeepSkyObjectSearchVM>().To<DeepSkyObjectSearchVM>();
         }
     }
 }

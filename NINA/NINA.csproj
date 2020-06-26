@@ -545,10 +545,14 @@
     <Compile Include="Utility\IAllDeviceConsumer.cs" />
     <Compile Include="Utility\IoCBindings.cs" />
     <Compile Include="Utility\Astrometry\INighttimeCalculator.cs" />
+    <Compile Include="Utility\Mediator\ApplicationMediator.cs" />
     <Compile Include="Utility\Mediator\DomeMediator.cs" />
+    <Compile Include="Utility\Mediator\Interfaces\IApplicationMediator.cs" />
     <Compile Include="Utility\Mediator\Interfaces\IDomeConsumer.cs" />
     <Compile Include="Utility\Mediator\Interfaces\IDomeMediator.cs" />
     <Compile Include="Utility\Astrometry\NighttimeCalculator.cs" />
+    <Compile Include="Utility\Mediator\Interfaces\ISequenceMediator.cs" />
+    <Compile Include="Utility\Mediator\SequenceMediator.cs" />
     <Compile Include="Utility\SerialCommunication\Exceptions.cs" />
     <Compile Include="Utility\ImageAnalysis\SharpCapSensorAnalysisReader.cs" />
     <Compile Include="Utility\SerialCommunication\ISerialSdk.cs" />
@@ -710,6 +714,7 @@
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataVM.cs" />
     <Compile Include="ViewModel\FramingAssistant\IFramingAssistantVM.cs" />
+    <Compile Include="ViewModel\IDeepSkyObjectSearchVM.cs" />
     <Compile Include="ViewModel\Interfaces\IApplicationDeviceConnectionVM.cs" />
     <Compile Include="ViewModel\Interfaces\IDockableVM.cs" />
     <Compile Include="ViewModel\Interfaces\IDockManagerVM.cs" />

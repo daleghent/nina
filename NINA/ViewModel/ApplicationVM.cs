@@ -28,14 +28,15 @@ namespace NINA.ViewModel {
 
     internal class ApplicationVM : BaseVM, IApplicationVM, ICameraConsumer {
 
-        public ApplicationVM(IProfileService profileService, ISequenceVM seqVM, ProjectVersion projectVersion, ICameraMediator cameraMediator) : base(profileService) {
+        public ApplicationVM(IProfileService profileService, ISequenceMediator sequenceMediator, ProjectVersion projectVersion, ICameraMediator cameraMediator, IApplicationMediator applicationMediator) : base(profileService) {
             if (Properties.Settings.Default.UpdateSettings) {
                 Properties.Settings.Default.Upgrade();
                 Properties.Settings.Default.UpdateSettings = false;
                 Properties.Settings.Default.Save();
             }
 
-            this.seqVM = seqVM;
+            applicationMediator.RegisterHandler(this);
+            this.sequenceMediator = sequenceMediator;
             this.projectVersion = projectVersion;
             this.cameraMediator = cameraMediator;
             cameraMediator.RegisterConsumer(this);
@@ -116,7 +117,7 @@ namespace NINA.ViewModel {
         }
 
         private void ExitApplication(object obj) {
-            if (seqVM?.OKtoExit() == false)
+            if (sequenceMediator.OkToExit() == false)
                 return;
             if (cameraInfo.Connected) {
                 var diag = MyMessageBox.MyMessageBox.Show("Camera still connected. Exit anyway?", "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
@@ -144,7 +145,7 @@ namespace NINA.ViewModel {
             cameraMediator.RemoveConsumer(this);
         }
 
-        private readonly ISequenceVM seqVM;
+        private readonly ISequenceMediator sequenceMediator;
         private readonly ProjectVersion projectVersion;
 
         public ICommand MinimizeWindowCommand { get; private set; }

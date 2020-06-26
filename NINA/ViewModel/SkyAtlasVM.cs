@@ -36,7 +36,7 @@ namespace NINA.ViewModel {
     internal class SkyAtlasVM : BaseVM, ISkyAtlasVM {
 
         public SkyAtlasVM(IProfileService profileService, ITelescopeMediator telescopeMediator,
-            IFramingAssistantVM framingAssistantVM, ISequenceVM seqVM, INighttimeCalculator nighttimeCalculator, IApplicationVM appVM) : base(profileService) {
+            IFramingAssistantVM framingAssistantVM, ISequenceMediator sequenceMediator, INighttimeCalculator nighttimeCalculator, IApplicationMediator applicationMediator) : base(profileService) {
             NighttimeCalculator = nighttimeCalculator;
             ResetFilters(null);
 
@@ -44,14 +44,14 @@ namespace NINA.ViewModel {
             CancelSearchCommand = new RelayCommand(CancelSearch);
             ResetFiltersCommand = new RelayCommand(ResetFilters);
             SetSequenceCoordinatesCommand = new AsyncCommand<bool>(async () => {
-                appVM.ChangeTab(ApplicationTab.SEQUENCE);
-                return await seqVM.SetSequenceCoordiantes(SearchResult.SelectedItem);
+                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
+                return await sequenceMediator.SetSequenceCoordinates(SearchResult.SelectedItem);
             });
             SlewToCoordinatesCommand = new AsyncCommand<bool>(async () => {
                 return await telescopeMediator.SlewToCoordinatesAsync(SearchResult.SelectedItem.Coordinates);
             });
             SetFramingAssistantCoordinatesCommand = new AsyncCommand<bool>(async () => {
-                appVM.ChangeTab(ApplicationTab.FRAMINGASSISTANT);
+                applicationMediator.ChangeTab(ApplicationTab.FRAMINGASSISTANT);
                 return await framingAssistantVM.SetCoordinates(SearchResult.SelectedItem);
             });
 

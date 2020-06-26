@@ -43,7 +43,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
             IApplicationStatusMediator applicationStatusMediator, INighttimeCalculator nighttimeCalculator, IPlanetariumFactory planetariumFactory,
-            ISequenceVM sequenceVM, IApplicationVM appVM) : base(profileService) {
+            ISequenceMediator sequenceMediator, IApplicationMediator applicationMediator, IDeepSkyObjectSearchVM deepSkyObjectSearchVM) : base(profileService) {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
@@ -77,11 +77,11 @@ namespace NINA.ViewModel.FramingAssistant {
 
             CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium));
 
-            DeepSkyObjectSearchVM = new DeepSkyObjectSearchVM();
+            DeepSkyObjectSearchVM = deepSkyObjectSearchVM;
             DeepSkyObjectSearchVM.PropertyChanged += DeepSkyObjectSearchVM_PropertyChanged;
 
             SetSequenceCoordinatesCommand = new AsyncCommand<bool>(async (object parameter) => {
-                appVM.ChangeTab(ApplicationTab.SEQUENCE);
+                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
 
                 var deepSkyObjects = new List<DeepSkyObject>();
                 foreach (var rect in CameraRectangles) {
@@ -93,9 +93,9 @@ namespace NINA.ViewModel.FramingAssistant {
 
                 bool msgResult = false;
                 if (parameter.ToString() == "Replace") {
-                    msgResult = await sequenceVM.SetSequenceCoordiantes(deepSkyObjects);
+                    msgResult = await sequenceMediator.SetSequenceCoordinates(deepSkyObjects, true);
                 } else if (parameter.ToString() == "Add") {
-                    msgResult = await sequenceVM.SetSequenceCoordiantes(deepSkyObjects, false);
+                    msgResult = await sequenceMediator.SetSequenceCoordinates(deepSkyObjects, false);
                 }
 
                 ImageParameter = null;
@@ -198,7 +198,7 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
-        public DeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; private set; }
+        public IDeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; private set; }
 
         private void ApplicationSettings_PropertyChanged(object sender, PropertyChangedEventArgs e) {
             InitializeCache();
@@ -319,6 +319,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private ITelescopeMediator telescopeMediator;
         private IApplicationStatusMediator applicationStatusMediator;
         private INighttimeCalculator nighttimeCalculator;
+
         public INighttimeCalculator NighttimeCalculator {
             get => nighttimeCalculator;
             set {
@@ -326,6 +327,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 RaisePropertyChanged();
             }
         }
+
         private readonly IPlanetariumFactory planetariumFactory;
 
         public int RAHours {

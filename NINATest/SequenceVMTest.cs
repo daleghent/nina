@@ -48,6 +48,7 @@ namespace NINATest {
         private Mock<INighttimeCalculator> nighttimeCalculatorMock;
         private Mock<IPlanetariumFactory> planetariumFactoryMock;
         private Mock<IImageHistoryVM> imageHistoryVMMock;
+        private Mock<IDeepSkyObjectSearchVM> deepSkyObjectSearchVMMock;
         private FlatDeviceInfo _flatDevice;
         private CaptureSequenceList _dummyList;
         private SequenceVM _sut;
@@ -74,6 +75,7 @@ namespace NINATest {
             nighttimeCalculatorMock = new Mock<INighttimeCalculator>();
             planetariumFactoryMock = new Mock<IPlanetariumFactory>();
             imageHistoryVMMock = new Mock<IImageHistoryVM>();
+            deepSkyObjectSearchVMMock = new Mock<IDeepSkyObjectSearchVM>();
 
             _dummyList = new CaptureSequenceList();
             _dummyList.Add(new CaptureSequence() { TotalExposureCount = 10 });
@@ -97,7 +99,7 @@ namespace NINATest {
             _sut = new SequenceVM(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, focuserMediatorMock.Object,
                 filterWheelMediatorMock.Object, guiderMediatorMock.Object, rotatorMediatorMock.Object, _flatDeviceMediatorMock.Object,
                 weatherDataMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, nighttimeCalculatorMock.Object,
-                planetariumFactoryMock.Object, imageHistoryVMMock.Object);
+                planetariumFactoryMock.Object, imageHistoryVMMock.Object, deepSkyObjectSearchVMMock.Object);
         }
 
         [TearDown]
