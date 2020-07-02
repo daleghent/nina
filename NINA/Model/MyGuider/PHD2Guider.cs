@@ -515,7 +515,7 @@ namespace NINA.Model.MyGuider {
                     return true;
                 }
             } catch (FileNotFoundException ex) {
-                Logger.Error(Locale.Loc.Instance["LblPhd2PathNotFound"]);
+                Logger.Error(Locale.Loc.Instance["LblPhd2PathNotFound"], ex);
                 Notification.ShowError(Locale.Loc.Instance["LblPhd2PathNotFound"]);
             } catch (Exception ex) {
                 Logger.Error(ex);

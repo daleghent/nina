@@ -14,13 +14,9 @@
 
 using NINA.Profile;
 using NINA.Utility;
-using Nito.Mvvm;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -45,6 +41,7 @@ namespace NINA.Model.MyCamera {
                 try {
                     this.Camera.SetBinning(this.profileService.ActiveProfile.CameraSettings.BinningX.Value, this.profileService.ActiveProfile.CameraSettings.BinningY.Value);
                 } catch (Exception e) {
+                    Logger.Debug(e.Message);
                     this.profileService.ActiveProfile.CameraSettings.BinningX = null;
                     this.profileService.ActiveProfile.CameraSettings.BinningY = null;
                 }
@@ -53,6 +50,7 @@ namespace NINA.Model.MyCamera {
                 try {
                     this.Camera.Gain = this.profileService.ActiveProfile.CameraSettings.Gain.Value;
                 } catch (Exception e) {
+                    Logger.Debug(e.Message);
                     this.profileService.ActiveProfile.CameraSettings.Gain = null;
                 }
             }
@@ -60,6 +58,7 @@ namespace NINA.Model.MyCamera {
                 try {
                     this.Camera.Offset = this.profileService.ActiveProfile.CameraSettings.Offset.Value;
                 } catch (Exception e) {
+                    Logger.Debug(e.Message);
                     this.profileService.ActiveProfile.CameraSettings.Offset = null;
                 }
             }
@@ -67,6 +66,7 @@ namespace NINA.Model.MyCamera {
                 try {
                     this.Camera.USBLimit = this.profileService.ActiveProfile.CameraSettings.USBLimit.Value;
                 } catch (Exception e) {
+                    Logger.Debug(e.Message);
                     this.profileService.ActiveProfile.CameraSettings.USBLimit = null;
                 }
             }
@@ -74,6 +74,7 @@ namespace NINA.Model.MyCamera {
                 try {
                     this.Camera.ReadoutMode = this.profileService.ActiveProfile.CameraSettings.ReadoutMode.Value;
                 } catch (Exception e) {
+                    Logger.Debug(e.Message);
                     this.profileService.ActiveProfile.CameraSettings.ReadoutMode = null;
                 }
             }
@@ -81,6 +82,7 @@ namespace NINA.Model.MyCamera {
                 try {
                     this.Camera.ReadoutModeForSnapImages = this.profileService.ActiveProfile.CameraSettings.ReadoutModeForSnapImages.Value;
                 } catch (Exception e) {
+                    Logger.Debug(e.Message);
                     this.profileService.ActiveProfile.CameraSettings.ReadoutModeForSnapImages = null;
                 }
             }
@@ -88,6 +90,7 @@ namespace NINA.Model.MyCamera {
                 try {
                     this.Camera.ReadoutModeForNormalImages = this.profileService.ActiveProfile.CameraSettings.ReadoutModeForNormalImages.Value;
                 } catch (Exception e) {
+                    Logger.Debug(e.Message);
                     this.profileService.ActiveProfile.CameraSettings.ReadoutModeForNormalImages = null;
                 }
             }
