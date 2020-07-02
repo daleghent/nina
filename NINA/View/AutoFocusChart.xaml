@@ -229,8 +229,8 @@
                 </oxy:PointAnnotation>
                 <oxy:PointAnnotation
                     Shape="Circle"
-                    X="{Binding TrendlineFitting.TrendLineIntersection.X}"
-                    Y="{Binding TrendlineFitting.TrendLineIntersection.Y}">
+                    X="{Binding TrendlineFitting.Intersection.X}"
+                    Y="{Binding TrendlineFitting.Intersection.Y}">
                     <oxy:PointAnnotation.Fill>
                         <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
                             <Binding>

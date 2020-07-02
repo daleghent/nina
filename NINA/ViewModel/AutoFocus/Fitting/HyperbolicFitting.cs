@@ -52,6 +52,16 @@ namespace NINA.ViewModel.AutoFocus {
             }
         }
 
+        private string _expression;
+
+        public string Expression {
+            get => _expression;
+            set {
+                _expression = value;
+                RaisePropertyChanged();
+            }
+        }
+
         /// <summary>
         /// The routine will try to find the best hyperbola curve fit. The focuser position p at the hyperbola minimum is the expected best focuser position
         /// The FocusPoints List will be used as input to the fitting
@@ -124,6 +134,9 @@ namespace NINA.ViewModel.AutoFocus {
                 }
                 iterationCycles++;
             } while (oldError - lowestError >= 0.0001 && lowestError > 0.0001 && iterationCycles < 30);
+
+            Expression = $"y = {a} * cosh(asinh(({p} - x) / {b}))";
+
             Fitting = (x) => a * MathHelper.HCos(MathHelper.HArcsin((p - x) / b));
             Minimum = new DataPoint((int)Math.Round(p), a);
             return this;
@@ -151,6 +164,10 @@ namespace NINA.ViewModel.AutoFocus {
             double x = perfectFocusPosition - position;
             double t = MathHelper.HArcsin(x / b); //calculate t-position in hyperbola
             return a * MathHelper.HCos(t); //convert t-position to y/hfd value
+        }
+
+        public override string ToString() {
+            return $"{Expression}";
         }
     }
 }

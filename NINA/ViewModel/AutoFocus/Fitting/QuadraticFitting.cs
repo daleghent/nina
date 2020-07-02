@@ -53,14 +53,29 @@ namespace NINA.ViewModel.AutoFocus {
             }
         }
 
+        private string _expression;
+
+        public string Expression {
+            get => _expression;
+            set {
+                _expression = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public QuadraticFitting Calculate(ICollection<ScatterErrorPoint> points) {
             var fitting = new PolynomialLeastSquares() { Degree = 2 };
             PolynomialRegression poly = fitting.Learn(points.Select((dp) => dp.X).ToArray(), points.Select((dp) => dp.Y).ToArray(), points.Select((dp) => 1 / (dp.ErrorY * dp.ErrorY)).ToArray());
+            Expression = $"y = {poly.Weights[0]} * x^2 + {poly.Weights[1]} * x + {poly.Intercept}";
             Fitting = (x) => (poly.Weights[0] * x * x + poly.Weights[1] * x + poly.Intercept);
             int minimumX = (int)Math.Round(poly.Weights[1] / (2 * poly.Weights[0]) * -1);
             double minimumY = Fitting(minimumX);
             Minimum = new DataPoint(minimumX, minimumY);
             return this;
+        }
+
+        public override string ToString() {
+            return $"{Expression}";
         }
     }
 }

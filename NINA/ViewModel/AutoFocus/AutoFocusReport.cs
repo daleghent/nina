@@ -23,8 +23,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace NINA.ViewModel.AutoFocus {
-
     public class AutoFocusReport {
+        [JsonProperty]
+        public int Version { get; set; } = 2;
 
         [JsonProperty]
         public string Filter { get; set; }
@@ -55,6 +56,9 @@ namespace NINA.ViewModel.AutoFocus {
 
         [JsonProperty]
         public Intersections Intersections { get; set; }
+
+        [JsonProperty]
+        public Fittings Fittings { get; set; }
 
         /// <summary>
         /// Generates a JSON report into %localappdata%\NINA\AutoFocus for the complete autofocus run containing all the measurements
@@ -99,6 +103,13 @@ namespace NINA.ViewModel.AutoFocus {
                     GaussianMaximum = new FocusPoint() { Position = gaussianFitting.Maximum.X, Value = gaussianFitting.Maximum.Y },
                     HyperbolicMinimum = new FocusPoint() { Position = hyperbolicFitting.Minimum.X, Value = hyperbolicFitting.Minimum.Y },
                     QuadraticMinimum = new FocusPoint() { Position = quadraticFitting.Minimum.X, Value = quadraticFitting.Minimum.Y }
+                },
+                Fittings = new Fittings() {
+                    Gaussian = gaussianFitting.Expression,
+                    Hyperbolic = hyperbolicFitting.Expression,
+                    Quadratic = quadraticFitting.Expression,
+                    LeftTrend = trendlineFitting.LeftExpression,
+                    RightTrend = trendlineFitting.RightExpression
                 }
             };
 
@@ -113,8 +124,24 @@ namespace NINA.ViewModel.AutoFocus {
         public FocusPoint GaussianMaximum { get; set; }
     }
 
-    public class FocusPoint {
+    public class Fittings {
+        [JsonProperty]
+        public string Quadratic { get; set; }
 
+        [JsonProperty]
+        public string Hyperbolic { get; set; }
+
+        [JsonProperty]
+        public string Gaussian { get; set; }
+
+        [JsonProperty]
+        public string LeftTrend { get; set; }
+
+        [JsonProperty]
+        public string RightTrend { get; set; }
+    }
+
+    public class FocusPoint {
         [JsonProperty]
         public double Position { get; set; }
 

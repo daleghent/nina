@@ -53,6 +53,16 @@ namespace NINA.ViewModel.AutoFocus {
             }
         }
 
+        private string _expression;
+
+        public string Expression {
+            get => _expression;
+            set {
+                _expression = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public GaussianFitting Calculate(ICollection<ScatterErrorPoint> points) {
             double[][] inputs = Accord.Math.Matrix.ToJagged(points.ToList().ConvertAll((dp) => dp.X).ToArray());
             double[] outputs = points.ToList().ConvertAll((dp) => dp.Y).ToArray();
@@ -82,9 +92,14 @@ namespace NINA.ViewModel.AutoFocus {
             };
 
             var regression = nls.Learn(inputs, outputs);
+            Expression = $"y = {regression.Coefficients[2]} * exp(-1 * (x - {regression.Coefficients[0]}) * (x - {regression.Coefficients[0]}) / (2 * {regression.Coefficients[1]} * {regression.Coefficients[1]})) + {regression.Coefficients[3]}";
             Fitting = (x) => regression.Coefficients[2] * Math.Exp(-1 * (x - regression.Coefficients[0]) * (x - regression.Coefficients[0]) / (2 * regression.Coefficients[1] * regression.Coefficients[1])) + regression.Coefficients[3];
             Maximum = new DataPoint((int)Math.Round(regression.Coefficients[0]), regression.Coefficients[2] + regression.Coefficients[3]);
             return this;
+        }
+
+        public override string ToString() {
+            return $"{Expression}";
         }
     }
 }
