@@ -29,6 +29,7 @@ using NINA.ViewModel.Equipment.Dome;
 using NINA.ViewModel.Equipment.Switch;
 using NINA.ViewModel.Equipment.Telescope;
 using NINA.ViewModel.Equipment.WeatherData;
+using NINA.ViewModel.Equipment.FlatDevice;
 
 namespace NINA.ViewModel {
 
@@ -39,7 +40,7 @@ namespace NINA.ViewModel {
             IWeatherDataVM weatherDataVM, IDomeVM domeVM, IAnchorableSnapshotVM snapshotVM,
             IPolarAlignmentVM polarAlignmentVM, IAnchorablePlateSolverVM plateSolverVM, ITelescopeVM telescopeVM, IGuiderVM guiderVM,
             IFocusTargetsVM focusTargetsVM, IAutoFocusVM autoFocusVM, IExposureCalculatorVM exposureCalculatorVM, IImageHistoryVM imageHistoryVM,
-            IImageControlVM imageControlVM, IImageStatisticsVM imageStatisticsVM) : base(profileService) {
+            IImageControlVM imageControlVM, IImageStatisticsVM imageStatisticsVM, IFlatDeviceVM flatDeviceVM) : base(profileService) {
             LoadAvalonDockLayoutCommand = new RelayCommand(LoadAvalonDockLayout);
             ResetDockLayoutCommand = new RelayCommand(ResetDockLayout, (object o) => _dockmanager != null);
 
@@ -65,6 +66,7 @@ namespace NINA.ViewModel {
             Anchorables.Add(autoFocusVM);
             Anchorables.Add(focusTargetsVM);
             Anchorables.Add(exposureCalculatorVM);
+            Anchorables.Add(flatDeviceVM);
 
             AnchorableInfoPanels.Add(imageControlVM);
             AnchorableInfoPanels.Add(cameraVM);
@@ -79,6 +81,7 @@ namespace NINA.ViewModel {
             AnchorableInfoPanels.Add(domeVM);
             AnchorableInfoPanels.Add(imageStatisticsVM);
             AnchorableInfoPanels.Add(imageHistoryVM);
+            AnchorableInfoPanels.Add(flatDeviceVM);
 
             AnchorableTools.Add(snapshotVM);
             AnchorableTools.Add(thumbnailVM);

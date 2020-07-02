@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.FlatDevice {
 
-    public interface IFlatDeviceVM : IDeviceVM<FlatDeviceInfo> {
+    public interface IFlatDeviceVM : IDeviceVM<FlatDeviceInfo>, IDockableVM {
 
         Task<bool> OpenCover();
 
