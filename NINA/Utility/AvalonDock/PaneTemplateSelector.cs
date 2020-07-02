@@ -29,7 +29,9 @@ using System.Windows.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
 
 namespace NINA.Utility.AvalonDock {
+
     public class PaneTemplateSelector : DataTemplateSelector {
+
         public PaneTemplateSelector() {
         }
 
@@ -74,8 +76,6 @@ namespace NINA.Utility.AvalonDock {
         public DataTemplate DomeTemplate { get; set; }
 
         public override System.Windows.DataTemplate SelectTemplate(object item, System.Windows.DependencyObject container) {
-            var itemAsLayoutContent = item as LayoutContent;
-
             switch (item) {
                 case CameraVM _:
                     return CameraTemplate;
@@ -137,10 +137,12 @@ namespace NINA.Utility.AvalonDock {
                 case ExposureCalculatorVM _:
                     return ExposureCalculatorTemplate;
 
-                case DomeVM:
+                case DomeVM _:
                     return DomeTemplate;
 
+                default:
                     return base.SelectTemplate(item, container);
             }
         }
     }
+}

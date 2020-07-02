@@ -41,7 +41,7 @@ namespace NINA.Utility {
             Bind<IImagingVM>().To<ImagingVM>().InSingletonScope();
             Bind<IEquipmentVM>().To<EquipmentVM>().InSingletonScope();
             Bind<IApplicationDeviceConnectionVM>().To<ApplicationDeviceConnectionVM>().InSingletonScope();
-
+            Bind<IImageGeometryProvider>().To<ImageGeometryProvider>().InSingletonScope();
             Bind<ISwitchVM>().To<SwitchVM>().InSingletonScope();
             Bind<IOptionsVM>().To<OptionsVM>().InSingletonScope();
             Bind<IFlatDeviceVM>().To<FlatDeviceVM>().InSingletonScope();
