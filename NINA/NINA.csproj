@@ -734,6 +734,7 @@
     <Compile Include="ViewModel\Imaging\IAnchorableSnapshotVM.cs" />
     <Compile Include="ViewModel\Imaging\IExposureCalculatorVM.cs" />
     <Compile Include="ViewModel\Interfaces\IApplicationVM.cs" />
+    <Compile Include="ViewModel\ImageGeometryProvider.cs" />
     <Compile Include="ViewModel\Imaging\AnchorableSnapshotVM.cs" />
     <Compile Include="ViewModel\Imaging\ExposureTimeRecommendationVM.cs" />
     <Compile Include="ViewModel\Imaging\AnchorablePlateSolverVM.cs" />
@@ -1153,6 +1154,9 @@
     </Compile>
     <Compile Include="View\Imaging\AnchorableExposureCalculatorView.xaml.cs">
       <DependentUpon>AnchorableExposureCalculatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Imaging\AnchorableFlatDeviceView.xaml.cs">
+      <DependentUpon>AnchorableFlatDeviceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Imaging\AnchorableFocusTargetsView.xaml.cs">
       <DependentUpon>AnchorableFocusTargetsView.xaml</DependentUpon>
@@ -1577,6 +1581,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Imaging\AnchorableFlatDeviceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Imaging\AnchorableFocusTargetsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1850,6 +1858,9 @@
     <Content Include="Database\Migration\3.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Database\Migration\5.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External\x64\AllPro\spikahidapi64.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -2020,6 +2031,7 @@
     <EmbeddedResource Include="Locale\Locale.gl-ES.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Locale.gl-ES.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Locale\Locale.it-IT.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -2058,6 +2070,7 @@
     <EmbeddedResource Include="Locale\Locale.tr-TR.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Locale.tr-TR.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Locale\Locale.zh-CN.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -23,8 +23,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace NINA.ViewModel.AutoFocus {
-
     public class AutoFocusReport {
+        [JsonProperty]
+        public string Filter { get; set; }
 
         [JsonProperty]
         public string Filter { get; set; }
@@ -114,7 +115,6 @@ namespace NINA.ViewModel.AutoFocus {
     }
 
     public class FocusPoint {
-
         [JsonProperty]
         public double Position { get; set; }
 

@@ -72,7 +72,7 @@ namespace NINA.Model.MyFocuser {
         public int MaxIncrement {
             get {
                 if (Connected) {
-                    return _focuser.MaxIncrement;
+                    return Math.Abs(_focuser.MaxIncrement);
                 } else {
                     return -1;
                 }
@@ -82,7 +82,7 @@ namespace NINA.Model.MyFocuser {
         public int MaxStep {
             get {
                 if (Connected) {
-                    return _focuser.MaxStep;
+                    return Math.Abs(_focuser.MaxStep);
                 } else {
                     return -1;
                 }
@@ -96,7 +96,7 @@ namespace NINA.Model.MyFocuser {
                 int pos = -1;
                 try {
                     if (Connected && _canGetPosition) {
-                        pos = _focuser.Position;
+                        pos = Math.Abs(_focuser.Position);
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetPosition = false;

@@ -43,7 +43,6 @@ using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace NINA.ViewModel.FlatWizard {
-
     internal class FlatWizardVM : DockableVM, IFlatWizardVM {
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private BinningMode binningMode;
@@ -452,7 +451,7 @@ namespace NINA.ViewModel.FlatWizard {
                 }
 
                 var prepareParameters = new PrepareImageParameters(autoStretch: true, detectStars: false);
-                prepareTask = ImagingVM.PrepareImage(imageData, prepareParameters, ct);                
+                prepareTask = ImagingVM.PrepareImage(imageData, prepareParameters, ct);
 
                 // check for exposure ADU state
                 exposureAduState = await FlatWizardExposureTimeFinderService.GetFlatExposureState(imageData, exposureTime, wrapper);
@@ -463,10 +462,11 @@ namespace NINA.ViewModel.FlatWizard {
                     case FlatWizardExposureAduState.ExposureFinished:
                         CalculatedHistogramMean = imageStatistics.Mean;
                         CalculatedExposureTime = exposureTime;
-                        if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
-                            profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(new FlatDeviceFilterSettingsKey(wrapper.Filter?.Position, BinningMode, Gain),
-                                new FlatDeviceFilterSettingsValue(flatDeviceInfo.Brightness, exposureTime));
-                            Logger.Debug($"Recording flat settings as filter position {wrapper.Filter?.Position} ({wrapper.Filter?.Name}), binning: {BinningMode}, gain: {Gain}, panel brightness {flatDeviceInfo.Brightness} and exposure time: {exposureTime}.");
+                        if (_flatDevice != null && _flatDevice.Connected) {
+                            var actualGain = Gain == -1 ? profileService.ActiveProfile.CameraSettings.Gain ?? -1 : Gain;
+                            profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(new FlatDeviceFilterSettingsKey(wrapper.Filter?.Position, BinningMode, actualGain),
+                                new FlatDeviceFilterSettingsValue(_flatDevice.Brightness, exposureTime));
+                            Logger.Debug($"Recording flat settings as filter position {wrapper.Filter?.Position} ({wrapper.Filter?.Name}), binning: {BinningMode}, gain: {actualGain}, panel brightness {_flatDevice.Brightness} and exposure time: {exposureTime}.");
                         }
 
                         progress.Report(new ApplicationStatus { Status = string.Format(Locale["LblFlatExposureCalcFinished"], Math.Round(CalculatedHistogramMean, 2), CalculatedExposureTime), Source = Title });
@@ -682,7 +682,7 @@ namespace NINA.ViewModel.FlatWizard {
 
                 var exposureData = await ImagingVM.CaptureImage(sequence, ct, progress);
                 var imageData = await exposureData.ToImageData();
-                imageData.MetaData.Target.Name = TargetName;            
+                imageData.MetaData.Target.Name = TargetName;
 
                 if (saveTask != null && !saveTask.IsCompleted) {
                     progress.Report(new ApplicationStatus() { Status = Locale["LblSavingImage"] });

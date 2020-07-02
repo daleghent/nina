@@ -25,13 +25,13 @@ using NINA.ViewModel.Equipment.Camera;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace NINA.ViewModel.Equipment.FlatDevice {
-
     internal class FlatDeviceVM : DockableVM, IFlatDeviceVM, ICameraConsumer {
         private IFlatDevice _flatDevice;
         private IFlatDeviceSettings _flatDeviceSettings;
@@ -47,6 +47,9 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             _flatDeviceMediator = flatDeviceMediator;
             _flatDeviceMediator.RegisterHandler(this);
             cameraMediator.RegisterConsumer(this);
+
+            this.Title = "LblFlatDevice";
+            this.ImageGeometry = imageGeometryProvider.GetImageGeometry("LightBulbSVG");
 
             ConnectCommand = new AsyncCommand<bool>(Connect);
             CancelConnectCommand = new RelayCommand(CancelConnectFlatDevice);
@@ -119,7 +122,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
 
         public void SetBrightness(object o) {
             if (_flatDevice == null || !_flatDevice.Connected) return;
-            if (!double.TryParse(o.ToString(), out var result)) return;
+            if (!double.TryParse(o.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)) return;
             _flatDevice.Brightness = result / 100d;
         }
 

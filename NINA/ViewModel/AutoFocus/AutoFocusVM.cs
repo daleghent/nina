@@ -37,7 +37,6 @@ using Newtonsoft.Json;
 using System.IO;
 
 namespace NINA.ViewModel {
-
     internal class AutoFocusVM : DockableVM, ICameraConsumer, IFocuserConsumer, IFilterWheelConsumer, IAutoFocusVM {
         private static readonly string ReportDirectory = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "AutoFocus");
 
@@ -661,7 +660,7 @@ namespace NINA.ViewModel {
                     filter
                 );
 
-                File.WriteAllText(Path.Combine(ReportDirectory, DateTime.Now.ToString("yyyy-dd-M--HH-mm-ss") + ".json"), JsonConvert.SerializeObject(report));
+                File.WriteAllText(Path.Combine(ReportDirectory, DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss") + ".json"), JsonConvert.SerializeObject(report));
                 return report;
             } catch (Exception ex) {
                 Logger.Error(ex);

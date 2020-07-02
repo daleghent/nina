@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.ViewModel;
 
 namespace NINATest.FlatDevice {
     [TestFixture]
@@ -40,6 +41,7 @@ namespace NINATest.FlatDevice {
         private Mock<IFlatDeviceSettings> _mockFlatDeviceSettings;
         private Mock<IFilterWheelSettings> _mockFilterWheelSettings;
         private Mock<ICameraMediator> _mockCameraMediator;
+        private Mock<IImageGeometryProvider> _mockImageGeometryProvider;
 
         [OneTimeSetUp]
         public void OneTimeSetUp() {
@@ -51,6 +53,7 @@ namespace NINATest.FlatDevice {
             _mockFlatDeviceSettings = new Mock<IFlatDeviceSettings>();
             _mockFilterWheelSettings = new Mock<IFilterWheelSettings>();
             _mockCameraMediator = new Mock<ICameraMediator>();
+            _mockImageGeometryProvider = new Mock<IImageGeometryProvider>();
         }
 
         [SetUp]
@@ -63,6 +66,7 @@ namespace NINATest.FlatDevice {
             _mockFlatDeviceSettings.Reset();
             _mockFilterWheelSettings.Reset();
             _mockCameraMediator.Reset();
+            _mockImageGeometryProvider.Reset();
 
             _mockFlatDeviceSettings.SetupProperty(m => m.Id, "mockDevice");
 
@@ -73,6 +77,7 @@ namespace NINATest.FlatDevice {
             //            _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings.Id).Returns("mockDevice");
             _sut = new FlatDeviceVM(_mockProfileService.Object, _mockFlatDeviceMediator.Object,
                 _mockApplicationStatusMediator.Object, _mockCameraMediator.Object);
+                _mockApplicationStatusMediator.Object, _mockImageGeometryProvider.Object);
         }
 
         [Test]
