@@ -129,10 +129,6 @@ namespace NINA.ViewModel {
 
         private void ClosingApplication(object o) {
             Notification.Dispose();
-
-            try {
-                Utility.AtikSDK.AtikCameraDll.Shutdown();
-            } catch (Exception) { }
         }
 
         public void UpdateDeviceInfo(CameraInfo deviceInfo) {

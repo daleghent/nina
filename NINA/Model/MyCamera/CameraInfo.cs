@@ -463,5 +463,15 @@ namespace NINA.Model.MyCamera {
                 RaisePropertyChanged();
             }
         }
+
+        private double exposureMin = 0;
+
+        public double ExposureMin {
+            get => exposureMin;
+            set {
+                exposureMin = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

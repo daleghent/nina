@@ -243,14 +243,14 @@ Thank you for your support!
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 46.16909.2020.404
-- **Atik:** 1.4.0.5
+- **Atik:** 2020.6.18.0
 - **Canon:** 13.12.10
 - **FLI:** 1.104.0.0
 - **Nikon:** 1.3.1.3001
 - **Omegon:** 39.15325.2019.810
 - **QHY:** 20.2.28.0
 - **ToupTek:** 30.13342.2018.1121
-- **ZWO:** 1.14.11.19
+- **ZWO:** 1.15.6.17
 
 # Version 1.9
 
