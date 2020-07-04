@@ -4,6 +4,7 @@ using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.Interfaces;
 using Ninject;
 using System;
+using System.Linq.Expressions;
 using System.Windows;
 
 namespace NINA.ViewModel {
@@ -11,22 +12,27 @@ namespace NINA.ViewModel {
     internal class VMInjector {
 
         public VMInjector() {
-            IReadOnlyKernel _kernel = new KernelConfiguration(new IoCBindings()).BuildReadonlyKernel();
-            AppVM = _kernel.Get<IApplicationVM>();
-            ImagingVM = _kernel.Get<IImagingVM>();
-            EquipmentVM = _kernel.Get<IEquipmentVM>();
-            SkyAtlasVM = _kernel.Get<ISkyAtlasVM>();
-            SeqVM = _kernel.Get<ISequenceVM>();
-            FramingAssistantVM = _kernel.Get<IFramingAssistantVM>();
-            FlatWizardVM = _kernel.Get<IFlatWizardVM>();
-            DockManagerVM = _kernel.Get<IDockManagerVM>();
+            try {
+                Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
-            OptionsVM = _kernel.Get<IOptionsVM>();
-            ApplicationDeviceConnectionVM = _kernel.Get<IApplicationDeviceConnectionVM>();
-            VersionCheckVM = _kernel.Get<IVersionCheckVM>();
-            ApplicationStatusVM = _kernel.Get<IApplicationStatusVM>();
+                IReadOnlyKernel _kernel = new KernelConfiguration(new IoCBindings()).BuildReadonlyKernel();
+                AppVM = _kernel.Get<IApplicationVM>();
+                ImagingVM = _kernel.Get<IImagingVM>();
+                EquipmentVM = _kernel.Get<IEquipmentVM>();
+                SkyAtlasVM = _kernel.Get<ISkyAtlasVM>();
+                SeqVM = _kernel.Get<ISequenceVM>();
+                FramingAssistantVM = _kernel.Get<IFramingAssistantVM>();
+                FlatWizardVM = _kernel.Get<IFlatWizardVM>();
+                DockManagerVM = _kernel.Get<IDockManagerVM>();
 
-            Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+                OptionsVM = _kernel.Get<IOptionsVM>();
+                ApplicationDeviceConnectionVM = _kernel.Get<IApplicationDeviceConnectionVM>();
+                VersionCheckVM = _kernel.Get<IVersionCheckVM>();
+                ApplicationStatusVM = _kernel.Get<IApplicationStatusVM>();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                throw ex;
+            }
         }
 
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
