@@ -18,6 +18,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace NINA.Model.MyCamera {
+
     public class CameraInfo : DeviceInfo {
         private bool canSetTemperature;
 
@@ -460,16 +461,6 @@ namespace NINA.Model.MyCamera {
             get => canShowLiveView;
             set {
                 canShowLiveView = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private double exposureMin = 0;
-
-        public double ExposureMin {
-            get => exposureMin;
-            set {
-                exposureMin = value;
                 RaisePropertyChanged();
             }
         }
