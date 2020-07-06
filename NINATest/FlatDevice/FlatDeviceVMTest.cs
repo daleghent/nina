@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using NINA.ViewModel;
 
 namespace NINATest.FlatDevice {
+
     [TestFixture]
     public class FlatDeviceVMTest {
         private FlatDeviceVM _sut;
@@ -76,8 +77,7 @@ namespace NINATest.FlatDevice {
             _mockProfileService.Setup(m => m.ActiveProfile.ApplicationSettings.DevicePollingInterval).Returns(200);
             //            _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings.Id).Returns("mockDevice");
             _sut = new FlatDeviceVM(_mockProfileService.Object, _mockFlatDeviceMediator.Object,
-                _mockApplicationStatusMediator.Object, _mockCameraMediator.Object);
-                _mockApplicationStatusMediator.Object, _mockImageGeometryProvider.Object);
+                            _mockApplicationStatusMediator.Object, _mockImageGeometryProvider.Object, _mockCameraMediator.Object);
         }
 
         [Test]
