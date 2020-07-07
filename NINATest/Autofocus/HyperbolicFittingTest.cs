@@ -49,5 +49,77 @@ namespace NINATest.Autofocus {
             sut.Minimum.Y.Should().BeApproximately(1.2, TOLERANCE);
             sut.Fitting(sut.Minimum.X).Should().Be(sut.Minimum.Y);
         }
+
+        [Test]
+        public void BadData_PreventInfiniteLoop() {
+            var points = new List<ScatterErrorPoint>() {
+                new ScatterErrorPoint(1000, 18, 1,1),
+                new ScatterErrorPoint(1100, 0,  1,1),
+                new ScatterErrorPoint(1200, 0,  1,1)
+            };
+
+            var sut = new HyperbolicFitting();
+            sut.Calculate(points);
+
+            sut.Minimum.X.Should().Be(0);
+            sut.Minimum.Y.Should().Be(0);
+            sut.Fitting.Should().BeNull();
+        }
+
+        [Test]
+        public void BadData2_PreventInfiniteLoop() {
+            var points = new List<ScatterErrorPoint>() {
+                new ScatterErrorPoint(1000, 18, 1,1),
+                new ScatterErrorPoint(1000, 18, 1,1),
+                new ScatterErrorPoint(1000, 18, 1,1),
+                new ScatterErrorPoint(1100, 0,  1,1),
+                new ScatterErrorPoint(1200, 0,  1,1)
+            };
+
+            var sut = new HyperbolicFitting();
+            sut.Calculate(points);
+
+            sut.Minimum.X.Should().Be(0);
+            sut.Minimum.Y.Should().Be(0);
+            sut.Fitting.Should().BeNull();
+        }
+
+        [Test]
+        public void BadData3_PreventInfiniteLoop() {
+            var points = new List<ScatterErrorPoint>() {
+                new ScatterErrorPoint(900, 18, 1,1),
+                new ScatterErrorPoint(1000, 18, 1,1),
+                new ScatterErrorPoint(1000, 18, 1,1),
+                new ScatterErrorPoint(1100, 0,  1,1),
+                new ScatterErrorPoint(1200, 0,  1,1)
+            };
+
+            var sut = new HyperbolicFitting();
+            sut.Calculate(points);
+
+            sut.Minimum.X.Should().Be(0);
+            sut.Minimum.Y.Should().Be(0);
+            sut.Fitting.Should().BeNull();
+        }
+
+        [Test]
+        public void BadData4_PreventInfiniteLoop() {
+            var points = new List<ScatterErrorPoint>() {
+                new ScatterErrorPoint(800, 18, 1,1),
+                new ScatterErrorPoint(900, 0, 1,1),
+                new ScatterErrorPoint(1000, 0, 1,1),
+                new ScatterErrorPoint(1000, 18, 1,1),
+                new ScatterErrorPoint(1000, 18, 1,1),
+                new ScatterErrorPoint(1100, 0,  1,1),
+                new ScatterErrorPoint(1200, 0,  1,1)
+            };
+
+            var sut = new HyperbolicFitting();
+            sut.Calculate(points);
+
+            sut.Minimum.X.Should().Be(0);
+            sut.Minimum.Y.Should().Be(0);
+            sut.Fitting.Should().BeNull();
+        }
     }
 }
