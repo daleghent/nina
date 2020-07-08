@@ -15,14 +15,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:util="clr-namespace:NINA.Utility"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            <Style BasedOn="{StaticResource {x:Type TextBlock}}"
-                               TargetType="TextBlock"
-                               x:Key="IfMultipleTargets">
+            <util:BindingProxy x:Key="CameraInfo" Data="{Binding CameraInfo}" />
+            <util:BindingProxy x:Key="DataContext" Data="{Binding}" />
+            <Style
+                x:Key="IfMultipleTargets"
+                BasedOn="{StaticResource {x:Type TextBlock}}"
+                TargetType="TextBlock">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Targets.Count}" Value="1">
                         <Setter Property="Visibility" Value="Collapsed" />
@@ -49,7 +53,7 @@
                     <TextBlock Text="{Binding ElementName=pbSequences, Path=Maximum}" />
                 </StackPanel>
             </Grid>
-            <Grid Margin="5,6,0,6" Name="g">
+            <Grid Name="g" Margin="5,6,0,6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
@@ -59,16 +63,18 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblCurrentSequenceEstimates}" Style="{StaticResource ResourceKey=IfMultipleTargets}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    Style="{StaticResource ResourceKey=IfMultipleTargets}"
+                    Text="{ns:Loc LblCurrentSequenceEstimates}" />
 
                 <TextBlock
                     Grid.Column="1"
                     Margin="5,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Text="{Binding SequenceEstimatedEndTime, StringFormat=HH:mm:ss, Mode=OneWay}"
-                    Style="{StaticResource ResourceKey=IfMultipleTargets}">
-                </TextBlock>
+                    Style="{StaticResource ResourceKey=IfMultipleTargets}"
+                    Text="{Binding SequenceEstimatedEndTime, StringFormat=HH:mm:ss, Mode=OneWay}" />
 
                 <TextBlock
                     Grid.Row="1"
@@ -145,11 +151,14 @@
                             <TextBlock Margin="5,0,0,0">
                                 <TextBlock.Text>
                                     <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}">
-                                        <Binding Mode="OneWay" Path="Gain" />
                                         <Binding
                                             Mode="OneWay"
-                                            Path="CameraVM.DefaultGain"
-                                            Source="{StaticResource AppVM}" />
+                                            Path="Gain"
+                                            Source="{StaticResource DataContext}" />
+                                        <Binding
+                                            Mode="OneWay"
+                                            Path="Data.DefaultGain"
+                                            Source="{StaticResource CameraInfo}" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
