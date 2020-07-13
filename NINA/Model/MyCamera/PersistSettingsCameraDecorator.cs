@@ -94,6 +94,13 @@ namespace NINA.Model.MyCamera {
                     this.profileService.ActiveProfile.CameraSettings.ReadoutModeForNormalImages = null;
                 }
             }
+            if (this.profileService.ActiveProfile.CameraSettings.DewHeaterOn.HasValue) {
+                try {
+                    this.Camera.DewHeaterOn = this.profileService.ActiveProfile.CameraSettings.DewHeaterOn.Value;
+                } catch (Exception e) {
+                    this.profileService.ActiveProfile.CameraSettings.DewHeaterOn = null;
+                }
+            }
         }
 
         public bool HasShutter => this.Camera.HasShutter;
@@ -155,7 +162,13 @@ namespace NINA.Model.MyCamera {
 
         public bool HasDewHeater => this.Camera.HasDewHeater;
 
-        public bool DewHeaterOn { get => this.Camera.DewHeaterOn; set => this.Camera.DewHeaterOn = value; }
+        public bool DewHeaterOn {
+            get => this.Camera.DewHeaterOn;
+            set {
+                this.Camera.DewHeaterOn = value;
+                this.profileService.ActiveProfile.CameraSettings.DewHeaterOn = value;
+            }
+        }
 
         public string CameraState => this.Camera.CameraState;
 

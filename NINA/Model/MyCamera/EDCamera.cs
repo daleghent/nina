@@ -299,6 +299,7 @@ namespace NINA.Model.MyCamera {
         private uint Camera_SDKObjectEvent(uint inEvent, IntPtr inRef, IntPtr inContext) {
             if (inEvent == EDSDK.ObjectEvent_DirItemRequestTransfer) {
                 this.DirectoryItem = inRef;
+                bulbCompletionCTS?.Cancel();
                 downloadExposure?.TrySetResult(true);
             }
             return EDSDK.EDS_ERR_OK;
@@ -493,6 +494,7 @@ namespace NINA.Model.MyCamera {
 
         private void CancelDownloadExposure() {
             EDSDK.EdsDownloadCancel(this.DirectoryItem);
+            bulbCompletionCTS?.Cancel();
             downloadExposure.TrySetCanceled();
         }
 
@@ -566,22 +568,33 @@ namespace NINA.Model.MyCamera {
             };
         }
 
+        private Task bulbCompletionTask = null;
+        private CancellationTokenSource bulbCompletionCTS = null;
+
         public void StartExposure(CaptureSequence sequence) {
-            downloadExposure = new TaskCompletionSource<object>();
+            if (downloadExposure?.Task?.Status <= TaskStatus.Running) {
+                Logger.Warning("An exposure was still in progress. Cancelling it to start another.");
+                CancelDownloadExposure();
+            }
             var exposureTime = sequence.ExposureTime;
             ValidateModeForExposure(exposureTime);
 
             /* Start exposure */
             bool useBulb = (IsManualMode() && exposureTime > 30.0) || (IsBulbMode() && exposureTime >= 1.0);
+
+            downloadExposure = new TaskCompletionSource<object>();
             SendStartExposureCmd(useBulb);
 
             if (useBulb) {
                 /* Stop Exposure after exposure time */
-                Task.Run(async () => {
-                    await Utility.Utility.Wait(TimeSpan.FromSeconds(exposureTime));
-
-                    SendStopExposureCmd(true);
-                });
+                bulbCompletionCTS?.Cancel();
+                bulbCompletionCTS = new CancellationTokenSource();
+                bulbCompletionTask = Task.Run(async () => {
+                    await Utility.Utility.Wait(TimeSpan.FromSeconds(exposureTime), bulbCompletionCTS.Token);
+                    if (!bulbCompletionCTS.IsCancellationRequested) {
+                        SendStopExposureCmd(true);
+                    }
+                }, bulbCompletionCTS.Token);
             } else {
                 /* Immediately release shutter button when having a set exposure */
                 SendStopExposureCmd(false);
