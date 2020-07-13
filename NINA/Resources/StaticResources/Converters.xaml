@@ -38,6 +38,7 @@
     <converters:DegreesToDMSConverter x:Key="DegreesToDMSConverter" />
     <converters:InverseMultiBooleanANDConverter x:Key="InverseMultiBooleanANDConverter" />
     <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
+    <converters:BooleanOrConverter x:Key="BooleanOrConverter" />
     <converters:PercentageConverter x:Key="PercentageConverter" />
     <converters:DoubleToHalfValueConverter x:Key="DoubleToHalfConverter" />
     <converters:WidthAndValueToWidthConverter x:Key="WidthAndValueToWidthConverter" />
@@ -65,6 +66,9 @@
     <converters:IntNegativeOneToDoubleDashConverter x:Key="IntNegativeOneToDoubleDashConverter" />
     <converters:NaNToDoubleDashConverter x:Key="NaNToDoubleDashConverter" />
     <converters:BooleanToVisibilityHiddenMultiConverter x:Key="BooleanToVisibilityHiddenMultiConverter" />
+    <converters:BooleanToVisibilityCollapsedMultiConverter x:Key="BooleanToVisibilityCollapsedMultiConverter" />
+    <converters:BooleanOrToVisibilityCollapsedMultiConverter x:Key="BooleanOrToVisibilityCollapsedMultiConverter" />
+    <converters:InverseBooleanOrToVisibilityCollapsedMultiConverter x:Key="InverseBooleanOrToVisibilityCollapsedMultiConverter" />
     <converters:OptimalExposureCalculatorAnswerConverter x:Key="OptimalExposureCalculatorAnswerConverter" />
     <converters:MinusOneToBaseValueConverter x:Key="MinusOneToBaseValueConverter" />
     <converters:IntListToTextBlockListConverter x:Key="IntListToTextBlockListConverter" />

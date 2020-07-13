@@ -507,6 +507,9 @@
     <Compile Include="Model\MySwitch\PegasusAstro\ContinuousSwitches.cs" />
     <Compile Include="Model\MySwitch\PegasusAstro\UltimatePowerBoxV2.cs" />
     <Compile Include="Utility\CameraSDKs\OmegonSDK\omegonprocam.cs" />
+    <Compile Include="Utility\Converters\BooleanOrConverter.cs" />
+    <Compile Include="Utility\Converters\BooleanOrToVisibilityCollapsedMultiConverter.cs" />
+    <Compile Include="Utility\Converters\BooleanToVisibilityCollapsedMultiConverter.cs" />
     <Compile Include="Utility\Converters\BooleanToVisibilityHiddenMultiConverter.cs" />
     <Compile Include="Utility\Converters\CollectionContainsItemsToBooleanConverter.cs" />
     <Compile Include="Utility\Converters\DecDegreeConverter.cs" />
@@ -515,6 +518,7 @@
     <Compile Include="Utility\Converters\FilterWheelFilterConverter.cs" />
     <Compile Include="Utility\Converters\ImagePatternToTextConverter.cs" />
     <Compile Include="Utility\Converters\IntNegativeOneToDoubleDashConverter.cs" />
+    <Compile Include="Utility\Converters\InverseBooleanOrToVisibilityCollapsedMultiConverter.cs" />
     <Compile Include="Utility\Converters\InverseNullToVisibilityCollapsedConverter.cs" />
     <Compile Include="Utility\Converters\ShutterStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\OptimalExposureCalculatorAnswerConverter.cs" />
@@ -1979,6 +1983,9 @@
     <Content Include="External\x86\ToupTek\toupcam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\cancel-32.png" />
+    <Resource Include="Resources\pause-32.png" />
+    <Resource Include="Resources\play-32.png" />
     <Content Include="Utility\ColorSchema\ColorSchemas.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

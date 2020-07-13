@@ -30,6 +30,56 @@
         <KeyBinding Key="F5" Command="{Binding ApplicationDeviceConnectionVM.ConnectAllDevicesCommand}" />
         <KeyBinding Key="F9" Command="{Binding ApplicationDeviceConnectionVM.DisconnectAllDevicesCommand}" />
     </Window.InputBindings>
+    <Window.TaskbarItemInfo>
+        <TaskbarItemInfo ProgressValue="{Binding SeqVM.TaskBarProgressValue}"
+                         ProgressState="{Binding TaskBarProgressState}">
+            <TaskbarItemInfo.ThumbButtonInfos>
+                <ThumbButtonInfo ImageSource="pack://application:,,,/Resources/play-32.png"
+                                 Command="{Binding SeqVM.StartSequenceCommand}"
+                                 Description="{ns:Loc LblStartSequence}">
+                    <ThumbButtonInfo.Visibility>
+                        <MultiBinding Converter="{StaticResource BooleanToVisibilityCollapsedMultiConverter}">
+                            <Binding Path="SeqVM.IsRunning" Converter="{StaticResource InverseBooleanConverter}" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="SeqVM.IsPaused" Converter="{StaticResource InverseBooleanConverter}" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="SeqVM.CameraInfo.Connected" UpdateSourceTrigger="PropertyChanged" />
+                        </MultiBinding>
+                    </ThumbButtonInfo.Visibility>
+                </ThumbButtonInfo>
+                <ThumbButtonInfo ImageSource="pack://application:,,,/Resources/pause-32.png"
+                                 Command="{Binding SeqVM.PauseSequenceCommand}"
+                                 Description="{ns:Loc LblPauseSequence}"
+                                 IsEnabled="{Binding SeqVM.IsRunning}">
+                    <ThumbButtonInfo.Visibility>
+                        <MultiBinding Converter="{StaticResource BooleanToVisibilityCollapsedMultiConverter}">
+                            <Binding Path="SeqVM.IsRunning" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="SeqVM.IsPaused" Converter="{StaticResource InverseBooleanConverter}" UpdateSourceTrigger="PropertyChanged" />
+                        </MultiBinding>
+                    </ThumbButtonInfo.Visibility>
+                </ThumbButtonInfo>
+                <ThumbButtonInfo ImageSource="pack://application:,,,/Resources/play-32.png"
+                                 Command="{Binding Path=SeqVM.ResumeSequenceCommand}"
+                                 Description="{ns:Loc LblResumeSequence}"
+                                 IsEnabled="{Binding Path=SeqVM.IsPaused}"
+                                 Visibility="{Binding Path=SeqVM.IsPaused, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, UpdateSourceTrigger=PropertyChanged}" />
+                <ThumbButtonInfo ImageSource="pack://application:,,,/Resources/cancel-32.png"
+                                 Command="{Binding Path=SeqVM.CancelSequenceCommand}"
+                                 Description="{ns:Loc LblCancelSequence}">
+                    <ThumbButtonInfo.IsEnabled>
+                        <MultiBinding Converter="{StaticResource BooleanOrConverter}">
+                            <Binding Path="SeqVM.IsRunning" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="SeqVM.IsPaused" UpdateSourceTrigger="PropertyChanged" />
+                        </MultiBinding>
+                    </ThumbButtonInfo.IsEnabled>
+                    <ThumbButtonInfo.Visibility>
+                        <MultiBinding Converter="{StaticResource BooleanOrToVisibilityCollapsedMultiConverter}">
+                            <Binding Path="SeqVM.IsRunning" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="SeqVM.IsPaused" UpdateSourceTrigger="PropertyChanged" />
+                        </MultiBinding>
+                    </ThumbButtonInfo.Visibility>
+                </ThumbButtonInfo>
+            </TaskbarItemInfo.ThumbButtonInfos>
+        </TaskbarItemInfo>
+    </Window.TaskbarItemInfo>
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding AppVM.CheckProfileCommand}" />

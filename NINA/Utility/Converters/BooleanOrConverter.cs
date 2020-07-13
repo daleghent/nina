@@ -1,4 +1,4 @@
-#region "copyright"
+﻿#region "copyright"
 
 /*
     Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
@@ -13,25 +13,23 @@
 #endregion "copyright"
 
 using System;
+using System.Globalization;
+using System.Linq;
 using System.Windows.Data;
 
 namespace NINA.Utility.Converters {
+    public class BooleanOrConverter : IMultiValueConverter {
 
-    [ValueConversion(typeof(bool), typeof(bool))]
-    public class InverseBooleanConverter : IValueConverter {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
+            var bools = values.Select(v => {
+                return v is bool ? (bool)v : false;
+            });
 
-        #region IValueConverter Members
-
-        public object Convert(object value, Type targetType, object parameter,
-            System.Globalization.CultureInfo culture) {
-            return !(bool)value;
+            return bools.Any(b => b);
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter,
-            System.Globalization.CultureInfo culture) {
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {
             throw new NotSupportedException();
         }
-
-        #endregion IValueConverter Members
     }
 }
