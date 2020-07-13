@@ -50,6 +50,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Shell;
 using System.Windows.Threading;
 
 namespace NINA.ViewModel {
@@ -164,6 +165,26 @@ namespace NINA.ViewModel {
         private void SequenceVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             if (e.PropertyName == nameof(Sequence))
                 ActiveSequenceChanged();
+        }
+
+        private TaskbarItemProgressState taskBarProgressState = TaskbarItemProgressState.None;
+
+        public TaskbarItemProgressState TaskBarProgressState {
+            get => taskBarProgressState;
+            set {
+                taskBarProgressState = value;
+                RaisePropertyChanged(nameof(TaskBarProgressState));
+            }
+        }
+
+        private double taskBarProgressValue;
+
+        public double TaskBarProgressValue {
+            get => taskBarProgressValue;
+            set {
+                taskBarProgressValue = value;
+                RaisePropertyChanged();
+            }
         }
 
         public IImageHistoryVM ImgHistoryVM { get; private set; }
@@ -363,6 +384,7 @@ namespace NINA.ViewModel {
 
         private void ResumeSequence(object obj) {
             if (_pauseTokenSource != null) {
+                TaskBarProgressState = TaskbarItemProgressState.Normal;
                 autoUpdateTimer.Stop();
                 _pauseTokenSource.IsPaused = false;
             }
@@ -370,6 +392,7 @@ namespace NINA.ViewModel {
 
         private void PauseSequence(object obj) {
             if (_pauseTokenSource != null) {
+                TaskBarProgressState = TaskbarItemProgressState.Paused;
                 autoUpdateTimer.Start();
                 _pauseTokenSource.IsPaused = true;
             }
@@ -731,6 +754,7 @@ namespace NINA.ViewModel {
             return Task.Run(async () => {
                 bool canceledAtStart = false;
                 try {
+                    TaskBarProgressState = TaskbarItemProgressState.Normal;
                     _actualDownloadTimes.Clear();
                     _canceltoken?.Dispose();
                     _canceltoken = new CancellationTokenSource();
@@ -784,6 +808,7 @@ namespace NINA.ViewModel {
                     autoUpdateTimer.Start();
                     progress.Report(new ApplicationStatus() { Status = string.Empty });
                 }
+                TaskBarProgressState = TaskbarItemProgressState.None;
                 return true;
             });
         }
@@ -793,6 +818,8 @@ namespace NINA.ViewModel {
                 if (csl.Count <= 0 || csl.GetNextSequenceItem(csl.ActiveSequence) == null) {
                     return false;
                 }
+
+                TaskBarProgressState = TaskbarItemProgressState.Indeterminate;
 
                 CalculateETA();
 
@@ -907,6 +934,7 @@ namespace NINA.ViewModel {
                     Task ditherTask = null;
                     Task filterChangeTask = null;
                     Task<IRenderedImage> imageProcessingTask = null;
+                    TaskBarProgressState = TaskbarItemProgressState.Indeterminate;
                     while ((seq = csl.Next()) != null) {
                         exposureCount++;
 
@@ -966,9 +994,14 @@ namespace NINA.ViewModel {
                             await HandleFlatDevice(seq);
                         }
 
+                        TaskBarProgressState = TaskbarItemProgressState.Normal;
+                        TaskBarProgressValue = (double)(csl.Items.Sum(c => c.ProgressExposureCount)) / csl.Items.Sum(c => c.TotalExposureCount);
+
                         /* 4) Capture */
                         var exposureStart = DateTime.Now;
                         await cameraMediator.Capture(seq, ct, progress);
+
+                        TaskBarProgressState = TaskbarItemProgressState.Indeterminate;
 
                         /* Stop RMS Recording */
                         var rms = this.guiderMediator.StopRMSRecording(rmsHandle);

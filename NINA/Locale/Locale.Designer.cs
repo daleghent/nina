@@ -1528,6 +1528,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel Sequence.
+        /// </summary>
+        internal static string LblCancelSequence {
+            get {
+                return ResourceManager.GetString("LblCancelSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A Canon error occored: {0}.
         /// </summary>
         internal static string LblCanonErrorOccurred {
@@ -7084,6 +7093,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pause Sequence.
+        /// </summary>
+        internal static string LblPauseSequence {
+            get {
+                return ResourceManager.GetString("LblPauseSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pause before Meridian (minutes).
         /// </summary>
         internal static string LblPauseTimeBeforeMeridian {
@@ -8152,6 +8170,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resume Sequence.
+        /// </summary>
+        internal static string LblResumeSequence {
+            get {
+                return ResourceManager.GetString("LblResumeSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Settle Time after resume.
         /// </summary>
         internal static string LblResumeSettleTime {
@@ -9140,6 +9167,15 @@ namespace NINA.Locale {
         internal static string LblStartingOUTBacklashMeasurement {
             get {
                 return ResourceManager.GetString("LblStartingOUTBacklashMeasurement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Sequence.
+        /// </summary>
+        internal static string LblStartSequence {
+            get {
+                return ResourceManager.GetString("LblStartSequence", resourceCulture);
             }
         }
         

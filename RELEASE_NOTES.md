@@ -8,6 +8,10 @@
 - The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver
 
 ## Application Improvements
+### General
+- Current sequence progress is now displayed in the task bar, also visualizes pause and non-capture tasks during the sequence
+- It is now possible to start, pause, resume and cancel sequences from the preview window
+
 ### Sequencer
 - Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter
 
