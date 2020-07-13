@@ -1379,6 +1379,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Camera still connected. Exit anyway?.
+        /// </summary>
+        internal static string LblCameraConnectedOnExit {
+            get {
+                return ResourceManager.GetString("LblCameraConnectedOnExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Camera connection lost! Please reconnect camera!.
         /// </summary>
         internal static string LblCameraConnectionLost {
@@ -3365,6 +3374,51 @@ namespace NINA.Locale {
         internal static string LblDisconnectAll {
             get {
                 return ResourceManager.GetString("LblDisconnectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnect Camera?.
+        /// </summary>
+        internal static string LblDisconnectCamera {
+            get {
+                return ResourceManager.GetString("LblDisconnectCamera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnect Filter Wheel?.
+        /// </summary>
+        internal static string LblDisconnectFilterWheel {
+            get {
+                return ResourceManager.GetString("LblDisconnectFilterWheel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnect Focuser?.
+        /// </summary>
+        internal static string LblDisconnectFocuser {
+            get {
+                return ResourceManager.GetString("LblDisconnectFocuser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnect Rotator?.
+        /// </summary>
+        internal static string LblDisconnectRotator {
+            get {
+                return ResourceManager.GetString("LblDisconnectRotator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnect Telescope?.
+        /// </summary>
+        internal static string LblDisconnectTelescope {
+            get {
+                return ResourceManager.GetString("LblDisconnectTelescope", resourceCulture);
             }
         }
         
@@ -8815,6 +8869,15 @@ namespace NINA.Locale {
         internal static string LblSharpCapSensorAnalysisPathTooltip {
             get {
                 return ResourceManager.GetString("LblSharpCapSensorAnalysisPathTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Side of Pier.
+        /// </summary>
+        internal static string LblSideOfPier {
+            get {
+                return ResourceManager.GetString("LblSideOfPier", resourceCulture);
             }
         }
         
