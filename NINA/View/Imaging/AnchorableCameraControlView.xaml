@@ -18,12 +18,12 @@
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
     xmlns:util="clr-namespace:NINA.Utility"
+    x:Name="UC"
     d:DesignHeight="300"
     d:DesignWidth="300"
-    x:Name="UC"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <CollectionViewSource x:Key="Filters" Source="{Binding Source={StaticResource AppVM}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}" />
+        <CollectionViewSource x:Key="Filters" Source="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}" />
         <util:BindingProxy x:Key="CameraInfo" Data="{Binding CameraInfo}" />
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
@@ -92,26 +92,32 @@
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblGain}" />
                             <Grid Margin="5,0,0,0">
-                                <TextBox IsEnabled="{Binding ElementName=UC, Path=DataContext.CameraInfo.CanSetGain}"
-                                         Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
+                                <TextBox IsEnabled="{Binding ElementName=UC, Path=DataContext.CameraInfo.CanSetGain}" Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                             <Binding Mode="TwoWay" Path="SnapGain">
                                                 <Binding.ValidationRules>
                                                     <rules:IntRangeRule>
                                                         <rules:IntRangeRule.ValidRange>
-                                                            <rules:IntRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}"
-                                                                                   Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
+                                                            <rules:IntRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
                                                         </rules:IntRangeRule.ValidRange>
                                                     </rules:IntRangeRule>
                                                 </Binding.ValidationRules>
                                             </Binding>
-                                            <Binding ElementName="UC" Path="DataContext.CameraInfo.DefaultGain" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" />
+                                            <Binding
+                                                ElementName="UC"
+                                                Mode="OneWay"
+                                                Path="DataContext.CameraInfo.DefaultGain"
+                                                UpdateSourceTrigger="PropertyChanged" />
                                         </MultiBinding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <ComboBox Grid.Column="1" SelectedValuePath="Text" DisplayMemberPath="Text" IsSynchronizedWithCurrentItem="True"
-                                          Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.Gains, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
+                                <ComboBox
+                                    Grid.Column="1"
+                                    DisplayMemberPath="Text"
+                                    IsSynchronizedWithCurrentItem="True"
+                                    SelectedValuePath="Text"
+                                    Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.Gains, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
                                     <ComboBox.ItemsSource>
                                         <CompositeCollection>
                                             <TextBlock Text="{Binding Source={StaticResource CameraInfo}, Path=Data.DefaultGain, UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
@@ -124,11 +130,14 @@
                                             Mode="TwoWay"
                                             UpdateSourceTrigger="PropertyChanged">
                                             <Binding
-                                            Path="SnapGain"
-                                            Mode="TwoWay"
-                                            UpdateSourceTrigger="PropertyChanged">
-                                            </Binding>
-                                            <Binding Source="{StaticResource CameraInfo}" Path="Data.DefaultGain" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" />
+                                                Mode="TwoWay"
+                                                Path="SnapGain"
+                                                UpdateSourceTrigger="PropertyChanged" />
+                                            <Binding
+                                                Mode="OneWay"
+                                                Path="Data.DefaultGain"
+                                                Source="{StaticResource CameraInfo}"
+                                                UpdateSourceTrigger="PropertyChanged" />
                                         </MultiBinding>
                                     </ComboBox.SelectedValue>
                                 </ComboBox>
