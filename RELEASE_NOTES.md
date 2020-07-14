@@ -1,4 +1,9 @@
-﻿# Version 1.11
+﻿# N.I.N.A. - Nighttime Imaging 'N' Astronomy Changelog
+
+If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
+More details at https://nighttime-imaging.eu/donate/
+
+# Version 1.11
 
 ## New hardware support
 
@@ -253,7 +258,7 @@ Thank you for your support!
 - **Nikon:** 1.3.1.3001
 - **Omegon:** 39.15325.2019.810
 - **QHY:** 20.6.26.0
-- **ToupTek:** 30.13342.2018.1121
+- **ToupTek:** 46.17309.2020.616
 - **ZWO:** 1.15.6.17
 
 # Version 1.9
