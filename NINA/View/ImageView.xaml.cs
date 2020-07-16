@@ -52,14 +52,6 @@ namespace NINA.View {
             PART_TextblockScale.Text = 1d.ToString("P0", CultureInfo.InvariantCulture);
         }
 
-        public static readonly DependencyProperty MouseLeaveCommandProperty =
-            DependencyProperty.Register(nameof(MouseLeaveCommand), typeof(ICommand), typeof(ImageView), new PropertyMetadata(null));
-
-        public ICommand MouseLeaveCommand {
-            get { return (ICommand)GetValue(MouseLeaveCommandProperty); }
-            set { SetValue(MouseLeaveCommandProperty, value); }
-        }
-
         public static readonly DependencyProperty RightMouseButtonDownCommandProperty =
             DependencyProperty.Register(nameof(RightMouseButtonDownCommand), typeof(ICommand), typeof(ImageView), new PropertyMetadata(null));
 

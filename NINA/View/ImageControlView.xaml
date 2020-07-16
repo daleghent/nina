@@ -57,7 +57,6 @@
 
         <local:ImageView
             Image="{Binding Image}"
-            MouseLeaveCommand="{Binding PixelPeepEndCommand}"
             RightMouseButtonDownCommand="{Binding PixelPeepStartCommand}"
             RightMouseButtonMoveCommand="{Binding PixelPeepMoveCommand}"
             RightMouseButtonUpCommand="{Binding PixelPeepEndCommand}">

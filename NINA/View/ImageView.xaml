@@ -194,7 +194,6 @@
                         Width="{Binding ActualWidth, ElementName=PART_Image}"
                         Height="{Binding ActualHeight, ElementName=PART_Image}"
                         behavior:MouseCommandBehavior.Enabled="True"
-                        behavior:MouseCommandBehavior.MouseLeaveCommand="{Binding MouseLeaveCommand, ElementName=PART_ImageView}"
                         behavior:MouseCommandBehavior.RightMouseDownCommand="{Binding RightMouseButtonDownCommand, ElementName=PART_ImageView}"
                         behavior:MouseCommandBehavior.RightMouseMoveCommand="{Binding RightMouseButtonMoveCommand, ElementName=PART_ImageView}"
                         behavior:MouseCommandBehavior.RightMouseUpCommand="{Binding RightMouseButtonUpCommand, ElementName=PART_ImageView}"

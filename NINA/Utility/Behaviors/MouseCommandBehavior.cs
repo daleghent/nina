@@ -57,21 +57,72 @@ namespace NINA.Utility.Behaviors {
             var instance = GetBehavior(element);
 
             if (isEnabled) {
+                element.MouseEnter += instance.ElementMouseEnter;
                 element.MouseLeave += instance.ElementMouseLeave;
                 element.MouseDown += instance.ElementMouseDown;
                 element.MouseUp += instance.ElementMouseUp;
                 element.MouseMove += instance.ElementMouseMove;
             } else {
+                element.MouseEnter -= instance.ElementMouseEnter;
+                element.MouseLeave -= instance.ElementMouseLeave;
                 element.MouseDown -= instance.ElementMouseDown;
                 element.MouseUp -= instance.ElementMouseUp;
                 element.MouseMove -= instance.ElementMouseMove;
             }
         }
 
+        private void ElementMouseEnter(object sender, MouseEventArgs e) {
+            if (e.LeftButton == MouseButtonState.Pressed) {
+                var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.Left);
+                ElementMouseDown(sender, args);
+            }
+
+            if (e.RightButton == MouseButtonState.Pressed) {
+                var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.Right);
+                ElementMouseDown(sender, args);
+            }
+
+            if (e.MiddleButton == MouseButtonState.Pressed) {
+                var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.Middle);
+                ElementMouseDown(sender, args);
+            }
+
+            if (e.XButton1 == MouseButtonState.Pressed) {
+                var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.XButton1);
+                ElementMouseDown(sender, args);
+            }
+
+            if (e.XButton2 == MouseButtonState.Pressed) {
+                var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.XButton2);
+                ElementMouseDown(sender, args);
+            }
+        }
+
         private void ElementMouseLeave(object sender, MouseEventArgs e) {
-            var element = (FrameworkElement)sender;
-            var cmd = GetMouseLeaveCommand(element);
-            cmd?.Execute(null);
+            if (e.LeftButton == MouseButtonState.Pressed) {
+                var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.Left);
+                ElementMouseUp(sender, args);
+            }
+
+            if (e.RightButton == MouseButtonState.Pressed) {
+                var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.Right);
+                ElementMouseUp(sender, args);
+            }
+
+            if (e.MiddleButton == MouseButtonState.Pressed) {
+                var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.Middle);
+                ElementMouseUp(sender, args);
+            }
+
+            if (e.XButton1 == MouseButtonState.Pressed) {
+                var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.XButton1);
+                ElementMouseUp(sender, args);
+            }
+
+            if (e.XButton2 == MouseButtonState.Pressed) {
+                var args = new MouseButtonEventArgs(e.MouseDevice, e.Timestamp, MouseButton.XButton2);
+                ElementMouseUp(sender, args);
+            }
         }
 
         private void ElementMouseUp(object sender, MouseButtonEventArgs e) {
@@ -101,17 +152,6 @@ namespace NINA.Utility.Behaviors {
                 var position = e.GetPosition(element);
                 cmd?.Execute(position);
             }
-        }
-
-        public static readonly DependencyProperty MouseLeaveCommandProperty =
-            DependencyProperty.RegisterAttached("MouseLeaveCommand", typeof(ICommand), typeof(MouseCommandBehavior), new PropertyMetadata(null));
-
-        public static ICommand GetMouseLeaveCommand(DependencyObject obj) {
-            return (ICommand)obj.GetValue(MouseLeaveCommandProperty);
-        }
-
-        public static void SetMouseLeaveCommand(DependencyObject obj, bool value) {
-            obj.SetValue(MouseLeaveCommandProperty, value);
         }
 
         public static readonly DependencyProperty RightMouseDownCommandProperty =
