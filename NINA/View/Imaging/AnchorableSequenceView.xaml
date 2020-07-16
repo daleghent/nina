@@ -153,8 +153,7 @@
                                     <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}">
                                         <Binding
                                             Mode="OneWay"
-                                            Path="Gain"
-                                            Source="{StaticResource DataContext}" />
+                                            Path="Gain" />
                                         <Binding
                                             Mode="OneWay"
                                             Path="Data.DefaultGain"
