@@ -81,6 +81,35 @@ namespace NINA.Utility.Astrometry {
             return Angle.ByRadians(Math.Atan2(y.Radians, x.Radians));
         }
 
+        private static double EQUALS_EPSILON = 1E-13;
+        public bool Equals(Angle that, Angle tolerance) {
+            var thisDegrees = Astrometry.EuclidianModulus(this.Degree, 360.0);
+            var thatDegrees = Astrometry.EuclidianModulus(that.Degree, 360.0);
+            var diffDegrees = Math.Abs(thisDegrees - thatDegrees);
+            var toleranceDegrees = Astrometry.EuclidianModulus(tolerance.Degree, 360.0);
+            return (diffDegrees - toleranceDegrees) <= EQUALS_EPSILON
+                || ((360.0 - diffDegrees) - toleranceDegrees) <= EQUALS_EPSILON;
+        }
+
+        public override bool Equals(object obj) {
+            return obj is Angle angle &&
+                   Degree == angle.Degree &&
+                   ArcMinutes == angle.ArcMinutes &&
+                   ArcSeconds == angle.ArcSeconds &&
+                   Radians == angle.Radians &&
+                   Hours == angle.Hours;
+        }
+
+        public override int GetHashCode() {
+            int hashCode = 2008533830;
+            hashCode = hashCode * -1521134295 + Degree.GetHashCode();
+            hashCode = hashCode * -1521134295 + ArcMinutes.GetHashCode();
+            hashCode = hashCode * -1521134295 + ArcSeconds.GetHashCode();
+            hashCode = hashCode * -1521134295 + Radians.GetHashCode();
+            hashCode = hashCode * -1521134295 + Hours.GetHashCode();
+            return hashCode;
+        }
+
         public static Angle operator +(Angle a, Angle b) {
             return Angle.ByRadians(a.Radians + b.Radians);
         }

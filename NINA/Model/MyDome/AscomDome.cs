@@ -57,39 +57,39 @@ namespace NINA.Model.MyDome {
             Name = domeName;
         }
 
-        private Dome _dome;
+        private Dome dome;
 
         public bool HasSetupDialog => true;
 
-        private string _id;
+        private string id;
         public string Id {
-            get => _id;
+            get => id;
             set {
-                _id = value;
+                id = value;
                 RaisePropertyChanged();
             }
         }
 
-        private string _name;
+        private string name;
         public string Name {
-            get => _name;
+            get => name;
             set {
-                _name = value;
+                name = value;
                 RaisePropertyChanged();
             }
         }
 
         public string Category => "ASCOM";
 
-        private bool _connected;
+        private bool connected;
 
         public bool Connected {
             get {
-                if (_connected) {
+                if (connected) {
                     bool val = false;
                     try {
-                        val = _dome.Connected;
-                        if (_connected != val) {
+                        val = dome.Connected;
+                        if (connected != val) {
                             Notification.ShowWarning(Locale.Loc.Instance["LblDomeConnectionLost"]);
                             Disconnect();
                         }
@@ -103,12 +103,12 @@ namespace NINA.Model.MyDome {
             }
             private set {
                 try {
-                    _dome.Connected = value;
-                    _connected = value;
+                    dome.Connected = value;
+                    connected = value;
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError(Locale.Loc.Instance["LblDomeReconnect"] + Environment.NewLine + ex.Message);
-                    _connected = false;
+                    connected = false;
                 }
                 RaisePropertyChanged();
             }
@@ -126,42 +126,52 @@ namespace NINA.Model.MyDome {
             }
         }
 
-        public string Description => Connected ? _dome?.Description ?? string.Empty : string.Empty;
+        public string Description => Connected ? dome?.Description ?? string.Empty : string.Empty;
 
-        public string DriverInfo => Connected ? _dome?.DriverInfo ?? string.Empty : string.Empty;
+        public string DriverInfo => Connected ? dome?.DriverInfo ?? string.Empty : string.Empty;
 
-        public string DriverVersion => Connected ? _dome?.DriverVersion ?? string.Empty : string.Empty;
+        public string DriverVersion => Connected ? dome?.DriverVersion ?? string.Empty : string.Empty;
 
-        public bool DriverCanSlave => Connected && _dome.CanSlave;
+        public bool DriverCanFollow => Connected && dome.CanSlave;
 
-        public bool CanSetShutter => Connected && _dome.CanSetShutter;
+        public bool CanSetShutter => Connected && dome.CanSetShutter;
 
-        public bool CanSetPark => Connected && _dome.CanSetPark;
+        public bool CanSetPark => Connected && dome.CanSetPark;
 
-        public bool CanSetAzimuth => Connected && _dome.CanSetAzimuth;
+        public bool CanSetAzimuth => Connected && dome.CanSetAzimuth;
 
-        public bool CanPark => Connected && _dome.CanPark;
+        public bool CanPark => Connected && dome.CanPark;
 
-        public bool CanFindHome => Connected && _dome.CanFindHome;
+        public bool CanFindHome => Connected && dome.CanFindHome;
 
-        public double Azimuth => TryGetProperty(() => _dome.Azimuth, -1);
+        public double Azimuth => TryGetProperty(() => dome.Azimuth, -1);
 
-        public bool AtPark => Connected && _dome.AtPark;
+        public bool AtPark => Connected && dome.AtPark;
 
-        public bool AtHome => Connected && _dome.AtHome;
+        public bool AtHome => Connected && dome.AtHome;
 
-        public bool DriverSlaved => TryGetProperty(() => _dome.Slaved, false);
+        public bool DriverFollowing {
+            get {
+                return TryGetProperty<bool>(() => dome.Slaved, false);
+            }
+            set {
+                if (Connected) {
+                    dome.Slaved = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
-        public bool Slewing => TryGetProperty(() => _dome.Slewing, false);
+        public bool Slewing => TryGetProperty(() => dome.Slewing, false);
 
-        public ShutterState ShutterStatus => TryGetProperty(() => _dome.ShutterStatus.FromASCOM(), ShutterState.ShutterNone); 
+        public ShutterState ShutterStatus => TryGetProperty(() => dome.ShutterStatus.FromASCOM(), ShutterState.ShutterNone); 
 
-        public bool CanSyncAzimuth => Connected && _dome.CanSyncAzimuth;
+        public bool CanSyncAzimuth => Connected && dome.CanSyncAzimuth;
 
         public async Task<bool> Connect(CancellationToken token) {
             return await Task.Run(() => {
                 try {
-                    _dome = new Dome(Id);
+                    dome = new Dome(Id);
                     Connected = true;
                     if (Connected) {
                         Init();
@@ -180,26 +190,27 @@ namespace NINA.Model.MyDome {
         }
 
         public void Dispose() {
-            _dome?.Dispose();
+            dome?.Dispose();
         }
 
         public void Disconnect() {
             Connected = false;
-            _dome?.Dispose();
-            _dome = null;
+            dome?.Dispose();
+            dome = null;
         }
 
         public void SetupDialog() {
             if (HasSetupDialog) {
                 try {
                     bool dispose = false;
-                    if (_dome == null) {
-                        _dome = new Dome(Id);
+                    if (dome == null) {
+                        dome = new Dome(Id);
+                        dispose = true;
                     }
-                    _dome.SetupDialog();
+                    dome.SetupDialog();
                     if (dispose) {
-                        _dome.Dispose();
-                        _dome = null;
+                        dome.Dispose();
+                        dome = null;
                     }
                 } catch (Exception ex) {
                     Logger.Error(ex);
@@ -214,8 +225,13 @@ namespace NINA.Model.MyDome {
         public async Task SlewToAzimuth(double azimuth, CancellationToken ct) {
             if (Connected) {
                 if (CanSetAzimuth) {
-                    ct.Register(() => _dome.AbortSlew());
-                    await Task.Run(() => _dome.SlewToAzimuth(azimuth), ct);
+                    ct.Register(StopSlewing);
+                    await Task.Run(async () => {
+                        dome?.SlewToAzimuth(azimuth);
+                        while (dome != null && dome.Slewing && !ct.IsCancellationRequested) {
+                            await Task.Delay(1000);
+                        }
+                    }, ct);
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSlew"]);
                 }
@@ -226,30 +242,49 @@ namespace NINA.Model.MyDome {
 
         public void StopSlewing() {
             if (Connected) {
-                _dome.AbortSlew();
+                // ASCOM only allows you to stop all movement, which includes both shutter and slewing. If the shutter was opening or closing
+                // when this command is received, try and continue the operation afterwards
+                Task.Run(() => {
+                    var priorShutterStatus = ShutterStatus;
+                    dome?.AbortSlew();
+                    if (priorShutterStatus == ShutterState.ShutterClosing) {
+                        dome?.CloseShutter();
+                    } else if (priorShutterStatus == ShutterState.ShutterOpening) {
+                        dome?.OpenShutter();
+                    }
+                });
             } else {
                 Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
             }
         }
 
         public void StopShutter() {
-            // ASCOM only allows you to stop both slew and shutter movement together
-            StopSlewing();
+            // ASCOM only allows you to stop both slew and shutter movement together. We also don't have a way of determining whether a
+            // slew is in progress or what the target azimuth is, so we can't recover for a StopShutter operation
+            StopAll();
+        }
+
+        public void StopAll() {
+            if (Connected) {
+                // Fire and forget
+                Task.Run(() => dome?.AbortSlew());
+            } else {
+                Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
+            }
         }
 
         public async Task OpenShutter(CancellationToken ct) {
             if (Connected) {
                 if (CanSetShutter) {
-                    ct.Register(() => _dome.AbortSlew());
+                    ct.Register(() => dome?.AbortSlew());
                     if (ShutterStatus == ShutterState.ShutterError) {
                         // If shutter is in the error state, you must close it before re-opening
-                        await Task.Run(() => {
-                            _dome.CloseShutter();
-                            _dome.OpenShutter();
-                            }, ct);
-                    } else if (ShutterStatus != ShutterState.ShutterOpen) {
-                        await Task.Run(() => _dome.OpenShutter(), ct);
+                        await CloseShutter(ct);
                     }
+                    await Task.Run(() => dome?.OpenShutter(), ct);
+                    while (dome != null && ShutterStatus == ShutterState.ShutterOpening && !ct.IsCancellationRequested) {
+                        await Task.Delay(1000, ct);
+                    };
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSetShutter"]);
                 }
@@ -261,10 +296,11 @@ namespace NINA.Model.MyDome {
         public async Task CloseShutter(CancellationToken ct) {
             if (Connected) {
                 if (CanSetShutter) {
-                    if (ShutterStatus != ShutterState.ShutterClosed) {
-                        ct.Register(() => _dome.AbortSlew());
-                        await Task.Run(() => _dome.CloseShutter(), ct);
-                    }
+                    ct.Register(() => dome?.AbortSlew());
+                    await Task.Run(() => dome?.CloseShutter(), ct);
+                    while (dome != null && ShutterStatus == ShutterState.ShutterClosing && !ct.IsCancellationRequested) {
+                        await Task.Delay(1000, ct);
+                    };
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSetShutter"]);
                 }
@@ -276,8 +312,13 @@ namespace NINA.Model.MyDome {
         public async Task FindHome(CancellationToken ct) {
             if (Connected) {
                 if (CanFindHome) {
-                    ct.Register(() => _dome.AbortSlew());
-                    await Task.Run(() => _dome.FindHome(), ct);
+                    ct.Register(() => dome.AbortSlew());
+                    await Task.Run(() => dome.FindHome(), ct);
+                    while (dome != null && dome.Slewing && !ct.IsCancellationRequested) {
+                        await Task.Delay(1000);
+                    }
+                    // Introduce a final delay, in case the Dome driver settles after finding the home position by backtracking
+                    await Task.Delay(2000);
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotFindHome"]);
                 }
@@ -289,8 +330,14 @@ namespace NINA.Model.MyDome {
         public async Task Park(CancellationToken ct) {
             if (Connected) {
                 if (CanPark) {
-                    ct.Register(() => _dome.AbortSlew());
-                    await Task.Run(() => _dome.Park(), ct);
+                    ct.Register(() => dome?.AbortSlew());
+                    await Task.Run(() => dome?.Park(), ct);
+                    if (CanSetShutter) {
+                        await Task.Run(() => dome?.CloseShutter(), ct);
+                    }
+                    while (dome != null && dome.Slewing && !ct.IsCancellationRequested) {
+                        await Task.Delay(1000);
+                    }
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotPark"]);
                 }
@@ -302,7 +349,7 @@ namespace NINA.Model.MyDome {
         public void SetPark() {
             if (Connected) {
                 if (CanSetPark) {
-                    _dome.SetPark();
+                    dome.SetPark();
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSetPark"]);
                 }
@@ -314,31 +361,13 @@ namespace NINA.Model.MyDome {
         public void SyncToAzimuth(double azimuth) {
             if (Connected) {
                 if (CanSyncAzimuth) {
-                    _dome.SyncToAzimuth(azimuth);
+                    dome.SyncToAzimuth(azimuth);
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSyncAzimuth"]);
                 }
             } else {
                 Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
             }
-        }
-
-        public Task StartRotateCW(CancellationToken ct) {
-            return Task.Run(async () => {
-                while (!ct.IsCancellationRequested) {
-                    var targetAzimuth = (Azimuth + 90.0) % 360.0;
-                    await SlewToAzimuth(targetAzimuth, ct);
-                }
-            }, ct);
-        }
-
-        public Task StartRotateCCW(CancellationToken ct) {
-            return Task.Run(async () => {
-                while (!ct.IsCancellationRequested) {
-                    var targetAzimuth = (Azimuth + 270.0) % 360.0;
-                    await SlewToAzimuth(targetAzimuth, ct);
-                }
-            }, ct);
         }
     }
 }

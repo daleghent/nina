@@ -19,6 +19,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows.Media.Media3D;
 
 namespace NINA.Utility.Astrometry {
 
@@ -153,7 +154,7 @@ namespace NINA.Utility.Astrometry {
         /// <param name="date"></param>
         /// <returns>UT1 - UTC in seconds</returns>
         /// <remarks>https://www.iers.org/IERS/EN/DataProducts/EarthOrientationData/eop.html</remarks>
-        public static double DeltaUT(DateTime date) {
+        public static double DeltaUT(DateTime date, DatabaseInteraction db = null) {
             if (date.Date == DateTime.UtcNow.Date) {
                 if (DeltaUTToday != 0) {
                     return DeltaUTToday;
@@ -168,7 +169,7 @@ namespace NINA.Utility.Astrometry {
 
             var utcDate = date.ToUniversalTime();
 
-            var db = new DatabaseInteraction();
+            db = db ?? new DatabaseInteraction();
             var deltaUT = 0d;
             try {
                 deltaUT = AsyncContext.Run(() => db.GetUT1_UTC(utcDate, default));
@@ -629,6 +630,14 @@ namespace NINA.Utility.Astrometry {
             double t = driftRate * 4;
 
             return ToDegree(δerr / (900 * t * Math.Cos(δ)));
+        }
+
+        public static Vector3D Polar3DToCartesian(double radius, double phi, double theta) {
+            double x = radius * Math.Cos(phi);
+            double radiusProjection = radius * Math.Sin(phi);
+            double z = radiusProjection * Math.Cos(theta);
+            double y = -radiusProjection * Math.Sin(theta);
+            return new Vector3D(x, y, z);
         }
     }
 

@@ -11,9 +11,9 @@ namespace NINA.Model.MyDome {
         ShutterError = 4
     }
 
-    internal interface IDome : IDevice {
+    public interface IDome : IDevice {
         ShutterState ShutterStatus { get; }
-        bool DriverCanSlave { get; }
+        bool DriverCanFollow { get; }
         bool CanSetShutter { get; }
         bool CanSetPark { get; }
         bool CanSetAzimuth { get; }
@@ -23,14 +23,13 @@ namespace NINA.Model.MyDome {
         double Azimuth { get; }
         bool AtPark { get; }
         bool AtHome { get; }
-        bool DriverSlaved { get; }
+        bool DriverFollowing { get; set; }
         bool Slewing { get; }
 
         Task SlewToAzimuth(double azimuth, CancellationToken ct);
-        Task StartRotateCW(CancellationToken ct);
-        Task StartRotateCCW(CancellationToken ct);
         void StopSlewing();
         void StopShutter();
+        void StopAll();
         Task OpenShutter(CancellationToken ct);
         Task CloseShutter(CancellationToken ct);
         Task FindHome(CancellationToken ct);

@@ -56,14 +56,14 @@
                     BorderBrush="{StaticResource BorderBrush}"
                     BorderThickness="0">
                     <UniformGrid VerticalAlignment="Center" Columns="2">
-                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeDriverCanSlave}" />
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeDriverCanFollow}" />
                         <CheckBox
                         Width="20"
                         Height="20"
                         Margin="5,0,0,0"
                         HorizontalAlignment="Left"
                         BorderBrush="Transparent"
-                        IsChecked="{Binding DomeInfo.DriverCanSlave, FallbackValue=False, Mode=OneWay}"
+                        IsChecked="{Binding DomeInfo.DriverCanFollow, FallbackValue=False, Mode=OneWay}"
                         IsEnabled="False"
                         Style="{StaticResource CheckmarkCheckbox}" />
                     </UniformGrid>
@@ -209,14 +209,14 @@
                     BorderBrush="{StaticResource BorderBrush}"
                     BorderThickness="0">
                     <UniformGrid VerticalAlignment="Center" Columns="2">
-                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeDriverSlaved}" />
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeDriverFollowing}" />
                         <CheckBox
                         Width="20"
                         Height="20"
                         Margin="5,0,0,0"
                         HorizontalAlignment="Left"
                         BorderBrush="Transparent"
-                        IsChecked="{Binding DomeInfo.DriverSlaved, FallbackValue=False, Mode=OneWay}"
+                        IsChecked="{Binding DomeInfo.DriverFollowing, FallbackValue=False, Mode=OneWay}"
                         IsEnabled="False"
                         Style="{StaticResource CheckmarkCheckbox}" />
                     </UniformGrid>

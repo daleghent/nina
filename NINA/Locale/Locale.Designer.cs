@@ -1818,6 +1818,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close dome shutter at sequence end.
+        /// </summary>
+        internal static string LblCloseDomeShutterAtSequenceEnd {
+            get {
+                return ResourceManager.GetString("LblCloseDomeShutterAtSequenceEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cloud Cover.
         /// </summary>
         internal static string LblCloudCover {
@@ -3531,6 +3540,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Azimuth Tolerance (degrees).
+        /// </summary>
+        internal static string LblDomeAzimuthToleranceDegrees {
+            get {
+                return ResourceManager.GetString("LblDomeAzimuthToleranceDegrees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The dome slews if the target azimuth is off by more than this amount.
+        /// </summary>
+        internal static string LblDomeAzimuthToleranceDegreesTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeAzimuthToleranceDegreesTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Can find home.
         /// </summary>
         internal static string LblDomeCanFindHome {
@@ -3657,7 +3684,16 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dome disconnected.
+        ///   Looks up a localized string similar to Use NINA Direct Following.
+        /// </summary>
+        internal static string LblDomeDirectDriver {
+            get {
+                return ResourceManager.GetString("LblDomeDirectDriver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnect dome?.
         /// </summary>
         internal static string LblDomeDisconnect {
             get {
@@ -3666,20 +3702,92 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Driver can slave.
+        ///   Looks up a localized string similar to Driver can follow.
         /// </summary>
-        internal static string LblDomeDriverCanSlave {
+        internal static string LblDomeDriverCanFollow {
             get {
-                return ResourceManager.GetString("LblDomeDriverCanSlave", resourceCulture);
+                return ResourceManager.GetString("LblDomeDriverCanFollow", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Slaved by driver.
+        ///   Looks up a localized string similar to Driver following telescope.
         /// </summary>
-        internal static string LblDomeDriverSlaved {
+        internal static string LblDomeDriverFollowing {
             get {
-                return ResourceManager.GetString("LblDomeDriverSlaved", resourceCulture);
+                return ResourceManager.GetString("LblDomeDriverFollowing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Could not enable Dome/Telescope following.
+        /// </summary>
+        internal static string LblDomeEnableFollowingWarning {
+            get {
+                return ResourceManager.GetString("LblDomeEnableFollowingWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Home.
+        /// </summary>
+        internal static string LblDomeFindHome {
+            get {
+                return ResourceManager.GetString("LblDomeFindHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find home before parking.
+        /// </summary>
+        internal static string LblDomeFindHomeBeforePark {
+            get {
+                return ResourceManager.GetString("LblDomeFindHomeBeforePark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If FindHome is available, then this can improve the reliability of parking to the correct location, when a precise location is required..
+        /// </summary>
+        internal static string LblDomeFindHomeBeforeParkTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeFindHomeBeforeParkTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome synchronization error. No longer following telescope. {0}.
+        /// </summary>
+        internal static string LblDomeFollowFailure {
+            get {
+                return ResourceManager.GetString("LblDomeFollowFailure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome follows telescope.
+        /// </summary>
+        internal static string LblDomeFollowing {
+            get {
+                return ResourceManager.GetString("LblDomeFollowing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GEM Axis Length (mm).
+        /// </summary>
+        internal static string LblDomeGemAxisLength {
+            get {
+                return ResourceManager.GetString("LblDomeGemAxisLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If Alt/Az, this should be 0. For an EQ mount, slew RA to +/- 90 degrees, and measure the lateral distance (in mm) from the axis to center of the telescope aperture.
+        /// </summary>
+        internal static string LblDomeGemAxisLengthTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeGemAxisLengthTooltip", resourceCulture);
             }
         }
         
@@ -3698,6 +3806,87 @@ namespace NINA.Locale {
         internal static string LblDomeNotConnected {
             get {
                 return ResourceManager.GetString("LblDomeNotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome Radius (mm).
+        /// </summary>
+        internal static string LblDomeRadius {
+            get {
+                return ResourceManager.GetString("LblDomeRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measure from the center to the rim of the dome, along the base.
+        /// </summary>
+        internal static string LblDomeRadiusTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeRadiusTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scope Position +E/-W (mm).
+        /// </summary>
+        internal static string LblDomeScopeEW {
+            get {
+                return ResourceManager.GetString("LblDomeScopeEW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measure the East or West offset (in mm) of the center of the mount from the center of the dome. East/West is relative to true north - the same direction a polar aligned telescope would point. Use a positive number for East, and a negative number for West..
+        /// </summary>
+        internal static string LblDomeScopeEWTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeScopeEWTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scope Position +N/-S (mm).
+        /// </summary>
+        internal static string LblDomeScopeNS {
+            get {
+                return ResourceManager.GetString("LblDomeScopeNS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measure the North or South offset (in mm) of the center of the mount from the center of the dome. North is true north - the same direction a polar aligned telescope would point. Use a positive number for North, and a negative number for South..
+        /// </summary>
+        internal static string LblDomeScopeNSTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeScopeNSTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Scope Position +Up/-Down (mm).
+        /// </summary>
+        internal static string LblDomeScopeUD {
+            get {
+                return ResourceManager.GetString("LblDomeScopeUD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Measure the height difference (in mm) of the center of the mount axis relative to the base of the dome. For an Alt/Az mount, this is from the center of the Altitude axis, and for an EQ mount this is where the RA and DEC axes intersect. A positive number indicates the center of axis is higher than the base of the dome, and a negative number means it is lower..
+        /// </summary>
+        internal static string LblDomeScopeUDTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeScopeUDTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome Settings.
+        /// </summary>
+        internal static string LblDomeSettings {
+            get {
+                return ResourceManager.GetString("LblDomeSettings", resourceCulture);
             }
         }
         
@@ -7080,6 +7269,15 @@ namespace NINA.Locale {
         internal static string LblPark {
             get {
                 return ResourceManager.GetString("LblPark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Park dome at sequence end.
+        /// </summary>
+        internal static string LblParkDomeAtSequenceEnd {
+            get {
+                return ResourceManager.GetString("LblParkDomeAtSequenceEnd", resourceCulture);
             }
         }
         

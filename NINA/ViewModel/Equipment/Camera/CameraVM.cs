@@ -219,7 +219,9 @@ namespace NINA.ViewModel.Equipment.Camera {
                     }
                 }
             } catch (OperationCanceledException ex) {
-                Cam.TemperatureSetPoint = Cam.Temperature;
+                if (Cam != null) {
+                    Cam.TemperatureSetPoint = Cam.Temperature;
+                }
                 throw ex;
             } finally {
                 progress.Report(1);

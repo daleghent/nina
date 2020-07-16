@@ -30,11 +30,16 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
     internal class TelescopeVM : DockableVM, ITelescopeVM {
 
-        public TelescopeVM(IProfileService profileService, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public TelescopeVM(
+            IProfileService profileService, 
+            ITelescopeMediator telescopeMediator, 
+            IApplicationStatusMediator applicationStatusMediator,
+            IDomeMediator domeMediator) : base(profileService) {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
+            this.domeMediator = domeMediator;
             Title = "LblTelescope";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["TelescopeSVG"];
 
@@ -275,7 +280,9 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 CanPark = Telescope.CanPark,
                                 CanSetPark = Telescope.CanSetPark,
                                 EquatorialSystem = Telescope.EquatorialSystem,
-                                HasUnknownEpoch = Telescope.HasUnknownEpoch
+                                HasUnknownEpoch = Telescope.HasUnknownEpoch,
+                                TargetCoordinates = Telescope.TargetCoordinates,
+                                TargetSideOfPier = Telescope.TargetSideOfPier
                             };
 
                             BroadcastTelescopeInfo();
@@ -393,6 +400,12 @@ namespace NINA.ViewModel.Equipment.Telescope {
             telescopeValues.TryGetValue(nameof(TelescopeInfo.SideOfPier), out o);
             TelescopeInfo.SideOfPier = (PierSide)(o ?? new PierSide());
 
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.TargetCoordinates), out o);
+            TelescopeInfo.TargetCoordinates = (Coordinates)(o ?? null);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.TargetSideOfPier), out o);
+            TelescopeInfo.TargetSideOfPier = (PierSide?)(o ?? null);
+
             BroadcastTelescopeInfo();
         }
 
@@ -419,6 +432,8 @@ namespace NINA.ViewModel.Equipment.Telescope {
             telescopeValues.Add(nameof(TelescopeInfo.TimeToMeridianFlip), _telescope?.TimeToMeridianFlip ?? double.NaN);
             telescopeValues.Add(nameof(TelescopeInfo.TimeToMeridianFlipString), _telescope?.TimeToMeridianFlipString ?? string.Empty);
             telescopeValues.Add(nameof(TelescopeInfo.SideOfPier), _telescope?.SideOfPier ?? new PierSide());
+            telescopeValues.Add(nameof(TelescopeInfo.TargetCoordinates), _telescope?.TargetCoordinates ?? null);
+            telescopeValues.Add(nameof(TelescopeInfo.TargetSideOfPier), _telescope?.TargetSideOfPier ?? null);
 
             return telescopeValues;
         }
@@ -580,6 +595,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
         private double _targetRightAscencionSeconds;
         private ITelescopeMediator telescopeMediator;
         private IApplicationStatusMediator applicationStatusMediator;
+        private IDomeMediator domeMediator;
         private IProgress<ApplicationStatus> progress;
 
         public double TargetRightAscencionSeconds {
@@ -606,7 +622,10 @@ namespace NINA.ViewModel.Equipment.Telescope {
                     await Task.Run(() => {
                         Telescope.SlewToCoordinates(coords);
                     });
-                    await Utility.Utility.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), default, progress, Locale.Loc.Instance["LblSettle"]);
+                    BroadcastTelescopeInfo();
+                    await Task.WhenAll(
+                        Utility.Utility.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), default, progress, Locale.Loc.Instance["LblSettle"]),
+                        this.domeMediator.WaitForDomeSynchronization(CancellationToken.None));
                     return true;
                 } else {
                     return false;
@@ -625,12 +644,14 @@ namespace NINA.ViewModel.Equipment.Telescope {
             return SlewToCoordinatesAsync(coords);
         }
 
-        public Task<bool> MeridianFlip(Coordinates targetCoordinates) {
+        public async Task<bool> MeridianFlip(Coordinates targetCoordinates) {
             var coords = targetCoordinates.Transform(TelescopeInfo.EquatorialSystem);
             if (TelescopeInfo.Connected) {
-                return Telescope.MeridianFlip(coords);
+                var flipResult = await Telescope.MeridianFlip(coords);
+                await this.domeMediator.WaitForDomeSynchronization(CancellationToken.None);
+                return flipResult;
             } else {
-                return Task.FromResult(false);
+                return false;
             }
         }
 
@@ -658,6 +679,14 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
         public Coordinates GetCurrentPosition() {
             return Telescope?.Coordinates;
+        }
+
+        public async Task WaitForSlew(CancellationToken cancellationToken) {
+            if (Telescope?.Connected == true) {
+                while (Telescope?.Slewing == true && !cancellationToken.IsCancellationRequested) {
+                    await Task.Delay(1000);
+                }
+            }
         }
 
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }

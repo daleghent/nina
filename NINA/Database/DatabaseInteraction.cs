@@ -31,7 +31,7 @@ using NINA.Utility.Extensions;
 
 namespace NINA.Database {
 
-    internal class DatabaseInteraction {
+    public class DatabaseInteraction {
 
         static DatabaseInteraction() {
             DllLoader.LoadDll(Path.Combine("SQLite", "SQLite.Interop.dll"));
@@ -39,8 +39,12 @@ namespace NINA.Database {
 
         private string connectionString;
 
-        public DatabaseInteraction() {
-            connectionString = string.Format(@"Data Source={0};", Environment.ExpandEnvironmentVariables(@"%localappdata%\NINA\NINA.sqlite"));
+        public DatabaseInteraction()
+            : this(string.Format(@"Data Source={0};", Environment.ExpandEnvironmentVariables(@"%localappdata%\NINA\NINA.sqlite"))) {
+        }
+
+        public DatabaseInteraction(string connectionString) {
+            this.connectionString = connectionString;
         }
 
         public NINADbContext GetContext() {

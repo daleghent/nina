@@ -15,19 +15,13 @@
 using NINA.Model;
 using NINA.Model.MyFlatDevice;
 using NINA.Profile;
-using NINA.Utility;
 
 namespace NINA.ViewModel.Equipment.FlatDevice {
 
-    public interface IFlatDeviceChooserVM {
-        IDevice SelectedDevice { get; set; }
-
-        void GetEquipment();
-    }
-
-    internal class FlatDeviceChooserVM : EquipmentChooserVM, IFlatDeviceChooserVM {
+    internal class FlatDeviceChooserVM : EquipmentChooserVM, IDeviceChooserVM {
 
         public FlatDeviceChooserVM(IProfileService profileService) : base(profileService) {
+            GetEquipment();
         }
 
         public override void GetEquipment() {

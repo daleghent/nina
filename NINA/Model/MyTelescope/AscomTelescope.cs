@@ -847,12 +847,16 @@ namespace NINA.Model.MyTelescope {
 
         public double TargetDeclination {
             get {
-                double val = -1;
-                if (Connected && _canGetTargetRaDec) {
+                double val = double.NaN;
+                if (Connected && _canGetTargetRaDec && Slewing) {
                     try {
                         val = _telescope.TargetDeclination;
                     } catch (PropertyNotImplementedException) {
                         _canGetTargetRaDec = false;
+                    } catch (DriverAccessCOMException ex) {
+                        Logger.Warning(ex.Message);
+                    } catch (ASCOM.InvalidOperationException ex) {
+                        Logger.Warning(ex.Message);
                     }
                 }
                 return val;
@@ -876,12 +880,16 @@ namespace NINA.Model.MyTelescope {
 
         public double TargetRightAscension {
             get {
-                double val = -1;
-                if (Connected && _canGetTargetRaDec) {
+                double val = double.NaN;
+                if (Connected && _canGetTargetRaDec && Slewing) {
                     try {
                         val = _telescope.TargetRightAscension;
                     } catch (PropertyNotImplementedException) {
                         _canGetTargetRaDec = false;
+                    } catch (DriverAccessCOMException ex) {
+                        Logger.Warning(ex.Message);
+                    } catch (ASCOM.InvalidOperationException ex) {
+                        Logger.Warning(ex.Message);
                     }
                 }
                 return val;
@@ -900,6 +908,35 @@ namespace NINA.Model.MyTelescope {
                 } catch (ASCOM.InvalidOperationException ex) {
                     Logger.Warning(ex.Message);
                 }
+            }
+        }
+
+        private Coordinates _targetCoordinates;
+        public Coordinates TargetCoordinates {
+            get {
+                if (Connected) {
+                    return _targetCoordinates;
+                }
+                return null;
+            }
+            private set {
+                _targetCoordinates = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private PierSide? targetSideOfPier;
+        public PierSide? TargetSideOfPier {
+            get {
+                if (Connected) {
+                    return targetSideOfPier;
+                } else {
+                    return null;
+                }
+            }
+            set {
+                targetSideOfPier = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -956,9 +993,12 @@ namespace NINA.Model.MyTelescope {
                     Tracking = true;
                 }
 
+                targetCoordinates = targetCoordinates.Transform(EquatorialSystem);
+                TargetCoordinates = targetCoordinates;
                 if (CanSetPierSide) {
                     var pierside = SideOfPier;
                     var flippedside = pierside == PierSide.pierEast ? PierSide.pierWest : PierSide.pierEast;
+                    TargetSideOfPier = flippedside;
                     SideOfPier = flippedside;
 
                     //Check if setting the pier side will result already in a flip
@@ -968,12 +1008,14 @@ namespace NINA.Model.MyTelescope {
                     }
                 }
 
-                targetCoordinates = targetCoordinates.Transform(EquatorialSystem);
                 SlewToCoordinates(targetCoordinates);
                 success = true;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(Locale.Loc.Instance["LblMeridianFlipFailed"]);
+            } finally {
+                TargetCoordinates = null;
+                TargetSideOfPier = null;
             }
             return success;
         }
@@ -1061,54 +1103,19 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        public void SlewToCoordinatesAsync(Coordinates coordinates) {
-            if (Connected && CanSlew && !AtPark) {
-                try {
-                    if (!Tracking) {
-                        Tracking = true;
-                    }
-                    coordinates = coordinates.Transform(EquatorialSystem);
-                    _telescope.SlewToCoordinatesAsync(coordinates.RA, coordinates.Dec);
-                } catch (Exception e) {
-                    Logger.Error(e);
-                    Notification.ShowError(e.Message);
-                }
-            }
-        }
-
         public void SlewToCoordinates(Coordinates coordinates) {
             if (Connected && CanSlew && !AtPark) {
                 try {
                     if (!Tracking) {
                         Tracking = true;
                     }
-                    coordinates = coordinates.Transform(EquatorialSystem);
-                    _telescope.SlewToCoordinates(coordinates.RA, coordinates.Dec);
+                    TargetCoordinates = coordinates.Transform(EquatorialSystem);
+                    _telescope.SlewToCoordinates(TargetCoordinates.RA, TargetCoordinates.Dec);
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowError(e.Message);
-                }
-            }
-        }
-
-        public void SlewToAltAz(TopocentricCoordinates coordinates) {
-            if (Connected && CanSlew && !AtPark) {
-                try {
-                    _telescope.SlewToAltAz(coordinates.Azimuth.Degree, coordinates.Altitude.Degree);
-                } catch (Exception e) {
-                    Logger.Error(e);
-                    Notification.ShowError(e.Message);
-                }
-            }
-        }
-
-        public void SlewToAltAzAsync(TopocentricCoordinates coordinates) {
-            if (Connected && CanSlew && !AtPark) {
-                try {
-                    _telescope.SlewToAltAz(coordinates.Azimuth.Degree, coordinates.Altitude.Degree);
-                } catch (Exception e) {
-                    Logger.Error(e);
-                    Notification.ShowError(e.Message);
+                } finally {
+                    TargetCoordinates = null;
                 }
             }
         }
@@ -1250,6 +1257,7 @@ namespace NINA.Model.MyTelescope {
                     bool dispose = false;
                     if (_telescope == null) {
                         _telescope = new Telescope(Id);
+                        dispose = true;
                     }
                     _telescope.SetupDialog();
                     if (dispose) {

@@ -16,5 +16,13 @@ namespace NINA.Profile {
 
     public interface IDomeSettings : ISettings {
         string Id { get; set; }
+        double ScopePositionEastWest_mm { get; set; }
+        double ScopePositionNorthSouth_mm { get; set; }
+        double ScopePositionUpDown_mm { get; set; }
+        double DomeRadius_mm { get; set; }
+        double GemAxis_mm { get; set; }
+        double AzimuthTolerance_degrees { get; set; }
+        bool UseDirectFollowing { get; set; }
+        bool FindHomeBeforePark { get; set; }
     }
 }

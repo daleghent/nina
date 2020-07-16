@@ -233,5 +233,24 @@ namespace NINA.Model.MyTelescope {
             get { return timeToMeridianFlipString; }
             set { timeToMeridianFlipString = value; RaisePropertyChanged(); }
         }
+
+        private Coordinates targetCoordinates;
+
+        public Coordinates TargetCoordinates {
+            get { return targetCoordinates; }
+            set { targetCoordinates = value; RaisePropertyChanged(); }
+        }
+
+        private PierSide? targetSideOfPier;
+
+        public PierSide? TargetSideOfPier {
+            get {
+                return targetSideOfPier;
+            }
+            set {
+                targetSideOfPier = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

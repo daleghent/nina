@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Utility.Astrometry;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyTelescope {
@@ -47,6 +48,9 @@ namespace NINA.Model.MyTelescope {
         bool CanSetPark { get; }
         Epoch EquatorialSystem { get; }
         bool HasUnknownEpoch { get; }
+        Coordinates TargetCoordinates { get; }
+        PierSide? TargetSideOfPier { get; }
+        bool Slewing { get; }
 
         Task<bool> MeridianFlip(Coordinates targetCoordinates);
 
@@ -58,13 +62,7 @@ namespace NINA.Model.MyTelescope {
 
         void Setpark();
 
-        void SlewToCoordinatesAsync(Coordinates coordinates);
-
         void SlewToCoordinates(Coordinates coordinates);
-
-        void SlewToAltAz(TopocentricCoordinates coordinates);
-
-        void SlewToAltAzAsync(TopocentricCoordinates coordinates);
 
         void StopSlew();
 

@@ -526,6 +526,7 @@
     <Compile Include="Utility\Converters\OptimalExposureCalculatorAnswerConverter.cs" />
     <Compile Include="Utility\Converters\NaNToDoubleDashConverter.cs" />
     <Compile Include="Utility\Converters\NaNToVisibilityCollapsedConverter.cs" />
+    <Compile Include="Utility\Dome\DomeSynchronization.cs" />
     <Compile Include="Utility\Converters\SideOfPierConverter.cs" />
     <Compile Include="Utility\Enum\BacklashCompensationModel.cs" />
     <Compile Include="Utility\Enum\BayerPatternEnum.cs" />
@@ -567,6 +568,7 @@
     <Compile Include="Utility\IoCBindings.cs" />
     <Compile Include="Utility\Astrometry\INighttimeCalculator.cs" />
     <Compile Include="Utility\Mediator\ApplicationMediator.cs" />
+    <Compile Include="Utility\Dome\IDomeSynchronization.cs" />
     <Compile Include="Utility\Mediator\DomeMediator.cs" />
     <Compile Include="Utility\Mediator\Interfaces\IApplicationMediator.cs" />
     <Compile Include="Utility\Mediator\Interfaces\IDomeConsumer.cs" />
@@ -728,6 +730,7 @@
     <Compile Include="ViewModel\Equipment\Focuser\FocuserChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\FocuserDecorator.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\OvershootBacklashCompensationDecorator.cs" />
+    <Compile Include="ViewModel\Equipment\IDeviceChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Rotator\RotatorChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Telescope\TelescopeChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Guider\GuiderChooserVM.cs" />
@@ -1293,6 +1296,9 @@
     <Compile Include="View\Options\EquipmentView.xaml.cs">
       <DependentUpon>EquipmentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Options\OptionsDomeView.xaml.cs">
+      <DependentUpon>OptionsDomeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Options\OptionsImagingView.xaml.cs">
       <DependentUpon>OptionsImagingView.xaml</DependentUpon>
     </Compile>
@@ -1760,6 +1766,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Options\EquipmentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Options\OptionsDomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

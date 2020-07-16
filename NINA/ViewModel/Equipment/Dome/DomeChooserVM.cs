@@ -20,9 +20,10 @@ using NINA.Model.MyDome;
 
 namespace NINA.ViewModel.Equipment.Dome {
 
-    internal class DomeChooserVM : EquipmentChooserVM {
+    internal class DomeChooserVM : EquipmentChooserVM, IDeviceChooserVM {
 
         public DomeChooserVM(IProfileService profileService) : base(profileService) {
+            GetEquipment();
         }
 
         public override void GetEquipment() {

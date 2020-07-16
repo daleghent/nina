@@ -23,33 +23,49 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using NINA.Model.MyDome;
+using NINA.Model.MyTelescope;
+using NINA.Utility.Astrometry;
+using Nito.AsyncEx;
+using ToastNotifications.Utilities;
+using Ninject;
 
 namespace NINA.ViewModel.Equipment.Dome {
 
-    internal class DomeVM : DockableVM, IDomeVM {
+    internal class DomeVM : DockableVM, IDomeVM, ITelescopeConsumer {
 
-        public DomeVM(IProfileService profileService, IDomeMediator domeMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public DomeVM(
+            IProfileService profileService,
+            IDomeMediator domeMediator,
+            IApplicationStatusMediator applicationStatusMediator,
+            ITelescopeMediator telescopeMediator,
+            IDeviceChooserVM domeChooserVM,
+            IDomeSynchronization domeSynchronization,
+            IApplicationResourceDictionary resourceDictionary,
+            IDeviceUpdateTimerFactory deviceUpdateTimerFactory) : base(profileService) {
             Title = "LblDome";
-            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ObservatorySVG"];
+            ImageGeometry = (System.Windows.Media.GeometryGroup)resourceDictionary["ObservatorySVG"];
 
             this.domeMediator = domeMediator;
             this.domeMediator.RegisterHandler(this);
+            this.telescopeMediator = telescopeMediator;
+            this.telescopeMediator.RegisterConsumer(this);
             this.applicationStatusMediator = applicationStatusMediator;
+            this.domeSynchronization = domeSynchronization;
+            DomeChooserVM = domeChooserVM;
 
             ChooseDomeCommand = new AsyncCommand<bool>(() => ChooseDome());
             CancelChooseDomeCommand = new RelayCommand(CancelChooseDome);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
             RefreshDomeListCommand = new RelayCommand(RefreshDomeList, o => !(Dome?.Connected == true));
             StopCommand = new RelayCommand(StopAll);
-            DomeRotateCommand = new RelayCommand(DomeRotate);
-            StopDomeRotateCommand = new RelayCommand(StopDomeRotate);
-            OpenShutterCommand = new AsyncCommand<bool>(OpenShutter);
-            CloseShutterCommand = new AsyncCommand<bool>(CloseShutter);
+            OpenShutterCommand = new AsyncCommand<bool>(OpenShutterVM);
+            CloseShutterCommand = new AsyncCommand<bool>(CloseShutterVM);
             SetParkPositionCommand = new RelayCommand(SetParkPosition);
-            ParkCommand = new AsyncCommand<bool>(Park);
+            ParkCommand = new AsyncCommand<bool>(ParkVM);
             ManualSlewCommand = new AsyncCommand<bool>(ManualSlew);
+            FindHomeCommand = new AsyncCommand<bool>(FindHome);
 
-            this.updateTimer = new DeviceUpdateTimer(
+            this.updateTimer = deviceUpdateTimerFactory.Create(
                 GetDomeValues,
                 UpdateDomeValues,
                 profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval
@@ -58,6 +74,8 @@ namespace NINA.ViewModel.Equipment.Dome {
             profileService.ProfileChanged += (object sender, EventArgs e) => {
                 RefreshDomeList(null);
             };
+
+            DirectFollowToggled = profileService.ActiveProfile.DomeSettings.UseDirectFollowing;
         }
 
         private CancellationTokenSource cancelChooseDomeSource;
@@ -97,7 +115,7 @@ namespace NINA.ViewModel.Equipment.Dome {
                             DomeInfo = new DomeInfo {
                                 Connected = true,
                                 ShutterStatus = Dome.ShutterStatus,
-                                DriverCanSlave = Dome.DriverCanSlave,
+                                DriverCanFollow = Dome.DriverCanFollow,
                                 CanSetShutter = Dome.CanSetShutter,
                                 CanSetPark = Dome.CanSetPark,
                                 CanSetAzimuth = Dome.CanSetAzimuth,
@@ -106,11 +124,12 @@ namespace NINA.ViewModel.Equipment.Dome {
                                 CanFindHome = Dome.CanFindHome,
                                 AtPark = Dome.AtPark,
                                 AtHome = Dome.AtPark,
-                                DriverSlaved = Dome.DriverSlaved,
+                                DriverFollowing = Dome.DriverFollowing,
                                 Slewing = Dome.Slewing,
                                 Azimuth = Dome.Azimuth
                             };
 
+                            RaiseAllPropertiesChanged();
                             BroadcastDomeInfo();
 
                             Notification.ShowSuccess(Locale.Loc.Instance["LblDomeConnected"]);
@@ -153,7 +172,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             Dictionary<string, object> domeValues = new Dictionary<string, object> {
                 { nameof(DomeInfo.Connected), Dome?.Connected ?? false },
                 { nameof(DomeInfo.ShutterStatus), Dome?.ShutterStatus ?? ShutterState.ShutterError },
-                { nameof(DomeInfo.DriverCanSlave), Dome?.DriverCanSlave ?? false },
+                { nameof(DomeInfo.DriverCanFollow), Dome?.DriverCanFollow ?? false },
                 { nameof(DomeInfo.CanSetShutter), Dome?.CanSetShutter ?? false },
                 { nameof(DomeInfo.CanSetPark), Dome?.CanSetPark ?? false },
                 { nameof(DomeInfo.CanSetAzimuth), Dome?.CanSetAzimuth ?? false },
@@ -162,7 +181,7 @@ namespace NINA.ViewModel.Equipment.Dome {
                 { nameof(DomeInfo.CanFindHome), Dome?.CanFindHome ?? false },
                 { nameof(DomeInfo.AtPark), Dome?.AtPark ?? false },
                 { nameof(DomeInfo.AtHome), Dome?.AtHome ?? false },
-                { nameof(DomeInfo.DriverSlaved), Dome?.DriverSlaved ?? false },
+                { nameof(DomeInfo.DriverFollowing), Dome?.DriverFollowing ?? false },
                 { nameof(DomeInfo.Slewing), Dome?.Slewing ?? false },
                 { nameof(DomeInfo.Azimuth), Dome?.Azimuth ?? Double.NaN }
             };
@@ -179,8 +198,8 @@ namespace NINA.ViewModel.Equipment.Dome {
             domeValues.TryGetValue(nameof(DomeInfo.ShutterStatus), out o);
             DomeInfo.ShutterStatus = (ShutterState)(o ?? ShutterState.ShutterError);
 
-            domeValues.TryGetValue(nameof(DomeInfo.DriverCanSlave), out o);
-            DomeInfo.DriverCanSlave = (bool)(o ?? false);
+            domeValues.TryGetValue(nameof(DomeInfo.DriverCanFollow), out o);
+            DomeInfo.DriverCanFollow = (bool)(o ?? false);
 
             domeValues.TryGetValue(nameof(DomeInfo.CanSetShutter), out o);
             DomeInfo.CanSetShutter = (bool)(o ?? false);
@@ -206,8 +225,8 @@ namespace NINA.ViewModel.Equipment.Dome {
             domeValues.TryGetValue(nameof(DomeInfo.AtHome), out o);
             DomeInfo.AtHome = (bool)(o ?? false);
 
-            domeValues.TryGetValue(nameof(DomeInfo.DriverSlaved), out o);
-            DomeInfo.DriverSlaved = (bool)(o ?? false);
+            domeValues.TryGetValue(nameof(DomeInfo.DriverFollowing), out o);
+            DomeInfo.DriverFollowing = (bool)(o ?? false);
 
             domeValues.TryGetValue(nameof(DomeInfo.Slewing), out o);
             DomeInfo.Slewing = (bool)(o ?? false);
@@ -266,11 +285,10 @@ namespace NINA.ViewModel.Equipment.Dome {
             Dome = null;
             DomeInfo = DeviceInfo.CreateDefaultInstance<DomeInfo>();
             BroadcastDomeInfo();
-            RaisePropertyChanged(nameof(Dome));
+            RaiseAllPropertiesChanged();
         }
 
         private IDome dome;
-
         public IDome Dome {
             get {
                 return dome;
@@ -281,45 +299,50 @@ namespace NINA.ViewModel.Equipment.Dome {
             }
         }
 
-        private DomeChooserVM domeChooserVM;
+        public IDeviceChooserVM DomeChooserVM { get; private set; }
 
-        public DomeChooserVM DomeChooserVM {
-            get {
-                if (domeChooserVM == null) {
-                    domeChooserVM = new DomeChooserVM(profileService);
-                    domeChooserVM.GetEquipment();
-                }
-                return domeChooserVM;
-            }
-            set => domeChooserVM = value;
+        private Task<bool> OpenShutterVM() {
+            return OpenShutter(CancellationToken.None);
         }
 
-        public async Task<bool> OpenShutter() {
+        public async Task<bool> OpenShutter(CancellationToken cancellationToken) {
             if (Dome.CanSetShutter) {
                 Logger.Trace("Opening dome shutter");
-                await Dome.OpenShutter(CancellationToken.None);
+                await Dome.OpenShutter(cancellationToken);
                 return true;
             } else {
-                Logger.Error("Cannot open shutter. Dome does not support it.");
+                Logger.Warning("Cannot open shutter. Dome does not support it.");
                 return false;
             }
         }
 
-        public async Task<bool> CloseShutter() {
+        private Task<bool> CloseShutterVM() {
+            return CloseShutter(CancellationToken.None);
+        }
+
+        public async Task<bool> CloseShutter(CancellationToken cancellationToken) {
             if (Dome.CanSetShutter) {
                 Logger.Trace("Closing dome shutter");
-                await Dome.CloseShutter(CancellationToken.None);
+                await Dome.CloseShutter(cancellationToken);
                 return true;
             } else {
-                Logger.Error("Cannot open shutter. Dome does not support it.");
+                Logger.Warning("Cannot close shutter. Dome does not support it.");
                 return false;
             }
         }
 
-        public async Task<bool> Park() {
+        private Task<bool> ParkVM() {
+            return Park(CancellationToken.None);
+        }
+
+        public async Task<bool> Park(CancellationToken cancellationToken) {
             if (Dome.CanPark) {
                 Logger.Trace("Parking dome");
-                await Dome.Park(CancellationToken.None);
+                await DisableFollow(cancellationToken);
+                if (profileService.ActiveProfile.DomeSettings.FindHomeBeforePark && Dome.CanFindHome) {
+                    await Dome.FindHome(cancellationToken);
+                }
+                await Dome.Park(cancellationToken);
                 return true;
             } else {
                 Logger.Error("Cannot park shutter. Dome does not support it.");
@@ -327,35 +350,25 @@ namespace NINA.ViewModel.Equipment.Dome {
             }
         }
 
-        private CancellationTokenSource domeManualRotationCTS;
-        private Task domeManualRotationTask;
+        private CancellationTokenSource domeRotationCTS;
+        private Task domeRotationTask;
 
-        private void DomeRotate(object p) {
-            string direction = p.ToString();
-            if (domeManualRotationCTS != null || domeManualRotationTask != null) {
-                Notification.ShowError("Cannot manually rotate the dome while another manual rotation is in progress");
-                return;
-            }
-            domeManualRotationCTS = new CancellationTokenSource();
-            if (direction == "CW") {
-                domeManualRotationTask = Dome.StartRotateCW(domeManualRotationCTS.Token);
-            } else if (direction == "CCW") {
-                domeManualRotationTask = Dome.StartRotateCCW(domeManualRotationCTS.Token);
-            } else {
-                throw new InvalidOperationException($"{direction} is not a valid direction");
+        public async Task WaitForDomeSynchronization(CancellationToken cancellationToken) {
+            while (DirectFollowEnabled && !cancellationToken.IsCancellationRequested && !IsSynchronized) {
+                await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
             }
         }
 
         private void StopDomeRotate(object p) {
-            domeManualRotationCTS?.Cancel();
-            domeManualRotationCTS = null;
-            domeManualRotationTask = null;
+            domeRotationCTS?.Cancel();
+            domeRotationCTS = null;
+            domeRotationTask = null;
         }
 
         private void StopAll(object p) {
             StopDomeRotate(null);
-            Dome?.StopSlewing();
-            Dome?.StopShutter();
+            Dome?.StopAll();
+            FollowEnabled = false;
         }
 
         private void SetParkPosition(object p) {
@@ -384,20 +397,180 @@ namespace NINA.ViewModel.Equipment.Dome {
             }
         }
 
-        private readonly DeviceUpdateTimer updateTimer;
+        private async Task<bool> FindHome(object obj) {
+            await Dome?.FindHome(CancellationToken.None);
+            return true;
+        }
+
+        private bool followEnabled;
+        public bool FollowEnabled {
+            get {
+                if (Dome?.Connected == true) {
+                    return followEnabled;
+                } else {
+                    return false;
+                }
+            }
+            set {
+                followEnabled = value;
+                OnFollowChanged();
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool directFollowingToggled;
+        public bool DirectFollowToggled {
+            get {
+                if (Dome?.Connected == true) {
+                    if (Dome.DriverCanFollow) {
+                        return directFollowingToggled;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            }
+            set {
+                directFollowingToggled = value;
+                profileService.ActiveProfile.DomeSettings.UseDirectFollowing = value;
+                OnFollowChanged();
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool DirectFollowEnabled {
+            get {
+                if (Dome?.Connected == true) {
+                    return FollowEnabled && DirectFollowToggled;
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        private void OnFollowChanged() {
+            if (Dome?.Connected == true) {
+                if (Dome.DriverCanFollow) {
+                    Dome.DriverFollowing = FollowEnabled && !DirectFollowToggled;
+                }
+                if (TelescopeInfo.Connected && DirectFollowEnabled) {
+                    SynchronizeWithTelescope(TelescopeInfo);
+                }
+            }
+        }
+
+        private double targetAzimuth = 0.0;
+        private void SynchronizeWithTelescope(TelescopeInfo telescopeInfo) {
+            if (Dome?.Connected == true) {
+                // If domeRotationTask is null or IsCompleted is true, then it is not rotating
+                var isRotating = domeRotationTask?.IsCompleted == false;
+                if (!isRotating) {
+                    var calculatedTargetAzimuth = GetSynchronizedPosition(telescopeInfo);
+                    var currentAzimuth = Angle.ByDegree(Dome.Azimuth);
+                    var tolerance = Angle.ByDegree(profileService.ActiveProfile.DomeSettings.AzimuthTolerance_degrees);
+                    if (!calculatedTargetAzimuth.Equals(currentAzimuth, tolerance)) {
+                        Logger.Trace($"Dome direct telescope follow slew. Current azimuth={currentAzimuth}, Target azimuth={targetAzimuth}");
+                        targetAzimuth = calculatedTargetAzimuth.Degree;
+                        domeRotationCTS = new CancellationTokenSource();
+                        domeRotationTask = Dome.SlewToAzimuth(targetAzimuth, domeRotationCTS.Token);
+                    }
+                }
+            }
+        }
+
+        private Angle GetSynchronizedPosition(TelescopeInfo telescopeInfo) {
+            var targetCoordinates = telescopeInfo.TargetCoordinates ?? telescopeInfo.Coordinates;
+            var targetSideOfPier = telescopeInfo.TargetSideOfPier ?? telescopeInfo.SideOfPier;
+            return domeSynchronization.TargetDomeAzimuth(
+                scopeCoordinates: targetCoordinates,
+                localSiderealTime: telescopeInfo.SiderealTime,
+                siteLatitude: Angle.ByDegree(telescopeInfo.SiteLatitude),
+                siteLongitude: Angle.ByDegree(telescopeInfo.SiteLongitude),
+                sideOfPier: targetSideOfPier);
+        }
+
+        private bool IsSynchronized {
+            get {
+                if (Dome?.Connected == true) {
+                    var calculatedTargetAzimuth = GetSynchronizedPosition(TelescopeInfo);
+                    var currentAzimuth = Angle.ByDegree(Dome.Azimuth);
+                    var tolerance = Angle.ByDegree(profileService.ActiveProfile.DomeSettings.AzimuthTolerance_degrees);
+                    return calculatedTargetAzimuth.Equals(currentAzimuth, tolerance);
+                }
+                return false;
+            }
+        }
+
+        public void UpdateDeviceInfo(TelescopeInfo deviceInfo) {
+            try {
+                TelescopeInfo = deviceInfo;
+                if (TelescopeInfo.Connected && DirectFollowEnabled) {
+                    SynchronizeWithTelescope(TelescopeInfo);
+                } else if (!TelescopeInfo.Connected) {
+                    FollowEnabled = false;
+                }
+            } catch (Exception e) {
+                Notification.ShowError(String.Format(Locale.Loc.Instance["LblDomeFollowFailure"], e.Message));
+                FollowEnabled = false;
+            }
+        }
+
+        private TelescopeInfo telescopeInfo = DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
+        public TelescopeInfo TelescopeInfo {
+            get {
+                return telescopeInfo;
+            } set {
+                telescopeInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public void Dispose() {
+            this.telescopeMediator?.RemoveConsumer(this);
+            this.telescopeMediator = null;
+        }
+
+        public async Task<bool> EnableFollowing(CancellationToken cancellationToken) {
+            if (!Dome.Connected) {
+                return false;
+            }
+
+            FollowEnabled = true;
+            while (Dome.Slewing && !cancellationToken.IsCancellationRequested) {
+                await Task.Delay(1000, cancellationToken);
+            }
+            return FollowEnabled;
+        }
+
+        public async Task<bool> DisableFollow(CancellationToken cancellationToken) {
+            if (!Dome.Connected) {
+                return false;
+            }
+
+            FollowEnabled = false;
+            while (Dome.Slewing && !cancellationToken.IsCancellationRequested) {
+                await Task.Delay(1000, cancellationToken);
+            }
+            return !FollowEnabled;
+        }
+
+        private readonly IDeviceUpdateTimer updateTimer;
         private readonly IDomeMediator domeMediator;
         private readonly IApplicationStatusMediator applicationStatusMediator;
+        private ITelescopeMediator telescopeMediator;
+        private IDomeSynchronization domeSynchronization;
         public IAsyncCommand ChooseDomeCommand { get; private set; }
         public ICommand RefreshDomeListCommand { get; private set; }
         public ICommand CancelChooseDomeCommand { get; private set; }
         public ICommand DisconnectCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
         public ICommand StopDomeRotateCommand { get; private set; }
-        public ICommand DomeRotateCommand { get; private set; }
         public ICommand OpenShutterCommand { get; private set; }
         public ICommand CloseShutterCommand { get; private set; }
         public ICommand ParkCommand { get; private set; }
         public ICommand SetParkPositionCommand { get; private set; }
         public ICommand ManualSlewCommand { get; private set; }
+        public ICommand FindHomeCommand { get; private set; }
     }
 }

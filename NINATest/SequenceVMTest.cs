@@ -49,6 +49,7 @@ namespace NINATest {
         private Mock<IPlanetariumFactory> planetariumFactoryMock;
         private Mock<IImageHistoryVM> imageHistoryVMMock;
         private Mock<IDeepSkyObjectSearchVM> deepSkyObjectSearchVMMock;
+        private Mock<IDomeMediator> domeMediatorMock;
         private Mock<ISequenceMediator> sequenceMediatorMock;
         private FlatDeviceInfo _flatDevice;
         private CaptureSequenceList _dummyList;
@@ -77,6 +78,7 @@ namespace NINATest {
             planetariumFactoryMock = new Mock<IPlanetariumFactory>();
             imageHistoryVMMock = new Mock<IImageHistoryVM>();
             deepSkyObjectSearchVMMock = new Mock<IDeepSkyObjectSearchVM>();
+            domeMediatorMock = new Mock<IDomeMediator>();
             sequenceMediatorMock = new Mock<ISequenceMediator>();
 
             _dummyList = new CaptureSequenceList();
@@ -101,7 +103,7 @@ namespace NINATest {
             _sut = new SequenceVM(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, focuserMediatorMock.Object,
                 filterWheelMediatorMock.Object, guiderMediatorMock.Object, rotatorMediatorMock.Object, flatDeviceMediatorMock.Object,
                 weatherDataMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, nighttimeCalculatorMock.Object,
-                planetariumFactoryMock.Object, imageHistoryVMMock.Object, deepSkyObjectSearchVMMock.Object, sequenceMediatorMock.Object);
+                planetariumFactoryMock.Object, imageHistoryVMMock.Object, deepSkyObjectSearchVMMock.Object, sequenceMediatorMock.Object, domeMediatorMock.Object);
         }
 
         [TearDown]
@@ -117,6 +119,7 @@ namespace NINATest {
             weatherDataMediatorMock.Verify(m => m.RegisterConsumer(_sut));
             guiderMediatorMock.Verify(m => m.RegisterConsumer(_sut));
             flatDeviceMediatorMock.Verify(m => m.RegisterConsumer(_sut));
+            domeMediatorMock.Verify(m => m.RegisterConsumer(_sut));
         }
 
         [Test]

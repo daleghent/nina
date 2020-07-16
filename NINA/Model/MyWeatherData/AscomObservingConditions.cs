@@ -333,6 +333,7 @@ namespace NINA.Model.MyWeatherData {
                     bool dispose = false;
                     if (_obscond == null) {
                         _obscond = new ObservingConditions(Id);
+                        dispose = true;
                     }
                     _obscond.SetupDialog();
                     if (dispose) {

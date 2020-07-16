@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace NINA.Model {
 
-    internal class ConstellationBoundary {
+    public class ConstellationBoundary {
         public string Name { get; set; }
         public List<Coordinates> Boundaries { get; set; } = new List<Coordinates>();
     }

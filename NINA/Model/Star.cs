@@ -17,7 +17,7 @@ using System.Drawing;
 
 namespace NINA.Model {
 
-    internal class Star {
+    public class Star {
 
         public Star(int id, string name, Coordinates coords, float mag) {
             Id = id;

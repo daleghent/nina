@@ -446,5 +446,30 @@ namespace NINATest {
 
             Assert.AreEqual(expectedDMS, dms);
         }
+
+        [Test]
+        [TestCase(1.0, 1.0, 0)]
+        [TestCase(1.0, 2.0, 1.0)]
+        [TestCase(1.0, 2.0, 4.0)]
+        [TestCase(359.9, 0.1, 0.2)]
+        public void EqualWithToleranceTest(double lhs, double rhs, double tolerance) {
+            var lhsAngle = Angle.ByDegree(lhs);
+            var rhsAngle = Angle.ByDegree(rhs);
+            var toleranceAngle = Angle.ByDegree(tolerance);
+            Assert.IsTrue(lhsAngle.Equals(rhsAngle, toleranceAngle));
+        }
+
+        [Test]
+        [TestCase(2.0, 0.0, 1.0)]
+        [TestCase(1.0, 1.2, 0.1)]
+        [TestCase(1.0, 2.0, 0.9)]
+        [TestCase(1.0, 2.0, 0.1)]
+        [TestCase(359.9, 0.1, 0.1)]
+        public void NotEqualWithToleranceTest(double lhs, double rhs, double tolerance) {
+            var lhsAngle = Angle.ByDegree(lhs);
+            var rhsAngle = Angle.ByDegree(rhs);
+            var toleranceAngle = Angle.ByDegree(tolerance);
+            Assert.IsFalse(lhsAngle.Equals(rhsAngle, toleranceAngle));
+        }
     }
 }

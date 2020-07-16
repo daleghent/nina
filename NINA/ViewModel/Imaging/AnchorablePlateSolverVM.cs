@@ -59,10 +59,12 @@ namespace NINA.ViewModel.Imaging {
         private TelescopeInfo telescopeInfo;
 
         private ITelescopeMediator telescopeMediator;
+        private IDomeMediator domeMediator;
 
         public AnchorablePlateSolverVM(IProfileService profileService,
                 ICameraMediator cameraMediator,
                 ITelescopeMediator telescopeMediator,
+                IDomeMediator domeMediator,
                 IImagingMediator imagingMediator,
                 IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = "LblPlateSolving";
@@ -71,6 +73,7 @@ namespace NINA.ViewModel.Imaging {
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterConsumer(this);
+            this.domeMediator = domeMediator;
             this.imagingMediator = imagingMediator;
             this.applicationStatusMediator = applicationStatusMediator;
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PlatesolveSVG"];
@@ -279,6 +282,9 @@ namespace NINA.ViewModel.Imaging {
                 if ((this.Sync || this.SlewToTarget) && !telescopeInfo.Connected) {
                     throw new Exception(Locale.Loc.Instance["LblTelescopeNotConnected"]);
                 }
+
+                await telescopeMediator.WaitForSlew(_solveCancelToken.Token);
+                await domeMediator.WaitForDomeSynchronization(_solveCancelToken.Token);
 
                 var seq = new CaptureSequence(SnapExposureDuration, CaptureSequence.ImageTypes.SNAPSHOT, SnapFilter, SnapBin, 1);
                 seq.Gain = SnapGain;

@@ -37,6 +37,8 @@ namespace NINA.Profile {
             templatePath = string.Empty;
             estimatedDownloadTime = TimeSpan.FromSeconds(0);
             DefaultSequenceFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A.");
+            closeDomeShutterAtSequenceEnd = true;
+            parkDomeAtSequenceEnd = true;
         }
 
         private string templatePath;
@@ -64,6 +66,36 @@ namespace NINA.Profile {
             set {
                 if (parkMountAtSequenceEnd != value) {
                     parkMountAtSequenceEnd = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool closeDomeShutterAtSequenceEnd;
+
+        [DataMember]
+        public bool CloseDomeShutterAtSequenceEnd {
+            get {
+                return closeDomeShutterAtSequenceEnd;
+            }
+            set {
+                if (closeDomeShutterAtSequenceEnd != value) {
+                    closeDomeShutterAtSequenceEnd = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool parkDomeAtSequenceEnd;
+
+        [DataMember]
+        public bool ParkDomeAtSequenceEnd {
+            get {
+                return parkDomeAtSequenceEnd;
+            }
+            set {
+                if (parkDomeAtSequenceEnd != value) {
+                    parkDomeAtSequenceEnd = value;
                     RaisePropertyChanged();
                 }
             }

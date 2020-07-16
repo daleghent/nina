@@ -793,6 +793,12 @@
         </TabItem>
         <TabItem>
             <TabItem.Header>
+                <TextBlock Style="{StaticResource TabItemTextBox}" Text="{ns:Loc LblDome}" />
+            </TabItem.Header>
+            <local:OptionsDomeView DataContext="{Binding}" />
+        </TabItem>
+        <TabItem>
+            <TabItem.Header>
                 <TextBlock Style="{StaticResource TabItemTextBox}" Text="{ns:Loc LblPlateSolving}" />
             </TabItem.Header>
             <local:OptionsPlateSolverView DataContext="{Binding}" />

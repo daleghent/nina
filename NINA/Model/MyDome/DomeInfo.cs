@@ -12,10 +12,10 @@ namespace NINA.Model.MyDome {
             set { shutterStatus = value; RaisePropertyChanged(); }
         }
 
-        private bool driverCanSlave;
-        public bool DriverCanSlave {
-            get => driverCanSlave;
-            set { driverCanSlave = value; RaisePropertyChanged(); }
+        private bool driverCanFollow;
+        public bool DriverCanFollow {
+            get => driverCanFollow;
+            set { driverCanFollow = value; RaisePropertyChanged(); }
         }
 
         private bool canSetShutter;
@@ -66,10 +66,10 @@ namespace NINA.Model.MyDome {
             set { atHome = value; RaisePropertyChanged(); }
         }
 
-        private bool driverSlaved;
-        public bool DriverSlaved {
-            get => driverSlaved;
-            set { driverSlaved = value; RaisePropertyChanged(); }
+        private bool driverFollowing;
+        public bool DriverFollowing {
+            get => driverFollowing;
+            set { driverFollowing = value; RaisePropertyChanged(); }
         }
 
         private bool slewing;

@@ -16,6 +16,7 @@ using Accord.Statistics.Models.Regression.Linear;
 using NINA.Model;
 using NINA.Model.ImageData;
 using NINA.Model.MyCamera;
+using NINA.Model.MyDome;
 using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFlatDevice;
 using NINA.Model.MyFocuser;
@@ -55,7 +56,7 @@ using System.Windows.Threading;
 
 namespace NINA.ViewModel {
 
-    internal class SequenceVM : DockableVM, ITelescopeConsumer, IFocuserConsumer, IFilterWheelConsumer, IRotatorConsumer, IFlatDeviceConsumer, IGuiderConsumer, ICameraConsumer, IWeatherDataConsumer, ISequenceVM {
+    internal class SequenceVM : DockableVM, ITelescopeConsumer, IFocuserConsumer, IFilterWheelConsumer, IRotatorConsumer, IFlatDeviceConsumer, IGuiderConsumer, ICameraConsumer, IWeatherDataConsumer, IDomeConsumer, ISequenceVM {
 
         public SequenceVM(
                 IProfileService profileService,
@@ -73,7 +74,8 @@ namespace NINA.ViewModel {
                 IPlanetariumFactory planetariumFactory,
                 IImageHistoryVM imageHistoryVM,
                 IDeepSkyObjectSearchVM deepSkyObjectSearchVM,
-                ISequenceMediator sequenceMediator
+                ISequenceMediator sequenceMediator,
+                IDomeMediator domeMediator
         ) : base(profileService) {
             sequenceMediator.RegisterHandler(this);
 
@@ -107,6 +109,9 @@ namespace NINA.ViewModel {
             NighttimeCalculator = nighttimeCalculator;
             this.planetariumFactory = planetariumFactory;
             this.DeepSkyObjectSearchVM = deepSkyObjectSearchVM;
+
+            this.domeMediator = domeMediator;
+            this.domeMediator.RegisterConsumer(this);
             this.DeepSkyObjectSearchVM.PropertyChanged += DeepSkyObjectDetailVM_PropertyChanged;
 
             this.profileService = profileService;
@@ -829,6 +834,16 @@ namespace NINA.ViewModel {
                 /* If the scope is parked, unpark it */
                 if (telescopeInfo.Connected && telescopeInfo.AtPark) {
                     telescopeMediator.UnparkTelescope();
+                }
+
+                if (domeInfo.Connected) {
+                    /* If dome shutter is closed, open it */
+                    var domeInitializationTasks = new List<Task>();
+                    if (domeInfo.CanSetShutter && domeInfo.ShutterStatus != ShutterState.ShutterOpen) {
+                        domeInitializationTasks.Add(domeMediator.OpenShutter(ct));
+                    }
+                    domeInitializationTasks.Add(domeMediator.EnableSlaving(ct));
+                    await Task.WhenAll(domeInitializationTasks).WaitAsync(ct);
                 }
 
                 //open flip-flat if necessary
@@ -1715,6 +1730,7 @@ namespace NINA.ViewModel {
 
         private ObservableCollection<string> _imageTypes;
         private ITelescopeMediator telescopeMediator;
+        private IDomeMediator domeMediator;
         private IFilterWheelMediator filterWheelMediator;
         private FocuserInfo focuserInfo = DeviceInfo.CreateDefaultInstance<FocuserInfo>();
         private FilterWheelInfo filterWheelInfo = DeviceInfo.CreateDefaultInstance<FilterWheelInfo>();
@@ -1726,6 +1742,7 @@ namespace NINA.ViewModel {
         public INighttimeCalculator NighttimeCalculator { get; }
         private readonly IPlanetariumFactory planetariumFactory;
         private TelescopeInfo telescopeInfo = DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
+        private DomeInfo domeInfo = DeviceInfo.CreateDefaultInstance<DomeInfo>();
         private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
         private IRotatorMediator rotatorMediator;
         private RotatorInfo rotatorInfo;
@@ -1810,6 +1827,10 @@ namespace NINA.ViewModel {
             }
         }
 
+        public void UpdateDeviceInfo(DomeInfo domeInfo) {
+            this.domeInfo = domeInfo;
+        }
+
         public void UpdateDeviceInfo(CameraInfo cameraInfo) {
             CameraInfo = cameraInfo;
         }
@@ -1853,6 +1874,8 @@ namespace NINA.ViewModel {
             bool warmCamera = false;
             bool closeFlatDeviceCover = false;
             bool runSequenceCompleteCommand = false;
+            bool parkDome = false;
+            bool closeDomeShutter = false;
 
             StringBuilder message = new StringBuilder();
 
@@ -1862,6 +1885,20 @@ namespace NINA.ViewModel {
                 if (telescopeInfo.CanPark || telescopeInfo.CanSetTracking) {
                     parkTelescope = true;
                     message.AppendLine(Locale.Loc.Instance["LblEndOfSequenceParkTelescope"]);
+                }
+            }
+
+            if (profileService.ActiveProfile.SequenceSettings.CloseDomeShutterAtSequenceEnd) {
+                if (domeInfo.Connected && domeInfo.CanSetShutter) {
+                    closeDomeShutter = true;
+                    message.AppendLine(Locale.Loc.Instance["LblCloseDomeShutterAtSequenceEnd"]);
+                }
+            }
+
+            if (profileService.ActiveProfile.SequenceSettings.ParkDomeAtSequenceEnd) {
+                if (domeInfo.Connected && domeInfo.CanPark) {
+                    parkDome = true;
+                    message.AppendLine(Locale.Loc.Instance["LblParkDomeAtSequenceEnd"]);
                 }
             }
 
@@ -1889,7 +1926,8 @@ namespace NINA.ViewModel {
 
             var endOfSequenceTasks = new List<Task>();
 
-            if (warmCamera || parkTelescope || closeFlatDeviceCover || runSequenceCompleteCommand) {
+            if (warmCamera || parkTelescope || closeFlatDeviceCover || runSequenceCompleteCommand || parkDome || closeDomeShutter) {
+                Task parkTelescopeTask = null;
                 if (_canceltoken.Token.IsCancellationRequested) { // Sequence was manually cancelled - ask before proceeding with end of sequence options
                     var diag = MyMessageBox.MyMessageBox.Show(message.ToString(), Locale.Loc.Instance["LblEndOfSequenceOptions"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
                     if (diag != System.Windows.MessageBoxResult.OK) {
@@ -1897,6 +1935,8 @@ namespace NINA.ViewModel {
                         warmCamera = false;
                         closeFlatDeviceCover = false;
                         runSequenceCompleteCommand = false;
+                        parkDome = false;
+                        closeDomeShutter = false;
                     } else {
                         // Need to reinitialize the cancellation token, as it is set to cancelation requested since sequence was manually cancelled.
                         _canceltoken?.Dispose();
@@ -1910,7 +1950,23 @@ namespace NINA.ViewModel {
                 if (parkTelescope) {
                     Logger.Trace("End of Sequence - Parking scope");
                     endOfSequenceTasks.Add(this.guiderMediator.StopGuiding(_canceltoken.Token));
-                    endOfSequenceTasks.Add(telescopeMediator.ParkTelescope());
+                    parkTelescopeTask = telescopeMediator.ParkTelescope();
+                    endOfSequenceTasks.Add(parkTelescopeTask);
+                }
+                if (parkDome || closeDomeShutter) {
+                    endOfSequenceTasks.Add(Task.Run(async () => {
+                        // Telescope park may need to complete before closing the dome if there is tight clearance
+                        if (parkTelescopeTask != null) {
+                            await parkTelescopeTask;
+                        }
+                        if (parkDome) {
+                            Logger.Trace("End of Sequence - Park dome");
+                            await domeMediator.Park(_canceltoken.Token);
+                        } else {
+                            Logger.Trace("End of Sequence - Close dome shutter");
+                            await domeMediator.CloseShutter(_canceltoken.Token);
+                        }
+                    }));
                 }
                 if (warmCamera) {
                     Logger.Trace("End of Sequence - Warming Camera");

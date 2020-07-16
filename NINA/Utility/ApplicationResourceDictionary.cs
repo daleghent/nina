@@ -17,6 +17,7 @@ using System.Windows;
 namespace NINA.Utility {
 
     public class ApplicationResourceDictionary : IApplicationResourceDictionary {
+        public static readonly ApplicationResourceDictionary INSTANCE = new ApplicationResourceDictionary();
         public object this[string key] => Application.Current.Resources[key];
     }
 }

@@ -142,16 +142,62 @@
                 <GroupBox Header="{ns:Loc LblDomeSynchronization}">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="200" />
+                            <ColumnDefinition Width="300" />
+                            <ColumnDefinition Width="300" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50" />
+                            <RowDefinition Height="80" />
                             <RowDefinition Height="*" />
+                            <RowDefinition Height="80" />
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Grid.Column="0">
-                            
-                        </Grid>
+                        <Border
+                            Margin="0,5,0,0"
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            IsEnabled="{Binding TelescopeInfo.Connected}">
+                            <UniformGrid Columns="2">
+                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeFollowing}" />
+                                <CheckBox
+                                    Width="120"
+                                    Height="25"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    IsChecked="{Binding FollowEnabled}" />
+                            </UniformGrid>
+                        </Border>
+                        <Border
+                            Margin="0,5,0,0"
+                            BorderBrush="{StaticResource BorderBrush}"
+                            BorderThickness="0"
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Visibility="{Binding DomeInfo.DriverCanFollow, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                            IsEnabled="{Binding FollowEnabled}">
+                            <UniformGrid Columns="2">
+                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeDirectDriver}" />
+                                <CheckBox
+                                    Width="120"
+                                    Height="25"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    IsChecked="{Binding DirectFollowToggled}" />
+                            </UniformGrid>
+                        </Border>
+                        <Button
+                            Grid.Row="3"
+                            Grid.Column="0"
+                            Width="80"
+                            Height="80"
+                            HorizontalAlignment="Left"
+                            Command="{Binding FindHomeCommand}"
+                            IsEnabled="{Binding DomeInfo.AtHome, Converter={StaticResource InverseBooleanConverter}}"
+                            Visibility="{Binding DomeInfo.CanFindHome, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblDomeFindHome}" />
+                        </Button>
                     </Grid>
                 </GroupBox>
             </Grid>
@@ -205,66 +251,6 @@
                                 </StackPanel>
                             </Border>
                         </Grid>
-                        <Button
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Width="80"
-                            Height="80"
-                            HorizontalAlignment="Right"
-                            IsEnabled="{Binding DomeInfo.CanSetAzimuth}">
-                            <!-- TODO: Isbeorn, can you make a Counter-Clockwise logo? -->
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="CCW" />
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewStylusDown">
-                                    <i:InvokeCommandAction Command="{Binding DomeRotateCommand}" CommandParameter="CCW" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewStylusUp">
-                                    <i:InvokeCommandAction Command="{Binding StopDomeRotateCommand}" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewTouchDown">
-                                    <i:InvokeCommandAction Command="{Binding DomeRotateCommand}" CommandParameter="CCW" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewTouchUp">
-                                    <i:InvokeCommandAction Command="{Binding StopDomeRotateCommand}" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding DomeRotateCommand}" CommandParameter="CCW" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                                    <i:InvokeCommandAction Command="{Binding StopDomeRotateCommand}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
-                        <Button
-                            Grid.Row="1"
-                            Grid.Column="2"
-                            Width="80"
-                            Height="80"
-                            HorizontalAlignment="Left"
-                            IsEnabled="{Binding DomeInfo.CanSetAzimuth}">
-                            <!-- TODO: Isbeorn, can you make a Clockwise logo? -->
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="CW" />
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="PreviewStylusDown">
-                                    <i:InvokeCommandAction Command="{Binding DomeRotateCommand}" CommandParameter="CW" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewStylusUp">
-                                    <i:InvokeCommandAction Command="{Binding StopDomeRotateCommand}" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewTouchDown">
-                                    <i:InvokeCommandAction Command="{Binding DomeRotateCommand}" CommandParameter="CW" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewTouchUp">
-                                    <i:InvokeCommandAction Command="{Binding StopDomeRotateCommand}" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding DomeRotateCommand}" CommandParameter="CW" />
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="PreviewMouseLeftButtonUp">
-                                    <i:InvokeCommandAction Command="{Binding StopDomeRotateCommand}" />
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Button>
                         <Button
                             Grid.Row="0"
                             Grid.Column="1"

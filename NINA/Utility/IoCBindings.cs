@@ -5,6 +5,7 @@ using NINA.Utility.ImageAnalysis;
 using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel;
+using NINA.ViewModel.Equipment;
 using NINA.ViewModel.Equipment.Camera;
 using NINA.ViewModel.Equipment.Dome;
 using NINA.ViewModel.Equipment.FilterWheel;
@@ -22,10 +23,6 @@ using NINA.ViewModel.Interfaces;
 using Ninject;
 using Ninject.Modules;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace NINA.Utility {
@@ -67,6 +64,8 @@ namespace NINA.Utility {
                 Bind<IImageControlVM>().To<ImageControlVM>().InSingletonScope();
                 Bind<IImageHistoryVM>().To<ImageHistoryVM>().InSingletonScope();
                 Bind<IImageStatisticsVM>().To<ImageStatisticsVM>().InSingletonScope();
+                Bind<IDeviceChooserVM>().To<DomeChooserVM>().WhenInjectedExactlyInto<DomeVM>().InSingletonScope();
+                Bind<IDeviceChooserVM>().To<FlatDeviceChooserVM>().WhenInjectedExactlyInto<FlatDeviceVM>().InSingletonScope();
 
                 Bind<ProjectVersion>().ToMethod(f => new ProjectVersion(Utility.Version)).InSingletonScope();
 
@@ -108,6 +107,8 @@ namespace NINA.Utility {
                 Bind<IApplicationResourceDictionary>().To<ApplicationResourceDictionary>();
                 Bind<INighttimeCalculator>().To<NighttimeCalculator>();
                 Bind<IDeepSkyObjectSearchVM>().To<DeepSkyObjectSearchVM>();
+                Bind<IDomeSynchronization>().To<DomeSynchronization>().InSingletonScope();
+                Bind<IDeviceUpdateTimerFactory>().To<DefaultDeviceUpateTimerFactory>().InSingletonScope();
             } catch (Exception e) {
                 Logger.Error(e);
                 throw e;

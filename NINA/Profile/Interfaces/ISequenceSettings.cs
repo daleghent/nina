@@ -21,6 +21,8 @@ namespace NINA.Profile {
         string TemplatePath { get; set; }
         long TimeSpanInTicks { get; set; }
         bool ParkMountAtSequenceEnd { get; set; }
+        bool CloseDomeShutterAtSequenceEnd { get; set; }
+        bool ParkDomeAtSequenceEnd { get; set; }
         bool WarmCamAtSequenceEnd { get; set; }
         string DefaultSequenceFolder { get; set; }
         string SequenceCompleteCommand { get; set; }

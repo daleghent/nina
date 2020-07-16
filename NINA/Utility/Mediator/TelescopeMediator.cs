@@ -17,6 +17,7 @@ using NINA.Utility.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Equipment.Telescope;
 using NINA.ViewModel.Interfaces;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Utility.Mediator {
@@ -65,6 +66,10 @@ namespace NINA.Utility.Mediator {
 
         public Coordinates GetCurrentPosition() {
             return handler.GetCurrentPosition();
+        }
+
+        public Task WaitForSlew(CancellationToken cancellationToken) {
+            return handler.WaitForSlew(cancellationToken);
         }
     }
 }

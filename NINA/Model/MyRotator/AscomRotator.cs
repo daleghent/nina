@@ -175,6 +175,7 @@ namespace NINA.Model.MyRotator {
                     bool dispose = false;
                     if (rotator == null) {
                         rotator = new Rotator(Id);
+                        dispose = true;
                     }
                     rotator.SetupDialog();
                     if (dispose) {

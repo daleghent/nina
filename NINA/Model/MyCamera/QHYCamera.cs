@@ -1268,6 +1268,6 @@ namespace NINA.Model.MyCamera {
             return false;
         }
 
-        #endregion "Quirks"
+    #endregion "Quirks"
     }
 }

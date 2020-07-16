@@ -17,7 +17,7 @@ using System.Collections.Generic;
 
 namespace NINA.Model {
 
-    internal class Constellation {
+    public class Constellation {
 
         public Constellation(string id) {
             Id = id;

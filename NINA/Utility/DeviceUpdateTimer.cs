@@ -20,7 +20,27 @@ using System.Threading.Tasks;
 
 namespace NINA.Utility {
 
-    internal class DeviceUpdateTimer {
+    public interface IDeviceUpdateTimerFactory {
+        IDeviceUpdateTimer Create(Func<Dictionary<string, object>> getValuesFunc, Action<Dictionary<string, object>> updateValuesFunc, double interval);
+    }
+
+    public class DefaultDeviceUpateTimerFactory : IDeviceUpdateTimerFactory {
+        public DefaultDeviceUpateTimerFactory() { }
+
+        public IDeviceUpdateTimer Create(Func<Dictionary<string, object>> getValuesFunc, Action<Dictionary<string, object>> updateValuesFunc, double interval) {
+            return new DeviceUpdateTimer(getValuesFunc, updateValuesFunc, interval);
+        }
+    }
+
+    public interface IDeviceUpdateTimer {
+        Func<Dictionary<string, object>> GetValuesFunc { get; }
+        IProgress<Dictionary<string, object>> Progress { get; }
+        double Interval { get; set; }
+        Task Stop();
+        void Start();
+    }
+
+    public class DeviceUpdateTimer : IDeviceUpdateTimer {
 
         public DeviceUpdateTimer(Func<Dictionary<string, object>> getValuesFunc, Action<Dictionary<string, object>> updateValuesFunc, double interval) {
             GetValuesFunc = getValuesFunc;

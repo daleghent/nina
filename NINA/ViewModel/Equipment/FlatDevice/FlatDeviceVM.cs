@@ -42,7 +42,8 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
         private readonly DeviceUpdateTimer _updateTimer;
 
         public FlatDeviceVM(IProfileService profileService, IFlatDeviceMediator flatDeviceMediator, IApplicationStatusMediator applicationStatusMediator, IImageGeometryProvider imageGeometryProvider,
-            ICameraMediator cameraMediator) : base(profileService) {
+            IDeviceChooserVM flatDeviceChooserVM, ICameraMediator cameraMediator) 
+            : base(profileService) {
             _applicationStatusMediator = applicationStatusMediator;
             this.cameraMediator = cameraMediator;
             _flatDeviceMediator = flatDeviceMediator;
@@ -66,7 +67,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             DeleteGainCommand = new RelayCommand(DeleteGainDialog);
             DeleteBinningCommand = new RelayCommand(DeleteBinningDialog);
 
-            FlatDeviceChooserVM = new FlatDeviceChooserVM(profileService);
+            FlatDeviceChooserVM = flatDeviceChooserVM;
             FlatDeviceChooserVM.GetEquipment();
 
             _updateTimer = new DeviceUpdateTimer(
@@ -360,7 +361,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             FlatDeviceChooserVM.GetEquipment();
         }
 
-        public IFlatDeviceChooserVM FlatDeviceChooserVM { get; set; }
+        public IDeviceChooserVM FlatDeviceChooserVM { get; }
 
         private void UpdateFlatDeviceValues(Dictionary<string, object> flatDeviceValues) {
             object o = null;

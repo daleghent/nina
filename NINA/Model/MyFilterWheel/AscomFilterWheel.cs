@@ -188,7 +188,7 @@ namespace NINA.Model.MyFilterWheel {
 
         public void Disconnect() {
             Connected = false;
-            Filters.Clear();
+            Filters?.Clear();
             _filterwheel?.Dispose();
             _filterwheel = null;
         }
@@ -221,6 +221,7 @@ namespace NINA.Model.MyFilterWheel {
                     bool dispose = false;
                     if (_filterwheel == null) {
                         _filterwheel = new FilterWheel(Id);
+                        dispose = true;
                     }
                     _filterwheel.SetupDialog();
                     if (dispose) {

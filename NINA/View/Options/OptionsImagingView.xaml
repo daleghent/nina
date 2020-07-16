@@ -668,6 +668,30 @@
                                     MinWidth="300"
                                     MinHeight="20"
                                     VerticalAlignment="Center"
+                                    Text="{ns:Loc LblCloseDomeShutterAtSequenceEnd}" />
+                                <CheckBox
+                                    Width="120"
+                                    Height="25"
+                                    HorizontalAlignment="Left"
+                                    IsChecked="{Binding CloseDomeShutterAtSequenceEnd}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                <TextBlock
+                                    MinWidth="300"
+                                    MinHeight="20"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblParkDomeAtSequenceEnd}" />
+                                <CheckBox
+                                    Width="120"
+                                    Height="25"
+                                    HorizontalAlignment="Left"
+                                    IsChecked="{Binding ParkDomeAtSequenceEnd}" />
+                            </StackPanel>
+                            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                                <TextBlock
+                                    MinWidth="300"
+                                    MinHeight="20"
+                                    VerticalAlignment="Center"
                                     Text="{ns:Loc LblWarmCamAtSequenceEnd}" />
                                 <CheckBox
                                     Width="120"

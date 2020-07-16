@@ -20,6 +20,7 @@ using NINA.Model.MyFlatDevice;
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
+using NINA.ViewModel.Equipment;
 using NINA.ViewModel.Equipment.FlatDevice;
 using NUnit.Framework;
 using System;
@@ -38,7 +39,7 @@ namespace NINATest.FlatDevice {
         private Mock<IFlatDeviceMediator> _mockFlatDeviceMediator;
         private Mock<IApplicationStatusMediator> _mockApplicationStatusMediator;
         private Mock<IFlatDevice> _mockFlatDevice;
-        private Mock<IFlatDeviceChooserVM> _mockFlatDeviceChooserVM;
+        private Mock<IDeviceChooserVM> _mockFlatDeviceChooserVM;
         private Mock<IFlatDeviceSettings> _mockFlatDeviceSettings;
         private Mock<IFilterWheelSettings> _mockFilterWheelSettings;
         private Mock<ICameraMediator> _mockCameraMediator;
@@ -50,7 +51,7 @@ namespace NINATest.FlatDevice {
             _mockFlatDeviceMediator = new Mock<IFlatDeviceMediator>();
             _mockApplicationStatusMediator = new Mock<IApplicationStatusMediator>();
             _mockFlatDevice = new Mock<IFlatDevice>();
-            _mockFlatDeviceChooserVM = new Mock<IFlatDeviceChooserVM>();
+            _mockFlatDeviceChooserVM = new Mock<IDeviceChooserVM>();
             _mockFlatDeviceSettings = new Mock<IFlatDeviceSettings>();
             _mockFilterWheelSettings = new Mock<IFilterWheelSettings>();
             _mockCameraMediator = new Mock<ICameraMediator>();
@@ -77,13 +78,12 @@ namespace NINATest.FlatDevice {
             _mockProfileService.Setup(m => m.ActiveProfile.ApplicationSettings.DevicePollingInterval).Returns(200);
             //            _mockProfileService.Setup(m => m.ActiveProfile.FlatDeviceSettings.Id).Returns("mockDevice");
             _sut = new FlatDeviceVM(_mockProfileService.Object, _mockFlatDeviceMediator.Object,
-                _mockApplicationStatusMediator.Object, _mockImageGeometryProvider.Object, _mockCameraMediator.Object);
+                _mockApplicationStatusMediator.Object, _mockImageGeometryProvider.Object, _mockFlatDeviceChooserVM.Object, _mockCameraMediator.Object);
         }
 
         [Test]
         public async Task TestOpenCoverNullFlatDevice() {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.OpenCover(), Is.False);
         }
 
@@ -91,7 +91,6 @@ namespace NINATest.FlatDevice {
         public async Task TestOpenCoverNotConnectedFlatDevice() {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, _mockFlatDevice.Object);
             _mockFlatDevice.Setup(m => m.Connected).Returns(false);
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.OpenCover(), Is.False);
         }
 
@@ -100,7 +99,6 @@ namespace NINATest.FlatDevice {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, _mockFlatDevice.Object);
             _mockFlatDevice.Setup(m => m.Connected).Returns(true);
             _mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(false);
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.OpenCover(), Is.False);
         }
 
@@ -113,7 +111,6 @@ namespace NINATest.FlatDevice {
             _mockFlatDevice.Setup(m => m.Connected).Returns(true);
             _mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             _mockFlatDevice.Setup(m => m.Open(It.IsAny<CancellationToken>(), It.IsAny<int>())).Returns(Task.FromResult(expected));
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.OpenCover(), Is.EqualTo(expected));
         }
 
@@ -125,14 +122,12 @@ namespace NINATest.FlatDevice {
             _mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             _mockFlatDevice.Setup(m => m.Open(It.IsAny<CancellationToken>(), It.IsAny<int>()))
                 .Callback((CancellationToken ct, int delay) => throw new OperationCanceledException());
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.OpenCover(), Is.False);
         }
 
         [Test]
         public async Task TestCloseCoverNullFlatDevice() {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.CloseCover(), Is.False);
         }
 
@@ -140,7 +135,6 @@ namespace NINATest.FlatDevice {
         public async Task TestCloseCoverNotConnectedFlatDevice() {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, _mockFlatDevice.Object);
             _mockFlatDevice.Setup(m => m.Connected).Returns(false);
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.CloseCover(), Is.False);
         }
 
@@ -149,7 +143,6 @@ namespace NINATest.FlatDevice {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, _mockFlatDevice.Object);
             _mockFlatDevice.Setup(m => m.Connected).Returns(true);
             _mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(false);
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.CloseCover(), Is.False);
         }
 
@@ -162,7 +155,6 @@ namespace NINATest.FlatDevice {
             _mockFlatDevice.Setup(m => m.Connected).Returns(true);
             _mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             _mockFlatDevice.Setup(m => m.Close(It.IsAny<CancellationToken>(), It.IsAny<int>())).Returns(Task.FromResult(expected));
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.CloseCover(), Is.EqualTo(expected));
         }
 
@@ -174,14 +166,12 @@ namespace NINATest.FlatDevice {
             _mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             _mockFlatDevice.Setup(m => m.Close(It.IsAny<CancellationToken>(), It.IsAny<int>()))
                 .Callback((CancellationToken ct, int delay) => throw new OperationCanceledException());
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.CloseCover(), Is.False);
         }
 
         [Test]
         public async Task TestConnectNullDevice() {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.Connect(), Is.False);
         }
 
@@ -189,7 +179,6 @@ namespace NINATest.FlatDevice {
         public async Task TestConnectDummyDevice() {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, _mockFlatDevice.Object);
             _mockFlatDevice.Setup(m => m.Id).Returns("No_Device");
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.Connect(), Is.False);
         }
 
@@ -200,7 +189,6 @@ namespace NINATest.FlatDevice {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, _mockFlatDevice.Object);
             _mockFlatDevice.Setup(m => m.Id).Returns("Something");
             _mockFlatDevice.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(expected));
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.Connect(), Is.EqualTo(expected));
         }
 
@@ -210,7 +198,6 @@ namespace NINATest.FlatDevice {
             _mockFlatDevice.Setup(m => m.Id).Returns("Something");
             _mockFlatDevice.Setup(m => m.Connect(It.IsAny<CancellationToken>()))
                 .Callback((CancellationToken ct) => throw new OperationCanceledException());
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             Assert.That(await _sut.Connect(), Is.False);
         }
 
@@ -366,7 +353,6 @@ namespace NINATest.FlatDevice {
         [Test]
         public void TestSetBrightnessNullFlatDevice() {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             _sut.SetBrightness(1.0);
             Assert.That(_sut.Brightness, Is.EqualTo(0d));
             _mockFlatDevice.Verify(m => m.Brightness, Times.Never);
@@ -378,7 +364,6 @@ namespace NINATest.FlatDevice {
             _mockFlatDevice.Setup(m => m.Id).Returns("Something");
             _mockFlatDevice.Setup(m => m.Connected).Returns(true);
             _mockFlatDevice.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             await _sut.Connect();
             _sut.SetBrightness(1.0);
             Assert.That(_sut.Brightness, Is.EqualTo(0d));
@@ -388,7 +373,6 @@ namespace NINATest.FlatDevice {
         [Test]
         public void TestToggleLightNullFlatDevice() {
             _mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             _sut.ToggleLight(true);
             Assert.That(_sut.LightOn, Is.EqualTo(false));
             _mockFlatDevice.Verify(m => m.LightOn, Times.Never);
@@ -402,7 +386,6 @@ namespace NINATest.FlatDevice {
             _mockFlatDevice.Setup(m => m.Id).Returns("Something");
             _mockFlatDevice.Setup(m => m.Connected).Returns(true);
             _mockFlatDevice.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
-            _sut.FlatDeviceChooserVM = _mockFlatDeviceChooserVM.Object;
             await _sut.Connect();
             _sut.ToggleLight(expected);
             _mockFlatDevice.VerifySet(m => m.LightOn = expected, Times.Once);

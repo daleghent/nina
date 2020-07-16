@@ -15,7 +15,7 @@
 using NINA.Model.MyTelescope;
 using NINA.Utility.Astrometry;
 using NINA.ViewModel.Equipment.Telescope;
-using NINA.ViewModel.Interfaces;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Utility.Mediator.Interfaces {
@@ -43,5 +43,7 @@ namespace NINA.Utility.Mediator.Interfaces {
         Task<bool> ParkTelescope();
 
         void UnparkTelescope();
+
+        Task WaitForSlew(CancellationToken cancellationToken);
     }
 }
