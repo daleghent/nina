@@ -32,7 +32,7 @@
     </Window.InputBindings>
     <Window.TaskbarItemInfo>
         <TaskbarItemInfo ProgressValue="{Binding SeqVM.TaskBarProgressValue}"
-                         ProgressState="{Binding TaskBarProgressState}">
+                         ProgressState="{Binding SeqVM.TaskBarProgressState}">
             <TaskbarItemInfo.ThumbButtonInfos>
                 <ThumbButtonInfo ImageSource="pack://application:,,,/Resources/play-32.png"
                                  Command="{Binding SeqVM.StartSequenceCommand}"
