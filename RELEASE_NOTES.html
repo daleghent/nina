@@ -21,8 +21,30 @@
     <h1 id="n.i.n.a-nighttime-imaging-n-astronomy-changelog">N.I.N.A. - Nighttime Imaging 'N' Astronomy Changelog</h1>
 <p>If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.<br />
 More details at <a href="https://nighttime-imaging.eu/donate/">https://nighttime-imaging.eu/donate/</a></p>
-<h1 id="version-1.10">Version 1.10</h1>
+<h1 id="version-1.11">Version 1.11</h1>
 <h2 id="new-hardware-support">New hardware support</h2>
+<h4 id="native-support-for-atik-efw23-and-internal-filterwheels">Native support for Atik EFW2/3 and internal Filterwheels</h4>
+<ul>
+<li>The integrated filter wheels for Atik cameras like the Atik One 9.0 are now natively supported</li>
+<li>This allows usage of native camera drivers for Atik cameras with integrated filter wheels</li>
+<li>The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver</li>
+</ul>
+<h2 id="application-improvements">Application Improvements</h2>
+<h3 id="general">General</h3>
+<ul>
+<li>Current sequence progress is now displayed in the task bar, also visualizes pause and non-capture tasks during the sequence</li>
+<li>It is now possible to start, pause, resume and cancel sequences from the preview window</li>
+</ul>
+<h3 id="sequencer">Sequencer</h3>
+<ul>
+<li>Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter</li>
+</ul>
+<h3 id="image-preview">Image Preview</h3>
+<ul>
+<li>Ability to inspect pixel area and pixel values in detail by holding right click</li>
+</ul>
+<h1 id="version-1.10">Version 1.10</h1>
+<h2 id="new-hardware-support-1">New hardware support</h2>
 <h4 id="flat-panel-control-and-automation">Flat Panel control and automation</h4>
 <ul>
 <li>Control supported flat panel devices from within N.I.N.A.</li>
@@ -97,8 +119,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/">https://nighttime
 </ul>
 </li>
 </ul>
-<h2 id="application-improvements">Application Improvements</h2>
-<h3 id="general">General</h3>
+<h2 id="application-improvements-1">Application Improvements</h2>
+<h3 id="general-1">General</h3>
 <ul>
 <li>Added the ability to record flat frame exposure times with the Flat Wizard, which may be later used in a sequence</li>
 <li>The Flat Wizard's limit of 50 exposures has been eliminated, but we're still not sure why you would want more than that</li>
@@ -148,7 +170,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/">https://nighttime
 <li>An auto-focus operation will not be performed if it might interfere with a pending meridian flip</li>
 <li>All auto-focus operations and their data points are now logged to their own <a href="https://www.json.org/">JSON</a>-formatted file located in <code>%LOCALAPPDATA%\NINA\AutoFocus</code>. This allows one to retrace what was measured at a later time</li>
 </ul>
-<h3 id="sequencer">Sequencer</h3>
+<h3 id="sequencer-1">Sequencer</h3>
 <ul>
 <li>Parameters in rows that are added to a sequence will now default to the parameters specified in the row above it</li>
 <li>A user-specified command (batch script, Windows/DOS executable, etc.) may be ran at the conclusion of a sequence. This command may be specified under <strong>Options &gt; Imaging &gt; Sequence</strong></li>

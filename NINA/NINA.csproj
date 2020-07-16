@@ -499,6 +499,8 @@
     <Compile Include="Utility\AllDeviceConsumer.cs" />
     <Compile Include="Utility\Astrometry\EarthRotationParameterUpdater.cs" />
     <Compile Include="Utility\Astrometry\WorldCoordinateSystem.cs" />
+    <Compile Include="Utility\Behaviors\MouseCommandBehavior.cs" />
+    <Compile Include="Utility\Behaviors\MouseFollowBehavior.cs" />
     <Compile Include="Utility\CameraSDKs\ASISDK\EFWdll.cs" />
     <Compile Include="Utility\CameraSDKs\EDSDK\EDSDKLocal.cs" />
     <Compile Include="Model\MySwitch\PegasusAstro\DataProviderSwitch.cs" />
