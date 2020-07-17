@@ -91,6 +91,11 @@ namespace NINA.Model.MySwitch {
 
             [JsonProperty(PropertyName = "label")]
             public string Label;
+
+            public PowerHubResponse(int status, string label) {
+                Status = status;
+                Label = label;
+            }
         }
     }
 }

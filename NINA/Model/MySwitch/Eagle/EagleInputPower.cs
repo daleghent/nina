@@ -51,6 +51,10 @@ namespace NINA.Model.MySwitch {
 
             [JsonProperty(PropertyName = "supply")]
             public double Supply;
+
+            public SupplyResponse(double supply) {
+                Supply = supply;
+            }
         }
     }
 }

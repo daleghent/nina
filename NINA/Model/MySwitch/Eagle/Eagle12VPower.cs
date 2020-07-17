@@ -77,6 +77,13 @@ namespace NINA.Model.MySwitch {
 
             [JsonProperty(PropertyName = "label")]
             public string Label;
+
+            public PowerOutResponse(double voltage, double current, double power, string label) {
+                Voltage = voltage;
+                Current = current;
+                Power = power;
+                Label = label;
+            }
         }
     }
 }
