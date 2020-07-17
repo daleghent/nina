@@ -3936,6 +3936,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Synchronization Timeout.
+        /// </summary>
+        internal static string LblDomeSyncTimeout {
+            get {
+                return ResourceManager.GetString("LblDomeSyncTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum amount of time, in seconds, to wait for the Dome and Telescope to synchronize their positions.
+        /// </summary>
+        internal static string LblDomeSyncTimeoutTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeSyncTimeoutTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download.
         /// </summary>
         internal static string LblDownload {

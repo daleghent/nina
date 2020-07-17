@@ -354,8 +354,14 @@ namespace NINA.ViewModel.Equipment.Dome {
         private Task domeRotationTask;
 
         public async Task WaitForDomeSynchronization(CancellationToken cancellationToken) {
-            while (DirectFollowEnabled && !cancellationToken.IsCancellationRequested && !IsSynchronized) {
-                await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+            var timeoutCTS = new CancellationTokenSource(TimeSpan.FromSeconds(profileService.ActiveProfile.DomeSettings.DomeSyncTimeoutSeconds));
+            var timeoutOrClientCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(timeoutCTS.Token, cancellationToken).Token;
+            while (DirectFollowEnabled && !IsSynchronized) {
+                if (timeoutOrClientCancellationToken.IsCancellationRequested) {
+                    Logger.Warning("Waiting for Dome synchronization cancelled or timed out");
+                    return;
+                }
+                await Task.Delay(TimeSpan.FromSeconds(1), timeoutOrClientCancellationToken);
             }
         }
 

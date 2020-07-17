@@ -24,5 +24,6 @@ namespace NINA.Profile {
         double AzimuthTolerance_degrees { get; set; }
         bool UseDirectFollowing { get; set; }
         bool FindHomeBeforePark { get; set; }
+        int DomeSyncTimeoutSeconds { get; set; }
     }
 }

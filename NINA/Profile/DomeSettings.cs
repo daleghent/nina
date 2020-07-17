@@ -25,6 +25,7 @@ namespace NINA.Profile {
             AzimuthTolerance_degrees = 1.0;
             UseDirectFollowing = true;
             FindHomeBeforePark = false;
+            DomeSyncTimeoutSeconds = 120;
         }
 
         private string id = string.Empty;
@@ -140,6 +141,19 @@ namespace NINA.Profile {
             }
             set {
                 findHomeBeforePark = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private int domeSyncTimeoutSeconds = 120;
+
+        [DataMember]
+        public int DomeSyncTimeoutSeconds {
+            get {
+                return domeSyncTimeoutSeconds;
+            }
+            set {
+                domeSyncTimeoutSeconds = value;
                 RaisePropertyChanged();
             }
         }
