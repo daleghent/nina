@@ -11,6 +11,7 @@ using NINA.Profile;
 using ASCOM.Astrometry.NOVASCOM;
 
 namespace NINATest.Dome {
+
     [TestFixture]
     public class DomeSynchronizationTest {
         private double siteLatitude;
@@ -30,7 +31,7 @@ namespace NINATest.Dome {
             double gemAxisLength = 0.0,
             double mountOffsetX = 0.0,
             double mountOffsetY = 0.0,
-            double mountOffsetZ = 0.0, 
+            double mountOffsetZ = 0.0,
             double siteLatitude = 41.3,
             double siteLongitude = -74.4) {
             var mockProfileService = new Mock<IProfileService>();
@@ -41,7 +42,7 @@ namespace NINATest.Dome {
             mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.ScopePositionUpDown_mm).Returns(mountOffsetZ);
             this.siteLatitude = siteLatitude;
             this.siteLongitude = siteLongitude;
-            this.localSiderealTime = Astrometry.GetLocalSiderealTime(DateTime.Now, this.siteLongitude);
+            this.localSiderealTime = Astrometry.GetLocalSiderealTime(DateTime.Now, this.siteLongitude, this.db);
             var mountOffset = new Vector3D(mountOffsetX, mountOffsetY, mountOffsetZ);
             return new DomeSynchronization(mockProfileService.Object);
         }
@@ -58,9 +59,9 @@ namespace NINATest.Dome {
 
         private Coordinates GetCoordinatesFromAltAz(double altitude, double azimuth) {
             return new TopocentricCoordinates(
-                azimuth: Angle.ByDegree(azimuth), 
-                altitude: Angle.ByDegree(altitude), 
-                latitude: Angle.ByDegree(siteLatitude), 
+                azimuth: Angle.ByDegree(azimuth),
+                altitude: Angle.ByDegree(altitude),
+                latitude: Angle.ByDegree(siteLatitude),
                 longitude: Angle.ByDegree(siteLongitude)).Transform(Epoch.JNOW, db);
         }
 

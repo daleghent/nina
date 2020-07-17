@@ -78,8 +78,8 @@ namespace NINATest.Dome {
             mockTelescopeMediator = new Mock<ITelescopeMediator>();
             mockDomeSynchronization = new Mock<IDomeSynchronization>();
             mockDomeSynchronization.Setup(x => x.TargetDomeAzimuth(
-                It.IsAny<Coordinates>(), 
-                It.IsAny<double>(), 
+                It.IsAny<Coordinates>(),
+                It.IsAny<double>(),
                 It.IsAny<Angle>(),
                 It.IsAny<Angle>(),
                 It.IsAny<PierSide>())).Returns(() => domeTargetAzimuth);
@@ -137,13 +137,14 @@ namespace NINATest.Dome {
             var sut = await CreateSUT();
             sut.FollowEnabled = true;
             sut.DirectFollowToggled = true;
-            var t1 = new TelescopeInfo() { 
+            var t1 = new TelescopeInfo() {
                 Connected = true,
                 SiteLatitude = siteLatitude.Degree,
                 SiteLongitude = siteLongitude.Degree,
                 SiderealTime = 11.2,
                 SideOfPier = PierSide.pierEast,
-                Coordinates = new Coordinates(1.0, 2.0, Epoch.J2000, Coordinates.RAType.Degrees)};
+                Coordinates = new Coordinates(1.0, 2.0, Epoch.J2000, Coordinates.RAType.Degrees)
+            };
             sut.UpdateDeviceInfo(t1);
             mockDomeSynchronization.Verify(x => x.TargetDomeAzimuth(t1.Coordinates, t1.SiderealTime, siteLatitude, siteLongitude, t1.SideOfPier), Times.Once);
         }
@@ -245,7 +246,7 @@ namespace NINATest.Dome {
             var t1 = new TelescopeInfo() { Connected = true };
             mockDomeSynchronization.Setup(x => x.TargetDomeAzimuth(It.IsAny<Coordinates>(), It.IsAny<double>(), It.IsAny<Angle>(), It.IsAny<Angle>(), It.IsAny<PierSide>())).Throws(new InvalidOperationException("Error"));
             sut.UpdateDeviceInfo(t1);
-            
+
             // Error getting the TargetDomeAzimuth disables slaving
             Assert.AreEqual(false, sut.FollowEnabled);
         }
@@ -257,7 +258,12 @@ namespace NINATest.Dome {
             sut.DirectFollowToggled = true;
             var t1 = new TelescopeInfo() { Connected = true };
             domeTargetAzimuth = Angle.ByDegree(2);
-            mockDome.Setup(x => x.SlewToAzimuth(domeTargetAzimuth.Degree, It.IsAny<CancellationToken>())).Verifiable();
+            mockDome
+                .Setup(x => x.SlewToAzimuth(domeTargetAzimuth.Degree, It.IsAny<CancellationToken>()))
+                .Callback<double, CancellationToken>((x, y) => {
+                    domeAzimuth = domeTargetAzimuth.Degree;
+                }).Returns(Task.CompletedTask)
+                .Verifiable();
 
             sut.UpdateDeviceInfo(t1);
             await sut.WaitForDomeSynchronization(CancellationToken.None);

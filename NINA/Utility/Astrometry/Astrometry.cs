@@ -133,7 +133,7 @@ namespace NINA.Utility.Astrometry {
         /// </summary>
         /// <param name="date">Date to retrieve DeltaT for</param>
         /// <returns>DeltaT at given date</returns>
-        public static double DeltaT(DateTime date) {
+        public static double DeltaT(DateTime date, DatabaseInteraction db = null) {
             var utcDate = date.ToUniversalTime();
             double utc1 = 0, utc2 = 0, tai1 = 0, tai2 = 0;
             SOFA.Dtf2d("UTC", utcDate.Year, utcDate.Month, utcDate.Day, utcDate.Hour, utcDate.Minute, (double)utcDate.Second + (double)utcDate.Millisecond / 1000.0, ref utc1, ref utc2);
@@ -141,7 +141,7 @@ namespace NINA.Utility.Astrometry {
 
             var utc = utc1 + utc2;
             var tai = tai1 + tai2;
-            var deltaT = 32.184 + DaysToSeconds((tai - utc)) - DeltaUT(utcDate);
+            var deltaT = 32.184 + DaysToSeconds((tai - utc)) - DeltaUT(utcDate, db);
             return deltaT;
         }
 
@@ -193,14 +193,14 @@ namespace NINA.Utility.Astrometry {
         /// <param name="date">     </param>
         /// <param name="longitude"></param>
         /// <returns>Sidereal Time in hours</returns>
-        public static double GetLocalSiderealTime(DateTime date, double longitude) {
+        public static double GetLocalSiderealTime(DateTime date, double longitude, DatabaseInteraction db = null) {
             var jd = GetJulianDate(date);
 
             long jd_high = (long)jd;
             double jd_low = jd - jd_high;
 
             double lst = 0;
-            NOVAS.SiderealTime(jd_high, jd_low, DeltaT(date), NOVAS.GstType.GreenwichApparentSiderealTime, NOVAS.Method.EquinoxBased, NOVAS.Accuracy.Full, ref lst);
+            NOVAS.SiderealTime(jd_high, jd_low, DeltaT(date, db), NOVAS.GstType.GreenwichApparentSiderealTime, NOVAS.Method.EquinoxBased, NOVAS.Accuracy.Full, ref lst);
             lst = lst + DegreesToHours(longitude);
             return lst;
         }
