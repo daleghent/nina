@@ -53,7 +53,7 @@ namespace NINA.ViewModel {
 
         private Coordinates _targetCoordinates;
 
-        private CancellationTokenSource _tokensource;
+        private CancellationTokenSource internalCancellationToken;
         private ITelescopeMediator telescopeMediator;
         private IGuiderMediator guiderMediator;
         private IImagingMediator imagingMediator;
@@ -102,10 +102,10 @@ namespace NINA.ViewModel {
         }
 
         private void Cancel(object obj) {
-            _tokensource?.Cancel();
+            internalCancellationToken?.Cancel();
         }
 
-        private async Task<bool> DoFilp(CancellationToken token, IProgress<ApplicationStatus> progress) {
+        private async Task<bool> DoFlip(CancellationToken token, IProgress<ApplicationStatus> progress) {
             progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblFlippingScope"] });
             Logger.Trace($"Meridian Flip - Scope will flip to coordinates RA: {_targetCoordinates.RAString} Dec: {_targetCoordinates.DecString} Epoch: {_targetCoordinates.Epoch}");
             var flipsuccess = await telescopeMediator.MeridianFlip(_targetCoordinates);
@@ -116,29 +116,29 @@ namespace NINA.ViewModel {
             return flipsuccess;
         }
 
-        private async Task<bool> DoMeridianFlip(Coordinates targetCoordinates, TimeSpan timeToFlip) {
+        private async Task<bool> DoMeridianFlip(Coordinates targetCoordinates, TimeSpan timeToFlip, CancellationToken requestCancellationToken) {
             try {
+                var cancellationToken = CancellationTokenSource.CreateLinkedTokenSource(requestCancellationToken, this.internalCancellationToken.Token).Token;
                 _targetCoordinates = targetCoordinates;
                 RemainingTime = timeToFlip;
 
                 Logger.Trace("Meridian Flip - Initializing Meridian Flip");
                 Logger.Trace($"Meridian Flip - Current target coordinates RA: {_targetCoordinates.RAString} Dec: {_targetCoordinates.DecString} Epoch: {_targetCoordinates.Epoch}");
 
-                var token = _tokensource.Token;
                 Steps = new AutomatedWorkflow();
 
-                Steps.Add(new WorkflowStep("StopAutoguider", Locale.Loc.Instance["LblStopAutoguider"], () => StopAutoguider(token, _progress)));
+                Steps.Add(new WorkflowStep("StopAutoguider", Locale.Loc.Instance["LblStopAutoguider"], () => StopAutoguider(cancellationToken, _progress)));
 
-                Steps.Add(new WorkflowStep("PassMeridian", Locale.Loc.Instance["LblPassMeridian"], () => PassMeridian(token, _progress)));
-                Steps.Add(new WorkflowStep("Flip", Locale.Loc.Instance["LblFlip"], () => DoFilp(token, _progress)));
+                Steps.Add(new WorkflowStep("PassMeridian", Locale.Loc.Instance["LblPassMeridian"], () => PassMeridian(cancellationToken, _progress)));
+                Steps.Add(new WorkflowStep("Flip", Locale.Loc.Instance["LblFlip"], () => DoFlip(cancellationToken, _progress)));
                 if (profileService.ActiveProfile.MeridianFlipSettings.Recenter) {
-                    Steps.Add(new WorkflowStep("Recenter", Locale.Loc.Instance["LblRecenter"], () => Recenter(token, _progress)));
+                    Steps.Add(new WorkflowStep("Recenter", Locale.Loc.Instance["LblRecenter"], () => Recenter(cancellationToken, _progress)));
                 }
 
-                Steps.Add(new WorkflowStep("SelectNewGuideStar", Locale.Loc.Instance["LblSelectNewGuideStar"], () => SelectNewGuideStar(token, _progress)));
-                Steps.Add(new WorkflowStep("ResumeAutoguider", Locale.Loc.Instance["LblResumeAutoguider"], () => ResumeAutoguider(token, _progress)));
+                Steps.Add(new WorkflowStep("SelectNewGuideStar", Locale.Loc.Instance["LblSelectNewGuideStar"], () => SelectNewGuideStar(cancellationToken, _progress)));
+                Steps.Add(new WorkflowStep("ResumeAutoguider", Locale.Loc.Instance["LblResumeAutoguider"], () => ResumeAutoguider(cancellationToken, _progress)));
 
-                Steps.Add(new WorkflowStep("Settle", Locale.Loc.Instance["LblSettle"], () => Settle(token, _progress)));
+                Steps.Add(new WorkflowStep("Settle", Locale.Loc.Instance["LblSettle"], () => Settle(cancellationToken, _progress)));
 
                 await Steps.Process();
             } catch (Exception ex) {
@@ -325,12 +325,12 @@ namespace NINA.ViewModel {
         /// <param name="targetCoordinates">Reference Coordinates to slew to after flip</param>
         /// <param name="timeToFlip">Remaining time to actually flip the scope</param>
         /// <returns></returns>
-        public async Task<bool> MeridianFlip(Coordinates targetCoordinates, TimeSpan timeToFlip) {
+        public async Task<bool> MeridianFlip(Coordinates targetCoordinates, TimeSpan timeToFlip, CancellationToken cancellationToken = default) {
             var service = WindowServiceFactory.Create();
-            this._tokensource?.Dispose();
-            this._tokensource = new CancellationTokenSource();
+            this.internalCancellationToken?.Dispose();
+            this.internalCancellationToken = new CancellationTokenSource();
             this._progress = new Progress<ApplicationStatus>(p => Status = p);
-            var flip = DoMeridianFlip(targetCoordinates, timeToFlip);
+            var flip = DoMeridianFlip(targetCoordinates, timeToFlip, cancellationToken);
 
             var serviceTask = service.ShowDialog(this, Locale.Loc.Instance["LblAutoMeridianFlip"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.None, CancelCommand);
             var flipResult = await flip;
