@@ -257,6 +257,7 @@
     <Compile Include="MGEN\Commands\StartStarSearchCommandTest.cs" />
     <Compile Include="MGEN\Commands\StopCameraCommandTest.cs" />
     <Compile Include="MGEN\Commands\StopGuidingCommandTest.cs" />
+    <Compile Include="Planetarium\StellariumTest.cs" />
     <Compile Include="PlateSolving\CaptureSolverTest.cs" />
     <Compile Include="PlateSolving\CenterSolverTest.cs" />
     <Compile Include="PlateSolving\ImageSolverTest.cs" />

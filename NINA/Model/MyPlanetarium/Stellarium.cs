@@ -118,7 +118,7 @@ namespace NINA.Model.MyPlanetarium {
             }
         }
 
-        private class StellariumView {
+        public class StellariumView {
 
             [JsonProperty(PropertyName = "altAz")]
             public double[] AltAz;
@@ -128,9 +128,15 @@ namespace NINA.Model.MyPlanetarium {
 
             [JsonProperty(PropertyName = "jNow")]
             public double[] JNOW;
+
+            public StellariumView(double[] altAz, double[] j2000, double[] jnow) {
+                AltAz = altAz;
+                J2000 = j2000;
+                JNOW = jnow;
+            }
         }
 
-        private class StellariumObject {
+        public class StellariumObject {
 
             [JsonProperty(PropertyName = "raJ2000")]
             public double RightAscension;
@@ -140,9 +146,15 @@ namespace NINA.Model.MyPlanetarium {
 
             [JsonProperty(PropertyName = "name")]
             public string Name;
+
+            public StellariumObject(double rightAscension, double declination, string name) {
+                RightAscension = rightAscension;
+                Declination = declination;
+                Name = name;
+            }
         }
 
-        private class StellariumLocation {
+        public class StellariumLocation {
 
             [JsonProperty(PropertyName = "altitude")]
             public double Altitude;
@@ -152,12 +164,22 @@ namespace NINA.Model.MyPlanetarium {
 
             [JsonProperty(PropertyName = "longitude")]
             public double Longitude;
+
+            public StellariumLocation(double altitude, double latitude, double longitude) {
+                Altitude = altitude;
+                Latitude = latitude;
+                Longitude = longitude;
+            }
         }
 
-        private class StellariumStatus {
+        public class StellariumStatus {
 
             [JsonProperty(PropertyName = "location")]
             public StellariumLocation Location;
+
+            public StellariumStatus(StellariumLocation location) {
+                Location = location;
+            }
         }
     }
 }
