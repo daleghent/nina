@@ -169,7 +169,7 @@
                         </TextBlock>
                         <TextBox Height="25" HorizontalAlignment="Stretch">
                             <TextBox.Text>
-                                <Binding Path="DomeSyncTimeout_secs" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="DomeSyncTimeoutSeconds" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:GreaterZeroRule />
                                     </Binding.ValidationRules>
