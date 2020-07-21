@@ -12,9 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Model.ImageData;
+using NINA.Model.MyTelescope;
 using NINA.Profile;
+using NINA.Utility;
+using NINA.Utility.Astrometry;
+using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.RawConverter;
+using NINA.Utility.SkySurvey;
 using NINA.Utility.WindowService;
 using System;
 using System.Collections.Generic;
@@ -22,11 +27,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NINA.Model.ImageData;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Model.MyTelescope;
-using NINA.Utility.SkySurvey;
-using NINA.Utility.Astrometry;
 
 namespace NINA.Model.MyCamera.Simulator {
 
@@ -446,9 +446,11 @@ namespace NINA.Model.MyCamera.Simulator {
         }
 
         public async Task<bool> Connect(CancellationToken token) {
-            this.telescopeMediator.RegisterConsumer(this);
-            Connected = true;
-            return true;
+            return await Task.Run(() => {
+                telescopeMediator.RegisterConsumer(this);
+                Connected = true;
+                return true;
+            }, token);
         }
 
         public void Disconnect() {

@@ -347,11 +347,11 @@ namespace NINA.Model.ImageData {
                         return BitmapToImageArray(decoder, isBayered);
 
                     case ".xisf":
-                        return await XISF.Load(new Uri(path), isBayered);
+                        return await XISF.Load(new Uri(path), isBayered, ct);
 
                     case ".fit":
                     case ".fits":
-                        return await FITS.Load(new Uri(path), isBayered);
+                        return await FITS.Load(new Uri(path), isBayered, ct);
 
                     case ".cr2":
                     case ".nef":

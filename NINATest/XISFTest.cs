@@ -12,21 +12,21 @@
 
 #endregion "copyright"
 
+using FluentAssertions;
+using NINA.Model.ImageData;
 using NINA.Utility;
+using NINA.Utility.Astrometry;
+using NINA.Utility.FileFormat.FITS;
+using NINA.Utility.FileFormat.XISF;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Linq;
-using FluentAssertions;
-using Moq;
-using NINA.Model.ImageData;
 using System.Globalization;
-using NINA.Utility.Astrometry;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
-using NINA.Utility.FileFormat.FITS;
-using NINA.Utility.FileFormat.XISF;
+using System.Xml.Linq;
 
 namespace NINATest {
 
@@ -41,7 +41,7 @@ namespace NINATest {
 
             var sut = new XISF(header);
 
-            sut.Header.Should().Equals(header);
+            sut.Header.Should().Be(header);
             sut.PaddedBlockSize.Should().Be(1024);
         }
 
@@ -63,7 +63,7 @@ namespace NINATest {
         [Test]
         public void XISFAddAttachedImageTest() {
             var props = new ImageProperties(width: 3, height: 3, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
+            const string imageType = "LIGHT";
             var data = new ushort[] {
                 1,1,1,
                 2,3,4,
@@ -84,9 +84,9 @@ namespace NINATest {
 
             sut.Header.Image.Should().HaveAttribute("location", $"attachment:{sut.PaddedBlockSize}:{length}");
 
-            ushort[] outarray = new ushort[sut.Data.Data.Length / 2];
-            Buffer.BlockCopy(sut.Data.Data, 0, outarray, 0, sut.Data.Data.Length);
-            outarray.Should().Equal(data);
+            var outArray = new ushort[sut.Data.Data.Length / 2];
+            Buffer.BlockCopy(sut.Data.Data, 0, outArray, 0, sut.Data.Data.Length);
+            outArray.Should().Equal(data);
         }
 
         [Test]
@@ -94,13 +94,12 @@ namespace NINATest {
         [TestCase("00000000000000000000000", "6144")]
         public async Task XISFAddAttachedImage_Special_Test(string value, string expectedAttachmentLocation) {
             var props = new ImageProperties(width: 3, height: 3, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
+            const string imageType = "LIGHT";
             var data = new ushort[] {
                 1,1,1,
                 2,3,4,
                 1,1,1
             };
-            var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
@@ -110,7 +109,7 @@ namespace NINATest {
 
             var header = new XISFHeader();
             header.AddImageMetaData(props, imageType);
-            for (int i = 0; i < 50; i++) {
+            for (var i = 0; i < 50; i++) {
                 header.AddImageFITSKeyword("test", "00000000000000000000000000000000000000000000000000");
             }
             header.AddImageFITSKeyword("t", value);
@@ -123,19 +122,20 @@ namespace NINATest {
                 sut.Save(s);
             }
 
-            var x = await XISF.Load(new Uri(file), false);
+            var x = await XISF.Load(new Uri(file), false, new CancellationToken());
 
-            sut.Header.Image.Attribute("location").Value.Split(':')[1].Should().Be(expectedAttachmentLocation);
+            sut.Header.Image.Attribute("location").Should().NotBeNull();
+            sut.Header.Image.Attribute("location")?.Value.Split(':')[1].Should().Be(expectedAttachmentLocation);
             x.Data.FlatArray.Should().BeEquivalentTo(data);
             File.Delete(file);
         }
 
         [Test]
         public void XISFCompressLZ4Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
@@ -160,10 +160,10 @@ namespace NINATest {
 
         [Test]
         public void XISFCompressLZ4ShuffledTest() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
@@ -189,10 +189,10 @@ namespace NINATest {
 
         [Test]
         public void XISFCompressLZ4HCTest() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
@@ -217,10 +217,10 @@ namespace NINATest {
 
         [Test]
         public void XISFCompressLZ4HCShuffledTest() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
@@ -246,10 +246,10 @@ namespace NINATest {
 
         [Test]
         public void XISFCompressZLibTest() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
@@ -274,10 +274,10 @@ namespace NINATest {
 
         [Test]
         public void XISFCompressZLibShuffledTest() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
             var length = data.Length * sizeof(ushort);
 
             var fileSaveInfo = new FileSaveInfo {
@@ -303,11 +303,11 @@ namespace NINATest {
 
         [Test]
         public void XISFChecksumSHA1Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
-            string cksum = "ca711c69165e1fa5be72993b9a7870ef6d485249";
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
+            const string checksum = "ca711c69165e1fa5be72993b9a7870ef6d485249";
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
@@ -325,16 +325,16 @@ namespace NINATest {
             var sut = new XISF(header);
             sut.AddAttachedImage(data, fileSaveInfo);
 
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-1:{cksum}");
+            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-1:{checksum}");
         }
 
         [Test]
         public void XISFChecksumSHA256Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
-            string cksum = "2d864c0b789a43214eee8524d3182075125e5ca2cd527f3582ec87ffd94076bc";
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
+            const string checksum = "2d864c0b789a43214eee8524d3182075125e5ca2cd527f3582ec87ffd94076bc";
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
@@ -352,16 +352,16 @@ namespace NINATest {
             var sut = new XISF(header);
             sut.AddAttachedImage(data, fileSaveInfo);
 
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-256:{cksum}");
+            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-256:{checksum}");
         }
 
         [Test]
         public void XISFChecksumSHA512Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
-            string cksum = "b0dbd95e5dbe70819049ae5f10340a2c29fa630ac3afd6b3cbf97865cea418dbecf718ea6e15a596c7e8a40b9372b85ac82f602092438570247afc418650db0b";
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
+            const string checksum = "b0dbd95e5dbe70819049ae5f10340a2c29fa630ac3afd6b3cbf97865cea418dbecf718ea6e15a596c7e8a40b9372b85ac82f602092438570247afc418650db0b";
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
@@ -379,16 +379,16 @@ namespace NINATest {
             var sut = new XISF(header);
             sut.AddAttachedImage(data, fileSaveInfo);
 
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-512:{cksum}");
+            sut.Header.Image.Should().HaveAttribute("checksum", $"sha-512:{checksum}");
         }
 
         [Test]
         public void XISFChecksumSHA3_256Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
-            string cksum = "1454fca9a69b7c15209d52a7474b3b80cfc4b80c5e1720d24c13a24d9d832c0e";
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
+            const string checksum = "1454fca9a69b7c15209d52a7474b3b80cfc4b80c5e1720d24c13a24d9d832c0e";
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
@@ -406,16 +406,16 @@ namespace NINATest {
             var sut = new XISF(header);
             sut.AddAttachedImage(data, fileSaveInfo);
 
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha3-256:{cksum}");
+            sut.Header.Image.Should().HaveAttribute("checksum", $"sha3-256:{checksum}");
         }
 
         [Test]
         public void XISFChecksumSHA3_512Test() {
-            int imgsize = 128;
-            var props = new ImageProperties(width: imgsize, height: imgsize, bitDepth: 16, isBayered: false, gain: 0);
-            var imageType = "LIGHT";
-            ushort[] data = new ushort[imgsize * imgsize];
-            string cksum = "9934ce6c44048d54302b025f71ddbb44ad49da730600b60821798892c1f51b19a91b0dc9c578ed4baa4b9e7506e966100532f9b70e264aaef6ee76eda074ab57";
+            const int imgSize = 128;
+            var props = new ImageProperties(width: imgSize, height: imgSize, bitDepth: 16, isBayered: false, gain: 0);
+            const string imageType = "LIGHT";
+            var data = new ushort[imgSize * imgSize];
+            const string checksum = "9934ce6c44048d54302b025f71ddbb44ad49da730600b60821798892c1f51b19a91b0dc9c578ed4baa4b9e7506e966100532f9b70e264aaef6ee76eda074ab57";
 
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
@@ -433,7 +433,7 @@ namespace NINATest {
             var sut = new XISF(header);
             sut.AddAttachedImage(data, fileSaveInfo);
 
-            sut.Header.Image.Should().HaveAttribute("checksum", $"sha3-512:{cksum}");
+            sut.Header.Image.Should().HaveAttribute("checksum", $"sha3-512:{checksum}");
         }
 
         #endregion "XISF"

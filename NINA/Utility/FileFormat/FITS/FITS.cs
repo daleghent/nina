@@ -13,15 +13,13 @@
 #endregion "copyright"
 
 using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
 using NINA.Utility.FileFormat.FITS.DataConverter;
 using nom.tam.fits;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Utility.FileFormat.FITS {
@@ -38,7 +36,7 @@ namespace NINA.Utility.FileFormat.FITS {
             this.Data = new FITSData(data);
         }
 
-        public static Task<IImageData> Load(Uri filePath, bool isBayered) {
+        public static Task<IImageData> Load(Uri filePath, bool isBayered, CancellationToken ct) {
             return Task.Run<IImageData>(() => {
                 Fits f = new Fits(filePath);
                 ImageHDU hdu = (ImageHDU)f.ReadHDU();
@@ -87,7 +85,7 @@ namespace NINA.Utility.FileFormat.FITS {
                     Logger.Error(ex.Message);
                 }
                 return new Model.ImageData.ImageData(pixels, width, height, 16, isBayered, metaData);
-            });
+            }, ct);
         }
 
         private static IDataConverter GetConverter(int bitPix) {

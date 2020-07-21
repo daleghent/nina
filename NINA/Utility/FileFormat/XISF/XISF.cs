@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -45,187 +46,189 @@ namespace NINA.Utility.FileFormat.XISF {
         /// </summary>
         public int PaddedBlockSize => 1024;
 
-        public static async Task<ImageData> Load(Uri filePath, bool isBayered) {
-            using (FileStream fs = new FileStream(filePath.LocalPath, FileMode.Open)) {
-                // First make sure we are opening a XISF file by looking for the XISF signature at bytes 1-8
-                byte[] fileSig = new byte[xisfSignature.Length];
-                fs.Read(fileSig, 0, fileSig.Length);
+        public static async Task<ImageData> Load(Uri filePath, bool isBayered, CancellationToken ct) {
+            return await Task.Run(() => {
+                using (FileStream fs = new FileStream(filePath.LocalPath, FileMode.Open)) {
+                    // First make sure we are opening a XISF file by looking for the XISF signature at bytes 1-8
+                    byte[] fileSig = new byte[xisfSignature.Length];
+                    fs.Read(fileSig, 0, fileSig.Length);
 
-                if (!fileSig.SequenceEqual(xisfSignature)) {
-                    Logger.Error($"XISF: Opened file \"{filePath.LocalPath}\" is not a valid XISF file");
-                    throw new InvalidDataException(Locale.Loc.Instance["LblXisfInvalidFile"]);
-                }
-
-                Logger.Debug($"XISF: Opening file \"{filePath.LocalPath}\"");
-
-                // Get the header length info, bytes 9-12
-                byte[] headerLengthInfo = new byte[4];
-                fs.Read(headerLengthInfo, 0, headerLengthInfo.Length);
-                uint headerLength = BitConverter.ToUInt32(headerLengthInfo, 0);
-
-                // Skip the next 4 bytes as they are reserved space
-                fs.Seek(4, SeekOrigin.Current);
-
-                // XML document starts at byte 17
-                byte[] bytes = new byte[headerLength];
-                fs.Read(bytes, 0, (int)headerLength);
-                string xmlString = Encoding.UTF8.GetString(bytes);
-
-                /*
-                 * Create the header for ease of access
-                 */
-                XElement xml = XElement.Parse(xmlString);
-                var header = new XISFHeader(xml);
-
-                var metaData = new ImageMetaData();
-                try {
-                    metaData = header.ExtractMetaData();
-                } catch (Exception ex) {
-                    Logger.Error($"XISF: Error during metadata extraction {ex.Message}");
-                }
-
-                /*
-                 * Retrieve the geometry attribute.
-                 */
-                int width = 0;
-                int height = 0;
-
-                try {
-                    string[] geometry = header.Image.Attribute("geometry").Value.Split(':');
-                    width = int.Parse(geometry[0]);
-                    height = int.Parse(geometry[1]);
-                } catch (Exception ex) {
-                    Logger.Error($"XISF: Could not find image geometry: {ex}");
-                    throw new InvalidDataException(Locale.Loc.Instance["LblXisfInvalidGeometry"]);
-                }
-
-                Logger.Debug($"XISF: File geometry: width={width}, height={height}");
-
-                /*
-                 * Retrieve the pixel data type
-                 */
-                string sampleFormat = "UInt16";
-                try {
-                    sampleFormat = header.Image.Attribute("sampleFormat").Value.ToString();
-                } catch (InvalidDataException ex) {
-                    Logger.Error($"XISF: Could not read image data: {ex}");
-                    throw ex;
-                } catch (Exception ex) {
-                    Logger.Error($"XISF: Could not find image data type: {ex}");
-                    throw new InvalidDataException("Could not find XISF image data type");
-                }
-
-                /*
-                 * Determine if the data block is compressed and if a checksum is provided for it
-                 */
-                XISFCompressionInfo compressionInfo = new XISFCompressionInfo();
-                string[] compression = null;
-
-                try {
-                    if (header.Image.Attribute("compression") != null) {
-                        // [compression codec]:[uncompressed size]:[sizeof shuffled typedef]
-                        compression = header.Image.Attribute("compression").Value.ToLower().Split(':');
-
-                        if (!string.IsNullOrEmpty(compression[0])) {
-                            compressionInfo = GetCompressionType(compression);
-                        }
-                    } else {
-                        Logger.Debug("XISF: Compressed data block was not encountered");
-                    }
-                } catch (InvalidDataException) {
-                    Logger.Error($"XISF: Unknown compression codec encountered: {compression[0]}");
-                    throw new InvalidDataException(string.Format(Locale.Loc.Instance["LblXisfUnsupportedCompression"], compression[0]));
-                }
-
-                if (compressionInfo.CompressionType != XISFCompressionTypeEnum.NONE) {
-                    Logger.Debug(string.Format("XISF: CompressionType: {0}, UncompressedSize: {1}, IsShuffled: {2}, ItemSize: {3}",
-                        compressionInfo.CompressionType,
-                        compressionInfo.UncompressedSize,
-                        compressionInfo.IsShuffled,
-                        compressionInfo.ItemSize));
-                }
-
-                /*
-                 * Determine if a checksum is provided for the datablock.
-                 * If the data block is compressed, the checksum is for the compressed form.
-                 */
-                XISFChecksumTypeEnum cksumType = XISFChecksumTypeEnum.NONE;
-                string cksumHash = string.Empty;
-                string[] cksum = null;
-
-                try {
-                    if (header.Image.Attribute("checksum") != null) {
-                        // [hash type]:[hash string]
-                        cksum = header.Image.Attribute("checksum").Value.ToLower().Split(':');
-
-                        if (!string.IsNullOrEmpty(cksum[0])) {
-                            cksumType = GetChecksumType(cksum[0]);
-                            cksumHash = cksum[1];
-                        }
-                    } else {
-                        Logger.Debug("XISF: Checksummed data block was not encountered");
-                    }
-                } catch (InvalidDataException) {
-                    Logger.Error($"XISF: Unknown checksum type: {cksum[0]}");
-                    throw new InvalidDataException(string.Format(Locale.Loc.Instance["LblXisfUnsupportedChecksum"], cksum[0]));
-                }
-
-                if (cksumType != XISFChecksumTypeEnum.NONE) {
-                    Logger.Debug($"XISF: Checksum type: {cksumType}, Hash: {cksumHash}");
-                }
-
-                /*
-                 * Retrieve the attachment attribute to find the start and length of the data block.
-                 * If the attachment attribute does not exist, we assume that the image data is
-                 * inside a <Data> element and is base64-encoded.
-                 */
-                ImageData imageData;
-
-                if (header.Image.Attribute("location").Value.StartsWith("attachment")) {
-                    string[] location = header.Image.Attribute("location").Value.Split(':');
-                    int start = int.Parse(location[1]);
-                    int size = int.Parse(location[2]);
-
-                    Logger.Debug($"XISF: Data block type: attachment, Data block start: {start}, Data block size: {size}");
-
-                    // Read the data block in, starting at the specified offset
-                    byte[] raw = new byte[size];
-                    fs.Seek(start, SeekOrigin.Begin);
-                    fs.Read(raw, 0, size);
-
-                    // Validate the data block's checksum
-                    if (cksumType != XISFChecksumTypeEnum.NONE) {
-                        if (!VerifyChecksum(raw, cksumType, cksumHash)) {
-                            // Only emit a warning to the user about a bad checksum for now
-                            Notification.Notification.ShowWarning(Locale.Loc.Instance["LblXisfBadChecksum"]);
-                        }
+                    if (!fileSig.SequenceEqual(xisfSignature)) {
+                        Logger.Error($"XISF: Opened file \"{filePath.LocalPath}\" is not a valid XISF file");
+                        throw new InvalidDataException(Locale.Loc.Instance["LblXisfInvalidFile"]);
                     }
 
-                    // Uncompress the data block
+                    Logger.Debug($"XISF: Opening file \"{filePath.LocalPath}\"");
+
+                    // Get the header length info, bytes 9-12
+                    byte[] headerLengthInfo = new byte[4];
+                    fs.Read(headerLengthInfo, 0, headerLengthInfo.Length);
+                    uint headerLength = BitConverter.ToUInt32(headerLengthInfo, 0);
+
+                    // Skip the next 4 bytes as they are reserved space
+                    fs.Seek(4, SeekOrigin.Current);
+
+                    // XML document starts at byte 17
+                    byte[] bytes = new byte[headerLength];
+                    fs.Read(bytes, 0, (int)headerLength);
+                    string xmlString = Encoding.UTF8.GetString(bytes);
+
+                    /*
+                     * Create the header for ease of access
+                     */
+                    XElement xml = XElement.Parse(xmlString);
+                    var header = new XISFHeader(xml);
+
+                    var metaData = new ImageMetaData();
+                    try {
+                        metaData = header.ExtractMetaData();
+                    } catch (Exception ex) {
+                        Logger.Error($"XISF: Error during metadata extraction {ex.Message}");
+                    }
+
+                    /*
+                     * Retrieve the geometry attribute.
+                     */
+                    int width = 0;
+                    int height = 0;
+
+                    try {
+                        string[] geometry = header.Image.Attribute("geometry").Value.Split(':');
+                        width = int.Parse(geometry[0]);
+                        height = int.Parse(geometry[1]);
+                    } catch (Exception ex) {
+                        Logger.Error($"XISF: Could not find image geometry: {ex}");
+                        throw new InvalidDataException(Locale.Loc.Instance["LblXisfInvalidGeometry"]);
+                    }
+
+                    Logger.Debug($"XISF: File geometry: width={width}, height={height}");
+
+                    /*
+                     * Retrieve the pixel data type
+                     */
+                    string sampleFormat = "UInt16";
+                    try {
+                        sampleFormat = header.Image.Attribute("sampleFormat").Value.ToString();
+                    } catch (InvalidDataException ex) {
+                        Logger.Error($"XISF: Could not read image data: {ex}");
+                        throw ex;
+                    } catch (Exception ex) {
+                        Logger.Error($"XISF: Could not find image data type: {ex}");
+                        throw new InvalidDataException("Could not find XISF image data type");
+                    }
+
+                    /*
+                     * Determine if the data block is compressed and if a checksum is provided for it
+                     */
+                    XISFCompressionInfo compressionInfo = new XISFCompressionInfo();
+                    string[] compression = null;
+
+                    try {
+                        if (header.Image.Attribute("compression") != null) {
+                            // [compression codec]:[uncompressed size]:[sizeof shuffled typedef]
+                            compression = header.Image.Attribute("compression").Value.ToLower().Split(':');
+
+                            if (!string.IsNullOrEmpty(compression[0])) {
+                                compressionInfo = GetCompressionType(compression);
+                            }
+                        } else {
+                            Logger.Debug("XISF: Compressed data block was not encountered");
+                        }
+                    } catch (InvalidDataException) {
+                        Logger.Error($"XISF: Unknown compression codec encountered: {compression[0]}");
+                        throw new InvalidDataException(string.Format(Locale.Loc.Instance["LblXisfUnsupportedCompression"], compression[0]));
+                    }
+
                     if (compressionInfo.CompressionType != XISFCompressionTypeEnum.NONE) {
-                        raw = UncompressData(raw, compressionInfo);
-
-                        if (compressionInfo.IsShuffled) {
-                            raw = XISFData.Unshuffle(raw, compressionInfo.ItemSize);
-                        }
+                        Logger.Debug(string.Format("XISF: CompressionType: {0}, UncompressedSize: {1}, IsShuffled: {2}, ItemSize: {3}",
+                            compressionInfo.CompressionType,
+                            compressionInfo.UncompressedSize,
+                            compressionInfo.IsShuffled,
+                            compressionInfo.ItemSize));
                     }
 
-                    var converter = GetConverter(sampleFormat);
-                    var img = converter.Convert(raw);
+                    /*
+                     * Determine if a checksum is provided for the datablock.
+                     * If the data block is compressed, the checksum is for the compressed form.
+                     */
+                    XISFChecksumTypeEnum cksumType = XISFChecksumTypeEnum.NONE;
+                    string cksumHash = string.Empty;
+                    string[] cksum = null;
 
-                    imageData = new ImageData(img, width, height, 16, isBayered, metaData);
-                } else {
-                    string base64Img = header.Image.Element("Data").Value;
-                    byte[] encodedImg = Convert.FromBase64String(base64Img);
+                    try {
+                        if (header.Image.Attribute("checksum") != null) {
+                            // [hash type]:[hash string]
+                            cksum = header.Image.Attribute("checksum").Value.ToLower().Split(':');
 
-                    var converter = GetConverter(sampleFormat);
-                    var img = converter.Convert(encodedImg);
+                            if (!string.IsNullOrEmpty(cksum[0])) {
+                                cksumType = GetChecksumType(cksum[0]);
+                                cksumHash = cksum[1];
+                            }
+                        } else {
+                            Logger.Debug("XISF: Checksummed data block was not encountered");
+                        }
+                    } catch (InvalidDataException) {
+                        Logger.Error($"XISF: Unknown checksum type: {cksum[0]}");
+                        throw new InvalidDataException(string.Format(Locale.Loc.Instance["LblXisfUnsupportedChecksum"], cksum[0]));
+                    }
 
-                    imageData = new ImageData(img, width, height, 16, isBayered, metaData);
+                    if (cksumType != XISFChecksumTypeEnum.NONE) {
+                        Logger.Debug($"XISF: Checksum type: {cksumType}, Hash: {cksumHash}");
+                    }
+
+                    /*
+                     * Retrieve the attachment attribute to find the start and length of the data block.
+                     * If the attachment attribute does not exist, we assume that the image data is
+                     * inside a <Data> element and is base64-encoded.
+                     */
+                    ImageData imageData;
+
+                    if (header.Image.Attribute("location").Value.StartsWith("attachment")) {
+                        string[] location = header.Image.Attribute("location").Value.Split(':');
+                        int start = int.Parse(location[1]);
+                        int size = int.Parse(location[2]);
+
+                        Logger.Debug($"XISF: Data block type: attachment, Data block start: {start}, Data block size: {size}");
+
+                        // Read the data block in, starting at the specified offset
+                        byte[] raw = new byte[size];
+                        fs.Seek(start, SeekOrigin.Begin);
+                        fs.Read(raw, 0, size);
+
+                        // Validate the data block's checksum
+                        if (cksumType != XISFChecksumTypeEnum.NONE) {
+                            if (!VerifyChecksum(raw, cksumType, cksumHash)) {
+                                // Only emit a warning to the user about a bad checksum for now
+                                Notification.Notification.ShowWarning(Locale.Loc.Instance["LblXisfBadChecksum"]);
+                            }
+                        }
+
+                        // Uncompress the data block
+                        if (compressionInfo.CompressionType != XISFCompressionTypeEnum.NONE) {
+                            raw = UncompressData(raw, compressionInfo);
+
+                            if (compressionInfo.IsShuffled) {
+                                raw = XISFData.Unshuffle(raw, compressionInfo.ItemSize);
+                            }
+                        }
+
+                        var converter = GetConverter(sampleFormat);
+                        var img = converter.Convert(raw);
+
+                        imageData = new ImageData(img, width, height, 16, isBayered, metaData);
+                    } else {
+                        string base64Img = header.Image.Element("Data").Value;
+                        byte[] encodedImg = Convert.FromBase64String(base64Img);
+
+                        var converter = GetConverter(sampleFormat);
+                        var img = converter.Convert(encodedImg);
+
+                        imageData = new ImageData(img, width, height, 16, isBayered, metaData);
+                    }
+
+                    return imageData;
                 }
-
-                return imageData;
-            }
+            }, ct);
         }
 
         private static IDataConverter GetConverter(string sampleFormat) {

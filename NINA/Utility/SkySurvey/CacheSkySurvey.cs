@@ -133,7 +133,6 @@ namespace NINA.Utility.SkySurvey {
                 Logger.Error(ex);
                 throw ex;
             }
-            return null;
         }
 
         public XElement Cache { get; private set; }
