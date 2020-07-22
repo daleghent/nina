@@ -723,8 +723,10 @@
     <Compile Include="ViewModel\Equipment\Dome\IDomeVM.cs" />
     <Compile Include="ViewModel\Equipment\FilterWheel\FilterWheelChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceFactory.cs" />
     <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceVM.cs" />
     <Compile Include="ViewModel\Equipment\FlatDevice\FlatWizardValues.cs" />
+    <Compile Include="ViewModel\Equipment\IDeviceFactory.cs" />
     <Compile Include="ViewModel\Equipment\FlatDevice\IFlatDeviceVM.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\AbsoluteBacklashCompensationDecorator.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\FocuserChooserVM.cs" />

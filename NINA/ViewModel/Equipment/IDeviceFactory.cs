@@ -13,11 +13,12 @@
 #endregion "copyright"
 
 using NINA.Model;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel.Equipment {
-    public interface IDeviceChooserVM {
-        IDevice SelectedDevice { get; set; }
 
-        void GetEquipment();
+    public interface IDeviceFactory {
+
+        IList<IDevice> GetDevices();
     }
 }

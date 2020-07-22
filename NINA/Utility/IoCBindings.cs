@@ -65,7 +65,6 @@ namespace NINA.Utility {
                 Bind<IImageHistoryVM>().To<ImageHistoryVM>().InSingletonScope();
                 Bind<IImageStatisticsVM>().To<ImageStatisticsVM>().InSingletonScope();
                 Bind<IDeviceChooserVM>().To<DomeChooserVM>().WhenInjectedExactlyInto<DomeVM>().InSingletonScope();
-                Bind<IDeviceChooserVM>().To<FlatDeviceChooserVM>().WhenInjectedExactlyInto<FlatDeviceVM>().InSingletonScope();
 
                 Bind<ProjectVersion>().ToMethod(f => new ProjectVersion(Utility.Version)).InSingletonScope();
 
@@ -109,6 +108,8 @@ namespace NINA.Utility {
                 Bind<IDeepSkyObjectSearchVM>().To<DeepSkyObjectSearchVM>();
                 Bind<IDomeSynchronization>().To<DomeSynchronization>().InSingletonScope();
                 Bind<IDeviceUpdateTimerFactory>().To<DefaultDeviceUpateTimerFactory>().InSingletonScope();
+                Bind<IDeviceChooserVM>().To<FlatDeviceChooserVM>().WhenInjectedInto<IFlatDeviceVM>().InSingletonScope();
+                Bind<IDeviceFactory>().To<FlatDeviceFactory>().WhenInjectedInto<FlatDeviceChooserVM>().InSingletonScope();
             } catch (Exception e) {
                 Logger.Error(e);
                 throw e;

@@ -12,27 +12,23 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyFlatDevice;
 using NINA.Profile;
 
 namespace NINA.ViewModel.Equipment.FlatDevice {
 
     internal class FlatDeviceChooserVM : EquipmentChooserVM, IDeviceChooserVM {
+        private readonly IDeviceFactory deviceFactory;
 
-        public FlatDeviceChooserVM(IProfileService profileService) : base(profileService) {
-            GetEquipment();
+        public FlatDeviceChooserVM(IProfileService profileService, IDeviceFactory deviceFactory) : base(profileService) {
+            this.deviceFactory = deviceFactory;
         }
 
         public override void GetEquipment() {
             Devices.Clear();
 
-            Devices.Add(new DummyDevice(Locale.Loc.Instance["LblFlatDeviceNoDevice"]));
-            Devices.Add(new AllProSpikeAFlat(profileService));
-            Devices.Add(new AlnitakFlipFlatSimulator(profileService));
-            Devices.Add(new AlnitakFlatDevice(profileService));
-            Devices.Add(new ArteskyFlatBox(profileService));
-            Devices.Add(new PegasusAstroFlatMaster(profileService));
+            foreach (var device in deviceFactory.GetDevices()) {
+                Devices.Add(device);
+            }
             DetermineSelectedDevice(profileService.ActiveProfile.FlatDeviceSettings.Id);
         }
     }
