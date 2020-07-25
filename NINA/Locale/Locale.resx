@@ -3927,4 +3927,7 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDomeSyncTimeoutTooltip" xml:space="preserve">
     <value>The maximum amount of time, in seconds, to wait for the Dome and Telescope to synchronize their positions</value>
   </data>
+  <data name="LblC2A" xml:space="preserve">
+    <value>C2A</value>
+  </data>
 </root>

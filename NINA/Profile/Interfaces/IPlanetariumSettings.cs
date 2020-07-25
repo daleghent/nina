@@ -26,6 +26,8 @@ namespace NINA.Profile {
         bool TSXUseSelectedObject { get; set; }
         string HNSKYHost { get; set; }
         int HNSKYPort { get; set; }
+        string C2AHost { get; set; }
+        int C2APort { get; set; }
         PlanetariumEnum PreferredPlanetarium { get; set; }
     }
 }

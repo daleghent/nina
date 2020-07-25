@@ -1307,6 +1307,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to C2A.
+        /// </summary>
+        internal static string LblC2A {
+            get {
+                return ResourceManager.GetString("LblC2A", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cache.
         /// </summary>
         internal static string LblCache {

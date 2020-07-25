@@ -29,6 +29,9 @@ namespace NINA.Utility.Enum {
         THESKYX,
 
         [Description("LblHNSKY")]
-        HNSKY
+        HNSKY,
+
+        [Description("LblC2A")]
+        C2A
     }
 }

@@ -1332,6 +1332,13 @@
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=PART_PlanetariumList, Path=SelectedIndex}" Value="4">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <Binding Mode="TwoWay" Path="C2AHost" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -1387,6 +1394,17 @@
                                                 <Setter Property="Text">
                                                     <Setter.Value>
                                                         <Binding Mode="TwoWay" Path="HNSKYPort">
+                                                            <Binding.ValidationRules>
+                                                                <rules:GreaterZeroRule />
+                                                            </Binding.ValidationRules>
+                                                        </Binding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=PART_PlanetariumList, Path=SelectedIndex}" Value="4">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <Binding Mode="TwoWay" Path="C2APort">
                                                             <Binding.ValidationRules>
                                                                 <rules:GreaterZeroRule />
                                                             </Binding.ValidationRules>

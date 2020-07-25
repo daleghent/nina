@@ -478,6 +478,7 @@
     <Compile Include="Model\MyFocuser\AscomFocuserProvider.cs" />
     <Compile Include="Model\MyFocuser\IAscomFocuserProvider.cs" />
     <Compile Include="Model\MyFlatDevice\ArteskyFlatBox.cs" />
+    <Compile Include="Model\MyPlanetarium\C2A.cs" />
     <Compile Include="Model\MyPlanetarium\IPlanetariumFactory.cs" />
     <Compile Include="Model\MyWeatherData\UltimatePowerboxV2.cs" />
     <Compile Include="Model\MyFlatDevice\PegasusAstroFlatMaster.cs" />

@@ -37,6 +37,8 @@ namespace NINA.Profile {
             tsxUseSelectedObject = true;
             hnskyPort = 7700;
             hnskyHost = "localhost";
+            c2aPort = 5876;
+            c2aHost = "localhost";
             preferredPlanetarium = PlanetariumEnum.CDC;
         }
 
@@ -170,6 +172,36 @@ namespace NINA.Profile {
             set {
                 if (hnskyPort != value) {
                     hnskyPort = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string c2aHost;
+
+        [DataMember]
+        public string C2AHost {
+            get {
+                return c2aHost;
+            }
+            set {
+                if (c2aHost != value) {
+                    c2aHost = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int c2aPort;
+
+        [DataMember]
+        public int C2APort {
+            get {
+                return c2aPort;
+            }
+            set {
+                if (c2aPort != value) {
+                    c2aPort = value;
                     RaisePropertyChanged();
                 }
             }
