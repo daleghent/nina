@@ -21,7 +21,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ### Sequencer
 - Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter
-- Added support for fetching sky view and localtion coordinates from the [C2A](http://www.astrosurf.com/c2a/) planetarium program
+- Added support for fetching sky view and location coordinates from the [C2A](http://www.astrosurf.com/c2a/) planetarium program
 
 ### Image Preview
 - Ability to inspect pixel area and pixel values in detail by holding right click
