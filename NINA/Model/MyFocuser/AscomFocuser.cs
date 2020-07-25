@@ -213,8 +213,8 @@ namespace NINA.Model.MyFocuser {
             }
         }
 
-        public async Task Move(int position, CancellationToken ct) {
-            await _focuser.MoveAsync(position, ct);
+        public async Task Move(int position, CancellationToken ct, int waitInMs = 1000) {
+            await _focuser.MoveAsync(position, ct, waitInMs);
         }
 
         private bool _canHalt;

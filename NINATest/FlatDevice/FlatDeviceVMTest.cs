@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using FluentAssertions;
 using Moq;
 using NINA.Locale;
 using NINA.Model.MyCamera;
@@ -20,6 +21,7 @@ using NINA.Model.MyFlatDevice;
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
+using NINA.ViewModel;
 using NINA.ViewModel.Equipment;
 using NINA.ViewModel.Equipment.FlatDevice;
 using NUnit.Framework;
@@ -28,11 +30,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using FluentAssertions;
-using NINA.ViewModel.Equipment;
-using NINA.ViewModel;
 
 namespace NINATest.FlatDevice {
+
     [TestFixture]
     public class FlatDeviceVMTest {
         private FlatDeviceVM sut;

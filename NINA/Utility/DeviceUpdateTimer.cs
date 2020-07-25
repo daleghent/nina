@@ -56,9 +56,9 @@ namespace NINA.Utility {
 
         public async Task Stop() {
             cts?.Cancel();
-            do {
+            while (!task?.IsCompleted == true) {
                 await Task.Delay(100);
-            } while (!task?.IsCompleted == true);
+            }
         }
 
         public async void Start() {

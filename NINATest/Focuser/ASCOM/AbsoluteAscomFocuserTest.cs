@@ -2,52 +2,68 @@
 using Moq;
 using NINA.Model.MyFocuser;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINATest.Focuser.ASCOM {
+
     [TestFixture]
-    class AbsoluteAscomFocuserTest {
-        private AbsoluteAscomFocuser _sut;
-        private Mock<IFocuserV3> _mockFocuser;
+    internal class AbsoluteAscomFocuserTest {
+        private AbsoluteAscomFocuser sut;
+        private Mock<IFocuserV3> mockFocuser;
+
+        [OneTimeSetUp]
+        public void OneTimeSetup() {
+            mockFocuser = new Mock<IFocuserV3>();
+        }
 
         [SetUp]
-        public async Task Init() {
-            _mockFocuser = new Mock<IFocuserV3>();
-            _mockFocuser.SetupProperty(m => m.Connected, false);
-            _sut = new AbsoluteAscomFocuser(_mockFocuser.Object);
+        public void Init() {
+            mockFocuser.Reset();
+            mockFocuser.SetupProperty(m => m.Connected, false);
+            sut = new AbsoluteAscomFocuser(mockFocuser.Object);
         }
 
         [Test]
-        [TestCase(true, false, false)]
-        [TestCase(true, true, true)]
-        [TestCase(false, true, false)]
-        [TestCase(false, false, false)]
-        public async Task TestMove(bool connected, bool tempComp, bool disableEnableTempComp) {
-            _mockFocuser.Setup(m => m.Connected).Returns(connected);
-            _mockFocuser.Setup(m => m.TempCompAvailable).Returns(true);
-            _mockFocuser.Setup(m => m.TempComp).Returns(tempComp);
-            _mockFocuser.SetupSequence(m => m.Position).Returns(0).Returns(10);
-            _mockFocuser.SetupSequence(m => m.IsMoving).Returns(true).Returns(false);
+        public async Task TestMoveConnectedWithTempCompOn() {
+            mockFocuser.Setup(m => m.Connected).Returns(true);
+            mockFocuser.Setup(m => m.TempCompAvailable).Returns(true);
+            mockFocuser.Setup(m => m.TempComp).Returns(true);
+            mockFocuser.SetupSequence(m => m.Position).Returns(0).Returns(10);
+            mockFocuser.SetupSequence(m => m.IsMoving).Returns(true).Returns(false);
 
-            var ct = new CancellationToken();
-            await _sut.MoveAsync(10, ct);
-            if (connected) {
-                _mockFocuser.Verify(m => m.Move(10), Times.Once);
-            } else {
-                _mockFocuser.Verify(m => m.Move(It.IsAny<int>()), Times.Never);
-            }
-            if (disableEnableTempComp) {
-                _mockFocuser.VerifySet(m => m.TempComp = true, Times.Once);
-                _mockFocuser.VerifySet(m => m.TempComp = false, Times.Once);
-            } else {
-                _mockFocuser.VerifySet(m => m.TempComp = true, Times.Never);
-                _mockFocuser.VerifySet(m => m.TempComp = false, Times.Never);
-            }
+            await sut.MoveAsync(10, new CancellationToken(), 0);
+
+            mockFocuser.Verify(m => m.Move(10), Times.Once);
+            mockFocuser.VerifySet(m => m.TempComp = true, Times.Once);
+            mockFocuser.VerifySet(m => m.TempComp = false, Times.Once);
+        }
+
+        [Test]
+        public async Task TestMoveConnectedWithTempCompOff() {
+            mockFocuser.Setup(m => m.Connected).Returns(true);
+            mockFocuser.Setup(m => m.TempCompAvailable).Returns(true);
+            mockFocuser.Setup(m => m.TempComp).Returns(false);
+            mockFocuser.SetupSequence(m => m.Position).Returns(0).Returns(10);
+            mockFocuser.SetupSequence(m => m.IsMoving).Returns(true).Returns(false);
+
+            await sut.MoveAsync(10, new CancellationToken(), 0);
+
+            mockFocuser.Verify(m => m.Move(10), Times.Once);
+            mockFocuser.VerifySet(m => m.TempComp = true, Times.Never);
+            mockFocuser.VerifySet(m => m.TempComp = false, Times.Never);
+        }
+
+        [Test]
+        public async Task TestMoveNotConnected() {
+            mockFocuser.Setup(m => m.Connected).Returns(false);
+            mockFocuser.Setup(m => m.TempCompAvailable).Returns(true);
+
+            await sut.MoveAsync(10, new CancellationToken(), 0);
+
+            mockFocuser.Verify(m => m.Move(It.IsAny<int>()), Times.Never);
+            mockFocuser.VerifySet(m => m.TempComp = true, Times.Never);
+            mockFocuser.VerifySet(m => m.TempComp = false, Times.Never);
         }
     }
 }

@@ -80,8 +80,8 @@ namespace NINA.Utility {
         /// <summary>
         /// Convert datetime to unix timestamp
         /// </summary>
-        /// <param name="unixTimeStamp">Milliseconds after 1970</param>
-        /// <returns>DateTime</returns>
+        /// <param name="date">DateTime object</param>
+        /// <returns>long</returns>
         public static long DateTimeToUnixTimeStamp(DateTime date) {
             return (int)(date.ToUniversalTime().Subtract(new DateTime(1970, 1, 1))).TotalSeconds; ;
         }
@@ -98,12 +98,12 @@ namespace NINA.Utility {
         }
 
         public static async Task<TimeSpan> Wait(TimeSpan t, CancellationToken token = new CancellationToken(), IProgress<ApplicationStatus> progress = default, string status = "") {
-            TimeSpan elapsed = new TimeSpan(0);
-            do {
+            var elapsed = new TimeSpan(0);
+            while (elapsed < t && !token.IsCancellationRequested) {
                 var delta = await Delay(100, token);
                 elapsed += delta;
-                progress?.Report(new ApplicationStatus() { MaxProgress = (int)t.TotalSeconds, Progress = (int)elapsed.TotalSeconds, Status = string.IsNullOrWhiteSpace(status) ? Locale.Loc.Instance["LblWaiting"] : status, ProgressType = ApplicationStatus.StatusProgressType.ValueOfMaxValue });
-            } while (elapsed < t && !token.IsCancellationRequested);
+                progress?.Report(new ApplicationStatus { MaxProgress = (int)t.TotalSeconds, Progress = (int)elapsed.TotalSeconds, Status = string.IsNullOrWhiteSpace(status) ? Locale.Loc.Instance["LblWaiting"] : status, ProgressType = ApplicationStatus.StatusProgressType.ValueOfMaxValue });
+            }
             return elapsed;
         }
 

@@ -358,9 +358,9 @@ namespace NINATest.Focuser.ASCOM {
         [Test]
         public async Task TestMove() {
             var ct = new CancellationToken();
-            _mockFocuser.Setup(m => m.MoveAsync(It.IsAny<int>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
-            await _sut.Move(10, ct);
-            _mockFocuser.Verify(m => m.MoveAsync(10, ct), Times.Once);
+            _mockFocuser.Setup(m => m.MoveAsync(It.IsAny<int>(), It.IsAny<CancellationToken>(), It.IsAny<int>())).Returns(Task.CompletedTask);
+            await _sut.Move(10, ct, 0);
+            _mockFocuser.Verify(m => m.MoveAsync(10, ct, 0), Times.Once);
         }
 
         [Test]

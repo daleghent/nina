@@ -15,11 +15,6 @@
 using NINA.Model.MyFocuser;
 using NINA.Profile;
 using NINA.Utility;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -47,7 +42,7 @@ namespace NINA.ViewModel.Equipment.Focuser {
             }
         }
 
-        public override Task Move(int position, CancellationToken ct) {
+        public override Task Move(int position, CancellationToken ct, int waitInMs = 1000) {
             var startPosition = base.Position;
             var adjustedTargetPosition = position + offset;
 

@@ -1,17 +1,14 @@
 ﻿using ASCOM.DeviceInterface;
-using ASCOM.DriverAccess;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Threading;
 
 namespace NINA.Model.MyFocuser {
+
     public class AbsoluteAscomFocuser : IFocuserV3Ex {
         private readonly IFocuserV3 focuser;
+
         public AbsoluteAscomFocuser(IFocuserV3 focuser) {
             this.focuser = focuser;
         }
@@ -82,9 +79,9 @@ namespace NINA.Model.MyFocuser {
             focuser.SetupDialog();
         }
 
-        public async Task MoveAsync(int position, CancellationToken ct) {
+        public async Task MoveAsync(int position, CancellationToken ct, int waitInMs = 1000) {
             if (Connected) {
-                bool reEnableTempComp = TempComp;
+                var reEnableTempComp = TempComp;
                 if (reEnableTempComp) {
                     TempComp = false;
                 }
@@ -92,7 +89,7 @@ namespace NINA.Model.MyFocuser {
                 while (position != focuser.Position) {
                     focuser.Move(position);
                     while (IsMoving) {
-                        await Utility.Utility.Wait(TimeSpan.FromSeconds(1), ct);
+                        await Utility.Utility.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
                     }
                 }
 

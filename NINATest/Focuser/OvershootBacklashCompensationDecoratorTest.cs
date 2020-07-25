@@ -18,10 +18,6 @@ using NINA.Model.MyFocuser;
 using NINA.Profile;
 using NINA.ViewModel.Equipment.Focuser;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -46,8 +42,8 @@ namespace NINATest.Focuser {
             focuserMock.Reset();
 
             // Move commands set position to input value
-            focuserMock.Setup(x => x.Move(It.IsAny<int>(), It.IsAny<CancellationToken>()))
-                 .Callback((int position, CancellationToken ct) => {
+            focuserMock.Setup(x => x.Move(It.IsAny<int>(), It.IsAny<CancellationToken>(), It.IsAny<int>()))
+                 .Callback((int position, CancellationToken ct, int waitInMs) => {
                      focuserMock.SetupGet(x => x.Position).Returns(position);
                  });
         }

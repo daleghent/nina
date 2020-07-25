@@ -15,6 +15,7 @@
 using NINA.ViewModel.FlatWizard;
 using System;
 using System.Threading.Tasks;
+using System.Windows;
 using NUnit.Framework;
 using Moq;
 using NINA.Utility.WindowService;
@@ -129,9 +130,9 @@ namespace NINATest {
             windowServiceMock.Setup(m => m.ShowDialog(It.IsAny<FlatWizardUserPromptVM>(), It.IsAny<string>(), System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow,
                 It.IsAny<ICommand>()))
                 .Returns(Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action<object>((f) => { ((DispatcherFrame)f).Continue = false; }), frame))
-                .Callback<FlatWizardUserPromptVM, object, object, object, object>((f, f1, f2, f3, f4) => {
-                    f.Continue = true;
-                    f.Reset = false;
+                .Callback<object, string, ResizeMode, WindowStyle, ICommand>((f, f1, f2, f3, f4) => {
+                    ((FlatWizardUserPromptVM)f).Continue = true;
+                    ((FlatWizardUserPromptVM)f).Reset = false;
                 });
 
             var statMock = new Mock<IImageStatistics>();
@@ -160,9 +161,9 @@ namespace NINATest {
             windowServiceMock.Setup(m => m.ShowDialog(It.IsAny<FlatWizardUserPromptVM>(), It.IsAny<string>(), System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow,
                 It.IsAny<ICommand>()))
                 .Returns(Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action<object>((f) => { ((DispatcherFrame)f).Continue = false; }), frame))
-                .Callback<FlatWizardUserPromptVM, object, object, object, object>((f, f1, f2, f3, f4) => {
-                    f.Continue = true;
-                    f.Reset = true;
+                .Callback<object, string, ResizeMode, WindowStyle, ICommand>((f, f1, f2, f3, f4) => {
+                    ((FlatWizardUserPromptVM)f).Continue = true;
+                    ((FlatWizardUserPromptVM)f).Reset = true;
                 });
 
             var statMock = new Mock<IImageStatistics>();
@@ -191,9 +192,9 @@ namespace NINATest {
             windowServiceMock.Setup(m => m.ShowDialog(It.IsAny<FlatWizardUserPromptVM>(), It.IsAny<string>(), System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow,
                 It.IsAny<ICommand>()))
                 .Returns(Dispatcher.CurrentDispatcher.BeginInvoke(DispatcherPriority.Background, new Action<object>((f) => { ((DispatcherFrame)f).Continue = false; }), frame))
-                .Callback<FlatWizardUserPromptVM, object, object, object, object>((f, f1, f2, f3, f4) => {
-                    f.Continue = false;
-                    f.Reset = true;
+                .Callback<object, string, ResizeMode, WindowStyle, ICommand>((f, f1, f2, f3, f4) => {
+                    ((FlatWizardUserPromptVM)f).Continue = false;
+                    ((FlatWizardUserPromptVM)f).Reset = true;
                 });
 
             var statMock = new Mock<IImageStatistics>();

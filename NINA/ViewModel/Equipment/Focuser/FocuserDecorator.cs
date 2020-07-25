@@ -15,11 +15,7 @@
 using NINA.Model.MyFocuser;
 using NINA.Profile;
 using NINA.Utility;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -85,7 +81,7 @@ namespace NINA.ViewModel.Equipment.Focuser {
             this.focuser.Halt();
         }
 
-        public virtual Task Move(int targetPosition, CancellationToken ct) {
+        public virtual Task Move(int targetPosition, CancellationToken ct, int waitInMs = 1000) {
             lastDirection = DetermineMovingDirection(this.Position, targetPosition);
             return this.focuser.Move(targetPosition, ct);
         }

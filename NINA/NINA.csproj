@@ -719,6 +719,7 @@
     <Compile Include="ViewModel\AutoFocus\Fitting\Trendline.cs" />
     <Compile Include="ViewModel\EquipmentVM.cs" />
     <Compile Include="ViewModel\Equipment\Camera\CameraChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\IDeviceChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Dome\DomeChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Dome\DomeVM.cs" />
     <Compile Include="ViewModel\Equipment\Dome\IDomeVM.cs" />
@@ -732,8 +733,8 @@
     <Compile Include="ViewModel\Equipment\Focuser\AbsoluteBacklashCompensationDecorator.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\FocuserChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\FocuserDecorator.cs" />
+    <Compile Include="ViewModel\Equipment\Focuser\FocuserFactory.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\OvershootBacklashCompensationDecorator.cs" />
-    <Compile Include="ViewModel\Equipment\IDeviceChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Rotator\RotatorChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Telescope\TelescopeChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Guider\GuiderChooserVM.cs" />
@@ -741,6 +742,7 @@
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataVM.cs" />
     <Compile Include="ViewModel\FramingAssistant\IFramingAssistantVM.cs" />
+    <Compile Include="ViewModel\ImageGeometryProvider.cs" />
     <Compile Include="ViewModel\IDeepSkyObjectSearchVM.cs" />
     <Compile Include="ViewModel\Interfaces\IApplicationDeviceConnectionVM.cs" />
     <Compile Include="ViewModel\Interfaces\IDockableVM.cs" />
@@ -754,7 +756,6 @@
     <Compile Include="ViewModel\Imaging\IAnchorableSnapshotVM.cs" />
     <Compile Include="ViewModel\Imaging\IExposureCalculatorVM.cs" />
     <Compile Include="ViewModel\Interfaces\IApplicationVM.cs" />
-    <Compile Include="ViewModel\ImageGeometryProvider.cs" />
     <Compile Include="ViewModel\Imaging\AnchorableSnapshotVM.cs" />
     <Compile Include="ViewModel\Imaging\ExposureTimeRecommendationVM.cs" />
     <Compile Include="ViewModel\Imaging\AnchorablePlateSolverVM.cs" />

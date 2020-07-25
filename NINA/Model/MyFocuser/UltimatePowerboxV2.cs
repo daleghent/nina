@@ -198,7 +198,7 @@ namespace NINA.Model.MyFocuser {
             }
         }
 
-        public Task Move(int position, CancellationToken ct) {
+        public Task Move(int position, CancellationToken ct, int waitInMs = 1000) {
             if (!Connected) return Task.FromResult(false);
             return Task.Run(async () => {
                 var command = new StepperMotorMoveToPositionCommand { Position = position };

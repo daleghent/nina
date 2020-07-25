@@ -27,7 +27,7 @@ namespace NINA.Model.MyFocuser {
         bool TempComp { get; set; }
         double Temperature { get; }
 
-        Task Move(int position, CancellationToken ct);
+        Task Move(int position, CancellationToken ct, int waitInMs = 1000);
 
         void Halt();
     }

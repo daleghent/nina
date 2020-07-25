@@ -1,22 +1,20 @@
 ﻿using ASCOM.DeviceInterface;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyFocuser {
-    class RelativeAscomFocuser : IFocuserV3Ex {
-        private int position;
+
+    internal class RelativeAscomFocuser : IFocuserV3Ex {
         private readonly IFocuserV3 focuser;
+
         public RelativeAscomFocuser(IFocuserV3 relativeFocuser) {
             if (relativeFocuser.Absolute) {
                 throw new InvalidOperationException($"Focuser {relativeFocuser.Name} is an absolute focuser");
             }
-            this.focuser = relativeFocuser;
-            this.position = 5000;
+            focuser = relativeFocuser;
+            Position = 5000;
         }
 
         public bool Connected { get => focuser.Connected; set => focuser.Connected = value; }
@@ -43,11 +41,7 @@ namespace NINA.Model.MyFocuser {
 
         public int MaxStep => focuser.MaxStep;
 
-        public int Position {
-            get {
-                return this.position;
-            }
-        }
+        public int Position { get; private set; }
 
         public double StepSize => focuser.StepSize;
 
@@ -89,9 +83,9 @@ namespace NINA.Model.MyFocuser {
             focuser.SetupDialog();
         }
 
-        public async Task MoveAsync(int pos, CancellationToken ct) {
+        public async Task MoveAsync(int pos, CancellationToken ct, int waitInMs = 1000) {
             if (Connected) {
-                bool reEnableTempComp = TempComp;
+                var reEnableTempComp = TempComp;
                 if (reEnableTempComp) {
                     TempComp = false;
                 }
@@ -104,10 +98,10 @@ namespace NINA.Model.MyFocuser {
                     }
                     focuser.Move(moveAmount);
                     while (IsMoving) {
-                        await Utility.Utility.Wait(TimeSpan.FromSeconds(1), ct);
+                        await Utility.Utility.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
                     }
                     relativeOffsetRemaining -= moveAmount;
-                    this.position += moveAmount;
+                    Position += moveAmount;
                 }
 
                 if (reEnableTempComp) {

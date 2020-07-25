@@ -12,33 +12,23 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyFocuser;
-using NINA.Utility;
 using NINA.Profile;
-using System;
 
 namespace NINA.ViewModel.Equipment.Focuser {
 
-    internal class FocuserChooserVM : EquipmentChooserVM {
+    internal class FocuserChooserVM : EquipmentChooserVM, IDeviceChooserVM {
+        private IDeviceFactory focuserFactory;
 
-        public FocuserChooserVM(IProfileService profileService) : base(profileService) {
+        public FocuserChooserVM(IProfileService profileService, IDeviceFactory focuserFactory) : base(profileService) {
+            this.focuserFactory = focuserFactory;
         }
 
         public override void GetEquipment() {
             Devices.Clear();
 
-            Devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoFocuser"]));
-
-            try {
-                foreach (IFocuser focuser in ASCOMInteraction.GetFocusers(profileService)) {
-                    Devices.Add(focuser);
-                }
-            } catch (Exception ex) {
-                Logger.Error(ex);
+            foreach (var device in focuserFactory.GetDevices()) {
+                Devices.Add(device);
             }
-
-            Devices.Add(new UltimatePowerboxV2(profileService));
 
             DetermineSelectedDevice(profileService.ActiveProfile.FocuserSettings.Id);
         }

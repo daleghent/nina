@@ -230,6 +230,7 @@
     <Compile Include="Focuser\AbsoluteBacklashCompensationDecoratorTest.cs" />
     <Compile Include="Focuser\ASCOM\RelativeAscomFocuserTest.cs" />
     <Compile Include="Focuser\ASCOM\AbsoluteAscomFocuserTest.cs" />
+    <Compile Include="Focuser\FocuserVMTest.cs" />
     <Compile Include="Focuser\OvershootBacklashCompensationDecoratorTest.cs" />
     <Compile Include="Focuser\PegasusAstro\UltimatePowerboxV2Test.cs" />
     <Compile Include="Focuser\ASCOM\AscomFocuserTest.cs" />
