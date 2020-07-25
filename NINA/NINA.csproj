@@ -122,37 +122,37 @@
       <HintPath>..\packages\Accord.Statistics.3.8.0\lib\net462\Accord.Statistics.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.Astrometry, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.Astrometry.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.Astrometry.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.Attributes, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.Attributes.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.Attributes.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.Cache, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.Cache.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.Cache.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.Controls, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.Controls.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.Controls.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.DeviceInterfaces, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.DeviceInterfaces.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.DeviceInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.DriverAccess, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.DriverAccess.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.DriverAccess.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.Exceptions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.Exceptions.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.Exceptions.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.Internal.Extensions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.Internal.Extensions.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.Internal.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.SettingsProvider, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.SettingsProvider.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.SettingsProvider.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.Utilities, Version=6.0.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.Utilities.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="ASCOM.Utilities.Video, Version=6.1.0.0, Culture=neutral, PublicKeyToken=565de7938946fba7, processorArchitecture=MSIL">
-      <HintPath>..\packages\ASCOM.Platform.6.4.2\lib\net40\ASCOM.Utilities.Video.dll</HintPath>
+      <HintPath>..\packages\ASCOM.Platform.6.5.0\lib\net40\ASCOM.Utilities.Video.dll</HintPath>
     </Reference>
     <Reference Include="AsyncEnumerable, Version=4.0.2.0, Culture=neutral, PublicKeyToken=0426b068161bd1d1, processorArchitecture=MSIL">
       <HintPath>..\packages\AsyncEnumerator.4.0.2\lib\net461\AsyncEnumerable.dll</HintPath>
@@ -1865,7 +1865,6 @@
     <None Include="..\NINA.sln.licenseheader">
       <Link>NINA.sln.licenseheader</Link>
     </None>
-    <None Include="BootstrapAscomProfileStore.ps1" />
     <Resource Include="Resources\astrometry.net.png" />
     <Content Include="3rd-party-licenses.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -2032,6 +2031,7 @@
     <Content Include="External\x86\ToupTek\toupcam.lib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="BootstrapAscomProfileStore.ps1" />
     <None Include="NINA.ruleset" />
     <None Include="packages.config" />
     <None Include="Resources\avalondock.config" />
