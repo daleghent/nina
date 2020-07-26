@@ -36,5 +36,6 @@ namespace NINA.Profile {
         AFMethodEnum AutoFocusMethod { get; set; }
         ContrastDetectionMethodEnum ContrastDetectionMethod { get; set; }
         BacklashCompensationModel BacklashCompensationModel { get; set; }
+        int AutoFocusTimeoutSeconds { get; set; }
     }
 }

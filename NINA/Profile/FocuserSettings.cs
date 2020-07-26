@@ -47,6 +47,7 @@ namespace NINA.Profile {
             autoFocusCurveFitting = AFCurveFittingEnum.TRENDLINES;
             contrastDetectionMethod = ContrastDetectionMethodEnum.Statistics;
             backlashCompensationModel = BacklashCompensationModel.ABSOLUTE;
+            autoFocusTimeoutSeconds = 600;
         }
 
         private string id;
@@ -335,6 +336,21 @@ namespace NINA.Profile {
             set {
                 if (backlashCompensationModel != value) {
                     backlashCompensationModel = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int autoFocusTimeoutSeconds;
+
+        [DataMember]
+        public int AutoFocusTimeoutSeconds {
+            get {
+                return autoFocusTimeoutSeconds;
+            }
+            set {
+                if (autoFocusTimeoutSeconds != value) {
+                    autoFocusTimeoutSeconds = value;
                     RaisePropertyChanged();
                 }
             }

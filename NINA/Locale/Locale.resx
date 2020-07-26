@@ -3915,6 +3915,12 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
     <value>If FindHome is available, then this can improve the reliability of parking to the correct location, when a precise location is required.</value>
   </data>
+  <data name="LblAutoFocusTimeout" xml:space="preserve">
+    <value>AF Sequence Timeout</value>
+  </data>
+  <data name="LblAutoFocusTimeoutTooltip" xml:space="preserve">
+    <value>Amount of time, in seconds, to wait for an auto focus during a sequence before cancelling to continue</value>
+  </data>
   <data name="LblEast" xml:space="preserve">
     <value>East</value>
   </data>

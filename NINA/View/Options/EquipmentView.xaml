@@ -960,6 +960,26 @@
                                         </TextBox.Text>
                                     </TextBox>
                                 </UniformGrid>
+                                <UniformGrid Margin="0,5,0,0" Columns="2">
+                                    <TextBlock
+                                        MinWidth="200"
+                                        MinHeight="20"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblAutoFocusTimeout}">
+                                        <TextBlock.ToolTip>
+                                            <TextBlock Text="{ns:Loc LblAutoFocusTimeoutTooltip}" />
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <TextBox Height="25" HorizontalAlignment="Stretch">
+                                        <TextBox.Text>
+                                            <Binding Path="AutoFocusTimeoutSeconds" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <rules:StrictGreaterZeroRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                </UniformGrid>
                             </UniformGrid>
                         </Expander>
                     </Border>

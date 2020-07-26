@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -41,6 +42,7 @@ namespace NINA.Utility.WindowService {
                     Style = Application.Current.TryFindResource("NoResizeWindow") as Style,
                 };
                 window.CloseCommand = new RelayCommand((object o) => window.Close());
+                window.Closed += (object sender, EventArgs e) => this.OnClosed?.Invoke(this, null);
                 window.ContentRendered += (object sender, EventArgs e) => window.InvalidateVisual();
                 window.Content = content;
                 window.Owner = Application.Current.MainWindow;
@@ -57,7 +59,7 @@ namespace NINA.Utility.WindowService {
 
         public async Task Close() {
             await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                window?.Close();
+                window?.Close();                
             }));
         }
 
@@ -76,6 +78,7 @@ namespace NINA.Utility.WindowService {
                 } else {
                     window.CloseCommand = closeCommand;
                 }
+                window.Closed += (object sender, EventArgs e) => this.OnClosed?.Invoke(this, null);
                 window.ContentRendered += (object sender, EventArgs e) => window.InvalidateVisual();
 
                 window.SizeChanged += Win_SizeChanged;
@@ -90,6 +93,8 @@ namespace NINA.Utility.WindowService {
         }
 
         public event EventHandler OnDialogResultChanged;
+
+        public event EventHandler OnClosed;
 
         private static void Win_SizeChanged(object sender, SizeChangedEventArgs e) {
             var mainwindow = System.Windows.Application.Current.MainWindow;
@@ -106,6 +111,8 @@ namespace NINA.Utility.WindowService {
         DispatcherOperation ShowDialog(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None, ICommand closeCommand = null);
 
         event EventHandler OnDialogResultChanged;
+
+        event EventHandler OnClosed;
 
         void DelayedClose(TimeSpan t);
 

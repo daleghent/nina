@@ -225,6 +225,7 @@ namespace NINA.ViewModel {
 
             if (offset != 0) {
                 //Move to initial position
+                Logger.Trace($"Moving focuser from {_focusPosition} to initial position by moving {offset * stepSize} steps");
                 _focusPosition = await focuserMediator.MoveFocuserRelative(offset * stepSize, token);
             }
 
@@ -238,6 +239,7 @@ namespace NINA.ViewModel {
 
                 //If star Measurement is 0, we didn't detect any stars or shapes, and want this point to be ignored by the fitting as much as possible. Setting a very high Stdev will do the trick.
                 if (measurement.Measure == 0) {
+                    Logger.Warning($"No stars detected in step {i + 1}. Setting a high stddev to ignore the point.");
                     measurement.Stdev = 1000;
                 }
 
@@ -246,7 +248,7 @@ namespace NINA.ViewModel {
                 FocusPoints.AddSorted(new ScatterErrorPoint(_focusPosition, measurement.Measure, 0, Math.Max(0.001, measurement.Stdev)), comparer);
                 PlotFocusPoints.AddSorted(new DataPoint(_focusPosition, measurement.Measure), plotComparer);
                 if (i < nrOfSteps - 1) {
-                    Logger.Trace("Moving focuser to next autofocus position");
+                    Logger.Trace($"Moving focuser from {_focusPosition} to the next autofocus position using step size: {-stepSize}");
                     _focusPosition = await focuserMediator.MoveFocuserRelative(-stepSize, token);
                 }
 
@@ -389,8 +391,8 @@ namespace NINA.ViewModel {
             for (int i = 0; i < exposuresPerFocusPoint; i++) {
                 var image = await TakeExposure(filter, token, progress);
                 var partialMeasurement = await EvaluateExposure(image, token, progress);
-                sumMeasure = sumMeasure + partialMeasurement.Measure;
-                sumVariances = sumVariances + partialMeasurement.Stdev * partialMeasurement.Stdev;
+                sumMeasure += partialMeasurement.Measure;
+                sumVariances += partialMeasurement.Stdev * partialMeasurement.Stdev;
                 token.ThrowIfCancellationRequested();
             }
 
@@ -435,6 +437,7 @@ namespace NINA.ViewModel {
 
             bool tempComp = false;
             bool guidingStopped = false;
+            bool completed = false;
 
             try {
                 if (focuserInfo.TempCompAvailable && focuserInfo.TempComp) {
@@ -468,8 +471,8 @@ namespace NINA.ViewModel {
                         try {
                             filter = await filterWheelMediator.ChangeFilter(defaultFocusFilter, token, progress);
                         } catch (Exception e) {
-                            Logger.Error(e.Message);
-                            Notification.ShowWarning(e.Message);
+                            Logger.Error("Failed to change filter during AutoFocus", e);
+                            Notification.ShowWarning($"Failed to change filter: {e.Message}");
                         }
                     }
 
@@ -549,22 +552,32 @@ namespace NINA.ViewModel {
                         }
                     }
                 } while (reattempt);
-
-                //_focusPosition = await Mediator.Instance.RequestAsync(new MoveFocuserMessage() { Position = (int)p.X, Absolute = true, Token = token });
+                completed = true;
             } catch (OperationCanceledException) {
-                FocusPoints.Clear();
-                PlotFocusPoints.Clear();
-                //Get back to original filter, if necessary
-                try {
-                    await filterWheelMediator.ChangeFilter(imagingFilter);
-                } catch (Exception e) {
-                    Logger.Error(e.Message);
-                    Notification.ShowError(e.Message);
-                }
+                Logger.Warning("AutoFocus cancelled");
             } catch (Exception ex) {
                 Notification.ShowError(ex.Message);
-                Logger.Error(ex);
+                Logger.Error("Failure during AutoFocus", ex);
             } finally {
+                if (!completed) {
+                    Logger.Warning($"AutoFocus did not complete successfully, so restoring the focuser position to {initialFocusPosition}");
+                    try {
+                        await focuserMediator.MoveFocuser(initialFocusPosition, token);
+                    } catch (Exception e) {
+                        Logger.Error("Failed to restore focuser position after AutoFocus failure", e);
+                    }
+
+                    FocusPoints.Clear();
+                    PlotFocusPoints.Clear();
+                    //Get back to original filter, if necessary
+                    try {
+                        await filterWheelMediator.ChangeFilter(imagingFilter);
+                    } catch (Exception e) {
+                        Logger.Error("Failed to restore filter position after AutoFocus failure", e);
+                        Notification.ShowError($"Failed to restore filter position: {e.Message}");
+                    }
+                }
+
                 //Restore original sub-sample rectangle, if appropriate
                 if (_setSubSample && oldSubSample.X >= 0 && oldSubSample.Y >= 0 && oldSubSample.Width > 0 && oldSubSample.Height > 0) {
                     try {

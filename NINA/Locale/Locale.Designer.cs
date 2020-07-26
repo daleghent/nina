@@ -885,6 +885,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AF Sequence Timeout.
+        /// </summary>
+        internal static string LblAutoFocusTimeout {
+            get {
+                return ResourceManager.GetString("LblAutoFocusTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount of time, in seconds, to wait for an auto focus during a sequence before cancelling to continue.
+        /// </summary>
+        internal static string LblAutoFocusTimeoutTooltip {
+            get {
+                return ResourceManager.GetString("LblAutoFocusTimeoutTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Meridian Flip.
         /// </summary>
         internal static string LblAutoMeridianFlip {

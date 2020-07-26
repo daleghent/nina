@@ -879,10 +879,18 @@ namespace NINA.ViewModel {
         private async Task<AutoFocus.AutoFocusReport> AutoFocus(FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress) {
             using (var autoFocus = new AutoFocusVM(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator)) {
                 var service = WindowServiceFactory.Create();
+                var closedCTS = new CancellationTokenSource();
+                var timeout = TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.AutoFocusTimeoutSeconds);
+                var ctsWithTimeout = CancellationTokenSource.CreateLinkedTokenSource(token, closedCTS.Token, new CancellationTokenSource(timeout).Token);
+                service.OnClosed += (object sender, EventArgs e) => closedCTS.Cancel();
                 service.Show(autoFocus, this.Title + " - " + autoFocus.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
                 try {
-                    var report = await autoFocus.StartAutoFocus(filter, token, progress);
+                    var report = await autoFocus.StartAutoFocus(filter, ctsWithTimeout.Token, progress);
                     return report;
+                } catch (Exception e) {
+                    Logger.Error(e, "Exception in AutoFocus during a sequence");
+                    Notification.ShowError($"AutoFocus error: {e.Message}");
+                    return null;
                 } finally {
                     service.DelayedClose(TimeSpan.FromSeconds(10));
                 }
@@ -987,10 +995,12 @@ namespace NINA.ViewModel {
 
                             progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblAutoFocus"] });
                             var report = await AutoFocus(seq.FilterType, _canceltoken.Token, progress);
-                            ImgHistoryVM.AppendAutoFocusPoint(report);
-                            lastAutoFocusTime = DateTime.UtcNow;
-                            lastAutoFocusTemperature = focuserInfo?.Temperature ?? double.NaN;
-                            AfHfrIndex = ImgHistoryVM.ImageHistory.Count();
+                            if (report != null) {
+                                ImgHistoryVM.AppendAutoFocusPoint(report);
+                                lastAutoFocusTime = DateTime.UtcNow;
+                                lastAutoFocusTemperature = focuserInfo?.Temperature ?? double.NaN;
+                                AfHfrIndex = ImgHistoryVM.ImageHistory.Count();
+                            }
                             progress.Report(new ApplicationStatus() { Status = " " });
                         }
 
