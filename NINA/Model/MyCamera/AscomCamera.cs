@@ -55,7 +55,7 @@ namespace NINA.Model.MyCamera {
 
         private Camera _camera;
 
-        private void init() {
+        private void Initialize() {
             _hasBayerOffset = true;
             _hasCCDTemperature = true;
             _hasCooler = true;
@@ -85,6 +85,55 @@ namespace NINA.Model.MyCamera {
                     }
                 }
             } catch (Exception) {
+            }
+
+            //Determine Offset Capabilities
+            try {
+                //Check if Offset is implemented at all in ICameraV3 Driver
+                _ = _camera.Offset;
+                CanSetOffset = true;
+            } catch (PropertyNotImplementedException) {
+                Logger.Trace("Offset is not implemented in this driver");
+                CanSetOffset = false;
+            } catch (ASCOM.InvalidOperationException) {
+                Logger.Trace("Offset is not implemented in this driver");
+                CanSetOffset = false;
+            } catch (Exception) {
+                Logger.Trace("Offset is not implemented in this driver");
+                CanSetOffset = false;
+            }
+
+            if (CanSetOffset) {
+                try {
+                    //Check if offset mode is in value mode
+                    _ = _camera.OffsetMin;
+                    offsetValueMode = true;
+                } catch (PropertyNotImplementedException) {
+                    Logger.Trace("Offset operates in index mode");
+                    offsetValueMode = false;
+                }
+
+                if (!offsetValueMode) {
+                    try {
+                        //Check when mode is likely to be index mode if the offsets property is implemented
+                        var arrayListOffsets = _camera.Offsets;
+
+                        //Map offsets to integer values
+                        offsets.Clear();
+                        try {
+                            foreach (object o in arrayListOffsets) {
+                                if (o.GetType() == typeof(string)) {
+                                    var offset = Regex.Match(o.ToString(), @"\d+").Value;
+                                    offsets.Add(int.Parse(offset, CultureInfo.InvariantCulture));
+                                }
+                            }
+                        } catch (Exception) {
+                        }
+                    } catch (PropertyNotImplementedException) {
+                        Logger.Error("Offset is implemented, but neither OffsetMin/Max nor Offsets are implemented.");
+                        CanSetOffset = false;
+                    }
+                }
             }
         }
 
@@ -574,6 +623,7 @@ namespace NINA.Model.MyCamera {
                         CanSetGain = false;
                         ASCOMInteraction.LogComplianceIssue($"{nameof(Gain)} SET");
                     } catch (InvalidValueException ex) {
+                        Logger.Error(ex.Message);
                         Notification.ShowWarning(ex.Message);
                     } catch (Exception) {
                         CanSetGain = false;
@@ -1067,7 +1117,7 @@ namespace NINA.Model.MyCamera {
                 _camera = new Camera(Id);
                 Connected = true;
                 if (Connected) {
-                    init();
+                    Initialize();
                     RaiseAllPropertiesChanged();
                 }
             } catch (ASCOM.DriverAccessCOMException ex) {
@@ -1190,21 +1240,49 @@ namespace NINA.Model.MyCamera {
             }
         }
 
+        private IList<int> offsets = new List<int>();
+        private bool offsetValueMode = true;
+        private bool canSetOffset = true;
+
         public bool CanSetOffset {
             get {
-                return false;
+                return canSetOffset;
+            }
+            private set {
+                canSetOffset = value;
+                RaisePropertyChanged();
             }
         }
 
         public int OffsetMin {
             get {
-                return 0;
+                var offsetMin = 0;
+                if (Connected && CanSetOffset) {
+                    if (offsetValueMode) {
+                        offsetMin = _camera.OffsetMin;
+                    } else {
+                        if (offsets.Count > 0) {
+                            offsetMin = offsets.Aggregate((l, r) => l < r ? l : r);
+                        }
+                    }
+                }
+                return offsetMin;
             }
         }
 
         public int OffsetMax {
             get {
-                return 0;
+                var offsetMax = 0;
+                if (Connected && CanSetOffset) {
+                    if (offsetValueMode) {
+                        offsetMax = _camera.OffsetMax;
+                    } else {
+                        if (offsets.Count > 0) {
+                            offsetMax = offsets.Aggregate((l, r) => l > r ? l : r);
+                        }
+                    }
+                }
+                return offsetMax;
             }
         }
 
@@ -1216,9 +1294,40 @@ namespace NINA.Model.MyCamera {
 
         public int Offset {
             get {
-                return -1;
+                var offset = -1;
+                if (Connected && CanSetOffset) {
+                    if (offsetValueMode) {
+                        offset = _camera.Offset;
+                    } else {
+                        offset = offsets[_camera.Offset];
+                    }
+                }
+                return offset;
             }
             set {
+                try {
+                    if (Connected && CanSetOffset) {
+                        if (offsetValueMode) {
+                            if (value < OffsetMin) {
+                                value = OffsetMin;
+                            }
+                            if (value > OffsetMax) {
+                                value = OffsetMax;
+                            }
+
+                            _camera.Offset = value;
+                        } else {
+                            var idx = offsets.IndexOf(value);
+                            if (idx >= 0) {
+                                _camera.Offset = idx;
+                            }
+                        }
+                        RaisePropertyChanged();
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                    Notification.ShowError(ex.Message);
+                }
             }
         }
 
@@ -1261,7 +1370,7 @@ namespace NINA.Model.MyCamera {
                     _camera = new Camera(Id);
                     Connected = true;
                     if (Connected) {
-                        init();
+                        Initialize();
                         RaiseAllPropertiesChanged();
                     }
                 } catch (ASCOM.DriverAccessCOMException ex) {
