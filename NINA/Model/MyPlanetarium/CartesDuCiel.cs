@@ -14,11 +14,10 @@
 
 using NINA.Utility.Astrometry;
 using NINA.Utility.Exceptions;
+using NINA.Utility.TcpRaw;
 using NINA.Profile;
 using System;
 using System.Threading.Tasks;
-using System.Net.Sockets;
-using System.Text;
 using System.Text.RegularExpressions;
 using NINA.Utility;
 using System.Linq;
@@ -44,7 +43,10 @@ namespace NINA.Model.MyPlanetarium {
         /// <returns></returns>
         public async Task<DeepSkyObject> GetTarget() {
             try {
-                var response = await Query("GETSELECTEDOBJECT");
+                string command = "GETSELECTEDOBJECT\r\n";
+
+                var query = new BasicQuery(address, port, command);
+                string response = await query.SendQuery();
 
                 if (!response.StartsWith("OK!")) { throw new PlanetariumObjectNotSelectedException(); }
 
@@ -75,7 +77,10 @@ namespace NINA.Model.MyPlanetarium {
 
         public async Task<Coords> GetSite() {
             try {
-                var response = await Query("GETOBS");
+                string command = "GETOBS\r\n";
+
+                var query = new BasicQuery(address, port, command);
+                string response = await query.SendQuery();
 
                 if (!response.StartsWith("OK!")) { throw new PlanetariumFailedToGetCoordinates(); }
 
@@ -107,31 +112,6 @@ namespace NINA.Model.MyPlanetarium {
             }
             result = match.Value;
             return true;
-        }
-
-        private async Task<string> Query(string command) {
-            using (var client = new TcpClient()) {
-                try {
-                    await Task.Factory.FromAsync((callback, stateObject) => client.BeginConnect(this.address, this.port, callback, stateObject), client.EndConnect, TaskCreationOptions.RunContinuationsAsynchronously);
-                } catch (Exception ex) {
-                    throw new PlanetariumFailedToConnect($"{address}:{port}: {ex.ToString()}");
-                }
-
-                byte[] data = Encoding.ASCII.GetBytes($"{command}\r\n");
-                var stream = client.GetStream();
-                stream.Write(data, 0, data.Length);
-
-                byte[] buffer = new byte[2048];
-                var length = stream.Read(buffer, 0, buffer.Length);
-                string response = System.Text.Encoding.ASCII.GetString(buffer, 0, length);
-
-                stream.Close();
-                client.Close();
-
-                Logger.Trace($"{Name} - Received Message {response}");
-
-                return response;
-            }
         }
     }
 }

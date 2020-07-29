@@ -15,11 +15,11 @@
 using NINA.Utility;
 using NINA.Utility.Astrometry;
 using NINA.Utility.Exceptions;
+using NINA.Utility.TcpRaw;
 using NINA.Profile;
 using System;
 using System.Text;
 using System.Threading.Tasks;
-using System.Net.Sockets;
 
 namespace NINA.Model.MyPlanetarium {
 
@@ -99,8 +99,10 @@ namespace NINA.Model.MyPlanetarium {
                 command.AppendFormat(@"Out = String(Lat) + "","" + String(Long) + "","" + String(Elevation);", Environment.NewLine);
                 command.AppendFormat(@"/* Socket End Packet */", Environment.NewLine);
 
-                string query = await Query(command.ToString());
-                string[] response = query.Split('|');
+                var query = new BasicQuery(address, port, command.ToString());
+                string reply = await query.SendQuery();
+
+                string[] response = reply.Split('|');
 
                 if (response[1].Equals("No error. Error = 0.")) {
                     // put the RA, Dec, and elevation into an array
@@ -120,31 +122,6 @@ namespace NINA.Model.MyPlanetarium {
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw ex;
-            }
-        }
-
-        private async Task<string> Query(string command) {
-            using (var client = new TcpClient()) {
-                try {
-                    await Task.Factory.FromAsync((callback, stateObject) => client.BeginConnect(this.address, this.port, callback, stateObject), client.EndConnect, TaskCreationOptions.RunContinuationsAsynchronously);
-                } catch (Exception ex) {
-                    throw new PlanetariumFailedToConnect($"{address}:{port}: {ex.ToString()}");
-                }
-
-                byte[] data = Encoding.ASCII.GetBytes($"{command}\r\n");
-                var stream = client.GetStream();
-                stream.Write(data, 0, data.Length);
-
-                byte[] buffer = new byte[2048];
-                var length = stream.Read(buffer, 0, buffer.Length);
-                string response = System.Text.Encoding.ASCII.GetString(buffer, 0, length);
-
-                stream.Close();
-                client.Close();
-
-                Logger.Trace($"{Name} - Received Message {response}");
-
-                return response;
             }
         }
 
@@ -175,10 +152,10 @@ namespace NINA.Model.MyPlanetarium {
             command.AppendFormat(@"Out = String(Target56) + "","" + String(Target57) + "","" + String(Name0);", Environment.NewLine);
             command.AppendFormat(@"/* Socket End Packet */", Environment.NewLine);
 
-            string query = await Query(command.ToString());
+            var query = new BasicQuery(address, port, command.ToString());
+            string reply = await query.SendQuery();
 
-            // split the returned coordinates from the status message
-            string[] response = query.Split('|');
+            string[] response = reply.Split('|');
 
             if (response[1].Equals("No error. Error = 0.")) {
                 // put the RA, Dec, and object name into an array
@@ -208,10 +185,10 @@ namespace NINA.Model.MyPlanetarium {
             command.AppendFormat(@"Out = String(chartRA) + "","" + String(chartDec);", Environment.NewLine);
             command.AppendFormat(@"/* Socket End Packet */", Environment.NewLine);
 
-            string query = await Query(command.ToString());
+            var query = new BasicQuery(address, port, command.ToString());
+            string reply = await query.SendQuery();
 
-            // split the returned coordinates from the status message
-            string[] response = query.Split('|');
+            string[] response = reply.Split('|');
 
             if (response[1].Equals("No error. Error = 0.")) {
                 // put the RA, Dec, and object name into an array

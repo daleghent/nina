@@ -700,6 +700,7 @@
     <Compile Include="Utility\SwitchSDKs\PegasusAstro\PegasusCommands.cs" />
     <Compile Include="Utility\SwitchSDKs\PegasusAstro\PegasusDevice.cs" />
     <Compile Include="Utility\SwitchSDKs\PegasusAstro\PegasusResponses.cs" />
+    <Compile Include="Utility\TcpRaw\BasicQuery.cs" />
     <Compile Include="Utility\ValidationRules\FullCircleDegreesRule.cs" />
     <Compile Include="Utility\ValidationRules\GreaterThanZeroRule.cs" />
     <Compile Include="Utility\ValidationRules\IntRangeRule.cs" />
