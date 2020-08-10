@@ -29,7 +29,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINATest {
-
     [TestFixture]
     public class SequenceVMTest {
         public TestContext TestContext { get; set; }

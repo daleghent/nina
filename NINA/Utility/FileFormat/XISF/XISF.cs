@@ -28,7 +28,6 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace NINA.Utility.FileFormat.XISF {
-
     internal class XISF {
         public XISFHeader Header { get; private set; }
 

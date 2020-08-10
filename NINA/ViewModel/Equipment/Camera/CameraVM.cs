@@ -226,7 +226,6 @@ namespace NINA.ViewModel.Equipment.Camera {
                 }
                 throw ex;
             } finally {
-                progress.Report(1);
             }
 
             return true;

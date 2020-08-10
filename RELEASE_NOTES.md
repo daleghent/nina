@@ -38,6 +38,32 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Added `$$ROTATEANGLE$$` file pattern
 - Added `$$STARCOUNT$$` file pattern
 
+# Version 1.10 HF1
+
+- When using a DSLR and Astrometry.net the uploaded file is now correctly sent as FITS instead of raw format
+- Ability to inspect pixel area and pixel values in detail by holding right click
+- Replaced LZ4 library with a more optimized one for faster XISF compression
+- Log files now show correct operating system version
+- Telescope views now display the side of pier when available
+- Cancelling a sequence that is paused, will no longer throw a semaphore error
+- Canon CR3 image format is now supported (use FreeImage as your RAW converter)
+- Adding support for the EOS R5 and EOS R6
+- Added `$$CAMERA$$` file pattern
+- Added `$$TELESCOPE$$` file pattern
+- Added `$$ROTATEANGLE$$` file pattern
+- Added `$$STARCOUNT$$` file pattern
+
+## Included Camera SDK Versions:
+- **Altair Astro:** 46.16909.2020.404
+- **Atik:** 2020.6.18.0
+- **Canon:** 13.12.31
+- **FLI:** 1.104.0.0
+- **Nikon:** 1.3.1.3001
+- **Omegon:** 39.15325.2019.810
+- **QHY:** 20.7.26.1
+- **ToupTek:** 46.17309.2020.616
+- **ZWO:** 1.15.6.17
+
 # Version 1.10
 
 ## New hardware support

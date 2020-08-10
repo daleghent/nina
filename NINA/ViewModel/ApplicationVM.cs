@@ -25,9 +25,7 @@ using System.Windows;
 using System.Windows.Input;
 
 namespace NINA.ViewModel {
-
     internal class ApplicationVM : BaseVM, IApplicationVM, ICameraConsumer {
-
         public ApplicationVM(IProfileService profileService, ISequenceMediator sequenceMediator, ProjectVersion projectVersion, ICameraMediator cameraMediator, IApplicationMediator applicationMediator) : base(profileService) {
             if (Properties.Settings.Default.UpdateSettings) {
                 Properties.Settings.Default.Upgrade();

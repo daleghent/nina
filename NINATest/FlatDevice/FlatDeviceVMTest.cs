@@ -32,7 +32,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINATest.FlatDevice {
-
     [TestFixture]
     public class FlatDeviceVMTest {
         private FlatDeviceVM sut;

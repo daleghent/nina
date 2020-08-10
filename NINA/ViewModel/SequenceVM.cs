@@ -1110,7 +1110,11 @@ namespace NINA.ViewModel {
                 } finally {
                     progress.Report(new ApplicationStatus() { Status = string.Empty });
                     csl.IsRunning = false;
-                    semaphoreSlim.Release();
+
+                    //In case the lock was already released due to pause skip it
+                    if (semaphoreSlim.CurrentCount == 0) {
+                        semaphoreSlim.Release();
+                    }
                 }
                 return true;
             });
