@@ -3936,4 +3936,13 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblC2A" xml:space="preserve">
     <value>C2A</value>
   </data>
+  <data name="LblCameraName" xml:space="preserve">
+    <value>Camera Name</value>
+  </data>
+  <data name="LblRotatorAngleDescription" xml:space="preserve">
+    <value>Angle of the rotator</value>
+  </data>
+  <data name="LblStarCount" xml:space="preserve">
+    <value>Star count</value>
+  </data>
 </root>

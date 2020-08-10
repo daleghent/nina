@@ -26,6 +26,12 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ### Image Preview
 - Ability to inspect pixel area and pixel values in detail by holding right click
 
+### File name patterns and FITS keywords
+- Added `$$CAMERA$$` file pattern
+- Added `$$TELESCOPE$$` file pattern
+- Added `$$ROTATEANGLE$$` file pattern
+- Added `$$STARCOUNT$$` file pattern
+
 # Version 1.10
 
 ## New hardware support
