@@ -14,6 +14,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - This allows usage of native camera drivers for Atik cameras with integrated filter wheels
 - The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver
 
+#### Expanded native camera support
+- **Canon:** EDSDK updated to 13.12.31, adding support for the EOS R5 and EOS R6
+
 ## Application Improvements
 ### General
 - Current sequence progress is now displayed in the task bar, also visualizes pause and non-capture tasks during the sequence
@@ -22,6 +25,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ### Sequencer
 - Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter
 - Added support for fetching sky view and location coordinates from the [C2A](http://www.astrosurf.com/c2a/) planetarium program
+
+### Device-related Improvements
+- Canon CR3 image format is now supported
 
 ### Image Preview
 - Ability to inspect pixel area and pixel values in detail by holding right click
