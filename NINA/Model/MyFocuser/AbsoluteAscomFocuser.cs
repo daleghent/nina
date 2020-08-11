@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyFocuser {
-
     public class AbsoluteAscomFocuser : IFocuserV3Ex {
         private readonly IFocuserV3 focuser;
 

@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using FluentAssertions;
 
 namespace NINATest.Focuser.ASCOM {
-
     [TestFixture]
     internal class RelativeAscomFocuserTest {
         private RelativeAscomFocuser sut;
