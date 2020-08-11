@@ -41,6 +41,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 # Version 1.10 HF1
 
 - When using a DSLR and Astrometry.net the uploaded file is now correctly sent as FITS instead of raw format
+- Relative Focusers can now be connected and will be simulated to behave like absolute focusers
 - Ability to inspect pixel area and pixel values in detail by holding right click
 - Replaced LZ4 library with a more optimized one for faster XISF compression
 - Log files now show correct operating system version
@@ -52,6 +53,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Added `$$TELESCOPE$$` file pattern
 - Added `$$ROTATEANGLE$$` file pattern
 - Added `$$STARCOUNT$$` file pattern
+- Set white balance and gamma to 50 for ASI native driver on connection
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 46.16909.2020.404
