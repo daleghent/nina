@@ -21,7 +21,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINATest.Focuser.ASCOM {
-
     [TestFixture]
     public class AscomFocuserTest {
         private AscomFocuser _sut;
