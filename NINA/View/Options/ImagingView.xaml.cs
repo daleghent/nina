@@ -17,14 +17,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace NINA.View {
+namespace NINA.View.Options {
 
     /// <summary>
     /// Interaction logic for OptionsImagingView.xaml
     /// </summary>
-    public partial class OptionsImagingView : UserControl {
+    public partial class ImagingView : UserControl {
 
-        public OptionsImagingView() {
+        public ImagingView() {
             InitializeComponent();
         }
 

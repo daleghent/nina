@@ -27,7 +27,7 @@ namespace NINA.Utility.ValidationRules {
             double parameter = 0;
 
             try {
-                if (((string)value).Length > 0) {
+                if (("" + value).Length > 0) {
                     parameter = double.Parse(value.ToString(), NumberStyles.Number, cultureInfo);
                 }
             } catch (Exception e) {
@@ -35,7 +35,7 @@ namespace NINA.Utility.ValidationRules {
                                              + e.Message);
             }
 
-            if ((parameter < ValidRange.Minimum) || (parameter > ValidRange.Maximum)) {
+            if (((parameter < ValidRange.Minimum) || (parameter > ValidRange.Maximum)) && parameter != (double)-1) {
                 return new ValidationResult(false,
                     "Please enter value in the range: "
                     + ValidRange.Minimum + " - " + ValidRange.Maximum + ".");

@@ -1,11 +1,13 @@
 ﻿using System.Windows.Controls;
 
-namespace NINA.View {
+namespace NINA.View.Options {
+
     /// <summary>
     /// Interaction logic for OptionsDomeView.xaml
     /// </summary>
-    public partial class OptionsDomeView : UserControl {
-        public OptionsDomeView() {
+    public partial class DomeView : UserControl {
+
+        public DomeView() {
             InitializeComponent();
         }
     }

@@ -18,6 +18,8 @@ using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
+using NINA.Utility.WindowService;
+using NINA.View.About;
 using NINA.ViewModel.Equipment.Camera;
 using NINA.ViewModel.Interfaces;
 using System;
@@ -47,6 +49,7 @@ namespace NINA.ViewModel {
             MaximizeWindowCommand = new RelayCommand(MaximizeWindow);
             CheckProfileCommand = new RelayCommand(LoadProfile);
             OpenManualCommand = new RelayCommand(OpenManual);
+            OpenAboutCommand = new RelayCommand(OpenAbout);
             CheckASCOMPlatformVersionCommand = new RelayCommand(CheckASCOMPlatformVersion);
 
             profileService.ProfileChanged += ProfileService_ProfileChanged;
@@ -74,6 +77,12 @@ namespace NINA.ViewModel {
 
         private void OpenManual(object o) {
             System.Diagnostics.Process.Start("https://nighttime-imaging.eu/docs/master/site/");
+        }
+
+        private void OpenAbout(object o) {
+            AboutPageView window = new AboutPageView();
+            var service = new WindowServiceFactory().Create();
+            service.Show(window, Title + " - " + Locale.Loc.Instance["LblAbout"], ResizeMode.CanResize, WindowStyle.ToolWindow);
         }
 
         public void ChangeTab(ApplicationTab tab) {
@@ -147,6 +156,7 @@ namespace NINA.ViewModel {
         public ICommand CheckProfileCommand { get; }
         public ICommand CheckUpdateCommand { get; private set; }
         public ICommand OpenManualCommand { get; private set; }
+        public ICommand OpenAboutCommand { get; private set; }
         public ICommand ExitCommand { get; private set; }
         public ICommand ClosingCommand { get; private set; }
         public ICommand CheckASCOMPlatformVersionCommand { get; private set; }

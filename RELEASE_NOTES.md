@@ -21,6 +21,12 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ### General
 - Current sequence progress is now displayed in the task bar, also visualizes pause and non-capture tasks during the sequence
 - It is now possible to start, pause, resume and cancel sequences from the preview window
+- Options menu has been restructured to adhere to the Equipment layout
+- Auto-focus is now its own tab in the Options menu
+- Empty gain and offset settings will now always reflect the settings set in Equipment - Camera (valid for imaging, sequence and auto-focus)
+
+### Auto-focus system
+- Auto-focus can now have different settings for gain, offset and binning per filter
 
 ### Sequencer
 - Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter

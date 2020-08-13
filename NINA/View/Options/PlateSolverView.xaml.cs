@@ -14,14 +14,14 @@
 
 using System.Windows.Controls;
 
-namespace NINA.View {
+namespace NINA.View.Options {
 
     /// <summary>
     /// Interaction logic for OptionsPlateSolverView.xaml
     /// </summary>
-    public partial class OptionsPlateSolverView : UserControl {
+    public partial class PlateSolverView : UserControl {
 
-        public OptionsPlateSolverView() {
+        public PlateSolverView() {
             InitializeComponent();
         }
     }

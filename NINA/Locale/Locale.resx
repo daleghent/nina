@@ -3849,6 +3849,9 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblSequenceContainsDarksOnly" xml:space="preserve">
     <value>Camera has no mechanical shutter, no automated flat panel is connected and sequence only contains DARK/BIAS items. Make sure camera is covered.</value>
   </data>
+  <data name="LblAutoFocusFilterSettings" xml:space="preserve">
+    <value>Auto Focus Filter Settings</value>
+  </data>
   <data name="LblMeridianFlipIn" xml:space="preserve">
     <value>Meridian Flip in</value>
   </data>

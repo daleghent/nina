@@ -37,6 +37,7 @@ using Newtonsoft.Json;
 using System.IO;
 
 namespace NINA.ViewModel {
+
     internal class AutoFocusVM : DockableVM, ICameraConsumer, IFocuserConsumer, IFilterWheelConsumer, IAutoFocusVM {
         private static readonly string ReportDirectory = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "AutoFocus");
 
@@ -276,12 +277,24 @@ namespace NINA.ViewModel {
         private async Task<IRenderedImage> TakeExposure(FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress) {
             Logger.Trace("Starting Exposure for autofocus");
             double expTime = profileService.ActiveProfile.FocuserSettings.AutoFocusExposureTime;
-            if (filter != null && filter.AutoFocusExposureTime > 0) {
+            if (filter != null && filter.AutoFocusExposureTime > -1) {
                 expTime = filter.AutoFocusExposureTime;
             }
             var seq = new CaptureSequence(expTime, CaptureSequence.ImageTypes.SNAPSHOT, filter, null, 1);
             seq.EnableSubSample = _setSubSample;
-            seq.Binning = new BinningMode(profileService.ActiveProfile.FocuserSettings.AutoFocusBinning, profileService.ActiveProfile.FocuserSettings.AutoFocusBinning);
+            if (filter.AutoFocusBinning != null) {
+                seq.Binning = filter.AutoFocusBinning;
+            } else {
+                seq.Binning = new BinningMode(profileService.ActiveProfile.FocuserSettings.AutoFocusBinning, profileService.ActiveProfile.FocuserSettings.AutoFocusBinning);
+            }
+
+            if (filter.AutoFocusOffset > -1) {
+                seq.Offset = filter.AutoFocusOffset;
+            }
+
+            if (filter.AutoFocusGain > -1) {
+                seq.Gain = filter.AutoFocusGain;
+            }
 
             bool autoStretch = true;
             //If using contrast based statistics, no need to stretch

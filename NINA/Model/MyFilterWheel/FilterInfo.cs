@@ -23,6 +23,10 @@ namespace NINA.Model.MyFilterWheel {
     public class FilterInfo : BaseINPC {
 
         public FilterInfo() {
+            AutoFocusGain = -1;
+            AutoFocusOffset = -1;
+            AutoFocusBinning = null;
+            AutoFocusExposureTime = -1;
         }
 
         private string _name;
@@ -30,7 +34,23 @@ namespace NINA.Model.MyFilterWheel {
         private short _position;
         private double _autoFocusExposureTime;
         private bool _autoFocusFilter;
+        private MyCamera.BinningMode _autoFocusBinning;
+        private int _autoFocusGain;
+        private int _autoFocusOffset;
         private FlatWizardFilterSettings _flatWizardFilterSettings;
+
+        [OnDeserializing]
+        private void OnDeserializing(System.Runtime.Serialization.StreamingContext c) {
+            AutoFocusGain = -1;
+            AutoFocusOffset = -1;
+            AutoFocusBinning = null;
+            AutoFocusExposureTime = -1;
+        }
+
+        [OnDeserialized]
+        private void OnDeserialized(StreamingContext c) {
+            if (AutoFocusExposureTime == 0) AutoFocusExposureTime = -1;
+        }
 
         [DataMember(Name = nameof(_name))]
         public string Name {
@@ -103,16 +123,55 @@ namespace NINA.Model.MyFilterWheel {
             }
         }
 
+        [DataMember(Name = nameof(_autoFocusBinning), IsRequired = false)]
+        public MyCamera.BinningMode AutoFocusBinning {
+            get {
+                return _autoFocusBinning;
+            }
+            set {
+                _autoFocusBinning = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        [DataMember(Name = nameof(_autoFocusGain), IsRequired = false)]
+        public int AutoFocusGain {
+            get {
+                return _autoFocusGain;
+            }
+            set {
+                _autoFocusGain = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        [DataMember(Name = nameof(_autoFocusOffset), IsRequired = false)]
+        public int AutoFocusOffset {
+            get {
+                return _autoFocusOffset;
+            }
+            set {
+                _autoFocusOffset = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public FilterInfo(string n, int offset, short position) {
             Name = n;
             FocusOffset = offset;
             Position = position;
+            AutoFocusBinning = null;
+            AutoFocusGain = -1;
+            AutoFocusOffset = -1;
+            AutoFocusExposureTime = -1;
             FlatWizardFilterSettings = new FlatWizardFilterSettings();
         }
 
-        public FilterInfo(string n, int offset, short position, double autoFocusExposureTime) : this(n, offset, position) {
+        public FilterInfo(string n, int offset, short position, double autoFocusExposureTime, MyCamera.BinningMode binning, int gain, int cameraOffset) : this(n, offset, position) {
+            AutoFocusBinning = binning;
+            AutoFocusGain = gain;
+            AutoFocusOffset = cameraOffset;
             AutoFocusExposureTime = autoFocusExposureTime;
-            FlatWizardFilterSettings = new FlatWizardFilterSettings();
         }
 
         public override string ToString() {

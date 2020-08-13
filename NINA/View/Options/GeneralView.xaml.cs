@@ -14,14 +14,14 @@
 
 using System.Windows.Controls;
 
-namespace NINA.View {
+namespace NINA.View.Options {
 
     /// <summary>
     /// Interaction logic for OptionsView.xaml
     /// </summary>
-    public partial class OptionsView : UserControl {
+    public partial class GeneralView : UserControl {
 
-        public OptionsView() {
+        public GeneralView() {
             InitializeComponent();
         }
     }

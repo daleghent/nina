@@ -1276,7 +1276,7 @@ namespace NINA.ViewModel {
                 return false;
             }
 
-            if (seq.FilterType != null && seq.FilterType.AutoFocusExposureTime > 0) {
+            if (seq.FilterType != null && seq.FilterType.AutoFocusExposureTime > -1) {
                 estimatedAFTime = TimeSpan.FromSeconds((profileService.ActiveProfile.FocuserSettings.FocuserSettleTime + seq.FilterType.AutoFocusExposureTime) * (profileService.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps + 1) * 4);
             } else {
                 estimatedAFTime = TimeSpan.FromSeconds((profileService.ActiveProfile.FocuserSettings.FocuserSettleTime + profileService.ActiveProfile.FocuserSettings.AutoFocusExposureTime) * (profileService.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps + 1) * 4);

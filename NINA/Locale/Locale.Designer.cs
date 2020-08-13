@@ -697,6 +697,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Auto Focus Filter Settings.
+        /// </summary>
+        internal static string LblAutoFocusFilterSettings {
+            get {
+                return ResourceManager.GetString("LblAutoFocusFilterSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot start Auto Focus. Camera or Focuser is not connected!.
         /// </summary>
         internal static string LblAutoFocusGearNotConnected {

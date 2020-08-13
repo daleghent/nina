@@ -101,39 +101,6 @@
                                     Height="15"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Right"
-                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.OptionsVM.ToggleColorsCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True">
-                                    <Button.ToolTip>
-                                        <ToolTip ToolTipService.ShowOnDisabled="True">
-                                            Toggles colors to alternative color schema
-                                        </ToolTip>
-                                    </Button.ToolTip>
-                                    <Path
-                                        Margin="2"
-                                        Data="{StaticResource EyeSVG}"
-                                        Stretch="Uniform"
-                                        Style="{StaticResource WindowButtonPath}" />
-                                </Button>
-                                <Button
-                                    Width="20"
-                                    Height="15"
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Right"
-                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.OpenManualCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True">
-                                    <Path
-                                        Margin="2"
-                                        Data="{StaticResource QuestionSVG}"
-                                        Stretch="Uniform"
-                                        Style="{StaticResource WindowButtonPath}" />
-                                </Button>
-                                <Button
-                                    Width="20"
-                                    Height="15"
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Right"
                                     Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.MinimizeWindowCommand}"
                                     Style="{StaticResource SecondaryBackgroundButton}"
                                     WindowChrome.IsHitTestVisibleInChrome="True">
