@@ -50,6 +50,7 @@ namespace NINA.ViewModel.Equipment.Guider {
             Guiders.Add(new SynchronizedPHD2Guider(profileService, cameraMediator));
             Guiders.Add(new DirectGuider(profileService, telescopeMediator));
             Guiders.Add(new MGENGuider(profileService));
+            Guiders.Add(new MetaGuideGuider(profileService));
 
             DetermineSelectedDevice(profileService.ActiveProfile.GuiderSettings.GuiderName);
         }

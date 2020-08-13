@@ -42,6 +42,9 @@ namespace NINA.Profile {
             autoRetryStartGuiding = false;
             autoRetryStartGuidingTimeoutSeconds = 60;
             maxY = 4;
+            metaGuideIP = "127.0.1.1";
+            metaGuidePort = 1277;
+            metaGuideMinIntensity = 100;
 
             var defaultPHD2Path = Environment.ExpandEnvironmentVariables(@"%programfiles(x86)%\PHDGuiding2\phd2.exe");
 
@@ -51,6 +54,7 @@ namespace NINA.Profile {
                 : string.Empty;
             guiderName = "PHD2";
             mgenFocalLength = 1000;
+            metaGuideDitherSettleSeconds = 30;
         }
 
         private double ditherPixels;
@@ -249,6 +253,32 @@ namespace NINA.Profile {
             }
         }
 
+        private string metaGuideIP;
+
+        [DataMember]
+        public string MetaGuideIP {
+            get => metaGuideIP;
+            set {
+                if (metaGuideIP != value) {
+                    metaGuideIP = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int metaGuidePort;
+
+        [DataMember]
+        public int MetaGuidePort {
+            get => metaGuidePort;
+            set {
+                if (metaGuidePort != value) {
+                    metaGuidePort = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         private int mgenFocalLength;
 
         [DataMember]
@@ -257,6 +287,32 @@ namespace NINA.Profile {
             set {
                 if (mgenFocalLength != value) {
                     mgenFocalLength = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int metaGuideMinIntensity;
+
+        [DataMember]
+        public int MetaGuideMinIntensity {
+            get => metaGuideMinIntensity;
+            set {
+                if (metaGuideMinIntensity != value) {
+                    metaGuideMinIntensity = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int metaGuideDitherSettleSeconds;
+
+        [DataMember]
+        public int MetaGuideDitherSettleSeconds {
+            get => metaGuideDitherSettleSeconds;
+            set {
+                if (metaGuideDitherSettleSeconds != value) {
+                    metaGuideDitherSettleSeconds = value;
                     RaisePropertyChanged();
                 }
             }

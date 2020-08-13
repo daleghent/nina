@@ -26,6 +26,7 @@ namespace NINA.View.Equipment.Guider {
     internal class GuiderTemplateSelector : DataTemplateSelector {
         public DataTemplate MGen { get; set; }
         public DataTemplate PHD2 { get; set; }
+        public DataTemplate MetaGuide { get; set; }
         public DataTemplate Default { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
@@ -33,6 +34,8 @@ namespace NINA.View.Equipment.Guider {
                 return MGen;
             } else if (item is PHD2Guider) {
                 return PHD2;
+            } else if (item is MetaGuideGuider) {
+                return MetaGuide;
             } else {
                 return Default;
             }

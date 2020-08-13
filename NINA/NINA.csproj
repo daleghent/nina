@@ -174,7 +174,6 @@
     </Reference>
     <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks, Version=1.0.12.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
@@ -288,7 +287,6 @@
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -479,6 +477,16 @@
     <Compile Include="Model\MyFocuser\IAscomFocuserProvider.cs" />
     <Compile Include="Model\MyFlatDevice\ArteskyFlatBox.cs" />
     <Compile Include="Model\MyPlanetarium\C2A.cs" />
+    <Compile Include="Model\MyGuider\MetaGuideGuider.cs" />
+    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideListener.cs" />
+    <Compile Include="Model\MyGuider\MetaGuide\CalibrationState.cs" />
+    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideBaseMsg.cs" />
+    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideCalibrationInfoMsg.cs" />
+    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideCameraMsg.cs" />
+    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideGuideMsg.cs" />
+    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideGuideParamsMsg.cs" />
+    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideMountMsg.cs" />
+    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideStatusMsg.cs" />
     <Compile Include="Model\MyPlanetarium\IPlanetariumFactory.cs" />
     <Compile Include="Model\MyWeatherData\UltimatePowerboxV2.cs" />
     <Compile Include="Model\MyFlatDevice\PegasusAstroFlatMaster.cs" />
@@ -704,6 +712,7 @@
     <Compile Include="Utility\ValidationRules\FullCircleDegreesRule.cs" />
     <Compile Include="Utility\ValidationRules\GreaterThanZeroRule.cs" />
     <Compile Include="Utility\ValidationRules\IntRangeRule.cs" />
+    <Compile Include="Utility\ValidationRules\IsValidIPAddressRule.cs" />
     <Compile Include="Utility\ValidationRules\StrictGreaterZeroRule.cs" />
     <Compile Include="ViewModel\ApplicationDeviceConnectionVM.cs" />
     <Compile Include="ViewModel\AutoFocus\AutoFocusPoint.cs" />
@@ -810,6 +819,9 @@
       <DependentUpon>DefaultDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Equipment\Guider\GuiderTemplateSelector.cs" />
+    <Compile Include="View\Equipment\Guider\MetaGuideDetailView.xaml.cs">
+      <DependentUpon>MetaGuideDetailView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Equipment\Guider\MGenDetailView.xaml.cs">
       <DependentUpon>MGenDetailView.xaml</DependentUpon>
     </Compile>
@@ -1576,6 +1588,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Equipment\Guider\MetaGuideDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Equipment\Guider\MGenDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1885,6 +1901,7 @@
     <Content Include="3rd-party-licenses.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="BootstrapAscomProfileStore.ps1" />
     <Content Include="Database\Initial\initial_data.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

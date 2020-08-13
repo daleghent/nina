@@ -157,6 +157,9 @@
                         <DataTemplate x:Key="PHD2">
                             <guider:DefaultDetailView />
                         </DataTemplate>
+                        <DataTemplate x:Key="MetaGuide">
+                            <guider:MetaGuideDetailView />
+                        </DataTemplate>
                         <DataTemplate x:Key="Default">
                             <guider:DefaultDetailView />
                         </DataTemplate>
@@ -164,7 +167,8 @@
                             x:Key="ContentSelector"
                             Default="{StaticResource Default}"
                             MGen="{StaticResource MGen}"
-                            PHD2="{StaticResource Default}" />
+                            PHD2="{StaticResource Default}"
+                            MetaGuide="{StaticResource MetaGuide}" />
                     </Grid.Resources>
                     <ContentControl
                         Content="{Binding}"

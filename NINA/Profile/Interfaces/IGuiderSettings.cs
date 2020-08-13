@@ -32,6 +32,10 @@ namespace NINA.Profile {
         string PHD2Path { get; set; }
         bool AutoRetryStartGuiding { get; set; }
         int AutoRetryStartGuidingTimeoutSeconds { get; set; }
+        string MetaGuideIP { get; set; }
+        int MetaGuidePort { get; set; }
         int MGENFocalLength { get; set; }
+        int MetaGuideMinIntensity { get; set; }
+        int MetaGuideDitherSettleSeconds { get; set; }
     }
 }

@@ -142,12 +142,11 @@ namespace NINA.ViewModel.Equipment.Guider {
                     profileService.ActiveProfile.GuiderSettings.GuiderName = Guider.Name;
                 }
             } catch (OperationCanceledException) {
-                Guider.PropertyChanged -= Guider_PropertyChanged;
-                Guider?.Disconnect();
-                GuiderInfo = new GuiderInfo {
-                    Connected = false
-                };
-                BroadcastGuiderInfo();
+                connected = false;
+            }
+
+            if (!connected) {
+                await Disconnect();
             }
 
             return connected;
@@ -161,6 +160,9 @@ namespace NINA.ViewModel.Equipment.Guider {
             if (e.PropertyName == nameof(IGuider.Connected)) {
                 GuiderInfo.Connected = Guider.Connected;
                 BroadcastGuiderInfo();
+                if (!GuiderInfo.Connected) {
+                    Disconnect();
+                }
             }
         }
 
@@ -184,6 +186,7 @@ namespace NINA.ViewModel.Equipment.Guider {
                 Guider.GuideEvent -= Guider_GuideEvent;
             }
             Guider?.Disconnect();
+            Guider = null;
             GuiderInfo = DeviceInfo.CreateDefaultInstance<GuiderInfo>();
             BroadcastGuiderInfo();
             return Task.CompletedTask;

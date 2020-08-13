@@ -1370,6 +1370,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calibration State.
+        /// </summary>
+        internal static string LblCalibrationState {
+            get {
+                return ResourceManager.GetString("LblCalibrationState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cam.
         /// </summary>
         internal static string LblCam {
@@ -5356,6 +5365,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FWHM.
+        /// </summary>
+        internal static string LblFWHM {
+            get {
+                return ResourceManager.GetString("LblFWHM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Gain.
         /// </summary>
         internal static string LblGain {
@@ -5896,6 +5914,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Intensity.
+        /// </summary>
+        internal static string LblIntensity {
+            get {
+                return ResourceManager.GetString("LblIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid mode.
         /// </summary>
         internal static string LblInvalidMode {
@@ -6409,6 +6436,87 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to connect to MetaGuide.
+        /// </summary>
+        internal static string LblMetaGuideConnectionFailed {
+            get {
+                return ResourceManager.GetString("LblMetaGuideConnectionFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dither settling time.
+        /// </summary>
+        internal static string LblMetaGuideDitherSettleTime {
+            get {
+                return ResourceManager.GetString("LblMetaGuideDitherSettleTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount of time, in seconds, to wait for dithering to complete.
+        /// </summary>
+        internal static string LblMetaGuideDitherSettleTimeTooltip {
+            get {
+                return ResourceManager.GetString("LblMetaGuideDitherSettleTimeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MetaGuide IP.
+        /// </summary>
+        internal static string LblMetaGuideIP {
+            get {
+                return ResourceManager.GetString("LblMetaGuideIP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guiding resumed.
+        /// </summary>
+        internal static string LblMetaGuideLowIntensityRestoreGuiding {
+            get {
+                return ResourceManager.GetString("LblMetaGuideLowIntensityRestoreGuiding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to resume guiding after star intensity recovered.
+        /// </summary>
+        internal static string LblMetaGuideLowIntensityRestoreGuidingFailed {
+            get {
+                return ResourceManager.GetString("LblMetaGuideLowIntensityRestoreGuidingFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stopped guiding due to low star intensity. There may be clouds..
+        /// </summary>
+        internal static string LblMetaGuideLowIntensityStopGuiding {
+            get {
+                return ResourceManager.GetString("LblMetaGuideLowIntensityStopGuiding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MetaGuide Port.
+        /// </summary>
+        internal static string LblMetaGuidePort {
+            get {
+                return ResourceManager.GetString("LblMetaGuidePort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update MetaGuide to at least {0}.
+        /// </summary>
+        internal static string LblMetaGuideVersionCheckFailed {
+            get {
+                return ResourceManager.GetString("LblMetaGuideVersionCheckFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Min.
         /// </summary>
         internal static string LblMin {
@@ -6459,6 +6567,24 @@ namespace NINA.Locale {
         internal static string LblMinimumSettleTime {
             get {
                 return ResourceManager.GetString("LblMinimumSettleTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum Intensity.
+        /// </summary>
+        internal static string LblMinIntensity {
+            get {
+                return ResourceManager.GetString("LblMinIntensity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guide star intensity is measured on a scale of 0-255. If intensity drops below this amount, then NINA will pause guiding until it returns. This may indicate the presence of clouds..
+        /// </summary>
+        internal static string LblMinIntensityTooltip {
+            get {
+                return ResourceManager.GetString("LblMinIntensityTooltip", resourceCulture);
             }
         }
         
@@ -8760,6 +8886,15 @@ namespace NINA.Locale {
         internal static string LblSeconds {
             get {
                 return ResourceManager.GetString("LblSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seeing.
+        /// </summary>
+        internal static string LblSeeing {
+            get {
+                return ResourceManager.GetString("LblSeeing", resourceCulture);
             }
         }
         
