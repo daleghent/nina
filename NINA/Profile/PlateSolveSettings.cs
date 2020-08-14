@@ -24,7 +24,7 @@ namespace NINA.Profile {
     [Serializable()]
     [DataContract]
     public class PlateSolveSettings : Settings, IPlateSolveSettings {
-        private PlateSolverEnum plateSolverType = PlateSolverEnum.PLATESOLVE2;
+        private PlateSolverEnum plateSolverType = PlateSolverEnum.ASTAP;
 
         [OnDeserializing]
         public void OnDeserializing(StreamingContext context) {
@@ -32,7 +32,7 @@ namespace NINA.Profile {
         }
 
         protected override void SetDefaultValues() {
-            blindSolverType = BlindSolverEnum.ASTROMETRY_NET;
+            blindSolverType = BlindSolverEnum.ASTAP;
             astrometryURL = "http://nova.astrometry.net";
             astrometryAPIKey = string.Empty;
             cygwinLocation = string.Empty;
