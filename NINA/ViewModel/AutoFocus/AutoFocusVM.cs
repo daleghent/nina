@@ -12,29 +12,30 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
 using NINA.Model;
+using NINA.Model.ImageData;
 using NINA.Model.MyCamera;
 using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFocuser;
+using NINA.Profile;
 using NINA.Utility;
+using NINA.Utility.Enum;
+using NINA.Utility.ImageAnalysis;
+using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.ViewModel.AutoFocus;
 using OxyPlot;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NINA.Utility.ImageAnalysis;
-using NINA.Model.ImageData;
-using NINA.Utility.Enum;
-using NINA.Utility.Mediator;
-using NINA.ViewModel.AutoFocus;
-using Newtonsoft.Json;
-using System.IO;
+using System.Windows.Navigation;
 
 namespace NINA.ViewModel {
 
@@ -88,23 +89,30 @@ namespace NINA.ViewModel {
 
             FocusPoints = new AsyncObservableCollection<ScatterErrorPoint>();
             PlotFocusPoints = new AsyncObservableCollection<DataPoint>();
+            ChartList = new AsyncObservableCollection<Chart>();
+            ChartListSelectable = true;
+            Task.Run(async () => { await ListChartsFromFs(); });
 
             StartAutoFocusCommand = new AsyncCommand<AutoFocusReport>(
                 () =>
                     Task.Run(
                         async () => {
                             cameraMediator.RegisterCaptureBlock(this);
+                            ChartListSelectable = false;
                             try {
                                 var result = await StartAutoFocus(CommandInitializization(), _autoFocusCancelToken.Token, new Progress<ApplicationStatus>(p => Status = p));
                                 return result;
                             } finally {
                                 cameraMediator.ReleaseCaptureBlock(this);
+                                ChartListSelectable = true;
                             }
                         }
                     ),
                 (p) => { return focuserInfo?.Connected == true && cameraInfo?.Connected == true && cameraMediator.IsFreeToCapture(this); }
             );
             CancelAutoFocusCommand = new RelayCommand(CancelAutoFocus);
+            LoadChartCommand = new RelayCommand(LoadChart);
+            SelectionChangedCommand = new RelayCommand(SelectionChanged);
         }
 
         private CancellationTokenSource _autoFocusCancelToken;
@@ -117,6 +125,101 @@ namespace NINA.ViewModel {
         private List<Accord.Point> brightestStarPositions = new List<Accord.Point>();
         public double AverageContrast { get; private set; }
         public double ContrastStdev { get; private set; }
+        public AsyncObservableCollection<Chart> ChartList { get; set; }
+
+        private AFCurveFittingEnum _autoFocusChartCurveFitting;
+
+        public AFCurveFittingEnum AutoFocusChartCurveFitting {
+            get {
+                return _autoFocusChartCurveFitting;
+            }
+            set {
+                _autoFocusChartCurveFitting = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private AFMethodEnum _autoFocusChartMethod;
+
+        public AFMethodEnum AutoFocusChartMethod {
+            get {
+                return _autoFocusChartMethod;
+            }
+            set {
+                _autoFocusChartMethod = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool _chartListSelectable;
+
+        public bool ChartListSelectable {
+            get {
+                return _chartListSelectable;
+            }
+            set {
+                _chartListSelectable = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private Chart _selectedChart;
+
+        public Chart SelectedChart {
+            get => _selectedChart;
+            set {
+                _selectedChart = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public void SelectionChanged(Object obj) {
+            LoadChart(null);
+        }
+
+        public class Chart {
+            public String Name { get; set; }
+            public String FilePath { get; set; }
+
+            public Chart(string name, string filePath) {
+                this.Name = name;
+                this.FilePath = filePath;
+            }
+        }
+
+        public async Task<AsyncObservableCollection<Chart>> ListChartsFromFs() {
+            var files = Directory.GetFiles(Path.Combine(ReportDirectory));
+            foreach (String file in files) {
+                ChartList.Add(new Chart(Path.GetFileName(file), file));
+            }
+            return ChartList;
+        }
+
+        public void LoadChart(Object obj) {
+            if (SelectedChart != null) {
+                var comparer = new FocusPointComparer();
+                var plotComparer = new PlotPointComparer();
+                FocusPoints.Clear();
+                PlotFocusPoints.Clear();
+
+                var report = JsonConvert.DeserializeObject<AutoFocusReport>(File.ReadAllText(SelectedChart.FilePath));
+
+                FinalFocusPoint = new DataPoint(report.CalculatedFocusPoint.Position, report.CalculatedFocusPoint.Value);
+                LastAutoFocusPoint = new AutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = report.Temperature, Timestamp = report.Timestamp };
+
+                foreach (FocusPoint fp in report.MeasurePoints) {
+                    FocusPoints.AddSorted(new ScatterErrorPoint(Convert.ToInt32(fp.Position), fp.Value, 0, fp.Error), comparer);
+                    PlotFocusPoints.AddSorted(new DataPoint(Convert.ToInt32(fp.Position), fp.Value), plotComparer);
+                }
+
+                AutoFocusChartMethod = report.Method == AFMethodEnum.STARHFR.ToString() ? AFMethodEnum.STARHFR : AFMethodEnum.CONTRASTDETECTION;
+                AFCurveFittingEnum AFCurveFittingEnum = new AFCurveFittingEnum();
+                Enum.TryParse<AFCurveFittingEnum>(report.Fitting, out AFCurveFittingEnum);
+                AutoFocusChartCurveFitting = AFCurveFittingEnum;
+
+                SetCurveFittings(report.Method, report.Fitting);
+            }
+        }
 
         public AsyncObservableCollection<ScatterErrorPoint> FocusPoints {
             get {
@@ -255,22 +358,24 @@ namespace NINA.ViewModel {
 
                 token.ThrowIfCancellationRequested();
 
-                TrendlineFitting = new TrendlineFitting().Calculate(FocusPoints);
+                SetCurveFittings(profileService.ActiveProfile.FocuserSettings.AutoFocusMethod.ToString(), profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting.ToString());
+            }
+        }
 
-                if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR) {
-                    if (FocusPoints.Count() >= 3
-                        && (profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.PARABOLIC
-                        || profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.TRENDPARABOLIC)) {
-                        QuadraticFitting = new QuadraticFitting().Calculate(FocusPoints);
-                    }
-                    if (FocusPoints.Count() >= 3
-                        && (profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.HYPERBOLIC
-                        || profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting == Utility.Enum.AFCurveFittingEnum.TRENDHYPERBOLIC)) {
-                        HyperbolicFitting = new HyperbolicFitting().Calculate(FocusPoints);
-                    }
-                } else if (FocusPoints.Count() >= 3) {
-                    GaussianFitting = new GaussianFitting().Calculate(FocusPoints);
+        private void SetCurveFittings(String method, String fitting) {
+            TrendlineFitting = new TrendlineFitting().Calculate(FocusPoints);
+
+            if (AFMethodEnum.STARHFR.ToString() == method) {
+                if (FocusPoints.Count() >= 3
+                    && (AFCurveFittingEnum.PARABOLIC.ToString() == fitting || AFCurveFittingEnum.TRENDPARABOLIC.ToString() == fitting)) {
+                    QuadraticFitting = new QuadraticFitting().Calculate(FocusPoints);
                 }
+                if (FocusPoints.Count() >= 3
+                    && (AFCurveFittingEnum.HYPERBOLIC.ToString() == fitting || AFCurveFittingEnum.TRENDHYPERBOLIC.ToString() == fitting)) {
+                    HyperbolicFitting = new HyperbolicFitting().Calculate(FocusPoints);
+                }
+            } else if (FocusPoints.Count() >= 3) {
+                GaussianFitting = new GaussianFitting().Calculate(FocusPoints);
             }
         }
 
@@ -413,8 +518,11 @@ namespace NINA.ViewModel {
         }
 
         public async Task<AutoFocusReport> StartAutoFocus(FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress) {
-            AutoFocusReport report = null;
             Logger.Trace("Starting Autofocus");
+            AutoFocusChartMethod = profileService.ActiveProfile.FocuserSettings.AutoFocusMethod;
+            AutoFocusChartCurveFitting = profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting;
+            SelectedChart = null;
+            AutoFocusReport report = null;
             FocusPoints.Clear();
             PlotFocusPoints.Clear();
             TrendlineFitting = null;
@@ -687,7 +795,9 @@ namespace NINA.ViewModel {
                     filter
                 );
 
-                File.WriteAllText(Path.Combine(ReportDirectory, DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss") + ".json"), JsonConvert.SerializeObject(report));
+                String path = Path.Combine(ReportDirectory, DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss") + ".json");
+                File.WriteAllText(path, JsonConvert.SerializeObject(report));
+                ChartList.Add(new Chart(Path.GetFileName(path), path));
                 return report;
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -737,5 +847,7 @@ namespace NINA.ViewModel {
 
         public ICommand StartAutoFocusCommand { get; private set; }
         public ICommand CancelAutoFocusCommand { get; private set; }
+        public ICommand LoadChartCommand { get; private set; }
+        public ICommand SelectionChangedCommand { get; private set; }
     }
 }

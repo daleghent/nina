@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using NINA.Model;
+﻿using NINA.Model;
 using NINA.Model.MyCamera;
 using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFocuser;
@@ -10,6 +6,10 @@ using NINA.Utility;
 using NINA.ViewModel.AutoFocus;
 using OxyPlot;
 using OxyPlot.Series;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace NINA.ViewModel {
 
@@ -27,6 +27,8 @@ namespace NINA.ViewModel {
         ICommand StartAutoFocusCommand { get; }
         ApplicationStatus Status { get; set; }
         TrendlineFitting TrendlineFitting { get; set; }
+        Boolean ChartListSelectable { get; }
+        ICommand LoadChartCommand { get; }
 
         void Dispose();
 
