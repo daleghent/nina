@@ -16,8 +16,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
-    xmlns:util="clr-namespace:NINA.Utility"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
+    xmlns:util="clr-namespace:NINA.Utility"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -32,13 +32,10 @@
         </Grid.ColumnDefinitions>-->
 
         <StackPanel IsEnabled="{Binding MyCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}}" Orientation="{Binding MyOrientation}">
-            <Border
-                MinHeight="30"
-                BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0">
+            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposureTime}" />
-                    <TextBox MinWidth="50" Margin="5">
+                    <TextBox MinWidth="50" Margin="5,0,0,0">
                         <TextBox.Text>
                             <Binding Mode="TwoWay" Path="MyExposureDuration">
                                 <Binding.ValidationRules>
@@ -50,13 +47,12 @@
                 </UniformGrid>
             </Border>
             <Border
-                MinHeight="30"
+                Margin="0,5,0,0"
                 BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFilter}" />
                     <ComboBox
-                        Height="25"
                         Margin="5,0,0,0"
                         DisplayMemberPath="Name"
                         SelectedItem="{Binding MySelectedFilter, Converter={StaticResource FilterWheelFilterConverter}}"
@@ -74,7 +70,7 @@
                 </UniformGrid>
             </Border>
             <Border
-                MinHeight="30"
+                Margin="0,5,0,0"
                 BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0"
                 Visibility="{Binding MyBinningModes, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
@@ -90,15 +86,18 @@
                 </UniformGrid>
             </Border>
             <Border
-                MinHeight="30"
+                Margin="0,5,0,0"
                 BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0"
                 Visibility="{Binding MyCanGetGain, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblGain}" />
                     <Grid Margin="5,0,0,0">
-                        <ComboBox SelectedValuePath="Text" DisplayMemberPath="Text" IsSynchronizedWithCurrentItem="True"
-                                          Visibility="{Binding MyGains, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
+                        <ComboBox
+                            DisplayMemberPath="Text"
+                            IsSynchronizedWithCurrentItem="True"
+                            SelectedValuePath="Text"
+                            Visibility="{Binding MyGains, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
                             <ComboBox.ItemsSource>
                                 <CompositeCollection>
                                     <TextBlock Text="{Binding Source={StaticResource ControlProxy}, Path=Data.MyDefaultGain, UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
@@ -106,13 +105,19 @@
                                 </CompositeCollection>
                             </ComboBox.ItemsSource>
                             <ComboBox.SelectedValue>
-                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
+                                <MultiBinding
+                                    Converter="{StaticResource MinusOneToBaseValueConverter}"
+                                    Mode="TwoWay"
+                                    UpdateSourceTrigger="PropertyChanged">
                                     <Binding
-                                            Path="MySelectedGain"
-                                            Mode="TwoWay"
-                                            UpdateSourceTrigger="PropertyChanged">
-                                    </Binding>
-                                    <Binding Source="{StaticResource ControlProxy}" Path="Data.MyDefaultGain" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" />
+                                        Mode="TwoWay"
+                                        Path="MySelectedGain"
+                                        UpdateSourceTrigger="PropertyChanged" />
+                                    <Binding
+                                        Mode="OneWay"
+                                        Path="Data.MyDefaultGain"
+                                        Source="{StaticResource ControlProxy}"
+                                        UpdateSourceTrigger="PropertyChanged" />
                                 </MultiBinding>
                             </ComboBox.SelectedValue>
                         </ComboBox>
@@ -120,9 +125,9 @@
                             <TextBox.Text>
                                 <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                     <Binding
-                                            Path="MySelectedGain"
-                                            Mode="TwoWay"
-                                            UpdateSourceTrigger="PropertyChanged">
+                                        Mode="TwoWay"
+                                        Path="MySelectedGain"
+                                        UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
                                             <rules:IntRangeRule>
                                                 <rules:IntRangeRule.ValidRange>
@@ -131,7 +136,11 @@
                                             </rules:IntRangeRule>
                                         </Binding.ValidationRules>
                                     </Binding>
-                                    <Binding Source="{StaticResource ControlProxy}" Path="Data.MyDefaultGain" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" />
+                                    <Binding
+                                        Mode="OneWay"
+                                        Path="Data.MyDefaultGain"
+                                        Source="{StaticResource ControlProxy}"
+                                        UpdateSourceTrigger="PropertyChanged" />
                                 </MultiBinding>
                             </TextBox.Text>
                         </TextBox>

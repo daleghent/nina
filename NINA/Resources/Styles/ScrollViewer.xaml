@@ -86,89 +86,156 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ScrollBarTrackThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Grid x:Name="Grid">
+                        <Rectangle
+                            Width="Auto"
+                            Height="Auto"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Fill="Transparent" />
+                        <Border
+                            x:Name="CornerScrollBarRectangle"
+                            Width="Auto"
+                            Height="Auto"
+                            Margin="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="5" />
+                    </Grid>
+                    <!--<ControlTemplate.Triggers>
+                        <Trigger Property="Tag" Value="Horizontal">
+                            <Setter TargetName="CornerScrollBarRectangle" Property="Width" Value="Auto" />
+                            <Setter TargetName="CornerScrollBarRectangle" Property="Height" Value="Auto" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>-->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <ControlTemplate x:Key="VerticalScrollBar" TargetType="{x:Type ScrollBar}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition MaxHeight="18" />
-                <RowDefinition Height="0.00001*" />
-                <RowDefinition MaxHeight="18" />
-            </Grid.RowDefinitions>
-            <Border Grid.RowSpan="3" BorderBrush="Transparent" BorderThickness="0" Background="{StaticResource ButtonForegroundDisabledBrush}" />
-            <RepeatButton
-                Grid.Row="0"
-                Height="18"
-                Command="ScrollBar.LineUpCommand"
-                Content="M 0 4 L 8 4 L 4 0 Z"
-                Style="{StaticResource ScrollBarLineButton}" />
-            <Track
-                Name="PART_Track"
-                Grid.Row="1"
-                IsDirectionReversed="true">
-                <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageUpCommand" Style="{StaticResource ScrollBarPageButton}" />
-                </Track.DecreaseRepeatButton>
-                <Track.Thumb>
-                    <Thumb
-                        Background="{StaticResource ButtonBackgroundBrush}"
-                        BorderBrush="{StaticResource ButtonBackgroundBrush}"
-                        Style="{StaticResource ScrollBarThumb}" />
-                </Track.Thumb>
-                <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageDownCommand" Style="{StaticResource ScrollBarPageButton}" />
-                </Track.IncreaseRepeatButton>
-            </Track>
-            <RepeatButton
-                Grid.Row="3"
-                Height="18"
-                Command="ScrollBar.LineDownCommand"
-                Content="M 0 0 L 4 4 L 8 0 Z"
-                Style="{StaticResource ScrollBarLineButton}" />
-        </Grid>
+        <Border
+            x:Name="GridRoot"
+            Width="7"
+            Height="Auto"
+            Background="{StaticResource ButtonForegroundDisabledBrush}"
+            BorderBrush="Transparent"
+            BorderThickness="0"
+            CornerRadius="5">
+            <Grid Background="{TemplateBinding Background}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Track
+                    x:Name="PART_Track"
+                    Grid.Row="0"
+                    Focusable="false"
+                    IsDirectionReversed="True">
+                    <Track.Thumb>
+                        <Thumb
+                            x:Name="Thumb"
+                            Background="{TemplateBinding Foreground}"
+                            Style="{DynamicResource ScrollBarTrackThumb}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton
+                            x:Name="PageUp"
+                            Command="ScrollBar.PageDownCommand"
+                            Focusable="false"
+                            Opacity="0" />
+                    </Track.IncreaseRepeatButton>
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton
+                            x:Name="PageDown"
+                            Command="ScrollBar.PageUpCommand"
+                            Focusable="false"
+                            Opacity="0" />
+                    </Track.DecreaseRepeatButton>
+                </Track>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                <Setter TargetName="Thumb" Property="Background" Value="{DynamicResource ButtonSelectBrush}" />
+                <Setter TargetName="GridRoot" Property="Width" Value="15" />
+            </Trigger>
+            <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                <Setter TargetName="Thumb" Property="Background" Value="{DynamicResource DarkBrush}" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
     <!--  HorizontalScrollBar Template using the previously created Templates  -->
     <ControlTemplate x:Key="HorizontalScrollBar" TargetType="{x:Type ScrollBar}">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition MaxWidth="18" />
-                <ColumnDefinition Width="0.00001*" />
-                <ColumnDefinition MaxWidth="18" />
-            </Grid.ColumnDefinitions>
-            <Border Grid.ColumnSpan="3" Background="{StaticResource ButtonForegroundDisabledBrush}" />
-            <RepeatButton
-                Grid.Column="0"
-                Width="18"
-                Command="ScrollBar.LineLeftCommand"
-                Content="M 4 0 L 4 8 L 0 4 Z"
-                Style="{StaticResource ScrollBarLineButton}" />
-            <Track
-                Name="PART_Track"
-                Grid.Column="1"
-                IsDirectionReversed="False">
-                <Track.DecreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageLeftCommand" Style="{StaticResource ScrollBarPageButton}" />
-                </Track.DecreaseRepeatButton>
-                <Track.Thumb>
-                    <Thumb
-                        Background="{StaticResource ButtonBackgroundBrush}"
-                        BorderBrush="{StaticResource ButtonBackgroundBrush}"
-                        Style="{StaticResource ScrollBarThumb}" />
-                </Track.Thumb>
-                <Track.IncreaseRepeatButton>
-                    <RepeatButton Command="ScrollBar.PageRightCommand" Style="{StaticResource ScrollBarPageButton}" />
-                </Track.IncreaseRepeatButton>
-            </Track>
-            <RepeatButton
-                Grid.Column="3"
-                Width="18"
-                Command="ScrollBar.LineRightCommand"
-                Content="M 0 0 L 4 4 L 0 8 Z"
-                Style="{StaticResource ScrollBarLineButton}" />
-        </Grid>
+        <Border
+            x:Name="GridRoot"
+            Width="Auto"
+            Height="7"
+            Background="{StaticResource ButtonForegroundDisabledBrush}"
+            BorderBrush="Transparent"
+            BorderThickness="0"
+            CornerRadius="5">
+            <Grid Background="{TemplateBinding Background}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Track
+                    x:Name="PART_Track"
+                    Grid.Row="0"
+                    Focusable="false"
+                    IsDirectionReversed="False">
+                    <Track.Thumb>
+                        <Thumb
+                            x:Name="Thumb"
+                            Background="{TemplateBinding Foreground}"
+                            Style="{DynamicResource ScrollBarTrackThumb}" />
+                    </Track.Thumb>
+                    <Track.IncreaseRepeatButton>
+                        <RepeatButton
+                            x:Name="PageUp"
+                            Command="ScrollBar.PageLeftCommand"
+                            Focusable="false"
+                            Opacity="0" />
+                    </Track.IncreaseRepeatButton>
+                    <Track.DecreaseRepeatButton>
+                        <RepeatButton
+                            x:Name="PageDown"
+                            Command="ScrollBar.PageRightCommand"
+                            Focusable="false"
+                            Opacity="0" />
+                    </Track.DecreaseRepeatButton>
+                </Track>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger SourceName="Thumb" Property="IsMouseOver" Value="true">
+                <Setter TargetName="Thumb" Property="Background" Value="{DynamicResource ButtonSelectBrush}" />
+                <Setter TargetName="GridRoot" Property="Height" Value="15" />
+            </Trigger>
+            <Trigger SourceName="Thumb" Property="IsDragging" Value="true">
+                <Setter TargetName="Thumb" Property="Background" Value="{DynamicResource DarkBrush}" />
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="Thumb" Property="Visibility" Value="Collapsed" />
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
+
     <!--  Style for overall  ScrollBar  -->
     <Style TargetType="{x:Type ScrollBar}">
+        <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
+        <Setter Property="Foreground" Value="{StaticResource ButtonBackgroundBrush}" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="OverridesDefaultStyle" Value="true" />
         <Style.Triggers>
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Width" Value="Auto" />

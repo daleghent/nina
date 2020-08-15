@@ -20,10 +20,10 @@
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
     xmlns:util="clr-namespace:NINA.Utility"
+    x:Name="UC"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    mc:Ignorable="d"
-    x:Name="UC">
+    mc:Ignorable="d">
     <UserControl.Resources>
         <util:BindingProxy x:Key="CameraInfo" Data="{Binding CameraInfo}" />
     </UserControl.Resources>
@@ -135,28 +135,32 @@
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblGain}" />
                             <Grid Margin="5,0,0,0">
-                                <TextBox IsEnabled="{Binding Source={StaticResource CameraInfo}, Path=Data.CanSetGain}"
-                                         Visibility="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
+                                <TextBox IsEnabled="{Binding Source={StaticResource CameraInfo}, Path=Data.CanSetGain}" Visibility="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
                                     <TextBox.Text>
                                         <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
-                                            <Binding
-                                            Path="Gain"
-                                            Mode="TwoWay">
+                                            <Binding Mode="TwoWay" Path="Gain">
                                                 <Binding.ValidationRules>
                                                     <rules:IntRangeRule>
                                                         <rules:IntRangeRule.ValidRange>
-                                                            <rules:IntRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}"
-                                                                                   Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
+                                                            <rules:IntRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
                                                         </rules:IntRangeRule.ValidRange>
                                                     </rules:IntRangeRule>
                                                 </Binding.ValidationRules>
                                             </Binding>
-                                            <Binding Source="{StaticResource CameraInfo}" Path="Data.DefaultGain" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" />
+                                            <Binding
+                                                Mode="OneWay"
+                                                Path="Data.DefaultGain"
+                                                Source="{StaticResource CameraInfo}"
+                                                UpdateSourceTrigger="PropertyChanged" />
                                         </MultiBinding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <ComboBox Grid.Column="1" SelectedValuePath="Text" DisplayMemberPath="Text" IsSynchronizedWithCurrentItem="True"
-                                          Visibility="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
+                                <ComboBox
+                                    Grid.Column="1"
+                                    DisplayMemberPath="Text"
+                                    IsSynchronizedWithCurrentItem="True"
+                                    SelectedValuePath="Text"
+                                    Visibility="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
                                     <ComboBox.ItemsSource>
                                         <CompositeCollection>
                                             <TextBlock Text="{Binding Source={StaticResource CameraInfo}, Path=Data.DefaultGain, UpdateSourceTrigger=PropertyChanged, StringFormat=({0})}" />
@@ -164,13 +168,19 @@
                                         </CompositeCollection>
                                     </ComboBox.ItemsSource>
                                     <ComboBox.SelectedValue>
-                                        <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="PropertyChanged" Mode="TwoWay">
-                                            <Binding
-                                            Path="Gain"
+                                        <MultiBinding
+                                            Converter="{StaticResource MinusOneToBaseValueConverter}"
                                             Mode="TwoWay"
                                             UpdateSourceTrigger="PropertyChanged">
-                                            </Binding>
-                                            <Binding Source="{StaticResource CameraInfo}" Path="Data.DefaultGain" Mode="OneWay" UpdateSourceTrigger="PropertyChanged" />
+                                            <Binding
+                                                Mode="TwoWay"
+                                                Path="Gain"
+                                                UpdateSourceTrigger="PropertyChanged" />
+                                            <Binding
+                                                Mode="OneWay"
+                                                Path="Data.DefaultGain"
+                                                Source="{StaticResource CameraInfo}"
+                                                UpdateSourceTrigger="PropertyChanged" />
                                         </MultiBinding>
                                     </ComboBox.SelectedValue>
                                 </ComboBox>
@@ -293,7 +303,7 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="4*" />
-                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="2*" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
                                         Grid.Column="0"
@@ -302,6 +312,7 @@
                                         TextWrapping="WrapWithOverflow" />
                                     <CheckBox
                                         Grid.Column="1"
+                                        HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         IsChecked="{Binding PauseBetweenFilters, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 </Grid>

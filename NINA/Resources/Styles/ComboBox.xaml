@@ -20,38 +20,37 @@
                 BorderBrush="Transparent" />
             <Border
                 x:Name="Border"
-                Grid.Column="1"
-                Background="{StaticResource ButtonBackgroundBrush}"
-                BorderBrush="Transparent"
-                BorderThickness="0" />
-            <Border
-                x:Name="LeftBorder"
-                Grid.Column="0"
-                Background="{StaticResource BackgroundBrush}"
+                Grid.ColumnSpan="2"
                 BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="1,1,0,1" />
+                BorderThickness="1"
+                CornerRadius="1">
+                <Border.Background>
+                    <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
+                </Border.Background>
+            </Border>
             <Path
                 x:Name="Arrow"
                 Grid.Column="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Data="M 0 0 L 4 4 L 8 0 Z"
-                Fill="{StaticResource ButtonForegroundBrush}" />
+                Fill="{StaticResource PrimaryBrush}"
+                Opacity=".7" />
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="ToggleButton.IsMouseOver" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                <Setter TargetName="LeftBorder" Property="BorderBrush" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource ButtonForegroundBrush}" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                <!--<Setter TargetName="LeftBorder" Property="BorderBrush" Value="{StaticResource ButtonBackgroundSelectedBrush}" />-->
+                <Setter TargetName="Arrow" Property="Opacity" Value="1" />
             </Trigger>
             <Trigger Property="ToggleButton.IsChecked" Value="true">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                <Setter TargetName="LeftBorder" Property="BorderBrush" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource ButtonForegroundBrush}" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                <!--<Setter TargetName="LeftBorder" Property="BorderBrush" Value="{StaticResource ButtonBackgroundSelectedBrush}" />-->
+                <Setter TargetName="Arrow" Property="Opacity" Value="1" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter TargetName="Border" Property="Background" Value="{StaticResource ButtonBackgroundBrush}" />
-                <Setter TargetName="LeftBorder" Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+                <!--<Setter TargetName="LeftBorder" Property="BorderBrush" Value="{StaticResource BorderBrush}" />-->
                 <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
                 <Setter TargetName="Arrow" Property="Fill" Value="{StaticResource ButtonForegroundDisabledBrush}" />
             </Trigger>
@@ -66,7 +65,6 @@
     </ControlTemplate>
 
     <Style TargetType="ComboBox">
-        <Setter Property="Height" Value="30" />
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />

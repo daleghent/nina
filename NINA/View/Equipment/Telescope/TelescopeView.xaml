@@ -234,6 +234,7 @@
                                 <TextBox
                                     MinWidth="40"
                                     Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding Path="TargetRightAscencionHours" UpdateSourceTrigger="LostFocus">
@@ -243,10 +244,11 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock>h</TextBlock>
+                                <TextBlock VerticalAlignment="Center">h</TextBlock>
                                 <TextBox
                                     MinWidth="40"
                                     Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding Path="TargetRightAscencionMinutes" UpdateSourceTrigger="LostFocus">
@@ -256,10 +258,11 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock>m</TextBlock>
+                                <TextBlock VerticalAlignment="Center">m</TextBlock>
                                 <TextBox
                                     MinWidth="40"
                                     Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding Path="TargetRightAscencionSeconds" UpdateSourceTrigger="LostFocus">
@@ -269,7 +272,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock>s</TextBlock>
+                                <TextBlock VerticalAlignment="Center">s</TextBlock>
                             </StackPanel>
                         </Border>
                         <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
@@ -278,6 +281,7 @@
                                 <TextBox
                                     MinWidth="40"
                                     Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding Path="TargetDeclinationDegrees" UpdateSourceTrigger="LostFocus">
@@ -287,10 +291,11 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock>d</TextBlock>
+                                <TextBlock VerticalAlignment="Center">d</TextBlock>
                                 <TextBox
                                     MinWidth="40"
                                     Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding Path="TargetDeclinationMinutes" UpdateSourceTrigger="LostFocus">
@@ -300,10 +305,11 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock>m</TextBlock>
+                                <TextBlock VerticalAlignment="Center">m</TextBlock>
                                 <TextBox
                                     MinWidth="40"
                                     Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
                                     TextAlignment="Right">
                                     <TextBox.Text>
                                         <Binding Path="TargetDeclinationSeconds" UpdateSourceTrigger="LostFocus">
@@ -313,7 +319,7 @@
                                         </Binding>
                                     </TextBox.Text>
                                 </TextBox>
-                                <TextBlock>s</TextBlock>
+                                <TextBlock VerticalAlignment="Center">s</TextBlock>
                             </StackPanel>
                         </Border>
                         <Button

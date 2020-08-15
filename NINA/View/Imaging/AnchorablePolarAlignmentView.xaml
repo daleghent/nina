@@ -22,7 +22,7 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid>
+        <Grid Margin="5,0,5,0">
             <StackPanel>
 
                 <local:PolarScopeView Width="Auto" />
@@ -35,12 +35,12 @@
                                 MyBinningModes="{Binding CameraInfo.BinningModes}"
                                 MyCanGetGain="{Binding CameraInfo.CanGetGain}"
                                 MyCanSetGain="{Binding CameraInfo.CanSetGain}"
+                                MyDefaultGain="{Binding CameraInfo.DefaultGain}"
                                 MyExposureDuration="{Binding SnapExposureDuration, Mode=TwoWay}"
                                 MyFilters="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
                                 MyGains="{Binding CameraInfo.Gains}"
                                 MyMaxGain="{Binding CameraInfo.GainMax}"
                                 MyMinGain="{Binding CameraInfo.GainMin}"
-                                MyDefaultGain="{Binding CameraInfo.DefaultGain}"
                                 MyOrientation="Vertical"
                                 MySelectedBinningMode="{Binding SnapBin, Mode=TwoWay}"
                                 MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}"

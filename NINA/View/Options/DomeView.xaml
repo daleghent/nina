@@ -37,7 +37,7 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel Orientation="Vertical">
                     <UniformGrid
-                        Margin="0,6,0,6"
+                        Margin="0,5,0,0"
                         VerticalAlignment="Center"
                         Columns="2">
                         <TextBlock
@@ -56,7 +56,7 @@
                             Text="{Binding ScopePositionNorthSouth_mm, UpdateSourceTrigger=LostFocus}" />
                     </UniformGrid>
                     <UniformGrid
-                        Margin="0,6,0,6"
+                        Margin="0,5,0,0"
                         VerticalAlignment="Center"
                         Columns="2">
                         <TextBlock
@@ -75,7 +75,7 @@
                             Text="{Binding ScopePositionEastWest_mm, UpdateSourceTrigger=LostFocus}" />
                     </UniformGrid>
                     <UniformGrid
-                        Margin="0,6,0,6"
+                        Margin="0,5,0,0"
                         VerticalAlignment="Center"
                         Columns="2">
                         <TextBlock
@@ -94,7 +94,7 @@
                             Text="{Binding ScopePositionUpDown_mm, UpdateSourceTrigger=LostFocus}" />
                     </UniformGrid>
                     <UniformGrid
-                        Margin="0,6,0,6"
+                        Margin="0,5,0,0"
                         VerticalAlignment="Center"
                         Columns="2">
                         <TextBlock
@@ -113,7 +113,7 @@
                             Text="{Binding DomeRadius_mm, UpdateSourceTrigger=LostFocus}" />
                     </UniformGrid>
                     <UniformGrid
-                        Margin="0,6,0,6"
+                        Margin="0,5,0,0"
                         VerticalAlignment="Center"
                         Columns="2">
                         <TextBlock
@@ -132,7 +132,7 @@
                             Text="{Binding GemAxis_mm, UpdateSourceTrigger=LostFocus}" />
                     </UniformGrid>
                     <UniformGrid
-                        Margin="0,6,0,6"
+                        Margin="0,5,0,0"
                         VerticalAlignment="Center"
                         Columns="2">
                         <TextBlock
@@ -178,19 +178,15 @@
                         </TextBox>
                     </UniformGrid>
                     <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
                         <TextBlock
-                                MinWidth="200"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblDomeFindHomeBeforePark}"
-                                ToolTip="{ns:Loc LblDomeFindHomeBeforeParkTooltip}" />
-                        <CheckBox
-                                Width="120"
-                                Height="25"
-                                HorizontalAlignment="Left"
-                                IsChecked="{Binding FindHomeBeforePark}" />
+                            MinWidth="200"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblDomeFindHomeBeforePark}"
+                            ToolTip="{ns:Loc LblDomeFindHomeBeforeParkTooltip}" />
+                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FindHomeBeforePark}" />
                     </UniformGrid>
                 </StackPanel>
             </Grid>

@@ -105,6 +105,7 @@
                     <UniformGrid Margin="0,5,0,0" Columns="2">
                         <ComboBox
                             Name="PART_FilterComboBox"
+                            Margin="0,0,2.5,0"
                             IsEnabled="{Binding FilterWheelInfo.IsMoving, Converter={StaticResource InverseBooleanConverter}}"
                             ItemsSource="{Binding FW.Filters}"
                             SelectedValue="{Binding TargetFilter}">
@@ -114,7 +115,7 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <Button Command="{Binding ChangeFilterCommand}">
+                        <Button Margin="2.5,0,0,0" Command="{Binding ChangeFilterCommand}">
                             <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblChange}" />
                         </Button>
                     </UniformGrid>

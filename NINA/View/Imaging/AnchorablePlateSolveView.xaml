@@ -29,9 +29,9 @@
     </UserControl.Resources>
     <ScrollViewer
         x:Name="grid"
-        HorizontalScrollBarVisibility="Auto"
+        HorizontalScrollBarVisibility="Disabled"
         VerticalScrollBarVisibility="Auto">
-        <Grid IsEnabled="{Binding CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
+        <Grid Margin="5,0,5,0" IsEnabled="{Binding CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
             <Grid IsEnabled="{Binding CameraInfo.Connected}">
                 <StackPanel Orientation="Vertical">
                     <Border
@@ -119,7 +119,6 @@
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSync}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
@@ -133,7 +132,6 @@
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblReslewToTarget}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
@@ -141,7 +139,7 @@
                         </UniformGrid>
                     </Border>
                     <Border
-                        MinHeight="60"
+                        Margin="0,5,0,0"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0">
                         <UniformGrid Columns="2">
@@ -165,15 +163,16 @@
                     </Border>
 
                     <local:CameraControlView
+                        Margin="0,5,0,0"
                         MyBinningModes="{Binding CameraInfo.BinningModes}"
                         MyCanGetGain="{Binding CameraInfo.CanGetGain}"
                         MyCanSetGain="{Binding CameraInfo.CanSetGain}"
+                        MyDefaultGain="{Binding CameraInfo.DefaultGain}"
                         MyExposureDuration="{Binding SnapExposureDuration, Mode=TwoWay}"
                         MyFilters="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
                         MyGains="{Binding CameraInfo.Gains}"
                         MyMaxGain="{Binding CameraInfo.GainMax}"
                         MyMinGain="{Binding CameraInfo.GainMin}"
-                        MyDefaultGain="{Binding CameraInfo.DefaultGain}"
                         MyOrientation="Vertical"
                         MySelectedBinningMode="{Binding SnapBin, Mode=TwoWay}"
                         MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}"

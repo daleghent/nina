@@ -41,7 +41,7 @@
                 <StackPanel Orientation="Vertical">
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -63,7 +63,7 @@
                             </TextBox>
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="5,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -89,7 +89,7 @@
                             </TextBox>
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -116,7 +116,7 @@
                             <StackPanel Orientation="Vertical">
                                 <UniformGrid Columns="2">
                                     <UniformGrid
-                                        Margin="0,6,0,6"
+                                        Margin="0,5,0,0"
                                         VerticalAlignment="Center"
                                         Columns="2">
                                         <TextBlock
@@ -128,13 +128,13 @@
                                                 <TextBlock Text="{ns:Loc LblEnableBitScalingTooltip}" />
                                             </TextBlock.ToolTip>
                                         </TextBlock>
-                                        <CheckBox IsChecked="{Binding BitScaling}" />
+                                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding BitScaling}" />
                                     </UniformGrid>
                                 </UniformGrid>
 
                                 <UniformGrid Columns="2">
                                     <UniformGrid
-                                        Margin="0,6,0,6"
+                                        Margin="0,5,0,0"
                                         VerticalAlignment="Center"
                                         Columns="2">
                                         <TextBlock
@@ -152,7 +152,7 @@
                                             SelectedItem="{Binding BulbMode}" />
                                     </UniformGrid>
                                     <UniformGrid
-                                        Margin="0,6,0,6"
+                                        Margin="5,5,0,0"
                                         VerticalAlignment="Center"
                                         Columns="2">
                                         <TextBlock
@@ -184,7 +184,7 @@
                                     </UniformGrid.Style>
 
                                     <UniformGrid
-                                        Margin="0,6,0,6"
+                                        Margin="0,5,0,0"
                                         VerticalAlignment="Center"
                                         Columns="2">
                                         <TextBlock
@@ -241,7 +241,7 @@
                                         </Style>
                                     </UniformGrid.Style>
                                     <UniformGrid
-                                        Margin="0,6,0,6"
+                                        Margin="0,5,0,0"
                                         VerticalAlignment="Center"
                                         Columns="2">
                                         <TextBlock
@@ -284,7 +284,7 @@
 
                                 <UniformGrid Columns="2">
                                     <UniformGrid
-                                        Margin="0,6,0,6"
+                                        Margin="0,5,0,0"
                                         VerticalAlignment="Center"
                                         Columns="2">
                                         <TextBlock
@@ -326,7 +326,6 @@
                         <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
                     <DataGrid
-                        MaxHeight="300"
                         AutoGenerateColumns="False"
                         CanUserAddRows="False"
                         HeadersVisibility="Column"
@@ -422,7 +421,7 @@
                 <StackPanel Orientation="Vertical">
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -438,23 +437,18 @@
                                 Text="{Binding Name}" />
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,5,0,5"
+                            Margin="5,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
                                 MinWidth="200"
-                                MinHeight="20"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblNoSync}">
                                 <TextBlock.ToolTip>
                                     <TextBlock Text="{ns:Loc LblNoSyncTooltip}" />
                                 </TextBlock.ToolTip>
                             </TextBlock>
-                            <CheckBox
-                                Width="120"
-                                Height="25"
-                                HorizontalAlignment="Left"
-                                IsChecked="{Binding NoSync}">
+                            <CheckBox HorizontalAlignment="Left" IsChecked="{Binding NoSync}">
 
                                 <CheckBox.ToolTip>
                                     <TextBlock Text="{ns:Loc LblNoSyncTooltip}" />
@@ -464,7 +458,7 @@
                     </UniformGrid>
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -491,7 +485,7 @@
                     </UniformGrid>
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -518,7 +512,7 @@
                     </UniformGrid>
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -549,7 +543,7 @@
                 <StackPanel Orientation="Vertical">
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -562,7 +556,6 @@
                                 </TextBlock.ToolTip>
                             </TextBlock>
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding DisplayFahrenheit}" />
@@ -570,7 +563,7 @@
                     </UniformGrid>
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -583,7 +576,6 @@
                                 </TextBlock.ToolTip>
                             </TextBlock>
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding DisplayImperial}" />
@@ -591,7 +583,7 @@
                     </UniformGrid>
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -632,7 +624,7 @@
                 <StackPanel Orientation="Vertical">
                     <Grid Margin="0,5,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="200" />
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
@@ -670,7 +662,7 @@
                     </Grid>
                     <UniformGrid Columns="2">
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -683,7 +675,7 @@
                                 Text="{Binding PHD2ServerUrl}" />
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="5,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -696,7 +688,7 @@
                                 Text="{Binding PHD2ServerPort}" />
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -714,7 +706,7 @@
                             </TextBox>
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="5,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -722,13 +714,12 @@
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblDitherRAOnly}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding DitherRAOnly}" />
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -746,7 +737,7 @@
                             </TextBox>
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="5,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -764,7 +755,7 @@
                             </TextBox>
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -782,7 +773,7 @@
                             </TextBox>
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="5,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -800,7 +791,7 @@
                             </TextBox>
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="0,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -809,13 +800,12 @@
                                 Text="{ns:Loc LblAutoRetryStartGuiding}"
                                 ToolTip="{ns:Loc LblAutoRetryStartGuidingTooltip}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding AutoRetryStartGuiding}" />
                         </UniformGrid>
                         <UniformGrid
-                            Margin="0,6,0,6"
+                            Margin="5,5,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
@@ -906,7 +896,7 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel
-                            Margin="0,5,0,5"
+                            Margin="0,5,0,0"
                             Orientation="Horizontal"
                             Visibility="Visible">
                             <TextBlock
@@ -960,7 +950,7 @@
                         <StackPanel
                             Grid.Row="0"
                             Grid.Column="1"
-                            Margin="0,5,0,5"
+                            Margin="5,5,0,0"
                             Orientation="Horizontal">
                             <TextBlock
                                 Width="140"
@@ -1050,7 +1040,6 @@
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblPlanetariumUseSelectedObject}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding TSXUseSelectedObject}" />

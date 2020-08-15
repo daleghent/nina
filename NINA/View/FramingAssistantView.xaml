@@ -21,9 +21,9 @@
     xmlns:s="clr-namespace:System;assembly=mscorlib"
     xmlns:survey="clr-namespace:NINA.Utility.SkySurvey"
     xmlns:util="clr-namespace:NINA.Utility"
+    x:Name="UC"
     d:DesignHeight="300"
     d:DesignWidth="300"
-    x:Name="UC"
     mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -164,13 +164,19 @@
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblName}" />
                                 <ninactrl:AutoCompleteBox
                                     Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    VerticalContentAlignment="Center"
                                     Foreground="{StaticResource PrimaryBrush}"
                                     HintText="{ns:Loc LblObjectNameHint}"
                                     PopupBackground="{StaticResource TertiaryBackgroundBrush}"
                                     SearchResult="{Binding DeepSkyObjectSearchVM.TargetSearchResult.Result}"
                                     SelectedSearchResult="{Binding DeepSkyObjectSearchVM.SelectedTargetSearchResult, Mode=TwoWay}"
                                     ShowPopup="{Binding DeepSkyObjectSearchVM.ShowPopup, Mode=TwoWay}"
-                                    Text="{Binding DeepSkyObjectSearchVM.TargetName, UpdateSourceTrigger=PropertyChanged}" />
+                                    Text="{Binding DeepSkyObjectSearchVM.TargetName, UpdateSourceTrigger=PropertyChanged}">
+                                    <ninactrl:AutoCompleteBox.Background>
+                                        <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
+                                    </ninactrl:AutoCompleteBox.Background>
+                                </ninactrl:AutoCompleteBox>
                             </UniformGrid>
                             <UniformGrid
                                 Margin="0,0,0,6"
@@ -436,10 +442,11 @@
             VerticalAlignment="Stretch" />
 
         <Grid Grid.Column="2">
-            <local:ImageView Image="{Binding ImageParameter.Image, IsAsync=True}"
-                             ScrollEnabled="{Binding SkyMapAnnotator.DynamicFoV, Converter={StaticResource InverseBooleanConverter}}"
-                             RectangleOpacity="{Binding Opacity}"
-                             RectangleFontSize="{Binding FontSize}">
+            <local:ImageView
+                Image="{Binding ImageParameter.Image, IsAsync=True}"
+                RectangleFontSize="{Binding FontSize}"
+                RectangleOpacity="{Binding Opacity}"
+                ScrollEnabled="{Binding SkyMapAnnotator.DynamicFoV, Converter={StaticResource InverseBooleanConverter}}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SizeChanged" SourceObject="{Binding RelativeSource={RelativeSource AncestorType=local:ImageView, Mode=FindAncestor}, Path=PART_ScrollViewerBinding}">
                         <i:InvokeCommandAction Command="{Binding ScrollViewerSizeChangedCommand}" />
@@ -613,8 +620,7 @@
                     </StackPanel>
                 </local:ImageView.ButtonHeaderContent>
                 <local:ImageView.ImageAreaContent>
-                    <Canvas Width="{Binding ImageParameter.Image.PixelWidth}"
-                            Height="{Binding ImageParameter.Image.PixelHeight}">
+                    <Canvas Width="{Binding ImageParameter.Image.PixelWidth}" Height="{Binding ImageParameter.Image.PixelHeight}">
                         <local:SkyMapOverlayView />
                         <Grid>
                             <Grid.Resources>
@@ -637,8 +643,7 @@
                                                     Stroke="{StaticResource SecondaryBrush}"
                                                     StrokeThickness="5">
                                                     <Rectangle.Fill>
-                                                        <SolidColorBrush Opacity="{Binding RelativeSource={RelativeSource AncestorType=local:ImageView, Mode=FindAncestor}, Path=RectangleOpacity}"
-                                                                         Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
+                                                        <SolidColorBrush Opacity="{Binding RelativeSource={RelativeSource AncestorType=local:ImageView, Mode=FindAncestor}, Path=RectangleOpacity}" Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
                                                     </Rectangle.Fill>
                                                 </Rectangle>
                                                 <TextBlock

@@ -20,7 +20,7 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
+        <Grid Margin="5,0,5,0" IsEnabled="{Binding Focuser, Converter={StaticResource InverseNullToBooleanConverter}}">
             <Grid IsEnabled="{Binding FocuserInfo.Connected}">
                 <StackPanel Orientation="Vertical">
                     <Border
@@ -107,7 +107,6 @@
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTempComp}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"

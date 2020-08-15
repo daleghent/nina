@@ -18,11 +18,11 @@
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
     xmlns:util="clr-namespace:NINA.Utility"
     xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
+    x:Name="UC"
     d:DesignHeight="300"
     d:DesignWidth="300"
     Background="{StaticResource BackgroundBrush}"
-    mc:Ignorable="d"
-    x:Name="UC">
+    mc:Ignorable="d">
     <UserControl.Resources>
         <util:BindingProxy x:Key="OptionsProxy" Data="{Binding}" />
     </UserControl.Resources>
@@ -46,9 +46,9 @@
                     </Grid.RowDefinitions>
 
                     <ListView
-                                MaxHeight="180"
-                                ItemsSource="{Binding Profiles}"
-                                SelectedItem="{Binding SelectedProfile}">
+                        MaxHeight="300"
+                        ItemsSource="{Binding Profiles}"
+                        SelectedItem="{Binding SelectedProfile}">
                         <ListView.ItemContainerStyle>
                             <Style BasedOn="{StaticResource ListViewItemStyle}" TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -60,12 +60,12 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <CheckBox
-                                                        Width="20"
-                                                        Height="20"
-                                                        HorizontalAlignment="Center"
-                                                        IsChecked="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}"
-                                                        IsEnabled="False"
-                                                        Style="{StaticResource BorderlessCheckmarkAndEmptyCheckbox}" />
+                                                Width="20"
+                                                Height="20"
+                                                HorizontalAlignment="Center"
+                                                IsChecked="{Binding IsActive, UpdateSourceTrigger=PropertyChanged}"
+                                                IsEnabled="False"
+                                                Style="{StaticResource BorderlessCheckmarkAndEmptyCheckbox}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -73,9 +73,9 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Text="{Binding Name}" />
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Name}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -83,9 +83,9 @@
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <TextBlock
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        Text="{Binding Id}" />
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Id}" />
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
@@ -94,40 +94,40 @@
                     </ListView>
                     <StackPanel Grid.Row="1" Orientation="Horizontal">
                         <Button
-                                    Width="40"
-                                    Margin="0,5,0,5"
-                                    Command="{Binding AddProfileCommand}">
+                            Width="40"
+                            Margin="0,5,0,5"
+                            Command="{Binding AddProfileCommand}">
                             <Path
-                                        Margin="5"
-                                        Data="{StaticResource AddSVG}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
+                                Margin="5"
+                                Data="{StaticResource AddSVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
                         </Button>
                         <Button
-                                    Width="40"
-                                    Margin="1,5,0,5"
-                                    Command="{Binding CloneProfileCommand}">
+                            Width="40"
+                            Margin="1,5,0,5"
+                            Command="{Binding CloneProfileCommand}">
                             <Path
-                                        Margin="5"
-                                        Data="{StaticResource CopySVG}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
+                                Margin="5"
+                                Data="{StaticResource CopySVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
                         </Button>
                         <Button
-                                    Width="40"
-                                    Margin="1,5,0,5"
-                                    Command="{Binding RemoveProfileCommand}">
+                            Width="40"
+                            Margin="1,5,0,5"
+                            Command="{Binding RemoveProfileCommand}">
                             <Path
-                                        Margin="5"
-                                        Data="{StaticResource SubstractSVG}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
+                                Margin="5"
+                                Data="{StaticResource SubstractSVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
                         </Button>
                         <Button
-                                    Grid.Column="1"
-                                    Width="100"
-                                    Margin="1,5,0,5"
-                                    Command="{Binding SelectProfileCommand}">
+                            Grid.Column="1"
+                            Width="100"
+                            Margin="1,5,0,5"
+                            Command="{Binding SelectProfileCommand}">
                             <Button.Content>
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblLoadProfile}" />
                             </Button.Content>
@@ -151,43 +151,44 @@
                 <StackPanel>
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                         <TextBlock
-                                    Width="140"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblName}" />
+                            Width="150"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblName}" />
                         <TextBox
-                                    MinWidth="120"
-                                    Margin="10,0,0,0"
-                                    HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Center"
-                                    VerticalContentAlignment="Center"
-                                    Text="{Binding ActiveProfile.Name}" />
+                            MinWidth="120"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Text="{Binding ActiveProfile.Name}" />
                     </StackPanel>
-                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                    <StackPanel Margin="0,6,0,0" Orientation="Horizontal">
                         <TextBlock
-                                    Width="140"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblLanguage}" />
+                            Width="150"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblLanguage}" />
                         <ComboBox
-                                    Margin="10,0,0,0"
-                                    DisplayMemberPath="DisplayName"
-                                    ItemsSource="{Binding AvailableLanguages}"
-                                    SelectedItem="{Binding Language}" />
+                            Margin="10,0,0,0"
+                            DisplayMemberPath="DisplayName"
+                            ItemsSource="{Binding AvailableLanguages}"
+                            SelectedItem="{Binding Language}" />
                     </StackPanel>
 
-                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                    <StackPanel Margin="0,6,0,0" Orientation="Horizontal">
                         <TextBlock
-                                    Width="140"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblAutoUpdateSource}" />
+                            Width="150"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblAutoUpdateSource}" />
                         <ComboBox
-                                    Margin="10,0,0,0"
-                                    ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:AutoUpdateSourceEnum}}}"
-                                    SelectedItem="{Binding AutoUpdateSource}" />
+                            MinWidth="120"
+                            Margin="10,0,0,0"
+                            ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:AutoUpdateSourceEnum}}}"
+                            SelectedItem="{Binding AutoUpdateSource}" />
                     </StackPanel>
 
-                    <Grid Margin="0,5,0,0">
+                    <Grid Margin="0,2,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="150" />
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
@@ -195,10 +196,10 @@
                         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSkyAtlasImageDirectory}" />
 
                         <TextBox
-                                    Grid.Column="1"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    VerticalContentAlignment="Center">
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center">
                             <TextBox.Text>
                                 <Binding Path="ActiveProfile.ApplicationSettings.SkyAtlasImageRepository" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -209,24 +210,24 @@
                         </TextBox>
 
                         <Button
-                                    Grid.Column="2"
-                                    Width="30"
-                                    Height="30"
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding OpenSkyAtlasImageRepositoryDiagCommand}">
+                            Grid.Column="2"
+                            Width="30"
+                            Height="30"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding OpenSkyAtlasImageRepositoryDiagCommand}">
                             <Path
-                                        Margin="4,17,4,4"
-                                        Data="{StaticResource DotsSVG}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
+                                Margin="4,17,4,4"
+                                Data="{StaticResource DotsSVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
                         </Button>
                     </Grid>
 
                     <Grid Margin="0,5,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="150" />
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
@@ -234,10 +235,10 @@
                         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSkySurveyCacheDirectory}" />
 
                         <TextBox
-                                    Grid.Column="1"
-                                    Margin="10,0,0,0"
-                                    VerticalAlignment="Center"
-                                    VerticalContentAlignment="Center">
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center">
                             <TextBox.Text>
                                 <Binding Path="ActiveProfile.ApplicationSettings.SkySurveyCacheDirectory" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -248,55 +249,56 @@
                         </TextBox>
 
                         <Button
-                                    Grid.Column="2"
-                                    Width="30"
-                                    Height="30"
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding OpenSkySurveyCacheDirectoryDiagCommand}">
+                            Grid.Column="2"
+                            Width="30"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding OpenSkySurveyCacheDirectoryDiagCommand}">
                             <Path
-                                        Margin="4,17,4,4"
-                                        Data="{StaticResource DotsSVG}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
+                                Margin="4,17,4,4"
+                                Data="{StaticResource DotsSVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
                         </Button>
                     </Grid>
 
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                         <TextBlock
-                                    Width="140"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblLogLevel}" />
+                            Width="150"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblLogLevel}" />
                         <ComboBox
-                                    Margin="10,0,0,0"
-                                    ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:LogLevelEnum}}}"
-                                    SelectedItem="{Binding LogLevel}" />
+                            MinWidth="120"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:LogLevelEnum}}}"
+                            SelectedItem="{Binding LogLevel}" />
                         <Button
-                                    Width="30"
-                                    Height="30"
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding OpenLogFolderCommand}">
+                            Width="30"
+                            Height="30"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding OpenLogFolderCommand}">
                             <Path
-                                        Margin="5"
-                                        Data="{StaticResource PreviewSVG}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
+                                Margin="5"
+                                Data="{StaticResource PreviewSVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
                         </Button>
                     </StackPanel>
 
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                         <TextBlock
-                                    Width="140"
-                                    VerticalAlignment="Center"
-                                    Text="{ns:Loc LblDevicePollingInterval}" />
+                            Width="150"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblDevicePollingInterval}" />
                         <TextBox
-                                    MinWidth="120"
-                                    Margin="10,0,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
+                            MinWidth="120"
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center">
                             <TextBox.Text>
                                 <Binding Path="ActiveProfile.ApplicationSettings.DevicePollingInterval" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -309,386 +311,388 @@
                 </StackPanel>
             </GroupBox>
             <GroupBox
-                        Grid.Row="1"
-                        DataContext="{Binding ActiveProfile.ColorSchemaSettings}"
-                        Header="{ns:Loc LblCurrentUIColorSchema}">
+                Grid.Row="1"
+                DataContext="{Binding ActiveProfile.ColorSchemaSettings}"
+                Header="{ns:Loc LblCurrentUIColorSchema}">
                 <UniformGrid Columns="2">
                     <StackPanel Orientation="Vertical">
 
                         <ComboBox
-                                    Grid.ColumnSpan="2"
-                                    Margin="0,5,0,0"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Stretch"
-                                    DisplayMemberPath="Name"
-                                    DockPanel.Dock="Left"
-                                    ItemsSource="{Binding ColorSchemas.Items}"
-                                    SelectedItem="{Binding ColorSchema}" />
+                            Grid.ColumnSpan="2"
+                            Height="30"
+                            Margin="0,5,0,5"
+                            HorizontalAlignment="Stretch"
+                            HorizontalContentAlignment="Stretch"
+                            DisplayMemberPath="Name"
+                            DockPanel.Dock="Left"
+                            ItemsSource="{Binding ColorSchemas.Items}"
+                            SelectedItem="{Binding ColorSchema}" />
 
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblPrimary}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblPrimary}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.PrimaryColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.PrimaryColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblBorder}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblBorder}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.BorderColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.BorderColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblSecondaryBackground}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblSecondaryBackground}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.SecondaryBackgroundColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.SecondaryBackgroundColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblButtonBackground}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblButtonBackground}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.ButtonBackgroundColor}" />
-                        </StackPanel>
-
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblButtonForeground}" />
-                            <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.ButtonForegroundColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.ButtonBackgroundColor}" />
                         </StackPanel>
 
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblNotificationWarning}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblButtonForeground}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.NotificationWarningColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.ButtonForegroundColor}" />
                         </StackPanel>
 
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblNotificationWarningText}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblNotificationWarning}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.NotificationWarningTextColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.NotificationWarningColor}" />
+                        </StackPanel>
+
+                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                            <TextBlock
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblNotificationWarningText}" />
+                            <xceed:ColorPicker
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.NotificationWarningTextColor}" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
                         <Button
-                                    Width="40"
-                                    Height="30"
-                                    Margin="5,5,0,0"
-                                    HorizontalAlignment="Left"
-                                    Command="{Binding Source={StaticResource OptionsProxy}, Path=Data.CopyToCustomSchemaCommand}"
-                                    DockPanel.Dock="Right">
+                            Width="40"
+                            Height="30"
+                            Margin="5,5,0,0"
+                            HorizontalAlignment="Left"
+                            Command="{Binding Source={StaticResource OptionsProxy}, Path=Data.CopyToCustomSchemaCommand}"
+                            DockPanel.Dock="Right">
                             <Path
-                                        Margin="5"
-                                        Data="{StaticResource CopySVG}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
+                                Margin="5"
+                                Data="{StaticResource CopySVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
                         </Button>
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblSecondary}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblSecondary}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.SecondaryColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.SecondaryColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblBackground}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblBackground}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.BackgroundColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.BackgroundColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblTertiaryBackground}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblTertiaryBackground}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.TertiaryBackgroundColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.TertiaryBackgroundColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblButtonHighlight}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblButtonHighlight}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.ButtonBackgroundSelectedColor}" />
-                        </StackPanel>
-
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblButtonForegroundDisabled}" />
-                            <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.ButtonForegroundDisabledColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.ButtonBackgroundSelectedColor}" />
                         </StackPanel>
 
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblNotificationError}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblButtonForegroundDisabled}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.NotificationErrorColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.ButtonForegroundDisabledColor}" />
                         </StackPanel>
 
                         <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblNotificationErrorText}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblNotificationError}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding ColorSchema.NotificationErrorTextColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.NotificationErrorColor}" />
+                        </StackPanel>
+
+                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                            <TextBlock
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblNotificationErrorText}" />
+                            <xceed:ColorPicker
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding ColorSchema.NotificationErrorTextColor}" />
                         </StackPanel>
                     </StackPanel>
                 </UniformGrid>
             </GroupBox>
             <GroupBox
-                        Grid.Row="1"
-                        Grid.Column="1"
-                        DataContext="{Binding ActiveProfile.ColorSchemaSettings}"
-                        Header="{ns:Loc LblAlternativeUIColorSchema}">
+                Grid.Row="1"
+                Grid.Column="1"
+                DataContext="{Binding ActiveProfile.ColorSchemaSettings}"
+                Header="{ns:Loc LblAlternativeUIColorSchema}">
                 <UniformGrid Columns="2">
                     <StackPanel Orientation="Vertical">
                         <ComboBox
-                                    Grid.ColumnSpan="2"
-                                    Margin="0,5,0,0"
-                                    DisplayMemberPath="Name"
-                                    ItemsSource="{Binding ColorSchemas.Items}"
-                                    SelectedItem="{Binding AltColorSchema}" />
+                            Grid.ColumnSpan="2"
+                            Height="30"
+                            Margin="0,5,0,5"
+                            DisplayMemberPath="Name"
+                            ItemsSource="{Binding ColorSchemas.Items}"
+                            SelectedItem="{Binding AltColorSchema}" />
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblPrimary}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblPrimary}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.PrimaryColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.PrimaryColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblBorder}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblBorder}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.BorderColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.BorderColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblSecondaryBackground}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblSecondaryBackground}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.SecondaryBackgroundColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.SecondaryBackgroundColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblButtonBackground}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblButtonBackground}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.ButtonBackgroundColor}" />
-                        </StackPanel>
-
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblButtonForeground}" />
-                            <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.ButtonForegroundColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.ButtonBackgroundColor}" />
                         </StackPanel>
 
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblNotificationWarning}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblButtonForeground}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.NotificationWarningColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.ButtonForegroundColor}" />
                         </StackPanel>
 
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblNotificationWarningText}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblNotificationWarning}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.NotificationWarningTextColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.NotificationWarningColor}" />
+                        </StackPanel>
+
+                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                            <TextBlock
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblNotificationWarningText}" />
+                            <xceed:ColorPicker
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.NotificationWarningTextColor}" />
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Orientation="Vertical">
                         <Button
-                                    Width="40"
-                                    Height="30"
-                                    Margin="5,5,0,0"
-                                    HorizontalAlignment="Left"
-                                    Command="{Binding Source={StaticResource OptionsProxy}, Path=Data.CopyToAlternativeCustomSchemaCommand}">
+                            Width="40"
+                            Height="30"
+                            Margin="5,5,0,0"
+                            HorizontalAlignment="Left"
+                            Command="{Binding Source={StaticResource OptionsProxy}, Path=Data.CopyToAlternativeCustomSchemaCommand}">
                             <Path
-                                        Margin="5"
-                                        Data="{StaticResource CopySVG}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
+                                Margin="5"
+                                Data="{StaticResource CopySVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
                         </Button>
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblSecondary}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblSecondary}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.SecondaryColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.SecondaryColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblBackground}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblBackground}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.BackgroundColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.BackgroundColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblTertiaryBackground}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblTertiaryBackground}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.TertiaryBackgroundColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.TertiaryBackgroundColor}" />
                         </StackPanel>
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblButtonHighlight}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblButtonHighlight}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.ButtonBackgroundSelectedColor}" />
-                        </StackPanel>
-
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblButtonForegroundDisabled}" />
-                            <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.ButtonForegroundDisabledColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.ButtonBackgroundSelectedColor}" />
                         </StackPanel>
 
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblNotificationError}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblButtonForegroundDisabled}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.NotificationErrorColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.ButtonForegroundDisabledColor}" />
                         </StackPanel>
 
                         <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
                             <TextBlock
-                                        Width="170"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblNotificationErrorText}" />
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblNotificationError}" />
                             <xceed:ColorPicker
-                                        Width="80"
-                                        HorizontalAlignment="Stretch"
-                                        VerticalAlignment="Center"
-                                        SelectedColor="{Binding AltColorSchema.NotificationErrorTextColor}" />
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.NotificationErrorColor}" />
+                        </StackPanel>
+
+                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                            <TextBlock
+                                Width="170"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblNotificationErrorText}" />
+                            <xceed:ColorPicker
+                                Width="80"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                SelectedColor="{Binding AltColorSchema.NotificationErrorTextColor}" />
                         </StackPanel>
                     </StackPanel>
                 </UniformGrid>
@@ -698,71 +702,72 @@
                     <UniformGrid Columns="2">
                         <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                             <TextBlock
-                                        Width="100"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblHemisphere}" />
+                                Width="100"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblHemisphere}" />
                             <ComboBox
-                                        Margin="10,0,0,0"
-                                        ItemsSource="{Binding Source={util:EnumBindingSource {x:Type astrometry:Hemisphere}}}"
-                                        SelectedItem="{Binding ActiveProfile.AstrometrySettings.HemisphereType}" />
+                                MinWidth="120"
+                                Margin="10,0,0,0"
+                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type astrometry:Hemisphere}}}"
+                                SelectedItem="{Binding ActiveProfile.AstrometrySettings.HemisphereType}" />
                         </StackPanel>
                     </UniformGrid>
 
                     <UniformGrid Columns="2">
                         <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                             <TextBlock
-                                        Width="100"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblLatitude}" />
+                                Width="100"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblLatitude}" />
                             <TextBox
-                                        MinWidth="120"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding Latitude}" />
+                                MinWidth="120"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{Binding Latitude}" />
                         </StackPanel>
                         <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                             <TextBlock
-                                        Width="100"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblLongitude}" />
+                                Width="100"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblLongitude}" />
                             <TextBox
-                                        MinWidth="120"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Text="{Binding Longitude}" />
+                                MinWidth="120"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Text="{Binding Longitude}" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <Button
-                                        Width="40"
-                                        Height="30"
-                                        Margin="5"
-                                        HorizontalAlignment="Center"
-                                        Command="{Binding SiteFromGPSCommand}">
+                                Width="40"
+                                Height="30"
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                Command="{Binding SiteFromGPSCommand}">
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblGPSTooltip}" />
                                 </Button.ToolTip>
                                 <Path
-                                            Margin="5"
-                                            Data="{StaticResource GPSSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                    Margin="5"
+                                    Data="{StaticResource GPSSVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    Stretch="Uniform" />
                             </Button>
                             <Button
-                                        Width="40"
-                                        Height="30"
-                                        Margin="5"
-                                        HorizontalAlignment="Center"
-                                        Command="{Binding SiteFromPlanetariumCommand}">
+                                Width="40"
+                                Height="30"
+                                Margin="5"
+                                HorizontalAlignment="Center"
+                                Command="{Binding SiteFromPlanetariumCommand}">
                                 <Button.ToolTip>
                                     <TextBlock Text="{ns:Loc LblPlanetariumTooltip}" />
                                 </Button.ToolTip>
                                 <Path
-                                            Margin="5"
-                                            Data="{StaticResource GetCoordsSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
+                                    Margin="5"
+                                    Data="{StaticResource GetCoordsSVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    Stretch="Uniform" />
                             </Button>
                         </StackPanel>
                     </UniformGrid>

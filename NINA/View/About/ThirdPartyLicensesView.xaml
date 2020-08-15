@@ -52,6 +52,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock FontWeight="Bold">Library</TextBlock>
@@ -250,6 +251,17 @@
             </TextBlock>
             <TextBlock Grid.Row="17" Grid.Column="2">
                 <Hyperlink NavigateUri="https://opensource.org/licenses/BSD-2-Clause" RequestNavigate="Hyperlink_RequestNavigate">The 2-Clause BSD License</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="18"
+                Grid.Column="0"
+                Text="ToggleSwitch" />
+            <TextBlock Grid.Row="18" Grid.Column="1">
+                <Hyperlink NavigateUri="https://archive.codeplex.com/?p=toggleswitch" RequestNavigate="Hyperlink_RequestNavigate">https://archive.codeplex.com/?p=toggleswitch</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="18" Grid.Column="2">
+                <Hyperlink NavigateUri="https://opensource.org/licenses/MS-PL" RequestNavigate="Hyperlink_RequestNavigate">Microsoft Public License (MS-PL)</Hyperlink>
             </TextBlock>
         </Grid>
     </Grid>

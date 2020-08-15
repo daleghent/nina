@@ -29,9 +29,9 @@
                     <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="30" />
-                    <RowDefinition Height="110" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="40" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -44,6 +44,7 @@
                 <ComboBox
                     Name="cbFileTypes"
                     Grid.Column="1"
+                    Grid.ColumnSpan="2"
                     ItemsSource="{Binding DataContext.FileTypes, ElementName=UC}"
                     SelectedItem="{Binding FileType}" />
                 <StackPanel
@@ -81,7 +82,6 @@
                             <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                                 <TextBlock
                                     MinWidth="200"
-                                    MinHeight="20"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblCompression}" />
                                 <ComboBox
@@ -112,9 +112,17 @@
                                 <TextBlock Text="{ns:Loc LblNoFileFormatOptions}" />
                             </Grid>
                         </StackPanel>
-                        <UniformGrid Columns="2" Rows="2">
-                            <UniformGrid.Style>
-                                <Style TargetType="UniformGrid">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
                                     <Setter Property="Visibility" Value="Collapsed" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding Path=SelectedValue, ElementName=cbFileTypes}" Value="XISF">
@@ -122,11 +130,10 @@
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </UniformGrid.Style>
+                            </Grid.Style>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     MinWidth="100"
-                                    MinHeight="20"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblCompression}" />
                                 <ComboBox
@@ -136,24 +143,26 @@
                                     SelectedItem="{Binding XISFCompressionType}" />
                             </StackPanel>
 
-                            <StackPanel Margin="20,0,0,0" Orientation="Horizontal">
+                            <StackPanel
+                                Grid.Column="1"
+                                Margin="20,0,0,0"
+                                Orientation="Horizontal">
                                 <TextBlock
                                     MinWidth="100"
-                                    MinHeight="20"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblByteShuffling}" />
                                 <CheckBox
-                                    Width="120"
-                                    Height="25"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Left"
                                     IsChecked="{Binding XISFByteShuffling}" />
                             </StackPanel>
 
-                            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                            <StackPanel
+                                Grid.Row="1"
+                                Margin="0,5,0,0"
+                                Orientation="Horizontal">
                                 <TextBlock
                                     MinWidth="100"
-                                    MinHeight="20"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblChecksum}" />
                                 <ComboBox
@@ -162,7 +171,7 @@
                                     ItemsSource="{Binding DataContext.XISFChecksumTypes, ElementName=UC}"
                                     SelectedItem="{Binding XISFChecksumType}" />
                             </StackPanel>
-                        </UniformGrid>
+                        </Grid>
                     </Grid>
                 </GroupBox>
 
@@ -212,6 +221,7 @@
                 <TextBlock
                     Grid.Row="5"
                     Grid.Column="0"
+                    Margin="0,5,0,0"
                     VerticalAlignment="Center"
                     Text="{ns:Loc LblImagePatternPreview}" />
                 <TextBox
@@ -219,6 +229,7 @@
                     Grid.Row="5"
                     Grid.Column="1"
                     Grid.ColumnSpan="2"
+                    Margin="0,5,0,0"
                     VerticalAlignment="Center"
                     IsReadOnly="True"
                     Text="{Binding ElementName=ImageFilePatternTextBox, Path=Text, Converter={StaticResource ImagePatternToTextConverter}}"
@@ -264,7 +275,6 @@
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblEnabled}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding Enabled}" />
@@ -296,7 +306,6 @@
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblUseSideOfPier}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding UseSideOfPier}" />
@@ -308,7 +317,6 @@
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblRecenterAfterFlip}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding Recenter}" />
@@ -360,7 +368,6 @@
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblAutoFocusAfterFlip}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding AutoFocusAfterFlip}" />
@@ -432,7 +439,6 @@
                                 </TextBlock.ToolTip>
                             </TextBlock>
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding AnnotateImage}" />
@@ -448,7 +454,6 @@
                                 </TextBlock.ToolTip>
                             </TextBlock>
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding DebayerImage}" />
@@ -464,7 +469,6 @@
                                 </TextBlock.ToolTip>
                             </TextBlock>
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding DebayeredHFR}" />
@@ -480,7 +484,6 @@
                                 </TextBlock.ToolTip>
                             </TextBlock>
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding UnlinkedStretch}" />
@@ -653,63 +656,43 @@
                         <StackPanel Orientation="Vertical">
                             <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                                 <TextBlock
-                                    MinWidth="300"
+                                    MinWidth="230"
                                     MinHeight="20"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblParkMountAtSequenceEnd}" />
-                                <CheckBox
-                                    Width="120"
-                                    Height="25"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding ParkMountAtSequenceEnd}" />
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding ParkMountAtSequenceEnd}" />
                             </StackPanel>
                             <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                                 <TextBlock
-                                    MinWidth="300"
+                                    MinWidth="230"
                                     MinHeight="20"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblCloseDomeShutterAtSequenceEnd}" />
-                                <CheckBox
-                                    Width="120"
-                                    Height="25"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding CloseDomeShutterAtSequenceEnd}" />
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding CloseDomeShutterAtSequenceEnd}" />
                             </StackPanel>
                             <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                                 <TextBlock
-                                    MinWidth="300"
+                                    MinWidth="230"
                                     MinHeight="20"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblParkDomeAtSequenceEnd}" />
-                                <CheckBox
-                                    Width="120"
-                                    Height="25"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding ParkDomeAtSequenceEnd}" />
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding ParkDomeAtSequenceEnd}" />
                             </StackPanel>
                             <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                                 <TextBlock
-                                    MinWidth="300"
+                                    MinWidth="230"
                                     MinHeight="20"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblWarmCamAtSequenceEnd}" />
-                                <CheckBox
-                                    Width="120"
-                                    Height="25"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding WarmCamAtSequenceEnd}" />
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding WarmCamAtSequenceEnd}" />
                             </StackPanel>
                             <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                                 <TextBlock
-                                    MinWidth="300"
+                                    MinWidth="230"
                                     MinHeight="20"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblFlatDeviceCloseAtSequenceEnd}" />
-                                <CheckBox
-                                    Width="120"
-                                    Height="25"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.CloseAtSequenceEnd, Mode=TwoWay}" />
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.CloseAtSequenceEnd, Mode=TwoWay}" />
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

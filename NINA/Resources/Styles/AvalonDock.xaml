@@ -453,7 +453,7 @@
 
     <DataTemplate x:Key="AnchorableTitleContentTemplate">
         <TextBlock
-            Margin="1,0,0,0"
+            Margin="3,0,0,0"
             VerticalAlignment="Center"
             FontSize="10"
             Foreground="{StaticResource ButtonForegroundBrush}"
@@ -550,4 +550,167 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type dock:LayoutAnchorableFloatingWindowControl}">
+        <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+    </Style>
+
+    <!--<Style x:Key="{x:Type dock:OverlayWindow}" TargetType="{x:Type dock:OverlayWindow}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type dock:OverlayWindow}">
+                    <Canvas x:Name="PART_DropTargetsContainer" Opacity="0.9">
+                        <Path
+                            x:Name="PART_PreviewBox"
+                            Fill="AliceBlue"
+                            Stroke="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
+                            StrokeThickness="2" />
+                        <Grid x:Name="PART_DockingManagerDropTargets">
+                            <Path
+                                x:Name="PART_DockingManagerDropTargetLeft"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Data="{StaticResource CancelSVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="None" />
+    -->
+    <!--<Image
+                                x:Name="PART_DockingManagerDropTargetLeft"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/DockLeft.PNG"
+                                Stretch="None" />-->
+    <!--
+                            <Image
+                                x:Name="PART_DockingManagerDropTargetRight"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/DockRight.PNG"
+                                Stretch="None" />
+                            <Image
+                                x:Name="PART_DockingManagerDropTargetBottom"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Bottom"
+                                Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/DockBottom.PNG"
+                                Stretch="None" />
+                            <Image
+                                x:Name="PART_DockingManagerDropTargetTop"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/DockTop.PNG"
+                                Stretch="None" />
+                        </Grid>
+                        <Grid x:Name="PART_AnchorablePaneDropTargets">
+                            <Grid
+                                Width="88"
+                                Height="88"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Image
+                                    Grid.RowSpan="3"
+                                    Grid.ColumnSpan="3"
+                                    Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/DockPaneEmpty.PNG"
+                                    Stretch="Uniform" />
+                                <Border
+                                    Name="PART_AnchorablePaneDropTargetTop"
+                                    Grid.Row="0"
+                                    Grid.Column="1">
+                                    <Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/InnerDockPaneTop.png" Stretch="None" />
+                                </Border>
+                                <Border
+                                    Name="PART_AnchorablePaneDropTargetRight"
+                                    Grid.Row="1"
+                                    Grid.Column="2">
+                                    <Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/InnerDockPaneRight.png" Stretch="None" />
+                                </Border>
+                                <Border
+                                    Name="PART_AnchorablePaneDropTargetBottom"
+                                    Grid.Row="2"
+                                    Grid.Column="1">
+                                    <Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/InnerDockPaneBottom.png" Stretch="None" />
+                                </Border>
+                                <Border
+                                    Name="PART_AnchorablePaneDropTargetLeft"
+                                    Grid.Row="1"
+                                    Grid.Column="0">
+                                    <Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/InnerDockPaneLeft.png" Stretch="None" />
+                                </Border>
+                                <Border
+                                    Name="PART_AnchorablePaneDropTargetInto"
+                                    Grid.Row="1"
+                                    Grid.Column="1">
+                                    <Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/InnerDockPaneInside.png" Stretch="None" />
+                                </Border>
+                            </Grid>
+                        </Grid>
+                        <Grid x:Name="PART_DocumentPaneDropTargets">
+                            <Grid
+                                Width="88"
+                                Height="88"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Image
+                                    Grid.RowSpan="3"
+                                    Grid.ColumnSpan="3"
+                                    Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/DockPaneEmpty.PNG"
+                                    Stretch="Uniform" />
+                                <Border
+                                    Name="PART_DocumentPaneDropTargetTop"
+                                    Grid.Row="0"
+                                    Grid.Column="1">
+                                    <Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/InnerDockDocPaneTop.png" Stretch="None" />
+                                </Border>
+                                <Border
+                                    Name="PART_DocumentPaneDropTargetRight"
+                                    Grid.Row="1"
+                                    Grid.Column="2">
+                                    <Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/InnerDockDocPaneRight.png" Stretch="None" />
+                                </Border>
+                                <Border
+                                    Name="PART_DocumentPaneDropTargetBottom"
+                                    Grid.Row="2"
+                                    Grid.Column="1">
+                                    <Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/InnerDockDocPaneBottom.png" Stretch="None" />
+                                </Border>
+                                <Border
+                                    Name="PART_DocumentPaneDropTargetLeft"
+                                    Grid.Row="1"
+                                    Grid.Column="0">
+                                    <Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/InnerDockDocPaneLeft.png" Stretch="None" />
+                                </Border>
+                                <Border
+                                    Name="PART_DocumentPaneDropTargetInto"
+                                    Grid.Row="1"
+                                    Grid.Column="1">
+                                    <Image Source="/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/InnerDockPaneInside.png" Stretch="None" />
+                                </Border>
+                            </Grid>
+                        </Grid>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>-->
 </ResourceDictionary>

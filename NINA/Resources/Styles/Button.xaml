@@ -22,7 +22,7 @@
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
                         CornerRadius="0">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="0">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="1">
                             <Grid>
                                 <ContentPresenter
                                     x:Name="MyContentPresenter"

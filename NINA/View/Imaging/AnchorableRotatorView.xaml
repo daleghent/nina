@@ -19,7 +19,7 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid IsEnabled="{Binding RotatorInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
+        <Grid Margin="5,0,5,0" IsEnabled="{Binding RotatorInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
             <Grid IsEnabled="{Binding RotatorInfo.Connected}">
                 <StackPanel Orientation="Vertical">
                     <Border

@@ -16,7 +16,11 @@
     </ControlTemplate>
 
     <Style x:Key="StandardTextbox" TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
+            </Setter.Value>
+        </Setter>
         <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
         <Setter Property="CaretBrush" Value="{StaticResource PrimaryBrush}" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
@@ -42,11 +46,12 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="0">
+                            CornerRadius="1">
                             <ScrollViewer
                                 x:Name="PART_ContentHost"
                                 Background="{TemplateBinding Background}"
                                 Focusable="False"
+                                Opacity="1"
                                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                 ScrollViewer.VerticalScrollBarVisibility="Hidden" />
                         </Border>
@@ -61,6 +66,12 @@
             <Trigger Property="Validation.HasError" Value="true">
                 <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
                 <Setter Property="BorderBrush" Value="Red" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="True">
+                <Setter Property="BorderBrush" Value="{StaticResource ButtonBackgroundBrush}" />
+            </Trigger>
+            <Trigger Property="IsFocused" Value="False">
+                <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
             </Trigger>
         </Style.Triggers>
     </Style>

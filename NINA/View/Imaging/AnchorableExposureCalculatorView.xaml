@@ -19,25 +19,25 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Margin="5,0,5,0">
         <Border>
-            <StackPanel Margin="5" VerticalAlignment="Top">
+            <StackPanel VerticalAlignment="Top">
                 <TextBlock Text="{ns:Loc LblExposureCalculatorDescription}" TextWrapping="Wrap" />
                 <local:CameraControlView
                     MyCanGetGain="{Binding CameraInfo.CanGetGain}"
                     MyCanSetGain="{Binding CameraInfo.CanSetGain}"
+                    MyDefaultGain="{Binding CameraInfo.DefaultGain}"
                     MyExposureDuration="{Binding SnapExposureDuration, Mode=TwoWay}"
-                    MyFilters="{Binding Source={StaticResource ProfileService},Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
+                    MyFilters="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
                     MyGains="{Binding CameraInfo.Gains}"
                     MyMaxGain="{Binding CameraInfo.GainMax}"
                     MyMinGain="{Binding CameraInfo.GainMin}"
-                    MyDefaultGain="{Binding CameraInfo.DefaultGain}"
                     MyOrientation="Vertical"
                     MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}"
                     MySelectedGain="{Binding SnapGain, Mode=TwoWay}" />
 
                 <UniformGrid
-                    Margin="0,10,0,6"
+                    Margin="0,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2">
                     <TextBlock
@@ -48,7 +48,7 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="35" />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <ComboBox
                             Height="25"
@@ -60,7 +60,7 @@
                             Grid.Column="3"
                             Width="25"
                             Height="25"
-                            Margin="1,0,0,0"
+                            Margin="5,0,0,0"
                             Command="{Binding ReloadSensorAnalysisCommand}">
                             <Grid>
                                 <Path
@@ -73,7 +73,7 @@
                     </Grid>
                 </UniformGrid>
                 <UniformGrid
-                    Margin="0,10,0,6"
+                    Margin="0,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2">
                     <TextBlock
@@ -83,6 +83,7 @@
                         Text="{ns:Loc LblFullWellCapacity}" />
                     <TextBox
                         MinWidth="80"
+                        Margin="5,0,0,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         IsEnabled="{Binding IsSharpCapSensorAnalysisEnabled, Converter={StaticResource InverseBooleanConverter}}">
@@ -96,7 +97,7 @@
                     </TextBox>
                 </UniformGrid>
                 <UniformGrid
-                    Margin="0,6,0,6"
+                    Margin="0,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2">
                     <TextBlock
@@ -106,6 +107,7 @@
                         Text="{ns:Loc LblReadNoise}" />
                     <TextBox
                         MinWidth="80"
+                        Margin="5,0,0,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         IsEnabled="{Binding IsSharpCapSensorAnalysisEnabled, Converter={StaticResource InverseBooleanConverter}}">
@@ -119,7 +121,7 @@
                     </TextBox>
                 </UniformGrid>
                 <UniformGrid
-                    Margin="0,6,0,6"
+                    Margin="0,5,0,0"
                     VerticalAlignment="Center"
                     Columns="2">
                     <TextBlock
@@ -128,18 +130,17 @@
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblBiasMedian}" />
                     <Grid
-                        Margin="0,0,0,0"
+                        Margin="5,0,0,0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <ninactrl:CancellableButton
                             Grid.Column="0"
                             Width="120"
                             Height="25"
-                            Margin="10,10,10,0"
                             HorizontalAlignment="Left"
                             ButtonText="{ns:Loc LblCalculateBias}"
                             CancelCommand="{Binding CancelDetermineBiasCommand}"
@@ -149,6 +150,7 @@
                         <TextBox
                             Grid.Column="1"
                             MinWidth="80"
+                            Margin="5,0,0,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center">
                             <TextBox.Text>

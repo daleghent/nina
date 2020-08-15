@@ -27,7 +27,7 @@
         <util:BindingProxy x:Key="CameraInfo" Data="{Binding CameraInfo}" />
     </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid IsEnabled="{Binding CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
+        <Grid Margin="5,0,5,0" IsEnabled="{Binding CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
             <StackPanel IsEnabled="{Binding CameraInfo.Connected}" Orientation="Vertical">
 
                 <StackPanel IsEnabled="{Binding SnapCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}}" Orientation="Vertical">
@@ -37,7 +37,7 @@
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposureTime}" />
-                            <TextBox MinWidth="50" Margin="5">
+                            <TextBox MinWidth="50" Margin="5,0,0,0">
                                 <TextBox.Text>
                                     <Binding Mode="TwoWay" Path="SnapExposureDuration">
                                         <Binding.ValidationRules>
@@ -151,7 +151,6 @@
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblLoop}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
@@ -165,7 +164,6 @@
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSave}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
@@ -180,7 +178,6 @@
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSubSample}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"

@@ -21,7 +21,7 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid>
+        <Grid Margin="5,0,5,0">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="45" />
@@ -31,29 +31,27 @@
             </Grid.RowDefinitions>
             <view:AutoFocusChart DataContext="{Binding}" />
 
-            <UniformGrid
+            <ComboBox
+                Name="PART_FocusChartComboBox"
                 Grid.Row="2"
-                Margin="0,0,0,0"
-                Columns="1">
-                <ComboBox
-                    Name="PART_FocusChartComboBox"
-                    Height="25"
-                    MinWidth="0"
-                    IsEnabled="{Binding ChartListSelectable}"
-                    ItemsSource="{Binding ChartList}"
-                    SelectedValue="{Binding SelectedChart}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Name}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </UniformGrid>
+                Height="25"
+                MinWidth="0"
+                Margin="10,0,2,0"
+                IsEnabled="{Binding ChartListSelectable}"
+                ItemsSource="{Binding ChartList}"
+                SelectedValue="{Binding SelectedChart}">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="SelectionChanged">
+                        <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+
 
             <ninactrl:CancellableButton
                 Grid.Row="3"

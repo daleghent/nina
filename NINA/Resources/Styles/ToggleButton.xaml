@@ -21,7 +21,7 @@
                         x:Name="border"
                         BorderBrush="Transparent"
                         BorderThickness="0">
-                        <Border Background="{TemplateBinding Background}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="1">
                             <Grid>
                                 <ContentPresenter
                                     x:Name="MyContentPresenter"

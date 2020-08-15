@@ -177,7 +177,6 @@
                             Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTemperatureCompensation}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"

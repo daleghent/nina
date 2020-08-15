@@ -112,7 +112,6 @@
                             IsEnabled="{Binding FlatDeviceInfo.Connected}">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceLight}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
@@ -272,7 +271,6 @@
                             Columns="2">
                             <TextBlock Text="{ns:Loc LblFlatDeviceOpenForDarkFlats}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
@@ -287,7 +285,6 @@
                             Columns="2">
                             <TextBlock Text="{ns:Loc LblFlatDeviceCloseAtSequenceEnd}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
@@ -302,7 +299,6 @@
                             Columns="2">
                             <TextBlock Text="{ns:Loc LblFlatDeviceUseWizardTrainedValues}" />
                             <CheckBox
-                                Width="120"
                                 Height="25"
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Left"
