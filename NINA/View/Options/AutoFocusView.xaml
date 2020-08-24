@@ -442,7 +442,7 @@
                                     <DataTemplate>
                                         <TextBox>
                                             <TextBox.Text>
-                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="PropertyChanged">
+                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                                     <MultiBinding.ValidationRules>
                                                         <rules:DoubleRangeRule>
                                                             <rules:DoubleRangeRule.ValidRange>
@@ -471,7 +471,7 @@
                                             VerticalAlignment="Center"
                                             TextAlignment="Center">
                                             <TextBlock.Text>
-                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="PropertyChanged">
+                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                                     <Binding
                                                         Mode="TwoWay"
                                                         Path="AutoFocusExposureTime"
@@ -586,7 +586,7 @@
                                             VerticalAlignment="Center"
                                             TextAlignment="Center">
                                             <TextBlock.Text>
-                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="PropertyChanged">
+                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                                     <Binding
                                                         Mode="TwoWay"
                                                         Path="AutoFocusGain"
@@ -620,7 +620,7 @@
                                     <DataTemplate>
                                         <TextBox>
                                             <TextBox.Text>
-                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="PropertyChanged">
+                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                                     <Binding
                                                         Mode="TwoWay"
                                                         Path="AutoFocusGain"
@@ -650,7 +650,7 @@
                                             VerticalAlignment="Center"
                                             TextAlignment="Center">
                                             <TextBlock.Text>
-                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="PropertyChanged">
+                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                                     <Binding
                                                         Mode="TwoWay"
                                                         Path="AutoFocusGain"
@@ -684,7 +684,7 @@
                                     <DataTemplate>
                                         <TextBox>
                                             <TextBox.Text>
-                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="PropertyChanged">
+                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                                     <Binding
                                                         Mode="TwoWay"
                                                         Path="Offset"
@@ -714,7 +714,7 @@
                                             VerticalAlignment="Center"
                                             TextAlignment="Center">
                                             <TextBlock.Text>
-                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="PropertyChanged">
+                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                                     <Binding
                                                         Mode="TwoWay"
                                                         Path="AutoFocusOffset"

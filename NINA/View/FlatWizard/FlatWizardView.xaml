@@ -137,7 +137,7 @@
                             <Grid Margin="5,0,0,0">
                                 <TextBox IsEnabled="{Binding Source={StaticResource CameraInfo}, Path=Data.CanSetGain}" Visibility="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
                                     <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="PropertyChanged">
+                                        <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
                                             <Binding Mode="TwoWay" Path="Gain">
                                                 <Binding.ValidationRules>
                                                     <rules:IntRangeRule>

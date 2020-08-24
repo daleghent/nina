@@ -52,7 +52,12 @@ namespace NINA.Model.MyCamera {
 
         public int DefaultGain {
             get { return defaultGain; }
-            set { defaultGain = value; RaisePropertyChanged(); }
+            set {
+                if (value != defaultGain) {
+                    defaultGain = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private double electronsPerADU;
@@ -127,7 +132,12 @@ namespace NINA.Model.MyCamera {
 
         public int DefaultOffset {
             get { return defaultOffset; }
-            set { defaultOffset = value; RaisePropertyChanged(); }
+            set {
+                if (value != defaultOffset) {
+                    defaultOffset = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private int usbLimit;
