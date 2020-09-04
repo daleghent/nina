@@ -29,6 +29,7 @@ using System.Windows.Input;
 namespace NINA.ViewModel.Equipment.Telescope {
 
     internal class TelescopeVM : DockableVM, ITelescopeVM {
+        private static double LAT_LONG_TOLERANCE = 0.001;
 
         public TelescopeVM(
             IProfileService profileService, 
@@ -236,7 +237,8 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblUnknownEpochWarning"], Telescope.EquatorialSystem));
                             }
 
-                            if (Telescope.SiteLatitude != profileService.ActiveProfile.AstrometrySettings.Latitude || Telescope.SiteLongitude != profileService.ActiveProfile.AstrometrySettings.Longitude) {
+                            if (Math.Abs(Telescope.SiteLatitude - profileService.ActiveProfile.AstrometrySettings.Latitude) > LAT_LONG_TOLERANCE 
+                                || Math.Abs(Telescope.SiteLongitude - profileService.ActiveProfile.AstrometrySettings.Longitude) > LAT_LONG_TOLERANCE) {
                                 var syncVM = new TelescopeLatLongSyncVM(
                                     Telescope.CanSetSiteLatLong,
                                     profileService.ActiveProfile.AstrometrySettings.Latitude,
