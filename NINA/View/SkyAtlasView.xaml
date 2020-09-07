@@ -238,7 +238,7 @@
                             Header="{ns:Loc LblReferenceDate}">
                             <UniformGrid Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblReferenceDate}" />
-                                <DatePicker SelectedDate="{Binding SelectedDate}" />
+                                <DatePicker SelectedDate="{Binding FilterDate}" />
                             </UniformGrid>
                         </Expander>
 

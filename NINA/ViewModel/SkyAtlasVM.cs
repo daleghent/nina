@@ -39,6 +39,7 @@ namespace NINA.ViewModel {
             IFramingAssistantVM framingAssistantVM, ISequenceMediator sequenceMediator, INighttimeCalculator nighttimeCalculator, IApplicationMediator applicationMediator) : base(profileService) {
             this.nighttimeCalculator = nighttimeCalculator;
             ResetFilters(null);
+            NighttimeData = this.nighttimeCalculator.Calculate(FilterDate);
 
             SearchCommand = new AsyncCommand<bool>(() => Search());
             CancelSearchCommand = new RelayCommand(CancelSearch);
@@ -80,8 +81,19 @@ namespace NINA.ViewModel {
             }
         }
 
+        private DateTime filterDate;
+        public DateTime FilterDate {
+            get => filterDate;
+            set {
+                if (filterDate != value) {
+                    filterDate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         private void ResetFilters(object obj) {
-            NighttimeData = this.nighttimeCalculator.Calculate();
+            FilterDate = DateTime.UtcNow;
 
             SearchObjectName = string.Empty;
 
@@ -159,6 +171,7 @@ namespace NINA.ViewModel {
                     var longitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
                     var latitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
 
+                    NighttimeData = this.nighttimeCalculator.Calculate(FilterDate);
                     DateTime d = NighttimeData.ReferenceDate;
 
                     Parallel.ForEach(result, (obj) => {

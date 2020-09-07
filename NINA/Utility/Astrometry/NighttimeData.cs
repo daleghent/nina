@@ -34,12 +34,18 @@ namespace NINA.Utility.Astrometry {
             if (twilightRiseAndSet != null && twilightRiseAndSet.Rise.HasValue && twilightRiseAndSet.Set.HasValue) {
                 var twilightRise = twilightRiseAndSet.Rise;
                 var twilightSet = twilightRiseAndSet.Set;
+                if (twilightSet.Value > twilightRise.Value) {
+                    twilightSet = twilightSet?.AddDays(-1);
+                }
                 var dataPointsBuilder = ImmutableList.CreateBuilder<DataPoint>();
                 dataPointsBuilder.Add(new DataPoint(Axis.ToDouble(twilightSet), 90));
                 if (sunRiseAndSet != null) {
                     var rise = sunRiseAndSet.Rise;
                     var set = sunRiseAndSet.Set;
                     if (rise.HasValue && set.HasValue) {
+                        if (set.Value > rise.Value) {
+                            set = set?.AddDays(-1);
+                        }
                         dataPointsBuilder.Add(new DataPoint(Axis.ToDouble(set), 90));
                         dataPointsBuilder.Add(new DataPoint(Axis.ToDouble(set), 0));
                         dataPointsBuilder.Add(new DataPoint(Axis.ToDouble(rise), 0));
@@ -56,6 +62,9 @@ namespace NINA.Utility.Astrometry {
             if (twilightRiseAndSet != null && twilightRiseAndSet.Rise.HasValue && twilightRiseAndSet.Set.HasValue) {
                 var rise = twilightRiseAndSet.Rise;
                 var set = twilightRiseAndSet.Set;
+                if (set.Value > rise.Value) {
+                    set = set?.AddDays(-1);
+                }
                 return ImmutableList.Create(
                     new DataPoint(Axis.ToDouble(rise), 90),
                     new DataPoint(Axis.ToDouble(set), 90));
