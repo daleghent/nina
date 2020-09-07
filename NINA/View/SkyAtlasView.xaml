@@ -24,7 +24,7 @@
     mc:Ignorable="d">
     <Grid>
         <Grid.Resources>
-            <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeCalculator}" />
+            <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeData}" />
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -600,7 +600,7 @@
                         Header="{ns:Loc LblAltitude}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <local:AltitudeChart DataContext="{Binding}" NighttimeCalculator="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
+                                <local:AltitudeChart DataContext="{Binding}" NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

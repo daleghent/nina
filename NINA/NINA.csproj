@@ -510,6 +510,7 @@
     <Compile Include="Profile\SnapShotControlSettings.cs" />
     <Compile Include="Utility\AllDeviceConsumer.cs" />
     <Compile Include="Utility\Astrometry\EarthRotationParameterUpdater.cs" />
+    <Compile Include="Utility\Astrometry\NighttimeData.cs" />
     <Compile Include="Utility\Astrometry\WorldCoordinateSystem.cs" />
     <Compile Include="Utility\Behaviors\MouseCommandBehavior.cs" />
     <Compile Include="Utility\Behaviors\MouseFollowBehavior.cs" />

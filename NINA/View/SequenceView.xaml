@@ -30,7 +30,7 @@
     </UserControl.Resources>
     <Grid>
         <Grid.Resources>
-            <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeCalculator}" />
+            <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeData}" />
         </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -937,7 +937,7 @@
                             Grid.Row="2"
                             Margin="0,0,0,-20"
                             DataContext="{Binding DSO}"
-                            NighttimeCalculator="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
+                            NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                     </Grid>
                 </Grid>
             </GroupBox>

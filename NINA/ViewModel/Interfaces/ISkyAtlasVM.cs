@@ -17,13 +17,9 @@ namespace NINA.ViewModel.Interfaces {
         AsyncObservableCollection<string> Constellations { get; set; }
         AsyncObservableCollection<KeyValuePair<double?, string>> DecFrom { get; set; }
         AsyncObservableCollection<KeyValuePair<double?, string>> DecThrough { get; set; }
-        double? Illumination { get; }
         AsyncObservableCollection<string> MagnitudesFrom { get; set; }
         AsyncObservableCollection<string> MagnitudesThrough { get; set; }
         AsyncObservableCollection<KeyValuePair<double, string>> MinimumAltitudeDegrees { get; set; }
-        Astrometry.MoonPhase MoonPhase { get; }
-        RiseAndSetEvent MoonRiseAndSet { get; }
-        AsyncObservableCollection<DataPoint> NightDuration { get; }
         AsyncObservableCollection<SkyAtlasVM.DSOObjectType> ObjectTypes { get; set; }
         SkyAtlasOrderByDirectionEnum OrderByDirection { get; set; }
         SkyAtlasOrderByFieldsEnum OrderByField { get; set; }
@@ -39,7 +35,6 @@ namespace NINA.ViewModel.Interfaces {
         double? SelectedBrightnessFrom { get; set; }
         double? SelectedBrightnessThrough { get; set; }
         string SelectedConstellation { get; set; }
-        DateTime SelectedDate { get; set; }
         double? SelectedDecFrom { get; set; }
         double? SelectedDecThrough { get; set; }
         double? SelectedMagnitudeFrom { get; set; }
@@ -54,8 +49,6 @@ namespace NINA.ViewModel.Interfaces {
         AsyncObservableCollection<KeyValuePair<string, string>> SizesFrom { get; set; }
         AsyncObservableCollection<KeyValuePair<string, string>> SizesThrough { get; set; }
         IAsyncCommand SlewToCoordinatesCommand { get; }
-        RiseAndSetEvent SunRiseAndSet { get; }
-        AsyncObservableCollection<DataPoint> TwilightDuration { get; }
-        RiseAndSetEvent TwilightRiseAndSet { get; }
+        NighttimeData NighttimeData { get; set; }
     }
 }

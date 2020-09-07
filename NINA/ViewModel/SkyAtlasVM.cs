@@ -37,7 +37,7 @@ namespace NINA.ViewModel {
 
         public SkyAtlasVM(IProfileService profileService, ITelescopeMediator telescopeMediator,
             IFramingAssistantVM framingAssistantVM, ISequenceMediator sequenceMediator, INighttimeCalculator nighttimeCalculator, IApplicationMediator applicationMediator) : base(profileService) {
-            NighttimeCalculator = nighttimeCalculator;
+            this.nighttimeCalculator = nighttimeCalculator;
             ResetFilters(null);
 
             SearchCommand = new AsyncCommand<bool>(() => Search());
@@ -59,7 +59,6 @@ namespace NINA.ViewModel {
             PageSize = 50;
 
             profileService.LocationChanged += (object sender, EventArgs e) => {
-                SelectedDate = DateTime.Now;
                 InitializeElevationFilters();
             };
 
@@ -68,8 +67,21 @@ namespace NINA.ViewModel {
             };
         }
 
+        private NighttimeData nighttimeData;
+        public NighttimeData NighttimeData {
+            get {
+                return nighttimeData;
+            }
+            set {
+                if (nighttimeData != value) {
+                    nighttimeData = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         private void ResetFilters(object obj) {
-            SelectedDate = DateTime.Now;
+            NighttimeData = this.nighttimeCalculator.Calculate();
 
             SearchObjectName = string.Empty;
 
@@ -110,32 +122,7 @@ namespace NINA.ViewModel {
             _searchTokenSource?.Cancel();
         }
 
-        public AsyncObservableCollection<DataPoint> NightDuration => NighttimeCalculator.NightDuration;
-
-        public AsyncObservableCollection<DataPoint> TwilightDuration => NighttimeCalculator.TwilightDuration;
-
-        public RiseAndSetEvent TwilightRiseAndSet => NighttimeCalculator.TwilightRiseAndSet;
-
-        public RiseAndSetEvent MoonRiseAndSet => NighttimeCalculator.MoonRiseAndSet;
-
-        public double? Illumination => NighttimeCalculator.Illumination;
-
-        public Astrometry.MoonPhase MoonPhase => NighttimeCalculator.MoonPhase;
-
-        public RiseAndSetEvent SunRiseAndSet => NighttimeCalculator.SunRiseAndSet;
-
-        public INighttimeCalculator NighttimeCalculator { get; }
-
-        public DateTime SelectedDate {
-            get {
-                return NighttimeCalculator.SelectedDate;
-            }
-            set {
-                NighttimeCalculator.SelectedDate = value;
-                RaisePropertyChanged();
-                InitializeElevationFilters();
-            }
-        }
+        private readonly INighttimeCalculator nighttimeCalculator;
 
         private async Task<bool> Search() {
             _searchTokenSource?.Dispose();
@@ -172,7 +159,7 @@ namespace NINA.ViewModel {
                     var longitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
                     var latitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
 
-                    DateTime d = Utility.Astrometry.NighttimeCalculator.GetReferenceDate(SelectedDate);
+                    DateTime d = NighttimeData.ReferenceDate;
 
                     Parallel.ForEach(result, (obj) => {
                         var cloneDate = d;
@@ -203,6 +190,7 @@ namespace NINA.ViewModel {
         }
 
         private void InitializeFilters() {
+            NighttimeData = this.nighttimeCalculator.Calculate();
             InitializeRADecFilters();
             InitializeConstellationFilters();
             InitializeObjectTypeFilters();
@@ -217,7 +205,7 @@ namespace NINA.ViewModel {
             AltitudeTimesThrough = new AsyncObservableCollection<DateTime>();
             MinimumAltitudeDegrees = new AsyncObservableCollection<KeyValuePair<double, string>>();
 
-            var d = Utility.Astrometry.NighttimeCalculator.GetReferenceDate(SelectedDate);
+            var d = NighttimeData.ReferenceDate;
 
             AltitudeTimesFrom.Add(DateTime.MinValue);
             AltitudeTimesThrough.Add(DateTime.MaxValue);

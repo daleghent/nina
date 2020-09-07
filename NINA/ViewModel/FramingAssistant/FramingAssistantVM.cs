@@ -48,7 +48,8 @@ namespace NINA.ViewModel.FramingAssistant {
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
             this.applicationStatusMediator = applicationStatusMediator;
-            NighttimeCalculator = nighttimeCalculator;
+            this.nighttimeCalculator = nighttimeCalculator;
+            this.NighttimeData = this.nighttimeCalculator.Calculate();
             this.planetariumFactory = planetariumFactory;
             Opacity = 0.2;
 
@@ -319,12 +320,14 @@ namespace NINA.ViewModel.FramingAssistant {
         private ITelescopeMediator telescopeMediator;
         private IApplicationStatusMediator applicationStatusMediator;
         private INighttimeCalculator nighttimeCalculator;
-
-        public INighttimeCalculator NighttimeCalculator {
-            get => nighttimeCalculator;
+        private NighttimeData nighttimeData;
+        public NighttimeData NighttimeData {
+            get => nighttimeData;
             set {
-                nighttimeCalculator = value;
-                RaisePropertyChanged();
+                if (nighttimeData != value) {
+                    nighttimeData = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -428,6 +431,7 @@ namespace NINA.ViewModel.FramingAssistant {
             RaisePropertyChanged(nameof(DecMinutes));
             RaisePropertyChanged(nameof(DecSeconds));
             NegativeDec = DSO?.Coordinates?.Dec < 0;
+            NighttimeData = nighttimeCalculator.Calculate();
         }
 
         private int _downloadProgressValue;

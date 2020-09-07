@@ -32,7 +32,7 @@
             <ColumnDefinition Width="8*" />
         </Grid.ColumnDefinitions>
         <Grid.Resources>
-            <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeCalculator}" />
+            <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeData}" />
         </Grid.Resources>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <Grid>
@@ -432,7 +432,7 @@
                     Grid.Row="1"
                     Margin="5"
                     VerticalAlignment="Bottom">
-                    <local:AltitudeChart DataContext="{Binding DSO}" NighttimeCalculator="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
+                    <local:AltitudeChart DataContext="{Binding DSO}" NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                 </Grid>
             </Grid>
         </ScrollViewer>

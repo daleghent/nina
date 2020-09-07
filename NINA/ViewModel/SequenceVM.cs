@@ -106,7 +106,8 @@ namespace NINA.ViewModel {
             this.imagingMediator = imagingMediator;
 
             this.applicationStatusMediator = applicationStatusMediator;
-            NighttimeCalculator = nighttimeCalculator;
+            this.nighttimeCalculator = nighttimeCalculator;
+            this.NighttimeData = this.nighttimeCalculator.Calculate();
             this.planetariumFactory = planetariumFactory;
             this.DeepSkyObjectSearchVM = deepSkyObjectSearchVM;
 
@@ -1615,6 +1616,7 @@ namespace NINA.ViewModel {
             Sequence.SetSequenceTarget(sequenceDso);
 
             Sequence.PropertyChanged += _sequence_PropertyChanged;
+            NighttimeData = nighttimeCalculator.Calculate();
 
             return true;
         }
@@ -1753,7 +1755,7 @@ namespace NINA.ViewModel {
         private ICameraMediator cameraMediator;
         private IImagingMediator imagingMediator;
         private IApplicationStatusMediator applicationStatusMediator;
-        public INighttimeCalculator NighttimeCalculator { get; }
+        private INighttimeCalculator nighttimeCalculator;
         private readonly IPlanetariumFactory planetariumFactory;
         private TelescopeInfo telescopeInfo = DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
         private DomeInfo domeInfo = DeviceInfo.CreateDefaultInstance<DomeInfo>();
@@ -1767,6 +1769,18 @@ namespace NINA.ViewModel {
         private GuiderInfo guiderInfo = DeviceInfo.CreateDefaultInstance<GuiderInfo>();
         private int AfHfrIndex = 0;
 
+        private NighttimeData nighttimeData;
+        public NighttimeData NighttimeData {
+            get {
+                return nighttimeData;
+            }
+            set {
+                if (nighttimeData != value) {
+                    nighttimeData = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
         public bool SequenceModified { get { return (Sequence != null) && (Sequence.HasChanged); } }
         public bool HasSequenceFileName { get { return (Sequence != null) && (Sequence.HasFileName); } }
         public bool SequenceSaveable { get { return SequenceModified && HasSequenceFileName; } }

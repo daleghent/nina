@@ -23,7 +23,7 @@
 
     <Grid>
         <Grid.Resources>
-            <util:BindingProxy x:Key="proxy" Data="{Binding ElementName=UC, Path=NighttimeCalculator}" />
+            <util:BindingProxy x:Key="proxy" Data="{Binding ElementName=UC, Path=NighttimeData}" />
         </Grid.Resources>
         <oxy:Plot
             MinHeight="180"

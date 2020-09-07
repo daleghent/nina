@@ -27,11 +27,11 @@ namespace NINA.View {
             InitializeComponent();
         }
 
-        public static DependencyProperty NighttimeCalculatorProperty = DependencyProperty.Register(nameof(NighttimeCalculator), typeof(INighttimeCalculator), typeof(AltitudeChart));
+        public static DependencyProperty NighttimeDataProperty = DependencyProperty.Register("NighttimeData", typeof(NighttimeData), typeof(AltitudeChart));
 
-        public INighttimeCalculator NighttimeCalculator {
-            get => (INighttimeCalculator)GetValue(NighttimeCalculatorProperty);
-            set => SetValue(NighttimeCalculatorProperty, value);
+        public NighttimeData NighttimeData {
+            get => (NighttimeData)GetValue(NighttimeDataProperty);
+            set => SetValue(NighttimeDataProperty, value);
         }
     }
 }
