@@ -14,15 +14,15 @@
   <?define Win64 = "yes"?>
   <?define SetupSource = "$(var.NINASetup.TargetDir)" ?>
   <?define DefaultInstallDir = "[ProgramFiles64Folder]N.I.N.A. - Nighttime Imaging 'N' Astronomy" ?>
-  <?define VCRedist2013 = "$(var.ProjectDir)\vcredist_x64.exe" ?>
-  <?define VCRedist2017 = "$(var.ProjectDir)\vc_redist2017.x64.exe" ?>
+  <?define VCRedist2013 = "$(var.ProjectDir)\vc_redist2013.x64.exe" ?>
+  <?define VCRedist2017 = "$(var.ProjectDir)\vc_redist.x64.exe" ?>
   <?else ?>
   <?define SetupMsiName = "NINASetup.msi" ?>
   <?define Win64 = "no"?>
   <?define SetupSource = "$(var.NINASetup.TargetDir)" ?>
   <?define DefaultInstallDir = "[ProgramFilesFolder]N.I.N.A. - Nighttime Imaging 'N' Astronomy" ?>
-  <?define VCRedist2013 = "$(var.ProjectDir)\vcredist_x86.exe" ?>
-  <?define VCRedist2017 = "$(var.ProjectDir)\vc_redist2017.x86.exe" ?>
+  <?define VCRedist2013 = "$(var.ProjectDir)\vc_redist2013.x86.exe" ?>
+  <?define VCRedist2017 = "$(var.ProjectDir)\vc_redist.x86.exe" ?>
   <?endif ?>
   <Bundle Name="N.I.N.A. - Nighttime Imaging 'N' Astronomy" Version="!(bind.packageVersion.NINASetup)" Manufacturer="N.I.N.A." UpgradeCode="E51BC85C-6DE1-4653-9B0B-3C80754E4C90">
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
@@ -66,7 +66,7 @@
         <ExitCode Value="1638" Behavior="success" />
       </ExePackage>
 
-      <!-- VCRedist 2017 (required for NOVAS, SOFA)-->
+      <!-- VCRedist 2015,2017,2019 (required for NOVAS, SOFA)-->
       <ExePackage
          Cache="no"
          Compressed="yes"
