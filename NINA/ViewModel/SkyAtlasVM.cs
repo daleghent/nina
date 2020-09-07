@@ -32,9 +32,7 @@ using NINA.ViewModel.Interfaces;
 using NINA.ViewModel.FramingAssistant;
 
 namespace NINA.ViewModel {
-
     internal class SkyAtlasVM : BaseVM, ISkyAtlasVM {
-
         public SkyAtlasVM(IProfileService profileService, ITelescopeMediator telescopeMediator,
             IFramingAssistantVM framingAssistantVM, ISequenceMediator sequenceMediator, INighttimeCalculator nighttimeCalculator, IApplicationMediator applicationMediator) : base(profileService) {
             this.nighttimeCalculator = nighttimeCalculator;
@@ -738,7 +736,6 @@ namespace NINA.ViewModel {
         }
 
         public class DSOObjectType : BaseINPC {
-
             public DSOObjectType(string s) {
                 Name = s;
                 Selected = false;
@@ -771,7 +768,6 @@ namespace NINA.ViewModel {
     }
 
     public class PagedList<T> : BaseINPC {
-
         public PagedList(int pageSize, IEnumerable<T> items) {
             _items = new List<T>(items);
             PageSize = pageSize;
@@ -927,7 +923,6 @@ namespace NINA.ViewModel {
 
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]
     public enum SkyAtlasOrderByFieldsEnum {
-
         [Description("LblSize")]
         SIZEMAX,
 
@@ -952,7 +947,6 @@ namespace NINA.ViewModel {
 
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]
     public enum SkyAtlasOrderByDirectionEnum {
-
         [Description("LblDescending")]
         DESC,
 

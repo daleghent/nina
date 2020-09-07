@@ -1618,6 +1618,8 @@ namespace NINA.ViewModel {
             Sequence.PropertyChanged += _sequence_PropertyChanged;
             NighttimeData = nighttimeCalculator.Calculate();
 
+            var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
+            vm.SkyAtlasVM.ResetRiseAndSetTimes();
             return true;
         }
 

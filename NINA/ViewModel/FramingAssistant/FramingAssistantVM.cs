@@ -38,9 +38,7 @@ using NINA.Utility.Exceptions;
 using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel.FramingAssistant {
-
     internal class FramingAssistantVM : BaseVM, ICameraConsumer, IFramingAssistantVM {
-
         public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
             IApplicationStatusMediator applicationStatusMediator, INighttimeCalculator nighttimeCalculator, IPlanetariumFactory planetariumFactory,
             ISequenceMediator sequenceMediator, IApplicationMediator applicationMediator, IDeepSkyObjectSearchVM deepSkyObjectSearchVM) : base(profileService) {

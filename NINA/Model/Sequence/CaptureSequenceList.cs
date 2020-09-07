@@ -25,11 +25,9 @@ using System.Xml;
 using System.Xml.Serialization;
 
 namespace NINA.Model {
-
     [Serializable()]
     [XmlRoot(nameof(CaptureSequenceList))]
     public class CaptureSequenceList : BaseINPC {
-
         public CaptureSequenceList() {
             TargetName = string.Empty;
             Mode = SequenceMode.STANDARD;
