@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 
 namespace NINA.Utility.Astrometry {
+
     public class NighttimeData {
+
         public NighttimeData(
             DateTime date,
             DateTime referenceDate,
@@ -23,7 +25,10 @@ namespace NINA.Utility.Astrometry {
             this.MoonRiseAndSet = moonRiseAndSet;
             this.NightDuration = new AsyncObservableCollection<DataPoint>(CalculateNightDuration(twilightRiseAndSet));
             this.TwilightDuration = new AsyncObservableCollection<DataPoint>(CalculateTwilightDuration(twilightRiseAndSet, sunRiseAndSet));
+            this.Ticker = new Ticker(TimeSpan.FromSeconds(30));
         }
+
+        public Ticker Ticker { get; }
 
         private static IList<DataPoint> CalculateTwilightDuration(RiseAndSetEvent twilightRiseAndSet, RiseAndSetEvent sunRiseAndSet) {
             if (twilightRiseAndSet != null && twilightRiseAndSet.Rise.HasValue && twilightRiseAndSet.Set.HasValue) {
