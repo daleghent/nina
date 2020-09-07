@@ -1618,8 +1618,6 @@ namespace NINA.ViewModel {
             Sequence.PropertyChanged += _sequence_PropertyChanged;
             NighttimeData = nighttimeCalculator.Calculate();
 
-            var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
-            vm.SkyAtlasVM.ResetRiseAndSetTimes();
             return true;
         }
 
@@ -1772,6 +1770,7 @@ namespace NINA.ViewModel {
         private int AfHfrIndex = 0;
 
         private NighttimeData nighttimeData;
+
         public NighttimeData NighttimeData {
             get {
                 return nighttimeData;
@@ -1783,6 +1782,7 @@ namespace NINA.ViewModel {
                 }
             }
         }
+
         public bool SequenceModified { get { return (Sequence != null) && (Sequence.HasChanged); } }
         public bool HasSequenceFileName { get { return (Sequence != null) && (Sequence.HasFileName); } }
         public bool SequenceSaveable { get { return SequenceModified && HasSequenceFileName; } }
