@@ -284,7 +284,7 @@
                         <Path
                             Width="50"
                             Height="50"
-                            Data="{Binding MoonPhase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
+                            Data="{Binding NighttimeData.MoonPhase, Converter={StaticResource MoonPhaseToGeometryConverter}}"
                             Fill="Black"
                             Stretch="Uniform" />
                     </Grid>
@@ -295,7 +295,7 @@
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIllumination}" />
-                            <TextBlock Text="{Binding Illumination, StringFormat={}{0:P2}}" />
+                            <TextBlock Text="{Binding NighttimeData.Illumination, StringFormat={}{0:P2}}" />
                         </UniformGrid>
                     </Border>
 
@@ -305,7 +305,7 @@
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMoonRise}" />
-                            <TextBlock Text="{Binding MoonRiseAndSet.Rise, StringFormat={}{0:HH:mm}}" />
+                            <TextBlock Text="{Binding NighttimeData.MoonRiseAndSet.Rise, StringFormat={}{0:HH:mm}}" />
                         </UniformGrid>
                     </Border>
 
@@ -315,7 +315,7 @@
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMoonSet}" />
-                            <TextBlock Text="{Binding MoonRiseAndSet.Set, StringFormat={}{0:HH:mm}}" />
+                            <TextBlock Text="{Binding NighttimeData.MoonRiseAndSet.Set, StringFormat={}{0:HH:mm}}" />
                         </UniformGrid>
                     </Border>
 
@@ -325,7 +325,7 @@
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDawn}" />
-                            <TextBlock Text="{Binding TwilightRiseAndSet.Rise, StringFormat={}{0:HH:mm}}" />
+                            <TextBlock Text="{Binding NighttimeData.TwilightRiseAndSet.Rise, StringFormat={}{0:HH:mm}}" />
                         </UniformGrid>
                     </Border>
 
@@ -335,7 +335,7 @@
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSunRise}" />
-                            <TextBlock Text="{Binding SunRiseAndSet.Rise, StringFormat={}{0:HH:mm}}" />
+                            <TextBlock Text="{Binding NighttimeData.SunRiseAndSet.Rise, StringFormat={}{0:HH:mm}}" />
                         </UniformGrid>
                     </Border>
 
@@ -345,7 +345,7 @@
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSunSet}" />
-                            <TextBlock Text="{Binding SunRiseAndSet.Set, StringFormat={}{0:HH:mm}}" />
+                            <TextBlock Text="{Binding NighttimeData.SunRiseAndSet.Set, StringFormat={}{0:HH:mm}}" />
                         </UniformGrid>
                     </Border>
 
@@ -355,7 +355,7 @@
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDusk}" />
-                            <TextBlock Text="{Binding TwilightRiseAndSet.Set, StringFormat={}{0:HH:mm}}" />
+                            <TextBlock Text="{Binding NighttimeData.TwilightRiseAndSet.Set, StringFormat={}{0:HH:mm}}" />
                         </UniformGrid>
                     </Border>
                 </StackPanel>
