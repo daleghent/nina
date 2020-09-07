@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Model.MyGuider {
 
-    public interface IGuider : INotifyPropertyChanged {
+    public interface IGuider : IDevice {
         bool Connected { get; }
         double PixelScale { get; set; }
         string State { get; }
@@ -28,11 +28,7 @@ namespace NINA.Model.MyGuider {
 
         event EventHandler<IGuideStep> GuideEvent;
 
-        Task<bool> Connect();
-
         Task<bool> AutoSelectGuideStar();
-
-        bool Disconnect();
 
         //Task<bool> Pause(bool pause, CancellationToken ct);
 

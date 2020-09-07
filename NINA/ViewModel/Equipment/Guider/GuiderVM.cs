@@ -31,7 +31,7 @@ namespace NINA.ViewModel.Equipment.Guider {
 
     internal class GuiderVM : DockableVM, IGuiderVM {
 
-        public GuiderVM(IProfileService profileService, IGuiderMediator guiderMediator, ICameraMediator cameraMediator, IApplicationStatusMediator applicationStatusMediator, ITelescopeMediator telescopeMediator) : base(profileService) {
+        public GuiderVM(IProfileService profileService, IGuiderMediator guiderMediator, IApplicationStatusMediator applicationStatusMediator, IDeviceChooserVM deviceChooser) : base(profileService) {
             Title = "LblGuider";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["GuiderSVG"];
 
@@ -41,11 +41,9 @@ namespace NINA.ViewModel.Equipment.Guider {
             this.applicationStatusMediator = applicationStatusMediator;
 
             ConnectGuiderCommand = new AsyncCommand<bool>(Connect);
-
             CancelConnectGuiderCommand = new RelayCommand(CancelConnectGuider);
-
-            GuiderChooserVM = new GuiderChooserVM(profileService, cameraMediator, telescopeMediator);
-
+            RefreshGuiderListCommand = new RelayCommand(RefreshGuiderList, o => !(Guider?.Connected == true));
+            GuiderChooserVM = deviceChooser;
             DisconnectGuiderCommand = new RelayCommand((object o) => Disconnect(), (object o) => Guider?.Connected == true);
             ClearGraphCommand = new RelayCommand((object o) => ResetGraphValues());
 
@@ -56,7 +54,7 @@ namespace NINA.ViewModel.Equipment.Guider {
             };
         }
 
-        public IGuiderChooserVM GuiderChooserVM { get; set; }
+        public IDeviceChooserVM GuiderChooserVM { get; private set; }
 
         /// <summary>
         /// Starts recording RMS until StopRMSRecording is called
@@ -114,6 +112,10 @@ namespace NINA.ViewModel.Equipment.Guider {
             GuideStepsHistory.Clear();
         }
 
+        public void RefreshGuiderList(object obj) {
+            GuiderChooserVM.GetEquipment();
+        }
+
         public async Task<bool> Connect() {
             ResetGraphValues();
 
@@ -126,9 +128,9 @@ namespace NINA.ViewModel.Equipment.Guider {
                 }
                 _cancelConnectGuiderSource?.Dispose();
                 _cancelConnectGuiderSource = new CancellationTokenSource();
-                Guider = GuiderChooserVM.SelectedGuider;
+                Guider = (IGuider)GuiderChooserVM.SelectedDevice;
                 Guider.PropertyChanged += Guider_PropertyChanged;
-                connected = await Guider.Connect();
+                connected = await Guider.Connect(_cancelConnectGuiderSource.Token);
                 _cancelConnectGuiderSource.Token.ThrowIfCancellationRequested();
 
                 if (connected) {
@@ -303,11 +305,9 @@ namespace NINA.ViewModel.Equipment.Guider {
         private CancellationTokenSource _cancelConnectGuiderSource;
 
         public ICommand ConnectGuiderCommand { get; private set; }
-
+        public ICommand RefreshGuiderListCommand { get; private set; }
         public ICommand DisconnectGuiderCommand { get; private set; }
-
         public ICommand ClearGraphCommand { get; private set; }
-
         public ICommand CancelConnectGuiderCommand { get; }
     }
 }

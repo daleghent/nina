@@ -3522,7 +3522,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PHD2 Dither Pixels.
+        ///   Looks up a localized string similar to Dither Pixels.
         /// </summary>
         internal static string LblDitherPixels {
             get {
@@ -6508,6 +6508,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to MetaGuide Setup.
+        /// </summary>
+        internal static string LblMetaGuideSetup {
+            get {
+                return ResourceManager.GetString("LblMetaGuideSetup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Update MetaGuide to at least {0}.
         /// </summary>
         internal static string LblMetaGuideVersionCheckFailed {
@@ -7665,6 +7674,15 @@ namespace NINA.Locale {
         internal static string LblPHD2Settings {
             get {
                 return ResourceManager.GetString("LblPHD2Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PHD2 Setup.
+        /// </summary>
+        internal static string LblPHD2Setup {
+            get {
+                return ResourceManager.GetString("LblPHD2Setup", resourceCulture);
             }
         }
         
@@ -9224,7 +9242,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PHD2 Settle Pixel Tolerance.
+        ///   Looks up a localized string similar to Settle Pixel Tolerance.
         /// </summary>
         internal static string LblSettlePixelTolerance {
             get {
@@ -9242,7 +9260,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PHD2 Settle Timeout.
+        ///   Looks up a localized string similar to Settle Timeout.
         /// </summary>
         internal static string LblSettleTimeout {
             get {

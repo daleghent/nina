@@ -20,6 +20,7 @@
     xmlns:simulator="clr-namespace:NINA.Model.MyCamera.Simulator"
     xmlns:switch="clr-namespace:NINA.Model.MySwitch"
     xmlns:switchview="clr-namespace:NINA.View.Equipment.Switch"
+    xmlns:guider="clr-namespace:NINA.Model.MyGuider"
     xmlns:view="clr-namespace:NINA.View"
     xmlns:vm="clr-namespace:NINA.ViewModel">
 
@@ -70,6 +71,14 @@
 
     <DataTemplate DataType="{x:Type camera:FLICamera}">
         <equip:FLICameraSetupView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type guider:PHD2Guider}">
+        <equip:PHD2SetupView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type guider:MetaGuideGuider}">
+        <equip:MetaGuideSetupView />
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type switch:Eagle}">

@@ -27,6 +27,7 @@ namespace NINA.View.Equipment.Guider {
         public DataTemplate MGen { get; set; }
         public DataTemplate PHD2 { get; set; }
         public DataTemplate MetaGuide { get; set; }
+        public DataTemplate DirectGuider { get; set; }
         public DataTemplate Default { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
@@ -36,6 +37,8 @@ namespace NINA.View.Equipment.Guider {
                 return PHD2;
             } else if (item is MetaGuideGuider) {
                 return MetaGuide;
+            } else if (item is DirectGuider) {
+                return DirectGuider;
             } else {
                 return Default;
             }

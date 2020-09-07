@@ -53,14 +53,16 @@ namespace NINA.Model.MyGuider {
                     } else {
                         Notification.ShowWarning(Locale.Loc.Instance["LblDirectGuiderTelescopeDisconnect"]);
                         Logger.Warning("Telescope is disconnected. Direct Guide will disconnect. Dither will not occur.");
-                        return Disconnect();
+                        Disconnect();
                     }
                 }
                 return false;
             }
             set {
-                _connected = value;
-                RaisePropertyChanged();
+                if (_connected != value) {
+                    _connected = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -78,7 +80,17 @@ namespace NINA.Model.MyGuider {
             }
         }
 
-        public async Task<bool> Connect() {
+        public bool HasSetupDialog => false;
+
+        public string Category => "Guiders";
+
+        public string Description => "Direct Guider";
+
+        public string DriverInfo => "Direct Guider";
+
+        public string DriverVersion => "1.0";
+
+        public async Task<bool> Connect(CancellationToken token) {
             Connected = false;
             if (telescopeInfo.Connected) {
                 Connected = true;
@@ -99,10 +111,8 @@ namespace NINA.Model.MyGuider {
             return Task.FromResult(true);
         }
 
-        public bool Disconnect() {
+        public void Disconnect() {
             Connected = false;
-
-            return Connected;
         }
 
         public Task<bool> Pause(bool pause, CancellationToken ct) {
@@ -199,6 +209,10 @@ namespace NINA.Model.MyGuider {
 
         public void Dispose() {
             this.telescopeMediator.RemoveConsumer(this);
+        }
+
+        public void SetupDialog() {
+            throw new NotImplementedException();
         }
     }
 }

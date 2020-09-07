@@ -14,6 +14,7 @@
     xmlns:guider="clr-namespace:NINA.View.Equipment.Guider"
     xmlns:local="clr-namespace:NINA.View.Equipment.Guider"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:equip="clr-namespace:NINA.View.Equipment"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
     d:DesignHeight="300"
@@ -39,67 +40,17 @@
                                 VerticalAlignment="Center"
                                 FontSize="20"
                                 Text="{ns:Loc LblGuider}" />
-                            <Grid Grid.Column="1" Margin="5">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="40" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <ninactrl:LoadingControl
-                                    Grid.Column="0"
-                                    Height="30"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    LoadingImageBrush="{StaticResource PrimaryBrush}"
-                                    Visibility="{Binding ConnectGuiderCommand.Execution.IsNotCompleted, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=Collapsed}" />
-                                <ComboBox
-                                    Grid.Column="1"
-                                    MinHeight="40"
-                                    DisplayMemberPath="Name"
-                                    IsEnabled="{Binding GuiderInfo.Connected, Converter={StaticResource InverseBooleanConverter}, UpdateSourceTrigger=PropertyChanged}"
-                                    ItemsSource="{Binding GuiderChooserVM.Guiders}"
-                                    SelectedItem="{Binding GuiderChooserVM.SelectedGuider}"
-                                    SelectedValuePath="Name"
-                                    Visibility="{Binding GuiderChooserVM.Guiders, Converter={StaticResource CollectionContainsMoreThanOneItemToVisibilityConverter}}" />
-                                <Grid
-                                    Grid.Column="2"
-                                    Width="40"
-                                    Height="40"
-                                    Margin="1,0,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
-
-                                    <ninactrl:CancellableButton
-                                        ButtonForegroundBrush="{StaticResource ButtonForegroundDisabledBrush}"
-                                        ButtonImage="{StaticResource PowerSVG}"
-                                        CancelButtonImage="{StaticResource CancelSVG}"
-                                        CancelCommand="{Binding CancelConnectGuiderCommand}"
-                                        Command="{Binding ConnectGuiderCommand}"
-                                        IsEnabled="{Binding GuiderInfo.Connected, Converter={StaticResource InverseBooleanConverter}, FallbackValue=True, UpdateSourceTrigger=PropertyChanged}"
-                                        ToolTip="{ns:Loc LblConnect}"
-                                        Visibility="{Binding GuiderInfo.Connected, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
-
-                                    <Grid Visibility="{Binding Guider, Converter={StaticResource NullToVisibilityConverter}}">
-                                        <Button
-                                            Command="{Binding DisconnectGuiderCommand}"
-                                            IsEnabled="{Binding GuiderInfo.Connected, UpdateSourceTrigger=PropertyChanged}"
-                                            Visibility="{Binding GuiderInfo.Connected, Converter={StaticResource VisibilityConverter}, UpdateSourceTrigger=PropertyChanged}">
-                                            <Button.ToolTip>
-                                                <ToolTip ToolTipService.ShowOnDisabled="False">
-                                                    <TextBlock Text="{ns:Loc LblDisconnect}" />
-                                                </ToolTip>
-                                            </Button.ToolTip>
-                                            <Grid>
-                                                <Path
-                                                    Margin="5"
-                                                    Data="{StaticResource PowerSVG}"
-                                                    Fill="{StaticResource ButtonForegroundBrush}"
-                                                    Stretch="Uniform" />
-                                            </Grid>
-                                        </Button>
-                                    </Grid>
-                                </Grid>
-                            </Grid>
+                            <equip:Connector
+                                Grid.Column="1"
+                                CancelCommand="{Binding CancelConnectGuiderCommand}"
+                                ConnectCommand="{Binding ConnectGuiderCommand}"
+                                Connected="{Binding GuiderInfo.Connected}"
+                                Devices="{Binding GuiderChooserVM.Devices}"
+                                DisconnectCommand="{Binding DisconnectGuiderCommand}"
+                                HasSetupDialog="{Binding GuiderChooserVM.SelectedDevice.HasSetupDialog}"
+                                RefreshCommand="{Binding RefreshGuiderListCommand}"
+                                SelectedDevice="{Binding GuiderChooserVM.SelectedDevice, Mode=TwoWay}"
+                                SetupCommand="{Binding GuiderChooserVM.SetupDialogCommand}" />
                         </Grid>
                     </GroupBox.Header>
                     <Grid>
@@ -155,10 +106,13 @@
                             <guider:MGenDetailView />
                         </DataTemplate>
                         <DataTemplate x:Key="PHD2">
-                            <guider:DefaultDetailView />
+                            <guider:PHD2DetailView />
                         </DataTemplate>
                         <DataTemplate x:Key="MetaGuide">
                             <guider:MetaGuideDetailView />
+                        </DataTemplate>
+                        <DataTemplate x:Key="DirectGuider">
+                            <guider:DirectGuiderDetailView />
                         </DataTemplate>
                         <DataTemplate x:Key="Default">
                             <guider:DefaultDetailView />
@@ -167,8 +121,9 @@
                             x:Key="ContentSelector"
                             Default="{StaticResource Default}"
                             MGen="{StaticResource MGen}"
-                            PHD2="{StaticResource Default}"
-                            MetaGuide="{StaticResource MetaGuide}" />
+                            PHD2="{StaticResource PHD2}"
+                            MetaGuide="{StaticResource MetaGuide}"
+                            DirectGuider="{StaticResource DirectGuider}" />
                     </Grid.Resources>
                     <ContentControl
                         Content="{Binding}"

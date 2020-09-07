@@ -22,6 +22,7 @@ using System;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Utility.WindowService;
 
 #pragma warning disable 4014
 
@@ -32,6 +33,7 @@ namespace NINA.Model.MyGuider {
         private const string ServiceEndPoint = "SynchronizedPHD2Guider";
         private readonly ICameraMediator cameraMediator;
         private readonly IProfileService profileService;
+        private readonly IWindowServiceFactory windowServiceFactory;
         private bool cameraIsExposing;
         private bool connected;
         private CancellationTokenSource disconnectTokenSource;
@@ -45,9 +47,10 @@ namespace NINA.Model.MyGuider {
 
         public event EventHandler<IGuideStep> GuideEvent;
 
-        public SynchronizedPHD2Guider(IProfileService profileService, ICameraMediator cameraMediator) {
+        public SynchronizedPHD2Guider(IProfileService profileService, ICameraMediator cameraMediator, IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
+            this.windowServiceFactory = windowServiceFactory;
         }
 
         private ILoc Locale { get; set; } = Loc.Instance;
@@ -84,6 +87,16 @@ namespace NINA.Model.MyGuider {
                 RaisePropertyChanged(nameof(State));
             }
         }
+
+        public bool HasSetupDialog => false;
+
+        public string Category => "Guiders";
+
+        public string Description => "Synchronized PHD2 Guider";
+
+        public string DriverInfo => "Synchronized PHD2 Guider";
+
+        public string DriverVersion => "1.0";
 
         private ISynchronizedPHD2GuiderService ConnectToService() {
             var guiderServiceChannelFactory
@@ -181,7 +194,7 @@ namespace NINA.Model.MyGuider {
 
                 // initialize the service, try to start and connect to phd2
                 startServiceTcs.TrySetResult(await ((SynchronizedPHD2GuiderService)host.SingletonInstance)
-                    .Initialize(new PHD2Guider(profileService), ct));
+                    .Initialize(new PHD2Guider(profileService, windowServiceFactory), ct));
 
                 // loop to keep the service alive
                 while (!ct.IsCancellationRequested) {
@@ -207,7 +220,7 @@ namespace NINA.Model.MyGuider {
         }
 
         /// <inheritdoc />
-        public async Task<bool> Connect() {
+        public async Task<bool> Connect(CancellationToken token) {
             disconnectTokenSource?.Dispose();
             disconnectTokenSource = new CancellationTokenSource();
 
@@ -223,11 +236,10 @@ namespace NINA.Model.MyGuider {
         }
 
         /// <inheritdoc />
-        public bool Disconnect() {
+        public void Disconnect() {
             disconnectTokenSource.Cancel();
 
             Connected = false;
-            return true;
         }
 
         /// <inheritdoc />
@@ -278,6 +290,10 @@ namespace NINA.Model.MyGuider {
 
         public void Dispose() {
             cameraMediator.RemoveConsumer(this);
+        }
+
+        public void SetupDialog() {
+            throw new NotImplementedException();
         }
     }
 }

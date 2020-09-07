@@ -2,6 +2,7 @@
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Notification;
+using NINA.Utility.WindowService;
 using Nito.AsyncEx;
 using System;
 using System.Net;
@@ -34,6 +35,7 @@ namespace NINA.Model.MyGuider {
         private readonly AsyncAutoResetEvent metaGuideMessageReceivedEvent = new AsyncAutoResetEvent(false);
 
         private readonly IProfileService profileService;
+        private readonly IWindowServiceFactory windowServiceFactory;
         private CancellationTokenSource clientCTS = null;
         private MetaGuideListener listener = null;
         private Task listenerTask = null;
@@ -41,8 +43,9 @@ namespace NINA.Model.MyGuider {
         private MetaGuideGuideMsg latestUnpublishedGuide = null;
         private volatile MetaGuideStatusMsg latestStatus = null;
 
-        public MetaGuideGuider(IProfileService profileService) {
+        public MetaGuideGuider(IProfileService profileService, IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
+            this.windowServiceFactory = windowServiceFactory;
         }
 
         public string Name => "MetaGuide";
@@ -195,12 +198,22 @@ namespace NINA.Model.MyGuider {
             }
         }
 
+        public bool HasSetupDialog => !Connected;
+
+        public string Category => "Guiders";
+
+        public string Description => "MetaGuide";
+
+        public string DriverInfo => "MetaGuide";
+
+        public string DriverVersion => "1.0";
+
         public Task<bool> AutoSelectGuideStar() {
             // Fire and forget
             return Task.FromResult(PostAndCheckMessage("LockOn", remoteLockMsg, 0, 0));
         }
 
-        public async Task<bool> Connect() {
+        public async Task<bool> Connect(CancellationToken token) {
             if (Connected) {
                 return true;
             }
@@ -226,7 +239,8 @@ namespace NINA.Model.MyGuider {
 
             try {
                 var connectTimeoutTokenSource = new CancellationTokenSource(TimeSpan.FromMilliseconds(METAGUIDE_CONNECT_TIMEOUT_MS));
-                connectionSuccess = await WaitOnEventChangeCondition(() => this.latestStatus != null, connectTimeoutTokenSource.Token);
+                var connectCancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(connectTimeoutTokenSource.Token, token);
+                connectionSuccess = await WaitOnEventChangeCondition(() => this.latestStatus != null, connectCancellationTokenSource.Token);
                 lock (this.lockobj) {
                     if (!connectionSuccess) {
                         Logger.Error("Failed to connect to MetaGuide. Check to make sure it is running, that broadcast is enabled in Setup -> Extra, and that the broadcast address and port match up with NINA settings.");
@@ -255,7 +269,7 @@ namespace NINA.Model.MyGuider {
             this.Disconnect();
         }
 
-        public bool Disconnect() {
+        public void Disconnect() {
             var listenerTask = Interlocked.Exchange(ref this.listenerTask, null);
             lock (this.lockobj) {
                 this.Connected = false;
@@ -278,7 +292,6 @@ namespace NINA.Model.MyGuider {
                 listenerTask?.Wait(TimeSpan.FromMilliseconds(METAGUIDE_QUEUE_FLUSH_TIMEOUT_MS));
             } catch (Exception) {
             }
-            return true;
         }
 
         public async Task<bool> Dither(CancellationToken ct) {
@@ -489,6 +502,11 @@ namespace NINA.Model.MyGuider {
                 return false;
             }
             return await WaitOnEventChangeCondition(() => this.IsGuiding, ct);
+        }
+
+        public void SetupDialog() {
+            var windowService = windowServiceFactory.Create();
+            windowService.ShowDialog(this, Locale.Loc.Instance["LblMetaGuideSetup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
         }
     }
 

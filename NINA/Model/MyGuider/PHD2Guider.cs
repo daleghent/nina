@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Notification;
+using NINA.Utility.WindowService;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -34,11 +35,13 @@ namespace NINA.Model.MyGuider {
 
     public class PHD2Guider : BaseINPC, IGuider {
 
-        public PHD2Guider(IProfileService profileService) {
+        public PHD2Guider(IProfileService profileService, IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
+            this.windowServiceFactory = windowServiceFactory;
         }
 
-        private IProfileService profileService;
+        private readonly IProfileService profileService;
+        private readonly IWindowServiceFactory windowServiceFactory;
 
         private Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
 
@@ -157,6 +160,16 @@ namespace NINA.Model.MyGuider {
             }
         }
 
+        public bool HasSetupDialog => !Connected;
+
+        public string Category => "Guiders";
+
+        public string Description => "PHD2 Guider";
+
+        public string DriverInfo => "PHD2 Guider";
+
+        public string DriverVersion => "1.0";
+
         /*private async Task<TcpClient> ConnectClient() {
             var client = new TcpClient();
             await client.ConnectAsync(Settings.PHD2ServerUrl, Settings.PHD2ServerPort);
@@ -164,7 +177,7 @@ namespace NINA.Model.MyGuider {
         }*/
         private TaskCompletionSource<bool> _tcs;
 
-        public async Task<bool> Connect() {
+        public async Task<bool> Connect(CancellationToken token) {
             _tcs = new TaskCompletionSource<bool>();
             var startedPHD2 = await StartPHD2Process();
 #pragma warning disable 4014
@@ -410,9 +423,8 @@ namespace NINA.Model.MyGuider {
             return null;
         }
 
-        public bool Disconnect() {
+        public void Disconnect() {
             _clientCTS?.Cancel();
-            return false;
         }
 
         private void ProcessEvent(string phdevent, JObject message) {
@@ -580,6 +592,11 @@ namespace NINA.Model.MyGuider {
                     PHD2ConnectionLost?.Invoke(this, EventArgs.Empty);
                 }
             }
+        }
+
+        public void SetupDialog() {
+            var windowService = windowServiceFactory.Create();
+            windowService.ShowDialog(this, Locale.Loc.Instance["LblPHD2Setup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
         }
 
         public event EventHandler PHD2ConnectionLost;

@@ -31,7 +31,7 @@ namespace NINATest {
         [SetUp]
         public void Init() {
             guider = new Mock<IGuider>(MockBehavior.Strict);
-            guider.Setup(m => m.Connect()).ReturnsAsync(true);
+            guider.Setup(m => m.Connect(It.IsAny<CancellationToken>())).ReturnsAsync(true);
         }
 
         [Test]
@@ -39,14 +39,14 @@ namespace NINATest {
             // setup
             CancellationTokenSource cts = new CancellationTokenSource();
             var localguider = new Mock<IGuider>(MockBehavior.Strict);
-            guider.Setup(m => m.Connect()).ReturnsAsync(false);
+            guider.Setup(m => m.Connect(It.IsAny<CancellationToken>())).ReturnsAsync(false);
 
             // act
             var result = await sut.Initialize(guider.Object, cts.Token);
 
             // assert
             result.Should().Be(false);
-            guider.Verify(m => m.Connect(), Times.Once);
+            guider.Verify(m => m.Connect(cts.Token), Times.Once);
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace NINATest {
             // setup
             Guid id = Guid.NewGuid();
             CancellationTokenSource cts = new CancellationTokenSource();
-            guider.Setup(m => m.Connect()).ReturnsAsync(false);
+            guider.Setup(m => m.Connect(cts.Token)).ReturnsAsync(false);
             await sut.Initialize(guider.Object, cts.Token);
 
             // act

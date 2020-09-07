@@ -132,14 +132,15 @@ namespace NINA.Model.MyGuider {
             return true;
         }
 
-        public async Task<bool> Connect() {
+        public async Task<bool> Connect(CancellationToken token) {
             try {
                 refreshCts?.Cancel();
                 refreshCts?.Dispose();
                 refreshCts = new CancellationTokenSource();
 
                 mgen = new MGEN.MGEN(Path.Combine("FTDI", "ftd2xx.dll"));
-                await mgen.DetectAndOpen();
+                await mgen.DetectAndOpen(token);
+                token.ThrowIfCancellationRequested();
                 await RefreshDisplay();
                 Connected = true;
 
@@ -311,12 +312,11 @@ namespace NINA.Model.MyGuider {
             }
         }
 
-        public bool Disconnect() {
+        public void Disconnect() {
             refreshCts?.Cancel();
             mgen.Disconnect();
             Display = null;
             Connected = false;
-            return true;
         }
 
         public async Task<bool> Dither(CancellationToken ct) {
@@ -385,6 +385,10 @@ namespace NINA.Model.MyGuider {
             return true;
         }
 
+        public void SetupDialog() {
+            throw new NotImplementedException();
+        }
+
         public ICommand MGenUpCommand { get; }
         public ICommand MGenDownCommand { get; }
         public ICommand MGenLeftCommand { get; }
@@ -395,5 +399,15 @@ namespace NINA.Model.MyGuider {
         public string Id {
             get => "Lacerta_MGEN_Superguider";
         }
+
+        public bool HasSetupDialog => false;
+
+        public string Category => "Guiders";
+
+        public string Description => "MGEN2";
+
+        public string DriverInfo => "MGEN2";
+
+        public string DriverVersion => "1.0";
     }
 }

@@ -48,7 +48,17 @@ namespace NINA.Model.MyGuider {
         public double PixelScale { get; set; }
         public string State => string.Empty;
 
-        public async Task<bool> Connect() {
+        public bool HasSetupDialog => false;
+
+        public string Category => "Guiders";
+
+        public string Description => "Dummy Guider";
+
+        public string DriverInfo => "Dummy Guider";
+
+        public string DriverVersion => "1.0";
+
+        public async Task<bool> Connect(CancellationToken token) {
             profileService.ActiveProfile.GuiderSettings.GuiderName = Id;
 
             Connected = false;
@@ -60,10 +70,8 @@ namespace NINA.Model.MyGuider {
             return true;
         }
 
-        public bool Disconnect() {
+        public void Disconnect() {
             Connected = false;
-
-            return Connected;
         }
 
         public async Task<bool> Pause(bool pause, CancellationToken ct) {
@@ -80,6 +88,10 @@ namespace NINA.Model.MyGuider {
 
         public async Task<bool> Dither(CancellationToken ct) {
             return true;
+        }
+
+        public void SetupDialog() {
+            throw new NotImplementedException();
         }
     }
 }

@@ -18,6 +18,7 @@ using NINA.Utility.Astrometry;
 using NINA.Utility.ImageAnalysis;
 using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;
+using NINA.Utility.WindowService;
 using NINA.ViewModel;
 using NINA.ViewModel.Equipment;
 using NINA.ViewModel.Equipment.Camera;
@@ -79,6 +80,7 @@ namespace NINA.Utility {
                 Bind<IImageHistoryVM>().To<ImageHistoryVM>().InSingletonScope();
                 Bind<IImageStatisticsVM>().To<ImageStatisticsVM>().InSingletonScope();
                 Bind<IDeviceChooserVM>().To<DomeChooserVM>().WhenInjectedExactlyInto<DomeVM>().InSingletonScope();
+                Bind<IDeviceChooserVM>().To<GuiderChooserVM>().WhenInjectedExactlyInto<GuiderVM>().InSingletonScope();
 
                 Bind<ProjectVersion>().ToMethod(f => new ProjectVersion(Utility.Version)).InSingletonScope();
 
@@ -113,6 +115,7 @@ namespace NINA.Utility {
                 Bind<IApplicationMediator>().To<ApplicationMediator>().InSingletonScope();
                 Bind<ISequenceMediator>().To<SequenceMediator>().InSingletonScope();
 
+                Bind<IWindowServiceFactory>().To<WindowServiceFactory>().InSingletonScope();
                 Bind<IPlanetariumFactory>().To<PlanetariumFactory>().InSingletonScope();
                 Bind<IAllDeviceConsumer>().To<AllDeviceConsumer>().InSingletonScope();
 

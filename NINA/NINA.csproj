@@ -800,6 +800,12 @@
       <DependentUpon>ThirdPartyLicensesView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Equipment\Camera\CameraTemplateSelector.cs" />
+    <Compile Include="View\Equipment\Guider\MetaGuideSetupView.xaml.cs">
+      <DependentUpon>MetaGuideSetupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Equipment\Guider\PHD2SetupView.xaml.cs">
+      <DependentUpon>PHD2SetupView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Equipment\Camera\FLICameraSetupView.xaml.cs">
       <DependentUpon>FLICameraSetupView.xaml</DependentUpon>
     </Compile>
@@ -823,6 +829,12 @@
       <DependentUpon>DefaultDetailView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Equipment\Guider\GuiderTemplateSelector.cs" />
+    <Compile Include="View\Equipment\Guider\DirectGuiderDetailView.xaml.cs">
+      <DependentUpon>DirectGuiderDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Equipment\Guider\PHD2DetailView.xaml.cs">
+      <DependentUpon>PHD2DetailView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Equipment\Guider\MetaGuideDetailView.xaml.cs">
       <DependentUpon>MetaGuideDetailView.xaml</DependentUpon>
     </Compile>
@@ -1154,7 +1166,6 @@
     <Compile Include="ViewModel\ImageHistoryVM.cs" />
     <Compile Include="ViewModel\ImageStatisticsVM.cs" />
     <Compile Include="ViewModel\ImagingVM.cs" />
-    <Compile Include="ViewModel\Equipment\Guider\IGuiderChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\Guider\IGuiderVM.cs" />
     <Compile Include="ViewModel\Interfaces\IImagingVM.cs" />
     <Compile Include="ViewModel\Equipment\Rotator\IRotatorVM.cs" />
@@ -1568,6 +1579,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Equipment\Guider\MetaGuideSetupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Equipment\Guider\PHD2SetupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Equipment\Camera\FileCameraSetupView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1595,6 +1614,14 @@
     <Page Include="View\Equipment\Guider\DefaultDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Equipment\Guider\DirectGuiderDetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Equipment\Guider\PHD2DetailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Equipment\Guider\MetaGuideDetailView.xaml">
       <SubType>Designer</SubType>

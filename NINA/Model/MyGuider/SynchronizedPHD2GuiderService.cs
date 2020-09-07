@@ -197,7 +197,7 @@ namespace NINA.Model.MyGuider {
             initializeTaskCompletionSource = new TaskCompletionSource<bool>();
             guiderInstance = guider;
             ConnectedClients = new List<SynchronizedClientInfo>();
-            PHD2Connected = await guiderInstance.Connect();
+            PHD2Connected = await guiderInstance.Connect(ct);
             if (PHD2Connected) {
                 try {
                     guiderInstance.GuideEvent += GuiderInstance_GuideEvent;

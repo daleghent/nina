@@ -1151,7 +1151,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Dithering is enabled, yet guider is not connected</value>
   </data>
   <data name="LblDitherPixels" xml:space="preserve">
-    <value>PHD2 Dither Pixels</value>
+    <value>Dither Pixels</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
     <value>Dither RA Only</value>
@@ -1959,6 +1959,12 @@ Calculated HFR: {2}
   </data>
   <data name="LblMeridianOffset" xml:space="preserve">
     <value>Meridian Offset</value>
+  </data>
+  <data name="LblPHD2Setup" xml:space="preserve">
+    <value>PHD2 Setup</value>
+  </data>
+  <data name="LblMetaGuideSetup" xml:space="preserve">
+    <value>MetaGuide Setup</value>
   </data>
   <data name="LblMetaGuideIP" xml:space="preserve">
     <value>MetaGuide IP</value>
@@ -2795,13 +2801,13 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>Settle</value>
   </data>
   <data name="LblSettlePixelTolerance" xml:space="preserve">
-    <value>PHD2 Settle Pixel Tolerance</value>
+    <value>Settle Pixel Tolerance</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
     <value>Settle time after slew</value>
   </data>
   <data name="LblSettleTimeout" xml:space="preserve">
-    <value>PHD2 Settle Timeout</value>
+    <value>Settle Timeout</value>
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Guiding Start Retry</value>
