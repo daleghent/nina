@@ -91,7 +91,7 @@ namespace NINA.ViewModel {
         }
 
         private void ResetFilters(object obj) {
-            FilterDate = DateTime.UtcNow;
+            FilterDate = DateTime.Now;
 
             SearchObjectName = string.Empty;
 
