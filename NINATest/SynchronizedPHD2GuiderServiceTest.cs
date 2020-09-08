@@ -15,6 +15,7 @@
 using FluentAssertions;
 using Moq;
 using NINA.Model.MyGuider;
+using NINA.Model.MyGuider.PHD2;
 using NUnit.Framework;
 using System;
 using System.ServiceModel;
