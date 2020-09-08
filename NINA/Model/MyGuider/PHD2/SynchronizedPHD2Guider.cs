@@ -26,7 +26,7 @@ using NINA.Utility.WindowService;
 
 #pragma warning disable 4014
 
-namespace NINA.Model.MyGuider {
+namespace NINA.Model.MyGuider.PHD2 {
 
     internal class SynchronizedPHD2Guider : BaseINPC, IGuider, ICameraConsumer {
         private const string LocalHostUri = "net.pipe://localhost";

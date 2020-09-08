@@ -18,7 +18,7 @@ using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyGuider {
+namespace NINA.Model.MyGuider.PHD2 {
 
     [ServiceContract]
     internal interface ISynchronizedPHD2GuiderService {

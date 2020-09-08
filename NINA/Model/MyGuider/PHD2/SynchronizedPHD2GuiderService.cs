@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable 1998
 
-namespace NINA.Model.MyGuider {
+namespace NINA.Model.MyGuider.PHD2 {
 
     /// <summary>
     /// This class is used to send over guide data from the service to the guider client.

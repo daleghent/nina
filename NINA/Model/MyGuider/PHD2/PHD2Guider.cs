@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NINA.Profile;
 using NINA.Utility;
@@ -31,7 +32,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace NINA.Model.MyGuider {
+namespace NINA.Model.MyGuider.PHD2 {
 
     public class PHD2Guider : BaseINPC, IGuider {
 
@@ -189,10 +190,12 @@ namespace NINA.Model.MyGuider {
                 if (startedPHD2 && connected) {
                     await Task.Run(ConnectPHD2Equipment);
                     await Task.Delay(TimeSpan.FromSeconds(1));
-                    await SendMessage(PHD2EventId.LOOP, PHD2Methods.LOOP);
+                    var loopMsg = new Phd2Loop();
+                    await SendMessage(loopMsg);
                 }
 
-                var resp = await SendMessage(PHD2EventId.GET_PIXEL_SCALE, PHD2Methods.GET_PIXEL_SCALE);
+                var msg = new Phd2GetPixelScale();
+                var resp = await SendMessage(msg);
                 if (resp.result != null)
                     PixelScale = double.Parse(resp.result.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
 
@@ -209,18 +212,21 @@ namespace NINA.Model.MyGuider {
         public async Task<bool> Dither(CancellationToken ct) {
             if (Connected) {
                 _isDithering = true;
-                var ditherMsg = await SendMessage(
-                    PHD2EventId.DITHER,
-                    string.Format(
-                        PHD2Methods.DITHER,
-                        profileService.ActiveProfile.GuiderSettings.DitherPixels.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture),
-                        profileService.ActiveProfile.GuiderSettings.DitherRAOnly.ToString().ToLower(),
-                        profileService.ActiveProfile.GuiderSettings.SettlePixels.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture),
-                        profileService.ActiveProfile.GuiderSettings.SettleTime.ToString(),
-                        profileService.ActiveProfile.GuiderSettings.SettleTimeout.ToString()
-                    )
-                );
-                if (ditherMsg.error != null) {
+
+                var ditherMsg = new Phd2Dither() {
+                    Parameters = new Phd2DitherParameter() {
+                        Amount = profileService.ActiveProfile.GuiderSettings.DitherPixels,
+                        RaOnly = profileService.ActiveProfile.GuiderSettings.DitherRAOnly,
+                        Settle = new Phd2Settle() {
+                            Pixels = profileService.ActiveProfile.GuiderSettings.SettlePixels,
+                            Time = profileService.ActiveProfile.GuiderSettings.SettleTime,
+                            Timeout = profileService.ActiveProfile.GuiderSettings.SettleTimeout
+                        }
+                    }
+                };
+
+                var ditherMsgResponse = await SendMessage(ditherMsg);
+                if (ditherMsgResponse.error != null) {
                     /* Dither failed */
                     _isDithering = false;
                     return false;
@@ -244,7 +250,8 @@ namespace NINA.Model.MyGuider {
 
         public async Task<bool> Pause(bool pause, CancellationToken ct) {
             if (Connected) {
-                await SendMessage(PHD2EventId.PAUSE, string.Format(PHD2Methods.PAUSE, pause.ToString().ToLower()));
+                var msg = new Phd2Pause() { Parameters = new bool[] { true } };
+                await SendMessage(msg);
 
                 if (pause) {
                     var elapsed = new TimeSpan();
@@ -277,11 +284,14 @@ namespace NINA.Model.MyGuider {
             if (Connected) {
                 var state = await GetAppState();
                 if (state != PhdAppState.LOOPING) {
-                    await SendMessage(PHD2EventId.LOOP, PHD2Methods.LOOP);
+                    var loopMsg = new Phd2Loop();
+                    await SendMessage(loopMsg);
                     await Task.Delay(TimeSpan.FromSeconds(5));
                 }
 
-                await SendMessage(PHD2EventId.AUTO_SELECT_STAR, PHD2Methods.AUTO_SELECT_STAR);
+                var findStarMsg = new Phd2FindStar();
+
+                await SendMessage(findStarMsg);
 
                 return true;
             }
@@ -290,9 +300,9 @@ namespace NINA.Model.MyGuider {
 
         private async Task<string> GetAppState(
             int receiveTimeout = 0) {
+            var msg = new Phd2GetAppState();
             var appStateResponse = await SendMessage(
-                PHD2EventId.GET_APP_STATE,
-                PHD2Methods.GET_APP_STATE,
+                msg,
                 receiveTimeout);
             return appStateResponse?.result?.ToString();
         }
@@ -326,10 +336,19 @@ namespace NINA.Model.MyGuider {
                 return await WaitForAppState(PhdAppState.GUIDING, ct);
 
             async Task<bool> TryStartGuideCommand() {
-                var guideMsg = await SendMessage(
-                    PHD2EventId.GUIDE,
-                    string.Format(PHD2Methods.GUIDE, false.ToString().ToLower()));
-                return guideMsg.error == null;
+                var guideMsg = new Phd2Guide() {
+                    Parameters = new Phd2GuideParameter() {
+                        Settle = new Phd2Settle() {
+                            Pixels = profileService.ActiveProfile.GuiderSettings.SettlePixels,
+                            Time = profileService.ActiveProfile.GuiderSettings.SettleTime,
+                            Timeout = profileService.ActiveProfile.GuiderSettings.SettleTimeout
+                        },
+                        Recalibrate = true
+                    }
+                };
+
+                var guideMsgResponse = await SendMessage(guideMsg);
+                return guideMsgResponse.error == null;
             }
 
             if (!autoRetry) {
@@ -370,9 +389,9 @@ namespace NINA.Model.MyGuider {
                 if (state == PhdAppState.STOPPED) {
                     return true;
                 }
+                var msg = new Phd2StopCapture();
                 var stopCapture = await SendMessage(
-                    PHD2EventId.STOP_CAPTURE,
-                    PHD2Methods.STOP_CAPTURE,
+                    msg,
                     10000); // triage: reported deadlock hanging of phd2+nina - 10s timeout
 
                 if (stopCapture == null || stopCapture.error != null) {
@@ -391,14 +410,14 @@ namespace NINA.Model.MyGuider {
             }
         }
 
-        private async Task<PhdMethodResponse> SendMessage(string msgId, string msg, int receiveTimeout = 0) {
+        private async Task<PhdMethodResponse> SendMessage(Phd2Method msg, int receiveTimeout = 0) {
             using (var client = new TcpClient()) {
                 client.ReceiveTimeout = receiveTimeout;
                 await client.ConnectAsync(
                     profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl,
                     profileService.ActiveProfile.GuiderSettings.PHD2ServerPort);
                 var stream = client.GetStream();
-                var data = Encoding.ASCII.GetBytes(msg);
+                var data = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(msg, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }) + Environment.NewLine);
 
                 await stream.WriteAsync(data, 0, data.Length);
 
@@ -411,7 +430,7 @@ namespace NINA.Model.MyGuider {
                         if (t != null) {
                             phdevent = t.ToString();
                         }
-                        if (phdevent == msgId) {
+                        if (phdevent == msg.Id) {
                             var response = o.ToObject<PhdMethodResponse>();
                             CheckPhdError(response);
                             return response;
@@ -503,9 +522,10 @@ namespace NINA.Model.MyGuider {
         }
 
         private async Task ConnectPHD2Equipment() {
-            var connectMsg = await SendMessage(
-                PHD2EventId.SET_CONNECTED,
-                string.Format(PHD2Methods.SET_CONNECTED, "true"));
+            var msg = new Phd2SetConnected() {
+                Parameters = new bool[] { true }
+            };
+            var connectMsg = await SendMessage(msg);
             if (connectMsg.error != null) {
                 Notification.ShowWarning(Locale.Loc.Instance["LblPhd2FailedEquipmentConnection"]);
             }

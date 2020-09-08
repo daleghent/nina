@@ -26,6 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
+using NINA.Model.MyGuider.PHD2;
 
 namespace NINA.ViewModel.Equipment.Guider {
 

@@ -16,6 +16,7 @@ using NINA.Model.MyGuider;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Profile;
 using NINA.Utility.WindowService;
+using NINA.Model.MyGuider.PHD2;
 
 namespace NINA.ViewModel.Equipment.Guider {
 

@@ -608,10 +608,10 @@
     <Compile Include="Model\MyFlatDevice\FlatDeviceInfo.cs" />
     <Compile Include="Model\MyFlatDevice\IFlatDevice.cs" />
     <Compile Include="Model\MyGuider\DirectGuider.cs" />
-    <Compile Include="Model\MyGuider\ISynchronizedPHD2GuiderService.cs" />
+    <Compile Include="Model\MyGuider\PHD2\ISynchronizedPHD2GuiderService.cs" />
     <Compile Include="Model\MyGuider\MGENGuider.cs" />
-    <Compile Include="Model\MyGuider\SynchronizedPHD2Guider.cs" />
-    <Compile Include="Model\MyGuider\SynchronizedPHD2GuiderService.cs" />
+    <Compile Include="Model\MyGuider\PHD2\SynchronizedPHD2Guider.cs" />
+    <Compile Include="Model\MyGuider\PHD2\SynchronizedPHD2GuiderService.cs" />
     <Compile Include="Model\MyPlanetarium\CartesDuCiel.cs" />
     <Compile Include="Model\MyPlanetarium\Coords.cs" />
     <Compile Include="Model\MyPlanetarium\PlanetariumFactory.cs" />
@@ -917,7 +917,7 @@
     <Compile Include="Model\MyFocuser\IFocuser.cs" />
     <Compile Include="Model\MyGuider\GuiderInfo.cs" />
     <Compile Include="Model\MyGuider\IGuider.cs" />
-    <Compile Include="Model\MyGuider\PHD2Guider.cs" />
+    <Compile Include="Model\MyGuider\PHD2\PHD2Guider.cs" />
     <Compile Include="Model\MyRotator\AscomRotator.cs" />
     <Compile Include="Model\MyRotator\IRotator.cs" />
     <Compile Include="Model\MyRotator\ManualRotator.cs" />
@@ -1157,7 +1157,7 @@
     <Compile Include="Utility\TabControlEx.cs" />
     <Compile Include="Utility\Notification\Notification.cs" />
     <Compile Include="Utility\NotifyTaskCompletion.cs" />
-    <Compile Include="Model\MyGuider\PHD2Methods.cs" />
+    <Compile Include="Model\MyGuider\PHD2\PHD2Methods.cs" />
     <Compile Include="Utility\RelayCommand.cs" />
     <Compile Include="Utility\Utility.cs" />
     <Compile Include="Utility\ValidationRules.cs" />

@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Model.MyGuider;
+using NINA.Model.MyGuider.PHD2;
 using System;
 using System.Collections.Generic;
 using System.Linq;
