@@ -494,6 +494,9 @@
       <Component Win64="$(var.Win64)" Id="ToggleSwitch.dll" Guid="b7d48149-e902-402d-86f7-6d08341960c2">
         <File Id="ToggleSwitch.dll" Name="ToggleSwitch.dll" Source="$(var.NINA_TargetDir)ToggleSwitch.dll" />
       </Component>
+      <Component Win64="$(var.Win64)" Id="Microsoft.Bcl.AsyncInterfaces.dll" Guid="35410b3f-f440-4399-b0bc-fa0e4ad5e906">
+        <File Id="Microsoft.Bcl.AsyncInterfaces.dll" Name="Microsoft.Bcl.AsyncInterfaces.dll" Source="$(var.NINA_TargetDir)Microsoft.Bcl.AsyncInterfaces.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
   <!--<Fragment>
