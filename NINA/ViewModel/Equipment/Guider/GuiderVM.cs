@@ -141,7 +141,7 @@ namespace NINA.ViewModel.Equipment.Guider {
                     };
                     BroadcastGuiderInfo();
                     RaisePropertyChanged(nameof(Guider));
-                    profileService.ActiveProfile.GuiderSettings.GuiderName = Guider.Name;
+                    profileService.ActiveProfile.GuiderSettings.GuiderName = Guider.Id;
                 }
             } catch (OperationCanceledException) {
                 connected = false;
