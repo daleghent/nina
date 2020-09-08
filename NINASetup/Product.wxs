@@ -491,6 +491,9 @@
       <Component Win64="$(var.Win64)" Id="Ninject.dll" Guid="c2d44b0a-a283-4cc3-8fd5-e7a744975300">
         <File Id="Ninject.dll" Name="Ninject.dll" Source="$(var.NINA_TargetDir)Ninject.dll" />
       </Component>
+      <Component Win64="$(var.Win64)" Id="ToggleSwitch.dll" Guid="b7d48149-e902-402d-86f7-6d08341960c2">
+        <File Id="ToggleSwitch.dll" Name="ToggleSwitch.dll" Source="$(var.NINA_TargetDir)ToggleSwitch.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
   <!--<Fragment>
@@ -1532,6 +1535,9 @@
       </Component>
       <Component Id="Database_Migration_3.sql" Guid="1ec7f760-b158-4ac2-a5c7-df74adbe3587">
         <File Id="Database_Migration_3.sql" Name="3.sql" Source="$(var.NINA_TargetDir)Database\Migration\3.sql" />
+      </Component>
+      <Component Id="Database_Migration_5.sql" Guid="c8b51616-73d0-49e3-91cc-88503889a10b">
+        <File Id="Database_Migration_5.sql" Name="5.sql" Source="$(var.NINA_TargetDir)Database\Migration\5.sql" />
       </Component>
     </ComponentGroup>
   </Fragment>
