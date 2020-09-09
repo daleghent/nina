@@ -23,8 +23,8 @@ namespace NINA.Model.MySwitch {
     internal class Eagle12VPower : EagleWritableSwitch {
 
         public Eagle12VPower(short index, string baseUrl) : base(index, baseUrl) {
-            getRoute = "getpwrout?idx=${0}";
-            setRoute = "setpwrout?idx=${0}";
+            getRoute = "getpwrout?idx={0}";
+            setRoute = "setpwrout?idx={0}";
             setValueAttribute = "state";
             name = "12V Power Out " + (4 - Id).ToString();
             Description = "Fixed Power Out " + (4 - Id).ToString();

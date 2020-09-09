@@ -73,7 +73,7 @@
             <ContentControl
                 Content="{Binding}"
                 ContentTemplateSelector="{StaticResource ContentSelector}"
-                DataContext="{Binding}" />
+                DataContext="{Binding SwitchHub}" />
         </Grid>
     </Grid>
 </UserControl>

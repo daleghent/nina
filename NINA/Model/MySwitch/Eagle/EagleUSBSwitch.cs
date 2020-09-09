@@ -23,8 +23,8 @@ namespace NINA.Model.MySwitch {
     internal class EagleUSBSwitch : EagleWritableSwitch {
 
         public EagleUSBSwitch(short index, string baseUrl) : base(index, baseUrl) {
-            getRoute = "getpwrhub?idx=${0}";
-            setRoute = "setpwrhub?idx=${0}";
+            getRoute = "getpwrhub?idx={0}";
+            setRoute = "setpwrhub?idx={0}";
             setValueAttribute = "state";
             name = GetDefaultName();
             Description = GetDescription();
