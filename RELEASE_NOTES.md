@@ -24,6 +24,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Options menu has been restructured to adhere to the Equipment layout
 - Auto-focus is now its own tab in the Options menu
 - Empty gain and offset settings will now always reflect the settings set in Equipment - Camera (valid for imaging, sequence and auto-focus)
+- Any active field of view or ocular rotation angle is now imported along with coordinates from Stellarium and TheSky X
 
 ### Auto-focus system
 - Auto-focus can now have different settings for gain, offset and binning per filter

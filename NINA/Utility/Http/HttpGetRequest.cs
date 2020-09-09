@@ -53,7 +53,7 @@ namespace NINA.Utility.Http {
                         result = streamReader.ReadToEnd();
                     }
                 } catch (Exception ex) {
-                    Logger.Error(ex);
+                    Logger.Error(formattedUrl + " " + ex);
                     if (response != null) {
                         response.Close();
                         response = null;

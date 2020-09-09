@@ -13,7 +13,6 @@
 #endregion "copyright"
 
 using NINA.Profile;
-using NINA.Utility.Astrometry;
 using NINA.Utility.Enum;
 
 namespace NINA.Model.MyPlanetarium {

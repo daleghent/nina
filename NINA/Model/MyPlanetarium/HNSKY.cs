@@ -31,11 +31,9 @@ namespace NINA.Model.MyPlanetarium {
             this.port = profileService.ActiveProfile.PlanetariumSettings.HNSKYPort;
         }
 
-        public string Name {
-            get {
-                return "HNSKY";
-            }
-        }
+        public string Name => "HNSKY";
+
+        public bool CanGetRotationAngle => false;
 
         /// <summary>
         /// Get the selected object in TheSkyX
@@ -116,6 +114,10 @@ namespace NINA.Model.MyPlanetarium {
                 Logger.Error(ex);
                 throw ex;
             }
+        }
+
+        public async Task<double> GetRotationAngle() {
+            return double.NaN;
         }
     }
 }

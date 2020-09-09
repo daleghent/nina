@@ -1,6 +1,4 @@
-﻿using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Enum;
+﻿using NINA.Utility.Enum;
 
 namespace NINA.Model.MyPlanetarium {
 

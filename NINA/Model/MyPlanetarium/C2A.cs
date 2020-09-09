@@ -31,11 +31,9 @@ namespace NINA.Model.MyPlanetarium {
             this.port = profileService.ActiveProfile.PlanetariumSettings.C2APort;
         }
 
-        public string Name {
-            get {
-                return "C2A";
-            }
-        }
+        public string Name => "C2A";
+
+        public bool CanGetRotationAngle => false;
 
         /// <summary>
         /// Get the selected object in C2A
@@ -94,6 +92,10 @@ namespace NINA.Model.MyPlanetarium {
                 Logger.Error(ex);
                 throw ex;
             }
+        }
+
+        public async Task<double> GetRotationAngle() {
+            return double.NaN;
         }
     }
 }

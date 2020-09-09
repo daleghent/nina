@@ -33,9 +33,9 @@ namespace NINA.Model.MyPlanetarium {
             this.port = profileService.ActiveProfile.PlanetariumSettings.CdCPort;
         }
 
-        public string Name {
-            get { return "Cartes Du Ciel"; }
-        }
+        public string Name => "Cartes Du Ciel";
+
+        public bool CanGetRotationAngle => false;
 
         /// <summary>
         /// Get the selected object in CdC
@@ -101,6 +101,10 @@ namespace NINA.Model.MyPlanetarium {
                 Logger.Error(ex);
                 throw ex;
             }
+        }
+
+        public async Task<double> GetRotationAngle() {
+            return double.NaN;
         }
 
         private bool Match(string input, string pattern, out string result) {

@@ -18,7 +18,6 @@ using NINA.Utility.Exceptions;
 using NINA.Utility.TcpRaw;
 using NINA.Profile;
 using System;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyPlanetarium {
@@ -34,11 +33,9 @@ namespace NINA.Model.MyPlanetarium {
             this.useSelectedObject = profileService.ActiveProfile.PlanetariumSettings.TSXUseSelectedObject;
         }
 
-        public string Name {
-            get {
-                return "TheSkyX";
-            }
-        }
+        public string Name => "TheSkyX";
+
+        public bool CanGetRotationAngle => true;
 
         /// <summary>
         /// Get the selected object in TheSkyX
@@ -77,29 +74,30 @@ namespace NINA.Model.MyPlanetarium {
         public async Task<Coords> GetSite() {
             try {
                 Coords loc = new Coords();
-                StringBuilder command = new StringBuilder();
                 string[] coords;
 
                 /*
                  * Get the location (latitude, longitude, elevation) that is currently set
                  * in TSX. Elevation is in meters.
                  */
-                command.AppendFormat(@"/* Java Script */", Environment.NewLine);
-                command.AppendFormat(@"/* Socket Start Packet */", Environment.NewLine);
-                command.AppendFormat(@"var Out = """";", Environment.NewLine);
-                command.AppendFormat(@"var Lat = 0;", Environment.NewLine);
-                command.AppendFormat(@"var Long = 0;", Environment.NewLine);
-                command.AppendFormat(@"var Elevation = 0;", Environment.NewLine);
-                command.AppendFormat(@"sky6StarChart.DocumentProperty(0);", Environment.NewLine);
-                command.AppendFormat(@"Lat = sky6StarChart.DocPropOut;", Environment.NewLine);
-                command.AppendFormat(@"sky6StarChart.DocumentProperty(1);", Environment.NewLine);
-                command.AppendFormat(@"Long = sky6StarChart.DocPropOut;", Environment.NewLine);
-                command.AppendFormat(@"sky6StarChart.DocumentProperty(3);", Environment.NewLine);
-                command.AppendFormat(@"Elevation = sky6StarChart.DocPropOut;", Environment.NewLine);
-                command.AppendFormat(@"Out = String(Lat) + "","" + String(Long) + "","" + String(Elevation);", Environment.NewLine);
-                command.AppendFormat(@"/* Socket End Packet */", Environment.NewLine);
+                var script = string.Join("\r\n", new string[] {
+                    @"/* Java Script */",
+                    @"/* Socket Start Packet */",
+                    @"var Out = """";",
+                    @"var Lat = 0;",
+                    @"var Long = 0;",
+                    @"var Elevation = 0;",
+                    @"sky6StarChart.DocumentProperty(0);",
+                    @"Lat = sky6StarChart.DocPropOut;",
+                    @"sky6StarChart.DocumentProperty(1);",
+                    @"Long = sky6StarChart.DocPropOut;",
+                    @"sky6StarChart.DocumentProperty(3);",
+                    @"Elevation = sky6StarChart.DocPropOut;",
+                    @"Out = String(Lat) + "","" + String(Long) + "","" + String(Elevation);",
+                    @"/* Socket End Packet */"
+                });
 
-                var query = new BasicQuery(address, port, command.ToString());
+                var query = new BasicQuery(address, port, script);
                 string reply = await query.SendQuery();
 
                 string[] response = reply.Split('|');
@@ -125,8 +123,57 @@ namespace NINA.Model.MyPlanetarium {
             }
         }
 
+        public async Task<double> GetRotationAngle() {
+            try {
+                double rotationAngle = double.NaN;
+
+                // User needs to turn off "Get coordinates from selected object" for this to really work right
+                if (useSelectedObject) { return rotationAngle; }
+
+                /*
+                 * Iterate through the list of configured FOVIs in TSX and find the first one that
+                 * is both visible and uses the screen center its reference. If we find such a FOVI,
+                 * we get its rotation angle.
+                 */
+                var script = string.Join("\r\n", new string[] {
+                    @"/* Java Script */",
+                    @"/* Socket Start Packet */",
+                    @"var angle = NaN;",
+                    @"var fov = sky6MyFOVs;",
+                    @"for (var i = 0; i < fov.Count; i++) {",
+                    @"fov.Name(i);",
+                    @"var name = fov.OutString;",
+                    @"fov.Property(name, 0, 0);",
+                    @"var isVisible = fov.OutVar;",
+                    @"fov.Property(name, 0, 2);",
+                    @"var refFrame = fov.OutVar;",
+                    @"if (isVisible == 1 && refFrame == 0) {",
+                    @"fov.Property(name, 0, 1);",
+                    @"angle = fov.OutVar;",
+                    @"break; } }",
+                    @"Out = String(angle);",
+                    @"/* Socket End Packet */"
+                });
+
+                var query = new BasicQuery(address, port, script);
+                string reply = await query.SendQuery();
+
+                string[] response = reply.Split('|');
+
+                if (response[1].Equals("No error. Error = 0.")) {
+                    if (double.TryParse(response[0], out rotationAngle)) {
+                        // Flip the orientation
+                        rotationAngle = 360d - rotationAngle;
+                    }
+                }
+
+                return rotationAngle;
+            } catch {
+                return double.NaN;
+            }
+        }
+
         private async Task<string[]> GetSelectedObject() {
-            StringBuilder command = new StringBuilder();
             string[] raDecName;
 
             /*
@@ -137,22 +184,24 @@ namespace NINA.Model.MyPlanetarium {
              * Special thanks to Kenneth Sturrock for providing examples and advice on
              * how to accomplish this with TSX.
              */
-            command.AppendFormat(@"/* Java Script */", Environment.NewLine);
-            command.AppendFormat(@"/* Socket Start Packet */", Environment.NewLine);
-            command.AppendFormat(@"var Out = """";", Environment.NewLine);
-            command.AppendFormat(@"var Target56 = 0;", Environment.NewLine);
-            command.AppendFormat(@"var Target57 = 0;", Environment.NewLine);
-            command.AppendFormat(@"var Name0 = """";", Environment.NewLine);
-            command.AppendFormat(@"sky6ObjectInformation.Property(56);", Environment.NewLine);
-            command.AppendFormat(@"Target56 = sky6ObjectInformation.ObjInfoPropOut;", Environment.NewLine);
-            command.AppendFormat(@"sky6ObjectInformation.Property(57);", Environment.NewLine);
-            command.AppendFormat(@"Target57 = sky6ObjectInformation.ObjInfoPropOut;", Environment.NewLine);
-            command.AppendFormat(@"sky6ObjectInformation.Property(0);", Environment.NewLine);
-            command.AppendFormat(@"Name0 = sky6ObjectInformation.ObjInfoPropOut;", Environment.NewLine);
-            command.AppendFormat(@"Out = String(Target56) + "","" + String(Target57) + "","" + String(Name0);", Environment.NewLine);
-            command.AppendFormat(@"/* Socket End Packet */", Environment.NewLine);
+            var script = string.Join("\r\n", new string[] {
+                @"/* Java Script */",
+                @"/* Socket Start Packet */",
+                @"var Out = """";",
+                @"var Target56 = 0;",
+                @"var Target57 = 0;",
+                @"var Name0 = """";",
+                @"sky6ObjectInformation.Property(56);",
+                @"Target56 = sky6ObjectInformation.ObjInfoPropOut;",
+                @"sky6ObjectInformation.Property(57);",
+                @"Target57 = sky6ObjectInformation.ObjInfoPropOut;",
+                @"sky6ObjectInformation.Property(0);",
+                @"Name0 = sky6ObjectInformation.ObjInfoPropOut;",
+                @"Out = String(Target56) + "","" + String(Target57) + "","" + String(Name0);",
+                @"/* Socket End Packet */"
+            });
 
-            var query = new BasicQuery(address, port, command.ToString());
+            var query = new BasicQuery(address, port, script);
             string reply = await query.SendQuery();
 
             string[] response = reply.Split('|');
@@ -168,24 +217,25 @@ namespace NINA.Model.MyPlanetarium {
         }
 
         private async Task<string[]> GetSkyChartCenter() {
-            StringBuilder command = new StringBuilder();
             string[] raDecName = new string[3];
 
             /*
              * Get J2000 coordinates of the center of the TSX star chart.
              * There is no way to get an object name, so we set that to an empty string.
-            */
-            command.AppendFormat(@"/* Java Script */", Environment.NewLine);
-            command.AppendFormat(@"/* Socket Start Packet */", Environment.NewLine);
-            command.AppendFormat(@"var Out = """";", Environment.NewLine);
-            command.AppendFormat(@"var chartRA = 0;", Environment.NewLine);
-            command.AppendFormat(@"var chartDec = 0;", Environment.NewLine);
-            command.AppendFormat(@"chartRA = sky6StarChart.RightAscension;", Environment.NewLine);
-            command.AppendFormat(@"chartDec = sky6StarChart.Declination;", Environment.NewLine);
-            command.AppendFormat(@"Out = String(chartRA) + "","" + String(chartDec);", Environment.NewLine);
-            command.AppendFormat(@"/* Socket End Packet */", Environment.NewLine);
+             */
+            var script = string.Join("\r\n", new string[] {
+                @"/* Java Script */",
+                @"/* Socket Start Packet */",
+                @"var Out = """";",
+                @"var chartRA = 0;",
+                @"var chartDec = 0;",
+                @"chartRA = sky6StarChart.RightAscension;",
+                @"chartDec = sky6StarChart.Declination;",
+                @"Out = String(chartRA) + "","" + String(chartDec);",
+                @"/* Socket End Packet */"
+            });
 
-            var query = new BasicQuery(address, port, command.ToString());
+            var query = new BasicQuery(address, port, script);
             string reply = await query.SendQuery();
 
             string[] response = reply.Split('|');

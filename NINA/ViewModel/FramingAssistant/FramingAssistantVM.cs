@@ -19,6 +19,7 @@ using NINA.PlateSolving;
 using NINA.Utility;
 using NINA.Utility.Astrometry;
 using NINA.Utility.Behaviors;
+using NINA.Utility.Exceptions;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Profile;
@@ -34,8 +35,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml.Linq;
-using NINA.Utility.Exceptions;
-using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel.FramingAssistant {
     internal class FramingAssistantVM : BaseVM, ICameraConsumer, IFramingAssistantVM {
@@ -927,6 +926,14 @@ namespace NINA.ViewModel.FramingAssistant {
                 if (resp != null) {
                     await SetCoordinates(resp);
                     Notification.ShowSuccess(string.Format(Locale.Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
+
+                    if (s.CanGetRotationAngle) {
+                        double rotationAngle = await s.GetRotationAngle();
+
+                        if (!double.IsNaN(rotationAngle)) {
+                            Rotation = rotationAngle;
+                        }
+                    }
                 }
             } catch (PlanetariumObjectNotSelectedException) {
                 Logger.Error($"Attempted to get coordinates from {s.Name} when no object was selected");

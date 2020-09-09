@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Moq;
 using Newtonsoft.Json.Linq;
 using NINA.Model.MyPlanetarium;
@@ -12,6 +11,7 @@ namespace NINATest.Planetarium {
     internal class StellariumTest {
         private Mock<IProfileService> mockProfileService;
         private IPlanetarium sut;
+        private Stellarium stelSut;
 
         [OneTimeSetUp]
         public void OneTimeSetup() {
@@ -25,6 +25,7 @@ namespace NINATest.Planetarium {
             mockProfileService.Setup(m => m.ActiveProfile.PlanetariumSettings.StellariumHost).Returns("localhost");
             mockProfileService.Setup(m => m.ActiveProfile.PlanetariumSettings.StellariumPort).Returns(8090);
             sut = new Stellarium(mockProfileService.Object);
+            stelSut = new Stellarium(mockProfileService.Object);
         }
 
         [Test]
@@ -91,6 +92,51 @@ namespace NINATest.Planetarium {
             result.Location.Latitude.Should().Be(33.02870178222656);
             result.Location.Longitude.Should().Be(-117.08460235595703);
             result.Location.Altitude.Should().Be(0);
+        }
+
+        [Test]
+        public void TestSellariumOcularsDeSerialization() {
+            const string response = "{\"Oculars.arrowButtonScale\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":6,\"typeString\":\"double\",\"value\":1.5,\"variantType\":\"double\"}," +
+                                    "\"Oculars.ccdCropOverlaySize\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":2,\"typeString\":\"int\",\"value\":250,\"variantType\":\"int\"}," +
+                                    "\"Oculars.enableCCD\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":true,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.enableCrosshairs\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.enableOcular\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.enableTelrad\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagAlignCrosshair\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagAutosetMountForCCD\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagDMSDegrees\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":true,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagGuiPanelEnabled\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":true,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagHideGridsLines\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":true,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagInitDirectionUsage\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagInitFOVUsage\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagLimitMagnitude\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":true,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagRequireSelection\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":true,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagScaleImageCircle\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":true,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagScalingFOVForCCD\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":true,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagScalingFOVForTelrad\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagSemiTransparency\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagShowCardinals\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagShowCcdCropOverlay\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagShowContour\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":false,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagShowOcularsButton\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":true,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.flagShowResolutionCriteria\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1,\"typeString\":\"bool\",\"value\":true,\"variantType\":\"bool\"}," +
+                                    "\"Oculars.guiPanelFontSize\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":2,\"typeString\":\"int\",\"value\":12,\"variantType\":\"int\"}," +
+                                    "\"Oculars.lineColor\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1024,\"typeString\":\"Vec3f\",\"value\":\"[0.77, 0.14, 0.16]\",\"variantType\":\"Vec3f\"}," +
+                                    "\"Oculars.selectedCCDIndex\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":2,\"typeString\":\"int\",\"value\":2,\"variantType\":\"int\"}," +
+                                    "\"Oculars.selectedCCDRotationAngle\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":6,\"typeString\":\"double\",\"value\":-246,\"variantType\":\"double\"}," +
+                                    "\"Oculars.selectedLensIndex\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":2,\"typeString\":\"int\",\"value\":0,\"variantType\":\"int\"}," +
+                                    "\"Oculars.selectedOcularIndex\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":2,\"typeString\":\"int\",\"value\":0,\"variantType\":\"int\"}," +
+                                    "\"Oculars.selectedTelescopeIndex\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":2,\"typeString\":\"int\",\"value\":0,\"variantType\":\"int\"}," +
+                                    "\"Oculars.textColor\":{\"canNotify\":true,\"isWritable\":true,\"typeEnum\":1024,\"typeString\":\"Vec3f\",\"value\":\"[0.8, 0.48, 0]\",\"variantType\":\"Vec3f\"}}";
+
+            var result = JObject.Parse(response);
+            result.Should().NotBeNull();
+
+            bool enableCCD = stelSut.ParseEnableCCD(result);
+            enableCCD.Should().Be(true);
+
+            double angle = stelSut.ParseRotationAngle(result);
+            angle.Should().Be(-246d);
         }
     }
 }

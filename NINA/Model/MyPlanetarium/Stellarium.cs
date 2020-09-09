@@ -34,11 +34,9 @@ namespace NINA.Model.MyPlanetarium {
             this.baseUrl = $"http://{baseAddress}:{port}";
         }
 
-        public string Name {
-            get {
-                return "Stellarium";
-            }
-        }
+        public string Name => "Stellarium";
+
+        public bool CanGetRotationAngle => true;
 
         public async Task<Coords> GetSite() {
             string route = "/api/main/status";
@@ -59,7 +57,7 @@ namespace NINA.Model.MyPlanetarium {
 
                 return loc;
             } catch (Exception ex) {
-                Logger.Error(ex);
+                Logger.Error($"Stellarium: Failed to import site info: {ex}");
                 throw ex;
             }
         }
@@ -95,7 +93,7 @@ namespace NINA.Model.MyPlanetarium {
 
                 return dso;
             } catch (Exception ex) {
-                Logger.Error(ex);
+                Logger.Error($"Stellarium: Failed to import view info: {ex}");
                 throw ex;
             }
         }
@@ -105,21 +103,84 @@ namespace NINA.Model.MyPlanetarium {
 
             var request = new HttpGetRequest(this.baseUrl + route);
             try {
+                bool isOcularsCcdEnabled = await IsOcularEnabled();
                 var response = await request.Request(new CancellationToken());
-                if (string.IsNullOrEmpty(response)) return await GetView();
+
+                // Get the view coordinates there is a CCD ocular active or if there is no object selected
+                if (isOcularsCcdEnabled || string.IsNullOrEmpty(response)) return await GetView();
 
                 var jobj = JObject.Parse(response);
                 var status = jobj.ToObject<StellariumObject>();
 
-                var ra = Astrometry.EuclidianModulus(status.RightAscension, 360);
+                var ra = Astrometry.EuclidianModulus(status.RightAscension, 360d);
                 var dec = status.Declination;
 
                 var coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
                 var dso = new DeepSkyObject(status.Name, coordinates, string.Empty);
                 return dso;
             } catch (Exception ex) {
-                Logger.Error(ex);
+                Logger.Error($"Stellarium: Failed to import object info: {ex}");
                 throw ex;
+            }
+        }
+
+        public async Task<double> GetRotationAngle() {
+            string route = "/api/stelproperty/list?format=json";
+
+            var request = new HttpGetRequest(this.baseUrl + route);
+            try {
+                double angle = double.NaN;
+
+                var response = await request.Request(new CancellationToken());
+                if (string.IsNullOrEmpty(response)) return double.NaN;
+
+                var jobj = JObject.Parse(response);
+
+                bool isOcularsCcdEnabled = ParseEnableCCD(jobj);
+
+                if (isOcularsCcdEnabled) {
+                    angle = ParseRotationAngle(jobj);
+
+                    if (angle < 0d) {
+                        angle += 360d;
+                    }
+                }
+
+                return angle;
+            } catch (Exception ex) {
+                Logger.Error($"Stellarium: Failed to import rotation angle: {ex}");
+                return double.NaN;
+            }
+        }
+
+        private async Task<bool> IsOcularEnabled() {
+            string route = "/api/stelproperty/list?format=json";
+
+            var request = new HttpGetRequest(this.baseUrl + route);
+            try {
+                var response = await request.Request(new CancellationToken());
+                if (string.IsNullOrEmpty(response)) return false;
+
+                var jobj = JObject.Parse(response);
+                return ParseEnableCCD(jobj);
+            } catch {
+                return false;
+            }
+        }
+
+        public bool ParseEnableCCD(JObject jObject) {
+            if (bool.TryParse((string)jObject["Oculars.enableCCD"]["value"], out bool enableCCD)) {
+                return enableCCD;
+            } else {
+                return false;
+            }
+        }
+
+        public double ParseRotationAngle(JObject jObject) {
+            if (double.TryParse((string)jObject["Oculars.selectedCCDRotationAngle"]["value"], out double angle)) {
+                return angle;
+            } else {
+                return 0d;
             }
         }
 

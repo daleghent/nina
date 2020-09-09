@@ -34,7 +34,7 @@ namespace NINA.Profile {
             cdCHost = "localhost";
             tsxPort = 3040;
             tsxHost = "localhost";
-            tsxUseSelectedObject = true;
+            tsxUseSelectedObject = false;
             hnskyPort = 7700;
             hnskyHost = "localhost";
             c2aPort = 5876;

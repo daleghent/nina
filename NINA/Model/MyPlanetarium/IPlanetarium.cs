@@ -18,8 +18,11 @@ namespace NINA.Model.MyPlanetarium {
 
     public interface IPlanetarium {
         string Name { get; }
+        bool CanGetRotationAngle { get; }
 
         Task<DeepSkyObject> GetTarget();
+
+        Task<double> GetRotationAngle();
 
         Task<Coords> GetSite();
     }
