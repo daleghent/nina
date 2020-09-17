@@ -419,8 +419,6 @@ namespace NINA.Model.MyCamera {
                         throw new Exception(Locale.Loc.Instance["LblASIImageDownloadError"]);
                     }
 
-                    var metadata = new ImageMetaData();
-
                     return new ImageArrayExposureData(
                         input: arr,
                         width: width,
