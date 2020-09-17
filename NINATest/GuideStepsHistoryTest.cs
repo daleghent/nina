@@ -14,6 +14,7 @@
 
 using NINA.Model;
 using NINA.Model.MyGuider;
+using NINA.Model.MyGuider.PHD2;
 using NINA.Utility.Enum;
 using NUnit.Framework;
 using System;

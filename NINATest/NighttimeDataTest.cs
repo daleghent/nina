@@ -44,15 +44,17 @@ namespace NINATest {
             if (twilightRiseAndSet == null) {
                 return new List<OxyPlot.DataPoint>();
             }
+            var twilightSet = twilightRiseAndSet.Set.Value > twilightRiseAndSet.Rise.Value ? twilightRiseAndSet.Set.Value.AddDays(-1) : twilightRiseAndSet.Set.Value;
             if (sunRiseAndSet == null) {
                 return new List<OxyPlot.DataPoint>() {
-                    new OxyPlot.DataPoint(Axis.ToDouble(twilightRiseAndSet.Set), 90),
+                    new OxyPlot.DataPoint(Axis.ToDouble(twilightSet), 90),
                     new OxyPlot.DataPoint(Axis.ToDouble(twilightRiseAndSet.Rise), 90) };
             }
+            var sunRiseSet = sunRiseAndSet.Set.Value > sunRiseAndSet.Rise.Value ? sunRiseAndSet.Set.Value.AddDays(-1) : sunRiseAndSet.Set.Value;
             return new List<OxyPlot.DataPoint>() {
-                new OxyPlot.DataPoint(Axis.ToDouble(twilightRiseAndSet.Set), 90),
-                new OxyPlot.DataPoint(Axis.ToDouble(sunRiseAndSet.Set), 90),
-                new OxyPlot.DataPoint(Axis.ToDouble(sunRiseAndSet.Set), 0),
+                new OxyPlot.DataPoint(Axis.ToDouble(twilightSet), 90),
+                new OxyPlot.DataPoint(Axis.ToDouble(sunRiseSet), 90),
+                new OxyPlot.DataPoint(Axis.ToDouble(sunRiseSet), 0),
                 new OxyPlot.DataPoint(Axis.ToDouble(sunRiseAndSet.Rise), 0),
                 new OxyPlot.DataPoint(Axis.ToDouble(sunRiseAndSet.Rise), 90),
                 new OxyPlot.DataPoint(Axis.ToDouble(twilightRiseAndSet.Rise), 90) };
@@ -62,9 +64,10 @@ namespace NINATest {
             if (twilightRiseAndSet == null) {
                 return new List<OxyPlot.DataPoint>();
             }
+            var twilightSet = twilightRiseAndSet.Set.Value > twilightRiseAndSet.Rise.Value ? twilightRiseAndSet.Set.Value.AddDays(-1) : twilightRiseAndSet.Set.Value;
             return new List<OxyPlot.DataPoint>() {
                 new OxyPlot.DataPoint(Axis.ToDouble(twilightRiseAndSet.Rise), 90),
-                new OxyPlot.DataPoint(Axis.ToDouble(twilightRiseAndSet.Set), 90) };
+                new OxyPlot.DataPoint(Axis.ToDouble(twilightSet), 90) };
         }
 
         [Test]
