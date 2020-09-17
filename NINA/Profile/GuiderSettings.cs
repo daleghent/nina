@@ -45,6 +45,7 @@ namespace NINA.Profile {
             metaGuideIP = "127.0.1.1";
             metaGuidePort = 1277;
             metaGuideMinIntensity = 100;
+            metaGuideLockWhenGuiding = false;
 
             var defaultPHD2Path = Environment.ExpandEnvironmentVariables(@"%programfiles(x86)%\PHDGuiding2\phd2.exe");
 
@@ -313,6 +314,19 @@ namespace NINA.Profile {
             set {
                 if (metaGuideDitherSettleSeconds != value) {
                     metaGuideDitherSettleSeconds = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool metaGuideLockWhenGuiding;
+
+        [DataMember]
+        public bool MetaGuideLockWhenGuiding {
+            get => metaGuideLockWhenGuiding;
+            set {
+                if (metaGuideLockWhenGuiding != value) {
+                    metaGuideLockWhenGuiding = value;
                     RaisePropertyChanged();
                 }
             }

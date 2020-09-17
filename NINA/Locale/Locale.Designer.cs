@@ -6472,6 +6472,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lock star when guiding.
+        /// </summary>
+        internal static string LblMetaGuideLockWhenGuiding {
+            get {
+                return ResourceManager.GetString("LblMetaGuideLockWhenGuiding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guiding resumed.
         /// </summary>
         internal static string LblMetaGuideLowIntensityRestoreGuiding {

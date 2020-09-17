@@ -37,5 +37,6 @@ namespace NINA.Profile {
         int MGENFocalLength { get; set; }
         int MetaGuideMinIntensity { get; set; }
         int MetaGuideDitherSettleSeconds { get; set; }
+        bool MetaGuideLockWhenGuiding { get; set; }
     }
 }

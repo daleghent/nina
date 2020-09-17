@@ -32,7 +32,6 @@ namespace NINA.ViewModel.Interfaces {
         ICommand OpenCygwinFileDiagCommand { get; }
         ICommand OpenImageFileDiagCommand { get; }
         ICommand OpenLogFolderCommand { get; }
-        RelayCommand OpenPHD2DiagCommand { get; set; }
         ICommand OpenPS2FileDiagCommand { get; }
         ICommand OpenSequenceCommandAtCompletionDiagCommand { get; }
         ICommand OpenSequenceFolderDiagCommand { get; }

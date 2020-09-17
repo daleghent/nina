@@ -39,7 +39,7 @@
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center">
                     <TextBox.Text>
-                        <Binding Path="PHD2Path" UpdateSourceTrigger="LostFocus">
+                        <Binding Source="{StaticResource ProfileService}" Path="ActiveProfile.GuiderSettings.PHD2Path" UpdateSourceTrigger="LostFocus">
                             <Binding.ValidationRules>
                                 <rules:FileExistsRule />
                             </Binding.ValidationRules>
@@ -53,7 +53,7 @@
                     Margin="5,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Command="{Binding DataContext.OpenPHD2DiagCommand, ElementName=UC}">
+                    Command="{Binding OpenPHD2DiagCommand}">
                     <Path
                         Margin="4,17,4,4"
                         Data="{StaticResource DotsSVG}"
@@ -72,7 +72,7 @@
                 <TextBox
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
-                    Text="{Binding PHD2ServerUrl}" />
+                    Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings.PHD2ServerUrl}" />
             </UniformGrid>
             <UniformGrid
                 Margin="5,5,0,0"
@@ -85,7 +85,7 @@
                 <TextBox
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Center"
-                    Text="{Binding PHD2ServerPort}" />
+                    Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.GuiderSettings.PHD2ServerPort}" />
             </UniformGrid>
             <Button
                 Grid.Row="1"

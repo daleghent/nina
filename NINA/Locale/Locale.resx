@@ -3996,4 +3996,7 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblMetaGuideDitherSettleTimeTooltip" xml:space="preserve">
     <value>Amount of time, in seconds, to wait for dithering to complete</value>
   </data>
+  <data name="LblMetaGuideLockWhenGuiding" xml:space="preserve">
+    <value>Lock star when guiding</value>
+  </data>
 </root>

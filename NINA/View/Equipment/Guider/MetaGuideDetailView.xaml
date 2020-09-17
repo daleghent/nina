@@ -12,7 +12,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-    xmlns:local="clr-namespace:NINA.View.Equipment.Guider"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
     mc:Ignorable="d" 
@@ -23,7 +22,10 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left">
+        <StackPanel 
+            Grid.ColumnSpan="2" 
+            VerticalAlignment="Center" 
+            HorizontalAlignment="Left">
             <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
                 <UniformGrid
                     Margin="0,6,0,6"
@@ -78,7 +80,7 @@
                     <TextBlock Margin="5,0,0,0" Text="{Binding CalibrationState, UpdateSourceTrigger=PropertyChanged}" />
                 </UniformGrid>
             </Border>
-            <StackPanel Margin="0,5,0,0" Orientation="Horizontal" DataContext="{Binding ActiveProfile.GuiderSettings}">
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                 <UniformGrid
                     Margin="0,6,0,6"
                     VerticalAlignment="Center"
@@ -102,7 +104,7 @@
                                 <Binding.ValidationRules>
                                     <rules:IntRangeRule>
                                         <rules:IntRangeRule.ValidRange>
-                                            <rules:IntRangeChecker Maximum="0" Minimum="255" />
+                                            <rules:IntRangeChecker Minimum="0" Maximum="255" />
                                         </rules:IntRangeRule.ValidRange>
                                     </rules:IntRangeRule>
                                 </Binding.ValidationRules>
@@ -111,7 +113,7 @@
                     </TextBox>
                 </UniformGrid>
             </StackPanel>
-            <StackPanel Margin="0,5,0,0" Orientation="Horizontal" DataContext="{Binding ActiveProfile.GuiderSettings}">
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                 <UniformGrid
                     Margin="0,6,0,6"
                     VerticalAlignment="Center"
@@ -136,7 +138,7 @@
                     </TextBox>
                 </UniformGrid>
             </StackPanel>
-            <StackPanel Margin="0,5,0,0" Orientation="Horizontal" DataContext="{Binding ActiveProfile.GuiderSettings}">
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                 <UniformGrid
                     Margin="0,6,0,6"
                     VerticalAlignment="Center"
@@ -163,6 +165,25 @@
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
+                </UniformGrid>
+            </StackPanel>
+            <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                <UniformGrid
+                    Margin="0,6,0,6"
+                    VerticalAlignment="Center"
+                    Columns="2">
+                    <TextBlock
+                        MinWidth="200"
+                        MinHeight="20"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblMetaGuideLockWhenGuiding}" />
+                    <CheckBox
+                        Height="25"
+                        HorizontalAlignment="Left">
+                        <CheckBox.IsChecked>
+                        <Binding Path="ActiveProfile.GuiderSettings.MetaGuideLockWhenGuiding" Source="{StaticResource ProfileService}" UpdateSourceTrigger="LostFocus" />
+                        </CheckBox.IsChecked>
+                    </CheckBox>
                 </UniformGrid>
             </StackPanel>
         </StackPanel>

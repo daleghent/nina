@@ -208,9 +208,13 @@ namespace NINA.Model.MyGuider {
 
         public string DriverVersion => "1.0";
 
-        public Task<bool> AutoSelectGuideStar() {
+        public async Task<bool> AutoSelectGuideStar() {
+            if (!this.profileService.ActiveProfile.GuiderSettings.MetaGuideLockWhenGuiding) {
+                return true;
+            }
+
             // Fire and forget
-            return Task.FromResult(PostAndCheckMessage("LockOn", remoteLockMsg, 0, 0));
+            return PostAndCheckMessage("LockOn", remoteLockMsg, 0, 0);
         }
 
         public async Task<bool> Connect(CancellationToken token) {
@@ -320,7 +324,7 @@ namespace NINA.Model.MyGuider {
                 return false;
             }
 
-            if (!IsLocked) {
+            if (this.profileService.ActiveProfile.GuiderSettings.MetaGuideLockWhenGuiding && !IsLocked) {
                 if (!await LockStar(ct)) {
                     return false;
                 }

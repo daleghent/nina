@@ -18,6 +18,7 @@ using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Notification;
 using NINA.Utility.WindowService;
+using NINA.ViewModel;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -39,6 +40,8 @@ namespace NINA.Model.MyGuider.PHD2 {
         public PHD2Guider(IProfileService profileService, IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
             this.windowServiceFactory = windowServiceFactory;
+
+            OpenPHD2DiagCommand = new RelayCommand(OpenPHD2FileDiag);
         }
 
         private readonly IProfileService profileService;
@@ -617,6 +620,15 @@ namespace NINA.Model.MyGuider.PHD2 {
         public void SetupDialog() {
             var windowService = windowServiceFactory.Create();
             windowService.ShowDialog(this, Locale.Loc.Instance["LblPHD2Setup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
+        }
+
+        public RelayCommand OpenPHD2DiagCommand { get; set; }
+
+        private void OpenPHD2FileDiag(object o) {
+            var dialog = OptionsVM.GetFilteredFileDialog(profileService.ActiveProfile.GuiderSettings.PHD2Path, "phd2.exe", "PHD2|phd2.exe");
+            if (dialog.ShowDialog() == true) {
+                this.profileService.ActiveProfile.GuiderSettings.PHD2Path = dialog.FileName;
+            }
         }
 
         public event EventHandler PHD2ConnectionLost;

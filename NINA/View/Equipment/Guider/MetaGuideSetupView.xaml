@@ -25,7 +25,10 @@
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center">
+        <StackPanel 
+            Grid.ColumnSpan="2" 
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Center">
             <UniformGrid
                 Margin="5,5,0,0"
                 VerticalAlignment="Center"
@@ -36,7 +39,7 @@
                     Text="{ns:Loc LblMetaGuideIP}"/>
                 <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center">
                     <TextBox.Text>
-                        <Binding Path="MetaGuideIP" UpdateSourceTrigger="LostFocus">
+                        <Binding Source="{StaticResource ProfileService}" Path="ActiveProfile.GuiderSettings.MetaGuideIP" UpdateSourceTrigger="LostFocus">
                             <Binding.ValidationRules>
                                 <rules:IsValidIPAddressRule />
                             </Binding.ValidationRules>
@@ -54,7 +57,7 @@
                     Text="{ns:Loc LblMetaGuidePort}" />
                 <TextBox HorizontalAlignment="Stretch" VerticalAlignment="Center">
                     <TextBox.Text>
-                        <Binding Path="MetaGuidePort" UpdateSourceTrigger="LostFocus">
+                        <Binding Source="{StaticResource ProfileService}" Path="ActiveProfile.GuiderSettings.MetaGuidePort" UpdateSourceTrigger="LostFocus">
                             <Binding.ValidationRules>
                                 <rules:GreaterZeroRule />
                             </Binding.ValidationRules>

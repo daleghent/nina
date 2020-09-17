@@ -59,7 +59,6 @@ namespace NINA.ViewModel {
             OpenSequenceFolderDiagCommand = new RelayCommand(OpenSequenceFolderDiag);
             OpenCygwinFileDiagCommand = new RelayCommand(OpenCygwinFileDiag);
             OpenPS2FileDiagCommand = new RelayCommand(OpenPS2FileDiag);
-            OpenPHD2DiagCommand = new RelayCommand(OpenPHD2FileDiag);
             OpenASPSFileDiagCommand = new RelayCommand(OpenASPSFileDiag);
             OpenASTAPFileDiagCommand = new RelayCommand(OpenASTAPFileDiag);
             OpenLogFolderCommand = new RelayCommand(OpenLogFolder);
@@ -112,8 +111,6 @@ namespace NINA.ViewModel {
             var url = new Uri(obj.ToString());
             Process.Start(new ProcessStartInfo(url.AbsoluteUri));
         }
-
-        public RelayCommand OpenPHD2DiagCommand { get; set; }
 
         private async Task<bool> SiteFromGPS() {
             bool loc = false; // if location was acquired
@@ -341,13 +338,6 @@ namespace NINA.ViewModel {
             }
         }
 
-        private void OpenPHD2FileDiag(object o) {
-            var dialog = GetFilteredFileDialog(profileService.ActiveProfile.GuiderSettings.PHD2Path, "phd2.exe", "PHD2|phd2.exe");
-            if (dialog.ShowDialog() == true) {
-                ActiveProfile.GuiderSettings.PHD2Path = dialog.FileName;
-            }
-        }
-
         private void OpenASPSFileDiag(object o) {
             var dialog = GetFilteredFileDialog(profileService.ActiveProfile.PlateSolveSettings.AspsLocation, "PlateSolver.exe", "ASPS|PlateSolver.exe");
             if (dialog.ShowDialog() == true) {
@@ -362,7 +352,7 @@ namespace NINA.ViewModel {
             }
         }
 
-        private Microsoft.Win32.OpenFileDialog GetFilteredFileDialog(string path, string filename, string filter) {
+        public static Microsoft.Win32.OpenFileDialog GetFilteredFileDialog(string path, string filename, string filter) {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
 
             if (File.Exists(path)) {
