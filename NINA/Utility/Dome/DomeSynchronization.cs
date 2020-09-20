@@ -55,7 +55,7 @@ namespace NINA.Utility {
             scopeCoordinates = scopeCoordinates.Transform(Epoch.JNOW);
 
             // Calculate a vector pointing from the origin (dome center) to the center of the scope aperture
-            var localHour = Angle.ByHours(localSiderealTime - scopeCoordinates.RA);
+            var localHour = Angle.ByHours(scopeCoordinates.RA - localSiderealTime);
             var topocentricCoordinates = scopeCoordinates.Transform(siteLatitude, siteLongitude);
             var altitudeRadians = topocentricCoordinates.Altitude.Radians;
             var azimuthRadians = topocentricCoordinates.Azimuth.Radians;
