@@ -14,6 +14,7 @@
 
 using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 
 namespace NINA.Utility.Converters {
@@ -21,6 +22,10 @@ namespace NINA.Utility.Converters {
     public class MinusOneToBaseValueConverter : IMultiValueConverter {
 
         public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture) {
+            if (value[0] == DependencyProperty.UnsetValue) {
+                value[0] = -1;
+            }
+
             var param = new object[] { value[0].ToString(), null };
             var parsed = (bool)value[0].GetType()
                 .GetMethod("TryParse", new[] { typeof(string), value[0].GetType().MakeByRefType() })
