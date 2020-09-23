@@ -61,6 +61,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Added <code>$$STARCOUNT$$</code> file pattern</li>
 <li>Telescope views now display the side of pier when available</li>
 <li>Replaced LZ4 library with a more optimized one for faster XISF compression</li>
+<li>Save target set in sequence screen is now enabled also when sequence is running</li>
+<li>Added info logs for start exposure, download location and star detection</li>
 </ul>
 <h2 id="bugfixes">Bugfixes</h2>
 <ul>
@@ -70,10 +72,11 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Set white balance and gamma to 50 for ASI native driver on connection</li>
 <li>FITS header parsing can now deal with keywords that don't have any comment at all</li>
 <li>Safeguard against NaN values for Hfr Std Deviation which could ruin an autofocus run</li>
+<li>Fix issue for QHY cameras to dither too early when camera was still exposing</li>
 </ul>
 <h2 id="included-camera-sdk-versions">Included Camera SDK Versions:</h2>
 <ul>
-<li><strong>Altair Astro:</strong> 46.16909.2020.404</li>
+<li><strong>Altair Astro:</strong> 47.17497.2020.722</li>
 <li><strong>Atik:</strong> 2020.6.18.0</li>
 <li><strong>Canon:</strong> 13.12.31</li>
 <li><strong>FLI:</strong> 1.104.0.0</li>
@@ -81,7 +84,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li><strong>Omegon:</strong> 39.15325.2019.810</li>
 <li><strong>QHY:</strong> 20.8.26.3</li>
 <li><strong>ToupTek:</strong> 46.17309.2020.616</li>
-<li><strong>ZWO:</strong> 1.15.6.17</li>
+<li><strong>ZWO:</strong> 1.15.9.15</li>
 </ul>
 <h1 id="version-1.10">Version 1.10</h1>
 <h2 id="new-hardware-support-1">New hardware support</h2>
