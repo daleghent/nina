@@ -22,6 +22,7 @@ namespace NINA.ViewModel.Interfaces {
         ICommand AddTargetCommand { get; }
         ICommand CancelSequenceCommand { get; }
         ICommand CoordsFromPlanetariumCommand { get; set; }
+        ICommand CoordsToFramingCommand { get; set; }
         IDeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; }
         ICommand DemoteSequenceRowCommand { get; }
         ICommand DemoteTargetCommand { get; }

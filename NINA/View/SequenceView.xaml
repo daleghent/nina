@@ -751,25 +751,45 @@
                                 FontSize="20"
                                 Text="{ns:Loc LblTarget}" />
                         </Grid>
-                        <Button
-                            Width="25"
-                            Height="25"
-                            Margin="5,0,5,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            HorizontalContentAlignment="Center"
-                            Command="{Binding DataContext.CoordsFromPlanetariumCommand, RelativeSource={RelativeSource AncestorType=local:SequenceView}}">
-                            <Button.ToolTip>
-                                <ToolTip ToolTipService.ShowOnDisabled="False">
-                                    <TextBlock Text="{ns:Loc LblPlanetariumTooltip}" />
-                                </ToolTip>
-                            </Button.ToolTip>
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource GetCoordsSVG}"
-                                Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
-                        </Button>
+                        <UniformGrid Columns="2" HorizontalAlignment="Right">
+                            <Button
+                                Width="25"
+                                Height="25"
+                                Margin="5,0,5,0"
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                IsEnabled="{Binding Coordinates, Converter={StaticResource InverseNullToBooleanConverter}}"
+                                Command="{Binding DataContext.CoordsToFramingCommand, RelativeSource={RelativeSource AncestorType=local:SequenceView}}">
+                                <Button.ToolTip>
+                                    <ToolTip ToolTipService.ShowOnDisabled="False">
+                                        <TextBlock Text="{ns:Loc LblCoordinatesToFramingTooltip}" />
+                                    </ToolTip>
+                                </Button.ToolTip>
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource FocusAssistantSVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    Stretch="Uniform" />
+                            </Button>
+                            <Button
+                                Width="25"
+                                Height="25"
+                                Margin="5,0,5,0"
+                                VerticalAlignment="Center"
+                                HorizontalContentAlignment="Center"
+                                Command="{Binding DataContext.CoordsFromPlanetariumCommand, RelativeSource={RelativeSource AncestorType=local:SequenceView}}">
+                                <Button.ToolTip>
+                                    <ToolTip ToolTipService.ShowOnDisabled="False">
+                                        <TextBlock Text="{ns:Loc LblPlanetariumTooltip}" />
+                                    </ToolTip>
+                                </Button.ToolTip>
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource GetCoordsSVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    Stretch="Uniform" />
+                            </Button>
+                        </UniformGrid>
                     </UniformGrid>
                 </GroupBox.Header>
 

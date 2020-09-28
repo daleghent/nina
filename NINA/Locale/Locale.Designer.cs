@@ -2864,6 +2864,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Send coordinates to the Framing Wizard.
+        /// </summary>
+        internal static string LblCoordinatesToFramingTooltip {
+            get {
+                return ResourceManager.GetString("LblCoordinatesToFramingTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Camera is unable to reach the specified target temperature!.
         /// </summary>
         internal static string LblCouldNotReachTargetTemperature {

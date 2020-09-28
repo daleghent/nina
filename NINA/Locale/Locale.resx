@@ -3999,4 +3999,7 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblMetaGuideLockWhenGuiding" xml:space="preserve">
     <value>Lock star when guiding</value>
   </data>
+  <data name="LblCoordinatesToFramingTooltip" xml:space="preserve">
+    <value>Send coordinates to the Framing Wizard</value>
+  </data>
 </root>

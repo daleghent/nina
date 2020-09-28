@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Moq;
+using NINA;
 using NINA.Model;
 using NINA.Model.MyFlatDevice;
 using NINA.Model.MyGuider;
@@ -23,6 +24,7 @@ using NINA.Utility.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel;
 using NINA.ViewModel.Equipment.FlatDevice;
+using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.Interfaces;
 using NUnit.Framework;
 using System.Threading;
@@ -50,6 +52,8 @@ namespace NINATest {
         private Mock<IDeepSkyObjectSearchVM> deepSkyObjectSearchVMMock;
         private Mock<IDomeMediator> domeMediatorMock;
         private Mock<ISequenceMediator> sequenceMediatorMock;
+        private Mock<IApplicationMediator> applicationMediatorMock;
+        private Mock<IFramingAssistantVM> framingAssistantVMMock;
         private FlatDeviceInfo _flatDevice;
         private CaptureSequenceList _dummyList;
         private SequenceVM _sut;
@@ -79,6 +83,8 @@ namespace NINATest {
             deepSkyObjectSearchVMMock = new Mock<IDeepSkyObjectSearchVM>();
             domeMediatorMock = new Mock<IDomeMediator>();
             sequenceMediatorMock = new Mock<ISequenceMediator>();
+            applicationMediatorMock = new Mock<IApplicationMediator>();
+            framingAssistantVMMock = new Mock<IFramingAssistantVM>();
 
             _dummyList = new CaptureSequenceList();
             _dummyList.Add(new CaptureSequence() { TotalExposureCount = 10 });
@@ -102,7 +108,8 @@ namespace NINATest {
             _sut = new SequenceVM(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, focuserMediatorMock.Object,
                 filterWheelMediatorMock.Object, guiderMediatorMock.Object, rotatorMediatorMock.Object, flatDeviceMediatorMock.Object,
                 weatherDataMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, nighttimeCalculatorMock.Object,
-                planetariumFactoryMock.Object, imageHistoryVMMock.Object, deepSkyObjectSearchVMMock.Object, sequenceMediatorMock.Object, domeMediatorMock.Object);
+                planetariumFactoryMock.Object, imageHistoryVMMock.Object, deepSkyObjectSearchVMMock.Object, sequenceMediatorMock.Object, domeMediatorMock.Object, 
+                framingAssistantVMMock.Object, applicationMediatorMock.Object);
         }
 
         [TearDown]

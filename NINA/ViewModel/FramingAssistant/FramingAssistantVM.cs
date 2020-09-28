@@ -277,6 +277,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 await Task.Delay(50);
             }
             await LoadImageCommand.ExecuteAsync(null);
+            this.Rotation = dso.Rotation;
             return true;
         }
 

@@ -36,6 +36,7 @@ using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Utility.WindowService;
 using NINA.ViewModel.Equipment.Camera;
+using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.Interfaces;
 using Nito.AsyncEx;
 using System;
@@ -75,7 +76,9 @@ namespace NINA.ViewModel {
                 IImageHistoryVM imageHistoryVM,
                 IDeepSkyObjectSearchVM deepSkyObjectSearchVM,
                 ISequenceMediator sequenceMediator,
-                IDomeMediator domeMediator
+                IDomeMediator domeMediator,
+                IFramingAssistantVM framingAssistantVM,
+                IApplicationMediator applicationMediator
         ) : base(profileService) {
             sequenceMediator.RegisterHandler(this);
 
@@ -110,6 +113,8 @@ namespace NINA.ViewModel {
             this.NighttimeData = this.nighttimeCalculator.Calculate();
             this.planetariumFactory = planetariumFactory;
             this.DeepSkyObjectSearchVM = deepSkyObjectSearchVM;
+            this.framingAssistantVM = framingAssistantVM;
+            this.applicationMediator = applicationMediator;
 
             this.domeMediator = domeMediator;
             this.domeMediator.RegisterConsumer(this);
@@ -148,6 +153,7 @@ namespace NINA.ViewModel {
             SaveTargetSetCommand = new RelayCommand(SaveTargetSet);
             LoadTargetSetCommand = new RelayCommand(LoadTargetSet);
             CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium));
+            CoordsToFramingCommand = new AsyncCommand<bool>(() => Task.Run(CoordsToFraming));
 
             autoUpdateTimer = new DispatcherTimer(DispatcherPriority.Background);
             autoUpdateTimer.Interval = TimeSpan.FromSeconds(1);
@@ -167,6 +173,9 @@ namespace NINA.ViewModel {
             PropertyChanged += SequenceVM_PropertyChanged;
             EstimatedDownloadTime = profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime;
         }
+
+        private readonly IFramingAssistantVM framingAssistantVM;
+        private readonly IApplicationMediator applicationMediator;
 
         private void SequenceVM_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             if (e.PropertyName == nameof(Sequence))
@@ -1899,6 +1908,16 @@ namespace NINA.ViewModel {
             return (resp != null);
         }
 
+        private async Task<bool> CoordsToFraming() {
+            if (Sequence.Coordinates != null) {
+                var dso = new DeepSkyObject(Sequence.TargetName, Sequence.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
+                dso.Rotation = Sequence.Rotation;
+                applicationMediator.ChangeTab(ApplicationTab.FRAMINGASSISTANT);
+                return await framingAssistantVM.SetCoordinates(dso);
+            }
+            return false;
+        }
+
         private async Task<bool> RunEndOfSequenceOptions(IProgress<ApplicationStatus> progress) {
             bool parkTelescope = false;
             bool warmCamera = false;
@@ -2017,6 +2036,7 @@ namespace NINA.ViewModel {
         }
 
         public ICommand CoordsFromPlanetariumCommand { get; set; }
+        public ICommand CoordsToFramingCommand { get; set; }
         public ICommand AddSequenceRowCommand { get; private set; }
         public ICommand AddTargetCommand { get; private set; }
         public ICommand RemoveTargetCommand { get; private set; }
