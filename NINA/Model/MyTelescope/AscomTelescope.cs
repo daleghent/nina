@@ -97,47 +97,41 @@ namespace NINA.Model.MyTelescope {
 
         private bool _canGetAltitude;
 
+        private double _altitude = double.NaN;
+
         public double Altitude {
             get {
-                double val = -1;
                 try {
                     if (Connected && _canGetAltitude) {
-                        val = _telescope.Altitude;
+                        _altitude = _telescope.Altitude;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetAltitude = false;
                 }
-                return val;
+                return _altitude;
             }
         }
 
-        public string AltitudeString {
-            get {
-                return Astrometry.DegreesToDMS(Altitude);
-            }
-        }
+        public string AltitudeString => double.IsNaN(Altitude) ? string.Empty : Astrometry.DegreesToDMS(Altitude);
 
         private bool _canGetAzimuth;
 
+        private double _azimuth = double.NaN;
+
         public double Azimuth {
             get {
-                double val = -1;
                 try {
                     if (Connected && _canGetAzimuth) {
-                        val = _telescope.Azimuth;
+                        _azimuth = _telescope.Azimuth;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetAzimuth = false;
                 }
-                return val;
+                return _azimuth;
             }
         }
 
-        public string AzimuthString {
-            get {
-                return Astrometry.DegreesToDMS(Azimuth);
-            }
-        }
+        public string AzimuthString => double.IsNaN(Azimuth) ? string.Empty : Astrometry.DegreesToDMS(Azimuth);
 
         private bool _canGetApertureArea;
 
@@ -912,6 +906,7 @@ namespace NINA.Model.MyTelescope {
         }
 
         private Coordinates _targetCoordinates;
+
         public Coordinates TargetCoordinates {
             get {
                 if (Connected) {
@@ -926,6 +921,7 @@ namespace NINA.Model.MyTelescope {
         }
 
         private PierSide? targetSideOfPier;
+
         public PierSide? TargetSideOfPier {
             get {
                 if (Connected) {

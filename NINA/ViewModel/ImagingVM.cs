@@ -151,11 +151,11 @@ namespace NINA.ViewModel {
         }
 
         private void AddMetaData(
-            ImageMetaData metaData,
-            CaptureSequence sequence,
-            DateTime start,
-            RMS rms,
-            string targetName) {
+                ImageMetaData metaData,
+                CaptureSequence sequence,
+                DateTime start,
+                RMS rms,
+                string targetName) {
             metaData.Image.ExposureStart = start;
             metaData.Image.Binning = sequence.Binning.Name;
             metaData.Image.ExposureNumber = sequence.ProgressExposureCount;

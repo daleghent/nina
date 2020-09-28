@@ -258,8 +258,10 @@ namespace NINA.ViewModel.Equipment.Telescope {
                             }
 
                             TelescopeInfo = new TelescopeInfo {
+                                Altitude = Telescope.Altitude,
                                 AltitudeString = Telescope.AltitudeString,
                                 AtPark = Telescope.AtPark,
+                                Azimuth = Telescope.Azimuth,
                                 AzimuthString = Telescope.AzimuthString,
                                 Connected = true,
                                 Coordinates = Telescope.Coordinates,
@@ -348,8 +350,14 @@ namespace NINA.ViewModel.Equipment.Telescope {
             telescopeValues.TryGetValue(nameof(TelescopeInfo.Connected), out o);
             TelescopeInfo.Connected = (bool)(o ?? false);
 
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.Altitude), out o);
+            TelescopeInfo.Altitude = (double)(o ?? double.NaN);
+
             telescopeValues.TryGetValue(nameof(TelescopeInfo.AltitudeString), out o);
             TelescopeInfo.AltitudeString = (string)(o ?? string.Empty);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.Azimuth), out o);
+            TelescopeInfo.Azimuth = (double)(o ?? double.NaN);
 
             telescopeValues.TryGetValue(nameof(TelescopeInfo.AzimuthString), out o);
             TelescopeInfo.AzimuthString = (string)(o ?? string.Empty);
@@ -418,7 +426,9 @@ namespace NINA.ViewModel.Equipment.Telescope {
             telescopeValues.Add(nameof(TelescopeInfo.AtPark), _telescope?.AtPark ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.Tracking), _telescope?.Tracking ?? false);
 
+            telescopeValues.Add(nameof(TelescopeInfo.Altitude), _telescope?.Altitude ?? double.NaN);
             telescopeValues.Add(nameof(TelescopeInfo.AltitudeString), _telescope?.AltitudeString ?? string.Empty);
+            telescopeValues.Add(nameof(TelescopeInfo.Azimuth), _telescope?.Azimuth ?? double.NaN);
             telescopeValues.Add(nameof(TelescopeInfo.AzimuthString), _telescope?.AzimuthString ?? string.Empty);
             telescopeValues.Add(nameof(TelescopeInfo.DeclinationString), _telescope?.DeclinationString ?? string.Empty);
             telescopeValues.Add(nameof(TelescopeInfo.RightAscensionString), _telescope?.RightAscensionString ?? string.Empty);

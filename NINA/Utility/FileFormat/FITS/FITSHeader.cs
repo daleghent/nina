@@ -192,6 +192,14 @@ namespace NINA.Utility.FileFormat.FITS {
                 metaData.Telescope.Coordinates = new Astrometry.Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
             }
 
+            if (_headerCards.TryGetValue("CENTALT", out card) || _headerCards.TryGetValue("OBJCTALT", out card)) {
+                metaData.Telescope.Altitude = ParseDouble(card.OriginalValue);
+            }
+
+            if (_headerCards.TryGetValue("CENTAZ", out card) || _headerCards.TryGetValue("OBJCTAZ", out card)) {
+                metaData.Telescope.Azimuth = ParseDouble(card.OriginalValue);
+            }
+
             /* Observer */
             if (_headerCards.TryGetValue("SITEELEV", out card)) {
                 metaData.Observer.Elevation = ParseDouble(card.OriginalValue);
@@ -224,6 +232,10 @@ namespace NINA.Utility.FileFormat.FITS {
                 var ra = Astrometry.Astrometry.HMSToDegrees(_headerCards["OBJCTRA"].OriginalValue);
                 var dec = Astrometry.Astrometry.DMSToDegrees(_headerCards["OBJCTDEC"].OriginalValue);
                 metaData.Target.Coordinates = new Astrometry.Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
+            }
+
+            if (_headerCards.TryGetValue("AIRMASS", out card)) {
+                metaData.Telescope.Airmass = ParseDouble(card.OriginalValue);
             }
 
             /* Focuser */
@@ -468,6 +480,18 @@ namespace NINA.Utility.FileFormat.FITS {
             if (metaData.Telescope.Coordinates != null) {
                 Add("RA", metaData.Telescope.Coordinates.RADegrees, "[deg] RA of telescope");
                 Add("DEC", metaData.Telescope.Coordinates.Dec, "[deg] Declination of telescope");
+            }
+
+            if (!double.IsNaN(metaData.Telescope.Altitude)) {
+                Add("CENTALT", metaData.Telescope.Altitude, "[deg] Altitude of telescope");
+            }
+
+            if (!double.IsNaN(metaData.Telescope.Azimuth)) {
+                Add("CENTAZ", metaData.Telescope.Azimuth, "[deg] Azimuth of telescope");
+            }
+
+            if (!double.IsNaN(metaData.Telescope.Airmass)) {
+                Add("AIRMASS", metaData.Telescope.Airmass, "Airmass at frame center (Gueymard 1993)");
             }
 
             /* Observer */

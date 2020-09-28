@@ -581,6 +581,22 @@ namespace NINA.Utility.Astrometry {
         }
 
         /// <summary>
+        /// Airmass calculated using Gueymard 1993
+        /// </summary>
+        /// <param name="altitude">Altitude in degrees</param>
+        /// <returns>Airmass or NaN if an invalid altitude is supplied</returns>
+        public static double Airmass(double altitude) {
+            if (altitude < 0d || altitude > 90d || double.IsNaN(altitude) || double.IsInfinity(altitude)) {
+                return double.NaN;
+            } else {
+                double Z = 90 - altitude;
+                double cosZ = Math.Cos(ToRadians(Z));
+
+                return 1.0 / (cosZ + 0.00176759 * Z * Math.Pow(94.37515 - Z, -1.21563));
+            }
+        }
+
+        /// <summary>
         /// Approximate dew point using Magnus Formula
         /// </summary>
         /// <param name="temperatrue">Temperature in Celsius</param>

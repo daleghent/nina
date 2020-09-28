@@ -13,7 +13,6 @@
 #endregion "copyright"
 
 using NINA.Utility.Astrometry;
-using NINA.Utility.Enum;
 
 namespace NINA.Model.MyTelescope {
 
@@ -150,14 +149,28 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        private string altitudeString;
+        private double altitude = double.NaN;
+
+        public double Altitude {
+            get { return altitude; }
+            set { altitude = value; RaisePropertyChanged(); }
+        }
+
+        private string altitudeString = string.Empty;
 
         public string AltitudeString {
             get { return altitudeString; }
             set { altitudeString = value; RaisePropertyChanged(); }
         }
 
-        private string azimuthString;
+        private double azimuth = double.NaN;
+
+        public double Azimuth {
+            get { return azimuth; }
+            set { azimuth = value; RaisePropertyChanged(); }
+        }
+
+        private string azimuthString = string.Empty;
 
         public string AzimuthString {
             get { return azimuthString; }

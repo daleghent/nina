@@ -19,7 +19,6 @@ using NINA.Model.MyRotator;
 using NINA.Model.MyTelescope;
 using NINA.Model.MyWeatherData;
 using NINA.Profile;
-using NINA.Utility;
 using NINA.Utility.Astrometry;
 using NINA.Utility.Enum;
 using System;
@@ -95,6 +94,9 @@ namespace NINA.Model.ImageData {
                 }
                 Observer.Elevation = info.SiteElevation;
                 Telescope.Coordinates = info.Coordinates;
+                Telescope.Altitude = info.Altitude;
+                Telescope.Azimuth = info.Azimuth;
+                Telescope.Airmass = Astrometry.Airmass(info.Altitude);
             }
         }
 
@@ -182,6 +184,10 @@ namespace NINA.Model.ImageData {
         public string Name { get; set; } = string.Empty;
         public double FocalLength { get; set; } = double.NaN;
         public double FocalRatio { get; set; } = double.NaN;
+        public double Altitude { get; set; } = double.NaN;
+        public double Azimuth { get; set; } = double.NaN;
+        public double Airmass { get; set; } = double.NaN;
+
         private Coordinates coordinates = null;
 
         public Coordinates Coordinates {
@@ -215,7 +221,6 @@ namespace NINA.Model.ImageData {
 
     public class TargetParameter {
         public string Name { get; set; } = string.Empty;
-
         private Coordinates coordinates = null;
 
         public Coordinates Coordinates {

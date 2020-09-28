@@ -198,6 +198,14 @@ namespace NINA.Utility.FileFormat.XISF {
                 }
             }
 
+            if (TryGetFITSProperty("CENTALT", out value) || TryGetFITSProperty("OBJCTALT", out value)) {
+                metaData.Telescope.Altitude = double.Parse(value, CultureInfo.InvariantCulture);
+            }
+
+            if (TryGetFITSProperty("CENTAZ", out value) || TryGetFITSProperty("OBJCTAZ", out value)) {
+                metaData.Telescope.Azimuth = double.Parse(value, CultureInfo.InvariantCulture);
+            }
+
             /* Focuser */
             if (TryGetFITSProperty("FOCNAME", out value)) {
                 metaData.Focuser.Name = value;
@@ -430,6 +438,19 @@ namespace NINA.Utility.FileFormat.XISF {
                 AddImageProperty(XISFImageProperty.Observation.Center.RA, metaData.Telescope.Coordinates.RADegrees, "[deg] RA of telescope");
                 AddImageProperty(XISFImageProperty.Observation.Center.Dec, metaData.Telescope.Coordinates.Dec, "[deg] Declination of telescope");
             }
+
+            if (!double.IsNaN(metaData.Telescope.Altitude)) {
+                AddImageFITSKeyword("CENTALT", metaData.Telescope.Altitude, "[deg] Altitude of telescope");
+            }
+
+            if (!double.IsNaN(metaData.Telescope.Azimuth)) {
+                AddImageFITSKeyword("CENTAZ", metaData.Telescope.Azimuth, "[deg] Azimuth of telescope");
+            }
+
+            if (!double.IsNaN(metaData.Telescope.Airmass)) {
+                AddImageFITSKeyword("AIRMASS", metaData.Telescope.Airmass, "Airmass at frame center (Gueymard 1993)");
+            }
+
 
             /* Target */
             if (!string.IsNullOrWhiteSpace(metaData.Target.Name)) {

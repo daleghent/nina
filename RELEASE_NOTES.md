@@ -40,6 +40,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Ability to inspect pixel area and pixel values in detail by holding right click
 
 ### File name patterns and FITS keywords
+- Added `CENTALT`, and `CENTAZ` keywords
+- Added `AIRMASS` keyword, calculated from mount altitude using Gueymard 1993
 - Added `$$CAMERA$$` file pattern
 - Added `$$TELESCOPE$$` file pattern
 - Added `$$ROTATEANGLE$$` file pattern
