@@ -52,6 +52,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## Features
 - Ability to inspect pixel area and pixel values in detail by holding right click
 - Relative Focusers can now be connected and will be simulated to behave like absolute focusers
+- It is possible now to import Telescopius Observing Lists and Telescopius Mosaic Plans via CSV
 
 ## Improvements
 - Canon CR3 image format is now supported (use FreeImage as your RAW converter)
@@ -75,8 +76,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Fix issue for QHY cameras to dither too early when camera was still exposing
 
 ## Included Camera SDK Versions:
-- **Altair Astro:** 47.17497.2020.722
-- **Atik:** 2020.6.18.0
+- **Altair Astro:** 48.17729.2020.922
+- **Atik:** 2020.08.3.642
 - **Canon:** 13.12.31
 - **FLI:** 1.104.0.0
 - **Nikon:** 1.3.1.3001

@@ -5878,6 +5878,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Import Targets from external source.
+        /// </summary>
+        internal static string LblImportTargets {
+            get {
+                return ResourceManager.GetString("LblImportTargets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sequence contains items using incompatible Gain settings. These will be ignored!.
         /// </summary>
         internal static string LblIncompatibleGainsInSequence {
@@ -10685,6 +10694,15 @@ namespace NINA.Locale {
         internal static string LblUnknownEpochWarning {
             get {
                 return ResourceManager.GetString("LblUnknownEpochWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unknown format to import targets.
+        /// </summary>
+        internal static string LblUnknownImportFormat {
+            get {
+                return ResourceManager.GetString("LblUnknownImportFormat", resourceCulture);
             }
         }
         

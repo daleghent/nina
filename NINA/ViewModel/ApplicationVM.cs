@@ -133,6 +133,10 @@ namespace NINA.ViewModel {
                 }
             }
 
+            try {
+                Utility.AtikSDK.AtikCameraDll.Shutdown();
+            } catch (Exception) { }
+
             Application.Current.Shutdown();
         }
 

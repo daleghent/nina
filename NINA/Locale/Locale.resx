@@ -4002,4 +4002,10 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblCoordinatesToFramingTooltip" xml:space="preserve">
     <value>Send coordinates to the Framing Wizard</value>
   </data>
+  <data name="LblImportTargets" xml:space="preserve">
+    <value>Import Targets from external source</value>
+  </data>
+  <data name="LblUnknownImportFormat" xml:space="preserve">
+    <value>Unknown format to import targets</value>
+  </data>
 </root>
