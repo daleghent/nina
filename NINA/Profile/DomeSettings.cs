@@ -106,6 +106,19 @@ namespace NINA.Profile {
             }
         }
 
+        private double lateralAxis_mm = 0.0;
+
+        [DataMember]
+        public double LateralAxis_mm {
+            get {
+                return lateralAxis_mm;
+            }
+            set {
+                lateralAxis_mm = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private double azimuthTolerance_degrees = 1.0;
 
         [DataMember]

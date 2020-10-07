@@ -139,6 +139,25 @@
                             Width="250"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
+                            Text="{ns:Loc LblDomeLateralAxisLength}">
+                            <TextBlock.ToolTip>
+                                <TextBlock Text="{ns:Loc LblDomeLateralAxisLengthTooltip}" />
+                            </TextBlock.ToolTip>
+                        </TextBlock>
+                        <TextBox
+                            MinWidth="80"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Text="{Binding LateralAxis_mm, UpdateSourceTrigger=LostFocus}" />
+                    </UniformGrid>
+                    <UniformGrid
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock
+                            Width="250"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
                             Text="{ns:Loc LblDomeAzimuthToleranceDegrees}">
                             <TextBlock.ToolTip>
                                 <TextBlock Text="{ns:Loc LblDomeAzimuthToleranceDegreesTooltip}" />

@@ -21,6 +21,7 @@ namespace NINA.Profile {
         double ScopePositionUpDown_mm { get; set; }
         double DomeRadius_mm { get; set; }
         double GemAxis_mm { get; set; }
+        double LateralAxis_mm { get; set; }
         double AzimuthTolerance_degrees { get; set; }
         bool UseDirectFollowing { get; set; }
         bool FindHomeBeforePark { get; set; }

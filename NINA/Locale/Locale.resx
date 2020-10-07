@@ -3813,6 +3813,12 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>If Alt/Az, this should be 0. For an EQ mount, slew RA to +/- 90 degrees, and measure the lateral distance (in mm) from the axis to center of the telescope aperture</value>
   </data>
+  <data name="LblDomeLateralAxisLength" xml:space="preserve">
+    <value>Lateral Axis Length (mm)</value>
+  </data>
+  <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
+    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right when facing the celestial pole.</value>
+  </data>
   <data name="LblDomeRadius" xml:space="preserve">
     <value>Dome Radius (mm)</value>
   </data>
@@ -3820,19 +3826,19 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Measure from the center to the rim of the dome, along the base</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position +E/-W (mm)</value>
+    <value>Scope Position E/W (mm)</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. East/West is relative to true north - the same direction a polar aligned telescope would point. Use a positive number for East, and a negative number for West.</value>
+    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the right when facing the celestial pole.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position +N/-S (mm)</value>
+    <value>Scope Position N/S (mm)</value>
   </data>
   <data name="LblCancelSequence" xml:space="preserve">
     <value>Cancel Sequence</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. North is true north - the same direction a polar aligned telescope would point. Use a positive number for North, and a negative number for South.</value>
+    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is towards the celestial pole.</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
     <value>Pause Sequence</value>

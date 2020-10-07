@@ -29,6 +29,7 @@ namespace NINATest.Dome {
         private DomeSynchronization Initialize(
             double domeRadius = 1000.0,
             double gemAxisLength = 0.0,
+            double lateralAxisLength = 0.0,
             double mountOffsetX = 0.0,
             double mountOffsetY = 0.0,
             double mountOffsetZ = 0.0,
@@ -37,8 +38,9 @@ namespace NINATest.Dome {
             var mockProfileService = new Mock<IProfileService>();
             mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.DomeRadius_mm).Returns(domeRadius);
             mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.GemAxis_mm).Returns(gemAxisLength);
-            mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.ScopePositionEastWest_mm).Returns(mountOffsetX);
-            mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.ScopePositionNorthSouth_mm).Returns(mountOffsetY);
+            mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.LateralAxis_mm).Returns(lateralAxisLength);
+            mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.ScopePositionNorthSouth_mm).Returns(mountOffsetX);
+            mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.ScopePositionEastWest_mm).Returns(mountOffsetY);
             mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.ScopePositionUpDown_mm).Returns(mountOffsetZ);
             this.siteLatitude = siteLatitude;
             this.siteLongitude = siteLongitude;
@@ -103,7 +105,7 @@ namespace NINATest.Dome {
 
         [Test]
         public void NorthOffset_AltAz_Test() {
-            var sut = Initialize(gemAxisLength: 0, mountOffsetY: 500, domeRadius: 1000);
+            var sut = Initialize(gemAxisLength: 0, mountOffsetX: 500, domeRadius: 1000);
 
             // When pointed to the east or west along the celestial equator, we expect the dome azimuth to be +/- 60 degrees, since the mount offset is half of the dome radius
             var eastCoordinates = GetCoordinatesFromAltAz(0, 90);
@@ -116,12 +118,29 @@ namespace NINATest.Dome {
         }
 
         [Test]
+        public void LateralOffset_CelestialPole_Test() {
+            var domeRadius = 1000;
+            var lateralAxisLength = 500;
+            var sut = Initialize(lateralAxisLength: lateralAxisLength, domeRadius: domeRadius);
+
+            // When pointed where the horizon and meridian intersect, we expect the dome azimuth to be +/- 60 degrees, since the lateral offset is half of the dome radius
+            var poleCoordinates = GetCoordinatesFromAltAz(this.siteLatitude, 0);
+
+            var distanceFromScopeOrigin = Math.Sqrt(domeRadius * domeRadius - lateralAxisLength * lateralAxisLength);
+            var northProjectionDistanceToDomeIntersection = distanceFromScopeOrigin * Math.Cos(Angle.ByDegree(this.siteLatitude).Radians);
+            var expectedAzimuth = Math.Atan(lateralAxisLength / northProjectionDistanceToDomeIntersection);
+
+            Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierEast).Equals(Angle.ByRadians(expectedAzimuth), DEGREES_EPSILON));
+            Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierWest).Equals(Angle.ByRadians(-expectedAzimuth), DEGREES_EPSILON));
+        }
+
+        [Test]
         [TestCase(0)]
         [TestCase(200)]
         [TestCase(400)]
         [TestCase(600)]
         public void NorthOffset_AltAz_Test(int length) {
-            var sut = Initialize(gemAxisLength: length, mountOffsetY: 500, domeRadius: 1000);
+            var sut = Initialize(gemAxisLength: length, mountOffsetX: 500, domeRadius: 1000);
 
             // When pointed at the celestial pole, an AltAz should still have an azimuth of 0 as long as the E/W mount offset is 0, regardless of gem length
             var poleCoordinates = GetCoordinatesFromAltAz(this.siteLatitude, 0);

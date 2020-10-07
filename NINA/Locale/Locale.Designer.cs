@@ -3855,6 +3855,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Lateral Axis Length (mm).
+        /// </summary>
+        internal static string LblDomeLateralAxisLength {
+            get {
+                return ResourceManager.GetString("LblDomeLateralAxisLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right when facing the celestial pole..
+        /// </summary>
+        internal static string LblDomeLateralAxisLengthTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeLateralAxisLengthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Dome Source.
         /// </summary>
         internal static string LblDomeNoSource {
@@ -3891,7 +3909,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scope Position +E/-W (mm).
+        ///   Looks up a localized string similar to Scope Position E/W (mm).
         /// </summary>
         internal static string LblDomeScopeEW {
             get {
@@ -3900,7 +3918,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Measure the East or West offset (in mm) of the center of the mount from the center of the dome. East/West is relative to true north - the same direction a polar aligned telescope would point. Use a positive number for East, and a negative number for West..
+        ///   Looks up a localized string similar to Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the right when facing the celestial pole..
         /// </summary>
         internal static string LblDomeScopeEWTooltip {
             get {
@@ -3909,7 +3927,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scope Position +N/-S (mm).
+        ///   Looks up a localized string similar to Scope Position N/S (mm).
         /// </summary>
         internal static string LblDomeScopeNS {
             get {
@@ -3918,7 +3936,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Measure the North or South offset (in mm) of the center of the mount from the center of the dome. North is true north - the same direction a polar aligned telescope would point. Use a positive number for North, and a negative number for South..
+        ///   Looks up a localized string similar to Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is towards the celestial pole..
         /// </summary>
         internal static string LblDomeScopeNSTooltip {
             get {
