@@ -27,6 +27,8 @@ using System.Threading.Tasks;
 namespace NINA.Model.MyTelescope {
 
     internal class AscomTelescope : BaseINPC, ITelescope, IDisposable {
+        private static readonly TimeSpan MERIDIAN_FLIP_SLEW_RETRY_WAIT = TimeSpan.FromMinutes(1);
+        private static readonly int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 10;
 
         public AscomTelescope(string telescopeId, string name, IProfileService profileService) {
             this.profileService = profileService;
@@ -982,6 +984,25 @@ namespace NINA.Model.MyTelescope {
             private set { _hasUnknownEpoch = value; RaisePropertyChanged(); }
         }
 
+        private async Task<bool> MeridianFlipSetPierSide() {
+            try {
+                var pierside = SideOfPier;
+                var flippedside = pierside == PierSide.pierEast ? PierSide.pierWest : PierSide.pierEast;
+                TargetSideOfPier = flippedside;
+                SideOfPier = flippedside;
+
+                //Check if setting the pier side will result already in a flip
+                await Utility.Utility.Wait(TimeSpan.FromSeconds(2));
+                while (Slewing) {
+                    await Utility.Utility.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval));
+                }
+                return true;
+            } catch (Exception ex) {
+                Logger.Error("Failed to flip side of pier", ex);
+                return false;
+            }
+        }
+
         public async Task<bool> MeridianFlip(Coordinates targetCoordinates) {
             var success = false;
             try {
@@ -991,21 +1012,29 @@ namespace NINA.Model.MyTelescope {
 
                 targetCoordinates = targetCoordinates.Transform(EquatorialSystem);
                 TargetCoordinates = targetCoordinates;
-                if (CanSetPierSide) {
-                    var pierside = SideOfPier;
-                    var flippedside = pierside == PierSide.pierEast ? PierSide.pierWest : PierSide.pierEast;
-                    TargetSideOfPier = flippedside;
-                    SideOfPier = flippedside;
-
-                    //Check if setting the pier side will result already in a flip
-                    await Utility.Utility.Wait(TimeSpan.FromSeconds(2));
-                    while (Slewing) {
-                        await Utility.Utility.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval));
+                bool setPierSide = false;
+                int retries = 0;
+                do {
+                    if (CanSetPierSide && !setPierSide) {
+                        setPierSide = await MeridianFlipSetPierSide();
                     }
-                }
 
-                SlewToCoordinates(targetCoordinates);
-                success = true;
+                    success = SlewToCoordinates(targetCoordinates);
+                    if (!success) {
+                        if (retries++ >= MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS) {
+                            Logger.Error("Failed to slew for Meridian Flip, even after retrying");
+                            break;
+                        } else {
+                            Logger.Error($"Failed to slew for Meridian Flip. Retry {retries} of {MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS} times with a {MERIDIAN_FLIP_SLEW_RETRY_WAIT} wait between each");
+                            await Task.Delay(MERIDIAN_FLIP_SLEW_RETRY_WAIT);
+                        }
+                    }
+                } while (!success);
+
+                if (success && retries > 0) {
+                    Logger.Info("Successfully slewed for Meridian Flip after retrying");
+                    Notification.ShowWarning(String.Format(Locale.Loc.Instance["LblMeridianFlipWaitLonger"], retries));
+                }
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(Locale.Loc.Instance["LblMeridianFlipFailed"]);
@@ -1099,7 +1128,7 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        public void SlewToCoordinates(Coordinates coordinates) {
+        public bool SlewToCoordinates(Coordinates coordinates) {
             if (Connected && CanSlew && !AtPark) {
                 try {
                     if (!Tracking) {
@@ -1107,6 +1136,7 @@ namespace NINA.Model.MyTelescope {
                     }
                     TargetCoordinates = coordinates.Transform(EquatorialSystem);
                     _telescope.SlewToCoordinates(TargetCoordinates.RA, TargetCoordinates.Dec);
+                    return true;
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowError(e.Message);
@@ -1114,6 +1144,7 @@ namespace NINA.Model.MyTelescope {
                     TargetCoordinates = null;
                 }
             }
+            return false;
         }
 
         public void StopSlew() {

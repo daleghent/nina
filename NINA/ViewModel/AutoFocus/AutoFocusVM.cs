@@ -387,17 +387,17 @@ namespace NINA.ViewModel {
             }
             var seq = new CaptureSequence(expTime, CaptureSequence.ImageTypes.SNAPSHOT, filter, null, 1);
             seq.EnableSubSample = _setSubSample;
-            if (filter.AutoFocusBinning != null) {
+            if (filter?.AutoFocusBinning != null) {
                 seq.Binning = filter.AutoFocusBinning;
             } else {
                 seq.Binning = new BinningMode(profileService.ActiveProfile.FocuserSettings.AutoFocusBinning, profileService.ActiveProfile.FocuserSettings.AutoFocusBinning);
             }
 
-            if (filter.AutoFocusOffset > -1) {
+            if (filter?.AutoFocusOffset > -1) {
                 seq.Offset = filter.AutoFocusOffset;
             }
 
-            if (filter.AutoFocusGain > -1) {
+            if (filter?.AutoFocusGain > -1) {
                 seq.Gain = filter.AutoFocusGain;
             }
 

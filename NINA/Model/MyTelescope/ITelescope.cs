@@ -62,7 +62,7 @@ namespace NINA.Model.MyTelescope {
 
         void Setpark();
 
-        void SlewToCoordinates(Coordinates coordinates);
+        bool SlewToCoordinates(Coordinates coordinates);
 
         void StopSlew();
 

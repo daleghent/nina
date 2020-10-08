@@ -4014,4 +4014,7 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblUnknownImportFormat" xml:space="preserve">
     <value>Unknown format to import targets</value>
   </data>
+  <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
+    <value>Add {0} to Minutes after Meridian</value>
+  </data>
 </root>

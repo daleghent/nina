@@ -6454,6 +6454,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add {0} to Minutes after Meridian.
+        /// </summary>
+        internal static string LblMeridianFlipWaitLonger {
+            get {
+                return ResourceManager.GetString("LblMeridianFlipWaitLonger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Meridian in.
         /// </summary>
         internal static string LblMeridianIn {
