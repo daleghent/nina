@@ -35,6 +35,8 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Xml.Linq;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 
 namespace NINA.ViewModel.FramingAssistant {
     internal class FramingAssistantVM : BaseVM, ICameraConsumer, IFramingAssistantVM {
@@ -741,6 +743,17 @@ namespace NINA.ViewModel.FramingAssistant {
                 skySurveyImage.FoVWidth = Astrometry.ArcsecToArcmin(psResult.Pixscale * skySurveyImage.Image.PixelWidth);
                 skySurveyImage.FoVHeight = Astrometry.ArcsecToArcmin(psResult.Pixscale * skySurveyImage.Image.PixelHeight);
                 skySurveyImage.Rotation = rotation;
+
+                if (psResult.Flipped) {
+                    var tb = new TransformedBitmap();
+                    tb.BeginInit();
+                    tb.Source = skySurveyImage.Image;
+                    var transform = new ScaleTransform(-1, 1, 0, 0);
+                    tb.Transform = transform;
+                    tb.EndInit();
+                    skySurveyImage.Image = tb;
+                }
+
                 this.DSO.Coordinates = psResult.Coordinates;
                 RaiseCoordinatesChanged();
             } else {
