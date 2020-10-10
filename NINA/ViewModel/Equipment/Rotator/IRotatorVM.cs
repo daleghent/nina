@@ -19,6 +19,8 @@ namespace NINA.ViewModel.Equipment.Rotator {
 
     public interface IRotatorVM : IDeviceVM<RotatorInfo>, IDockableVM {
 
+        void Sync(float skyAngle);
+
         Task<float> Move(float position);
 
         Task<float> MoveRelative(float position);
