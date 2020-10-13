@@ -54,6 +54,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Relative Focusers can now be connected and will be simulated to behave like absolute focusers
 - It is possible now to import Telescopius Observing Lists and Telescopius Mosaic Plans via CSV
 - Added Ultra Mode and Dew Heater Controls for supported Altair Cameras.
+- New translation for Greek (Ελληνικά) has been added
 
 ## Improvements
 - Canon CR3 image format is now supported (use FreeImage as your RAW converter)
@@ -78,6 +79,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Safeguard against NaN values for Hfr Std Deviation which could ruin an autofocus run
 - Fix issue for QHY cameras to dither too early when camera was still exposing
 - Images that are mirrored (e.g. on a scope like a hyperstar) now have a correct rotation inside the framing wizard
+- Fixed a problem with Nikon Shutterspeeds between 1s and 30s not being parsed correctly in certain locale settings
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 48.17729.2020.922

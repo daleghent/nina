@@ -368,8 +368,14 @@ namespace NINA.Model.MyCamera {
                             Notification.ShowError(Locale.Loc.Instance["LblCameraConnectionLost"]);
                             Disconnect();
                         }
-                    } catch (Exception) {
-                        Disconnect();
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                        Notification.ShowError(Locale.Loc.Instance["LblCameraConnectionLost"]);
+                        try {
+                            Disconnect();
+                        } catch (Exception disconnectEx) {
+                            Logger.Error(disconnectEx);
+                        }
                     }
                     return val;
                 } else {
