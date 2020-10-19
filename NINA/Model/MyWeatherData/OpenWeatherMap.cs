@@ -127,7 +127,7 @@ namespace NINA.Model.MyWeatherData {
         }
 
         private double _averagePeriod;
-        public double AveragePeriod { get => double.NaN; set => _averagePeriod = value; }
+        public double AveragePeriod { get => _averagePeriod; set => _averagePeriod = value; }
 
         public double RainRate { get => double.NaN; }
 
@@ -141,6 +141,7 @@ namespace NINA.Model.MyWeatherData {
 
         public double WindGust { get => double.NaN; }
 
+        public string OWMAPIKey;
         private bool _connected;
 
         public bool Connected {
@@ -154,22 +155,12 @@ namespace NINA.Model.MyWeatherData {
         private async Task OWMUpdateWorker(CancellationToken ct) {
             try {
                 while (true) {
-                    if (string.IsNullOrEmpty(GetOWMAPIKey())) {
-                        Notification.ShowError("There is no OpenWeatherMap API key configured.");
-                        Logger.Warning("OWM: No API key has been set. Sleeping for 30 seconds until next try");
-
-                        // Sleep for 30 seconds before trying again
-                        await Task.Delay(TimeSpan.FromSeconds(30), ct);
-
-                        return;
-                    }
-
                     var latitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
                     var longitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
 
                     var url = _owmCurrentWeatherBaseURL + "?appid={0}&lat={1}&lon={2}";
 
-                    var request = new HttpGetRequest(url, GetOWMAPIKey(), latitude, longitude);
+                    var request = new HttpGetRequest(url, OWMAPIKey, latitude, longitude);
                     string result = await request.Request(new CancellationToken());
 
                     JObject o = JObject.Parse(result);
@@ -207,6 +198,7 @@ namespace NINA.Model.MyWeatherData {
                 Logger.Warning("OWM: No API key has been set");
 
                 Connected = false;
+                OWMAPIKey = GetOWMAPIKey();
                 return Task.FromResult(false);
             }
 
