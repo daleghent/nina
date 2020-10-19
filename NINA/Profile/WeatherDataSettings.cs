@@ -31,6 +31,7 @@ namespace NINA.Profile {
             DisplayFahrenheit = false;
             DisplayImperial = false;
             OpenWeatherMapAPIKey = string.Empty;
+            TheWeatherCompanyAPIKey = string.Empty;
         }
 
         private string id = string.Empty;
@@ -81,6 +82,19 @@ namespace NINA.Profile {
             }
             set {
                 openWeatherMapAPIKey = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string theWeatherCompanyAPIKey = string.Empty;
+
+        [DataMember]
+        public string TheWeatherCompanyAPIKey {
+            get {
+                return theWeatherCompanyAPIKey;
+            }
+            set {
+                theWeatherCompanyAPIKey = value;
                 RaisePropertyChanged();
             }
         }

@@ -19,5 +19,6 @@ namespace NINA.Profile {
         bool DisplayFahrenheit { get; set; }
         bool DisplayImperial { get; set; }
         string OpenWeatherMapAPIKey { get; set; }
+        string TheWeatherCompanyAPIKey { get; set; }
     }
 }

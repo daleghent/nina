@@ -24,23 +24,23 @@ using System.Threading.Tasks;
 
 namespace NINA.Model.MyWeatherData {
 
-    internal class OpenWeatherMap : BaseINPC, IWeatherData {
+    internal class TheWeatherCompany : BaseINPC, IWeatherData {
         private const string _category = "N.I.N.A.";
-        private const string _driverId = "NINA.OpenWeatherMap.Client";
-        private const string _driverName = "OpenWeatherMap";
+        private const string _driverId = "NINA.WeatherCompany.Client";
+        private const string _driverName = "TheWeatherCompany";
         private const string _driverVersion = "1.0";
 
-        // OWM current weather API base URL
-        private const string _owmCurrentWeatherBaseURL = "https://api.openweathermap.org/data/2.5/weather";
+        // TWC current weather API base URL
+        private const string _twcCurrentWeatherBaseURL = "https://api.weather.com/v1/";
 
-        // OWM updates weather data every 10 minutes.
+        // TWC updates weather data every 10 minutes.
         // They strongly suggest that the API not be queried more frequent than that.
-        private const double _owmQueryPeriod = 600;
+        private const double _twcQueryPeriod = 600;
 
         private Task updateWorkerTask;
-        private CancellationTokenSource OWMUpdateWorkerCts;
+        private CancellationTokenSource TWCUpdateWorkerCts;
 
-        public OpenWeatherMap(IProfileService profileService) {
+        public TheWeatherCompany(IProfileService profileService) {
             this.profileService = profileService;
         }
 
@@ -52,11 +52,11 @@ namespace NINA.Model.MyWeatherData {
 
         public string Name => _driverName;
 
-        public string DriverInfo => Locale.Loc.Instance["LblOpenWeatherMapClientInfo"];
+        public string DriverInfo => Locale.Loc.Instance["LblTheWeatherCompanyClientInfo"];
 
         public string DriverVersion => _driverVersion;
 
-        public string Description => Locale.Loc.Instance["LblOpenWeatherMapClientDescription"];
+        public string Description => Locale.Loc.Instance["LblTheWeatherCompanyClientDescription"];
 
         public bool HasSetupDialog => false;
 
@@ -126,7 +126,7 @@ namespace NINA.Model.MyWeatherData {
             }
         }
 
-        private double _averagePeriod;
+        private double _averagePeriod = double.NaN;
         public double AveragePeriod { get => _averagePeriod; set => _averagePeriod = value; }
 
         public double RainRate { get => double.NaN; }
@@ -141,7 +141,8 @@ namespace NINA.Model.MyWeatherData {
 
         public double WindGust { get => double.NaN; }
 
-        public string OWMAPIKey;
+        public string TWCAPIKey;
+
         private bool _connected;
 
         public bool Connected {
@@ -152,73 +153,102 @@ namespace NINA.Model.MyWeatherData {
             }
         }
 
-        private async Task OWMUpdateWorker(CancellationToken ct) {
+        private async Task TWCUpdateWorker(CancellationToken ct) {
             try {
                 while (true) {
                     var latitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
                     var longitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
 
-                    var url = _owmCurrentWeatherBaseURL + "?appid={0}&lat={1}&lon={2}";
+                    // var url = _twcCurrentWeatherBaseURL + "?appid={0}&lat={1}&lon={2}";
+                    var url = _twcCurrentWeatherBaseURL + "/geocode/{1}/{2}/observations.json?language=en-US&units=m&apiKey={0}";
 
-                    var request = new HttpGetRequest(url, OWMAPIKey, latitude, longitude);
+                    var request = new HttpGetRequest(url, TWCAPIKey, latitude, longitude);
                     string result = await request.Request(new CancellationToken());
 
                     JObject o = JObject.Parse(result);
-                    var openweatherdata = o.ToObject<OpenWeatherDataResponse>();
+                    var WeatherCompanydata = o.ToObject<WeatherCompanyDataResponse>();
 
-                    // temperature is provided in Kelvin
-                    Temperature = openweatherdata.main.temp - 273.15;
+                    Temperature = WeatherCompanydata.observation.temp;
 
                     // pressure is hectopascals
-                    Pressure = openweatherdata.main.pressure;
+                    Pressure = WeatherCompanydata.observation.pressure;
 
                     // humidity in percent
-                    Humidity = openweatherdata.main.humidity;
+                    Humidity = WeatherCompanydata.observation.rh;
 
                     // wind speed in meters per second
-                    WindSpeed = openweatherdata.wind.speed;
+                    WindSpeed = WeatherCompanydata.observation.wspd;
 
                     // wind heading in degrees
-                    WindDirection = openweatherdata.wind.deg;
+                    WindDirection = WeatherCompanydata.observation.wdir;
 
-                    // cloudiness in percent
-                    CloudCover = openweatherdata.clouds.all;
+                    // convert METAR codes to a percentage
+                    switch (WeatherCompanydata.observation.clds) {
+                        case "SKC": // Sky Clear
+                            CloudCover = 0;
+                            break;
 
-                    // Sleep thread until the next OWM API query
-                    await Task.Delay(TimeSpan.FromSeconds(_owmQueryPeriod), ct);
+                        case "CLR": // Clear below 12000AGL
+                            CloudCover = 20;
+                            break;
+
+                        case "SCT": // Scattered Clouds
+                            CloudCover = 40;
+                            break;
+
+                        case "FEW": // Few Clouds
+                            CloudCover = 60;
+                            break;
+
+                        case "BKN": // Broken Clouds
+                            CloudCover = 80;
+                            break;
+
+                        case "OVC": // Overcast
+                            CloudCover = 100;
+                            break;
+
+                        default:
+                            // Should never reach here
+                            CloudCover = 100;
+                            break;
+                    }
+
+                    // Sleep thread until the next TWC API query
+                    await Task.Delay(TimeSpan.FromSeconds(_twcQueryPeriod), ct);
                 }
             } catch (OperationCanceledException) {
-                Logger.Debug("OWM: OWMUpdate task cancelled");
+                Logger.Debug("TWC: TWCUpdate task cancelled");
             }
         }
 
         public Task<bool> Connect(CancellationToken ct) {
-            if (string.IsNullOrEmpty(GetOWMAPIKey())) {
-                Notification.ShowError("There is no OpenWeatherMap API key configured.");
-                Logger.Warning("OWM: No API key has been set");
+            if (string.IsNullOrEmpty(GetTWCAPIKey())) {
+                Notification.ShowError("There is no TheWeatherCompany API key configured.");
+                Logger.Warning("TWC: No API key has been set");
 
                 Connected = false;
-                OWMAPIKey = GetOWMAPIKey();
+                TWCAPIKey = GetTWCAPIKey();
                 return Task.FromResult(false);
             }
 
-            Logger.Debug("OWM: Starting OWMUpdate task");
-            OWMUpdateWorkerCts?.Dispose();
-            OWMUpdateWorkerCts = new CancellationTokenSource();
-            updateWorkerTask = OWMUpdateWorker(OWMUpdateWorkerCts.Token);
+            Logger.Debug("TWC: Starting TWCUpdate task");
+            TWCUpdateWorkerCts?.Dispose();
+            TWCUpdateWorkerCts = new CancellationTokenSource();
+            updateWorkerTask = TWCUpdateWorker(TWCUpdateWorkerCts.Token);
 
             Connected = true;
             return Task.FromResult(true);
         }
 
         public void Disconnect() {
-            Logger.Debug("OWM: Stopping OWMUpdate task");
+            Logger.Debug("TWC: Stopping TWCUpdate task");
 
             if (Connected == false)
                 return;
 
-            OWMUpdateWorkerCts.Cancel();
-            OWMUpdateWorkerCts.Dispose();
+            TWCUpdateWorkerCts.Cancel();
+            TWCUpdateWorkerCts.Dispose();
 
             Connected = false;
         }
@@ -226,38 +256,22 @@ namespace NINA.Model.MyWeatherData {
         public void SetupDialog() {
         }
 
-        private string GetOWMAPIKey() {
-            return profileService.ActiveProfile.WeatherDataSettings.OpenWeatherMapAPIKey;
+        private string GetTWCAPIKey() {
+            return profileService.ActiveProfile.WeatherDataSettings.TheWeatherCompanyAPIKey;
         }
 
-        public class OpenWeatherDataResponse {
-            public OpenWeatherDataResponseCoord coord { get; set; }
-            public OpenWeatherDataResponseMain main { get; set; }
-            public OpenWeatherDataResponseWind wind { get; set; }
-            public OpenWeatherDataResponseClouds clouds { get; set; }
+        public class WeatherCompanyDataResponse {
+            public WeatherCompanyDataResponseObs observation { get; set; }
             public int id { get; set; }
             public string name { get; set; }
 
-            public class OpenWeatherDataResponseMain {
+            public class WeatherCompanyDataResponseObs {
                 public double temp { get; set; }
                 public double pressure { get; set; }
-                public double humidity { get; set; }
-                public double temp_min { get; set; }
-                public double temp_max { get; set; }
-            }
-
-            public class OpenWeatherDataResponseCoord {
-                public double lon { get; set; }
-                public double lat { get; set; }
-            }
-
-            public class OpenWeatherDataResponseClouds {
-                public double all { get; set; }
-            }
-
-            public class OpenWeatherDataResponseWind {
-                public double speed { get; set; }
-                public double deg { get; set; }
+                public double rh { get; set; }
+                public double wspd { get; set; }
+                public double wdir { get; set; }
+                public string clds { get; set; }
             }
         }
     }

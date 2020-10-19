@@ -40,6 +40,7 @@ namespace NINA.ViewModel.Equipment.WeatherData {
 
             Devices.Add(new OpenWeatherMap(this.profileService));
             Devices.Add(new UltimatePowerboxV2(profileService));
+            Devices.Add(new TheWeatherCompany(this.profileService));
 
             DetermineSelectedDevice(profileService.ActiveProfile.WeatherDataSettings.Id);
         }
