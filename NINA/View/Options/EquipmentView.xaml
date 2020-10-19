@@ -639,7 +639,7 @@
                                     VerticalAlignment="Center"
                                     DockPanel.Dock="Right"
                                     Text="">
-                                    <Hyperlink Command="{Binding Source={StaticResource AppVM}, Path=OptionsVM.OpenWebRequestCommand}" CommandParameter="https://weather.service-now.com/apicustomer">
+                                    <Hyperlink Command="{Binding ElementName=UC, Path=DataContext.OpenWebRequestCommand}" CommandParameter="https://weather.service-now.com/apicustomer">
                                         <Run Text="?" />
                                     </Hyperlink>
                                 </TextBlock>
