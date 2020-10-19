@@ -11,7 +11,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyGuider {
-    class MetaGuideGuider : BaseINPC, IGuider {
+
+    internal class MetaGuideGuider : BaseINPC, IGuider {
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern uint RegisterWindowMessage(string lpString);
 
@@ -50,9 +52,11 @@ namespace NINA.Model.MyGuider {
 
         public string Name => "MetaGuide";
         public string Id => "MetaGuide";
+
         public event EventHandler<IGuideStep> GuideEvent;
 
         private bool connected;
+
         public bool Connected {
             get {
                 return connected;
@@ -67,6 +71,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private double pixelScale;
+
         public double PixelScale {
             get {
                 return pixelScale;
@@ -80,6 +85,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private string state = "Not Ready";
+
         public string State {
             get {
                 return state;
@@ -93,6 +99,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private volatile bool isLocked = false;
+
         public bool IsLocked {
             get {
                 return this.isLocked;
@@ -107,6 +114,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private volatile bool isGuiding = false;
+
         public bool IsGuiding {
             get {
                 return this.isGuiding;
@@ -121,6 +129,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private double intensity;
+
         public double Intensity {
             get {
                 return intensity;
@@ -134,6 +143,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private double fwhm;
+
         public double FWHM {
             get {
                 return fwhm;
@@ -147,6 +157,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private double seeing;
+
         public double Seeing {
             get {
                 return seeing;
@@ -160,6 +171,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private CalibrationState calibrationState;
+
         public CalibrationState CalibrationState {
             get {
                 return calibrationState;
@@ -173,6 +185,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private double focalLength;
+
         public double FocalLength {
             get {
                 return focalLength;
@@ -186,6 +199,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private double pixelSize;
+
         public double PixelSize {
             get {
                 return pixelSize;
@@ -208,13 +222,13 @@ namespace NINA.Model.MyGuider {
 
         public string DriverVersion => "1.0";
 
-        public async Task<bool> AutoSelectGuideStar() {
+        public Task<bool> AutoSelectGuideStar() {
             if (!this.profileService.ActiveProfile.GuiderSettings.MetaGuideLockWhenGuiding) {
-                return true;
+                return Task.FromResult(true);
             }
 
             // Fire and forget
-            return PostAndCheckMessage("LockOn", remoteLockMsg, 0, 0);
+            return Task.FromResult(PostAndCheckMessage("LockOn", remoteLockMsg, 0, 0));
         }
 
         public async Task<bool> Connect(CancellationToken token) {
@@ -354,6 +368,7 @@ namespace NINA.Model.MyGuider {
         private bool guidingHaltedDueToLowIntensity = false;
         private Task lowIntensityChangeGuidingTask = Task.CompletedTask;
         private volatile int lowIntensityGuidingAttemptCount = 0;
+
         private void Listener_OnStatus(MetaGuideStatusMsg message) {
             MetaGuideGuideMsg guideMsg;
             lock (this.lockobj) {

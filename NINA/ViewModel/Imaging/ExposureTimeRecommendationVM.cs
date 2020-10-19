@@ -41,7 +41,6 @@ namespace NINA.ViewModel.Imaging {
         private CancellationTokenSource _cts;
         private string _sharpCapSensorAnalysisDisabledValue;
         private ImmutableDictionary<string, SharpCapSensorAnalysisData> _sharpCapSensorAnalysisData;
-        private static double WARN_THRESHOLD_FOR_SHARPCAP_GOODNESS_OF_FIT = 0.8;
 
         public ExposureCalculatorVM(IProfileService profileService, IImagingMediator imagingMediator, ISharpCapSensorAnalysisReader sharpCapSensorAnalysisReader,
             ICameraMediator cameraMediator)
@@ -142,13 +141,13 @@ namespace NINA.ViewModel.Imaging {
             return true;
         }
 
-        private async Task<bool> ReloadSensorAnalysis(object obj) {
+        private Task<bool> ReloadSensorAnalysis(object obj) {
             var path = String.IsNullOrEmpty(this.profileService.ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder)
                 ? SharpCapSensorAnalysisConstants.DEFAULT_SHARPCAP_SENSOR_ANALYSIS_PATH
                 : this.profileService.ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder;
             var sensorAnalysisData = LoadSensorAnalysisData(path);
             Notification.ShowInformation(String.Format(Locale.Loc.Instance["LblSharpCapSensorAnalysisLoadedFormat"], sensorAnalysisData.Count));
-            return true;
+            return Task.FromResult(true);
         }
 
         public IAsyncCommand DetermineExposureTimeCommand { get; private set; }

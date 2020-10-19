@@ -20,11 +20,8 @@ using System.Threading.Tasks;
 namespace NINA.Model.MyGuider {
 
     public interface IGuider : IDevice {
-        bool Connected { get; }
         double PixelScale { get; set; }
         string State { get; }
-        string Name { get; }
-        string Id { get; }
 
         event EventHandler<IGuideStep> GuideEvent;
 

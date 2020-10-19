@@ -11,7 +11,6 @@ namespace NINA.ViewModel.Imaging {
     internal interface IAnchorableSnapshotVM : IDockableVM {
         CameraInfo CameraInfo { get; set; }
         ICommand CancelSnapCommand { get; }
-        string ContentId { get; }
         bool IsLooping { get; set; }
         bool LiveViewEnabled { get; set; }
         bool Loop { get; set; }

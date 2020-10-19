@@ -13,8 +13,6 @@ namespace NINA.ViewModel.Interfaces {
 
         void Dispose();
 
-        void Hide(object o);
-
         void UpdateDeviceInfo(TelescopeInfo deviceInfo);
     }
 }

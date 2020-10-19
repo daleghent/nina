@@ -98,6 +98,7 @@ namespace NINA.Model.MyCamera {
                 try {
                     this.Camera.DewHeaterOn = this.profileService.ActiveProfile.CameraSettings.DewHeaterOn.Value;
                 } catch (Exception e) {
+                    Logger.Debug(e.Message);
                     this.profileService.ActiveProfile.CameraSettings.DewHeaterOn = null;
                 }
             }

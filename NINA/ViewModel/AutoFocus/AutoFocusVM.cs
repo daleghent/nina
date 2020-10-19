@@ -187,12 +187,12 @@ namespace NINA.ViewModel {
             }
         }
 
-        public async Task<AsyncObservableCollection<Chart>> ListChartsFromFs() {
+        public Task<AsyncObservableCollection<Chart>> ListChartsFromFs() {
             var files = Directory.GetFiles(Path.Combine(ReportDirectory));
             foreach (String file in files) {
                 ChartList.Add(new Chart(Path.GetFileName(file), file));
             }
-            return ChartList;
+            return Task.FromResult(ChartList);
         }
 
         public void LoadChart(Object obj) {

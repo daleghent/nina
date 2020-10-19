@@ -32,7 +32,7 @@ namespace NINA.Utility.Astrometry {
     internal class EarthRotationParameterUpdater {
 
         private async Task<DateTime> UpdateEarthRotationParameters(DateTime startDate) {
-            var maxUnix = 0l;
+            var maxUnix = 0L;
             using (MyStopWatch.Measure()) {
                 var startDateUnix = Utility.DateTimeToUnixTimeStamp(startDate);
                 var data = QueryOnlineData();

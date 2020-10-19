@@ -103,8 +103,8 @@ namespace NINA.Model.MyPlanetarium {
             }
         }
 
-        public async Task<double> GetRotationAngle() {
-            return double.NaN;
+        public Task<double> GetRotationAngle() {
+            return Task.FromResult(double.NaN);
         }
 
         private bool Match(string input, string pattern, out string result) {

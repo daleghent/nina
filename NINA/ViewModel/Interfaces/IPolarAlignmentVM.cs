@@ -40,8 +40,6 @@ namespace NINA.ViewModel.Interfaces {
 
         void Dispose();
 
-        void Hide(object o);
-
         Task<bool> SlewToMeridianOffset(double meridianOffset, double declination);
 
         void UpdateDeviceInfo(CameraInfo cameraInfo);

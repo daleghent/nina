@@ -1054,7 +1054,6 @@ namespace NINA.Model.MyCamera {
 
         public void StartExposure(CaptureSequence sequence) {
             RaiseIfNotConnected();
-            uint rv;
             uint startx, starty, sizex, sizey;
             bool isSnap;
 
@@ -1360,6 +1359,6 @@ namespace NINA.Model.MyCamera {
             return false;
         }
 
-    #endregion "Quirks"
+        #endregion "Quirks"
     }
 }

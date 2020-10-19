@@ -15,7 +15,6 @@ namespace NINA.ViewModel.Imaging {
         IProfile ActiveProfile { get; }
         CameraInfo CameraInfo { get; }
         ICommand CancelSolveCommand { get; }
-        string ContentId { get; }
         PlateSolveResult PlateSolveResult { get; set; }
         ObservableCollection<PlateSolveResult> PlateSolveResultList { get; set; }
         double RepeatThreshold { get; set; }
