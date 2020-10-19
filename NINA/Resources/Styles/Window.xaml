@@ -42,103 +42,103 @@
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <StackPanel
-                                Margin="2.5,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                    <Image
-                                    Width="18"
-                                    Height="18"
+                                    Margin="2.5,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Source="/NINA;component/Resources/Logo_Nina.png" />
+                                    Orientation="Horizontal">
+                                    <Image
+                                        Width="18"
+                                        Height="18"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Source="/NINA;component/Resources/Logo_Nina.png" />
                                     <TextBlock
-                                    Margin="4,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Foreground="{StaticResource ButtonForegroundDisabledBrush}"
-                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
+                                        Margin="4,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource ButtonForegroundDisabledBrush}"
+                                        Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Title}" />
                                     <TextBlock
-                                    Margin="4,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Foreground="{StaticResource ButtonForegroundDisabledBrush}"
-                                    Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.Version}" />
-                                <TextBlock
-                                    Margin="4,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Foreground="{StaticResource ButtonForegroundDisabledBrush}"
-                                    Text=" - " />
+                                        Margin="4,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource ButtonForegroundDisabledBrush}"
+                                        Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.Version}" />
                                     <TextBlock
-                                    Margin="4,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Foreground="{StaticResource ButtonForegroundDisabledBrush}"
-                                    Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.Name}" />
-                            </StackPanel>
+                                        Margin="4,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource ButtonForegroundDisabledBrush}"
+                                        Text=" - " />
+                                    <TextBlock
+                                        Margin="4,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Foreground="{StaticResource ButtonForegroundDisabledBrush}"
+                                        Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.Name}" />
+                                </StackPanel>
 
                                 <StackPanel
-                                Margin="0,0,2.5,0"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
+                                    Margin="0,0,2.5,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal">
                                     <Button
-                                    Height="15"
-                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.VersionCheckVM.ShowDownloadCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}"
-                                    Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.VersionCheckVM.UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                        Height="15"
+                                        Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.VersionCheckVM.ShowDownloadCommand}"
+                                        Style="{StaticResource SecondaryBackgroundButton}"
+                                        Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.VersionCheckVM.UpdateAvailable, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource WindowButtonTextBlock}"
-                                            Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.VersionCheckVM.UpdateAvailableText}" />
-                                        <Path
-                                            Margin="2"
-                                            Data="{StaticResource DownloadSVG}"
-                                            Stretch="Uniform"
-                                            Style="{StaticResource WindowButtonPath}" />
+                                                VerticalAlignment="Center"
+                                                Style="{StaticResource WindowButtonTextBlock}"
+                                                Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.VersionCheckVM.UpdateAvailableText}" />
+                                            <Path
+                                                Margin="2"
+                                                Data="{StaticResource DownloadSVG}"
+                                                Stretch="Uniform"
+                                                Style="{StaticResource WindowButtonPath}" />
                                         </StackPanel>
                                     </Button>
                                     <Button
-                                    Width="20"
-                                    Height="15"
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Right"
-                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.MinimizeWindowCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                        Width="20"
+                                        Height="15"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Right"
+                                        Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.MinimizeWindowCommand}"
+                                        Style="{StaticResource SecondaryBackgroundButton}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
                                         <Path
-                                        Margin="2,12,2,2"
-                                        VerticalAlignment="Bottom"
-                                        Data="{StaticResource MinimizeWindowSVG}"
-                                        Stretch="Uniform"
-                                        Style="{StaticResource WindowButtonPath}" />
+                                            Margin="2,12,2,2"
+                                            VerticalAlignment="Bottom"
+                                            Data="{StaticResource MinimizeWindowSVG}"
+                                            Stretch="Uniform"
+                                            Style="{StaticResource WindowButtonPath}" />
                                     </Button>
                                     <Button
-                                    Width="20"
-                                    Height="15"
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Right"
-                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.MaximizeWindowCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                        Width="20"
+                                        Height="15"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Right"
+                                        Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.MaximizeWindowCommand}"
+                                        Style="{StaticResource SecondaryBackgroundButton}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
                                         <Path
-                                        Margin="2"
-                                        Data="{StaticResource MaximizeSVG}"
-                                        Stretch="Uniform"
-                                        Style="{StaticResource WindowButtonPath}" />
+                                            Margin="2"
+                                            Data="{StaticResource MaximizeSVG}"
+                                            Stretch="Uniform"
+                                            Style="{StaticResource WindowButtonPath}" />
                                     </Button>
                                     <Button
-                                    Width="20"
-                                    Height="15"
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Right"
-                                    Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.ExitCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}"
-                                    WindowChrome.IsHitTestVisibleInChrome="True">
+                                        Width="20"
+                                        Height="15"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Right"
+                                        Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=DataContext.AppVM.ExitCommand}"
+                                        Style="{StaticResource SecondaryBackgroundButton}"
+                                        WindowChrome.IsHitTestVisibleInChrome="True">
                                         <Path
-                                        Margin="2"
-                                        Data="{StaticResource CancelSVG}"
-                                        Stretch="Uniform"
-                                        Style="{StaticResource WindowButtonPath}" />
+                                            Margin="2"
+                                            Data="{StaticResource CancelSVG}"
+                                            Stretch="Uniform"
+                                            Style="{StaticResource WindowButtonPath}" />
                                     </Button>
                                 </StackPanel>
 
