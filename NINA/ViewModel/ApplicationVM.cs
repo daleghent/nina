@@ -28,7 +28,7 @@ using System.Windows.Input;
 
 namespace NINA.ViewModel {
     internal class ApplicationVM : BaseVM, IApplicationVM, ICameraConsumer {
-        public ApplicationVM(IProfileService profileService, ISequenceMediator sequenceMediator, ProjectVersion projectVersion, ICameraMediator cameraMediator, IApplicationMediator applicationMediator) : base(profileService) {
+        public ApplicationVM(IProfileService profileService, ProjectVersion projectVersion, ICameraMediator cameraMediator, IApplicationMediator applicationMediator, IImageSaveMediator imageSaveMediator) : base(profileService) {
             if (Properties.Settings.Default.UpdateSettings) {
                 Properties.Settings.Default.Upgrade();
                 Properties.Settings.Default.UpdateSettings = false;
@@ -36,9 +36,9 @@ namespace NINA.ViewModel {
             }
 
             applicationMediator.RegisterHandler(this);
-            this.sequenceMediator = sequenceMediator;
             this.projectVersion = projectVersion;
             this.cameraMediator = cameraMediator;
+            this.imageSaveMediator = imageSaveMediator;
             cameraMediator.RegisterConsumer(this);
 
             Logger.SetLogLevel(profileService.ActiveProfile.ApplicationSettings.LogLevel);
@@ -100,6 +100,7 @@ namespace NINA.ViewModel {
         private int _tabIndex;
         private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
         private readonly ICameraMediator cameraMediator;
+        private readonly IImageSaveMediator imageSaveMediator;
 
         public int TabIndex {
             get {
@@ -124,14 +125,14 @@ namespace NINA.ViewModel {
         }
 
         private void ExitApplication(object obj) {
-            if (sequenceMediator.OkToExit() == false)
-                return;
             if (cameraInfo.Connected) {
                 var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblCameraConnectedOnExit"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
                 if (diag != MessageBoxResult.OK) {
                     return;
                 }
             }
+
+            imageSaveMediator.Shutdown();
 
             try {
                 Utility.AtikSDK.AtikCameraDll.Shutdown();
@@ -152,7 +153,6 @@ namespace NINA.ViewModel {
             cameraMediator.RemoveConsumer(this);
         }
 
-        private readonly ISequenceMediator sequenceMediator;
         private readonly ProjectVersion projectVersion;
 
         public ICommand MinimizeWindowCommand { get; private set; }
@@ -172,6 +172,7 @@ namespace NINA.ViewModel {
         FRAMINGASSISTANT,
         FLATWIZARD,
         SEQUENCE,
+        SEQUENCE2,
         IMAGING,
         OPTIONS
     }

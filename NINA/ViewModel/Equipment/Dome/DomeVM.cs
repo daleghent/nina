@@ -338,7 +338,7 @@ namespace NINA.ViewModel.Equipment.Dome {
         public async Task<bool> Park(CancellationToken cancellationToken) {
             if (Dome.CanPark) {
                 Logger.Trace("Parking dome");
-                await DisableFollow(cancellationToken);
+                await DisableFollowing(cancellationToken);
                 if (profileService.ActiveProfile.DomeSettings.FindHomeBeforePark && Dome.CanFindHome) {
                     await Dome.FindHome(cancellationToken);
                 }
@@ -549,7 +549,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             return FollowEnabled;
         }
 
-        public async Task<bool> DisableFollow(CancellationToken cancellationToken) {
+        public async Task<bool> DisableFollowing(CancellationToken cancellationToken) {
             if (!Dome.Connected) {
                 return false;
             }

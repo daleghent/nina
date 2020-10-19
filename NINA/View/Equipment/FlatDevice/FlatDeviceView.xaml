@@ -278,33 +278,6 @@
                                 IsEnabled="{Binding FlatDeviceInfo.Connected}" />
                         </UniformGrid>
                     </Border>
-                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Top"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblFlatDeviceCloseAtSequenceEnd}" />
-                            <CheckBox
-                                Height="25"
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Left"
-                                IsChecked="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.CloseAtSequenceEnd, Mode=TwoWay}"
-                                IsEnabled="{Binding FlatDeviceInfo.Connected}" />
-                        </UniformGrid>
-                    </Border>
-                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Top"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblFlatDeviceUseWizardTrainedValues}" />
-                            <CheckBox
-                                Height="25"
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Left"
-                                IsChecked="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.UseWizardTrainedValues, Mode=TwoWay}" />
-                        </UniformGrid>
-                    </Border>
                 </StackPanel>
             </Grid>
         </GroupBox>

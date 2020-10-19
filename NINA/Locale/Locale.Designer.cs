@@ -61,6 +61,1455 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add new Target.
+        /// </summary>
+        internal static string Lbl_OldSequencer_AddNewTarget {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_AddNewTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a new Sequence Target via the + Button, open an existing Target or add Targets via Framing Assistant.
+        /// </summary>
+        internal static string Lbl_OldSequencer_EmptyAreaDescription {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_EmptyAreaDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End of Sequence Instructions.
+        /// </summary>
+        internal static string Lbl_OldSequencer_EndOfSequence {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_EndOfSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End of all Targets Options.
+        /// </summary>
+        internal static string Lbl_OldSequencer_EndOfSequenceHeader {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_EndOfSequenceHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Sequence contains rows which are either disabled or where the progress exposure count is equals to the total exposure count. These items are skipped and no items for these rows are generated for the sequencer..
+        /// </summary>
+        internal static string Lbl_OldSequencer_HasSkippedRows {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_HasSkippedRows", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import Target.
+        /// </summary>
+        internal static string Lbl_OldSequencer_ImportTarget {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_ImportTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load Target.
+        /// </summary>
+        internal static string Lbl_OldSequencer_LoadTarget {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_LoadTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Target Set.
+        /// </summary>
+        internal static string Lbl_OldSequencer_OpenTargetSet {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_OpenTargetSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parallel End of Sequence Instructions.
+        /// </summary>
+        internal static string Lbl_OldSequencer_ParallelEndOfSequence {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_ParallelEndOfSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start of Sequence Instructions.
+        /// </summary>
+        internal static string Lbl_OldSequencer_StartOfSequence {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_StartOfSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start of all Targets Options.
+        /// </summary>
+        internal static string Lbl_OldSequencer_StartOfSequenceHeader {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_StartOfSequenceHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Imaging Instructions.
+        /// </summary>
+        internal static string Lbl_OldSequencer_TargetImaging {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_TargetImaging", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequence Builder Template.
+        /// </summary>
+        internal static string Lbl_OldSequencer_Template {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequence Builder.
+        /// </summary>
+        internal static string Lbl_OldSequencer_Title {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Camera.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Camera {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Camera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop Condition.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Condition {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Condition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instruction Set.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Container {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Container", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Dome {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Dome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter Wheel.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_FilterWheel {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_FilterWheel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Flat Device.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_FlatDevice {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_FlatDevice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Focuser.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Focuser {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Focuser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guider.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Guider {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Guider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Switch {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Switch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telescope.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Telescope {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Telescope", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trigger.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Trigger {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Trigger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utility.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Utility {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Utility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A condition that loops while the target is above the given altitude and then stops the current instruction set.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_AltitudeCondition_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_AltitudeCondition_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop While Altitude Above.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_AltitudeCondition_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_AltitudeCondition_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A condition to loop a sequence container for the specified amount of loops.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_LoopCondition_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_LoopCondition_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop For Iterations.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_LoopCondition_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_LoopCondition_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
+        ///Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays true..
+        /// </summary>
+        internal static string Lbl_SequenceCondition_SafetyMonitorCondition_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_SafetyMonitorCondition_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Safety Monitor.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_SafetyMonitorCondition_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_SafetyMonitorCondition_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A condition that loops until the specified time has been reached and then stops the current instruction set.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_TimeCondition_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_TimeCondition_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop Until Time.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_TimeCondition_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_TimeCondition_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a loop condition to the instruction set.
+        ///An instruction set will be executed and repeated when one or more conditions are added to a container as long as these loop conditions are truthy.
+        ///Once one of the loop conditions are not truthy anymore, the execution of the remaining instructions inside the set will be skipped.
+        ///Furthermore loop conditions are valid for the current instruction set and each sub set inside the set. .
+        /// </summary>
+        internal static string Lbl_SequenceContainer_AddCondition_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_AddCondition_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add an instruction to the instruction set.
+        ///An instruction is a single instruction or a set of instructions that will be executed, when they are valid. 
+        ///Instructions that are not valid (indicated by the red circled exclamation mark) will be skipped..
+        /// </summary>
+        internal static string Lbl_SequenceContainer_AddInstruction_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_AddInstruction_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add a trigger to the instruction set.
+        ///Triggers are instructions, that are only executed when the specified parameters to execute them are met. 
+        ///Trigger parameters will be updated and evaluated after an instruction was completed.
+        ///Furthermore triggers are valid for the current instruction set and each sub set inside the set..
+        /// </summary>
+        internal static string Lbl_SequenceContainer_AddTrigger_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_AddTrigger_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop Conditions.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_Conditions_Header {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_Conditions_Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Works like a sequential container, but a deep sky object can be specified which will auto populate all sub items with the relevant information (coordinates, rotation etc.).
+        /// </summary>
+        internal static string Lbl_SequenceContainer_DeepSkyObjectContainer_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_DeepSkyObjectContainer_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Deep Sky Object Sequence.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_DeepSkyObjectContainer_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_DeepSkyObjectContainer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removes the current instruction set and all its items from the sequence..
+        /// </summary>
+        internal static string Lbl_SequenceContainer_Delete_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_Delete_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creates a duplicate of current set and all its items and append it to the parent instruction set.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_Duplicate_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_Duplicate_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_EndAreaContainer_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_EndAreaContainer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moves the instruction set and all its content down by one position.
+        ///If the position below it is an instruction set that is expanded, it will be moved inside the instruction set.
+        ///If the position below it is an instruction set that is not currently expanded, it will be moved below the instruction set..
+        /// </summary>
+        internal static string Lbl_SequenceContainer_MoveDown_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_MoveDown_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moves the instruction set and all its content up by one position.
+        ///If the position above it is an instruction set that is expanded, it will be moved inside the instruction set.
+        ///If the position above it is an instruction set that is not currently expanded, it will be moved above the instruction set..
+        /// </summary>
+        internal static string Lbl_SequenceContainer_MoveUp_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_MoveUp_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to All items in this container are run in parallel. This container will not evaluate any conditions or triggers until all items are finished..
+        /// </summary>
+        internal static string Lbl_SequenceContainer_ParallelContainer_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_ParallelContainer_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parallel Instruction Set.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_ParallelContainer_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_ParallelContainer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resets the state and progress of the current instruction set and all instructions that are inside..
+        /// </summary>
+        internal static string Lbl_SequenceContainer_Reset_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_Reset_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save the current instruction set and all of its content as a template for re-usage.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SaveAsTemplate_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SaveAsTemplate_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequence End Area.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequenceRootContainer_EndArea {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequenceRootContainer_EndArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequence.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequenceRootContainer_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequenceRootContainer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequence Start Area.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequenceRootContainer_StartArea {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequenceRootContainer_StartArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequence Target Area
+        ///Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assistant.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequenceRootContainer_TargetArea {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequenceRootContainer_TargetArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Runs all items in a sequential order. Trigger and conditions are evaluated after each item.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequentialContainer_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequentialContainer_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequential Instruction Set.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequentialContainer_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequentialContainer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_StartAreaContainer_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_StartAreaContainer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Targets.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_TargetAreaContainer_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_TargetAreaContainer_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executes an autofocus run.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Autofocus_RunAutofocus_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Autofocus_RunAutofocus_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run Autofocus.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Autofocus_RunAutofocus_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Autofocus_RunAutofocus_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cools down the camera for the given temperature and duration.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_CoolCamera_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_CoolCamera_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cool Camera.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_CoolCamera_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_CoolCamera_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warms the camera for the given duration.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_WarmCamera_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_WarmCamera_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warm Camera.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_WarmCamera_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_WarmCamera_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removes the current instruction from the instruction set..
+        /// </summary>
+        internal static string Lbl_SequenceItem_Delete_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Delete_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closes the shutter of the dome.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_CloseDomeShutter_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_CloseDomeShutter_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Dome Shutter.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_CloseDomeShutter_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_CloseDomeShutter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ensures the dome remains synchronized with the telescope.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable Dome Synchronization.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the shutter of the dome.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_OpenDomeShutter_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_OpenDomeShutter_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Dome Shutter.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_OpenDomeShutter_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_OpenDomeShutter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parks the dome to the park position.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_ParkDome_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_ParkDome_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Park Dome.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Dome_ParkDome_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Dome_ParkDome_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creates a duplicate of current item and append it to the parent instruction set.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Duplicate_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Duplicate_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moves the filter wheel to the specified filter.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FilterWheel_SwitchFilter_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FilterWheel_SwitchFilter_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch Filter.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FilterWheel_SwitchFilter_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FilterWheel_SwitchFilter_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closes the cover of the flat panel.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_CloseCover_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_CloseCover_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close Flat Panel Cover.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_CloseCover_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_CloseCover_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens the cover of the flat panel.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_OpenCover_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_OpenCover_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open Flat Panel Cover.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_OpenCover_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_OpenCover_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the brightness of the flat device to the specified value.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_SetBrightness_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_SetBrightness_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Brightness.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_SetBrightness_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_SetBrightness_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggles the flat device light on or off.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_ToggleLight_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_ToggleLight_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle Light.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_ToggleLight_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_ToggleLight_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Looks up the trained exposure value for the specified parameters and takes flat exposures.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trained Flat Exposure.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moves the focuser to the given absolute position.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Focuser.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends a dither signal to the guider.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Guider_Dither_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Guider_Dither_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dither.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Guider_Dither_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Guider_Dither_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starts autoguiding.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Guider_StartGuiding_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Guider_StartGuiding_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Guiding.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Guider_StartGuiding_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Guider_StartGuiding_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stops autoguiding.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Guider_StopGuiding_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Guider_StopGuiding_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stop Guiding.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Guider_StopGuiding_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Guider_StopGuiding_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Takes exposures for the given amount, filter, duration, gain and offset and initiates a dither after the amount of exposures. Triggers and conditions are evaluated in between the exposures..
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_SmartExposure_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_SmartExposure_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Command a dither after the specified amount of exposures. A value of 0 will disable dither for this item..
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_SmartExposure_DitherTooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_SmartExposure_DitherTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Smart Exposure.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_SmartExposure_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_SmartExposure_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Takes an exposure for the given duration, gain and offset.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_TakeExposure_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_TakeExposure_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take Exposure.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_TakeExposure_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_TakeExposure_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Takes exposures for the given amount, duration, gain and offset. Triggers and conditions are evaluated in between the exposures..
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_TakeManyExposures_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_TakeManyExposures_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take Many Exposures.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_TakeManyExposures_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_TakeManyExposures_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moves the instruction down by one position.
+        ///If the position below it is an instruction set that is expanded, it will be moved inside the instruction set.
+        ///If the position below it is an instruction set that is not currently expanded, it will be moved below the instruction set..
+        /// </summary>
+        internal static string Lbl_SequenceItem_MoveDown_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_MoveDown_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moves the instruction up by one position.
+        ///If the position above it is an instruction set that is expanded, it will be moved inside the instruction set.
+        ///If the position above it is an instruction set that is not currently expanded, it will be moved above the instruction set..
+        /// </summary>
+        internal static string Lbl_SequenceItem_MoveUp_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_MoveUp_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Centers the telescope via plate solving for the given coordinates.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Platesolving_Center_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Platesolving_Center_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Center.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Platesolving_Center_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Platesolving_Center_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Centers and rotates the telescope via plate solving and a rotator for the given coordinates and rotation.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Platesolving_CenterAndRotate_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Platesolving_CenterAndRotate_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Center and Rotate.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Platesolving_CenterAndRotate_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Platesolving_CenterAndRotate_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resets the state and progress of the current instruction..
+        /// </summary>
+        internal static string Lbl_SequenceItem_Reset_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Reset_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets a value for a given switch from the switch hub.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Switch_SetSwitchValue_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Switch_SetSwitchValue_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Switch Value.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Switch_SetSwitchValue_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Switch_SetSwitchValue_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parks the telescope to the park position.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_ParkScope_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_ParkScope_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Park Scope.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_ParkScope_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_ParkScope_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sets the tracking mode on the mount.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_SetTracking_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_SetTracking_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Tracking.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_SetTracking_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_SetTracking_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slews the telescope to the given altitude and azimuth coordinates.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slew To Alt/Az.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slews the telescope to the given right ascension and declination coordinates.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slew To Ra/Dec.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unparks the telescope.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_UnparkScope_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_UnparkScope_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpark Scope.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_UnparkScope_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_UnparkScope_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A utility item to add annotations to a sequence.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_Annotation_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_Annotation_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Annotation.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_Annotation_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_Annotation_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calls an external script for the given path.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_ExternalScript_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_ExternalScript_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to External Script.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_ExternalScript_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_ExternalScript_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Opens up a message box with the provided text to be clicked. Can be used as a manual stop, e.g. to cover the scope for dark frames.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_MessageBox_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_MessageBox_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message Box.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_MessageBox_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_MessageBox_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waits until the altitude has been reached for the given coordinates.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForAltitude_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForAltitude_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait for Altitude.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForAltitude_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForAltitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting until target has reached specified altitude. {0}° / {1}°.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForAltitude_Progress {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForAltitude_Progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waits for the specified time in the hh:mm:ss format. Additionally a utility box is available to auto populate it for sunset, dusk, dawn and sunrise.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForTime_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForTime_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait for Time.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForTime_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForTime_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waits for a given duration in seconds.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForTimeSpan_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForTimeSpan_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait for Time Span.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForTimeSpan_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForTimeSpan_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Camera does not have a cooler and is unable to set a temperature.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_CameraCannotSetTemperature {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_CameraCannotSetTemperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The flat device does not support opening or closing the cover.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No trained exposure value was found for the combination of filter {0}, gain {1}, binning {2}.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid value for selected switch! Minimum {0} / Maximum {1} / StepSize {2}.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_InvalidSwitchValue {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_InvalidSwitchValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No switch selected!.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_NoSwitchSelected {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_NoSwitchSelected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE ITEM.
+        /// </summary>
+        internal static string Lbl_Sequencer_DeleteItem {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_DeleteItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load complete sequence from JSON file.
+        /// </summary>
+        internal static string Lbl_Sequencer_LoadSequence_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_LoadSequence_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to load sequence - Sequencer root element must be sequence root container!.
+        /// </summary>
+        internal static string Lbl_Sequencer_RootElementMustBeRootContainer {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_RootElementMustBeRootContainer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save complete sequence to a new JSON file.
+        /// </summary>
+        internal static string Lbl_Sequencer_SaveAsSequence_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_SaveAsSequence_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequence &quot;{0}&quot; saved successfully at {1}.
+        /// </summary>
+        internal static string Lbl_Sequencer_SaveSequence_Notification {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_SaveSequence_Notification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save complete sequence to JSON file.
+        /// </summary>
+        internal static string Lbl_Sequencer_SaveSequence_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_SaveSequence_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequencer.
+        /// </summary>
+        internal static string Lbl_Sequencer_Title {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to deserialize JSON.
+        /// </summary>
+        internal static string Lbl_Sequencer_UnableToDeserializeJSON {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_UnableToDeserializeJSON", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Triggers an autofocus run after the set amount of exposures have been captured.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterExposures_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterExposures_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AF After # Exposures.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterExposures_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterExposures_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starts AutoFocus after a detected filter change.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AF After Filter Change.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A trigger to initiate an autofocus run after the HFR has increased by the given amount in percent since the last autofocus run or start of sequence.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AF After HFR Increase.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A trigger to initiate an autofocus run after the temperature has changed by the given amount in degrees since the last autofocus run or start of sequence.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AF After Temperature Change.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A trigger to initiate an autofocus run after the time has passed by the given amount in minutes since the last autofocus run or start of sequence.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to AF After Time.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sends a dither command to the guider after the specified number of exposures.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_Guider_DitherAfterExposures_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_Guider_DitherAfterExposures_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dither after Exposures.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A trigger to initiate a meridian flip when conditions are met.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_MeridianFlipTrigger_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_MeridianFlipTrigger_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meridian Flip.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_MeridianFlipTrigger_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_MeridianFlipTrigger_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E.
         /// </summary>
         internal static string LblAbbrEast {
@@ -169,6 +1618,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Target to Sequence.
+        /// </summary>
+        internal static string LblAddTargetToSequence {
+            get {
+                return ResourceManager.GetString("LblAddTargetToSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Advanced Settings.
         /// </summary>
         internal static string LblAdvancedSettings {
@@ -210,6 +1668,24 @@ namespace NINA.Locale {
         internal static string LblAfter {
             get {
                 return ResourceManager.GetString("LblAfter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to After Exposures.
+        /// </summary>
+        internal static string LblAfterExposures {
+            get {
+                return ResourceManager.GetString("LblAfterExposures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to After Iterations.
+        /// </summary>
+        internal static string LblAfterIterations {
+            get {
+                return ResourceManager.GetString("LblAfterIterations", resourceCulture);
             }
         }
         
@@ -322,6 +1798,15 @@ namespace NINA.Locale {
         internal static string LblAltitudeMeasurementSide {
             get {
                 return ResourceManager.GetString("LblAltitudeMeasurementSide", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        internal static string LblAmount {
+            get {
+                return ResourceManager.GetString("LblAmount", resourceCulture);
             }
         }
         
@@ -1271,6 +2756,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Builds up a sequence for the planned set of targets.
+        /// </summary>
+        internal static string LblBuildSequenceTooltip {
+            get {
+                return ResourceManager.GetString("LblBuildSequenceTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bulb Mode.
         /// </summary>
         internal static string LblBulbMode {
@@ -1488,6 +2982,15 @@ namespace NINA.Locale {
         internal static string LblCameraNotAtTargetTemp {
             get {
                 return ResourceManager.GetString("LblCameraNotAtTargetTemp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Camera not connected.
+        /// </summary>
+        internal static string LblCameraNotConnected {
+            get {
+                return ResourceManager.GetString("LblCameraNotConnected", resourceCulture);
             }
         }
         
@@ -1859,6 +3362,15 @@ namespace NINA.Locale {
         internal static string LblClearCache {
             get {
                 return ResourceManager.GetString("LblClearCache", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear calibration.
+        /// </summary>
+        internal static string LblClearGuidingCalibration {
+            get {
+                return ResourceManager.GetString("LblClearGuidingCalibration", resourceCulture);
             }
         }
         
@@ -2799,6 +4311,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Container.
+        /// </summary>
+        internal static string LblContainer {
+            get {
+                return ResourceManager.GetString("LblContainer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         internal static string LblContinue {
@@ -2813,6 +4334,15 @@ namespace NINA.Locale {
         internal static string LblContrastMethod {
             get {
                 return ResourceManager.GetString("LblContrastMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cool camera when sequence starts.
+        /// </summary>
+        internal static string LblCoolCamAtSequenceStart {
+            get {
+                return ResourceManager.GetString("LblCoolCamAtSequenceStart", resourceCulture);
             }
         }
         
@@ -3270,11 +4800,29 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delay.
+        /// </summary>
+        internal static string LblDelay {
+            get {
+                return ResourceManager.GetString("LblDelay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot delete profile. It is already in use by another N.I.N.A. instance!.
         /// </summary>
         internal static string LblDeleteProfileInUseWarning {
             get {
                 return ResourceManager.GetString("LblDeleteProfileInUseWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delta.
+        /// </summary>
+        internal static string LblDelta {
+            get {
+                return ResourceManager.GetString("LblDelta", resourceCulture);
             }
         }
         
@@ -3482,6 +5030,15 @@ namespace NINA.Locale {
         internal static string LblDisconnectRotator {
             get {
                 return ResourceManager.GetString("LblDisconnectRotator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disconnect Safety Monitor.
+        /// </summary>
+        internal static string LblDisconnectSafetyMonitor {
+            get {
+                return ResourceManager.GetString("LblDisconnectSafetyMonitor", resourceCulture);
             }
         }
         
@@ -4089,6 +5646,60 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ADD LOOP CONDITION.
+        /// </summary>
+        internal static string LblDragOver_AddCondition {
+            get {
+                return ResourceManager.GetString("LblDragOver_AddCondition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE NEW TEMPLATE.
+        /// </summary>
+        internal static string LblDragOver_AddTemplate {
+            get {
+                return ResourceManager.GetString("LblDragOver_AddTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ADD TRIGGER.
+        /// </summary>
+        internal static string LblDragOver_AddTrigger {
+            get {
+                return ResourceManager.GetString("LblDragOver_AddTrigger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSERT INSTRUCTION BELOW.
+        /// </summary>
+        internal static string LblDragOver_BottomText {
+            get {
+                return ResourceManager.GetString("LblDragOver_BottomText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ADD INSTRUCTION HERE.
+        /// </summary>
+        internal static string LblDragOver_CenterText {
+            get {
+                return ResourceManager.GetString("LblDragOver_CenterText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to INSERT INSTRUCTION ABOVE.
+        /// </summary>
+        internal static string LblDragOver_TopText {
+            get {
+                return ResourceManager.GetString("LblDragOver_TopText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Driver Info.
         /// </summary>
         internal static string LblDriverInfo {
@@ -4161,6 +5772,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Elapsed.
+        /// </summary>
+        internal static string LblElapsed {
+            get {
+                return ResourceManager.GetString("LblElapsed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enable bit scaling.
         /// </summary>
         internal static string LblEnableBitScaling {
@@ -4229,6 +5849,24 @@ namespace NINA.Locale {
         internal static string LblEndOfSequenceWarmCamera {
             get {
                 return ResourceManager.GetString("LblEndOfSequenceWarmCamera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Annotation.
+        /// </summary>
+        internal static string LblEnterAnnotation {
+            get {
+                return ResourceManager.GetString("LblEnterAnnotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter Message.
+        /// </summary>
+        internal static string LblEnterMessage {
+            get {
+                return ResourceManager.GetString("LblEnterMessage", resourceCulture);
             }
         }
         
@@ -4310,6 +5948,15 @@ namespace NINA.Locale {
         internal static string LblETA {
             get {
                 return ResourceManager.GetString("LblETA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Executing items in parallel.
+        /// </summary>
+        internal static string LblExecutingItemsInParallel {
+            get {
+                return ResourceManager.GetString("LblExecutingItemsInParallel", resourceCulture);
             }
         }
         
@@ -4531,6 +6178,15 @@ namespace NINA.Locale {
         internal static string LblFilterwheelConnectionLost {
             get {
                 return ResourceManager.GetString("LblFilterwheelConnectionLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filterwheel not connected.
+        /// </summary>
+        internal static string LblFilterWheelNotConnected {
+            get {
+                return ResourceManager.GetString("LblFilterWheelNotConnected", resourceCulture);
             }
         }
         
@@ -4778,11 +6434,29 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flat Device not connected.
+        /// </summary>
+        internal static string LblFlatDeviceNotConnected {
+            get {
+                return ResourceManager.GetString("LblFlatDeviceNotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
         internal static string LblFlatDeviceOpen {
             get {
                 return ResourceManager.GetString("LblFlatDeviceOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open cover when sequence starts.
+        /// </summary>
+        internal static string LblFlatDeviceOpenAtSequenceStart {
+            get {
+                return ResourceManager.GetString("LblFlatDeviceOpenAtSequenceStart", resourceCulture);
             }
         }
         
@@ -4796,7 +6470,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open cover for darks and dark flats.
+        ///   Looks up a localized string similar to Open cover for dark flats in flat wizard.
         /// </summary>
         internal static string LblFlatDeviceOpenForDarkFlats {
             get {
@@ -5084,6 +6758,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flip Time.
+        /// </summary>
+        internal static string LblFlipTime {
+            get {
+                return ResourceManager.GetString("LblFlipTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flood for snapshots.
         /// </summary>
         internal static string LblFLISnapshotFlood {
@@ -5245,6 +6928,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Focuser not connected.
+        /// </summary>
+        internal static string LblFocuserNotConnected {
+            get {
+                return ResourceManager.GetString("LblFocuserNotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Current focuser position.
         /// </summary>
         internal static string LblFocuserPositionDescription {
@@ -5325,6 +7017,15 @@ namespace NINA.Locale {
         internal static string LblFolderToWatch {
             get {
                 return ResourceManager.GetString("LblFolderToWatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Force Calibration.
+        /// </summary>
+        internal static string LblForceGuidingCalibration {
+            get {
+                return ResourceManager.GetString("LblForceGuidingCalibration", resourceCulture);
             }
         }
         
@@ -5491,6 +7192,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Guider does not support calibration.
+        /// </summary>
+        internal static string LblGuiderCannotClearCalibration {
+            get {
+                return ResourceManager.GetString("LblGuiderCannotClearCalibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guider Connected.
         /// </summary>
         internal static string LblGuiderConnected {
@@ -5523,6 +7233,15 @@ namespace NINA.Locale {
         internal static string LblGuiderNoSettleDone {
             get {
                 return ResourceManager.GetString("LblGuiderNoSettleDone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Guider not connected.
+        /// </summary>
+        internal static string LblGuiderNotConnected {
+            get {
+                return ResourceManager.GetString("LblGuiderNotConnected", resourceCulture);
             }
         }
         
@@ -5622,6 +7341,15 @@ namespace NINA.Locale {
         internal static string LblHFRPatternDescription {
             get {
                 return ResourceManager.GetString("LblHFRPatternDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to HFR Trend.
+        /// </summary>
+        internal static string LblHFRTrend {
+            get {
+                return ResourceManager.GetString("LblHFRTrend", resourceCulture);
             }
         }
         
@@ -5959,6 +7687,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Instructions.
+        /// </summary>
+        internal static string LblInstructions {
+            get {
+                return ResourceManager.GetString("LblInstructions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Instruction Set.
+        /// </summary>
+        internal static string LblInstructionSet {
+            get {
+                return ResourceManager.GetString("LblInstructionSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Intensity.
         /// </summary>
         internal static string LblIntensity {
@@ -6013,6 +7759,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Is Safe.
+        /// </summary>
+        internal static string LblIsSafe {
+            get {
+                return ResourceManager.GetString("LblIsSafe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Settling.
         /// </summary>
         internal static string LblIsSettling {
@@ -6027,6 +7782,15 @@ namespace NINA.Locale {
         internal static string LblItemsPerPage {
             get {
                 return ResourceManager.GetString("LblItemsPerPage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iterations.
+        /// </summary>
+        internal static string LblIterations {
+            get {
+                return ResourceManager.GetString("LblIterations", resourceCulture);
             }
         }
         
@@ -6072,6 +7836,15 @@ namespace NINA.Locale {
         internal static string LblLaplace {
             get {
                 return ResourceManager.GetString("LblLaplace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Last Filter.
+        /// </summary>
+        internal static string LblLastFilter {
+            get {
+                return ResourceManager.GetString("LblLastFilter", resourceCulture);
             }
         }
         
@@ -6243,6 +8016,15 @@ namespace NINA.Locale {
         internal static string LblLoop {
             get {
                 return ResourceManager.GetString("LblLoop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop until.
+        /// </summary>
+        internal static string LblLoopUntil {
+            get {
+                return ResourceManager.GetString("LblLoopUntil", resourceCulture);
             }
         }
         
@@ -6436,6 +8218,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Center after Meridian Flip Failed.
+        /// </summary>
+        internal static string LblMeridianFlipCenterFailed {
+            get {
+                return ResourceManager.GetString("LblMeridianFlipCenterFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Meridian Flip failed.
         /// </summary>
         internal static string LblMeridianFlipFailed {
@@ -6486,6 +8277,15 @@ namespace NINA.Locale {
         internal static string LblMeridianOffset {
             get {
                 return ResourceManager.GetString("LblMeridianOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        internal static string LblMessage {
+            get {
+                return ResourceManager.GetString("LblMessage", resourceCulture);
             }
         }
         
@@ -7426,6 +9226,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open dome shutter at sequence start.
+        /// </summary>
+        internal static string LblOpenDomeShutterAtSequenceStart {
+            get {
+                return ResourceManager.GetString("LblOpenDomeShutterAtSequenceStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open Manual.
         /// </summary>
         internal static string LblOpenManual {
@@ -8134,6 +9943,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plugin.
+        /// </summary>
+        internal static string LblPlugin {
+            get {
+                return ResourceManager.GetString("LblPlugin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pointing Tolerance.
         /// </summary>
         internal static string LblPointingTolerance {
@@ -8215,7 +10033,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The following potential issues have been found with your sequence:.
+        ///   Looks up a localized string similar to The following potential issues have been found with the sequence:.
         /// </summary>
         internal static string LblPreSequenceChecklist {
             get {
@@ -8746,6 +10564,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rotate Target.
+        /// </summary>
+        internal static string LblRotateTarget {
+            get {
+                return ResourceManager.GetString("LblRotateTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rotation.
         /// </summary>
         internal static string LblRotation {
@@ -8809,6 +10636,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rotator not connected.
+        /// </summary>
+        internal static string LblRotatorNotConnected {
+            get {
+                return ResourceManager.GetString("LblRotatorNotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reverse movement direction of rotator. Toggle this, if the platesolver rotates into the wrong direction..
         /// </summary>
         internal static string LblRotatorReverseTooltip {
@@ -8823,6 +10659,42 @@ namespace NINA.Locale {
         internal static string LblRunningEndOfSequence {
             get {
                 return ResourceManager.GetString("LblRunningEndOfSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Safety Monitor.
+        /// </summary>
+        internal static string LblSafetyMonitor {
+            get {
+                return ResourceManager.GetString("LblSafetyMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Safety Monitor Connected.
+        /// </summary>
+        internal static string LblSafetyMonitorConnected {
+            get {
+                return ResourceManager.GetString("LblSafetyMonitorConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Safety Monitor connection has been lost!.
+        /// </summary>
+        internal static string LblSafetyMonitorConnectionLost {
+            get {
+                return ResourceManager.GetString("LblSafetyMonitorConnectionLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Safety Monitor is not connected.
+        /// </summary>
+        internal static string LblSafetyMonitorNotConnected {
+            get {
+                return ResourceManager.GetString("LblSafetyMonitorNotConnected", resourceCulture);
             }
         }
         
@@ -8931,6 +10803,15 @@ namespace NINA.Locale {
         internal static string LblScopeSettleTimeAfterFlip {
             get {
                 return ResourceManager.GetString("LblScopeSettleTimeAfterFlip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Script.
+        /// </summary>
+        internal static string LblScript {
+            get {
+                return ResourceManager.GetString("LblScript", resourceCulture);
             }
         }
         
@@ -9337,6 +11218,15 @@ namespace NINA.Locale {
         internal static string LblSettleTimeout {
             get {
                 return ResourceManager.GetString("LblSettleTimeout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Tracking Rate.
+        /// </summary>
+        internal static string LblSetTrackingRate {
+            get {
+                return ResourceManager.GetString("LblSetTrackingRate", resourceCulture);
             }
         }
         
@@ -9756,6 +11646,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Startup Sequence Template.
+        /// </summary>
+        internal static string LblStartupSequenceTemplate {
+            get {
+                return ResourceManager.GetString("LblStartupSequenceTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When set, this template will be pre-loaded into the sequencer..
+        /// </summary>
+        internal static string LblStartupSequenceTemplateTooltip {
+            get {
+                return ResourceManager.GetString("LblStartupSequenceTemplateTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to State.
         /// </summary>
         internal static string LblState {
@@ -9954,6 +11862,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Switch is not connected!.
+        /// </summary>
+        internal static string LblSwitchNotConnected {
+            get {
+                return ResourceManager.GetString("LblSwitchNotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sync.
         /// </summary>
         internal static string LblSync {
@@ -10021,7 +11938,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Target (J2000).
+        ///   Looks up a localized string similar to Target.
         /// </summary>
         internal static string LblTarget {
             get {
@@ -10044,6 +11961,15 @@ namespace NINA.Locale {
         internal static string LblTargetHeightDegrees {
             get {
                 return ResourceManager.GetString("LblTargetHeightDegrees", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target (J2000).
+        /// </summary>
+        internal static string LblTargetJ2000 {
+            get {
+                return ResourceManager.GetString("LblTargetJ2000", resourceCulture);
             }
         }
         
@@ -10287,6 +12213,78 @@ namespace NINA.Locale {
         internal static string LblTemperatureDescription {
             get {
                 return ResourceManager.GetString("LblTemperatureDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default Templates.
+        /// </summary>
+        internal static string LblTemplate_DefaultTemplates {
+            get {
+                return ResourceManager.GetString("LblTemplate_DefaultTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Template?.
+        /// </summary>
+        internal static string LblTemplate_DeleteTemplateMessageBox_Caption {
+            get {
+                return ResourceManager.GetString("LblTemplate_DeleteTemplateMessageBox_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template &apos;{0}&apos; will be deleted. Do you want to delete the existing Template? This action is irreversible..
+        /// </summary>
+        internal static string LblTemplate_DeleteTemplateMessageBox_Text {
+            get {
+                return ResourceManager.GetString("LblTemplate_DeleteTemplateMessageBox_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drop Sequence Instruction Set from the Sequence here to create a new Template.
+        /// </summary>
+        internal static string LblTemplate_DropTemplateHere {
+            get {
+                return ResourceManager.GetString("LblTemplate_DropTemplateHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite Template?.
+        /// </summary>
+        internal static string LblTemplate_OverwriteTemplateMessageBox_Caption {
+            get {
+                return ResourceManager.GetString("LblTemplate_OverwriteTemplateMessageBox_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Template &apos;{0}&apos; already exists. Do you want to overwrite the existing Template? This action is irreversible..
+        /// </summary>
+        internal static string LblTemplate_OverwriteTemplateMessageBox_Text {
+            get {
+                return ResourceManager.GetString("LblTemplate_OverwriteTemplateMessageBox_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Templates.
+        /// </summary>
+        internal static string LblTemplate_UserTemplates {
+            get {
+                return ResourceManager.GetString("LblTemplate_UserTemplates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Templates.
+        /// </summary>
+        internal static string LblTemplates {
+            get {
+                return ResourceManager.GetString("LblTemplates", resourceCulture);
             }
         }
         
@@ -10617,6 +12615,87 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom.
+        /// </summary>
+        internal static string LblTrackingCustom {
+            get {
+                return ResourceManager.GetString("LblTrackingCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom ({0}, {1}).
+        /// </summary>
+        internal static string LblTrackingCustomRate {
+            get {
+                return ResourceManager.GetString("LblTrackingCustomRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to King.
+        /// </summary>
+        internal static string LblTrackingKing {
+            get {
+                return ResourceManager.GetString("LblTrackingKing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lunar.
+        /// </summary>
+        internal static string LblTrackingLunar {
+            get {
+                return ResourceManager.GetString("LblTrackingLunar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracking mode not supported by the mount.
+        /// </summary>
+        internal static string LblTrackingModeNotSupported {
+            get {
+                return ResourceManager.GetString("LblTrackingModeNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracking Rate.
+        /// </summary>
+        internal static string LblTrackingRate {
+            get {
+                return ResourceManager.GetString("LblTrackingRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sidereal.
+        /// </summary>
+        internal static string LblTrackingSidereal {
+            get {
+                return ResourceManager.GetString("LblTrackingSidereal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solar.
+        /// </summary>
+        internal static string LblTrackingSolar {
+            get {
+                return ResourceManager.GetString("LblTrackingSolar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stopped.
+        /// </summary>
+        internal static string LblTrackingStopped {
+            get {
+                return ResourceManager.GetString("LblTrackingStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Transit North.
         /// </summary>
         internal static string LblTransitNorth {
@@ -10658,6 +12737,15 @@ namespace NINA.Locale {
         internal static string LblTrendParabolic {
             get {
                 return ResourceManager.GetString("LblTrendParabolic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Triggers.
+        /// </summary>
+        internal static string LblTriggers {
+            get {
+                return ResourceManager.GetString("LblTriggers", resourceCulture);
             }
         }
         
@@ -10797,6 +12885,33 @@ namespace NINA.Locale {
         internal static string LblUnpark {
             get {
                 return ResourceManager.GetString("LblUnpark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpark dome at sequence start.
+        /// </summary>
+        internal static string LblUnparkDomeAtSequenceStart {
+            get {
+                return ResourceManager.GetString("LblUnparkDomeAtSequenceStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unpark mount when sequence starts.
+        /// </summary>
+        internal static string LblUnparkMountAtSequenceStart {
+            get {
+                return ResourceManager.GetString("LblUnparkMountAtSequenceStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude will never be reached.
+        /// </summary>
+        internal static string LblUnreachableAltitude {
+            get {
+                return ResourceManager.GetString("LblUnreachableAltitude", resourceCulture);
             }
         }
         
@@ -11184,6 +13299,24 @@ namespace NINA.Locale {
         internal static string LblUseSnapPort {
             get {
                 return ResourceManager.GetString("LblUseSnapPort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Utility.
+        /// </summary>
+        internal static string LblUtility {
+            get {
+                return ResourceManager.GetString("LblUtility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value.
+        /// </summary>
+        internal static string LblValue {
+            get {
+                return ResourceManager.GetString("LblValue", resourceCulture);
             }
         }
         

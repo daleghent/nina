@@ -29,9 +29,10 @@ namespace NINA.PlateSolving {
         public CenteringSolver(IPlateSolver plateSolver,
                 IPlateSolver blindSolver,
                 IImagingMediator imagingMediator,
-                ITelescopeMediator telescopeMediator) {
+                ITelescopeMediator telescopeMediator,
+                IFilterWheelMediator filterWheelMediator) {
             this.telescopeMediator = telescopeMediator;
-            this.CaptureSolver = new CaptureSolver(plateSolver, blindSolver, imagingMediator);
+            this.CaptureSolver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
         }
 
         public ICaptureSolver CaptureSolver { get; set; }

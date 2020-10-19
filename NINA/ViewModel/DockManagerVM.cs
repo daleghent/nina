@@ -30,17 +30,20 @@ using NINA.ViewModel.Equipment.Switch;
 using NINA.ViewModel.Equipment.Telescope;
 using NINA.ViewModel.Equipment.WeatherData;
 using NINA.ViewModel.Equipment.FlatDevice;
+using NINA.ViewModel.Sequencer;
+using NINA.ViewModel.ImageHistory;
+using NINA.ViewModel.Equipment.SafetyMonitor;
 
 namespace NINA.ViewModel {
 
     internal class DockManagerVM : BaseVM, IDockManagerVM {
 
-        public DockManagerVM(IProfileService profileService, ICameraVM cameraVM, ISequenceVM seqVM,
+        public DockManagerVM(IProfileService profileService, ICameraVM cameraVM, ISequence2VM sequence2VM,
             IThumbnailVM thumbnailVM, ISwitchVM switchVM, IFilterWheelVM filterWheelVM, IFocuserVM focuserVM, IRotatorVM rotatorVM,
             IWeatherDataVM weatherDataVM, IDomeVM domeVM, IAnchorableSnapshotVM snapshotVM,
             IPolarAlignmentVM polarAlignmentVM, IAnchorablePlateSolverVM plateSolverVM, ITelescopeVM telescopeVM, IGuiderVM guiderVM,
             IFocusTargetsVM focusTargetsVM, IAutoFocusVM autoFocusVM, IExposureCalculatorVM exposureCalculatorVM, IImageHistoryVM imageHistoryVM,
-            IImageControlVM imageControlVM, IImageStatisticsVM imageStatisticsVM, IFlatDeviceVM flatDeviceVM) : base(profileService) {
+            IImageControlVM imageControlVM, IImageStatisticsVM imageStatisticsVM, IFlatDeviceVM flatDeviceVM, ISafetyMonitorVM safetyMonitorVM) : base(profileService) {
             LoadAvalonDockLayoutCommand = new RelayCommand(LoadAvalonDockLayout);
             ResetDockLayoutCommand = new RelayCommand(ResetDockLayout, (object o) => _dockmanager != null);
 
@@ -55,7 +58,7 @@ namespace NINA.ViewModel {
             Anchorables.Add(weatherDataVM);
             Anchorables.Add(domeVM);
 
-            Anchorables.Add(seqVM);
+            Anchorables.Add(sequence2VM);
             Anchorables.Add(imageStatisticsVM);
             Anchorables.Add(imageHistoryVM);
 
@@ -67,6 +70,7 @@ namespace NINA.ViewModel {
             Anchorables.Add(focusTargetsVM);
             Anchorables.Add(exposureCalculatorVM);
             Anchorables.Add(flatDeviceVM);
+            Anchorables.Add(safetyMonitorVM);
 
             AnchorableInfoPanels.Add(imageControlVM);
             AnchorableInfoPanels.Add(cameraVM);
@@ -75,13 +79,14 @@ namespace NINA.ViewModel {
             AnchorableInfoPanels.Add(rotatorVM);
             AnchorableInfoPanels.Add(telescopeVM);
             AnchorableInfoPanels.Add(guiderVM);
-            AnchorableInfoPanels.Add(seqVM);
+            AnchorableInfoPanels.Add(sequence2VM);
             AnchorableInfoPanels.Add(switchVM);
             AnchorableInfoPanels.Add(weatherDataVM);
             AnchorableInfoPanels.Add(domeVM);
             AnchorableInfoPanels.Add(imageStatisticsVM);
             AnchorableInfoPanels.Add(imageHistoryVM);
             AnchorableInfoPanels.Add(flatDeviceVM);
+            AnchorableInfoPanels.Add(safetyMonitorVM);
 
             AnchorableTools.Add(snapshotVM);
             AnchorableTools.Add(thumbnailVM);

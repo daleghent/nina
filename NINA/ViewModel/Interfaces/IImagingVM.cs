@@ -34,7 +34,8 @@ namespace NINA.ViewModel.Interfaces {
         Task<IExposureData> CaptureImage(
             CaptureSequence sequence,
             CancellationToken token,
-            IProgress<ApplicationStatus> progress);
+            IProgress<ApplicationStatus> progress,
+            string targetName = "");
 
         Task<IRenderedImage> CaptureAndPrepareImage(
             CaptureSequence sequence,

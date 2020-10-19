@@ -249,6 +249,15 @@ namespace NINA.Utility {
             }
         }
 
+        public void RemoveLast() {
+            _lock.EnterWriteLock();
+            try {
+                _underLyingLinkedList.RemoveLast();
+            } finally {
+                _lock.ExitWriteLock();
+            }
+        }
+
         public IEnumerator<T> GetEnumerator() {
             return _underLyingLinkedList.GetEnumerator();
         }

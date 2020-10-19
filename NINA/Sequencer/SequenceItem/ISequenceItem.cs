@@ -1,0 +1,68 @@
+﻿#region "copyright"
+
+/*
+    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+
+    This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+#endregion "copyright"
+
+using NINA.Model;
+using NINA.Sequencer.Container;
+using NINA.Sequencer.DragDrop;
+using NINA.Sequencer.Validations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using System.Windows.Media;
+
+namespace NINA.Sequencer.SequenceItem {
+
+    public interface ISequenceItem : ISequenceEntity {
+
+        /// <summary>
+        /// Short summary of sequence item used in mini sequencer
+        /// </summary>
+        string Detail { get; }
+
+        /// <summary>
+        /// The actual logic when the sequence item should be executed
+        /// </summary>
+        /// <param name="progress">The handle to report back the progress to the application</param>
+        /// <param name="token">Cancellation token to interrupt the sequence</param>
+        /// <returns></returns>
+        Task Run(IProgress<ApplicationStatus> progress, CancellationToken token);
+
+        /// <summary>
+        /// Resets the progress of the sequence item
+        /// </summary>
+        void ResetProgress();
+
+        /// <summary>
+        /// Resets the progress of the sequence item and its parent (and the parent of parent etc.)
+        /// </summary>
+        void ResetProgressCascaded();
+
+        /// <summary>
+        /// Sets the progress of the item to skipped
+        /// </summary>
+        void Skip();
+
+        /// <summary>
+        /// Should return a rough estimate of the sequence item duration to be used for conditions and triggers
+        /// </summary>
+        /// <returns></returns>
+        TimeSpan GetEstimatedDuration();
+
+        ICommand ResetProgressCommand { get; }
+    }
+}

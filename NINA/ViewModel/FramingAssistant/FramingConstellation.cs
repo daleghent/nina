@@ -21,7 +21,7 @@ using System.Linq;
 
 namespace NINA.ViewModel.FramingAssistant {
 
-    internal class FramingConstellation {
+    public class FramingConstellation {
         private Constellation constellation;
 
         public FramingConstellation(Constellation constellation, ViewportFoV viewport) {

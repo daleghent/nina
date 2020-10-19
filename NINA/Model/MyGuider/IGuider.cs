@@ -18,10 +18,10 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyGuider {
-
     public interface IGuider : IDevice {
         double PixelScale { get; set; }
         string State { get; }
+        bool CanClearCalibration { get; }
 
         event EventHandler<IGuideStep> GuideEvent;
 
@@ -29,11 +29,13 @@ namespace NINA.Model.MyGuider {
 
         //Task<bool> Pause(bool pause, CancellationToken ct);
 
-        Task<bool> StartGuiding(CancellationToken ct);
+        Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct);
 
         Task<bool> StopGuiding(CancellationToken ct);
 
         Task<bool> Dither(CancellationToken ct);
+
+        Task<bool> ClearCalibration(CancellationToken ct);
     }
 
     public interface IGuideEvent {

@@ -12,15 +12,19 @@
 
 #endregion "copyright"
 
+using NINA.Model;
 using NINA.Model.MySwitch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.Switch {
 
     public interface ISwitchVM : IDeviceVM<SwitchInfo>, IDockableVM {
+
+        Task SetSwitchValue(short switchIndex, double value, IProgress<ApplicationStatus> progress, CancellationToken ct);
     }
 }

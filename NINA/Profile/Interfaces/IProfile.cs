@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Profile.Interfaces;
 using System;
 using System.ComponentModel;
 
@@ -46,6 +47,7 @@ namespace NINA.Profile {
         IWeatherDataSettings WeatherDataSettings { get; set; }
         IExposureCalculatorSettings ExposureCalculatorSettings { get; set; }
         ISnapShotControlSettings SnapShotControlSettings { get; set; }
+        ISafetyMonitorSettings SafetyMonitorSettings { get; set; }
 
         void Save();
     }

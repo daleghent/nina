@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Model.MyFilterWheel;
+using NINA.Profile.Interfaces;
 using NINA.Utility;
 using System;
 using System.ComponentModel;
@@ -48,6 +49,7 @@ namespace NINA.Profile {
     [KnownType(typeof(SwitchSettings))]
     [KnownType(typeof(ExposureCalculatorSettings))]
     [KnownType(typeof(SnapShotControlSettings))]
+    [KnownType(typeof(SafetyMonitorSettings))]
     public class Profile : BaseINPC, IProfile {
 
         /// <summary>
@@ -115,6 +117,7 @@ namespace NINA.Profile {
             WeatherDataSettings = new WeatherDataSettings();
             ExposureCalculatorSettings = new ExposureCalculatorSettings();
             SnapShotControlSettings = new SnapShotControlSettings();
+            SafetyMonitorSettings = new SafetyMonitorSettings();
         }
 
         /// <summary>
@@ -145,6 +148,7 @@ namespace NINA.Profile {
             WeatherDataSettings.PropertyChanged += SettingsChanged;
             ExposureCalculatorSettings.PropertyChanged += SettingsChanged;
             SnapShotControlSettings.PropertyChanged += SettingsChanged;
+            SafetyMonitorSettings.PropertyChanged += SettingsChanged;
         }
 
         /// <summary>
@@ -178,7 +182,7 @@ namespace NINA.Profile {
 
         [DataMember]
         public Guid Id { get; set; } = Guid.NewGuid();
-        
+
         [DataMember]
         public DateTime LastUsed { get; set; } = DateTime.MinValue;
 
@@ -275,6 +279,9 @@ namespace NINA.Profile {
 
         [DataMember]
         public ISnapShotControlSettings SnapShotControlSettings { get; set; }
+
+        [DataMember]
+        public ISafetyMonitorSettings SafetyMonitorSettings { get; set; }
 
         /// <summary>
         /// Deep Clone an existing profile, create a new Id and append "Copy" to the name

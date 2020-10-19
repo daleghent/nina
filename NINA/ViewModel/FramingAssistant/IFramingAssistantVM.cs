@@ -5,11 +5,10 @@ using NINA.Model;
 using NINA.Model.MyCamera;
 using NINA.Utility;
 using NINA.Utility.SkySurvey;
-using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel.FramingAssistant {
 
-    internal interface IFramingAssistantVM {
+    public interface IFramingAssistantVM {
         double BoundHeight { get; set; }
         double BoundWidth { get; set; }
         int CameraHeight { get; set; }
@@ -50,7 +49,7 @@ namespace NINA.ViewModel.FramingAssistant {
         double Rotation { get; set; }
         ICommand ScrollViewerSizeChangedCommand { get; }
         XElement SelectedImageCacheInfo { get; set; }
-        ICommand SetSequenceCoordinatesCommand { get; }
+        ICommand SetSequencerTargetCommand { get; }
         SkyMapAnnotator SkyMapAnnotator { get; set; }
         ISkySurveyFactory SkySurveyFactory { get; set; }
         IAsyncCommand SlewToCoordinatesCommand { get; }

@@ -17,7 +17,7 @@ using System.Drawing;
 
 namespace NINA.ViewModel.FramingAssistant {
 
-    internal class FramingConstellationBoundary {
+    public class FramingConstellationBoundary {
         private static Pen boundaryPen = new Pen(Color.FromArgb(128, Color.Khaki), 0.1f);
         public List<PointF> Points = new List<PointF>();
 

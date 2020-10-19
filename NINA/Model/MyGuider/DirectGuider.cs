@@ -119,11 +119,19 @@ namespace NINA.Model.MyGuider {
             return Task.FromResult(true);
         }
 
-        public Task<bool> StartGuiding(CancellationToken ct) {
+        public Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
             return Task.FromResult(true);
         }
 
         public Task<bool> StopGuiding(CancellationToken ct) {
+            return Task.FromResult(true);
+        }
+
+        public bool CanClearCalibration {
+            get => true;
+        }
+
+        public Task<bool> ClearCalibration(CancellationToken ct) {
             return Task.FromResult(true);
         }
 

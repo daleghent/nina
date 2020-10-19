@@ -251,10 +251,10 @@ namespace NINA.Model.MyGuider.PHD2 {
         }
 
         /// <inheritdoc />
-        public Task<bool> StartGuiding(CancellationToken ct) {
+        public Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
             return Task.Run(async () => {
                 ct.Register(guiderService.CancelStartGuiding);
-                return await guiderService.StartGuiding();
+                return await guiderService.StartGuiding(forceCalibration);
             }, ct);
         }
 
@@ -263,6 +263,18 @@ namespace NINA.Model.MyGuider.PHD2 {
             return Task.Run(async () => {
                 ct.Register(guiderService.CancelStopGuiding);
                 return await guiderService.StopGuiding();
+            }, ct);
+        }
+
+        public bool CanClearCalibration {
+            get => true;
+        }
+
+        /// <inheritdoc />
+        public Task<bool> ClearCalibration(CancellationToken ct) {
+            return Task.Run(async () => {
+                ct.Register(guiderService.CancelStopGuiding);
+                return await guiderService.ClearCalibration();
             }, ct);
         }
 

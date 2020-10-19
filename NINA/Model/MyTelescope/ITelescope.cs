@@ -13,10 +13,25 @@
 #endregion "copyright"
 
 using NINA.Utility.Astrometry;
-using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace NINA.Model.MyTelescope {
+    public enum TrackingMode {
+        Sidereal,
+        Lunar,
+        Solar,
+        King,
+        Custom,
+        Stopped
+    }
+
+    public struct TrackingRate {
+        public static TrackingRate STOPPED = new TrackingRate() { TrackingMode = TrackingMode.Stopped };
+        public TrackingMode TrackingMode;
+        public double? CustomRightAscensionRate;
+        public double? CustomDeclinationRate;
+    }
 
     internal interface ITelescope : IDevice {
         Coordinates Coordinates { get; }
@@ -36,8 +51,11 @@ namespace NINA.Model.MyTelescope {
         string TimeToMeridianFlipString { get; }
         double MovingRate { get; set; }
         PierSide SideOfPier { get; }
-        bool CanSetTracking { get; }
-        bool Tracking { get; set; }
+        bool CanSetTrackingEnabled { get; }
+        bool TrackingEnabled { get; set; }
+        IList<TrackingMode> TrackingModes {get; }
+        TrackingRate TrackingRate { get; }
+        TrackingMode TrackingMode { get; set; }
         double SiteLatitude { get; set; }
         double SiteLongitude { get; set; }
         double SiteElevation { get; }
@@ -71,5 +89,7 @@ namespace NINA.Model.MyTelescope {
         void Unpark();
 
         void SendCommandString(string command);
+
+        void SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
     }
 }

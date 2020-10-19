@@ -25,6 +25,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Linq;
+using System.Collections.Immutable;
 
 namespace NINA.ViewModel.Equipment.Telescope {
 
@@ -56,6 +58,8 @@ namespace NINA.ViewModel.Equipment.Telescope {
             MoveCommand = new RelayCommand(Move);
             StopMoveCommand = new RelayCommand(StopMove);
             StopSlewCommand = new RelayCommand(StopSlew);
+            SetTrackingEnabledCommand = new RelayCommand(HandleSetTrackingEnabledCommand);
+            SetTrackingModeCommand = new RelayCommand(HandleSetTrackingModeCommand);
 
             updateTimer = new DeviceUpdateTimer(
                 GetTelescopeValues,
@@ -102,7 +106,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                 Logger.Trace(String.Format("Telescope will slew to RA {0} and Dec {1}", targetCoords.RAString, targetCoords.DecString));
                 await SlewToCoordinatesAsync(targetCoords);
                 Logger.Trace("Telescope will stop tracking");
-                SetTracking(false);
+                SetTrackingEnabled(false);
                 Logger.Trace("Telescope will now park according to mount defined park method");
                 return await Task.Run<bool>(() => { Telescope.Park(); return true; });
             } else { //Telescope cannot park, slew and stop tracking
@@ -110,7 +114,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                 Logger.Trace(String.Format("Telescope will slew to RA {0} and Dec {1}", targetCoords.RAString, targetCoords.DecString));
                 await SlewToCoordinatesAsync(targetCoords);
                 Logger.Trace("Telescope will stop tracking");
-                SetTracking(false);
+                SetTrackingEnabled(false);
             }
             Logger.Trace("Telescope has been parked");
             return true;
@@ -279,8 +283,10 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 TimeToMeridianFlip = Telescope.TimeToMeridianFlip,
                                 TimeToMeridianFlipString = Telescope.TimeToMeridianFlipString,
                                 SideOfPier = Telescope.SideOfPier,
-                                Tracking = Telescope.Tracking,
-                                CanSetTracking = Telescope.CanSetTracking,
+                                TrackingModes = Telescope.TrackingModes,
+                                TrackingRate = Telescope.TrackingRate,
+                                TrackingEnabled = Telescope.TrackingEnabled,
+                                CanSetTrackingEnabled = Telescope.CanSetTrackingEnabled,
                                 CanPark = Telescope.CanPark,
                                 CanSetPark = Telescope.CanSetPark,
                                 EquatorialSystem = Telescope.EquatorialSystem,
@@ -288,6 +294,9 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 TargetCoordinates = Telescope.TargetCoordinates,
                                 TargetSideOfPier = Telescope.TargetSideOfPier
                             };
+
+                            // Supporting custom would require an additional dialog box to input the custom rates. We can add that later if there's demand for it
+                            SupportedTrackingModes = new AsyncObservableCollection<TrackingMode>(Telescope.TrackingModes.Where(m => m != TrackingMode.Custom));
 
                             BroadcastTelescopeInfo();
 
@@ -395,8 +404,17 @@ namespace NINA.ViewModel.Equipment.Telescope {
             telescopeValues.TryGetValue(nameof(TelescopeInfo.SiteElevation), out o);
             TelescopeInfo.SiteElevation = (double)(o ?? double.NaN);
 
-            telescopeValues.TryGetValue(nameof(TelescopeInfo.Tracking), out o);
-            TelescopeInfo.Tracking = (bool)(o ?? false);
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.TrackingRate), out o);
+            TelescopeInfo.TrackingRate = (TrackingRate)(o ?? TrackingRate.STOPPED);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.CanSetTrackingEnabled), out o);
+            TelescopeInfo.CanSetTrackingEnabled = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.TrackingEnabled), out o);
+            TelescopeInfo.TrackingEnabled = (bool)(o ?? false);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.TrackingModes), out o);
+            TelescopeInfo.TrackingModes = (IList<TrackingMode>)(o ?? ImmutableList<TrackingMode>.Empty);
 
             telescopeValues.TryGetValue(nameof(Coordinates), out o);
             TelescopeInfo.Coordinates = (Coordinates)(o ?? null);
@@ -424,8 +442,10 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
             telescopeValues.Add(nameof(TelescopeInfo.Connected), _telescope?.Connected ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.AtPark), _telescope?.AtPark ?? false);
-            telescopeValues.Add(nameof(TelescopeInfo.Tracking), _telescope?.Tracking ?? false);
-
+            telescopeValues.Add(nameof(TelescopeInfo.CanSetTrackingEnabled), _telescope?.CanSetTrackingEnabled ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.TrackingRate), _telescope?.TrackingRate ?? TrackingRate.STOPPED);
+            telescopeValues.Add(nameof(TelescopeInfo.TrackingEnabled), _telescope?.TrackingEnabled ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.TrackingModes), _telescope?.TrackingModes ?? ImmutableList<TrackingMode>.Empty);
             telescopeValues.Add(nameof(TelescopeInfo.Altitude), _telescope?.Altitude ?? double.NaN);
             telescopeValues.Add(nameof(TelescopeInfo.AltitudeString), _telescope?.AltitudeString ?? string.Empty);
             telescopeValues.Add(nameof(TelescopeInfo.Azimuth), _telescope?.Azimuth ?? double.NaN);
@@ -667,15 +687,6 @@ namespace NINA.ViewModel.Equipment.Telescope {
             }
         }
 
-        public bool SetTracking(bool tracking) {
-            if (TelescopeInfo.Connected) {
-                Telescope.Tracking = tracking;
-                return Telescope.Tracking;
-            } else {
-                return false;
-            }
-        }
-
         public Task<bool> Connect() {
             return ChooseTelescope();
         }
@@ -701,6 +712,53 @@ namespace NINA.ViewModel.Equipment.Telescope {
             }
         }
 
+        private void HandleSetTrackingEnabledCommand(object p) {
+            var enabled = (bool)p;
+            SetTrackingEnabled(enabled);
+        }
+
+        private void HandleSetTrackingModeCommand(object p) {
+            if (p != null) {
+                SetTrackingMode((TrackingMode)p);
+            }
+        }
+
+        public bool SetTrackingEnabled(bool tracking) {
+            if (TelescopeInfo.Connected) {
+                Telescope.TrackingEnabled = tracking;
+                return Telescope.TrackingEnabled;
+            } else {
+                return false;
+            }
+        }
+
+        public bool SetTrackingMode(TrackingMode trackingMode) {
+            if (Telescope?.Connected == true && trackingMode != TrackingMode.Custom) {
+                Telescope.TrackingMode = trackingMode;
+                return Telescope.TrackingMode == trackingMode;
+            }
+            return false;
+        }
+
+        public bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate) {
+            if (Telescope?.Connected == true) {
+                Telescope.SetCustomTrackingRate(rightAscensionRate, declinationRate);
+                return true;
+            }
+            return false;
+        }
+
+        private AsyncObservableCollection<TrackingMode> supportedTrackingModes = new AsyncObservableCollection<TrackingMode>();
+        public AsyncObservableCollection<TrackingMode> SupportedTrackingModes { 
+            get {
+                return supportedTrackingModes;
+            }
+            set {
+                supportedTrackingModes = value;
+                RaisePropertyChanged();
+            } 
+        }
+
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
 
         public IAsyncCommand ChooseTelescopeCommand { get; private set; }
@@ -720,5 +778,9 @@ namespace NINA.ViewModel.Equipment.Telescope {
         public ICommand StopSlewCommand { get; private set; }
 
         public ICommand RefreshTelescopeListCommand { get; private set; }
+
+        public ICommand SetTrackingEnabledCommand { get; private set; }
+
+        public ICommand SetTrackingModeCommand { get; private set; }
     }
 }

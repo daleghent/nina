@@ -20,13 +20,13 @@ using System.Windows.Media.Imaging;
 
 namespace NINA.Utility.SkySurvey {
 
-    internal interface ISkySurvey {
+    public interface ISkySurvey {
 
         Task<SkySurveyImage> GetImage(string name, Coordinates coordinates, double fieldOfView, int width, int height,
             CancellationToken ct, IProgress<int> progress);
     }
 
-    internal class SkySurveyImage {
+    public class SkySurveyImage {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Source { get; set; }
         public BitmapSource Image { get; set; }

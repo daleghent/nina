@@ -50,7 +50,7 @@ namespace NINA.ViewModel.Imaging {
         private ApplicationStatus _status;
 
         private IApplicationStatusMediator applicationStatusMediator;
-
+        private IFilterWheelMediator filterWheelMediator;
         private CameraInfo cameraInfo;
 
         private ICameraMediator cameraMediator;
@@ -66,7 +66,8 @@ namespace NINA.ViewModel.Imaging {
                 ITelescopeMediator telescopeMediator,
                 IDomeMediator domeMediator,
                 IImagingMediator imagingMediator,
-                IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+                IApplicationStatusMediator applicationStatusMediator,
+                IFilterWheelMediator filterWheelMediator) : base(profileService) {
             Title = "LblPlateSolving";
 
             this.cameraMediator = cameraMediator;
@@ -76,6 +77,8 @@ namespace NINA.ViewModel.Imaging {
             this.domeMediator = domeMediator;
             this.imagingMediator = imagingMediator;
             this.applicationStatusMediator = applicationStatusMediator;
+            this.filterWheelMediator = filterWheelMediator;
+
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PlatesolveSVG"];
 
             SolveCommand = new AsyncCommand<bool>(async () => {
@@ -298,7 +301,7 @@ namespace NINA.ViewModel.Imaging {
                 });
 
                 if (this.SlewToTarget) {
-                    var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator);
+                    var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator);
                     var parameter = new CenterSolveParameter() {
                         Attempts = 1,
                         Binning = SnapBin?.X ?? CameraInfo.BinX,
@@ -315,7 +318,7 @@ namespace NINA.ViewModel.Imaging {
                     };
                     _ = await solver.Center(seq, parameter, solveProgress, progress, _solveCancelToken.Token);
                 } else {
-                    var solver = new CaptureSolver(plateSolver, blindSolver, imagingMediator);
+                    var solver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
                     var parameter = new CaptureSolverParameter() {
                         Attempts = 1,
                         Binning = SnapBin?.X ?? CameraInfo.BinX,

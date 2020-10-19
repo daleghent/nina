@@ -217,6 +217,16 @@
                                     <TextBlock Text="{ns:Loc LblSideOfPier}" />
                                     <TextBlock Margin="5,0,0,0" Text="{Binding TelescopeInfo.SideOfPier, Converter={StaticResource SideOfPierConverter}}" />
                                 </UniformGrid>
+                                <UniformGrid
+                                    Margin="0,6,0,6"
+                                    VerticalAlignment="Center"
+                                    Columns="2">
+                                    <TextBlock Text="{ns:Loc LblTracking}" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        Text="{Binding TelescopeInfo.TrackingRate, Converter={StaticResource TrackingRateConverter}}"
+                                        Visibility="{Binding TelescopeInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
+                                </UniformGrid>
                             </UniformGrid>
                         </Border>
                     </StackPanel>
@@ -340,10 +350,7 @@
             Grid.Column="1"
             IsEnabled="{Binding Telescope, Converter={StaticResource InverseNullToBooleanConverter}}">
             <Grid IsEnabled="{Binding TelescopeInfo.Connected}">
-                <GroupBox
-                    Grid.Row="1"
-                    Header="{ns:Loc LblManualControl}"
-                    IsEnabled="{Binding Telescope.CanSlew}">
+                <GroupBox Header="{ns:Loc LblManualControl}" IsEnabled="{Binding Telescope.CanSlew}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -355,8 +362,39 @@
                             <RowDefinition Height="*" />
                             <RowDefinition Height="100" />
                             <RowDefinition Height="100" />
+                            <RowDefinition Height="100" />
                             <RowDefinition Height="50" />
                         </Grid.RowDefinitions>
+                        <UniformGrid
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Columns="2"
+                            Visibility="{Binding TelescopeInfo.CanSetTrackingEnabled, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                            <Button
+                                Margin="5"
+                                Command="{Binding SetTrackingModeCommand}"
+                                CommandParameter="{Binding Path=SelectedItem, ElementName=TrackingModeComboBox}">
+                                <TextBlock
+                                    Margin="10"
+                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                    Text="{ns:Loc LblSetTrackingRate}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
+                            </Button>
+                            <ComboBox
+                                x:Name="TrackingModeComboBox"
+                                Height="30"
+                                Margin="10,0,0,0"
+                                ItemsSource="{Binding SupportedTrackingModes}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Path=., Converter={StaticResource TrackingModeConverter}}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </UniformGrid>
                         <StackPanel
                             Grid.Row="0"
                             Grid.Column="3"
@@ -369,7 +407,7 @@
                             <ninactrl:StepperControl Value="{Binding Telescope.MovingRate, Mode=TwoWay}" />
                         </StackPanel>
                         <Button
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Grid.Column="0"
                             Width="80"
                             Height="80"
@@ -397,7 +435,7 @@
                             </i:Interaction.Triggers>
                         </Button>
                         <Button
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Grid.Column="2"
                             Width="80"
                             Height="80"
@@ -425,7 +463,7 @@
                             </i:Interaction.Triggers>
                         </Button>
                         <Button
-                            Grid.Row="0"
+                            Grid.Row="1"
                             Grid.Column="1"
                             Width="80"
                             Height="80"
@@ -453,7 +491,7 @@
                             </i:Interaction.Triggers>
                         </Button>
                         <Button
-                            Grid.Row="2"
+                            Grid.Row="3"
                             Grid.Column="1"
                             Width="80"
                             Height="80"
@@ -482,7 +520,7 @@
                             </i:Interaction.Triggers>
                         </Button>
                         <Button
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Grid.Column="1"
                             Width="80"
                             Height="80"
@@ -491,7 +529,7 @@
                         </Button>
 
                         <Button
-                            Grid.Row="2"
+                            Grid.Row="3"
                             Grid.Column="3"
                             Width="80"
                             Height="80"
@@ -501,7 +539,7 @@
                             <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblPark}" />
                         </Button>
                         <Grid
-                            Grid.Row="2"
+                            Grid.Row="3"
                             Grid.Column="3"
                             Width="80"
                             Height="80"
@@ -513,7 +551,7 @@
                         </Grid>
 
                         <Button
-                            Grid.Row="3"
+                            Grid.Row="4"
                             Grid.Column="3"
                             Width="80"
                             Height="40"

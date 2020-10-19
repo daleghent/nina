@@ -138,7 +138,8 @@ namespace NINA.ViewModel.Equipment.Guider {
                     Guider.GuideEvent += Guider_GuideEvent;
 
                     GuiderInfo = new GuiderInfo {
-                        Connected = connected
+                        Connected = connected,
+                        CanClearCalibration = Guider.CanClearCalibration
                     };
                     BroadcastGuiderInfo();
                     RaisePropertyChanged(nameof(Guider));
@@ -234,9 +235,18 @@ namespace NINA.ViewModel.Equipment.Guider {
             }
         }
 
-        public async Task<bool> StartGuiding(CancellationToken token) {
+        public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Guider?.Connected == true) {
-                return await Guider.StartGuiding(token);
+                try {
+                    progress.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblStartGuiding"] });
+                    var guiding = await Guider.StartGuiding(forceCalibration, token);
+                    return guiding;
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                    return false;
+                } finally {
+                    progress.Report(new ApplicationStatus { Status = string.Empty });
+                }
             } else {
                 return false;
             }
@@ -245,6 +255,14 @@ namespace NINA.ViewModel.Equipment.Guider {
         public async Task<bool> StopGuiding(CancellationToken token) {
             if (Guider?.Connected == true) {
                 return await Guider.StopGuiding(token);
+            } else {
+                return false;
+            }
+        }
+
+        public async Task<bool> ClearCalibration(CancellationToken token) {
+            if (Guider?.Connected == true) {
+                return await Guider.ClearCalibration(token);
             } else {
                 return false;
             }

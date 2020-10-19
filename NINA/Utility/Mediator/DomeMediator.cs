@@ -10,7 +10,7 @@ namespace NINA.Utility.Mediator {
             return handler.OpenShutter(cancellationToken);
         }
 
-        public Task<bool> EnableSlaving(CancellationToken cancellationToken) {
+        public Task<bool> EnableFollowing(CancellationToken cancellationToken) {
             return handler.EnableFollowing(cancellationToken);
         }
 
@@ -26,8 +26,8 @@ namespace NINA.Utility.Mediator {
             return handler.Park(cancellationToken);
         }
 
-        public Task<bool> DisableSlaving(CancellationToken cancellationToken) {
-            return handler.DisableFollow(cancellationToken);
+        public Task<bool> DisableFollowing(CancellationToken cancellationToken) {
+            return handler.DisableFollowing(cancellationToken);
         }
     }
 }

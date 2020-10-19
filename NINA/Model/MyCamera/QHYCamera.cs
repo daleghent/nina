@@ -1247,8 +1247,6 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        #region "Quirks"
-
         ///<summary>
         // Camera models usually accept CONTROL_GAIN values as a normal integer
         // in accordance with the accepted ranges as stated by the values returned
@@ -1358,7 +1356,5 @@ namespace NINA.Model.MyCamera {
             }
             return false;
         }
-
-        #endregion "Quirks"
     }
 }

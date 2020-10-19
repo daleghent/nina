@@ -88,7 +88,7 @@ namespace NINA.Model.MyGuider.PHD2 {
         /// </summary>
         /// <returns></returns>
         [OperationContract]
-        Task<bool> StartGuiding();
+        Task<bool> StartGuiding(bool forceCalibration);
 
         /// <summary>
         /// Forwards StopGuiding to the PHD2 instance and stops guiding. Can be called from multiple instances simultaneously.
@@ -96,6 +96,13 @@ namespace NINA.Model.MyGuider.PHD2 {
         /// <returns></returns>
         [OperationContract]
         Task<bool> StopGuiding();
+
+        /// <summary>
+        /// Forwards ClearCalibration to the PHD2 instance and stops guiding. Can be called from multiple instances simultaneously.
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        Task<bool> ClearCalibration();
 
         /// <summary>
         /// Request to Dither to the PHD2 instance. Will return immediately if should not dither or will wait for the other client to call the same method to synchronize a Dither request.

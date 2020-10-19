@@ -24,13 +24,16 @@ using NINA.Utility.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel;
 using NINA.ViewModel.Equipment.FlatDevice;
+using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.Interfaces;
+using NINA.ViewModel.Sequencer;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINATest {
+
     [TestFixture]
     public class SequenceVMTest {
         public TestContext TestContext { get; set; }
@@ -51,11 +54,12 @@ namespace NINATest {
         private Mock<IImageHistoryVM> imageHistoryVMMock;
         private Mock<IDeepSkyObjectSearchVM> deepSkyObjectSearchVMMock;
         private Mock<IDomeMediator> domeMediatorMock;
-        private Mock<ISequenceMediator> sequenceMediatorMock;
+        private Mock<IImageSaveMediator> imageSaveMediatorMock;
         private Mock<IApplicationMediator> applicationMediatorMock;
         private Mock<IFramingAssistantVM> framingAssistantVMMock;
         private FlatDeviceInfo _flatDevice;
         private CaptureSequenceList _dummyList;
+        private Mock<ISequenceMediator> sequenceMediatorMock;
         private SequenceVM _sut;
 
         [SetUp]
@@ -105,11 +109,8 @@ namespace NINATest {
                 SupportsOpenClose = true
             };
 
-            _sut = new SequenceVM(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, focuserMediatorMock.Object,
-                filterWheelMediatorMock.Object, guiderMediatorMock.Object, rotatorMediatorMock.Object, flatDeviceMediatorMock.Object,
-                weatherDataMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, nighttimeCalculatorMock.Object,
-                planetariumFactoryMock.Object, imageHistoryVMMock.Object, deepSkyObjectSearchVMMock.Object, sequenceMediatorMock.Object, domeMediatorMock.Object, 
-                framingAssistantVMMock.Object, applicationMediatorMock.Object);
+            _sut = new SequenceVM(profileServiceMock.Object, sequenceMediatorMock.Object, cameraMediatorMock.Object, rotatorMediatorMock.Object, applicationStatusMediatorMock.Object, nighttimeCalculatorMock.Object,
+                planetariumFactoryMock.Object, deepSkyObjectSearchVMMock.Object, framingAssistantVMMock.Object, applicationMediatorMock.Object);
         }
 
         [TearDown]
@@ -118,90 +119,14 @@ namespace NINATest {
 
         [Test]
         public void Sequence_ConsumerRegistered() {
-            telescopeMediatorMock.Verify(m => m.RegisterConsumer(_sut));
-            focuserMediatorMock.Verify(m => m.RegisterConsumer(_sut));
-            filterWheelMediatorMock.Verify(m => m.RegisterConsumer(_sut));
+            cameraMediatorMock.Verify(m => m.RegisterConsumer(_sut));
             rotatorMediatorMock.Verify(m => m.RegisterConsumer(_sut));
-            weatherDataMediatorMock.Verify(m => m.RegisterConsumer(_sut));
-            guiderMediatorMock.Verify(m => m.RegisterConsumer(_sut));
-            flatDeviceMediatorMock.Verify(m => m.RegisterConsumer(_sut));
-            domeMediatorMock.Verify(m => m.RegisterConsumer(_sut));
-        }
-
-        [Test]
-        public async Task ProcessSequence_Default() {
-            _sut.UpdateDeviceInfo(_flatDevice);
-            profileServiceMock.SetupProperty(m => m.ActiveProfile.FlatDeviceSettings.CloseAtSequenceEnd, true);
-            //Act
-            await _sut.StartSequenceCommand.ExecuteAsync(null);
-
-            //Assert
-            Assert.That(_sut.SelectedSequenceRowIdx, Is.EqualTo(0));
-            Assert.That(_sut.IsPaused, Is.False);
-            Assert.That(_sut.Sequence.IsRunning, Is.False);
-            flatDeviceMediatorMock.Verify(m => m.CloseCover(), Times.Once);
-        }
-
-        [Test]
-        public async Task ProcessSequence_StartOptions_DontSlewToTargetTest() {
-            _dummyList.SlewToTarget = false;
-            _sut.Sequence = _dummyList;
-
-            //Act
-            await _sut.StartSequenceCommand.ExecuteAsync(null);
-
-            //Assert
-            telescopeMediatorMock.Verify(m => m.SlewToCoordinatesAsync(It.IsAny<Coordinates>()), Times.Never);
-        }
-
-        [Test]
-        public async Task ProcessSequence_StartOptions_CoordinatesSlewTest() {
-            _sut.UpdateDeviceInfo(new TelescopeInfo() { Connected = true });
-            _dummyList.CenterTarget = true;
-            var coordinates = new Coordinates(10, 10, Epoch.J2000, Coordinates.RAType.Degrees);
-            _dummyList.Coordinates = coordinates;
-
-            _sut.Targets = new NINA.Utility.AsyncObservableCollection<CaptureSequenceList>() { _dummyList };
-            _sut.Sequence = _dummyList;
-
-            //Act
-            await _sut.StartSequenceCommand.ExecuteAsync(null);
-
-            //Assert
-            telescopeMediatorMock.Verify(m => m.SlewToCoordinatesAsync(coordinates));
-        }
-
-        [Test]
-        public async Task ProcessSequence_StartOptions_StartGuidingTest() {
-            _sut.UpdateDeviceInfo(new GuiderInfo() { Connected = true });
-            _dummyList.SlewToTarget = false;
-            _dummyList.CenterTarget = false;
-            _dummyList.StartGuiding = true;
-            _sut.Targets = new NINA.Utility.AsyncObservableCollection<CaptureSequenceList>() { _dummyList };
-            _sut.Sequence = _dummyList;
-
-            //Act
-            await _sut.StartSequenceCommand.ExecuteAsync(null);
-
-            //Assert
-            guiderMediatorMock.Verify(m => m.StartGuiding(It.IsAny<CancellationToken>()), Times.Once);
-        }
-
-        [Test]
-        public async Task ProcessSequence_StartOptions_DontStartGuidingTest() {
-            _dummyList.StartGuiding = false;
-            _sut.Sequence = _dummyList;
-
-            //Act
-            await _sut.StartSequenceCommand.ExecuteAsync(null);
-
-            //Assert
-            guiderMediatorMock.Verify(m => m.StartGuiding(It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]
         public void ProcessSequence_AddSequenceCommand() {
             //Act
+            _sut.AddTarget(new DeepSkyObject("", ""));
             _sut.AddSequenceRowCommand.Execute(null);
 
             //Assert
@@ -225,6 +150,7 @@ namespace NINATest {
         [Test]
         public void ProcessSequence_RemoveSequenceCommand() {
             //Act
+            _sut.AddTarget(new DeepSkyObject("", ""));
             _sut.RemoveSequenceRowCommand.Execute(null);
 
             //Assert
@@ -235,6 +161,7 @@ namespace NINATest {
         [Test]
         public void ProcessSequence_OnEmptySequence_RemoveSequenceCommand() {
             //Act
+            _sut.AddTarget(new DeepSkyObject("", ""));
             _sut.RemoveSequenceRowCommand.Execute(null);
             _sut.RemoveSequenceRowCommand.Execute(null);
 

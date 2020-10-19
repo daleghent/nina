@@ -8,8 +8,8 @@ namespace NINA.Utility.Mediator.Interfaces {
         Task WaitForDomeSynchronization(CancellationToken cancellationToken);
         Task<bool> OpenShutter(CancellationToken cancellationToken);
         Task<bool> CloseShutter(CancellationToken cancellationToken);
-        Task<bool> EnableSlaving(CancellationToken cancellationToken);
-        Task<bool> DisableSlaving(CancellationToken cancellationToken);
+        Task<bool> EnableFollowing(CancellationToken cancellationToken);
+        Task<bool> DisableFollowing(CancellationToken cancellationToken);
         Task<bool> Park(CancellationToken cancellationToken);
     }
 }

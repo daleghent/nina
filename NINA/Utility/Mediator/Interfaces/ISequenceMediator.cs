@@ -13,18 +13,27 @@
 #endregion "copyright"
 
 using NINA.Model;
+using NINA.Sequencer;
+using NINA.Sequencer.Container;
 using NINA.ViewModel.Interfaces;
+using NINA.ViewModel.Sequencer;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace NINA.Utility.Mediator.Interfaces {
 
-    public interface ISequenceMediator : IMediator<ISequenceVM> {
+    public interface ISequenceMediator {
 
-        Task<bool> SetSequenceCoordinates(DeepSkyObject dso);
+        void AddTargetToOldSequencer(DeepSkyObject deepSkyObject);
 
-        Task<bool> SetSequenceCoordinates(ICollection<DeepSkyObject> dso, bool replace);
+        void AddTargetToSequencer(IDeepSkyObjectContainer container);
 
-        bool OkToExit();
+        void RegisterConstructor(ISequenceVM constructor);
+
+        void RegisterSequencer(ISequence2VM sequencer);
+
+        void SetRootContainer(ISequenceRootContainer container);
+
+        SequencerFactory GetFactory();
+        IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates();
     }
 }

@@ -3,9 +3,53 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
-### <span style="color:red;">Nightly builds contain the ongoing development effort for new features. These builds progress quickly, can be unstable (especially in early stages) and running on outdated nightly builds is strongly discouraged!</span>
+### <span style="color:red;">Nightly builds are preview builds and contain the ongoing development effort for new features. These builds progress quickly, can be unstable (especially in early stages) and running on outdated nightly builds is strongly discouraged!</span>
 
 # Version 1.11
+
+## Complete Sequencer Rework
+
+### Sequence Tab changed to Sequence Builder
+- The old sequence UI is still available, but instead of running a sequence it will instead be used to generate the new sequence construct
+- This generation process will help to easily transition to the new way of sequencing
+- Instead of loading an empty target, the UI will show a separate UI when no target was set, where the user can choose which kind of sequence should be loaded instead
+- End of sequence options are moved from the options tab to the sequence tab
+- Introduced new start of sequence options to be used
+- Added a "Rotate Target" button to explicitly set, that the rotation for the target should be considered
+
+### New Sequencer Tab
+- This will be the new heart of the application, where a sequence can be built completely from scratch by individual tiny building blocks
+- The building blocks consist of these categories
+  - Instruction Sets
+    - These sets group together different instructions
+    - Templates can be generated out of these sets to be used later with the same parameters
+  - Instructions
+    - These are the individual steps to automate the sequence
+    - Each item has a different operation, like switching to a filter or taking an exposure 
+  - Trigger
+    - Triggers are part of an instruction set and are evaluated after each instruction is processed
+    - They have certain conditions that are checked and when these are fullfilled the triggers will fire
+    - Examples for these are autofocus after certain parameters, merdian flip or dithering after an amount of exposures
+    - Triggers are always cascading. So a trigger on an instruction set on a higher level than the currently executed instruction set will also be evaluated
+  - Loop Conditions
+    - These conditions are attached to an instruction set and drive the behavior of the set
+    - As long as a condition is fullfilled, the instruction set will be looped
+    - Once a condition is not fullfilled anymore, all remaining instructions inside an instruction set will be skipped
+    - Loop conditions are always cascading. So a conditions on an instruction set on a higher level than the currently executed instruction set will also be evaluated
+  - Templates
+    - Each instruction set can be saved as a template
+    - These templates store all info that has been set inside the instruction set and can be restored for later usage
+    - Furthermore these will be stored physically inside the default sequence folder and can be reorganized there
+    - Sub folders inside the default sequence folder are possible and will group these templates together
+- For more details on the usage refer to the documentation
+
+### Framing Tab
+- Instead of sending the current target to the sequencer, the user will be prompted to either choose the sequence constructor or directly send the target to the new sequencer while also being able to choose from different templates
+- Replacing of the complete targets is removed, as this is not necessary anymore.  
+
+### Imaging Tab - Sequence Panel
+- As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore
+- Instead the sequence panel will show a minimized representation of the set up sequence, where you can see the current running instruction set with basic details
 
 ## New hardware support
 

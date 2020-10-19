@@ -25,6 +25,7 @@
     <Grid>
         <Grid.Resources>
             <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeData}" />
+            <util:BindingProxy x:Key="Context" Data="{Binding}" />
         </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -416,7 +417,6 @@
                     <Style x:Key="myHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
                         <Setter Property="Visibility" Value="Collapsed" />
                     </Style>
-
                 </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTemplateColumn
@@ -620,11 +620,64 @@
                                         MinHeight="40"
                                         Margin="5"
                                         HorizontalAlignment="Stretch"
-                                        Command="{Binding DataContext.SetSequenceCoordinatesCommand, RelativeSource={RelativeSource AncestorType=local:SkyAtlasView}}">
+                                        Command="{Binding DataContext.GetDSOTemplatesCommand, RelativeSource={RelativeSource AncestorType=local:SkyAtlasView}}">
                                         <TextBlock
                                             Foreground="{StaticResource ButtonForegroundBrush}"
-                                            Text="{ns:Loc LblSetAsSequenceTarget}"
+                                            Text="{ns:Loc LblAddTargetToSequence}"
                                             TextWrapping="Wrap" />
+                                        <Button.Style>
+                                            <Style BasedOn="{StaticResource StandardButton}" TargetType="{x:Type Button}">
+                                                <Style.Resources>
+                                                    <Border
+                                                        x:Key="MenuHeader"
+                                                        MinHeight="30"
+                                                        x:Shared="false"
+                                                        Background="Transparent">
+                                                        <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+                                                    </Border>
+                                                    <Path
+                                                        x:Key="MenuIcon"
+                                                        Width="20"
+                                                        Height="20"
+                                                        Margin="5"
+                                                        x:Shared="false"
+                                                        Data="{Binding Icon}"
+                                                        Fill="{StaticResource PrimaryBrush}"
+                                                        Stretch="Uniform" />
+                                                </Style.Resources>
+                                                <Style.Triggers>
+                                                    <EventTrigger RoutedEvent="Click">
+                                                        <EventTrigger.Actions>
+                                                            <BeginStoryboard>
+                                                                <Storyboard>
+                                                                    <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                                        <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                                                                    </BooleanAnimationUsingKeyFrames>
+                                                                </Storyboard>
+                                                            </BeginStoryboard>
+                                                        </EventTrigger.Actions>
+                                                    </EventTrigger>
+                                                </Style.Triggers>
+                                                <Setter Property="ContextMenu">
+                                                    <Setter.Value>
+                                                        <ContextMenu>
+                                                            <MenuItem Command="{Binding Source={StaticResource Context}, Path=Data.SetOldSequencerTargetCommand}" Header="{ns:Loc Lbl_OldSequencer_Title}" />
+                                                            <Separator />
+                                                            <MenuItem Header="{ns:Loc Lbl_Sequencer_Title}" ItemsSource="{Binding Source={StaticResource Context}, Path=Data.DSOTemplates}">
+                                                                <MenuItem.ItemContainerStyle>
+                                                                    <Style TargetType="MenuItem">
+                                                                        <Setter Property="Header" Value="{StaticResource MenuHeader}" />
+                                                                        <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
+                                                                        <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.SetSequencerTargetCommand}" />
+                                                                        <Setter Property="CommandParameter" Value="{Binding}" />
+                                                                    </Style>
+                                                                </MenuItem.ItemContainerStyle>
+                                                            </MenuItem>
+                                                        </ContextMenu>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </Button.Style>
                                     </Button>
                                     <Button
                                         MinHeight="40"

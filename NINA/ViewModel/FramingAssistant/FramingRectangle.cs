@@ -17,7 +17,7 @@ using NINA.Utility.Astrometry;
 
 namespace NINA.ViewModel.FramingAssistant {
 
-    internal class FramingRectangle : ObservableRectangle {
+    public class FramingRectangle : ObservableRectangle {
 
         public FramingRectangle(double rotationOffset) : base(rotationOffset) {
         }

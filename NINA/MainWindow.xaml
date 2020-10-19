@@ -16,6 +16,7 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:options="clr-namespace:NINA.View.Options"
+    xmlns:sequencer="clr-namespace:NINA.View.Sequencer"
     xmlns:util="clr-namespace:NINA.Utility"
     xmlns:view="clr-namespace:NINA.View"
     xmlns:vm="clr-namespace:NINA.ViewModel"
@@ -32,61 +33,33 @@
         <KeyBinding Key="F9" Command="{Binding ApplicationDeviceConnectionVM.DisconnectAllDevicesCommand}" />
     </Window.InputBindings>
     <Window.TaskbarItemInfo>
-        <TaskbarItemInfo ProgressState="{Binding SeqVM.TaskBarProgressState}" ProgressValue="{Binding SeqVM.TaskBarProgressValue}">
+        <TaskbarItemInfo ProgressState="{Binding Sequence2VM.TaskBarProgressState}">
             <TaskbarItemInfo.ThumbButtonInfos>
                 <ThumbButtonInfo
-                    Command="{Binding SeqVM.StartSequenceCommand}"
+                    Command="{Binding Sequence2VM.StartSequenceCommand}"
                     Description="{ns:Loc LblStartSequence}"
                     ImageSource="pack://application:,,,/Resources/play-32.png">
                     <ThumbButtonInfo.Visibility>
                         <MultiBinding Converter="{StaticResource BooleanToVisibilityCollapsedMultiConverter}">
                             <Binding
                                 Converter="{StaticResource InverseBooleanConverter}"
-                                Path="SeqVM.IsRunning"
-                                UpdateSourceTrigger="PropertyChanged" />
-                            <Binding
-                                Converter="{StaticResource InverseBooleanConverter}"
-                                Path="SeqVM.IsPaused"
-                                UpdateSourceTrigger="PropertyChanged" />
-                            <Binding Path="SeqVM.CameraInfo.Connected" UpdateSourceTrigger="PropertyChanged" />
-                        </MultiBinding>
-                    </ThumbButtonInfo.Visibility>
-                </ThumbButtonInfo>
-                <ThumbButtonInfo
-                    Command="{Binding SeqVM.PauseSequenceCommand}"
-                    Description="{ns:Loc LblPauseSequence}"
-                    ImageSource="pack://application:,,,/Resources/pause-32.png"
-                    IsEnabled="{Binding SeqVM.IsRunning}">
-                    <ThumbButtonInfo.Visibility>
-                        <MultiBinding Converter="{StaticResource BooleanToVisibilityCollapsedMultiConverter}">
-                            <Binding Path="SeqVM.IsRunning" UpdateSourceTrigger="PropertyChanged" />
-                            <Binding
-                                Converter="{StaticResource InverseBooleanConverter}"
-                                Path="SeqVM.IsPaused"
+                                Path="Sequence2VM.IsRunning"
                                 UpdateSourceTrigger="PropertyChanged" />
                         </MultiBinding>
                     </ThumbButtonInfo.Visibility>
                 </ThumbButtonInfo>
                 <ThumbButtonInfo
-                    Command="{Binding Path=SeqVM.ResumeSequenceCommand}"
-                    Description="{ns:Loc LblResumeSequence}"
-                    ImageSource="pack://application:,,,/Resources/play-32.png"
-                    IsEnabled="{Binding Path=SeqVM.IsPaused}"
-                    Visibility="{Binding Path=SeqVM.IsPaused, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, UpdateSourceTrigger=PropertyChanged}" />
-                <ThumbButtonInfo
-                    Command="{Binding Path=SeqVM.CancelSequenceCommand}"
+                    Command="{Binding Path=Sequence2VM.CancelSequenceCommand}"
                     Description="{ns:Loc LblCancelSequence}"
                     ImageSource="pack://application:,,,/Resources/cancel-32.png">
                     <ThumbButtonInfo.IsEnabled>
                         <MultiBinding Converter="{StaticResource BooleanOrConverter}">
-                            <Binding Path="SeqVM.IsRunning" UpdateSourceTrigger="PropertyChanged" />
-                            <Binding Path="SeqVM.IsPaused" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="Sequence2VM.IsRunning" UpdateSourceTrigger="PropertyChanged" />
                         </MultiBinding>
                     </ThumbButtonInfo.IsEnabled>
                     <ThumbButtonInfo.Visibility>
                         <MultiBinding Converter="{StaticResource BooleanOrToVisibilityCollapsedMultiConverter}">
-                            <Binding Path="SeqVM.IsRunning" UpdateSourceTrigger="PropertyChanged" />
-                            <Binding Path="SeqVM.IsPaused" UpdateSourceTrigger="PropertyChanged" />
+                            <Binding Path="Sequence2VM.IsRunning" UpdateSourceTrigger="PropertyChanged" />
                         </MultiBinding>
                     </ThumbButtonInfo.Visibility>
                 </ThumbButtonInfo>
@@ -106,7 +79,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-        <Grid>
+        <Grid x:Name="RootGrid">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="30" />
@@ -215,10 +188,10 @@
 
                     <TabItem>
                         <TabItem.Header>
-                            <Grid Width="50" Height="50">
+                            <Grid Width="60" Height="60">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
-                                    <RowDefinition Height="10" />
+                                    <RowDefinition Height="20" />
                                 </Grid.RowDefinitions>
                                 <Path
                                     Margin="5"
@@ -227,12 +200,37 @@
                                     Style="{StaticResource TabItemPath}" />
                                 <TextBlock
                                     Grid.Row="1"
+                                    VerticalAlignment="Center"
                                     Style="{StaticResource SideBarTextBlock}"
-                                    Text="{ns:Loc LblSequence}" />
+                                    Text="{ns:Loc Lbl_OldSequencer_Title}"
+                                    TextAlignment="Center"
+                                    TextWrapping="Wrap" />
                             </Grid>
                         </TabItem.Header>
                         <TabItem.Content>
                             <view:SequenceView DataContext="{Binding SeqVM}" />
+                        </TabItem.Content>
+                    </TabItem>
+                    <TabItem>
+                        <TabItem.Header>
+                            <Grid Width="50" Height="50">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="10" />
+                                </Grid.RowDefinitions>
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource SketchSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Style="{StaticResource SideBarTextBlock}"
+                                    Text="{ns:Loc Lbl_Sequencer_Title}" />
+                            </Grid>
+                        </TabItem.Header>
+                        <TabItem.Content>
+                            <sequencer:SequenceView DataContext="{Binding Sequence2VM}" />
                         </TabItem.Content>
                     </TabItem>
 

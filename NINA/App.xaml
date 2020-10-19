@@ -55,6 +55,7 @@
                 <ResourceDictionary Source="Resources\Styles\StepperControl.xaml" />
                 <ResourceDictionary Source="Resources\Styles\Window.xaml" />
                 <ResourceDictionary Source="Resources\Styles\ToggleSwitch.xaml" />
+                <ResourceDictionary Source="Resources\Styles\ContextMenu.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/ToastNotifications.Messages;component/Themes/Default.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

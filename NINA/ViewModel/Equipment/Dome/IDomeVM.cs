@@ -25,6 +25,6 @@ namespace NINA.ViewModel.Equipment.Dome {
         double TargetAzimuthDegrees { get; }
         Task WaitForDomeSynchronization(CancellationToken cancellationToken);
         Task<bool> EnableFollowing(CancellationToken cancellationToken);
-        Task<bool> DisableFollow(CancellationToken cancellationToken);
+        Task<bool> DisableFollowing(CancellationToken cancellationToken);
     }
 }

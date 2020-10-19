@@ -271,7 +271,7 @@
                             <view:AnchorableCameraView />
                         </DataTemplate>
                     </util:PaneTemplateSelector.CameraTemplate>
-                    
+
                     <util:PaneTemplateSelector.TelescopeTemplate>
                         <DataTemplate>
                             <view:AnchorableTelescopeView />
@@ -355,6 +355,12 @@
                             <view:AnchorableRotatorView />
                         </DataTemplate>
                     </util:PaneTemplateSelector.RotatorTemplate>
+
+                    <util:PaneTemplateSelector.SafetyMonitorTemplate>
+                        <DataTemplate>
+                            <view:AnchorableSafetyMonitorView />
+                        </DataTemplate>
+                    </util:PaneTemplateSelector.SafetyMonitorTemplate>
 
                     <util:PaneTemplateSelector.WeatherDataTemplate>
                         <DataTemplate>

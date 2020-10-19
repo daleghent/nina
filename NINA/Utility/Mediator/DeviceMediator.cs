@@ -76,5 +76,12 @@ namespace NINA.Utility.Mediator {
                 c.UpdateDeviceInfo(deviceInfo);
             }
         }
+
+        public TInfo GetInfo() {
+            if (handler == null) {
+                return default;
+            }
+            return handler.GetDeviceInfo();
+        }
     }
 }

@@ -17,14 +17,65 @@ using System;
 namespace NINA.Profile {
 
     public interface ISequenceSettings : ISettings {
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
         TimeSpan EstimatedDownloadTime { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
         string TemplatePath { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
         long TimeSpanInTicks { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
         bool ParkMountAtSequenceEnd { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
         bool CloseDomeShutterAtSequenceEnd { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
         bool ParkDomeAtSequenceEnd { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
         bool WarmCamAtSequenceEnd { get; set; }
-        string DefaultSequenceFolder { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
         string SequenceCompleteCommand { get; set; }
+
+        string DefaultSequenceFolder { get; set; }
+
+        string StartupSequenceTemplate { get; set; }
+        string SequencerTemplatesFolder { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
+        bool CoolCameraAtSequenceStart { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
+        bool UnparMountAtSequenceStart { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Constructor
+        /// </summary>
+        bool OpenDomeShutterAtSequenceStart { get; set; }
     }
 }

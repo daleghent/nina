@@ -12,12 +12,14 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
 using NINA.Utility;
 using System;
 using System.Runtime.Serialization;
 
 namespace NINA.Model.MyFilterWheel {
 
+    [JsonObject(MemberSerialization.OptIn)]
     [Serializable()]
     [DataContract]
     public class FilterInfo : BaseINPC {
@@ -53,6 +55,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember(Name = nameof(_name))]
+        [JsonProperty(PropertyName = nameof(_name))]
         public string Name {
             get {
                 return _name;
@@ -65,6 +68,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember(Name = nameof(_focusOffset))]
+        [JsonProperty(PropertyName = nameof(_focusOffset))]
         public int FocusOffset {
             get {
                 return _focusOffset;
@@ -77,6 +81,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember(Name = nameof(_position))]
+        [JsonProperty(PropertyName = nameof(_position))]
         public short Position {
             get {
                 return _position;
@@ -89,6 +94,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember(Name = nameof(_autoFocusExposureTime))]
+        [JsonProperty(PropertyName = nameof(_autoFocusExposureTime))]
         public double AutoFocusExposureTime {
             get {
                 return _autoFocusExposureTime;
@@ -101,6 +107,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember(Name = nameof(_autoFocusFilter))]
+        [JsonProperty(PropertyName = nameof(_autoFocusFilter))]
         public bool AutoFocusFilter {
             get {
                 return _autoFocusFilter;
@@ -113,6 +120,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember(Name = nameof(FlatWizardFilterSettings), IsRequired = false)]
+        [JsonProperty(PropertyName = nameof(FlatWizardFilterSettings))]
         public FlatWizardFilterSettings FlatWizardFilterSettings {
             get {
                 return _flatWizardFilterSettings;
@@ -124,6 +132,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember(Name = nameof(_autoFocusBinning), IsRequired = false)]
+        [JsonProperty(PropertyName = nameof(_autoFocusBinning))]
         public MyCamera.BinningMode AutoFocusBinning {
             get {
                 return _autoFocusBinning;
@@ -135,6 +144,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember(Name = nameof(_autoFocusGain), IsRequired = false)]
+        [JsonProperty(PropertyName = nameof(_autoFocusGain))]
         public int AutoFocusGain {
             get {
                 return _autoFocusGain;
@@ -146,6 +156,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember(Name = nameof(_autoFocusOffset), IsRequired = false)]
+        [JsonProperty(PropertyName = nameof(_autoFocusOffset))]
         public int AutoFocusOffset {
             get {
                 return _autoFocusOffset;

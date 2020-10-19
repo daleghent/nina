@@ -28,13 +28,16 @@ using NINA.ViewModel.Equipment.FlatDevice;
 using NINA.ViewModel.Equipment.Focuser;
 using NINA.ViewModel.Equipment.Guider;
 using NINA.ViewModel.Equipment.Rotator;
+using NINA.ViewModel.Equipment.SafetyMonitor;
 using NINA.ViewModel.Equipment.Switch;
 using NINA.ViewModel.Equipment.Telescope;
 using NINA.ViewModel.Equipment.WeatherData;
 using NINA.ViewModel.FlatWizard;
 using NINA.ViewModel.FramingAssistant;
+using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Imaging;
 using NINA.ViewModel.Interfaces;
+using NINA.ViewModel.Sequencer;
 using Ninject;
 using Ninject.Modules;
 using System;
@@ -72,6 +75,7 @@ namespace NINA.Utility {
                 Bind<IThumbnailVM>().To<ThumbnailVM>().InSingletonScope();
                 Bind<IDockManagerVM>().To<DockManagerVM>().InSingletonScope();
                 Bind<IRotatorVM>().To<RotatorVM>().InSingletonScope();
+                Bind<ISafetyMonitorVM>().To<SafetyMonitorVM>().InSingletonScope();
                 Bind<IFilterWheelVM>().To<FilterWheelVM>().InSingletonScope();
                 Bind<IApplicationStatusVM>().To<ApplicationStatusVM>().InSingletonScope();
                 Bind<IFocuserVM>().To<FocuserVM>().InSingletonScope();
@@ -114,6 +118,7 @@ namespace NINA.Utility {
                 Bind<IWeatherDataMediator>().To<WeatherDataMediator>().InSingletonScope();
                 Bind<IApplicationMediator>().To<ApplicationMediator>().InSingletonScope();
                 Bind<ISequenceMediator>().To<SequenceMediator>().InSingletonScope();
+                Bind<ISafetyMonitorMediator>().To<SafetyMonitorMediator>().InSingletonScope();
 
                 Bind<IWindowServiceFactory>().To<WindowServiceFactory>().InSingletonScope();
                 Bind<IPlanetariumFactory>().To<PlanetariumFactory>().InSingletonScope();
@@ -121,7 +126,7 @@ namespace NINA.Utility {
 
                 Bind<ISharpCapSensorAnalysisReader>().To<DefaultSharpCapSensorAnalysisReader>();
                 Bind<IApplicationResourceDictionary>().To<ApplicationResourceDictionary>();
-                Bind<INighttimeCalculator>().To<NighttimeCalculator>();
+                Bind<INighttimeCalculator>().To<NighttimeCalculator>().InSingletonScope();
                 Bind<IDeepSkyObjectSearchVM>().To<DeepSkyObjectSearchVM>();
                 Bind<IDomeSynchronization>().To<DomeSynchronization>().InSingletonScope();
                 Bind<IDeviceUpdateTimerFactory>().To<DefaultDeviceUpateTimerFactory>().InSingletonScope();
@@ -129,6 +134,10 @@ namespace NINA.Utility {
                 Bind<IDeviceFactory>().To<FlatDeviceFactory>().WhenInjectedInto<FlatDeviceChooserVM>().InSingletonScope();
                 Bind<IDeviceChooserVM>().To<FocuserChooserVM>().WhenInjectedInto<IFocuserVM>().InSingletonScope();
                 Bind<IDeviceFactory>().To<FocuserFactory>().WhenInjectedInto<FocuserChooserVM>().InSingletonScope();
+
+                Bind<ISequence2VM>().To<Sequence2VM>().InSingletonScope();
+                Bind<IImageSaveMediator>().To<ImageSaveMediator>().InSingletonScope();
+                Bind<IImageSaveController>().To<ImageSaveController>().InSingletonScope();
             } catch (Exception e) {
                 Logger.Error(e);
                 throw e;

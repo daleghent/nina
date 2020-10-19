@@ -16,7 +16,6 @@ using NINA.Model.MyTelescope;
 using NINA.Utility.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Equipment.Telescope;
-using NINA.ViewModel.Interfaces;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -48,8 +47,8 @@ namespace NINA.Utility.Mediator {
             return handler.MeridianFlip(targetCoordinates);
         }
 
-        public bool SetTracking(bool tracking) {
-            return handler.SetTracking(tracking);
+        public bool SetTrackingEnabled(bool tracking) {
+            return handler.SetTrackingEnabled(tracking);
         }
 
         public bool SendToSnapPort(bool start) {
@@ -70,6 +69,14 @@ namespace NINA.Utility.Mediator {
 
         public Task WaitForSlew(CancellationToken cancellationToken) {
             return handler.WaitForSlew(cancellationToken);
+        }
+
+        public bool SetTrackingMode(TrackingMode trackingMode) {
+            return handler.SetTrackingMode(trackingMode);
+        }
+
+        public bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate) {
+            return handler.SetCustomTrackingRate(rightAscensionRate, declinationRate);
         }
     }
 }

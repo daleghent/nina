@@ -27,17 +27,29 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.ViewModel.AutoFocus;
+using NINA.Model.MyFilterWheel;
+using System.Linq;
 
 namespace NINA.ViewModel {
 
     internal class MeridianFlipVM : BaseVM {
 
-        public MeridianFlipVM(IProfileService profileService, ITelescopeMediator telescopeMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public MeridianFlipVM(
+                IProfileService profileService,
+                ICameraMediator cameraMediator,
+                ITelescopeMediator telescopeMediator,
+                IGuiderMediator guiderMediator,
+                IFocuserMediator focuserMediator,
+                IImagingMediator imagingMediator,
+                IApplicationStatusMediator applicationStatusMediator,
+                IFilterWheelMediator filterWheelMediator) : base(profileService) {
             this.telescopeMediator = telescopeMediator;
             this.guiderMediator = guiderMediator;
             this.imagingMediator = imagingMediator;
             this.applicationStatusMediator = applicationStatusMediator;
-
+            this.filterWheelMediator = filterWheelMediator;
+            AutoFocusVMFactory = new AutoFocusVMFactory(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator);
             CancelCommand = new RelayCommand(Cancel);
         }
 
@@ -58,6 +70,7 @@ namespace NINA.ViewModel {
         private IGuiderMediator guiderMediator;
         private IImagingMediator imagingMediator;
         private IApplicationStatusMediator applicationStatusMediator;
+        private IFilterWheelMediator filterWheelMediator;
 
         public ICommand CancelCommand {
             get {
@@ -131,6 +144,9 @@ namespace NINA.ViewModel {
 
                 Steps.Add(new WorkflowStep("PassMeridian", Locale.Loc.Instance["LblPassMeridian"], () => PassMeridian(cancellationToken, _progress)));
                 Steps.Add(new WorkflowStep("Flip", Locale.Loc.Instance["LblFlip"], () => DoFlip(cancellationToken, _progress)));
+                if (profileService.ActiveProfile.MeridianFlipSettings.AutoFocusAfterFlip) {
+                    Steps.Add(new WorkflowStep("Autofocus", Locale.Loc.Instance["LblAutoFocus"], () => AutoFocus(cancellationToken, _progress)));
+                }
                 if (profileService.ActiveProfile.MeridianFlipSettings.Recenter) {
                     Steps.Add(new WorkflowStep("Recenter", Locale.Loc.Instance["LblRecenter"], () => Recenter(cancellationToken, _progress)));
                 }
@@ -153,12 +169,35 @@ namespace NINA.ViewModel {
                 }
 
                 Logger.Trace("Meridian Flip - Re-enable Tracking after meridian flip error");
-                telescopeMediator.SetTracking(true);
+                telescopeMediator.SetTrackingEnabled(true);
                 return false;
             } finally {
                 _progress.Report(new ApplicationStatus() { Status = "" });
             }
             Logger.Trace("Meridian Flip - Exiting meridian flip");
+            return true;
+        }
+
+        public IAutoFocusVMFactory AutoFocusVMFactory { get; set; }
+
+        private async Task<bool> AutoFocus(CancellationToken token, IProgress<ApplicationStatus> progress) {
+            using (var autoFocus = AutoFocusVMFactory.Create()) {
+                progress.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblAutoFocus"] });
+                var service = WindowServiceFactory.Create();
+                service.Show(autoFocus, autoFocus.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
+                try {
+                    FilterInfo filter = null;
+                    var selectedFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
+                    if (selectedFilter != null) {
+                        filter = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters.Where(x => x.Position == selectedFilter.Position).FirstOrDefault();
+                    }
+
+                    var report = await autoFocus.StartAutoFocus(filter, token, progress);
+                    //history.AppendAutoFocusPoint(report);
+                } finally {
+                    service.DelayedClose(TimeSpan.FromSeconds(10));
+                }
+            }
             return true;
         }
 
@@ -168,7 +207,7 @@ namespace NINA.ViewModel {
             progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblStopTracking"] });
 
             Logger.Trace("Meridian Flip - Stopping tracking to pass meridian");
-            telescopeMediator.SetTracking(false);
+            telescopeMediator.SetTrackingEnabled(false);
             do {
                 progress.Report(new ApplicationStatus() { Status = RemainingTime.ToString(@"hh\:mm\:ss") });
 
@@ -180,7 +219,7 @@ namespace NINA.ViewModel {
             progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblResumeTracking"] });
 
             Logger.Trace("Meridian Flip - Resuming tracking after passing meridian");
-            telescopeMediator.SetTracking(true);
+            telescopeMediator.SetTrackingEnabled(true);
 
             Logger.Trace("Meridian Flip - Meridian passed");
             return true;
@@ -203,7 +242,7 @@ namespace NINA.ViewModel {
                 );
                 seq.Gain = profileService.ActiveProfile.PlateSolveSettings.Gain;
 
-                var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator);
+                var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator);
                 var parameter = new CenterSolveParameter() {
                     Attempts = profileService.ActiveProfile.PlateSolveSettings.NumberOfAttempts,
                     Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,
@@ -218,7 +257,12 @@ namespace NINA.ViewModel {
                     Threshold = profileService.ActiveProfile.PlateSolveSettings.Threshold,
                     NoSync = profileService.ActiveProfile.TelescopeSettings.NoSync
                 };
-                _ = await solver.Center(seq, parameter, default, progress, token);
+                var result = await solver.Center(seq, parameter, default, progress, token);
+                if (!result.Success) {
+                    Logger.Error("Center after meridian flip failed. Continuing without it");
+                    Notification.ShowError(Locale.Loc.Instance["LblMeridianFlipCenterFailed"]);
+                    // Recenter is best effort, so always return true
+                }
             }
             return true;
         }
@@ -226,7 +270,7 @@ namespace NINA.ViewModel {
         private async Task<bool> ResumeAutoguider(CancellationToken token, IProgress<ApplicationStatus> progress) {
             progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblResumeGuiding"] });
             Logger.Trace("Meridian Flip - Resuming Autoguider");
-            var result = await this.guiderMediator.StartGuiding(token);
+            var result = await this.guiderMediator.StartGuiding(false, progress, token);
 
             return result;
         }

@@ -17,6 +17,7 @@ using NINA.Model.MyDome;
 using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFocuser;
 using NINA.Model.MyRotator;
+using NINA.Model.MySafetyMonitor;
 using NINA.Model.MySwitch;
 using NINA.Model.MyTelescope;
 using NINA.Model.MyWeatherData;
@@ -82,6 +83,21 @@ namespace NINA.Utility {
                     try {
                         AscomRotator rotator = new AscomRotator(device.Key, device.Value);
                         l.Add(rotator);
+                    } catch (Exception) {
+                        //only add filter wheels which are supported. e.g. x86 drivers will not work in x64
+                    }
+                }
+                return l;
+            }
+        }
+
+        public static List<ISafetyMonitor> GetSafetyMonitors(IProfileService profileService) {
+            var l = new List<ISafetyMonitor>();
+            using (var ascomDevices = new ASCOM.Utilities.Profile()) {
+                foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("SafetyMonitor")) {
+                    try {
+                        AscomSafetyMonitor safetyMonitor = new AscomSafetyMonitor(device.Key, device.Value);
+                        l.Add(safetyMonitor);
                     } catch (Exception) {
                         //only add filter wheels which are supported. e.g. x86 drivers will not work in x64
                     }
@@ -160,7 +176,7 @@ namespace NINA.Utility {
             }
         }
 
-        public static void LogComplianceIssue([CallerMemberName]string callerMember = "") {
+        public static void LogComplianceIssue([CallerMemberName] string callerMember = "") {
             Logger.Error($"ASCOM {callerMember} threw a PropertyNotImplementedException. This is a driver compliance issue and should be fixed by the driver vendor.");
         }
     }

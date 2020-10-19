@@ -113,6 +113,7 @@ namespace NINA.Model.MyGuider.PHD2 {
         private Task<bool> startGuidingTask;
         private CancellationTokenSource stopGuidingCancellationTokenSource;
         private Task<bool> stopGuidingTask;
+        private Task<bool> clearCalibrationTask;
         public List<SynchronizedClientInfo> ConnectedClients;
         private ILoc Locale { get; set; } = Loc.Instance;
         public bool PHD2Connected { get; private set; } = false;
@@ -217,7 +218,7 @@ namespace NINA.Model.MyGuider.PHD2 {
         }
 
         /// <inheritdoc />
-        public Task<bool> StartGuiding() {
+        public Task<bool> StartGuiding(bool forceCalibration) {
             lock (startGuidingLock) {
                 var taskStatus = startGuidingTask?.Status;
                 if (taskStatus == TaskStatus.Faulted ||
@@ -226,7 +227,7 @@ namespace NINA.Model.MyGuider.PHD2 {
                     startGuidingTask == null) {
                     startGuidingCancellationTokenSource?.Dispose();
                     startGuidingCancellationTokenSource = new CancellationTokenSource();
-                    startGuidingTask = guiderInstance.StartGuiding(startGuidingCancellationTokenSource.Token);
+                    startGuidingTask = guiderInstance.StartGuiding(forceCalibration, startGuidingCancellationTokenSource.Token);
                 }
             }
 
@@ -248,6 +249,23 @@ namespace NINA.Model.MyGuider.PHD2 {
             }
 
             return stopGuidingTask;
+        }
+
+        /// <inheritdoc />
+        public Task<bool> ClearCalibration() {
+            lock (stopGuidingLock) {
+                var taskStatus = clearCalibrationTask?.Status;
+                if (taskStatus == TaskStatus.Faulted ||
+                    taskStatus == TaskStatus.Canceled ||
+                    taskStatus == TaskStatus.RanToCompletion ||
+                    clearCalibrationTask == null) {
+                    stopGuidingCancellationTokenSource?.Dispose();
+                    stopGuidingCancellationTokenSource = new CancellationTokenSource();
+                    clearCalibrationTask = guiderInstance.ClearCalibration(stopGuidingCancellationTokenSource.Token);
+                }
+            }
+
+            return clearCalibrationTask;
         }
 
         /// <inheritdoc />

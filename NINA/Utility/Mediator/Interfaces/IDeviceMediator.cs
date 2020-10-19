@@ -29,5 +29,7 @@ namespace NINA.Utility.Mediator.Interfaces {
         void Disconnect();
 
         void Broadcast(TInfo deviceInfo);
+
+        TInfo GetInfo();
     }
 }

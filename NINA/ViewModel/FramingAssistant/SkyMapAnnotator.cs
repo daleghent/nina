@@ -36,7 +36,7 @@ using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
 namespace NINA.ViewModel.FramingAssistant {
 
-    internal class SkyMapAnnotator : BaseINPC, ITelescopeConsumer {
+    public class SkyMapAnnotator : BaseINPC, ITelescopeConsumer {
         private readonly DatabaseInteraction dbInstance;
         public ViewportFoV ViewportFoV { get; private set; }
         private List<Model.Constellation> dbConstellations;

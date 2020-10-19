@@ -33,8 +33,6 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
         Task<bool> MeridianFlip(Coordinates targetCoordinates);
 
-        bool SetTracking(bool tracking);
-
         bool SendToSnapPort(bool start);
 
         Coordinates GetCurrentPosition();
@@ -44,5 +42,11 @@ namespace NINA.ViewModel.Equipment.Telescope {
         void UnparkTelescope();
 
         Task WaitForSlew(CancellationToken cancellationToken);
+
+        bool SetTrackingEnabled(bool tracking);
+
+        bool SetTrackingMode(TrackingMode trackingMode);
+
+        bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
     }
 }

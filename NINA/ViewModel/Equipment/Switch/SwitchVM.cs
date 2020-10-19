@@ -27,6 +27,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 
 namespace NINA.ViewModel.Equipment.Switch {
 
@@ -82,6 +84,17 @@ namespace NINA.ViewModel.Equipment.Switch {
             return success;
         }
 
+        public Task SetSwitchValue(short switchIndex, double value, IProgress<ApplicationStatus> progress, CancellationToken ct) {
+            if (this.WritableSwitches.Count > switchIndex) {
+                var writableSwitch = this.WritableSwitches[switchIndex];
+                writableSwitch.TargetValue = value;
+                return SetSwitchValue(writableSwitch);
+            } else {
+                Logger.Error($"No switch found for index {switchIndex}");
+                return Task.CompletedTask;
+            }
+        }
+
         public IAsyncCommand SetSwitchValueCommand { get; private set; }
 
         private ISwitchHub switchHub;
@@ -94,7 +107,7 @@ namespace NINA.ViewModel.Equipment.Switch {
             }
         }
 
-        public ICollection<IWritableSwitch> WritableSwitches { get; private set; } = new AsyncObservableCollection<IWritableSwitch>();
+        public IList<IWritableSwitch> WritableSwitches { get; private set; } = new AsyncObservableCollection<IWritableSwitch>();
 
         private IWritableSwitch selectedWritableSwitch;
 
@@ -192,14 +205,6 @@ namespace NINA.ViewModel.Equipment.Switch {
                         if (connected) {
                             this.SwitchHub = switchHub;
 
-                            SwitchInfo = new SwitchInfo {
-                                Connected = true,
-                                Name = switchHub.Name,
-                                Description = switchHub.Description,
-                                DriverInfo = switchHub.DriverInfo,
-                                DriverVersion = switchHub.DriverVersion
-                            };
-
                             Notification.ShowSuccess(Locale.Loc.Instance["LblSwitchConnected"]);
 
                             updateTimer.Interval = profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval;
@@ -214,6 +219,16 @@ namespace NINA.ViewModel.Equipment.Switch {
                                 }
                             }
                             SelectedWritableSwitch = WritableSwitches.FirstOrDefault();
+
+                            SwitchInfo = new SwitchInfo {
+                                Connected = true,
+                                Name = switchHub.Name,
+                                Description = switchHub.Description,
+                                DriverInfo = switchHub.DriverInfo,
+                                DriverVersion = switchHub.DriverVersion,
+                                WritableSwitches = new ReadOnlyCollection<IWritableSwitch>(WritableSwitches)
+                            };
+
                             RaisePropertyChanged(nameof(WritableSwitches));
                             BroadcastSwitchInfo();
 

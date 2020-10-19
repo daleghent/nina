@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Database;
+using NINA.Utility.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,11 @@ using System.Threading.Tasks;
 namespace NINA.Utility.Astrometry {
 
     public class TopocentricCoordinates {
-        public Angle Azimuth { get; private set; }
-        public Angle Altitude { get; private set; }
+        public Angle Azimuth { get; set; }
+        public Angle Altitude { get; set; }
         public Angle Latitude { get; private set; }
         public Angle Longitude { get; private set; }
+        public AltitudeSite AltitudeSite => Azimuth.Degree >= 0 && Azimuth.Degree < 180 ? AltitudeSite.EAST : AltitudeSite.WEST;
 
         public TopocentricCoordinates(Angle azimuth, Angle altitude, Angle latitude, Angle longitude) {
             this.Azimuth = azimuth;

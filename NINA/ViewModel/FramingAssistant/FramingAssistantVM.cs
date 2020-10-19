@@ -38,8 +38,17 @@ using System.Xml.Linq;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 
+using NINA.Utility.Exceptions;
+
+using NINA.ViewModel.Interfaces;
+using NINA.ViewModel.Sequencer;
+using System.Linq;
+using NINA.Sequencer.Container;
+
 namespace NINA.ViewModel.FramingAssistant {
+
     internal class FramingAssistantVM : BaseVM, ICameraConsumer, IFramingAssistantVM {
+
         public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
             IApplicationStatusMediator applicationStatusMediator, INighttimeCalculator nighttimeCalculator, IPlanetariumFactory planetariumFactory,
             ISequenceMediator sequenceMediator, IApplicationMediator applicationMediator, IDeepSkyObjectSearchVM deepSkyObjectSearchVM) : base(profileService) {
@@ -80,7 +89,11 @@ namespace NINA.ViewModel.FramingAssistant {
             DeepSkyObjectSearchVM = deepSkyObjectSearchVM;
             DeepSkyObjectSearchVM.PropertyChanged += DeepSkyObjectSearchVM_PropertyChanged;
 
-            SetSequenceCoordinatesCommand = new AsyncCommand<bool>(async (object parameter) => {
+            GetDSOTemplatesCommand = new RelayCommand((object o) => {
+                DSOTemplates = sequenceMediator.GetDeepSkyObjectContainerTemplates();
+                RaisePropertyChanged(nameof(DSOTemplates));
+            });
+            SetOldSequencerTargetCommand = new RelayCommand((object o) => {
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
 
                 var deepSkyObjects = new List<DeepSkyObject>();
@@ -88,20 +101,29 @@ namespace NINA.ViewModel.FramingAssistant {
                     var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Locale.Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
                     var dso = new DeepSkyObject(name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
                     dso.Rotation = Rectangle.DisplayedRotation;
-                    deepSkyObjects.Add(dso);
+                    sequenceMediator.AddTargetToOldSequencer(dso);
                 }
+            }, (object o) => Rectangle?.Coordinates != null);
+            SetSequencerTargetCommand = new RelayCommand((object o) => {
+                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE2);
 
-                bool msgResult = false;
-                if (parameter.ToString() == "Replace") {
-                    msgResult = await sequenceMediator.SetSequenceCoordinates(deepSkyObjects, true);
-                } else if (parameter.ToString() == "Add") {
-                    msgResult = await sequenceMediator.SetSequenceCoordinates(deepSkyObjects, false);
+                var template = o as IDeepSkyObjectContainer;
+                var first = true;
+                foreach (var rect in CameraRectangles) {
+                    var container = (IDeepSkyObjectContainer)template.Clone();
+                    var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Locale.Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
+                    container.Name = name;
+                    container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude)) {
+                        TargetName = name,
+                        Rotation = Rectangle.DisplayedRotation,
+                        InputCoordinates = new InputCoordinates() {
+                            Coordinates = rect.Coordinates
+                        }
+                    };
+                    container.IsExpanded = first;
+                    first = false;
+                    sequenceMediator.AddTargetToSequencer(container);
                 }
-
-                ImageParameter = null;
-                GC.Collect();
-                GC.WaitForPendingFinalizers();
-                return msgResult;
             }, (object o) => Rectangle?.Coordinates != null);
 
             RecenterCommand = new AsyncCommand<bool>(async () => {
@@ -150,6 +172,8 @@ namespace NINA.ViewModel.FramingAssistant {
 
             InitializeCache();
         }
+
+        public IList<IDeepSkyObjectContainer> DSOTemplates { get; private set; }
 
         private void InitializeCache() {
             try {
@@ -321,6 +345,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private IApplicationStatusMediator applicationStatusMediator;
         private INighttimeCalculator nighttimeCalculator;
         private NighttimeData nighttimeData;
+
         public NighttimeData NighttimeData {
             get => nighttimeData;
             set {
@@ -973,7 +998,9 @@ namespace NINA.ViewModel.FramingAssistant {
         public ICommand DragMoveCommand { get; private set; }
         public IAsyncCommand LoadImageCommand { get; private set; }
         public ICommand CancelLoadImageCommand { get; private set; }
-        public ICommand SetSequenceCoordinatesCommand { get; private set; }
+        public ICommand SetOldSequencerTargetCommand { get; private set; }
+        public ICommand SetSequencerTargetCommand { get; private set; }
+        public ICommand GetDSOTemplatesCommand { get; private set; }
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
         public IAsyncCommand RecenterCommand { get; private set; }
         public ICommand CancelLoadImageFromFileCommand { get; private set; }

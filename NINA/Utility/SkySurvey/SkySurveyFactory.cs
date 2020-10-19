@@ -47,7 +47,7 @@ namespace NINA.Utility.SkySurvey {
         }
     }
 
-    internal interface ISkySurveyFactory {
+    public interface ISkySurveyFactory {
 
         ISkySurvey Create(SkySurveySource source);
     }

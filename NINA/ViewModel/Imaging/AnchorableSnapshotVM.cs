@@ -12,7 +12,9 @@
 
 #endregion "copyright"
 
+using Accord;
 using NINA.Model;
+using NINA.Model.ImageData;
 using NINA.Model.MyCamera;
 using NINA.Profile;
 using NINA.Utility;
@@ -27,6 +29,7 @@ using System.Windows.Input;
 using static NINA.Model.CaptureSequence;
 
 namespace NINA.ViewModel.Imaging {
+
     internal class AnchorableSnapshotVM : DockableVM, ICameraConsumer, IAnchorableSnapshotVM {
         private CancellationTokenSource _captureImageToken;
         private CancellationTokenSource _liveViewCts;
@@ -40,20 +43,22 @@ namespace NINA.ViewModel.Imaging {
         private CameraInfo cameraInfo;
         private ICameraMediator cameraMediator;
         private IImagingMediator imagingMediator;
-
+        private IImageSaveMediator imageSaveMediator;
         private IProgress<ApplicationStatus> progress;
 
         public AnchorableSnapshotVM(
                 IProfileService profileService,
                 IImagingMediator imagingMediator,
                 ICameraMediator cameraMediator,
-                IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+                IApplicationStatusMediator applicationStatusMediator,
+                IImageSaveMediator imageSaveMediator) : base(profileService) {
             Title = "LblImaging";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ImagingSVG"];
             this.applicationStatusMediator = applicationStatusMediator;
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.imagingMediator = imagingMediator;
+            this.imageSaveMediator = imageSaveMediator;
             progress = new Progress<ApplicationStatus>(p => Status = p);
             SnapCommand = new AsyncCommand<bool>(async () => {
                 cameraMediator.RegisterCaptureBlock(this);
@@ -251,29 +256,23 @@ namespace NINA.ViewModel.Imaging {
             try {
                 var success = true;
                 if (Loop) IsLooping = true;
+                Task<IRenderedImage> prepareTask = null;
                 do {
                     var seq = new CaptureSequence(SnapExposureDuration, ImageTypes.SNAPSHOT, SnapFilter, SnapBin, 1);
                     seq.EnableSubSample = SnapSubSample;
                     seq.Gain = SnapGain;
 
-                    var renderedImage = await imagingMediator.CaptureAndPrepareImage(seq, new PrepareImageParameters(), _captureImageToken.Token, progress);
+                    var exposureData = await imagingMediator.CaptureImage(seq, _captureImageToken.Token, progress);
+                    var imageData = await exposureData.ToImageData(_captureImageToken.Token);
+
+                    if (prepareTask?.Status < TaskStatus.RanToCompletion) {
+                        await prepareTask;
+                    }
+                    prepareTask = imagingMediator.PrepareImage(exposureData, new PrepareImageParameters(), _captureImageToken.Token);
                     if (SnapSave) {
                         progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSavingImage"] });
-                        var path = await renderedImage.RawImageData.SaveToDisk(new FileSaveInfo(profileService), _captureImageToken.Token);
-                        var imageStatistics = await renderedImage.RawImageData.Statistics.Task;
 
-                        imagingMediator.OnImageSaved(
-                            new ImageSavedEventArgs() {
-                                PathToImage = new Uri(path),
-                                Image = renderedImage.Image,
-                                FileType = profileService.ActiveProfile.ImageFileSettings.FileType,
-                                Mean = imageStatistics.Mean,
-                                HFR = renderedImage.RawImageData.StarDetectionAnalysis.HFR,
-                                Duration = renderedImage.RawImageData.MetaData.Image.ExposureTime,
-                                IsBayered = renderedImage.RawImageData.Properties.IsBayered,
-                                Filter = renderedImage.RawImageData.MetaData.FilterWheel.Filter
-                            }
-                        );
+                        await imageSaveMediator.Enqueue(imageData, prepareTask, progress, _captureImageToken.Token);
                     }
 
                     _captureImageToken.Token.ThrowIfCancellationRequested();

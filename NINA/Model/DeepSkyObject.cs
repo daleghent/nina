@@ -73,7 +73,9 @@ namespace NINA.Model {
             }
             set {
                 _coordinates = value;
-                CalculateAltitude();
+                if (_coordinates != null) {
+                    CalculateAltitude();
+                }
                 RaisePropertyChanged();
             }
         }

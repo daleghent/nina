@@ -46,6 +46,8 @@
     <converters:OneValueGreaterThanAnotherToVisiblityConverter x:Key="GreaterThanToVisiblityConverter" />
     <converters:CollectionContainsMoreThanOneItemToVisibilityConverter x:Key="CollectionContainsMoreThanOneItemToVisibilityConverter" />
     <converters:MultiToListConverter x:Key="MultiToListConverter" />
+    <converters:TrackingRateConverter x:Key="TrackingRateConverter" />
+    <converters:TrackingModeConverter x:Key="TrackingModeConverter" />
     <converters:SubtractHalfConverter x:Key="SubtractHalfConverter" />
     <converters:DoubleToBooleanConverter x:Key="DoubleToBooleanConverter" />
     <converters:InverseBooleanToVisibilityCollapsedConverter x:Key="InverseBooleanToVisibilityCollapsedConverter" />
@@ -59,6 +61,7 @@
     <converters:WeatherRainRateConverter x:Key="WeatherRainRateConverter" />
     <converters:WeatherBrightnessConverter x:Key="WeatherBrightnessConverter" />
     <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
+    <converters:InverseZeroToVisibilityConverter x:Key="InverseZeroToVisibilityConverter" />
     <converters:AFFittingToVisibilityConverter x:Key="AFFittingToVisibilityConverter" />
     <converters:IsLightImageTypeToVisibilityConverter x:Key="IsLightImageTypeToVisibilityConverter" />
     <converters:FilterWheelFilterConverter x:Key="FilterWheelFilterConverter" />
@@ -73,4 +76,10 @@
     <converters:OptimalExposureCalculatorAnswerConverter x:Key="OptimalExposureCalculatorAnswerConverter" />
     <converters:MinusOneToBaseValueConverter x:Key="MinusOneToBaseValueConverter" />
     <converters:IntListToTextBlockListConverter x:Key="IntListToTextBlockListConverter" />
+    <converters:DateTimeZeroToVisibilityCollapsedConverter x:Key="DateTimeZeroToVisibilityCollapsedConverter" />
+    <converters:ConditionalNullToObjectMultiConverter x:Key="ConditionalNullToObjectMultiConverter" />
+    <converters:DataTypeToStringConverter x:Key="DataTypeToStringConverter" />
+    <converters:SequenceEntityStatusToVisibilityConverter x:Key="SequenceEntityStatusToVisibilityConverter" />
+    <converters:SequenceEntityStatusRunningToVisibilityConverter x:Key="SequenceEntityStatusRunningToVisibilityConverter" />
+    <converters:SubstractConverter x:Key="SubstractConverter" />
 </ResourceDictionary>

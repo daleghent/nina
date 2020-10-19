@@ -35,6 +35,7 @@ namespace NINATest.PlateSolving {
         private Mock<ITelescopeMediator> telescopeMediatorMock;
         private Mock<IImagingMediator> imagingMediatorMock;
         private Mock<ICaptureSolver> captureSolverMock;
+        private Mock<IFilterWheelMediator> filterMediatorMock;
 
         [SetUp]
         public void Setup() {
@@ -42,6 +43,7 @@ namespace NINATest.PlateSolving {
             blindSolverMock = new Mock<IPlateSolver>();
             captureSolverMock = new Mock<ICaptureSolver>();
             telescopeMediatorMock = new Mock<ITelescopeMediator>();
+            filterMediatorMock = new Mock<IFilterWheelMediator>();
         }
 
         [Test]
@@ -65,7 +67,7 @@ namespace NINATest.PlateSolving {
                 .Setup(x => x.GetCurrentPosition())
                 .Returns(coordinates);
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);
@@ -97,7 +99,7 @@ namespace NINATest.PlateSolving {
                 .Setup(x => x.GetCurrentPosition())
                 .Returns(coordinates);
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);
@@ -141,7 +143,7 @@ namespace NINATest.PlateSolving {
                 .Returns(Task.FromResult(true))
                 .Returns(Task.FromResult(true));
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);
@@ -179,7 +181,7 @@ namespace NINATest.PlateSolving {
                 .SetupSequence(x => x.Sync(It.IsAny<Coordinates>()))
                 .Returns(Task.FromResult(false));
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);
@@ -218,7 +220,7 @@ namespace NINATest.PlateSolving {
                 .SetupSequence(x => x.Sync(It.IsAny<Coordinates>()))
                 .Returns(Task.FromResult(false));
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);
@@ -257,7 +259,7 @@ namespace NINATest.PlateSolving {
                 .SetupSequence(x => x.Sync(It.IsAny<Coordinates>()))
                 .Returns(Task.FromResult(true));
 
-            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object);
+            var sut = new CenteringSolver(plateSolverMock.Object, blindSolverMock.Object, null, telescopeMediatorMock.Object, filterMediatorMock.Object);
             sut.CaptureSolver = captureSolverMock.Object;
 
             var result = await sut.Center(seq, parameter, default, default, default);

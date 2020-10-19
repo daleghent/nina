@@ -1,7 +1,10 @@
-﻿using NINA.Utility;
+﻿using Accord.Statistics.Kernels;
+using NINA.Utility;
 using NINA.ViewModel.FlatWizard;
 using NINA.ViewModel.FramingAssistant;
+using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Interfaces;
+using NINA.ViewModel.Sequencer;
 using Ninject;
 using System;
 using System.Linq.Expressions;
@@ -17,6 +20,7 @@ namespace NINA.ViewModel {
 
                 IReadOnlyKernel _kernel = new KernelConfiguration(new IoCBindings()).BuildReadonlyKernel();
                 AppVM = _kernel.Get<IApplicationVM>();
+                ImageSaveController = _kernel.Get<IImageSaveController>();
                 ImagingVM = _kernel.Get<IImagingVM>();
                 EquipmentVM = _kernel.Get<IEquipmentVM>();
                 SkyAtlasVM = _kernel.Get<ISkyAtlasVM>();
@@ -29,6 +33,9 @@ namespace NINA.ViewModel {
                 ApplicationDeviceConnectionVM = _kernel.Get<IApplicationDeviceConnectionVM>();
                 VersionCheckVM = _kernel.Get<IVersionCheckVM>();
                 ApplicationStatusVM = _kernel.Get<IApplicationStatusVM>();
+
+                Sequence2VM = _kernel.Get<ISequence2VM>();
+                ImageHistoryVM = _kernel.Get<IImageHistoryVM>();
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw ex;
@@ -77,5 +84,11 @@ namespace NINA.ViewModel {
         public IApplicationStatusVM ApplicationStatusVM { get; private set; }
 
         public IApplicationDeviceConnectionVM ApplicationDeviceConnectionVM { get; private set; }
+
+        public ISequence2VM Sequence2VM { get; private set; }
+
+        public IImageSaveController ImageSaveController { get; private set; }
+
+        public IImageHistoryVM ImageHistoryVM { get; private set; }
     }
 }

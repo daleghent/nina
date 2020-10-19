@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace NINA.Profile {
+
     [Serializable()]
     [DataContract]
     public class DomeSettings : Settings, IDomeSettings {
@@ -36,8 +37,10 @@ namespace NINA.Profile {
                 return id;
             }
             set {
-                id = value;
-                RaisePropertyChanged();
+                if (id != value) {
+                    id = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -49,8 +52,10 @@ namespace NINA.Profile {
                 return scopePositionEastWest_mm;
             }
             set {
-                scopePositionEastWest_mm = value;
-                RaisePropertyChanged();
+                if (scopePositionEastWest_mm != value) {
+                    scopePositionEastWest_mm = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -62,8 +67,10 @@ namespace NINA.Profile {
                 return scopePositionNorthSouth_mm;
             }
             set {
-                scopePositionNorthSouth_mm = value;
-                RaisePropertyChanged();
+                if (scopePositionNorthSouth_mm != value) {
+                    scopePositionNorthSouth_mm = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -75,8 +82,10 @@ namespace NINA.Profile {
                 return scopePositionUpDown_mm;
             }
             set {
-                scopePositionUpDown_mm = value;
-                RaisePropertyChanged();
+                if (scopePositionUpDown_mm != value) {
+                    scopePositionUpDown_mm = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -88,8 +97,10 @@ namespace NINA.Profile {
                 return domeRadius_mm;
             }
             set {
-                domeRadius_mm = value;
-                RaisePropertyChanged();
+                if (domeRadius_mm != value) {
+                    domeRadius_mm = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -101,8 +112,10 @@ namespace NINA.Profile {
                 return gemAxis_mm;
             }
             set {
-                gemAxis_mm = value;
-                RaisePropertyChanged();
+                if (gemAxis_mm != value) {
+                    gemAxis_mm = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -114,8 +127,10 @@ namespace NINA.Profile {
                 return lateralAxis_mm;
             }
             set {
-                lateralAxis_mm = value;
-                RaisePropertyChanged();
+                if (lateralAxis_mm != value) {
+                    lateralAxis_mm = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -127,8 +142,10 @@ namespace NINA.Profile {
                 return azimuthTolerance_degrees;
             }
             set {
-                azimuthTolerance_degrees = value;
-                RaisePropertyChanged();
+                if (azimuthTolerance_degrees != value) {
+                    azimuthTolerance_degrees = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -140,8 +157,10 @@ namespace NINA.Profile {
                 return useDirectSlaving;
             }
             set {
-                useDirectSlaving = value;
-                RaisePropertyChanged();
+                if (useDirectSlaving != value) {
+                    useDirectSlaving = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -153,8 +172,10 @@ namespace NINA.Profile {
                 return findHomeBeforePark;
             }
             set {
-                findHomeBeforePark = value;
-                RaisePropertyChanged();
+                if (findHomeBeforePark != value) {
+                    findHomeBeforePark = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -166,8 +187,10 @@ namespace NINA.Profile {
                 return domeSyncTimeoutSeconds;
             }
             set {
-                domeSyncTimeoutSeconds = value;
-                RaisePropertyChanged();
+                if (domeSyncTimeoutSeconds != value) {
+                    domeSyncTimeoutSeconds = value;
+                    RaisePropertyChanged();
+                }
             }
         }
     }

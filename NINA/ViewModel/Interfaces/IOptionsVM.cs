@@ -33,7 +33,6 @@ namespace NINA.ViewModel.Interfaces {
         ICommand OpenImageFileDiagCommand { get; }
         ICommand OpenLogFolderCommand { get; }
         ICommand OpenPS2FileDiagCommand { get; }
-        ICommand OpenSequenceCommandAtCompletionDiagCommand { get; }
         ICommand OpenSequenceFolderDiagCommand { get; }
         ICommand OpenSequenceTemplateDiagCommand { get; }
         ICommand OpenSharpCapSensorAnalysisFolderDiagCommand { get; }

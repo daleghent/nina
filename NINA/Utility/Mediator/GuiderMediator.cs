@@ -38,8 +38,8 @@ namespace NINA.Utility.Mediator {
             return handler.StopRMSRecording(handle);
         }
 
-        public Task<bool> StartGuiding(CancellationToken token) {
-            return handler.StartGuiding(token);
+        public Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken token) {
+            return handler.StartGuiding(forceCalibration, progress, token);
         }
 
         public Task<bool> StopGuiding(CancellationToken token) {
@@ -48,6 +48,10 @@ namespace NINA.Utility.Mediator {
 
         public Task<bool> AutoSelectGuideStar(CancellationToken token) {
             return handler.AutoSelectGuideStar(token);
+        }
+
+        public Task<bool> ClearCalibration(CancellationToken token) {
+            return handler.ClearCalibration(token);
         }
     }
 }

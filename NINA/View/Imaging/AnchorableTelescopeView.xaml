@@ -43,15 +43,10 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTracking}" />
-                    <CheckBox
-                        Width="20"
-                        Height="20"
-                        Margin="5,0,0,0"
-                        HorizontalAlignment="Left"
-                        BorderBrush="Transparent"
-                        IsChecked="{Binding TelescopeInfo.Tracking, FallbackValue=False, Mode=OneWay}"
-                        IsEnabled="False"
-                        Style="{StaticResource CheckmarkCheckbox}" />
+                    <TextBlock 
+                        Margin="5,0,0,0" 
+                        Text="{Binding TelescopeInfo.TrackingRate, Converter={StaticResource TrackingRateConverter}}"
+                        Visibility="{Binding TelescopeInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                 </UniformGrid>
             </Border>
             <Border

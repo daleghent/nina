@@ -39,7 +39,7 @@ using System.Windows.Navigation;
 
 namespace NINA.ViewModel {
 
-    internal class AutoFocusVM : DockableVM, ICameraConsumer, IFocuserConsumer, IFilterWheelConsumer, IAutoFocusVM {
+    public class AutoFocusVM : DockableVM, ICameraConsumer, IFocuserConsumer, IFilterWheelConsumer, IAutoFocusVM {
         private static readonly string ReportDirectory = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "AutoFocus");
 
         static AutoFocusVM() {
@@ -68,7 +68,7 @@ namespace NINA.ViewModel {
                 IApplicationStatusMediator applicationStatusMediator
         ) : base(profileService) {
             Title = "LblAutoFocus";
-            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["AutoFocusSVG"];
+            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current?.Resources["AutoFocusSVG"];
 
             if (cameraMediator != null) {
                 this.cameraMediator = cameraMediator;
@@ -716,7 +716,7 @@ namespace NINA.ViewModel {
 
                 brightestStarPositions.Clear();
                 if (guidingStopped) {
-                    var startGuidingTask = this.guiderMediator.StartGuiding(token);
+                    var startGuidingTask = this.guiderMediator.StartGuiding(false, progress, token);
                     var completedTask = await Task.WhenAny(Task.Delay(60000), startGuidingTask);
                     if (startGuidingTask != completedTask) {
                         Notification.ShowWarning(Locale.Loc.Instance["LblStartGuidingFailed"]);

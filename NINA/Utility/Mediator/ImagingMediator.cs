@@ -42,8 +42,8 @@ namespace NINA.Utility.Mediator {
             return handler.CaptureAndPrepareImage(sequence, parameters, token, progress);
         }
 
-        public Task<IExposureData> CaptureImage(CaptureSequence sequence, CancellationToken token, IProgress<ApplicationStatus> progress) {
-            return handler.CaptureImage(sequence, token, progress);
+        public Task<IExposureData> CaptureImage(CaptureSequence sequence, CancellationToken token, IProgress<ApplicationStatus> progress, string targetName = "") {
+            return handler.CaptureImage(sequence, token, progress, targetName);
         }
 
         public Task<IRenderedImage> PrepareImage(
@@ -58,12 +58,6 @@ namespace NINA.Utility.Mediator {
             PrepareImageParameters parameters,
             CancellationToken token) {
             return handler.PrepareImage(data, parameters, token);
-        }
-
-        public event EventHandler<ImageSavedEventArgs> ImageSaved;
-
-        public void OnImageSaved(ImageSavedEventArgs e) {
-            ImageSaved?.Invoke(handler, e);
         }
 
         public void DestroyImage() {

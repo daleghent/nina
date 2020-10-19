@@ -21,13 +21,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Serialization;
 
 namespace NINA.Model {
+
     [Serializable()]
     [XmlRoot(nameof(CaptureSequenceList))]
     public class CaptureSequenceList : BaseINPC {
+
         public CaptureSequenceList() {
             TargetName = string.Empty;
             Mode = SequenceMode.STANDARD;
@@ -542,7 +545,10 @@ namespace NINA.Model {
             }
             set {
                 _slewToTarget = value;
-                if (!_slewToTarget) { CenterTarget = _slewToTarget; }
+                if (!_slewToTarget) {
+                    CenterTarget = _slewToTarget;
+                    RotateTarget = _slewToTarget;
+                }
                 RaisePropertyChanged();
             }
         }
@@ -570,6 +576,21 @@ namespace NINA.Model {
             set {
                 _centerTarget = value;
                 if (_centerTarget) { SlewToTarget = _centerTarget; }
+                if (!_centerTarget) { RotateTarget = _centerTarget; }
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool rotateTarget;
+
+        [XmlAttribute(nameof(RotateTarget))]
+        public bool RotateTarget {
+            get {
+                return rotateTarget;
+            }
+            set {
+                rotateTarget = value;
+                if (rotateTarget) { CenterTarget = rotateTarget; }
                 RaisePropertyChanged();
             }
         }

@@ -33,21 +33,22 @@ namespace NINA.ViewModel {
 
     internal class ThumbnailVM : DockableVM, IThumbnailVM {
 
-        public ThumbnailVM(IProfileService profileService, IImagingMediator imagingMediator) : base(profileService) {
+        public ThumbnailVM(IProfileService profileService, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator) : base(profileService) {
             Title = "LblImageHistory";
             CanClose = false;
             ImageGeometry = (GeometryGroup)System.Windows.Application.Current.Resources["HistorySVG"];
 
             this.imagingMediator = imagingMediator;
+            this.imageSaveMediator = imageSaveMediator;
 
-            this.imagingMediator.ImageSaved += ImagingMediator_ImageSaved;
+            this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
 
             SelectCommand = new AsyncCommand<bool>((object o) => {
                 return SelectImage((Thumbnail)o);
             });
         }
 
-        private void ImagingMediator_ImageSaved(object sender, ImageSavedEventArgs e) {
+        private void ImageSaveMediator_ImageSaved(object sender, ImageSavedEventArgs e) {
             AddThumbnail(e);
         }
 
@@ -66,8 +67,8 @@ namespace NINA.ViewModel {
                         ImagePath = msg.PathToImage,
                         FileType = msg.FileType,
                         Duration = msg.Duration,
-                        Mean = msg.Mean,
-                        HFR = msg.HFR,
+                        Mean = msg.Statistics.Mean,
+                        HFR = msg.StarDetectionAnalysis.HFR,
                         Filter = msg.Filter,
                         IsBayered = msg.IsBayered
                     };
@@ -114,6 +115,8 @@ namespace NINA.ViewModel {
 
         private ObservableLimitedSizedStack<Thumbnail> _thumbnails;
         private IImagingMediator imagingMediator;
+        private IImageSaveMediator imageSaveMediator;
+
         public ICommand SelectCommand { get; set; }
 
         private async Task<bool> SelectImage(Thumbnail thumbnail) {

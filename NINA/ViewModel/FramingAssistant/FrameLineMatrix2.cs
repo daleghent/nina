@@ -20,7 +20,7 @@ using System.Linq;
 
 namespace NINA.ViewModel.FramingAssistant {
 
-    internal class FrameLineMatrix2 {
+    public class FrameLineMatrix2 {
         private List<double> STEPSIZES = new List<double>() { 1, 2, 4, 12, 20 };
 
         public FrameLineMatrix2() {

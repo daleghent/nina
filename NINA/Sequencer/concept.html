@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta property="og:url" content="https://nighttime-imaging.eu/">
+    <meta property="og:title" content="Nighttime Imaging 'N' Astronomy">
+    <meta property="og:description" content="An astrophotography imaging suite">
+    <meta property="og:image" content="https://nighttime-imaging.eu/wp-content/uploads/2019/02/Logo_Nina.png">
+    <meta property="og:type" content="website">
+    <style type="text/css">
+        body {
+            background-color: #222;
+            color: #eee;
+            font-family: "Libre Franklin", "Helvetica Neue", helvetica, arial, sans-serif
+        }
+    </style>
+    <title>Sequencer 2.0</title>
+</head>
+<body>
+
+    <h1 id="sequencer-2.0">Sequencer 2.0</h1>
+<h2 id="problem">Problem</h2>
+<p>The current sequencer is rather static in its mode of operation. There is no possibility to have custom actions prior to or after running a sequence.
+Only fixed defined patterns are supported.
+This works for a broader range of use cases, but won't ever cover the full range of requirements that users have for an automated sequence.</p>
+<p>The sequencer should be much more versatile to allow for special equipment to be controlled as well as use cases like waiting for a sequence to start at a specific time of for a target reaching a specific altitude.</p>
+<h2 id="example-use-cases">Example Use Cases</h2>
+<ul>
+<li>Cooling a camera prior to starting an imaging run</li>
+<li>Waiting for a sequence to start at a specific time</li>
+<li>Waiting for a sequence to start until a target has reached a set altitude</li>
+<li>Looping a sequence as long as the target is between a specific altitude range</li>
+<li>Cover the scope in between sequences to mix light and dark frames</li>
+<li>Park equipment at end of a sequence</li>
+<li>Warm a camera</li>
+<li>Ability to add certain events based on conditions. e.g. similar to the old autofocus triggers</li>
+<li>Events need to be easily enhanced for things like star lost during guiding</li>
+<li>More events will enable error recovery</li>
+<li>Save custom building blocks for re-usability</li>
+</ul>
+<h2 id="things-to-consider">Things to consider</h2>
+<ul>
+<li>Adding panels from framing into the new sequencer</li>
+</ul>
+<h2 id="data-model">Data model</h2>
+<h3 id="interfaces">Interfaces</h3>
+<ul>
+<li><p>ISequenceItem</p>
+<ul>
+<li>Run()</li>
+</ul>
+</li>
+<li><p>ISequenceContainer : ISequenceItem</p>
+<ul>
+<li><p>readonly ICollection<ISequenceBlock> { get; }</p>
+</li>
+<li><p>ICollection<ISequenceEvent> { get; } // loop through each event and check if should trigger?</p>
+</li>
+<li><p>Add(ISequenceItem)</p>
+</li>
+<li><p>Remove(ISequenceItem)</p>
+</li>
+</ul>
+</li>
+<li><p>ISequenceEvent</p>
+<ul>
+<li>tbd</li>
+</ul>
+</li>
+</ul>
+<h3 id="classes">Classes</h3>
+<ul>
+<li><p>SequentialContainer : ISequenceContainer</p>
+<ul>
+<li>Runs items one after the other</li>
+</ul>
+</li>
+<li><p>ParallelContainer : ISequenceContainer</p>
+<ul>
+<li>Runs items in parallel</li>
+</ul>
+</li>
+<li><p>abstract ImagingContainer : ISequenceContainer</p>
+</li>
+<li><p>SequentialImagingContainer : ImagingContainer</p>
+</li>
+<li><p>LoopedImagingContainer : ImagingContainer // maybe unnecessary and merged with timed</p>
+</li>
+<li><p>TimedImagingContainer : ImagingContainer</p>
+</li>
+<li><p>AltitudeImagingContainer : ImagingContainer</p>
+</li>
+<li><p>DarkFrameContainer</p>
+</li>
+<li><p>FlatFrameContainer</p>
+</li>
+</ul>
+<p>Example visions of users:</p>
+<pre><code>container
+  +type sequential
+  -camera cool to -15
+  -camera gain 200
+  -container
+    # start event: time &gt;23:00
+    +type sequential
+    +name my L sequence 1
+    -center on ra X dec Y //slew + solve
+    -filter switch L
+    -guiding start
+    -container
+      +type loop
+      +image type light
+      # start event: time &gt;23:00
+      -take image 300s
+      -dither
+      # end event: time &gt;01:30
+  -container
+    # start event: time &gt;01:30
+    +type sequential
+    +name my rgb sequence 2
+    -center on ra X2 dec Y2 //slew + solve
+    -guiding start
+    -container
+      +type loop
+      +image type light
+      # start event: time &gt;1:30
+      -filter switch R
+      -take image 300s
+      -filter switch G
+      -take image 300s
+      -filter switch B
+      -take image 300s
+      -dither
+      # end event: time &gt;5:00
+  -camera warm
+  -mount park
+</code></pre>
+<pre><code>Wait until {nautical dark}
+Start camera cooler to -15 
+Slew and center to target1 | Autofocus | Begin Guiding
+Wait until {camera cooler &lt; -15}
+Image { L:45s; R:60s; G:60s; B:60s } 
+    gain 111 offset 8
+    loopingFilters
+    dither {every 10m}
+    until {moon &gt; 15*}
+Image {Ha:5m}
+    gain 53 offset 10
+    dither {every 2 frames}
+    until {next target &gt; 40* alt}
+Slew and center to target2 | Autofocus | Begin Guiding
+Image { Ha:5m:Gain 111 Offset 8; Oiii:10m:Gain 53 Offset 10; Sii:5m:Gain 111 Offset 8;} 
+    loopingFilters
+    dither {every 2 frames}
+    until {target goals reached | nautical twilight}
+Warm Camera | Park
+</code></pre>
+<pre><code>Wait until {astro dark}
+Image { L;R;G;B } 
+    using optimum exposure calculator
+        generating master dark sequence
+    gain 111 offset 8
+    loopingFilters
+    dither {every 10m}
+    until {moon &lt; 5*}
+
+Image { L;R;G;B } 
+    using optimum exposure calculator --rerun
+        generating master dark sequence
+    gain 111 offset 8
+    loopingFilters
+    dither {every 10m}
+    until {nautical twilight}
+</code></pre>
+
+</body>
+</html>

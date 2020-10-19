@@ -336,10 +336,10 @@ namespace NINA.Model.MyGuider {
             return false;
         }
 
-        public async Task<bool> StartGuiding(CancellationToken ct) {
+        public async Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
             try {
                 if (!await mgen.IsGuidingActive(ct)) {
-                    await StartCalibrationIfRequired(ct);
+                    await StartCalibrationIfRequired(forceCalibration, ct);
 
                     Logger.Debug("MGEN - Starting Guiding");
                     await mgen.StartGuiding(ct);
@@ -353,10 +353,18 @@ namespace NINA.Model.MyGuider {
             return true;
         }
 
-        private async Task<bool> StartCalibrationIfRequired(CancellationToken ct) {
+        public bool CanClearCalibration {
+            get => true;
+        }
+
+        public Task<bool> ClearCalibration(CancellationToken ct) {
+            return Task.FromResult(true);
+        }
+
+        private async Task<bool> StartCalibrationIfRequired(bool forceCalibration, CancellationToken ct) {
             using (ct.Register(async () => await mgen.CancelCalibration())) {
                 var calibrationStatus = await mgen.QueryCalibration(ct); ;
-                if (!calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) || calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error)) {
+                if (forceCalibration || (!calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) || calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error))) {
                     Logger.Debug("MGEN - Starting Calibraiton");
                     _ = await AutoSelectGuideStar();
                     _ = await mgen.StartCalibration(ct);

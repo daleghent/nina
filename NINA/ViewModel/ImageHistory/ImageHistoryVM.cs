@@ -21,29 +21,39 @@ using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using NINA.ViewModel.Interfaces;
+using NINA.Utility.Mediator.Interfaces;
+using System;
 
-namespace NINA.ViewModel {
+namespace NINA.ViewModel.ImageHistory {
 
     public class ImageHistoryVM : DockableVM, IImageHistoryVM {
 
-        public ImageHistoryVM(IProfileService profileService) : base(profileService) {
+        public ImageHistoryVM(IProfileService profileService, IImageSaveMediator imageSaveMediator) : base(profileService) {
             Title = "LblHFRHistory";
 
             if (System.Windows.Application.Current != null) {
                 ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["HFRHistorySVG"];
             }
 
+            this.imageSaveMediator = imageSaveMediator;
+            this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
+
             _nextStatHistoryId = 0;
-            LimitedImageHistoryStack = new AsyncObservableLimitedSizedStack<ImageHistoryPoint>(100);
+            ObservableImageHistory = new AsyncObservableCollection<ImageHistoryPoint>();
             AutoFocusPoints = new AsyncObservableCollection<ImageHistoryPoint>();
 
             PlotClearCommand = new RelayCommand((object o) => PlotClear());
         }
 
-        private int _nextStatHistoryId;
-        private AsyncObservableLimitedSizedStack<ImageHistoryPoint> _limitedImageHistoryStack;
+        private void ImageSaveMediator_ImageSaved(object sender, ImageSavedEventArgs e) {
+            this.AppendStarDetection(e.StarDetectionAnalysis);
+        }
 
-        public AsyncObservableLimitedSizedStack<ImageHistoryPoint> LimitedImageHistoryStack {
+        private IImageSaveMediator imageSaveMediator;
+        private int _nextStatHistoryId;
+        private AsyncObservableCollection<ImageHistoryPoint> _limitedImageHistoryStack;
+
+        public AsyncObservableCollection<ImageHistoryPoint> ObservableImageHistory {
             get {
                 return _limitedImageHistoryStack;
             }
@@ -69,18 +79,20 @@ namespace NINA.ViewModel {
 
         private object lockObj = new object();
 
-        public void Add(IStarDetectionAnalysis starDetectionAnalysis) {
+        public void Add(IImageStatistics statistics) {
+            lock (lockObj) {
+                var point = new ImageHistoryPoint(Interlocked.Increment(ref _nextStatHistoryId), statistics);
+                ImageHistory.Add(point);
+            }
+        }
+
+        public void AppendStarDetection(IStarDetectionAnalysis starDetectionAnalysis) {
             if (starDetectionAnalysis != null) {
                 lock (lockObj) {
-                    var point = new ImageHistoryPoint(Interlocked.Increment(ref _nextStatHistoryId), starDetectionAnalysis);
-                    ImageHistory.Add(point);
-                    LimitedImageHistoryStack.Add(point);
-
-                    //Clear AF point if stack that is limited to 100 does not contain this point anymore
-
-                    var items = AutoFocusPoints.Except(LimitedImageHistoryStack).ToList();
-                    foreach (var item in items) {
-                        AutoFocusPoints.Remove(item);
+                    var last = ImageHistory.LastOrDefault();
+                    if (last != null) {
+                        last.PopulateSDPoint(starDetectionAnalysis);
+                        ObservableImageHistory.Add(last);
                     }
                 }
             }
@@ -89,7 +101,7 @@ namespace NINA.ViewModel {
         public void AppendAutoFocusPoint(AutoFocus.AutoFocusReport report) {
             if (report != null) {
                 lock (lockObj) {
-                    var last = LimitedImageHistoryStack.LastOrDefault();
+                    var last = ImageHistory.LastOrDefault();
                     if (last != null) {
                         last.PopulateAFPoint(report);
                         AutoFocusPoints.Add(last);
@@ -99,40 +111,10 @@ namespace NINA.ViewModel {
         }
 
         public void PlotClear() {
-            this.LimitedImageHistoryStack.Clear();
+            this.ObservableImageHistory.Clear();
             this.AutoFocusPoints.Clear();
         }
 
         public ICommand PlotClearCommand { get; private set; }
-
-        public class ImageHistoryPoint {
-
-            public ImageHistoryPoint(int id, IStarDetectionAnalysis starDetectionAnalysis) {
-                Id = id;
-                HFR = starDetectionAnalysis.HFR;
-                DetectedStars = starDetectionAnalysis.DetectedStars;
-            }
-
-            internal void PopulateAFPoint(AutoFocus.AutoFocusReport report) {
-                AutoFocusPoint = new AutoFocusPoint();
-                AutoFocusPoint.OldPosition = report.InitialFocusPoint.Position;
-                AutoFocusPoint.NewPosition = report.CalculatedFocusPoint.Position;
-                AutoFocusPoint.Temperature = report.Temperature;
-            }
-
-            public int Id { get; private set; }
-            public double Zero { get; } = 0.05;
-            public int DetectedStars { get; private set; }
-
-            public AutoFocusPoint AutoFocusPoint { get; private set; }
-
-            public double HFR { get; private set; }
-        }
-
-        public class AutoFocusPoint {
-            public double NewPosition { get; set; }
-            public double OldPosition { get; set; }
-            public double Temperature { get; set; }
-        }
     }
 }

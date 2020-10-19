@@ -78,7 +78,7 @@ namespace NINA.Model.MyGuider {
             return true;
         }
 
-        public async Task<bool> StartGuiding(CancellationToken ct) {
+        public async Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
             return true;
         }
 
@@ -87,6 +87,14 @@ namespace NINA.Model.MyGuider {
         }
 
         public async Task<bool> Dither(CancellationToken ct) {
+            return true;
+        }
+
+        public bool CanClearCalibration {
+            get => true;
+        }
+
+        public async Task<bool> ClearCalibration(CancellationToken ct) {
             return true;
         }
 

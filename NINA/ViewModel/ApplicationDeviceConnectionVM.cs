@@ -34,11 +34,12 @@ namespace NINA.ViewModel {
         private readonly IGuiderMediator guiderMediator;
         private readonly IWeatherDataMediator weatherDataMediator;
         private readonly ISwitchMediator switchMediator;
+        private readonly ISafetyMonitorMediator safetyMonitorMediator;
 
         public ApplicationDeviceConnectionVM(IProfileService profileService, ICameraMediator camMediator, ITelescopeMediator teleMediator,
             IFocuserMediator focMediator, IFilterWheelMediator fwMediator, IRotatorMediator rotMediator, IFlatDeviceMediator flatdMediator, IGuiderMediator guidMediator,
             ISwitchMediator swMediator, IWeatherDataMediator weatherMediator,
-            IDomeMediator domMediator) : base(profileService) {
+            IDomeMediator domMediator, ISafetyMonitorMediator safetyMonitorMediator) : base(profileService) {
             cameraMediator = camMediator;
             telescopeMediator = teleMediator;
             focuserMediator = focMediator;
@@ -49,6 +50,7 @@ namespace NINA.ViewModel {
             switchMediator = swMediator;
             domeMediator = domMediator;
             weatherDataMediator = weatherMediator;
+            this.safetyMonitorMediator = safetyMonitorMediator;
 
             ConnectAllDevicesCommand = new AsyncCommand<bool>(async () => {
                 var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblReconnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
@@ -64,7 +66,8 @@ namespace NINA.ViewModel {
                         var weather = weatherDataMediator.Connect();
                         var swtch = switchMediator.Connect();
                         var dome = domeMediator.Connect();
-                        await Task.WhenAll(cam, fw, telescope, focuser, rotator, flatdevice, guider, weather, swtch, dome);
+                        var safetyMonitor = this.safetyMonitorMediator.Connect();
+                        await Task.WhenAll(cam, fw, telescope, focuser, rotator, flatdevice, guider, weather, swtch, dome, safetyMonitor);
                         return true;
                     });
                 } else {
@@ -137,6 +140,12 @@ namespace NINA.ViewModel {
 
             try {
                 weatherDataMediator.Disconnect();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
+            try {
+                this.safetyMonitorMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }

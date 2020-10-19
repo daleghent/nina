@@ -12,12 +12,14 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
 using NINA.Utility;
 using System;
 using System.Xml.Serialization;
 
 namespace NINA.Model.MyCamera {
 
+    [JsonObject(MemberSerialization.OptIn)]
     [Serializable()]
     [XmlRoot(ElementName = nameof(BinningMode))]
     public class BinningMode : BaseINPC {
@@ -37,6 +39,7 @@ namespace NINA.Model.MyCamera {
         public string Name => string.Join(SEPARATOR.ToString(), X, Y);
 
         [XmlElement(nameof(X))]
+        [JsonProperty(PropertyName = nameof(X))]
         public short X {
             get => _x;
 
@@ -47,6 +50,7 @@ namespace NINA.Model.MyCamera {
         }
 
         [XmlElement(nameof(Y))]
+        [JsonProperty(PropertyName = nameof(Y))]
         public short Y {
             get => _y;
 

@@ -13,6 +13,8 @@
 #endregion "copyright"
 
 using NINA.Utility.Astrometry;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace NINA.Model.MyTelescope {
 
@@ -198,11 +200,22 @@ namespace NINA.Model.MyTelescope {
             set { atPark = value; RaisePropertyChanged(); }
         }
 
-        private bool tracking;
+        private TrackingRate trackingRate;
+        public TrackingRate TrackingRate {
+            get { return trackingRate; }
+            set { trackingRate = value; RaisePropertyChanged(); RaisePropertyChanged(nameof(TrackingMode)); }
+        }
 
-        public bool Tracking {
-            get { return tracking; }
-            set { tracking = value; RaisePropertyChanged(); }
+        private bool trackingEnabled;
+        public bool TrackingEnabled {
+            get { return trackingEnabled; }
+            set { trackingEnabled = value; RaisePropertyChanged(); }
+        }
+
+        private IList<TrackingMode> trackingModes;
+        public IList<TrackingMode> TrackingModes {
+            get { return trackingModes; }
+            set { trackingModes = value; RaisePropertyChanged(); }
         }
 
         private bool canPark;
@@ -221,7 +234,7 @@ namespace NINA.Model.MyTelescope {
 
         private bool canSetTracking;
 
-        public bool CanSetTracking {
+        public bool CanSetTrackingEnabled {
             get { return canSetTracking; }
             set { canSetTracking = value; RaisePropertyChanged(); }
         }

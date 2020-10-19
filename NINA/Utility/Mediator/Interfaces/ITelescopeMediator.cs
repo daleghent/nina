@@ -34,7 +34,11 @@ namespace NINA.Utility.Mediator.Interfaces {
 
         Task<bool> MeridianFlip(Coordinates targetCoordinates);
 
-        bool SetTracking(bool tracking);
+        bool SetTrackingEnabled(bool trackingEnabled);
+
+        bool SetTrackingMode(TrackingMode trackingMode);
+
+        bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
 
         bool SendToSnapPort(bool start);
 

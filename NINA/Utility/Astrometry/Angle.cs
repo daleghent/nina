@@ -16,6 +16,7 @@ using System;
 
 namespace NINA.Utility.Astrometry {
 
+    [Serializable]
     public class Angle {
 
         public static Angle ByHours(double hours) {
@@ -31,6 +32,8 @@ namespace NINA.Utility.Astrometry {
             var degree = Astrometry.ToDegree(radians);
             return new Angle(Astrometry.ToDegree(radians), radians, Astrometry.DegreesToHours(degree));
         }
+
+        public static Angle Zero { get; } = Angle.ByDegree(0);
 
         private Angle(double degree, double radians, double hours) {
             this.Degree = degree;
@@ -82,6 +85,7 @@ namespace NINA.Utility.Astrometry {
         }
 
         private static double EQUALS_EPSILON = 1E-13;
+
         public bool Equals(Angle that, Angle tolerance) {
             var thisDegrees = Astrometry.EuclidianModulus(this.Degree, 360.0);
             var thatDegrees = Astrometry.EuclidianModulus(that.Degree, 360.0);

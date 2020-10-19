@@ -29,7 +29,8 @@ namespace NINA.Utility.Mediator.Interfaces {
         Task<IExposureData> CaptureImage(
             CaptureSequence sequence,
             CancellationToken token,
-            IProgress<ApplicationStatus> progress);
+            IProgress<ApplicationStatus> progress,
+            string targetName = "");
 
         Task<IRenderedImage> CaptureAndPrepareImage(
             CaptureSequence sequence,
@@ -51,21 +52,6 @@ namespace NINA.Utility.Mediator.Interfaces {
 
         void DestroyImage();
 
-        event EventHandler<ImageSavedEventArgs> ImageSaved;
-
-        void OnImageSaved(ImageSavedEventArgs e);
-
         void SetImage(BitmapSource img);
-    }
-
-    public class ImageSavedEventArgs : EventArgs {
-        public BitmapSource Image { get; set; }
-        public double Mean { get; set; }
-        public Uri PathToImage { get; set; }
-        public FileTypeEnum FileType { get; set; }
-        public double HFR { get; internal set; }
-        public bool IsBayered { get; internal set; }
-        public double Duration { get; internal set; }
-        public string Filter { get; internal set; }
     }
 }

@@ -21,7 +21,7 @@ using Pen = System.Drawing.Pen;
 
 namespace NINA.ViewModel.FramingAssistant {
 
-    internal class FramingDSO {
+    public class FramingDSO {
         private const int DSO_DEFAULT_SIZE = 30;
 
         private double arcSecWidth;

@@ -41,7 +41,8 @@ namespace NINA.ViewModel {
                 ITelescopeMediator telescopeMediator,
                 IImagingMediator imagingMediator,
                 IApplicationStatusMediator applicationStatusMediator,
-                IImageControlVM imageControlVM
+                IImageControlVM imageControlVM,
+                IFilterWheelMediator filterWheelMediator
         ) : base(profileService) {
             Title = "LblPolarAlignment";
 
@@ -51,6 +52,7 @@ namespace NINA.ViewModel {
             this.cameraMediator.RegisterConsumer(this);
 
             this.imagingMediator = imagingMediator;
+            this.filterWheelMediator = filterWheelMediator;
 
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterConsumer(this);
@@ -463,6 +465,7 @@ namespace NINA.ViewModel {
 
         private TelescopeInfo telescopeInfo;
         private IImagingMediator imagingMediator;
+        private IFilterWheelMediator filterWheelMediator;
         private ITelescopeMediator telescopeMediator;
 
         public TelescopeInfo TelescopeInfo {
@@ -577,7 +580,7 @@ namespace NINA.ViewModel {
         private async Task<double> CalculatePoleError(Coordinates startPosition, IProgress<ApplicationStatus> progress, CancellationToken canceltoken) {
             var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
             var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
-            var solver = new CaptureSolver(plateSolver, blindSolver, imagingMediator);
+            var solver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
             var parameter = new CaptureSolverParameter() {
                 Attempts = 1,
                 Binning = SnapBin?.X ?? CameraInfo.BinX,

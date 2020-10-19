@@ -143,6 +143,7 @@
       <ComponentGroupRef Id="gl_ES_files" />
       <ComponentGroupRef Id="pt_PT_files" />
       <ComponentGroupRef Id="el_GR_files" />
+      <ComponentGroupRef Id="Sequencer_Examples_files" />
     </Feature>
   </Product>
 
@@ -276,6 +277,10 @@
           <Directory Id="gl_ES" Name="gl-ES" />
           <Directory Id="pt_PT" Name="pt-PT" />
           <Directory Id="el_GR" Name="el-GR" />
+          <Directory Id="Sequencer" Name="Sequencer">
+            <Directory Id="Sequencer_Examples" Name="Examples" />
+          </Directory>
+          <Directory Id="Sequencer" Name="Sequencer" />
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -1675,6 +1680,19 @@
     <ComponentGroup Id="el_GR_files" Directory="el_GR">
       <Component Id="el_GR_NINA.resources.dll" Guid="a3f9cfbc-8d39-4eb0-b2c6-4014a670f764">
         <File Id="el_GR_NINA.resources.dll" Name="NINA.resources.dll" Source="$(var.NINA_TargetDir)el-GR\NINA.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Sequencer_Examples_files" Directory="Sequencer_Examples">
+      <Component Id="Sequencer_Examples_Basic_Sequence_Target.template.json" Guid="87f83e54-e180-45d3-942c-e1df42ec8399">
+        <File Id="Sequencer_Examples_Basic_Sequence_Target.template.json" Name="Basic Sequence Target.template.json" Source="$(var.NINA_TargetDir)Sequencer\Examples\Basic Sequence Target.template.json" />
+      </Component>
+      <Component Id="Sequencer_Examples_Basic_Sequence_Startup.template.json" Guid="3A7B3C7A-44A4-4D54-BC61-2D1CDDBF84BA">
+        <File Id="Sequencer_Examples_Basic_Sequence_Startup.template.json" Name="Basic Sequence Startup.template.json" Source="$(var.NINA_TargetDir)Sequencer\Examples\Basic Sequence Startup.template.json" />
+      </Component>
+      <Component Id="Sequencer_Examples_Basic_Sequence_End.template.json" Guid="F87F8F42-BDF7-4496-BB3F-E49E35E77A9E">
+        <File Id="Sequencer_Examples_Basic_Sequence_End.template.json" Name="Basic Sequence End.template.json" Source="$(var.NINA_TargetDir)Sequencer\Examples\Basic Sequence End.template.json" />
       </Component>
     </ComponentGroup>
   </Fragment>

@@ -20,10 +20,13 @@ using NINA.ViewModel.Equipment.FlatDevice;
 using NINA.ViewModel.Equipment.Focuser;
 using NINA.ViewModel.Equipment.Guider;
 using NINA.ViewModel.Equipment.Rotator;
+using NINA.ViewModel.Equipment.SafetyMonitor;
 using NINA.ViewModel.Equipment.Switch;
 using NINA.ViewModel.Equipment.Telescope;
 using NINA.ViewModel.Equipment.WeatherData;
+using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Imaging;
+using NINA.ViewModel.Sequencer;
 using System.Windows;
 using System.Windows.Controls;
 using Xceed.Wpf.AvalonDock.Layout;
@@ -56,6 +59,8 @@ namespace NINA.Utility.AvalonDock {
         public DataTemplate ImageStatisticsTemplate { get; set; }
 
         public DataTemplate RotatorTemplate { get; set; }
+
+        public DataTemplate SafetyMonitorTemplate { get; set; }
 
         public DataTemplate SequenceTemplate { get; set; }
 
@@ -107,7 +112,7 @@ namespace NINA.Utility.AvalonDock {
                 case ImageControlVM _:
                     return ImageControlTemplate;
 
-                case SequenceVM _:
+                case Sequence2VM _:
                     return SequenceTemplate;
 
                 case WeatherDataVM _:
@@ -139,6 +144,9 @@ namespace NINA.Utility.AvalonDock {
 
                 case DomeVM _:
                     return DomeTemplate;
+
+                case SafetyMonitorVM _:
+                    return SafetyMonitorTemplate;
 
                 default:
                     return base.SelectTemplate(item, container);

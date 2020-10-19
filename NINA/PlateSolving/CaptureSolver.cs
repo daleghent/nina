@@ -30,11 +30,14 @@ namespace NINA.PlateSolving {
 
     internal class CaptureSolver : ICaptureSolver {
         private IImagingMediator imagingMediator;
+        private IFilterWheelMediator filterWheelMediator;
 
         public CaptureSolver(IPlateSolver plateSolver,
                 IPlateSolver blindSolver,
-                IImagingMediator imagingMediator) {
+                IImagingMediator imagingMediator,
+                IFilterWheelMediator filterWheelMediator) {
             this.imagingMediator = imagingMediator;
+            this.filterWheelMediator = filterWheelMediator;
             this.ImageSolver = new ImageSolver(plateSolver, blindSolver);
         }
 
@@ -45,7 +48,13 @@ namespace NINA.PlateSolving {
             PlateSolveResult plateSolveResult;
             do {
                 remainingAttempts--;
+                var oldFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
                 var renderedImage = await imagingMediator.CaptureAndPrepareImage(seq, new PrepareImageParameters(), ct, progress);
+
+                Task filterChangeTask = Task.CompletedTask;
+                if (oldFilter != null) {
+                    filterChangeTask = filterWheelMediator.ChangeFilter(oldFilter);
+                }
 
                 solveProgress?.Report(
                     new PlateSolveProgress {
@@ -66,6 +75,8 @@ namespace NINA.PlateSolving {
                         PlateSolveResult = plateSolveResult
                     }
                 );
+
+                await filterChangeTask;
 
                 if (!plateSolveResult.Success && remainingAttempts > 0) {
                     await Utility.Utility.Wait(parameter.ReattemptDelay, ct, progress);

@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
 using NINA.Utility;
 using NINA.Utility.Enum;
 using System;
@@ -19,6 +20,7 @@ using System.Runtime.Serialization;
 
 namespace NINA.Model.MyFilterWheel {
 
+    [JsonObject(MemberSerialization.OptIn)]
     [Serializable]
     [DataContract]
     public class FlatWizardFilterSettings : BaseINPC {
@@ -52,6 +54,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember]
+        [JsonProperty]
         public FlatWizardMode FlatWizardMode {
             get => flatWizardMode;
             set {
@@ -61,6 +64,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember]
+        [JsonProperty]
         public double HistogramMeanTarget {
             get => histogramMeanTarget;
             set {
@@ -70,6 +74,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember]
+        [JsonProperty]
         public double HistogramTolerance {
             get => histogramTolerance;
             set {
@@ -79,6 +84,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember]
+        [JsonProperty]
         public double MaxFlatExposureTime {
             get => maxFlatExposureTime;
             set {
@@ -88,6 +94,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember]
+        [JsonProperty]
         public double MinFlatExposureTime {
             get => minFlatExposureTime;
             set {
@@ -101,6 +108,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember]
+        [JsonProperty]
         public double StepSize {
             get => stepSize;
             set {
@@ -110,6 +118,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember]
+        [JsonProperty]
         public double MaxFlatDeviceBrightness {
             get => maxFlatDeviceBrightness;
             set {
@@ -119,6 +128,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember]
+        [JsonProperty]
         public double MinFlatDeviceBrightness {
             get => minFlatDeviceBrightness;
             set {
@@ -132,6 +142,7 @@ namespace NINA.Model.MyFilterWheel {
         }
 
         [DataMember]
+        [JsonProperty]
         public double FlatDeviceStepSize {
             get => flatDeviceStepSize;
             set {

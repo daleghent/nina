@@ -20,6 +20,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace NINA.Utility.Converters {
@@ -27,6 +28,13 @@ namespace NINA.Utility.Converters {
     internal class DecDegreeConverter : IMultiValueConverter {
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
+            if (values.Length == 0) {
+                return string.Empty;
+            }
+            if (values[0] == DependencyProperty.UnsetValue) {
+                return string.Empty;
+            }
+
             var isNegative = (bool)values[0];
             int degrees = (int)values[1];
 

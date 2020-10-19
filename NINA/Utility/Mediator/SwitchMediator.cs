@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Model;
 using NINA.Model.MySwitch;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Equipment.Switch;
@@ -19,10 +20,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Utility.Mediator {
 
     internal class SwitchMediator : DeviceMediator<ISwitchVM, ISwitchConsumer, SwitchInfo>, ISwitchMediator {
+
+        public Task SetSwitchValue(short switchIndex, double value, IProgress<ApplicationStatus> progress, CancellationToken ct) {
+            return handler.SetSwitchValue(switchIndex, value, progress, ct);
+        }
     }
 }

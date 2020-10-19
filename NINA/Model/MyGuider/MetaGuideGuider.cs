@@ -333,7 +333,7 @@ namespace NINA.Model.MyGuider {
             return !ct.IsCancellationRequested && this.IsGuiding;
         }
 
-        public async Task<bool> StartGuiding(CancellationToken ct) {
+        public async Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
             if (!Connected) {
                 return false;
             }
@@ -359,6 +359,14 @@ namespace NINA.Model.MyGuider {
                 return false;
             }
             return await WaitOnEventChangeCondition(() => !this.IsGuiding && !this.IsLocked, ct);
+        }
+
+        public bool CanClearCalibration {
+            get => false;
+        }
+
+        public Task<bool> ClearCalibration(CancellationToken ct) {
+            return Task.FromResult(false);
         }
 
         private static readonly TimeSpan LOW_INTENSITY_THRESHOLD = TimeSpan.FromSeconds(5);
@@ -447,7 +455,7 @@ namespace NINA.Model.MyGuider {
 
                     ++lowIntensityGuidingAttemptCount;
                     lowIntensityChangeGuidingTask = Task.Run(async () => {
-                        if (await StartGuiding(new CancellationTokenSource(LOW_INTENSITY_GUIDING_TIMEOUT).Token)) {
+                        if (await StartGuiding(false, new CancellationTokenSource(LOW_INTENSITY_GUIDING_TIMEOUT).Token)) {
                             guidingHaltedDueToLowIntensity = false;
                             lowIntensityGuidingAttemptCount = 0;
                         } else if (lowIntensityGuidingAttemptCount >= MAX_LOW_INTENSITY_GUIDING_RETRIES) {

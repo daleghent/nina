@@ -6,6 +6,7 @@ using NINA.ViewModel.Equipment.FlatDevice;
 using NINA.ViewModel.Equipment.Focuser;
 using NINA.ViewModel.Equipment.Guider;
 using NINA.ViewModel.Equipment.Rotator;
+using NINA.ViewModel.Equipment.SafetyMonitor;
 using NINA.ViewModel.Equipment.Switch;
 using NINA.ViewModel.Equipment.Telescope;
 using NINA.ViewModel.Equipment.WeatherData;
@@ -22,7 +23,7 @@ namespace NINA.ViewModel {
 
         public EquipmentVM(IProfileService profileService, ICameraVM cameraVM, IFilterWheelVM filterWheelVM, IFocuserVM focuserVM,
             IRotatorVM rotatorVM, ITelescopeVM telescopeVM, IDomeVM domeVM, IGuiderVM guiderVM, ISwitchVM switchVM,
-            IFlatDeviceVM flatDeviceVM, IWeatherDataVM weatherDataVM) : base(profileService) {
+            IFlatDeviceVM flatDeviceVM, IWeatherDataVM weatherDataVM, ISafetyMonitorVM safetyMonitorVM) : base(profileService) {
             CameraVM = cameraVM;
             FilterWheelVM = filterWheelVM;
             FocuserVM = focuserVM;
@@ -33,6 +34,7 @@ namespace NINA.ViewModel {
             SwitchVM = switchVM;
             FlatDeviceVM = flatDeviceVM;
             WeatherDataVM = weatherDataVM;
+            SafetyMonitorVM = safetyMonitorVM;
         }
 
         public ICameraVM CameraVM { get; }
@@ -45,5 +47,6 @@ namespace NINA.ViewModel {
         public ISwitchVM SwitchVM { get; }
         public IFlatDeviceVM FlatDeviceVM { get; }
         public IWeatherDataVM WeatherDataVM { get; }
+        public ISafetyMonitorVM SafetyMonitorVM { get; }
     }
 }

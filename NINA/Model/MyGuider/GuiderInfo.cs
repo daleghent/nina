@@ -15,5 +15,14 @@
 namespace NINA.Model.MyGuider {
 
     public class GuiderInfo : DeviceInfo {
+        private bool _canClearCalibration;
+
+        public bool CanClearCalibration {
+            get => _canClearCalibration;
+            set {
+                _canClearCalibration = value;
+                RaisePropertyChanged();
+            }
+        }
     }
 }

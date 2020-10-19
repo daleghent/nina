@@ -14,13 +14,13 @@ using NINA.Model.MyTelescope;
 using NINA.Model.MyWeatherData;
 using NINA.Utility;
 using NINA.Utility.WindowService;
+using NINA.ViewModel.ImageHistory;
 
 namespace NINA.ViewModel.Interfaces {
 
     public interface ISequenceVM : IDockableVM {
         ICommand AddSequenceRowCommand { get; }
         ICommand AddTargetCommand { get; }
-        ICommand CancelSequenceCommand { get; }
         ICommand CoordsFromPlanetariumCommand { get; set; }
         ICommand CoordsToFramingCommand { get; set; }
         IDeepSkyObjectSearchVM DeepSkyObjectSearchVM { get; }
@@ -29,23 +29,18 @@ namespace NINA.ViewModel.Interfaces {
         TimeSpan EstimatedDownloadTime { get; set; }
         bool HasSequenceFileName { get; }
         ObservableCollection<string> ImageTypes { get; set; }
-        IImageHistoryVM ImgHistoryVM { get; }
-        bool IsPaused { get; set; }
-        bool IsRunning { get; set; }
         bool IsUsingSynchronizedGuider { get; set; }
         ICommand LoadSequenceCommand { get; }
         ICommand LoadTargetSetCommand { get; }
         TimeSpan OverallDuration { get; }
         DateTime OverallEndTime { get; }
         DateTime OverallStartTime { get; }
-        ICommand PauseSequenceCommand { get; }
         ICommand PromoteSequenceRowCommand { get; }
         ICommand PromoteTargetCommand { get; }
         ICommand RemoveSequenceRowCommand { get; }
         ICommand RemoveTargetCommand { get; }
         ICommand ResetSequenceRowCommand { get; }
         ICommand ResetTargetCommand { get; }
-        ICommand ResumeSequenceCommand { get; }
         ICommand SaveAsSequenceCommand { get; }
         ICommand SaveSequenceCommand { get; }
         ICommand SaveTargetSetCommand { get; }
@@ -56,39 +51,18 @@ namespace NINA.ViewModel.Interfaces {
         DateTime SequenceEstimatedStartTime { get; }
         bool SequenceModified { get; }
         bool SequenceSaveable { get; }
-        IAsyncCommand StartSequenceCommand { get; }
-        ApplicationStatus Status { get; set; }
+        IAsyncCommand BuildSequenceCommand { get; }
         AsyncObservableCollection<CaptureSequenceList> Targets { get; set; }
         IWindowServiceFactory WindowServiceFactory { get; set; }
 
         void AddDownloadTime(TimeSpan t);
 
+        void AddTarget(DeepSkyObject deepSkyObject);
+
         void AddSequenceRow(object o);
-
-        void Dispose();
-
-        bool HasWritePermission(string dir);
 
         bool OKtoExit();
 
-        Task<bool> SetSequenceCoordiantes(DeepSkyObject dso);
-
-        Task<bool> SetSequenceCoordiantes(ICollection<DeepSkyObject> deepSkyObjects, bool replace = true);
-
-        void UpdateDeviceInfo(CameraInfo cameraInfo);
-
-        void UpdateDeviceInfo(FilterWheelInfo filterWheelInfo);
-
-        void UpdateDeviceInfo(FlatDeviceInfo deviceInfo);
-
-        void UpdateDeviceInfo(FocuserInfo focuserInfo);
-
-        void UpdateDeviceInfo(GuiderInfo deviceInfo);
-
-        void UpdateDeviceInfo(RotatorInfo deviceInfo);
-
-        void UpdateDeviceInfo(TelescopeInfo telescopeInfo);
-
-        void UpdateDeviceInfo(WeatherDataInfo deviceInfo);
+        Task<bool> SetMultipleSequenceTargets(ICollection<DeepSkyObject> deepSkyObjects, bool replace = true);
     }
 }

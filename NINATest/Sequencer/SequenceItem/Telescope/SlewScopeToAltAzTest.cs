@@ -1,0 +1,159 @@
+﻿#region "copyright"
+
+/*
+    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+
+    This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.
+*/
+
+#endregion "copyright"
+
+using FluentAssertions;
+using Moq;
+using NINA.Model.MyTelescope;
+using NINA.Profile;
+using NINA.Sequencer;
+using NINA.Sequencer.Container;
+using NINA.Sequencer.Exceptions;
+using NINA.Sequencer.SequenceItem.Telescope;
+using NINA.Utility.Astrometry;
+using NINA.Utility.Mediator.Interfaces;
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace NINATest.Sequencer.SequenceItem.Telescope {
+
+    [TestFixture]
+    internal class SlewScopeToAltAzTest {
+        public Mock<IProfileService> profileServiceMock;
+        public Mock<ITelescopeMediator> telescopeMediatorMock;
+
+        [SetUp]
+        public void Setup() {
+            profileServiceMock = new Mock<IProfileService>();
+            profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Latitude).Returns(10);
+            profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Longitude).Returns(20);
+            telescopeMediatorMock = new Mock<ITelescopeMediator>();
+        }
+
+        [Test]
+        public void Clone_ItemClonedProperly() {
+            profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Latitude).Returns(1);
+            profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Longitude).Returns(5);
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            sut.Name = "SomeName";
+            sut.Description = "SomeDescription";
+            sut.Icon = new System.Windows.Media.GeometryGroup();
+            sut.Coordinates.Coordinates = new TopocentricCoordinates(Angle.ByDegree(10), Angle.ByDegree(-10), Angle.ByDegree(1), Angle.ByDegree(5));
+            var item2 = (SlewScopeToAltAz)sut.Clone();
+
+            item2.Should().NotBeSameAs(sut);
+            item2.Name.Should().BeSameAs(sut.Name);
+            item2.Description.Should().BeSameAs(sut.Description);
+            item2.Icon.Should().BeSameAs(sut.Icon);
+            item2.Coordinates.Should().NotBeSameAs(sut.Coordinates);
+            item2.Coordinates.Coordinates.Altitude.Should().Be(sut.Coordinates.Coordinates.Altitude);
+            item2.Coordinates.Coordinates.Azimuth.Should().Be(sut.Coordinates.Coordinates.Azimuth);
+        }
+
+        [Test]
+        public void Validate_NoIssues() {
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = true });
+
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            var valid = sut.Validate();
+
+            valid.Should().BeTrue();
+
+            sut.Issues.Should().BeEmpty();
+        }
+
+        [Test]
+        public void Validate_NotConnected_OneIssue() {
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = false });
+
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            var valid = sut.Validate();
+
+            valid.Should().BeFalse();
+
+            sut.Issues.Should().HaveCount(1);
+        }
+
+        [Test]
+        public async Task Execute_NoIssues_LogicCalled() {
+            var referenceDate = new DateTime(2020, 01, 01);
+            var latitude = 5;
+            var longitude = 5;
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = true });
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, referenceDate);
+            var topo = coordinates.Transform(Angle.ByDegree(latitude), Angle.ByDegree(longitude));
+
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            sut.Coordinates.Coordinates = topo;
+            await sut.Execute(default, default);
+
+            telescopeMediatorMock
+                .Verify(
+                x => x.SlewToCoordinatesAsync(
+                    It.Is<TopocentricCoordinates>(c =>
+                        c.Altitude == topo.Altitude
+                        && c.Azimuth == topo.Azimuth)
+                    )
+                , Times.Once
+            );
+        }
+
+        [Test]
+        public Task Execute_HasIssues_LogicNotCalled() {
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = false });
+
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            Func<Task> act = () => { return sut.Execute(default, default); };
+
+            telescopeMediatorMock.Verify(x => x.SlewToCoordinatesAsync(It.IsAny<TopocentricCoordinates>()), Times.Never);
+            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
+        }
+
+        [Test]
+        public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+
+            var duration = sut.GetEstimatedDuration();
+
+            duration.Should().Be(TimeSpan.Zero);
+        }
+
+        [Test]
+        public void AttachNewParent_HasDSOContainerParent_RetrieveParentCoordinates() {
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = true });
+            profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Latitude).Returns(1);
+            profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Longitude).Returns(1);
+
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
+            var parentMock = new Mock<IDeepSkyObjectContainer>();
+            parentMock
+                .SetupGet(x => x.Target)
+                .Returns(
+                new NINA.Model.InputTarget(Angle.ByDegree(1), Angle.ByDegree(2)) {
+                    InputCoordinates = new NINA.Model.InputCoordinates() {
+                        Coordinates = coordinates
+                    }
+                }
+            );
+
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            sut.AttachNewParent(parentMock.Object);
+
+            sut.Coordinates.Should().NotBeNull();
+        }
+    }
+}

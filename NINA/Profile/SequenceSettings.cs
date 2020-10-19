@@ -36,13 +36,17 @@ namespace NINA.Profile {
             warmCamAtSequenceEnd = false;
             templatePath = string.Empty;
             estimatedDownloadTime = TimeSpan.FromSeconds(0);
-            DefaultSequenceFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A.");
+            DefaultSequenceFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A");
             closeDomeShutterAtSequenceEnd = true;
             parkDomeAtSequenceEnd = true;
+            SequencerTemplatesFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A", "Templates");
+            startupSequenceTemplate = string.Empty;
+            unparMountAtSequenceStart = true;
         }
 
         private string templatePath;
 
+        [Obsolete("Used by the old sequencer")]
         [DataMember]
         public string TemplatePath {
             get {
@@ -163,6 +167,79 @@ namespace NINA.Profile {
             set {
                 if (sequenceCompleteCommand != value) {
                     sequenceCompleteCommand = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string templateFolder;
+
+        public event EventHandler SequencerTemplatesFolderChanged;
+
+        [DataMember]
+        public string SequencerTemplatesFolder {
+            get => templateFolder;
+            set {
+                if (templateFolder != value) {
+                    templateFolder = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string startupSequenceTemplate;
+
+        [DataMember]
+        public string StartupSequenceTemplate {
+            get => startupSequenceTemplate;
+            set {
+                if (startupSequenceTemplate != value) {
+                    startupSequenceTemplate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool coolCameraAtSequenceStart;
+
+        [DataMember]
+        public bool CoolCameraAtSequenceStart {
+            get {
+                return coolCameraAtSequenceStart;
+            }
+            set {
+                if (coolCameraAtSequenceStart != value) {
+                    coolCameraAtSequenceStart = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool unparMountAtSequenceStart;
+
+        [DataMember]
+        public bool UnparMountAtSequenceStart {
+            get {
+                return unparMountAtSequenceStart;
+            }
+            set {
+                if (unparMountAtSequenceStart != value) {
+                    unparMountAtSequenceStart = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool openDomeShutterAtSequenceStart;
+
+        [DataMember]
+        public bool OpenDomeShutterAtSequenceStart {
+            get {
+                return openDomeShutterAtSequenceStart;
+            }
+            set {
+                if (openDomeShutterAtSequenceStart != value) {
+                    openDomeShutterAtSequenceStart = value;
                     RaisePropertyChanged();
                 }
             }

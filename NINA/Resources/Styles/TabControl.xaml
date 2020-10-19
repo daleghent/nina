@@ -103,6 +103,32 @@
         </Grid>
     </ControlTemplate>
 
+    <ControlTemplate x:Key="RightTabTemplate" TargetType="TabControl">
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Border
+                Grid.Column="0"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0,0,0,0">
+                <ContentPresenter
+                    x:Name="ContentPresenter"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    ContentSource="SelectedContent" />
+            </Border>
+            <TabPanel
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                Background="{StaticResource SecondaryBackgroundBrush}"
+                IsItemsHost="true" />
+        </Grid>
+    </ControlTemplate>
+
     <ControlTemplate x:Key="TopTabTemplate" TargetType="TabControl">
         <Grid>
             <Grid.RowDefinitions>
@@ -134,6 +160,10 @@
             <Trigger Property="TabStripPlacement" Value="Top">
                 <Setter Property="Template" Value="{StaticResource TopTabTemplate}" />
                 <Setter Property="ItemContainerStyle" Value="{StaticResource TopTabItem}" />
+            </Trigger>
+            <Trigger Property="TabStripPlacement" Value="Right">
+                <Setter Property="Template" Value="{StaticResource RightTabTemplate}" />
+                <Setter Property="ItemContainerStyle" Value="{StaticResource LeftTabItem}" />
             </Trigger>
         </Style.Triggers>
     </Style>

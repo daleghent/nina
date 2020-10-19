@@ -48,8 +48,8 @@
                             <ContentPresenter
                                 Grid.Column="1"
                                 Margin="4,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 RecognizesAccessKey="True"
                                 SnapsToDevicePixels="True" />
                         </Grid>
@@ -158,6 +158,7 @@
                     FontStyle="{TemplateBinding FontStyle}"
                     FontWeight="{TemplateBinding FontWeight}"
                     Foreground="{TemplateBinding Foreground}"
+                    Background="{TemplateBinding Background}"
                     IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                     Style="{StaticResource ExpanderDownHeaderStyle}" />
                 <ContentPresenter

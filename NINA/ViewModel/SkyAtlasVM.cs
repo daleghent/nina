@@ -30,9 +30,13 @@ using System.Windows.Input;
 using NINA.Database;
 using NINA.ViewModel.Interfaces;
 using NINA.ViewModel.FramingAssistant;
+using NINA.ViewModel.Sequencer;
+using NINA.Sequencer.Container;
 
 namespace NINA.ViewModel {
+
     internal class SkyAtlasVM : BaseVM, ISkyAtlasVM {
+
         public SkyAtlasVM(IProfileService profileService, ITelescopeMediator telescopeMediator,
             IFramingAssistantVM framingAssistantVM, ISequenceMediator sequenceMediator, INighttimeCalculator nighttimeCalculator, IApplicationMediator applicationMediator) : base(profileService) {
             this.nighttimeCalculator = nighttimeCalculator;
@@ -42,9 +46,27 @@ namespace NINA.ViewModel {
             SearchCommand = new AsyncCommand<bool>(() => Search());
             CancelSearchCommand = new RelayCommand(CancelSearch);
             ResetFiltersCommand = new RelayCommand(ResetFilters);
-            SetSequenceCoordinatesCommand = new AsyncCommand<bool>(async () => {
+            GetDSOTemplatesCommand = new RelayCommand((object o) => {
+                DSOTemplates = sequenceMediator.GetDeepSkyObjectContainerTemplates();
+                RaisePropertyChanged(nameof(DSOTemplates));
+            });
+            SetOldSequencerTargetCommand = new RelayCommand((object o) => {
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
-                return await sequenceMediator.SetSequenceCoordinates(SearchResult.SelectedItem);
+
+                sequenceMediator.AddTargetToOldSequencer(SearchResult.SelectedItem);
+            });
+            SetSequencerTargetCommand = new RelayCommand((object o) => {
+                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE2);
+
+                var template = o as IDeepSkyObjectContainer;
+
+                var container = (IDeepSkyObjectContainer)template.Clone();
+                container.Name = SearchResult.SelectedItem.Name;
+                container.Target.TargetName = SearchResult.SelectedItem.Name;
+                container.Target.Rotation = 0;
+                container.Target.InputCoordinates.Coordinates = SearchResult.SelectedItem.Coordinates;
+
+                sequenceMediator.AddTargetToSequencer(container);
             });
             SlewToCoordinatesCommand = new AsyncCommand<bool>(async () => {
                 return await telescopeMediator.SlewToCoordinatesAsync(SearchResult.SelectedItem.Coordinates);
@@ -67,6 +89,7 @@ namespace NINA.ViewModel {
         }
 
         private NighttimeData nighttimeData;
+
         public NighttimeData NighttimeData {
             get {
                 return nighttimeData;
@@ -79,7 +102,10 @@ namespace NINA.ViewModel {
             }
         }
 
+        public IList<IDeepSkyObjectContainer> DSOTemplates { get; private set; }
+
         private DateTime filterDate;
+
         public DateTime FilterDate {
             get => filterDate;
             set {
@@ -682,11 +708,13 @@ namespace NINA.ViewModel {
 
         public ICommand CancelSearchCommand { get; private set; }
 
-        public ICommand SetSequenceCoordinatesCommand { get; private set; }
+        public ICommand SetOldSequencerTargetCommand { get; private set; }
+        public ICommand SetSequencerTargetCommand { get; private set; }
 
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
 
         public ICommand SetFramingAssistantCoordinatesCommand { get; private set; }
+        public ICommand GetDSOTemplatesCommand { get; private set; }
 
         private int _pageSize;
 
@@ -736,6 +764,7 @@ namespace NINA.ViewModel {
         }
 
         public class DSOObjectType : BaseINPC {
+
             public DSOObjectType(string s) {
                 Name = s;
                 Selected = false;
@@ -768,6 +797,7 @@ namespace NINA.ViewModel {
     }
 
     public class PagedList<T> : BaseINPC {
+
         public PagedList(int pageSize, IEnumerable<T> items) {
             _items = new List<T>(items);
             PageSize = pageSize;
@@ -923,6 +953,7 @@ namespace NINA.ViewModel {
 
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]
     public enum SkyAtlasOrderByFieldsEnum {
+
         [Description("LblSize")]
         SIZEMAX,
 
@@ -947,6 +978,7 @@ namespace NINA.ViewModel {
 
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]
     public enum SkyAtlasOrderByDirectionEnum {
+
         [Description("LblDescending")]
         DESC,
 

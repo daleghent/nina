@@ -21,14 +21,17 @@ using NINA.Utility.Notification;
 using NINA.Profile;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Immutable;
 
 namespace NINA.Model.MyTelescope {
 
     internal class AscomTelescope : BaseINPC, ITelescope, IDisposable {
         private static readonly TimeSpan MERIDIAN_FLIP_SLEW_RETRY_WAIT = TimeSpan.FromMinutes(1);
         private static readonly int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 10;
+        private static double TRACKING_RATE_EPSILON = 0.000001;
 
         public AscomTelescope(string telescopeId, string name, IProfileService profileService) {
             this.profileService = profileService;
@@ -267,7 +270,7 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        public bool CanSetTracking {
+        public bool CanSetTrackingRate {
             get {
                 if (Connected) {
                     return _telescope.CanSetTracking;
@@ -593,38 +596,12 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        public ITrackingRates TrackingRates {
-            get {
-                if (Connected) {
-                    return _telescope.TrackingRates;
-                } else {
-                    return null;
-                }
-            }
-        }
-
         public bool IsPulseGuiding {
             get {
                 if (Connected && CanPulseGuide) {
                     return _telescope.IsPulseGuiding;
                 } else {
                     return false;
-                }
-            }
-        }
-
-        public bool Tracking {
-            get {
-                if (Connected) {
-                    return _telescope.Tracking;
-                } else {
-                    return false;
-                }
-            }
-            set {
-                if (Connected && CanSetTracking) {
-                    _telescope.Tracking = value;
-                    RaisePropertyChanged();
                 }
             }
         }
@@ -668,26 +645,6 @@ namespace NINA.Model.MyTelescope {
                 } catch (PropertyNotImplementedException ex) {
                     Logger.Warning(ex.Message);
                 } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
-                }
-            }
-        }
-
-        public DriveRates TrackingRate {
-            get {
-                if (Connected) {
-                    return _telescope.TrackingRate;
-                } else {
-                    return DriveRates.driveSidereal;
-                }
-            }
-            set {
-                try {
-                    if (Connected) {
-                        _telescope.TrackingRate = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
                     Logger.Warning(ex.Message);
                 }
             }
@@ -1012,8 +969,8 @@ namespace NINA.Model.MyTelescope {
         public async Task<bool> MeridianFlip(Coordinates targetCoordinates) {
             var success = false;
             try {
-                if (!Tracking) {
-                    Tracking = true;
+                if (!TrackingEnabled) {
+                    TrackingEnabled = true;
                 }
 
                 targetCoordinates = targetCoordinates.Transform(EquatorialSystem);
@@ -1134,12 +1091,32 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
+        public bool CanSetTrackingEnabled {
+            get {
+                return Connected && _telescope.CanSetTracking;
+            }
+        }
+
+        public bool TrackingEnabled {
+            get {
+                return Connected && _telescope.Tracking;
+            }
+            set {
+                if (Connected && CanSetTrackingEnabled) {
+                    if (_telescope.Tracking != value) {
+                        _telescope.Tracking = value;
+                        RaisePropertyChanged();
+                        RaisePropertyChanged(nameof(TrackingMode));
+                        RaisePropertyChanged(nameof(TrackingRate));
+                    }
+                }
+            }
+        }
+
         public bool SlewToCoordinates(Coordinates coordinates) {
             if (Connected && CanSlew && !AtPark) {
                 try {
-                    if (!Tracking) {
-                        Tracking = true;
-                    }
+                    TrackingEnabled = true;
                     TargetCoordinates = coordinates.Transform(EquatorialSystem);
                     _telescope.SlewToCoordinates(TargetCoordinates.RA, TargetCoordinates.Dec);
                     return true;
@@ -1167,7 +1144,7 @@ namespace NINA.Model.MyTelescope {
         public bool Sync(Coordinates coordinates) {
             bool success = false;
             if (Connected && CanSync) {
-                if (Tracking) {
+                if (TrackingEnabled) {
                     try {
                         coordinates = coordinates.Transform(EquatorialSystem);
                         _telescope.SyncToCoordinates(coordinates.RA, coordinates.Dec);
@@ -1322,6 +1299,7 @@ namespace NINA.Model.MyTelescope {
                         EquatorialSystem = DetermineEquatorialSystem();
                         SiteLongitude = SiteLongitude;
                         SiteLatitude = SiteLatitude;
+                        trackingModes = GetTrackingModes();
                         RaiseAllPropertiesChanged();
                     }
                 } catch (ASCOM.DriverAccessCOMException ex) {
@@ -1363,6 +1341,123 @@ namespace NINA.Model.MyTelescope {
             }
 
             return epoch;
+        }
+
+        private ImmutableList<TrackingMode> GetTrackingModes() {
+            var trackingRateEnum = _telescope.TrackingRates.GetEnumerator();
+            var trackingModes = ImmutableList.CreateBuilder<TrackingMode>();
+            trackingModes.Add(TrackingMode.Sidereal);
+            while (!trackingRateEnum.MoveNext()) {
+                var trackingRate = (DriveRates)trackingRateEnum.Current;
+                switch (trackingRate) {
+                    case DriveRates.driveKing:
+                        trackingModes.Add(TrackingMode.King);
+                        break;
+                    case DriveRates.driveLunar:
+                        trackingModes.Add(TrackingMode.Lunar);
+                        break;
+                    case DriveRates.driveSolar:
+                        trackingModes.Add(TrackingMode.Solar);
+                        break;
+                }
+            }
+
+            if (_telescope.CanSetRightAscensionRate && _telescope.CanSetDeclinationRate) {
+                trackingModes.Add(TrackingMode.Custom);
+            }
+            trackingModes.Add(TrackingMode.Stopped);
+            return trackingModes.ToImmutable();
+        }
+
+        private ImmutableList<TrackingMode> trackingModes = ImmutableList.Create<TrackingMode>();
+        public IList<TrackingMode> TrackingModes {
+            get {
+                return trackingModes;
+            }
+        }
+
+        public TrackingRate TrackingRate {
+            get {
+                if (!Connected || !_telescope.Tracking) {
+                    return new TrackingRate() { TrackingMode = TrackingMode.Stopped };
+                } else if (!_telescope.CanSetTracking) {
+                    return new TrackingRate() { TrackingMode = TrackingMode.Sidereal };
+                }
+
+                var ascomTrackingRate = _telescope.TrackingRate;
+                if (ascomTrackingRate == DriveRates.driveSidereal && (
+                    Math.Abs(_telescope.DeclinationRate) >= TRACKING_RATE_EPSILON) || (Math.Abs(_telescope.RightAscensionRate) >= TRACKING_RATE_EPSILON)) {
+                    return new TrackingRate() {
+                        TrackingMode = TrackingMode.Custom,
+                        CustomRightAscensionRate = _telescope.RightAscensionRate,
+                        CustomDeclinationRate = _telescope.DeclinationRate
+                    };
+                }
+                var trackingMode = TrackingMode.Sidereal;
+                switch (ascomTrackingRate) {
+                    case DriveRates.driveKing:
+                        trackingMode = TrackingMode.King;
+                        break;
+                    case DriveRates.driveLunar:
+                        trackingMode = TrackingMode.Lunar;
+                        break;
+                    case DriveRates.driveSolar:
+                        trackingMode = TrackingMode.Solar;
+                        break;
+                }
+                return new TrackingRate() { TrackingMode = trackingMode };
+            }
+        }
+
+        public TrackingMode TrackingMode {
+            get {
+                return TrackingRate.TrackingMode;
+            }
+            set {
+                if (value == TrackingMode.Custom) {
+                    throw new ArgumentException("TrackingMode cannot be set to Custom. Use SetCustomTrackingRate");
+                }
+
+                if (Connected && _telescope.CanSetTracking) {
+                    // Set the mode regardless of whether it is the same as what is currently set
+                    // Some ASCOM drivers incorrectly report custom rates as Sidereal, and this can help force set the tracking mode to the desired value
+                    var currentTrackingMode = TrackingRate.TrackingMode;
+                    switch (value) {
+                        case TrackingMode.Sidereal:
+                            _telescope.TrackingRate = DriveRates.driveSidereal;
+                            break;
+                        case TrackingMode.Lunar:
+                            _telescope.TrackingRate = DriveRates.driveLunar;
+                            break;
+                        case TrackingMode.Solar:
+                            _telescope.TrackingRate = DriveRates.driveSolar;
+                            break;
+                        case TrackingMode.King:
+                            _telescope.TrackingRate = DriveRates.driveKing;
+                            break;
+                    }
+                    _telescope.Tracking = (value != TrackingMode.Stopped);
+                    if (currentTrackingMode != value) {
+                        RaisePropertyChanged();
+                        RaisePropertyChanged(nameof(TrackingRate));
+                        RaisePropertyChanged(nameof(TrackingEnabled));
+                    }
+                }
+            }
+        }
+
+        public void SetCustomTrackingRate(double rightAscensionRate, double declinationRate) {
+            if (!this.TrackingModes.Contains(TrackingMode.Custom) || !this.CanSetTrackingRate) {
+                throw new NotSupportedException("Custom tracking rate not supported");
+            }
+
+            this._telescope.TrackingRate = DriveRates.driveSidereal;
+            this._telescope.Tracking = true;
+            this._telescope.RightAscensionRate = rightAscensionRate;
+            this._telescope.DeclinationRate = declinationRate;
+            RaisePropertyChanged(nameof(TrackingMode));
+            RaisePropertyChanged(nameof(TrackingRate));
+            RaisePropertyChanged(nameof(TrackingEnabled));
         }
     }
 }

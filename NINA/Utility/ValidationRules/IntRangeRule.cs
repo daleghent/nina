@@ -19,11 +19,10 @@ using System.Windows.Controls;
 
 namespace NINA.Utility.ValidationRules {
 
-    public class IntRangeRule : ValidationRule {
+    public abstract class IntRangeRuleBase : ValidationRule {
         public IntRangeChecker ValidRange { get; set; }
 
-        public override ValidationResult Validate(object value,
-                                                   CultureInfo cultureInfo) {
+        public override ValidationResult Validate(object value, CultureInfo cultureInfo) {
             int parameter = 0;
 
             try {
@@ -35,13 +34,29 @@ namespace NINA.Utility.ValidationRules {
                                              + e.Message);
             }
 
-            if (((parameter < ValidRange.Minimum) || (parameter > ValidRange.Maximum)) && parameter != -1) {
+            if (((parameter < ValidRange.Minimum) || (parameter > ValidRange.Maximum)) && !AllowDefaultValue(parameter)) {
                 return new ValidationResult(false,
                     "Please enter value in the range: "
                     + ValidRange.Minimum + " - " + ValidRange.Maximum + ".");
             }
 
             return new ValidationResult(true, null);
+        }
+
+        protected abstract bool AllowDefaultValue(int parameter);
+    }
+
+    public class IntRangeRule : IntRangeRuleBase {
+
+        protected override bool AllowDefaultValue(int paramater) {
+            return false;
+        }
+    }
+
+    public class IntRangeRuleWithDefault : IntRangeRuleBase {
+
+        protected override bool AllowDefaultValue(int parameter) {
+            return parameter == -1;
         }
     }
 

@@ -20,9 +20,11 @@ using System.Runtime.Serialization;
 using NINA.Model.MyFilterWheel;
 
 namespace NINA.Profile {
+
     [Serializable]
     [DataContract]
     internal class FlatDeviceSettings : Settings, IFlatDeviceSettings {
+
         public FlatDeviceSettings() {
             FilterSettings = new Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue>();
         }
@@ -76,6 +78,18 @@ namespace NINA.Profile {
             set {
                 if (_portName == value) return;
                 _portName = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool openAtSequenceStart;
+
+        [DataMember]
+        public bool OpenAtSequenceStart {
+            get => openAtSequenceStart;
+            set {
+                if (openAtSequenceStart == value) return;
+                openAtSequenceStart = value;
                 RaisePropertyChanged();
             }
         }
@@ -229,6 +243,7 @@ namespace NINA.Profile {
     [Serializable]
     [DataContract]
     public class FlatDeviceFilterSettingsValue {
+
         [DataMember]
         public double Brightness { get; set; }
 

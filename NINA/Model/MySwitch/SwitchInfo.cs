@@ -14,6 +14,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,5 +23,6 @@ using System.Threading.Tasks;
 namespace NINA.Model.MySwitch {
 
     public class SwitchInfo : DeviceInfo {
+        public ReadOnlyCollection<IWritableSwitch> WritableSwitches { get; set; }
     }
 }

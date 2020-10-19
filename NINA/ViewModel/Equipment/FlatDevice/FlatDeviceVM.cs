@@ -353,7 +353,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
         }
 
         public FlatDeviceInfo GetDeviceInfo() {
-            return flatDeviceInfo;
+            return FlatDeviceInfo;
         }
 
         private void RefreshFlatDeviceList(object obj) {

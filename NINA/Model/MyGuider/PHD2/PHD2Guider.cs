@@ -324,7 +324,7 @@ namespace NINA.Model.MyGuider.PHD2 {
             });
         }
 
-        public async Task<bool> StartGuiding(CancellationToken ct) {
+        public async Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
             var autoRetry = profileService.ActiveProfile.GuiderSettings.AutoRetryStartGuiding;
             var retryAfterSeconds = profileService.ActiveProfile.GuiderSettings.AutoRetryStartGuidingTimeoutSeconds * 1000;
 
@@ -346,7 +346,7 @@ namespace NINA.Model.MyGuider.PHD2 {
                             Time = profileService.ActiveProfile.GuiderSettings.SettleTime,
                             Timeout = profileService.ActiveProfile.GuiderSettings.SettleTimeout
                         },
-                        Recalibrate = true
+                        Recalibrate = forceCalibration
                     }
                 };
 
@@ -411,6 +411,26 @@ namespace NINA.Model.MyGuider.PHD2 {
                 Logger.Error(ee);
                 return false;
             }
+        }
+
+        public bool CanClearCalibration {
+            get => true;
+        }
+
+        public async Task<bool> ClearCalibration(CancellationToken ct) {
+            if (Connected) {
+                var clearMessage = new Phd2ClearCalibration() {
+                    Parameters = new string[] { "Both" }
+                };
+                var clearGuidance = await SendMessage(clearMessage, 10000);
+
+                if (clearGuidance == null || clearGuidance.error != null) {
+                    return false;
+                }
+
+                await Task.Delay(100, ct); // give time for PHD2 to clear the guidance
+            }
+            return true;
         }
 
         private async Task<PhdMethodResponse> SendMessage(Phd2Method msg, int receiveTimeout = 0) {

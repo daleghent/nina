@@ -13,7 +13,7 @@ using System.Windows.Input;
 
 namespace NINA.ViewModel {
 
-    internal interface IAutoFocusVM : IDockableVM {
+    public interface IAutoFocusVM : IDockableVM, IDisposable {
         double AverageContrast { get; }
         ICommand CancelAutoFocusCommand { get; }
         double ContrastStdev { get; }

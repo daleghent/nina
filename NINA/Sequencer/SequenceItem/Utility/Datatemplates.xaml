@@ -1,0 +1,289 @@
+﻿<!--
+    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+
+    This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.-->
+<ResourceDictionary
+    x:Class="NINA.Sequencer.SequenceItem.Utility.Datatemplates"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:enum="clr-namespace:NINA.Utility.Enum"
+    xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.Utility"
+    xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
+    xmlns:s="clr-namespace:System;assembly=mscorlib"
+    xmlns:view="clr-namespace:NINA.View.Sequencer">
+    <DataTemplate DataType="{x:Type local:Annotation}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <TextBox Text="{Binding Text, Mode=TwoWay}" />
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:MessageBox}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMessage}" />
+                    <TextBox
+                        Grid.Column="1"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Text, Mode=TwoWay}" />
+                </Grid>
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:WaitForTimeSpan}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDelay}" />
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        TextAlignment="Right">
+                        <TextBox.Text>
+                            <Binding Mode="TwoWay" Path="Time">
+                                <Binding.ValidationRules>
+                                    <rules:GreaterThanZeroRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock VerticalAlignment="Center" Text="s" />
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:WaitForTime}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSource}" />
+
+                    <ComboBox
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        DisplayMemberPath="Name"
+                        ItemsSource="{Binding DateTimeProviders}"
+                        SelectedItem="{Binding SelectedProvider}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblTime}" />
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Right">
+                        <TextBox.Text>
+                            <Binding Path="Hours">
+                                <Binding.ValidationRules>
+                                    <rules:IntRangeRule>
+                                        <rules:IntRangeRule.ValidRange>
+                                            <rules:IntRangeChecker Maximum="23" Minimum="0" />
+                                        </rules:IntRangeRule.ValidRange>
+                                    </rules:IntRangeRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock VerticalAlignment="Center" Text=":" />
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Right">
+                        <TextBox.Text>
+                            <Binding Path="Minutes">
+                                <Binding.ValidationRules>
+                                    <rules:IntRangeRule>
+                                        <rules:IntRangeRule.ValidRange>
+                                            <rules:IntRangeChecker Maximum="59" Minimum="0" />
+                                        </rules:IntRangeRule.ValidRange>
+                                    </rules:IntRangeRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock VerticalAlignment="Center" Text=":" />
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Right">
+                        <TextBox.Text>
+                            <Binding Path="Seconds">
+                                <Binding.ValidationRules>
+                                    <rules:IntRangeRule>
+                                        <rules:IntRangeRule.ValidRange>
+                                            <rules:IntRangeChecker Maximum="59" Minimum="0" />
+                                        </rules:IntRangeRule.ValidRange>
+                                    </rules:IntRangeRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:ExternalScript}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblScript}" />
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Script}"
+                        TextAlignment="Right" />
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:WaitForAltitude}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAltitude}" />
+                        <ComboBox
+                            Margin="5,0,0,0"
+                            SelectedValue="{Binding AboveOrBelow}"
+                            SelectedValuePath="Content">
+                            <ComboBoxItem>
+                                <s:String>&gt;=</s:String>
+                            </ComboBoxItem>
+                            <ComboBoxItem>
+                                <s:String>&lt;=</s:String>
+                            </ComboBoxItem>
+                        </ComboBox>
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            TextAlignment="Right">
+                            <TextBox.Text>
+                                <Binding Path="Altitude" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:GreaterThanZeroRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock VerticalAlignment="Center">°</TextBlock>
+                    </StackPanel>
+                    <StackPanel
+                        DataContext="{Binding Coordinates}"
+                        Orientation="Horizontal"
+                        Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type view:SequenceBlockView}}, Path=DataContext.HasDsoParent, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                        <TextBlock Margin="5,0,5,0" VerticalAlignment="Center">|</TextBlock>
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblRA}" />
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            TextAlignment="Right">
+                            <TextBox.Text>
+                                <Binding Path="RAHours" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:HoursRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock VerticalAlignment="Center">h</TextBlock>
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            TextAlignment="Right">
+                            <TextBox.Text>
+                                <Binding Path="RAMinutes" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:MinutesRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock VerticalAlignment="Center">m</TextBlock>
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            TextAlignment="Right">
+                            <TextBox.Text>
+                                <Binding Path="RASeconds" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:SecondsRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock VerticalAlignment="Center">s</TextBlock>
+                        <TextBlock
+                            Margin="10,0,10,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Text="|" />
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDec}" />
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            TextAlignment="Right">
+                            <TextBox.Text>
+                                <MultiBinding Converter="{StaticResource DecDegreeConverter}" UpdateSourceTrigger="LostFocus">
+                                    <Binding Path="NegativeDec" />
+                                    <Binding Path="DecDegrees">
+                                        <Binding.ValidationRules>
+                                            <rules:DegreesRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </MultiBinding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock VerticalAlignment="Center">d</TextBlock>
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            TextAlignment="Right">
+                            <TextBox.Text>
+                                <Binding Path="DecMinutes" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:MinutesRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock VerticalAlignment="Center">m</TextBlock>
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            TextAlignment="Right">
+                            <TextBox.Text>
+                                <Binding Path="DecSeconds" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:SecondsRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock VerticalAlignment="Center">s</TextBlock>
+                    </StackPanel>
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+</ResourceDictionary>

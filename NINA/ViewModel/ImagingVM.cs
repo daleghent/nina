@@ -277,8 +277,8 @@ namespace NINA.ViewModel {
             }
         }
 
-        public Task<IExposureData> CaptureImage(CaptureSequence sequence, CancellationToken token, IProgress<ApplicationStatus> progress) {
-            return CaptureImage(sequence, new PrepareImageParameters(), token, string.Empty, true);
+        public Task<IExposureData> CaptureImage(CaptureSequence sequence, CancellationToken token, IProgress<ApplicationStatus> progress, string targetName = "") {
+            return CaptureImage(sequence, new PrepareImageParameters(), token, targetName, true);
         }
 
         public void DestroyImage() {

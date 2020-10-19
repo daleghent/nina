@@ -129,11 +129,11 @@
                                         Path="MySelectedGain"
                                         UpdateSourceTrigger="PropertyChanged">
                                         <Binding.ValidationRules>
-                                            <rules:IntRangeRule>
-                                                <rules:IntRangeRule.ValidRange>
+                                            <rules:IntRangeRuleWithDefault>
+                                                <rules:IntRangeRuleWithDefault.ValidRange>
                                                     <rules:IntRangeChecker Maximum="{Binding Source={StaticResource ControlProxy}, Path=Data.MyMaxGain}" Minimum="{Binding Source={StaticResource ControlProxy}, Path=Data.MyMinGain}" />
-                                                </rules:IntRangeRule.ValidRange>
-                                            </rules:IntRangeRule>
+                                                </rules:IntRangeRuleWithDefault.ValidRange>
+                                            </rules:IntRangeRuleWithDefault>
                                         </Binding.ValidationRules>
                                     </Binding>
                                     <Binding

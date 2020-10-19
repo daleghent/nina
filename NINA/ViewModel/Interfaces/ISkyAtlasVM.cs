@@ -45,7 +45,7 @@ namespace NINA.ViewModel.Interfaces {
         double? SelectedSizeFrom { get; set; }
         double? SelectedSizeThrough { get; set; }
         ICommand SetFramingAssistantCoordinatesCommand { get; }
-        ICommand SetSequenceCoordinatesCommand { get; }
+        ICommand SetSequencerTargetCommand { get; }
         AsyncObservableCollection<KeyValuePair<string, string>> SizesFrom { get; set; }
         AsyncObservableCollection<KeyValuePair<string, string>> SizesThrough { get; set; }
         IAsyncCommand SlewToCoordinatesCommand { get; }
