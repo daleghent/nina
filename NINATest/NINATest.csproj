@@ -278,6 +278,7 @@
     <Compile Include="Sequencer\Conditions\SafetyMonitorConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\SequenceConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\TimeConditionTest.cs" />
+    <Compile Include="Sequencer\Conditions\TimeSpanConditionTest.cs" />
     <Compile Include="Sequencer\Container\ExecutionStrategy\ParallelStrategyTest.cs" />
     <Compile Include="Sequencer\Container\ExecutionStrategy\SequentialStrategyTest.cs" />
     <Compile Include="Sequencer\Container\SequenceContainerTest.cs" />

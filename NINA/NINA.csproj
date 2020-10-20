@@ -528,6 +528,7 @@
     <Compile Include="Sequencer\Conditions\SafetyMonitorCondition.cs" />
     <Compile Include="Sequencer\Conditions\SequenceCondition.cs" />
     <Compile Include="Sequencer\Conditions\TimeCondition.cs" />
+    <Compile Include="Sequencer\Conditions\TimeSpanCondition.cs" />
     <Compile Include="Sequencer\Container\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>

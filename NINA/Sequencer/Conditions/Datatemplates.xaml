@@ -37,6 +37,22 @@
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
+            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type local:TimeSpanCondition}">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblRemaining}" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{Binding RemainingTime, StringFormat={}{0:hh}:{0:mm}:{0:ss}}" />
+                        </StackPanel>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
             <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type local:TimeCondition}">
                 <Setter Property="Content">
                     <Setter.Value>
@@ -87,6 +103,80 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+
+    <DataTemplate DataType="{x:Type local:TimeSpanCondition}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblTimeSpan}" />
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Right">
+                        <TextBox.Text>
+                            <Binding Path="Hours">
+                                <Binding.ValidationRules>
+                                    <rules:IntRangeRule>
+                                        <rules:IntRangeRule.ValidRange>
+                                            <rules:IntRangeChecker Maximum="23" Minimum="0" />
+                                        </rules:IntRangeRule.ValidRange>
+                                    </rules:IntRangeRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock VerticalAlignment="Center" Text="h" />
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Right">
+                        <TextBox.Text>
+                            <Binding Path="Minutes">
+                                <Binding.ValidationRules>
+                                    <rules:IntRangeRule>
+                                        <rules:IntRangeRule.ValidRange>
+                                            <rules:IntRangeChecker Maximum="59" Minimum="0" />
+                                        </rules:IntRangeRule.ValidRange>
+                                    </rules:IntRangeRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock VerticalAlignment="Center" Text="m" />
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Right">
+                        <TextBox.Text>
+                            <Binding Path="Seconds">
+                                <Binding.ValidationRules>
+                                    <rules:IntRangeRule>
+                                        <rules:IntRangeRule.ValidRange>
+                                            <rules:IntRangeChecker Maximum="59" Minimum="0" />
+                                        </rules:IntRangeRule.ValidRange>
+                                    </rules:IntRangeRule>
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock VerticalAlignment="Center" Text="s" />
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+            <view:SequenceBlockView.SequenceItemProgressContent>
+                <ContentControl Style="{StaticResource ConditionsProgress}" />
+            </view:SequenceBlockView.SequenceItemProgressContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:TimeCondition}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>

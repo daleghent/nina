@@ -368,6 +368,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loop instruction set for a given duration. When the duration is over, the remaining instructions inside the set will be skipped..
+        /// </summary>
+        internal static string Lbl_SequenceCondition_TimeSpanCondition_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_TimeSpanCondition_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop until Time Span.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_TimeSpanCondition_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_TimeSpanCondition_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a loop condition to the instruction set.
         ///An instruction set will be executed and repeated when one or more conditions are added to a container as long as these loop conditions are truthy.
         ///Once one of the loop conditions are not truthy anymore, the execution of the remaining instructions inside the set will be skipped.
@@ -12366,6 +12384,15 @@ namespace NINA.Locale {
         internal static string LblTimeoutToSetSwitchValue {
             get {
                 return ResourceManager.GetString("LblTimeoutToSetSwitchValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Time Span.
+        /// </summary>
+        internal static string LblTimeSpan {
+            get {
+                return ResourceManager.GetString("LblTimeSpan", resourceCulture);
             }
         }
         
