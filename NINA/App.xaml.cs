@@ -26,7 +26,12 @@ namespace NINA {
     public partial class App : Application {
 
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
-            Logger.Error(e.Exception);
+            if (e.Exception.InnerException != null) {
+                var message = $"{e.Exception.Message}{Environment.NewLine}{e.Exception.StackTrace}{Environment.NewLine}Inner Exception: {Environment.NewLine}{e.Exception.InnerException}{e.Exception.StackTrace}";
+                Logger.Error(message);
+            } else {
+                Logger.Error(e.Exception);
+            }
 
             if (Application.Current != null) {
                 var result = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblApplicationInBreakMode"], Locale.Loc.Instance["LblUnhandledException"], MessageBoxButton.YesNo, MessageBoxResult.No);
