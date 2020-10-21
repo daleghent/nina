@@ -377,7 +377,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loop until Time Span.
+        ///   Looks up a localized string similar to Loop for Time Span.
         /// </summary>
         internal static string Lbl_SequenceCondition_TimeSpanCondition_Name {
             get {

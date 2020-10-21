@@ -4756,6 +4756,6 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Loop instruction set for a given duration. When the duration is over, the remaining instructions inside the set will be skipped.</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
-    <value>Loop until Time Span</value>
+    <value>Loop for Time Span</value>
   </data>
 </root>
