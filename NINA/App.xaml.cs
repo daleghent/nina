@@ -19,7 +19,6 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace NINA {
-
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
