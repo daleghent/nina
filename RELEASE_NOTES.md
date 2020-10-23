@@ -3,9 +3,9 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
-### <span style="color:red;">Nightly builds are preview builds and contain the ongoing development effort for new features. These builds progress quickly, can be unstable (especially in early stages) and running on outdated nightly builds is strongly discouraged!</span>
+### <span style="color:red;">Nightly builds are preview builds and contain the ongoing development effort for new features. These builds progress quickly, can be unstable (especially in early stages) and running on outdated nightly builds is strongly discouraged!</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span>
 
-# Version 1.11
+# Version 1.11 - Preview
 
 ## Complete Sequencer Rework
 
@@ -57,9 +57,6 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The integrated filter wheels for Atik cameras like the Atik One 9.0 are now natively supported
 - This allows usage of native camera drivers for Atik cameras with integrated filter wheels
 - The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver
-
-#### Expanded native camera support
-- **Canon:** EDSDK updated to 13.12.31, adding support for the EOS R5 and EOS R6
 
 ## Application Improvements
 ### General
