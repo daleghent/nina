@@ -72,14 +72,13 @@ namespace NINA.ViewModel.Equipment.Focuser {
         }
 
         private void ToggleTempComp(object obj) {
-            if (FocuserInfo.Connected) {
-                Focuser.TempComp = (bool)obj;
-            }
+            ToggleTempComp((bool)obj);
         }
 
         public void ToggleTempComp(bool tempComp) {
             if (FocuserInfo.Connected) {
                 Focuser.TempComp = tempComp;
+                FocuserInfo.TempComp = tempComp;
             }
         }
 
@@ -111,14 +110,13 @@ namespace NINA.ViewModel.Equipment.Focuser {
             var pos = -1;
 
             await Task.Run(async () => {
+                var tempComp = false;
+                if (Focuser.TempCompAvailable && Focuser.TempComp) {
+                    tempComp = true;
+                    ToggleTempComp(false);
+                }
                 try {
                     using (ct.Register(() => HaltFocuser())) {
-                        var tempComp = false;
-                        if (Focuser.TempCompAvailable && Focuser.TempComp) {
-                            tempComp = true;
-                            ToggleTempComp(false);
-                        }
-
                         Logger.Info($"Moving Focuser to position {position}");
                         progress.Report(new ApplicationStatus() { Status = string.Format(Loc.Instance["LblFocuserMoveToPosition"], position) });
 
@@ -130,7 +128,6 @@ namespace NINA.ViewModel.Equipment.Focuser {
 
                         FocuserInfo.Position = this.Position;
                         pos = this.Position;
-                        ToggleTempComp(tempComp);
                         BroadcastFocuserInfo();
 
                         //Wait for focuser to settle
@@ -142,6 +139,9 @@ namespace NINA.ViewModel.Equipment.Focuser {
                 } catch (OperationCanceledException) {
                     Logger.Info("Focuser move cancelled");
                 } finally {
+                    if (tempComp) {
+                        ToggleTempComp(tempComp);
+                    }
                     FocuserInfo.IsSettling = false;
                     FocuserInfo.IsMoving = false;
                     progress.Report(new ApplicationStatus() { Status = string.Empty });
