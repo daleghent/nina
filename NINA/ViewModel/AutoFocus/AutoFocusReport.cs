@@ -14,6 +14,7 @@
 
 using Accord;
 using Newtonsoft.Json;
+using NINA.Profile;
 using NINA.Utility.Enum;
 using OxyPlot;
 using OxyPlot.Series;
@@ -23,7 +24,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace NINA.ViewModel.AutoFocus {
+
     public class AutoFocusReport {
+
         [JsonProperty]
         public int Version { get; set; } = 2;
 
@@ -60,19 +63,21 @@ namespace NINA.ViewModel.AutoFocus {
         [JsonProperty]
         public Fittings Fittings { get; set; }
 
+        [JsonProperty]
+        public BacklashCompensation BacklashCompensation { get; set; }
+
         /// <summary>
         /// Generates a JSON report into %localappdata%\NINA\AutoFocus for the complete autofocus run containing all the measurements
         /// </summary>
         /// <param name="initialFocusPosition"></param>
         /// <param name="initialHFR"></param>
         public static AutoFocusReport GenerateReport(
+            IProfileService profileService,
             ICollection<ScatterErrorPoint> FocusPoints,
             double initialFocusPosition,
             double initialHFR,
             DataPoint focusPoint,
             AutoFocusPoint lastFocusPoint,
-            AFMethodEnum method,
-            AFCurveFittingEnum fitting,
             TrendlineFitting trendlineFitting,
             QuadraticFitting quadraticFitting,
             HyperbolicFitting hyperbolicFitting,
@@ -95,8 +100,8 @@ namespace NINA.ViewModel.AutoFocus {
                     Position = lastFocusPoint?.Focuspoint.X ?? double.NaN,
                     Value = lastFocusPoint?.Focuspoint.Y ?? double.NaN
                 },
-                Method = method.ToString(),
-                Fitting = method == AFMethodEnum.STARHFR ? fitting.ToString() : "GAUSSIAN",
+                Method = profileService.ActiveProfile.FocuserSettings.AutoFocusMethod.ToString(),
+                Fitting = profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR ? profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting.ToString() : "GAUSSIAN",
                 MeasurePoints = FocusPoints.Select(x => new FocusPoint() { Position = x.X, Value = x.Y, Error = x.ErrorY }),
                 Intersections = new Intersections() {
                     TrendLineIntersection = new FocusPoint() { Position = trendlineFitting.Intersection.X, Value = trendlineFitting.Intersection.Y },
@@ -110,6 +115,11 @@ namespace NINA.ViewModel.AutoFocus {
                     Quadratic = quadraticFitting.Expression,
                     LeftTrend = trendlineFitting.LeftExpression,
                     RightTrend = trendlineFitting.RightExpression
+                },
+                BacklashCompensation = new BacklashCompensation() {
+                    BacklashCompensationModel = profileService.ActiveProfile.FocuserSettings.BacklashCompensationModel.ToString(),
+                    BacklashIN = profileService.ActiveProfile.FocuserSettings.BacklashIn,
+                    BacklashOUT = profileService.ActiveProfile.FocuserSettings.BacklashOut,
                 }
             };
 
@@ -118,13 +128,22 @@ namespace NINA.ViewModel.AutoFocus {
     }
 
     public class Intersections {
+
+        [JsonProperty]
         public FocusPoint TrendLineIntersection { get; set; }
+
+        [JsonProperty]
         public FocusPoint HyperbolicMinimum { get; set; }
+
+        [JsonProperty]
         public FocusPoint QuadraticMinimum { get; set; }
+
+        [JsonProperty]
         public FocusPoint GaussianMaximum { get; set; }
     }
 
     public class Fittings {
+
         [JsonProperty]
         public string Quadratic { get; set; }
 
@@ -142,6 +161,7 @@ namespace NINA.ViewModel.AutoFocus {
     }
 
     public class FocusPoint {
+
         [JsonProperty]
         public double Position { get; set; }
 
@@ -150,5 +170,17 @@ namespace NINA.ViewModel.AutoFocus {
 
         [JsonProperty]
         public double Error { get; set; }
+    }
+
+    public class BacklashCompensation {
+
+        [JsonProperty]
+        public string BacklashCompensationModel { get; set; }
+
+        [JsonProperty]
+        public int BacklashIN { get; set; }
+
+        [JsonProperty]
+        public int BacklashOUT { get; set; }
     }
 }

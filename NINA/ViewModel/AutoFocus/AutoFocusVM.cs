@@ -776,17 +776,13 @@ namespace NINA.ViewModel {
         /// <param name="initialHFR"></param>
         private AutoFocusReport GenerateReport(double initialFocusPosition, double initialHFR, string filter) {
             try {
-                var method = profileService.ActiveProfile.FocuserSettings.AutoFocusMethod;
-                var fitting = profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting;
-
                 var report = AutoFocusReport.GenerateReport(
+                    profileService,
                     FocusPoints,
                     initialFocusPosition,
                     initialHFR,
                     FinalFocusPoint,
                     LastAutoFocusPoint,
-                    method,
-                    fitting,
                     TrendlineFitting,
                     QuadraticFitting,
                     HyperbolicFitting,
@@ -795,7 +791,7 @@ namespace NINA.ViewModel {
                     filter
                 );
 
-                String path = Path.Combine(ReportDirectory, DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss") + ".json");
+                string path = Path.Combine(ReportDirectory, DateTime.Now.ToString("yyyy-MM-dd--HH-mm-ss") + ".json");
                 File.WriteAllText(path, JsonConvert.SerializeObject(report));
                 ChartList.Add(new Chart(Path.GetFileName(path), path));
                 return report;
