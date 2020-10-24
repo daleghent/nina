@@ -326,7 +326,7 @@
                         Height="40"
                         Margin="5"
                         LoadingImageBrush="{StaticResource PrimaryBrush}"
-                        Visibility="{Binding ConnectAllDevicesCommand.Execution.IsNotCompleted, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=Collapsed}" />
+                        Visibility="{Binding ApplicationDeviceConnectionVM.ConnectAllDevicesCommand.Execution.IsNotCompleted, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=Collapsed}" />
                     <Button
                         Grid.Row="1"
                         Grid.Column="0"
