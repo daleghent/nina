@@ -49,6 +49,7 @@ using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -116,7 +117,10 @@ namespace NINA.Sequencer {
             };
 
             var catalog = new AggregateCatalog();
-            catalog.Catalogs.Add(new AssemblyCatalog(typeof(ISequenceEntity).Assembly));
+
+            var types = GetCoreSequencerTypes();
+            var coreCatalog = new TypeCatalog(types);
+            catalog.Catalogs.Add(coreCatalog);
 
             var extensionsFolder = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Plugins");
             if (Directory.Exists(extensionsFolder)) {
@@ -184,6 +188,26 @@ namespace NINA.Sequencer {
             ItemsView.SortDescriptions.Add(new SortDescription("Category", ListSortDirection.Ascending));
             ItemsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             ItemsView.Filter += new Predicate<object>(ApplyViewFilter);
+        }
+
+        public static IEnumerable<Type> GetCoreSequencerTypes() {
+            IEnumerable<Type> loadableTypes;
+            try {
+                loadableTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
+            } catch (ReflectionTypeLoadException e) {
+                loadableTypes = e.Types.Where(t => t != null);
+            }
+
+            List<Type> sequencerTypes = new List<Type>();
+            foreach (Type t in loadableTypes) {
+                try {
+                    if (t.IsClass && t.Namespace?.StartsWith("NINA.Sequencer") == true) {
+                        sequencerTypes.Add(t);
+                    }
+                } catch (Exception) {
+                }
+            }
+            return sequencerTypes;
         }
 
         private bool ApplyViewFilter(object obj) {
