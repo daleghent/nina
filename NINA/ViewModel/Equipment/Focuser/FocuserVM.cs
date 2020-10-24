@@ -107,7 +107,33 @@ namespace NINA.ViewModel.Equipment.Focuser {
         }
 
         public async Task<int> MoveFocuser(int position, CancellationToken ct) {
+            await ss.WaitAsync(ct);
+            try {
+                return await MoveFocuserInternal(position, ct);
+            } finally {
+                ss.Release();
+            }
+        }
+
+        public async Task<int> MoveFocuserRelative(int offset, CancellationToken ct) {
+            await ss.WaitAsync(ct);
+            try {
+                if (Focuser?.Connected != true) return -1;
+                var pos = Position + offset;
+                pos = await MoveFocuserInternal(pos, ct);
+                return pos;
+            } finally {
+                ss.Release();
+            }
+        }
+
+        private async Task<int> MoveFocuserInternal(int position, CancellationToken ct) {
             var pos = -1;
+
+            if (position < 0) {
+                Logger.Info($"Requested to move to a negative position {position}. Moving to 0 instead.");
+                position = 0;
+            }
 
             await Task.Run(async () => {
                 var tempComp = false;
@@ -147,13 +173,6 @@ namespace NINA.ViewModel.Equipment.Focuser {
                     progress.Report(new ApplicationStatus() { Status = string.Empty });
                 }
             }, ct);
-            return pos;
-        }
-
-        public async Task<int> MoveFocuserRelative(int offset, CancellationToken ct) {
-            if (Focuser?.Connected != true) return -1;
-            var pos = Position + offset;
-            pos = await MoveFocuser(pos, ct);
             return pos;
         }
 
