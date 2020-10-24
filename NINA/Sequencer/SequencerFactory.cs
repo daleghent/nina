@@ -120,7 +120,16 @@ namespace NINA.Sequencer {
 
             var extensionsFolder = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Plugins");
             if (Directory.Exists(extensionsFolder)) {
-                catalog.Catalogs.Add(new DirectoryCatalog(extensionsFolder));
+                foreach (var file in Directory.GetFiles(extensionsFolder, "*.dll")) {
+                    try {
+                        var plugin = new AssemblyCatalog(file);
+                        plugin.Parts.ToArray();
+
+                        catalog.Catalogs.Add(plugin);
+                    } catch (Exception ex) {
+                        Logger.Error($"Failed to load plugin {file}", ex);
+                    }
+                }
             }
 
             container = new CompositionContainer(catalog);
