@@ -4761,4 +4761,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
     <value>Flat Device connection lost!</value>
   </data>
+  <data name="LblNoSafetyMonitor" xml:space="preserve">
+    <value>No Safety Monitor</value>
+  </data>
 </root>

@@ -281,7 +281,6 @@
           <Directory Id="Sequencer" Name="Sequencer">
             <Directory Id="Sequencer_Examples" Name="Examples" />
           </Directory>
-          <Directory Id="Sequencer" Name="Sequencer" />
           <Directory Id="cs_CZ" Name="cs-CZ" />
         </Directory>
       </Directory>

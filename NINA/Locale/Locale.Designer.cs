@@ -8794,6 +8794,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Safety Monitor.
+        /// </summary>
+        internal static string LblNoSafetyMonitor {
+            get {
+                return ResourceManager.GetString("LblNoSafetyMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Switch.
         /// </summary>
         internal static string LblNoSwitch {
