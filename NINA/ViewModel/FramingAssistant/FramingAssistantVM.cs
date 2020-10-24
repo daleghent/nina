@@ -598,15 +598,18 @@ namespace NINA.ViewModel.FramingAssistant {
                 if (Rectangle != null && ImageParameter != null && rotation >= 0 && rotation <= 360) {
                     Rectangle.Rotation += (rotation - oldRotation) % 360;
                     if (Rectangle.Rotation < 0) { Rectangle.Rotation += 360; }
-                    var center = new Point(Rectangle.X + Rectangle.Width / 2d, Rectangle.Y + Rectangle.Height / 2d);
-                    var imageArcsecWidth = Astrometry.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
-                    var imageArcsecHeight = Astrometry.ArcminToArcsec(ImageParameter.FoVHeight) / ImageParameter.Image.Height;
-                    foreach (var rect in CameraRectangles) {
-                        var rectCenter = new Point(rect.X + Rectangle.X + rect.Width / 2d, rect.Y + Rectangle.Y + rect.Height / 2d);
 
-                        var deltaX = rectCenter.X - center.X;
-                        var deltaY = rectCenter.Y - center.Y;
-                        rect.Coordinates = Rectangle.Coordinates.Shift(deltaX, deltaY, rotation, imageArcsecWidth, imageArcsecHeight);
+                    if (!double.IsNaN(FocalLength)) {
+                        var center = new Point(Rectangle.X + Rectangle.Width / 2d, Rectangle.Y + Rectangle.Height / 2d);
+                        var imageArcsecWidth = Astrometry.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
+                        var imageArcsecHeight = Astrometry.ArcminToArcsec(ImageParameter.FoVHeight) / ImageParameter.Image.Height;
+                        foreach (var rect in CameraRectangles) {
+                            var rectCenter = new Point(rect.X + Rectangle.X + rect.Width / 2d, rect.Y + Rectangle.Y + rect.Height / 2d);
+
+                            var deltaX = rectCenter.X - center.X;
+                            var deltaY = rectCenter.Y - center.Y;
+                            rect.Coordinates = Rectangle.Coordinates.Shift(deltaX, deltaY, rotation, imageArcsecWidth, imageArcsecHeight);
+                        }
                     }
                 }
                 RaisePropertyChanged();
