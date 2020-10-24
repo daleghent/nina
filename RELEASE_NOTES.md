@@ -88,6 +88,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Added `$$ROTATEANGLE$$` file pattern
 - Added `$$STARCOUNT$$` file pattern
 
+## BugFixes
+- Weather information in equipment tab now shows correct wind direction.
+
 # Version 1.10 HF1
 
 ## Features

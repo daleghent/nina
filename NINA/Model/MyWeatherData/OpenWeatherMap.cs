@@ -198,10 +198,10 @@ namespace NINA.Model.MyWeatherData {
                 Logger.Warning("OWM: No API key has been set");
 
                 Connected = false;
-                OWMAPIKey = GetOWMAPIKey();
                 return Task.FromResult(false);
             }
 
+            OWMAPIKey = GetOWMAPIKey();
             Logger.Debug("OWM: Starting OWMUpdate task");
             OWMUpdateWorkerCts?.Dispose();
             OWMUpdateWorkerCts = new CancellationTokenSource();

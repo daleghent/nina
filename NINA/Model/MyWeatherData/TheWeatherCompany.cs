@@ -228,10 +228,10 @@ namespace NINA.Model.MyWeatherData {
                 Logger.Warning("TWC: No API key has been set");
 
                 Connected = false;
-                TWCAPIKey = GetTWCAPIKey();
                 return Task.FromResult(false);
             }
 
+            TWCAPIKey = GetTWCAPIKey();
             Logger.Debug("TWC: Starting TWCUpdate task");
             TWCUpdateWorkerCts?.Dispose();
             TWCUpdateWorkerCts = new CancellationTokenSource();
