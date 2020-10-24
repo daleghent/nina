@@ -190,6 +190,11 @@ namespace NINA.Sequencer {
             ItemsView.Filter += new Predicate<object>(ApplyViewFilter);
         }
 
+        /// <summary>
+        /// This returns a list of types in the NINA.Sequencer namespace to load the core plugins
+        /// Furthermore this safeguards against the ASCOM assembly that is not required to load when the platform is not installed
+        /// </summary>
+        /// <returns></returns>
         public static IEnumerable<Type> GetCoreSequencerTypes() {
             IEnumerable<Type> loadableTypes;
             try {
