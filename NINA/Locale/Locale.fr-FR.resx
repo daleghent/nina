@@ -1151,7 +1151,7 @@ si les traces d'étoiles ne sont pas alignées, c'est qu'il y a une erreur d'ali
     <value>Le dither est activé, mais l'autoguidage n'est pas connecté</value>
   </data>
   <data name="LblDitherPixels" xml:space="preserve">
-    <value>Dither Pixels</value>
+    <value>Décaler les pixels</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
     <value>Dither AD Seulement</value>
@@ -1163,7 +1163,7 @@ si les traces d'étoiles ne sont pas alignées, c'est qu'il y a une erreur d'ali
     <value>Impossible de se connecter au pilote ASCOM Dome:</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>Driver can follow</value>
+    <value>Le pilote peut suivre</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>Statut du cimier</value>
@@ -1193,7 +1193,7 @@ si les traces d'étoiles ne sont pas alignées, c'est qu'il y a une erreur d'ali
     <value>A la position Home</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>Driver following telescope</value>
+    <value>Le pilote suit le télescope</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>Pointage</value>
@@ -1229,7 +1229,7 @@ si les traces d'étoiles ne sont pas alignées, c'est qu'il y a une erreur d'ali
     <value>Connexion au dôme perdue.</value>
   </data>
   <data name="LblDomeDisconnect" xml:space="preserve">
-    <value>Disconnect dome?</value>
+    <value>Déconnecter le dôme ?</value>
   </data>
   <data name="LblDomeNotConnected" xml:space="preserve">
     <value>Dôme non connecté</value>
@@ -1466,7 +1466,7 @@ Lorsque ce déclencheur est désactivé, l'application ignorera simplement le d�
     <value>Ouvrir</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Ouvrir l'obturateur du tube pour les darks et dark flats</value>
+    <value>Ouvrir le couvercle pour les darks de flats dans l'assistant flats</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Ajuster</value>
@@ -1961,16 +1961,16 @@ HFR calculé: {2}</value>
     <value>Écart au Méridien</value>
   </data>
   <data name="LblPHD2Setup" xml:space="preserve">
-    <value>PHD2 Setup</value>
+    <value>Configuration PHD2</value>
   </data>
   <data name="LblMetaGuideSetup" xml:space="preserve">
-    <value>MetaGuide Setup</value>
+    <value>Configuration de MetaGuide</value>
   </data>
   <data name="LblMetaGuideIP" xml:space="preserve">
-    <value>MetaGuide IP</value>
+    <value>IP de MetaGuide</value>
   </data>
   <data name="LblMetaGuidePort" xml:space="preserve">
-    <value>MetaGuide Port</value>
+    <value>Port MetaGuide</value>
   </data>
   <data name="LblMin" xml:space="preserve">
     <value>Min</value>
@@ -2472,6 +2472,9 @@ HFR calculé: {2}</value>
   <data name="LblPosition" xml:space="preserve">
     <value>Position</value>
   </data>
+  <data name="LblClearGuidingCalibration" xml:space="preserve">
+    <value>Effacer l'étalonnage</value>
+  </data>
   <data name="LblPreferredPlanetarium" xml:space="preserve">
     <value>Logiciel Planétarium préféré</value>
   </data>
@@ -2488,7 +2491,7 @@ HFR calculé: {2}</value>
     <value>Filtre pour PLU: {0}</value>
   </data>
   <data name="LblPreSequenceChecklist" xml:space="preserve">
-    <value>Les problèmes potentiels suivants ont été détectés avec votre séquence:</value>
+    <value>Les problèmes potentiels suivants ont été trouvés avec la séquence :</value>
   </data>
   <data name="LblPreSequenceChecklistHeader" xml:space="preserve">
     <value>Liste de Contrôle Pré-Séquence</value>
@@ -2801,13 +2804,13 @@ Ce modèle sera utilisé au démarrage pour initialiser la séquence au lieu de 
     <value>Délai</value>
   </data>
   <data name="LblSettlePixelTolerance" xml:space="preserve">
-    <value>Settle Pixel Tolerance</value>
+    <value>Régler la tolérance de Pixel</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
     <value>Délai après déplacement</value>
   </data>
   <data name="LblSettleTimeout" xml:space="preserve">
-    <value>Settle Timeout</value>
+    <value>Délai d'expiration</value>
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Réessayer de lancer le guidage</value>
@@ -3036,7 +3039,7 @@ Ce modèle sera utilisé au démarrage pour initialiser la séquence au lieu de 
 Les valeurs doivent-elles être synchronisées?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
-    <value>Cible (J2000)</value>
+    <value>Cible</value>
   </data>
   <data name="LblTargetDec" xml:space="preserve">
     <value>Cible Dec</value>
@@ -3231,6 +3234,30 @@ Faites glisser le rectangle sur la partie du cadre que vous souhaitez sous-écha
   </data>
   <data name="LblTracking" xml:space="preserve">
     <value>Suivi</value>
+  </data>
+  <data name="LblTrackingRate" xml:space="preserve">
+    <value>Vitesse de suivi</value>
+  </data>
+  <data name="LblTrackingStopped" xml:space="preserve">
+    <value>Arrêté</value>
+  </data>
+  <data name="LblTrackingSidereal" xml:space="preserve">
+    <value>Sidéral</value>
+  </data>
+  <data name="LblTrackingSolar" xml:space="preserve">
+    <value>Solaire</value>
+  </data>
+  <data name="LblTrackingLunar" xml:space="preserve">
+    <value>Lunaire</value>
+  </data>
+  <data name="LblTrackingKing" xml:space="preserve">
+    <value>King</value>
+  </data>
+  <data name="LblTrackingCustom" xml:space="preserve">
+    <value>Personnalisé</value>
+  </data>
+  <data name="LblTrackingCustomRate" xml:space="preserve">
+    <value>Personnalisé ({0}, {1})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Transit Nord</value>
@@ -3793,70 +3820,70 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Assistant mode opération</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance (degrees)</value>
+    <value>Tolérance d'azimuth (degrés)</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
-    <value>The dome slews if the target azimuth is off by more than this amount</value>
+    <value>Le dôme pivote si l'azimut de la cible est décalé de plus de cette valeur</value>
   </data>
   <data name="LblDomeDirectDriver" xml:space="preserve">
-    <value>Use NINA Direct Following</value>
+    <value>Utiliser le suivi direct NINA</value>
   </data>
   <data name="LblDomeFindHome" xml:space="preserve">
-    <value>Find Home</value>
+    <value>Trouver le repos</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length (mm)</value>
+    <value>Longueur de l'axe GEM (mm)</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
-    <value>If Alt/Az, this should be 0. For an EQ mount, slew RA to +/- 90 degrees, and measure the lateral distance (in mm) from the axis to center of the telescope aperture</value>
+    <value>Si Alt/Az, ce devrait être 0. Pour une monture EQ, pivoter RA à +/- 90 degrés, et mesurer la distance latérale (en mm) de l'axe au centre de l'ouverture du télescope</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length (mm)</value>
+    <value>Longueur de l'axe latéral (mm)</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
-    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right when facing the celestial pole.</value>
+    <value>Dans une configuration côte-à-côte, c'est la distance (latéralement, en mm) de la selle au centre de l'OTA. Positif est vers la droite face au pôle céleste.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius (mm)</value>
+    <value>Rayon du dôme (mm)</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
-    <value>Measure from the center to the rim of the dome, along the base</value>
+    <value>Mesure du centre au bord du dôme, le long de la base</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W (mm)</value>
+    <value>Position du télescope E/O (mm)</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the right when facing the celestial pole.</value>
+    <value>Mesurer le décalage Est ou Ouest (en mm) du centre de la monture à partir du centre du dôme. Positif est à droite face au pôle céleste.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S (mm)</value>
+    <value>Position du télescope N/S (mm)</value>
   </data>
   <data name="LblCancelSequence" xml:space="preserve">
-    <value>Cancel Sequence</value>
+    <value>Annuler la séquence</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is towards the celestial pole.</value>
+    <value>Mesurer le décalage nord ou sud (en mm) du centre de la monture à partir du centre du dôme. Positif vers le pôle céleste.</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
-    <value>Pause Sequence</value>
+    <value>Suspendre la séquence</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down (mm)</value>
+    <value>Position du télescope +N/-S (mm)</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
-    <value>Measure the height difference (in mm) of the center of the mount axis relative to the base of the dome. For an Alt/Az mount, this is from the center of the Altitude axis, and for an EQ mount this is where the RA and DEC axes intersect. A positive number indicates the center of axis is higher than the base of the dome, and a negative number means it is lower.</value>
+    <value>Mesurez la différence de hauteur (en mm) du centre de l'axe de la monture par rapport à la base du dôme. Pour une monture Alt/Az, c'est à partir du centre de l'axe d'altitude, et pour une monture EQ, c'est l'intersection des axes RA et DEC. Un nombre positif indique que le centre de l'axe est plus haut que la base du dôme, et un nombre négatif signifie qu'il est plus bas.</value>
   </data>
   <data name="LblDomeSettings" xml:space="preserve">
-    <value>Dome Settings</value>
+    <value>Paramètres du dôme</value>
   </data>
   <data name="LblResumeSequence" xml:space="preserve">
-    <value>Resume Sequence</value>
+    <value>Reprendre la séquence</value>
   </data>
   <data name="LblDomeFollowing" xml:space="preserve">
-    <value>Dome follows telescope</value>
+    <value>Le dôme suit le télescope</value>
   </data>
   <data name="LblStartSequence" xml:space="preserve">
-    <value>Start Sequence</value>
+    <value>Démarrer la séquence</value>
   </data>
   <data name="LblSequenceContainsDarksAndLights" xml:space="preserve">
     <value>La caméra n'a pas d'obturateur mécanique, aucun panneau flat n'est connecté et la séquence contient des éléments DARK/BIAS mélangés avec LIGHT.</value>
@@ -3865,10 +3892,13 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>La caméra n'a pas d'obturateur mécanique, aucun panneau flat n'est connecté et la séquence contient des éléments DARK/BIAS. Assurez vous que la caméra est obturée.</value>
   </data>
   <data name="LblAutoFocusFilterSettings" xml:space="preserve">
-    <value>Auto Focus Filter Settings</value>
+    <value>Paramètres de mise au point automatique du filtre</value>
   </data>
   <data name="LblMeridianFlipIn" xml:space="preserve">
     <value>Retournement au méridien dans</value>
+  </data>
+  <data name="LblMeridianFlipCenterFailed" xml:space="preserve">
+    <value>Echec du centrage après le retournement au méridien</value>
   </data>
   <data name="LblDefaultGain" xml:space="preserve">
     <value>Gain par défaut</value>
@@ -3889,25 +3919,25 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Déplacement du focuser vers la position {0}</value>
   </data>
   <data name="LblCameraConnectedOnExit" xml:space="preserve">
-    <value>Camera still connected. Exit anyway?</value>
+    <value>Caméra toujours connectée. Quitter quand même ?</value>
   </data>
   <data name="LblDisconnectCamera" xml:space="preserve">
-    <value>Disconnect Camera?</value>
+    <value>Déconnecter la caméra?</value>
   </data>
   <data name="LblDisconnectFilterWheel" xml:space="preserve">
-    <value>Disconnect Filter Wheel?</value>
+    <value>Déconnecter la roue de filtre?</value>
   </data>
   <data name="LblDisconnectFocuser" xml:space="preserve">
-    <value>Disconnect Focuser?</value>
+    <value>Déconnecter le focuser?</value>
   </data>
   <data name="LblDisconnectRotator" xml:space="preserve">
-    <value>Disconnect Rotator?</value>
+    <value>Déconnecter le rotateur ?</value>
   </data>
   <data name="LblDisconnectTelescope" xml:space="preserve">
-    <value>Disconnect Telescope?</value>
+    <value>Déconnecter le télescope ?</value>
   </data>
   <data name="LblSideOfPier" xml:space="preserve">
-    <value>Side of Pier</value>
+    <value>Côté du pied</value>
   </data>
   <data name="LblCameraTimeoutOption" xml:space="preserve">
     <value>Délai d'expiration de la caméra</value>
@@ -3916,108 +3946,813 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Le délai après le temps d'exposition pour que l'image soit considérée comme perdue. Lorsque l'appareil n'envoie pas d'image prête après le temps d'exposition + délai d'exposition, l'exposition sera annulée.</value>
   </data>
   <data name="LblCalibrationState" xml:space="preserve">
-    <value>Calibration State</value>
+    <value>État de la calibration</value>
   </data>
   <data name="LblFWHM" xml:space="preserve">
     <value>FWHM</value>
   </data>
   <data name="LblIntensity" xml:space="preserve">
-    <value>Intensity</value>
+    <value>Intensité</value>
   </data>
   <data name="LblMinIntensity" xml:space="preserve">
-    <value>Minimum Intensity</value>
+    <value>Intensité minimale</value>
   </data>
   <data name="LblMinIntensityTooltip" xml:space="preserve">
-    <value>Guide star intensity is measured on a scale of 0-255. If intensity drops below this amount, then NINA will pause guiding until it returns. This may indicate the presence of clouds.</value>
+    <value>L'intensité de l'étoile guide est mesurée sur une échelle de 0 à 255. Si l'intensité tombe en dessous de ce niveau, NINA mettra en pause le guidage jusqu'à son retour. Cela peut indiquer la présence de nuages.</value>
   </data>
   <data name="LblSeeing" xml:space="preserve">
     <value>Seeing</value>
   </data>
   <data name="LblMetaGuideConnectionFailed" xml:space="preserve">
-    <value>Failed to connect to MetaGuide</value>
+    <value>Impossible de se connecter à MetaGuide</value>
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuiding" xml:space="preserve">
-    <value>Guiding resumed</value>
+    <value>Le guidage a repris</value>
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
-    <value>Failed to resume guiding after star intensity recovered</value>
+    <value>Impossible de reprendre le guidage après la récupération de l'intensité de l'étoile</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
-    <value>Dome synchronization error. No longer following telescope. {0}</value>
+    <value>Erreur de synchronisation du dôme. Ne suit plus le télescope. {0}</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
-    <value>Close dome shutter at sequence end</value>
+    <value>Fermer l'obturateur du dôme à la fin de la séquence</value>
   </data>
   <data name="LblDomeEnableFollowingWarning" xml:space="preserve">
-    <value>Could not enable Dome/Telescope following</value>
+    <value>N'a pas pu activer le suivi de Dôme/Télescope</value>
   </data>
   <data name="LblParkDomeAtSequenceEnd" xml:space="preserve">
-    <value>Park dome at sequence end</value>
+    <value>Parque le dôme à la fin de la séquence</value>
   </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
-    <value>Find home before parking</value>
+    <value>Trouver la position de repos avant le parcage</value>
   </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
-    <value>If FindHome is available, then this can improve the reliability of parking to the correct location, when a precise location is required.</value>
+    <value>Si FindHome est disponible, cela peut améliorer la fiabilité du parcage au bon endroit, lorsqu'un emplacement précis est nécessaire.</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
-    <value>AF Sequence Timeout</value>
+    <value>Expiration séquence AF</value>
   </data>
   <data name="LblAutoFocusTimeoutTooltip" xml:space="preserve">
-    <value>Amount of time, in seconds, to wait for an auto focus during a sequence before cancelling to continue</value>
-  </data>
-  <data name="LblEast" xml:space="preserve">
-    <value>East</value>
+    <value>Temps, en secondes, pour attendre une mise au point automatique pendant une séquence avant d'annuler pour continuer</value>
   </data>
   <data name="LblMetaGuideLowIntensityStopGuiding" xml:space="preserve">
-    <value>Stopped guiding due to low star intensity. There may be clouds.</value>
+    <value>Guidage interrompu en raison de la faible intensité de l'étoile. Il peut y avoir des nuages.</value>
   </data>
   <data name="LblDomeSyncTimeout" xml:space="preserve">
-    <value>Synchronization Timeout</value>
+    <value>Délai de synchronisation dépassé</value>
   </data>
   <data name="LblDomeSyncTimeoutTooltip" xml:space="preserve">
-    <value>The maximum amount of time, in seconds, to wait for the Dome and Telescope to synchronize their positions</value>
+    <value>Le temps maximum, en secondes, pour attendre que le Dôme et le Télescope synchronisent leurs positions</value>
   </data>
   <data name="LblC2A" xml:space="preserve">
     <value>C2A</value>
   </data>
   <data name="LblCameraName" xml:space="preserve">
-    <value>Camera Name</value>
+    <value>Nom de la caméra</value>
   </data>
   <data name="LblRotatorAngleDescription" xml:space="preserve">
-    <value>Angle of the rotator</value>
+    <value>Angle du rotateur</value>
   </data>
   <data name="LblStarCount" xml:space="preserve">
-    <value>Star count</value>
+    <value>Nombre d'étoiles</value>
+  </data>
+  <data name="LblCameraNotConnected" xml:space="preserve">
+    <value>Caméra non connectée</value>
+  </data>
+  <data name="LblFilterWheelNotConnected" xml:space="preserve">
+    <value>Roue à filtres non connectée</value>
+  </data>
+  <data name="LblFocuserNotConnected" xml:space="preserve">
+    <value>Focuser non connecté</value>
+  </data>
+  <data name="LblGuiderNotConnected" xml:space="preserve">
+    <value>Guidage non connecté</value>
+  </data>
+  <data name="LblGuiderCannotClearCalibration" xml:space="preserve">
+    <value>Le guidage ne supporte pas la calibration</value>
+  </data>
+  <data name="LblIterations" xml:space="preserve">
+    <value>Itérations</value>
+  </data>
+  <data name="LblRotatorNotConnected" xml:space="preserve">
+    <value>Rotateur non connectée</value>
+  </data>
+  <data name="LblScript" xml:space="preserve">
+    <value>Script</value>
+  </data>
+  <data name="LblDelay" xml:space="preserve">
+    <value>Délai</value>
+  </data>
+  <data name="LblTargetJ2000" xml:space="preserve">
+    <value>Cible (J2000)</value>
+  </data>
+  <data name="LblExecutingItemsInParallel" xml:space="preserve">
+    <value>Exécution des éléments en parallèle</value>
+  </data>
+  <data name="LblEnterAnnotation" xml:space="preserve">
+    <value>Entrez l'annotation</value>
+  </data>
+  <data name="LblAfterIterations" xml:space="preserve">
+    <value>Après itérations</value>
+  </data>
+  <data name="LblFlatDeviceNotConnected" xml:space="preserve">
+    <value>Appareil à flats non connecté</value>
+  </data>
+  <data name="LblEnterMessage" xml:space="preserve">
+    <value>Entrez le message</value>
+  </data>
+  <data name="LblMessage" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="LblLoopUntil" xml:space="preserve">
+    <value>Boucler jusqu'à</value>
+  </data>
+  <data name="LblTriggers" xml:space="preserve">
+    <value>Déclencheurs</value>
   </data>
   <data name="LblMetaGuideVersionCheckFailed" xml:space="preserve">
-    <value>Update MetaGuide to at least {0}</value>
+    <value>Mettre à jour MetaGuide vers au moins {0}</value>
   </data>
   <data name="LblMetaGuideDitherSettleTime" xml:space="preserve">
-    <value>Dither settling time</value>
+    <value>Temps de stabilisation du dithering</value>
   </data>
   <data name="LblMetaGuideDitherSettleTimeTooltip" xml:space="preserve">
-    <value>Amount of time, in seconds, to wait for dithering to complete</value>
+    <value>Durée, en secondes, à attendre pour la fin du dithering</value>
   </data>
   <data name="LblMetaGuideLockWhenGuiding" xml:space="preserve">
-    <value>Lock star when guiding</value>
+    <value>Verrouiller l'étoile lors du guidage</value>
   </data>
   <data name="LblCoordinatesToFramingTooltip" xml:space="preserve">
-    <value>Send coordinates to the Framing Wizard</value>
+    <value>Envoyer les coordonnées à l'assistant de cadrage</value>
   </data>
   <data name="LblImportTargets" xml:space="preserve">
-    <value>Import Targets from external source</value>
+    <value>Importer des cibles depuis une source externe</value>
   </data>
   <data name="LblUnknownImportFormat" xml:space="preserve">
-    <value>Unknown format to import targets</value>
+    <value>Format inconnu des cibles importées</value>
   </data>
   <data name="LblUltraMode" xml:space="preserve">
-    <value>Ultra Mode</value>
+    <value>Mode Ultra</value>
   </data>
   <data name="LblUltraModeTooltip" xml:space="preserve">
-    <value>Enables the Ultra Mode for extra low read noise </value>
+    <value>Active le mode Ultra pour un bruit de lecture très faible </value>
+  </data>
+  <data name="LblRotatorReverseTooltip" xml:space="preserve">
+    <value>Inversion du sens de rotation du rotateur. Basculez cette option si la résolution astrométrique tourne dans la mauvaise direction.</value>
+  </data>
+  <data name="LblHips2FitsSurvey" xml:space="preserve">
+    <value>HIPS 2 FITS Sky Survey</value>
   </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
-    <value>Add {0} to Minutes after Meridian</value>
+    <value>Ajouter {0} aux minutes après le Méridien</value>
+  </data>
+  <data name="LblFlipTime" xml:space="preserve">
+    <value>Heure du retournement</value>
+  </data>
+  <data name="LblAmount" xml:space="preserve">
+    <value>Quantité</value>
+  </data>
+  <data name="LblDelta" xml:space="preserve">
+    <value>Delta</value>
+  </data>
+  <data name="LblElapsed" xml:space="preserve">
+    <value>Écoulé</value>
+  </data>
+  <data name="LblHFRTrend" xml:space="preserve">
+    <value>HFR Trend</value>
+  </data>
+  <data name="Lbl_SequenceCondition_LoopCondition_Description" xml:space="preserve">
+    <value>Une condition pour boucler un container de séquence pour la quantité spécifiée de boucles</value>
+  </data>
+  <data name="Lbl_SequenceCondition_LoopCondition_Name" xml:space="preserve">
+    <value>Boucle pour les itérations</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeCondition_Description" xml:space="preserve">
+    <value>Une condition qui boucle jusqu'à ce que l'heure spécifiée soit atteinte et arrête ensuite le jeu d'instructions en cours</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeCondition_Name" xml:space="preserve">
+    <value>Boucler jusqu'à la durée</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
+    <value>Fonctionne comme un morceau de séquence, mais un objet ciel profond peut être spécifié qui remplira automatiquement tous les sous-éléments avec les informations pertinentes (coordonnées, rotation, etc.)</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
+    <value>Séquence d'objet ciel profond</value>
+  </data>
+  <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
+    <value>Tous les éléments de ce conteneur sont exécutés en parallèle. Ce conteneur n'évaluera aucune condition ou déclencheur tant que tous les éléments ne seront pas terminés.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
+    <value>Jeu d'instructions parallèles</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequentialContainer_Description" xml:space="preserve">
+    <value>Exécute tous les éléments dans un ordre séquentiel. Déclencheur et conditions sont évaluées après chaque élément</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequentialContainer_Name" xml:space="preserve">
+    <value>Jeu d'Instruction Séquentiel</value>
+  </data>
+  <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Description" xml:space="preserve">
+    <value>Exécute une série de mise au point automatique</value>
+  </data>
+  <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Name" xml:space="preserve">
+    <value>Lancer la mise au point automatique</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_CoolCamera_Description" xml:space="preserve">
+    <value>Refroidit la caméra pour la température et la durée spécifiées</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_CoolCamera_Name" xml:space="preserve">
+    <value>Refroidir la caméra</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_WarmCamera_Description" xml:space="preserve">
+    <value>Réchauffe la caméra pour la durée donnée</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
+    <value>Réchauffement Caméra</value>
+  </data>
+  <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
+    <value>Déplace la roue de filtre vers le filtre spécifié</value>
+  </data>
+  <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Name" xml:space="preserve">
+    <value>Changer de filtre</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Description" xml:space="preserve">
+    <value>Ferme le capot du panneau à flats</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Name" xml:space="preserve">
+    <value>Fermer le capot du panneau à flats</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
+    <value>Déplace le focuser à la position absolue donnée</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
+    <value>Déplacer le focuser</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
+    <value>Envoie un signal dither au guidage</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_Dither_Name" xml:space="preserve">
+    <value>Dither</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StartGuiding_Description" xml:space="preserve">
+    <value>Démarre l'auto-guidage</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StartGuiding_Name" xml:space="preserve">
+    <value>Démarrer le guidage</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StopGuiding_Description" xml:space="preserve">
+    <value>Arrêter l'auto-guidage</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StopGuiding_Name" xml:space="preserve">
+    <value>Arrêt Guidage</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Description" xml:space="preserve">
+    <value>Prend une exposition pour la durée, le gain et l'offset donnés</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Name" xml:space="preserve">
+    <value>Prendre une exposition</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
+    <value>Centre et tourne le télescope via l'astrométrie et un rotateur pour les coordonnées et la rotation données</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
+    <value>Centrer et tourner</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
+    <value>Centrer le télescope via l'astrométrie pour les coordonnées données</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
+    <value>Centrer</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
+    <value>Parque le télescope à la position du park</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_ParkScope_Name" xml:space="preserve">
+    <value>Parquer/Déparquer le télescope</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description" xml:space="preserve">
+    <value>Déplace le télescope aux coordonnées de l'altitude et de l'azimuth données</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name" xml:space="preserve">
+    <value>Déplacer vers Alt/Az</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description" xml:space="preserve">
+    <value>Déplace le télescope aux coordonnées d'ascension droite et de déclinaison données</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name" xml:space="preserve">
+    <value>Déplace vers Ad/Dec</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_UnparkScope_Description" xml:space="preserve">
+    <value>Déparque le télescope</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_UnparkScope_Name" xml:space="preserve">
+    <value>Déparquer le télescope</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SetTracking_Name" xml:space="preserve">
+    <value>Définir le suivi</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SetTracking_Description" xml:space="preserve">
+    <value>Définit le mode de suivi sur la monture</value>
+  </data>
+  <data name="LblTrackingModeNotSupported" xml:space="preserve">
+    <value>Mode de suivi non pris en charge par la monture</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_Annotation_Description" xml:space="preserve">
+    <value>Un objet utilitaire pour ajouter des annotations à une séquence</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_Annotation_Name" xml:space="preserve">
+    <value>Annotation</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_ExternalScript_Description" xml:space="preserve">
+    <value>Appelle un script externe pour le chemin donné</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_ExternalScript_Name" xml:space="preserve">
+    <value>Script externe</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_MessageBox_Description" xml:space="preserve">
+    <value>Ouvre une boîte de message avec le texte fourni à cliquer. Peut être utilisé comme un arrêt manuel, par ex pour couvrir le télescope pour les darks</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_MessageBox_Name" xml:space="preserve">
+    <value>Boîte de messages</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Description" xml:space="preserve">
+    <value>Attend jusqu'à ce que l'altitude soit atteinte pour les coordonnées données</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Name" xml:space="preserve">
+    <value>Attendre l'altitude</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Description" xml:space="preserve">
+    <value>Attend une durée donnée en secondes</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Name" xml:space="preserve">
+    <value>Attendre la durée</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTime_Description" xml:space="preserve">
+    <value>Attend l'heure spécifiée au format hh:mm:ss. De plus, un utilitaire est disponible pour remplir automatiquement les coucher, crépuscule, aube et lever du soleil</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
+    <value>Attendre l'heure</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
+    <value>Un déclencheur pour lancer une mise au point automatique après que le HFR a augmenté du pourcentage donné depuis la dernière exécution ou lancement de la séquence</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Name" xml:space="preserve">
+    <value>AF après l'augmentation du HFR</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description" xml:space="preserve">
+    <value>Un déclencheur pour lancer une mise au point automatique après que la température a changé de la quantité donnée en degrés depuis la dernière exécution ou lancement de la séquence</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Name" xml:space="preserve">
+    <value>AF après changement de température</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Description" xml:space="preserve">
+    <value>Un déclencheur pour lancer une mise au point automatique après le délai donné en minutes depuis la dernière exécution ou lancement de la séquence</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Name" xml:space="preserve">
+    <value>AF après le délai</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Description" xml:space="preserve">
+    <value>Un déclencheur pour lancer un retournement au méridien lorsque les conditions sont remplies</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Name" xml:space="preserve">
+    <value>Retournement au méridien</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CameraCannotSetTemperature" xml:space="preserve">
+    <value>La caméra n'a pas de refroidissement et ne peut pas définir de température</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose" xml:space="preserve">
+    <value>Le panneau à flats ne prend pas en charge l'ouverture ou la fermeture du capot</value>
+  </data>
+  <data name="Lbl_Sequencer_LoadSequence_Tooltip" xml:space="preserve">
+    <value>Charger la séquence complète depuis le fichier JSON</value>
+  </data>
+  <data name="Lbl_Sequencer_RootElementMustBeRootContainer" xml:space="preserve">
+    <value>Impossible de charger la séquence - l'élément racine du séquenceur doit être le conteneur racine de la séquence !</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveSequence_Tooltip" xml:space="preserve">
+    <value>Enregistrer la séquence complète dans le fichier JSON</value>
+  </data>
+  <data name="Lbl_Sequencer_UnableToDeserializeJSON" xml:space="preserve">
+    <value>Impossible de désérialiser JSON</value>
+  </data>
+  <data name="LblValue" xml:space="preserve">
+    <value>Valeur</value>
+  </data>
+  <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Name" xml:space="preserve">
+    <value>Définir la valeur du commutateur</value>
+  </data>
+  <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Description" xml:space="preserve">
+    <value>Définit une valeur pour un commutateur donné depuis le hub du commutateur</value>
+  </data>
+  <data name="LblSwitchNotConnected" xml:space="preserve">
+    <value>Le commutateur n'est pas connecté !</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidSwitchValue" xml:space="preserve">
+    <value>Valeur non valide pour le commutateur sélectionné! Minimum {0} / Maximum {1} / StepSize {2}</value>
+  </data>
+  <data name="LblContainer" xml:space="preserve">
+    <value>Conteneur</value>
+  </data>
+  <data name="LblUtility" xml:space="preserve">
+    <value>Utilitaire</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Description" xml:space="preserve">
+    <value>Envoie une commande de décalage au guidage après le nombre spécifié d'expositions</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
+    <value>Décaler après les expositions</value>
+  </data>
+  <data name="LblAfterExposures" xml:space="preserve">
+    <value>Après les expositions</value>
+  </data>
+  <data name="LblDragOver_BottomText" xml:space="preserve">
+    <value>INSÉRER UNE INSTRUCTION EN DESSOUS</value>
+  </data>
+  <data name="LblDragOver_CenterText" xml:space="preserve">
+    <value>AJOUTER UNE INSTRUCTION ICI</value>
+  </data>
+  <data name="LblDragOver_TopText" xml:space="preserve">
+    <value>INSÉRER UNE INSTRUCTION AU DESSUS</value>
+  </data>
+  <data name="LblDragOver_AddCondition" xml:space="preserve">
+    <value>AJOUTER UNE CONDITION DE BOUCLE</value>
+  </data>
+  <data name="LblDragOver_AddTemplate" xml:space="preserve">
+    <value>CRÉER UN NOUVEAU MODELE</value>
+  </data>
+  <data name="LblDragOver_AddTrigger" xml:space="preserve">
+    <value>AJOUTER UN DECLENCHEUR</value>
+  </data>
+  <data name="LblInstructions" xml:space="preserve">
+    <value>Instructions</value>
+  </data>
+  <data name="LblTemplates" xml:space="preserve">
+    <value>Modèles</value>
+  </data>
+  <data name="LblTemplate_DefaultTemplates" xml:space="preserve">
+    <value>Modèles par défaut</value>
+  </data>
+  <data name="LblTemplate_DropTemplateHere" xml:space="preserve">
+    <value>Déposer le jeu d'instructions de séquence à partir de la séquence ici pour créer un nouveau modèle</value>
+  </data>
+  <data name="LblTemplate_OverwriteTemplateMessageBox_Caption" xml:space="preserve">
+    <value>Écraser le modèle ?</value>
+  </data>
+  <data name="LblTemplate_OverwriteTemplateMessageBox_Text" xml:space="preserve">
+    <value>Le modèle '{0}' existe déjà. Voulez-vous remplacer le modèle existant ? Cette action est irréversible.</value>
+  </data>
+  <data name="LblTemplate_UserTemplates" xml:space="preserve">
+    <value>Modèles d'utilisateur</value>
+  </data>
+  <data name="LblTemplate_DeleteTemplateMessageBox_Caption" xml:space="preserve">
+    <value>Supprimer le modèle ?</value>
+  </data>
+  <data name="LblTemplate_DeleteTemplateMessageBox_Text" xml:space="preserve">
+    <value>Le modèle '{0}' sera supprimé. Voulez-vous supprimer le modèle existant ? Cette action est irréversible.</value>
+  </data>
+  <data name="Lbl_Sequencer_DeleteItem" xml:space="preserve">
+    <value>SUPPRIMER L'OBJET</value>
+  </data>
+  <data name="LblAddTargetToSequence" xml:space="preserve">
+    <value>Ajouter la cible à la séquence</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description" xml:space="preserve">
+    <value>Démarre la mise au point automatique après une détection de changement de filtre</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name" xml:space="preserve">
+    <value>AF Après Changement de Filtre</value>
+  </data>
+  <data name="LblLastFilter" xml:space="preserve">
+    <value>Dernier filtre</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Description" xml:space="preserve">
+    <value>Déclenche une mise au point automatique après que la quantité d'expositions définies ait été capturées</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Name" xml:space="preserve">
+    <value>AF Après # Expositions</value>
+  </data>
+  <data name="LblUnreachableAltitude" xml:space="preserve">
+    <value>L'altitude ne sera jamais atteinte</value>
+  </data>
+  <data name="LblPlugin" xml:space="preserve">
+    <value>Branchement</value>
+  </data>
+  <data name="LblBuildSequenceTooltip" xml:space="preserve">
+    <value>Construit une séquence pour l'ensemble de cibles planifiées</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Description" xml:space="preserve">
+    <value>Prend des expositions pour la quantité, la durée, le gain et l'offset donnés. Les déclencheurs et conditions sont évalués entre les expositions.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Name" xml:space="preserve">
+    <value>Prendre de nombreuses expositions</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_Description" xml:space="preserve">
+    <value>Prend des expositions pour la quantité donnée, le filtre, la durée, le gain et offset et initie un décalage après la quantité d'expositions. Les déclencheurs et les conditions sont évalués entre les expositions.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_Name" xml:space="preserve">
+    <value>Exposition intelligente</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveAsSequence_Tooltip" xml:space="preserve">
+    <value>Enregistrer la séquence complète dans un nouveau fichier JSON</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Description" xml:space="preserve">
+    <value>Ouvre le capot du panneau à plat</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Name" xml:space="preserve">
+    <value>Ouvrir le capot du panneau à flats</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Description" xml:space="preserve">
+    <value>Définit la luminosité du panneau à flats à la valeur spécifiée</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Name" xml:space="preserve">
+    <value>Régler la luminosité</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Description" xml:space="preserve">
+    <value>Active/désactive la lumière du panneau à flats</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Name" xml:space="preserve">
+    <value>Activer/désactiver la lumière</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description" xml:space="preserve">
+    <value>Recherche la valeur d'exposition cible pour les paramètres spécifiés et prend des expositions de flats</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
+    <value>Valeur d'exposition de flat</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
+    <value>Aucune valeur d'exposition n'a été trouvée pour la combinaison de filtre {0}, gain {1}, binning {2}</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_EndArea" xml:space="preserve">
+    <value>Zone de fin de séquence</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_StartArea" xml:space="preserve">
+    <value>Zone de départ de la séquence</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
+    <value>Zone cible de séquence
+Ajoutez des séquences d'objet ciel profond ici ou ajoutez des cibles via l'Atlas du ciel ou l'Assistant de cadrage</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
+    <value>Conditions de la boucle</value>
+  </data>
+  <data name="Lbl_SequenceContainer_EndAreaContainer_Name" xml:space="preserve">
+    <value>Fin</value>
+  </data>
+  <data name="Lbl_SequenceContainer_StartAreaContainer_Name" xml:space="preserve">
+    <value>Début</value>
+  </data>
+  <data name="Lbl_SequenceContainer_TargetAreaContainer_Name" xml:space="preserve">
+    <value>Cibles</value>
+  </data>
+  <data name="LblStartupSequenceTemplate" xml:space="preserve">
+    <value>Démarrer le modèle de séquence</value>
+  </data>
+  <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
+    <value>Lorsque défini, ce modèle sera préchargé dans le séquenceur.</value>
+  </data>
+  <data name="LblForceGuidingCalibration" xml:space="preserve">
+    <value>Forcer la calibration</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_NoSwitchSelected" xml:space="preserve">
+    <value>Aucun interrupteur sélectionné !</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_DitherTooltip" xml:space="preserve">
+    <value>Commande un décalage après la quantité spécifiée d'exposition. Une valeur de 0 désactivera le décalage pour cet objet.</value>
+  </data>
+  <data name="LblInstructionSet" xml:space="preserve">
+    <value>Jeu d'instructions</value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddCondition_Tooltip" xml:space="preserve">
+    <value>Ajouter une condition de boucle au jeu d'instructions.
+Une instruction sera exécutée et répétée lorsqu'une ou plusieurs conditions sont ajoutées à un conteneur tant que ces conditions de boucle sont vraies.
+Une fois qu'une des conditions de la boucle n'est plus vraie, l'exécution des instructions restantes à l'intérieur du jeu sera ignorée.
+En outre, les conditions de la boucle sont valables pour le jeu d'instructions actuel et chaque sous-ensemble à l'intérieur du jeu. </value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddInstruction_Tooltip" xml:space="preserve">
+    <value>Ajouter une instruction au jeu d'instructions.
+Une instruction est une instruction unique ou un ensemble d'instructions qui seront exécutées, quand elles sont valides. 
+Les instructions qui ne sont pas valides (indiquées par le point d'exclamation cerclé rouge) seront ignorées.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddTrigger_Tooltip" xml:space="preserve">
+    <value>Ajouter un déclencheur à l'ensemble d'instructions.
+Les déclencheurs sont des instructions, qui ne sont exécutées que lorsque les paramètres spécifiés pour les exécuter sont satisfaits. 
+Les paramètres de déclenchement seront mis à jour et évalués après avoir complété une instruction.
+De plus, les déclencheurs sont valides pour le jeu d'instructions en cours et chaque sous-ensemble à l'intérieur du jeu.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Delete_Tooltip" xml:space="preserve">
+    <value>Supprime le jeu d'instructions en cours et tous ses éléments de la séquence.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_MoveDown_Tooltip" xml:space="preserve">
+    <value>Déplace le jeu d'instructions et tout son contenu d'un cran vers le bas.
+Si la position en dessous est un jeu d'instructions qui est développé, elle sera déplacée à l'intérieur du jeu d'instructions.
+Si la position en dessous est un jeu d'instructions qui n'est pas actuellement développé, il sera déplacé sous le jeu d'instructions.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_MoveUp_Tooltip" xml:space="preserve">
+    <value>Déplace le jeu d'instructions et tout son contenu d'un cran vers le haut.
+Si la position au dessus est un jeu d'instructions qui est développée, il sera déplacé à l'intérieur du jeu d'instructions.
+Si la position au dessus est un jeu d'instructions qui n'est pas actuellement développé, il sera déplacé au dessus du jeu d'instructions.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Reset_Tooltip" xml:space="preserve">
+    <value>Réinitialise l'état et la progression du jeu d'instructions actuel et toutes les instructions qui se trouvent à l'intérieur.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Delete_Tooltip" xml:space="preserve">
+    <value>Supprime l'instruction courante du jeu d'instructions.</value>
+  </data>
+  <data name="Lbl_SequenceItem_MoveDown_Tooltip" xml:space="preserve">
+    <value>Déplace l'instruction vers le bas d'un cran.
+Si la position en dessous est un jeu d'instructions qui est développé, elle sera déplacée à l'intérieur du jeu d'instructions.
+Si la position en dessous est un jeu d'instructions qui n'est pas actuellement développé, elle sera déplacée sous le jeu d'instructions.</value>
+  </data>
+  <data name="Lbl_SequenceItem_MoveUp_Tooltip" xml:space="preserve">
+    <value>Déplace l'instruction vers le haut d'un cran.
+Si la position au dessus est un jeu d'instructions qui est développée, elle sera déplacée à l'intérieur du jeu d'instructions.
+Si la position au dessus est un jeu d'instructions qui n'est pas actuellement développé, elle sera déplacée au dessus du jeu d'instructions.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Reset_Tooltip" xml:space="preserve">
+    <value>Réinitialise l'état et la progression de l'instruction courante.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Progress" xml:space="preserve">
+    <value>Attend que la cible ait atteint l'altitude spécifiée. {0}° / {1}°</value>
+  </data>
+  <data name="Lbl_OldSequencer_EndOfSequence" xml:space="preserve">
+    <value>Instructions de fin de séquence</value>
+  </data>
+  <data name="Lbl_OldSequencer_ParallelEndOfSequence" xml:space="preserve">
+    <value>Instructions de fin de séquence parallèle</value>
+  </data>
+  <data name="Lbl_OldSequencer_TargetImaging" xml:space="preserve">
+    <value>Instructions d'imagerie de la cible</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_Name" xml:space="preserve">
+    <value>Séquence</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Duplicate_Tooltip" xml:space="preserve">
+    <value>Crée un doublon du jeu courant et de tous ses éléments et l'ajoute au jeu d'instructions parent</value>
+  </data>
+  <data name="Lbl_SequenceItem_Duplicate_Tooltip" xml:space="preserve">
+    <value>Crée un doublon de l'élément courant et l'ajoute au jeu d'instructions parent</value>
+  </data>
+  <data name="Lbl_OldSequencer_EmptyAreaDescription" xml:space="preserve">
+    <value>Ajouter une nouvelle cible de séquence via le bouton +, ouvrir une cible existante ou ajouter des cibles via l'assistant de cadrage</value>
+  </data>
+  <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
+    <value>Ajouter une nouvelle cible</value>
+  </data>
+  <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
+    <value>Charger la cible</value>
+  </data>
+  <data name="Lbl_OldSequencer_OpenTargetSet" xml:space="preserve">
+    <value>Ouvrir le jeu de cibles</value>
+  </data>
+  <data name="Lbl_OldSequencer_Title" xml:space="preserve">
+    <value>Générateur de séquence</value>
+  </data>
+  <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
+    <value>Options de fin de toutes les cibles</value>
+  </data>
+  <data name="Lbl_OldSequencer_Template" xml:space="preserve">
+    <value>Modèle de constructeur de séquence</value>
+  </data>
+  <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
+    <value>Importe la cible</value>
+  </data>
+  <data name="Lbl_Sequencer_Title" xml:space="preserve">
+    <value>Séquenceur</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Camera" xml:space="preserve">
+    <value>Caméra</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Condition" xml:space="preserve">
+    <value>Condition de boucle</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
+    <value>Jeu d'instructions</value>
+  </data>
+  <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
+    <value>Roue à filtres</value>
+  </data>
+  <data name="Lbl_SequenceCategory_FlatDevice" xml:space="preserve">
+    <value>Panneau à flats</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Focuser" xml:space="preserve">
+    <value>Focalisation</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Guider" xml:space="preserve">
+    <value>Guidage</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Switch" xml:space="preserve">
+    <value>Commutateur</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Telescope" xml:space="preserve">
+    <value>Télescope</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Trigger" xml:space="preserve">
+    <value>Déclencheur</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Utility" xml:space="preserve">
+    <value>Utilitaire</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
+    <value>Une condition qui boucle lorsque la cible est au dessus de l'altitude spécifiée, puis arrête le jeu d'instructions actuel</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
+    <value>Boucler pendant l'altitude au dessus</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
+    <value>Dôme</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Description" xml:space="preserve">
+    <value>Ferme le volet du dôme</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Name" xml:space="preserve">
+    <value>Fermer le volet du dôme</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_ParkDome_Description" xml:space="preserve">
+    <value>Parque le dôme à la position de park</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_ParkDome_Name" xml:space="preserve">
+    <value>Parque le Dôme</value>
+  </data>
+  <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
+    <value>Début des instructions de séquence</value>
+  </data>
+  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
+    <value>Début de toutes les options des cibles</value>
+  </data>
+  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
+    <value>Refroidir la caméra au démarrage de la séquence</value>
+  </data>
+  <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
+    <value>Ouvrir le capot au démarrage de la séquence</value>
+  </data>
+  <data name="LblOpenDomeShutterAtSequenceStart" xml:space="preserve">
+    <value>Ouvrir le volet du dôme au début de la séquence</value>
+  </data>
+  <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
+    <value>Déparquer le dôme au début de la séquence</value>
+  </data>
+  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
+    <value>Démonter la monture au démarrage de la séquence</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
+    <value>Ouvre le volet du dôme</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Name" xml:space="preserve">
+    <value>Ouvrir le volet du dôme</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description" xml:space="preserve">
+    <value>Veille à ce que le dôme reste synchronisé avec le télescope</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
+    <value>Activer la synchronisation du Dôme</value>
+  </data>
+  <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
+    <value>La séquence contient des lignes qui sont soit désactivées, ou dans lesquelles le nombre d'expositions atteint le nombre total d'expositions. Ces éléments sont ignorés et aucun élément pour ces lignes n'est généré pour le séquenceur.</value>
+  </data>
+  <data name="LblRotateTarget" xml:space="preserve">
+    <value>Tourner la cible</value>
+  </data>
+  <data name="LblSafetyMonitorConnectionLost" xml:space="preserve">
+    <value>La connexion au moniteur de sécurité a été perdue !</value>
+  </data>
+  <data name="LblSafetyMonitor" xml:space="preserve">
+    <value>Moniteur de sécurité</value>
+  </data>
+  <data name="LblDisconnectSafetyMonitor" xml:space="preserve">
+    <value>Déconnecter le moniteur de sécurité</value>
+  </data>
+  <data name="LblSafetyMonitorConnected" xml:space="preserve">
+    <value>Moniteur de sécurité connecté</value>
+  </data>
+  <data name="LblIsSafe" xml:space="preserve">
+    <value>Est sûr</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
+    <value>Une condition qui vérifie que le moniteur de sécurité connecté est sûr et boucle les instructions définies tant qu'il déclare être sûr. Si le périphérique déclare ne plus être sûr, le jeu d'instructions en cours est arrêté.
+A utiliser en conjonction avec une autre condition de boucle pour ne pas se retrouver dans une boucle infinie lorsque le moniteur de sécurité reste vrai.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
+    <value>Moniteur de sécurité</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
+    <value>Enregistrer le jeu d'instructions actuel et tout son contenu comme un modèle pour le réutiliser</value>
+  </data>
+  <data name="LblSafetyMonitorNotConnected" xml:space="preserve">
+    <value>Moniteur de sécurité n'est pas connecté</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveSequence_Notification" xml:space="preserve">
+    <value>Séquence "{0}" enregistrée avec succès à {1}</value>
+  </data>
+  <data name="LblSetTrackingRate" xml:space="preserve">
+    <value>Définir la vitesse de suivi</value>
+  </data>
+  <data name="LblTimeSpan" xml:space="preserve">
+    <value>Intervalle de temps</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
+    <value>Boucle de jeu d'instructions définies pour une durée donnée. Lorsque la durée est atteinte, les instructions restantes dans le jeu seront ignorées.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
+    <value>Boucler pendant la durée</value>
   </data>
 </root>

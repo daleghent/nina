@@ -1151,7 +1151,7 @@
     <value>抖动已启用，但未连接导星工具</value>
   </data>
   <data name="LblDitherPixels" xml:space="preserve">
-    <value>Dither Pixels</value>
+    <value>抖动像素</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
     <value>仅抖动赤经</value>
@@ -1163,7 +1163,7 @@
     <value>无法连接到 ASCOM 圆顶 驱动程序：</value>
   </data>
   <data name="LblDomeDriverCanFollow" xml:space="preserve">
-    <value>Driver can follow</value>
+    <value>从属驱动</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
     <value>快门状态</value>
@@ -1193,7 +1193,7 @@
     <value>在零位</value>
   </data>
   <data name="LblDomeDriverFollowing" xml:space="preserve">
-    <value>Driver following telescope</value>
+    <value>驱动从属于赤道仪</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
     <value>指向中</value>
@@ -1229,7 +1229,7 @@
     <value>圆顶连接丢失。</value>
   </data>
   <data name="LblDomeDisconnect" xml:space="preserve">
-    <value>Disconnect dome?</value>
+    <value>断开圆顶？</value>
   </data>
   <data name="LblDomeNotConnected" xml:space="preserve">
     <value>圆顶未连接</value>
@@ -1466,7 +1466,7 @@
     <value>打开</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>拍摄暗场、暗平场时打开镜头盖</value>
+    <value>在平场助手拍摄暗平场时关闭镜头盖</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>设定</value>
@@ -1961,16 +1961,16 @@
     <value>中天位置偏移</value>
   </data>
   <data name="LblPHD2Setup" xml:space="preserve">
-    <value>PHD2 Setup</value>
+    <value>PHD2 设置</value>
   </data>
   <data name="LblMetaGuideSetup" xml:space="preserve">
-    <value>MetaGuide Setup</value>
+    <value>MetaGuide 设置</value>
   </data>
   <data name="LblMetaGuideIP" xml:space="preserve">
     <value>MetaGuide IP</value>
   </data>
   <data name="LblMetaGuidePort" xml:space="preserve">
-    <value>MetaGuide Port</value>
+    <value>MetaGuide 端口</value>
   </data>
   <data name="LblMin" xml:space="preserve">
     <value>最小</value>
@@ -2472,6 +2472,9 @@
   <data name="LblPosition" xml:space="preserve">
     <value>方向</value>
   </data>
+  <data name="LblClearGuidingCalibration" xml:space="preserve">
+    <value>清除校准</value>
+  </data>
   <data name="LblPreferredPlanetarium" xml:space="preserve">
     <value>使用星图软件</value>
   </data>
@@ -2488,7 +2491,7 @@
     <value>平场拍摄滤镜: {0}</value>
   </data>
   <data name="LblPreSequenceChecklist" xml:space="preserve">
-    <value>您的序列中发现了以下潜在问题：</value>
+    <value>在您的序列中发现了以下潜在问题：</value>
   </data>
   <data name="LblPreSequenceChecklistHeader" xml:space="preserve">
     <value>拍摄前检查表</value>
@@ -2801,13 +2804,13 @@
     <value>稳定</value>
   </data>
   <data name="LblSettlePixelTolerance" xml:space="preserve">
-    <value>Settle Pixel Tolerance</value>
+    <value>稳定像素容差值</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
     <value>移动后稳定时间（秒）</value>
   </data>
   <data name="LblSettleTimeout" xml:space="preserve">
-    <value>Settle Timeout</value>
+    <value>稳定超时</value>
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>开始导星重试</value>
@@ -3037,7 +3040,7 @@
 数值需要同步吗？</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
-    <value>目标坐标 (J2000)</value>
+    <value>目标</value>
   </data>
   <data name="LblTargetDec" xml:space="preserve">
     <value>目标赤纬</value>
@@ -3070,7 +3073,7 @@
     <value>最小宽度（度）</value>
   </data>
   <data name="LblTelescope" xml:space="preserve">
-    <value>赤道仪</value>
+    <value>望远镜</value>
   </data>
   <data name="LblTelescopeCannotPulseGuide" xml:space="preserve">
     <value>赤道仪无法脉冲导星</value>
@@ -3088,7 +3091,7 @@
     <value>赤道仪控制</value>
   </data>
   <data name="LblTelescopeName" xml:space="preserve">
-    <value>赤道仪名称</value>
+    <value>望远镜名称</value>
   </data>
   <data name="LblTelescopeNotConnected" xml:space="preserve">
     <value>赤道仪未连接</value>
@@ -3232,6 +3235,30 @@
   </data>
   <data name="LblTracking" xml:space="preserve">
     <value>追踪</value>
+  </data>
+  <data name="LblTrackingRate" xml:space="preserve">
+    <value>跟踪速率</value>
+  </data>
+  <data name="LblTrackingStopped" xml:space="preserve">
+    <value>已停止</value>
+  </data>
+  <data name="LblTrackingSidereal" xml:space="preserve">
+    <value>恒星速</value>
+  </data>
+  <data name="LblTrackingSolar" xml:space="preserve">
+    <value>太阳速</value>
+  </data>
+  <data name="LblTrackingLunar" xml:space="preserve">
+    <value>月球速</value>
+  </data>
+  <data name="LblTrackingKing" xml:space="preserve">
+    <value>King</value>
+  </data>
+  <data name="LblTrackingCustom" xml:space="preserve">
+    <value>自定义</value>
+  </data>
+  <data name="LblTrackingCustomRate" xml:space="preserve">
+    <value>自定义 ({0}， {1})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>转向北天</value>
@@ -3796,70 +3823,70 @@
     <value>向导操作模式</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance (degrees)</value>
+    <value>方位容差值(度)</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
-    <value>The dome slews if the target azimuth is off by more than this amount</value>
+    <value>如果目标方位角偏离超过此值，则圆顶将旋转</value>
   </data>
   <data name="LblDomeDirectDriver" xml:space="preserve">
-    <value>Use NINA Direct Following</value>
+    <value>使用NINA直接跟随</value>
   </data>
   <data name="LblDomeFindHome" xml:space="preserve">
-    <value>Find Home</value>
+    <value>查找零位</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length (mm)</value>
+    <value>GEM 轴长度 (mm)</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
-    <value>If Alt/Az, this should be 0. For an EQ mount, slew RA to +/- 90 degrees, and measure the lateral distance (in mm) from the axis to center of the telescope aperture</value>
+    <value>如果Alt/Az，则应为0。对于赤道仪，将RA旋转至+/-90度，并测量从轴到望远镜孔径中心的横向距离(单位：mm)</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length (mm)</value>
+    <value>横轴长度 (mm)</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
-    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right when facing the celestial pole.</value>
+    <value>在Side-by-side配置中，这是从支架到OTA中心的距离(横向，mm)。正对着天极时在右边。</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius (mm)</value>
+    <value>圆顶半径(mm)</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
-    <value>Measure from the center to the rim of the dome, along the base</value>
+    <value>沿着底部，测量从圆顶的中心到边缘的距离</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W (mm)</value>
+    <value>望远镜位置 东/西 (mm)</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the right when facing the celestial pole.</value>
+    <value>测量圆顶中心的东西偏移(毫米)。面对天极时在右侧。</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S (mm)</value>
+    <value>范围位置 北/南 (mm)</value>
   </data>
   <data name="LblCancelSequence" xml:space="preserve">
-    <value>Cancel Sequence</value>
+    <value>取消序列</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is towards the celestial pole.</value>
+    <value>测量圆顶中心的南北偏移量(mm)。 正面是朝着天极方向。</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
-    <value>Pause Sequence</value>
+    <value>暂停序列</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down (mm)</value>
+    <value>望远镜位置 +上/-下 (mm)</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
-    <value>Measure the height difference (in mm) of the center of the mount axis relative to the base of the dome. For an Alt/Az mount, this is from the center of the Altitude axis, and for an EQ mount this is where the RA and DEC axes intersect. A positive number indicates the center of axis is higher than the base of the dome, and a negative number means it is lower.</value>
+    <value>测量安装轴中心相对于圆顶底座的高度差(单位：mm)。对于经纬仪/赤道仪，这是从高度轴的中心开始的，对于赤道仪，这是赤经和赤纬轴相交的地方。正数表示轴中心高于圆顶底部，负数表示轴中心低于圆顶。</value>
   </data>
   <data name="LblDomeSettings" xml:space="preserve">
-    <value>Dome Settings</value>
+    <value>圆顶设置</value>
   </data>
   <data name="LblResumeSequence" xml:space="preserve">
-    <value>Resume Sequence</value>
+    <value>恢复序列</value>
   </data>
   <data name="LblDomeFollowing" xml:space="preserve">
-    <value>Dome follows telescope</value>
+    <value>圆顶跟随赤道仪</value>
   </data>
   <data name="LblStartSequence" xml:space="preserve">
-    <value>Start Sequence</value>
+    <value>开始序列</value>
   </data>
   <data name="LblSequenceContainsDarksAndLights" xml:space="preserve">
     <value>相机没有机械快门，序列中含有暗场/偏置项目，但没有安装镜头盖</value>
@@ -3868,10 +3895,13 @@
     <value>相机没有机械快门，序列中只有暗场/偏置项目，但没有安装镜头盖，请确认镜头已经盖好。</value>
   </data>
   <data name="LblAutoFocusFilterSettings" xml:space="preserve">
-    <value>Auto Focus Filter Settings</value>
+    <value>自动对焦滤镜设置</value>
   </data>
   <data name="LblMeridianFlipIn" xml:space="preserve">
     <value>中天翻转开始于</value>
+  </data>
+  <data name="LblMeridianFlipCenterFailed" xml:space="preserve">
+    <value>中天翻转后居中失败</value>
   </data>
   <data name="LblDefaultGain" xml:space="preserve">
     <value>默认增益</value>
@@ -3892,25 +3922,25 @@
     <value>移动调焦器到位置 {0}</value>
   </data>
   <data name="LblCameraConnectedOnExit" xml:space="preserve">
-    <value>Camera still connected. Exit anyway?</value>
+    <value>相机仍然连接。仍然退出吗？</value>
   </data>
   <data name="LblDisconnectCamera" xml:space="preserve">
-    <value>Disconnect Camera?</value>
+    <value>断开相机？</value>
   </data>
   <data name="LblDisconnectFilterWheel" xml:space="preserve">
-    <value>Disconnect Filter Wheel?</value>
+    <value>断开滤镜轮？</value>
   </data>
   <data name="LblDisconnectFocuser" xml:space="preserve">
-    <value>Disconnect Focuser?</value>
+    <value>断开电调？</value>
   </data>
   <data name="LblDisconnectRotator" xml:space="preserve">
-    <value>Disconnect Rotator?</value>
+    <value>断开旋转器？</value>
   </data>
   <data name="LblDisconnectTelescope" xml:space="preserve">
-    <value>Disconnect Telescope?</value>
+    <value>断开望远镜？</value>
   </data>
   <data name="LblSideOfPier" xml:space="preserve">
-    <value>Side of Pier</value>
+    <value>赤道仪方位</value>
   </data>
   <data name="LblCameraTimeoutOption" xml:space="preserve">
     <value>相机超时</value>
@@ -3919,108 +3949,813 @@
     <value>相机曝光之后直到图像被视为丢失的时间量。当相机曝光完成+秒后，依然没有收到图像准备就绪指令，则曝光将被取消。</value>
   </data>
   <data name="LblCalibrationState" xml:space="preserve">
-    <value>Calibration State</value>
+    <value>校准状态</value>
   </data>
   <data name="LblFWHM" xml:space="preserve">
     <value>FWHM</value>
   </data>
   <data name="LblIntensity" xml:space="preserve">
-    <value>Intensity</value>
+    <value>强度</value>
   </data>
   <data name="LblMinIntensity" xml:space="preserve">
-    <value>Minimum Intensity</value>
+    <value>最小强度</value>
   </data>
   <data name="LblMinIntensityTooltip" xml:space="preserve">
-    <value>Guide star intensity is measured on a scale of 0-255. If intensity drops below this amount, then NINA will pause guiding until it returns. This may indicate the presence of clouds.</value>
+    <value>导星强度范围为0-255。 如果强度下降到这个数量以下，NINA将暂停导星，直到数值回升。这可能表明存在云。</value>
   </data>
   <data name="LblSeeing" xml:space="preserve">
-    <value>Seeing</value>
+    <value>视宁度</value>
   </data>
   <data name="LblMetaGuideConnectionFailed" xml:space="preserve">
-    <value>Failed to connect to MetaGuide</value>
+    <value>无法连接到MetaGuide</value>
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuiding" xml:space="preserve">
-    <value>Guiding resumed</value>
+    <value>导星已恢复</value>
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
-    <value>Failed to resume guiding after star intensity recovered</value>
+    <value>在星点强度恢复之后继续导星失败</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
-    <value>Dome synchronization error. No longer following telescope. {0}</value>
+    <value>圆顶同步错误。不再跟随望远镜。 {0}</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
-    <value>Close dome shutter at sequence end</value>
+    <value>序列结束时关闭圆顶活动窗</value>
   </data>
   <data name="LblDomeEnableFollowingWarning" xml:space="preserve">
-    <value>Could not enable Dome/Telescope following</value>
+    <value>无法启用圆顶/望远镜跟随</value>
   </data>
   <data name="LblParkDomeAtSequenceEnd" xml:space="preserve">
-    <value>Park dome at sequence end</value>
+    <value>序列结束时停放圆顶</value>
   </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
-    <value>Find home before parking</value>
+    <value>在停放之前查找零位</value>
   </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
-    <value>If FindHome is available, then this can improve the reliability of parking to the correct location, when a precise location is required.</value>
+    <value>当需要停在准确位置时，如果查找零位可用，就可以提高关停在正确位置的可靠性</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
-    <value>AF Sequence Timeout</value>
+    <value>序列自动对焦超时</value>
   </data>
   <data name="LblAutoFocusTimeoutTooltip" xml:space="preserve">
-    <value>Amount of time, in seconds, to wait for an auto focus during a sequence before cancelling to continue</value>
-  </data>
-  <data name="LblEast" xml:space="preserve">
-    <value>East</value>
+    <value>在一个序列中，在取消继续之前，等待自动对焦的时间（秒）</value>
   </data>
   <data name="LblMetaGuideLowIntensityStopGuiding" xml:space="preserve">
-    <value>Stopped guiding due to low star intensity. There may be clouds.</value>
+    <value>由于星点强度低而停止导星。可能会有云。</value>
   </data>
   <data name="LblDomeSyncTimeout" xml:space="preserve">
-    <value>Synchronization Timeout</value>
+    <value>同步超时</value>
   </data>
   <data name="LblDomeSyncTimeoutTooltip" xml:space="preserve">
-    <value>The maximum amount of time, in seconds, to wait for the Dome and Telescope to synchronize their positions</value>
+    <value>圆顶与赤道仪同步位置的最大时限，以秒为单位</value>
   </data>
   <data name="LblC2A" xml:space="preserve">
     <value>C2A</value>
   </data>
   <data name="LblCameraName" xml:space="preserve">
-    <value>Camera Name</value>
+    <value>相机名称</value>
   </data>
   <data name="LblRotatorAngleDescription" xml:space="preserve">
-    <value>Angle of the rotator</value>
+    <value>旋转器角度</value>
   </data>
   <data name="LblStarCount" xml:space="preserve">
-    <value>Star count</value>
+    <value>星点数量</value>
+  </data>
+  <data name="LblCameraNotConnected" xml:space="preserve">
+    <value>相机未连接</value>
+  </data>
+  <data name="LblFilterWheelNotConnected" xml:space="preserve">
+    <value>过滤车轮未连接</value>
+  </data>
+  <data name="LblFocuserNotConnected" xml:space="preserve">
+    <value>调焦器未连接</value>
+  </data>
+  <data name="LblGuiderNotConnected" xml:space="preserve">
+    <value>导星未连接</value>
+  </data>
+  <data name="LblGuiderCannotClearCalibration" xml:space="preserve">
+    <value>导星不支持校准</value>
+  </data>
+  <data name="LblIterations" xml:space="preserve">
+    <value>迭代次数</value>
+  </data>
+  <data name="LblRotatorNotConnected" xml:space="preserve">
+    <value>旋转器未连接</value>
+  </data>
+  <data name="LblScript" xml:space="preserve">
+    <value>脚本</value>
+  </data>
+  <data name="LblDelay" xml:space="preserve">
+    <value>延迟</value>
+  </data>
+  <data name="LblTargetJ2000" xml:space="preserve">
+    <value>目标坐标 (J2000)</value>
+  </data>
+  <data name="LblExecutingItemsInParallel" xml:space="preserve">
+    <value>同步执行项目</value>
+  </data>
+  <data name="LblEnterAnnotation" xml:space="preserve">
+    <value>输入批注</value>
+  </data>
+  <data name="LblAfterIterations" xml:space="preserve">
+    <value>迭代后</value>
+  </data>
+  <data name="LblFlatDeviceNotConnected" xml:space="preserve">
+    <value>平场设备未连接</value>
+  </data>
+  <data name="LblEnterMessage" xml:space="preserve">
+    <value>输入消息</value>
+  </data>
+  <data name="LblMessage" xml:space="preserve">
+    <value>消息</value>
+  </data>
+  <data name="LblLoopUntil" xml:space="preserve">
+    <value>循环直到...</value>
+  </data>
+  <data name="LblTriggers" xml:space="preserve">
+    <value>触发器</value>
   </data>
   <data name="LblMetaGuideVersionCheckFailed" xml:space="preserve">
-    <value>Update MetaGuide to at least {0}</value>
+    <value>将MetaGuide更新到最新 {0}</value>
   </data>
   <data name="LblMetaGuideDitherSettleTime" xml:space="preserve">
-    <value>Dither settling time</value>
+    <value>抖动稳定时间</value>
   </data>
   <data name="LblMetaGuideDitherSettleTimeTooltip" xml:space="preserve">
-    <value>Amount of time, in seconds, to wait for dithering to complete</value>
+    <value>等待抖动以完成的时间（以秒为单位）</value>
   </data>
   <data name="LblMetaGuideLockWhenGuiding" xml:space="preserve">
-    <value>Lock star when guiding</value>
+    <value>导星时锁定星点</value>
   </data>
   <data name="LblCoordinatesToFramingTooltip" xml:space="preserve">
-    <value>Send coordinates to the Framing Wizard</value>
+    <value>将坐标发送到构图助手</value>
   </data>
   <data name="LblImportTargets" xml:space="preserve">
-    <value>Import Targets from external source</value>
+    <value>从外部源导入目标</value>
   </data>
   <data name="LblUnknownImportFormat" xml:space="preserve">
-    <value>Unknown format to import targets</value>
+    <value>导入目标的未知格式</value>
   </data>
   <data name="LblUltraMode" xml:space="preserve">
-    <value>Ultra Mode</value>
+    <value>超级模式</value>
   </data>
   <data name="LblUltraModeTooltip" xml:space="preserve">
-    <value>Enables the Ultra Mode for extra low read noise </value>
+    <value>开启“超级模式”，以获得额外的低读出噪声 </value>
+  </data>
+  <data name="LblRotatorReverseTooltip" xml:space="preserve">
+    <value>反向移动旋转器。如果解析时转向错误的方向则打开此项目。</value>
+  </data>
+  <data name="LblHips2FitsSurvey" xml:space="preserve">
+    <value>HIPS 2 FITS Sky Survey数据源</value>
   </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
-    <value>Add {0} to Minutes after Meridian</value>
+    <value>在中天后添加 {0} 分钟</value>
+  </data>
+  <data name="LblFlipTime" xml:space="preserve">
+    <value>翻转时间</value>
+  </data>
+  <data name="LblAmount" xml:space="preserve">
+    <value>次数</value>
+  </data>
+  <data name="LblDelta" xml:space="preserve">
+    <value>Delta</value>
+  </data>
+  <data name="LblElapsed" xml:space="preserve">
+    <value>已耗时</value>
+  </data>
+  <data name="LblHFRTrend" xml:space="preserve">
+    <value>HFR趋势</value>
+  </data>
+  <data name="Lbl_SequenceCondition_LoopCondition_Description" xml:space="preserve">
+    <value>触发序列循环指定次数的条件</value>
+  </data>
+  <data name="Lbl_SequenceCondition_LoopCondition_Name" xml:space="preserve">
+    <value>用于迭代的循环</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeCondition_Description" xml:space="preserve">
+    <value>指定一个条件，否则达到指定时间后停止当前指令集</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeCondition_Name" xml:space="preserve">
+    <value>到某时间前循环</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
+    <value>工作原理类似于顺序容器，但可以指定一个深空对象，使用此目标的相关信息 (坐标、旋转等) 自动填充所有子项目</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
+    <value>深空对象序列</value>
+  </data>
+  <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
+    <value>此容器中的所有项都是并行运行的。在完成所有项目之前，此容器不会评估任何状态或触发器</value>
+  </data>
+  <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
+    <value>并行指令集</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequentialContainer_Description" xml:space="preserve">
+    <value>按顺序运行所有项目。每个项目后会评估触发器和状态</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequentialContainer_Name" xml:space="preserve">
+    <value>顺序指令集</value>
+  </data>
+  <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Description" xml:space="preserve">
+    <value>执行自动对焦</value>
+  </data>
+  <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Name" xml:space="preserve">
+    <value>开始自动对焦</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_CoolCamera_Description" xml:space="preserve">
+    <value>将相机制冷并保持在指定温度</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_CoolCamera_Name" xml:space="preserve">
+    <value>冷却相机</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_WarmCamera_Description" xml:space="preserve">
+    <value>将相机制冷并保持在指定温度</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
+    <value>相机回温</value>
+  </data>
+  <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
+    <value>转动到指定滤镜</value>
+  </data>
+  <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Name" xml:space="preserve">
+    <value>切换滤镜</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Description" xml:space="preserve">
+    <value>关闭平场板的盖子</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Name" xml:space="preserve">
+    <value>关闭平场镜头盖</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
+    <value>将调焦器移动到指定位置</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
+    <value>移动对焦器</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
+    <value>向导星发送抖动信号</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_Dither_Name" xml:space="preserve">
+    <value>抖动</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StartGuiding_Description" xml:space="preserve">
+    <value>开始自动导星</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StartGuiding_Name" xml:space="preserve">
+    <value>开始导星</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StopGuiding_Description" xml:space="preserve">
+    <value>停止自动导星</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StopGuiding_Name" xml:space="preserve">
+    <value>停止导星</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Description" xml:space="preserve">
+    <value>使用指定的时长、增益和偏移进行曝光</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Name" xml:space="preserve">
+    <value>开始曝光</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
+    <value>根据指定的坐标和旋转角，解析并旋转，直至居中目标</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
+    <value>居中并旋转</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
+    <value>通过解析，将赤道仪居中到给定的坐标</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
+    <value>居中</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
+    <value>将望远镜停放到泊位</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_ParkScope_Name" xml:space="preserve">
+    <value>停放望远镜</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description" xml:space="preserve">
+    <value>将望远镜指向到给定的高度和方位坐标</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name" xml:space="preserve">
+    <value>旋转至高度角/方位角</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description" xml:space="preserve">
+    <value>将望远镜指向到给定的赤经和赤纬坐标</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name" xml:space="preserve">
+    <value>旋转到赤经/赤纬</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_UnparkScope_Description" xml:space="preserve">
+    <value>将望远镜解除停放</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_UnparkScope_Name" xml:space="preserve">
+    <value>将望远镜解除停放</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SetTracking_Name" xml:space="preserve">
+    <value>设置跟踪</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SetTracking_Description" xml:space="preserve">
+    <value>设置赤道仪的跟踪模式</value>
+  </data>
+  <data name="LblTrackingModeNotSupported" xml:space="preserve">
+    <value>赤道仪不支持此跟踪模式</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_Annotation_Description" xml:space="preserve">
+    <value>向序列添加标注项</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_Annotation_Name" xml:space="preserve">
+    <value>标注</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_ExternalScript_Description" xml:space="preserve">
+    <value>调用指定路径的外部脚本</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_ExternalScript_Name" xml:space="preserve">
+    <value>外部脚本</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_MessageBox_Description" xml:space="preserve">
+    <value>打开消息框，点击提供的文本。 可以用作手动停止，例如盖上镜头盖拍摄暗场</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_MessageBox_Name" xml:space="preserve">
+    <value>消息框</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Description" xml:space="preserve">
+    <value>待机，直到拍摄坐标达到指定高度</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Name" xml:space="preserve">
+    <value>等待到达高度</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Description" xml:space="preserve">
+    <value>待机给定的持续时间（秒）</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Name" xml:space="preserve">
+    <value>等待时间</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTime_Description" xml:space="preserve">
+    <value>待机到hh:mm:ss格式的时间。另外，可以使用辅助工具自动设置日落、黄昏、晨光和日出的时间</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
+    <value>等待到达时间</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
+    <value>自上次自动对焦运行或序列拍摄开始后，当HFR增加给定量（以百分比表示）后，启动自动对焦</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Name" xml:space="preserve">
+    <value>HFR增加</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description" xml:space="preserve">
+    <value>自上次自动对焦运行或序列拍摄开始后，当温度加给定量（以度表示）后，启动自动对焦</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Name" xml:space="preserve">
+    <value>温度变化</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Description" xml:space="preserve">
+    <value>自上次自动对焦运行或序列拍摄开始后，当达到给定时间（以分钟表示）后，启动自动对焦</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Name" xml:space="preserve">
+    <value>特定时间</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Description" xml:space="preserve">
+    <value>满足条件时启动中天翻转（触发器）</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Name" xml:space="preserve">
+    <value>中天翻转</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CameraCannotSetTemperature" xml:space="preserve">
+    <value>相机没有冷却器，无法设置温度</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose" xml:space="preserve">
+    <value>平场设备不支持打开或关闭盖子</value>
+  </data>
+  <data name="Lbl_Sequencer_LoadSequence_Tooltip" xml:space="preserve">
+    <value>从 JSON 文件加载完整序列</value>
+  </data>
+  <data name="Lbl_Sequencer_RootElementMustBeRootContainer" xml:space="preserve">
+    <value>无法加载序列 - 序列器根元素必须是序列根容器！</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveSequence_Tooltip" xml:space="preserve">
+    <value>将完整序列保存到 JSON 文件</value>
+  </data>
+  <data name="Lbl_Sequencer_UnableToDeserializeJSON" xml:space="preserve">
+    <value>无法反序列化 JSON文件</value>
+  </data>
+  <data name="LblValue" xml:space="preserve">
+    <value>值</value>
+  </data>
+  <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Name" xml:space="preserve">
+    <value>设置切换值</value>
+  </data>
+  <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Description" xml:space="preserve">
+    <value>从开关集线器设置给定的值</value>
+  </data>
+  <data name="LblSwitchNotConnected" xml:space="preserve">
+    <value>开关没有连接！</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidSwitchValue" xml:space="preserve">
+    <value>选中开关的值无效！最小 {0} / 最大 {1} / 步骤大小 {2}</value>
+  </data>
+  <data name="LblContainer" xml:space="preserve">
+    <value>容器</value>
+  </data>
+  <data name="LblUtility" xml:space="preserve">
+    <value>工具</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Description" xml:space="preserve">
+    <value>在制定数量的曝光次数之后向导星发送抖动命令</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
+    <value>曝光之后抖动</value>
+  </data>
+  <data name="LblAfterExposures" xml:space="preserve">
+    <value>曝光后</value>
+  </data>
+  <data name="LblDragOver_BottomText" xml:space="preserve">
+    <value>在下方插入器材</value>
+  </data>
+  <data name="LblDragOver_CenterText" xml:space="preserve">
+    <value>在此处添加器材</value>
+  </data>
+  <data name="LblDragOver_TopText" xml:space="preserve">
+    <value>在上方插入器材</value>
+  </data>
+  <data name="LblDragOver_AddCondition" xml:space="preserve">
+    <value>加入循环条件</value>
+  </data>
+  <data name="LblDragOver_AddTemplate" xml:space="preserve">
+    <value>创建新的模板</value>
+  </data>
+  <data name="LblDragOver_AddTrigger" xml:space="preserve">
+    <value>添加触发器</value>
+  </data>
+  <data name="LblInstructions" xml:space="preserve">
+    <value>说明</value>
+  </data>
+  <data name="LblTemplates" xml:space="preserve">
+    <value>模板</value>
+  </data>
+  <data name="LblTemplate_DefaultTemplates" xml:space="preserve">
+    <value>默认模板</value>
+  </data>
+  <data name="LblTemplate_DropTemplateHere" xml:space="preserve">
+    <value>将序列指令集从此处拖放到此处创建一个新模板</value>
+  </data>
+  <data name="LblTemplate_OverwriteTemplateMessageBox_Caption" xml:space="preserve">
+    <value>覆盖已有模板？</value>
+  </data>
+  <data name="LblTemplate_OverwriteTemplateMessageBox_Text" xml:space="preserve">
+    <value>模板{0} 已存在。您想要覆盖现有模板吗？此操作是不可逆的。</value>
+  </data>
+  <data name="LblTemplate_UserTemplates" xml:space="preserve">
+    <value>用户模板</value>
+  </data>
+  <data name="LblTemplate_DeleteTemplateMessageBox_Caption" xml:space="preserve">
+    <value>删除模板？</value>
+  </data>
+  <data name="LblTemplate_DeleteTemplateMessageBox_Text" xml:space="preserve">
+    <value>模板 '{0}' 将被删除。你想要删除现有模板吗？此操作是不可逆的。</value>
+  </data>
+  <data name="Lbl_Sequencer_DeleteItem" xml:space="preserve">
+    <value>删除物品</value>
+  </data>
+  <data name="LblAddTargetToSequence" xml:space="preserve">
+    <value>将目标添加到序列</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description" xml:space="preserve">
+    <value>检测到滤镜切换之后执行自动对焦</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name" xml:space="preserve">
+    <value>切换滤镜后</value>
+  </data>
+  <data name="LblLastFilter" xml:space="preserve">
+    <value>上一个滤镜</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Description" xml:space="preserve">
+    <value>达到指定的曝光的次数之后触发自动对焦</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Name" xml:space="preserve">
+    <value>拍摄#张数后</value>
+  </data>
+  <data name="LblUnreachableAltitude" xml:space="preserve">
+    <value>永远不会达到高度</value>
+  </data>
+  <data name="LblPlugin" xml:space="preserve">
+    <value>插件</value>
+  </data>
+  <data name="LblBuildSequenceTooltip" xml:space="preserve">
+    <value>为一组目标建立序列计划</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Description" xml:space="preserve">
+    <value>根据指定的数量、时间、增益和偏移进行曝光，在曝光间隔评估触发器和状态</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Name" xml:space="preserve">
+    <value>多次曝光</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_Description" xml:space="preserve">
+    <value>根据指定的数量、时间、增益、偏移和抖动设置进行曝光，在曝光间隔评估触发器和状态</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_Name" xml:space="preserve">
+    <value>智能曝光</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveAsSequence_Tooltip" xml:space="preserve">
+    <value>保存完整序列到新的 JSON 文件</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Description" xml:space="preserve">
+    <value>打开平场板的盖子</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Name" xml:space="preserve">
+    <value>打开平场镜头盖</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Description" xml:space="preserve">
+    <value>设置平场光源的亮度值</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Name" xml:space="preserve">
+    <value>设置亮度</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Description" xml:space="preserve">
+    <value>打开或关闭灯光</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Name" xml:space="preserve">
+    <value>切换灯光</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description" xml:space="preserve">
+    <value>查找训练后的曝光参数，并拍摄平场</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
+    <value>受过训练的平场曝光</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
+    <value>没有找到以下组合的训练曝光时间：滤镜 {0}，增益 {1}，合并像素 {2}</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_EndArea" xml:space="preserve">
+    <value>序列结束区域</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_StartArea" xml:space="preserve">
+    <value>序列开始区域</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
+    <value>序列目标区域
+在此处添加深空目标序列或通过 Sky Atlas、构图助手添加目标</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
+    <value>循环条件</value>
+  </data>
+  <data name="Lbl_SequenceContainer_EndAreaContainer_Name" xml:space="preserve">
+    <value>结束</value>
+  </data>
+  <data name="Lbl_SequenceContainer_StartAreaContainer_Name" xml:space="preserve">
+    <value>开始</value>
+  </data>
+  <data name="Lbl_SequenceContainer_TargetAreaContainer_Name" xml:space="preserve">
+    <value>目标</value>
+  </data>
+  <data name="LblStartupSequenceTemplate" xml:space="preserve">
+    <value>启动序列模板</value>
+  </data>
+  <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
+    <value>设置后，此模板将被预加载到序列。</value>
+  </data>
+  <data name="LblForceGuidingCalibration" xml:space="preserve">
+    <value>强制校准</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_NoSwitchSelected" xml:space="preserve">
+    <value>未选择开关！</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_DitherTooltip" xml:space="preserve">
+    <value>在指定的曝光次数抖动。值为0将禁用此条目的抖动。</value>
+  </data>
+  <data name="LblInstructionSet" xml:space="preserve">
+    <value>指令集</value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddCondition_Tooltip" xml:space="preserve">
+    <value>将循环条件添加到指令集中。
+如果一个或多个条件被添加到序列容器内，只要这些循环条件满足，将会执行并重复指令。
+一旦循环条件中的一个不满足，将会跳过其余指令。
+此外，循环条件适用于当前指令集的每个指令。 </value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddInstruction_Tooltip" xml:space="preserve">
+    <value>向指令集中添加一个指令。
+一个指令是单一指令或一组指令，当它们有效时将被执行。 
+无效的指示(红圈标注) 将会被跳过。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddTrigger_Tooltip" xml:space="preserve">
+    <value>将触发器添加到指令集。
+触发器是指令，仅在满足指定参数时执行。 
+指令完成后将更新和评估触发参数。
+还有一些触发器适用于当前指令集和集合中的每个子集。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Delete_Tooltip" xml:space="preserve">
+    <value>从序列中删除当前指令集及其所有项目。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_MoveDown_Tooltip" xml:space="preserve">
+    <value>将指令集和全部内容下移一个位置。
+如果下面的位置是扩展的指令集，它将被移动到指令集中。
+如果下面的位置是当前未扩展的指令集，它将被移至指令集的下方。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_MoveUp_Tooltip" xml:space="preserve">
+    <value>将指令集和所有内容上移一个位置。
+如果上面的位置是扩展的指令集，它将被移动到指令集中。
+如果上面的位置是当前未扩展的指令集，它将被移动到指令集之上。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Reset_Tooltip" xml:space="preserve">
+    <value>重置当前指令集的状态和进度以及所有内部指令。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Delete_Tooltip" xml:space="preserve">
+    <value>从指令集中删除当前指令。</value>
+  </data>
+  <data name="Lbl_SequenceItem_MoveDown_Tooltip" xml:space="preserve">
+    <value>将指令向下移动一个位置。
+如果下面的位置是扩展的指令集，它将被移动到指令集中。
+如果下面的位置是当前未扩展的指令集，它将被移至指令集的下方。</value>
+  </data>
+  <data name="Lbl_SequenceItem_MoveUp_Tooltip" xml:space="preserve">
+    <value>将指令向上移动一个位置。
+如果上面的位置是扩展的指令集，它将被移动到指令集中。
+如果上面的位置是当前未扩展的指令集，它将被移动到指令集之上。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Reset_Tooltip" xml:space="preserve">
+    <value>重置当前指令的状态和进度。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Progress" xml:space="preserve">
+    <value>等待目标达到指定高度。 {0}° / {1}°</value>
+  </data>
+  <data name="Lbl_OldSequencer_EndOfSequence" xml:space="preserve">
+    <value>序列结束指令</value>
+  </data>
+  <data name="Lbl_OldSequencer_ParallelEndOfSequence" xml:space="preserve">
+    <value>并行序列结束指令</value>
+  </data>
+  <data name="Lbl_OldSequencer_TargetImaging" xml:space="preserve">
+    <value>目标图像指令</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_Name" xml:space="preserve">
+    <value>序列</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Duplicate_Tooltip" xml:space="preserve">
+    <value>创建当前设置和条目的副本，并将其附加到父指令集</value>
+  </data>
+  <data name="Lbl_SequenceItem_Duplicate_Tooltip" xml:space="preserve">
+    <value>创建当前条目的副本，并将其附加到父指令集</value>
+  </data>
+  <data name="Lbl_OldSequencer_EmptyAreaDescription" xml:space="preserve">
+    <value>通过 + 按钮添加新的序列目标，打开现有目标或通过构图助手添加目标</value>
+  </data>
+  <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
+    <value>添加新的目标</value>
+  </data>
+  <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
+    <value>加载目标</value>
+  </data>
+  <data name="Lbl_OldSequencer_OpenTargetSet" xml:space="preserve">
+    <value>打开目标集</value>
+  </data>
+  <data name="Lbl_OldSequencer_Title" xml:space="preserve">
+    <value>序列生成器</value>
+  </data>
+  <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
+    <value>所有目标结束选项</value>
+  </data>
+  <data name="Lbl_OldSequencer_Template" xml:space="preserve">
+    <value>序列生成器模板</value>
+  </data>
+  <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
+    <value>导入目标</value>
+  </data>
+  <data name="Lbl_Sequencer_Title" xml:space="preserve">
+    <value>序列器</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Camera" xml:space="preserve">
+    <value>相机</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Condition" xml:space="preserve">
+    <value>循环条件</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
+    <value>指令集</value>
+  </data>
+  <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
+    <value>滤镜轮</value>
+  </data>
+  <data name="Lbl_SequenceCategory_FlatDevice" xml:space="preserve">
+    <value>平场设备</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Focuser" xml:space="preserve">
+    <value>电调</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Guider" xml:space="preserve">
+    <value>导星</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Switch" xml:space="preserve">
+    <value>开关</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Telescope" xml:space="preserve">
+    <value>赤道仪</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Trigger" xml:space="preserve">
+    <value>触发器</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Utility" xml:space="preserve">
+    <value>工具</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
+    <value>当目标高于给定高度时 循环的条件，然后停止当前指令集</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
+    <value>高于高度时循环</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
+    <value>圆顶</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Description" xml:space="preserve">
+    <value>关闭圆顶的活动窗</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Name" xml:space="preserve">
+    <value>关闭圆顶活动窗</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_ParkDome_Description" xml:space="preserve">
+    <value>将圆顶停放到泊位</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_ParkDome_Name" xml:space="preserve">
+    <value>停放圆顶</value>
+  </data>
+  <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
+    <value>开始序列指令</value>
+  </data>
+  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
+    <value>开始所有目标选项</value>
+  </data>
+  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
+    <value>序列开始时冷却相机</value>
+  </data>
+  <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
+    <value>序列开始时打开镜头盖</value>
+  </data>
+  <data name="LblOpenDomeShutterAtSequenceStart" xml:space="preserve">
+    <value>序列开始时打开圆顶活动窗</value>
+  </data>
+  <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
+    <value>序列开始时解除圆顶停放</value>
+  </data>
+  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
+    <value>序列开始时解除赤道仪停放</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
+    <value>打开圆顶的活动窗</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Name" xml:space="preserve">
+    <value>打开圆顶活动窗</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description" xml:space="preserve">
+    <value>确保圆顶保持与望远镜同步</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
+    <value>启用圆顶同步</value>
+  </data>
+  <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
+    <value>序列包含已禁用或进度曝光次数等于总曝光次数的条目。 这些项目被跳过，序列中没有任何新的项目。</value>
+  </data>
+  <data name="LblRotateTarget" xml:space="preserve">
+    <value>旋转目标</value>
+  </data>
+  <data name="LblSafetyMonitorConnectionLost" xml:space="preserve">
+    <value>安全监控连接丢失！</value>
+  </data>
+  <data name="LblSafetyMonitor" xml:space="preserve">
+    <value>安全监控</value>
+  </data>
+  <data name="LblDisconnectSafetyMonitor" xml:space="preserve">
+    <value>断开安全监控</value>
+  </data>
+  <data name="LblSafetyMonitorConnected" xml:space="preserve">
+    <value>安全监控已连接</value>
+  </data>
+  <data name="LblIsSafe" xml:space="preserve">
+    <value>安全的</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
+    <value>设置某个条件：检查所连接的安全监视器设备是否安全，只要安全监视器报告安全，就循环执行指令集。如果设备返回不安全状态，则当前指令集将停止。
+最好与另一个循环条件结合使用，以避免在安全监控保持为真时陷入无限循环。</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
+    <value>安全监控</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
+    <value>保存当前指令及其所有内容作为重新使用的模板</value>
+  </data>
+  <data name="LblSafetyMonitorNotConnected" xml:space="preserve">
+    <value>安全监控尚未连接</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveSequence_Notification" xml:space="preserve">
+    <value>序列"{0}" 保存成功于 {1}</value>
+  </data>
+  <data name="LblSetTrackingRate" xml:space="preserve">
+    <value>设置跟踪速率</value>
+  </data>
+  <data name="LblTimeSpan" xml:space="preserve">
+    <value>时间间隔</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
+    <value>在制定时间内循环指令。当时间结束时，该组内的其余指令将会被跳过。</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
+    <value>以时间循环</value>
   </data>
 </root>

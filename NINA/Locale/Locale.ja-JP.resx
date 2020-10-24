@@ -1139,7 +1139,7 @@
     <value>デザリングがオンになっていますが、ガイドカメラが未接続です。</value>
   </data>
   <data name="LblDitherPixels" xml:space="preserve">
-    <value>Dither Pixels</value>
+    <value>デザリングピクセル</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
     <value>赤経のみデザリグ</value>
@@ -1452,7 +1452,7 @@
     <value>開</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>ダーク及びフラットダーク撮影のためカバーを開けて下さい。</value>
+    <value>フラットウィザードでダークフラット用のカバーを開く</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>設定</value>
@@ -1946,16 +1946,16 @@
     <value>子午線オフセット</value>
   </data>
   <data name="LblPHD2Setup" xml:space="preserve">
-    <value>PHD2 Setup</value>
+    <value>PHD2設定</value>
   </data>
   <data name="LblMetaGuideSetup" xml:space="preserve">
-    <value>MetaGuide Setup</value>
+    <value>MetaGuide設定</value>
   </data>
   <data name="LblMetaGuideIP" xml:space="preserve">
     <value>MetaGuide IP</value>
   </data>
   <data name="LblMetaGuidePort" xml:space="preserve">
-    <value>MetaGuide Port</value>
+    <value>MetaGuide ポート</value>
   </data>
   <data name="LblMin" xml:space="preserve">
     <value>最小</value>
@@ -2456,6 +2456,9 @@
   <data name="LblPosition" xml:space="preserve">
     <value>位置</value>
   </data>
+  <data name="LblClearGuidingCalibration" xml:space="preserve">
+    <value>キャリブレーションをクリアする</value>
+  </data>
   <data name="LblPreferredPlanetarium" xml:space="preserve">
     <value>好きなプラネタリウムソフト</value>
   </data>
@@ -2472,7 +2475,7 @@
     <value>フィルター:{0} 使用のフラット</value>
   </data>
   <data name="LblPreSequenceChecklist" xml:space="preserve">
-    <value>あなたのシーケンスには次の潜在的な問題が見つかりました。</value>
+    <value>次の潜在的な問題がシーケンスで発見されました:</value>
   </data>
   <data name="LblPreSequenceChecklistHeader" xml:space="preserve">
     <value>シーケンス事前チェックリスト</value>
@@ -2785,13 +2788,13 @@
     <value>安定化</value>
   </data>
   <data name="LblSettlePixelTolerance" xml:space="preserve">
-    <value>Settle Pixel Tolerance</value>
+    <value>安定化許容ピクセル</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
     <value>導入動作後の安定化時間</value>
   </data>
   <data name="LblSettleTimeout" xml:space="preserve">
-    <value>Settle Timeout</value>
+    <value>安定化タイムアウト</value>
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>ガイド開始再試行</value>
@@ -3020,7 +3023,7 @@
     <value>赤道儀の緯度と経度はNINAの値と異なります。値を同期しますか？</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
-    <value>対象(J2000)</value>
+    <value>目標</value>
   </data>
   <data name="LblTargetDec" xml:space="preserve">
     <value>対象赤緯</value>
@@ -3215,6 +3218,30 @@
   </data>
   <data name="LblTracking" xml:space="preserve">
     <value>追尾</value>
+  </data>
+  <data name="LblTrackingRate" xml:space="preserve">
+    <value>トラッキングレート</value>
+  </data>
+  <data name="LblTrackingStopped" xml:space="preserve">
+    <value>停止しました</value>
+  </data>
+  <data name="LblTrackingSidereal" xml:space="preserve">
+    <value>恒星の</value>
+  </data>
+  <data name="LblTrackingSolar" xml:space="preserve">
+    <value>太陽の</value>
+  </data>
+  <data name="LblTrackingLunar" xml:space="preserve">
+    <value>月の</value>
+  </data>
+  <data name="LblTrackingKing" xml:space="preserve">
+    <value>キング</value>
+  </data>
+  <data name="LblTrackingCustom" xml:space="preserve">
+    <value>カスタム</value>
+  </data>
+  <data name="LblTrackingCustomRate" xml:space="preserve">
+    <value>カスタム ({0}, {1})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Transit North</value>
@@ -3665,10 +3692,10 @@
     <value>シーケンスの中に、使用できないオフセット設定をした項目があります。この項目は無視されます。</value>
   </data>
   <data name="LblFlatDeviceAddBinningMode" xml:space="preserve">
-    <value>ビニングを増加</value>
+    <value>ビニングを追加</value>
   </data>
   <data name="LblFlatDeviceAddGain" xml:space="preserve">
-    <value>ゲインを増加</value>
+    <value>ゲインを追加</value>
   </data>
   <data name="LblFlatDeviceAreYouSureBinning" xml:space="preserve">
     <value>ビニングの値をすべて削除していいですか？</value>
@@ -3792,10 +3819,10 @@
     <value>経緯台の場合は0にする必要があります。 赤道儀では、赤経 を +/- 90 度まで旋回し、回転軸から望遠鏡の開口部の中心までの、横方向の距離(mm)を測定します</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length (mm)</value>
+    <value>ドーム横軸長(mm)</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
-    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right when facing the celestial pole.</value>
+    <value>サイドバイサイド構成では、サドルからOTA中央までの距離(横方向、mm単位) です。極軸に向かって右が正符号です。</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
     <value>ドーム半径(mm)</value>
@@ -3804,19 +3831,19 @@
     <value>ドームの中心から周辺からまでをベースに沿って測定</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W (mm)</value>
+    <value>鏡筒位置 東/西 (mm)</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the right when facing the celestial pole.</value>
+    <value>ドームの中心から架台の中心までの、東または西のオフセット値(mm)を測定します。 天の極を向いているとき、プラスの値は右側になります。</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S (mm)</value>
+    <value>鏡筒位置 北/南 (mm)</value>
   </data>
   <data name="LblCancelSequence" xml:space="preserve">
     <value>シーケンスの取り消し</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is towards the celestial pole.</value>
+    <value>ドームの中心から架台の中心までの、北または南のオフセット値(mm)を測定します。 プラスの値は天の極側になります。</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
     <value>シーケンスの一時停止</value>
@@ -3846,10 +3873,13 @@
     <value>カメラには機械式シャッターがなく、自動フラットパネルが接続されておらず、シーケンスにはダーク/BIASアイテムのみが含まれています。カメラがカバーされていることを確認してください。</value>
   </data>
   <data name="LblAutoFocusFilterSettings" xml:space="preserve">
-    <value>Auto Focus Filter Settings</value>
+    <value>オートフォーカスフィルター設定</value>
   </data>
   <data name="LblMeridianFlipIn" xml:space="preserve">
     <value>子午線フリップに入りました</value>
+  </data>
+  <data name="LblMeridianFlipCenterFailed" xml:space="preserve">
+    <value>子午線反転失敗後の中央位置合わせ</value>
   </data>
   <data name="LblDefaultGain" xml:space="preserve">
     <value>デフォルトのゲイン</value>
@@ -3897,31 +3927,31 @@
     <value>露出時間の後の、画像が失われたと見なされるまでの時間。 露出+タイムアウト時間後に、カメラが画像準備イベントを送信しない場合、露出はキャンセルされます。</value>
   </data>
   <data name="LblCalibrationState" xml:space="preserve">
-    <value>Calibration State</value>
+    <value>キャリブレーション状態</value>
   </data>
   <data name="LblFWHM" xml:space="preserve">
     <value>FWHM</value>
   </data>
   <data name="LblIntensity" xml:space="preserve">
-    <value>Intensity</value>
+    <value>輝度</value>
   </data>
   <data name="LblMinIntensity" xml:space="preserve">
-    <value>Minimum Intensity</value>
+    <value>最小輝度</value>
   </data>
   <data name="LblMinIntensityTooltip" xml:space="preserve">
-    <value>Guide star intensity is measured on a scale of 0-255. If intensity drops below this amount, then NINA will pause guiding until it returns. This may indicate the presence of clouds.</value>
+    <value>ガイド星の輝度は0-255のスケールで測定されます。 輝度がこの量を下回ると、回復するまでNINAはガイドを一時停止します。これは雲の存在を示しているかもしれません。</value>
   </data>
   <data name="LblSeeing" xml:space="preserve">
-    <value>Seeing</value>
+    <value>シーイング</value>
   </data>
   <data name="LblMetaGuideConnectionFailed" xml:space="preserve">
-    <value>Failed to connect to MetaGuide</value>
+    <value>MetaGuide に接続できませんでした</value>
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuiding" xml:space="preserve">
-    <value>Guiding resumed</value>
+    <value>ガイドが再開</value>
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
-    <value>Failed to resume guiding after star intensity recovered</value>
+    <value>星の明るさが回復した後、ガイド再開に失敗しました</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>ドーム同期エラー. 望遠鏡に追従できません,{0}</value>
@@ -3947,11 +3977,8 @@
   <data name="LblAutoFocusTimeoutTooltip" xml:space="preserve">
     <value>シーケンス中（動作キャンセル前）の、オートフォーカスを待つ時間（秒）</value>
   </data>
-  <data name="LblEast" xml:space="preserve">
-    <value>東</value>
-  </data>
   <data name="LblMetaGuideLowIntensityStopGuiding" xml:space="preserve">
-    <value>Stopped guiding due to low star intensity. There may be clouds.</value>
+    <value>星の明るさが足りないためガイドを停止しました。雲があるかもしれません。</value>
   </data>
   <data name="LblDomeSyncTimeout" xml:space="preserve">
     <value>同期のタイムアウト</value>
@@ -3963,42 +3990,750 @@
     <value>C2A</value>
   </data>
   <data name="LblCameraName" xml:space="preserve">
-    <value>Camera Name</value>
+    <value>カメラ名</value>
   </data>
   <data name="LblRotatorAngleDescription" xml:space="preserve">
-    <value>Angle of the rotator</value>
+    <value>回転装置の角度</value>
   </data>
   <data name="LblStarCount" xml:space="preserve">
-    <value>Star count</value>
+    <value>星の数</value>
+  </data>
+  <data name="LblCameraNotConnected" xml:space="preserve">
+    <value>カメラが接続されていません</value>
+  </data>
+  <data name="LblFilterWheelNotConnected" xml:space="preserve">
+    <value>フィルターホイールが接続されていません</value>
+  </data>
+  <data name="LblFocuserNotConnected" xml:space="preserve">
+    <value>フォーカサーが接続されていません</value>
+  </data>
+  <data name="LblGuiderNotConnected" xml:space="preserve">
+    <value>ガイダーが接続されていません</value>
+  </data>
+  <data name="LblGuiderCannotClearCalibration" xml:space="preserve">
+    <value>ガイダーはキャリブレーションをサポートしていません</value>
+  </data>
+  <data name="LblIterations" xml:space="preserve">
+    <value>反復</value>
+  </data>
+  <data name="LblRotatorNotConnected" xml:space="preserve">
+    <value>回転装置が接続されていません</value>
+  </data>
+  <data name="LblScript" xml:space="preserve">
+    <value>スクリプト</value>
+  </data>
+  <data name="LblDelay" xml:space="preserve">
+    <value>遅延</value>
+  </data>
+  <data name="LblTargetJ2000" xml:space="preserve">
+    <value>対象(J2000)</value>
+  </data>
+  <data name="LblExecutingItemsInParallel" xml:space="preserve">
+    <value>項目を並列実行中</value>
+  </data>
+  <data name="LblEnterAnnotation" xml:space="preserve">
+    <value>注釈を入力</value>
+  </data>
+  <data name="LblAfterIterations" xml:space="preserve">
+    <value>反復処理後</value>
+  </data>
+  <data name="LblFlatDeviceNotConnected" xml:space="preserve">
+    <value>フラット装置が接続されていません</value>
+  </data>
+  <data name="LblEnterMessage" xml:space="preserve">
+    <value>メッセージを入力</value>
+  </data>
+  <data name="LblMessage" xml:space="preserve">
+    <value>メッセージ</value>
+  </data>
+  <data name="LblLoopUntil" xml:space="preserve">
+    <value>までループ</value>
+  </data>
+  <data name="LblTriggers" xml:space="preserve">
+    <value>トリガー</value>
   </data>
   <data name="LblMetaGuideVersionCheckFailed" xml:space="preserve">
-    <value>Update MetaGuide to at least {0}</value>
+    <value>MetaGuideを少なくとも {0}に更新</value>
   </data>
   <data name="LblMetaGuideDitherSettleTime" xml:space="preserve">
-    <value>Dither settling time</value>
+    <value>ディザリング安定化時間</value>
   </data>
   <data name="LblMetaGuideDitherSettleTimeTooltip" xml:space="preserve">
-    <value>Amount of time, in seconds, to wait for dithering to complete</value>
+    <value>ディザリングが完了するまでの時間（秒）</value>
   </data>
   <data name="LblMetaGuideLockWhenGuiding" xml:space="preserve">
-    <value>Lock star when guiding</value>
+    <value>ガイド時に星をロック</value>
   </data>
   <data name="LblCoordinatesToFramingTooltip" xml:space="preserve">
-    <value>Send coordinates to the Framing Wizard</value>
+    <value>フレーミングウィザードに座標を送信する</value>
   </data>
   <data name="LblImportTargets" xml:space="preserve">
-    <value>Import Targets from external source</value>
+    <value>外部ソースからターゲットをインポート</value>
   </data>
   <data name="LblUnknownImportFormat" xml:space="preserve">
-    <value>Unknown format to import targets</value>
+    <value>ターゲットをインポートするための不明なフォーマット</value>
   </data>
   <data name="LblUltraMode" xml:space="preserve">
-    <value>Ultra Mode</value>
+    <value>ウルトラモード</value>
   </data>
   <data name="LblUltraModeTooltip" xml:space="preserve">
-    <value>Enables the Ultra Mode for extra low read noise </value>
+    <value>超低読み出しノイズ用にウルトラモードを有効にします </value>
+  </data>
+  <data name="LblRotatorReverseTooltip" xml:space="preserve">
+    <value>回転装置の方向を反転させます。プレートソルバーが間違った方向に回転させた場合、これで切り替えてください。</value>
+  </data>
+  <data name="LblHips2FitsSurvey" xml:space="preserve">
+    <value>HIPS 2 FITSスカイサーベイ</value>
   </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
-    <value>Add {0} to Minutes after Meridian</value>
+    <value>子午線反転後の時間（分）に {0} を加算する</value>
+  </data>
+  <data name="LblFlipTime" xml:space="preserve">
+    <value>反転時間</value>
+  </data>
+  <data name="LblAmount" xml:space="preserve">
+    <value>枚数</value>
+  </data>
+  <data name="LblDelta" xml:space="preserve">
+    <value>デルタ</value>
+  </data>
+  <data name="LblElapsed" xml:space="preserve">
+    <value>経過</value>
+  </data>
+  <data name="LblHFRTrend" xml:space="preserve">
+    <value>HFRトレンド</value>
+  </data>
+  <data name="Lbl_SequenceCondition_LoopCondition_Description" xml:space="preserve">
+    <value>指定された回数だけシーケンスコンテナをループさせる条件</value>
+  </data>
+  <data name="Lbl_SequenceCondition_LoopCondition_Name" xml:space="preserve">
+    <value>反復ループ</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeCondition_Description" xml:space="preserve">
+    <value>現在の命令セットを、指定された時間に達するまでループして停止する条件</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeCondition_Name" xml:space="preserve">
+    <value>時間までループ</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
+    <value>シーケンシャルコンテナのように動作しますが、ディープスカイオブジェクトを指定することができ、関連する情報(座標や回転など) が全てのサブアイテムに自動的に設定されます</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
+    <value>ディープスカイオブジェクトのシーケンス</value>
+  </data>
+  <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
+    <value>このコンテナ内のすべての項目は並列に実行されます。すべての項目が完了するまで、コンテナはどの条件やトリガーも評価しません。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
+    <value>並列命令セット</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequentialContainer_Description" xml:space="preserve">
+    <value>すべての項目を順番に実行します。トリガーと条件は各項目の終了後に評価されます。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequentialContainer_Name" xml:space="preserve">
+    <value>順次命令セット</value>
+  </data>
+  <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Description" xml:space="preserve">
+    <value>オートフォーカスを実行します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Name" xml:space="preserve">
+    <value>オートフォーカスを実行</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_CoolCamera_Description" xml:space="preserve">
+    <value>指定された温度と時間で、カメラを冷却します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_CoolCamera_Name" xml:space="preserve">
+    <value>カメラを冷却する</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_WarmCamera_Description" xml:space="preserve">
+    <value>設定された時間でカメラを昇温させます</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
+    <value>カメラを昇温する</value>
+  </data>
+  <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
+    <value>フィルターホイールを指定したフィルターに移動させます。</value>
+  </data>
+  <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Name" xml:space="preserve">
+    <value>フィルターの切り替え</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Description" xml:space="preserve">
+    <value>フラットパネルの蓋を閉じる</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Name" xml:space="preserve">
+    <value>フラットパネルに蓋をする</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
+    <value>フォーカサーを指定された絶対位置に移動します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
+    <value>フォーカサーを移動</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
+    <value>ディザー信号をガイダーに送信します。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_Dither_Name" xml:space="preserve">
+    <value>デザリング</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StartGuiding_Description" xml:space="preserve">
+    <value>オートガイドを開始します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StartGuiding_Name" xml:space="preserve">
+    <value>ガイド開始</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StopGuiding_Description" xml:space="preserve">
+    <value>オートガイドを停止します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StopGuiding_Name" xml:space="preserve">
+    <value>ガイド停止</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Description" xml:space="preserve">
+    <value>指定された時間、ゲイン、オフセットで露出します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Name" xml:space="preserve">
+    <value>露出</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
+    <value>指定された座標と回転角度に、プレートソルブによって望遠鏡を中心に合わせ、望遠鏡と回転装置を回転させます</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
+    <value>中心合わせと回転</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
+    <value>指定された座標にプレートソルブして、望遠鏡を中央に合わせます</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
+    <value>中心合わせ</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
+    <value>望遠鏡を所定の位置にパークさせます</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_ParkScope_Name" xml:space="preserve">
+    <value>望遠鏡のパーク</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description" xml:space="preserve">
+    <value>所定の高度と方位角座標に望遠鏡を移動させます</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name" xml:space="preserve">
+    <value>高度/方位角に移動</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description" xml:space="preserve">
+    <value>所定の赤経と赤緯座標に望遠鏡を移動させます</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name" xml:space="preserve">
+    <value>赤緯／赤経に移動</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_UnparkScope_Description" xml:space="preserve">
+    <value>望遠鏡のパークを解除します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_UnparkScope_Name" xml:space="preserve">
+    <value>望遠鏡のパーク解除</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SetTracking_Name" xml:space="preserve">
+    <value>追尾に設定</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SetTracking_Description" xml:space="preserve">
+    <value>赤道儀を追尾モードに設定します</value>
+  </data>
+  <data name="LblTrackingModeNotSupported" xml:space="preserve">
+    <value>赤道儀は追尾モードをサポートしていません</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_Annotation_Description" xml:space="preserve">
+    <value>シーケンスに注釈を追加するユーティリティアイテム</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_Annotation_Name" xml:space="preserve">
+    <value>注釈</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_ExternalScript_Description" xml:space="preserve">
+    <value>指定されたパスの外部スクリプトを呼び出します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_ExternalScript_Name" xml:space="preserve">
+    <value>外部スクリプト</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_MessageBox_Description" xml:space="preserve">
+    <value>クリックする文字列を含むメッセージボックスを開きます。 例えば、ダークフレーム用に望遠鏡に蓋をするために、手動で停止するときに使うことができます。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_MessageBox_Name" xml:space="preserve">
+    <value>メッセージ ボックス</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Description" xml:space="preserve">
+    <value>指定された座標の高度に達するまで待機します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Name" xml:space="preserve">
+    <value>高度まで待機</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Description" xml:space="preserve">
+    <value>指定された時間（秒）待機します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Name" xml:space="preserve">
+    <value>指定時間待機</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTime_Description" xml:space="preserve">
+    <value>指定された時間（hh:mm:ss 形式）待機します。さらに、ユーティリティボックスが利用でき、そこには日没、夕暮れ、夜明け、日の出用の情報が自動的に設定されます。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
+    <value>指定時間待機</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
+    <value>前回のオートフォーカス実行またはシーケンス開始後で、HFRが設定値（パーセント）だけ増えた後に、オートフォーカスを開始するトリガー</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Name" xml:space="preserve">
+    <value>HFR増加後のオートフォーカス</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description" xml:space="preserve">
+    <value>前回のオートフォーカス実行またはシーケンス開始後で、気温が設定値だけ変化した後に、オートフォーカスを開始するトリガー</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Name" xml:space="preserve">
+    <value>温度変更後のオートフォーカス</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Description" xml:space="preserve">
+    <value>前回のオートフォーカス実行またはシーケンス開始後で、時間が設定値（分）だけ経過した後に、オートフォーカスを開始するトリガー</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Name" xml:space="preserve">
+    <value>指定時間後のオートフォーカス</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Description" xml:space="preserve">
+    <value>条件が満たされたときに、子午線反転を開始するトリガー</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Name" xml:space="preserve">
+    <value>子午線反転</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CameraCannotSetTemperature" xml:space="preserve">
+    <value>カメラに冷却装置がないため、温度を設定できません</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose" xml:space="preserve">
+    <value>このフラット装置は蓋の開閉をサポートしていません</value>
+  </data>
+  <data name="Lbl_Sequencer_LoadSequence_Tooltip" xml:space="preserve">
+    <value>JSON ファイルからシーケンス全体を読み込む</value>
+  </data>
+  <data name="Lbl_Sequencer_RootElementMustBeRootContainer" xml:space="preserve">
+    <value>シーケンスを読み込めません - シーケンサーのルート要素は、シーケンスルートコンテナでなければなりません！</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveSequence_Tooltip" xml:space="preserve">
+    <value>JSONファイルにシーケンス全体を保存する</value>
+  </data>
+  <data name="Lbl_Sequencer_UnableToDeserializeJSON" xml:space="preserve">
+    <value>JSONを逆シリアル化できません</value>
+  </data>
+  <data name="LblValue" xml:space="preserve">
+    <value>値</value>
+  </data>
+  <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Name" xml:space="preserve">
+    <value>スイッチ値の設定</value>
+  </data>
+  <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Description" xml:space="preserve">
+    <value>指定されたスイッチに、スイッチハブから値を設定します</value>
+  </data>
+  <data name="LblSwitchNotConnected" xml:space="preserve">
+    <value>スイッチが接続されていません！</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidSwitchValue" xml:space="preserve">
+    <value>選択したスイッチの値が無効です! {0} / 最大 {1} / ステップサイズ {2}</value>
+  </data>
+  <data name="LblContainer" xml:space="preserve">
+    <value>コンテナ</value>
+  </data>
+  <data name="LblUtility" xml:space="preserve">
+    <value>ユーティリティ</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Description" xml:space="preserve">
+    <value>指定した露出回数終了後、ディザーコマンドをガイダーに送信する</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
+    <value>露出後のディザー</value>
+  </data>
+  <data name="LblAfterExposures" xml:space="preserve">
+    <value>露出後</value>
+  </data>
+  <data name="LblDragOver_BottomText" xml:space="preserve">
+    <value>以下に命令を挿入</value>
+  </data>
+  <data name="LblDragOver_CenterText" xml:space="preserve">
+    <value>ここに命令を追加</value>
+  </data>
+  <data name="LblDragOver_TopText" xml:space="preserve">
+    <value>上に命令を挿入</value>
+  </data>
+  <data name="LblDragOver_AddCondition" xml:space="preserve">
+    <value>ループ条件を追加</value>
+  </data>
+  <data name="LblDragOver_AddTemplate" xml:space="preserve">
+    <value>新しいテンプレートを作成</value>
+  </data>
+  <data name="LblDragOver_AddTrigger" xml:space="preserve">
+    <value>トリガーを追加</value>
+  </data>
+  <data name="LblInstructions" xml:space="preserve">
+    <value>命令</value>
+  </data>
+  <data name="LblTemplates" xml:space="preserve">
+    <value>テンプレート</value>
+  </data>
+  <data name="LblTemplate_DefaultTemplates" xml:space="preserve">
+    <value>デフォルトのテンプレート</value>
+  </data>
+  <data name="LblTemplate_DropTemplateHere" xml:space="preserve">
+    <value>シーケンスからシーケンス命令セットをここにドロップして、新しいテンプレートを作成</value>
+  </data>
+  <data name="LblTemplate_OverwriteTemplateMessageBox_Caption" xml:space="preserve">
+    <value>テンプレートを上書きしますか？</value>
+  </data>
+  <data name="LblTemplate_OverwriteTemplateMessageBox_Text" xml:space="preserve">
+    <value>テンプレート '{0}' は既に存在します。既存のテンプレートを上書きしますか？この操作は元に戻せません。</value>
+  </data>
+  <data name="LblTemplate_UserTemplates" xml:space="preserve">
+    <value>ユーザーテンプレート</value>
+  </data>
+  <data name="LblTemplate_DeleteTemplateMessageBox_Caption" xml:space="preserve">
+    <value>テンプレートを削除しますか？</value>
+  </data>
+  <data name="LblTemplate_DeleteTemplateMessageBox_Text" xml:space="preserve">
+    <value>テンプレート '{0}' は削除されます。既存のテンプレートを削除しますか？この操作は元に戻せません。</value>
+  </data>
+  <data name="Lbl_Sequencer_DeleteItem" xml:space="preserve">
+    <value>項目を削除</value>
+  </data>
+  <data name="LblAddTargetToSequence" xml:space="preserve">
+    <value>目標をシーケンスに追加</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description" xml:space="preserve">
+    <value>フィルタの変更が検出された後に、オートフォーカスを開始します</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name" xml:space="preserve">
+    <value>フィルター変更後のオートフォーカス</value>
+  </data>
+  <data name="LblLastFilter" xml:space="preserve">
+    <value>最後のフィルター</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Description" xml:space="preserve">
+    <value>指定された枚数の撮影が終了した後に、オートフォーカスを実行します</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Name" xml:space="preserve">
+    <value># 枚撮影後のオートフォーカス</value>
+  </data>
+  <data name="LblUnreachableAltitude" xml:space="preserve">
+    <value>高度に到達することはありません</value>
+  </data>
+  <data name="LblPlugin" xml:space="preserve">
+    <value>プラグイン</value>
+  </data>
+  <data name="LblBuildSequenceTooltip" xml:space="preserve">
+    <value>計画された複数の目標の、シーケンスを構築します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Description" xml:space="preserve">
+    <value>指定された枚数、時間、ゲイン、およびオフセットで撮影します。トリガーと条件は、撮影の間に評価されます。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Name" xml:space="preserve">
+    <value>多数枚の撮影</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_Description" xml:space="preserve">
+    <value>指定された枚数、フィルター、時間、ゲイン、オフセット撮影し、指定枚数後にディザリングを開始します。 トリガーと条件は、撮影の間に評価されます。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_Name" xml:space="preserve">
+    <value>撮影開始</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveAsSequence_Tooltip" xml:space="preserve">
+    <value>新しいJSONファイルにシーケンス全体を保存する</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Description" xml:space="preserve">
+    <value>フラットパネルの蓋を開ける</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Name" xml:space="preserve">
+    <value>フラットパネルの蓋を開く</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Description" xml:space="preserve">
+    <value>フラット装置の明るさを、指定した値に設定します</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Name" xml:space="preserve">
+    <value>明るさを設定</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Description" xml:space="preserve">
+    <value>フラット装置のライトのオンとオフを切り替えます</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Name" xml:space="preserve">
+    <value>ライトの切り替え</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description" xml:space="preserve">
+    <value>指定されたパラメータで露出時間を調べ、フラットを撮影します</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
+    <value>調べられたフラットの露出時間</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
+    <value>フィルター {0}、ゲイン {1}、ビンニング {2} の組み合わせで、適正な露出時間が見つけられませんでした</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_EndArea" xml:space="preserve">
+    <value>シーケンス終了エリア</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_StartArea" xml:space="preserve">
+    <value>シーケンス開始エリア</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
+    <value>シーケンス目標場所
+ディープスカイオブジェクトのシーケンスをここに追加するか、スカイアトラスかフレーミング支援を使って目標を追加する</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
+    <value>ループ条件</value>
+  </data>
+  <data name="Lbl_SequenceContainer_EndAreaContainer_Name" xml:space="preserve">
+    <value>終了</value>
+  </data>
+  <data name="Lbl_SequenceContainer_StartAreaContainer_Name" xml:space="preserve">
+    <value>開始</value>
+  </data>
+  <data name="Lbl_SequenceContainer_TargetAreaContainer_Name" xml:space="preserve">
+    <value>ターゲット群</value>
+  </data>
+  <data name="LblStartupSequenceTemplate" xml:space="preserve">
+    <value>シーケンス開始テンプレート</value>
+  </data>
+  <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
+    <value>設定すると、このテンプレートはシーケンサーにあらかじめ読み込まれます。</value>
+  </data>
+  <data name="LblForceGuidingCalibration" xml:space="preserve">
+    <value>強制的にキャリブレーション実行</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_NoSwitchSelected" xml:space="preserve">
+    <value>スイッチが選択されていません！</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_DitherTooltip" xml:space="preserve">
+    <value>指定された露出時間後にディザーを実行します。0にすると、この項目のディザーが無効になります。</value>
+  </data>
+  <data name="LblInstructionSet" xml:space="preserve">
+    <value>命令セット</value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddCondition_Tooltip" xml:space="preserve">
+    <value>命令セットにループ条件を追加します。
+コンテナに一つまたは複数の条件が追加され、このループ条件が正しそうであれば、命令セットは実行・ループされます。
+一つでもループ条件が正しそうでなくなれば、セット内の残りの命令は実行されません。
+さらに、ループ条件は現在の命令セットとセット内のどのサブセットに対しても有効になります。 </value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddInstruction_Tooltip" xml:space="preserve">
+    <value>命令セットに命令を追加します。
+命令は一つまたは複数の命令で構成され、有効であれば実行されます。
+無効な命令（赤い丸で囲んだ感嘆符で示されます）は実行されません。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddTrigger_Tooltip" xml:space="preserve">
+    <value>命令セットにトリガーを追加します。
+トリガーは複数の命令から構成され、指定されたパラメーターが合っているときだけ実行されます。
+トリガーのパラメーターは、命令の実行が完了したときに、評価・更新されます。
+さらに、トリガーは現在の命令セットとセット内のどのサブセットに対しても有効になります。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Delete_Tooltip" xml:space="preserve">
+    <value>現在の命令セットとそのすべての項目をシーケンスから削除します。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_MoveDown_Tooltip" xml:space="preserve">
+    <value>命令セットとその全てのコンテンツをひとつ下に移動します。
+ひとつ下の位置が拡張されている命令セットであれば、その命令セット内に移動されます。
+ひとつ下の位置が、現在拡張されていない命令セットであれば、その命令セットの下に移動されます。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_MoveUp_Tooltip" xml:space="preserve">
+    <value>命令セットとその全てのコンテンツをひとつ上に移動します。
+ひとつ上の位置が拡張されている命令セットであれば、その命令セット内に移動されます。
+ひとつ上の位置が、現在拡張されていない命令セットであれば、その命令セットの上に移動されます。</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Reset_Tooltip" xml:space="preserve">
+    <value>現在の命令セットと内部にあるすべての命令の、状態と進行状況をリセットします。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Delete_Tooltip" xml:space="preserve">
+    <value>命令セットから現在の命令を削除します。</value>
+  </data>
+  <data name="Lbl_SequenceItem_MoveDown_Tooltip" xml:space="preserve">
+    <value>命令をひとつ下に移動します。
+ひとつ下の位置が拡張されている命令セットであれば、その命令セット内に移動されます。
+ひとつ下の位置が、現在拡張されていない命令セットであれば、その命令セットの下に移動されます。</value>
+  </data>
+  <data name="Lbl_SequenceItem_MoveUp_Tooltip" xml:space="preserve">
+    <value>命令をひとつ上に移動します。
+ひとつ上の位置が拡張されている命令セットであれば、その命令セット内に移動されます。
+ひとつ上の位置が、現在拡張されていない命令セットであれば、その命令セットの上に移動されます。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Reset_Tooltip" xml:space="preserve">
+    <value>現在の命令の状態と進行状況をリセットします。</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Progress" xml:space="preserve">
+    <value>目標が指定された高度に達するまで待機しています。 {0}° / {1}°</value>
+  </data>
+  <data name="Lbl_OldSequencer_EndOfSequence" xml:space="preserve">
+    <value>シーケンス終了命令</value>
+  </data>
+  <data name="Lbl_OldSequencer_ParallelEndOfSequence" xml:space="preserve">
+    <value>並列シーケンスの終了命令</value>
+  </data>
+  <data name="Lbl_OldSequencer_TargetImaging" xml:space="preserve">
+    <value>目標撮影の命令</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_Name" xml:space="preserve">
+    <value>シーケンス</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Duplicate_Tooltip" xml:space="preserve">
+    <value>現在のセットとそのすべての項目の複製を作成し、上位命令セットに追加します</value>
+  </data>
+  <data name="Lbl_SequenceItem_Duplicate_Tooltip" xml:space="preserve">
+    <value>現在の項目の複製を作成し、上位命令セットに追加します</value>
+  </data>
+  <data name="Lbl_OldSequencer_EmptyAreaDescription" xml:space="preserve">
+    <value>+ ボタンを使用して新しいシーケンス目標を追加します。既存の目標を開くか、フレーミング支援を使って目標を追加します</value>
+  </data>
+  <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
+    <value>新しい目標の追加</value>
+  </data>
+  <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
+    <value>目標の読み込み</value>
+  </data>
+  <data name="Lbl_OldSequencer_OpenTargetSet" xml:space="preserve">
+    <value>目標セットを開く</value>
+  </data>
+  <data name="Lbl_OldSequencer_Title" xml:space="preserve">
+    <value>シーケンスビルダー</value>
+  </data>
+  <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
+    <value>全てのターゲット終了オプション</value>
+  </data>
+  <data name="Lbl_OldSequencer_Template" xml:space="preserve">
+    <value>シーケンスビルダーテンプレート</value>
+  </data>
+  <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
+    <value>目標のインポート</value>
+  </data>
+  <data name="Lbl_Sequencer_Title" xml:space="preserve">
+    <value>シーケンサー</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Camera" xml:space="preserve">
+    <value>カメラ</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Condition" xml:space="preserve">
+    <value>ループ条件</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
+    <value>命令セット</value>
+  </data>
+  <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
+    <value>フィルターホイール</value>
+  </data>
+  <data name="Lbl_SequenceCategory_FlatDevice" xml:space="preserve">
+    <value>フラット装置</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Focuser" xml:space="preserve">
+    <value>フォーカサー</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Guider" xml:space="preserve">
+    <value>ガイダー</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Switch" xml:space="preserve">
+    <value>スイッチ</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Telescope" xml:space="preserve">
+    <value>望遠鏡</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Trigger" xml:space="preserve">
+    <value>トリガー</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Utility" xml:space="preserve">
+    <value>ユーティリティ</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
+    <value>目標が指定された高度の上にある間に、命令セットをループさせてから停止させる条件</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
+    <value>高度の上にある間にループする</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
+    <value>ドーム</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Description" xml:space="preserve">
+    <value>ドームのシャッターを閉じます</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Name" xml:space="preserve">
+    <value>ドームシャッターの閉鎖</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_ParkDome_Description" xml:space="preserve">
+    <value>ドームを所定の位置にパークさせます</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_ParkDome_Name" xml:space="preserve">
+    <value>ドームをパークさせる</value>
+  </data>
+  <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
+    <value>シーケンス開始命令</value>
+  </data>
+  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
+    <value>全ての目標開始オプション</value>
+  </data>
+  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
+    <value>シーケンス開始時のカメラの冷却</value>
+  </data>
+  <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
+    <value>シーケンス開始時にフラット装置の蓋を開く</value>
+  </data>
+  <data name="LblOpenDomeShutterAtSequenceStart" xml:space="preserve">
+    <value>シーケンス開始時にドームのシャッターを開く</value>
+  </data>
+  <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
+    <value>シーケンス開始時にドームのパークを解除する</value>
+  </data>
+  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
+    <value>シーケンス開始時に赤道儀のパークを解除する</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
+    <value>ドームのシャッターを開きます</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Name" xml:space="preserve">
+    <value>ドームシャッターを開く</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description" xml:space="preserve">
+    <value>ドームが望遠鏡と同期したままになるようにします</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
+    <value>ドーム同期を有効にする</value>
+  </data>
+  <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
+    <value>シーケンスには、無効な行または進行した撮影枚数が合計撮影枚数と等しい行が含まれています。 これらの項目はスキップされ、行内のどの項目も、シーケンサーに生成されません。</value>
+  </data>
+  <data name="LblRotateTarget" xml:space="preserve">
+    <value>目標を回転</value>
+  </data>
+  <data name="LblSafetyMonitorConnectionLost" xml:space="preserve">
+    <value>セーフティモニターの接続が切れました！</value>
+  </data>
+  <data name="LblSafetyMonitor" xml:space="preserve">
+    <value>セーフティモニター</value>
+  </data>
+  <data name="LblDisconnectSafetyMonitor" xml:space="preserve">
+    <value>セーフティモニターを切断</value>
+  </data>
+  <data name="LblSafetyMonitorConnected" xml:space="preserve">
+    <value>セーフティモニターが接続されました</value>
+  </data>
+  <data name="LblIsSafe" xml:space="preserve">
+    <value>安全です</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
+    <value>接続されたセーフティモニターが安全であるかを確認し、モニターが安全であることを報告している間命令セットをループさせる条件。 モニターが安全でないことを報告した場合、現在の命令セットは停止します。
+一番良いのは、安全モニタが真であり続けるときに無限ループにならないように、別のループ条件と組み合わせて使用することです。</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
+    <value>セーフティモニター</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
+    <value>現在の命令セットとすべてのコンテンツを、再使用するためのテンプレートとして保存します</value>
+  </data>
+  <data name="LblSafetyMonitorNotConnected" xml:space="preserve">
+    <value>セーフティモニターが接続されていません</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveSequence_Notification" xml:space="preserve">
+    <value>シーケンス "{0}" は {1} に正常に保存されました</value>
+  </data>
+  <data name="LblSetTrackingRate" xml:space="preserve">
+    <value>トラッキングレートの設定</value>
+  </data>
+  <data name="LblTimeSpan" xml:space="preserve">
+    <value>指定時間</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
+    <value>指定時間ループする命令セット。この時間が過ぎれば、セット内の残りの命令は実行されません。</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
+    <value>指定時間ループ</value>
   </data>
 </root>
