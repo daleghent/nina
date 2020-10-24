@@ -453,7 +453,8 @@ namespace NINA.ViewModel {
             new CultureInfo("ja-JP"),
             new CultureInfo("tr-TR"),
             new CultureInfo("pt-PT"),
-            new CultureInfo("el-GR")
+            new CultureInfo("el-GR"),
+            new CultureInfo("cs-CZ")
         };
 
         public ObservableCollection<CultureInfo> AvailableLanguages {

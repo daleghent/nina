@@ -144,6 +144,7 @@
       <ComponentGroupRef Id="pt_PT_files" />
       <ComponentGroupRef Id="el_GR_files" />
       <ComponentGroupRef Id="Sequencer_Examples_files" />
+      <ComponentGroupRef Id="cs_CZ_files" />
     </Feature>
   </Product>
 
@@ -281,6 +282,7 @@
             <Directory Id="Sequencer_Examples" Name="Examples" />
           </Directory>
           <Directory Id="Sequencer" Name="Sequencer" />
+          <Directory Id="cs_CZ" Name="cs-CZ" />
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -1693,6 +1695,13 @@
       </Component>
       <Component Id="Sequencer_Examples_Basic_Sequence_End.template.json" Guid="F87F8F42-BDF7-4496-BB3F-E49E35E77A9E">
         <File Id="Sequencer_Examples_Basic_Sequence_End.template.json" Name="Basic Sequence End.template.json" Source="$(var.NINA_TargetDir)Sequencer\Examples\Basic Sequence End.template.json" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="cs_CZ_files" Directory="cs_CZ">
+      <Component Id="cs_CZ_NINA.resources.dll" Guid="26dd6369-ae6f-47ff-b9c9-53791e99e2b5">
+        <File Id="cs_CZ_NINA.resources.dll" Name="NINA.resources.dll" Source="$(var.NINA_TargetDir)cs-CZ\NINA.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
