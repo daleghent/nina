@@ -3040,7 +3040,7 @@ Bitte vergewissern, dass das System gut oder nahe im Fokus ist, bevor fortgefahr
 Sollen die Werte synchronisiert werden?</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
-    <value>Target</value>
+    <value>Ziel</value>
   </data>
   <data name="LblTargetDec" xml:space="preserve">
     <value>ZielDek</value>
@@ -3238,13 +3238,13 @@ Das Rechteck über einen Teil des Bildes bewegen das Sie fotografieren wollen un
     <value>Nachführung</value>
   </data>
   <data name="LblTrackingRate" xml:space="preserve">
-    <value>Tracking Rate</value>
+    <value>Nachführungsrate</value>
   </data>
   <data name="LblTrackingStopped" xml:space="preserve">
-    <value>Stopped</value>
+    <value>Gestoppt</value>
   </data>
   <data name="LblTrackingSidereal" xml:space="preserve">
-    <value>Sidereal</value>
+    <value>Siderisch</value>
   </data>
   <data name="LblTrackingSolar" xml:space="preserve">
     <value>Solar</value>
@@ -3253,13 +3253,13 @@ Das Rechteck über einen Teil des Bildes bewegen das Sie fotografieren wollen un
     <value>Lunar</value>
   </data>
   <data name="LblTrackingKing" xml:space="preserve">
-    <value>King</value>
+    <value>König</value>
   </data>
   <data name="LblTrackingCustom" xml:space="preserve">
-    <value>Custom</value>
+    <value>Benutzerdefiniert</value>
   </data>
   <data name="LblTrackingCustomRate" xml:space="preserve">
-    <value>Custom ({0}, {1})</value>
+    <value>Benutzerdefiniert ({0}, {1})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
     <value>Transit Nord</value>
@@ -3831,7 +3831,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>NINA Direct Following verwenden</value>
   </data>
   <data name="LblDomeFindHome" xml:space="preserve">
-    <value>Find Home</value>
+    <value>Home suchen</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
     <value>GEM Achsenlänge (mm)</value>
@@ -3957,7 +3957,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Intensität</value>
   </data>
   <data name="LblMinIntensity" xml:space="preserve">
-    <value>Minimum Intensity</value>
+    <value>Minimale Intensität</value>
   </data>
   <data name="LblMinIntensityTooltip" xml:space="preserve">
     <value>Guide star intensity is measured on a scale of 0-255. If intensity drops below this amount, then NINA will pause guiding until it returns. This may indicate the presence of clouds.</value>
@@ -3966,7 +3966,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Seeing</value>
   </data>
   <data name="LblMetaGuideConnectionFailed" xml:space="preserve">
-    <value>Failed to connect to MetaGuide</value>
+    <value>Verbindung zu MetaGuide fehlgeschlagen</value>
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuiding" xml:space="preserve">
     <value>Guiding fortgesetzt</value>
@@ -4014,46 +4014,46 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Name der Kamera</value>
   </data>
   <data name="LblRotatorAngleDescription" xml:space="preserve">
-    <value>Angle of the rotator</value>
+    <value>Winkel des Rotators</value>
   </data>
   <data name="LblStarCount" xml:space="preserve">
     <value>Sternanzahl</value>
   </data>
   <data name="LblCameraNotConnected" xml:space="preserve">
-    <value>Camera not connected</value>
+    <value>Kamera nicht verbunden</value>
   </data>
   <data name="LblFilterWheelNotConnected" xml:space="preserve">
-    <value>Filterwheel not connected</value>
+    <value>Filterrad nicht verbunden</value>
   </data>
   <data name="LblFocuserNotConnected" xml:space="preserve">
-    <value>Focuser not connected</value>
+    <value>Okularauszug nicht verbunden</value>
   </data>
   <data name="LblGuiderNotConnected" xml:space="preserve">
-    <value>Guider not connected</value>
+    <value>Guider nicht verbunden</value>
   </data>
   <data name="LblGuiderCannotClearCalibration" xml:space="preserve">
-    <value>Guider does not support calibration</value>
+    <value>Guider unterstützt keine Kalibrierung</value>
   </data>
   <data name="LblIterations" xml:space="preserve">
-    <value>Iterations</value>
+    <value>Iterationen</value>
   </data>
   <data name="LblRotatorNotConnected" xml:space="preserve">
-    <value>Rotator not connected</value>
+    <value>Rotator nicht verbunden</value>
   </data>
   <data name="LblScript" xml:space="preserve">
-    <value>Script</value>
+    <value>Skript</value>
   </data>
   <data name="LblDelay" xml:space="preserve">
-    <value>Delay</value>
+    <value>Verzögerung</value>
   </data>
   <data name="LblTargetJ2000" xml:space="preserve">
-    <value>Target (J2000)</value>
+    <value>Ziel (J2000)</value>
   </data>
   <data name="LblExecutingItemsInParallel" xml:space="preserve">
-    <value>Executing items in parallel</value>
+    <value>Führe Elemente parallel aus</value>
   </data>
   <data name="LblEnterAnnotation" xml:space="preserve">
-    <value>Enter Annotation</value>
+    <value>Anmerkung eingeben</value>
   </data>
   <data name="LblAfterIterations" xml:space="preserve">
     <value>After Iterations</value>
@@ -4062,16 +4062,16 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Flat Device not connected</value>
   </data>
   <data name="LblEnterMessage" xml:space="preserve">
-    <value>Enter Message</value>
+    <value>Nachricht eingeben</value>
   </data>
   <data name="LblMessage" xml:space="preserve">
-    <value>Message</value>
+    <value>Nachricht</value>
   </data>
   <data name="LblLoopUntil" xml:space="preserve">
     <value>Loop until</value>
   </data>
   <data name="LblTriggers" xml:space="preserve">
-    <value>Triggers</value>
+    <value>Auslöser</value>
   </data>
   <data name="LblMetaGuideVersionCheckFailed" xml:space="preserve">
     <value>Update MetaGuide to at least {0}</value>
@@ -4095,7 +4095,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Unbekanntes Format zum Importieren von Zielen</value>
   </data>
   <data name="LblUltraMode" xml:space="preserve">
-    <value>Ultra Mode</value>
+    <value>Ultra-Modus</value>
   </data>
   <data name="LblUltraModeTooltip" xml:space="preserve">
     <value>Enables the Ultra Mode for extra low read noise </value>
@@ -4113,13 +4113,13 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Flip Time</value>
   </data>
   <data name="LblAmount" xml:space="preserve">
-    <value>Amount</value>
+    <value>Betrag</value>
   </data>
   <data name="LblDelta" xml:space="preserve">
     <value>Delta</value>
   </data>
   <data name="LblElapsed" xml:space="preserve">
-    <value>Elapsed</value>
+    <value>Verstrichen</value>
   </data>
   <data name="LblHFRTrend" xml:space="preserve">
     <value>HFR Trend</value>
@@ -4128,7 +4128,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>A condition to loop a sequence container for the specified amount of loops</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopCondition_Name" xml:space="preserve">
-    <value>Loop For Iterations</value>
+    <value>Schleife für Iterationen</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Description" xml:space="preserve">
     <value>A condition that loops until the specified time has been reached and then stops the current instruction set</value>
@@ -4140,43 +4140,43 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Works like a sequential container, but a deep sky object can be specified which will auto populate all sub items with the relevant information (coordinates, rotation etc.)</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Deep Sky Object Sequence</value>
+    <value>Deep Sky Objekt Sequenz</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>All items in this container are run in parallel. This container will not evaluate any conditions or triggers until all items are finished.</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
-    <value>Parallel Instruction Set</value>
+    <value>Paralleles Anweisungsset</value>
   </data>
   <data name="Lbl_SequenceContainer_SequentialContainer_Description" xml:space="preserve">
     <value>Runs all items in a sequential order. Trigger and conditions are evaluated after each item</value>
   </data>
   <data name="Lbl_SequenceContainer_SequentialContainer_Name" xml:space="preserve">
-    <value>Sequential Instruction Set</value>
+    <value>Sequentielles Anweisungsset</value>
   </data>
   <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Description" xml:space="preserve">
     <value>Executes an autofocus run</value>
   </data>
   <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Name" xml:space="preserve">
-    <value>Run Autofocus</value>
+    <value>Autofokus ausführen</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_CoolCamera_Description" xml:space="preserve">
     <value>Cools down the camera for the given temperature and duration</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_CoolCamera_Name" xml:space="preserve">
-    <value>Cool Camera</value>
+    <value>Kamera kühlen</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Description" xml:space="preserve">
     <value>Warms the camera for the given duration</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
-    <value>Warm Camera</value>
+    <value>Kamera aufwärmen</value>
   </data>
   <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
     <value>Moves the filter wheel to the specified filter</value>
   </data>
   <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Name" xml:space="preserve">
-    <value>Switch Filter</value>
+    <value>Filter wechseln</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Description" xml:space="preserve">
     <value>Closes the cover of the flat panel</value>
@@ -4188,7 +4188,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Moves the focuser to the given absolute position</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
-    <value>Move Focuser</value>
+    <value>Okularauszug bewegen</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
     <value>Sends a dither signal to the guider</value>
@@ -4197,61 +4197,61 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Dither</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StartGuiding_Description" xml:space="preserve">
-    <value>Starts autoguiding</value>
+    <value>Autoguiding starten</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StartGuiding_Name" xml:space="preserve">
-    <value>Start Guiding</value>
+    <value>Guiding starten</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StopGuiding_Description" xml:space="preserve">
-    <value>Stops autoguiding</value>
+    <value>Guiding stoppen</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StopGuiding_Name" xml:space="preserve">
-    <value>Stop Guiding</value>
+    <value>Stoppe Guiding</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Description" xml:space="preserve">
     <value>Takes an exposure for the given duration, gain and offset</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Name" xml:space="preserve">
-    <value>Take Exposure</value>
+    <value>Belichtung ausführen</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
     <value>Centers and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Center and Rotate</value>
+    <value>Zentrieren und drehen</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
     <value>Centers the telescope via plate solving for the given coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Center</value>
+    <value>Zentrieren</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Parks the telescope to the park position</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Name" xml:space="preserve">
-    <value>Park Scope</value>
+    <value>Teleskop parken</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description" xml:space="preserve">
     <value>Slews the telescope to the given altitude and azimuth coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name" xml:space="preserve">
-    <value>Slew To Alt/Az</value>
+    <value>Zu Alt/Az schwenken</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description" xml:space="preserve">
     <value>Slews the telescope to the given right ascension and declination coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name" xml:space="preserve">
-    <value>Slew To Ra/Dec</value>
+    <value>Zu Ra/Dec schwenken</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_UnparkScope_Description" xml:space="preserve">
-    <value>Unparks the telescope</value>
+    <value>Parkt das Teleskop aus</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_UnparkScope_Name" xml:space="preserve">
-    <value>Unpark Scope</value>
+    <value>Teleskop ausparken</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SetTracking_Name" xml:space="preserve">
-    <value>Set Tracking</value>
+    <value>Nachführung setzen</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SetTracking_Description" xml:space="preserve">
     <value>Sets the tracking mode on the mount</value>
@@ -4263,19 +4263,19 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>A utility item to add annotations to a sequence</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_Annotation_Name" xml:space="preserve">
-    <value>Annotation</value>
+    <value>Anmerkung</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_ExternalScript_Description" xml:space="preserve">
     <value>Calls an external script for the given path</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_ExternalScript_Name" xml:space="preserve">
-    <value>External Script</value>
+    <value>Externes Skript</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_MessageBox_Description" xml:space="preserve">
     <value>Opens up a message box with the provided text to be clicked. Can be used as a manual stop, e.g. to cover the scope for dark frames</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_MessageBox_Name" xml:space="preserve">
-    <value>Message Box</value>
+    <value>Nachrichtenfeld</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Description" xml:space="preserve">
     <value>Waits until the altitude has been reached for the given coordinates</value>
@@ -4338,7 +4338,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Unable to deserialize JSON</value>
   </data>
   <data name="LblValue" xml:space="preserve">
-    <value>Value</value>
+    <value>Wert</value>
   </data>
   <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Name" xml:space="preserve">
     <value>Set Switch Value</value>
@@ -4356,7 +4356,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Container</value>
   </data>
   <data name="LblUtility" xml:space="preserve">
-    <value>Utility</value>
+    <value>Hilfsmittel</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Description" xml:space="preserve">
     <value>Sends a dither command to the guider after the specified number of exposures</value>
@@ -4386,34 +4386,34 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>ADD TRIGGER</value>
   </data>
   <data name="LblInstructions" xml:space="preserve">
-    <value>Instructions</value>
+    <value>Instruktionen</value>
   </data>
   <data name="LblTemplates" xml:space="preserve">
-    <value>Templates</value>
+    <value>Vorlagen</value>
   </data>
   <data name="LblTemplate_DefaultTemplates" xml:space="preserve">
-    <value>Default Templates</value>
+    <value>Standardvorlagen</value>
   </data>
   <data name="LblTemplate_DropTemplateHere" xml:space="preserve">
     <value>Drop Sequence Instruction Set from the Sequence here to create a new Template</value>
   </data>
   <data name="LblTemplate_OverwriteTemplateMessageBox_Caption" xml:space="preserve">
-    <value>Overwrite Template?</value>
+    <value>Vorlage überschreiben?</value>
   </data>
   <data name="LblTemplate_OverwriteTemplateMessageBox_Text" xml:space="preserve">
     <value>Template '{0}' already exists. Do you want to overwrite the existing Template? This action is irreversible.</value>
   </data>
   <data name="LblTemplate_UserTemplates" xml:space="preserve">
-    <value>User Templates</value>
+    <value>Benutzervorlagen</value>
   </data>
   <data name="LblTemplate_DeleteTemplateMessageBox_Caption" xml:space="preserve">
-    <value>Delete Template?</value>
+    <value>Vorlage löschen?</value>
   </data>
   <data name="LblTemplate_DeleteTemplateMessageBox_Text" xml:space="preserve">
     <value>Template '{0}' will be deleted. Do you want to delete the existing Template? This action is irreversible.</value>
   </data>
   <data name="Lbl_Sequencer_DeleteItem" xml:space="preserve">
-    <value>DELETE ITEM</value>
+    <value>ITEM LÖSCHEN</value>
   </data>
   <data name="LblAddTargetToSequence" xml:space="preserve">
     <value>Add Target to Sequence</value>
@@ -4425,7 +4425,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>AF After Filter Change</value>
   </data>
   <data name="LblLastFilter" xml:space="preserve">
-    <value>Last Filter</value>
+    <value>Letzter Filter</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Description" xml:space="preserve">
     <value>Triggers an autofocus run after the set amount of exposures have been captured</value>
@@ -4446,13 +4446,13 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Takes exposures for the given amount, duration, gain and offset. Triggers and conditions are evaluated in between the exposures.</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Name" xml:space="preserve">
-    <value>Take Many Exposures</value>
+    <value>Viele Belichtungen aufnehmen</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_Description" xml:space="preserve">
     <value>Takes exposures for the given amount, filter, duration, gain and offset and initiates a dither after the amount of exposures. Triggers and conditions are evaluated in between the exposures.</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_Name" xml:space="preserve">
-    <value>Smart Exposure</value>
+    <value>Smart Belichtung</value>
   </data>
   <data name="Lbl_Sequencer_SaveAsSequence_Tooltip" xml:space="preserve">
     <value>Save complete sequence to a new JSON file</value>
@@ -4461,19 +4461,19 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Opens the cover of the flat panel</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Name" xml:space="preserve">
-    <value>Open Flat Panel Cover</value>
+    <value>Flat Panel Abdeckung öffnen</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Description" xml:space="preserve">
     <value>Sets the brightness of the flat device to the specified value</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Name" xml:space="preserve">
-    <value>Set Brightness</value>
+    <value>Helligkeit setzen</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Description" xml:space="preserve">
     <value>Toggles the flat device light on or off</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Name" xml:space="preserve">
-    <value>Toggle Light</value>
+    <value>Licht umschalten</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description" xml:space="preserve">
     <value>Looks up the trained exposure value for the specified parameters and takes flat exposures</value>
@@ -4485,44 +4485,44 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>No trained exposure value was found for the combination of filter {0}, gain {1}, binning {2}</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_EndArea" xml:space="preserve">
-    <value>Sequence End Area</value>
+    <value>Sequenz Endbereich</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_StartArea" xml:space="preserve">
-    <value>Sequence Start Area</value>
+    <value>Sequenz Startbereich</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
     <value>Sequence Target Area
 Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assistant</value>
   </data>
   <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
-    <value>Loop Conditions</value>
+    <value>Schleifenbedingungen</value>
   </data>
   <data name="Lbl_SequenceContainer_EndAreaContainer_Name" xml:space="preserve">
-    <value>End</value>
+    <value>Ende</value>
   </data>
   <data name="Lbl_SequenceContainer_StartAreaContainer_Name" xml:space="preserve">
     <value>Start</value>
   </data>
   <data name="Lbl_SequenceContainer_TargetAreaContainer_Name" xml:space="preserve">
-    <value>Targets</value>
+    <value>Ziele</value>
   </data>
   <data name="LblStartupSequenceTemplate" xml:space="preserve">
-    <value>Startup Sequence Template</value>
+    <value>Start-Up Sequenzvorlage</value>
   </data>
   <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
     <value>When set, this template will be pre-loaded into the sequencer.</value>
   </data>
   <data name="LblForceGuidingCalibration" xml:space="preserve">
-    <value>Force Calibration</value>
+    <value>Kalibrierung erzwingen</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_NoSwitchSelected" xml:space="preserve">
-    <value>No switch selected!</value>
+    <value>Kein Switch ausgewählt!</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_DitherTooltip" xml:space="preserve">
     <value>Command a dither after the specified amount of exposures. A value of 0 will disable dither for this item.</value>
   </data>
   <data name="LblInstructionSet" xml:space="preserve">
-    <value>Instruction Set</value>
+    <value>Instruktionsset</value>
   </data>
   <data name="Lbl_SequenceContainer_AddCondition_Tooltip" xml:space="preserve">
     <value>Add a loop condition to the instruction set.
@@ -4586,7 +4586,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Target Imaging Instructions</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_Name" xml:space="preserve">
-    <value>Sequence</value>
+    <value>Sequenz</value>
   </data>
   <data name="Lbl_SequenceContainer_Duplicate_Tooltip" xml:space="preserve">
     <value>Creates a duplicate of current set and all its items and append it to the parent instruction set</value>
@@ -4598,16 +4598,16 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Add a new Sequence Target via the + Button, open an existing Target or add Targets via Framing Assistant</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Add new Target</value>
+    <value>Neues Ziel hinzufügen</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
-    <value>Load Target</value>
+    <value>Ziel laden</value>
   </data>
   <data name="Lbl_OldSequencer_OpenTargetSet" xml:space="preserve">
     <value>Open Target Set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Sequence Builder</value>
+    <value>Sequenz-Builder</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>End of all Targets Options</value>
@@ -4616,43 +4616,43 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Sequence Builder Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
-    <value>Import Target</value>
+    <value>Ziel importieren</value>
   </data>
   <data name="Lbl_Sequencer_Title" xml:space="preserve">
-    <value>Sequencer</value>
+    <value>Sequenzer</value>
   </data>
   <data name="Lbl_SequenceCategory_Camera" xml:space="preserve">
-    <value>Camera</value>
+    <value>Kamera</value>
   </data>
   <data name="Lbl_SequenceCategory_Condition" xml:space="preserve">
-    <value>Loop Condition</value>
+    <value>Schleifenbedingung</value>
   </data>
   <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
-    <value>Instruction Set</value>
+    <value>Instruktionsset</value>
   </data>
   <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
-    <value>Filter Wheel</value>
+    <value>Filterrad</value>
   </data>
   <data name="Lbl_SequenceCategory_FlatDevice" xml:space="preserve">
     <value>Flat Device</value>
   </data>
   <data name="Lbl_SequenceCategory_Focuser" xml:space="preserve">
-    <value>Focuser</value>
+    <value>Okularauszug</value>
   </data>
   <data name="Lbl_SequenceCategory_Guider" xml:space="preserve">
     <value>Guider</value>
   </data>
   <data name="Lbl_SequenceCategory_Switch" xml:space="preserve">
-    <value>Switch</value>
+    <value>Schalter</value>
   </data>
   <data name="Lbl_SequenceCategory_Telescope" xml:space="preserve">
-    <value>Telescope</value>
+    <value>Teleskop</value>
   </data>
   <data name="Lbl_SequenceCategory_Trigger" xml:space="preserve">
-    <value>Trigger</value>
+    <value>Auslöser</value>
   </data>
   <data name="Lbl_SequenceCategory_Utility" xml:space="preserve">
-    <value>Utility</value>
+    <value>Hilfsmittel</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
     <value>A condition that loops while the target is above the given altitude and then stops the current instruction set</value>
@@ -4661,7 +4661,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Loop While Altitude Above</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
-    <value>Dome</value>
+    <value>Kuppel</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Description" xml:space="preserve">
     <value>Closes the shutter of the dome</value>
@@ -4727,7 +4727,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Safety Monitor Connected</value>
   </data>
   <data name="LblIsSafe" xml:space="preserve">
-    <value>Is Safe</value>
+    <value>Ist sicher</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
     <value>A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
@@ -4749,12 +4749,15 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Set Tracking Rate</value>
   </data>
   <data name="LblTimeSpan" xml:space="preserve">
-    <value>Time Span</value>
+    <value>Zeitspanne</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
     <value>Loop instruction set for a given duration. When the duration is over, the remaining instructions inside the set will be skipped.</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>Loop for Time Span</value>
+  </data>
+  <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
+    <value>Flat Device connection lost!</value>
   </data>
 </root>

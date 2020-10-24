@@ -4755,4 +4755,7 @@ A utiliser en conjonction avec une autre condition de boucle pour ne pas se retr
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>Boucler pendant la durée</value>
   </data>
+  <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
+    <value>Flat Device connection lost!</value>
+  </data>
 </root>

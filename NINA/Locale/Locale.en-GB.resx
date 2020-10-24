@@ -2247,15 +2247,6 @@ Calculated HFR: {2}
   <data name="LblOpenWeatherMapClientInfo" xml:space="preserve">
     <value>NINA internal OpenWeatherMap API client</value>
   </data>
-  <data name="LblTheWeatherCompanyAPIKey" xml:space="preserve">
-    <value>TheWeatherCompany API Key</value>
-  </data>
-  <data name="LblTheWeatherCompanyClientDescription" xml:space="preserve">
-    <value>Uses TheWeatherCompany's Current Weather API. Weather data is refreshed every 10 minutes.</value>
-  </data>
-  <data name="LblTheWeatherCompanyClientInfo" xml:space="preserve">
-    <value>NINA internal TheWeatherCompany API client</value>
-  </data>
   <data name="LblOptions" xml:space="preserve">
     <value>Options</value>
   </data>
@@ -4764,5 +4755,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>Loop for Time Span</value>
+  </data>
+  <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
+    <value>Flat Device connection lost!</value>
   </data>
 </root>

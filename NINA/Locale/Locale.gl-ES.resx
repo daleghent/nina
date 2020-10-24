@@ -4760,4 +4760,7 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>Repetición por Intervalo de Tempo</value>
   </data>
+  <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
+    <value>Flat Device connection lost!</value>
+  </data>
 </root>

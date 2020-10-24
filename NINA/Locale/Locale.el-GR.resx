@@ -4748,4 +4748,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>Loop for Time Span</value>
   </data>
+  <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
+    <value>Flat Device connection lost!</value>
+  </data>
 </root>

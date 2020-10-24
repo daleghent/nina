@@ -4748,4 +4748,7 @@ Použijte ve spojení s jinou podmínkou smyčky, abyste neskončili v nekonečn
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>Smyčka po Zadaný Čas</value>
   </data>
+  <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
+    <value>Flat Zařízení odpojeno!</value>
+  </data>
 </root>
