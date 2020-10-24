@@ -67,6 +67,7 @@ namespace NINA.Sequencer.SequenceItem.Guider {
             return new StartGuiding(guiderMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

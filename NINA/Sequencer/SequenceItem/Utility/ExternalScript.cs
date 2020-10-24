@@ -77,6 +77,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 Icon = Icon,
                 Script = Script,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

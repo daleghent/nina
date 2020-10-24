@@ -66,6 +66,7 @@ namespace NINA.Sequencer.SequenceItem.Dome {
             return new EnableDomeSynchronization(domeMediator, telescopeMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

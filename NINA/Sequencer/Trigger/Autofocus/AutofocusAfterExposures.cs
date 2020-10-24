@@ -96,6 +96,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             return new AutofocusAfterExposures(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 AfterExposures = AfterExposures,
                 TriggerRunner = (SequentialContainer)TriggerRunner.Clone()

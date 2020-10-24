@@ -73,6 +73,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             return new MeridianFlipTrigger(profileService, cameraMediator, telescopeMediator, guiderMediator, focuserMediator, imagingMediator, applicationStatusMediator, filterWheelMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

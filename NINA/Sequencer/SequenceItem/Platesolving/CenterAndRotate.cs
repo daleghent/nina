@@ -110,6 +110,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             return new CenterAndRotate(profileService, telescopeMediator, imagingMediator, rotatorMediator, filterWheelMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates.Transform(Epoch.J2000) },
                 Rotation = Rotation

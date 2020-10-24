@@ -106,6 +106,7 @@ namespace NINA.Sequencer.SequenceItem.FilterWheel {
             return new SwitchFilter(profileService, filterWheelMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Filter = Filter
             };

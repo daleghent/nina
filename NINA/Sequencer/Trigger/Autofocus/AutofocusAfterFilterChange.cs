@@ -68,6 +68,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             return new AutofocusAfterFilterChange(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 TriggerRunner = (SequentialContainer)TriggerRunner.Clone()
             };

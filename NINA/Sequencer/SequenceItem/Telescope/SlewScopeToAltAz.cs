@@ -96,6 +96,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             return new SlewScopeToAltAz(profileService, telescopeMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Coordinates = new InputTopocentricCoordinates(Coordinates.Coordinates),
             };

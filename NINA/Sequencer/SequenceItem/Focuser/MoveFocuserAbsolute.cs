@@ -79,6 +79,7 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             return new MoveFocuserAbsolute(focuserMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Position = Position
             };

@@ -144,6 +144,7 @@ namespace NINA.Sequencer.Conditions {
                 Minutes = Minutes,
                 Seconds = Seconds,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

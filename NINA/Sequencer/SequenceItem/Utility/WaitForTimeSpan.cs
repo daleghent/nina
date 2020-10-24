@@ -63,6 +63,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             return new WaitForTimeSpan() {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Time = Time
             };

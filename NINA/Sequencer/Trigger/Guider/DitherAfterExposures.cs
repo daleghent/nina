@@ -80,6 +80,7 @@ namespace NINA.Sequencer.Trigger.Guider {
             return new DitherAfterExposures(guiderMediator, history) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 AfterExposures = AfterExposures,
                 TriggerRunner = (SequentialContainer)TriggerRunner.Clone()

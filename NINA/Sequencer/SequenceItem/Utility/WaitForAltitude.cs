@@ -113,6 +113,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             return new WaitForAltitude(profileService) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Altitude = Altitude,
                 AboveOrBelow = AboveOrBelow,

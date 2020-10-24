@@ -55,6 +55,7 @@ namespace NINA.Sequencer.Container {
             return new SequenceRootContainer() {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

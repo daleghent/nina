@@ -89,6 +89,7 @@ namespace NINA.Sequencer.SequenceItem.Camera {
             return new WarmCamera(cameraMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Duration = Duration
             };

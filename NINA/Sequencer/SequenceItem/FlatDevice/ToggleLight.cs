@@ -70,6 +70,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             return new ToggleLight(flatDeviceMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 On = On,
             };

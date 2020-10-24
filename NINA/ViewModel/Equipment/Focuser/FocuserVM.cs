@@ -131,7 +131,7 @@ namespace NINA.ViewModel.Equipment.Focuser {
             var pos = -1;
 
             if (position < 0) {
-                Logger.Info($"Requested to move to a negative position {position}. Moving to 0 instead.");
+                Logger.Warning($"Requested to move to a negative position {position}. Moving to 0 instead.");
                 position = 0;
             }
 

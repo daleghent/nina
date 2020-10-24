@@ -106,6 +106,7 @@ namespace NINA.Plugin.Template.Sequencer.SequenceItem {
                 Icon = Icon,
                 Text = Text,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

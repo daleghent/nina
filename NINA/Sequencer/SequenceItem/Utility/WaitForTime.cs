@@ -82,6 +82,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 Minutes = Minutes,
                 Seconds = Seconds,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

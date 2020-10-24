@@ -104,6 +104,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
                 Icon = Icon,
                 Amount = Amount,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 TriggerRunner = (SequentialContainer)TriggerRunner.Clone()
             };

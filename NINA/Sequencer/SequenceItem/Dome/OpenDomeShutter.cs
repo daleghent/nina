@@ -64,6 +64,7 @@ namespace NINA.Sequencer.SequenceItem.Dome {
             return new OpenDomeShutter(domeMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

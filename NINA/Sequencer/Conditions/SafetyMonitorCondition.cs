@@ -81,6 +81,7 @@ namespace NINA.Sequencer.Conditions {
             return new SafetyMonitorCondition(safetyMonitorMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

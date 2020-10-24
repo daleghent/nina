@@ -45,6 +45,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 Icon = Icon,
                 Text = Text,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

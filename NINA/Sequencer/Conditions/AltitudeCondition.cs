@@ -97,6 +97,7 @@ namespace NINA.Sequencer.Conditions {
             return new AltitudeCondition(profileService) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Altitude = Altitude,
                 Coordinates = new InputCoordinates(Coordinates.Coordinates)

@@ -103,6 +103,7 @@ namespace NINA.Sequencer.SequenceItem.Camera {
             return new CoolCamera(cameraMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Temperature = Temperature,
                 Duration = Duration

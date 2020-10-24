@@ -142,6 +142,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             return new Center(profileService, telescopeMediator, imagingMediator, filterWheelMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates.Transform(Epoch.J2000) }
             };

@@ -107,6 +107,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             return new SlewScopeToRaDec(telescopeMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Coordinates = new InputCoordinates(Coordinates.Coordinates),
             };

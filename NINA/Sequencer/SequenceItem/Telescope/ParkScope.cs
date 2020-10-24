@@ -65,6 +65,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             return new ParkScope(telescopeMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

@@ -68,6 +68,7 @@ namespace NINA.Sequencer.Conditions {
                 Icon = Icon,
                 Iterations = Iterations,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

@@ -59,6 +59,7 @@ namespace NINA.Sequencer.SequenceItem.Switch {
             return new SetSwitchValue(switchMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 SwitchIndex = SwitchIndex,
                 Value = Value

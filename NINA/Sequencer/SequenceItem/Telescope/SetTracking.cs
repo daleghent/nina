@@ -91,6 +91,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             return new SetTracking(telescopeMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 TrackingMode = TrackingMode
             };

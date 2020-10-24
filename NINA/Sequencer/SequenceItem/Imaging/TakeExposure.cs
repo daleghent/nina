@@ -176,6 +176,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             return new TakeExposure(cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 ExposureTime = ExposureTime,
                 ExposureCount = 0,

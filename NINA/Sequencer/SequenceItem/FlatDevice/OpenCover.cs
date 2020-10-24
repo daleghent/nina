@@ -65,6 +65,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             return new OpenCover(flatDeviceMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

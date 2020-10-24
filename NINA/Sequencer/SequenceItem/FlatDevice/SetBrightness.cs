@@ -72,6 +72,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             return new SetBrightness(flatDeviceMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
                 Brightness = Brightness
             };

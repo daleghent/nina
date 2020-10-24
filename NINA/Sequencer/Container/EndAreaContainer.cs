@@ -38,6 +38,7 @@ namespace NINA.Sequencer.Container {
             return new EndAreaContainer() {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }

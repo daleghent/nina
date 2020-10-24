@@ -65,6 +65,7 @@ namespace NINA.Sequencer.SequenceItem.Guider {
             return new Dither(guiderMediator) {
                 Icon = Icon,
                 Name = Name,
+                Category = Category,
                 Description = Description,
             };
         }
