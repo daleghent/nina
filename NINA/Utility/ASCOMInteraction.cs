@@ -15,6 +15,7 @@
 using NINA.Model.MyCamera;
 using NINA.Model.MyDome;
 using NINA.Model.MyFilterWheel;
+using NINA.Model.MyFlatDevice;
 using NINA.Model.MyFocuser;
 using NINA.Model.MyRotator;
 using NINA.Model.MySafetyMonitor;
@@ -158,6 +159,20 @@ namespace NINA.Utility {
                 try {
                     AscomDome ascomDome = new AscomDome(device.Key, device.Value);
                     l.Add(ascomDome);
+                } catch (Exception) {
+                }
+            }
+            return l;
+        }
+
+        public static List<IFlatDevice> GetCoverCalibrators(IProfileService profileService) {
+            var l = new List<IFlatDevice>();
+            var ascomDevices = new ASCOM.Utilities.Profile();
+
+            foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("CoverCalibrator")) {
+                try {
+                    AscomCoverCalibrator ascomCoverCalibrator = new AscomCoverCalibrator(device.Key, device.Value);
+                    l.Add(ascomCoverCalibrator);
                 } catch (Exception) {
                 }
             }

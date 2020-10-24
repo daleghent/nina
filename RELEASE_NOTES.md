@@ -53,6 +53,14 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ## New hardware support
 
+### ASCOM CoverCalibrator
+- With the ASCOM Platform Version 6.5 a new type of interface was added called "CoverCalibrator". 
+- These are basically flat panel devices which will now be available to choose from in the application under the flat panel section
+
+### ASCOM SafetyMonitor
+- An ASCOM device to monitor safe conditions for an imaging run
+- These devices can be used inside the sequencer to interrupt an imaging run, when they report unsafe conditions
+
 #### Native support for Atik EFW2/3 and internal Filterwheels
 - The integrated filter wheels for Atik cameras like the Atik One 9.0 are now natively supported
 - This allows usage of native camera drivers for Atik cameras with integrated filter wheels

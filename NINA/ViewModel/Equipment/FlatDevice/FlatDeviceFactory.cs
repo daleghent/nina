@@ -12,10 +12,12 @@
 
 #endregion "copyright"
 
+using System;
 using System.Collections.Generic;
 using NINA.Model;
 using NINA.Model.MyFlatDevice;
 using NINA.Profile;
+using NINA.Utility;
 
 namespace NINA.ViewModel.Equipment.FlatDevice {
 
@@ -27,15 +29,25 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
         }
 
         public IList<IDevice> GetDevices() {
-            return new List<IDevice>
-            {
-                new DummyDevice(Locale.Loc.Instance["LblFlatDeviceNoDevice"]),
+            var devices = new List<IDevice>();
+            devices.Add(new DummyDevice(Locale.Loc.Instance["LblFlatDeviceNoDevice"]));
+
+            try {
+                foreach (IFlatDevice flatDevice in ASCOMInteraction.GetCoverCalibrators(profileService)) {
+                    devices.Add(flatDevice);
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
+            devices.AddRange(new List<IDevice>{
                 new AllProSpikeAFlat(profileService),
                 new AlnitakFlipFlatSimulator(profileService),
                 new AlnitakFlatDevice(profileService),
                 new ArteskyFlatBox(profileService),
                 new PegasusAstroFlatMaster(profileService)
-            };
+            });
+            return devices;
         }
     }
 }

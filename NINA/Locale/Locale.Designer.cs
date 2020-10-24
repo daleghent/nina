@@ -6362,6 +6362,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Flat Device connection lost!.
+        /// </summary>
+        internal static string LblFlatDeviceConnectionLost {
+            get {
+                return ResourceManager.GetString("LblFlatDeviceConnectionLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cover.
         /// </summary>
         internal static string LblFlatDeviceCover {
