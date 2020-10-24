@@ -51,6 +51,17 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore
 - Instead the sequence panel will show a minimized representation of the set up sequence, where you can see the current running instruction set with basic details
 
+## Dome Support
+- ASCOM Domes are supported throughout the application
+  - Natively provides azimuth synchronization with the telescope, so no additional applications are needed (such as ASCOM Device Hub)
+  - Lateral offsets supported, enabling side-by-side telescope setups
+  - When synchronization is enabled, telescope slews wait for the dome to synchronize before next actions, such as imaging and plate solving
+  - Homes the dome prior to parking, which can improve the reliability of arriving precisely at the park location. This can be important if a shutter motor battery charges in the park position
+ - Dome actions provided in the new sequencer
+  - Enable dome synchronization
+  - Open/Close shutter
+  - Park dome
+
 ## New hardware support
 
 ### ASCOM CoverCalibrator
@@ -75,6 +86,12 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Empty gain and offset settings will now always reflect the settings set in Equipment - Camera (valid for imaging, sequence and auto-focus)
 - Any active field of view or ocular rotation angle is now imported along with coordinates from Stellarium and TheSky X
 - New translation for Czech (Čeština) has been added
+- Can send the sequencer target coordinates to the Framing Wizard
+- Improved Meridian Flip reliability by retrying when changing the pier or slewing close to the meridian fails. NINA now provides a warning suggesting to increase the meridian wait time if this hapens
+- Guider settings moved to the guider equipment page making them easier to find and exposing only settings relevant for each type of guider
+
+### Guiders
+- MetaGuide is now supported
 
 ### Auto-focus system
 - Auto-focus can now have different settings for gain, offset and binning per filter
