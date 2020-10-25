@@ -3,6 +3,11 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 1.10 HF2
+
+## Bugfixes
+- When rotator reports final position too early while still reporting IsMoving as true, N.I.N.A. will now still wait for the movement to complete
+
 # Version 1.10 HF1
 
 ## Features
