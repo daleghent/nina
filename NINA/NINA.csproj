@@ -2266,7 +2266,6 @@
     <Content Include="3rd-party-licenses.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="BootstrapAscomProfileStore.ps1" />
     <Content Include="Database\Initial\initial_data.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2438,7 +2437,6 @@
     <Content Include="External\x86\ToupTek\toupcam.lib">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="BootstrapAscomProfileStore.ps1" />
     <None Include="NINA.ruleset" />
     <None Include="packages.config" />
     <None Include="Resources\avalondock.config" />
@@ -2649,41 +2647,41 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-			if exist "$(ProjectDir)External\x64\Altair" (
-			echo "Copy Altair x64 DLLs"
-			xcopy "$(ProjectDir)External\x64\Altair" "$(TargetDir)\External\x64\Altair" /h/i/c/k/e/r/y
-			)
-			if exist "$(ProjectDir)External\x86\Altair" (
-			echo "Copy Altair x86 DLLs"
-			xcopy "$(ProjectDir)External\x86\Altair" "$(TargetDir)\External\x86\Altair" /h/i/c/k/e/r/y
-			)
+      if exist "$(ProjectDir)External\x64\Altair" (
+      echo "Copy Altair x64 DLLs"
+      xcopy "$(ProjectDir)External\x64\Altair" "$(TargetDir)\External\x64\Altair" /h/i/c/k/e/r/y
+      )
+      if exist "$(ProjectDir)External\x86\Altair" (
+      echo "Copy Altair x86 DLLs"
+      xcopy "$(ProjectDir)External\x86\Altair" "$(TargetDir)\External\x86\Altair" /h/i/c/k/e/r/y
+      )
 
-			if exist "$(ProjectDir)External\x64\Canon" (
-			echo "Copy Canon x64 DLLs"
-			xcopy "$(ProjectDir)External\x64\Canon" "$(TargetDir)\External\x64\Canon" /h/i/c/k/e/r/y
-			)
-			if exist "$(ProjectDir)External\x86\Canon" (
-			echo "Copy Canon x86 DLLs"
-			xcopy "$(ProjectDir)External\x86\Canon" "$(TargetDir)\External\x86\Canon" /h/i/c/k/e/r/y
-			)
+      if exist "$(ProjectDir)External\x64\Canon" (
+      echo "Copy Canon x64 DLLs"
+      xcopy "$(ProjectDir)External\x64\Canon" "$(TargetDir)\External\x64\Canon" /h/i/c/k/e/r/y
+      )
+      if exist "$(ProjectDir)External\x86\Canon" (
+      echo "Copy Canon x86 DLLs"
+      xcopy "$(ProjectDir)External\x86\Canon" "$(TargetDir)\External\x86\Canon" /h/i/c/k/e/r/y
+      )
 
-			if exist "$(ProjectDir)External\x64\Nikon" (
-			echo "Copy Nikon x64 DLLs"
-			xcopy "$(ProjectDir)External\x64\Nikon" "$(TargetDir)\External\x64\Nikon" /h/i/c/k/e/r/y
-			)
-			if exist "$(ProjectDir)External\x86\Nikon" (
-			echo "Copy Nikon x86 DLLs"
-			xcopy "$(ProjectDir)External\x86\Nikon" "$(TargetDir)\External\x86\Nikon" /h/i/c/k/e/r/y
-			)
+      if exist "$(ProjectDir)External\x64\Nikon" (
+      echo "Copy Nikon x64 DLLs"
+      xcopy "$(ProjectDir)External\x64\Nikon" "$(TargetDir)\External\x64\Nikon" /h/i/c/k/e/r/y
+      )
+      if exist "$(ProjectDir)External\x86\Nikon" (
+      echo "Copy Nikon x86 DLLs"
+      xcopy "$(ProjectDir)External\x86\Nikon" "$(TargetDir)\External\x86\Nikon" /h/i/c/k/e/r/y
+      )
 
-			if $(Platform) == x86 (
-			if exist "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat" (
-			echo "Making x86 large address aware"
-			call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat"
-			editbin /largeaddressaware "$(TargetPath)"
-			)
-			)
-		</PostBuildEvent>
+      if $(Platform) == x86 (
+      if exist "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat" (
+      echo "Making x86 large address aware"
+      call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat"
+      editbin /largeaddressaware "$(TargetPath)"
+      )
+      )
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
