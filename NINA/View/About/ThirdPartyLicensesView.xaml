@@ -53,6 +53,8 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock FontWeight="Bold">Library</TextBlock>
@@ -245,12 +247,12 @@
             <TextBlock
                 Grid.Row="17"
                 Grid.Column="0"
-                Text="lz4net" />
+                Text="K4os.Compression.LZ4" />
             <TextBlock Grid.Row="17" Grid.Column="1">
-                <Hyperlink NavigateUri="https://github.com/MiloszKrajewski/lz4net" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/MiloszKrajewski/lz4net</Hyperlink>
+                <Hyperlink NavigateUri="https://github.com/MiloszKrajewski/K4os.Compression.LZ4" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/MiloszKrajewski/K4os.Compression.LZ4</Hyperlink>
             </TextBlock>
             <TextBlock Grid.Row="17" Grid.Column="2">
-                <Hyperlink NavigateUri="https://opensource.org/licenses/BSD-2-Clause" RequestNavigate="Hyperlink_RequestNavigate">The 2-Clause BSD License</Hyperlink>
+                <Hyperlink NavigateUri="https://opensource.org/licenses/MIT" RequestNavigate="Hyperlink_RequestNavigate">The MIT License</Hyperlink>
             </TextBlock>
 
             <TextBlock
@@ -262,6 +264,17 @@
             </TextBlock>
             <TextBlock Grid.Row="18" Grid.Column="2">
                 <Hyperlink NavigateUri="https://opensource.org/licenses/MS-PL" RequestNavigate="Hyperlink_RequestNavigate">Microsoft Public License (MS-PL)</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="19"
+                Grid.Column="0"
+                Text="Ninject" />
+            <TextBlock Grid.Row="19" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/ninject/Ninject" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/ninject/Ninject</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="19" Grid.Column="2">
+                <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">Apache 2.0</Hyperlink>
             </TextBlock>
         </Grid>
     </Grid>
