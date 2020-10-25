@@ -2252,7 +2252,6 @@
       <Link>NINA.sln.licenseheader</Link>
     </None>
     <None Include="BootstrapAscomProfileStore.ps1" />
-    <None Include="Sequencer\concept.md" />
     <Content Include="Sequencer\Examples\Basic Sequence End.template.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2400,9 +2399,6 @@
     <Resource Include="Resources\Logo_Nina.ico" />
     <Content Include="External\x86\ToupTek\toupcam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sequencer\concept.html">
-      <DependentUpon>concept.md</DependentUpon>
     </Content>
     <Resource Include="Resources\cancel-32.png" />
     <Resource Include="Resources\pause-32.png" />
