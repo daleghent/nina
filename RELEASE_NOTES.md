@@ -45,7 +45,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 ### Framing Tab
 - Instead of sending the current target to the sequencer, the user will be prompted to either choose the sequence constructor or directly send the target to the new sequencer while also being able to choose from different templates
-- Replacing of the complete targets is removed, as this is not necessary anymore.  
+- Replacing of the complete targets is removed, as this is not necessary anymore. 
+- Possibility to manually enter target rotation 
 
 ### Imaging Tab - Sequence Panel
 - As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore

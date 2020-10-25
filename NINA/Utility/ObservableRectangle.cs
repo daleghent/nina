@@ -85,18 +85,24 @@ namespace NINA.Utility {
             }
             set {
                 _rotation = Astrometry.Astrometry.MathMod(value, 360);
+                if (_rotation < 0) { _rotation += 360; }
+                
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(DisplayedRotation));
+                RaisePropertyChanged(nameof(TotalRotation));
             }
         }
 
-        private double _rotationOffset;
+        private readonly double _rotationOffset;
 
-        public double DisplayedRotation {
+        public double TotalRotation {
             get {
                 var rotation = _rotationOffset + Rotation;
                 rotation = Astrometry.Astrometry.MathMod(rotation, 360);
                 return Math.Round(rotation, 2);
+            }
+            set {
+                //This will rise property changed for TotalRotation
+                Rotation = value - _rotationOffset;
             }
         }
     }

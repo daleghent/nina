@@ -367,11 +367,12 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock
-                                        MinWidth="20"
+                                    <TextBox
+                                        MinWidth="35"
                                         Margin="5,0,0,0"
                                         VerticalAlignment="Center"
-                                        Text="{Binding Rectangle.DisplayedRotation, Mode=OneWay}" />
+                                        Text="{Binding Rectangle.TotalRotation}"
+                                        IsEnabled="{Binding RectangleCalculated}" />
                                     <Slider
                                         Grid.Column="1"
                                         Margin="5,0,0,0"
@@ -379,7 +380,8 @@
                                         Maximum="360"
                                         Minimum="0"
                                         TickFrequency="5"
-                                        Value="{Binding Rotation}" />
+                                        Value="{Binding Rectangle.Rotation}"
+                                        IsEnabled="{Binding RectangleCalculated}" />
                                 </Grid>
                             </UniformGrid>
                         </StackPanel>

@@ -704,7 +704,7 @@ namespace NINATest {
                 new FITSHeaderCard("XBINNING",1, "X axis binning factor"),
                 new FITSHeaderCard("YBINNING",1, "Y axis binning factor"),
                 new FITSHeaderCard("EQUINOX", 2000, "Equinox of celestial coordinate system"),
-                new FITSHeaderCard("SWCREATE",string.Format("N.I.N.A. {0} ({1})", Utility.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file"),
+                new FITSHeaderCard("SWCREATE",string.Format("N.I.N.A. {0} ({1})", NINA.Utility.Utility.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file"),
             };
 
             //Act
@@ -740,7 +740,7 @@ namespace NINATest {
 
             sut.Image.Elements(ns + "FITSKeyword").First(x => x.Attribute("name").Value == "SWCREATE")
                 .Should().HaveAttribute("name", "SWCREATE")
-                .And.HaveAttribute("value", string.Format("N.I.N.A. {0} ({1})", Utility.Version, DllLoader.IsX86() ? "x86" : "x64"))
+                .And.HaveAttribute("value", string.Format("N.I.N.A. {0} ({1})", NINA.Utility.Utility.Version, DllLoader.IsX86() ? "x86" : "x64"))
                 .And.HaveAttribute("comment", "Software that created this file");
         }
 

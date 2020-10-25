@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Utility.Enum;
 
 namespace NINATest.Autofocus {
 
@@ -50,7 +51,7 @@ namespace NINATest.Autofocus {
             points.AddRange(rightPoints);
 
             var sut = new TrendlineFitting();
-            sut.Calculate(points);
+            sut.Calculate(points, AFMethodEnum.STARHFR.ToString());
 
             sut.Intersection.X.Should().BeApproximately(5, TOLERANCE);
             sut.Intersection.Y.Should().BeApproximately(2, TOLERANCE);
@@ -82,7 +83,7 @@ namespace NINATest.Autofocus {
             points.AddRange(rightPoints);
 
             var sut = new TrendlineFitting();
-            sut.Calculate(points);
+            sut.Calculate(points, AFMethodEnum.STARHFR.ToString());
 
             sut.Intersection.X.Should().BeApproximately(6, TOLERANCE);
             sut.Intersection.Y.Should().BeApproximately(0, TOLERANCE);

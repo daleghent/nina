@@ -338,6 +338,7 @@
     <Compile Include="FlatDevice\AlnitakFlipFlatSimulatorTest.cs" />
     <Compile Include="FlatDevice\FlatDeviceSettingsTest.cs" />
     <Compile Include="Dome\DomeSynchronizationTest.cs" />
+    <Compile Include="Utility\ObservableRectangleTest.cs" />
     <Compile Include="WeatherData\PegasusAstro\UltimatePowerboxV2Test.cs" />
     <Compile Include="XISFTest.cs" />
   </ItemGroup>
@@ -368,7 +369,6 @@
       <Name>NINA</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

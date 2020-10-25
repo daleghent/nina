@@ -45,8 +45,8 @@ namespace NINA.ViewModel.FramingAssistant {
         int RASeconds { get; set; }
         IAsyncCommand RecenterCommand { get; }
         FramingRectangle Rectangle { get; set; }
+        bool RectangleCalculated { get;}
         ICommand RefreshSkyMapAnnotationCommand { get; }
-        double Rotation { get; set; }
         ICommand ScrollViewerSizeChangedCommand { get; }
         XElement SelectedImageCacheInfo { get; set; }
         ICommand SetSequencerTargetCommand { get; }
