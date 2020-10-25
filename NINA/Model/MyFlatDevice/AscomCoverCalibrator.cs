@@ -33,6 +33,7 @@ namespace NINA.Model.MyFlatDevice {
         }
 
         private CoverCalibrator coverCalibrator;
+        private int lastBrightness = 0;
 
         public string Category { get; } = "ASCOM";
 
@@ -137,8 +138,14 @@ namespace NINA.Model.MyFlatDevice {
             get => coverCalibrator.Brightness > 0;
             set {
                 try {
-                    Logger.Debug("Switching cover calibrator on");
-                    coverCalibrator.CalibratorOn(MaxBrightness);
+                    if (value) {
+                        Logger.Debug("Switching cover calibrator on");
+                        // switch the light on with the last saved value, if any
+                        coverCalibrator.CalibratorOn((lastBrightness != 0)?lastBrightness:MaxBrightness);
+                    } else {
+                        Logger.Debug("Switching cover calibrator off");
+                        coverCalibrator.CalibratorOff();
+                    }
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }
@@ -152,6 +159,7 @@ namespace NINA.Model.MyFlatDevice {
                     var converted = (int)(value * MaxBrightness);
                     Logger.Debug($"Setting cover calibrator brightness to {value}% = {converted}");
                     coverCalibrator.CalibratorOn(converted);
+                    lastBrightness = converted; // save brightness for next time the user toggles the light on
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }
