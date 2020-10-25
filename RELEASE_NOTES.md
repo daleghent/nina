@@ -117,6 +117,11 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 ## BugFixes
 - Weather information in equipment tab now shows correct wind direction.
 
+# Version 1.10 HF2
+
+## Bugfixes
+- When rotator reports final position too early while still reporting IsMoving as true, N.I.N.A. will now still wait for the movement to complete
+
 # Version 1.10 HF1
 
 ## Features

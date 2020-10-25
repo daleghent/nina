@@ -69,6 +69,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
 
         public void Sync(float skyAngle) {
             if (RotatorInfo.Connected) {
+                Logger.Info($"Syncing Rotator to Sky Angle {skyAngle}°");
                 rotator.Sync(skyAngle);
                 RotatorInfo.Position = rotator.Position;
                 BroadcastRotatorInfo();
@@ -85,7 +86,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     // Focuser position should be in [0, 360)
                     targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
                     rotator.MoveAbsolute(targetPosition);
-                    while (RotatorInfo.IsMoving && RotatorInfo.Position != targetPosition) {
+                    while (RotatorInfo.IsMoving || Math.Ceiling(RotatorInfo.Position) != Math.Ceiling(targetPosition)) {
                         _moveCts.Token.ThrowIfCancellationRequested();
                     }
                     RotatorInfo.Position = targetPosition;

@@ -75,9 +75,7 @@ using System.Windows.Shell;
 using System.Windows.Threading;
 
 namespace NINA.ViewModel {
-
     internal class SequenceVM : DockableVM, ISequenceVM, ICameraConsumer, IRotatorConsumer {
-
         public SequenceVM(
                 IProfileService profileService,
                 ISequenceMediator sequenceMediator,
