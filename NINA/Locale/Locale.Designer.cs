@@ -88,7 +88,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to End of all Targets Options.
+        ///   Looks up a localized string similar to End of Last Target Options.
         /// </summary>
         internal static string Lbl_OldSequencer_EndOfSequenceHeader {
             get {
@@ -151,7 +151,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start of all Targets Options.
+        ///   Looks up a localized string similar to Start of First Target Options.
         /// </summary>
         internal static string Lbl_OldSequencer_StartOfSequenceHeader {
             get {
