@@ -62,6 +62,7 @@
             <TextBlock Text="Igor von Nyssen" />
             <TextBlock Text="Simon Kapadia" />
             <TextBlock Text="Nick Hardy" />
+            <TextBlock Text="Szymon Giermakowski" />
         </StackPanel>
     </StackPanel>
 </UserControl>
