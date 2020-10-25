@@ -975,6 +975,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Gain. The Gain has to be set between {0} and {1} but is set to {2}.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Offset. The Offset has to be set between {0} and {1} but is set to {2}.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Takes exposures for the given amount, duration, gain and offset. Triggers and conditions are evaluated in between the exposures..
         /// </summary>
         internal static string Lbl_SequenceItem_Imaging_TakeManyExposures_Description {

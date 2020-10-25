@@ -137,7 +137,7 @@
                             <Binding.ValidationRules>
                                 <util:ShortRangeRule>
                                     <util:ShortRangeRule.ValidRange>
-                                        <util:ShortRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
+                                        <util:ShortRangeChecker Maximum="32767" Minimum="-1" />
                                     </util:ShortRangeRule.ValidRange>
                                 </util:ShortRangeRule>
                             </Binding.ValidationRules>
@@ -182,7 +182,7 @@
                             <Binding.ValidationRules>
                                 <util:ShortRangeRule>
                                     <util:ShortRangeRule.ValidRange>
-                                        <util:ShortRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.OffsetMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.OffsetMin}" />
+                                        <util:ShortRangeChecker Maximum="32767" Minimum="-1" />
                                     </util:ShortRangeRule.ValidRange>
                                 </util:ShortRangeRule>
                             </Binding.ValidationRules>

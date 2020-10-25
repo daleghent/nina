@@ -211,6 +211,13 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             CameraInfo = this.cameraMediator.GetInfo();
             if (!CameraInfo.Connected) {
                 i.Add(Locale.Loc.Instance["LblCameraNotConnected"]);
+            } else {
+                if (CameraInfo.CanSetGain && Gain > -1 && (Gain < CameraInfo.GainMin || Gain > CameraInfo.GainMax)) {
+                    i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain"], CameraInfo.GainMin, CameraInfo.GainMax, Gain));
+                }
+                if (CameraInfo.CanSetOffset && Offset > -1 && (Offset < CameraInfo.OffsetMin || Offset > CameraInfo.OffsetMax)) {
+                    i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset"], CameraInfo.OffsetMin, CameraInfo.OffsetMax, Offset));
+                }
             }
             Issues = i;
             return i.Count == 0;

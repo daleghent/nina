@@ -4764,4 +4764,10 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblNoSafetyMonitor" xml:space="preserve">
     <value>No Safety Monitor</value>
   </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain" xml:space="preserve">
+    <value>Invalid Gain. The Gain has to be set between {0} and {1} but is set to {2}</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset" xml:space="preserve">
+    <value>Invalid Offset. The Offset has to be set between {0} and {1} but is set to {2}</value>
+  </data>
 </root>
