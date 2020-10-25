@@ -4609,7 +4609,7 @@ Se la posizione sopra è un set di istruzioni che non è attualmente espanso, ve
     <value>Sequence Builder</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
-    <value>End of all Targets Options</value>
+    <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
     <value>Sequence Builder Template</value>
@@ -4678,7 +4678,7 @@ Se la posizione sopra è un set di istruzioni che non è attualmente espanso, ve
     <value>Start of Sequence Instructions</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Start of all Targets Options</value>
+    <value>Start of First Target Options</value>
   </data>
   <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
     <value>Cool camera when sequence starts</value>
@@ -4757,6 +4757,9 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Loop for Time Span</value>
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
-    <value>Flat Device connection lost!</value>
+    <value>Connessione al pannello per Flats persa!</value>
+  </data>
+  <data name="LblNoSafetyMonitor" xml:space="preserve">
+    <value>No Safety Monitor</value>
   </data>
 </root>

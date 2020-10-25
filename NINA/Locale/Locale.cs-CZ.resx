@@ -206,10 +206,10 @@ Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</va
     <value>Zobrazit a anotovat Souhvězdí</value>
   </data>
   <data name="LblAnnotateDSO" xml:space="preserve">
-    <value>Anotovat Deep Sky Objects</value>
+    <value>Anotovat DSO</value>
   </data>
   <data name="LblAnnotateGrid" xml:space="preserve">
-    <value>Zobrazit Mřížku</value>
+    <value>Zobrazit Souřadnice</value>
   </data>
   <data name="LblAnnotateImage" xml:space="preserve">
     <value>Anotovat Obraz</value>
@@ -319,7 +319,8 @@ Měla by se aplikace pokusit chybu opravit? (Může vést k neočekávanému cho
     <value>Poměr Vnitřního Oříznutí Auto-ostření</value>
   </data>
   <data name="LblAutoFocusInnerCropRatioTooltip" xml:space="preserve">
-    <value>Pokud je nastavena hodnota menší než 1, detekce hvězd se objeví pouze během auto-ostření, používá vycentrovaný spodní pomocný rámec celkového senzoru (je-li podporován kamerou). Pokud to kamera nepodporuje, budou hvězdy poblíž okraje během detekce hvězd ignorovány. Pokud se použije v kombinaci, kde je poměr vnějšího oříznutí menší než 1, použije se pro auto-ostření obdélníkový pás (vnitřní a vnější obdélník) obrázku.</value>
+    <value>Pokud je nastavena hodnota menší než 1, detekce hvězd se objeví pouze během auto-ostření, používá vycentrovaný spodní pomocný rámec celkového senzoru (je-li podporován kamerou). Pokud to kamera nepodporuje, budou hvězdy poblíž okraje během detekce hvězd ignorovány. 
+Pokud se použije v kombinaci, kde je poměr vnějšího oříznutí menší než 1, použije se pro auto-ostření obdélníkový pás (vnitřní a vnější obdélník) obrázku.</value>
   </data>
   <data name="LblAutoFocusMethod" xml:space="preserve">
     <value>Metoda AutoOstření</value>
@@ -350,7 +351,7 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Kolik rámců se použije k určení ostřícího bodu. Pokud je hodnota větší než 1, použije se více rámců a bod zaostření se vypočítá z jejich průměru</value>
   </data>
   <data name="LblAutoFocusOnFilterChange" xml:space="preserve">
-    <value>Při výměně filtru</value>
+    <value>Po výměně filtru</value>
   </data>
   <data name="LblAutoFocusOnStart" xml:space="preserve">
     <value>Při startu</value>
@@ -383,7 +384,7 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Faktor pro algoritmus Autorozpětí. Slouží k zobrazení obrázků a k rozpoznání hvězd. Hodnota musí být mezi 0 a 1. Pro většinu případů by měla stačit hodnota 0.2.</value>
   </data>
   <data name="LblAutoUpdateSource" xml:space="preserve">
-    <value>Auto-aktualizace Zdroje</value>
+    <value>Aktualizace Zdroje</value>
   </data>
   <data name="LblAzimuth" xml:space="preserve">
     <value>Azimut</value>
@@ -417,10 +418,10 @@ Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</va
     <value>Beta</value>
   </data>
   <data name="LblBiasMean" xml:space="preserve">
-    <value>Průměrná hodnota BIAS (v 16 bitech)</value>
+    <value>Střední BIAS (v 16 bitech)</value>
   </data>
   <data name="LblBiasMedian" xml:space="preserve">
-    <value>Průměrná hodnota BIAS (v 16bitech)</value>
+    <value>Průměr BIAS (v 16bitech)</value>
   </data>
   <data name="LblBinning" xml:space="preserve">
     <value>Binning</value>
@@ -429,7 +430,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</va
     <value>Binning kamery</value>
   </data>
   <data name="LblBitDepth" xml:space="preserve">
-    <value>Bitová Hloubka</value>
+    <value>Bit.Hloub</value>
   </data>
   <data name="LblBitDepthADU" xml:space="preserve">
     <value>Bitová hloubka v ADU</value>
@@ -474,7 +475,7 @@ Pro: {1}</value>
     <value>Mezipaměť</value>
   </data>
   <data name="LblCalculateBias" xml:space="preserve">
-    <value>Vypočítaný Bias</value>
+    <value>Vypočítat Bias</value>
   </data>
   <data name="LblCalculatedExposureTime" xml:space="preserve">
     <value>Vypočítaný Čas Expozice</value>
@@ -1012,7 +1013,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Datum ve formátu RRRR-MM-DD_HH-mm-ss</value>
   </data>
   <data name="LblDawn" xml:space="preserve">
-    <value>Svítání</value>
+    <value>Rozbřesk</value>
   </data>
   <data name="LblDays" xml:space="preserve">
     <value>Dny</value>
@@ -1294,7 +1295,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Chyba</value>
   </data>
   <data name="LblErrorDistance" xml:space="preserve">
-    <value>Chybová Vzdálenost</value>
+    <value>Chyba Vzdálenosti</value>
   </data>
   <data name="LblErrorLT" xml:space="preserve">
     <value>chyba &lt;</value>
@@ -1456,7 +1457,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Otevřít</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Otevřete kryt pro tmavé flaty v průvodce plochým snímkem</value>
+    <value>Otevřít kryt pro tmavé flaty v průvodci plochým snímkem</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Nastavit</value>
@@ -1516,7 +1517,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Plochý snímek je příliš tmavý. Zvyšte množství světla nebo upravte toleranci, průměrnou hodnotu nebo na minimální expoziční čas</value>
   </data>
   <data name="LblFlatWizard" xml:space="preserve">
-    <value>Průvodce Plochým Snímkem</value>
+    <value>Flat Snímkem</value>
   </data>
   <data name="LblFlatWizardCapture" xml:space="preserve">
     <value>Vytvořit Plochý Snímek</value>
@@ -1702,7 +1703,7 @@ Vypočtené HFR: {2}
     <value>Historie HFR</value>
   </data>
   <data name="LblHFRPatternDescription" xml:space="preserve">
-    <value>Vypočítaný obraz HFR (je třeba povolit detekci HFR)</value>
+    <value>Vypočítaný obraz HFR (povolit detekci HFR)</value>
   </data>
   <data name="LblHigh" xml:space="preserve">
     <value>Vysoký</value>
@@ -1759,10 +1760,10 @@ Vypočtené HFR: {2}
     <value>Chyba obrazového souboru</value>
   </data>
   <data name="LblImageFilePath" xml:space="preserve">
-    <value>Cesta k Obrazovému Souboru</value>
+    <value>Cesta k Souboru</value>
   </data>
   <data name="LblImageFilePattern" xml:space="preserve">
-    <value>Vzor Obrazového Souboru</value>
+    <value>Vzor Souboru</value>
   </data>
   <data name="LblImageHistory" xml:space="preserve">
     <value>Historie Obrazů</value>
@@ -1771,7 +1772,7 @@ Vypočtené HFR: {2}
     <value>Možnosti Obrazu</value>
   </data>
   <data name="LblImageSource" xml:space="preserve">
-    <value>Zdroj obrázku</value>
+    <value>Zdroj obrazu</value>
   </data>
   <data name="LblImageTypeDescription" xml:space="preserve">
     <value>Light, Flat, Dark, Bias, Snapshot</value>
@@ -1804,10 +1805,10 @@ Vypočtené HFR: {2}
     <value>Je Bayered</value>
   </data>
   <data name="LblIsMoving" xml:space="preserve">
-    <value>Pohybující se</value>
+    <value>Pohybuje se</value>
   </data>
   <data name="LblIsSettling" xml:space="preserve">
-    <value>Stabilizující</value>
+    <value>Stabilizován</value>
   </data>
   <data name="LblItemsPerPage" xml:space="preserve">
     <value>Položek na stránce</value>
@@ -1984,7 +1985,7 @@ Vypočtené HFR: {2}
     <value>Minuty</value>
   </data>
   <data name="LblMinutesAfterMeridian" xml:space="preserve">
-    <value>Minuty po překlopení Poledníku</value>
+    <value>Minuty po Poledníku</value>
   </data>
   <data name="LblMinutesShort" xml:space="preserve">
     <value>min</value>
@@ -2117,13 +2118,13 @@ Vypočtené HFR: {2}
     <value>1 Hvězda</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Hvězdy</value>
+    <value>Dvojhvězda</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Hvězdy</value>
+    <value>Trojhvězda</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Hvězdy</value>
+    <value>Čtyřhvězda</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
     <value>8 Hvězd</value>
@@ -2394,7 +2395,7 @@ Vypočtené HFR: {2}
     <value>Platesolve2 exe nenalezen</value>
   </data>
   <data name="LblPlateSolvedPolarAlignment" xml:space="preserve">
-    <value>Vyřešit Polární Zarovnání</value>
+    <value>Astrometrie Polárního Zarovnání</value>
   </data>
   <data name="LblPlateSolveEnding" xml:space="preserve">
     <value>Řešení dosáhlo maximálního počtu pokusů, nebo je nutné změnit překlopení poledníku.</value>
@@ -2526,7 +2527,7 @@ Vypočtené HFR: {2}
     <value>RA Pix chyba</value>
   </data>
   <data name="LblRate" xml:space="preserve">
-    <value>Hodnotit</value>
+    <value>Rychlost</value>
   </data>
   <data name="LblRawConverter" xml:space="preserve">
     <value>Raw konvertor</value>
@@ -2637,7 +2638,7 @@ Vypočtené HFR: {2}
     <value>Rektascenze</value>
   </data>
   <data name="LblRotation" xml:space="preserve">
-    <value>Otáčení</value>
+    <value>Rotace</value>
   </data>
   <data name="LblRotationRequired" xml:space="preserve">
     <value>Vyžaduje Rotaci Kamery</value>
@@ -2845,7 +2846,7 @@ Tato šablona bude použita při spuštění sekvence místo výchozí.</value>
     <value>Atlas Hvězd</value>
   </data>
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
-    <value>Mapa hvězd Adresář Obrázků</value>
+    <value>Mapa hvězd Adresář</value>
   </data>
   <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
     <value>Mapa Hvězd (Offline Rámování)</value>
@@ -2869,7 +2870,7 @@ Tato šablona bude použita při spuštění sekvence místo výchozí.</value>
     <value>Přejezd</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
-    <value>Doba trvání Přejezdu</value>
+    <value>Doba Přejezdu</value>
   </data>
   <data name="LblSlewEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>Přejezd k cíli je povolen, ale dalekohled není připojen</value>
@@ -2878,7 +2879,7 @@ Tato šablona bude použita při spuštění sekvence místo výchozí.</value>
     <value>Rychlost Přejezdu (stup/sek)</value>
   </data>
   <data name="LblSlewToTarget" xml:space="preserve">
-    <value>Přejezd do cíle</value>
+    <value>Přejezd na cíl</value>
   </data>
   <data name="LblSlewToZenith" xml:space="preserve">
     <value>Přejezd na zenit</value>
@@ -2981,7 +2982,7 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
     <value>Povolit Pod Vzorkování</value>
   </data>
   <data name="LblSuccess" xml:space="preserve">
-    <value>Úspěšně</value>
+    <value>Úspěch</value>
   </data>
   <data name="LblSunRise" xml:space="preserve">
     <value>Svítání</value>
@@ -3084,7 +3085,7 @@ Synchronizovat hodnoty?</value>
     <value>Jméno Dalekohledu</value>
   </data>
   <data name="LblTelescopeNotConnected" xml:space="preserve">
-    <value>Dalekohled není připojen</value>
+    <value>Dalekohled nepřipojen</value>
   </data>
   <data name="LblTelescopeNotConnectedForCommand" xml:space="preserve">
     <value>Dalekohled není připojen k odeslání příkazu</value>
@@ -3105,7 +3106,7 @@ Synchronizovat hodnoty?</value>
     <value>Dalekohled pro NINA</value>
   </data>
   <data name="LblTempComp" xml:space="preserve">
-    <value>Reg Tepl</value>
+    <value>Kompen. T°</value>
   </data>
   <data name="LblTempControl" xml:space="preserve">
     <value>Regulace Teploty</value>
@@ -3242,7 +3243,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Měsíční</value>
   </data>
   <data name="LblTrackingKing" xml:space="preserve">
-    <value>Král</value>
+    <value>Speciální</value>
   </data>
   <data name="LblTrackingCustom" xml:space="preserve">
     <value>Vlastní</value>
@@ -3251,10 +3252,10 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Vlastní ({0}, {1})</value>
   </data>
   <data name="LblTransitNorth" xml:space="preserve">
-    <value>Pohyb Sever</value>
+    <value>Tranzit Sever</value>
   </data>
   <data name="LblTransitSouth" xml:space="preserve">
-    <value>Pohyb Jih</value>
+    <value>Tranzit Jih</value>
   </data>
   <data name="LblTrendHyperbolic" xml:space="preserve">
     <value>Trendy a hyperbolické</value>
@@ -3263,7 +3264,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Trendové Čáry</value>
   </data>
   <data name="LblTrendParabolic" xml:space="preserve">
-    <value>Trendy a Parabolické</value>
+    <value>Trendy a Parabolický</value>
   </data>
   <data name="LblType" xml:space="preserve">
     <value>Typ</value>
@@ -4044,7 +4045,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Souběžné provádění položek</value>
   </data>
   <data name="LblEnterAnnotation" xml:space="preserve">
-    <value>Zadejte Anotaci</value>
+    <value>Zadejte Poznámku</value>
   </data>
   <data name="LblAfterIterations" xml:space="preserve">
     <value>Po Opakování</value>
@@ -4251,10 +4252,10 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Režim sledování není montáží podporová</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_Annotation_Description" xml:space="preserve">
-    <value>Položka nástroje pro přidání anotace do sekvence</value>
+    <value>Položka nástroje pro přidání poznámek do sekvence</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_Annotation_Name" xml:space="preserve">
-    <value>Anotace</value>
+    <value>Poznámky</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_ExternalScript_Description" xml:space="preserve">
     <value>Volá externí skript pro danou cestu</value>
@@ -4281,7 +4282,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Čeká na Zadaný Čas</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Description" xml:space="preserve">
-    <value>Čeká na zadaný čas ve formátu hh:mm:ss. Kromě toho je k dispozici nástroj, který automaticky vyplní informacemi o západu slunce, soumraku, úsvitu a východu slunce</value>
+    <value>Čeká na zadaný čas ve formátu hh:mm:ss. Kromě toho je k dispozici nástroj, který automaticky vyplní informace o západu slunce, soumraku, úsvitu a východu slunce</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
     <value>Čeká na Čas</value>
@@ -4317,13 +4318,13 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Zařízení flat nepodporuje otevírání ani zavírání krytu</value>
   </data>
   <data name="Lbl_Sequencer_LoadSequence_Tooltip" xml:space="preserve">
-    <value>Načíst kompletní sekvenci ze souboru JSON</value>
+    <value>Načte kompletní sekvenci ze souboru JSON</value>
   </data>
   <data name="Lbl_Sequencer_RootElementMustBeRootContainer" xml:space="preserve">
     <value>Nelze načíst sekvenci - kořen Sekvencéru musí být kořenový kontejner sekvence!</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_Tooltip" xml:space="preserve">
-    <value>Uložit kompletní sekvenci do souboru JSON</value>
+    <value>Uloží kompletní sekvenci do souboru JSON</value>
   </data>
   <data name="Lbl_Sequencer_UnableToDeserializeJSON" xml:space="preserve">
     <value>Nelze rekonstruovat JSON</value>
@@ -4440,7 +4441,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Provede Mnoho Expozic</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_Description" xml:space="preserve">
-    <value>Provede expozice v uvedeném množství, filtru, době trvání, zisku a offsetu a po určitém množství expozic spusťte dithering. Spouštěč a podmínky se hodnotí mezi expozicemi.</value>
+    <value>Provede expozice v uvedeném množství, filtru, době trvání, zisku a offsetu, po určitém množství expozic je zahájen dithering. Spouštěč a podmínky se hodnotí mezi expozicemi.</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_Name" xml:space="preserve">
     <value>Chytrá Expozice</value>
@@ -4498,7 +4499,7 @@ Přidejte sekvence DSO nebo přidejte cíle pomocí Sky Atlas nebo Průvodce Rá
     <value>Cíle</value>
   </data>
   <data name="LblStartupSequenceTemplate" xml:space="preserve">
-    <value>Spustit Šablonu Sekvence</value>
+    <value>Spuštění Šablony Sekvence</value>
   </data>
   <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
     <value>Po nastavení bude tato šablona předem načtena do sekvencéru.</value>
@@ -4601,7 +4602,7 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Tvůrce Sekvence</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
-    <value>Konec všech Možností Cílů</value>
+    <value>Možnosti Ukončení Posledního Cíle</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
     <value>Šablona Tvůrce Sekvence</value>
@@ -4670,7 +4671,7 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Začátek Sekvence Pokynů</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Začátek všech Možností Cílů</value>
+    <value>Možnost Spuštění Prvního Cíle</value>
   </data>
   <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
     <value>Po spuštění sekvence ochladit kameru</value>
@@ -4750,5 +4751,8 @@ Použijte ve spojení s jinou podmínkou smyčky, abyste neskončili v nekonečn
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
     <value>Flat Zařízení odpojeno!</value>
+  </data>
+  <data name="LblNoSafetyMonitor" xml:space="preserve">
+    <value>Žádný Bezpečnostní Monitor</value>
   </data>
 </root>

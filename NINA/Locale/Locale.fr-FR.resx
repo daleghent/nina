@@ -4608,7 +4608,7 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
     <value>Générateur de séquence</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
-    <value>Options de fin de toutes les cibles</value>
+    <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
     <value>Modèle de constructeur de séquence</value>
@@ -4677,7 +4677,7 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
     <value>Début des instructions de séquence</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Début de toutes les options des cibles</value>
+    <value>Start of First Target Options</value>
   </data>
   <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
     <value>Refroidir la caméra au démarrage de la séquence</value>
@@ -4757,5 +4757,8 @@ A utiliser en conjonction avec une autre condition de boucle pour ne pas se retr
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
     <value>Flat Device connection lost!</value>
+  </data>
+  <data name="LblNoSafetyMonitor" xml:space="preserve">
+    <value>No Safety Monitor</value>
   </data>
 </root>

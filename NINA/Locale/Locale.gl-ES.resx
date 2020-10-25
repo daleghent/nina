@@ -4613,7 +4613,7 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
     <value>Creador de Secuencias</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
-    <value>Fin de todas as opcións de obxectivos</value>
+    <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
     <value>Modelo de Creador de Secuencias</value>
@@ -4682,7 +4682,7 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
     <value>Inicio das Instrucións da Secuencia</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Inicio de Todas as Opcións de Obxectivos</value>
+    <value>Start of First Target Options</value>
   </data>
   <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
     <value>Arrefriar a cámara cando comece a secuencia</value>
@@ -4762,5 +4762,8 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
     <value>Flat Device connection lost!</value>
+  </data>
+  <data name="LblNoSafetyMonitor" xml:space="preserve">
+    <value>No Safety Monitor</value>
   </data>
 </root>

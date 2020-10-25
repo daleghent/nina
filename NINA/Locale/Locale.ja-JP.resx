@@ -4589,7 +4589,7 @@
     <value>シーケンスビルダー</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
-    <value>全てのターゲット終了オプション</value>
+    <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
     <value>シーケンスビルダーテンプレート</value>
@@ -4658,7 +4658,7 @@
     <value>シーケンス開始命令</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>全ての目標開始オプション</value>
+    <value>Start of First Target Options</value>
   </data>
   <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
     <value>シーケンス開始時のカメラの冷却</value>
@@ -4738,5 +4738,8 @@
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
     <value>Flat Device connection lost!</value>
+  </data>
+  <data name="LblNoSafetyMonitor" xml:space="preserve">
+    <value>No Safety Monitor</value>
   </data>
 </root>
