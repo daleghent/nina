@@ -125,7 +125,18 @@ namespace NINA.ViewModel {
         private List<Accord.Point> brightestStarPositions = new List<Accord.Point>();
         public double AverageContrast { get; private set; }
         public double ContrastStdev { get; private set; }
-        public AsyncObservableCollection<Chart> ChartList { get; set; }
+
+        private static AsyncObservableCollection<Chart> _chartList;
+
+        public AsyncObservableCollection<Chart> ChartList {
+            get {
+                return _chartList;
+            }
+            set {
+                _chartList = value;
+                RaisePropertyChanged();
+            }
+        }
 
         private AFCurveFittingEnum _autoFocusChartCurveFitting;
 
@@ -363,7 +374,7 @@ namespace NINA.ViewModel {
         }
 
         private void SetCurveFittings(String method, String fitting) {
-            TrendlineFitting = new TrendlineFitting().Calculate(FocusPoints);
+            TrendlineFitting = new TrendlineFitting().Calculate(FocusPoints, method);
 
             if (AFMethodEnum.STARHFR.ToString() == method) {
                 if (FocusPoints.Count() >= 3
@@ -731,7 +742,7 @@ namespace NINA.ViewModel {
             using (MyStopWatch.Measure()) {
                 var method = profileService.ActiveProfile.FocuserSettings.AutoFocusMethod;
 
-                TrendlineFitting = new TrendlineFitting().Calculate(FocusPoints);
+                TrendlineFitting = new TrendlineFitting().Calculate(FocusPoints, method.ToString());
 
                 HyperbolicFitting = new HyperbolicFitting().Calculate(FocusPoints);
 

@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Utility;
+using NINA.Utility.Enum;
 using OxyPlot;
 using OxyPlot.Series;
 using System;
@@ -96,26 +97,26 @@ namespace NINA.ViewModel.AutoFocus {
             }
         }
 
-        public TrendlineFitting Calculate(ICollection<ScatterErrorPoint> points) {
-            //if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR) {
-            //Get the minimum based on HFR and Error, rather than just HFR. This ensures 0 HFR is never used, and low HFR / High error numbers are also ignored
-            Minimum = points.Aggregate((l, r) => l.Y + l.ErrorY < r.Y + r.ErrorY ? l : r);
-            IEnumerable<ScatterErrorPoint> leftTrendPoints = points.Where((x) => x.X < Minimum.X && x.Y > (Minimum.Y + 0.1));
-            IEnumerable<ScatterErrorPoint> rightTrendPoints = points.Where((x) => x.X > Minimum.X && x.Y > (Minimum.Y + 0.1));
-            LeftTrend = new Trendline(leftTrendPoints);
-            RightTrend = new Trendline(rightTrendPoints);
-            Intersection = LeftTrend.Intersect(RightTrend);
+        public TrendlineFitting Calculate(ICollection<ScatterErrorPoint> points, string afMethod) {
+            if (afMethod == AFMethodEnum.STARHFR.ToString()) {
+                //Get the minimum based on HFR and Error, rather than just HFR. This ensures 0 HFR is never used, and low HFR / High error numbers are also ignored
+                Minimum = points.Aggregate((l, r) => l.Y + l.ErrorY < r.Y + r.ErrorY ? l : r);
+                IEnumerable<ScatterErrorPoint> leftTrendPoints = points.Where((x) => x.X < Minimum.X && x.Y > (Minimum.Y + 0.1));
+                IEnumerable<ScatterErrorPoint> rightTrendPoints = points.Where((x) => x.X > Minimum.X && x.Y > (Minimum.Y + 0.1));
+                LeftTrend = new Trendline(leftTrendPoints);
+                RightTrend = new Trendline(rightTrendPoints);
+                Intersection = LeftTrend.Intersect(RightTrend);
 
-            LeftExpression = $"y = {LeftTrend.Slope} * x + {LeftTrend.Offset}";
-            RightExpression = $"y = {RightTrend.Slope} * x + {RightTrend.Offset}";
-
-            /*} else {
-                var max = FocusPoints.Aggregate((l, r) => l.Y - l.ErrorY > r.Y - r.ErrorY ? l : r);
-                IEnumerable<ScatterErrorPoint> leftTrendPoints = FocusPoints.Where((x) => x.X < max.X && x.Y < (max.Y - 0.01));
-                IEnumerable<ScatterErrorPoint> rightTrendPoints = FocusPoints.Where((x) => x.X > max.X && x.Y < (max.Y - 0.01));
-                LeftTrend = new TrendLine(leftTrendPoints);
-                RightTrend = new TrendLine(rightTrendPoints);
-            }*/
+                LeftExpression = $"y = {LeftTrend.Slope} * x + {LeftTrend.Offset}";
+                RightExpression = $"y = {RightTrend.Slope} * x + {RightTrend.Offset}";
+            } else {
+                var max = points.Aggregate((l, r) => l.Y - l.ErrorY > r.Y - r.ErrorY ? l : r);
+                Minimum = max; // trendline minimum is actually Gaussian max
+                IEnumerable<ScatterErrorPoint> leftTrendPoints = points.Where((x) => x.X < max.X && x.Y < (max.Y - 0.01));
+                IEnumerable<ScatterErrorPoint> rightTrendPoints = points.Where((x) => x.X > max.X && x.Y < (max.Y - 0.01));
+                LeftTrend = new Trendline(leftTrendPoints);
+                RightTrend = new Trendline(rightTrendPoints);
+            }
             return this;
         }
 
