@@ -31,7 +31,7 @@ namespace NINA.Profile {
             cameraHeight = 3500;
             cameraWidth = 4500;
             fieldOfView = 3;
-            lastSelectedImageSource = 0;
+            lastSelectedImageSource = SkySurveySource.HIPS2FITS;
         }
 
         private SkySurveySource lastSelectedImageSource;
