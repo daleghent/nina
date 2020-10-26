@@ -709,7 +709,7 @@ namespace NINA.ViewModel.FlatWizard {
                 var tempList = new FlatWizardFilterSettingsWrapper[Filters.Count];
                 Filters.CopyTo(tempList, 0);
                 foreach (var item in tempList) {
-                    var newListItem = newList.SingleOrDefault(f => f.Filter.Name == item.Filter.Name);
+                    var newListItem = newList.FirstOrDefault(f => f.Filter.Name == item.Filter.Name);
                     Filters[Filters.IndexOf(item)] = newListItem;
                     newList.Remove(newListItem);
                 }
