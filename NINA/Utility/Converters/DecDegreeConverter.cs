@@ -50,8 +50,11 @@ namespace NINA.Utility.Converters {
             if (degrees == "-0") {
                 return new object[] { true, 0 };
             } else {
-                int number = int.Parse(degrees, CultureInfo.InvariantCulture);
-                return new object[] { number < 0, number };
+                if (int.TryParse(degrees, NumberStyles.Any, CultureInfo.InvariantCulture, out var number)) {
+                    return new object[] { number < 0, number };
+                } else {
+                    return new object[] { true, 0 };
+                }
             }
         }
     }
