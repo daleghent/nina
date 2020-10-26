@@ -23,6 +23,8 @@
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a></p>
 <h3 id="nightly-builds-are-preview-builds-and-contain-the-ongoing-development-effort-for-new-features.these-builds-progress-quickly-can-be-unstable-especially-in-early-stages-and-running-on-outdated-nightly-builds-is-strongly-discouragedto-be-able-to-roll-back-to-a-previous-released-version-without-losing-the-profiles-backup-the-profiles-which-are-located-at-localappdatanina"><span style="color:red;">Nightly builds are preview builds and contain the ongoing development effort for new features. These builds progress quickly, can be unstable (especially in early stages) and running on outdated nightly builds is strongly discouraged!</br>To be able to roll back to a previous released version without losing the profiles, backup the profiles which are located at %localappdata%\NINA</span></h3>
 <h1 id="version-1.11-preview">Version 1.11 - Preview</h1>
+<p>The Release Notes below will only mention the changes compared to the last released version.<br />
+To identify what has changed in between nightly builds, please refer to the <a href="https://bitbucket.org/Isbeorn/nina/commits/branch/develop">bitbucket commit history</a></p>
 <h2 id="complete-sequencer-rework">Complete Sequencer Rework</h2>
 <h3 id="sequence-tab-changed-to-sequence-builder">Sequence Tab changed to Sequence Builder</h3>
 <ul>
@@ -82,11 +84,27 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <ul>
 <li>Instead of sending the current target to the sequencer, the user will be prompted to either choose the sequence constructor or directly send the target to the new sequencer while also being able to choose from different templates</li>
 <li>Replacing of the complete targets is removed, as this is not necessary anymore.</li>
+<li>Possibility to manually enter target rotation</li>
 </ul>
 <h3 id="imaging-tab-sequence-panel">Imaging Tab - Sequence Panel</h3>
 <ul>
 <li>As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore</li>
 <li>Instead the sequence panel will show a minimized representation of the set up sequence, where you can see the current running instruction set with basic details</li>
+</ul>
+<h2 id="dome-support">Dome Support</h2>
+<ul>
+<li>ASCOM Domes are supported throughout the application
+<ul>
+<li>Natively provides azimuth synchronization with the telescope, so no additional applications are needed (such as ASCOM Device Hub)</li>
+<li>Lateral offsets supported, enabling side-by-side telescope setups</li>
+<li>When synchronization is enabled, telescope slews wait for the dome to synchronize before next actions, such as imaging and plate solving</li>
+<li>Homes the dome prior to parking, which can improve the reliability of arriving precisely at the park location. This can be important if a shutter motor battery charges in the park position</li>
+</ul>
+</li>
+<li>Dome actions provided in the new sequencer</li>
+<li>Enable dome synchronization</li>
+<li>Open/Close shutter</li>
+<li>Park dome</li>
 </ul>
 <h2 id="new-hardware-support">New hardware support</h2>
 <h3 id="ascom-covercalibrator">ASCOM CoverCalibrator</h3>
@@ -115,6 +133,13 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Empty gain and offset settings will now always reflect the settings set in Equipment - Camera (valid for imaging, sequence and auto-focus)</li>
 <li>Any active field of view or ocular rotation angle is now imported along with coordinates from Stellarium and TheSky X</li>
 <li>New translation for Czech (Čeština) has been added</li>
+<li>Can send the sequencer target coordinates to the Framing Wizard</li>
+<li>Improved Meridian Flip reliability by retrying when changing the pier or slewing close to the meridian fails. NINA now provides a warning suggesting to increase the meridian wait time if this hapens</li>
+<li>Guider settings moved to the guider equipment page making them easier to find and exposing only settings relevant for each type of guider</li>
+</ul>
+<h3 id="guiders">Guiders</h3>
+<ul>
+<li>MetaGuide is now supported</li>
 </ul>
 <h3 id="auto-focus-system">Auto-focus system</h3>
 <ul>
@@ -147,7 +172,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Weather information in equipment tab now shows correct wind direction.</li>
 </ul>
 <h1 id="version-1.10-hf2">Version 1.10 HF2</h1>
-<h2 id="bugfixes">Bugfixes</h2>
+<h2 id="bugfixes-1">Bugfixes</h2>
 <ul>
 <li>When rotator reports final position too early while still reporting IsMoving as true, N.I.N.A. will now still wait for the movement to complete</li>
 </ul>
@@ -176,7 +201,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Rotators will now display the sky angle as the current position, when rotation via plate solving was invoked</li>
 <li>Added toggle to reverse direction for rotators</li>
 </ul>
-<h2 id="bugfixes-1">Bugfixes</h2>
+<h2 id="bugfixes-2">Bugfixes</h2>
 <ul>
 <li>When using a DSLR and Astrometry.net the uploaded file is now correctly sent as FITS instead of raw format</li>
 <li>Log files now show correct operating system version</li>
@@ -620,7 +645,7 @@ Thank you for your support!</p>
 </ul>
 </li>
 </ul>
-<h2 id="bugfixes-2">Bugfixes</h2>
+<h2 id="bugfixes-3">Bugfixes</h2>
 <ul>
 <li>Fixed when FramingAssistant was not opened before and a DSO was selected from the SkyAtlas as Framing Source an error could occur</li>
 <li>Fixed scrolling through Framing Assistant Offline Sky Map while cursor was inside Rectangle ignored zooming</li>
@@ -728,7 +753,7 @@ the background itself will be moved like in an orrery</li>
 <li>Previously the auto update was always just looking for released versions. Now multiple sources (Release, Beta and Nightly) can be selected and the auto updater updates to the respective version accordingls.</li>
 <li>Additionally the changelog for the new version will now be displayed prior to updating, too.</li>
 </ul>
-<h2 id="bugfixes-3">Bugfixes</h2>
+<h2 id="bugfixes-4">Bugfixes</h2>
 <ul>
 <li>Corrected Max Binning level for ASI Cameras</li>
 <li>Focuser move command fixed where lots of move commands where sent by accident</li>
@@ -849,7 +874,7 @@ Thank you for your support!</p>
 <li>Latitude and Longitude can now be synced from application to telescope and vica versa (when supported).</li>
 <li>Serial Relay (via USB) interaction for Nikon Bulb</li>
 </ul>
-<h2 id="bugfixes-4">Bugfixes</h2>
+<h2 id="bugfixes-5">Bugfixes</h2>
 <ul>
 <li>Fixed Canon issue that a second exposure is accidentally triggered, causing the camera to be stuck</li>
 <li>Fixed memory leak when using Free Image RAW Converter</li>
@@ -869,5 +894,6 @@ Thank you for your support!</p>
 <li>Major code refactorings for better maintainability</li>
 <li>Lots and lots of minor bugfixes and improvements</li>
 </ul>
+
 </body>
 </html>

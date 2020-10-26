@@ -7,6 +7,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 # Version 1.11 - Preview
 
+The Release Notes below will only mention the changes compared to the last released version.  
+To identify what has changed in between nightly builds, please refer to the [bitbucket commit history](https://bitbucket.org/Isbeorn/nina/commits/branch/develop)
+
 ## Complete Sequencer Rework
 
 ### Sequence Tab changed to Sequence Builder
