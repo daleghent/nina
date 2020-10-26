@@ -93,8 +93,19 @@
                         Height="20"
                         Margin="0,0,10,0"
                         Data="{StaticResource SequenceSVG}"
-                        Fill="{StaticResource ButtonForegroundBrush}"
-                        Stretch="Uniform" />
+                        Stretch="Uniform">
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Setter Property="Fill" Value="{StaticResource PrimaryBrush}" />
+                                <Style.Triggers>
+
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabItem}}, Path=IsSelected}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource ButtonForegroundBrush}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
                     <TextBlock
                         VerticalAlignment="Center"
                         Style="{StaticResource TabItemTextBox}"
@@ -340,8 +351,19 @@
                         Height="20"
                         Margin="0,0,10,0"
                         Data="{StaticResource BoxSVG}"
-                        Fill="{StaticResource ButtonForegroundBrush}"
-                        Stretch="Uniform" />
+                        Stretch="Uniform">
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Setter Property="Fill" Value="{StaticResource PrimaryBrush}" />
+                                <Style.Triggers>
+
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabItem}}, Path=IsSelected}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource ButtonForegroundBrush}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
                     <TextBlock
                         VerticalAlignment="Center"
                         Style="{StaticResource TabItemTextBox}"
