@@ -79,7 +79,5 @@
     <converters:DateTimeZeroToVisibilityCollapsedConverter x:Key="DateTimeZeroToVisibilityCollapsedConverter" />
     <converters:ConditionalNullToObjectMultiConverter x:Key="ConditionalNullToObjectMultiConverter" />
     <converters:DataTypeToStringConverter x:Key="DataTypeToStringConverter" />
-    <converters:SequenceEntityStatusToVisibilityConverter x:Key="SequenceEntityStatusToVisibilityConverter" />
-    <converters:SequenceEntityStatusRunningToVisibilityConverter x:Key="SequenceEntityStatusRunningToVisibilityConverter" />
     <converters:SubstractConverter x:Key="SubstractConverter" />
 </ResourceDictionary>

@@ -100,18 +100,17 @@
                         x:Name="PART_Border"
                         Background="{StaticResource BackgroundBrush}"
                         BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="1">
+                        BorderThickness="1"
+                        CornerRadius="10">
                         <Grid>
                             <Path
                                 x:Name="PART_CheckedSymbol"
-                                Margin="2"
                                 Data="{StaticResource CheckedCircledSVG}"
                                 Fill="{StaticResource PrimaryBrush}"
                                 Stretch="Uniform"
                                 Visibility="Visible" />
                             <Path
                                 x:Name="PART_NotCheckedSymbol"
-                                Margin="2"
                                 Data="{StaticResource CancelCircledSVG}"
                                 Fill="{StaticResource PrimaryBrush}"
                                 Stretch="Uniform"
@@ -122,6 +121,7 @@
                         <Trigger Property="IsChecked" Value="False">
                             <Setter TargetName="PART_CheckedSymbol" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="PART_NotCheckedSymbol" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource NotificationErrorBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="PART_Border" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />

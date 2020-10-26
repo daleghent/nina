@@ -701,7 +701,7 @@
     <Compile Include="Utility\Converters\IntNegativeOneToDoubleDashConverter.cs" />
     <Compile Include="Utility\Converters\InverseBooleanOrToVisibilityCollapsedMultiConverter.cs" />
     <Compile Include="Utility\Converters\InverseNullToVisibilityCollapsedConverter.cs" />
-    <Compile Include="Utility\Converters\SequenceEntityStatusToVisibilityConverter.cs" />
+    <Compile Include="View\Sequencer\Converter\SequenceEntityStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\ShutterStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\OptimalExposureCalculatorAnswerConverter.cs" />
     <Compile Include="Utility\Converters\NaNToDoubleDashConverter.cs" />
@@ -1570,7 +1570,7 @@
     <Compile Include="View\Sequencer\SequenceContainerView.xaml.cs">
       <DependentUpon>SequenceContainerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\DroppableToDropIntoParametersConverter.cs" />
+    <Compile Include="View\Sequencer\Converter\DroppableToDropIntoParametersConverter.cs" />
     <Compile Include="View\Sequencer\MiniSequencer\MiniSequencer.xaml.cs">
       <DependentUpon>MiniSequencer.xaml</DependentUpon>
     </Compile>
@@ -1581,8 +1581,8 @@
     <Compile Include="View\Sequencer\SequenceSidebar.xaml.cs">
       <DependentUpon>SequenceSidebar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\StrategyEvaluatesConditionsAndTriggersToVisibilityConverter.cs" />
-    <Compile Include="View\Sequencer\TargetAreaMinHeightConverter.cs" />
+    <Compile Include="View\Sequencer\Converter\StrategyEvaluatesConditionsAndTriggersToVisibilityConverter.cs" />
+    <Compile Include="View\Sequencer\Converter\TargetAreaMinHeightConverter.cs" />
     <Compile Include="View\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
     </Compile>

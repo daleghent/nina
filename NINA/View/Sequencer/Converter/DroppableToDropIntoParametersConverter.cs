@@ -12,35 +12,23 @@
 
 #endregion "copyright"
 
-using NINA.Sequencer.Container;
-using NINA.Sequencer.Container.ExecutionStrategy;
+using NINA.Sequencer.DragDrop;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 
-namespace NINA.View.Sequencer {
+namespace NINA.View.Sequencer.Converter {
 
-    internal class StrategyEvaluatesConditionsAndTriggersToVisibilityConverter : IValueConverter {
+    public class DroppableToDropIntoParametersConverter : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            if (value == null) {
-                return Visibility.Collapsed;
-            }
-            var container = value as ISequenceContainer;
-            if (container == null) {
-                throw new ArgumentException("Invalid Type for converter - Must be ISequenceContainer");
-            }
-
-            if (container.Strategy.GetType() == typeof(ParallelStrategy)) {
-                return Visibility.Collapsed;
-            } else {
-                return Visibility.Visible;
-            }
+            var p = new DropIntoParameters(value as IDroppable);
+            p.Position = Utility.Enum.DropTargetEnum.Center;
+            return p;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

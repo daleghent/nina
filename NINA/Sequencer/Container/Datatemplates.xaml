@@ -18,6 +18,7 @@
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
     xmlns:util="clr-namespace:NINA.Utility"
+    xmlns:converter="clr-namespace:NINA.View.Sequencer.Converter"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
     <Style x:Key="DSOHeaderExpanderStyle" TargetType="ToggleButton">
         <Setter Property="Template">
@@ -460,7 +461,7 @@
                 <Grid.MinHeight>
                     <MultiBinding>
                         <MultiBinding.Converter>
-                            <view:TargetAreaMinHeightConverter />
+                            <converter:TargetAreaMinHeightConverter />
                         </MultiBinding.Converter>
                         <Binding Path="ViewportHeight" RelativeSource="{RelativeSource AncestorType=ScrollViewer}" />
                         <Binding RelativeSource="{RelativeSource AncestorType=ItemsControl}" />

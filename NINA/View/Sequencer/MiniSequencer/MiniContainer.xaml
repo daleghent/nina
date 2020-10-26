@@ -12,6 +12,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cond="clr-namespace:NINA.Sequencer.Conditions"
     xmlns:cont="clr-namespace:NINA.Sequencer.Container"
+    xmlns:converter="clr-namespace:NINA.View.Sequencer.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:NINA.View.Sequencer.MiniSequencer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -27,6 +28,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../ProgressStyle.xaml" />
                 <ResourceDictionary>
+                    <converter:SequenceEntityStatusRunningToVisibilityConverter x:Key="SequenceEntityStatusRunningToVisibilityConverter" />
                     <DataTemplate x:Key="TriggerTemplate" DataType="{x:Type trigger:SequenceTrigger}">
                         <Grid DataContext="{Binding}">
                             <Grid.ColumnDefinitions>
@@ -112,7 +114,10 @@
                         </Grid>
                     </DataTemplate>
                     <DataTemplate x:Key="SequenceItemTemplate" DataType="{x:Type sequenceItem:SequenceItem}">
-                        <Grid DataContext="{Binding}" Visibility="{Binding Parent.Status, Converter={StaticResource SequenceEntityStatusRunningToVisibilityConverter}}">
+                        <Grid
+                            x:Name="PART_Grid"
+                            Background="Transparent"
+                            DataContext="{Binding}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="20" />
                                 <ColumnDefinition Width="20" />
@@ -130,6 +135,7 @@
                                 <ContentPresenter Content="{Binding}" Style="{StaticResource ProgressPresenter}" />
                             </Viewbox>
                             <Path
+                                x:Name="PART_Icon"
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Width="16"
@@ -139,36 +145,28 @@
                                 Fill="{StaticResource PrimaryBrush}"
                                 Stretch="Uniform" />
                             <TextBlock
+                                x:Name="PART_Name"
                                 Grid.Column="2"
                                 Margin="5,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{Binding Name}">
-                                <TextBlock.Style>
-                                    <Style BasedOn="{StaticResource StandardTextBlock}" TargetType="{x:Type TextBlock}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static sequencer:SequenceEntityStatus.RUNNING}">
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
+                                Text="{Binding Name}" />
                             <TextBlock
+                                x:Name="PART_Detail"
                                 Grid.Column="3"
                                 Margin="5,0,0,0"
                                 VerticalAlignment="Center"
-                                Text="{Binding Detail}">
-                                <TextBlock.Style>
-                                    <Style BasedOn="{StaticResource StandardTextBlock}" TargetType="{x:Type TextBlock}">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Status}" Value="{x:Static sequencer:SequenceEntityStatus.RUNNING}">
-                                                <Setter Property="FontWeight" Value="Bold" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
+                                Text="{Binding Detail}" />
                         </Grid>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static sequencer:SequenceEntityStatus.RUNNING}">
+                                <Setter TargetName="PART_Grid" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                <Setter TargetName="PART_Name" Property="FontWeight" Value="Bold" />
+                                <Setter TargetName="PART_Detail" Property="FontWeight" Value="Bold" />
+                                <Setter TargetName="PART_Icon" Property="Fill" Value="{StaticResource ButtonForegroundBrush}" />
+                                <Setter TargetName="PART_Name" Property="Foreground" Value="{StaticResource ButtonForegroundBrush}" />
+                                <Setter TargetName="PART_Detail" Property="Foreground" Value="{StaticResource ButtonForegroundBrush}" />
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
 
                     <DataTemplate x:Key="SequenceContainerTemplate" DataType="{x:Type cont:SequenceContainer}">
@@ -187,12 +185,6 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid DataContext="{Binding}">
-        <Grid.Visibility>
-            <Binding
-                Converter="{StaticResource SequenceEntityStatusToVisibilityConverter}"
-                Path="Status"
-                UpdateSourceTrigger="PropertyChanged" />
-        </Grid.Visibility>
         <Grid.RowDefinitions>
             <RowDefinition Height="20" />
             <RowDefinition />

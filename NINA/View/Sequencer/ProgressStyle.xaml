@@ -27,23 +27,29 @@
             Width="15"
             Height="15"
             Data="{StaticResource CheckedSVG}"
-            Fill="{StaticResource ButtonForegroundBrush}"
+            Fill="{StaticResource PrimaryBrush}"
             Stretch="Uniform" />
     </DataTemplate>
     <DataTemplate x:Key="FailedItem">
-        <Path
+        <Border
             Width="15"
             Height="15"
-            Data="{StaticResource CancelSVG}"
-            Fill="{StaticResource ButtonForegroundBrush}"
-            Stretch="Uniform" />
+            Background="{StaticResource NotificationErrorBrush}"
+            BorderBrush="{StaticResource BorderBrush}"
+            BorderThickness="1"
+            CornerRadius="10">
+            <Path
+                Data="{StaticResource CancelCircledSVG}"
+                Fill="{StaticResource PrimaryBrush}"
+                Stretch="Uniform" />
+        </Border>
     </DataTemplate>
     <DataTemplate x:Key="SkippedItem">
         <Path
             Width="15"
             Height="15"
             Data="{StaticResource SkipSVG}"
-            Fill="{StaticResource ButtonForegroundBrush}"
+            Fill="{StaticResource PrimaryBrush}"
             Stretch="Uniform" />
     </DataTemplate>
     <Style x:Key="ProgressPresenter" TargetType="ContentPresenter">

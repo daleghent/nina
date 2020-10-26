@@ -5,6 +5,7 @@
     xmlns:behaviors="clr-namespace:NINA.Utility.Behaviors"
     xmlns:condition="clr-namespace:NINA.Sequencer.Conditions"
     xmlns:cont="clr-namespace:NINA.Sequencer.Container"
+    xmlns:converter="clr-namespace:NINA.View.Sequencer.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dragdrop="clr-namespace:NINA.Sequencer.DragDrop"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -32,8 +33,8 @@
                 <PropertyGroupDescription PropertyName="Category" />
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
-        <local:DroppableToDropIntoParametersConverter x:Key="DroppableToDropIntoParametersConverter" />
-        <local:StrategyEvaluatesConditionsAndTriggersToVisibilityConverter x:Key="StrategyEvaluatesConditionsAndTriggersToVisibilityConverter" />
+        <converter:DroppableToDropIntoParametersConverter x:Key="DroppableToDropIntoParametersConverter" />
+        <converter:StrategyEvaluatesConditionsAndTriggersToVisibilityConverter x:Key="StrategyEvaluatesConditionsAndTriggersToVisibilityConverter" />
 
         <Border
             x:Key="MenuHeader"
