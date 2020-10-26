@@ -4770,4 +4770,11 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset" xml:space="preserve">
     <value>Invalid Offset. The Offset has to be set between {0} and {1} but is set to {2}</value>
   </data>
+  <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
+    <value>Takes an image and solves the image using the current telescope position as reference.
+After solving the frame successfully the telescope will be synced to the solved position.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
+    <value>Solve and Sync</value>
+  </data>
 </root>

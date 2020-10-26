@@ -592,6 +592,7 @@
     <Compile Include="Sequencer\SequenceItem\Platesolving\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sequencer\SequenceItem\Platesolving\SolveAndSync.cs" />
     <Compile Include="Sequencer\SequenceItem\Switch\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>

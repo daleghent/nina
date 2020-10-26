@@ -1069,6 +1069,25 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Takes an image and solves the image using the current telescope position as reference.
+        ///After solving the frame successfully the telescope will be synced to the solved position..
+        /// </summary>
+        internal static string Lbl_SequenceItem_Platesolving_SolveAndSync_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Platesolving_SolveAndSync_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solve and Sync.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Platesolving_SolveAndSync_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Platesolving_SolveAndSync_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Resets the state and progress of the current instruction..
         /// </summary>
         internal static string Lbl_SequenceItem_Reset_Tooltip {
