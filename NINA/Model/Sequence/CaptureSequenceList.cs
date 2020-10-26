@@ -129,8 +129,14 @@ namespace NINA.Model {
         }
 
         public static CaptureSequenceList Load(string fileName, ICollection<MyFilterWheel.FilterInfo> filters, double latitude, double longitude) {
-            using (var s = new FileStream(fileName, FileMode.Open)) {
-                return Load(s, fileName, filters, latitude, longitude);
+            try {
+                using (var s = new FileStream(fileName, FileMode.Open)) {
+                    return Load(s, fileName, filters, latitude, longitude);
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(ex.Message);
+                return null;
             }
         }
 

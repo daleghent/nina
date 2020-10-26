@@ -401,12 +401,14 @@ namespace NINA.ViewModel {
                         profileService.ActiveProfile.AstrometrySettings.Latitude,
                         profileService.ActiveProfile.AstrometrySettings.Longitude
                     );
-                    AdjustCaptureSequenceListForSynchronization(l);
-                    this.Targets.Add(l);
-                    l.MarkAsUnchanged();
+                    if (l != null) {
+                        AdjustCaptureSequenceListForSynchronization(l);
+                        this.Targets.Add(l);
+                        l.MarkAsUnchanged();
 
-                    // set the last one loaded as the current sequence
-                    Sequence = l;
+                        // set the last one loaded as the current sequence
+                        Sequence = l;
+                    }
                 }
             }
         }
@@ -943,7 +945,9 @@ namespace NINA.ViewModel {
                     profileService.ActiveProfile.AstrometrySettings.Latitude,
                     profileService.ActiveProfile.AstrometrySettings.Longitude
                 );
-                AdjustCaptureSequenceListForSynchronization(csl);
+                if (csl != null) {
+                    AdjustCaptureSequenceListForSynchronization(csl);
+                }
             } else {
                 var seq = new CaptureSequence();
                 csl = new CaptureSequenceList(seq) { TargetName = "Target" };
