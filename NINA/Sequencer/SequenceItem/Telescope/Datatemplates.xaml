@@ -120,7 +120,54 @@
             <view:SequenceBlockView.SequenceItemContent>
 
                 <StackPanel DataContext="{Binding Coordinates}" Orientation="Horizontal">
-                    <TextBlock Margin="5,0,5,0" VerticalAlignment="Center">|</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAltitude}" />
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        TextAlignment="Right">
+                        <TextBox.Text>
+                            <MultiBinding Converter="{StaticResource DecDegreeConverter}" UpdateSourceTrigger="LostFocus">
+                                <Binding Path="NegativeAlt" />
+                                <Binding Path="AltDegrees">
+                                    <Binding.ValidationRules>
+                                        <rules:DegreesRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </MultiBinding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock VerticalAlignment="Center">d</TextBlock>
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        TextAlignment="Right">
+                        <TextBox.Text>
+                            <Binding Path="AltMinutes" UpdateSourceTrigger="LostFocus">
+                                <Binding.ValidationRules>
+                                    <rules:MinutesRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock VerticalAlignment="Center">m</TextBlock>
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        TextAlignment="Right">
+                        <TextBox.Text>
+                            <Binding Path="AltSeconds" UpdateSourceTrigger="LostFocus">
+                                <Binding.ValidationRules>
+                                    <rules:SecondsRule />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    <TextBlock VerticalAlignment="Center">s</TextBlock>
+                    <TextBlock
+                        Margin="10,0,10,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="|" />
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAzimuth}" />
                     <TextBox
                         MinWidth="40"
@@ -158,54 +205,6 @@
                         TextAlignment="Right">
                         <TextBox.Text>
                             <Binding Path="AzSeconds" UpdateSourceTrigger="LostFocus">
-                                <Binding.ValidationRules>
-                                    <rules:SecondsRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBlock VerticalAlignment="Center">s</TextBlock>
-                    <TextBlock
-                        Margin="10,0,10,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Text="|" />
-                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAltitude}" />
-                    <TextBox
-                        MinWidth="40"
-                        Margin="5,0,0,0"
-                        TextAlignment="Right">
-                        <TextBox.Text>
-                            <MultiBinding Converter="{StaticResource DecDegreeConverter}" UpdateSourceTrigger="LostFocus">
-                                <Binding Path="NegativeAlt" />
-                                <Binding Path="AltDegrees">
-                                    <Binding.ValidationRules>
-                                        <rules:DegreesRule />
-                                    </Binding.ValidationRules>
-                                </Binding>
-                            </MultiBinding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBlock VerticalAlignment="Center">d</TextBlock>
-                    <TextBox
-                        MinWidth="40"
-                        Margin="5,0,0,0"
-                        TextAlignment="Right">
-                        <TextBox.Text>
-                            <Binding Path="AltMinutes" UpdateSourceTrigger="LostFocus">
-                                <Binding.ValidationRules>
-                                    <rules:MinutesRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBlock VerticalAlignment="Center">m</TextBlock>
-                    <TextBox
-                        MinWidth="40"
-                        Margin="5,0,0,0"
-                        TextAlignment="Right">
-                        <TextBox.Text>
-                            <Binding Path="AltSeconds" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:SecondsRule />
                                 </Binding.ValidationRules>

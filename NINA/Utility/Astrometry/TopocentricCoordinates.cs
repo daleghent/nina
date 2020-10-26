@@ -36,6 +36,10 @@ namespace NINA.Utility.Astrometry {
             this.Longitude = longitude;
         }
 
+        public TopocentricCoordinates Copy() {
+            return new TopocentricCoordinates(Azimuth.Copy(), Altitude.Copy(), Latitude.Copy(), Latitude.Copy());
+        }
+
         public Coordinates Transform(Epoch epoch, DatabaseInteraction db = null) {
             var now = DateTime.Now;
             var jdUTC = Astrometry.GetJulianDate(now);

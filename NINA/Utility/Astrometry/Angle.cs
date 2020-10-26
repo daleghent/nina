@@ -114,6 +114,10 @@ namespace NINA.Utility.Astrometry {
             return hashCode;
         }
 
+        public Angle Copy() {
+            return Angle.ByRadians(this.Radians);
+        }
+
         public static Angle operator +(Angle a, Angle b) {
             return Angle.ByRadians(a.Radians + b.Radians);
         }
