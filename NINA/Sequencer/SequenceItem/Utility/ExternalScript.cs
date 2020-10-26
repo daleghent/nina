@@ -37,8 +37,20 @@ namespace NINA.Sequencer.SequenceItem.Utility {
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
     public class ExternalScript : SequenceItem, IValidatable {
+        public System.Windows.Input.ICommand OpenDialogCommand { get; private set; }
 
         public ExternalScript() {
+            OpenDialogCommand = new RelayCommand((object o) => {
+                Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+                dialog.Title = Locale.Loc.Instance["Lbl_SequenceItem_Utility_ExternalScript_Name"];
+                dialog.FileName = "";
+                dialog.DefaultExt = ".*";
+                dialog.Filter = "Any executable command |*.*";
+
+                if (dialog.ShowDialog() == true) {
+                    Script = dialog.FileName;
+                }
+            });
         }
 
         private IList<string> issues = new List<string>();

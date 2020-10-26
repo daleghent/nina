@@ -75,7 +75,9 @@ using System.Windows.Shell;
 using System.Windows.Threading;
 
 namespace NINA.ViewModel {
+
     internal class SequenceVM : DockableVM, ISequenceVM, ICameraConsumer, IRotatorConsumer {
+
         public SequenceVM(
                 IProfileService profileService,
                 ISequenceMediator sequenceMediator,
@@ -863,7 +865,7 @@ namespace NINA.ViewModel {
                     endOfSequence.Add(parallelActions);
                 }
 
-                if (File.Exists(profileService.ActiveProfile.SequenceSettings.SequenceCompleteCommand)) {
+                if (ExternalCommandExecutor.CommandExists(profileService.ActiveProfile.SequenceSettings.SequenceCompleteCommand)) {
                     var script = factory.GetItem<ExternalScript>();
                     script.Script = profileService.ActiveProfile.SequenceSettings.SequenceCompleteCommand;
                     endOfSequence.Add(script);
