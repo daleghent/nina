@@ -4763,4 +4763,38 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="LblNoSafetyMonitor" xml:space="preserve">
     <value>No Safety Monitor</value>
   </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain" xml:space="preserve">
+    <value>Invalid Gain. The Gain has to be set between {0} and {1} but is set to {2}</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset" xml:space="preserve">
+    <value>Invalid Offset. The Offset has to be set between {0} and {1} but is set to {2}</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
+    <value>Takes an image and solves the image using the current telescope position as reference.
+After solving the frame successfully the telescope will be synced to the solved position.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
+    <value>Solve and Sync</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DragOver_AddTarget" xml:space="preserve">
+    <value>SAVE TARGET</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DropTargetHere" xml:space="preserve">
+    <value>Drop Deep Sky Object Sequences from the Sequence here to save your individual target</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Caption" xml:space="preserve">
+    <value>Overwrite Target?</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text" xml:space="preserve">
+    <value>Target '{0}' already exists. Do you want to overwrite the existing Target? This action is irreversible.</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption" xml:space="preserve">
+    <value>Delete Target?</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text" xml:space="preserve">
+    <value>Target '{0}' will be deleted. Do you want to delete the existing Target? This action is irreversible.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SaveAsTarget_Tooltip" xml:space="preserve">
+    <value>Save the current target and all of its content for re-usage</value>
+  </data>
 </root>

@@ -130,7 +130,7 @@
     <value>Z</value>
   </data>
   <data name="LblAberrationInspector" xml:space="preserve">
-    <value>Detekce Aberace</value>
+    <value>Kontrola Aberace</value>
   </data>
   <data name="LblActive" xml:space="preserve">
     <value>Aktivní</value>
@@ -163,7 +163,7 @@
     <value>Použít nejjasnější n hvězdy</value>
   </data>
   <data name="LblAFUseBrightestStarsTooltip" xml:space="preserve">
-    <value>Omezí hodnotu Auto-ostření na nejjasnější hvězdy. 0 znamená bez omezení.</value>
+    <value>Omezí Auto-ostření na nejjasnější hvězdy. 0 neomezeně.</value>
   </data>
   <data name="LblAllProSpikeAFlatPanel" xml:space="preserve">
     <value>AllPro Spike-a-Flat Panel</value>
@@ -244,7 +244,7 @@ Měla by se aplikace pokusit chybu opravit? (Může vést k neočekávanému cho
     <value>Vzestupně</value>
   </data>
   <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>V ovladači ASCOM došlo k výjimce interoperability. Pravděpodobně to bylo způsobeno nekompatibilitou mezi ovladačem, který instalujete jako {0}, a i N.I.N.A. je {1}. Nainstalujte ovladač jako {1}</value>
+    <value>V ovladači ASCOM došlo k výjimce interoperability. Pravděpodobně kvůli nekompatibilitě mezi ovladačem, který je nainstalovaný jako {0}, a N.I.N.A. je {1}. Nainstalujte ovladač jako {1}</value>
   </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Chyba při načítání obrazových dat z kamery!</value>
@@ -418,7 +418,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</va
     <value>Beta</value>
   </data>
   <data name="LblBiasMean" xml:space="preserve">
-    <value>Střední BIAS (v 16 bitech)</value>
+    <value>Průměrný BIAS (v 16 bitech)</value>
   </data>
   <data name="LblBiasMedian" xml:space="preserve">
     <value>Průměr BIAS (v 16bitech)</value>
@@ -569,7 +569,7 @@ Filtr: {3}</value>
     <value>Vycentrovat cíl</value>
   </data>
   <data name="LblChange" xml:space="preserve">
-    <value>Změnit</value>
+    <value>Změna</value>
   </data>
   <data name="LblChangedSequenceWarning" xml:space="preserve">
     <value>Pořadí cíle(ů) v sekvenci '{0}' bylo od posledního uložení změněno (nebo ještě nebylo uloženo).
@@ -616,7 +616,7 @@ Zavřít sekvenci a vše ztratit?</value>
     <value>Teplota Senz.</value>
   </data>
   <data name="LblChooseProfile" xml:space="preserve">
-    <value>Vyberte Profil</value>
+    <value>Výběr Profilu</value>
   </data>
   <data name="LblClear" xml:space="preserve">
     <value>Vyčistit</value>
@@ -940,7 +940,7 @@ Zavřít sekvenci a vše ztratit?</value>
     <value>Metoda Detekce Kontrastu</value>
   </data>
   <data name="LblCoolCamBtnTooltip" xml:space="preserve">
-    <value>Zapne chlazení kamery na nastavenou teplotu. Doba trvání je volitelná. Většina řidičů již automaticky reguluje chladicí systém a postupně snižuje teplotu.
+    <value>Zapne chlazení kamery na nastavenou teplotu. Doba trvání je volitelná. Většina řadičů již automaticky reguluje chladicí systém a postupně snižuje teplotu.
 V případě, že je nutné provádět chlazení déle, lze určit dobu trvání a aplikace se pokusí pomalu dosáhnout teploty na základě definované doby.</value>
   </data>
   <data name="LblCoolerOn" xml:space="preserve">
@@ -959,7 +959,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Levotočivý</value>
   </data>
   <data name="LblCoverScopeMsgBox" xml:space="preserve">
-    <value>Zakrýt dalekohled a stiskem OK spustíte snímání temných snímků.</value>
+    <value>Zakrýt dalekohled a stiskem OK spustíte snímání temných plochých snímků.</value>
   </data>
   <data name="LblCoverScopeMsgBoxTitle" xml:space="preserve">
     <value>Zakrýt dalekohled</value>
@@ -1001,7 +1001,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Počáteční datový soubor DSO poskytl</value>
   </data>
   <data name="LblDataToDownloadRatio" xml:space="preserve">
-    <value>Rychlost Přenosu</value>
+    <value>Rychlost Stahování Dat</value>
   </data>
   <data name="LblDateFormatDescription" xml:space="preserve">
     <value>Datum ve formátu RRRR-MM-DD</value>
@@ -1022,19 +1022,19 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>DCRaw</value>
   </data>
   <data name="LblDebayeredHFR" xml:space="preserve">
-    <value>Debayered HFR</value>
+    <value>Bayerova maska HFR</value>
   </data>
   <data name="LblDebayeredHFRTooltip" xml:space="preserve">
-    <value>Proveďte operace HFR pomocí obrazu debayera. Přesné, ale náročné na zdroje.</value>
+    <value>Provede výpočet HFR na obraz s Bayerovou maskou. Přesné, ale náročné na zdroje.</value>
   </data>
   <data name="LblDebayerImage" xml:space="preserve">
-    <value>Debayer Obraz</value>
+    <value>Obraz s Bayerovou maskou</value>
   </data>
   <data name="LblDebayerImageTooltip" xml:space="preserve">
-    <value>Zobrazit obraz debayer v náhledu (neovlivní uložené soubory)</value>
+    <value>Zobrazit Obraz s Bayerovou maskou v náhledu (neovlivní uložené soubory)</value>
   </data>
   <data name="LblDebayeringImage" xml:space="preserve">
-    <value>Debayering obraz</value>
+    <value>Použít Bayerovu masku na obraz</value>
   </data>
   <data name="LblDebug" xml:space="preserve">
     <value>Ladit</value>
@@ -1070,7 +1070,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>°</value>
   </data>
   <data name="LblDeleteProfileInUseWarning" xml:space="preserve">
-    <value>Profil nelze smazat. Používá jej další N.I.N.A. instalace!</value>
+    <value>Profil nelze smazat. Je již používán jinou spuštěnou N.I.N.A. aplikací!</value>
   </data>
   <data name="LblDescending" xml:space="preserve">
     <value>Sestupně</value>
@@ -1373,7 +1373,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Název Filtru</value>
   </data>
   <data name="LblFilterNotFoundForPosition" xml:space="preserve">
-    <value>Na pozici {0} nalezen žádný filtr. Zkontrolujte filtry v nastavení a ujistěte se, že jsou kompatibilní s filtrovým kolem!</value>
+    <value>Na pozici {0} nezjištěn žádný filtr. Zkontrolujte filtry v nastavení a ujistěte se, že jsou kompatibilní s filtrovým kolem!</value>
   </data>
   <data name="LblFilterSetButFilterWheelNotConnected" xml:space="preserve">
     <value>Jedna nebo více položek sekvence obsahuje sadu filtrů, ale filtrové kolo není připojeno</value>
@@ -1397,7 +1397,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Vypočtený Průměr Cílového Histogramu</value>
   </data>
   <data name="LblFlatCount" xml:space="preserve">
-    <value>Počet Flat</value>
+    <value>Počet Plochých snímků</value>
   </data>
   <data name="LblFlatDevice" xml:space="preserve">
     <value>FlatBox</value>
@@ -1487,7 +1487,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Tolerance Střední hodnoty</value>
   </data>
   <data name="LblFlatMaxExposureTime" xml:space="preserve">
-    <value>Plochý snímek Maximální Expozice</value>
+    <value>Ploché snímky Max. Expozice</value>
   </data>
   <data name="LblFlatMinExposureTime" xml:space="preserve">
     <value>Ploché snímky Min. Expozice</value>
@@ -1517,10 +1517,10 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Plochý snímek je příliš tmavý. Zvyšte množství světla nebo upravte toleranci, průměrnou hodnotu nebo na minimální expoziční čas</value>
   </data>
   <data name="LblFlatWizard" xml:space="preserve">
-    <value>Flat Snímkem</value>
+    <value>Průvodce Plochým sním.</value>
   </data>
   <data name="LblFlatWizardCapture" xml:space="preserve">
-    <value>Vytvořit Plochý Snímek</value>
+    <value>Snímání Průvodcem Plochých sním.</value>
   </data>
   <data name="LblFLICameraSetup" xml:space="preserve">
     <value>Nastavení Kamery FLI</value>
@@ -1532,10 +1532,10 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Doba trvání Zaplavení</value>
   </data>
   <data name="LblFLIFlushCount" xml:space="preserve">
-    <value>Počet Vybrázdění Před expozicí</value>
+    <value>Počet Pře-expozic Před Expozicí</value>
   </data>
   <data name="LblFlip" xml:space="preserve">
-    <value>Proveďte překlopení</value>
+    <value>Provést překlopení</value>
   </data>
   <data name="LblFlippingScope" xml:space="preserve">
     <value>Překlopení Dalekohledu</value>
@@ -1802,13 +1802,13 @@ Vypočtené HFR: {2}
     <value>Neplatný režim (manual) pro Čas Expozice &gt;30s</value>
   </data>
   <data name="LblIsBayered" xml:space="preserve">
-    <value>Je Bayered</value>
+    <value>Je Bayer</value>
   </data>
   <data name="LblIsMoving" xml:space="preserve">
     <value>Pohybuje se</value>
   </data>
   <data name="LblIsSettling" xml:space="preserve">
-    <value>Stabilizován</value>
+    <value>Stabilizuje se</value>
   </data>
   <data name="LblItemsPerPage" xml:space="preserve">
     <value>Položek na stránce</value>
@@ -1847,7 +1847,7 @@ Vypočtené HFR: {2}
     <value>Načíst Profil</value>
   </data>
   <data name="LblLoadProfileInUseWarning" xml:space="preserve">
-    <value>Profil nelze načíst. Je již používán jinou N.I.N.A. instancí!</value>
+    <value>Profil nelze načíst. Je již používán jinou spuštěnou N.I.N.A. aplikací!</value>
   </data>
   <data name="LblLoadSequence" xml:space="preserve">
     <value>Načíst Sekvenci</value>
@@ -2368,7 +2368,7 @@ Vypočtené HFR: {2}
     <value>Souřadnice získané od {0}</value>
   </data>
   <data name="LblPlanetariumFailedToConnect" xml:space="preserve">
-    <value>Nelze se připojit k síti {0}. Ujistěte se, že je spuštěná a nakonfigurovaná pro příjem požadavků</value>
+    <value>Nelze se připojit k {0}. Ujistěte se, že je spuštěná a nakonfigurovaná pro příjem požadavků</value>
   </data>
   <data name="LblPlanetariumObjectNotSelected" xml:space="preserve">
     <value>{0} Nevybrán žádný objekt</value>
@@ -2380,7 +2380,7 @@ Vypočtené HFR: {2}
     <value>Získat souřadnice z Planetária</value>
   </data>
   <data name="LblPlanetariumUseSelectedObject" xml:space="preserve">
-    <value>Souřadnice z vybraného objektu</value>
+    <value>Souřadnice podle vybraného objektu</value>
   </data>
   <data name="LblPlatesolve2" xml:space="preserve">
     <value>Platesolve2</value>
@@ -2816,7 +2816,7 @@ Tato šablona bude použita při spuštění sekvence místo výchozí.</value>
     <value>Časový limit v sekundách před přerušením příkazu StartGuiding před dalším pokusem.</value>
   </data>
   <data name="LblSharpCapSensorAnalysisPath" xml:space="preserve">
-    <value>SharpCap Senzor Analýza složky</value>
+    <value>Složka Analýzy Senzoru SharpCap</value>
   </data>
   <data name="LblSharpCapSensorAnalysisLoadedFormat" xml:space="preserve">
     <value>Načteno {0} senzory</value>
@@ -4051,7 +4051,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Po Opakování</value>
   </data>
   <data name="LblFlatDeviceNotConnected" xml:space="preserve">
-    <value>Flat zařízení nepřipojeno</value>
+    <value>Zařízení Plochého snímku nepřipojeno</value>
   </data>
   <data name="LblEnterMessage" xml:space="preserve">
     <value>Zadejte Zprávu</value>
@@ -4093,7 +4093,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Povolí Režim Ultra pro velmi nízký čtecí šum </value>
   </data>
   <data name="LblRotatorReverseTooltip" xml:space="preserve">
-    <value>Otočit směr pohybu rotátoru. Přepnout pokud se rotátor po vyřešení otáčí špatným směrem.</value>
+    <value>Reverse movement direction of rotator. Toggle this, if the platesolver rotates into the wrong direction.</value>
   </data>
   <data name="LblHips2FitsSurvey" xml:space="preserve">
     <value>HIPS 2 FITS Sky Survey</value>
@@ -4471,7 +4471,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Zkontroluje cílovou hodnotu expozice pro zadané parametry a provede flat expozice</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
-    <value>Průvodce Expozicí Flat</value>
+    <value>Průvodce Expozicí Plochého snímku</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
     <value>Pro kombinaci filtru {0}, zesílení {1}, binningu {2} nebyla nalezena žádná optimální hodnota expozice</value>
@@ -4626,7 +4626,7 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Filtrové Kolo</value>
   </data>
   <data name="Lbl_SequenceCategory_FlatDevice" xml:space="preserve">
-    <value>Flat Zařízení</value>
+    <value>Zařízení Ploch. sním.</value>
   </data>
   <data name="Lbl_SequenceCategory_Focuser" xml:space="preserve">
     <value>Zaostřovač</value>
@@ -4744,15 +4744,49 @@ Použijte ve spojení s jinou podmínkou smyčky, abyste neskončili v nekonečn
     <value>Zadaný Čas</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
-    <value>Smyčka sady pokynů po dobu trvání. Po uplynutí daného času budou zbývající pokyny uvnitř sady přeskočeny.</value>
+    <value>Loop instruction set for a given duration. When the duration is over, the remaining instructions inside the set will be skipped.</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>Smyčka po Zadaný Čas</value>
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
-    <value>Flat Zařízení odpojeno!</value>
+    <value>Zařízení Plochého snímku odpojeno!</value>
   </data>
   <data name="LblNoSafetyMonitor" xml:space="preserve">
     <value>Žádný Bezpečnostní Monitor</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain" xml:space="preserve">
+    <value>Neplatný Zisk. Zisk musí být mezi {0} a {1}, ale je nastaven na {2}</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset" xml:space="preserve">
+    <value>Neplatný Offset. Offset musí být mezi {0} a {1}, ale je nastaven na {2}</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
+    <value>Takes an image and solves the image using the current telescope position as reference.
+After solving the frame successfully the telescope will be synced to the solved position.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
+    <value>Solve and Sync</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DragOver_AddTarget" xml:space="preserve">
+    <value>SAVE TARGET</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DropTargetHere" xml:space="preserve">
+    <value>Drop Deep Sky Object Sequences from the Sequence here to save your individual target</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Caption" xml:space="preserve">
+    <value>Overwrite Target?</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text" xml:space="preserve">
+    <value>Target '{0}' already exists. Do you want to overwrite the existing Target? This action is irreversible.</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption" xml:space="preserve">
+    <value>Delete Target?</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text" xml:space="preserve">
+    <value>Target '{0}' will be deleted. Do you want to delete the existing Target? This action is irreversible.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SaveAsTarget_Tooltip" xml:space="preserve">
+    <value>Save the current target and all of its content for re-usage</value>
   </data>
 </root>
