@@ -97,7 +97,12 @@
                                                     HorizontalAlignment="Right"
                                                     Command="{Binding DataContext.RemoveTargetCommand, RelativeSource={RelativeSource AncestorType=local:SequenceView}}"
                                                     CommandParameter="{Binding}">
-                                                    X
+
+                                                    <Path
+                                                        Margin="5"
+                                                        Data="{StaticResource TrashCanSVG}"
+                                                        Fill="{StaticResource ButtonForegroundBrush}"
+                                                        Stretch="Uniform" />
                                                 </Button>
                                                 <Button
                                                     x:Name="PART_Reset"
@@ -1595,7 +1600,7 @@
                         </Button.ToolTip>
                         <Path
                             Margin="5"
-                            Data="{StaticResource SubstractSVG}"
+                            Data="{StaticResource TrashCanSVG}"
                             Fill="{StaticResource ButtonForegroundBrush}"
                             Stretch="Uniform" />
                     </Button>

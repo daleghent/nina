@@ -119,7 +119,7 @@
                             Command="{Binding RemoveProfileCommand}">
                             <Path
                                 Margin="5"
-                                Data="{StaticResource SubstractSVG}"
+                                Data="{StaticResource TrashCanSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
                                 Stretch="Uniform" />
                         </Button>
