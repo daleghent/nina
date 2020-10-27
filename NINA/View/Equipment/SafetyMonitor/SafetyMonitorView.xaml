@@ -19,97 +19,99 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <GroupBox>
-        <GroupBox.Header>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="3*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    VerticalAlignment="Center"
-                    FontSize="20"
-                    Text="{ns:Loc LblSafetyMonitor}" />
-                <equip:Connector
-                    Grid.Column="1"
-                    CancelCommand="{Binding CancelConnectCommand}"
-                    ConnectCommand="{Binding ConnectCommand}"
-                    Connected="{Binding SafetyMonitorInfo.Connected}"
-                    Devices="{Binding SafetyMonitorChooserVM.Devices}"
-                    DisconnectCommand="{Binding DisconnectCommand}"
-                    HasSetupDialog="{Binding SafetyMonitorChooserVM.SelectedDevice.HasSetupDialog}"
-                    RefreshCommand="{Binding RefreshMonitorListCommand}"
-                    SelectedDevice="{Binding SafetyMonitorChooserVM.SelectedDevice, Mode=TwoWay}"
-                    SetupCommand="{Binding SafetyMonitorChooserVM.SetupDialogCommand}" />
-            </Grid>
-        </GroupBox.Header>
+    <UniformGrid Columns="2">
+        <GroupBox>
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="{ns:Loc LblSafetyMonitor}" />
+                    <equip:Connector
+                        Grid.Column="1"
+                        CancelCommand="{Binding CancelConnectCommand}"
+                        ConnectCommand="{Binding ConnectCommand}"
+                        Connected="{Binding SafetyMonitorInfo.Connected}"
+                        Devices="{Binding SafetyMonitorChooserVM.Devices}"
+                        DisconnectCommand="{Binding DisconnectCommand}"
+                        HasSetupDialog="{Binding SafetyMonitorChooserVM.SelectedDevice.HasSetupDialog}"
+                        RefreshCommand="{Binding RefreshMonitorListCommand}"
+                        SelectedDevice="{Binding SafetyMonitorChooserVM.SelectedDevice, Mode=TwoWay}"
+                        SetupCommand="{Binding SafetyMonitorChooserVM.SetupDialogCommand}" />
+                </Grid>
+            </GroupBox.Header>
 
-        <Grid>
-            <StackPanel>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblName}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding SafetyMonitorInfo.Name}"
-                                TextWrapping="WrapWithOverflow" />
+            <Grid>
+                <StackPanel>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblName}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding SafetyMonitorInfo.Name}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblDescription}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding SafetyMonitorInfo.Description}"
-                                TextWrapping="WrapWithOverflow" />
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblDescription}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding SafetyMonitorInfo.Description}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblDriverInfo}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding SafetyMonitorInfo.DriverInfo}"
-                                TextWrapping="WrapWithOverflow" />
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblDriverInfo}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding SafetyMonitorInfo.DriverInfo}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblDriverVersion}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding SafetyMonitorInfo.DriverVersion}" />
+                            </UniformGrid>
                         </UniformGrid>
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblDriverVersion}" />
-                            <TextBlock Margin="5,0,0,0" Text="{Binding SafetyMonitorInfo.DriverVersion}" />
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblIsSafe}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding SafetyMonitorInfo.IsSafe}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblIsSafe}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding SafetyMonitorInfo.IsSafe}"
-                                TextWrapping="WrapWithOverflow" />
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-            </StackPanel>
-        </Grid>
-    </GroupBox>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </UniformGrid>
 </UserControl>

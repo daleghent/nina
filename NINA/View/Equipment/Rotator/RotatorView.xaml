@@ -19,171 +19,173 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <GroupBox>
-        <GroupBox.Header>
+    <UniformGrid Columns="2">
+        <GroupBox>
+            <GroupBox.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="{ns:Loc LblRotator}" />
+                    <equip:Connector
+                        Grid.Column="1"
+                        CancelCommand="{Binding CancelConnectCommand}"
+                        ConnectCommand="{Binding ConnectCommand}"
+                        Connected="{Binding RotatorInfo.Connected}"
+                        Devices="{Binding RotatorChooserVM.Devices}"
+                        DisconnectCommand="{Binding DisconnectCommand}"
+                        HasSetupDialog="{Binding RotatorChooserVM.SelectedDevice.HasSetupDialog}"
+                        RefreshCommand="{Binding RefreshRotatorListCommand}"
+                        SelectedDevice="{Binding RotatorChooserVM.SelectedDevice, Mode=TwoWay}"
+                        SetupCommand="{Binding RotatorChooserVM.SetupDialogCommand}" />
+                </Grid>
+            </GroupBox.Header>
+
             <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*" />
-                    <ColumnDefinition Width="3*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    VerticalAlignment="Center"
-                    FontSize="20"
-                    Text="{ns:Loc LblRotator}" />
-                <equip:Connector
-                    Grid.Column="1"
-                    CancelCommand="{Binding CancelConnectCommand}"
-                    ConnectCommand="{Binding ConnectCommand}"
-                    Connected="{Binding RotatorInfo.Connected}"
-                    Devices="{Binding RotatorChooserVM.Devices}"
-                    DisconnectCommand="{Binding DisconnectCommand}"
-                    HasSetupDialog="{Binding RotatorChooserVM.SelectedDevice.HasSetupDialog}"
-                    RefreshCommand="{Binding RefreshRotatorListCommand}"
-                    SelectedDevice="{Binding RotatorChooserVM.SelectedDevice, Mode=TwoWay}"
-                    SetupCommand="{Binding RotatorChooserVM.SetupDialogCommand}" />
-            </Grid>
-        </GroupBox.Header>
-
-        <Grid>
-            <StackPanel>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblName}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding RotatorInfo.Name}"
-                                TextWrapping="WrapWithOverflow" />
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblDescription}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding RotatorInfo.Description}"
-                                TextWrapping="WrapWithOverflow" />
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblDriverInfo}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding RotatorInfo.DriverInfo}"
-                                TextWrapping="WrapWithOverflow" />
-                        </UniformGrid>
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblDriverVersion}" />
-                            <TextBlock Margin="5,0,0,0" Text="{Binding RotatorInfo.DriverVersion}" />
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblIsMoving}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding RotatorInfo.IsMoving}"
-                                TextWrapping="WrapWithOverflow" />
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-                <Border
-                    BorderBrush="{StaticResource BorderBrush}"
-                    BorderThickness="0"
-                    IsEnabled="{Binding RotatorInfo.CanReverse}">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblReverse}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblRotatorReverseTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            <CheckBox
-                                Width="120"
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Left"
-                                Command="{Binding ReverseCommand}"
-                                CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
-                                IsChecked="{Binding RotatorInfo.Reverse}">
-                                <CheckBox.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblRotatorReverseTooltip}" />
-                                </CheckBox.ToolTip>
-                            </CheckBox>
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock Text="{ns:Loc LblPosition}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                Text="{Binding RotatorInfo.Position, StringFormat={}{0:0.##}°}"
-                                TextWrapping="WrapWithOverflow" />
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
-
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetPosition}" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Height="25"
-                                    MinWidth="90"
+                <StackPanel>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblName}" />
+                                <TextBlock
                                     Margin="5,0,0,0"
-                                    Text="{Binding TargetPosition}" />
-                                <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
-                                    <ninactrl:CancellableButton
-                                        Width="50"
-                                        Height="25"
-                                        Margin="5"
-                                        HorizontalAlignment="Left"
-                                        HorizontalContentAlignment="Center"
-                                        ButtonText="{ns:Loc LblMove}"
-                                        CancelButtonImage="{StaticResource CancelSVG}"
-                                        CancelCommand="{Binding HaltCommand}"
-                                        Command="{Binding MoveCommand}"
-                                        ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
-                                </Grid>
-                            </StackPanel>
+                                    Text="{Binding RotatorInfo.Name}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
                         </UniformGrid>
-                    </UniformGrid>
-                </Border>
-            </StackPanel>
-        </Grid>
-    </GroupBox>
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblDescription}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding RotatorInfo.Description}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblDriverInfo}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding RotatorInfo.DriverInfo}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblDriverVersion}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding RotatorInfo.DriverVersion}" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblIsMoving}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding RotatorInfo.IsMoving}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                    <Border
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0"
+                        IsEnabled="{Binding RotatorInfo.CanReverse}">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblReverse}">
+                                    <TextBlock.ToolTip>
+                                        <TextBlock Text="{ns:Loc LblRotatorReverseTooltip}" />
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                                <CheckBox
+                                    Width="120"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    Command="{Binding ReverseCommand}"
+                                    CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
+                                    IsChecked="{Binding RotatorInfo.Reverse}">
+                                    <CheckBox.ToolTip>
+                                        <TextBlock Text="{ns:Loc LblRotatorReverseTooltip}" />
+                                    </CheckBox.ToolTip>
+                                </CheckBox>
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblPosition}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding RotatorInfo.Position, StringFormat={}{0:0.##}°}"
+                                    TextWrapping="WrapWithOverflow" />
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetPosition}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBox
+                                        Height="25"
+                                        MinWidth="90"
+                                        Margin="5,0,0,0"
+                                        Text="{Binding TargetPosition}" />
+                                    <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
+                                        <ninactrl:CancellableButton
+                                            Width="50"
+                                            Height="25"
+                                            Margin="5"
+                                            HorizontalAlignment="Left"
+                                            HorizontalContentAlignment="Center"
+                                            ButtonText="{ns:Loc LblMove}"
+                                            CancelButtonImage="{StaticResource CancelSVG}"
+                                            CancelCommand="{Binding HaltCommand}"
+                                            Command="{Binding MoveCommand}"
+                                            ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
+                                    </Grid>
+                                </StackPanel>
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+    </UniformGrid>
 </UserControl>

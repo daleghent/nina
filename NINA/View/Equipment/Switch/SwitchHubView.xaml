@@ -24,6 +24,10 @@
         <util:BindingProxy x:Key="SwitchProxy" Data="{Binding}" />
     </UserControl.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />
@@ -53,7 +57,7 @@
                 </Grid>
             </GroupBox.Header>
         </GroupBox>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.Resources>
                 <DataTemplate x:Key="Eagle">
                     <switch:Eagle DataContext="{Binding}" />
