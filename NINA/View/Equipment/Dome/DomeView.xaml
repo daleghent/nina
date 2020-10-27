@@ -187,17 +187,37 @@
                                     IsChecked="{Binding DirectFollowToggled}" />
                             </UniformGrid>
                         </Border>
-                        <Button
-                            Grid.Row="3"
+                        <Grid
+                            Grid.Row="0"
+                            Grid.RowSpan="4"
                             Grid.Column="0"
-                            Width="80"
-                            Height="80"
-                            HorizontalAlignment="Left"
-                            Command="{Binding FindHomeCommand}"
-                            IsEnabled="{Binding DomeInfo.AtHome, Converter={StaticResource InverseBooleanConverter}}"
-                            Visibility="{Binding DomeInfo.CanFindHome, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblDomeFindHome}" />
-                        </Button>
+                            VerticalAlignment="Bottom"
+                            HorizontalAlignment="Left">
+                            <StackPanel Orientation="Vertical">
+                                <Button
+                                    Margin="5"
+                                    Width="80"
+                                    Height="80"
+                                    Command="{Binding SyncCommand}"
+                                    Visibility="{Binding DomeInfo.CanSyncAzimuth, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblDomeSyncAzimuth}" />
+                                    <Button.ToolTip>
+                                        <ToolTip ToolTipService.ShowOnDisabled="True">
+                                            <TextBlock Text="{ns:Loc LblDomeSyncAzimuthTooltip}" />
+                                        </ToolTip>
+                                    </Button.ToolTip>
+                                </Button>
+                                <Button
+                                    Margin="5"
+                                    Width="80"
+                                    Height="80"
+                                    Command="{Binding FindHomeCommand}"
+                                    IsEnabled="{Binding DomeInfo.AtHome, Converter={StaticResource InverseBooleanConverter}}"
+                                    Visibility="{Binding DomeInfo.CanFindHome, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblDomeFindHome}" />
+                                </Button>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </GroupBox>
             </Grid>
@@ -212,18 +232,58 @@
                     Header="{ns:Loc LblManualControl}">
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="100" />
-                            <RowDefinition Height="100" />
                             <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="50" />
+                            <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="3" Grid.Column="1">
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="{Binding DomeInfo.CanSetShutter}">
+                                    <Button
+                                        Width="40"
+                                        Height="40"
+                                        Margin="5"
+                                        HorizontalAlignment="Right"
+                                        Command="{Binding CloseShutterCommand}">
+                                        <Path
+                                            Margin="5"
+                                            Data="{StaticResource ObservatoryClosedSVG}"
+                                            Fill="{StaticResource ButtonForegroundBrush}"
+                                            Stretch="Uniform" />
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                <TextBlock Text="{ns:Loc LblDomeShutterClose}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
+                                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeShutter}" />
+                                    <Button
+                                        Width="40"
+                                        Height="40"
+                                        Margin="5"
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding OpenShutterCommand}">
+                                        <Path
+                                            Margin="5"
+                                            Data="{StaticResource ObservatorySVG}"
+                                            Fill="{StaticResource ButtonForegroundBrush}"
+                                            Stretch="Uniform" />
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                <TextBlock Text="{ns:Loc LblDomeShutterOpen}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Row="1" Grid.Column="0">
                             <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="{Binding DomeInfo.CanSetAzimuth}">
                                     <Button
@@ -231,9 +291,47 @@
                                         Height="40"
                                         Margin="5"
                                         HorizontalAlignment="Right"
-                                        Command="{Binding ManualSlewCommand}">
-                                        <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSlew}"/>
+                                        Command="{Binding RotateCCWCommand}">
+                                        <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="&lt;"/>
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                <TextBlock Text="{ns:Loc LblDomeRotateCCW}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
                                     </Button>
+                                    <TextBox
+                                        MinWidth="30"
+                                        Margin="5,0,0,0"
+                                        TextAlignment="Right"
+                                        VerticalAlignment="Center">
+                                        <TextBox.Text>
+                                            <Binding Path="ActiveProfile.DomeSettings.RotateDegrees" Source="{StaticResource ProfileService}" UpdateSourceTrigger="LostFocus">
+                                                <Binding.ValidationRules>
+                                                    <rules:FullCircleDegreesRule />
+                                                </Binding.ValidationRules>
+                                            </Binding>
+                                        </TextBox.Text>
+                                    </TextBox>
+                                    <TextBlock Margin="0,-10,0,0" VerticalAlignment="Center" Text="&#730;"/>
+                                    <Button
+                                        Width="40"
+                                        Height="40"
+                                        Margin="5"
+                                        HorizontalAlignment="Left"
+                                        Command="{Binding RotateCWCommand}">
+                                        <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="&gt;"/>
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                <TextBlock Text="{ns:Loc LblDomeRotateCW}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
+                                </StackPanel>
+                            </Border>
+                        </Grid>
+                        <Grid Grid.Row="2" Grid.Column="0">
+                            <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" IsEnabled="{Binding DomeInfo.CanSetAzimuth}">
                                     <TextBox
                                         MinWidth="30"
                                         Margin="5,0,0,0"
@@ -248,65 +346,71 @@
                                         </TextBox.Text>
                                     </TextBox>
                                     <TextBlock Margin="0,-10,0,0" VerticalAlignment="Center" Text="&#730;"/>
+                                    <Button
+                                        Width="40"
+                                        Height="40"
+                                        Margin="5"
+                                        HorizontalAlignment="Right"
+                                        Command="{Binding ManualSlewCommand}">
+                                        <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSlew}"/>
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                <TextBlock Text="{ns:Loc LblDomeManualSlewTooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
                                 </StackPanel>
                             </Border>
                         </Grid>
-                        <Button
+                        <Grid
                             Grid.Row="0"
-                            Grid.Column="1"
-                            Width="80"
-                            Height="80"
-                            Command="{Binding OpenShutterCommand}"
+                            Grid.RowSpan="4"
+                            Grid.Column="2"
                             VerticalAlignment="Bottom"
-                            IsEnabled="{Binding DomeInfo.CanSetShutter}">
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblDomeShutterOpen}" />
-                        </Button>
-                        <Button
-                            Grid.Row="2"
-                            Grid.Column="1"
-                            Width="80"
-                            Height="80"
-                            Command="{Binding CloseShutterCommand}"
-                            VerticalAlignment="Top"
-                            IsEnabled="{Binding DomeInfo.CanSetShutter}">
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblDomeShutterClose}" />
-                        </Button>
-                        <Button
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            Width="80"
-                            Height="80"
-                            Command="{Binding StopCommand}">
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblStop}" />
-                        </Button>
-
-                        <Button
-                            Grid.Row="2"
-                            Grid.Column="3"
-                            Width="80"
-                            Height="80"
-                            HorizontalAlignment="Right"
-                            Command="{Binding ParkCommand}"
-                            IsEnabled="{Binding DomeInfo.CanPark}"
-                            Visibility="{Binding DomeInfo.AtPark, Converter={StaticResource InverseBoolToVisibilityConverter}}">
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblPark}" />
-                        </Button>
-                        <Button
-                            Grid.Row="3"
-                            Grid.Column="3"
-                            Width="80"
-                            Height="40"
-                            HorizontalAlignment="Right"
-                            Command="{Binding SetParkPositionCommand}"
-                            IsEnabled="{Binding DomeInfo.AtPark, Converter={StaticResource InverseBooleanConverter}}"
-                            Visibility="{Binding DomeInfo.CanSetPark, Converter={StaticResource VisibilityConverter}}">
-                            <Button.ToolTip>
-                                <ToolTip ToolTipService.ShowOnDisabled="True">
-                                    <TextBlock Text="{ns:Loc LblSetParkToolTip}" />
-                                </ToolTip>
-                            </Button.ToolTip>
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSetPark}" />
-                        </Button>
+                            HorizontalAlignment="Right">
+                            <StackPanel Orientation="Vertical">
+                                <Button
+                                    Margin="5"
+                                    Width="80"
+                                    Height="80"
+                                    Command="{Binding StopCommand}">
+                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblStop}" />
+                                    <Button.ToolTip>
+                                        <ToolTip ToolTipService.ShowOnDisabled="True">
+                                            <TextBlock Text="{ns:Loc LblDomeStopTooltip}" />
+                                        </ToolTip>
+                                    </Button.ToolTip>
+                                </Button>
+                                <Button
+                                    Margin="5"
+                                    Width="80"
+                                    Height="80"
+                                    Command="{Binding ParkCommand}"
+                                    IsEnabled="{Binding DomeInfo.CanPark}"
+                                    Visibility="{Binding DomeInfo.AtPark, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblPark}" />
+                                    <Button.ToolTip>
+                                        <ToolTip ToolTipService.ShowOnDisabled="True">
+                                            <TextBlock Text="{ns:Loc LblDomeParkTooltip}" />
+                                        </ToolTip>
+                                    </Button.ToolTip>
+                                </Button>
+                                <Button
+                                    Margin="5"
+                                    Width="80"
+                                    Height="40"
+                                    Command="{Binding SetParkPositionCommand}"
+                                    IsEnabled="{Binding DomeInfo.AtPark, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}"
+                                    Visibility="{Binding DomeInfo.CanSetPark, Converter={StaticResource VisibilityConverter}}">
+                                    <Button.ToolTip>
+                                        <ToolTip ToolTipService.ShowOnDisabled="True">
+                                            <TextBlock Text="{ns:Loc LblSetParkToolTip}" />
+                                        </ToolTip>
+                                    </Button.ToolTip>
+                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSetPark}" />
+                                </Button>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </GroupBox>
             </Grid>

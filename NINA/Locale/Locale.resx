@@ -3795,14 +3795,38 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblASCOMPlatformOutdated" xml:space="preserve">
     <value>ASCOM Platform Version is outdated. Please update to the latest ASCOM platform version. Otherwise the application might not be able to connect to all ASCOM devices.</value>
   </data>
+  <data name="LblDomeShutter" xml:space="preserve">
+    <value>Shutter</value>
+  </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
     <value>Close</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
     <value>Open</value>
   </data>
+  <data name="LblDomeRotateCW" xml:space="preserve">
+    <value>Rotate clockwise</value>
+  </data>
+  <data name="LblDomeRotateCCW" xml:space="preserve">
+    <value>Rotate counter-clockwise</value>
+  </data>
   <data name="LblDomeSynchronization" xml:space="preserve">
     <value>Synchronization</value>
+  </data>
+  <data name="LblDomeSyncAzimuth" xml:space="preserve">
+    <value>Sync</value>
+  </data>
+  <data name="LblDomeSyncAzimuthTooltip" xml:space="preserve">
+    <value>Syncs the dome azimuth to the value calculated from the telescope direction and dome measurements</value>
+  </data>
+  <data name="LblDomeStopTooltip" xml:space="preserve">
+    <value>Stops all dome shutter and rotation movement</value>
+  </data>
+  <data name="LblDomeManualSlewTooltip" xml:space="preserve">
+    <value>Rotate the dome to a target azimuth</value>
+  </data>
+  <data name="LblDomeParkTooltip" xml:space="preserve">
+    <value>Rotate the dome to the park location set in the driver and close the shutter</value>
   </data>
   <data name="LblDynamicBrightness" xml:space="preserve">
     <value>Dynamic Brightness</value>
@@ -3987,11 +4011,23 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblParkDomeAtSequenceEnd" xml:space="preserve">
     <value>Park dome at sequence end</value>
   </data>
+  <data name="LblDomeSyncDuringMountSlew" xml:space="preserve">
+    <value>Allow sync while mount slews</value>
+  </data>
+  <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
+    <value>When Dome Following is enabled, NINA will frequently check if the Dome needs to be rotated to line up with the telescope. When an external application, such as a planetarium or a handset, moves the telescope it may be helpful to wait until the telescope is no longer moving to rotate the dome.</value>
+  </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>Find home before parking</value>
   </data>
+  <data name="LblDomeSlewCW" xml:space="preserve">
+    <value>Move CW</value>
+  </data>
+  <data name="LblDomeSlewCCW" xml:space="preserve">
+    <value>Move CCW</value>
+  </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
-    <value>If FindHome is available, then this can improve the reliability of parking to the correct location, when a precise location is required.</value>
+    <value>If FindHome is supported by the driver, using it before parking can ensure it goes to a precise location. This can be helpful if the shutter motor battery charges while parked.</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
     <value>AF Sequence Timeout</value>

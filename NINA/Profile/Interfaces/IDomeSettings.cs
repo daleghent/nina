@@ -26,5 +26,7 @@ namespace NINA.Profile {
         bool UseDirectFollowing { get; set; }
         bool FindHomeBeforePark { get; set; }
         int DomeSyncTimeoutSeconds { get; set; }
+        bool SynchronizeDuringMountSlew { get; set; }
+        double RotateDegrees { get; set; }
     }
 }

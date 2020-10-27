@@ -292,7 +292,8 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 EquatorialSystem = Telescope.EquatorialSystem,
                                 HasUnknownEpoch = Telescope.HasUnknownEpoch,
                                 TargetCoordinates = Telescope.TargetCoordinates,
-                                TargetSideOfPier = Telescope.TargetSideOfPier
+                                TargetSideOfPier = Telescope.TargetSideOfPier,
+                                Slewing = Telescope.Slewing
                             };
 
                             // Supporting custom would require an additional dialog box to input the custom rates. We can add that later if there's demand for it
@@ -434,6 +435,9 @@ namespace NINA.ViewModel.Equipment.Telescope {
             telescopeValues.TryGetValue(nameof(TelescopeInfo.TargetSideOfPier), out o);
             TelescopeInfo.TargetSideOfPier = (PierSide?)(o ?? null);
 
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.Slewing), out o);
+            TelescopeInfo.Slewing = (bool)(o ?? false);
+
             BroadcastTelescopeInfo();
         }
 
@@ -466,6 +470,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
             telescopeValues.Add(nameof(TelescopeInfo.SideOfPier), _telescope?.SideOfPier ?? new PierSide());
             telescopeValues.Add(nameof(TelescopeInfo.TargetCoordinates), _telescope?.TargetCoordinates ?? null);
             telescopeValues.Add(nameof(TelescopeInfo.TargetSideOfPier), _telescope?.TargetSideOfPier ?? null);
+            telescopeValues.Add(nameof(TelescopeInfo.Slewing), _telescope?.Slewing ?? false);
 
             return telescopeValues;
         }

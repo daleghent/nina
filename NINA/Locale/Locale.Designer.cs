@@ -5485,7 +5485,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If FindHome is available, then this can improve the reliability of parking to the correct location, when a precise location is required..
+        ///   Looks up a localized string similar to If FindHome is supported by the driver, using it before parking can ensure it goes to a precise location. This can be helpful if the shutter motor battery charges while parked..
         /// </summary>
         internal static string LblDomeFindHomeBeforeParkTooltip {
             get {
@@ -5548,6 +5548,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rotate the dome to a target azimuth.
+        /// </summary>
+        internal static string LblDomeManualSlewTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeManualSlewTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No Dome Source.
         /// </summary>
         internal static string LblDomeNoSource {
@@ -5566,6 +5575,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rotate the dome to the park location set in the driver and close the shutter.
+        /// </summary>
+        internal static string LblDomeParkTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeParkTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dome Radius (mm).
         /// </summary>
         internal static string LblDomeRadius {
@@ -5580,6 +5598,24 @@ namespace NINA.Locale {
         internal static string LblDomeRadiusTooltip {
             get {
                 return ResourceManager.GetString("LblDomeRadiusTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotate counter-clockwise.
+        /// </summary>
+        internal static string LblDomeRotateCCW {
+            get {
+                return ResourceManager.GetString("LblDomeRotateCCW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rotate clockwise.
+        /// </summary>
+        internal static string LblDomeRotateCW {
+            get {
+                return ResourceManager.GetString("LblDomeRotateCW", resourceCulture);
             }
         }
         
@@ -5647,6 +5683,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shutter.
+        /// </summary>
+        internal static string LblDomeShutter {
+            get {
+                return ResourceManager.GetString("LblDomeShutter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close.
         /// </summary>
         internal static string LblDomeShutterClose {
@@ -5674,11 +5719,74 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move CCW.
+        /// </summary>
+        internal static string LblDomeSlewCCW {
+            get {
+                return ResourceManager.GetString("LblDomeSlewCCW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move CW.
+        /// </summary>
+        internal static string LblDomeSlewCW {
+            get {
+                return ResourceManager.GetString("LblDomeSlewCW", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slewing.
         /// </summary>
         internal static string LblDomeSlewing {
             get {
                 return ResourceManager.GetString("LblDomeSlewing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stops all dome shutter and rotation movement.
+        /// </summary>
+        internal static string LblDomeStopTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeStopTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sync.
+        /// </summary>
+        internal static string LblDomeSyncAzimuth {
+            get {
+                return ResourceManager.GetString("LblDomeSyncAzimuth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Syncs the dome azimuth to the value calculated from the telescope direction and dome measurements.
+        /// </summary>
+        internal static string LblDomeSyncAzimuthTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeSyncAzimuthTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Allow sync while mount slews.
+        /// </summary>
+        internal static string LblDomeSyncDuringMountSlew {
+            get {
+                return ResourceManager.GetString("LblDomeSyncDuringMountSlew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When Dome Following is enabled, NINA will frequently check if the Dome needs to be rotated to line up with the telescope. When an external application, such as a planetarium or a handset, moves the telescope it may be helpful to wait until the telescope is no longer moving to rotate the dome..
+        /// </summary>
+        internal static string LblDomeSyncDuringMountSlewTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeSyncDuringMountSlewTooltip", resourceCulture);
             }
         }
         

@@ -278,5 +278,12 @@ namespace NINA.Model.MyTelescope {
                 RaisePropertyChanged();
             }
         }
+
+        private bool slewing;
+
+        public bool Slewing {
+            get { return slewing; }
+            set { slewing = value; RaisePropertyChanged(); }
+        }
     }
 }

@@ -203,6 +203,17 @@
                         <TextBlock
                             MinWidth="200"
                             VerticalAlignment="Center"
+                            Text="{ns:Loc LblDomeSyncDuringMountSlew}"
+                            ToolTip="{ns:Loc LblDomeSyncDuringMountSlewTooltip}" />
+                        <CheckBox HorizontalAlignment="Left" IsChecked="{Binding SynchronizeDuringMountSlew}" />
+                    </UniformGrid>
+                    <UniformGrid
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock
+                            MinWidth="200"
+                            VerticalAlignment="Center"
                             Text="{ns:Loc LblDomeFindHomeBeforePark}"
                             ToolTip="{ns:Loc LblDomeFindHomeBeforeParkTooltip}" />
                         <CheckBox HorizontalAlignment="Left" IsChecked="{Binding FindHomeBeforePark}" />

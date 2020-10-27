@@ -193,5 +193,35 @@ namespace NINA.Profile {
                 }
             }
         }
+
+        private bool synchronizeDuringMountSlew = false;
+
+        [DataMember]
+        public bool SynchronizeDuringMountSlew {
+            get {
+                return synchronizeDuringMountSlew;
+            }
+            set {
+                if (synchronizeDuringMountSlew != value) {
+                    synchronizeDuringMountSlew = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double manualSlewDegrees = 10.0;
+
+        [DataMember]
+        public double RotateDegrees {
+            get {
+                return manualSlewDegrees;
+            }
+            set {
+                if (manualSlewDegrees != value) {
+                    manualSlewDegrees = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
     }
 }

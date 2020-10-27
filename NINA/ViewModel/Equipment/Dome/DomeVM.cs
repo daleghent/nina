@@ -62,8 +62,11 @@ namespace NINA.ViewModel.Equipment.Dome {
             CloseShutterCommand = new AsyncCommand<bool>(CloseShutterVM);
             SetParkPositionCommand = new RelayCommand(SetParkPosition);
             ParkCommand = new AsyncCommand<bool>(ParkVM);
-            ManualSlewCommand = new AsyncCommand<bool>(ManualSlew);
+            ManualSlewCommand = new AsyncCommand<bool>(() => ManualSlew(TargetAzimuthDegrees));
+            RotateCWCommand = new AsyncCommand<bool>(() => RotateRelative(RotateDegrees));
+            RotateCCWCommand = new AsyncCommand<bool>(() => RotateRelative(-RotateDegrees));
             FindHomeCommand = new AsyncCommand<bool>(FindHome);
+            SyncCommand = new RelayCommand(SyncAzimuth);
 
             this.updateTimer = deviceUpdateTimerFactory.Create(
                 GetDomeValues,
@@ -394,9 +397,43 @@ namespace NINA.ViewModel.Equipment.Dome {
             }
         }
 
-        private async Task<bool> ManualSlew(object obj) {
+        public double RotateDegrees {
+            get {
+                return profileService.ActiveProfile.DomeSettings.RotateDegrees;
+            }
+
+            set {
+                if (profileService.ActiveProfile.DomeSettings.RotateDegrees != value) {
+                    profileService.ActiveProfile.DomeSettings.RotateDegrees = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public bool CanSyncAzimuth {
+            get {
+                if (Dome?.Connected != true || TelescopeInfo?.Connected != true) {
+                    return false;
+                }
+                return Dome.CanSyncAzimuth;
+            }
+        }
+
+        private async Task<bool> ManualSlew(double degrees) {
             if (Dome.CanSetAzimuth) {
-                await Dome?.SlewToAzimuth(TargetAzimuthDegrees, CancellationToken.None);
+                this.FollowEnabled = false;
+                await Dome?.SlewToAzimuth(degrees, CancellationToken.None);
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        private async Task<bool> RotateRelative(double degrees) {
+            if (Dome.CanSetAzimuth) {
+                this.FollowEnabled = false;
+                var targetAzimuth = Astrometry.EuclidianModulus(this.Dome.Azimuth + degrees, 360.0);
+                await Dome?.SlewToAzimuth(targetAzimuth, CancellationToken.None);
                 return true;
             } else {
                 return false;
@@ -406,6 +443,13 @@ namespace NINA.ViewModel.Equipment.Dome {
         private async Task<bool> FindHome(object obj) {
             await Dome?.FindHome(CancellationToken.None);
             return true;
+        }
+
+        private void SyncAzimuth(object obj) {
+            if (CanSyncAzimuth) {
+                var calculatedTargetAzimuth = GetSynchronizedPosition(TelescopeInfo);
+                Dome.SyncToAzimuth(calculatedTargetAzimuth.Degree);
+            }
         }
 
         private bool followEnabled;
@@ -512,7 +556,9 @@ namespace NINA.ViewModel.Equipment.Dome {
             try {
                 TelescopeInfo = deviceInfo;
                 if (TelescopeInfo.Connected && DirectFollowEnabled) {
-                    SynchronizeWithTelescope(TelescopeInfo);
+                    if (!TelescopeInfo.Slewing || profileService.ActiveProfile.DomeSettings.SynchronizeDuringMountSlew) {
+                        SynchronizeWithTelescope(TelescopeInfo);
+                    }
                 } else if (!TelescopeInfo.Connected) {
                     FollowEnabled = false;
                 }
@@ -578,5 +624,8 @@ namespace NINA.ViewModel.Equipment.Dome {
         public ICommand SetParkPositionCommand { get; private set; }
         public ICommand ManualSlewCommand { get; private set; }
         public ICommand FindHomeCommand { get; private set; }
+        public ICommand RotateCWCommand { get; private set; }
+        public ICommand RotateCCWCommand { get; private set; }
+        public ICommand SyncCommand { get; private set; }
     }
 }
