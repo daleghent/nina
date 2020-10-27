@@ -400,6 +400,39 @@
                                 </Button>
 
                                 <Button
+                                    x:Name="TargetContainerButton"
+                                    Width="25"
+                                    Height="25"
+                                    Margin="5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Command="{Binding Path=Data.AddTargetToControllerCommand, Source={StaticResource ViewModel}}"
+                                    CommandParameter="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}">
+                                    <Grid>
+                                        <Path
+                                            Margin="5"
+                                            Data="{StaticResource PictureSVG}"
+                                            Fill="{StaticResource ButtonForegroundBrush}"
+                                            Stretch="Uniform" />
+                                    </Grid>
+                                    <Button.ToolTip>
+                                        <ToolTip>
+                                            <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_SaveAsTarget_Tooltip}" />
+                                        </ToolTip>
+                                    </Button.ToolTip>
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource SecondaryBackgroundButton}" TargetType="Button">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type cont:DeepSkyObjectContainer}">
+                                                    <Setter Property="Visibility" Value="Visible" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+
+                                <Button
                                     x:Name="TemplateContainerButton"
                                     Width="25"
                                     Height="25"
@@ -754,6 +787,19 @@
                                                                         <MenuItem.ItemContainerStyle>
                                                                             <Style TargetType="MenuItem">
                                                                                 <Setter Property="Header" Value="{StaticResource TemplateMenuHeader}" />
+                                                                                <Setter Property="Icon" Value="{StaticResource TemplateMenuIcon}" />
+                                                                                <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoCommand}" />
+                                                                                <Setter Property="CommandParameter" Value="{Binding Container, Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
+                                                                            </Style>
+                                                                        </MenuItem.ItemContainerStyle>
+                                                                    </MenuItem>
+                                                                    <MenuItem MinHeight="30" ItemsSource="{Binding Source={StaticResource ViewModel}, Path=Data.TargetController.TargetsMenuView}">
+                                                                        <MenuItem.Header>
+                                                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargets}" />
+                                                                        </MenuItem.Header>
+                                                                        <MenuItem.ItemContainerStyle>
+                                                                            <Style TargetType="MenuItem">
+                                                                                <Setter Property="Header" Value="{StaticResource MenuHeader}" />
                                                                                 <Setter Property="Icon" Value="{StaticResource TemplateMenuIcon}" />
                                                                                 <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoCommand}" />
                                                                                 <Setter Property="CommandParameter" Value="{Binding Container, Converter={StaticResource DroppableToDropIntoParametersConverter}}" />

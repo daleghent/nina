@@ -39,7 +39,8 @@ namespace NINA.Profile {
             DefaultSequenceFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A");
             closeDomeShutterAtSequenceEnd = true;
             parkDomeAtSequenceEnd = true;
-            SequencerTemplatesFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A", "Templates");
+            templateFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A", "Templates");
+            targetsFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A", "Targets");
             startupSequenceTemplate = string.Empty;
             unparMountAtSequenceStart = true;
         }
@@ -174,14 +175,25 @@ namespace NINA.Profile {
 
         private string templateFolder;
 
-        public event EventHandler SequencerTemplatesFolderChanged;
-
         [DataMember]
         public string SequencerTemplatesFolder {
             get => templateFolder;
             set {
                 if (templateFolder != value) {
                     templateFolder = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string targetsFolder;
+
+        [DataMember]
+        public string SequencerTargetsFolder {
+            get => targetsFolder;
+            set {
+                if (targetsFolder != value) {
+                    targetsFolder = value;
                     RaisePropertyChanged();
                 }
             }

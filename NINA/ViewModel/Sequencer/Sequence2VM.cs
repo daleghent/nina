@@ -109,6 +109,7 @@ namespace NINA.ViewModel.Sequencer {
 
             SequenceJsonConverter = new SequenceJsonConverter(SequencerFactory);
             TemplateController = new TemplateController(SequenceJsonConverter, profileService);
+            TargetController = new TargetController(SequenceJsonConverter, profileService);
 
             var rootContainer = SequencerFactory.GetContainer<SequenceRootContainer>();
             rootContainer.Add(SequencerFactory.GetContainer<StartAreaContainer>());
@@ -130,16 +131,26 @@ namespace NINA.ViewModel.Sequencer {
             SaveAsSequenceCommand = new RelayCommand(SaveAsSequence);
             SaveSequenceCommand = new RelayCommand(SaveSequence);
             AddTemplateCommand = new RelayCommand(AddTemplate);
+            AddTargetToControllerCommand = new RelayCommand(AddTargetToController);
             LoadSequenceCommand = new RelayCommand(LoadSequence);
 
             DetachCommand = new RelayCommand((o) => {
                 var source = (o as DropIntoParameters)?.Source;
                 source?.Detach();
-                if (source != null && source is TemplatedSequenceContainer) {
-                    var result = MyMessageBox.MyMessageBox.Show(string.Format(Locale.Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Text"], (source as TemplatedSequenceContainer).Container.Name),
-                        Locale.Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Caption"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
-                    if (result == System.Windows.MessageBoxResult.OK) {
-                        TemplateController.DeleteUserTemplate(source as TemplatedSequenceContainer);
+                if (source != null) {
+                    if (source is TemplatedSequenceContainer) {
+                        var result = MyMessageBox.MyMessageBox.Show(string.Format(Locale.Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Text"], (source as TemplatedSequenceContainer).Container.Name),
+                            Locale.Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Caption"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+                        if (result == System.Windows.MessageBoxResult.OK) {
+                            TemplateController.DeleteUserTemplate(source as TemplatedSequenceContainer);
+                        }
+                    }
+                    if (source is TargetSequenceContainer) {
+                        var result = MyMessageBox.MyMessageBox.Show(string.Format(Locale.Loc.Instance["Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text"], (source as TargetSequenceContainer).Name),
+                            Locale.Loc.Instance["Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No);
+                        if (result == System.Windows.MessageBoxResult.Yes) {
+                            TargetController.DeleteTarget(source as TargetSequenceContainer);
+                        }
                     }
                 }
             });
@@ -151,6 +162,25 @@ namespace NINA.ViewModel.Sequencer {
                 } catch (Exception ex) {
                     Logger.Error("Startup Sequence failed to load", ex);
                 }
+            }
+        }
+
+        private void AddTargetToController(object obj) {
+            var original = ((obj as DropIntoParameters).Source as IDeepSkyObjectContainer);
+            IDeepSkyObjectContainer clonedContainer = original.Clone() as IDeepSkyObjectContainer;
+
+            if (clonedContainer == null) { return; }
+
+            if (TargetController.Targets.Any(t => t.Name == clonedContainer.Name)) {
+                if (MyMessageBox.MyMessageBox.Show(
+                    string.Format(Locale.Loc.Instance["Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text"], clonedContainer.Name),
+                    Locale.Loc.Instance["Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Caption"], System.Windows.MessageBoxButton.YesNo,
+                    System.Windows.MessageBoxResult.No
+                  ) == System.Windows.MessageBoxResult.Yes) {
+                    TargetController.AddTarget(clonedContainer);
+                }
+            } else {
+                TargetController.AddTarget(clonedContainer);
             }
         }
 
@@ -259,6 +289,7 @@ namespace NINA.ViewModel.Sequencer {
         public SequencerFactory SequencerFactory { get; }
 
         public TemplateController TemplateController { get; }
+        public TargetController TargetController { get; }
 
         public SequenceJsonConverter SequenceJsonConverter { get; }
 
@@ -329,6 +360,8 @@ namespace NINA.ViewModel.Sequencer {
         }
 
         public ICommand AddTemplateCommand { get; private set; }
+        public ICommand AddTargetToControllerCommand { get; private set; }
+
         public ICommand DetachCommand { get; set; }
         public IAsyncCommand StartSequenceCommand { get; private set; }
         public ICommand CancelSequenceCommand { get; private set; }

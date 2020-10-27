@@ -252,6 +252,19 @@
                                             </Style>
                                         </MenuItem.ItemContainerStyle>
                                     </MenuItem>
+                                    <MenuItem MinHeight="30" ItemsSource="{Binding Source={StaticResource ViewModel}, Path=Data.TargetController.TargetsMenuView}">
+                                        <MenuItem.Header>
+                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargets}" />
+                                        </MenuItem.Header>
+                                        <MenuItem.ItemContainerStyle>
+                                            <Style TargetType="MenuItem">
+                                                <Setter Property="Header" Value="{StaticResource MenuHeader}" />
+                                                <Setter Property="Icon" Value="{StaticResource TemplateMenuIcon}" />
+                                                <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoCommand}" />
+                                                <Setter Property="CommandParameter" Value="{Binding Container, Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
+                                            </Style>
+                                        </MenuItem.ItemContainerStyle>
+                                    </MenuItem>
                                 </ContextMenu>
                             </Setter.Value>
                         </Setter>

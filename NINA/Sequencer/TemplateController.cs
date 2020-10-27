@@ -1,10 +1,13 @@
 ﻿using Accord.Math;
+using NINA.Model;
 using NINA.Profile;
 using NINA.Properties;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.DragDrop;
+using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Serialization;
 using NINA.Utility;
+using NINA.Utility.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -135,6 +138,14 @@ namespace NINA.Sequencer {
         }
 
         public void AddNewUserTemplate(ISequenceContainer sequenceContainer) {
+            if (sequenceContainer is IDeepSkyObjectContainer) {
+                var dso = (sequenceContainer as IDeepSkyObjectContainer);
+                dso.Target.TargetName = string.Empty;
+                dso.Target.InputCoordinates.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
+                dso.Target.Rotation = 0;
+                dso.Target = dso.Target;
+            }
+
             var jsonContainer = sequenceJsonConverter.Serialize(sequenceContainer);
             File.WriteAllText(Path.Combine(userTemplatePath, GetTemplateFileName(sequenceContainer)), jsonContainer);
         }
@@ -184,6 +195,10 @@ namespace NINA.Sequencer {
         }
 
         public void MoveUp() {
+        }
+
+        public ISequenceItem Clone() {
+            return (ISequenceItem)Container.Clone();
         }
     }
 }

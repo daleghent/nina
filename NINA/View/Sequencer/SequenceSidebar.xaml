@@ -586,5 +586,151 @@
                 </i:Interaction.Behaviors>
             </Grid>
         </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <StackPanel Orientation="Horizontal">
+                    <Path
+                        Width="20"
+                        Height="20"
+                        Margin="0,0,10,0"
+                        Data="{StaticResource PictureSVG}"
+                        Stretch="Uniform">
+                        <Path.Style>
+                            <Style TargetType="Path">
+                                <Setter Property="Fill" Value="{StaticResource PrimaryBrush}" />
+                                <Style.Triggers>
+
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TabItem}}, Path=IsSelected}" Value="True">
+                                        <Setter Property="Fill" Value="{StaticResource ButtonForegroundBrush}" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Path.Style>
+                    </Path>
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        Style="{StaticResource TabItemTextBox}"
+                        Text="{ns:Loc LblTargets}" />
+                </StackPanel>
+            </TabItem.Header>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <ninactrl:HintTextBox
+                    Margin="0,5,0,5"
+                    Foreground="{StaticResource PrimaryBrush}"
+                    HintText="{ns:Loc LblSearch}"
+                    Text="{Binding TargetController.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
+                    <ninactrl:HintTextBox.Background>
+                        <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
+                    </ninactrl:HintTextBox.Background>
+                </ninactrl:HintTextBox>
+                <Border
+                    Grid.Row="1"
+                    Margin="10,10,10,10"
+                    Background="{StaticResource SecondaryBackgroundBrush}"
+                    BorderThickness="0"
+                    DockPanel.Dock="Top">
+                    <TextBlock
+                        Padding="10"
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource ButtonForegroundBrush}"
+                        Text="{ns:Loc Lbl_Sequencer_TargetSidebar_DropTargetHere}"
+                        TextAlignment="Center"
+                        TextBlock.FontStyle="Italic"
+                        TextWrapping="Wrap" />
+                </Border>
+                <ScrollViewer
+                    Grid.Row="2"
+                    VerticalAlignment="Stretch"
+                    HorizontalScrollBarVisibility="Disabled"
+                    VerticalScrollBarVisibility="Auto">
+                    <ItemsControl
+                        Margin="5,0,0,0"
+                        Panel.ZIndex="10"
+                        ItemsSource="{Binding TargetController.TargetsView}">
+                        <!--<ItemsControl.GroupStyle>
+                            <GroupStyle ContainerStyle="{StaticResource ContainerStyle}" />
+                        </ItemsControl.GroupStyle>-->
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type sequencer:TargetSequenceContainer}">
+                                <Border Margin="0,5,0,0">
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:DragDropBehavior />
+                                    </i:Interaction.Behaviors>
+                                    <StackPanel Margin="5" Orientation="Vertical"  DataContext="{Binding Container}">
+                                        <TextBlock
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                            Text="{Binding Name}" />
+                                        <StackPanel Margin="10,0,0,0" Orientation="Vertical">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    MinWidth="50"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{ns:Loc LblRA}" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{Binding Target.InputCoordinates.RAHours}" />
+                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
+                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RAMinutes}" />
+                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
+                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RASeconds}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    MinWidth="50"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{ns:Loc LblDec}" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{Binding Target.InputCoordinates.DecDegrees}" />
+                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
+                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecMinutes}" />
+                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
+                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecSeconds}" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    MinWidth="50"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{ns:Loc LblRotation}" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{Binding Target.Rotation}" />
+                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="°" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="False">
+                                                    <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <i:Interaction.Behaviors>
+                    <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc Lbl:Sequencer_TargetSidebar_DragOver_AddTarget}" DragOverDisplayAnchor="Left" />
+                    <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.IDeepSkyObjectContainer" OnDropCommand="{Binding AddTargetToControllerCommand}" />
+                </i:Interaction.Behaviors>
+            </Grid>
+        </TabItem>
     </TabControl>
 </UserControl>

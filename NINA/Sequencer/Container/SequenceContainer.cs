@@ -111,15 +111,20 @@ namespace NINA.Sequencer.Container {
         private void DropInSequenceItem(DropIntoParameters parameters) {
             ISequenceItem item;
             ISequenceItem source;
-            if (parameters.Source is TemplatedSequenceContainer) source = (parameters.Source as TemplatedSequenceContainer).Container;
-            else source = parameters.Source as ISequenceItem;
-            var target = parameters.Target as ISequenceItem;
 
-            if (source.Parent != null && !parameters.Duplicate) {
-                item = source;
+            if (parameters.Source is TemplatedSequenceContainer) {
+                item = (parameters.Source as TemplatedSequenceContainer).Clone();
+            } else if (parameters.Source is TargetSequenceContainer) {
+                item = (parameters.Source as TargetSequenceContainer).Clone();
             } else {
-                item = (ISequenceItem)source.Clone();
+                source = parameters.Source as ISequenceItem;
+                if (source.Parent != null && !parameters.Duplicate) {
+                    item = source;
+                } else {
+                    item = (ISequenceItem)source.Clone();
+                }
             }
+            var target = parameters.Target as ISequenceItem;
 
             if (parameters.Position == DropTargetEnum.Center && item.Parent != this) {
                 InsertIntoSequenceBlocks(Items.Count, item);

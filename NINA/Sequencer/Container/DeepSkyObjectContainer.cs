@@ -106,6 +106,10 @@ namespace NINA.Sequencer.Container {
                 Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude))
             };
 
+            clone.Target.TargetName = this.Target.TargetName;
+            clone.Target.InputCoordinates.Coordinates = this.Target.InputCoordinates.Coordinates.Transform(Epoch.J2000);
+            clone.Target.Rotation = this.Target.Rotation;
+
             foreach (var item in clone.Items) {
                 item.AttachNewParent(clone);
             }

@@ -633,6 +633,7 @@
     <Compile Include="Sequencer\Serialization\SequenceJsonConverter.cs" />
     <Compile Include="Sequencer\Serialization\SequenceRootContainerCreationConverter.cs" />
     <Compile Include="Sequencer\Serialization\SequenceTriggerCreationConverter.cs" />
+    <Compile Include="Sequencer\TargetController.cs" />
     <Compile Include="Sequencer\TemplateController.cs" />
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterExposures.cs" />
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterFilterChange.cs" />

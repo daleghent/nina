@@ -524,6 +524,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save the current target and all of its content for re-usage.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SaveAsTarget_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SaveAsTarget_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save the current instruction set and all of its content as a template for re-usage.
         /// </summary>
         internal static string Lbl_SequenceContainer_SaveAsTemplate_Tooltip {
@@ -1417,6 +1426,60 @@ namespace NINA.Locale {
         internal static string Lbl_Sequencer_SaveSequence_Tooltip {
             get {
                 return ResourceManager.GetString("Lbl_Sequencer_SaveSequence_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Target?.
+        /// </summary>
+        internal static string Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target &apos;{0}&apos; will be deleted. Do you want to delete the existing Target? This action is irreversible..
+        /// </summary>
+        internal static string Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SAVE TARGET.
+        /// </summary>
+        internal static string Lbl_Sequencer_TargetSidebar_DragOver_AddTarget {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_TargetSidebar_DragOver_AddTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Drop Deep Sky Object Sequences from the Sequence here to save your individual target.
+        /// </summary>
+        internal static string Lbl_Sequencer_TargetSidebar_DropTargetHere {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_TargetSidebar_DropTargetHere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Overwrite Target?.
+        /// </summary>
+        internal static string Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Caption {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target &apos;{0}&apos; already exists. Do you want to overwrite the existing Target? This action is irreversible..
+        /// </summary>
+        internal static string Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text", resourceCulture);
             }
         }
         
