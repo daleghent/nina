@@ -690,7 +690,7 @@ namespace NINA.ViewModel {
                         rotatorMediator.Sync(orientation);
 
                         if (Math.Abs(position) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
-                            Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {position}° / Target: {orientation}° - Moving focuser relatively by {position}°");
+                            Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {csl.DSO.Rotation}° - Moving focuser relatively by {position}°");
                             await rotatorMediator.MoveRelative(position);
                         }
                         plateSolveResult = null;
