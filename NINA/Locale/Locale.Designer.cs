@@ -885,6 +885,38 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This will determine the focuser position based on the temperature using slope and intercept.
+        ///Example:
+        ///  - Slope = 2
+        ///  - Intercept = 1000
+        ///  - Current Temperature = 10°C
+        ///    =&gt; Position = 2 * 10 + 1000 = 1020.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Focuser by Temperature.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Focuser does not expose any valid temperature.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sends a dither signal to the guider.
         /// </summary>
         internal static string Lbl_SequenceItem_Guider_Dither_Description {
@@ -7949,6 +7981,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Intercept.
+        /// </summary>
+        internal static string LblIntercept {
+            get {
+                return ResourceManager.GetString("LblIntercept", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid mode.
         /// </summary>
         internal static string LblInvalidMode {
@@ -11696,6 +11737,15 @@ namespace NINA.Locale {
         internal static string LblSlewWhenTargetCoordsUnset {
             get {
                 return ResourceManager.GetString("LblSlewWhenTargetCoordsUnset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slope.
+        /// </summary>
+        internal static string LblSlope {
+            get {
+                return ResourceManager.GetString("LblSlope", resourceCulture);
             }
         }
         

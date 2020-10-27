@@ -296,6 +296,7 @@
     <Compile Include="Sequencer\SequenceItem\FlatDevice\SetBrightnessTest.cs" />
     <Compile Include="Sequencer\SequenceItem\FlatDevice\ToggleLightTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Focuser\MoveFocuserAbsoluteTest.cs" />
+    <Compile Include="Sequencer\SequenceItem\Focuser\MoveFocuserByTemperatureTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Guider\DitherTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Guider\StartGuidingTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Guider\StopGuidingTest.cs" />

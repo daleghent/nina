@@ -4834,4 +4834,26 @@ After solving the frame successfully the telescope will be synced to the solved 
   <data name="Lbl_SequenceContainer_SaveAsTarget_Tooltip" xml:space="preserve">
     <value>Save the current target and all of its content for re-usage</value>
   </data>
+  <data name="LblIntercept" xml:space="preserve">
+    <value>Intercept</value>
+    <comment>The line intersection of the y axis</comment>
+  </data>
+  <data name="LblSlope" xml:space="preserve">
+    <value>Slope</value>
+    <comment>The slope of a line</comment>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description" xml:space="preserve">
+    <value>This will determine the focuser position based on the temperature using slope and intercept.
+Example:
+  - Slope = 2
+  - Intercept = 1000
+  - Current Temperature = 10°C
+    =&gt; Position = 2 * 10 + 1000 = 1020</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
+    <value>Move Focuser by Temperature</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
+    <value>Focuser does not expose any valid temperature</value>
+  </data>
 </root>
