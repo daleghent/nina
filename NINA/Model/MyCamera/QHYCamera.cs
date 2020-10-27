@@ -777,8 +777,8 @@ namespace NINA.Model.MyCamera {
                 Info.HasChipTemp = IsQHYControl(LibQHYCCD.CONTROL_ID.CONTROL_CURTEMP);
 
                 if (Info.HasCooler) {
-                    ThrowOnFailure("GetQHYCCDParamMinMaxStep(TEC)", LibQHYCCD.GetQHYCCDParamMinMaxStep(CameraP,
-                        LibQHYCCD.CONTROL_ID.CONTROL_MANULPWM, ref min, ref max, ref step));
+                    // Ignore the return code due to a bug in the SDK causes this to return a failure even if it succeeds
+                    LibQHYCCD.GetQHYCCDParamMinMaxStep(CameraP, LibQHYCCD.CONTROL_ID.CONTROL_MANULPWM, ref min, ref max, ref step);
 
                     Info.CoolerPwmMin = min;
                     Info.CoolerPwmMax = max;
