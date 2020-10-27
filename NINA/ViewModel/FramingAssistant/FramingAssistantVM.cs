@@ -38,6 +38,7 @@ using NINA.Model.ImageData;
 using NINA.Utility.Exceptions;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Linq;
 
 namespace NINA.ViewModel.FramingAssistant {
 
@@ -707,7 +708,7 @@ namespace NINA.ViewModel.FramingAssistant {
             var pixelSize = double.IsNaN(skySurveyImage.Data.MetaData.Camera.PixelSize) ? this.CameraPixelSize : skySurveyImage.Data.MetaData.Camera.PixelSize;
 
             var parameter = new PlateSolveParameter() {
-                Binning = 1,
+                Binning = skySurveyImage.Data.MetaData.Camera.BinX,
                 Coordinates = referenceCoordinates,
                 DownSampleFactor = profileService.ActiveProfile.PlateSolveSettings.DownSampleFactor,
                 FocalLength = focalLength,
