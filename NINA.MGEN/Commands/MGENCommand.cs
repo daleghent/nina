@@ -32,7 +32,7 @@ namespace NINA.MGEN.Commands {
         public abstract TResult Execute(IFTDI device);
 
         protected void Write(IFTDI device, byte[] data) {
-            ValidateBaudRate(device);
+            ValidateDeviceParameter(device);
             var status = device.Write(data, data.Length, out var writtenBytes);
             if (status != FT_STATUS.FT_OK) {
                 throw new FTDIWriteException();
@@ -40,7 +40,7 @@ namespace NINA.MGEN.Commands {
         }
 
         protected void Write(IFTDI device, byte data) {
-            ValidateBaudRate(device);
+            ValidateDeviceParameter(device);
             var command = new byte[] { data };
             var status = device.Write(command, command.Length, out var writtenBytes);
             if (status != FT_STATUS.FT_OK) {
@@ -49,7 +49,7 @@ namespace NINA.MGEN.Commands {
         }
 
         protected byte[] Read(IFTDI device, int length) {
-            ValidateBaudRate(device);
+            ValidateDeviceParameter(device);
 
             byte[] buffer = new byte[length];
             var status = device.Read(buffer, buffer.Length, out var readBytes);
@@ -59,8 +59,9 @@ namespace NINA.MGEN.Commands {
             return buffer;
         }
 
-        private void ValidateBaudRate(IFTDI device) {
+        private void ValidateDeviceParameter(IFTDI device) {
             device.SetBaudRate(RequiredBaudRate);
+            device.SetTimeouts(Timeout, Timeout);
         }
 
         protected short ToShort(byte first, byte second) {
