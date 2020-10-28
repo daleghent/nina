@@ -18,8 +18,10 @@ namespace NINA.Model.MyRotator {
         bool CanReverse { get; }
         bool Reverse { get; set; }
         bool IsMoving { get; }
+        bool Synced { get; }
 
         float Position { get; }
+        float MechanicalPosition { get; }
 
         float StepSize { get; }
 
@@ -28,6 +30,8 @@ namespace NINA.Model.MyRotator {
         void Move(float position);
 
         void MoveAbsolute(float position);
+
+        void MoveAbsoluteMechanical(float position);
 
         void Halt();
     }

@@ -69,6 +69,16 @@ namespace NINA.Model.MyRotator {
             }
         }
 
+        private bool synced;
+
+        public bool Synced {
+            get => synced;
+            private set {
+                synced = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private float position = 0;
 
         public float Position {
@@ -76,6 +86,16 @@ namespace NINA.Model.MyRotator {
             private set {
                 position = Astrometry.EuclidianModulus(value, 360);
                 RaisePropertyChanged();
+            }
+        }
+
+        public float MechanicalPosition {
+            get {
+                if (Connected) {
+                    return rotator.Position;
+                } else {
+                    return float.NaN;
+                }
             }
         }
 
@@ -160,7 +180,8 @@ namespace NINA.Model.MyRotator {
                     Position = 0;
                     rotator = new Rotator(Id);
                     Connected = true;
-                    Position = rotator.Position;
+                    Synced = false;
+                    Position = MechanicalPosition;
                     if (Connected) {
                         RaiseAllPropertiesChanged();
                     }
@@ -194,6 +215,7 @@ namespace NINA.Model.MyRotator {
 
         public void Sync(float skyAngle) {
             Position = skyAngle;
+            Synced = true;
         }
 
         public void Move(float position) {
@@ -203,6 +225,13 @@ namespace NINA.Model.MyRotator {
                 rotator?.Move(position);
                 Position += position;
                 Logger.Debug($"ASCOM - New Position {Position}° - Position reported by focuser {rotator?.Position}°");
+            }
+        }
+
+        public void MoveAbsoluteMechanical(float targetPosition) {
+            if (Connected) {
+                var movement = targetPosition - MechanicalPosition;
+                Move(movement);
             }
         }
 

@@ -22,9 +22,15 @@
 <p>If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.<br />
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a></p>
 <h1 id="version-1.10-hf2">Version 1.10 HF2</h1>
+<h2 id="improvements">Improvements</h2>
+<ul>
+<li>Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.</li>
+</ul>
 <h2 id="bugfixes">Bugfixes</h2>
 <ul>
 <li>When rotator reports final position too early while still reporting IsMoving as true, N.I.N.A. will now still wait for the movement to complete</li>
+<li>SkyAtlas File Source will now consider binning for solving</li>
+<li>Fixed issue with filter wheel filter import in options when filters have the same name</li>
 </ul>
 <h1 id="version-1.10-hf1">Version 1.10 HF1</h1>
 <h2 id="features">Features</h2>
@@ -36,7 +42,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>New translation for Greek (Ελληνικά) has been added</li>
 <li>Added a new sky survey <a href="http://alasky.u-strasbg.fr/hips-image-services/hips2fits" target="_blank">Hips 2 Fits</a> as an option in framing assistant. This survey seems to provide a much faster image compared to the other surveys.</li>
 </ul>
-<h2 id="improvements">Improvements</h2>
+<h2 id="improvements-1">Improvements</h2>
 <ul>
 <li>Canon CR3 image format is now supported (use FreeImage as your RAW converter)</li>
 <li>Adding support for the EOS R5 and EOS R6</li>
@@ -513,7 +519,7 @@ Thank you for your support!</p>
 <li>Some Sky Surveys did not work in some locales due to decimal pointer settings</li>
 <li>Fixed race condition when using DCRaw when the previous temp image was not finished processed and the new image tried to replace the previous temp image</li>
 </ul>
-<h2 id="improvements-1">Improvements</h2>
+<h2 id="improvements-2">Improvements</h2>
 <ul>
 <li>When EOS Utility is running in the background, the x64 N.I.N.A. client will scan for this app and prevent a crash due to the EOS utility being open. Instead a notification will show up to close the EOS Utility.</li>
 <li>N.I.N.A. SQLite Database will be created on demand and migrated to new versions on application startup instead of just being overwritten by the installer.</li>
@@ -621,7 +627,7 @@ the background itself will be moved like in an orrery</li>
 <li>Fixed Platesolve result reporting wrong Dec Error.</li>
 <li>Platesolve recenter now considers proper angular distance calculation instead of relying just on Right Ascension.</li>
 </ul>
-<h2 id="improvements-2">Improvements</h2>
+<h2 id="improvements-3">Improvements</h2>
 <ul>
 <li>Clear button for PHD2 Graph</li>
 <li>Hide camera cooler controls when not available for current camera model</li>
@@ -729,7 +735,7 @@ Thank you for your support!</p>
 <li>Fixed Canon issue that a second exposure is accidentally triggered, causing the camera to be stuck</li>
 <li>Fixed memory leak when using Free Image RAW Converter</li>
 </ul>
-<h2 id="improvements-3">Improvements</h2>
+<h2 id="improvements-4">Improvements</h2>
 <ul>
 <li>Guider is also connected when pushing &quot;Connect All&quot;</li>
 <li>Changed FilterWheel UI for switching filters</li>

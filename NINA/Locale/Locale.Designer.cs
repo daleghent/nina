@@ -5887,6 +5887,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mechanical Position.
+        /// </summary>
+        internal static string LblMechanicalPosition {
+            get {
+                return ResourceManager.GetString("LblMechanicalPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Median.
         /// </summary>
         internal static string LblMedian {
@@ -8738,6 +8747,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sky Position.
+        /// </summary>
+        internal static string LblSkyPosition {
+            get {
+                return ResourceManager.GetString("LblSkyPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sky Quality.
         /// </summary>
         internal static string LblSkyQuality {
@@ -9310,6 +9328,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Mechanical Position.
+        /// </summary>
+        internal static string LblTargetMechanicalPosition {
+            get {
+                return ResourceManager.GetString("LblTargetMechanicalPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target Name.
         /// </summary>
         internal static string LblTargetName {
@@ -9351,6 +9378,15 @@ namespace NINA.Locale {
         internal static string LblTargets {
             get {
                 return ResourceManager.GetString("LblTargets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Sky Position.
+        /// </summary>
+        internal static string LblTargetSkyPosition {
+            get {
+                return ResourceManager.GetString("LblTargetSkyPosition", resourceCulture);
             }
         }
         

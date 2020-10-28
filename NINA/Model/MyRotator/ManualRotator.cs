@@ -47,6 +47,16 @@ namespace NINA.Model.MyRotator {
             }
         }
 
+        private bool synced;
+
+        public bool Synced {
+            get => synced;
+            private set {
+                synced = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public bool IsMoving { get; set; }
 
         public bool Connected { get; set; }
@@ -142,8 +152,11 @@ namespace NINA.Model.MyRotator {
             }
         }
 
+        public float MechanicalPosition => Position;
+
         public void Sync(float skyAngle) {
             Position = skyAngle;
+            Synced = true;
         }
 
         public void Move(float position) {
@@ -171,6 +184,10 @@ namespace NINA.Model.MyRotator {
         }
 
         public void SetupDialog() {
+        }
+
+        public void MoveAbsoluteMechanical(float position) {
+            MoveAbsolute(position);
         }
     }
 }
