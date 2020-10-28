@@ -727,7 +727,7 @@
                     </ItemsControl>
                 </ScrollViewer>
                 <i:Interaction.Behaviors>
-                    <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc Lbl:Sequencer_TargetSidebar_DragOver_AddTarget}" DragOverDisplayAnchor="Left" />
+                    <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc Lbl_Sequencer_TargetSidebar_DragOver_AddTarget}" DragOverDisplayAnchor="Left" />
                     <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.IDeepSkyObjectContainer" OnDropCommand="{Binding AddTargetToControllerCommand}" />
                 </i:Interaction.Behaviors>
             </Grid>
