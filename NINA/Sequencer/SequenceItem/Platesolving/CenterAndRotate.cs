@@ -87,7 +87,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     rotatorMediator.Sync(orientation);
 
                     if (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
-                        Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {Rotation}° - Moving focuser relatively by {rotationDistance}°");
+                        Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {Rotation}° - Moving rotator relatively by {rotationDistance}°");
                         await rotatorMediator.MoveRelative(rotationDistance);
                     }
                 };
