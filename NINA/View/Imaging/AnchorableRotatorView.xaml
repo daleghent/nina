@@ -59,7 +59,20 @@
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
-                            <TextBlock Text="{ns:Loc LblPosition}" />
+                            <TextBlock Text="{ns:Loc LblMechanicalPosition}" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                Text="{Binding RotatorInfo.MechanicalPosition}"
+                                TextWrapping="WrapWithOverflow" />
+                        </UniformGrid>
+                    </Border>
+                    <Border
+                        Margin="0,5,0,0"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0"
+                        Visibility="{Binding RotatorInfo.Synced, Converter={StaticResource VisibilityConverter}}">
+                        <UniformGrid VerticalAlignment="Center" Columns="2">
+                            <TextBlock Text="{ns:Loc LblSkyPosition}" />
                             <TextBlock
                                 Margin="5,0,0,0"
                                 Text="{Binding RotatorInfo.Position}"

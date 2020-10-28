@@ -40,9 +40,7 @@ using System.Windows.Media;
 using NINA.Sequencer.Container;
 
 namespace NINA.ViewModel.FramingAssistant {
-
     internal class FramingAssistantVM : BaseVM, ICameraConsumer, IFramingAssistantVM {
-
         public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
             IApplicationStatusMediator applicationStatusMediator, INighttimeCalculator nighttimeCalculator, IPlanetariumFactory planetariumFactory,
             ISequenceMediator sequenceMediator, IApplicationMediator applicationMediator, IDeepSkyObjectSearchVM deepSkyObjectSearchVM) : base(profileService) {
@@ -119,8 +117,8 @@ namespace NINA.ViewModel.FramingAssistant {
             RefreshSkyMapAnnotationCommand = new RelayCommand((object o) => SkyMapAnnotator.UpdateSkyMap(), (object o) => SkyMapAnnotator.Initialized);
             MouseWheelCommand = new RelayCommand(MouseWheel);
 
-            CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium)); 
-            
+            CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium));
+
             GetDSOTemplatesCommand = new RelayCommand((object o) => {
                 DSOTemplates = sequenceMediator.GetDeepSkyObjectContainerTemplates();
                 RaisePropertyChanged(nameof(DSOTemplates));
@@ -164,10 +162,10 @@ namespace NINA.ViewModel.FramingAssistant {
                 return true;
             }, (object o) => RectangleCalculated);
 
-            SlewToCoordinatesCommand = new AsyncCommand<bool>(async () => 
-                await telescopeMediator.SlewToCoordinatesAsync(Rectangle.Coordinates), 
+            SlewToCoordinatesCommand = new AsyncCommand<bool>(async () =>
+                await telescopeMediator.SlewToCoordinatesAsync(Rectangle.Coordinates),
                 (object o) => RectangleCalculated);
-            
+
             ScrollViewerSizeChangedCommand = new RelayCommand((parameter) => {
                 resizeTimer.Stop();
                 if (ImageParameter != null && FramingAssistantSource == SkySurveySource.SKYATLAS) {
@@ -264,7 +262,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 skySurveyFactory = value;
             }
         }
-        
+
         private bool _rectangleCalculated;
         public bool RectangleCalculated {
             get {
@@ -606,7 +604,7 @@ namespace NINA.ViewModel.FramingAssistant {
             if (double.IsNaN(FocalLength)) {
                 return;
             }
-            
+
             var center = new Point(Rectangle.X + Rectangle.Width / 2d, Rectangle.Y + Rectangle.Height / 2d);
             var imageArcsecWidth = Astrometry.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
             var imageArcsecHeight = Astrometry.ArcminToArcsec(ImageParameter.FoVHeight) / ImageParameter.Image.Height;
@@ -754,7 +752,7 @@ namespace NINA.ViewModel.FramingAssistant {
             var pixelSize = double.IsNaN(skySurveyImage.Data.MetaData.Camera.PixelSize) ? this.CameraPixelSize : skySurveyImage.Data.MetaData.Camera.PixelSize;
 
             var parameter = new PlateSolveParameter() {
-                Binning = 1,
+                Binning = skySurveyImage.Data.MetaData.Camera.BinX,
                 Coordinates = referenceCoordinates,
                 DownSampleFactor = profileService.ActiveProfile.PlateSolveSettings.DownSampleFactor,
                 FocalLength = focalLength,
@@ -900,7 +898,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     Coordinates = centerCoordinates
                 };
                 RectangleCalculated = Rectangle?.Coordinates != null;
-                
+
                 Rectangle.PropertyChanged += (sender, eventArgs) => {
                     RectangleCalculated = Rectangle?.Coordinates != null;
                     RedrawRectangle();

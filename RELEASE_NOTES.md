@@ -123,8 +123,13 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 # Version 1.10 HF2
 
+## Improvements
+- Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.
+
 ## Bugfixes
 - When rotator reports final position too early while still reporting IsMoving as true, N.I.N.A. will now still wait for the movement to complete
+- SkyAtlas File Source will now consider binning for solving
+- Fixed issue with filter wheel filter import in options when filters have the same name
 
 # Version 1.10 HF1
 

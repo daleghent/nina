@@ -29,6 +29,13 @@ namespace NINA.Model.MyRotator {
             set { reverse = value; RaisePropertyChanged(); }
         }
 
+        private float mechanicalPosition;
+
+        public float MechanicalPosition {
+            get { return mechanicalPosition; }
+            set { mechanicalPosition = value; RaisePropertyChanged(); }
+        }
+
         private float position;
 
         public float Position {
@@ -48,6 +55,13 @@ namespace NINA.Model.MyRotator {
         public bool IsMoving {
             get { return isMoving; }
             set { isMoving = value; RaisePropertyChanged(); }
+        }
+
+        private bool synced;
+
+        public bool Synced {
+            get { return synced; }
+            set { synced = value; RaisePropertyChanged(); }
         }
     }
 }
