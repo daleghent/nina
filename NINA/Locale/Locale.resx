@@ -4186,7 +4186,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Loop Until Time</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
-    <value>Works like a sequential container, but a deep sky object can be specified which will auto populate all sub items with the relevant information (coordinates, rotation etc.)</value>
+    <value>Works like a sequential instruction set, but a deep sky object can be specified inside, which will auto populate all instructions inside it with the coordinates and rotation when necessary.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
     <value>Deep Sky Object Sequence</value>
@@ -4677,7 +4677,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Loop Condition</value>
   </data>
   <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
-    <value>Instruction Set</value>
+    <value>* Instruction Set *</value>
   </data>
   <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
     <value>Filter Wheel</value>

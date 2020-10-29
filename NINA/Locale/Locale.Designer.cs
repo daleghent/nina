@@ -205,7 +205,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Instruction Set.
+        ///   Looks up a localized string similar to * Instruction Set *.
         /// </summary>
         internal static string Lbl_SequenceCategory_Container {
             get {
@@ -430,7 +430,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Works like a sequential container, but a deep sky object can be specified which will auto populate all sub items with the relevant information (coordinates, rotation etc.).
+        ///   Looks up a localized string similar to Works like a sequential instruction set, but a deep sky object can be specified inside, which will auto populate all instructions inside it with the coordinates and rotation when necessary..
         /// </summary>
         internal static string Lbl_SequenceContainer_DeepSkyObjectContainer_Description {
             get {
@@ -12277,20 +12277,20 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Target Mechanical Position.
-        /// </summary>
-        internal static string LblTargetMechanicalPosition {
-            get {
-                return ResourceManager.GetString("LblTargetMechanicalPosition", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Target (J2000).
         /// </summary>
         internal static string LblTargetJ2000 {
             get {
                 return ResourceManager.GetString("LblTargetJ2000", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Mechanical Position.
+        /// </summary>
+        internal static string LblTargetMechanicalPosition {
+            get {
+                return ResourceManager.GetString("LblTargetMechanicalPosition", resourceCulture);
             }
         }
         
