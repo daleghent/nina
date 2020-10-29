@@ -142,7 +142,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start of Sequence Instructions.
+        ///   Looks up a localized string similar to Parallel Start of Sequence Instructions.
         /// </summary>
         internal static string Lbl_OldSequencer_StartOfSequence {
             get {

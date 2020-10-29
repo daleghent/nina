@@ -4725,7 +4725,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Park Dome</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
-    <value>Start of Sequence Instructions</value>
+    <value>Parallel Start of Sequence Instructions</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
     <value>Start of First Target Options</value>
