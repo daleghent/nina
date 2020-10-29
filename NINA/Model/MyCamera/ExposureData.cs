@@ -32,7 +32,7 @@ namespace NINA.Model.MyCamera {
             this.MetaData = metadata;
         }
 
-        public abstract Task<IImageData> ToImageData(CancellationToken cancelToken);
+        public abstract Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default);
     }
 
     public class CachedExposureData : BaseExposureData {
@@ -43,7 +43,7 @@ namespace NINA.Model.MyCamera {
             this.imageData = imageData;
         }
 
-        public override Task<IImageData> ToImageData(CancellationToken cancelToken) {
+        public override Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default) {
             return Task.FromResult(this.imageData);
         }
     }
@@ -68,7 +68,7 @@ namespace NINA.Model.MyCamera {
             this.IsBayered = isBayered;
         }
 
-        public override Task<IImageData> ToImageData(CancellationToken cancelToken = default) {
+        public override Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default) {
             return Task.FromResult<IImageData>(
                 new ImageData.ImageData(
                     imageArray: this.imageArray,
@@ -144,15 +144,20 @@ namespace NINA.Model.MyCamera {
             this.IsBayered = isBayered;
         }
 
-        public override async Task<IImageData> ToImageData(CancellationToken cancelToken = default) {
-            var flatArray = await Task.Run(() => FlipAndConvert2d(this.flipped2DArray), cancelToken);
-            return new ImageData.ImageData(
-                imageArray: new ImageArray(flatArray),
-                width: this.flipped2DArray.GetLength(0),
-                height: this.flipped2DArray.GetLength(1),
-                bitDepth: this.BitDepth,
-                isBayered: this.IsBayered,
-                metaData: this.MetaData);
+        public override async Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default) {
+            try {
+                progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblPrepareExposure"] });
+                var flatArray = await Task.Run(() => FlipAndConvert2d(this.flipped2DArray), cancelToken);
+                return new ImageData.ImageData(
+                    imageArray: new ImageArray(flatArray),
+                    width: this.flipped2DArray.GetLength(0),
+                    height: this.flipped2DArray.GetLength(1),
+                    bitDepth: this.BitDepth,
+                    isBayered: this.IsBayered,
+                    metaData: this.MetaData);
+            } finally {
+                progress?.Report(new ApplicationStatus { Status = string.Empty });
+            }
         }
 
         private static ushort[] FlipAndConvert2d(Array input) {
@@ -201,14 +206,20 @@ namespace NINA.Model.MyCamera {
             this.rawType = rawType;
         }
 
-        public override async Task<IImageData> ToImageData(CancellationToken cancelToken = default) {
-            using (var memoryStream = new System.IO.MemoryStream(this.rawBytes)) {
-                return await this.rawConverter.Convert(
-                    s: memoryStream,
-                    rawType: this.rawType,
-                    bitDepth: this.BitDepth,
-                    metaData: this.MetaData,
-                    token: cancelToken);
+        public override async Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default) {
+            try {
+                progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblPrepareExposure"] });
+                using (var memoryStream = new System.IO.MemoryStream(this.rawBytes)) {
+                    var data = await this.rawConverter.Convert(
+                        s: memoryStream,
+                        rawType: this.rawType,
+                        bitDepth: this.BitDepth,
+                        metaData: this.MetaData,
+                        token: cancelToken);
+                    return data;
+                }
+            } finally {
+                progress?.Report(new ApplicationStatus { Status = string.Empty });
             }
         }
     }
