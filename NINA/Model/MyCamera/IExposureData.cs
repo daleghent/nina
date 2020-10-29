@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Model.ImageData;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -22,6 +23,6 @@ namespace NINA.Model.MyCamera {
         int BitDepth { get; }
         ImageMetaData MetaData { get; }
 
-        Task<IImageData> ToImageData(CancellationToken cancelToken = default);
+        Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default);
     }
 }

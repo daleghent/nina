@@ -152,9 +152,9 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
                 var exposureData = await imagingMediator.CaptureImage(capture, token, progress, TargetName);
 
-                var imageData = await exposureData.ToImageData(token);
+                var imageData = await exposureData.ToImageData(progress, token);
 
-                var prepareTask = imagingMediator.PrepareImage(exposureData, imageParams, token);
+                var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
 
                 await imageSaveMediator.Enqueue(imageData, prepareTask, progress, token);
 

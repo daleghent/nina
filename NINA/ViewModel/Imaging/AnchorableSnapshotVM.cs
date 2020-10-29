@@ -263,12 +263,12 @@ namespace NINA.ViewModel.Imaging {
                     seq.Gain = SnapGain;
 
                     var exposureData = await imagingMediator.CaptureImage(seq, _captureImageToken.Token, progress);
-                    var imageData = await exposureData.ToImageData(_captureImageToken.Token);
+                    var imageData = await exposureData.ToImageData(progress, _captureImageToken.Token);
 
                     if (prepareTask?.Status < TaskStatus.RanToCompletion) {
                         await prepareTask;
                     }
-                    prepareTask = imagingMediator.PrepareImage(exposureData, new PrepareImageParameters(), _captureImageToken.Token);
+                    prepareTask = imagingMediator.PrepareImage(imageData, new PrepareImageParameters(), _captureImageToken.Token);
                     if (SnapSave) {
                         progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSavingImage"] });
 

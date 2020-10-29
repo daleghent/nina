@@ -300,7 +300,7 @@ namespace NINA.ViewModel {
             PrepareImageParameters parameters,
             CancellationToken cancelToken) {
             _imageProcessingTask = Task.Run(async () => {
-                var imageData = await data.ToImageData();
+                var imageData = await data.ToImageData(progress, cancelToken);
                 var processedData = await ImageControl.PrepareImage(imageData, parameters, cancelToken);
                 await ImgStatisticsVM.UpdateStatistics(imageData);
                 return processedData;
@@ -330,7 +330,7 @@ namespace NINA.ViewModel {
             try {
                 var liveViewEnumerable = cameraMediator.LiveView(ct);
                 await liveViewEnumerable.ForEachAsync(async exposureData => {
-                    var imageData = await exposureData.ToImageData(ct);
+                    var imageData = await exposureData.ToImageData(progress, ct);
                     await ImageControl.PrepareImage(imageData, new PrepareImageParameters(), ct);
                 });
             } catch (OperationCanceledException) {
