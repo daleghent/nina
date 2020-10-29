@@ -140,6 +140,18 @@
         </Setter>
     </Style>
 
+    <DataTemplate DataType="{x:Type local:ParallelContainer}">
+        <view:SequenceContainerView DataContext="{Binding}">
+            <view:SequenceContainerView.SequenceContainerContent>
+                <TextBlock
+                    Margin="5,5,0,0"
+                    VerticalAlignment="Center"
+                    FontStyle="Italic"
+                    Text="{ns:Loc Lbl_SequenceContainer_ParallelContainer_Description}" />
+            </view:SequenceContainerView.SequenceContainerContent>
+        </view:SequenceContainerView>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:DeepSkyObjectContainer}">
         <view:SequenceContainerView DataContext="{Binding}">
             <view:SequenceContainerView.SequenceContainerContent>

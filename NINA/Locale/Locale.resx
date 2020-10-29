@@ -4192,7 +4192,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Deep Sky Object Sequence</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
-    <value>All items in this container are run in parallel. This container will not evaluate any conditions or triggers until all items are finished.</value>
+    <value>All instructions in this instruction set are run in parallel. This instruction set will not evaluate any conditions or triggers until all instructions are finished.</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
     <value>Parallel Instruction Set</value>

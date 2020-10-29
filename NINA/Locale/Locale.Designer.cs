@@ -497,7 +497,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All items in this container are run in parallel. This container will not evaluate any conditions or triggers until all items are finished..
+        ///   Looks up a localized string similar to All instructions in this instruction set are run in parallel. This instruction set will not evaluate any conditions or triggers until all instructions are finished..
         /// </summary>
         internal static string Lbl_SequenceContainer_ParallelContainer_Description {
             get {

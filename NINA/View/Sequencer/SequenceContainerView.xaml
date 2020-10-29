@@ -522,10 +522,7 @@
                             LastChildFill="True">
                             <Border DockPanel.Dock="Top">
                                 <StackPanel Orientation="Vertical">
-                                    <Border
-                                        BorderBrush="{StaticResource TertiaryBackgroundBrush}"
-                                        BorderThickness="0,0,0,1"
-                                        Visibility="{Binding Converter={StaticResource StrategyEvaluatesConditionsAndTriggersToVisibilityConverter}}">
+                                    <Border BorderBrush="{StaticResource TertiaryBackgroundBrush}" BorderThickness="0,0,0,1">
                                         <Grid>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto" />
@@ -547,7 +544,8 @@
                                                 VerticalContentAlignment="Top"
                                                 Background="{StaticResource BackgroundBrush}"
                                                 BorderBrush="Transparent"
-                                                IsHitTestVisible="True">
+                                                IsHitTestVisible="True"
+                                                Visibility="{Binding Converter={StaticResource StrategyEvaluatesConditionsAndTriggersToVisibilityConverter}}">
                                                 <i:Interaction.Behaviors>
                                                     <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc LblDragOver_AddTrigger}" DragOverDisplayAnchor="Right" />
                                                     <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Trigger.SequenceTrigger" OnDropCommand="{Binding Source={StaticResource Context}, Path=Data.DropIntoTriggersCommand}" />
@@ -628,13 +626,15 @@
                                             <Border
                                                 Grid.Row="2"
                                                 BorderBrush="{StaticResource TertiaryBackgroundBrush}"
-                                                BorderThickness="0,1,0,0" />
+                                                BorderThickness="0,1,0,0"
+                                                Visibility="{Binding Converter={StaticResource StrategyEvaluatesConditionsAndTriggersToVisibilityConverter}}" />
 
                                             <ninactrl:HitTestGroupBox
                                                 Grid.Row="3"
                                                 VerticalAlignment="Stretch"
                                                 VerticalContentAlignment="Top"
-                                                BorderBrush="Transparent">
+                                                BorderBrush="Transparent"
+                                                Visibility="{Binding Converter={StaticResource StrategyEvaluatesConditionsAndTriggersToVisibilityConverter}}">
                                                 <GroupBox.Header>
                                                     <Grid>
                                                         <Grid.ColumnDefinitions>
