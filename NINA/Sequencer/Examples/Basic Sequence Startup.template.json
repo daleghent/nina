@@ -64,6 +64,6 @@
     "$type": "System.Collections.ObjectModel.ObservableCollection`1[[NINA.Sequencer.Trigger.ISequenceTrigger, NINA]], System",
     "$values": []
   },
-  "Name": "Basic Sequence Startup",
+  "Name": "Basic Parallel Sequence Startup",
   "Parent": null
 }
