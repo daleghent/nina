@@ -814,7 +814,7 @@
                                             </Button>
                                         </Grid>
                                     </GroupBox.Header>
-                                    <ItemsControl Margin="20,10,-20,10" ItemsSource="{Binding Items}">
+                                    <ItemsControl Margin="20,10,-10,10" ItemsSource="{Binding Items}">
                                         <ItemsControl.Resources>
                                             <ResourceDictionary>
                                                 <DataTemplate DataType="{x:Type seqItem:SequenceItem}">
