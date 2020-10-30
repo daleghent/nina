@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using NINA.Model;
 using NINA.Model.MyCamera;
@@ -40,7 +41,7 @@ namespace NINA.ViewModel.Interfaces {
 
         void Dispose();
 
-        Task<bool> SlewToMeridianOffset(double meridianOffset, double declination);
+        Task<bool> SlewToMeridianOffset(double meridianOffset, double declination, CancellationToken token);
 
         void UpdateDeviceInfo(CameraInfo cameraInfo);
 

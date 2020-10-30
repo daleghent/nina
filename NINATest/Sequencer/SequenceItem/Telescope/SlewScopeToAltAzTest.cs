@@ -27,6 +27,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINATest.Sequencer.SequenceItem.Telescope {
@@ -106,7 +107,8 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
                 x => x.SlewToCoordinatesAsync(
                     It.Is<TopocentricCoordinates>(c =>
                         c.Altitude == topo.Altitude
-                        && c.Azimuth == topo.Azimuth)
+                        && c.Azimuth == topo.Azimuth),
+                    It.IsAny<CancellationToken>()
                     )
                 , Times.Once
             );
@@ -119,7 +121,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
             Func<Task> act = () => { return sut.Execute(default, default); };
 
-            telescopeMediatorMock.Verify(x => x.SlewToCoordinatesAsync(It.IsAny<TopocentricCoordinates>()), Times.Never);
+            telescopeMediatorMock.Verify(x => x.SlewToCoordinatesAsync(It.IsAny<TopocentricCoordinates>(), It.IsAny<CancellationToken>()), Times.Never);
             return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
         }
 

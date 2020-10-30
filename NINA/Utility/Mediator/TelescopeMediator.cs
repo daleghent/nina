@@ -35,12 +35,12 @@ namespace NINA.Utility.Mediator {
             return await handler.Sync(coordinates);
         }
 
-        public Task<bool> SlewToCoordinatesAsync(Coordinates coords) {
-            return handler.SlewToCoordinatesAsync(coords);
+        public Task<bool> SlewToCoordinatesAsync(Coordinates coords, CancellationToken token) {
+            return handler.SlewToCoordinatesAsync(coords, token);
         }
 
-        public Task<bool> SlewToCoordinatesAsync(TopocentricCoordinates coords) {
-            return handler.SlewToCoordinatesAsync(coords);
+        public Task<bool> SlewToCoordinatesAsync(TopocentricCoordinates coords, CancellationToken token) {
+            return handler.SlewToCoordinatesAsync(coords, token);
         }
 
         public Task<bool> MeridianFlip(Coordinates targetCoordinates) {
@@ -55,8 +55,8 @@ namespace NINA.Utility.Mediator {
             return handler.SendToSnapPort(start);
         }
 
-        public Task<bool> ParkTelescope() {
-            return handler.ParkTelescope();
+        public Task<bool> ParkTelescope(CancellationToken token) {
+            return handler.ParkTelescope(token);
         }
 
         public void UnparkTelescope() {

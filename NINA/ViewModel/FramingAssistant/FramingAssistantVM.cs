@@ -40,7 +40,9 @@ using System.Windows.Media;
 using NINA.Sequencer.Container;
 
 namespace NINA.ViewModel.FramingAssistant {
+
     internal class FramingAssistantVM : BaseVM, ICameraConsumer, IFramingAssistantVM {
+
         public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
             IApplicationStatusMediator applicationStatusMediator, INighttimeCalculator nighttimeCalculator, IPlanetariumFactory planetariumFactory,
             ISequenceMediator sequenceMediator, IApplicationMediator applicationMediator, IDeepSkyObjectSearchVM deepSkyObjectSearchVM) : base(profileService) {
@@ -163,7 +165,7 @@ namespace NINA.ViewModel.FramingAssistant {
             }, (object o) => RectangleCalculated);
 
             SlewToCoordinatesCommand = new AsyncCommand<bool>(async () =>
-                await telescopeMediator.SlewToCoordinatesAsync(Rectangle.Coordinates),
+                await telescopeMediator.SlewToCoordinatesAsync(Rectangle.Coordinates, CancellationToken.None),
                 (object o) => RectangleCalculated);
 
             ScrollViewerSizeChangedCommand = new RelayCommand((parameter) => {
@@ -264,6 +266,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private bool _rectangleCalculated;
+
         public bool RectangleCalculated {
             get {
                 return _rectangleCalculated;

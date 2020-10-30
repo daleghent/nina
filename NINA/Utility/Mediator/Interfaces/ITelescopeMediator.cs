@@ -28,9 +28,9 @@ namespace NINA.Utility.Mediator.Interfaces {
 
         Task<bool> Sync(Coordinates coordinates);
 
-        Task<bool> SlewToCoordinatesAsync(Coordinates coords);
+        Task<bool> SlewToCoordinatesAsync(Coordinates coords, CancellationToken token);
 
-        Task<bool> SlewToCoordinatesAsync(TopocentricCoordinates coords);
+        Task<bool> SlewToCoordinatesAsync(TopocentricCoordinates coords, CancellationToken token);
 
         Task<bool> MeridianFlip(Coordinates targetCoordinates);
 
@@ -44,7 +44,7 @@ namespace NINA.Utility.Mediator.Interfaces {
 
         Coordinates GetCurrentPosition();
 
-        Task<bool> ParkTelescope();
+        Task<bool> ParkTelescope(CancellationToken token);
 
         void UnparkTelescope();
 

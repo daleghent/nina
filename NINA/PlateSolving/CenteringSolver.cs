@@ -83,7 +83,7 @@ namespace NINA.PlateSolving {
                     Logger.Trace($"Slewing to target after sync. Target coordinates RA: {parameter.Coordinates.RAString} Dec: {parameter.Coordinates.DecString} Epoch: {parameter.Coordinates.Epoch}");
                     progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPlateSolveNotInsideToleranceReslew"] });
 
-                    await telescopeMediator.SlewToCoordinatesAsync(parameter.Coordinates + offset);
+                    await telescopeMediator.SlewToCoordinatesAsync(parameter.Coordinates + offset, ct);
 
                     progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPlateSolveNotInsideToleranceRepeating"] });
                 } else {

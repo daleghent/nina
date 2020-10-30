@@ -83,7 +83,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         protected virtual async Task<PlateSolveResult> DoCenter(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates);
+            await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
             var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
             var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);

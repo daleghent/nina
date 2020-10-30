@@ -26,6 +26,7 @@ using System.Timers;
 using NINA.Database;
 using Nito.AsyncEx;
 using NINA.ViewModel.Interfaces;
+using System.Threading;
 
 namespace NINA.ViewModel {
 
@@ -33,7 +34,7 @@ namespace NINA.ViewModel {
         private ObservableCollection<FocusTarget> focusTargets;
         private FocusTarget selectedFocusTarget;
         private bool telescopeConnected;
-        private readonly Timer updateTimer;
+        private readonly System.Timers.Timer updateTimer;
 
         public FocusTargetsVM(IProfileService profileService, ITelescopeMediator telescopeMediator, IApplicationResourceDictionary resourceDictionary) : base(profileService) {
             Title = "LblManualFocusTargets";
@@ -44,13 +45,14 @@ namespace NINA.ViewModel {
 
             AsyncContext.Run(LoadFocusTargets);
 
-            updateTimer = new Timer(TimeSpan.FromMinutes(1).TotalMilliseconds) { AutoReset = true };
+            updateTimer = new System.Timers.Timer(TimeSpan.FromMinutes(1).TotalMilliseconds) { AutoReset = true };
             updateTimer.Elapsed += (sender, args) => CalculateVisibleStars();
             if (IsVisible) {
                 updateTimer.Start();
             }
 
-            SlewToCoordinatesCommand = new AsyncCommand<bool>(async () => await telescopeMediator.SlewToCoordinatesAsync(SelectedFocusTarget.Coordinates));
+            SlewToCoordinatesCommand = new AsyncCommand<bool>(
+                async () => await telescopeMediator.SlewToCoordinatesAsync(SelectedFocusTarget.Coordinates, CancellationToken.None));
         }
 
         public bool TelescopeConnected {

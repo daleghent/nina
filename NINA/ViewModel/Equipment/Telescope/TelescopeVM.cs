@@ -34,8 +34,8 @@ namespace NINA.ViewModel.Equipment.Telescope {
         private static double LAT_LONG_TOLERANCE = 0.001;
 
         public TelescopeVM(
-            IProfileService profileService, 
-            ITelescopeMediator telescopeMediator, 
+            IProfileService profileService,
+            ITelescopeMediator telescopeMediator,
             IApplicationStatusMediator applicationStatusMediator,
             IDomeMediator domeMediator) : base(profileService) {
             this.profileService = profileService;
@@ -49,7 +49,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
             ChooseTelescopeCommand = new AsyncCommand<bool>(() => ChooseTelescope());
             CancelChooseTelescopeCommand = new RelayCommand(CancelChooseTelescope);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectTelescope());
-            ParkCommand = new AsyncCommand<bool>(ParkTelescope);
+            ParkCommand = new AsyncCommand<bool>(() => ParkTelescope(CancellationToken.None));
             UnparkCommand = new RelayCommand(UnparkTelescope);
             SetParkPositionCommand = new AsyncCommand<bool>(SetParkPosition);
             SlewToCoordinatesCommand = new AsyncCommand<bool>(SlewToCoordinatesInternal);
@@ -97,22 +97,22 @@ namespace NINA.ViewModel.Equipment.Telescope {
             TelescopeChooserVM.GetEquipment();
         }
 
-        public async Task<bool> ParkTelescope() {
+        public async Task<bool> ParkTelescope(CancellationToken token) {
             if (Telescope.CanPark && Telescope.CanSetPark) { //Park position can be set, assume user set it properly
                 Logger.Trace("Telescope will park according to mount defined park position");
-                return await Task.Run<bool>(() => { Telescope.Park(); return true; });
+                return await Task.Run<bool>(() => { Telescope.Park(); return true; }, token);
             } else if (Telescope.CanPark) { //Park position cannot be set, mount could park right where it is, slew first
                 Coordinates targetCoords = GetHomeCoordinates(Telescope.Coordinates);
                 Logger.Trace(String.Format("Telescope will slew to RA {0} and Dec {1}", targetCoords.RAString, targetCoords.DecString));
-                await SlewToCoordinatesAsync(targetCoords);
+                await SlewToCoordinatesAsync(targetCoords, token);
                 Logger.Trace("Telescope will stop tracking");
                 SetTrackingEnabled(false);
                 Logger.Trace("Telescope will now park according to mount defined park method");
-                return await Task.Run<bool>(() => { Telescope.Park(); return true; });
+                return await Task.Run<bool>(() => { Telescope.Park(); return true; }, token);
             } else { //Telescope cannot park, slew and stop tracking
                 Coordinates targetCoords = GetHomeCoordinates(telescopeInfo.Coordinates);
                 Logger.Trace(String.Format("Telescope will slew to RA {0} and Dec {1}", targetCoords.RAString, targetCoords.DecString));
-                await SlewToCoordinatesAsync(targetCoords);
+                await SlewToCoordinatesAsync(targetCoords, token);
                 Logger.Trace("Telescope will stop tracking");
                 SetTrackingEnabled(false);
             }
@@ -241,7 +241,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblUnknownEpochWarning"], Telescope.EquatorialSystem));
                             }
 
-                            if (Math.Abs(Telescope.SiteLatitude - profileService.ActiveProfile.AstrometrySettings.Latitude) > LAT_LONG_TOLERANCE 
+                            if (Math.Abs(Telescope.SiteLatitude - profileService.ActiveProfile.AstrometrySettings.Latitude) > LAT_LONG_TOLERANCE
                                 || Math.Abs(Telescope.SiteLongitude - profileService.ActiveProfile.AstrometrySettings.Longitude) > LAT_LONG_TOLERANCE) {
                                 var syncVM = new TelescopeLatLongSyncVM(
                                     Telescope.CanSetSiteLatLong,
@@ -646,7 +646,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
             }
         }
 
-        public async Task<bool> SlewToCoordinatesAsync(Coordinates coords) {
+        public async Task<bool> SlewToCoordinatesAsync(Coordinates coords, CancellationToken token) {
             try {
                 coords = coords.Transform(TelescopeInfo.EquatorialSystem);
                 if (Telescope?.Connected == true) {
@@ -658,11 +658,11 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
                     await Task.Run(() => {
                         Telescope.SlewToCoordinates(coords);
-                    });
+                    }, token);
                     BroadcastTelescopeInfo();
                     await Task.WhenAll(
-                        Utility.Utility.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), default, progress, Locale.Loc.Instance["LblSettle"]),
-                        this.domeMediator.WaitForDomeSynchronization(CancellationToken.None));
+                        Utility.Utility.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), token, progress, Locale.Loc.Instance["LblSettle"]),
+                        this.domeMediator.WaitForDomeSynchronization(token));
                     return true;
                 } else {
                     return false;
@@ -678,7 +678,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
             var coords = new Coordinates(targetRightAscencion, targetDeclination, Epoch.J2000, Coordinates.RAType.Hours);
             coords = coords.Transform(TelescopeInfo.EquatorialSystem);
-            return SlewToCoordinatesAsync(coords);
+            return SlewToCoordinatesAsync(coords, CancellationToken.None);
         }
 
         public async Task<bool> MeridianFlip(Coordinates targetCoordinates) {
@@ -700,9 +700,9 @@ namespace NINA.ViewModel.Equipment.Telescope {
             return TelescopeInfo;
         }
 
-        public Task<bool> SlewToCoordinatesAsync(TopocentricCoordinates coordinates) {
+        public Task<bool> SlewToCoordinatesAsync(TopocentricCoordinates coordinates, CancellationToken token) {
             var transformed = coordinates.Transform(TelescopeInfo.EquatorialSystem);
-            return this.SlewToCoordinatesAsync(transformed);
+            return this.SlewToCoordinatesAsync(transformed, token);
         }
 
         public Coordinates GetCurrentPosition() {
@@ -754,14 +754,15 @@ namespace NINA.ViewModel.Equipment.Telescope {
         }
 
         private AsyncObservableCollection<TrackingMode> supportedTrackingModes = new AsyncObservableCollection<TrackingMode>();
-        public AsyncObservableCollection<TrackingMode> SupportedTrackingModes { 
+
+        public AsyncObservableCollection<TrackingMode> SupportedTrackingModes {
             get {
                 return supportedTrackingModes;
             }
             set {
                 supportedTrackingModes = value;
                 RaisePropertyChanged();
-            } 
+            }
         }
 
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }

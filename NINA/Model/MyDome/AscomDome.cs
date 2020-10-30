@@ -7,17 +7,23 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyDome {
+
     public static class ShutterStateExtensions {
+
         public static ShutterState FromASCOM(this ASCOM.DeviceInterface.ShutterState shutterState) {
             switch (shutterState) {
                 case ASCOM.DeviceInterface.ShutterState.shutterOpen:
                     return ShutterState.ShutterOpen;
+
                 case ASCOM.DeviceInterface.ShutterState.shutterClosed:
                     return ShutterState.ShutterClosed;
+
                 case ASCOM.DeviceInterface.ShutterState.shutterOpening:
                     return ShutterState.ShutterOpening;
+
                 case ASCOM.DeviceInterface.ShutterState.shutterClosing:
                     return ShutterState.ShutterClosing;
+
                 case ASCOM.DeviceInterface.ShutterState.shutterError:
                     return ShutterState.ShutterError;
             }
@@ -28,14 +34,19 @@ namespace NINA.Model.MyDome {
             switch (shutterState) {
                 case ShutterState.ShutterOpen:
                     return ASCOM.DeviceInterface.ShutterState.shutterOpen;
+
                 case ShutterState.ShutterClosed:
                     return ASCOM.DeviceInterface.ShutterState.shutterClosed;
+
                 case ShutterState.ShutterOpening:
                     return ASCOM.DeviceInterface.ShutterState.shutterOpening;
+
                 case ShutterState.ShutterClosing:
                     return ASCOM.DeviceInterface.ShutterState.shutterClosing;
+
                 case ShutterState.ShutterError:
                     return ASCOM.DeviceInterface.ShutterState.shutterError;
+
                 case ShutterState.ShutterNone:
                     return ASCOM.DeviceInterface.ShutterState.shutterError;
             }
@@ -52,6 +63,7 @@ namespace NINA.Model.MyDome {
     }
 
     internal class AscomDome : BaseINPC, IDome, IDisposable {
+
         public AscomDome(string domeId, string domeName) {
             Id = domeId;
             Name = domeName;
@@ -62,6 +74,7 @@ namespace NINA.Model.MyDome {
         public bool HasSetupDialog => true;
 
         private string id;
+
         public string Id {
             get => id;
             set {
@@ -71,6 +84,7 @@ namespace NINA.Model.MyDome {
         }
 
         private string name;
+
         public string Name {
             get => name;
             set {
@@ -164,7 +178,7 @@ namespace NINA.Model.MyDome {
 
         public bool Slewing => TryGetProperty(() => dome.Slewing, false);
 
-        public ShutterState ShutterStatus => TryGetProperty(() => dome.ShutterStatus.FromASCOM(), ShutterState.ShutterNone); 
+        public ShutterState ShutterStatus => TryGetProperty(() => dome.ShutterStatus.FromASCOM(), ShutterState.ShutterNone);
 
         public bool CanSyncAzimuth => Connected && dome.CanSyncAzimuth;
 
@@ -229,7 +243,7 @@ namespace NINA.Model.MyDome {
                     await Task.Run(async () => {
                         dome?.SlewToAzimuth(azimuth);
                         while (dome != null && dome.Slewing && !ct.IsCancellationRequested) {
-                            await Task.Delay(1000);
+                            await Task.Delay(1000, ct);
                         }
                     }, ct);
                 } else {

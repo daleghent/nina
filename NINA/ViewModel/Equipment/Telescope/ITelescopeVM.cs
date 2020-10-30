@@ -21,9 +21,9 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
     public interface ITelescopeVM : IDeviceVM<TelescopeInfo>, IDockableVM {
 
-        Task<bool> SlewToCoordinatesAsync(Coordinates coords);
+        Task<bool> SlewToCoordinatesAsync(Coordinates coords, CancellationToken token);
 
-        Task<bool> SlewToCoordinatesAsync(TopocentricCoordinates coordinates);
+        Task<bool> SlewToCoordinatesAsync(TopocentricCoordinates coordinates, CancellationToken token);
 
         void MoveAxis(TelescopeAxes axis, double rate);
 
@@ -37,7 +37,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
         Coordinates GetCurrentPosition();
 
-        Task<bool> ParkTelescope();
+        Task<bool> ParkTelescope(CancellationToken token);
 
         void UnparkTelescope();
 

@@ -66,7 +66,7 @@ namespace NINA.ViewModel {
                 async () => {
                     cameraMediator.RegisterCaptureBlock(this);
                     try {
-                        var result = await MeasurePolarError(new Progress<ApplicationStatus>(p => AzimuthPolarErrorStatus = p), Direction.AZIMUTH);
+                        var result = await MeasurePolarError(new Progress<ApplicationStatus>(p => AzimuthPolarErrorStatus = p), Direction.AZIMUTH, CancellationToken.None);
                         return result;
                     } finally {
                         cameraMediator.ReleaseCaptureBlock(this);
@@ -77,7 +77,7 @@ namespace NINA.ViewModel {
                 async () => {
                     cameraMediator.RegisterCaptureBlock(this);
                     try {
-                        var result = await MeasurePolarError(new Progress<ApplicationStatus>(p => AltitudePolarErrorStatus = p), Direction.ALTITUDE);
+                        var result = await MeasurePolarError(new Progress<ApplicationStatus>(p => AltitudePolarErrorStatus = p), Direction.ALTITUDE, CancellationToken.None);
                         return result;
                     } finally {
                         cameraMediator.ReleaseCaptureBlock(this);
@@ -85,10 +85,10 @@ namespace NINA.ViewModel {
                 },
                 (p) => (TelescopeInfo?.Connected == true && CameraInfo?.Connected == true && cameraMediator.IsFreeToCapture(this)));
             SlewToAltitudeMeridianOffsetCommand = new AsyncCommand<bool>(
-                () => SlewToMeridianOffset(AltitudeMeridianOffset, AltitudeDeclination),
+                () => SlewToMeridianOffset(AltitudeMeridianOffset, AltitudeDeclination, CancellationToken.None),
                 (p) => (TelescopeInfo?.Connected == true));
             SlewToAzimuthMeridianOffsetCommand = new AsyncCommand<bool>(
-                () => SlewToMeridianOffset(AzimuthMeridianOffset, AzimuthDeclination),
+                () => SlewToMeridianOffset(AzimuthMeridianOffset, AzimuthDeclination, CancellationToken.None),
                 (p) => (TelescopeInfo?.Connected == true));
             DARVSlewCommand = new AsyncCommand<bool>(
                 async () => {
@@ -414,7 +414,7 @@ namespace NINA.ViewModel {
                 } catch (OperationCanceledException) {
                 } finally {
                     progress.Report("Restoring start position...");
-                    await telescopeMediator.SlewToCoordinatesAsync(startPosition);
+                    await telescopeMediator.SlewToCoordinatesAsync(startPosition, canceltoken);
                 }
 
                 progress.Report(string.Empty);
@@ -478,7 +478,7 @@ namespace NINA.ViewModel {
             }
         }
 
-        private async Task<bool> MeasurePolarError(IProgress<ApplicationStatus> progress, Direction direction) {
+        private async Task<bool> MeasurePolarError(IProgress<ApplicationStatus> progress, Direction direction, CancellationToken token) {
             if (CameraInfo?.Connected == true) {
                 cancelMeasureErrorToken?.Dispose();
                 cancelMeasureErrorToken = new CancellationTokenSource();
@@ -494,7 +494,7 @@ namespace NINA.ViewModel {
 
                     Coordinates startPosition = telescopeMediator.GetCurrentPosition();
                     double poleErr = await CalculatePoleError(startPosition, progress, cancelMeasureErrorToken.Token);
-                    moveBackTask = telescopeMediator.SlewToCoordinatesAsync(startPosition);
+                    moveBackTask = telescopeMediator.SlewToCoordinatesAsync(startPosition, token);
 
                     string poleErrString = Deg2str(Math.Abs(poleErr), 4);
                     cancelMeasureErrorToken.Token.ThrowIfCancellationRequested();
@@ -616,7 +616,7 @@ namespace NINA.ViewModel {
 
                 Coordinates targetPosition = new Coordinates(startPosition.RADegrees - driftAmount, startPosition.Dec, TelescopeInfo.EquatorialSystem, Coordinates.RAType.Degrees);
                 progress.Report(new ApplicationStatus() { Status = "Slewing..." });
-                await telescopeMediator.SlewToCoordinatesAsync(targetPosition);
+                await telescopeMediator.SlewToCoordinatesAsync(targetPosition, canceltoken);
 
                 canceltoken.ThrowIfCancellationRequested();
 
@@ -651,7 +651,7 @@ namespace NINA.ViewModel {
             return poleError;
         }
 
-        public async Task<bool> SlewToMeridianOffset(double meridianOffset, double declination) {
+        public async Task<bool> SlewToMeridianOffset(double meridianOffset, double declination, CancellationToken token) {
             var lst = Astrometry.GetLocalSiderealTimeNow(profileService.ActiveProfile.AstrometrySettings.Longitude);
 
             double slew_ra = lst + (Astrometry.DegreesToHours(meridianOffset));
@@ -662,7 +662,7 @@ namespace NINA.ViewModel {
             }
 
             var coords = new Coordinates(slew_ra, declination, Epoch.JNOW, Coordinates.RAType.Hours);
-            return await telescopeMediator.SlewToCoordinatesAsync(coords);
+            return await telescopeMediator.SlewToCoordinatesAsync(coords, token);
         }
 
         private const double polarisRA = 2.5303040444444442;

@@ -64,8 +64,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Validate()) {
-                // Todo - this interface lacks progress and token
-                return telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates);
+                return telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }

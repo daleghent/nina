@@ -69,7 +69,7 @@ namespace NINA.ViewModel {
                 sequenceMediator.AddTargetToSequencer(container);
             });
             SlewToCoordinatesCommand = new AsyncCommand<bool>(async () => {
-                return await telescopeMediator.SlewToCoordinatesAsync(SearchResult.SelectedItem.Coordinates);
+                return await telescopeMediator.SlewToCoordinatesAsync(SearchResult.SelectedItem.Coordinates, CancellationToken.None);
             });
             SetFramingAssistantCoordinatesCommand = new AsyncCommand<bool>(async () => {
                 applicationMediator.ChangeTab(ApplicationTab.FRAMINGASSISTANT);

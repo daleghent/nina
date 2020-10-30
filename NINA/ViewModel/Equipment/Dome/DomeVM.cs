@@ -25,9 +25,6 @@ using System.Windows.Input;
 using NINA.Model.MyDome;
 using NINA.Model.MyTelescope;
 using NINA.Utility.Astrometry;
-using Nito.AsyncEx;
-using ToastNotifications.Utilities;
-using Ninject;
 
 namespace NINA.ViewModel.Equipment.Dome {
 
@@ -292,6 +289,7 @@ namespace NINA.ViewModel.Equipment.Dome {
         }
 
         private IDome dome;
+
         public IDome Dome {
             get {
                 return dome;
@@ -364,6 +362,7 @@ namespace NINA.ViewModel.Equipment.Dome {
                     Logger.Warning("Waiting for Dome synchronization cancelled or timed out");
                     return;
                 }
+                Logger.Trace("Dome not synchronized. Waiting...");
                 await Task.Delay(TimeSpan.FromSeconds(1), timeoutOrClientCancellationToken);
             }
         }
@@ -453,6 +452,7 @@ namespace NINA.ViewModel.Equipment.Dome {
         }
 
         private bool followEnabled;
+
         public bool FollowEnabled {
             get {
                 if (Dome?.Connected == true) {
@@ -469,6 +469,7 @@ namespace NINA.ViewModel.Equipment.Dome {
         }
 
         private bool directFollowingToggled;
+
         public bool DirectFollowToggled {
             get {
                 if (Dome?.Connected == true) {
@@ -505,13 +506,14 @@ namespace NINA.ViewModel.Equipment.Dome {
                     Dome.DriverFollowing = FollowEnabled && !DirectFollowToggled;
                 }
                 if (TelescopeInfo.Connected && DirectFollowEnabled) {
-                    SynchronizeWithTelescope(TelescopeInfo);
+                    SynchronizeWithTelescope(TelescopeInfo, CancellationToken.None);
                 }
             }
         }
 
         private double targetAzimuth = 0.0;
-        private void SynchronizeWithTelescope(TelescopeInfo telescopeInfo) {
+
+        private void SynchronizeWithTelescope(TelescopeInfo telescopeInfo, CancellationToken token) {
             if (Dome?.Connected == true) {
                 // If domeRotationTask is null or IsCompleted is true, then it is not rotating
                 var isRotating = domeRotationTask?.IsCompleted == false;
@@ -520,10 +522,11 @@ namespace NINA.ViewModel.Equipment.Dome {
                     var currentAzimuth = Angle.ByDegree(Dome.Azimuth);
                     var tolerance = Angle.ByDegree(profileService.ActiveProfile.DomeSettings.AzimuthTolerance_degrees);
                     if (!calculatedTargetAzimuth.Equals(currentAzimuth, tolerance)) {
-                        Logger.Trace($"Dome direct telescope follow slew. Current azimuth={currentAzimuth}, Target azimuth={targetAzimuth}");
+                        Logger.Trace($"Dome direct telescope follow slew. Current azimuth={currentAzimuth}, Target azimuth={calculatedTargetAzimuth}, Tolerance={tolerance}");
                         targetAzimuth = calculatedTargetAzimuth.Degree;
                         domeRotationCTS = new CancellationTokenSource();
-                        domeRotationTask = Dome.SlewToAzimuth(targetAzimuth, domeRotationCTS.Token);
+                        var slewCTS = CancellationTokenSource.CreateLinkedTokenSource(domeRotationCTS.Token, token);
+                        domeRotationTask = Dome.SlewToAzimuth(targetAzimuth, slewCTS.Token);
                     }
                 }
             }
@@ -557,7 +560,7 @@ namespace NINA.ViewModel.Equipment.Dome {
                 TelescopeInfo = deviceInfo;
                 if (TelescopeInfo.Connected && DirectFollowEnabled) {
                     if (!TelescopeInfo.Slewing || profileService.ActiveProfile.DomeSettings.SynchronizeDuringMountSlew) {
-                        SynchronizeWithTelescope(TelescopeInfo);
+                        SynchronizeWithTelescope(TelescopeInfo, CancellationToken.None);
                     }
                 } else if (!TelescopeInfo.Connected) {
                     FollowEnabled = false;
@@ -569,10 +572,12 @@ namespace NINA.ViewModel.Equipment.Dome {
         }
 
         private TelescopeInfo telescopeInfo = DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
+
         public TelescopeInfo TelescopeInfo {
             get {
                 return telescopeInfo;
-            } set {
+            }
+            set {
                 telescopeInfo = value;
                 RaisePropertyChanged();
             }
