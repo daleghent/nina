@@ -25,9 +25,6 @@
     Background="{StaticResource BackgroundBrush}"
     Icon="/NINA;component/Resources/Logo_Nina.ico"
     Style="{StaticResource MainWindow}">
-    <Window.DataContext>
-        <vm:VMInjector />
-    </Window.DataContext>
     <Window.InputBindings>
         <KeyBinding Key="F5" Command="{Binding ApplicationDeviceConnectionVM.ConnectAllDevicesCommand}" />
         <KeyBinding Key="F9" Command="{Binding ApplicationDeviceConnectionVM.DisconnectAllDevicesCommand}" />

@@ -117,7 +117,7 @@ namespace NINA.ViewModel {
             _cancelTokenSource?.Dispose();
             _cancelTokenSource = new CancellationTokenSource();
             try {
-                if (!UseSavedProfile) {
+                if (!UseSavedProfile && !profileService.ProfileWasSpecifiedFromCommandLineArgs) {
                     var ws = WindowServiceFactory.Create();
                     ws.OnDialogResultChanged += (s, e) => {
                         var dialogResult = (DialogResultEventArgs)e;

@@ -36,15 +36,11 @@ namespace NINA.Profile {
             saveTimer.Elapsed += SaveTimer_Elapsed;
 
             Profiles = new AsyncObservableCollection<ProfileMeta>();
-
-            Load();
-
-            CreateWatcher();
         }
 
         private FileSystemWatcher profileFileWatcher;
 
-        private void CreateWatcher() {
+        public void CreateWatcher() {
             profileFileWatcher?.Dispose();
 
             profileFileWatcher = new FileSystemWatcher() {
@@ -108,20 +104,24 @@ namespace NINA.Profile {
             Save();
         }
 
-        private void Load() {
+        public bool TryLoad(string startWithProfileId) {
             lock (lockobj) {
                 using (MyStopWatch.Measure()) {
                     if (!Directory.Exists(PROFILEFOLDER)) {
                         Directory.CreateDirectory(PROFILEFOLDER);
                     }
 
-                    foreach (var file in Directory.GetFiles(PROFILEFOLDER, "*.profile")) {
-                        var info = Profile.Peek(file);
-                        if (info != null) {
-                            Profiles.Add(info);
-                        }
-                    }
-                    if (Profiles.Count == 0) {
+                    var loadSpecificProfile = !string.IsNullOrWhiteSpace(startWithProfileId);
+                    ProfileWasSpecifiedFromCommandLineArgs = loadSpecificProfile;
+                    Directory
+                        .GetFiles(PROFILEFOLDER, "*.profile")
+                        .Select(Profile.Peek)
+                        .Where(p => p != null)
+                        .OrderByDescending(x => x.LastUsed)
+                        .ToList()
+                        .ForEach(Profiles.Add);
+
+                    if (!Profiles.Any() && !loadSpecificProfile) {
                         if (File.Exists(OLDPROFILEFILEPATH)) {
                             MigrateOldProfile();
                         } else {
@@ -129,17 +129,22 @@ namespace NINA.Profile {
                         }
                     }
 
-                    var l = Profiles.OrderBy(x => x.LastUsed);
-
-                    for (var idx = l.Count() - 1; idx >= 0; idx--) {
-                        if (SelectProfile(l.ElementAt(idx))) {
-                            return;
-                        }
+                    var selectedProfile =
+                        Profiles
+                        .Where(p => !loadSpecificProfile || p.Id.ToString() == startWithProfileId)
+                        .SkipWhile(p => !SelectProfile(p))
+                        .FirstOrDefault();
+                    if (selectedProfile != null) {
+                        return true;
+                    }
+                    if (loadSpecificProfile) {
+                        return false;
                     }
 
                     Logger.Debug("All Profiles are in use. Creating a new default profile");
                     var defaultProfile = AddDefaultProfile();
                     SelectProfile(defaultProfile);
+                    return true;
                 }
             }
         }
@@ -198,6 +203,8 @@ namespace NINA.Profile {
                 this.ActiveProfile.PropertyChanged -= SettingsChanged;
             }
         }
+
+        public bool ProfileWasSpecifiedFromCommandLineArgs { get; private set; }
 
         public event EventHandler LocaleChanged;
 
@@ -382,5 +389,59 @@ namespace NINA.Profile {
         }
 
         #endregion Migration
+
+        public static void ActivateInstanceOfNinaReferencingProfile(string startWithProfileId) {
+
+            using (var waitHandle = new EventWaitHandle(false,
+
+                EventResetMode.ManualReset,
+
+                "NINA_ActivateInstance:" + startWithProfileId)) {
+
+                waitHandle.Set();
+
+            }
+
+        }
+
+        public static System.Threading.Tasks.Task ActivateInstanceWatcher(
+            IProfileService profileService,
+            Window mainWindow
+            ) {
+            var currentProfile = profileService.ActiveProfile.Id.ToString();
+            return System.Threading.Tasks.Task.Factory.StartNew(
+                () => {
+                    var profileChanged = new ManualResetEventSlim();
+                    profileService.ProfileChanged += (x, y) => profileChanged.Set();
+
+                    var activated = new EventWaitHandle(false,
+                        EventResetMode.AutoReset,
+                        "NINA_ActivateInstance:" + currentProfile);
+
+                    while (true) {
+                        var handles = new WaitHandle[] {
+                            profileChanged.WaitHandle,
+                            activated };
+                        var response = WaitHandle.WaitAny(handles, TimeSpan.FromSeconds(1));
+                        if (258 == response) // timeout
+                        {
+                            continue;
+                        }
+
+                        if (handles[response] == profileChanged.WaitHandle) {
+                            profileChanged.Reset();
+                            activated.Dispose();
+                            handles[1] = activated = new EventWaitHandle(false,
+                                EventResetMode.AutoReset,
+                                "NINA_ActivateInstance:" +
+                                    profileService.ActiveProfile.Id.ToString());
+                        }
+                        if (handles[response] == activated) {
+                            mainWindow.Dispatcher.Invoke(
+                                    () => mainWindow.Activate());
+                        }
+                    }
+                }, System.Threading.Tasks.TaskCreationOptions.LongRunning);
+        }
     }
 }

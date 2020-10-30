@@ -347,6 +347,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AppJumpListExtensions.cs" />
     <Compile Include="AstrometryIndexDownloader\AstrometryIndexDownloader.xaml.cs">
       <DependentUpon>AstrometryIndexDownloader.xaml</DependentUpon>
     </Compile>
@@ -704,6 +705,8 @@
     <Compile Include="Utility\Converters\IntNegativeOneToDoubleDashConverter.cs" />
     <Compile Include="Utility\Converters\InverseBooleanOrToVisibilityCollapsedMultiConverter.cs" />
     <Compile Include="Utility\Converters\InverseNullToVisibilityCollapsedConverter.cs" />
+    <Compile Include="ViewModel\Interfaces\IMainWindowVM.cs" />
+    <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="View\Sequencer\Converter\SequenceEntityStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\ShutterStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\OptimalExposureCalculatorAnswerConverter.cs" />
@@ -970,7 +973,7 @@
     <Compile Include="ViewModel\PlateSolvingStatusVM.cs" />
     <Compile Include="ViewModel\Sequencer\ISequence2VM.cs" />
     <Compile Include="ViewModel\Sequencer\Sequence2VM.cs" />
-    <Compile Include="ViewModel\VMInjector.cs" />
+    <Compile Include="CompositionRoot.cs" />
     <Compile Include="View\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
     </Compile>

@@ -758,3 +758,5 @@ ___
 - ImagePatterns inside options can now be dragged from the list to the textbox
 - Major code refactorings for better maintainability
 - Lots and lots of minor bugfixes and improvements
+- Launch NINA with a specific ProfileId via cmdline
+- Integrated with Windows JumpList feature to launch instance with specific profile loaded

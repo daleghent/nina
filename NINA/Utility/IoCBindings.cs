@@ -41,15 +41,17 @@ using NINA.ViewModel.Sequencer;
 using Ninject;
 using Ninject.Modules;
 using System;
-using System.Windows;
 
 namespace NINA.Utility {
 
     internal class IoCBindings : NinjectModule {
+        private readonly IProfileService _profileService;
+        public IoCBindings(IProfileService profileService) =>
+            _profileService = profileService;
 
         public override void Load() {
             try {
-                Bind<IProfileService>().ToMethod(f => (ProfileService)Application.Current.Resources["ProfileService"]);
+                Bind<IProfileService>().ToMethod(f => _profileService);
                 Bind<IProfile>().ToMethod(f => f.Kernel.Get<ProfileService>().ActiveProfile);
 
                 Bind<IApplicationVM>().To<ApplicationVM>().InSingletonScope();

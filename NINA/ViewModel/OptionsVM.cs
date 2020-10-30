@@ -202,6 +202,7 @@ namespace NINA.ViewModel {
                 ProfileChanged();
             } else {
                 Notification.ShowWarning(Locale.Loc.Instance["LblLoadProfileInUseWarning"]);
+                ProfileService.ActivateInstanceOfNinaReferencingProfile(SelectedProfile.Id.ToString());
             }
         }
 

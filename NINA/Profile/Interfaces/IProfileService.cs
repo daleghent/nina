@@ -15,12 +15,12 @@
 using NINA.Utility;
 using NINA.Utility.Astrometry;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
 
 namespace NINA.Profile {
 
     public interface IProfileService {
+        bool ProfileWasSpecifiedFromCommandLineArgs { get; }
         AsyncObservableCollection<ProfileMeta> Profiles { get; }
         IProfile ActiveProfile { get; }
 
