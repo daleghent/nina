@@ -72,24 +72,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
         }
 
         public override void AfterParentChanged() {
-            var coordinates = RetrieveContextCoordinates(this.Parent);
-            if (coordinates != null) {
-                Coordinates.Coordinates = coordinates.Transform(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
-            }
             Validate();
-        }
-
-        private Coordinates RetrieveContextCoordinates(ISequenceContainer parent) {
-            if (parent != null) {
-                var container = parent as IDeepSkyObjectContainer;
-                if (container != null) {
-                    return container.Target.InputCoordinates.Coordinates;
-                } else {
-                    return RetrieveContextCoordinates(parent.Parent);
-                }
-            } else {
-                return null;
-            }
         }
 
         public override object Clone() {

@@ -104,12 +104,12 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
             var imageDataMock = new Mock<IImageData>();
             var stats = new Mock<IImageStatistics>();
             imageDataMock.SetupGet(x => x.Statistics).Returns(new AsyncLazy<IImageStatistics>(() => Task.FromResult(stats.Object)));
-            imageMock.Setup(x => x.ToImageData(It.IsAny<CancellationToken>())).Returns(Task.FromResult(imageDataMock.Object));
+            imageMock.Setup(x => x.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(imageDataMock.Object));
             var imageTask = Task.FromResult(imageMock.Object);
             var prepareTask = Task.FromResult(new Mock<IRenderedImage>().Object);
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = true });
             imagingMediatorMock.Setup(x => x.CaptureImage(It.IsAny<CaptureSequence>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<string>())).Returns(imageTask);
-            imagingMediatorMock.Setup(x => x.PrepareImage(It.IsAny<IExposureData>(), It.IsAny<PrepareImageParameters>(), It.IsAny<CancellationToken>())).Returns(prepareTask);
+            imagingMediatorMock.Setup(x => x.PrepareImage(It.IsAny<IImageData>(), It.IsAny<PrepareImageParameters>(), It.IsAny<CancellationToken>())).Returns(prepareTask);
 
             var sut = new TakeExposure(cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
             sut.ExposureTime = exposuretime;
@@ -137,7 +137,7 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
                     It.IsAny<string>()
                 ), Times.Once);
 
-            imagingMediatorMock.Verify(x => x.PrepareImage(It.Is<IExposureData>(e => e == imageMock.Object), It.Is<PrepareImageParameters>(y => y.AutoStretch == expectedStretch && y.DetectStars == expectedDetect), It.IsAny<CancellationToken>()), Times.Once);
+            imagingMediatorMock.Verify(x => x.PrepareImage(It.Is<IImageData>(e => e == imageDataMock.Object), It.Is<PrepareImageParameters>(y => y.AutoStretch == expectedStretch && y.DetectStars == expectedDetect), It.IsAny<CancellationToken>()), Times.Once);
 
             imageSaveMediatorMock.Verify(x => x.Enqueue(It.Is<IImageData>(d => d == imageDataMock.Object), It.Is<Task<IRenderedImage>>(t => t == prepareTask), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
             historyMock.Verify(x => x.Add(It.Is<IImageStatistics>(s => s == stats.Object)), Times.Exactly(historycalls));
