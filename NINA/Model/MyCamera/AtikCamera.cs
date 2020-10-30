@@ -65,11 +65,7 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        public bool CanShowLiveView {
-            get {
-                return false;
-            }
-        }
+        public bool CanShowLiveView { get => false; }
 
         private double _temperature;
 
@@ -540,17 +536,8 @@ namespace NINA.Model.MyCamera {
             throw new NotImplementedException();
         }
 
-        private bool _liveViewEnabled;
         private IProfileService profileService;
-
-        public bool LiveViewEnabled {
-            get {
-                return _liveViewEnabled;
-            }
-            set {
-                _liveViewEnabled = value;
-            }
-        }
+        public bool LiveViewEnabled { get => false; set => throw new NotImplementedException(); }
 
         public int BatteryLevel => -1;
 

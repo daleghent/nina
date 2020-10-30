@@ -139,11 +139,7 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        public bool CanShowLiveView {
-            get {
-                return true;
-            }
-        }
+        public bool CanShowLiveView => false;
 
         public double Temperature {
             get {
@@ -747,30 +743,11 @@ namespace NINA.Model.MyCamera {
         }
 
         public void StartLiveView() {
-            ASICameraDll.StartVideoCapture(_cameraId);
+            throw new System.NotImplementedException();
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken token) {
-            return Task.Run<IExposureData>(() => {
-                var width = CaptureAreaInfo.Size.Width;
-                var height = CaptureAreaInfo.Size.Height;
-
-                int size = width * height;
-
-                ushort[] arr = new ushort[size];
-                int buffersize = width * height * 2;
-                if (!GetVideoData(arr, buffersize)) {
-                    throw new Exception(Locale.Loc.Instance["LblASIImageDownloadError"]);
-                }
-
-                return new ImageArrayExposureData(
-                    input: arr,
-                    width: width,
-                    height: height,
-                    bitDepth: this.BitDepth,
-                    isBayered: this.SensorType != SensorType.Monochrome,
-                    metaData: new ImageMetaData());
-            });
+            throw new System.NotImplementedException();
         }
 
         private bool GetVideoData(ushort[] buffer, int bufferSize) {
@@ -778,19 +755,10 @@ namespace NINA.Model.MyCamera {
         }
 
         public void StopLiveView() {
-            ASICameraDll.StopVideoCapture(_cameraId);
+            throw new System.NotImplementedException();
         }
 
-        private bool _liveViewEnabled;
-
-        public bool LiveViewEnabled {
-            get {
-                return _liveViewEnabled;
-            }
-            set {
-                _liveViewEnabled = value;
-            }
-        }
+        public bool LiveViewEnabled { get => false; set => throw new NotImplementedException(); }
 
         public bool HasBattery => false;
     }

@@ -254,24 +254,8 @@ namespace NINA.Model.MyCamera {
         public int SubSampleY { get; set; }
         public int SubSampleWidth { get; set; }
         public int SubSampleHeight { get; set; }
-
-        public bool CanShowLiveView {
-            get {
-                return true;
-            }
-        }
-
-        private bool _liveViewEnabled;
-
-        public bool LiveViewEnabled {
-            get {
-                return _liveViewEnabled;
-            }
-            set {
-                _liveViewEnabled = value;
-                RaisePropertyChanged();
-            }
-        }
+        public bool CanShowLiveView { get => false; }
+        public bool LiveViewEnabled { get => false; set => throw new NotImplementedException(); }
 
         public bool HasBattery {
             get {
@@ -747,7 +731,7 @@ namespace NINA.Model.MyCamera {
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken token) {
-            return DownloadExposure(token);
+            throw new NotImplementedException();
         }
 
         public void SetBinning(short x, short y) {
@@ -808,12 +792,7 @@ namespace NINA.Model.MyCamera {
         }
 
         public void StartLiveView() {
-            if (!camera.put_Option(Omegonprocam.eOPTION.OPTION_TRIGGER, 0)) {
-                throw new Exception("OmegonCamera - Could not set Trigger video mode");
-            }
-            imageReadyTCS?.TrySetCanceled();
-            imageReadyTCS = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            LiveViewEnabled = true;
+            throw new System.NotImplementedException();
         }
 
         public void StopExposure() {
@@ -824,13 +803,7 @@ namespace NINA.Model.MyCamera {
         }
 
         public void StopLiveView() {
-            imageReadyTCS.Task.ContinueWith((Task<bool> o) => {
-                if (!camera.put_Option(Omegonprocam.eOPTION.OPTION_TRIGGER, 1)) {
-                    Disconnect();
-                    throw new Exception("OmegonCamera - Could not set Trigger manual mode. Reconnect Camera!");
-                }
-                LiveViewEnabled = false;
-            });
+            throw new System.NotImplementedException();
         }
 
         public int USBLimitStep { get => 1; }

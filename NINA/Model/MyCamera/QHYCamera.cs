@@ -33,7 +33,6 @@ namespace NINA.Model.MyCamera {
         private IntPtr CameraP;
         private AsyncObservableCollection<BinningMode> _binningModes;
         private bool _connected = false;
-        private bool _liveViewEnabled = false;
         private short _readoutModeForNormalImages;
         private short _readoutModeForSnapImages;
         private Task coolerTask;
@@ -214,7 +213,7 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        public bool CanShowLiveView => true;
+        public bool CanShowLiveView => false;
         public bool CanSubSample => true;
 
         public bool Connected {
@@ -320,16 +319,7 @@ namespace NINA.Model.MyCamera {
         }
 
         public string Id => $"{Description}";
-
-        public bool LiveViewEnabled {
-            get => _liveViewEnabled;
-            set {
-                if (_liveViewEnabled != value) {
-                    _liveViewEnabled = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
+        public bool LiveViewEnabled { get => false; set => throw new NotImplementedException(); }
 
         public short MaxBinX => (short)SupportedBinFactors.DefaultIfEmpty(1).Max();
         public short MaxBinY => MaxBinX;
@@ -955,69 +945,7 @@ namespace NINA.Model.MyCamera {
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken ct) {
-            RaiseIfNotConnected();
-            return Task.Run<IExposureData>(async () => {
-                uint rv;
-                uint width = 0;
-                uint height = 0;
-                uint bpp = 0;
-                uint channels = 0;
-
-                Logger.Debug("QHYCCD: Downloading exposure...");
-
-                /*
-                 * Ask the SDK how big the exposure will be
-                 */
-                var size = LibQHYCCD.GetQHYCCDMemLength(CameraP);
-
-                if (size == 0) {
-                    Logger.Warning("QHYCCD: SDK reported a 0-length image buffer!");
-                    throw new Exception(Locale.Loc.Instance["LblASIImageDownloadError"]);
-                }
-                Logger.Debug($"QHYCCD: Image size will be {size} bytes");
-
-                /*
-                 * Size the image data byte array for the image
-                 */
-                var ImgData = new byte[size];
-
-                while (!ct.IsCancellationRequested) {
-                    rv = LibQHYCCD.GetQHYCCDLiveFrame(CameraP, ref width, ref height, ref bpp, ref channels, ImgData);
-                    if (rv == uint.MaxValue) {
-                        await Task.Yield();
-                        // GetQHYCCDLiveFrame returns -1 when the data isn't available yet, requiring looping.
-                        continue;
-                    } else if (rv > size) {
-                        // rv returns how many bytes have been downloaded if there is still more to do. 0 indicates completion
-                        Logger.Warning($"QHYCCD: Failed to download image from camera! rv = {rv}");
-                        throw new Exception(Locale.Loc.Instance["LblASIImageDownloadError"]);
-                    } else {
-                        break;
-                    }
-                }
-
-                Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
-
-                /*
-                 * Copy the image byte array to an allocated buffer
-                 */
-                IntPtr buf = Marshal.AllocHGlobal(ImgData.Length);
-                Marshal.Copy(ImgData, 0, buf, ImgData.Length);
-                var cameraDataToManaged = new CameraDataToManaged(buf, (int)width, (int)height, (int)bpp, bitScaling: false);
-                var arr = cameraDataToManaged.GetData();
-                ImgData = null;
-                Marshal.FreeHGlobal(buf);
-
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.IDLE.ToString();
-
-                return new ImageArrayExposureData(
-                    input: arr,
-                    width: (int)width,
-                    height: (int)height,
-                    bitDepth: this.BitDepth,
-                    isBayered: this.SensorType != SensorType.Monochrome,
-                    metaData: new ImageMetaData());
-            }, ct);
+            throw new NotImplementedException();
         }
 
         public void SetBinning(short x, short y) {
@@ -1135,47 +1063,7 @@ namespace NINA.Model.MyCamera {
         }
 
         public void StartLiveView() {
-            RaiseIfNotConnected();
-            LiveViewEnabled = true;
-            ReconnectForLiveView();
-
-            // TODO: Use controls on the exposure tab to adjust gain and exposure
-            if (!SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_EXPOSURE, 1e6)) {
-                Logger.Warning("QHYCCD: Failed to set exposure time");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                return;
-            }
-
-            if (!SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_GAIN, ((double)Info.GainMin + Info.GainMax) / 2)) {
-                Logger.Warning("QHYCCD: Failed to set gain");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                return;
-            }
-
-            if (LibQHYCCD.IsQHYCCDControlAvailable(CameraP, LibQHYCCD.CONTROL_ID.CONTROL_TRANSFERBIT) == LibQHYCCD.QHYCCD_SUCCESS &&
-                LibQHYCCD.SetQHYCCDBitsMode(CameraP, 8) != LibQHYCCD.QHYCCD_SUCCESS) {
-                Logger.Warning("QHYCCD: Failed to set 8-bit mode for live view");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                return;
-            }
-
-            uint startx, starty, sizex, sizey;
-            if (!SetResolution(out startx, out starty, out sizex, out sizey)) {
-                Logger.Warning("QHYCCD: Failed to set resolution for live view");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                return;
-            }
-
-            if (LibQHYCCD.BeginQHYCCDLive(CameraP) != LibQHYCCD.QHYCCD_SUCCESS) {
-                Logger.Warning("QHYCCD: Failed to start live view");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                LiveViewEnabled = false;
-                ReconnectForLiveView();
-                return;
-            }
-            CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.EXPOSING.ToString();
-
-            Logger.Debug("QHYCCD: Enabled live view");
+            throw new System.NotImplementedException();
         }
 
         public void StopExposure() {
@@ -1186,17 +1074,7 @@ namespace NINA.Model.MyCamera {
         }
 
         public void StopLiveView() {
-            RaiseIfNotConnected();
-            if (LibQHYCCD.StopQHYCCDLive(CameraP) != LibQHYCCD.QHYCCD_SUCCESS) {
-                Logger.Warning("QHYCCD: Failed to stop live view");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                // Continue on to reconnecting the camera
-            } else {
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.IDLE.ToString();
-            }
-            LiveViewEnabled = false;
-            ReconnectForLiveView();
-            Logger.Debug("QHYCCD: Disabled live view");
+            throw new System.NotImplementedException();
         }
 
         public bool QhyIncludeOverscan {

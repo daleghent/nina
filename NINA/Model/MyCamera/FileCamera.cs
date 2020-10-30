@@ -679,13 +679,15 @@ namespace NINA.Model.MyCamera {
         }
 
         public void StartLiveView() {
+            throw new System.NotImplementedException();
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken token) {
-            return null;
+            throw new System.NotImplementedException();
         }
 
         public void StopLiveView() {
+            throw new System.NotImplementedException();
         }
     }
 

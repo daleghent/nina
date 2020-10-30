@@ -269,11 +269,7 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        public bool CanShowLiveView {
-            get {
-                return false;
-            }
-        }
+        public bool CanShowLiveView { get => false; }
 
         public bool CanAsymmetricBin {
             get {
@@ -1403,17 +1399,7 @@ namespace NINA.Model.MyCamera {
             throw new System.NotImplementedException();
         }
 
-        private bool _liveViewEnabled;
-
-        public bool LiveViewEnabled {
-            get {
-                return _liveViewEnabled;
-            }
-            set {
-                _liveViewEnabled = value;
-                // todo: code to start liveview if possible
-            }
-        }
+        public bool LiveViewEnabled { get => false; set => throw new System.NotImplementedException(); }
 
         public int BatteryLevel => -1;
 
