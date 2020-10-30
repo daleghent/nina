@@ -3226,7 +3226,7 @@
     <value>停止しました</value>
   </data>
   <data name="LblTrackingSidereal" xml:space="preserve">
-    <value>恒星の</value>
+    <value>Sidereal</value>
   </data>
   <data name="LblTrackingSolar" xml:space="preserve">
     <value>太陽の</value>
@@ -3773,14 +3773,38 @@
   <data name="LblASCOMPlatformOutdated" xml:space="preserve">
     <value>ASCOMプラットフォームのバージョンが古くなっています。最新のバージョンにアップデートしてください。 そうしないと、すべてのASCOMデバイスに接続できなくなる可能性があります。</value>
   </data>
+  <data name="LblDomeShutter" xml:space="preserve">
+    <value>Shutter</value>
+  </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
     <value>クローズ</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
     <value>開</value>
   </data>
+  <data name="LblDomeRotateCW" xml:space="preserve">
+    <value>Rotate clockwise</value>
+  </data>
+  <data name="LblDomeRotateCCW" xml:space="preserve">
+    <value>Rotate counter-clockwise</value>
+  </data>
   <data name="LblDomeSynchronization" xml:space="preserve">
     <value>同期</value>
+  </data>
+  <data name="LblDomeSyncAzimuth" xml:space="preserve">
+    <value>Sync</value>
+  </data>
+  <data name="LblDomeSyncAzimuthTooltip" xml:space="preserve">
+    <value>Syncs the dome azimuth to the value calculated from the telescope direction and dome measurements</value>
+  </data>
+  <data name="LblDomeStopTooltip" xml:space="preserve">
+    <value>Stops all dome shutter and rotation movement</value>
+  </data>
+  <data name="LblDomeManualSlewTooltip" xml:space="preserve">
+    <value>Rotate the dome to a target azimuth</value>
+  </data>
+  <data name="LblDomeParkTooltip" xml:space="preserve">
+    <value>Rotate the dome to the park location set in the driver and close the shutter</value>
   </data>
   <data name="LblDynamicBrightness" xml:space="preserve">
     <value>動的な輝度</value>
@@ -3965,11 +3989,23 @@
   <data name="LblParkDomeAtSequenceEnd" xml:space="preserve">
     <value>シーケンス終了時にドームをパークさせる</value>
   </data>
+  <data name="LblDomeSyncDuringMountSlew" xml:space="preserve">
+    <value>Allow sync while mount slews</value>
+  </data>
+  <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
+    <value>When Dome Following is enabled, NINA will frequently check if the Dome needs to be rotated to line up with the telescope. When an external application, such as a planetarium or a handset, moves the telescope it may be helpful to wait until the telescope is no longer moving to rotate the dome.</value>
+  </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>パークする前にホームポジションを見つける</value>
   </data>
+  <data name="LblDomeSlewCW" xml:space="preserve">
+    <value>Move CW</value>
+  </data>
+  <data name="LblDomeSlewCCW" xml:space="preserve">
+    <value>Move CCW</value>
+  </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
-    <value>正確な位置合わせが必要なとき、FindHomeが利用可能であれば、これによって正しい位置にパークさせる確実性を向上させることができます。</value>
+    <value>If FindHome is supported by the driver, using it before parking can ensure it goes to a precise location. This can be helpful if the shutter motor battery charges while parked.</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
     <value>オートフォーカスシーケンスのタイムアウト</value>
@@ -4085,6 +4121,18 @@
   <data name="LblHips2FitsSurvey" xml:space="preserve">
     <value>HIPS 2 FITSスカイサーベイ</value>
   </data>
+  <data name="LblMechanicalPosition" xml:space="preserve">
+    <value>Mechanical Position</value>
+  </data>
+  <data name="LblSkyPosition" xml:space="preserve">
+    <value>Sky Position</value>
+  </data>
+  <data name="LblTargetMechanicalPosition" xml:space="preserve">
+    <value>Target Mechanical Position</value>
+  </data>
+  <data name="LblTargetSkyPosition" xml:space="preserve">
+    <value>Target Sky Position</value>
+  </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
     <value>子午線反転後の時間（分）に {0} を加算する</value>
   </data>
@@ -4116,13 +4164,13 @@
     <value>時間までループ</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
-    <value>シーケンシャルコンテナのように動作しますが、ディープスカイオブジェクトを指定することができ、関連する情報(座標や回転など) が全てのサブアイテムに自動的に設定されます</value>
+    <value>Works like a sequential instruction set, but a deep sky object can be specified inside, which will auto populate all instructions inside it with the coordinates and rotation when necessary.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
     <value>ディープスカイオブジェクトのシーケンス</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
-    <value>このコンテナ内のすべての項目は並列に実行されます。すべての項目が完了するまで、コンテナはどの条件やトリガーも評価しません。</value>
+    <value>All instructions in this instruction set are run in parallel. This instruction set will not evaluate any conditions or triggers until all instructions are finished.</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
     <value>並列命令セット</value>
@@ -4556,10 +4604,10 @@
     <value>目標が指定された高度に達するまで待機しています。 {0}° / {1}°</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequence" xml:space="preserve">
-    <value>シーケンス終了命令</value>
+    <value>End of Sequence Instructions</value>
   </data>
   <data name="Lbl_OldSequencer_ParallelEndOfSequence" xml:space="preserve">
-    <value>並列シーケンスの終了命令</value>
+    <value>Parallel End of Sequence Instructions</value>
   </data>
   <data name="Lbl_OldSequencer_TargetImaging" xml:space="preserve">
     <value>目標撮影の命令</value>
@@ -4607,7 +4655,7 @@
     <value>ループ条件</value>
   </data>
   <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
-    <value>命令セット</value>
+    <value>* Instruction Set *</value>
   </data>
   <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
     <value>フィルターホイール</value>
@@ -4655,7 +4703,7 @@
     <value>ドームをパークさせる</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
-    <value>シーケンス開始命令</value>
+    <value>Parallel Start of Sequence Instructions</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
     <value>Start of First Target Options</value>
@@ -4775,5 +4823,27 @@ After solving the frame successfully the telescope will be synced to the solved 
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTarget_Tooltip" xml:space="preserve">
     <value>Save the current target and all of its content for re-usage</value>
+  </data>
+  <data name="LblIntercept" xml:space="preserve">
+    <value>Intercept</value>
+    <comment>The line intersection of the y axis</comment>
+  </data>
+  <data name="LblSlope" xml:space="preserve">
+    <value>Slope</value>
+    <comment>The slope of a line</comment>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description" xml:space="preserve">
+    <value>This will determine the focuser position based on the temperature using slope and intercept.
+Example:
+  - Slope = 2
+  - Intercept = 1000
+  - Current Temperature = 10°C
+    =&gt; Position = 2 * 10 + 1000 = 1020</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
+    <value>Move Focuser by Temperature</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
+    <value>Focuser does not expose any valid temperature</value>
   </data>
 </root>

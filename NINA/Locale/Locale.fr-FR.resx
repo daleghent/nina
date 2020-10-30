@@ -3792,14 +3792,38 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
   <data name="LblASCOMPlatformOutdated" xml:space="preserve">
     <value>La version de plateforme ASCOM est obsolète. Veuillez mettre à jour la plateforme ASCOM avec la dernière version disponible. Sinon, l'application pourrait ne pas être en mesure de se connecter à tous les périphériques ASCOM.</value>
   </data>
+  <data name="LblDomeShutter" xml:space="preserve">
+    <value>Shutter</value>
+  </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
     <value>Fermer</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
     <value>Ouvrir</value>
   </data>
+  <data name="LblDomeRotateCW" xml:space="preserve">
+    <value>Rotate clockwise</value>
+  </data>
+  <data name="LblDomeRotateCCW" xml:space="preserve">
+    <value>Rotate counter-clockwise</value>
+  </data>
   <data name="LblDomeSynchronization" xml:space="preserve">
     <value>Synchronisation</value>
+  </data>
+  <data name="LblDomeSyncAzimuth" xml:space="preserve">
+    <value>Sync</value>
+  </data>
+  <data name="LblDomeSyncAzimuthTooltip" xml:space="preserve">
+    <value>Syncs the dome azimuth to the value calculated from the telescope direction and dome measurements</value>
+  </data>
+  <data name="LblDomeStopTooltip" xml:space="preserve">
+    <value>Stops all dome shutter and rotation movement</value>
+  </data>
+  <data name="LblDomeManualSlewTooltip" xml:space="preserve">
+    <value>Rotate the dome to a target azimuth</value>
+  </data>
+  <data name="LblDomeParkTooltip" xml:space="preserve">
+    <value>Rotate the dome to the park location set in the driver and close the shutter</value>
   </data>
   <data name="LblDynamicBrightness" xml:space="preserve">
     <value>Luminosité dynamique</value>
@@ -3984,11 +4008,23 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
   <data name="LblParkDomeAtSequenceEnd" xml:space="preserve">
     <value>Parque le dôme à la fin de la séquence</value>
   </data>
+  <data name="LblDomeSyncDuringMountSlew" xml:space="preserve">
+    <value>Allow sync while mount slews</value>
+  </data>
+  <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
+    <value>When Dome Following is enabled, NINA will frequently check if the Dome needs to be rotated to line up with the telescope. When an external application, such as a planetarium or a handset, moves the telescope it may be helpful to wait until the telescope is no longer moving to rotate the dome.</value>
+  </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>Trouver la position de repos avant le parcage</value>
   </data>
+  <data name="LblDomeSlewCW" xml:space="preserve">
+    <value>Move CW</value>
+  </data>
+  <data name="LblDomeSlewCCW" xml:space="preserve">
+    <value>Move CCW</value>
+  </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
-    <value>Si FindHome est disponible, cela peut améliorer la fiabilité du parcage au bon endroit, lorsqu'un emplacement précis est nécessaire.</value>
+    <value>If FindHome is supported by the driver, using it before parking can ensure it goes to a precise location. This can be helpful if the shutter motor battery charges while parked.</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
     <value>Expiration séquence AF</value>
@@ -4104,6 +4140,18 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
   <data name="LblHips2FitsSurvey" xml:space="preserve">
     <value>HIPS 2 FITS Sky Survey</value>
   </data>
+  <data name="LblMechanicalPosition" xml:space="preserve">
+    <value>Mechanical Position</value>
+  </data>
+  <data name="LblSkyPosition" xml:space="preserve">
+    <value>Sky Position</value>
+  </data>
+  <data name="LblTargetMechanicalPosition" xml:space="preserve">
+    <value>Target Mechanical Position</value>
+  </data>
+  <data name="LblTargetSkyPosition" xml:space="preserve">
+    <value>Target Sky Position</value>
+  </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
     <value>Ajouter {0} aux minutes après le Méridien</value>
   </data>
@@ -4135,13 +4183,13 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Boucler jusqu'à la durée</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
-    <value>Fonctionne comme un morceau de séquence, mais un objet ciel profond peut être spécifié qui remplira automatiquement tous les sous-éléments avec les informations pertinentes (coordonnées, rotation, etc.)</value>
+    <value>Works like a sequential instruction set, but a deep sky object can be specified inside, which will auto populate all instructions inside it with the coordinates and rotation when necessary.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
     <value>Séquence d'objet ciel profond</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
-    <value>Tous les éléments de ce conteneur sont exécutés en parallèle. Ce conteneur n'évaluera aucune condition ou déclencheur tant que tous les éléments ne seront pas terminés.</value>
+    <value>All instructions in this instruction set are run in parallel. This instruction set will not evaluate any conditions or triggers until all instructions are finished.</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
     <value>Jeu d'instructions parallèles</value>
@@ -4626,7 +4674,7 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
     <value>Condition de boucle</value>
   </data>
   <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
-    <value>Jeu d'instructions</value>
+    <value>* Instruction Set *</value>
   </data>
   <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
     <value>Roue à filtres</value>
@@ -4674,7 +4722,7 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
     <value>Parque le Dôme</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
-    <value>Début des instructions de séquence</value>
+    <value>Parallel Start of Sequence Instructions</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
     <value>Start of First Target Options</value>
@@ -4794,5 +4842,27 @@ After solving the frame successfully the telescope will be synced to the solved 
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTarget_Tooltip" xml:space="preserve">
     <value>Save the current target and all of its content for re-usage</value>
+  </data>
+  <data name="LblIntercept" xml:space="preserve">
+    <value>Intercept</value>
+    <comment>The line intersection of the y axis</comment>
+  </data>
+  <data name="LblSlope" xml:space="preserve">
+    <value>Slope</value>
+    <comment>The slope of a line</comment>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description" xml:space="preserve">
+    <value>This will determine the focuser position based on the temperature using slope and intercept.
+Example:
+  - Slope = 2
+  - Intercept = 1000
+  - Current Temperature = 10°C
+    =&gt; Position = 2 * 10 + 1000 = 1020</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
+    <value>Move Focuser by Temperature</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
+    <value>Focuser does not expose any valid temperature</value>
   </data>
 </root>

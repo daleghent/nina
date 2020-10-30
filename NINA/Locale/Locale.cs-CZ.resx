@@ -215,7 +215,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</va
     <value>Anotovat Obraz</value>
   </data>
   <data name="LblAnnotateImageTooltip" xml:space="preserve">
-    <value>Pokud zaškrtnete funkci detekce hvězd, hvězdy detekované na obrázku budou anotovány a budou zobrazeny jejich hodnoty HFR</value>
+    <value>Pokud zaškrtnete tuto možnost a funkci detekce hvězd, hvězdy detekované na obrázku budou označeny a budou zobrazeny jejich hodnoty HFR</value>
   </data>
   <data name="LblAPIKey" xml:space="preserve">
     <value>API Klíč</value>
@@ -1517,7 +1517,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Plochý snímek je příliš tmavý. Zvyšte množství světla nebo upravte toleranci, průměrnou hodnotu nebo na minimální expoziční čas</value>
   </data>
   <data name="LblFlatWizard" xml:space="preserve">
-    <value>Průvodce Plochým sním.</value>
+    <value>Flat Wizard</value>
   </data>
   <data name="LblFlatWizardCapture" xml:space="preserve">
     <value>Snímání Průvodcem Plochých sním.</value>
@@ -1907,7 +1907,7 @@ Vypočtené HFR: {2}
     <value>Ruční Rotátor</value>
   </data>
   <data name="LblManualRotatorDescription" xml:space="preserve">
-    <value>Je-li požadována rotace, zobrazí se informační okno pro ruční rotaci</value>
+    <value>Je-li požadováné otočení, zobrazí se informační okno pro ruční otočení</value>
   </data>
   <data name="LblMax" xml:space="preserve">
     <value>Max</value>
@@ -1937,7 +1937,7 @@ Vypočtené HFR: {2}
     <value>Změřit Zpětnou vůli Zaostření</value>
   </data>
   <data name="LblMedian" xml:space="preserve">
-    <value>Median</value>
+    <value>Střední</value>
   </data>
   <data name="LblMeridianFlipFailed" xml:space="preserve">
     <value>Překlopení Poledníku Selhalo</value>
@@ -2638,13 +2638,13 @@ Vypočtené HFR: {2}
     <value>Rektascenze</value>
   </data>
   <data name="LblRotation" xml:space="preserve">
-    <value>Rotace</value>
+    <value>Otočení</value>
   </data>
   <data name="LblRotationRequired" xml:space="preserve">
-    <value>Vyžaduje Rotaci Kamery</value>
+    <value>Vyžaduje Otočení Kamery</value>
   </data>
   <data name="LblRotationTolerance" xml:space="preserve">
-    <value>Rotační Tolerance</value>
+    <value>Tolerance Otočení</value>
   </data>
   <data name="LblRotator" xml:space="preserve">
     <value>Rotátor</value>
@@ -2774,7 +2774,7 @@ Tato šablona bude použita při spuštění sekvence místo výchozí.</value>
     <value>Nastavit jako Filtr Auto-ostření</value>
   </data>
   <data name="LblSetAutoFocusFilterTooltip" xml:space="preserve">
-    <value>Je-li vybráno, auto-ostření vždy použít vybraný filtr a vzít v úvahu posunutí filtru</value>
+    <value>Je-li vybráno, auto-ostření vždy použije vybraný filtr a vezme v úvahu posunutí filtru</value>
   </data>
   <data name="LblSetForFramingAssistant" xml:space="preserve">
     <value>Přejít na průvodce rámováním</value>
@@ -3295,7 +3295,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
   </data>
   <data name="LblUnlinkedStretchTooltip" xml:space="preserve">
     <value>
-        Když jsou povoleny, barevné kanály se jednotlivě roztáhnou a usnadní skrytí
+        Pokud jsou povoleny barevné kanály, ty se jednotlivě roztáhnou a usnadní skrytí
         pozadí oblohy a zvýší spolehlivost auto-ostření a řešení. To je vhodné zejména v oblastech
         se světelným znečištěním. Čas zpracování však bude delší.
     </value>
@@ -3786,14 +3786,38 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
   <data name="LblASCOMPlatformOutdated" xml:space="preserve">
     <value>Verze platformy ASCOM je zastaralá. Aktualizujte na nejnovější verzi platformy ASCOM. Jinak se aplikace nemusí být schopna připojit ke všem zařízením ASCOM.</value>
   </data>
+  <data name="LblDomeShutter" xml:space="preserve">
+    <value>Závěrka</value>
+  </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
     <value>Zavřít</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
     <value>Otevřít</value>
   </data>
+  <data name="LblDomeRotateCW" xml:space="preserve">
+    <value>Otáčet pravotočivě</value>
+  </data>
+  <data name="LblDomeRotateCCW" xml:space="preserve">
+    <value>Otáčet levotočivě</value>
+  </data>
   <data name="LblDomeSynchronization" xml:space="preserve">
     <value>Synchronizace</value>
+  </data>
+  <data name="LblDomeSyncAzimuth" xml:space="preserve">
+    <value>Synchronizace</value>
+  </data>
+  <data name="LblDomeSyncAzimuthTooltip" xml:space="preserve">
+    <value>Synchronizuje azimut kupole s hodnotou vypočítanou ze směru dalekohledu a měření kupole</value>
+  </data>
+  <data name="LblDomeStopTooltip" xml:space="preserve">
+    <value>Zastaví pohyb závěrky a otáčení kopule</value>
+  </data>
+  <data name="LblDomeManualSlewTooltip" xml:space="preserve">
+    <value>Otočit kopuli na azimut cíle</value>
+  </data>
+  <data name="LblDomeParkTooltip" xml:space="preserve">
+    <value>Otočit kopuli do polohy zaparkovat definovanou ovladačem a zavře závěrku</value>
   </data>
   <data name="LblDynamicBrightness" xml:space="preserve">
     <value>Dynamický Jas</value>
@@ -3978,11 +4002,23 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
   <data name="LblParkDomeAtSequenceEnd" xml:space="preserve">
     <value>Na konci sekvence zaparkovat kopuli</value>
   </data>
+  <data name="LblDomeSyncDuringMountSlew" xml:space="preserve">
+    <value>Povolit synchronizaci, zatímco se montáž přesouvá</value>
+  </data>
+  <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
+    <value>Když je povoleno sledování kopule, NINA často kontroluje, zda je třeba kopuli otočit, aby se vyrovnala s dalekohledem. Když planetárium nebo mobilní aplikace pohne dalekohledem, je vhodné počkat, až se dalekohled přestane pohybovat, aby otočil kopuli.</value>
+  </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>Před zaparkováním najít domovskou pozici</value>
   </data>
+  <data name="LblDomeSlewCW" xml:space="preserve">
+    <value>Pohyb Pravotoč</value>
+  </data>
+  <data name="LblDomeSlewCCW" xml:space="preserve">
+    <value>Pohyb Levotoč</value>
+  </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
-    <value>Pokud je FindHome k dispozici, když je požadováno přesné zarovnání, může to zvýšit jistotu parkování ve správné poloze.</value>
+    <value>Pokud je ovladač FindHome podporován, jeho použití před zaparkováním zajistí přejezd na přesné místo. To je užitečné, pokud se baterie k motoru závěrky nabíjí, když je zaparkovaná.</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
     <value>Časový limit Sekvence Auto-ostření</value>
@@ -4093,10 +4129,22 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Povolí Režim Ultra pro velmi nízký čtecí šum </value>
   </data>
   <data name="LblRotatorReverseTooltip" xml:space="preserve">
-    <value>Reverse movement direction of rotator. Toggle this, if the platesolver rotates into the wrong direction.</value>
+    <value>Otočit směr pohybu rotátoru. Přepnout pokud se rotátor po řešení otáčí špatným směrem.</value>
   </data>
   <data name="LblHips2FitsSurvey" xml:space="preserve">
     <value>HIPS 2 FITS Sky Survey</value>
+  </data>
+  <data name="LblMechanicalPosition" xml:space="preserve">
+    <value>Mechanická Poloha</value>
+  </data>
+  <data name="LblSkyPosition" xml:space="preserve">
+    <value>Pozice Oblohy</value>
+  </data>
+  <data name="LblTargetMechanicalPosition" xml:space="preserve">
+    <value>Mechanická Poloha Cíle</value>
+  </data>
+  <data name="LblTargetSkyPosition" xml:space="preserve">
+    <value>Cílová Poloha Oblohy</value>
   </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
     <value>Přidat {0} do Minut po Poledníku</value>
@@ -4129,13 +4177,13 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Smyčka v Trvání</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
-    <value>Funguje jako kontejner posloupnosti, lze určit objekt hlubokého vesmíru, u kterého se automaticky vyplní všechny podpoložky příslušnými informacemi (souřadnice, rotace atd.)</value>
+    <value>Funguje jako sekvenční sada pokynů, uvnitř lze určit DSO, u kterého se v případě potřeby automaticky vyplní všechny instrukce se souřadnicemi a otočením.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
     <value>Sekvence Objektů Hlubokého Vesmíru</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
-    <value>Všechny položky v tomto kontejneru jsou spuštěny paralelně. Tento kontejner nebude vyhodnocovat žádné podmínky ani aktivační události, dokud nebudou dokončeny všechny položky.</value>
+    <value>All instructions in this instruction set are run in parallel. This instruction set will not evaluate any conditions or triggers until all instructions are finished.</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
     <value>Souběžná Sada Pokynů</value>
@@ -4620,7 +4668,7 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Stav Smyčky</value>
   </data>
   <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
-    <value>Zadat Pokyn</value>
+    <value>* Sada Pokynů *</value>
   </data>
   <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
     <value>Filtrové Kolo</value>
@@ -4668,10 +4716,10 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Parkovat Kopuli</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
-    <value>Začátek Sekvence Pokynů</value>
+    <value>Pokyny pro Paralelní Zahájení Sekvence</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Možnost Spuštění Prvního Cíle</value>
+    <value>Možnosti Spuštění Prvního Cíle</value>
   </data>
   <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
     <value>Po spuštění sekvence ochladit kameru</value>
@@ -4744,7 +4792,7 @@ Použijte ve spojení s jinou podmínkou smyčky, abyste neskončili v nekonečn
     <value>Zadaný Čas</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
-    <value>Loop instruction set for a given duration. When the duration is over, the remaining instructions inside the set will be skipped.</value>
+    <value>Smyčka sady pokynů po zadaný čas. Po uplynutí daného času budou zbývající pokyny uvnitř sady přeskočeny.</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>Smyčka po Zadaný Čas</value>
@@ -4762,31 +4810,52 @@ Použijte ve spojení s jinou podmínkou smyčky, abyste neskončili v nekonečn
     <value>Neplatný Offset. Offset musí být mezi {0} a {1}, ale je nastaven na {2}</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Takes an image and solves the image using the current telescope position as reference.
-After solving the frame successfully the telescope will be synced to the solved position.</value>
+    <value>Pořídí snímek a řeší jej s pomocí aktuální polohy dalekohledu. Po úspěšném řešení snímku bude dalekohled synchronizován do této polohy.</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
-    <value>Solve and Sync</value>
+    <value>Řešení a Synchronizace</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DragOver_AddTarget" xml:space="preserve">
-    <value>SAVE TARGET</value>
+    <value>ULOŽIT CÍL</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DropTargetHere" xml:space="preserve">
-    <value>Drop Deep Sky Object Sequences from the Sequence here to save your individual target</value>
+    <value>Přetáhněte sekvenci DSO ze sekvence sem, pro uložení svého individuálního cíle</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Caption" xml:space="preserve">
-    <value>Overwrite Target?</value>
+    <value>Přepsat Cíl?</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text" xml:space="preserve">
-    <value>Target '{0}' already exists. Do you want to overwrite the existing Target? This action is irreversible.</value>
+    <value>Cíl '{0}' již existuje. Chcete přepsat stávající cíl? Tato akce je nevratná.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption" xml:space="preserve">
-    <value>Delete Target?</value>
+    <value>Smazat Cíl?</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text" xml:space="preserve">
-    <value>Target '{0}' will be deleted. Do you want to delete the existing Target? This action is irreversible.</value>
+    <value>Cíl '{0}' bude smazán. Chcete smazat stávající cíl? Tato akce je nevratná.</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTarget_Tooltip" xml:space="preserve">
-    <value>Save the current target and all of its content for re-usage</value>
+    <value>Uložte aktuální cíl a veškerý jeho obsah pro opětovné použití</value>
+  </data>
+  <data name="LblIntercept" xml:space="preserve">
+    <value>Průsečík</value>
+    <comment>The line intersection of the y axis</comment>
+  </data>
+  <data name="LblSlope" xml:space="preserve">
+    <value>Sklon</value>
+    <comment>The slope of a line</comment>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description" xml:space="preserve">
+    <value>Tím se určí poloha zaostřovače na základě teploty pomocí sklonu a průsečíku.
+Příklad:
+  - Sklon= 2
+  - Průsečík= 1000
+  - Aktuální Teplota = 10°C
+    =&gt; Pozice= 2 * 10 + 1000 = 1020</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
+    <value>Pohyb Zaostřovače dle Teploty</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
+    <value>Zaostřovač nezjistil žádnou teplotu</value>
   </data>
 </root>
