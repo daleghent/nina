@@ -186,12 +186,12 @@
                                     Text="{Binding TargetPosition}" />
                                 <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
                                     <ninactrl:CancellableButton
-                                        Width="50"
+                                        Width="200"
                                         Height="25"
                                         Margin="5"
                                         HorizontalAlignment="Left"
                                         HorizontalContentAlignment="Center"
-                                        ButtonText="{ns:Loc LblMove}"
+                                        ButtonText="{ns:Loc LblMoveMechanicalPosition}"
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding HaltCommand}"
                                         Command="{Binding MoveMechanicalCommand}"
@@ -220,12 +220,12 @@
                                     Text="{Binding TargetPosition}" />
                                 <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
                                     <ninactrl:CancellableButton
-                                        Width="50"
+                                        Width="200"
                                         Height="25"
                                         Margin="5"
                                         HorizontalAlignment="Left"
                                         HorizontalContentAlignment="Center"
-                                        ButtonText="{ns:Loc LblMove}"
+                                        ButtonText="{ns:Loc LblMoveSkyPosition}"
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding HaltCommand}"
                                         Command="{Binding MoveCommand}"

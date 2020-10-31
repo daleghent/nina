@@ -6076,11 +6076,29 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move Mechanical Position.
+        /// </summary>
+        internal static string LblMoveMechanicalPosition {
+            get {
+                return ResourceManager.GetString("LblMoveMechanicalPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Moves rotator to the specified target position.
         /// </summary>
         internal static string LblMoveRotatorTooltip {
             get {
                 return ResourceManager.GetString("LblMoveRotatorTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Sky Position.
+        /// </summary>
+        internal static string LblMoveSkyPosition {
+            get {
+                return ResourceManager.GetString("LblMoveSkyPosition", resourceCulture);
             }
         }
         

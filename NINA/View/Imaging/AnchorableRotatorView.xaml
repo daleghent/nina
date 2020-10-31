@@ -101,7 +101,22 @@
                             Height="25"
                             Margin="10,10,10,0"
                             HorizontalContentAlignment="Center"
-                            ButtonText="{ns:Loc LblMove}"
+                            ButtonText="{ns:Loc LblMoveMechanicalPosition}"
+                            CancelButtonImage="{StaticResource CancelSVG}"
+                            CancelCommand="{Binding HaltCommand}"
+                            Command="{Binding MoveMechanicalCommand}"
+                            ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
+                    </Grid>
+
+                    <Grid
+                        Margin="0,5,0,0"
+                        IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}"
+                        Visibility="{Binding RotatorInfo.Synced, Converter={StaticResource VisibilityConverter}}">
+                        <ninactrl:CancellableButton
+                            Height="25"
+                            Margin="10,10,10,0"
+                            HorizontalContentAlignment="Center"
+                            ButtonText="{ns:Loc LblMoveSkyPosition}"
                             CancelButtonImage="{StaticResource CancelSVG}"
                             CancelCommand="{Binding HaltCommand}"
                             Command="{Binding MoveCommand}"
