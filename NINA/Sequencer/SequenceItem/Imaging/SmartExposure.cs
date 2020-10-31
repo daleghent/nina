@@ -80,9 +80,25 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             IsExpanded = false;
         }
 
+        public SwitchFilter GetSwitchFilter() {
+            return Items[0] as SwitchFilter;
+        }
+
+        public TakeExposure GetTakeExposure() {
+            return Items[1] as TakeExposure;
+        }
+
+        public DitherAfterExposures GetDitherAfterExposures() {
+            return Triggers[0] as DitherAfterExposures;
+        }
+
+        public LoopCondition GetLoopCondition() {
+            return Conditions[0] as LoopCondition;
+        }
+
         public override bool Validate() {
-            var sw = ((SwitchFilter)Items[0]);
-            var te = ((TakeExposure)Items[1]);
+            var sw = GetSwitchFilter();
+            var te = GetTakeExposure();
             var valid = sw.Validate() && te.Validate();
             Issues = sw.Issues.Concat(te.Issues).Distinct().ToList();
             RaisePropertyChanged(nameof(Issues));
