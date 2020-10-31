@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 namespace NINA.MGEN.Commands.AppMode {
 
     public class StartStarSearchCommand : AutoGuidingCommand<StarSearchResult> {
-        public new uint Timeout { get; } = 15000;
+        public override uint Timeout { get; } = 15000;
         private byte gain;
         private ushort exposureTime;
 
@@ -44,9 +44,7 @@ namespace NINA.MGEN.Commands.AppMode {
                 //For exposure time LSB has to be first
                 var parameters = new byte[] { gain, exposureTimeBytes[0], exposureTimeBytes[1] };
                 Write(device, parameters);
-
                 var numStars = Read(device, 1);
-
                 return new StarSearchResult(numStars[0]);
             } else if (data[0] == 0xf2) {
                 throw new CameraIsOffException();

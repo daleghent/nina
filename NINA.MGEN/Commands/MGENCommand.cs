@@ -25,7 +25,7 @@ namespace NINA.MGEN.Commands {
 
     public abstract class MGENCommand<TResult> : IMGENCommand<TResult> where TResult : IMGENResult {
         public abstract uint RequiredBaudRate { get; }
-        public uint Timeout { get; } = 1000;
+        public virtual uint Timeout { get; } = 1000;
         public abstract byte CommandCode { get; }
         public abstract byte AcknowledgeCode { get; }
 
