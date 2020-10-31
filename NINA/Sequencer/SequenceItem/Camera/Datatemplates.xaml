@@ -17,12 +17,12 @@
 
     <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Camera.CoolCamera_Mini">
         <mini:MiniSequenceItem>
-            <mini:MiniSequenceItem.SequenceItemProgressContent>
+            <mini:MiniSequenceItem.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{Binding Temperature}" />
                     <TextBlock VerticalAlignment="Center" Text="°" />
                 </StackPanel>
-            </mini:MiniSequenceItem.SequenceItemProgressContent>
+            </mini:MiniSequenceItem.SequenceItemContent>
         </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:CoolCamera}">

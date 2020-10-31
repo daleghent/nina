@@ -20,12 +20,12 @@
 
     <DataTemplate x:Key="NINA.Sequencer.SequenceItem.FlatDevice.SetBrightness_Mini">
         <mini:MiniSequenceItem>
-            <mini:MiniSequenceItem.SequenceItemProgressContent>
+            <mini:MiniSequenceItem.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{Binding Brightness}" />
                     <TextBlock VerticalAlignment="Center" Text="%" />
                 </StackPanel>
-            </mini:MiniSequenceItem.SequenceItemProgressContent>
+            </mini:MiniSequenceItem.SequenceItemContent>
         </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:SetBrightness}">

@@ -38,6 +38,14 @@ namespace NINA.View.Sequencer.MiniSequencer {
             InitializeComponent();
         }
 
+        public static readonly DependencyProperty SequenceItemContentProperty =
+            DependencyProperty.Register(nameof(SequenceItemContent), typeof(object), typeof(MiniSequenceItem));
+
+        public object SequenceItemContent {
+            get { return (object)GetValue(SequenceItemContentProperty); }
+            set { SetValue(SequenceItemContentProperty, value); }
+        }
+
         public static readonly DependencyProperty SequenceItemProgressContentProperty =
             DependencyProperty.Register(nameof(SequenceItemProgressContent), typeof(object), typeof(MiniSequenceItem));
 

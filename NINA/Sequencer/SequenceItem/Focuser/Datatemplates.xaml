@@ -17,11 +17,11 @@
 
     <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Focuser.MoveFocuserAbsolute_Mini">
         <mini:MiniSequenceItem>
-            <mini:MiniSequenceItem.SequenceItemProgressContent>
+            <mini:MiniSequenceItem.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{Binding Position}" />
                 </StackPanel>
-            </mini:MiniSequenceItem.SequenceItemProgressContent>
+            </mini:MiniSequenceItem.SequenceItemContent>
         </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:MoveFocuserAbsolute}">
@@ -41,13 +41,13 @@
 
     <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Focuser.MoveFocuserByTemperature_Mini">
         <mini:MiniSequenceItem>
-            <mini:MiniSequenceItem.SequenceItemProgressContent>
+            <mini:MiniSequenceItem.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{Binding Slope}" />
                     <TextBlock VerticalAlignment="Center" Text="* x + " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding Intercept}" />
                 </StackPanel>
-            </mini:MiniSequenceItem.SequenceItemProgressContent>
+            </mini:MiniSequenceItem.SequenceItemContent>
         </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:MoveFocuserByTemperature}">
