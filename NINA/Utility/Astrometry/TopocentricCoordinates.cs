@@ -15,10 +15,6 @@
 using NINA.Database;
 using NINA.Utility.Enum;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NINA.Utility.Astrometry {
 

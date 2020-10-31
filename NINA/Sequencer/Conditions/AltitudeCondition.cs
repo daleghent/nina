@@ -19,11 +19,8 @@ using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Utility;
 using NINA.Utility.Astrometry;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using NINA.Utility.Enum;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -34,8 +31,9 @@ namespace NINA.Sequencer.Conditions {
     [Export(typeof(ISequenceCondition))]
     [JsonObject(MemberSerialization.OptIn)]
     public class AltitudeCondition : SequenceCondition {
-        private IProfileService profileService;
+        private readonly IProfileService profileService;
         private InputCoordinates coordinates;
+        private bool isEastOfMeridian;
         private double altitude;
         private double currentAltitude;
         private bool hasDsoParent;
@@ -92,6 +90,13 @@ namespace NINA.Sequencer.Conditions {
                 RaisePropertyChanged();
             }
         }
+        public bool IsEastOfMeridian {
+            get => isEastOfMeridian;
+            private set {
+                isEastOfMeridian = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public override object Clone() {
             return new AltitudeCondition(profileService) {
@@ -130,13 +135,17 @@ namespace NINA.Sequencer.Conditions {
         public override bool Check(ISequenceItem nextItem) {
             CalculateCurrentAltitude();
 
-            return CurrentAltitude >= Altitude;
+            return IsEastOfMeridian || CurrentAltitude >= Altitude;
         }
 
         private void CalculateCurrentAltitude() {
-            var coordinates = Coordinates.Coordinates;
-            var altaz = coordinates.Transform(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
-
+            var location = profileService.ActiveProfile.AstrometrySettings;
+            var altaz = Coordinates
+                .Coordinates
+                .Transform(
+                    Angle.ByDegree(location.Latitude), 
+                    Angle.ByDegree(location.Longitude));
+            IsEastOfMeridian = altaz.AltitudeSite == AltitudeSite.EAST;
             CurrentAltitude = Math.Round(altaz.Altitude.Degree, 2);
         }
     }
