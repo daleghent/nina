@@ -66,9 +66,14 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             IsExpanded = false;
         }
 
+        public TakeExposure GetTakeExposure() {
+            return Items[0] as TakeExposure;
+        }
+
         public override bool Validate() {
-            var valid = ((TakeExposure)Items[0]).Validate();
-            Issues = ((TakeExposure)Items[0]).Issues;
+            var item = GetTakeExposure();
+            var valid = item.Validate();
+            Issues = item.Issues;
             RaisePropertyChanged(nameof(Issues));
             return valid;
         }
