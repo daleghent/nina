@@ -4874,4 +4874,7 @@ Example:
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>Focuser does not expose any valid temperature</value>
   </data>
+  <data name="LblCloseAll" xml:space="preserve">
+    <value>Close All</value>
+  </data>
 </root>

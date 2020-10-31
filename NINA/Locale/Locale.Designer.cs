@@ -3534,6 +3534,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close All.
+        /// </summary>
+        internal static string LblCloseAll {
+            get {
+                return ResourceManager.GetString("LblCloseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Close dome shutter at sequence end.
         /// </summary>
         internal static string LblCloseDomeShutterAtSequenceEnd {
