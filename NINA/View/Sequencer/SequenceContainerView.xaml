@@ -253,7 +253,7 @@
                     IsHitTestVisible="True"
                     Style="{StaticResource SequenceContainerExpander}">
                     <i:Interaction.Behaviors>
-                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer" OnDropCommand="{Binding DropIntoCommand}" />
+                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.ISequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TemplatedSequenceContainer;NINA.Sequencer.SequenceItem.ISequenceItem;NINA.Sequencer.TargetSequenceContainer" OnDropCommand="{Binding DropIntoCommand}" />
                         <behaviors:DragOverBehavior
                             AllowDragCenter="False"
                             DragAboveSize="25"
