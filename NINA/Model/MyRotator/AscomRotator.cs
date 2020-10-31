@@ -45,7 +45,7 @@ namespace NINA.Model.MyRotator {
 
         public bool Reverse {
             get {
-                if (Connected) {
+                if (CanReverse) {
                     return rotator.Reverse;
                 } else {
                     return false;
