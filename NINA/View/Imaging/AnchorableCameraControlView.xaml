@@ -105,9 +105,9 @@
                                                 </Binding.ValidationRules>
                                             </Binding>
                                             <Binding
-                                                ElementName="UC"
                                                 Mode="OneWay"
-                                                Path="DataContext.CameraInfo.DefaultGain"
+                                                Path="Data.DefaultGain"
+                                                Source="{StaticResource CameraInfo}"
                                                 UpdateSourceTrigger="PropertyChanged" />
                                         </MultiBinding>
                                     </TextBox.Text>
