@@ -16,14 +16,8 @@ using FluentAssertions;
 using Moq;
 using NINA.Profile;
 using NINA.Sequencer.Conditions;
-using NINA.Sequencer.SequenceItem.Telescope;
 using NINA.Utility.Astrometry;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NINATest.Sequencer.Conditions {
 
@@ -50,24 +44,55 @@ namespace NINATest.Sequencer.Conditions {
         }
 
         [Test]
-        [TestCase(30, 30, true)]
-        [TestCase(40, 35, true)]
-        [TestCase(29, 30, false)]
-        [TestCase(0, 0, true)]
-        [TestCase(10, 0, true)]
-        [TestCase(-10, 0, false)]
-        [TestCase(-10, -11, true)]
-        [TestCase(-10, -10, true)]
-        [TestCase(-20, -10, false)]
-        public void Check_Altitude_MustBeAboveToBeTrue(double currentAltitude, double targetAltitude, bool isValid) {
-            var altaz = new TopocentricCoordinates(Angle.Zero, Angle.ByDegree(currentAltitude), Angle.Zero, Angle.Zero);
+        [TestCase(30, 30)]
+        [TestCase(40, 35)]
+        [TestCase(35, 40)]
+        public void Check_When_Scope_Pointing_East_Returns_True(double currentAltitude, double targetAltitude) {
+            var altaz = new TopocentricCoordinates(Angle.ByDegree(90), Angle.ByDegree(currentAltitude), Angle.Zero, Angle.Zero);
             var coords = altaz.Transform(Epoch.J2000);
 
             var sut = new AltitudeCondition(profileServiceMock.Object);
             sut.Coordinates.Coordinates = coords;
             sut.Altitude = targetAltitude;
 
-            sut.Check(null).Should().Be(isValid);
+            Assert.IsTrue(
+                sut.Check(null));
+        }
+
+
+        [Test]
+        [TestCase(30, 30)]
+        [TestCase(40, 35)]
+        [TestCase(0, 0)]
+        [TestCase(10, 0)]
+        [TestCase(-10, -11)]
+        [TestCase(-10, -10)]
+        public void Check_When_Scope_Is_Pointing_West_Above_Target_Alt_Returns_True(double currentAltitude, double targetAltitude) {
+            var altaz = new TopocentricCoordinates(Angle.ByDegree(270), Angle.ByDegree(currentAltitude), Angle.Zero, Angle.Zero);
+            var coords = altaz.Transform(Epoch.J2000);
+
+            var sut = new AltitudeCondition(profileServiceMock.Object);
+            sut.Coordinates.Coordinates = coords;
+            sut.Altitude = targetAltitude;
+
+            Assert.IsTrue(
+                sut.Check(null));
+        }
+
+
+        [Test]
+        [TestCase(29, 30)]
+        [TestCase(-10, 0)]
+        [TestCase(-20, -10)]
+        public void Check_When_Scope_Is_Pointing_West_Below_Target_Alt_Returns_False(double currentAltitude, double targetAltitude) {
+            var altaz = new TopocentricCoordinates(Angle.ByDegree(270), Angle.ByDegree(currentAltitude), Angle.Zero, Angle.Zero);
+            var coords = altaz.Transform(Epoch.J2000);
+
+            var sut = new AltitudeCondition(profileServiceMock.Object);
+            sut.Coordinates.Coordinates = coords;
+            sut.Altitude = targetAltitude;
+            Assert.IsFalse(
+                sut.Check(null));
         }
     }
 }

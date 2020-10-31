@@ -19,6 +19,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using ToastNotifications;
@@ -115,6 +116,12 @@ namespace NINA.Utility.Notification {
             }
         }
 
+        public static void CloseAll() {
+            lock (_lock) {
+                notifier?.ClearMessages(new ClearAll());
+            }
+        }
+
         /// <summary>
         /// Disposes the notifier instance and supresses further notifications
         /// </summary>
@@ -150,6 +157,8 @@ namespace NINA.Utility.Notification {
             ForegroundColor = foregroundColor;
             Lifetime = lifetime;
         }
+
+        public ICommand CloseAllCommand { get; } = new RelayCommand((object o) => Notification.CloseAll());
 
         public DateTime DateTime { get; private set; } = DateTime.Now;
 
@@ -193,7 +202,7 @@ namespace NINA.Utility.Notification {
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void RaisePropertyChanged([CallerMemberName]string propertyName = null) {
+        protected virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null) {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
