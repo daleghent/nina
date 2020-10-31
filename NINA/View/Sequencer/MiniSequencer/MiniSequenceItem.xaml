@@ -63,10 +63,15 @@
                         VerticalAlignment="Center"
                         Text="{Binding Name}" />
                     <ContentPresenter
+                        x:Name="PART_Content"
                         Grid.Column="4"
                         Margin="5,0,0,0"
                         HorizontalAlignment="Left"
-                        Content="{Binding SequenceItemContent, ElementName=UC}" />
+                        Content="{Binding SequenceItemContent, ElementName=UC}">
+                        <ContentPresenter.Resources>
+                            <Style BasedOn="{x:Null}" TargetType="{x:Type TextBlock}" />
+                        </ContentPresenter.Resources>
+                    </ContentPresenter>
                     <ContentPresenter
                         x:Name="PART_Progress"
                         Grid.Row="1"
@@ -89,19 +94,29 @@
                         <Setter TargetName="PART_Progress" Property="Visibility" Value="Visible" />
                         <Setter TargetName="PART_Progress" Property="TextBlock.Foreground" Value="{StaticResource ButtonForegroundBrush}" />
                         <Setter TargetName="PART_Progress" Property="TextBlock.FontWeight" Value="Bold" />
+                        <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{StaticResource ButtonForegroundBrush}" />
+                        <Setter TargetName="PART_Content" Property="TextBlock.FontWeight" Value="Bold" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Status}" Value="{x:Static sequencer:SequenceEntityStatus.CREATED}">
                         <Setter TargetName="PART_Progress" Property="Visibility" Value="Collapsed" />
+                        <Setter TargetName="PART_Progress" Property="TextBlock.Foreground" Value="{StaticResource PrimaryBrush}" />
+                        <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{StaticResource PrimaryBrush}" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Status}" Value="{x:Static sequencer:SequenceEntityStatus.FINISHED}">
                         <Setter TargetName="PART_Progress" Property="Visibility" Value="Collapsed" />
+                        <Setter TargetName="PART_Progress" Property="TextBlock.Foreground" Value="{StaticResource PrimaryBrush}" />
+                        <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{StaticResource PrimaryBrush}" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Status}" Value="{x:Static sequencer:SequenceEntityStatus.FAILED}">
                         <Setter TargetName="PART_Progress" Property="Visibility" Value="Visible" />
+                        <Setter TargetName="PART_Progress" Property="TextBlock.Foreground" Value="{StaticResource PrimaryBrush}" />
+                        <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{StaticResource PrimaryBrush}" />
                         <Setter TargetName="PART_Grid" Property="Background" Value="{StaticResource NotificationErrorBrush}" />
                     </DataTrigger>
                     <DataTrigger Binding="{Binding Status}" Value="{x:Static sequencer:SequenceEntityStatus.SKIPPED}">
                         <Setter TargetName="PART_Progress" Property="Visibility" Value="Visible" />
+                        <Setter TargetName="PART_Progress" Property="TextBlock.Foreground" Value="{StaticResource PrimaryBrush}" />
+                        <Setter TargetName="PART_Content" Property="TextBlock.Foreground" Value="{StaticResource PrimaryBrush}" />
                     </DataTrigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
