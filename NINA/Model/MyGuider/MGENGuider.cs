@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using NINA.MGEN.Commands;
+using NINA.MGEN.Commands.AppMode;
 using NINA.MGEN.Exceptions;
 using NINA.Profile;
 using NINA.Utility;
@@ -31,7 +33,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace NINA.Model.MyGuider {
-
     internal class MGENGuider : BaseINPC, IGuider {
         private MGEN.MGEN mgen;
         private IProfileService profileService;
@@ -63,6 +64,8 @@ namespace NINA.Model.MyGuider {
             },
                 (object o) => Connected == true);
         }
+
+        private bool needsCalibration = true;
 
         private bool _connected = false;
 
@@ -110,26 +113,29 @@ namespace NINA.Model.MyGuider {
         public event EventHandler<IGuideStep> GuideEvent;
 
         public async Task<bool> AutoSelectGuideStar() {
-            if (!await mgen.IsGuidingActive()) {
-                var imagingParameter = await mgen.GetImagingParameter();
-
-                Logger.Debug("MGEN - Starting Camera");
-                await mgen.StartCamera();
-
+            if (await mgen.IsGuidingActive()) {
+                Logger.Debug("MGEN - Stopping Guiding");
+                await mgen.StopGuiding();
+            }
+            var imagingParameter = await mgen.GetImagingParameter();
+            Logger.Debug("MGEN - Starting Camera");
+            await mgen.StartCamera();
+            Logger.Debug($"MGEN - Starting Star Search - Gain: {imagingParameter.Gain} ExposureTime: {imagingParameter.ExposureTime}");
+            var result = await mgen.StartStarSearch(imagingParameter.Gain, imagingParameter.ExposureTime);
+            Logger.Debug($"MGEN - Star Search Done - {result.NumberOfStars} stars found");
+            var starSearchSuccess = new MGENResult(false);
+            if (result.NumberOfStars > 0) {
+                StarData starDetail = await mgen.GetStarData(0);
+                Logger.Debug($"MGEN - Got Star Detail and setting new guiding position - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
+                starSearchSuccess = await mgen.SetNewGuidingPosition(starDetail);
+                Logger.Debug($"MGEN - Set New Guiding Position: {starSearchSuccess.Success}");
+                needsCalibration = true;
                 Logger.Debug($"MGEN - Setting Imaging Parameter - Gain: {imagingParameter.Gain} ExposureTime: {imagingParameter.ExposureTime} Threshold: {imagingParameter.Threshold}");
                 await mgen.SetImagingParameter(imagingParameter.Gain, imagingParameter.ExposureTime, imagingParameter.Threshold);
-
-                Logger.Debug($"MGEN - Starting Star Search - Gain: {imagingParameter.Gain} ExposureTime: {imagingParameter.ExposureTime}");
-                await mgen.StartStarSearch(imagingParameter.Gain, imagingParameter.ExposureTime);
-
-                // Get brightest star (will be at index 0)
-                var starDetail = await mgen.GetStarData(0);
-                Logger.Debug($"MGEN - Got Star Detail and setting new guiding position - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
-                var success = await mgen.SetNewGuidingPosition(starDetail);
-                Logger.Debug($"MGEN - Set New Guiding Position: {success.Success}");
-                return success.Success;
+            } else {
+                Logger.Debug($"MGEN - No guide star found!");
             }
-            return true;
+            return starSearchSuccess.Success;
         }
 
         public async Task<bool> Connect(CancellationToken token) {
@@ -203,8 +209,8 @@ namespace NINA.Model.MyGuider {
                     _lastStep = new MGENGuideStep() {
                         Frame = state.FrameInfo.FrameIndex,
                         Time = _lastStepNumber++,
-                        RADistanceRaw = state.FrameInfo.DriftRA,
-                        DECDistanceRaw = state.FrameInfo.DriftDec
+                        RADistanceRaw = state.FrameInfo.DriftRA/256.0,
+                        DECDistanceRaw = state.FrameInfo.DriftDec/256.0
                     };
                     GuideEvent?.Invoke(this, _lastStep);
                 }
@@ -363,8 +369,8 @@ namespace NINA.Model.MyGuider {
 
         private async Task<bool> StartCalibrationIfRequired(bool forceCalibration, CancellationToken ct) {
             using (ct.Register(async () => await mgen.CancelCalibration())) {
-                var calibrationStatus = await mgen.QueryCalibration(ct); ;
-                if (forceCalibration || (!calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) || calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error))) {
+                var calibrationStatus = await mgen.QueryCalibration(ct);
+                if (needsCalibration || !calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) || calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error)) {
                     Logger.Debug("MGEN - Starting Calibraiton");
                     _ = await AutoSelectGuideStar();
                     _ = await mgen.StartCalibration(ct);
@@ -379,6 +385,8 @@ namespace NINA.Model.MyGuider {
                         Logger.Error(calibrationStatus.Error);
                         Notification.ShowError(calibrationStatus.Error);
                         return false;
+                    } else {
+                        needsCalibration = false;
                     }
                 }
                 return true;
