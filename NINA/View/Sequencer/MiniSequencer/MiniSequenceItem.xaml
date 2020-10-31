@@ -69,7 +69,7 @@
                 </Grid>
                 <ControlTemplate.Triggers>
                     <DataTrigger Binding="{Binding Status}" Value="{x:Static sequencer:SequenceEntityStatus.RUNNING}">
-                        <Setter TargetName="PART_Grid" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                        <Setter TargetName="PART_Grid" Property="Background" Value="{StaticResource SecondaryBrush}" />
                         <Setter TargetName="PART_Name" Property="FontWeight" Value="Bold" />
                         <Setter TargetName="PART_Icon" Property="Fill" Value="{StaticResource ButtonForegroundBrush}" />
                         <Setter TargetName="PART_Name" Property="Foreground" Value="{StaticResource ButtonForegroundBrush}" />

@@ -35,10 +35,10 @@
                     <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding Status}" Value="{x:Static sequencer:SequenceEntityStatus.RUNNING}">
-                            <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                            <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
                         </DataTrigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
+                            <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
