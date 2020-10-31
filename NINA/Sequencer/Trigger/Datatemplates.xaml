@@ -14,129 +14,61 @@
     xmlns:g="clr-namespace:NINA.Sequencer.Trigger.Guider"
     xmlns:local="clr-namespace:NINA.Sequencer.Trigger"
     xmlns:mf="clr-namespace:NINA.Sequencer.Trigger.MeridianFlip"
+    xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
-    <Style
-        x:Key="TriggerProgress"
-        x:Shared="false"
-        TargetType="ContentControl">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type mf:MeridianFlipTrigger}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel
-                            HorizontalAlignment="Right"
-                            Orientation="Horizontal"
-                            Visibility="{Binding FlipTime, Converter={StaticResource DateTimeZeroToVisibilityCollapsedConverter}}">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlipTime}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding FlipTime, StringFormat='{}{0:HH:mm:ss}'}" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type af:AutofocusAfterExposures}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposures}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding ProgressExposures}" />
-                            <TextBlock Text="/" />
-                            <TextBlock VerticalAlignment="Center" Text="{Binding AfterExposures}" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type g:DitherAfterExposures}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposures}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding ProgressExposures}" />
-                            <TextBlock Text="/" />
-                            <TextBlock VerticalAlignment="Center" Text="{Binding AfterExposures}" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type af:AutofocusAfterHFRIncreaseTrigger}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblHFRTrend}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding HFRTrend}" />
-                            <TextBlock VerticalAlignment="Center" Text="% / " />
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
-                            <TextBlock VerticalAlignment="Center" Text="%" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type af:AutofocusAfterTemperatureChangeTrigger}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDelta}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding DeltaT}" />
-                            <TextBlock VerticalAlignment="Center" Text="° / " />
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
-                            <TextBlock VerticalAlignment="Center" Text="°" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type af:AutofocusAfterTimeTrigger}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblElapsed}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding Elapsed}" />
-                            <TextBlock VerticalAlignment="Center" Text="m / " />
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
-                            <TextBlock VerticalAlignment="Center" Text="m" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type af:AutofocusAfterFilterChange}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Margin="0,0,5,0"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblLastFilter}" />
-                            <TextBlock VerticalAlignment="Center" Text="{Binding LastAutoFocusFilter.Name, FallbackValue='-'}" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
+
+    <DataTemplate x:Key="NINA.Sequencer.Trigger.MeridianFlip.MeridianFlipTrigger_Mini">
+        <mini:MiniTrigger DataContext="{Binding}">
+            <mini:MiniTrigger.TriggerProgressContent>
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Visibility="{Binding FlipTime, Converter={StaticResource DateTimeZeroToVisibilityCollapsedConverter}}">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlipTime}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding FlipTime, StringFormat='{}{0:HH:mm:ss}'}" />
+                </StackPanel>
+            </mini:MiniTrigger.TriggerProgressContent>
+        </mini:MiniTrigger>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type mf:MeridianFlipTrigger}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource TriggerProgress}" />
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Visibility="{Binding FlipTime, Converter={StaticResource DateTimeZeroToVisibilityCollapsedConverter}}">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlipTime}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding FlipTime, StringFormat='{}{0:HH:mm:ss}'}" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Trigger.Autofocus.AutofocusAfterHFRIncreaseTrigger_Mini">
+        <mini:MiniTrigger DataContext="{Binding}">
+            <mini:MiniTrigger.TriggerProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblHFRTrend}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding HFRTrend}" />
+                    <TextBlock VerticalAlignment="Center" Text="% / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
+                    <TextBlock VerticalAlignment="Center" Text="%" />
+                </StackPanel>
+            </mini:MiniTrigger.TriggerProgressContent>
+        </mini:MiniTrigger>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type af:AutofocusAfterHFRIncreaseTrigger}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -153,17 +85,65 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource TriggerProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblHFRTrend}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding HFRTrend}" />
+                    <TextBlock VerticalAlignment="Center" Text="% / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
+                    <TextBlock VerticalAlignment="Center" Text="%" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Trigger.Autofocus.AutofocusAfterFilterChange_Mini">
+        <mini:MiniTrigger DataContext="{Binding}">
+            <mini:MiniTrigger.TriggerProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="0,0,5,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblLastFilter}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding LastAutoFocusFilter.Name, FallbackValue='-'}" />
+                </StackPanel>
+            </mini:MiniTrigger.TriggerProgressContent>
+        </mini:MiniTrigger>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type af:AutofocusAfterFilterChange}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource TriggerProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="0,0,5,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblLastFilter}" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding LastAutoFocusFilter.Name, FallbackValue='-'}" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Trigger.Autofocus.AutofocusAfterTemperatureChangeTrigger_Mini">
+        <mini:MiniTrigger DataContext="{Binding}">
+            <mini:MiniTrigger.TriggerProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDelta}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding DeltaT}" />
+                    <TextBlock VerticalAlignment="Center" Text="° / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                </StackPanel>
+            </mini:MiniTrigger.TriggerProgressContent>
+        </mini:MiniTrigger>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type af:AutofocusAfterTemperatureChangeTrigger}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -180,10 +160,37 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource TriggerProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDelta}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding DeltaT}" />
+                    <TextBlock VerticalAlignment="Center" Text="° / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Trigger.Autofocus.AutofocusAfterTimeTrigger_Mini">
+        <mini:MiniTrigger DataContext="{Binding}">
+            <mini:MiniTrigger.TriggerProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblElapsed}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Elapsed}" />
+                    <TextBlock VerticalAlignment="Center" Text="m / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
+                    <TextBlock VerticalAlignment="Center" Text="m" />
+                </StackPanel>
+            </mini:MiniTrigger.TriggerProgressContent>
+        </mini:MiniTrigger>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type af:AutofocusAfterTimeTrigger}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -200,10 +207,36 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource TriggerProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblElapsed}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Elapsed}" />
+                    <TextBlock VerticalAlignment="Center" Text="m / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
+                    <TextBlock VerticalAlignment="Center" Text="m" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Trigger.Autofocus.AutofocusAfterExposures_Mini">
+        <mini:MiniTrigger DataContext="{Binding}">
+            <mini:MiniTrigger.TriggerProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposures}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding ProgressExposures}" />
+                    <TextBlock Text="/" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding AfterExposures}" />
+                </StackPanel>
+            </mini:MiniTrigger.TriggerProgressContent>
+        </mini:MiniTrigger>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type af:AutofocusAfterExposures}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -218,10 +251,35 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource TriggerProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposures}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding ProgressExposures}" />
+                    <TextBlock Text="/" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding AfterExposures}" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Trigger.Guider.DitherAfterExposures_Mini">
+        <mini:MiniTrigger DataContext="{Binding}">
+            <mini:MiniTrigger.TriggerProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposures}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding ProgressExposures}" />
+                    <TextBlock Text="/" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding AfterExposures}" />
+                </StackPanel>
+            </mini:MiniTrigger.TriggerProgressContent>
+        </mini:MiniTrigger>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type g:DitherAfterExposures}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -236,10 +294,19 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource TriggerProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposures}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding ProgressExposures}" />
+                    <TextBlock Text="/" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding AfterExposures}" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:SequenceTrigger}">
         <view:SequenceBlockView DataContext="{Binding}" />
     </DataTemplate>

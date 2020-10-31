@@ -11,98 +11,27 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:NINA.Sequencer.Conditions"
+    xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
-    <Style
-        x:Key="ConditionsProgress"
-        x:Shared="false"
-        TargetType="ContentControl">
-        <Style.Triggers>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type local:LoopCondition}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblIterations}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding CompletedIterations}" />
-                            <TextBlock VerticalAlignment="Center">/</TextBlock>
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Iterations}" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type local:TimeSpanCondition}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblRemaining}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding RemainingTime, StringFormat={}{0:hh}:{0:mm}:{0:ss}}" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type local:TimeCondition}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblRemaining}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding RemainingTime, StringFormat={}{0:hh}:{0:mm}:{0:ss}}" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type local:AltitudeCondition}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblAltitude}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding CurrentAltitude}" />
-                            <TextBlock VerticalAlignment="Center" Text="° / " />
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Altitude}" />
-                            <TextBlock VerticalAlignment="Center" Text="°" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-            <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type local:SafetyMonitorCondition}">
-                <Setter Property="Content">
-                    <Setter.Value>
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsSafe}" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                VerticalAlignment="Center"
-                                Text="{Binding IsSafe}" />
-                        </StackPanel>
-                    </Setter.Value>
-                </Setter>
-            </DataTrigger>
-        </Style.Triggers>
-    </Style>
+
+    <DataTemplate x:Key="NINA.Sequencer.Conditions.TimeSpanCondition_Mini">
+        <mini:MiniCondition DataContext="{Binding}">
+            <mini:MiniCondition.ConditionProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblRemaining}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding RemainingTime, StringFormat={}{0:hh}:{0:mm}:{0:ss}}" />
+                </StackPanel>
+            </mini:MiniCondition.ConditionProgressContent>
+        </mini:MiniCondition>
+    </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:TimeSpanCondition}">
         <view:SequenceBlockView DataContext="{Binding}">
@@ -172,9 +101,35 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource ConditionsProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblRemaining}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding RemainingTime, StringFormat={}{0:hh}:{0:mm}:{0:ss}}" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
+    </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Conditions.TimeCondition_Mini">
+        <mini:MiniCondition DataContext="{Binding}">
+            <mini:MiniCondition.ConditionProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblRemaining}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding RemainingTime, StringFormat={}{0:hh}:{0:mm}:{0:ss}}" />
+                </StackPanel>
+            </mini:MiniCondition.ConditionProgressContent>
+        </mini:MiniCondition>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:TimeCondition}">
@@ -251,9 +206,37 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource ConditionsProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblRemaining}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding RemainingTime, StringFormat={}{0:hh}:{0:mm}:{0:ss}}" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
+    </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Conditions.LoopCondition_Mini">
+        <mini:MiniCondition DataContext="{Binding}">
+            <mini:MiniCondition.ConditionProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblIterations}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding CompletedIterations}" />
+                    <TextBlock VerticalAlignment="Center">/</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Iterations}" />
+                </StackPanel>
+            </mini:MiniCondition.ConditionProgressContent>
+        </mini:MiniCondition>
     </DataTemplate>
 
     <DataTemplate DataType="{x:Type local:LoopCondition}">
@@ -269,22 +252,71 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource ConditionsProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblIterations}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding CompletedIterations}" />
+                    <TextBlock VerticalAlignment="Center">/</TextBlock>
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Iterations}" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <DataTemplate x:Key="NINA.Sequencer.Conditions.SafetyMonitorCondition_Mini">
+        <mini:MiniCondition DataContext="{Binding}">
+            <mini:MiniCondition.ConditionProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsSafe}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding IsSafe}" />
+                </StackPanel>
+            </mini:MiniCondition.ConditionProgressContent>
+        </mini:MiniCondition>
+    </DataTemplate>
     <DataTemplate DataType="{x:Type local:SafetyMonitorCondition}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
                 <Grid />
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource ConditionsProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsSafe}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding IsSafe}" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <DataTemplate x:Key="NINA.Sequencer.Conditions.AltitudeCondition_Mini">
+        <mini:MiniCondition DataContext="{Binding}">
+            <mini:MiniCondition.ConditionProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblAltitude}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding CurrentAltitude}" />
+                    <TextBlock VerticalAlignment="Center" Text="° / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Altitude}" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                </StackPanel>
+            </mini:MiniCondition.ConditionProgressContent>
+        </mini:MiniCondition>
+    </DataTemplate>
     <DataTemplate DataType="{x:Type local:AltitudeCondition}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -406,7 +438,19 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <ContentControl Style="{StaticResource ConditionsProgress}" />
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{ns:Loc LblAltitude}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding CurrentAltitude}" />
+                    <TextBlock VerticalAlignment="Center" Text="° / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Altitude}" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>

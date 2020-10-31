@@ -1567,8 +1567,18 @@
       <DependentUpon>RotatorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sequencer\GroupMenuBehavior.cs" />
+    <Compile Include="View\Sequencer\MiniSequencer\MiniCondition.xaml.cs">
+      <DependentUpon>MiniCondition.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sequencer\MiniSequencer\MiniContainer.xaml.cs">
       <DependentUpon>MiniContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sequencer\MiniSequencer\MiniSequenceItem.xaml.cs">
+      <DependentUpon>MiniSequenceItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sequencer\MiniSequencer\MiniSequencerDataTemplateSelector.cs" />
+    <Compile Include="View\Sequencer\MiniSequencer\MiniTrigger.xaml.cs">
+      <DependentUpon>MiniTrigger.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sequencer\SequenceBlockView.xaml.cs">
       <DependentUpon>SequenceBlockView.xaml</DependentUpon>
@@ -2176,7 +2186,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Sequencer\MiniSequencer\MiniCondition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Sequencer\MiniSequencer\MiniContainer.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sequencer\MiniSequencer\MiniSequenceItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sequencer\MiniSequencer\MiniTrigger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

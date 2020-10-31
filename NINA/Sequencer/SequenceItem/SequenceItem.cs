@@ -43,7 +43,6 @@ namespace NINA.Sequencer.SequenceItem {
         public ICommand MoveDownCommand => new RelayCommand((o) => MoveDown());
         public ICommand MoveUpCommand => new RelayCommand((o) => MoveUp());
         public ICommand AddCloneToParentCommand => new RelayCommand((o) => AddCloneToParent());
-        public virtual string Detail => string.Empty;
 
         private string name;
 

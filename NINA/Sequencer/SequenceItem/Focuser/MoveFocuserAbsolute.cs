@@ -42,7 +42,6 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
         }
 
         private IFocuserMediator focuserMediator;
-        public override string Detail { get => $"{Position}"; }
 
         private int position = 0;
 
@@ -52,7 +51,6 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             set {
                 position = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(Detail));
             }
         }
 

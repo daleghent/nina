@@ -43,8 +43,6 @@ namespace NINA.Sequencer.SequenceItem.Camera {
 
         private ICameraMediator cameraMediator;
 
-        public override string Detail { get => $"{Temperature}°"; }
-
         private double temperature = 0;
 
         [JsonProperty]
@@ -53,7 +51,6 @@ namespace NINA.Sequencer.SequenceItem.Camera {
             set {
                 temperature = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(Detail));
             }
         }
 

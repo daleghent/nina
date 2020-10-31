@@ -12,6 +12,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:filter="clr-namespace:NINA.Model.MyFilterWheel"
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.Imaging"
+    xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:util="clr-namespace:NINA.Utility"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
@@ -198,6 +199,17 @@
         </WrapPanel>
     </WrapPanel>
 
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Imaging.TakeExposure_Mini">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding ExposureTime}" />
+                    <TextBlock VerticalAlignment="Center" Text="s" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemProgressContent>
+        </mini:MiniSequenceItem>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:TakeExposure}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -240,6 +252,22 @@
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
+    </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Imaging.SmartExposure_Mini" DataType="{x:Type local:SmartExposure}">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemProgressContent>
+                <WrapPanel VerticalAlignment="Center" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblProgress}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Conditions[0].CompletedIterations}" />
+                    <TextBlock VerticalAlignment="Center" Text="/" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Conditions[0].Iterations}" />
+                </WrapPanel>
+            </mini:MiniSequenceItem.SequenceItemProgressContent>
+        </mini:MiniSequenceItem>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:SmartExposure}">
         <view:SequenceBlockView DataContext="{Binding}">
@@ -311,11 +339,7 @@
                 </Grid>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
-                <WrapPanel
-                    Grid.RowSpan="3"
-                    Grid.Column="1"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
+                <WrapPanel VerticalAlignment="Center" Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblProgress}" />
                     <TextBlock
                         Margin="5,0,0,0"

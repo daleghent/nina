@@ -12,8 +12,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:filter="clr-namespace:NINA.Model.MyFilterWheel"
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.FilterWheel"
+    xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
+
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.FilterWheel.SwitchFilter_Mini">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemProgressContent>
+                <StackPanel Orientation="Horizontal" Visibility="{Binding Filter, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Filter.Name}" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemProgressContent>
+        </mini:MiniSequenceItem>
+    </DataTemplate>
     <DataTemplate DataType="{x:Type local:SwitchFilter}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>

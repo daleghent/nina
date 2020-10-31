@@ -64,8 +64,6 @@ namespace NINA.Sequencer.SequenceItem.FilterWheel {
             }
         }
 
-        public override string Detail { get => Filter?.Name; }
-
         private FilterInfo filter;
 
         [JsonProperty]
@@ -74,7 +72,6 @@ namespace NINA.Sequencer.SequenceItem.FilterWheel {
             set {
                 filter = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(Detail));
             }
         }
 

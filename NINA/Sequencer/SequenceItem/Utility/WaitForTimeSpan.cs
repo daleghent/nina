@@ -37,8 +37,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             Time = 1;
         }
 
-        public override string Detail { get => $"{Time}s"; }
-
         private int time;
 
         [JsonProperty]
@@ -47,7 +45,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             set {
                 time = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(Detail));
             }
         }
 

@@ -70,8 +70,6 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             }
         }
 
-        public override string Detail { get => $"{ExposureTime}s"; }
-
         private double exposureTime;
 
         [JsonProperty]
@@ -80,7 +78,6 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             set {
                 exposureTime = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(Detail));
             }
         }
 

@@ -50,8 +50,6 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             }
         }
 
-        public override string Detail { get => $"{Brightness}%"; }
-
         private double brightness;
 
         [JsonProperty]
@@ -60,7 +58,6 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             set {
                 brightness = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(Detail));
             }
         }
 

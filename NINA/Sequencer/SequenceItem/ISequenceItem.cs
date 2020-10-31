@@ -30,11 +30,6 @@ namespace NINA.Sequencer.SequenceItem {
     public interface ISequenceItem : ISequenceEntity {
 
         /// <summary>
-        /// Short summary of sequence item used in mini sequencer
-        /// </summary>
-        string Detail { get; }
-
-        /// <summary>
         /// The actual logic when the sequence item should be executed
         /// </summary>
         /// <param name="progress">The handle to report back the progress to the application</param>

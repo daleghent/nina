@@ -12,6 +12,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:enum="clr-namespace:NINA.Utility.Enum"
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.Utility"
+    xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
@@ -23,6 +24,7 @@
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:MessageBox}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -41,6 +43,18 @@
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Utility.WaitForTimeSpan_Mini">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Time}" />
+                    <TextBlock VerticalAlignment="Center" Text="s" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemProgressContent>
+        </mini:MiniSequenceItem>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:WaitForTimeSpan}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -64,6 +78,7 @@
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:WaitForTime}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -142,6 +157,7 @@
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:ExternalScript}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
@@ -179,6 +195,7 @@
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:WaitForAltitude}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>

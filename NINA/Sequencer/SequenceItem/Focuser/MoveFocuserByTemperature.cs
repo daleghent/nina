@@ -41,7 +41,6 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
         }
 
         private IFocuserMediator focuserMediator;
-        public override string Detail { get => $"{Slope} * x + {Intercept}"; }
 
         private double slope = 1;
 
@@ -51,7 +50,6 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             set {
                 slope = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(Detail));
             }
         }
 
@@ -63,7 +61,6 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             set {
                 intercept = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(Detail));
             }
         }
 
