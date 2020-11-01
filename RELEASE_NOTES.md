@@ -15,6 +15,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The MGEN2 guider can now auto select a guide star unattended, with a new calibration just downstream of that, which enables auto meridian flips
 - The timeout values for the MGEN2 guider can now be overridden in the implementations of IMGENCommand
 - The MGEN2 guider drift values are now correctly reported in fractional pixels
+- ASCOM devices are now properly disposed after calling the setup dialog
 
 # Version 1.10 HF1
 

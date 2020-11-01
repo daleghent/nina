@@ -279,6 +279,7 @@ namespace NINA.Model.MyFocuser {
                     bool dispose = false;
                     if (_focuser == null) {
                         _focuser = GetFocuser();
+                        dispose = true;
                     }
                     _focuser.SetupDialog();
                     if (dispose) {

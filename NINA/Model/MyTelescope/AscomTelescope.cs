@@ -1256,6 +1256,7 @@ namespace NINA.Model.MyTelescope {
                     bool dispose = false;
                     if (_telescope == null) {
                         _telescope = new Telescope(Id);
+                        dispose = true;
                     }
                     _telescope.SetupDialog();
                     if (dispose) {
