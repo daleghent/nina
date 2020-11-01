@@ -4531,7 +4531,7 @@
     <value>切换灯光</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description" xml:space="preserve">
-    <value>查找训练后的曝光参数，并拍摄平场</value>
+    <value>Looks up the trained exposure value for the specified parameters and takes flat exposures</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
     <value>受过训练的平场曝光</value>

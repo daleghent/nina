@@ -3900,7 +3900,7 @@
     <value>オートフォーカスフィルター設定</value>
   </data>
   <data name="LblMeridianFlipIn" xml:space="preserve">
-    <value>子午線フリップに入りました</value>
+    <value>Meridian Flip in</value>
   </data>
   <data name="LblMeridianFlipCenterFailed" xml:space="preserve">
     <value>子午線反転失敗後の中央位置合わせ</value>

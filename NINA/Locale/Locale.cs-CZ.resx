@@ -4135,16 +4135,16 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>HIPS 2 FITS Sky Survey</value>
   </data>
   <data name="LblMechanicalPosition" xml:space="preserve">
-    <value>Mechanická Poloha</value>
+    <value>Mechanical Position</value>
   </data>
   <data name="LblSkyPosition" xml:space="preserve">
     <value>Pozice Oblohy</value>
   </data>
   <data name="LblTargetMechanicalPosition" xml:space="preserve">
-    <value>Mechanická Poloha Cíle</value>
+    <value>Target Mechanical Position</value>
   </data>
   <data name="LblTargetSkyPosition" xml:space="preserve">
-    <value>Cílová Poloha Oblohy</value>
+    <value>Target Sky Position</value>
   </data>
   <data name="LblMoveMechanicalPosition" xml:space="preserve">
     <value>Move Mechanical Position</value>
