@@ -4157,6 +4157,12 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
   <data name="LblTargetSkyPosition" xml:space="preserve">
     <value>Target Sky Position</value>
   </data>
+  <data name="LblMoveMechanicalPosition" xml:space="preserve">
+    <value>Move Mechanical Position</value>
+  </data>
+  <data name="LblMoveSkyPosition" xml:space="preserve">
+    <value>Move Sky Position</value>
+  </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
     <value>Engadir {0} a Minutos despois do Meridiano</value>
   </data>
@@ -4869,5 +4875,8 @@ Example:
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>Focuser does not expose any valid temperature</value>
+  </data>
+  <data name="LblCloseAll" xml:space="preserve">
+    <value>Close All</value>
   </data>
 </root>

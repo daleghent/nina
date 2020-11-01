@@ -4146,6 +4146,12 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
   <data name="LblTargetSkyPosition" xml:space="preserve">
     <value>Cílová Poloha Oblohy</value>
   </data>
+  <data name="LblMoveMechanicalPosition" xml:space="preserve">
+    <value>Move Mechanical Position</value>
+  </data>
+  <data name="LblMoveSkyPosition" xml:space="preserve">
+    <value>Move Sky Position</value>
+  </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
     <value>Přidat {0} do Minut po Poledníku</value>
   </data>
@@ -4857,5 +4863,8 @@ Příklad:
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>Zaostřovač nezjistil žádnou teplotu</value>
+  </data>
+  <data name="LblCloseAll" xml:space="preserve">
+    <value>Close All</value>
   </data>
 </root>
