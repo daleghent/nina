@@ -305,9 +305,16 @@ namespace NINA.Model.MyCamera {
             }
         }
 
+        private AsyncObservableCollection<BinningMode> binningModes;
+
         public AsyncObservableCollection<BinningMode> BinningModes {
             get {
-                return null;
+                if (binningModes == null) {
+                    binningModes = new AsyncObservableCollection<BinningMode> {
+                        new BinningMode(1,1)
+                    };
+                }
+                return binningModes;
             }
         }
 
