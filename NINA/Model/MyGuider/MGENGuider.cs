@@ -209,8 +209,8 @@ namespace NINA.Model.MyGuider {
                     _lastStep = new MGENGuideStep() {
                         Frame = state.FrameInfo.FrameIndex,
                         Time = _lastStepNumber++,
-                        RADistanceRaw = state.FrameInfo.DriftRA/256.0,
-                        DECDistanceRaw = state.FrameInfo.DriftDec/256.0
+                        RADistanceRaw = state.FrameInfo.DriftRA / 256.0,
+                        DECDistanceRaw = state.FrameInfo.DriftDec / 256.0
                     };
                     GuideEvent?.Invoke(this, _lastStep);
                 }
@@ -314,6 +314,7 @@ namespace NINA.Model.MyGuider {
             get => _display;
             set {
                 _display = value;
+                _display?.Freeze();
                 RaisePropertyChanged();
             }
         }
