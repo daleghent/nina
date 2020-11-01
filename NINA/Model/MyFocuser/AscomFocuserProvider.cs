@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using ASCOM.DriverAccess;
+using NINA.Utility;
 
 namespace NINA.Model.MyFocuser {
 
@@ -21,8 +22,10 @@ namespace NINA.Model.MyFocuser {
         public IFocuserV3Ex GetFocuser(string focuserId) {
             var ascomFocuser = new Focuser(focuserId);
             if (ascomFocuser.Absolute) {
+                Logger.Debug($"Absolute ASCOM Focuser detected {focuserId}");
                 return new AbsoluteAscomFocuser(ascomFocuser);
             } else {
+                Logger.Debug($"Relative ASCOM Focuser detected {focuserId}");
                 return new RelativeAscomFocuser(ascomFocuser);
             }
         }
