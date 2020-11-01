@@ -687,6 +687,7 @@
     <Compile Include="Model\MySwitch\PegasusAstro\ContinuousSwitches.cs" />
     <Compile Include="Model\MySwitch\PegasusAstro\UltimatePowerBoxV2.cs" />
     <Compile Include="Utility\CameraSDKs\OmegonSDK\omegonprocam.cs" />
+    <Compile Include="Utility\Converters\DefaultBinningModesConverter.cs" />
     <Compile Include="Utility\Converters\TrackingModeConverter.cs" />
     <Compile Include="Utility\Converters\TrackingRateConverter.cs" />
     <Compile Include="Utility\Converters\BooleanOrConverter.cs" />

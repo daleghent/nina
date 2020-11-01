@@ -27,7 +27,7 @@ namespace NINA.Model.MyFilterWheel {
         public FilterInfo() {
             AutoFocusGain = -1;
             AutoFocusOffset = -1;
-            AutoFocusBinning = null;
+            AutoFocusBinning = new MyCamera.BinningMode(1, 1);
             AutoFocusExposureTime = -1;
         }
 
@@ -45,13 +45,14 @@ namespace NINA.Model.MyFilterWheel {
         private void OnDeserializing(System.Runtime.Serialization.StreamingContext c) {
             AutoFocusGain = -1;
             AutoFocusOffset = -1;
-            AutoFocusBinning = null;
+            AutoFocusBinning = new MyCamera.BinningMode(1, 1);
             AutoFocusExposureTime = -1;
         }
 
         [OnDeserialized]
         private void OnDeserialized(StreamingContext c) {
             if (AutoFocusExposureTime == 0) AutoFocusExposureTime = -1;
+            if (AutoFocusBinning == null) AutoFocusBinning = new MyCamera.BinningMode(1, 1);
         }
 
         [DataMember(Name = nameof(_name))]
@@ -171,7 +172,7 @@ namespace NINA.Model.MyFilterWheel {
             Name = n;
             FocusOffset = offset;
             Position = position;
-            AutoFocusBinning = null;
+            AutoFocusBinning = new MyCamera.BinningMode(1, 1);
             AutoFocusGain = -1;
             AutoFocusOffset = -1;
             AutoFocusExposureTime = -1;

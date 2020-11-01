@@ -164,7 +164,7 @@
 
                     <local:CameraControlView
                         Margin="0,5,0,0"
-                        MyBinningModes="{Binding CameraInfo.BinningModes}"
+                        MyBinningModes="{Binding CameraInfo.BinningModes, Converter={StaticResource DefaultBinningModesConverter}}"
                         MyCanGetGain="{Binding CameraInfo.CanGetGain}"
                         MyCanSetGain="{Binding CameraInfo.CanSetGain}"
                         MyDefaultGain="{Binding CameraInfo.DefaultGain}"

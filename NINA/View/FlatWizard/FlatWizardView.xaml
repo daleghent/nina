@@ -122,7 +122,7 @@
                                 HorizontalAlignment="Right"
                                 DisplayMemberPath="Name"
                                 IsSynchronizedWithCurrentItem="True"
-                                ItemsSource="{Binding CameraInfo.BinningModes}"
+                                ItemsSource="{Binding CameraInfo.BinningModes, Converter={StaticResource DefaultBinningModesConverter}}"
                                 SelectedItem="{Binding BinningMode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 SelectedValuePath="Name" />
                         </Grid>

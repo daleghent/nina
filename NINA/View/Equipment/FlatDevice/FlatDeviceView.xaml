@@ -482,7 +482,7 @@
                                 Height="25"
                                 MinWidth="60"
                                 IsEnabled="{Binding CameraInfo.Connected, FallbackValue=false}"
-                                ItemsSource="{Binding CameraInfo.BinningModes}" />
+                                ItemsSource="{Binding CameraInfo.BinningModes, Converter={StaticResource DefaultBinningModesConverter}}" />
                             <Button
                                 Height="25"
                                 MinWidth="100"

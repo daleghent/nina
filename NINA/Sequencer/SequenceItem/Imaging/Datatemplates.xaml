@@ -54,7 +54,7 @@
         <ComboBox
             Margin="5,0,0,0"
             DisplayMemberPath="Name"
-            ItemsSource="{Binding Source={StaticResource CameraInfo}, Path=Data.BinningModes}"
+            ItemsSource="{Binding Source={StaticResource CameraInfo}, Path=Data.BinningModes, Converter={StaticResource DefaultBinningModesConverter}}"
             SelectedItem="{Binding Binning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
             SelectedValuePath="Name" />
 

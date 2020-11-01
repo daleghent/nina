@@ -37,7 +37,7 @@ namespace NINA.ViewModel.Imaging {
 
         private double _repeatThreshold;
 
-        private BinningMode _snapBin;
+        private BinningMode _snapBin = new BinningMode(1, 1);
 
         private double _snapExposureDuration;
 

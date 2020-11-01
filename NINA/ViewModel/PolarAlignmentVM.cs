@@ -277,7 +277,7 @@ namespace NINA.ViewModel {
         public IImageControlVM ImageControlVM { get; }
         private DispatcherTimer updateValues;
 
-        private BinningMode snapBin;
+        private BinningMode snapBin = new BinningMode(1, 1);
         private Model.MyFilterWheel.FilterInfo snapFilter;
         private double snapExposureDuration;
 

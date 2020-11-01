@@ -170,7 +170,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override object Clone() {
-            return new TakeExposure(cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) {
+            var clone = new TakeExposure(cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,
@@ -182,6 +182,12 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 Offset = Offset,
                 ImageType = ImageType,
             };
+
+            if (clone.Binning == null) {
+                clone.Binning = new BinningMode(1, 1);
+            }
+
+            return clone;
         }
 
         public override void AfterParentChanged() {

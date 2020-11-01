@@ -515,7 +515,7 @@
                                     <DataTemplate>
                                         <ComboBox
                                             DisplayMemberPath="Name"
-                                            ItemsSource="{Binding Source={StaticResource CameraInfo}, Path=Data.BinningModes}"
+                                            ItemsSource="{Binding Source={StaticResource CameraInfo}, Path=Data.BinningModes, Converter={StaticResource DefaultBinningModesConverter}}"
                                             SelectedItem="{Binding AutoFocusBinning, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                             SelectedValuePath="Name" />
                                     </DataTemplate>

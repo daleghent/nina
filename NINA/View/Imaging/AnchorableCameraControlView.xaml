@@ -79,7 +79,7 @@
                                 Height="25"
                                 Margin="5,0,0,0"
                                 DisplayMemberPath="Name"
-                                ItemsSource="{Binding ElementName=UC, Path=DataContext.CameraInfo.BinningModes}"
+                                ItemsSource="{Binding ElementName=UC, Path=DataContext.CameraInfo.BinningModes, Converter={StaticResource DefaultBinningModesConverter}}"
                                 SelectedItem="{Binding SnapBin, Mode=TwoWay}"
                                 SelectedValuePath="Name" />
                         </UniformGrid>

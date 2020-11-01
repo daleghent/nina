@@ -34,7 +34,7 @@
             IsEnabled="{Binding CameraInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
             <local:CameraControlView
                 IsEnabled="{Binding CameraInfo.Connected}"
-                MyBinningModes="{Binding CameraInfo.BinningModes, Mode=TwoWay}"
+                MyBinningModes="{Binding CameraInfo.BinningModes, Mode=TwoWay, Converter={StaticResource DefaultBinningModesConverter}}"
                 MyButtonImage="{StaticResource PictureSVG}"
                 MyCancelButtonImage="{StaticResource CancelSVG}"
                 MyCancelCommand="{Binding CancelSnapCommand}"
