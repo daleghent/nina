@@ -404,8 +404,7 @@
                                                 Orientation="Horizontal">
                                                 <TextBlock Text="{ns:Loc LblBinning}" />
                                                 <TextBlock Text=" " />
-                                                <TextBlock Text="{Binding Binning}" Visibility="{Binding Path=Binning, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
-                                                <TextBlock Text="{ns:Loc LblNone}" Visibility="{Binding Path=Binning, Converter={StaticResource InverseNullToVisibilityCollapsedConverter}}" />
+                                                <TextBlock Text="{Binding Binning}" />
                                             </StackPanel>
                                             <ItemsControl ItemsSource="{Binding Columns}">
                                                 <ItemsControl.ItemsPanel>
@@ -481,15 +480,14 @@
                                 x:Name="CameraBinningModesCombobox"
                                 Height="25"
                                 MinWidth="60"
-                                IsEnabled="{Binding CameraInfo.Connected, FallbackValue=false}"
-                                ItemsSource="{Binding CameraInfo.BinningModes, Converter={StaticResource DefaultBinningModesConverter}}" />
+                                ItemsSource="{Binding CameraInfo.BinningModes, Converter={StaticResource DefaultBinningModesConverter}}"
+                                SelectedIndex="0" />
                             <Button
                                 Height="25"
                                 MinWidth="100"
                                 Margin="5"
                                 Command="{Binding AddBinningCommand}"
-                                CommandParameter="{Binding Path=SelectedItem, ElementName=CameraBinningModesCombobox}"
-                                IsEnabled="{Binding CameraInfo.Connected, FallbackValue=false}">
+                                CommandParameter="{Binding Path=SelectedItem, ElementName=CameraBinningModesCombobox}">
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblFlatDeviceAddBinningMode}" />
                             </Button>
                             <ComboBox
