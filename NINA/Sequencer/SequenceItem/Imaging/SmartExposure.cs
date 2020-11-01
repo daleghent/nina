@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Namotion.Reflection;
 using Newtonsoft.Json;
 using NINA.Profile;
 using NINA.Sequencer.Conditions;
@@ -21,6 +22,7 @@ using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Trigger.Guider;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.ImageHistory;
+using NJsonSchema.Validation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -97,10 +99,27 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override bool Validate() {
+            var issues = new List<string>();
             var sw = GetSwitchFilter();
             var te = GetTakeExposure();
-            var valid = sw.Validate() && te.Validate();
-            Issues = sw.Issues.Concat(te.Issues).Distinct().ToList();
+            var dither = GetDitherAfterExposures();
+
+            bool valid = false;
+
+            valid = te.Validate() && valid;
+            issues.AddRange(te.Issues);
+
+            if (sw.Filter != null) {
+                valid = sw.Validate() && valid;
+                issues.AddRange(sw.Issues);
+            }
+
+            if (dither.AfterExposures > 0) {
+                valid = dither.Validate() && valid;
+                issues.AddRange(dither.Issues);
+            }
+
+            Issues = issues;
             RaisePropertyChanged(nameof(Issues));
 
             return valid;

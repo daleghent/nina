@@ -220,6 +220,17 @@
 
     <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Imaging.TakeManyExposures_Mini" DataType="{x:Type local:SmartExposure}">
         <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Conditions[0].Iterations}" />
+                    <TextBlock VerticalAlignment="Center" Text="x" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Items[0].ExposureTime}" />
+                    <TextBlock VerticalAlignment="Center" Text="s" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemContent>
             <mini:MiniSequenceItem.SequenceItemProgressContent>
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblProgress}" />
@@ -270,6 +281,21 @@
 
     <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Imaging.SmartExposure_Mini" DataType="{x:Type local:SmartExposure}">
         <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Conditions[0].Iterations}" />
+                    <TextBlock VerticalAlignment="Center" Text="x" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Items[0].Filter.Name}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Items[1].ExposureTime}" />
+                    <TextBlock VerticalAlignment="Center" Text="s" />
+                </StackPanel>
+            </mini:MiniSequenceItem.SequenceItemContent>
             <mini:MiniSequenceItem.SequenceItemProgressContent>
                 <WrapPanel VerticalAlignment="Center" Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblProgress}" />
