@@ -182,6 +182,10 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>When rotator reports final position too early while still reporting IsMoving as true, N.I.N.A. will now still wait for the movement to complete</li>
 <li>SkyAtlas File Source will now consider binning for solving</li>
 <li>Fixed issue with filter wheel filter import in options when filters have the same name</li>
+<li>The MGEN2 guider can now auto select a guide star unattended, with a new calibration just downstream of that, which enables auto meridian flips</li>
+<li>The timeout values for the MGEN2 guider can now be overridden in the implementations of IMGENCommand</li>
+<li>The MGEN2 guider drift values are now correctly reported in fractional pixels</li>
+<li>ASCOM devices are now properly disposed after calling the setup dialog</li>
 </ul>
 <h1 id="version-1.10-hf1">Version 1.10 HF1</h1>
 <h2 id="features">Features</h2>
