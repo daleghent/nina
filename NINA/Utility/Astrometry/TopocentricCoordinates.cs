@@ -33,7 +33,7 @@ namespace NINA.Utility.Astrometry {
         }
 
         public TopocentricCoordinates Copy() {
-            return new TopocentricCoordinates(Azimuth.Copy(), Altitude.Copy(), Latitude.Copy(), Latitude.Copy());
+            return new TopocentricCoordinates(Azimuth.Copy(), Altitude.Copy(), Latitude.Copy(), Longitude.Copy());
         }
 
         public Coordinates Transform(Epoch epoch, DatabaseInteraction db = null) {
