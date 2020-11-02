@@ -36,7 +36,7 @@ namespace NINATest.Focuser.ASCOM {
             _mockFocuser = new Mock<IFocuserV3Ex>();
             _mockFocuser.SetupProperty(m => m.Connected, false);
             _mockFocuser.Setup(m => m.Absolute).Returns(true);
-            _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>())).Returns(_mockFocuser.Object);
+            _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>(), true)).Returns(_mockFocuser.Object);
             _sut = new AscomFocuser(ID, NAME) { FocuserProvider = _mockFocuserProvider.Object };
             var result = await _sut.Connect(new CancellationToken());
             Assert.That(result, Is.True);
@@ -50,7 +50,7 @@ namespace NINATest.Focuser.ASCOM {
 
         [Test]
         public async Task TestConnectDriverAccessComException() {
-            _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>()))
+            _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>(), true))
                 .Throws(new DriverAccessCOMException("", 0, null));
             var sut = new AscomFocuser(ID, NAME) { FocuserProvider = _mockFocuserProvider.Object };
             var result = await sut.Connect(new CancellationToken());
@@ -59,7 +59,7 @@ namespace NINATest.Focuser.ASCOM {
 
         [Test]
         public async Task TestConnectComException() {
-            _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>()))
+            _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>(), true))
                 .Throws(new System.Runtime.InteropServices.COMException());
             var sut = new AscomFocuser(ID, NAME) { FocuserProvider = _mockFocuserProvider.Object };
             var result = await sut.Connect(new CancellationToken());
@@ -68,7 +68,7 @@ namespace NINATest.Focuser.ASCOM {
 
         [Test]
         public async Task TestConnectException() {
-            _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>()))
+            _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>(), true))
                 .Throws(new Exception());
             var sut = new AscomFocuser(ID, NAME) { FocuserProvider = _mockFocuserProvider.Object };
             var result = await sut.Connect(new CancellationToken());
@@ -444,7 +444,7 @@ namespace NINATest.Focuser.ASCOM {
         [Test]
         public void TestSetupDialogException() {
             var sut = new AscomFocuser(ID, NAME) { FocuserProvider = _mockFocuserProvider.Object };
-            _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>())).Throws(new Exception());
+            _mockFocuserProvider.Setup(m => m.GetFocuser(It.IsAny<string>(), false)).Throws(new Exception());
             sut.SetupDialog();
             _mockFocuser.Verify(m => m.SetupDialog(), Times.Never);
         }
