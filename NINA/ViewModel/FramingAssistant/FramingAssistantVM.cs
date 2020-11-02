@@ -310,7 +310,7 @@ namespace NINA.ViewModel.FramingAssistant {
             this.DSO = new DeepSkyObject(dso.Name, dso.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
             FramingAssistantSource = profileService.ActiveProfile.FramingAssistantSettings.LastSelectedImageSource;
             if (FramingAssistantSource == SkySurveySource.CACHE || FramingAssistantSource == SkySurveySource.FILE) {
-                FramingAssistantSource = SkySurveySource.NASA;
+                FramingAssistantSource = SkySurveySource.HIPS2FITS;
             }
 
             RaiseCoordinatesChanged();
