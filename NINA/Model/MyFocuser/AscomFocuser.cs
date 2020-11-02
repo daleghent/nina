@@ -267,8 +267,8 @@ namespace NINA.Model.MyFocuser {
             _focuser?.Dispose();
         }
 
-        private IFocuserV3Ex GetFocuser() {
-            return FocuserProvider.GetFocuser(Id);
+        private IFocuserV3Ex GetFocuser(bool connect) {
+            return FocuserProvider.GetFocuser(Id, connect);
         }
 
         public void SetupDialog() {
@@ -276,7 +276,7 @@ namespace NINA.Model.MyFocuser {
                 try {
                     bool dispose = false;
                     if (_focuser == null) {
-                        _focuser = GetFocuser();
+                        _focuser = GetFocuser(false);
                         dispose = true;
                     }
                     _focuser.SetupDialog();
@@ -294,7 +294,7 @@ namespace NINA.Model.MyFocuser {
         public async Task<bool> Connect(CancellationToken token) {
             return await Task<bool>.Run(() => {
                 try {
-                    _focuser = GetFocuser();
+                    _focuser = GetFocuser(true);
                     Connected = true;
                     if (Connected) {
                         Initialize();

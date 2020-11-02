@@ -17,6 +17,6 @@ namespace NINA.Model.MyFocuser {
 
     public interface IAscomFocuserProvider {
 
-        IFocuserV3Ex GetFocuser(string focuserId);
+        IFocuserV3Ex GetFocuser(string focuserId, bool connect);
     }
 }
