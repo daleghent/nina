@@ -93,7 +93,7 @@
                                         Height="25"
                                         Margin="5,0,0,0"
                                         HorizontalContentAlignment="Center"
-                                        Command="{Binding Path=DataContext.SetSwitchValueCommand, Source={Binding RelativeSource={RelativeSource AncestorType=equip:SwitchHubView}}}"
+                                        Command="{Binding Path=DataContext.SetSwitchValueCommand, RelativeSource={RelativeSource AncestorType=equip:SwitchHubView}}"
                                         CommandParameter="{Binding}"
                                         ToolTip="{ns:Loc LblSetNewValue}">
 
