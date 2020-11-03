@@ -371,7 +371,7 @@ namespace NINA.Utility.Behaviors {
             // we are in a new element
             //Debug.WriteLine("\\> Wheel over element " + draggedOverElement?.GetHashCode());
             mouseOverEventArgs.RoutedEvent = UIElement.MouseWheelEvent;
-            draggedOverElement.RaiseEvent(mouseOverEventArgs);
+            draggedOverElement?.RaiseEvent(mouseOverEventArgs);
         }
 
         protected override void OnDetaching() {
