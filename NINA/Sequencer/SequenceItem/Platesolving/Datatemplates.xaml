@@ -226,7 +226,7 @@
                         <TextBox.Text>
                             <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
-                                    <rules:SecondsRule />
+                                    <rules:FullCircleDegreesRule />
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>

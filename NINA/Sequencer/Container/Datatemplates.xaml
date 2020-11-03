@@ -432,11 +432,7 @@
                                     <TextBox.Text>
                                         <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <rules:DoubleRangeRule>
-                                                    <rules:DoubleRangeRule.ValidRange>
-                                                        <rules:DoubleRangeChecker Maximum="360" Minimum="0" />
-                                                    </rules:DoubleRangeRule.ValidRange>
-                                                </rules:DoubleRangeRule>
+                                                <rules:FullCircleDegreesRule />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
