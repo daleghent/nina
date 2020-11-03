@@ -281,7 +281,9 @@ namespace NINA.ViewModel.Sequencer {
                 var json = SequenceJsonConverter.Serialize(Sequencer.MainContainer);
                 File.WriteAllText(SavePath, json);
             }
-            Notification.ShowSuccess(string.Format(Locale.Loc.Instance["Lbl_Sequencer_SaveSequence_Notification"], Sequencer.MainContainer.Name, SavePath));
+            if (!string.IsNullOrEmpty(SavePath)) {
+                Notification.ShowSuccess(string.Format(Locale.Loc.Instance["Lbl_Sequencer_SaveSequence_Notification"], Sequencer.MainContainer.Name, SavePath));
+            }
         }
 
         public NINA.Sequencer.Sequencer Sequencer { get; }
