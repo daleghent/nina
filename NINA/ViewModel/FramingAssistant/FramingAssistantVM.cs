@@ -133,6 +133,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Locale.Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
                     var dso = new DeepSkyObject(name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
                     dso.Rotation = Rectangle.TotalRotation;
+                    dso.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
                     sequenceMediator.AddTargetToOldSequencer(dso);
                 }
             }, (object o) => RectangleCalculated);
