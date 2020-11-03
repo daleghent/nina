@@ -69,6 +69,7 @@ namespace NINA.Sequencer.SequenceItem.Guider {
                 Name = Name,
                 Category = Category,
                 Description = Description,
+                ForceCalibration = ForceCalibration
             };
         }
 
