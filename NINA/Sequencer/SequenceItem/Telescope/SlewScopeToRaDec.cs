@@ -108,7 +108,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
                 Name = Name,
                 Category = Category,
                 Description = Description,
-                Coordinates = new InputCoordinates(Coordinates.Coordinates),
+                Coordinates = Coordinates.Clone(),
             };
         }
 

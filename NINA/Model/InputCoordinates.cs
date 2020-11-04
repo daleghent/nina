@@ -150,5 +150,8 @@ namespace NINA.Model {
             RaisePropertyChanged(nameof(DecSeconds));
             NegativeDec = Coordinates?.Dec < 0;
         }
+
+        public InputCoordinates Clone() =>
+            new InputCoordinates(coordinates.Clone());
     }
 }

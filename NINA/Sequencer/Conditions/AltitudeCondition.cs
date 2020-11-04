@@ -17,8 +17,10 @@ using NINA.Model;
 using NINA.Profile;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Utility;
+using NINA.Utility;
 using NINA.Utility.Astrometry;
 using System;
+using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using NINA.Utility.Enum;
 
@@ -36,6 +38,7 @@ namespace NINA.Sequencer.Conditions {
         private bool isEastOfMeridian;
         private double altitude;
         private double currentAltitude;
+        private string risingSettingDisplay;
         private bool hasDsoParent;
 
         [ImportingConstructor]
@@ -43,6 +46,20 @@ namespace NINA.Sequencer.Conditions {
             this.profileService = profileService;
             Coordinates = new InputCoordinates();
             Altitude = 30;
+
+
+            //todo: find a better home for this
+            Task.Run(async () => {
+               await Task.Delay(15000);
+               while (true) {
+                   try {
+                       CalculateCurrentAltitude();
+                   } catch (Exception ee) {
+                       Logger.Error(ee);
+                   }
+                   await Task.Delay(5000);
+               }
+            });
         }
 
         [JsonProperty]
@@ -97,6 +114,13 @@ namespace NINA.Sequencer.Conditions {
                 RaisePropertyChanged();
             }
         }
+        public string RisingSettingDisplay {
+            get => risingSettingDisplay;
+            private set {
+                risingSettingDisplay = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public override object Clone() {
             return new AltitudeCondition(profileService) {
@@ -105,7 +129,7 @@ namespace NINA.Sequencer.Conditions {
                 Category = Category,
                 Description = Description,
                 Altitude = Altitude,
-                Coordinates = new InputCoordinates(Coordinates.Coordinates)
+                Coordinates = Coordinates.Clone()
             };
         }
 
@@ -146,7 +170,10 @@ namespace NINA.Sequencer.Conditions {
                     Angle.ByDegree(location.Latitude), 
                     Angle.ByDegree(location.Longitude));
             IsEastOfMeridian = altaz.AltitudeSite == AltitudeSite.EAST;
-            CurrentAltitude = Math.Round(altaz.Altitude.Degree, 2);
+            var currentAlt = Math.Round(altaz.Altitude.Degree, 2);
+            CurrentAltitude = currentAlt;
+            RisingSettingDisplay=
+                IsEastOfMeridian ? "^" : "v";
         }
     }
 }

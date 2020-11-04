@@ -306,11 +306,10 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblAltitude}" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentAltitude}" />
-                    <TextBlock VerticalAlignment="Center" Text="° / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CurrentAltitude}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="° " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding RisingSettingDisplay}" />
+                    <TextBlock VerticalAlignment="Center" Text=" / " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding Altitude}" />
                     <TextBlock VerticalAlignment="Center" Text="°" />
                 </StackPanel>
@@ -443,11 +442,10 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblAltitude}" />
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding CurrentAltitude}" />
-                    <TextBlock VerticalAlignment="Center" Text="° / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CurrentAltitude}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="° " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding RisingSettingDisplay}" />
+                    <TextBlock VerticalAlignment="Center" Text=" / " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding Altitude}" />
                     <TextBlock VerticalAlignment="Center" Text="°" />
                 </StackPanel>

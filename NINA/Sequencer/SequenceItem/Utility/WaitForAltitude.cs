@@ -117,7 +117,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 Description = Description,
                 Altitude = Altitude,
                 AboveOrBelow = AboveOrBelow,
-                Coordinates = new InputCoordinates(Coordinates.Coordinates)
+                Coordinates = Coordinates.Clone()
             };
         }
 

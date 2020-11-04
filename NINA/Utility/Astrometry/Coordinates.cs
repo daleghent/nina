@@ -502,6 +502,13 @@ namespace NINA.Utility.Astrometry {
         public override string ToString() {
             return $"RA: {this.RAString}; Dec: {this.DecString}; Epoch: {Epoch}";
         }
+
+        public Coordinates Clone() => 
+            new Coordinates(
+                this.raAngle, 
+                this.decAngle, 
+                this.Epoch, 
+                this.creationDate);
     }
 
     /// <summary>

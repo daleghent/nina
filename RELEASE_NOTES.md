@@ -764,4 +764,4 @@ ___
 - Lots and lots of minor bugfixes and improvements
 - Launch NINA with a specific ProfileId via cmdline
 - Integrated with Windows JumpList feature to launch instance with specific profile loaded
-- Modified Altitude Check to permit imaging of targets that are below the configured altitude when they are rising in the sky
+- Enhanced Altitude Check to permit imaging of targets that are below the configured altitude when they are rising in the sky and display a visual cue to distinguish rising versus setting targets
