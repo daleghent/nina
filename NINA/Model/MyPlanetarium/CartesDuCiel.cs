@@ -81,7 +81,7 @@ namespace NINA.Model.MyPlanetarium {
 
                 if (!Match(response, @"(?<=LAT:)[\+|-]([0-9]{1,2})[:|d]([0-9]{1,2})[:|m]?([0-9]{1,2}(?:\.[0-9]+){0,1})?[:|s]", out var latutideString)) { throw new PlanetariumFailedToGetCoordinates(); }
 
-                if (!Match(response, @"(?<=LON:)[\+|-]([0-9]{1,2})[:|d]([0-9]{1,2})[:|m]?([0-9]{1,2}(?:\.[0-9]+){0,1})?[:|s]", out var longitudeString)) { throw new PlanetariumFailedToGetCoordinates(); }
+                if (!Match(response, @"(?<=LON:)[\+|-]([0-9]{1,3})[:|d]([0-9]{1,2})[:|m]?([0-9]{1,2}(?:\.[0-9]+){0,1})?[:|s]", out var longitudeString)) { throw new PlanetariumFailedToGetCoordinates(); }
 
                 if (!Match(response, @"(?<=ALT:)([0-9]{0,5})[m]", out var altitudeString)) { throw new PlanetariumFailedToGetCoordinates(); }
 
