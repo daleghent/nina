@@ -1319,9 +1319,9 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Kalkulačka Optimální Expozice</value>
   </data>
   <data name="LblExposureCalculatorDescription" xml:space="preserve">
-    <value>Tento nástroj navrhne doporučenou dobu expozice na základě čteného šumu ze senzoru a průměrné záře oblohy.
-Pokud máte nainstalován SharpCap a provádíte analýzu senzorů, použijte rozevírací nabídku níže k načtení šumu čtení a plné kapacity pro zadaný zisk.
-Můžete také vypočítat zkreslení kliknutím na tlačítko Snapshot vedle Bias Mean.</value>
+    <value>This tool will suggest a recommended exposure time based on the read noise from your sensor and the average skyglow.
+If you have SharpCap installed and perform a Sensor Analysis, then use the drop down below to retrieve the read noise and full well capacity for the specified gain.
+You can also calculate the bias by clicking the Snapshot button next to Bias Mean.</value>
   </data>
   <data name="LblExposureCalculatorMeanLessThanOffset" xml:space="preserve">
     <value>Nelze určit doporučený čas expozice. Průměrná hodnota v obrázku je menší než hodnota zadaná pro průměrné zkreslení. Proveďte delší expozici nebo upravte nesprávné hodnoty.</value>
@@ -4537,8 +4537,8 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Oblast Začátku Sekvence</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
-    <value>Cílová Oblast Sekvence
-Přidejte sekvence DSO nebo přidejte cíle pomocí Sky Atlas nebo Průvodce Rámováním</value>
+    <value>Sequence Target Area
+Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assistant</value>
   </data>
   <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
     <value>Stav Smyčky</value>
