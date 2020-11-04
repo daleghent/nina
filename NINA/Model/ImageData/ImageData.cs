@@ -149,8 +149,8 @@ namespace NINA.Model.ImageData {
                 p.Set(ImagePatternKeys.RMSArcSec, metadata.Image.RecordedRMS.Total * metadata.Image.RecordedRMS.Scale);
             }
 
-            if (!double.IsNaN(metadata.Focuser.Position)) {
-                p.Set(ImagePatternKeys.FocuserPosition, metadata.Focuser.Position);
+            if (metadata.Focuser.Position.HasValue) {
+                p.Set(ImagePatternKeys.FocuserPosition, metadata.Focuser.Position.Value);
             }
 
             if (!double.IsNaN(metadata.Focuser.Temperature)) {

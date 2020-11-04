@@ -244,11 +244,11 @@ namespace NINA.Utility.FileFormat.FITS {
             }
 
             if (_headerCards.TryGetValue("FOCPOS", out card)) {
-                metaData.Focuser.Position = ParseDouble(card.OriginalValue);
+                metaData.Focuser.Position = ParseInt(card.OriginalValue);
             }
 
             if (_headerCards.TryGetValue("FOCUSPOS", out card)) {
-                metaData.Focuser.Position = ParseDouble(card.OriginalValue);
+                metaData.Focuser.Position = ParseInt(card.OriginalValue);
             }
 
             if (_headerCards.TryGetValue("FOCUSSZ", out card)) {
@@ -532,12 +532,12 @@ namespace NINA.Utility.FileFormat.FITS {
                 Add("FOCNAME", metaData.Focuser.Name, "Focusing equipment name");
             }
 
-            if (!double.IsNaN(metaData.Focuser.Position)) {
+            if (metaData.Focuser.Position.HasValue) {
                 /* fits4win, SGP */
-                Add("FOCPOS", metaData.Focuser.Position, "[step] Focuser position");
+                Add("FOCPOS", metaData.Focuser.Position.Value, "[step] Focuser position");
 
                 /* MaximDL, several observatories */
-                Add("FOCUSPOS", metaData.Focuser.Position, "[step] Focuser position");
+                Add("FOCUSPOS", metaData.Focuser.Position.Value, "[step] Focuser position");
             }
 
             if (!double.IsNaN(metaData.Focuser.StepSize)) {

@@ -1075,14 +1075,14 @@ namespace NINATest {
             //Arrange
             var metaData = new ImageMetaData();
             metaData.Focuser.Name = "TEST";
-            metaData.Focuser.Position = 123.11;
+            metaData.Focuser.Position = 123;
             metaData.Focuser.StepSize = 10.23;
             metaData.Focuser.Temperature = 125.12;
 
             var expectedFITSKeywords = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("FOCNAME", metaData.Focuser.Name, "Focusing equipment name"),
-                new FITSHeaderCard("FOCPOS", metaData.Focuser.Position, "[step] Focuser position"),
-                new FITSHeaderCard("FOCUSPOS", metaData.Focuser.Position, "[step] Focuser position"),
+                new FITSHeaderCard("FOCPOS", metaData.Focuser.Position.Value, "[step] Focuser position"),
+                new FITSHeaderCard("FOCUSPOS", metaData.Focuser.Position.Value, "[step] Focuser position"),
                 new FITSHeaderCard("FOCUSSZ", metaData.Focuser.StepSize, "[um] Focuser step size"),
                 new FITSHeaderCard("FOCTEMP", metaData.Focuser.Temperature, "[degC] Focuser temperature"),
                 new FITSHeaderCard("FOCUSTEM", metaData.Focuser.Temperature, "[degC] Focuser temperature"),
@@ -1138,8 +1138,6 @@ namespace NINATest {
                 new FITSHeaderCard("ROTATANG", metaData.Rotator.Position, "[deg] Rotator angle"),
                 new FITSHeaderCard("ROTSTPSZ", metaData.Rotator.StepSize, "[deg] Rotator step size"),
             };
-
-            float expectedFocusDistance = (float)((metaData.Focuser.Position * metaData.Focuser.StepSize) / 1000.0);
 
             //Act
             var sut = new XISFHeader();

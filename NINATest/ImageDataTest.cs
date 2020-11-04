@@ -413,7 +413,7 @@ namespace NINATest {
                 $"#{string.Format("{0:0}", MetaData.Camera.Offset)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total * MetaData.Image.RecordedRMS.Scale)}" +
-                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Focuser.Position)}" +
+                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0}", MetaData.Focuser.Position)}" +
                 $"#{NINA.Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}.{fileSaveInfo.FileType.ToString().ToLower()}");
@@ -513,7 +513,7 @@ namespace NINATest {
                 $"#{string.Format("{0:0}", MetaData.Camera.Offset)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total * MetaData.Image.RecordedRMS.Scale)}" +
-                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Focuser.Position)}" +
+                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0}", MetaData.Focuser.Position)}" +
                 $"#{NINA.Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}.{fileSaveInfo.FileType.ToString().ToLower()}");
@@ -574,7 +574,7 @@ namespace NINATest {
                 $"#{string.Format("{0:0}", MetaData.Camera.Offset)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total * MetaData.Image.RecordedRMS.Scale)}" +
-                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Focuser.Position)}" +
+                $"#{string.Format(CultureInfo.InvariantCulture, "{0:0}", MetaData.Focuser.Position)}" +
                 $"#{NINA.Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}.{fileSaveInfo.FileType.ToString().ToLower()}");

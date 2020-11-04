@@ -62,7 +62,7 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
             item2.Name.Should().BeSameAs(sut.Name);
             item2.Description.Should().BeSameAs(sut.Description);
             item2.Icon.Should().BeSameAs(sut.Icon);
-            item2.Binning.Should().BeSameAs(sut.Binning);
+            item2.Binning.Should().NotBeNull();
             item2.ExposureCount.Should().Be(0);
             item2.ExposureTime.Should().Be(sut.ExposureCount);
             item2.Gain.Should().Be(sut.Gain);

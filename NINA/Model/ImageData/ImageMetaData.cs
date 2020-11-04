@@ -203,7 +203,7 @@ namespace NINA.Model.ImageData {
 
     public class FocuserParameter {
         public string Name { get; set; } = string.Empty;
-        public double Position { get; set; } = double.NaN;
+        public int? Position { get; set; } = null;
         public double StepSize { get; set; } = double.NaN;
         public double Temperature { get; set; } = double.NaN;
     }

@@ -451,7 +451,6 @@ namespace NINA.Utility.FileFormat.XISF {
                 AddImageFITSKeyword("AIRMASS", metaData.Telescope.Airmass, "Airmass at frame center (Gueymard 1993)");
             }
 
-
             /* Target */
             if (!string.IsNullOrWhiteSpace(metaData.Target.Name)) {
                 AddImageProperty(XISFImageProperty.Observation.Object.Name, metaData.Target.Name, "Name of the object of interest");
@@ -476,18 +475,18 @@ namespace NINA.Utility.FileFormat.XISF {
              * This unit is different from FOCUSPOS FITSKeyword, so we must do two separate actions: calculate distance from origin in millimetres and insert
              * that as the XISF Instrument:Focuser:Position property, and then insert the separate FOCUSPOS FITSKeyword (measured in steps).
              */
-            if (!double.IsNaN(metaData.Focuser.Position)) {
+            if (metaData.Focuser.Position.HasValue) {
                 if (!double.IsNaN(metaData.Focuser.StepSize)) {
                     /* steps * step size (microns) converted to millimetres, single-precision float */
-                    float focusDistance = (float)((metaData.Focuser.Position * metaData.Focuser.StepSize) / 1000.0);
+                    float focusDistance = (float)((metaData.Focuser.Position.Value * metaData.Focuser.StepSize) / 1000.0);
                     AddImageProperty(XISFImageProperty.Instrument.Focuser.Position, focusDistance);
                 }
 
                 /* fits4win, SGP */
-                AddImageFITSKeyword("FOCPOS", metaData.Focuser.Position, "[step] Focuser position");
+                AddImageFITSKeyword("FOCPOS", metaData.Focuser.Position.Value, "[step] Focuser position");
 
                 /* MaximDL, several observatories */
-                AddImageFITSKeyword("FOCUSPOS", metaData.Focuser.Position, "[step] Focuser position");
+                AddImageFITSKeyword("FOCUSPOS", metaData.Focuser.Position.Value, "[step] Focuser position");
             }
 
             if (!double.IsNaN(metaData.Focuser.StepSize)) {

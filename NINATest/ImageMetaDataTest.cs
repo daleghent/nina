@@ -58,7 +58,7 @@ namespace NINATest {
             Assert.AreEqual(null, sut.Telescope.Coordinates);
 
             Assert.AreEqual(string.Empty, sut.Focuser.Name);
-            Assert.AreEqual(double.NaN, sut.Focuser.Position);
+            Assert.AreEqual(null, sut.Focuser.Position);
             Assert.AreEqual(double.NaN, sut.Focuser.StepSize);
             Assert.AreEqual(double.NaN, sut.Focuser.Temperature);
 
@@ -311,7 +311,7 @@ namespace NINATest {
             sut.FromFocuserInfo(info);
 
             Assert.AreEqual(string.Empty, sut.Focuser.Name);
-            Assert.AreEqual(double.NaN, sut.Focuser.Position);
+            Assert.AreEqual(null, sut.Focuser.Position);
             Assert.AreEqual(double.NaN, sut.Focuser.StepSize);
             Assert.AreEqual(double.NaN, sut.Focuser.Temperature);
         }
