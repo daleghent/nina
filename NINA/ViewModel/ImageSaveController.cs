@@ -17,6 +17,7 @@ using NINA.Model.ImageData;
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
+using NINA.Utility.Notification;
 using NINA.ViewModel.Interfaces;
 using Nito.AsyncEx;
 using System;
@@ -78,6 +79,7 @@ namespace NINA.ViewModel {
                 } catch (OperationCanceledException) {
                 } catch (Exception ex) {
                     Logger.Error(ex);
+                    Notification.ShowError(ex.Message);
                 }
             }
         }
