@@ -131,6 +131,7 @@ namespace NINA.Utility {
                 Bind<INighttimeCalculator>().To<NighttimeCalculator>().InSingletonScope();
                 Bind<IDeepSkyObjectSearchVM>().To<DeepSkyObjectSearchVM>();
                 Bind<IDomeSynchronization>().To<DomeSynchronization>().InSingletonScope();
+                Bind<IDomeFollower>().To<DomeFollower>().InSingletonScope();
                 Bind<IDeviceUpdateTimerFactory>().To<DefaultDeviceUpateTimerFactory>().InSingletonScope();
                 Bind<IDeviceChooserVM>().To<FlatDeviceChooserVM>().WhenInjectedInto<IFlatDeviceVM>().InSingletonScope();
                 Bind<IDeviceFactory>().To<FlatDeviceFactory>().WhenInjectedInto<FlatDeviceChooserVM>().InSingletonScope();

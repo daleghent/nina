@@ -25,6 +25,7 @@ using System.Windows.Input;
 using NINA.Model.MyDome;
 using NINA.Model.MyTelescope;
 using NINA.Utility.Astrometry;
+using System.ComponentModel;
 
 namespace NINA.ViewModel.Equipment.Dome {
 
@@ -36,7 +37,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             IApplicationStatusMediator applicationStatusMediator,
             ITelescopeMediator telescopeMediator,
             IDeviceChooserVM domeChooserVM,
-            IDomeSynchronization domeSynchronization,
+            IDomeFollower domeFollower,
             IApplicationResourceDictionary resourceDictionary,
             IDeviceUpdateTimerFactory deviceUpdateTimerFactory) : base(profileService) {
             Title = "LblDome";
@@ -47,8 +48,9 @@ namespace NINA.ViewModel.Equipment.Dome {
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterConsumer(this);
             this.applicationStatusMediator = applicationStatusMediator;
-            this.domeSynchronization = domeSynchronization;
             DomeChooserVM = domeChooserVM;
+            this.domeFollower = domeFollower;
+            this.domeFollower.PropertyChanged += DomeFollower_PropertyChanged;
 
             ChooseDomeCommand = new AsyncCommand<bool>(() => ChooseDome());
             CancelChooseDomeCommand = new RelayCommand(CancelChooseDome);
@@ -74,8 +76,14 @@ namespace NINA.ViewModel.Equipment.Dome {
             profileService.ProfileChanged += (object sender, EventArgs e) => {
                 RefreshDomeList(null);
             };
+        }
 
-            DirectFollowToggled = profileService.ActiveProfile.DomeSettings.UseDirectFollowing;
+        private void DomeFollower_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            if (e.PropertyName == nameof(IDomeFollower.IsFollowing)) {
+                if (!this.domeFollower.IsFollowing) {
+                    this.FollowEnabled = false;
+                }
+            }
         }
 
         private CancellationTokenSource cancelChooseDomeSource;
@@ -351,30 +359,12 @@ namespace NINA.ViewModel.Equipment.Dome {
             }
         }
 
-        private CancellationTokenSource domeRotationCTS;
-        private Task domeRotationTask;
-
         public async Task WaitForDomeSynchronization(CancellationToken cancellationToken) {
-            var timeoutCTS = new CancellationTokenSource(TimeSpan.FromSeconds(profileService.ActiveProfile.DomeSettings.DomeSyncTimeoutSeconds));
-            var timeoutOrClientCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(timeoutCTS.Token, cancellationToken).Token;
-            while (DirectFollowEnabled && !IsSynchronized) {
-                if (timeoutOrClientCancellationToken.IsCancellationRequested) {
-                    Logger.Warning("Waiting for Dome synchronization cancelled or timed out");
-                    return;
-                }
-                Logger.Trace("Dome not synchronized. Waiting...");
-                await Task.Delay(TimeSpan.FromSeconds(1), timeoutOrClientCancellationToken);
-            }
-        }
-
-        private void StopDomeRotate(object p) {
-            domeRotationCTS?.Cancel();
-            domeRotationCTS = null;
-            domeRotationTask = null;
+            await this.domeFollower.WaitForDomeSynchronization(cancellationToken);
         }
 
         private void StopAll(object p) {
-            StopDomeRotate(null);
+            this.domeFollower.Stop();
             Dome?.StopAll();
             FollowEnabled = false;
         }
@@ -418,11 +408,18 @@ namespace NINA.ViewModel.Equipment.Dome {
             }
         }
 
+        public async Task<bool> SlewToAzimuth(double degrees, CancellationToken token) {
+            if (Dome?.Connected == true) {
+                await Dome?.SlewToAzimuth(degrees, token);
+                return true;
+            }
+            return false;
+        }
+
         private async Task<bool> ManualSlew(double degrees) {
             if (Dome.CanSetAzimuth) {
                 this.FollowEnabled = false;
-                await Dome?.SlewToAzimuth(degrees, CancellationToken.None);
-                return true;
+                return await SlewToAzimuth(degrees, CancellationToken.None);
             } else {
                 return false;
             }
@@ -432,8 +429,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             if (Dome.CanSetAzimuth) {
                 this.FollowEnabled = false;
                 var targetAzimuth = Astrometry.EuclidianModulus(this.Dome.Azimuth + degrees, 360.0);
-                await Dome?.SlewToAzimuth(targetAzimuth, CancellationToken.None);
-                return true;
+                return await SlewToAzimuth(targetAzimuth, CancellationToken.None);
             } else {
                 return false;
             }
@@ -446,7 +442,7 @@ namespace NINA.ViewModel.Equipment.Dome {
 
         private void SyncAzimuth(object obj) {
             if (CanSyncAzimuth) {
-                var calculatedTargetAzimuth = GetSynchronizedPosition(TelescopeInfo);
+                var calculatedTargetAzimuth = this.domeFollower.GetSynchronizedPosition(TelescopeInfo);
                 Dome.SyncToAzimuth(calculatedTargetAzimuth.Degree);
             }
         }
@@ -462,113 +458,24 @@ namespace NINA.ViewModel.Equipment.Dome {
                 }
             }
             set {
-                followEnabled = value;
-                OnFollowChanged();
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool directFollowingToggled;
-
-        public bool DirectFollowToggled {
-            get {
-                if (Dome?.Connected == true) {
-                    if (Dome.DriverCanFollow) {
-                        return directFollowingToggled;
-                    } else {
-                        return true;
-                    }
-                } else {
-                    return true;
-                }
-            }
-            set {
-                directFollowingToggled = value;
-                profileService.ActiveProfile.DomeSettings.UseDirectFollowing = value;
-                OnFollowChanged();
-                RaisePropertyChanged();
-            }
-        }
-
-        public bool DirectFollowEnabled {
-            get {
-                if (Dome?.Connected == true) {
-                    return FollowEnabled && DirectFollowToggled;
-                } else {
-                    return false;
+                if (followEnabled != value) {
+                    followEnabled = value;
+                    OnFollowChanged(followEnabled);
+                    RaisePropertyChanged();
                 }
             }
         }
 
-        private void OnFollowChanged() {
-            if (Dome?.Connected == true) {
-                if (Dome.DriverCanFollow) {
-                    Dome.DriverFollowing = FollowEnabled && !DirectFollowToggled;
-                }
-                if (TelescopeInfo.Connected && DirectFollowEnabled) {
-                    SynchronizeWithTelescope(TelescopeInfo, CancellationToken.None);
-                }
-            }
-        }
-
-        private double targetAzimuth = 0.0;
-
-        private void SynchronizeWithTelescope(TelescopeInfo telescopeInfo, CancellationToken token) {
-            if (Dome?.Connected == true) {
-                // If domeRotationTask is null or IsCompleted is true, then it is not rotating
-                var isRotating = domeRotationTask?.IsCompleted == false;
-                if (!isRotating) {
-                    var calculatedTargetAzimuth = GetSynchronizedPosition(telescopeInfo);
-                    var currentAzimuth = Angle.ByDegree(Dome.Azimuth);
-                    var tolerance = Angle.ByDegree(profileService.ActiveProfile.DomeSettings.AzimuthTolerance_degrees);
-                    if (!calculatedTargetAzimuth.Equals(currentAzimuth, tolerance)) {
-                        Logger.Trace($"Dome direct telescope follow slew. Current azimuth={currentAzimuth}, Target azimuth={calculatedTargetAzimuth}, Tolerance={tolerance}");
-                        targetAzimuth = calculatedTargetAzimuth.Degree;
-                        domeRotationCTS = new CancellationTokenSource();
-                        var slewCTS = CancellationTokenSource.CreateLinkedTokenSource(domeRotationCTS.Token, token);
-                        domeRotationTask = Dome.SlewToAzimuth(targetAzimuth, slewCTS.Token);
-                    }
-                }
-            }
-        }
-
-        private Angle GetSynchronizedPosition(TelescopeInfo telescopeInfo) {
-            var targetCoordinates = telescopeInfo.TargetCoordinates ?? telescopeInfo.Coordinates;
-            var targetSideOfPier = telescopeInfo.TargetSideOfPier ?? telescopeInfo.SideOfPier;
-            return domeSynchronization.TargetDomeAzimuth(
-                scopeCoordinates: targetCoordinates,
-                localSiderealTime: telescopeInfo.SiderealTime,
-                siteLatitude: Angle.ByDegree(telescopeInfo.SiteLatitude),
-                siteLongitude: Angle.ByDegree(telescopeInfo.SiteLongitude),
-                sideOfPier: targetSideOfPier);
-        }
-
-        private bool IsSynchronized {
-            get {
-                if (Dome?.Connected == true) {
-                    var calculatedTargetAzimuth = GetSynchronizedPosition(TelescopeInfo);
-                    var currentAzimuth = Angle.ByDegree(Dome.Azimuth);
-                    var tolerance = Angle.ByDegree(profileService.ActiveProfile.DomeSettings.AzimuthTolerance_degrees);
-                    return calculatedTargetAzimuth.Equals(currentAzimuth, tolerance);
-                }
-                return false;
+        private void OnFollowChanged(bool followEnabled) {
+            if (followEnabled && Dome?.Connected == true) {
+                this.domeFollower.Start();
+            } else {
+                this.domeFollower.Stop();
             }
         }
 
         public void UpdateDeviceInfo(TelescopeInfo deviceInfo) {
-            try {
-                TelescopeInfo = deviceInfo;
-                if (TelescopeInfo.Connected && DirectFollowEnabled) {
-                    if (!TelescopeInfo.Slewing || profileService.ActiveProfile.DomeSettings.SynchronizeDuringMountSlew) {
-                        SynchronizeWithTelescope(TelescopeInfo, CancellationToken.None);
-                    }
-                } else if (!TelescopeInfo.Connected) {
-                    FollowEnabled = false;
-                }
-            } catch (Exception e) {
-                Notification.ShowError(String.Format(Locale.Loc.Instance["LblDomeFollowFailure"], e.Message));
-                FollowEnabled = false;
-            }
+            TelescopeInfo = deviceInfo;
         }
 
         private TelescopeInfo telescopeInfo = DeviceInfo.CreateDefaultInstance<TelescopeInfo>();
@@ -615,14 +522,13 @@ namespace NINA.ViewModel.Equipment.Dome {
         private readonly IDeviceUpdateTimer updateTimer;
         private readonly IDomeMediator domeMediator;
         private readonly IApplicationStatusMediator applicationStatusMediator;
+        private readonly IDomeFollower domeFollower;
         private ITelescopeMediator telescopeMediator;
-        private IDomeSynchronization domeSynchronization;
         public IAsyncCommand ChooseDomeCommand { get; private set; }
         public ICommand RefreshDomeListCommand { get; private set; }
         public ICommand CancelChooseDomeCommand { get; private set; }
         public ICommand DisconnectCommand { get; private set; }
         public ICommand StopCommand { get; private set; }
-        public ICommand StopDomeRotateCommand { get; private set; }
         public ICommand OpenShutterCommand { get; private set; }
         public ICommand CloseShutterCommand { get; private set; }
         public ICommand ParkCommand { get; private set; }

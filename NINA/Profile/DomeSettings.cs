@@ -24,7 +24,6 @@ namespace NINA.Profile {
             DomeRadius_mm = 0.0;
             GemAxis_mm = 0.0;
             AzimuthTolerance_degrees = 1.0;
-            UseDirectFollowing = true;
             FindHomeBeforePark = false;
             DomeSyncTimeoutSeconds = 120;
         }
@@ -144,21 +143,6 @@ namespace NINA.Profile {
             set {
                 if (azimuthTolerance_degrees != value) {
                     azimuthTolerance_degrees = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        private bool useDirectSlaving = true;
-
-        [DataMember]
-        public bool UseDirectFollowing {
-            get {
-                return useDirectSlaving;
-            }
-            set {
-                if (useDirectSlaving != value) {
-                    useDirectSlaving = value;
                     RaisePropertyChanged();
                 }
             }

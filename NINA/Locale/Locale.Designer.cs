@@ -5535,6 +5535,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dome driver is following the telescope already.
+        /// </summary>
+        internal static string LblDomeFollowError_DriverFollowing {
+            get {
+                return ResourceManager.GetString("LblDomeFollowError_DriverFollowing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dome synchronization error. No longer following telescope. {0}.
         /// </summary>
         internal static string LblDomeFollowFailure {
@@ -5828,6 +5837,15 @@ namespace NINA.Locale {
         internal static string LblDomeSyncDuringMountSlewTooltip {
             get {
                 return ResourceManager.GetString("LblDomeSyncDuringMountSlewTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Timed out while waiting for dome synchronization.
+        /// </summary>
+        internal static string LblDomeSyncError_SyncTimeout {
+            get {
+                return ResourceManager.GetString("LblDomeSyncError_SyncTimeout", resourceCulture);
             }
         }
         

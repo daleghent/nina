@@ -11,6 +11,7 @@ using NINA.ViewModel.Equipment.Dome;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace NINATest.Dome {
         private Mock<IApplicationStatusMediator> mockApplicationStatusMediator;
         private Mock<IDomeMediator> mockDomeMediator;
         private Mock<ITelescopeMediator> mockTelescopeMediator;
-        private Mock<IDomeSynchronization> mockDomeSynchronization;
+        private Mock<IDomeFollower> mockDomeFollower;
         private Mock<IDeviceUpdateTimerFactory> mockDeviceUpdateTimerFactory;
         private Mock<IDeviceUpdateTimer> mockDeviceUpdateTimer;
         private Mock<IApplicationResourceDictionary> mockResourceDictionary;
@@ -32,7 +33,7 @@ namespace NINATest.Dome {
         private string domeId;
         private bool domeConnected;
         private ShutterState domeShutterState;
-        private bool domeDriverCanSlave;
+        private bool domeDriverCanFollow;
         private bool domeCanSetShutter;
         private bool domeCanSetPark;
         private bool domeCanSetAzimuth;
@@ -44,17 +45,14 @@ namespace NINATest.Dome {
         private bool domeAtPark;
         private bool domeAtHome;
         private bool domeSlewing;
-        private bool domeDriverSlaved;
-        private double domeAzimuthToleranceDegrees;
-        private Angle siteLatitude;
-        private Angle siteLongitude;
+        private bool domeDriverFollowing;
 
         [SetUp]
         public void Init() {
             domeId = "ID";
             domeConnected = false;
             domeShutterState = ShutterState.ShutterOpen;
-            domeDriverCanSlave = true;
+            domeDriverCanFollow = true;
             domeCanSetShutter = true;
             domeCanSetPark = true;
             domeCanSetAzimuth = true;
@@ -66,45 +64,36 @@ namespace NINATest.Dome {
             domeAtPark = true;
             domeAtHome = false;
             domeSlewing = false;
-            domeDriverSlaved = false;
-            domeAzimuthToleranceDegrees = 1.0;
-            siteLatitude = Angle.ByDegree(41.5);
-            siteLongitude = Angle.ByDegree(-23.2);
+            domeDriverFollowing = false;
 
             mockProfileService = new Mock<IProfileService>();
             mockDomeDeviceChooserVM = new Mock<IDeviceChooserVM>();
             mockApplicationStatusMediator = new Mock<IApplicationStatusMediator>();
             mockDomeMediator = new Mock<IDomeMediator>();
             mockTelescopeMediator = new Mock<ITelescopeMediator>();
-            mockDomeSynchronization = new Mock<IDomeSynchronization>();
-            mockDomeSynchronization.Setup(x => x.TargetDomeAzimuth(
-                It.IsAny<Coordinates>(),
-                It.IsAny<double>(),
-                It.IsAny<Angle>(),
-                It.IsAny<Angle>(),
-                It.IsAny<PierSide>())).Returns(() => domeTargetAzimuth);
+            mockDomeFollower = new Mock<IDomeFollower>();
+            mockDomeFollower.Setup(x => x.GetSynchronizedPosition(It.IsAny<TelescopeInfo>())).Returns(() => domeTargetAzimuth);
             mockDeviceUpdateTimer = new Mock<IDeviceUpdateTimer>();
             mockDeviceUpdateTimerFactory = new Mock<IDeviceUpdateTimerFactory>();
             mockDeviceUpdateTimerFactory
                 .Setup(x => x.Create(It.IsAny<Func<Dictionary<string, object>>>(), It.IsAny<Action<Dictionary<string, object>>>(), It.IsAny<double>()))
                 .Returns(mockDeviceUpdateTimer.Object);
             mockResourceDictionary = new Mock<IApplicationResourceDictionary>();
+            mockProfileService.SetupProperty(p => p.ActiveProfile.DomeSettings.Id);
             mockProfileService.SetupGet(p => p.ActiveProfile.ApplicationSettings.DevicePollingInterval).Returns(1);
-            mockProfileService.SetupGet(p => p.ActiveProfile.DomeSettings.UseDirectFollowing).Returns(false);
-            mockProfileService.SetupGet(p => p.ActiveProfile.DomeSettings.AzimuthTolerance_degrees).Returns(() => domeAzimuthToleranceDegrees);
 
             mockApplicationStatusMediator.Setup(x => x.StatusUpdate(It.IsAny<ApplicationStatus>()));
         }
 
         private async Task<DomeVM> CreateSUT() {
             var domeVM = new DomeVM(mockProfileService.Object, mockDomeMediator.Object, mockApplicationStatusMediator.Object, mockTelescopeMediator.Object,
-                mockDomeDeviceChooserVM.Object, mockDomeSynchronization.Object, mockResourceDictionary.Object, mockDeviceUpdateTimerFactory.Object);
+                mockDomeDeviceChooserVM.Object, mockDomeFollower.Object, mockResourceDictionary.Object, mockDeviceUpdateTimerFactory.Object);
 
             mockDome = new Mock<IDome>();
             mockDome.SetupGet(x => x.Id).Returns(() => domeId);
             mockDome.SetupGet(x => x.Connected).Returns(() => domeConnected);
             mockDome.SetupGet(x => x.ShutterStatus).Returns(() => domeShutterState);
-            mockDome.SetupGet(x => x.DriverCanFollow).Returns(() => domeDriverCanSlave);
+            mockDome.SetupGet(x => x.DriverCanFollow).Returns(() => domeDriverCanFollow);
             mockDome.SetupGet(x => x.CanSetShutter).Returns(() => domeCanSetShutter);
             mockDome.SetupGet(x => x.CanSetPark).Returns(() => domeCanSetPark);
             mockDome.SetupGet(x => x.CanSetAzimuth).Returns(() => domeCanSetAzimuth);
@@ -115,12 +104,12 @@ namespace NINATest.Dome {
             mockDome.SetupGet(x => x.AtPark).Returns(() => domeAtPark);
             mockDome.SetupGet(x => x.AtHome).Returns(() => domeAtHome);
             mockDome.SetupGet(x => x.Slewing).Returns(() => domeSlewing);
-            mockDome.SetupGet(x => x.DriverFollowing).Returns(() => domeDriverSlaved);
+            mockDome.SetupGet(x => x.DriverFollowing).Returns(() => domeDriverFollowing);
             mockDome.SetupSet(x => x.DriverFollowing = It.IsAny<bool>()).Callback<bool>(v => {
-                if (!domeDriverCanSlave) {
+                if (!domeDriverCanFollow) {
                     throw new InvalidOperationException("Dome cannot slave");
                 }
-                domeDriverSlaved = v;
+                domeDriverFollowing = v;
             });
             mockDome.Setup(x => x.Connect(It.IsAny<CancellationToken>())).Callback<CancellationToken>(ct => {
                 domeConnected = true;
@@ -133,141 +122,28 @@ namespace NINATest.Dome {
         }
 
         [Test]
-        public async Task Test_DomeSynchronize_ReceivesCorrectParameters() {
+        public async Task Test_DomeFollowEnabled_Starts() {
             var sut = await CreateSUT();
             sut.FollowEnabled = true;
-            sut.DirectFollowToggled = true;
-            var t1 = new TelescopeInfo() {
-                Connected = true,
-                SiteLatitude = siteLatitude.Degree,
-                SiteLongitude = siteLongitude.Degree,
-                SiderealTime = 11.2,
-                SideOfPier = PierSide.pierEast,
-                Coordinates = new Coordinates(1.0, 2.0, Epoch.J2000, Coordinates.RAType.Degrees)
-            };
-            sut.UpdateDeviceInfo(t1);
-            mockDomeSynchronization.Verify(x => x.TargetDomeAzimuth(t1.Coordinates, t1.SiderealTime, siteLatitude, siteLongitude, t1.SideOfPier), Times.Once);
+            mockDomeFollower.Verify(x => x.Start(), Times.Once);
         }
 
         [Test]
-        public async Task Test_SlavingDisabled_NoDomeSynchronization() {
+        public async Task Test_DomeDisconnected_DomeFollowEnabled_NoStart() {
             var sut = await CreateSUT();
-            sut.FollowEnabled = false;
-            sut.DirectFollowToggled = true;
-            var t1 = new TelescopeInfo() { Connected = true };
-            sut.UpdateDeviceInfo(t1);
-            mockDomeSynchronization.Verify(x => x.TargetDomeAzimuth(It.IsAny<Coordinates>(), It.IsAny<double>(), It.IsAny<Angle>(), It.IsAny<Angle>(), It.IsAny<PierSide>()), Times.Never);
+            domeConnected = false;
+            sut.FollowEnabled = true;
+            mockDomeFollower.Verify(x => x.Start(), Times.Never);
         }
 
         [Test]
-        public async Task Test_DirectSlavingDisabled_NoDomeSynchronization() {
-            var sut = await CreateSUT();
-            sut.DirectFollowToggled = false;
-            sut.FollowEnabled = true;
-            var t1 = new TelescopeInfo() { Connected = true };
-            sut.UpdateDeviceInfo(t1);
-            mockDomeSynchronization.Verify(x => x.TargetDomeAzimuth(It.IsAny<Coordinates>(), It.IsAny<double>(), It.IsAny<Angle>(), It.IsAny<Angle>(), It.IsAny<PierSide>()), Times.Never);
-        }
-
-        [Test]
-        public async Task Test_DomeSynchronize_TargetsOverrideCurrent() {
+        public async Task Test_DomeFollowStops_ToggleSwitchedOff() {
             var sut = await CreateSUT();
             sut.FollowEnabled = true;
-            sut.DirectFollowToggled = true;
-            var t1 = new TelescopeInfo() {
-                Connected = true,
-                SiteLatitude = siteLatitude.Degree,
-                SiteLongitude = siteLongitude.Degree,
-                SiderealTime = 11.2,
-                SideOfPier = PierSide.pierWest,
-                TargetSideOfPier = PierSide.pierEast,
-                Coordinates = new Coordinates(1.0, 2.0, Epoch.J2000, Coordinates.RAType.Degrees),
-                TargetCoordinates = new Coordinates(2.0, 3.0, Epoch.J2000, Coordinates.RAType.Degrees),
-            };
-            sut.UpdateDeviceInfo(t1);
-            mockDomeSynchronization.Verify(x => x.TargetDomeAzimuth(t1.TargetCoordinates, t1.SiderealTime, siteLatitude, siteLongitude, t1.TargetSideOfPier.Value), Times.Once);
-
-            var t2 = new TelescopeInfo() {
-                Connected = true,
-                SiteLatitude = siteLatitude.Degree,
-                SiteLongitude = siteLongitude.Degree,
-                SiderealTime = 11.2,
-                TargetSideOfPier = PierSide.pierWest,
-                SideOfPier = PierSide.pierEast,
-                TargetCoordinates = new Coordinates(1.0, 2.0, Epoch.J2000, Coordinates.RAType.Degrees),
-                Coordinates = new Coordinates(2.0, 3.0, Epoch.J2000, Coordinates.RAType.Degrees),
-            };
-            sut.UpdateDeviceInfo(t2);
-            mockDomeSynchronization.Verify(x => x.TargetDomeAzimuth(t2.TargetCoordinates, t2.SiderealTime, siteLatitude, siteLongitude, t2.TargetSideOfPier.Value), Times.Once);
-        }
-
-        [Test]
-        public async Task Test_DriverSlaved_Toggling() {
-            var sut = await CreateSUT();
-            Assert.AreEqual(false, mockDome.Object.DriverFollowing);
-
-            sut.DirectFollowToggled = true;
-            mockDome.VerifySet(x => x.DriverFollowing = false, Times.Once);
-
-            sut.FollowEnabled = true;
-            mockDome.VerifySet(x => x.DriverFollowing = false, Times.Exactly(2));
-
-            sut.DirectFollowToggled = false;
-            mockDome.VerifySet(x => x.DriverFollowing = true, Times.Once);
-
-            sut.FollowEnabled = false;
-            mockDome.VerifySet(x => x.DriverFollowing = false, Times.Exactly(3));
-        }
-
-        [Test]
-        public async Task Test_DriverCanSlaveDisabled_NoUpdates() {
-            domeDriverCanSlave = false;
-            var sut = await CreateSUT();
-            Assert.AreEqual(false, mockDome.Object.DriverFollowing);
-
-            sut.DirectFollowToggled = true;
-            mockDome.VerifySet(x => x.DriverFollowing = It.IsAny<bool>(), Times.Never);
-
-            sut.FollowEnabled = true;
-            mockDome.VerifySet(x => x.DriverFollowing = It.IsAny<bool>(), Times.Never);
-
-            sut.DirectFollowToggled = false;
-            mockDome.VerifySet(x => x.DriverFollowing = It.IsAny<bool>(), Times.Never);
-
-            sut.FollowEnabled = false;
-            mockDome.VerifySet(x => x.DriverFollowing = It.IsAny<bool>(), Times.Never);
-        }
-
-        [Test]
-        public async Task Test_DomeSynchronizeThrows_DisablesDirectSlaving() {
-            var sut = await CreateSUT();
-            sut.FollowEnabled = true;
-            sut.DirectFollowToggled = true;
-            var t1 = new TelescopeInfo() { Connected = true };
-            mockDomeSynchronization.Setup(x => x.TargetDomeAzimuth(It.IsAny<Coordinates>(), It.IsAny<double>(), It.IsAny<Angle>(), It.IsAny<Angle>(), It.IsAny<PierSide>())).Throws(new InvalidOperationException("Error"));
-            sut.UpdateDeviceInfo(t1);
-
-            // Error getting the TargetDomeAzimuth disables slaving
-            Assert.AreEqual(false, sut.FollowEnabled);
-        }
-
-        [Test]
-        public async Task Test_DomeSynchronize_SlewIfExceedsTolerance() {
-            var sut = await CreateSUT();
-            sut.FollowEnabled = true;
-            sut.DirectFollowToggled = true;
-            var t1 = new TelescopeInfo() { Connected = true };
-            domeTargetAzimuth = Angle.ByDegree(2);
-            mockDome
-                .Setup(x => x.SlewToAzimuth(domeTargetAzimuth.Degree, It.IsAny<CancellationToken>()))
-                .Callback<double, CancellationToken>((x, y) => {
-                    domeAzimuth = domeTargetAzimuth.Degree;
-                }).Returns(Task.CompletedTask)
-                .Verifiable();
-
-            sut.UpdateDeviceInfo(t1);
-            await sut.WaitForDomeSynchronization(CancellationToken.None);
-            mockDome.Verify();
+            mockDomeFollower.Verify(x => x.Start(), Times.Once);
+            mockDomeFollower.SetupGet(f => f.IsFollowing).Returns(false);
+            mockDomeFollower.Raise(f => f.PropertyChanged += null, new PropertyChangedEventArgs(nameof(IDomeFollower.IsFollowing)));
+            mockDomeFollower.Verify(x => x.Stop(), Times.Once);
         }
 
         [Test]

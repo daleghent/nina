@@ -5,7 +5,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Utility.Mediator {
+
     internal class DomeMediator : DeviceMediator<IDomeVM, IDomeConsumer, DomeInfo>, IDomeMediator {
+
         public Task<bool> OpenShutter(CancellationToken cancellationToken) {
             return handler.OpenShutter(cancellationToken);
         }
@@ -28,6 +30,10 @@ namespace NINA.Utility.Mediator {
 
         public Task<bool> DisableFollowing(CancellationToken cancellationToken) {
             return handler.DisableFollowing(cancellationToken);
+        }
+
+        public Task<bool> SlewToAzimuth(double degrees, CancellationToken cancellationToken) {
+            return handler.SlewToAzimuth(degrees, cancellationToken);
         }
     }
 }

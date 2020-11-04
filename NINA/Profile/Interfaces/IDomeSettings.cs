@@ -23,7 +23,6 @@ namespace NINA.Profile {
         double GemAxis_mm { get; set; }
         double LateralAxis_mm { get; set; }
         double AzimuthTolerance_degrees { get; set; }
-        bool UseDirectFollowing { get; set; }
         bool FindHomeBeforePark { get; set; }
         int DomeSyncTimeoutSeconds { get; set; }
         bool SynchronizeDuringMountSlew { get; set; }

@@ -706,6 +706,8 @@
     <Compile Include="Utility\Converters\IntNegativeOneToDoubleDashConverter.cs" />
     <Compile Include="Utility\Converters\InverseBooleanOrToVisibilityCollapsedMultiConverter.cs" />
     <Compile Include="Utility\Converters\InverseNullToVisibilityCollapsedConverter.cs" />
+    <Compile Include="ViewModel\Equipment\Dome\DomeFollower.cs" />
+    <Compile Include="ViewModel\Equipment\Dome\IDomeFollower.cs" />
     <Compile Include="ViewModel\Interfaces\IMainWindowVM.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="View\Sequencer\Converter\SequenceEntityStatusToVisibilityConverter.cs" />

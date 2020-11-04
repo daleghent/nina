@@ -169,24 +169,6 @@
                                     IsChecked="{Binding FollowEnabled}" />
                             </UniformGrid>
                         </Border>
-                        <Border
-                            Margin="0,5,0,0"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0"
-                            Grid.Column="1"
-                            Grid.Row="0"
-                            Visibility="{Binding DomeInfo.DriverCanFollow, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}"
-                            IsEnabled="{Binding FollowEnabled}">
-                            <UniformGrid Columns="2">
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeDirectDriver}" />
-                                <CheckBox
-                                    Width="120"
-                                    Height="25"
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding DirectFollowToggled}" />
-                            </UniformGrid>
-                        </Border>
                         <Grid
                             Grid.Row="0"
                             Grid.RowSpan="4"

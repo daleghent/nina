@@ -19,12 +19,21 @@ using System.Threading.Tasks;
 namespace NINA.ViewModel.Equipment.Dome {
 
     public interface IDomeVM : IDeviceVM<DomeInfo>, IDockableVM {
+
         Task<bool> OpenShutter(CancellationToken cancellationToken);
+
         Task<bool> CloseShutter(CancellationToken cancellationToken);
+
         Task<bool> Park(CancellationToken cancellationToken);
+
+        Task<bool> SlewToAzimuth(double degrees, CancellationToken cancellationToken);
+
         double TargetAzimuthDegrees { get; }
+
         Task WaitForDomeSynchronization(CancellationToken cancellationToken);
+
         Task<bool> EnableFollowing(CancellationToken cancellationToken);
+
         Task<bool> DisableFollowing(CancellationToken cancellationToken);
     }
 }
