@@ -93,6 +93,8 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Can send the sequencer target coordinates to the Framing Wizard
 - Improved Meridian Flip reliability by retrying when changing the pier or slewing close to the meridian fails. NINA now provides a warning suggesting to increase the meridian wait time if this hapens
 - Guider settings moved to the guider equipment page making them easier to find and exposing only settings relevant for each type of guider
+- Connect all button now connects all devices in a sequential order to prevent collisions with com port scanning that could happen
+- After hitting connect all button, it will show highlighted and when hit again it will disconnect all devices instead
 
 ### Guiders
 - MetaGuide is now supported

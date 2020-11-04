@@ -4883,4 +4883,7 @@ Example:
   <data name="LblCloseAll" xml:space="preserve">
     <value>Close All</value>
   </data>
+  <data name="LblConnectAll" xml:space="preserve">
+    <value>Connect all devices?</value>
+  </data>
 </root>

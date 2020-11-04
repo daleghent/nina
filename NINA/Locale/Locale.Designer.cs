@@ -3633,6 +3633,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connect all devices?.
+        /// </summary>
+        internal static string LblConnectAll {
+            get {
+                return ResourceManager.GetString("LblConnectAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connected.
         /// </summary>
         internal static string LblConnected {

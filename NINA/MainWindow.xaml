@@ -314,7 +314,23 @@
                         ButtonImage="{StaticResource PowerSVG}"
                         ButtonStyle="{StaticResource SecondaryBackgroundButton}"
                         Command="{Binding ApplicationDeviceConnectionVM.ConnectAllDevicesCommand}"
-                        ToolTip="{ns:Loc LblConnect}" />
+                        ToolTip="{ns:Loc LblConnect}"
+                        Visibility="{Binding ApplicationDeviceConnectionVM.AllConnected, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
+                    <ninactrl:CancellableButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Width="40"
+                        Height="40"
+                        Margin="10"
+                        VerticalAlignment="Center"
+                        Background="{StaticResource SecondaryBackgroundBrush}"
+                        ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
+                        ButtonImage="{StaticResource PowerSVG}"
+                        ButtonStyle="{StaticResource SecondaryBackgroundButton}"
+                        Command="{Binding ApplicationDeviceConnectionVM.DisconnectAllDevicesCommand}"
+                        ToolTip="{ns:Loc LblDisconnect}"
+                        Visibility="{Binding ApplicationDeviceConnectionVM.AllConnected, Converter={StaticResource VisibilityConverter}}" />
                     <ninactrl:LoadingControl
                         Grid.Row="0"
                         Grid.Column="0"

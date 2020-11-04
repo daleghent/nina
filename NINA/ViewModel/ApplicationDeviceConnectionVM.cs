@@ -53,24 +53,80 @@ namespace NINA.ViewModel {
             this.safetyMonitorMediator = safetyMonitorMediator;
 
             ConnectAllDevicesCommand = new AsyncCommand<bool>(async () => {
-                var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblReconnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
+                var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblConnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
                 if (diag == MessageBoxResult.OK) {
                     return await Task<bool>.Run(async () => {
-                        var cam = cameraMediator.Connect();
-                        var fw = filterWheelMediator.Connect();
-                        var telescope = telescopeMediator.Connect();
-                        var focuser = focuserMediator.Connect();
-                        var rotator = rotatorMediator.Connect();
-                        var flatdevice = flatDeviceMediator.Connect();
-                        var guider = guiderMediator.Connect();
-                        var weather = weatherDataMediator.Connect();
-                        var swtch = switchMediator.Connect();
-                        var dome = domeMediator.Connect();
-                        var safetyMonitor = this.safetyMonitorMediator.Connect();
-                        await Task.WhenAll(cam, fw, telescope, focuser, rotator, flatdevice, guider, weather, swtch, dome, safetyMonitor);
+                        try {
+                            Logger.Debug("Connecting to camera");
+                            await cameraMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        try {
+                            Logger.Debug("Connecting to Filter Wheel");
+                            await filterWheelMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        try {
+                            Logger.Debug("Connecting to Telescope");
+                            await telescopeMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        try {
+                            Logger.Debug("Connecting to Focuser");
+                            await focuserMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        try {
+                            Logger.Debug("Connecting to Rotator");
+                            await rotatorMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        try {
+                            Logger.Debug("Connecting to Guider");
+                            await guiderMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        try {
+                            Logger.Debug("Connecting to Flat Device");
+                            await flatDeviceMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        try {
+                            Logger.Debug("Connecting to Weather Data");
+                            await weatherDataMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        try {
+                            Logger.Debug("Connecting to Switch");
+                            await switchMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        try {
+                            Logger.Debug("Connecting to Dome");
+                            await domeMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        try {
+                            Logger.Debug("Connecting to Safety Monitor");
+                            await safetyMonitorMediator.Connect();
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                        }
+                        AllConnected = true;
                         return true;
                     });
                 } else {
+                    AllConnected = false;
                     return false;
                 }
             });
@@ -79,10 +135,21 @@ namespace NINA.ViewModel {
                 var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
                 if (diag == MessageBoxResult.OK) {
                     DisconnectEquipment();
+                    AllConnected = false;
                 }
             });
 
             ClosingCommand = new RelayCommand(ClosingApplication);
+        }
+
+        private bool allConnected = false;
+
+        public bool AllConnected {
+            get => allConnected;
+            set {
+                allConnected = value;
+                RaisePropertyChanged();
+            }
         }
 
         private void ClosingApplication(object o) {

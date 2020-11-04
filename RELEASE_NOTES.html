@@ -136,6 +136,8 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>Can send the sequencer target coordinates to the Framing Wizard</li>
 <li>Improved Meridian Flip reliability by retrying when changing the pier or slewing close to the meridian fails. NINA now provides a warning suggesting to increase the meridian wait time if this hapens</li>
 <li>Guider settings moved to the guider equipment page making them easier to find and exposing only settings relevant for each type of guider</li>
+<li>Connect all button now connects all devices in a sequential order to prevent collisions with com port scanning that could happen</li>
+<li>After hitting connect all button, it will show highlighted and when hit again it will disconnect all devices instead</li>
 </ul>
 <h3 id="guiders">Guiders</h3>
 <ul>
@@ -176,7 +178,6 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <ul>
 <li>Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.</li>
 </ul>
-<h2 id="bugfixes">Bugfixes</h2>
 <h2 id="bugfixes-1">Bugfixes</h2>
 <ul>
 <li>When rotator reports final position too early while still reporting IsMoving as true, N.I.N.A. will now still wait for the movement to complete</li>
@@ -904,9 +905,10 @@ Thank you for your support!</p>
 <li>ImagePatterns inside options can now be dragged from the list to the textbox</li>
 <li>Major code refactorings for better maintainability</li>
 <li>Lots and lots of minor bugfixes and improvements</li>
-<li>Ability to launch NINA with a specific ProfileId via the -profileid cmd line argument</li>
-<li>Windows JumpList integration for quickly launching NINA loading a specific profile</li>
+<li>Launch NINA with a specific ProfileId via cmdline</li>
+<li>Integrated with Windows JumpList feature to launch instance with specific profile loaded</li>
 <li>Enhanced Altitude Check to permit imaging of targets that are below the configured altitude when they are rising in the sky and display a visual cue to distinguish rising versus setting targets</li>
 </ul>
+
 </body>
 </html>
