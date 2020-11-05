@@ -81,8 +81,6 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             var info = flatDeviceMediator.GetInfo();
             if (!info.Connected) {
                 i.Add(Locale.Loc.Instance["LblFlatDeviceNotConnected"]);
-            } else if (!info.SupportsOpenClose) {
-                i.Add(Locale.Loc.Instance["Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose"]);
             }
             Issues = i;
             return i.Count == 0;
