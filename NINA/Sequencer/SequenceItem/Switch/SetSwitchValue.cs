@@ -138,11 +138,11 @@ namespace NINA.Sequencer.SequenceItem.Switch {
                 //When switch gets disconnected the real list will be changed to the dummy list
                 if (!(WritableSwitches.First() is DummySwitch)) {
                     WritableSwitches = new ReadOnlyCollection<IWritableSwitch>(CreateDummyList());
-                    if (switchIndex >= 0 && WritableSwitches.Count > switchIndex) {
-                        SelectedSwitch = WritableSwitches[switchIndex];
-                    }
                 }
 
+                if (switchIndex >= 0 && WritableSwitches.Count > switchIndex) {
+                    SelectedSwitch = WritableSwitches[switchIndex];
+                }
                 i.Add(Locale.Loc.Instance["LblSwitchNotConnected"]);
             } else {
                 //When switch gets connected the dummy list will be changed to the real list
