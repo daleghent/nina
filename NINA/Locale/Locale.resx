@@ -4886,4 +4886,10 @@ Example:
   <data name="LblConnectAll" xml:space="preserve">
     <value>Connect all devices?</value>
   </data>
+  <data name="LblCollapseSequencerTemplatesByDefault" xml:space="preserve">
+    <value>Collapse Sequence Templates by default</value>
+  </data>
+  <data name="LblCollapseSequencerTemplatesByDefaultTooltip" xml:space="preserve">
+    <value>When this option is enabled, adding templates and targets to the sequencer will create them in a collapsed state.</value>
+  </data>
 </root>

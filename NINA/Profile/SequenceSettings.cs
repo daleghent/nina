@@ -43,6 +43,7 @@ namespace NINA.Profile {
             targetsFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A", "Targets");
             startupSequenceTemplate = string.Empty;
             unparMountAtSequenceStart = true;
+            collapseSequencerTemplatesByDefault = false;
         }
 
         private string templatePath;
@@ -252,6 +253,21 @@ namespace NINA.Profile {
             set {
                 if (openDomeShutterAtSequenceStart != value) {
                     openDomeShutterAtSequenceStart = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool collapseSequencerTemplatesByDefault;
+
+        [DataMember]
+        public bool CollapseSequencerTemplatesByDefault {
+            get {
+                return collapseSequencerTemplatesByDefault;
+            }
+            set {
+                if (collapseSequencerTemplatesByDefault != value) {
+                    collapseSequencerTemplatesByDefault = value;
                     RaisePropertyChanged();
                 }
             }

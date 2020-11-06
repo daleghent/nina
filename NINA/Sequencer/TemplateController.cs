@@ -64,7 +64,7 @@ namespace NINA.Sequencer {
                 try {
                     var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file)) as ISequenceContainer;
                     if (container is ISequenceRootContainer) continue;
-                    Templates.Add(new TemplatedSequenceContainer(DefaultTemplatesGroup, container));
+                    Templates.Add(new TemplatedSequenceContainer(profileService, DefaultTemplatesGroup, container));
                 } catch (Exception ex) {
                     Logger.Error("Invalid template JSON", ex);
                 }
@@ -125,7 +125,7 @@ namespace NINA.Sequencer {
                 try {
                     var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
                     if (container is ISequenceRootContainer) continue;
-                    var template = new TemplatedSequenceContainer(UserTemplatesGroup, container);
+                    var template = new TemplatedSequenceContainer(profileService, UserTemplatesGroup, container);
                     var fileInfo = new FileInfo(file);
                     container.Name = fileInfo.Name.Replace(TemplateFileExtension, "");
                     template.SubGroups = fileInfo.Directory.FullName.Replace(userTemplatePath, "").Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
@@ -162,16 +162,20 @@ namespace NINA.Sequencer {
 
     public class TemplatedSequenceContainer : IDroppable {
 
-        public TemplatedSequenceContainer(string group, ISequenceContainer container) {
+        public TemplatedSequenceContainer(IProfileService profileService, string group, ISequenceContainer container) {
             Group = group;
             Container = container;
             SubGroups = new string[0];
+            this.profileService = profileService;
         }
 
         public string GroupTranslated => Locale.Loc.Instance[Group] + " › " + (SubGroups.Count() > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
 
         public string Group { get; }
         public string[] SubGroups { get; set; }
+
+        private IProfileService profileService;
+
         public ISequenceContainer Container { get; }
 
         public ISequenceContainer Parent => null;
@@ -198,7 +202,11 @@ namespace NINA.Sequencer {
         }
 
         public ISequenceItem Clone() {
-            return (ISequenceItem)Container.Clone();
+            var clone = (ISequenceContainer)Container.Clone();
+            if (profileService.ActiveProfile.SequenceSettings.CollapseSequencerTemplatesByDefault) {
+                clone.IsExpanded = false;
+            }
+            return clone;
         }
     }
 }

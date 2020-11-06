@@ -3561,6 +3561,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Collapse Sequence Templates by default.
+        /// </summary>
+        internal static string LblCollapseSequencerTemplatesByDefault {
+            get {
+                return ResourceManager.GetString("LblCollapseSequencerTemplatesByDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to When this option is enabled, adding templates and targets to the sequencer will create them in a collapsed state..
+        /// </summary>
+        internal static string LblCollapseSequencerTemplatesByDefaultTooltip {
+            get {
+                return ResourceManager.GetString("LblCollapseSequencerTemplatesByDefaultTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Color sensor is not supported yet.
         /// </summary>
         internal static string LblColorSensorNotSupported {

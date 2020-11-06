@@ -789,7 +789,7 @@
                                                                                 <Setter Property="Header" Value="{StaticResource TemplateMenuHeader}" />
                                                                                 <Setter Property="Icon" Value="{StaticResource TemplateMenuIcon}" />
                                                                                 <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoCommand}" />
-                                                                                <Setter Property="CommandParameter" Value="{Binding Container, Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
+                                                                                <Setter Property="CommandParameter" Value="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
                                                                             </Style>
                                                                         </MenuItem.ItemContainerStyle>
                                                                     </MenuItem>
@@ -802,7 +802,7 @@
                                                                                 <Setter Property="Header" Value="{StaticResource MenuHeader}" />
                                                                                 <Setter Property="Icon" Value="{StaticResource TemplateMenuIcon}" />
                                                                                 <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoCommand}" />
-                                                                                <Setter Property="CommandParameter" Value="{Binding Container, Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
+                                                                                <Setter Property="CommandParameter" Value="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
                                                                             </Style>
                                                                         </MenuItem.ItemContainerStyle>
                                                                     </MenuItem>

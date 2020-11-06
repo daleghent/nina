@@ -63,6 +63,7 @@ namespace NINA.Profile {
         string StartupSequenceTemplate { get; set; }
         string SequencerTemplatesFolder { get; set; }
         string SequencerTargetsFolder { get; set; }
+        bool CollapseSequencerTemplatesByDefault { get; set; }
 
         /// <summary>
         /// Used by Sequence Constructor

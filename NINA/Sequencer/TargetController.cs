@@ -80,9 +80,9 @@ namespace NINA.Sequencer {
             var existingTarget = Targets.FirstOrDefault(x => x.Name == deepSkyObjectContainer.Name);
             if (existingTarget != null) {
                 Targets.Remove(existingTarget);
-                Targets.Add(new TargetSequenceContainer(deepSkyObjectContainer));
+                Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer));
             } else {
-                Targets.Add(new TargetSequenceContainer(deepSkyObjectContainer));
+                Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer));
             }
 
             RefreshFilters();
@@ -105,7 +105,7 @@ namespace NINA.Sequencer {
 
                     var dsoContainer = container as IDeepSkyObjectContainer;
                     if (dsoContainer != null) {
-                        Targets.Add(new TargetSequenceContainer(dsoContainer));
+                        Targets.Add(new TargetSequenceContainer(profileService, dsoContainer));
                     }
                 } catch (Exception ex) {
                     Logger.Error($"Invalid target JSON {file}", ex);
@@ -132,13 +132,16 @@ namespace NINA.Sequencer {
 
     public class TargetSequenceContainer : IDroppable {
 
-        public TargetSequenceContainer(IDeepSkyObjectContainer container) {
+        public TargetSequenceContainer(IProfileService profileService, IDeepSkyObjectContainer container) {
             Container = container;
+            this.profileService = profileService;
         }
 
         public string Name { get => Container.Name; }
 
         public IDeepSkyObjectContainer Container { get; }
+
+        private IProfileService profileService;
 
         public ISequenceContainer Parent => null;
 
@@ -164,7 +167,11 @@ namespace NINA.Sequencer {
         }
 
         public IDeepSkyObjectContainer Clone() {
-            return Container.Clone() as IDeepSkyObjectContainer;
+            var clone = (IDeepSkyObjectContainer)Container.Clone();
+            if (profileService.ActiveProfile.SequenceSettings.CollapseSequencerTemplatesByDefault) {
+                clone.IsExpanded = false;
+            }
+            return clone;
         }
     }
 }
