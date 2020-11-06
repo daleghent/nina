@@ -123,7 +123,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
             if ((DateTime.Now - lastFlipTime) < TimeSpan.FromHours(11)) {
                 //A flip for the same target is only expected every 12 hours on planet earth
-                Logger.Info($"Meridian Flip - Flip for the current target already happened at {lastFlipTime }. Flip will be skipped");
+                Logger.Debug($"Meridian Flip - Flip for the current target already happened at {lastFlipTime }. Flip will be skipped");
                 return false;
             }
 
@@ -145,6 +145,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                     return telescopeInfo.SideOfPier == PierSide.pierWest;
                 } else {
                     //No pier info is available. Flip now.
+                    Logger.Debug("Meridian Flip - Remaining Time is between minimum and maximum flip time. Flip should happen now");
                     return true;
                 }
             } else {
@@ -153,7 +154,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
                 if (settings.UseSideOfPier) {
                     if (telescopeInfo.SideOfPier == PierSide.pierEast) {
-                        Logger.Info("Meridian Flip - Telescope reports East Side of Pier, Automated Flip will not be performed.");
+                        Logger.Debug("Meridian Flip - Telescope reports East Side of Pier, Automated Flip will not be performed.");
                         return false;
                     } else {
                         if (noRemainingTime) {
