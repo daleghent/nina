@@ -131,7 +131,7 @@ namespace NINA.Sequencer.SequenceItem {
                     Status = SequenceEntityStatus.SKIPPED;
                 } catch (OperationCanceledException ex) {
                     Status = SequenceEntityStatus.CREATED;
-                    Logger.Info($"Cancelled {this}");
+                    Logger.Debug($"Cancelled {this}");
                     throw ex;
                 } catch (Exception ex) {
                     Status = SequenceEntityStatus.FAILED;

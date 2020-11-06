@@ -65,8 +65,12 @@ namespace NINA.Sequencer {
                 if (!PromptForIssues()) {
                     return false;
                 }
+                try {
+                    await MainContainer.Run(progress, token);
+                } catch (OperationCanceledException) {
+                    Logger.Info("Sequence run was cancelled");
+                }
 
-                await MainContainer.Run(progress, token);
                 return true;
             });
         }
