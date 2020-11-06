@@ -21,6 +21,7 @@ using System.Windows;
 using System.Windows.Controls;
 
 namespace NINA {
+
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
@@ -29,12 +30,11 @@ namespace NINA {
         private IMainWindowVM _mainWindowViewModel;
 
         protected override void OnStartup(StartupEventArgs e) {
-
             Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
-            _profileService = 
+            _profileService =
                 //TODO: Eliminate Smell by reversing direction of this dependency
                 (ProfileService)Current.Resources["ProfileService"];
-            
+
             ToolTipService.ShowDurationProperty.OverrideMetadata(typeof(DependencyObject), new FrameworkPropertyMetadata(Int32.MaxValue));
 
             var startWithProfileId = e
@@ -45,9 +45,9 @@ namespace NINA {
             _profileService = (ProfileService)Current.Resources["ProfileService"];
 
             if (!_profileService.TryLoad(startWithProfileId)) {
-               ProfileService.ActivateInstanceOfNinaReferencingProfile(startWithProfileId);
-               Shutdown();
-               return;
+                ProfileService.ActivateInstanceOfNinaReferencingProfile(startWithProfileId);
+                Shutdown();
+                return;
             }
             this.RefreshJumpList(_profileService);
 
@@ -66,27 +66,31 @@ namespace NINA {
         private void TextBox_GotFocus(object sender, RoutedEventArgs e) {
             (sender as TextBox).SelectAll();
         }
-        protected override void OnExit(ExitEventArgs e) {
 
+        protected override void OnExit(ExitEventArgs e) {
             this.RefreshJumpList(_profileService);
         }
 
-        private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e){
-            Logger.Error(e.Exception);
+        private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
+            if (e.Exception.InnerException != null) {
+                var message = $"{e.Exception.Message}{Environment.NewLine}{e.Exception.StackTrace}{Environment.NewLine}Inner Exception: {Environment.NewLine}{e.Exception.InnerException}{e.Exception.StackTrace}";
+                Logger.Error(message);
+            } else {
+                Logger.Error(e.Exception);
+            }
+
             if (Current != null) {
                 var result = MyMessageBox.MyMessageBox.Show(
-                    Locale.Loc.Instance["LblApplicationInBreakMode"], 
-                    Locale.Loc.Instance["LblUnhandledException"], 
-                    MessageBoxButton.YesNo, 
+                    Locale.Loc.Instance["LblApplicationInBreakMode"],
+                    Locale.Loc.Instance["LblUnhandledException"],
+                    MessageBoxButton.YesNo,
                     MessageBoxResult.No);
                 if (result == MessageBoxResult.Yes) {
                     e.Handled = true;
-                }
-                else {
+                } else {
                     try {
                         _mainWindowViewModel?.ApplicationDeviceConnectionVM?.DisconnectEquipment();
-                    }
-                    catch (Exception ex) {
+                    } catch (Exception ex) {
                         Logger.Error(ex);
                     }
                     e.Handled = true;
@@ -94,5 +98,5 @@ namespace NINA {
                 }
             }
         }
-   }
+    }
 }
