@@ -17,6 +17,7 @@ using NINA.Model;
 using NINA.Model.MySwitch;
 using NINA.Sequencer.Exceptions;
 using NINA.Sequencer.Validations;
+using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -41,8 +42,9 @@ namespace NINA.Sequencer.SequenceItem.Switch {
         [ImportingConstructor]
         public SetSwitchValue(ISwitchMediator switchMediator) {
             this.switchMediator = switchMediator;
-            this.switchIndex = -1;
-            SwitchInfo = switchMediator.GetInfo();
+
+            WritableSwitches = new ReadOnlyCollection<IWritableSwitch>(CreateDummyList());
+            SelectedSwitch = WritableSwitches.First();
         }
 
         private IList<string> issues = new List<string>();
@@ -98,17 +100,17 @@ namespace NINA.Sequencer.SequenceItem.Switch {
             get => selectedSwitch;
             set {
                 selectedSwitch = value;
-                Validate();
+                SwitchIndex = (short)WritableSwitches.IndexOf(selectedSwitch);
                 RaisePropertyChanged();
             }
         }
 
-        private SwitchInfo switchInfo;
+        private ReadOnlyCollection<IWritableSwitch> writableSwitches;
 
-        public SwitchInfo SwitchInfo {
-            get => switchInfo;
+        public ReadOnlyCollection<IWritableSwitch> WritableSwitches {
+            get => writableSwitches;
             set {
-                switchInfo = value;
+                writableSwitches = value;
                 RaisePropertyChanged();
             }
         }
@@ -121,21 +123,44 @@ namespace NINA.Sequencer.SequenceItem.Switch {
             }
         }
 
+        private IList<IWritableSwitch> CreateDummyList() {
+            var dummySwitches = new List<IWritableSwitch>();
+            for (short i = 0; i < 20; i++) {
+                dummySwitches.Add(new DummySwitch((short)(i + 1)));
+            }
+            return dummySwitches;
+        }
+
         public bool Validate() {
             var i = new List<string>();
-            SwitchInfo = switchMediator.GetInfo();
-            if (!SwitchInfo?.Connected == true) {
+            var info = switchMediator.GetInfo();
+            if (info?.Connected != true) {
+                //When switch gets disconnected the real list will be changed to the dummy list
+                if (!(WritableSwitches.First() is DummySwitch)) {
+                    WritableSwitches = new ReadOnlyCollection<IWritableSwitch>(CreateDummyList());
+                    if (switchIndex >= 0 && WritableSwitches.Count > switchIndex) {
+                        SelectedSwitch = WritableSwitches[switchIndex];
+                    }
+                }
+
                 i.Add(Locale.Loc.Instance["LblSwitchNotConnected"]);
             } else {
-                if (SelectedSwitch == null && switchIndex >= 0 && SwitchInfo.WritableSwitches.Count > switchIndex) {
-                    SelectedSwitch = SwitchInfo.WritableSwitches[switchIndex];
-                }
-                if (SelectedSwitch == null) {
-                    i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Validation_NoSwitchSelected"]));
+                //When switch gets connected the dummy list will be changed to the real list
+                if (WritableSwitches.First() is DummySwitch) {
+                    WritableSwitches = info.WritableSwitches;
+
+                    if (switchIndex >= 0 && WritableSwitches.Count > switchIndex) {
+                        SelectedSwitch = WritableSwitches[switchIndex];
+                    } else {
+                        SelectedSwitch = null;
+                    }
                 }
             }
             var s = SelectedSwitch;
-            if (s != null) {
+
+            if (s == null) {
+                i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Validation_NoSwitchSelected"]));
+            } else {
                 if (Value < s.Minimum || Value > s.Maximum)
                     i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Validation_InvalidSwitchValue"], s.Minimum, s.Maximum, s.StepSize));
             }

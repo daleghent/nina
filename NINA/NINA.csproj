@@ -496,6 +496,7 @@
     <Compile Include="Model\MyFocuser\AscomFocuserProvider.cs" />
     <Compile Include="Model\MyFocuser\IAscomFocuserProvider.cs" />
     <Compile Include="Model\MyFlatDevice\ArteskyFlatBox.cs" />
+    <Compile Include="Model\MySwitch\DummySwitch.cs" />
     <Compile Include="Model\MyWeatherData\TheWeatherCompany.cs" />
     <Compile Include="Model\MyPlanetarium\C2A.cs" />
     <Compile Include="Model\MyGuider\MetaGuideGuider.cs" />

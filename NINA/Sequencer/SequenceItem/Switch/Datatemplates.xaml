@@ -22,8 +22,7 @@
                     <ComboBox
                         Margin="5,0,0,0"
                         DisplayMemberPath="Name"
-                        ItemsSource="{Binding SwitchInfo.WritableSwitches}"
-                        SelectedIndex="{Binding SwitchIndex}"
+                        ItemsSource="{Binding WritableSwitches}"
                         SelectedItem="{Binding SelectedSwitch}"
                         SelectedValuePath="Name" />
                     <TextBlock
