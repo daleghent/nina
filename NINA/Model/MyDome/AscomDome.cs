@@ -128,13 +128,16 @@ namespace NINA.Model.MyDome {
             }
         }
 
-        private T TryGetProperty<T>(Func<T> supplier, T defaultT) {
+        private T TryGetProperty<T>(Func<T> supplier, T defaultT, ref bool isImplemented) {
             try {
-                if (Connected) {
+                if (isImplemented && Connected) {
                     return supplier();
                 } else {
                     return defaultT;
                 }
+            } catch (PropertyNotImplementedException) {
+                isImplemented = false;
+                return defaultT;
             } catch (Exception) {
                 return defaultT;
             }
@@ -146,27 +149,37 @@ namespace NINA.Model.MyDome {
 
         public string DriverVersion => Connected ? dome?.DriverVersion ?? string.Empty : string.Empty;
 
-        public bool DriverCanFollow => Connected && dome.CanSlave;
+        private bool canSlaveImplemented = true;
+        public bool DriverCanFollow => TryGetProperty(() => dome.CanSlave, false, ref canSlaveImplemented);
 
-        public bool CanSetShutter => Connected && dome.CanSetShutter;
+        private bool canSetShutterImplemented = true;
+        public bool CanSetShutter => TryGetProperty(() => dome.CanSetShutter, false, ref canSetShutterImplemented);
 
-        public bool CanSetPark => Connected && dome.CanSetPark;
+        private bool canSetParkImplemented = true;
+        public bool CanSetPark => TryGetProperty(() => dome.CanSetPark, false, ref canSetParkImplemented);
 
-        public bool CanSetAzimuth => Connected && dome.CanSetAzimuth;
+        private bool canSetAzimuthImplemented = true;
+        public bool CanSetAzimuth => TryGetProperty(() => dome.CanSetAzimuth, false, ref canSetAzimuthImplemented);
 
-        public bool CanPark => Connected && dome.CanPark;
+        private bool canParkImplemented = true;
+        public bool CanPark => TryGetProperty(() => dome.CanPark, false, ref canParkImplemented);
 
-        public bool CanFindHome => Connected && dome.CanFindHome;
+        private bool canFindHomeImplemented = true;
+        public bool CanFindHome => TryGetProperty(() => dome.CanFindHome, false, ref canFindHomeImplemented);
 
-        public double Azimuth => TryGetProperty(() => dome.Azimuth, -1);
+        private bool azimuthImplemented = true;
+        public double Azimuth => TryGetProperty(() => dome.Azimuth, -1, ref azimuthImplemented);
 
-        public bool AtPark => Connected && dome.AtPark;
+        private bool atParkImplemented = true;
+        public bool AtPark => TryGetProperty(() => dome.AtPark, false, ref atParkImplemented);
 
-        public bool AtHome => Connected && dome.AtHome;
+        private bool atHomeImplemented = true;
+        public bool AtHome => TryGetProperty(() => dome.AtPark, false, ref atHomeImplemented);
 
+        private bool slavedImplemented = true;
         public bool DriverFollowing {
             get {
-                return TryGetProperty<bool>(() => dome.Slaved, false);
+                return TryGetProperty<bool>(() => dome.Slaved, false, ref slavedImplemented);
             }
             set {
                 if (Connected) {
@@ -176,9 +189,12 @@ namespace NINA.Model.MyDome {
             }
         }
 
-        public bool Slewing => TryGetProperty(() => dome.Slewing, false);
+        private bool slewingImplemented = true;
+        public bool Slewing => TryGetProperty(() => dome.Slewing, false, ref slewingImplemented);
 
-        public ShutterState ShutterStatus => TryGetProperty(() => dome.ShutterStatus.FromASCOM(), ShutterState.ShutterNone);
+        private bool shutterStatusImplemented = true;
+
+        public ShutterState ShutterStatus => TryGetProperty(() => dome.ShutterStatus.FromASCOM(), ShutterState.ShutterNone, ref shutterStatusImplemented);
 
         public bool CanSyncAzimuth => Connected && dome.CanSyncAzimuth;
 
