@@ -51,6 +51,7 @@ namespace NINA.Profile {
                 : string.Empty;
             guiderName = "PHD2";
             mgenFocalLength = 1000;
+            mgenPixelMargin = 10;
         }
 
         private double ditherPixels;
@@ -257,6 +258,18 @@ namespace NINA.Profile {
             set {
                 if (mgenFocalLength != value) {
                     mgenFocalLength = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int mgenPixelMargin;
+        [DataMember]
+        public int MGENPixelMargin {
+            get => mgenPixelMargin;
+            set {
+                if (mgenPixelMargin != value) {
+                    mgenPixelMargin = value;
                     RaisePropertyChanged();
                 }
             }

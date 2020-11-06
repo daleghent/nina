@@ -48,4 +48,5 @@ namespace NINA.MGEN.Commands.AppMode {
 
         public bool Dithering { get; }
     }
+
 }

@@ -7135,6 +7135,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keep guide stars off sensor edges by at least.
+        /// </summary>
+        internal static string LblPixelMargin {
+            get {
+                return ResourceManager.GetString("LblPixelMargin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pixels.
         /// </summary>
         internal static string LblPixels {
