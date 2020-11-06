@@ -15,7 +15,6 @@
 using NINA.Utility.Enum;
 
 namespace NINA.Profile {
-
     public interface IGuiderSettings : ISettings {
         string GuiderName { get; set; }
         double DitherPixels { get; set; }
@@ -35,6 +34,7 @@ namespace NINA.Profile {
         string MetaGuideIP { get; set; }
         int MetaGuidePort { get; set; }
         int MGENFocalLength { get; set; }
+        int MGENPixelMargin { get; set; }
         int MetaGuideMinIntensity { get; set; }
         int MetaGuideDitherSettleSeconds { get; set; }
         bool MetaGuideLockWhenGuiding { get; set; }

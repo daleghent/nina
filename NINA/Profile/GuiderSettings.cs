@@ -18,11 +18,9 @@ using System.IO;
 using System.Runtime.Serialization;
 
 namespace NINA.Profile {
-
     [Serializable()]
     [DataContract]
     public class GuiderSettings : Settings, IGuiderSettings {
-
         [OnDeserializing]
         public void OnDeserializing(StreamingContext context) {
             SetDefaultValues();
@@ -55,6 +53,7 @@ namespace NINA.Profile {
                 : string.Empty;
             guiderName = "PHD2";
             mgenFocalLength = 1000;
+            mgenPixelMargin = 10;
             metaGuideDitherSettleSeconds = 30;
         }
 
@@ -288,6 +287,18 @@ namespace NINA.Profile {
             set {
                 if (mgenFocalLength != value) {
                     mgenFocalLength = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int mgenPixelMargin;
+        [DataMember]
+        public int MGENPixelMargin {
+            get => mgenPixelMargin;
+            set {
+                if (mgenPixelMargin != value) {
+                    mgenPixelMargin = value;
                     RaisePropertyChanged();
                 }
             }

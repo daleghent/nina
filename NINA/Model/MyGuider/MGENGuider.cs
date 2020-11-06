@@ -87,6 +87,14 @@ namespace NINA.Model.MyGuider {
             }
         }
 
+        public int PixelMargin {
+            get => profileService.ActiveProfile.GuiderSettings.MGENPixelMargin;
+            set {
+                profileService.ActiveProfile.GuiderSettings.MGENPixelMargin = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public double PixelScale {
             get {
                 // According to documentation the pixel size reported is normalized to 4.85
@@ -119,6 +127,9 @@ namespace NINA.Model.MyGuider {
                 await mgen.StopGuiding();
             }
             var imagingParameter = await mgen.GetImagingParameter();
+            var ditherAmplitude = await mgen.GetDitherAmplitude();
+            Logger.Debug($"MGEN - Dither amplitude {ditherAmplitude.Amplitude} pixels");
+            Logger.Debug($"MGEN - Pixel margin {PixelMargin} pixels");
             Logger.Debug("MGEN - Starting Camera");
             await mgen.StartCamera();
             Logger.Debug($"MGEN - Starting Star Search - Gain: {imagingParameter.Gain} ExposureTime: {imagingParameter.ExposureTime}");
@@ -126,15 +137,31 @@ namespace NINA.Model.MyGuider {
             Logger.Debug($"MGEN - Star Search Done - {result.NumberOfStars} stars found");
             var starSearchSuccess = new MGENResult(false);
             if (result.NumberOfStars > 0) {
-                StarData starDetail = await mgen.GetStarData(0);
-                Logger.Debug($"MGEN - Got Star Detail and setting new guiding position - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
-                starSearchSuccess = await mgen.SetNewGuidingPosition(starDetail);
-                Logger.Debug($"MGEN - Set New Guiding Position: {starSearchSuccess.Success}");
-                needsCalibration = true;
-                Logger.Debug($"MGEN - Setting Imaging Parameter - Gain: {imagingParameter.Gain} ExposureTime: {imagingParameter.ExposureTime} Threshold: {imagingParameter.Threshold}");
-                await mgen.SetImagingParameter(imagingParameter.Gain, imagingParameter.ExposureTime, imagingParameter.Threshold);
-            } else {
-                Logger.Debug($"MGEN - No guide star found!");
+                StarData starDetail = null;
+                for (byte starIndex = 0; starIndex < result.NumberOfStars; starIndex++)
+                {
+                    starDetail = await mgen.GetStarData(starIndex);
+                    if (starDetail.PositionX > Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
+                        starDetail.PositionX < mgen.SensorSizeX - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) && 
+                        starDetail.PositionY > Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) && 
+                        starDetail.PositionY < mgen.SensorSizeY - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)))
+                    {
+                        Logger.Debug($"MGEN - Got Star Detail and setting new guiding position - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
+                        starSearchSuccess = await mgen.SetNewGuidingPosition(starDetail);
+                        Logger.Debug($"MGEN - Set New Guiding Position: {starSearchSuccess.Success}");
+                        needsCalibration = true;
+                        Logger.Debug($"MGEN - Setting Imaging Parameter - Gain: {imagingParameter.Gain} ExposureTime: {imagingParameter.ExposureTime} Threshold: {imagingParameter.Threshold}");
+                        await mgen.SetImagingParameter(imagingParameter.Gain, imagingParameter.ExposureTime, imagingParameter.Threshold);
+                        break;
+                    }
+                    else
+                    {
+                        Logger.Debug($"MGEN - Got Star Detail but skipping star because too close to edge - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
+                    }
+                }
+            }
+            if (!starSearchSuccess.Success) {
+                Logger.Error($"MGEN - No guide star found!");
             }
             return starSearchSuccess.Success;
         }

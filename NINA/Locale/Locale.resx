@@ -4167,6 +4167,9 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblMoveSkyPosition" xml:space="preserve">
     <value>Move Sky Position</value>
   </data>
+  <data name="LblPixelMargin" xml:space="preserve">
+    <value>Keep guide stars off sensor edges by at least</value>
+  </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
     <value>Add {0} to Minutes after Meridian</value>
   </data>

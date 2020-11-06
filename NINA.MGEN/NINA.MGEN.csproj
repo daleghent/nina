@@ -62,6 +62,7 @@
     <Compile Include="Commands\AppMode\AutoGuidingCommands\StartStarSearchCommand.cs" />
     <Compile Include="Commands\AppMode\AutoGuidingCommands\StopCameraCommand.cs" />
     <Compile Include="Commands\AppMode\AutoGuidingCommands\StopGuidingCommand.cs" />
+    <Compile Include="Commands\AppMode\DitheringCommands\GetDitherAmplitudeCommand.cs" />
     <Compile Include="Commands\AppMode\DitheringCommands\DitheringCommand.cs" />
     <Compile Include="Commands\AppMode\DitheringCommands\GetDitherStateCommand.cs" />
     <Compile Include="Commands\AppMode\DitheringCommands\StartDitherCommand.cs" />
