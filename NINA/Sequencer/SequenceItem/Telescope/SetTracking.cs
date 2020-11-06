@@ -42,6 +42,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             trackingModeChoicesBuilder.Add(TrackingMode.King);
             trackingModeChoicesBuilder.Add(TrackingMode.Solar);
             trackingModeChoicesBuilder.Add(TrackingMode.Lunar);
+            trackingModeChoicesBuilder.Add(TrackingMode.Stopped);
             trackingModeChoices = trackingModeChoicesBuilder.ToImmutable();
         }
 
