@@ -95,6 +95,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Guider settings moved to the guider equipment page making them easier to find and exposing only settings relevant for each type of guider
 - Connect all button now connects all devices in a sequential order to prevent collisions with com port scanning that could happen
 - After hitting connect all button, it will show highlighted and when hit again it will disconnect all devices instead
+- Meridian Flip now allows for a time range instead of a single point in time to allow for less time lost
 
 ### Guiders
 - MetaGuide is now supported

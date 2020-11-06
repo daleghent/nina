@@ -27,28 +27,13 @@ namespace NINA.Profile {
         }
 
         protected override void SetDefaultValues() {
-            enabled = false;
             recenter = true;
             minutesAfterMeridian = 5;
+            MaxMinutesAfterMeridian = 5;
             useSideOfPier = false;
             settleTime = 30;
             pauseTimeBeforeMeridian = 0;
             autoFocusAfterFlip = false;
-        }
-
-        private bool enabled;
-
-        [DataMember]
-        public bool Enabled {
-            get {
-                return enabled;
-            }
-            set {
-                if (enabled != value) {
-                    enabled = value;
-                    RaisePropertyChanged();
-                }
-            }
         }
 
         private bool recenter;
@@ -76,6 +61,27 @@ namespace NINA.Profile {
             set {
                 if (minutesAfterMeridian != value) {
                     minutesAfterMeridian = value;
+                    if (MaxMinutesAfterMeridian < minutesAfterMeridian) {
+                        MaxMinutesAfterMeridian = minutesAfterMeridian;
+                    }
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double maxMinutesAfterMeridian;
+
+        [DataMember]
+        public double MaxMinutesAfterMeridian {
+            get {
+                return maxMinutesAfterMeridian;
+            }
+            set {
+                if (maxMinutesAfterMeridian != value) {
+                    maxMinutesAfterMeridian = value;
+                    if (maxMinutesAfterMeridian < MinutesAfterMeridian) {
+                        MinutesAfterMeridian = value;
+                    }
                     RaisePropertyChanged();
                 }
             }

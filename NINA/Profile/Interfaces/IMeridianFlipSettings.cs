@@ -15,8 +15,17 @@
 namespace NINA.Profile {
 
     public interface IMeridianFlipSettings : ISettings {
-        bool Enabled { get; set; }
+
+        /// <summary>
+        /// The earliest time a flip should happen
+        /// </summary>
         double MinutesAfterMeridian { get; set; }
+
+        /// <summary>
+        /// The latest time a flip should happen
+        /// </summary>
+        double MaxMinutesAfterMeridian { get; set; }
+
         double PauseTimeBeforeMeridian { get; set; }
         bool Recenter { get; set; }
         int SettleTime { get; set; }

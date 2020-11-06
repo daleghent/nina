@@ -71,13 +71,18 @@ namespace NINA.Profile {
         bool CoolCameraAtSequenceStart { get; set; }
 
         /// <summary>
-        /// Used by Sequence Constructor
+        /// Used by Sequence Builder
         /// </summary>
         bool UnparMountAtSequenceStart { get; set; }
 
         /// <summary>
-        /// Used by Sequence Constructor
+        /// Used by Sequence Builder
         /// </summary>
         bool OpenDomeShutterAtSequenceStart { get; set; }
+
+        /// <summary>
+        /// Used by Sequence Builder
+        /// </summary>
+        bool DoMeridianFlip { get; set; }
     }
 }

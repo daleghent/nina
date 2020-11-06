@@ -4892,4 +4892,7 @@ Example:
   <data name="LblCollapseSequencerTemplatesByDefaultTooltip" xml:space="preserve">
     <value>When this option is enabled, adding templates and targets to the sequencer will create them in a collapsed state.</value>
   </data>
+  <data name="LblMaxMinutesAfterMeridian" xml:space="preserve">
+    <value>Max Minutes after Meridian</value>
+  </data>
 </root>

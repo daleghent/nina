@@ -1195,7 +1195,7 @@ namespace NINA.Model.MyTelescope {
             get {
                 var hourstomed = double.MaxValue;
                 try {
-                    hourstomed = RightAscension + (profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian / 60) - SiderealTime;
+                    hourstomed = RightAscension + (profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian / 60) - SiderealTime;
                     if (hourstomed < 0) {
                         hourstomed += 24;
                     }
@@ -1353,9 +1353,11 @@ namespace NINA.Model.MyTelescope {
                     case DriveRates.driveKing:
                         trackingModes.Add(TrackingMode.King);
                         break;
+
                     case DriveRates.driveLunar:
                         trackingModes.Add(TrackingMode.Lunar);
                         break;
+
                     case DriveRates.driveSolar:
                         trackingModes.Add(TrackingMode.Solar);
                         break;
@@ -1370,6 +1372,7 @@ namespace NINA.Model.MyTelescope {
         }
 
         private ImmutableList<TrackingMode> trackingModes = ImmutableList.Create<TrackingMode>();
+
         public IList<TrackingMode> TrackingModes {
             get {
                 return trackingModes;
@@ -1398,9 +1401,11 @@ namespace NINA.Model.MyTelescope {
                     case DriveRates.driveKing:
                         trackingMode = TrackingMode.King;
                         break;
+
                     case DriveRates.driveLunar:
                         trackingMode = TrackingMode.Lunar;
                         break;
+
                     case DriveRates.driveSolar:
                         trackingMode = TrackingMode.Solar;
                         break;
@@ -1426,12 +1431,15 @@ namespace NINA.Model.MyTelescope {
                         case TrackingMode.Sidereal:
                             _telescope.TrackingRate = DriveRates.driveSidereal;
                             break;
+
                         case TrackingMode.Lunar:
                             _telescope.TrackingRate = DriveRates.driveLunar;
                             break;
+
                         case TrackingMode.Solar:
                             _telescope.TrackingRate = DriveRates.driveSolar;
                             break;
+
                         case TrackingMode.King:
                             _telescope.TrackingRate = DriveRates.driveKing;
                             break;

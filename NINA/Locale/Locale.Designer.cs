@@ -8503,6 +8503,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max Minutes after Meridian.
+        /// </summary>
+        internal static string LblMaxMinutesAfterMeridian {
+            get {
+                return ResourceManager.GetString("LblMaxMinutesAfterMeridian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Maximum objects.
         /// </summary>
         internal static string LblMaxObjects {

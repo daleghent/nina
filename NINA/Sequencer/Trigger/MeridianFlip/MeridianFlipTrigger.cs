@@ -14,11 +14,13 @@
 
 using Newtonsoft.Json;
 using NINA.Model;
+using NINA.Model.MyTelescope;
 using NINA.Profile;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
+using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel;
 using System;
@@ -46,6 +48,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         private IFilterWheelMediator filterWheelMediator;
         private IApplicationStatusMediator applicationStatusMediator;
         private ICameraMediator cameraMediator;
+        private DateTime lastFlipTime = DateTime.MinValue;
 
         [ImportingConstructor]
         public MeridianFlipTrigger(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IGuiderMediator guiderMediator, IFocuserMediator focuserMediator, IImagingMediator imagingMediator, IApplicationStatusMediator applicationStatusMediator, IFilterWheelMediator filterWheelMediator) : base() {
@@ -94,17 +97,89 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
             //Todo: The MeridianFlipVM could be completely replaced by sequential instructions and dedicated ui template
             var info = telescopeMediator.GetInfo();
+            lastFlipTime = DateTime.Now;
             return new MeridianFlipVM(profileService, cameraMediator, telescopeMediator, guiderMediator, focuserMediator, imagingMediator, applicationStatusMediator, filterWheelMediator)
-                .MeridianFlip(target, TimeSpan.FromHours(info.TimeToMeridianFlip));
+                .MeridianFlip(target, TimeSpan.FromHours(info.TimeToMeridianFlip) - TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian));
+        }
+
+        public override void AfterParentChanged() {
+            lastFlipTime = DateTime.MinValue;
         }
 
         public override void Initialize() {
         }
 
         public override bool ShouldTrigger(ISequenceItem nextItem) {
-            var info = telescopeMediator.GetInfo();
-            FlipTime = DateTime.Now + TimeSpan.FromHours(info.TimeToMeridianFlip);
-            return MeridianFlipVM.ShouldFlip(profileService, nextItem.GetEstimatedDuration().TotalSeconds, telescopeMediator.GetInfo());
+            var telescopeInfo = telescopeMediator.GetInfo();
+            var settings = profileService.ActiveProfile.MeridianFlipSettings;
+
+            if (!telescopeInfo.Connected || double.IsNaN(telescopeInfo.TimeToMeridianFlip)) {
+                Logger.Error("Meridian Flip - Telescope is not connected to evaluate if a flip should happen!");
+                return false;
+            }
+
+            //Update the FlipTime
+            FlipTime = DateTime.Now + TimeSpan.FromHours(telescopeInfo.TimeToMeridianFlip);
+
+            if ((DateTime.Now - lastFlipTime) < TimeSpan.FromHours(11)) {
+                //A flip for the same target is only expected every 12 hours on planet earth
+                Logger.Info($"Meridian Flip - Flip for the current target already happened at {lastFlipTime }. Flip will be skipped");
+                return false;
+            }
+
+            var exposureTime = nextItem.GetEstimatedDuration().TotalSeconds;
+
+            //The time to meridian flip reported by the telescop is the latest time for a flip to happen
+            var minimumTimeRemaining = TimeSpan.FromHours(telescopeInfo.TimeToMeridianFlip) - TimeSpan.FromMinutes(settings.MinutesAfterMeridian);
+            var maximumTimeRemaining = TimeSpan.FromHours(telescopeInfo.TimeToMeridianFlip);
+            if (settings.PauseTimeBeforeMeridian != 0) {
+                //A pause prior to a meridian flip is a hard limit due to equipment obstruction. There is no possibility for a timerange as we have to pause early and wait for meridian to pass
+                minimumTimeRemaining = minimumTimeRemaining - TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian) - TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian);
+                maximumTimeRemaining = minimumTimeRemaining;
+            }
+
+            if (minimumTimeRemaining <= TimeSpan.Zero && maximumTimeRemaining > TimeSpan.Zero) {
+                // We are in the zone between the minimum time and the maximum time. Flip is possible now.
+                if (settings.UseSideOfPier) {
+                    //Flip when the telescope is on the west side
+                    return telescopeInfo.SideOfPier == PierSide.pierWest;
+                } else {
+                    //No pier info is available. Flip now.
+                    return true;
+                }
+            } else {
+                //The minimum time to flip has not been reached yet. Check if a flip is required based on the estimation of the next instruction
+                var noRemainingTime = maximumTimeRemaining <= TimeSpan.FromSeconds(exposureTime);
+
+                if (settings.UseSideOfPier) {
+                    if (telescopeInfo.SideOfPier == PierSide.pierEast) {
+                        Logger.Info("Meridian Flip - Telescope reports East Side of Pier, Automated Flip will not be performed.");
+                        return false;
+                    } else {
+                        if (noRemainingTime) {
+                            Logger.Info("Meridian Flip - No more remaining time available before flip. Flip should happen now");
+                            return true;
+                        }
+
+                        Logger.Info("Meridian Flip - Flip seems to not happened in time as Side Of Pier is West but expected to be East. Flip should happen now");
+
+                        //When pier side is still West, but remaining time indicating that a flip happend, the flip seems to have not happened yet and must be done immediately
+                        var delayedFlip = maximumTimeRemaining
+                            >= (TimeSpan.FromSeconds(12 * 60 * 60)
+                                - TimeSpan.FromMinutes(settings.MaxMinutesAfterMeridian)
+                                - TimeSpan.FromMinutes(settings.PauseTimeBeforeMeridian)
+                              );
+                        return delayedFlip;
+                    }
+                } else {
+                    if (noRemainingTime) {
+                        Logger.Info("Meridian Flip - No more remaining time available before flip. Flip should happen now");
+                        return true;
+                    }
+                }
+
+                return false;
+            }
         }
 
         public override string ToString() {

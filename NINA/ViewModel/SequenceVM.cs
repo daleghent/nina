@@ -75,7 +75,9 @@ using System.Windows.Shell;
 using System.Windows.Threading;
 
 namespace NINA.ViewModel {
+
     internal class SequenceVM : DockableVM, ISequenceVM, ICameraConsumer, IRotatorConsumer {
+
         public SequenceVM(
                 IProfileService profileService,
                 ISequenceMediator sequenceMediator,
@@ -667,7 +669,7 @@ namespace NINA.ViewModel {
                     imagingContainer.Name = Locale.Loc.Instance["Lbl_OldSequencer_TargetImaging"];
 
                     /* Triggers */
-                    if (profileService.ActiveProfile.MeridianFlipSettings.Enabled) {
+                    if (profileService.ActiveProfile.SequenceSettings.DoMeridianFlip) {
                         var trigger = factory.GetTrigger<MeridianFlipTrigger>();
                         imagingContainer.Add(trigger);
                     }

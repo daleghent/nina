@@ -241,7 +241,6 @@
     <Compile Include="ImageDataTest.cs" />
     <Compile Include="ImageHistoryVMTest.cs" />
     <Compile Include="ImageMetaDataTest.cs" />
-    <Compile Include="MeridianFlipVMTest.cs" />
     <Compile Include="MGEN\Commands\ButtonCommandTest.cs" />
     <Compile Include="MGEN\Commands\CancelCalibrationCommandTest.cs" />
     <Compile Include="MGEN\Commands\CommandTestRunner.cs" />
