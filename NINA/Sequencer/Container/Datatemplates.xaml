@@ -126,6 +126,10 @@
                                 Focusable="false"
                                 Visibility="Collapsed" />
                         </DockPanel>
+                        <i:Interaction.Behaviors>
+                            <behaviors:DragOverBehavior DragAboveSize="0" DragBelowSize="0" />
+                            <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.TargetSequenceContainer" OnDropCommand="{Binding DropTargetCommand}" />
+                        </i:Interaction.Behaviors>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="true">

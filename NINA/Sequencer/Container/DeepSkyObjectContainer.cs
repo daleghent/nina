@@ -66,6 +66,23 @@ namespace NINA.Sequencer.Container {
             Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
             CoordsToFramingCommand = new AsyncCommand<bool>(() => Task.Run(CoordsToFraming));
             CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium));
+            DropTargetCommand = new RelayCommand(DropTarget);
+        }
+
+        private void DropTarget(object obj) {
+            var p = obj as DragDrop.DropIntoParameters;
+            if (p != null) {
+                var con = p.Source as TargetSequenceContainer;
+                if (con != null) {
+                    var dropTarget = con.Container.Target;
+                    if (dropTarget != null) {
+                        this.Name = dropTarget.TargetName;
+                        this.Target.TargetName = dropTarget.TargetName;
+                        this.Target.InputCoordinates = dropTarget.InputCoordinates.Clone();
+                        this.Target.Rotation = dropTarget.Rotation;
+                    }
+                }
+            }
         }
 
         private INighttimeCalculator nighttimeCalculator;
@@ -74,6 +91,7 @@ namespace NINA.Sequencer.Container {
 
         public ICommand CoordsToFramingCommand { get; set; }
         public ICommand CoordsFromPlanetariumCommand { get; set; }
+        public ICommand DropTargetCommand { get; set; }
 
         [JsonProperty]
         public InputTarget Target {
