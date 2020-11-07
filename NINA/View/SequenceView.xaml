@@ -1347,12 +1347,14 @@
                                 CanUserSort="False"
                                 Header="{ns:Loc LblOffset}">
                                 <DataGridTemplateColumn.Visibility>
-                                    <PriorityBinding FallbackValue="Visible">
+                                    <MultiBinding Converter="{StaticResource BooleanOrToVisibilityCollapsedMultiConverter}" FallbackValue="Visible">
                                         <Binding
-                                            Converter="{StaticResource BooleanToVisibilityHiddenConverter}"
-                                            Path="Data.CanSetOffset"
+                                            Converter="{StaticResource InverseBooleanConverter}"
+                                            FallbackValue="True"
+                                            Path="Data.Connected"
                                             Source="{StaticResource CameraInfo}" />
-                                    </PriorityBinding>
+                                        <Binding Path="Data.CanSetOffset" Source="{StaticResource CameraInfo}" />
+                                    </MultiBinding>
                                 </DataGridTemplateColumn.Visibility>
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>

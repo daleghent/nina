@@ -156,12 +156,13 @@
         <!--  Offset  -->
         <WrapPanel Orientation="Horizontal">
             <WrapPanel.Visibility>
-                <PriorityBinding FallbackValue="Visible">
+                <MultiBinding Converter="{StaticResource BooleanOrToVisibilityCollapsedMultiConverter}" FallbackValue="Visible">
                     <Binding
-                        Converter="{StaticResource BooleanToVisibilityCollapsedConverter}"
-                        Path="Data.CanSetOffset"
+                        Converter="{StaticResource InverseBooleanConverter}"
+                        Path="Data.Connected"
                         Source="{StaticResource CameraInfo}" />
-                </PriorityBinding>
+                    <Binding Path="Data.CanSetOffset" Source="{StaticResource CameraInfo}" />
+                </MultiBinding>
             </WrapPanel.Visibility>
             <TextBlock
                 Margin="10,0,10,0"
