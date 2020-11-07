@@ -70,7 +70,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             this.guiderMediator = guiderMediator;
 
             var switchFilter = new SwitchFilter(profileService, filterWheelMediator);
-            var takeExposure = new TakeExposure(cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM);
+            var takeExposure = new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM);
             var loopCondition = new LoopCondition();
             var ditherAfterExposures = new DitherAfterExposures(guiderMediator, imageHistoryVM);
 

@@ -73,7 +73,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             var toggleLightOn = new ToggleLight(flatDeviceMediator) { On = true };
             var switchFilter = new SwitchFilter(profileService, filterWheelMediator);
             var setBrightness = new SetBrightness(flatDeviceMediator);
-            var takeExposue = new TakeExposure(cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) { ImageType = CaptureSequence.ImageTypes.FLAT };
+            var takeExposue = new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) { ImageType = CaptureSequence.ImageTypes.FLAT };
             var toggleLightOff = new ToggleLight(flatDeviceMediator) { On = false };
             var openCover = new OpenCover(flatDeviceMediator);
             var iterations = new LoopCondition() { Iterations = 1 };

@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
+using NINA.Profile;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Trigger;
@@ -50,15 +51,17 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         private IImagingMediator imagingMediator;
         private IImageSaveMediator imageSaveMediator;
         private IImageHistoryVM imageHistoryVM;
+        private IProfileService profileService;
 
         [ImportingConstructor]
-        public TakeManyExposures(ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM) {
+        public TakeManyExposures(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM) {
             this.cameraMediator = cameraMediator;
             this.imagingMediator = imagingMediator;
             this.imageSaveMediator = imageSaveMediator;
             this.imageHistoryVM = imageHistoryVM;
+            this.profileService = profileService;
 
-            var takeExposure = new TakeExposure(cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM);
+            var takeExposure = new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM);
             var loopCondition = new LoopCondition() { Iterations = 1 };
             this.Add(takeExposure);
             this.Add(loopCondition);
@@ -79,7 +82,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override object Clone() {
-            var clone = new TakeManyExposures(cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) {
+            var clone = new TakeManyExposures(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,

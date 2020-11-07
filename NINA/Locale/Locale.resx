@@ -4898,4 +4898,10 @@ Example:
   <data name="LblMaxMinutesAfterMeridian" xml:space="preserve">
     <value>Max Minutes after Meridian</value>
   </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty" xml:space="preserve">
+    <value>No folder was specified to save images to. Please set a valid folder inside the Image File Settings</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid" xml:space="preserve">
+    <value>The folder that is specified inside the Image File Settings to save images to was not found. Please validate the folder specified in the Image File Settings.</value>
+  </data>
 </root>

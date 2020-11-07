@@ -1016,6 +1016,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No folder was specified to save images to. Please set a valid folder inside the Image File Settings.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The folder that is specified inside the Image File Settings to save images to was not found. Please validate the folder specified in the Image File Settings..
+        /// </summary>
+        internal static string Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Gain. The Gain has to be set between {0} and {1} but is set to {2}.
         /// </summary>
         internal static string Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain {

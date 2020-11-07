@@ -28,6 +28,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -47,9 +48,10 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         private IImagingMediator imagingMediator;
         private IImageSaveMediator imageSaveMediator;
         private IImageHistoryVM imageHistoryVM;
+        private IProfileService profileService;
 
         [ImportingConstructor]
-        public TakeExposure(ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM) {
+        public TakeExposure(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM) {
             Gain = -1;
             Offset = -1;
             ImageType = Model.CaptureSequence.ImageTypes.LIGHT;
@@ -57,6 +59,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             this.imagingMediator = imagingMediator;
             this.imageSaveMediator = imageSaveMediator;
             this.imageHistoryVM = imageHistoryVM;
+            this.profileService = profileService;
             CameraInfo = this.cameraMediator.GetInfo();
         }
 
@@ -175,7 +178,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override object Clone() {
-            var clone = new TakeExposure(cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) {
+            var clone = new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,
@@ -225,6 +228,15 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                     i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset"], CameraInfo.OffsetMin, CameraInfo.OffsetMax, Offset));
                 }
             }
+
+            var fileSettings = profileService.ActiveProfile.ImageFileSettings;
+
+            if (string.IsNullOrWhiteSpace(fileSettings.FilePath)) {
+                i.Add(Locale.Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty"]);
+            } else if (!Directory.Exists(fileSettings.FilePath)) {
+                i.Add(Locale.Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid"]);
+            }
+
             Issues = i;
             return i.Count == 0;
         }
