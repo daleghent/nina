@@ -27,7 +27,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource CameraSVG}"
@@ -66,7 +66,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource FWSVG}"
@@ -105,7 +105,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource FocusSVG}"
@@ -145,7 +145,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource RotatorSVG}"
@@ -185,7 +185,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource TelescopeSVG}"
@@ -224,7 +224,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource GuiderSVG}"
@@ -263,7 +263,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource SwitchesSVG}"
@@ -303,7 +303,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource LightBulbSVG}"
@@ -343,7 +343,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource CloudSVG}"
@@ -383,7 +383,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource ObservatorySVG}"
@@ -422,7 +422,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource ShieldSVG}"

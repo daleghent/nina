@@ -43,7 +43,6 @@
         <ScrollViewer
             Grid.Row="0"
             Margin="5,5,5,5"
-            HorizontalScrollBarVisibility="Disabled"
             VerticalScrollBarVisibility="Auto">
             <sequencer:MiniSequencer VerticalContentAlignment="Top" DataContext="{Binding Sequencer.MainContainer}" />
         </ScrollViewer>

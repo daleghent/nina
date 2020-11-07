@@ -1478,7 +1478,7 @@ When this trigger is deactivated the application will just skip the Start Exposu
     <value>Unknown</value>
   </data>
   <data name="LblFlatDeviceUseWizardTrainedValues" xml:space="preserve">
-    <value>Use exposure times trained with flat wizard</value>
+    <value>Use trained exposure times</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
     <value>Mean ADU was {0}, starting Exposure Time calculation at {1}</value>

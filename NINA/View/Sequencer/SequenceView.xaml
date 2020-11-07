@@ -34,7 +34,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="45" />
         </Grid.RowDefinitions>
         <!--  ******* Sequencer *******  -->
         <ScrollViewer
@@ -176,7 +176,6 @@
         <Grid
             Grid.Row="1"
             Grid.Column="2"
-            MinWidth="300"
             Margin="5,5,15,5"
             HorizontalAlignment="Stretch"
             DockPanel.Dock="Right">

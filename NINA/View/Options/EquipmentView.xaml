@@ -403,7 +403,6 @@
                         </StackPanel>
                         <Button
                             Grid.Column="1"
-                            Width="300"
                             Margin="5"
                             Command="{Binding ImportFiltersCommand}">
                             <Button.Content>

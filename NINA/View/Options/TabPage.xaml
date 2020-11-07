@@ -27,7 +27,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource NINASVG}"
@@ -53,7 +53,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource TelescopeSVG}"
@@ -79,7 +79,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource AutoFocusSVG}"
@@ -105,7 +105,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource ObservatorySVG}"
@@ -131,7 +131,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource PictureSVG}"
@@ -157,7 +157,7 @@
                         <RowDefinition Height="10" />
                     </Grid.RowDefinitions>
                     <Grid>
-                        <Grid Width="50" Height="50">
+                        <Grid Width="40" Height="40">
                             <Path
                                 Margin="5"
                                 Data="{StaticResource PlatesolveSVG}"

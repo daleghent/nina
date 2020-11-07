@@ -6845,7 +6845,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use exposure times trained with flat wizard.
+        ///   Looks up a localized string similar to Use trained exposure times.
         /// </summary>
         internal static string LblFlatDeviceUseWizardTrainedValues {
             get {

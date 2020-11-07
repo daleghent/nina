@@ -1104,7 +1104,9 @@ namespace NINA.Model.MyCamera {
             get {
                 ArrayList val = new ArrayList();
                 try {
-                    val = _camera.SupportedActions;
+                    if (Connected) {
+                        val = _camera?.SupportedActions;
+                    }
                 } catch (DriverException) {
                 }
                 return val;

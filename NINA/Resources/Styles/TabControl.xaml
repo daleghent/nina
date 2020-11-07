@@ -85,7 +85,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TabPanel
-                MinWidth="80"
+                MinWidth="{TemplateBinding MinWidth}"
                 HorizontalAlignment="Left"
                 Background="{StaticResource SecondaryBackgroundBrush}"
                 IsItemsHost="true" />
@@ -151,9 +151,11 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type TabControl}">
+
         <Setter Property="Background" Value="{StaticResource BackgroundBrush}" />
         <Style.Triggers>
             <Trigger Property="TabStripPlacement" Value="Left">
+                <Setter Property="MinWidth" Value="80" />
                 <Setter Property="Template" Value="{StaticResource LeftTabTemplate}" />
                 <Setter Property="ItemContainerStyle" Value="{StaticResource LeftTabItem}" />
             </Trigger>
@@ -176,7 +178,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <TabPanel
-                MinWidth="80"
+                MinWidth="65"
                 HorizontalAlignment="Left"
                 Background="{StaticResource TertiaryBackgroundBrush}"
                 IsItemsHost="true" />
