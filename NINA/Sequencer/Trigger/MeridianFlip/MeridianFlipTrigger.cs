@@ -162,14 +162,16 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                             return true;
                         }
 
-                        Logger.Info("Meridian Flip - Flip seems to not happened in time as Side Of Pier is West but expected to be East. Flip should happen now");
-
                         //When pier side is still West, but remaining time indicating that a flip happend, the flip seems to have not happened yet and must be done immediately
                         var delayedFlip = maximumTimeRemaining
                             >= (TimeSpan.FromSeconds(12 * 60 * 60)
                                 - TimeSpan.FromMinutes(settings.MaxMinutesAfterMeridian)
                                 - TimeSpan.FromMinutes(settings.PauseTimeBeforeMeridian)
                               );
+
+                        if (delayedFlip) {
+                            Logger.Info("Meridian Flip - Flip seems to not happened in time as Side Of Pier is West but expected to be East. Flip should happen now");
+                        }
                         return delayedFlip;
                     }
                 } else {
