@@ -17,6 +17,7 @@ using Moq;
 using NINA.Model;
 using NINA.Model.ImageData;
 using NINA.Model.MyCamera;
+using NINA.Profile;
 using NINA.Sequencer;
 using NINA.Sequencer.Exceptions;
 using NINA.Sequencer.SequenceItem.Imaging;
@@ -41,6 +42,7 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
         private Mock<IImagingMediator> imagingMediatorMock;
         private Mock<IImageSaveMediator> imageSaveMediatorMock;
         private Mock<IImageHistoryVM> historyMock;
+        private Mock<IProfileService> profileServiceMock;
 
         [SetUp]
         public void Setup() {
@@ -48,11 +50,12 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
             imagingMediatorMock = new Mock<IImagingMediator>();
             imageSaveMediatorMock = new Mock<IImageSaveMediator>();
             historyMock = new Mock<IImageHistoryVM>();
+            profileServiceMock = new Mock<IProfileService>();
         }
 
         [Test]
         public void Clone_ItemClonedProperly() {
-            var sut = new TakeExposure(cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
+            var sut = new TakeExposure(profileServiceMock.Object, cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
             sut.Name = "SomeName";
             sut.Description = "SomeDescription";
             sut.Icon = new System.Windows.Media.GeometryGroup();
@@ -72,9 +75,10 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
 
         [Test]
         public void Validate_NoIssues() {
+            profileServiceMock.SetupGet(x => x.ActiveProfile.ImageFileSettings.FilePath).Returns(TestContext.CurrentContext.TestDirectory);
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = true });
 
-            var sut = new TakeExposure(cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
+            var sut = new TakeExposure(profileServiceMock.Object, cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
             var valid = sut.Validate();
 
             valid.Should().BeTrue();
@@ -84,9 +88,10 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
 
         [Test]
         public void Validate_NotConnected_OneIssue() {
+            profileServiceMock.SetupGet(x => x.ActiveProfile.ImageFileSettings.FilePath).Returns(TestContext.CurrentContext.TestDirectory);
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = false });
 
-            var sut = new TakeExposure(cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
+            var sut = new TakeExposure(profileServiceMock.Object, cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
             var valid = sut.Validate();
 
             valid.Should().BeFalse();
@@ -103,6 +108,7 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
             var imageMock = new Mock<IExposureData>();
             var imageDataMock = new Mock<IImageData>();
             var stats = new Mock<IImageStatistics>();
+            profileServiceMock.SetupGet(x => x.ActiveProfile.ImageFileSettings.FilePath).Returns(TestContext.CurrentContext.TestDirectory);
             imageDataMock.SetupGet(x => x.Statistics).Returns(new AsyncLazy<IImageStatistics>(() => Task.FromResult(stats.Object)));
             imageMock.Setup(x => x.ToImageData(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Returns(Task.FromResult(imageDataMock.Object));
             var imageTask = Task.FromResult(imageMock.Object);
@@ -111,7 +117,7 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
             imagingMediatorMock.Setup(x => x.CaptureImage(It.IsAny<CaptureSequence>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<string>())).Returns(imageTask);
             imagingMediatorMock.Setup(x => x.PrepareImage(It.IsAny<IImageData>(), It.IsAny<PrepareImageParameters>(), It.IsAny<CancellationToken>())).Returns(prepareTask);
 
-            var sut = new TakeExposure(cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
+            var sut = new TakeExposure(profileServiceMock.Object, cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
             sut.ExposureTime = exposuretime;
             sut.Gain = gain;
             sut.Offset = offset;
@@ -145,9 +151,10 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
 
         [Test]
         public Task Execute_HasIssues_LogicNotCalled() {
+            profileServiceMock.SetupGet(x => x.ActiveProfile.ImageFileSettings.FilePath).Returns(TestContext.CurrentContext.TestDirectory);
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = false });
 
-            var sut = new TakeExposure(cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
+            var sut = new TakeExposure(profileServiceMock.Object, cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
             Func<Task> act = () => { return sut.Execute(default, default); };
 
             return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
@@ -159,7 +166,7 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
         [TestCase(0)]
         [TestCase(0.12)]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate(double exposuretime) {
-            var sut = new TakeExposure(cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
+            var sut = new TakeExposure(profileServiceMock.Object, cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
             sut.ExposureTime = exposuretime;
 
             var duration = sut.GetEstimatedDuration();

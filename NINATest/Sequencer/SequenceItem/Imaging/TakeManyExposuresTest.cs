@@ -16,6 +16,7 @@ using FluentAssertions;
 using Moq;
 using NINA.Model.ImageData;
 using NINA.Model.MyCamera;
+using NINA.Profile;
 using NINA.Sequencer;
 using NINA.Sequencer.Exceptions;
 using NINA.Sequencer.SequenceItem.Imaging;
@@ -38,6 +39,7 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
         private Mock<IImagingMediator> imagingMediatorMock;
         private Mock<IImageSaveMediator> imageSaveMediatorMock;
         private Mock<IImageHistoryVM> historyMock;
+        private Mock<IProfileService> profileServiceMock;
 
         [SetUp]
         public void Setup() {
@@ -45,12 +47,14 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
             imagingMediatorMock = new Mock<IImagingMediator>();
             imageSaveMediatorMock = new Mock<IImageSaveMediator>();
             historyMock = new Mock<IImageHistoryVM>();
+            profileServiceMock = new Mock<IProfileService>();
         }
 
         [Test]
         public void Clone_ItemClonedProperly() {
+            profileServiceMock.SetupGet(x => x.ActiveProfile.ImageFileSettings.FilePath).Returns(TestContext.CurrentContext.TestDirectory);
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = true });
-            var sut = new TakeManyExposures(cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
+            var sut = new TakeManyExposures(profileServiceMock.Object, cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
             sut.Name = "SomeName";
             sut.Description = "SomeDescription";
             sut.Icon = new System.Windows.Media.GeometryGroup();
@@ -76,9 +80,10 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
 
         [Test]
         public void Validate_NoIssues() {
+            profileServiceMock.SetupGet(x => x.ActiveProfile.ImageFileSettings.FilePath).Returns(TestContext.CurrentContext.TestDirectory);
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = true });
 
-            var sut = new TakeManyExposures(cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
+            var sut = new TakeManyExposures(profileServiceMock.Object, cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
             var valid = sut.Validate();
 
             valid.Should().BeTrue();
@@ -88,9 +93,10 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
 
         [Test]
         public void Validate_NotConnected_OneIssue() {
+            profileServiceMock.SetupGet(x => x.ActiveProfile.ImageFileSettings.FilePath).Returns(TestContext.CurrentContext.TestDirectory);
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = false });
 
-            var sut = new TakeManyExposures(cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
+            var sut = new TakeManyExposures(profileServiceMock.Object, cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
             var valid = sut.Validate();
 
             valid.Should().BeFalse();
