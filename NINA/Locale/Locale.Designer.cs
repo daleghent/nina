@@ -12745,6 +12745,33 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to TheWeatherCompany API Key.
+        /// </summary>
+        internal static string LblTheWeatherCompanyAPIKey {
+            get {
+                return ResourceManager.GetString("LblTheWeatherCompanyAPIKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses TheWeatherCompany&apos;s Current Weather API. Weather data is refreshed every 10 minutes..
+        /// </summary>
+        internal static string LblTheWeatherCompanyClientDescription {
+            get {
+                return ResourceManager.GetString("LblTheWeatherCompanyClientDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N.I.N.A. internal TheWeatherCompany API client.
+        /// </summary>
+        internal static string LblTheWeatherCompanyClientInfo {
+            get {
+                return ResourceManager.GetString("LblTheWeatherCompanyClientInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Third Party Licenses.
         /// </summary>
         internal static string LblThirdPartyLicenses {

@@ -588,11 +588,7 @@
                                 Width="160"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Text="{ns:Loc LblOpenWeatherMapAPIKey}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblWeatherDisplayImperialTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
+                                Text="{ns:Loc LblOpenWeatherMapAPIKey}" />
                             <DockPanel>
                                 <TextBox
                                     MinWidth="36"
@@ -621,11 +617,7 @@
                                 Width="160"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Text="{ns:Loc LblTheWeatherCompanyAPIKey}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblWeatherDisplayImperialTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
+                                Text="{ns:Loc LblTheWeatherCompanyAPIKey}" />
                             <DockPanel>
                                 <TextBox
                                     MinWidth="36"
