@@ -183,7 +183,6 @@ namespace NINA.Model.MyGuider {
                 if (resp.result != null)
                     PixelScale = double.Parse(resp.result.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
 
-                Notification.ShowSuccess(Locale.Loc.Instance["LblGuiderConnected"]);
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Logger.Error(ex);
