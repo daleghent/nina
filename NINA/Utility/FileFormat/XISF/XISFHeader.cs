@@ -190,6 +190,10 @@ namespace NINA.Utility.FileFormat.XISF {
                 metaData.Target.Name = value;
             }
 
+            if (TryGetFITSProperty("OBJCTROT", out value)) {
+                metaData.Target.Rotation = double.Parse(value, CultureInfo.InvariantCulture);
+            }
+
             if (TryGetImageProperty(XISFImageProperty.Observation.Object.RA, out value)) {
                 var ra = double.Parse(value, CultureInfo.InvariantCulture);
                 if (TryGetImageProperty(XISFImageProperty.Observation.Object.Dec, out value)) {
@@ -461,6 +465,11 @@ namespace NINA.Utility.FileFormat.XISF {
                 AddImageFITSKeyword(XISFImageProperty.Observation.Object.RA[2], Astrometry.Astrometry.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object");
                 AddImageProperty(XISFImageProperty.Observation.Object.Dec, metaData.Target.Coordinates.Dec, "[deg] Declination of imaged object", false);
                 AddImageFITSKeyword(XISFImageProperty.Observation.Object.Dec[2], Astrometry.Astrometry.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object");
+            }
+
+            if (!double.IsNaN(metaData.Target.Rotation)) {
+                /* NINA Specific target rotation */
+                AddImageFITSKeyword("OBJCTROT", metaData.Target.Rotation, "[deg] planned rotation of imaged object");
             }
 
             /* Focuser */

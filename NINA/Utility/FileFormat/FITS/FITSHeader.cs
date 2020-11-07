@@ -234,6 +234,10 @@ namespace NINA.Utility.FileFormat.FITS {
                 metaData.Target.Coordinates = new Astrometry.Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
             }
 
+            if (_headerCards.TryGetValue("OBJCTROT", out card)) {
+                metaData.Target.Rotation = ParseDouble(card.OriginalValue);
+            }
+
             if (_headerCards.TryGetValue("AIRMASS", out card)) {
                 metaData.Telescope.Airmass = ParseDouble(card.OriginalValue);
             }
@@ -524,6 +528,11 @@ namespace NINA.Utility.FileFormat.FITS {
             if (metaData.Target.Coordinates != null) {
                 Add("OBJCTRA", Astrometry.Astrometry.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object");
                 Add("OBJCTDEC", Astrometry.Astrometry.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object");
+            }
+
+            if (!double.IsNaN(metaData.Target.Rotation)) {
+                /* NINA Specific target rotation */
+                Add("OBJCTROT", metaData.Target.Rotation, "[deg] planned rotation of imaged object");
             }
 
             /* Focuser */

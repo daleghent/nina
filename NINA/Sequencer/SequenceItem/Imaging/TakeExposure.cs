@@ -96,9 +96,6 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         [JsonProperty]
         public int ExposureCount { get; private set; }
 
-        [JsonProperty]
-        public string TargetName { get; private set; }
-
         private CameraInfo cameraInfo;
 
         public CameraInfo CameraInfo {
@@ -143,15 +140,23 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 };
 
                 var imageParams = new PrepareImageParameters(null, false);
+                InputTarget target = null;
                 if (IsLightSequence()) {
                     imageParams = new PrepareImageParameters(true, true);
+                    target = RetrieveTarget(this.Parent);
                 }
 
-                var exposureData = await imagingMediator.CaptureImage(capture, token, progress, TargetName);
+                var exposureData = await imagingMediator.CaptureImage(capture, token, progress);
 
                 var imageData = await exposureData.ToImageData(progress, token);
 
                 var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
+
+                if (target != null) {
+                    imageData.MetaData.Target.Name = target.TargetName;
+                    imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
+                    imageData.MetaData.Target.Rotation = target.Rotation;
+                }
 
                 await imageSaveMediator.Enqueue(imageData, prepareTask, progress, token);
 
@@ -191,21 +196,19 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override void AfterParentChanged() {
-            var info = RetrieveTargetName(this.Parent);
-            TargetName = info;
             Validate();
         }
 
-        private string RetrieveTargetName(ISequenceContainer parent) {
+        private InputTarget RetrieveTarget(ISequenceContainer parent) {
             if (parent != null) {
                 var container = parent as IDeepSkyObjectContainer;
                 if (container != null) {
-                    return container.Target?.TargetName;
+                    return container.Target;
                 } else {
-                    return RetrieveTargetName(parent.Parent);
+                    return RetrieveTarget(parent.Parent);
                 }
             } else {
-                return string.Empty;
+                return null;
             }
         }
 

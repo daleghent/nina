@@ -221,6 +221,7 @@ namespace NINA.Model.ImageData {
 
     public class TargetParameter {
         public string Name { get; set; } = string.Empty;
+        public double Rotation { get; set; } = double.NaN;
         private Coordinates coordinates = null;
 
         public Coordinates Coordinates {
