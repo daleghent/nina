@@ -605,7 +605,9 @@ namespace NINA.ViewModel {
                 startOfSequence.Name = Locale.Loc.Instance["Lbl_OldSequencer_StartOfSequence"];
 
                 if (profileService.ActiveProfile.SequenceSettings.CoolCameraAtSequenceStart) {
-                    startOfSequence.Add(factory.GetItem<CoolCamera>());
+                    var cool = factory.GetItem<CoolCamera>();
+                    cool.Temperature = profileService.ActiveProfile.CameraSettings.Temperature ?? -10;
+                    startOfSequence.Add(cool);
                 }
                 if (profileService.ActiveProfile.SequenceSettings.UnparMountAtSequenceStart) {
                     startOfSequence.Add(factory.GetItem<UnparkScope>());
