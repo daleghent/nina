@@ -959,7 +959,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Levotočivý</value>
   </data>
   <data name="LblCoverScopeMsgBox" xml:space="preserve">
-    <value>Zakrýt dalekohled a stiskem OK spustíte snímání temných plochých snímků.</value>
+    <value>Zakrýt dalekohled a stiskem OK spustíte snímání Vyrovnání temného pozadí.</value>
   </data>
   <data name="LblCoverScopeMsgBoxTitle" xml:space="preserve">
     <value>Zakrýt dalekohled</value>
@@ -986,7 +986,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Adresář Cygwin</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Počet Dark Flats</value>
+    <value>Počet Vyrovnání Temného pozadí</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>D.A.R.V. Přejezd</value>
@@ -1319,9 +1319,9 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Kalkulačka Optimální Expozice</value>
   </data>
   <data name="LblExposureCalculatorDescription" xml:space="preserve">
-    <value>This tool will suggest a recommended exposure time based on the read noise from your sensor and the average skyglow.
-If you have SharpCap installed and perform a Sensor Analysis, then use the drop down below to retrieve the read noise and full well capacity for the specified gain.
-You can also calculate the bias by clicking the Snapshot button next to Bias Mean.</value>
+    <value>Tento nástroj navrhne doporučenou dobu expozice na základě čteného šumu ze senzoru a průměrné záře oblohy.
+Pokud máte nainstalován SharpCap a provádíte analýzu senzorů, použijte rozevírací nabídku níže k načtení šumu čtení a plné kapacity pro zadaný zisk.
+Můžete také vypočítat zkreslení kliknutím na tlačítko Vypočítat Bias.</value>
   </data>
   <data name="LblExposureCalculatorMeanLessThanOffset" xml:space="preserve">
     <value>Nelze určit doporučený čas expozice. Průměrná hodnota v obrázku je menší než hodnota zadaná pro průměrné zkreslení. Proveďte delší expozici nebo upravte nesprávné hodnoty.</value>
@@ -1457,7 +1457,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Otevřít</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Otevřít kryt pro tmavé flaty v průvodci plochým snímkem</value>
+    <value>Otevřít kryt pro Vyrovnání temného pozadí v průvodci plochým snímkem</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Nastavit</value>
@@ -1469,7 +1469,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Neznámý</value>
   </data>
   <data name="LblFlatDeviceUseWizardTrainedValues" xml:space="preserve">
-    <value>Použít expoziční časy získané pomocí průvodcem plochých snímků</value>
+    <value>Use trained exposure times</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
     <value>Průměrné ADU {0}, výpočet Času Expozice začíná v {1}</value>
@@ -1517,7 +1517,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Plochý snímek je příliš tmavý. Zvyšte množství světla nebo upravte toleranci, průměrnou hodnotu nebo na minimální expoziční čas</value>
   </data>
   <data name="LblFlatWizard" xml:space="preserve">
-    <value>Flat Wizard</value>
+    <value>Průvodce Flat</value>
   </data>
   <data name="LblFlatWizardCapture" xml:space="preserve">
     <value>Snímání Průvodcem Plochých sním.</value>
@@ -2476,7 +2476,7 @@ Vypočtené HFR: {2}
     <value>Příprava obrazu</value>
   </data>
   <data name="LblPreparingDarkFlatSequence" xml:space="preserve">
-    <value>Připravuje se Sekvence Dark Flat</value>
+    <value>Připravuje se Sekvence Vyrovnání temného pozadí</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
     <value>Plochý snímek pro filtr: {0}</value>
@@ -3900,6 +3900,12 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
   <data name="LblDomeFollowing" xml:space="preserve">
     <value>Kopule sleduje dalekohled</value>
   </data>
+  <data name="LblDomeFollowError_DriverFollowing" xml:space="preserve">
+    <value>Dome driver is following the telescope already</value>
+  </data>
+  <data name="LblDomeSyncError_SyncTimeout" xml:space="preserve">
+    <value>Timed out while waiting for dome synchronization</value>
+  </data>
   <data name="LblStartSequence" xml:space="preserve">
     <value>Spustit Sekvenci</value>
   </data>
@@ -4135,22 +4141,25 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>HIPS 2 FITS Sky Survey</value>
   </data>
   <data name="LblMechanicalPosition" xml:space="preserve">
-    <value>Mechanical Position</value>
+    <value>Mechanická Pozice</value>
   </data>
   <data name="LblSkyPosition" xml:space="preserve">
     <value>Pozice Oblohy</value>
   </data>
   <data name="LblTargetMechanicalPosition" xml:space="preserve">
-    <value>Target Mechanical Position</value>
+    <value>Mechanická Pozice Cíle</value>
   </data>
   <data name="LblTargetSkyPosition" xml:space="preserve">
-    <value>Target Sky Position</value>
+    <value>Cílová Pozice Oblohy</value>
   </data>
   <data name="LblMoveMechanicalPosition" xml:space="preserve">
-    <value>Move Mechanical Position</value>
+    <value>Pohyb Mechanické Pozice</value>
   </data>
   <data name="LblMoveSkyPosition" xml:space="preserve">
-    <value>Move Sky Position</value>
+    <value>Pohyb Oblohy</value>
+  </data>
+  <data name="LblPixelMargin" xml:space="preserve">
+    <value>Keep guide stars off sensor edges by at least</value>
   </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
     <value>Přidat {0} do Minut po Poledníku</value>
@@ -4189,7 +4198,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Sekvence Objektů Hlubokého Vesmíru</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
-    <value>All instructions in this instruction set are run in parallel. This instruction set will not evaluate any conditions or triggers until all instructions are finished.</value>
+    <value>Všechny pokyny v této sadě pokynů jsou prováděny paralelně. Tato sada pokynů nevyhodnocuje žádné podmínky ani spouštěče, dokud nejsou dokončeny všechny pokyny.</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
     <value>Souběžná Sada Pokynů</value>
@@ -4537,8 +4546,8 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Oblast Začátku Sekvence</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
-    <value>Sequence Target Area
-Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assistant</value>
+    <value>Cílová Oblast Sekvence
+Přidejte sekvence DSO nebo přidejte cíle pomocí Atlasu Hvězd nebo Průvodcem Rámováním</value>
   </data>
   <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
     <value>Stav Smyčky</value>
@@ -4865,6 +4874,24 @@ Příklad:
     <value>Zaostřovač nezjistil žádnou teplotu</value>
   </data>
   <data name="LblCloseAll" xml:space="preserve">
-    <value>Close All</value>
+    <value>Zavřít Vše</value>
+  </data>
+  <data name="LblConnectAll" xml:space="preserve">
+    <value>Connect all devices?</value>
+  </data>
+  <data name="LblCollapseSequencerTemplatesByDefault" xml:space="preserve">
+    <value>Collapse Sequence Templates by default</value>
+  </data>
+  <data name="LblCollapseSequencerTemplatesByDefaultTooltip" xml:space="preserve">
+    <value>When this option is enabled, adding templates and targets to the sequencer will create them in a collapsed state.</value>
+  </data>
+  <data name="LblMaxMinutesAfterMeridian" xml:space="preserve">
+    <value>Max Minutes after Meridian</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty" xml:space="preserve">
+    <value>No folder was specified to save images to. Please set a valid folder inside the Image File Settings</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid" xml:space="preserve">
+    <value>The folder that is specified inside the Image File Settings to save images to was not found. Please validate the folder specified in the Image File Settings.</value>
   </data>
 </root>

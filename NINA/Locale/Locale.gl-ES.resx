@@ -1480,7 +1480,7 @@ Cando este desencadeador estea desactivado, a aplicación omite o inicio de expo
     <value>Descoñecido</value>
   </data>
   <data name="LblFlatDeviceUseWizardTrainedValues" xml:space="preserve">
-    <value>Usar tempos exposición do asistente de flat</value>
+    <value>Use trained exposure times</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
     <value>A media ADU era {0}, iniciando o cálculo de tempo de exposición en {1}</value>
@@ -3911,6 +3911,12 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
   <data name="LblDomeFollowing" xml:space="preserve">
     <value>A cúpula segue o telescopio</value>
   </data>
+  <data name="LblDomeFollowError_DriverFollowing" xml:space="preserve">
+    <value>Dome driver is following the telescope already</value>
+  </data>
+  <data name="LblDomeSyncError_SyncTimeout" xml:space="preserve">
+    <value>Timed out while waiting for dome synchronization</value>
+  </data>
   <data name="LblStartSequence" xml:space="preserve">
     <value>Comezar Secuencia</value>
   </data>
@@ -4162,6 +4168,9 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
   </data>
   <data name="LblMoveSkyPosition" xml:space="preserve">
     <value>Move Sky Position</value>
+  </data>
+  <data name="LblPixelMargin" xml:space="preserve">
+    <value>Keep guide stars off sensor edges by at least</value>
   </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
     <value>Engadir {0} a Minutos despois do Meridiano</value>
@@ -4878,5 +4887,23 @@ Example:
   </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>Close All</value>
+  </data>
+  <data name="LblConnectAll" xml:space="preserve">
+    <value>Connect all devices?</value>
+  </data>
+  <data name="LblCollapseSequencerTemplatesByDefault" xml:space="preserve">
+    <value>Collapse Sequence Templates by default</value>
+  </data>
+  <data name="LblCollapseSequencerTemplatesByDefaultTooltip" xml:space="preserve">
+    <value>When this option is enabled, adding templates and targets to the sequencer will create them in a collapsed state.</value>
+  </data>
+  <data name="LblMaxMinutesAfterMeridian" xml:space="preserve">
+    <value>Max Minutes after Meridian</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty" xml:space="preserve">
+    <value>No folder was specified to save images to. Please set a valid folder inside the Image File Settings</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid" xml:space="preserve">
+    <value>The folder that is specified inside the Image File Settings to save images to was not found. Please validate the folder specified in the Image File Settings.</value>
   </data>
 </root>
