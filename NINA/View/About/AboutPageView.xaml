@@ -17,7 +17,10 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <TabControl Style="{StaticResource SecondLevelTabControl}" TabStripPlacement="Left">
+    <TabControl
+        Margin="-7,-18,0,-18"
+        Style="{StaticResource SecondLevelTabControl}"
+        TabStripPlacement="Left">
         <TabItem>
             <TabItem.Header>
                 <TextBlock
@@ -58,9 +61,11 @@
             <TabItem.Header>
                 <TextBlock
                     MinHeight="30"
+                    Margin="5,0,5,0"
                     FontSize="14"
                     Style="{StaticResource SideBarTextBlock}"
-                    Text="{ns:Loc LblThirdPartyLicenses}" />
+                    Text="{ns:Loc LblThirdPartyLicenses}"
+                    TextWrapping="Wrap" />
             </TabItem.Header>
             <TabItem.Content>
                 <local:ThirdPartyLicensesView />

@@ -16,9 +16,11 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <StackPanel Orientation="Vertical">
+    <StackPanel Margin="5,0,0,0" Orientation="Vertical">
         <TextBlock FontSize="20">
             N.I.N.A. - Nighttime Imaging 'N' Astronomy was created in 2016 and is maintained
+        </TextBlock>
+        <TextBlock FontSize="20">
             by Stefan Berg &lt;isbeorn86+NINA@googlemail.com&gt;
         </TextBlock>
         <StackPanel Margin="5,20,0,0" Orientation="Horizontal">

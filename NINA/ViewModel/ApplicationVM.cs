@@ -81,8 +81,10 @@ namespace NINA.ViewModel {
 
         private void OpenAbout(object o) {
             AboutPageView window = new AboutPageView();
+            window.Width = 1280;
+            window.Height = 720;
             var service = new WindowServiceFactory().Create();
-            service.Show(window, Title + " - " + Locale.Loc.Instance["LblAbout"], ResizeMode.CanResize, WindowStyle.ToolWindow);
+            service.Show(window, Title + " - " + Locale.Loc.Instance["LblAbout"], ResizeMode.NoResize, WindowStyle.ToolWindow);
         }
 
         public void ChangeTab(ApplicationTab tab) {
