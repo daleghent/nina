@@ -74,6 +74,13 @@
                                         Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.Name}" />
                                 </StackPanel>
 
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontWeight="Bold">
+                                    ! PREVIEW VERSION !
+                                </TextBlock>
+
                                 <StackPanel
                                     Margin="0,0,2.5,0"
                                     HorizontalAlignment="Right"
