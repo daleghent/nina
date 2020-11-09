@@ -214,6 +214,7 @@ namespace NINA.Model.MyRotator {
         }
 
         public void Sync(float skyAngle) {
+            Logger.Debug($"ASCOM - Sync Position to Sky Angle {skyAngle}°");
             Position = skyAngle;
             Synced = true;
         }
