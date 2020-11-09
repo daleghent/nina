@@ -26,6 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
+using NINA.Utility.Notification;
 
 namespace NINA.ViewModel.Equipment.Guider {
 
@@ -138,6 +139,7 @@ namespace NINA.ViewModel.Equipment.Guider {
                         Connected = connected
                     };
                     BroadcastGuiderInfo();
+                    Notification.ShowSuccess(Locale.Loc.Instance["LblGuiderConnected"]);
                     RaisePropertyChanged(nameof(Guider));
                     profileService.ActiveProfile.GuiderSettings.GuiderName = Guider.Name;
                 }
