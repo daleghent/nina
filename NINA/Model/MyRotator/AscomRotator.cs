@@ -220,11 +220,17 @@ namespace NINA.Model.MyRotator {
 
         public void Move(float position) {
             if (Connected) {
-                position = Astrometry.EuclidianModulus(position, 360);
+                if (position >= 360) {
+                    position = Astrometry.EuclidianModulus(position, 360);
+                }
+                if (position <= -360) {
+                    position = Astrometry.EuclidianModulus(position, -360);
+                }
+
                 Logger.Debug($"ASCOM - Move Relative by {position}°");
                 rotator?.Move(position);
                 Position += position;
-                Logger.Debug($"ASCOM - New Position {Position}° - Position reported by focuser {rotator?.Position}°");
+                Logger.Debug($"ASCOM - New Position {Position}° - Position reported by rotator {rotator?.Position}°");
             }
         }
 

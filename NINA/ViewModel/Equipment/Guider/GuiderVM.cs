@@ -27,11 +27,10 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 using NINA.Model.MyGuider.PHD2;
+using NINA.Utility.Notification;
 
 namespace NINA.ViewModel.Equipment.Guider {
-
     internal class GuiderVM : DockableVM, IGuiderVM {
-
         public GuiderVM(IProfileService profileService, IGuiderMediator guiderMediator, IApplicationStatusMediator applicationStatusMediator, IDeviceChooserVM deviceChooser) : base(profileService) {
             Title = "LblGuider";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["GuiderSVG"];
@@ -142,6 +141,7 @@ namespace NINA.ViewModel.Equipment.Guider {
                         CanClearCalibration = Guider.CanClearCalibration
                     };
                     BroadcastGuiderInfo();
+                    Notification.ShowSuccess(Locale.Loc.Instance["LblGuiderConnected"]);
                     RaisePropertyChanged(nameof(Guider));
                     profileService.ActiveProfile.GuiderSettings.GuiderName = Guider.Id;
                 }

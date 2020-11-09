@@ -138,6 +138,8 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - The timeout values for the MGEN2 guider can now be overridden in the implementations of IMGENCommand
 - The MGEN2 guider drift values are now correctly reported in fractional pixels
 - ASCOM devices are now properly disposed after calling the setup dialog
+- The MGEN guider now doesn't autoselect guide stars that lie too close to the sensor edge, based on a stand-off distance that the user can set in the UI
+- All guiders now report when a successful connection happens
 
 # Version 1.10 HF1
 
