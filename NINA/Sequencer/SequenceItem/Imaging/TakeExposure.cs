@@ -143,11 +143,11 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 };
 
                 var imageParams = new PrepareImageParameters(null, false);
-                InputTarget target = null;
                 if (IsLightSequence()) {
                     imageParams = new PrepareImageParameters(true, true);
-                    target = RetrieveTarget(this.Parent);
                 }
+
+                var target = RetrieveTarget(this.Parent);
 
                 var exposureData = await imagingMediator.CaptureImage(capture, token, progress);
 
