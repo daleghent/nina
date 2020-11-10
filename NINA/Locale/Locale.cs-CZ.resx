@@ -3291,7 +3291,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Došlo k Neošetřené výjimce</value>
   </data>
   <data name="LblUnlinkedStretch" xml:space="preserve">
-    <value>Rozpětí bez Připojení</value>
+    <value>Unlinked Stretch</value>
   </data>
   <data name="LblUnlinkedStretchTooltip" xml:space="preserve">
     <value>
@@ -4893,5 +4893,14 @@ Příklad:
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid" xml:space="preserve">
     <value>The folder that is specified inside the Image File Settings to save images to was not found. Please validate the folder specified in the Image File Settings.</value>
+  </data>
+  <data name="LblTheWeatherCompanyAPIKey" xml:space="preserve">
+    <value>TheWeatherCompany API Key</value>
+  </data>
+  <data name="LblTheWeatherCompanyClientDescription" xml:space="preserve">
+    <value>Uses TheWeatherCompany's Current Weather API. Weather data is refreshed every 10 minutes.</value>
+  </data>
+  <data name="LblTheWeatherCompanyClientInfo" xml:space="preserve">
+    <value>N.I.N.A. internal TheWeatherCompany API client</value>
   </data>
 </root>
