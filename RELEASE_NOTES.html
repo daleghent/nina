@@ -26,18 +26,19 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <p>The Release Notes below will only mention the changes compared to the last released version.<br />
 To identify what has changed in between nightly builds, please refer to the <a href="https://bitbucket.org/Isbeorn/nina/commits/branch/develop">bitbucket commit history</a></p>
 <h2 id="complete-sequencer-rework">Complete Sequencer Rework</h2>
-<h3 id="sequence-tab-changed-to-sequence-builder">Sequence Tab changed to Sequence Builder</h3>
+<h3 id="sequence-tab-changed-to-show-a-sequence-navigation-first">Sequence Tab changed to show a sequence navigation first</h3>
 <ul>
-<li>The old sequence UI is still available, but instead of running a sequence it will instead be used to generate the new sequence construct</li>
-<li>This generation process will help to easily transition to the new way of sequencing</li>
-<li>Instead of loading an empty target, the UI will show a separate UI when no target was set, where the user can choose which kind of sequence should be loaded instead</li>
+<li>The old sequence UI is still available and called &quot;Simple Sequence&quot;. However it will run the new sequencer framework in the background instead</li>
+<li>If required the simple sequence can be generated into the advanced sequence for fine tuning</li>
+<li>Instead of loading an empty target by default, the UI will show a separate UI when no target was set, where the user can choose which kind of sequence should be loaded instead or jump directly into the advanced sequencer</li>
 <li>End of sequence options are moved from the options tab to the sequence tab</li>
 <li>Introduced new start of sequence options to be used</li>
 <li>Added a &quot;Rotate Target&quot; button to explicitly set, that the rotation for the target should be considered</li>
+<li>Removed External command and flat panel items from the simple sequencer UI, as these are only for advanced usage and not used by the majority that only use the simple sequencer</li>
 </ul>
-<h3 id="new-sequencer-tab">New Sequencer Tab</h3>
+<h3 id="new-advanced-sequencer-tab">New Advanced Sequencer Tab</h3>
 <ul>
-<li>This will be the new heart of the application, where a sequence can be built completely from scratch by individual tiny building blocks</li>
+<li>This will be the new heart of the application, where a custom sequence can be built completely from scratch by individual tiny building blocks</li>
 <li>The building blocks consist of these categories
 <ul>
 <li>Instruction Sets
@@ -189,6 +190,8 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>The timeout values for the MGEN2 guider can now be overridden in the implementations of IMGENCommand</li>
 <li>The MGEN2 guider drift values are now correctly reported in fractional pixels</li>
 <li>ASCOM devices are now properly disposed after calling the setup dialog</li>
+<li>The MGEN guider now doesn't autoselect guide stars that lie too close to the sensor edge, based on a stand-off distance that the user can set in the UI</li>
+<li>All guiders now report when a successful connection happens</li>
 </ul>
 <h1 id="version-1.10-hf1">Version 1.10 HF1</h1>
 <h2 id="features">Features</h2>

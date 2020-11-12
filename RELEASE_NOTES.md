@@ -12,16 +12,17 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ## Complete Sequencer Rework
 
-### Sequence Tab changed to Sequence Builder
-- The old sequence UI is still available, but instead of running a sequence it will instead be used to generate the new sequence construct
-- This generation process will help to easily transition to the new way of sequencing
-- Instead of loading an empty target, the UI will show a separate UI when no target was set, where the user can choose which kind of sequence should be loaded instead
+### Sequence Tab changed to show a sequence navigation first
+- The old sequence UI is still available and called "Simple Sequence". However it will run the new sequencer framework in the background instead
+- If required the simple sequence can be generated into the advanced sequence for fine tuning
+- Instead of loading an empty target by default, the UI will show a separate UI when no target was set, where the user can choose which kind of sequence should be loaded instead or jump directly into the advanced sequencer
 - End of sequence options are moved from the options tab to the sequence tab
 - Introduced new start of sequence options to be used
 - Added a "Rotate Target" button to explicitly set, that the rotation for the target should be considered
+- Removed External command and flat panel items from the simple sequencer UI, as these are only for advanced usage and not used by the majority that only use the simple sequencer
 
-### New Sequencer Tab
-- This will be the new heart of the application, where a sequence can be built completely from scratch by individual tiny building blocks
+### New Advanced Sequencer Tab
+- This will be the new heart of the application, where a custom sequence can be built completely from scratch by individual tiny building blocks
 - The building blocks consist of these categories
   - Instruction Sets
     - These sets group together different instructions
