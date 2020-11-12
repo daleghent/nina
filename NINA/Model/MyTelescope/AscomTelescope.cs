@@ -30,7 +30,7 @@ namespace NINA.Model.MyTelescope {
 
     internal class AscomTelescope : BaseINPC, ITelescope, IDisposable {
         private static readonly TimeSpan MERIDIAN_FLIP_SLEW_RETRY_WAIT = TimeSpan.FromMinutes(1);
-        private static readonly int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 10;
+        private static readonly int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 20;
         private static double TRACKING_RATE_EPSILON = 0.000001;
 
         public AscomTelescope(string telescopeId, string name, IProfileService profileService) {
@@ -947,12 +947,13 @@ namespace NINA.Model.MyTelescope {
             private set { _hasUnknownEpoch = value; RaisePropertyChanged(); }
         }
 
-        private async Task<bool> MeridianFlipSetPierSide() {
+        private async Task<bool> SetPierSide(PierSide targetPierSide) {
             try {
                 var pierside = SideOfPier;
-                var flippedside = pierside == PierSide.pierEast ? PierSide.pierWest : PierSide.pierEast;
-                TargetSideOfPier = flippedside;
-                SideOfPier = flippedside;
+                Logger.Debug($"Setting pier side from {pierside} to {targetPierSide}");
+
+                TargetSideOfPier = targetPierSide;
+                SideOfPier = targetPierSide;
 
                 //Check if setting the pier side will result already in a flip
                 await Utility.Utility.Wait(TimeSpan.FromSeconds(2));
@@ -973,22 +974,37 @@ namespace NINA.Model.MyTelescope {
                     TrackingEnabled = true;
                 }
 
+                var targetSideOfPier = PierSide.pierUnknown;
+                if (CanSetPierSide) {
+                    targetSideOfPier = SideOfPier == PierSide.pierWest ? PierSide.pierEast : PierSide.pierWest;
+                    Logger.Debug($"Mount can set SideOfPier, so setting to {targetSideOfPier} as part of the meridian flip");
+                }
+
                 targetCoordinates = targetCoordinates.Transform(EquatorialSystem);
                 TargetCoordinates = targetCoordinates;
-                bool setPierSide = false;
+                bool pierSideSuccess = !CanSetPierSide;  // If we can't set the side of pier, consider our work done up front already
+                bool slewSuccess = false;
                 int retries = 0;
                 do {
-                    if (CanSetPierSide && !setPierSide) {
-                        setPierSide = await MeridianFlipSetPierSide();
+                    if (!pierSideSuccess) {
+                        pierSideSuccess = await SetPierSide(targetSideOfPier);
                     }
-
-                    success = SlewToCoordinates(targetCoordinates);
+                    if (!slewSuccess) {
+                        slewSuccess = SlewToCoordinates(targetCoordinates);
+                    }
+                    if (!pierSideSuccess) {
+                        pierSideSuccess = SideOfPier == targetSideOfPier;
+                    }
+                    success = slewSuccess && pierSideSuccess;
                     if (!success) {
                         if (retries++ >= MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS) {
                             Logger.Error("Failed to slew for Meridian Flip, even after retrying");
                             break;
                         } else {
-                            Logger.Error($"Failed to slew for Meridian Flip. Retry {retries} of {MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS} times with a {MERIDIAN_FLIP_SLEW_RETRY_WAIT} wait between each");
+                            var jsnowCoordinates = targetCoordinates.Transform(Epoch.JNOW);
+                            var topocentricCoordinates = jsnowCoordinates.Transform(latitude: Angle.ByDegree(SiteLatitude), longitude: Angle.ByDegree(SiteLongitude));
+                            Logger.Error($"Failed to slew for Meridian Flip. Retry {retries} of {MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS} times with a {MERIDIAN_FLIP_SLEW_RETRY_WAIT} wait between each.  " +
+                                $"SideOfPier: {SideOfPier}, RA: {jsnowCoordinates.RAString}, DEC: {jsnowCoordinates.DecString}, Azimuth: {topocentricCoordinates.Azimuth}");
                             await Task.Delay(MERIDIAN_FLIP_SLEW_RETRY_WAIT);
                         }
                     }
