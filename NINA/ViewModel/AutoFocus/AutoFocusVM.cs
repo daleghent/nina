@@ -126,7 +126,7 @@ namespace NINA.ViewModel {
         public double AverageContrast { get; private set; }
         public double ContrastStdev { get; private set; }
 
-        private static AsyncObservableCollection<Chart> _chartList;
+        private AsyncObservableCollection<Chart> _chartList;
 
         public AsyncObservableCollection<Chart> ChartList {
             get {
@@ -198,16 +198,23 @@ namespace NINA.ViewModel {
             }
         }
 
-        public Task<AsyncObservableCollection<Chart>> ListChartsFromFs() {
+        private AsyncObservableCollection<Chart> ListCharts() {
             var files = Directory.GetFiles(Path.Combine(ReportDirectory));
             foreach (String file in files) {
-                ChartList.Add(new Chart(Path.GetFileName(file), file));
+                var item = new Chart(Path.GetFileName(file), file);
+                if (!ChartList.Any(x => x.Name == item.Name))
+                    ChartList.Add(item);
             }
-            return Task.FromResult(ChartList);
+            return ChartList;
+        }
+
+        public Task<AsyncObservableCollection<Chart>> ListChartsFromFs() {
+            return Task.FromResult(ListCharts());
         }
 
         public void LoadChart(Object obj) {
             if (SelectedChart != null) {
+                ListCharts();
                 var comparer = new FocusPointComparer();
                 var plotComparer = new PlotPointComparer();
                 FocusPoints.Clear();
