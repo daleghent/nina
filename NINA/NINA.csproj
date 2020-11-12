@@ -515,6 +515,7 @@
     <Compile Include="Model\MySafetyMonitor\SafetyMonitorInfo.cs" />
     <Compile Include="Model\MyWeatherData\UltimatePowerboxV2.cs" />
     <Compile Include="Model\MyFlatDevice\PegasusAstroFlatMaster.cs" />
+    <Compile Include="Model\MyWeatherData\WeatherUnderground.cs" />
     <Compile Include="PlateSolving\CaptureSolverParameter.cs" />
     <Compile Include="PlateSolving\CenteringSolver.cs" />
     <Compile Include="PlateSolving\CenterSolveParameter.cs" />
@@ -711,6 +712,7 @@
     <Compile Include="Utility\Converters\IntNegativeOneToDoubleDashConverter.cs" />
     <Compile Include="Utility\Converters\InverseBooleanOrToVisibilityCollapsedMultiConverter.cs" />
     <Compile Include="Utility\Converters\InverseNullToVisibilityCollapsedConverter.cs" />
+    <Compile Include="Utility\RawConverter\FreeImageConverter.cs" />
     <Compile Include="ViewModel\Equipment\Dome\DomeFollower.cs" />
     <Compile Include="ViewModel\Equipment\Dome\IDomeFollower.cs" />
     <Compile Include="ViewModel\Interfaces\IMainWindowVM.cs" />
@@ -1295,7 +1297,6 @@
     <Compile Include="Profile\Profiles.cs" />
     <Compile Include="Profile\SequenceSettings.cs" />
     <Compile Include="Profile\TelescopeSettings.cs" />
-    <Compile Include="Utility\RawConverter\FreeImageConverter.cs" />
     <Compile Include="Utility\RawConverter\IRawConverter.cs" />
     <Compile Include="Utility\SerialRelayInteraction.cs" />
     <Compile Include="Utility\SerialPortInteraction.cs" />

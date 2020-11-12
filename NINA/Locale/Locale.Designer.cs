@@ -14105,6 +14105,42 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Weather Underground API key.
+        /// </summary>
+        internal static string LblWeatherUndergroundAPIKey {
+            get {
+                return ResourceManager.GetString("LblWeatherUndergroundAPIKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uses Weather Underground PWS Weather API. Weather data is refreshed every 10mn. .
+        /// </summary>
+        internal static string LblWeatherUndergroundClientDescription {
+            get {
+                return ResourceManager.GetString("LblWeatherUndergroundClientDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N.I.N.A. internal Weather Underground API client..
+        /// </summary>
+        internal static string LblWeatherUndergroundClientInfo {
+            get {
+                return ResourceManager.GetString("LblWeatherUndergroundClientInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weather Underground Station ID.
+        /// </summary>
+        internal static string LblWeatherUndergroundStationID {
+            get {
+                return ResourceManager.GetString("LblWeatherUndergroundStationID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome to Nighttime Imaging &apos;N&apos; Astronomy!.
         /// </summary>
         internal static string LblWelcome {

@@ -20,5 +20,7 @@ namespace NINA.Profile {
         bool DisplayImperial { get; set; }
         string OpenWeatherMapAPIKey { get; set; }
         string TheWeatherCompanyAPIKey { get; set; }
+        string WeatherUndergroundAPIKey { get; set; }
+        string WeatherUndergroundStation { get; set; }
     }
 }

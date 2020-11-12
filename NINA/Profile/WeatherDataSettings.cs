@@ -32,6 +32,8 @@ namespace NINA.Profile {
             DisplayImperial = false;
             OpenWeatherMapAPIKey = string.Empty;
             TheWeatherCompanyAPIKey = string.Empty;
+            WeatherUndergroundAPIKey = string.Empty;
+            WeatherUndergroundStation = string.Empty;
         }
 
         private string id = string.Empty;
@@ -95,6 +97,32 @@ namespace NINA.Profile {
             }
             set {
                 theWeatherCompanyAPIKey = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string weatherUndergroundAPIKey = string.Empty;
+
+        [DataMember]
+        public string WeatherUndergroundAPIKey {
+            get {
+                return weatherUndergroundAPIKey;
+            }
+            set {
+                weatherUndergroundAPIKey = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string weatherUndergroundStation = string.Empty;
+
+        [DataMember]
+        public string WeatherUndergroundStation {
+            get {
+                return weatherUndergroundStation;
+            }
+            set {
+                weatherUndergroundStation = value;
                 RaisePropertyChanged();
             }
         }

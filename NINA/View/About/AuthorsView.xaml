@@ -66,6 +66,7 @@
             <TextBlock Text="Francesco Meschia" />
             <TextBlock Text="Nick Hardy" />
             <TextBlock Text="Szymon Giermakowski" />
+            <TextBlock Text="Franck Malterre" />
         </StackPanel>
     </StackPanel>
 </UserControl>

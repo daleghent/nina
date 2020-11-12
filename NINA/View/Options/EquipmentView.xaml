@@ -637,6 +637,64 @@
                             </DockPanel>
                         </UniformGrid>
                     </UniformGrid>
+                    <UniformGrid Columns="2">
+                        <UniformGrid
+                            Margin="0,6,0,6"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                Width="160"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblWeatherUndergroundAPIKey}" />
+                            <DockPanel>
+                                <TextBox
+                                    MinWidth="36"
+                                    HorizontalAlignment="Stretch"
+                                    DockPanel.Dock="Left"
+                                    Text="{Binding WeatherUndergroundAPIKey}" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Width="Auto"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Right"
+                                    Text="">
+                                    <Hyperlink Command="{Binding ElementName=UC, Path=DataContext.OpenWebRequestCommand}" CommandParameter="https://www.wunderground.com/member/api-keys">
+                                        <Run Text="?" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </DockPanel>
+                        </UniformGrid>
+                    </UniformGrid>
+                    <UniformGrid Columns="2">
+                        <UniformGrid
+                            Margin="0,6,0,6"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <TextBlock
+                                Width="160"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblWeatherUndergroundStationID}" />
+                            <DockPanel>
+                                <TextBox
+                                    MinWidth="36"
+                                    HorizontalAlignment="Stretch"
+                                    DockPanel.Dock="Left"
+                                    Text="{Binding WeatherUndergroundStation}" />
+                                <TextBlock
+                                    Grid.Column="2"
+                                    Width="Auto"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Right"
+                                    Text="">
+                                    <Hyperlink Command="{Binding ElementName=UC, Path=DataContext.OpenWebRequestCommand}" CommandParameter="https://www.wunderground.com/member/api-keys">
+                                        <Run Text="?" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </DockPanel>
+                        </UniformGrid>
+                    </UniformGrid>
                 </StackPanel>
             </GroupBox>
             <GroupBox
