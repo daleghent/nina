@@ -1157,7 +1157,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Ovladač může sledovat</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
-    <value>Stav závěrky</value>
+    <value>Stav vrat</value>
   </data>
   <data name="LblDomeCanSetShutter" xml:space="preserve">
     <value>Můžete nastavit závěrku</value>
@@ -1469,7 +1469,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Neznámý</value>
   </data>
   <data name="LblFlatDeviceUseWizardTrainedValues" xml:space="preserve">
-    <value>Use trained exposure times</value>
+    <value>Použít expoziční časy získané pomocí průvodcem plochých snímků</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
     <value>Průměrné ADU {0}, výpočet Času Expozice začíná v {1}</value>
@@ -2085,7 +2085,7 @@ Vypočtené HFR: {2}
     <value>Bez Synch</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
-    <value>Pokud je povoleno, aplikace neposílá synchronizační příkaz do dalekohledu. To by mělo být použito v případě, že existuje dobrý naváděcí model, který by se neměl měnit.</value>
+    <value>Pokud je povoleno, aplikace neposílá synchronizační příkaz do dalekohledu. Používat jen když má dalekohled má dobrý naváděcí systém, nebo existují speciální požadavky bez použití synchronizačních příkazů a software nemusí původní nastavení měnit.</value>
   </data>
   <data name="LblNoTelescope" xml:space="preserve">
     <value>Žádný Dalekohled</value>
@@ -3291,7 +3291,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Došlo k Neošetřené výjimce</value>
   </data>
   <data name="LblUnlinkedStretch" xml:space="preserve">
-    <value>Unlinked Stretch</value>
+    <value>Rozpětí bez Propojení</value>
   </data>
   <data name="LblUnlinkedStretchTooltip" xml:space="preserve">
     <value>
@@ -3418,7 +3418,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Použít Analýzu Senzoru SharpCap</value>
   </data>
   <data name="LblUseSideOfPier" xml:space="preserve">
-    <value>Použít Polohu Nastavenou Dalekohledem</value>
+    <value>Použít Polohu Dalekohledu</value>
   </data>
   <data name="LblUseSnapPort" xml:space="preserve">
     <value>Použít Port Dalekohledu Snap</value>
@@ -3787,7 +3787,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Verze platformy ASCOM je zastaralá. Aktualizujte na nejnovější verzi platformy ASCOM. Jinak se aplikace nemusí být schopna připojit ke všem zařízením ASCOM.</value>
   </data>
   <data name="LblDomeShutter" xml:space="preserve">
-    <value>Závěrka</value>
+    <value>Vrata</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
     <value>Zavřít</value>
@@ -3811,13 +3811,13 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Synchronizuje azimut kupole s hodnotou vypočítanou ze směru dalekohledu a měření kupole</value>
   </data>
   <data name="LblDomeStopTooltip" xml:space="preserve">
-    <value>Zastaví pohyb závěrky a otáčení kopule</value>
+    <value>Zastaví pohyb vrat a otáčení kopule</value>
   </data>
   <data name="LblDomeManualSlewTooltip" xml:space="preserve">
     <value>Otočit kopuli na azimut cíle</value>
   </data>
   <data name="LblDomeParkTooltip" xml:space="preserve">
-    <value>Otočit kopuli do polohy zaparkovat definovanou ovladačem a zavře závěrku</value>
+    <value>Otočit kopuli do polohy zaparkovat definovanou ovladačem a zavře vrata</value>
   </data>
   <data name="LblDynamicBrightness" xml:space="preserve">
     <value>Dynamický Jas</value>
@@ -3901,10 +3901,10 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Kopule sleduje dalekohled</value>
   </data>
   <data name="LblDomeFollowError_DriverFollowing" xml:space="preserve">
-    <value>Dome driver is following the telescope already</value>
+    <value>Ovladač kopule již sleduje dalekohled</value>
   </data>
   <data name="LblDomeSyncError_SyncTimeout" xml:space="preserve">
-    <value>Timed out while waiting for dome synchronization</value>
+    <value>Vypršel časový limit při čekání na synchronizaci kopule</value>
   </data>
   <data name="LblStartSequence" xml:space="preserve">
     <value>Spustit Sekvenci</value>
@@ -4000,7 +4000,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Chyba synchronizace kopule. Již nesleduje dalekohled. {0}</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
-    <value>Až sekvence skončí, zavřít štěrbinu kopule</value>
+    <value>Až sekvence skončí, zavřít vrata kopule</value>
   </data>
   <data name="LblDomeEnableFollowingWarning" xml:space="preserve">
     <value>Nelze povolit funkci sledování Kopule/Dalekohledu</value>
@@ -4024,7 +4024,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Pohyb Levotoč</value>
   </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
-    <value>Pokud je ovladač FindHome podporován, jeho použití před zaparkováním zajistí přejezd na přesné místo. To je užitečné, pokud se baterie k motoru závěrky nabíjí, když je zaparkovaná.</value>
+    <value>Pokud je ovladač FindHome podporován, jeho použití před zaparkováním zajistí přejezd na přesné místo. To je užitečné, pokud se baterie k motoru vrat nabíjí, když je zaparkovaná.</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
     <value>Časový limit Sekvence Auto-ostření</value>
@@ -4141,25 +4141,25 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>HIPS 2 FITS Sky Survey</value>
   </data>
   <data name="LblMechanicalPosition" xml:space="preserve">
-    <value>Mechanická Pozice</value>
+    <value>Pozice</value>
   </data>
   <data name="LblSkyPosition" xml:space="preserve">
     <value>Pozice Oblohy</value>
   </data>
   <data name="LblTargetMechanicalPosition" xml:space="preserve">
-    <value>Mechanická Pozice Cíle</value>
+    <value>Pozice Cíle</value>
   </data>
   <data name="LblTargetSkyPosition" xml:space="preserve">
     <value>Cílová Pozice Oblohy</value>
   </data>
   <data name="LblMoveMechanicalPosition" xml:space="preserve">
-    <value>Pohyb Mechanické Pozice</value>
+    <value>Pohyb Pozice</value>
   </data>
   <data name="LblMoveSkyPosition" xml:space="preserve">
     <value>Pohyb Oblohy</value>
   </data>
   <data name="LblPixelMargin" xml:space="preserve">
-    <value>Keep guide stars off sensor edges by at least</value>
+    <value>Pointační hvězdu udržujte mimo okraj senzoru</value>
   </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
     <value>Přidat {0} do Minut po Poledníku</value>
@@ -4562,7 +4562,7 @@ Přidejte sekvence DSO nebo přidejte cíle pomocí Atlasu Hvězd nebo Průvodce
     <value>Cíle</value>
   </data>
   <data name="LblStartupSequenceTemplate" xml:space="preserve">
-    <value>Spuštění Šablony Sekvence</value>
+    <value>Zahájit Šablonu Sekvencí</value>
   </data>
   <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
     <value>Po nastavení bude tato šablona předem načtena do sekvencéru.</value>
@@ -4662,13 +4662,13 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Otevřít Sadu Cílů</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Tvůrce Sekvence</value>
+    <value>Simple Sequence</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Možnosti Ukončení Posledního Cíle</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Šablona Tvůrce Sekvence</value>
+    <value>Simple Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Importovat Cíle</value>
@@ -4719,10 +4719,10 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Kopule</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Description" xml:space="preserve">
-    <value>Zavřít štěrbinu kopule</value>
+    <value>Zavřít vrata kopule</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Name" xml:space="preserve">
-    <value>Zavřít Štěrbinu</value>
+    <value>Zavřít Vrata</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_ParkDome_Description" xml:space="preserve">
     <value>Parkovat kopuli do parkovací polohy</value>
@@ -4743,7 +4743,7 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Po spuštění sekvence otevřít kryt</value>
   </data>
   <data name="LblOpenDomeShutterAtSequenceStart" xml:space="preserve">
-    <value>Po spuštění sekvence otevřít štěrbinu</value>
+    <value>Po spuštění sekvence otevřít vrata</value>
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Odparkovat kopuli a spustit sekvenci</value>
@@ -4752,10 +4752,10 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Odparkovat montáž při spuštění sekvence</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
-    <value>Otevřít štěrbinu kopule</value>
+    <value>Otevřít vrata kopule</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Name" xml:space="preserve">
-    <value>Otevřít Štěrbinu</value>
+    <value>Otevřít Vrata</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description" xml:space="preserve">
     <value>Zajišťuje synchronizaci kopule s dalekohledem</value>
@@ -4877,30 +4877,56 @@ Příklad:
     <value>Zavřít Vše</value>
   </data>
   <data name="LblConnectAll" xml:space="preserve">
-    <value>Connect all devices?</value>
+    <value>Připojit všechna zařízení?</value>
   </data>
   <data name="LblCollapseSequencerTemplatesByDefault" xml:space="preserve">
-    <value>Collapse Sequence Templates by default</value>
+    <value>Ve výchozím nastavení Sbalte Šablony Sekvencí</value>
   </data>
   <data name="LblCollapseSequencerTemplatesByDefaultTooltip" xml:space="preserve">
-    <value>When this option is enabled, adding templates and targets to the sequencer will create them in a collapsed state.</value>
+    <value>Pokud je tato možnost povolena, přidá šablonu a cíl v sekvencéru ve sbaleném stavu.</value>
   </data>
   <data name="LblMaxMinutesAfterMeridian" xml:space="preserve">
-    <value>Max Minutes after Meridian</value>
+    <value>Max Minuty po Poledníku</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty" xml:space="preserve">
-    <value>No folder was specified to save images to. Please set a valid folder inside the Image File Settings</value>
+    <value>Nebyla zadána žádná složka pro uložení obrázků. Nastavte složku v Možnosti -Zachytávání - Nastavení Souboru</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid" xml:space="preserve">
-    <value>The folder that is specified inside the Image File Settings to save images to was not found. Please validate the folder specified in the Image File Settings.</value>
+    <value>Složka zadaná v Možnosti - Zachytávání - Nastavení Souboru, do které se mají obrázky ukládat, nebyla nalezena. Ověřte správnost této složky.</value>
   </data>
   <data name="LblTheWeatherCompanyAPIKey" xml:space="preserve">
-    <value>TheWeatherCompany API Key</value>
+    <value>TheWeatherCompany API</value>
   </data>
   <data name="LblTheWeatherCompanyClientDescription" xml:space="preserve">
-    <value>Uses TheWeatherCompany's Current Weather API. Weather data is refreshed every 10 minutes.</value>
+    <value>Používá API pro aktuální počasí TheWeatherCompany. Údaje o počasí se aktualizují každých 10 minut.</value>
   </data>
   <data name="LblTheWeatherCompanyClientInfo" xml:space="preserve">
-    <value>N.I.N.A. internal TheWeatherCompany API client</value>
+    <value>N.I.N.A. interní klient TheWeatherCompany API</value>
+  </data>
+  <data name="Lbl_OldSequencer_BuildAdvanced_Caption" xml:space="preserve">
+    <value>Build Advanced Sequence?</value>
+  </data>
+  <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the simple sequence!</value>
+  </data>
+  <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
+    <value>Advanced Sequencer</value>
+  </data>
+  <data name="Lbl_OldSequencer_SwitchToAdvancedTooltip" xml:space="preserve">
+    <value>Switches to the advanced sequence planning mode.
+There the sequence can be planned from scratch using fine granular instructions, triggers and conditions.</value>
+  </data>
+  <data name="LblDisableSimpleSequencer" xml:space="preserve">
+    <value>Disable Simple Sequencer</value>
+  </data>
+  <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
+    <value>This will disable the simple sequencer and directly show the advanced sequencer in the sequence tab.</value>
+  </data>
+  <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
+    <value>Switch back to Sequencer Dashboard</value>
+  </data>
+  <data name="Lbl_OldSequencer_TargetPreparation" xml:space="preserve">
+    <value>Target Preparation Instructions</value>
   </data>
 </root>

@@ -4666,13 +4666,13 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Open Target Set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Sequence Builder</value>
+    <value>Simple Sequence</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Sequence Builder Template</value>
+    <value>Simple Sequence Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Import Target</value>
@@ -4907,5 +4907,31 @@ Example:
   </data>
   <data name="LblTheWeatherCompanyClientInfo" xml:space="preserve">
     <value>N.I.N.A. internal TheWeatherCompany API client</value>
+  </data>
+  <data name="Lbl_OldSequencer_BuildAdvanced_Caption" xml:space="preserve">
+    <value>Build Advanced Sequence?</value>
+  </data>
+  <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
+    <value>Are you sure to export the sequence to the advanced sequence?
+Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the simple sequence!</value>
+  </data>
+  <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
+    <value>Advanced Sequencer</value>
+  </data>
+  <data name="Lbl_OldSequencer_SwitchToAdvancedTooltip" xml:space="preserve">
+    <value>Switches to the advanced sequence planning mode.
+There the sequence can be planned from scratch using fine granular instructions, triggers and conditions.</value>
+  </data>
+  <data name="LblDisableSimpleSequencer" xml:space="preserve">
+    <value>Disable Simple Sequencer</value>
+  </data>
+  <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
+    <value>This will disable the simple sequencer and directly show the advanced sequencer in the sequence tab.</value>
+  </data>
+  <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
+    <value>Switch back to Sequencer Dashboard</value>
+  </data>
+  <data name="Lbl_OldSequencer_TargetPreparation" xml:space="preserve">
+    <value>Target Preparation Instructions</value>
   </data>
 </root>
