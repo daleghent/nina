@@ -97,9 +97,16 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
             //Todo: The MeridianFlipVM could be completely replaced by sequential instructions and dedicated ui template
             var info = telescopeMediator.GetInfo();
+
+            var timeToFlip = CalculateMinimumTimeRemaining();
+            if (timeToFlip > TimeSpan.FromHours(2)) {
+                //Assume a delayed flip when the time is more than two hours and flip immediately
+                timeToFlip = TimeSpan.Zero;
+            }
+
             lastFlipTime = DateTime.Now;
             return new MeridianFlipVM(profileService, cameraMediator, telescopeMediator, guiderMediator, focuserMediator, imagingMediator, applicationStatusMediator, filterWheelMediator)
-                .MeridianFlip(target, TimeSpan.FromHours(info.TimeToMeridianFlip) - TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian));
+                .MeridianFlip(target, timeToFlip);
         }
 
         public override void AfterParentChanged() {
@@ -107,6 +114,23 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         }
 
         public override void Initialize() {
+        }
+
+        private TimeSpan CalculateMinimumTimeRemaining() {
+            var settings = profileService.ActiveProfile.MeridianFlipSettings;
+            //Substract delta from maximum to get minimum time
+            var delta = settings.MaxMinutesAfterMeridian - settings.MinutesAfterMeridian;
+            var time = CalculateMaximumTimeRemainaing() - TimeSpan.FromMinutes(delta);
+            if (time < TimeSpan.Zero) {
+                time = TimeSpan.Zero;
+            }
+            return time;
+        }
+
+        private TimeSpan CalculateMaximumTimeRemainaing() {
+            var telescopeInfo = telescopeMediator.GetInfo();
+
+            return TimeSpan.FromHours(telescopeInfo.TimeToMeridianFlip);
         }
 
         public override bool ShouldTrigger(ISequenceItem nextItem) {
@@ -130,8 +154,8 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             var exposureTime = nextItem.GetEstimatedDuration().TotalSeconds;
 
             //The time to meridian flip reported by the telescop is the latest time for a flip to happen
-            var minimumTimeRemaining = TimeSpan.FromHours(telescopeInfo.TimeToMeridianFlip) - TimeSpan.FromMinutes(settings.MinutesAfterMeridian);
-            var maximumTimeRemaining = TimeSpan.FromHours(telescopeInfo.TimeToMeridianFlip);
+            var minimumTimeRemaining = CalculateMinimumTimeRemaining();
+            var maximumTimeRemaining = CalculateMaximumTimeRemainaing();
             if (settings.PauseTimeBeforeMeridian != 0) {
                 //A pause prior to a meridian flip is a hard limit due to equipment obstruction. There is no possibility for a timerange as we have to pause early and wait for meridian to pass
                 minimumTimeRemaining = minimumTimeRemaining - TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian) - TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian);
