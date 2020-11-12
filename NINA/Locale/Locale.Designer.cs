@@ -13446,6 +13446,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unparked.
+        /// </summary>
+        internal static string LblUnparked {
+            get {
+                return ResourceManager.GetString("LblUnparked", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unpark mount when sequence starts.
         /// </summary>
         internal static string LblUnparkMountAtSequenceStart {

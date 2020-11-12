@@ -4939,4 +4939,8 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="Lbl_OldSequencer_TargetPreparation" xml:space="preserve">
     <value>Target Preparation Instructions</value>
   </data>
+  <data name="LblUnparked" xml:space="preserve">
+    <value>Unparked</value>
+    <comment>If the telescope is not in park position</comment>
+  </data>
 </root>

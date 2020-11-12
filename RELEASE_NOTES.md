@@ -98,6 +98,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - After hitting connect all button, it will show highlighted and when hit again it will disconnect all devices instead
 - Meridian Flip now allows for a time range instead of a single point in time to allow for less time lost
 - Some areas where the user interface was clipped on lower resolutions (down to 720p) are now showing all details
+- Telescope panel in imaging tab now shows an indicator when the telescope is not unparked
 
 ### Guiders
 - MetaGuide is now supported
