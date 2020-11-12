@@ -44,7 +44,7 @@ namespace NINA.Sequencer.Conditions {
         [JsonProperty]
         public int CompletedIterations {
             get => completedIterations;
-            private set {
+            set {
                 completedIterations = value;
                 RaisePropertyChanged();
             }

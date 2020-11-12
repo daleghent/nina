@@ -48,6 +48,7 @@ namespace NINA.Sequencer.Container {
         private readonly IFramingAssistantVM framingAssistantVM;
         private readonly IPlanetariumFactory planetariumFactory;
         private readonly IApplicationMediator applicationMediator;
+        private INighttimeCalculator nighttimeCalculator;
         private InputTarget target;
 
         [ImportingConstructor]
@@ -84,8 +85,6 @@ namespace NINA.Sequencer.Container {
                 }
             }
         }
-
-        private INighttimeCalculator nighttimeCalculator;
 
         public NighttimeData NighttimeData { get; }
 

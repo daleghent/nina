@@ -25,11 +25,11 @@ using System.Threading.Tasks;
 namespace NINA.Sequencer.Serialization {
 
     public class SequenceJsonConverter {
-        private SequencerFactory factory;
+        private ISequencerFactory factory;
 
         private List<JsonConverter> converters;
 
-        public SequenceJsonConverter(SequencerFactory factory) {
+        public SequenceJsonConverter(ISequencerFactory factory) {
             this.factory = factory;
             var c = new SequenceContainerCreationConverter(factory);
             this.converters = new List<JsonConverter>() {

@@ -115,14 +115,8 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
-        private bool valid = true;
-
         public override bool Check(ISequenceItem nextItem) {
-            if (valid) {
-                this.valid = DateTime.Now + (nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero) <= CalculateRemainingTime();
-            }
-
-            return valid;
+            return DateTime.Now + (nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero) <= CalculateRemainingTime();
         }
 
         private DateTime CalculateRemainingTime() {
@@ -150,7 +144,6 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void ResetProgress() {
-            valid = true;
         }
 
         public override void SequenceBlockFinished() {

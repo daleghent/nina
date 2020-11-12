@@ -309,7 +309,7 @@ namespace NINA.Sequencer.Container {
             } else {
                 int newIndex = index + 1;
                 var container = Items[newIndex] as ISequenceContainer;
-                if (container?.IsExpanded == true) {
+                if (container?.IsExpanded == true && !(container is IImmutableContainer)) {
                     container.Items.Insert(0, item);
                     item.Parent?.Remove(item);
                     item.AttachNewParent(container);
@@ -338,7 +338,7 @@ namespace NINA.Sequencer.Container {
             } else {
                 int newIndex = index - 1;
                 var container = Items[newIndex] as ISequenceContainer;
-                if (container?.IsExpanded == true) {
+                if (container?.IsExpanded == true && !(container is IImmutableContainer)) {
                     container.Items.Add(item);
                     item.Parent?.Remove(item);
                     item.AttachNewParent(container);

@@ -12,28 +12,25 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Sequencer;
 using NINA.Sequencer.Container;
-using NINA.ViewModel.Interfaces;
-using NINA.ViewModel.Sequencer;
+using NINA.Utility;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
-namespace NINA.Utility.Mediator.Interfaces {
+namespace NINA.ViewModel.Sequencer {
 
-    public interface ISequenceMediator {
+    public interface ISequence2VM {
+        IAsyncCommand StartSequenceCommand { get; }
+        ICommand CancelSequenceCommand { get; }
+        NINA.Sequencer.Sequencer Sequencer { get; }
+        NINA.Sequencer.ISequencerFactory SequencerFactory { get; }
 
         IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates();
 
-        void SetAdvancedSequence(ISequenceRootContainer container);
-
-        void AddAdvancedTarget(IDeepSkyObjectContainer container);
-
-        void AddSimpleTarget(DeepSkyObject deepSkyObject);
-
-        void RegisterSequenceNavigation(ISequenceNavigationVM sequenceNavigation);
-
-        void SwitchToAdvancedView();
-        void SwitchToOverview();
+        void AddTarget(IDeepSkyObjectContainer container);
     }
 }

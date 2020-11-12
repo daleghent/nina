@@ -676,6 +676,21 @@
                                 HorizontalAlignment="Left"
                                 IsChecked="{Binding CollapseSequencerTemplatesByDefault}" />
                         </StackPanel>
+                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                            <TextBlock
+                                MinWidth="230"
+                                MinHeight="20"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblDisableSimpleSequencer}">
+                                <TextBlock.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblDisableSimpleSequencerTooltip}" />
+                                </TextBlock.ToolTip>
+                            </TextBlock>
+                            <CheckBox
+                                Height="25"
+                                HorizontalAlignment="Left"
+                                IsChecked="{Binding DisableSimpleSequencer}" />
+                        </StackPanel>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="{ns:Loc LblLayout}">

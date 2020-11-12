@@ -161,10 +161,7 @@
                                 </UniformGrid>
                             </UniformGrid>
                         </Border>
-                        <Border
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0"
-                            Visibility="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.MeridianFlipSettings.Enabled, Converter={StaticResource VisibilityConverter}}">
+                        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
                             <UniformGrid Columns="2">
                                 <UniformGrid
                                     Margin="0,6,0,6"

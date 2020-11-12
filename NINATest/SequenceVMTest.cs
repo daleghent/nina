@@ -60,7 +60,7 @@ namespace NINATest {
         private FlatDeviceInfo _flatDevice;
         private CaptureSequenceList _dummyList;
         private Mock<ISequenceMediator> sequenceMediatorMock;
-        private SequenceVM _sut;
+        private SimpleSequenceVM _sut;
 
         [SetUp]
         public void SequenceVM_TestInit() {
@@ -109,7 +109,7 @@ namespace NINATest {
                 SupportsOpenClose = true
             };
 
-            _sut = new SequenceVM(profileServiceMock.Object, sequenceMediatorMock.Object, cameraMediatorMock.Object, rotatorMediatorMock.Object, applicationStatusMediatorMock.Object, nighttimeCalculatorMock.Object,
+            _sut = new SimpleSequenceVM(profileServiceMock.Object, sequenceMediatorMock.Object, cameraMediatorMock.Object, rotatorMediatorMock.Object, applicationStatusMediatorMock.Object, nighttimeCalculatorMock.Object,
                 planetariumFactoryMock.Object, deepSkyObjectSearchVMMock.Object, framingAssistantVMMock.Object, applicationMediatorMock.Object);
         }
 

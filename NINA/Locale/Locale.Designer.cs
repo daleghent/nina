@@ -70,6 +70,25 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Build Advanced Sequence?.
+        /// </summary>
+        internal static string Lbl_OldSequencer_BuildAdvanced_Caption {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_BuildAdvanced_Caption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure to export the sequence to the advanced sequence?
+        ///Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the simple sequence!.
+        /// </summary>
+        internal static string Lbl_OldSequencer_BuildAdvanced_Text {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_BuildAdvanced_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add a new Sequence Target via the + Button, open an existing Target or add Targets via Framing Assistant.
         /// </summary>
         internal static string Lbl_OldSequencer_EmptyAreaDescription {
@@ -160,6 +179,25 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced Sequencer.
+        /// </summary>
+        internal static string Lbl_OldSequencer_SwitchToAdvanced {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_SwitchToAdvanced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switches to the advanced sequence planning mode.
+        ///There the sequence can be planned from scratch using fine granular instructions, triggers and conditions..
+        /// </summary>
+        internal static string Lbl_OldSequencer_SwitchToAdvancedTooltip {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_SwitchToAdvancedTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target Imaging Instructions.
         /// </summary>
         internal static string Lbl_OldSequencer_TargetImaging {
@@ -169,7 +207,16 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sequence Builder Template.
+        ///   Looks up a localized string similar to Target Preparation Instructions.
+        /// </summary>
+        internal static string Lbl_OldSequencer_TargetPreparation {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_TargetPreparation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Simple Sequence Template.
         /// </summary>
         internal static string Lbl_OldSequencer_Template {
             get {
@@ -178,7 +225,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sequence Builder.
+        ///   Looks up a localized string similar to Simple Sequence.
         /// </summary>
         internal static string Lbl_OldSequencer_Title {
             get {
@@ -1476,6 +1523,15 @@ namespace NINA.Locale {
         internal static string Lbl_Sequencer_SaveSequence_Tooltip {
             get {
                 return ResourceManager.GetString("Lbl_Sequencer_SaveSequence_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Switch back to Sequencer Dashboard.
+        /// </summary>
+        internal static string Lbl_Sequencer_SwitchToOverview {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_SwitchToOverview", resourceCulture);
             }
         }
         
@@ -5180,6 +5236,24 @@ namespace NINA.Locale {
         internal static string LblDisabled {
             get {
                 return ResourceManager.GetString("LblDisabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable Simple Sequencer.
+        /// </summary>
+        internal static string LblDisableSimpleSequencer {
+            get {
+                return ResourceManager.GetString("LblDisableSimpleSequencer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This will disable the simple sequencer and directly show the advanced sequencer in the sequence tab..
+        /// </summary>
+        internal static string LblDisableSimpleSequencerTooltip {
+            get {
+                return ResourceManager.GetString("LblDisableSimpleSequencerTooltip", resourceCulture);
             }
         }
         

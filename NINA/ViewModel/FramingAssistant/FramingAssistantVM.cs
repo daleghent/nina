@@ -134,11 +134,11 @@ namespace NINA.ViewModel.FramingAssistant {
                     var dso = new DeepSkyObject(name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
                     dso.Rotation = Rectangle.TotalRotation;
                     dso.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
-                    sequenceMediator.AddTargetToOldSequencer(dso);
+                    sequenceMediator.AddSimpleTarget(dso);
                 }
             }, (object o) => RectangleCalculated);
             SetSequencerTargetCommand = new RelayCommand((object o) => {
-                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE2);
+                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
 
                 var template = o as IDeepSkyObjectContainer;
                 var first = true;
@@ -155,7 +155,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     };
                     container.IsExpanded = first;
                     first = false;
-                    sequenceMediator.AddTargetToSequencer(container);
+                    sequenceMediator.AddAdvancedTarget(container);
                 }
             }, (object o) => RectangleCalculated);
 

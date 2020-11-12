@@ -14,6 +14,7 @@
 
 using NINA.Model.MyPlanetarium;
 using NINA.Profile;
+using NINA.Sequencer;
 using NINA.Utility.Astrometry;
 using NINA.Utility.ImageAnalysis;
 using NINA.Utility.Mediator;
@@ -46,6 +47,7 @@ namespace NINA.Utility {
 
     internal class IoCBindings : NinjectModule {
         private readonly IProfileService _profileService;
+
         public IoCBindings(IProfileService profileService) =>
             _profileService = profileService;
 
@@ -65,7 +67,7 @@ namespace NINA.Utility {
                 Bind<IFlatDeviceVM>().To<FlatDeviceVM>().InSingletonScope();
                 Bind<IGuiderVM>().To<GuiderVM>().InSingletonScope();
                 Bind<IExposureCalculatorVM>().To<ExposureCalculatorVM>().InSingletonScope();
-                Bind<ISequenceVM>().To<SequenceVM>().InSingletonScope();
+                Bind<ISimpleSequenceVM>().To<SimpleSequenceVM>().InSingletonScope();
                 Bind<IPolarAlignmentVM>().To<PolarAlignmentVM>().InSingletonScope();
                 Bind<ISkyAtlasVM>().To<SkyAtlasVM>().InSingletonScope();
                 Bind<IFramingAssistantVM>().To<FramingAssistantVM>().InSingletonScope();
@@ -141,6 +143,8 @@ namespace NINA.Utility {
                 Bind<ISequence2VM>().To<Sequence2VM>().InSingletonScope();
                 Bind<IImageSaveMediator>().To<ImageSaveMediator>().InSingletonScope();
                 Bind<IImageSaveController>().To<ImageSaveController>().InSingletonScope();
+                Bind<ISequenceNavigationVM>().To<SequenceNavigationVM>().InSingletonScope();
+                Bind<ISequencerFactory>().To<SequencerFactory>().InSingletonScope();
             } catch (Exception e) {
                 Logger.Error(e);
                 throw e;

@@ -17,9 +17,11 @@ using System.IO;
 using System.Runtime.Serialization;
 
 namespace NINA.Profile {
+
     [Serializable()]
     [DataContract]
     public class SequenceSettings : Settings, ISequenceSettings {
+
         public SequenceSettings() {
             SetDefaultValues();
         }
@@ -43,6 +45,7 @@ namespace NINA.Profile {
             startupSequenceTemplate = string.Empty;
             unparMountAtSequenceStart = true;
             collapseSequencerTemplatesByDefault = false;
+            disableSimpleSequencer = false;
         }
 
         private string templatePath;
@@ -282,6 +285,21 @@ namespace NINA.Profile {
             set {
                 if (doMeridianFlip != value) {
                     doMeridianFlip = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool disableSimpleSequencer;
+
+        [DataMember]
+        public bool DisableSimpleSequencer {
+            get {
+                return disableSimpleSequencer;
+            }
+            set {
+                if (disableSimpleSequencer != value) {
+                    disableSimpleSequencer = value;
                     RaisePropertyChanged();
                 }
             }

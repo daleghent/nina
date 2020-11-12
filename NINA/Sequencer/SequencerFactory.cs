@@ -39,7 +39,7 @@ using System.Windows.Data;
 
 namespace NINA.Sequencer {
 
-    public class SequencerFactory {
+    public class SequencerFactory : ISequencerFactory {
         private CompositionContainer container;
 
         public IList<IDateTimeProvider> DateTimeProviders { get; private set; }

@@ -53,10 +53,10 @@ namespace NINA.ViewModel {
             SetOldSequencerTargetCommand = new RelayCommand((object o) => {
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
 
-                sequenceMediator.AddTargetToOldSequencer(SearchResult.SelectedItem);
+                sequenceMediator.AddSimpleTarget(SearchResult.SelectedItem);
             });
             SetSequencerTargetCommand = new RelayCommand((object o) => {
-                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE2);
+                applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
 
                 var template = o as IDeepSkyObjectContainer;
 
@@ -66,7 +66,7 @@ namespace NINA.ViewModel {
                 container.Target.Rotation = 0;
                 container.Target.InputCoordinates.Coordinates = SearchResult.SelectedItem.Coordinates;
 
-                sequenceMediator.AddTargetToSequencer(container);
+                sequenceMediator.AddAdvancedTarget(container);
             });
             SlewToCoordinatesCommand = new AsyncCommand<bool>(async () => {
                 return await telescopeMediator.SlewToCoordinatesAsync(SearchResult.SelectedItem.Coordinates, CancellationToken.None);

@@ -84,5 +84,10 @@ namespace NINA.Profile {
         /// Used by Sequence Builder
         /// </summary>
         bool DoMeridianFlip { get; set; }
+
+        /// <summary>
+        /// Disables the sequence dashboard and directly shows the advanced sequencer
+        /// </summary>
+        bool DisableSimpleSequencer { get; set; }
     }
 }

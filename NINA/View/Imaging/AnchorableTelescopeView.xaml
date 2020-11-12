@@ -43,8 +43,8 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTracking}" />
-                    <TextBlock 
-                        Margin="5,0,0,0" 
+                    <TextBlock
+                        Margin="5,0,0,0"
                         Text="{Binding TelescopeInfo.TrackingRate, Converter={StaticResource TrackingRateConverter}}"
                         Visibility="{Binding TelescopeInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                 </UniformGrid>
@@ -72,8 +72,7 @@
             <Border
                 Margin="0,5,0,0"
                 BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0"
-                Visibility="{Binding Path=ActiveProfile.MeridianFlipSettings.Enabled, Converter={StaticResource VisibilityConverter}}">
+                BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblMeridianFlipIn}" />
                     <TextBlock Margin="5,0,0,0" Text="{Binding TelescopeInfo.TimeToMeridianFlipString}" />
