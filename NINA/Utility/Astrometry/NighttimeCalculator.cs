@@ -27,12 +27,13 @@ namespace NINA.Utility.Astrometry {
                 return nighttimeData;
             } else {
                 var twilightRiseAndSet = Astrometry.GetNightTimes(referenceDate, latitude, longitude);
+                var nauticalTwilightRiseAndSet = Astrometry.GetNauticalNightTimes(referenceDate, latitude, longitude);
                 var moonRiseAndSet = Astrometry.GetMoonRiseAndSet(referenceDate, latitude, longitude);
                 var sunRiseAndSet = Astrometry.GetSunRiseAndSet(referenceDate, latitude, longitude);
                 var moonPhase = Astrometry.GetMoonPhase(referenceDate);
                 var illumination = Astrometry.GetMoonIllumination(referenceDate);
 
-                var data = new NighttimeData(date: selectedDate, referenceDate: referenceDate, moonPhase: moonPhase, moonIllumination: illumination, twilightRiseAndSet: twilightRiseAndSet,
+                var data = new NighttimeData(date: selectedDate, referenceDate: referenceDate, moonPhase: moonPhase, moonIllumination: illumination, twilightRiseAndSet: twilightRiseAndSet, nauticalTwilightRiseAndSet: nauticalTwilightRiseAndSet,
                     sunRiseAndSet: sunRiseAndSet, moonRiseAndSet: moonRiseAndSet);
                 Cache[key] = data;
                 return data;

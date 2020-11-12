@@ -297,6 +297,13 @@ namespace NINA.Utility.Astrometry {
             return riseAndSet;
         }
 
+        public static RiseAndSetEvent GetNauticalNightTimes(DateTime date, double latitude, double longitude) {
+            var riseAndSet = new NauticalTwilightRiseAndSet(date, latitude, longitude);
+            var t = riseAndSet.Calculate().Result;
+
+            return riseAndSet;
+        }
+
         public static RiseAndSetEvent GetMoonRiseAndSet(DateTime date, double latitude, double longitude) {
             var riseAndSet = new MoonRiseAndSet(date, latitude, longitude);
             var t = riseAndSet.Calculate().Result;

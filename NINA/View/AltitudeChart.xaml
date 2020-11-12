@@ -16,10 +16,10 @@
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
     xmlns:util="clr-namespace:NINA.Utility"
+    x:Name="UC"
     d:DesignHeight="300"
     d:DesignWidth="300"
-    mc:Ignorable="d"
-    x:Name="UC">
+    mc:Ignorable="d">
 
     <Grid>
         <Grid.Resources>
@@ -67,7 +67,13 @@
                     ItemsSource="{Binding Source={StaticResource proxy}, Path=Data.TwilightDuration, UpdateSourceTrigger=PropertyChanged}"
                     TrackerFormatString="X: {2:HH:mm}h"
                     Color="#FF73737E" />
-
+                <oxy:AreaSeries
+                    Color2="Transparent"
+                    DataFieldX="Key"
+                    DataFieldY="Value"
+                    ItemsSource="{Binding Source={StaticResource proxy}, Path=Data.NauticalTwilightDuration, UpdateSourceTrigger=PropertyChanged}"
+                    TrackerFormatString="X: {2:HH:mm}h"
+                    Color="LightSlateGray" />
                 <oxy:AreaSeries
                     Color2="Transparent"
                     DataFieldX="Key"

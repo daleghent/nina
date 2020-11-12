@@ -14,6 +14,7 @@ namespace NINA.Utility.Astrometry {
             Astrometry.MoonPhase moonPhase,
             double? moonIllumination,
             RiseAndSetEvent twilightRiseAndSet,
+            RiseAndSetEvent nauticalTwilightRiseAndSet,
             RiseAndSetEvent sunRiseAndSet,
             RiseAndSetEvent moonRiseAndSet) {
             this.Date = date;
@@ -21,10 +22,12 @@ namespace NINA.Utility.Astrometry {
             this.MoonPhase = moonPhase;
             this.Illumination = moonIllumination;
             this.TwilightRiseAndSet = twilightRiseAndSet;
+            this.NauticalTwilightRiseAndSet = nauticalTwilightRiseAndSet;
             this.SunRiseAndSet = sunRiseAndSet;
             this.MoonRiseAndSet = moonRiseAndSet;
             this.NightDuration = new AsyncObservableCollection<DataPoint>(CalculateNightDuration(twilightRiseAndSet));
             this.TwilightDuration = new AsyncObservableCollection<DataPoint>(CalculateTwilightDuration(twilightRiseAndSet, sunRiseAndSet));
+            this.NauticalTwilightDuration = new AsyncObservableCollection<DataPoint>(CalculateNauticalTwilightDuration(nauticalTwilightRiseAndSet, sunRiseAndSet));
             this.Ticker = new Ticker(TimeSpan.FromSeconds(30));
         }
 
@@ -58,6 +61,34 @@ namespace NINA.Utility.Astrometry {
             return ImmutableList.Create<DataPoint>();
         }
 
+        private static IList<DataPoint> CalculateNauticalTwilightDuration(RiseAndSetEvent nauticalTwilightRiseAndSet, RiseAndSetEvent sunRiseAndSet) {
+            if (nauticalTwilightRiseAndSet != null && nauticalTwilightRiseAndSet.Rise.HasValue && nauticalTwilightRiseAndSet.Set.HasValue) {
+                var nauticalTwilightRise = nauticalTwilightRiseAndSet.Rise;
+                var nauticalTwilightSet = nauticalTwilightRiseAndSet.Set;
+                if (nauticalTwilightSet.Value > nauticalTwilightRise.Value) {
+                    nauticalTwilightSet = nauticalTwilightSet?.AddDays(-1);
+                }
+                var dataPointsBuilder = ImmutableList.CreateBuilder<DataPoint>();
+                dataPointsBuilder.Add(new DataPoint(Axis.ToDouble(nauticalTwilightSet), 90));
+                if (sunRiseAndSet != null) {
+                    var rise = sunRiseAndSet.Rise;
+                    var set = sunRiseAndSet.Set;
+                    if (rise.HasValue && set.HasValue) {
+                        if (set.Value > rise.Value) {
+                            set = set?.AddDays(-1);
+                        }
+                        dataPointsBuilder.Add(new DataPoint(Axis.ToDouble(set), 90));
+                        dataPointsBuilder.Add(new DataPoint(Axis.ToDouble(set), 0));
+                        dataPointsBuilder.Add(new DataPoint(Axis.ToDouble(rise), 0));
+                        dataPointsBuilder.Add(new DataPoint(Axis.ToDouble(rise), 90));
+                    }
+                }
+                dataPointsBuilder.Add(new DataPoint(Axis.ToDouble(nauticalTwilightRise), 90));
+                return dataPointsBuilder.ToImmutable();
+            }
+            return ImmutableList.Create<DataPoint>();
+        }
+
         private static IList<DataPoint> CalculateNightDuration(RiseAndSetEvent twilightRiseAndSet) {
             if (twilightRiseAndSet != null && twilightRiseAndSet.Rise.HasValue && twilightRiseAndSet.Set.HasValue) {
                 var rise = twilightRiseAndSet.Rise;
@@ -78,9 +109,11 @@ namespace NINA.Utility.Astrometry {
         public Astrometry.MoonPhase MoonPhase { get; set; }
         public double? Illumination { get; set; }
         public RiseAndSetEvent TwilightRiseAndSet { get; set; }
+        public RiseAndSetEvent NauticalTwilightRiseAndSet { get; set; }
         public RiseAndSetEvent SunRiseAndSet { get; set; }
         public RiseAndSetEvent MoonRiseAndSet { get; set; }
         public AsyncObservableCollection<DataPoint> TwilightDuration { get; set; }
+        public AsyncObservableCollection<DataPoint> NauticalTwilightDuration { get; set; }
         public AsyncObservableCollection<DataPoint> NightDuration { get; set; }
     }
 }

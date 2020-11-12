@@ -94,6 +94,8 @@ namespace NINA.Sequencer {
                 new SunsetProvider(nighttimeCalculator),
                 new DuskProvider(nighttimeCalculator),
                 new DawnProvider(nighttimeCalculator),
+                new NauticalDawnProvider(nighttimeCalculator),
+                new NauticalDuskProvider(nighttimeCalculator),
                 new SunriseProvider(nighttimeCalculator)
             };
 

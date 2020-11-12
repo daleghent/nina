@@ -1021,7 +1021,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
   <data name="LblDateTimeFormatDescription" xml:space="preserve">
     <value>Date with format YYYY-MM-DD_HH-mm-ss</value>
   </data>
-  <data name="LblDawn" xml:space="preserve">
+ <data name="LblDawn" xml:space="preserve">
     <value>Dawn</value>
   </data>
   <data name="LblDays" xml:space="preserve">
@@ -2019,6 +2019,12 @@ Calculated HFR: {2}
   </data>
   <data name="LblNative" xml:space="preserve">
     <value>Native</value>
+  </data>
+	<data name="LblNauticalDawn" xml:space="preserve">
+    <value>Nautical Dawn</value>
+	</data>
+	<data name="LblNauticalDusk" xml:space="preserve">
+    <value>Nautical Dusk</value>
   </data>
   <data name="LblNewPosition" xml:space="preserve">
     <value>New Position</value>
