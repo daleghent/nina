@@ -323,7 +323,6 @@
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterFilterChangeTest.cs" />
     <Compile Include="Sequencer\Trigger\Guider\DitherAfterExposuresTest.cs" />
     <Compile Include="Sequencer\Trigger\MeridianFlip\MeridianFlipTriggerTest.cs" />
-    <Compile Include="SequenceVMTest.cs" />
     <Compile Include="SerialCommunication\ResponseTests.cs" />
     <Compile Include="SerialCommunication\SerialSdkTest.cs" />
     <Compile Include="SerialCommunication\ResponseCacheTest.cs" />
