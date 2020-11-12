@@ -27,41 +27,37 @@ using System.Threading.Tasks;
 namespace NINA.Utility.Mediator {
 
     public class SequenceMediator : ISequenceMediator {
-        private ISequenceVM oldSequencer;
-        private ISequence2VM sequencer;
+        private ISequenceNavigationVM sequenceNavigation;
 
-        public void RegisterConstructor(ISequenceVM constructor) {
-            if (this.oldSequencer != null) {
-                throw new Exception("Old Sequence already registered!");
-            }
-            this.oldSequencer = constructor;
-        }
-
-        public void RegisterSequencer(ISequence2VM sequencer) {
-            if (this.sequencer != null) {
+        public void RegisterSequenceNavigation(ISequenceNavigationVM sequenceNavigation) {
+            if (this.sequenceNavigation != null) {
                 throw new Exception("Sequencer already registered!");
             }
-            this.sequencer = sequencer;
+            this.sequenceNavigation = sequenceNavigation;
         }
 
-        public void AddTargetToOldSequencer(DeepSkyObject deepSkyObject) {
-            oldSequencer.AddTarget(deepSkyObject);
+        public void AddSimpleTarget(DeepSkyObject deepSkyObject) {
+            sequenceNavigation.AddSimpleTarget(deepSkyObject);
         }
 
-        public void AddTargetToSequencer(IDeepSkyObjectContainer container) {
-            sequencer.AddTarget(container);
+        public void AddAdvancedTarget(IDeepSkyObjectContainer container) {
+            sequenceNavigation.AddAdvancedTarget(container);
         }
 
-        public void SetRootContainer(ISequenceRootContainer container) {
-            sequencer.Sequencer.MainContainer = container;
-        }
-
-        public SequencerFactory GetFactory() {
-            return sequencer.SequencerFactory;
+        public void SetAdvancedSequence(ISequenceRootContainer container) {
+            sequenceNavigation.SetAdvancedSequence(container);
         }
 
         public IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates() {
-            return sequencer.GetDeepSkyObjectContainerTemplates();
+            return sequenceNavigation.GetDeepSkyObjectContainerTemplates();
+        }
+
+        public void SwitchToAdvancedView() {
+            sequenceNavigation.SwitchToAdvancedView();
+        }
+
+        public void SwitchToOverview() {
+            sequenceNavigation.SwitchToOverview();
         }
     }
 }

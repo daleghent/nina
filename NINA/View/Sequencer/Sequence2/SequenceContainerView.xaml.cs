@@ -36,5 +36,13 @@ namespace NINA.View.Sequencer {
             get { return (object)GetValue(SequenceContainerContentProperty); }
             set { SetValue(SequenceContainerContentProperty, value); }
         }
+
+        public static readonly DependencyProperty ShowDetailsProperty =
+            DependencyProperty.Register(nameof(ShowDetails), typeof(bool), typeof(SequenceBlockView), new PropertyMetadata(true));
+
+        public bool ShowDetails {
+            get { return (bool)GetValue(ShowDetailsProperty); }
+            set { SetValue(ShowDetailsProperty, value); }
+        }
     }
 }

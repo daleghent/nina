@@ -350,6 +350,12 @@
                         </DataTemplate>
                     </util:PaneTemplateSelector.SequenceTemplate>
 
+                    <util:PaneTemplateSelector.Sequence2Template>
+                        <DataTemplate>
+                            <view:AnchorableSequence2View />
+                        </DataTemplate>
+                    </util:PaneTemplateSelector.Sequence2Template>
+
                     <util:PaneTemplateSelector.RotatorTemplate>
                         <DataTemplate>
                             <view:AnchorableRotatorView />

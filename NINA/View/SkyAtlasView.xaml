@@ -657,6 +657,22 @@
                                                             </BeginStoryboard>
                                                         </EventTrigger.Actions>
                                                     </EventTrigger>
+                                                    <DataTrigger Binding="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.SequenceSettings.DisableSimpleSequencer}" Value="True">
+                                                        <Setter Property="ContextMenu">
+                                                            <Setter.Value>
+                                                                <ContextMenu ItemsSource="{Binding Source={StaticResource Context}, Path=Data.DSOTemplates}">
+                                                                    <ContextMenu.ItemContainerStyle>
+                                                                        <Style TargetType="MenuItem">
+                                                                            <Setter Property="Header" Value="{StaticResource MenuHeader}" />
+                                                                            <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
+                                                                            <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.SetSequencerTargetCommand}" />
+                                                                            <Setter Property="CommandParameter" Value="{Binding}" />
+                                                                        </Style>
+                                                                    </ContextMenu.ItemContainerStyle>
+                                                                </ContextMenu>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
                                                 </Style.Triggers>
                                                 <Setter Property="ContextMenu">
                                                     <Setter.Value>

@@ -19,9 +19,9 @@ using Newtonsoft.Json.Linq;
 namespace NINA.Sequencer.Serialization {
 
     public class SequenceContainerCreationConverter : JsonCreationConverter<ISequenceContainer> {
-        private SequencerFactory factory;
+        private ISequencerFactory factory;
 
-        public SequenceContainerCreationConverter(SequencerFactory factory) {
+        public SequenceContainerCreationConverter(ISequencerFactory factory) {
             this.factory = factory;
         }
 

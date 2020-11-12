@@ -19,10 +19,10 @@ using Newtonsoft.Json.Linq;
 namespace NINA.Sequencer.Serialization {
 
     public class SequenceItemCreationConverter : JsonCreationConverter<ISequenceItem> {
-        private SequencerFactory factory;
+        private ISequencerFactory factory;
         private SequenceContainerCreationConverter sequenceContainerCreationConverter;
 
-        public SequenceItemCreationConverter(SequencerFactory factory, SequenceContainerCreationConverter sequenceContainerCreationConverter) {
+        public SequenceItemCreationConverter(ISequencerFactory factory, SequenceContainerCreationConverter sequenceContainerCreationConverter) {
             this.factory = factory;
             this.sequenceContainerCreationConverter = sequenceContainerCreationConverter;
         }

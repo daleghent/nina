@@ -38,7 +38,7 @@ namespace NINA.ViewModel {
 
     internal class DockManagerVM : BaseVM, IDockManagerVM {
 
-        public DockManagerVM(IProfileService profileService, ICameraVM cameraVM, ISequence2VM sequence2VM,
+        public DockManagerVM(IProfileService profileService, ICameraVM cameraVM, ISequenceNavigationVM sequenceNavigationVM,
             IThumbnailVM thumbnailVM, ISwitchVM switchVM, IFilterWheelVM filterWheelVM, IFocuserVM focuserVM, IRotatorVM rotatorVM,
             IWeatherDataVM weatherDataVM, IDomeVM domeVM, IAnchorableSnapshotVM snapshotVM,
             IPolarAlignmentVM polarAlignmentVM, IAnchorablePlateSolverVM plateSolverVM, ITelescopeVM telescopeVM, IGuiderVM guiderVM,
@@ -58,7 +58,7 @@ namespace NINA.ViewModel {
             Anchorables.Add(weatherDataVM);
             Anchorables.Add(domeVM);
 
-            Anchorables.Add(sequence2VM);
+            Anchorables.Add(sequenceNavigationVM);
             Anchorables.Add(imageStatisticsVM);
             Anchorables.Add(imageHistoryVM);
 
@@ -79,7 +79,7 @@ namespace NINA.ViewModel {
             AnchorableInfoPanels.Add(rotatorVM);
             AnchorableInfoPanels.Add(telescopeVM);
             AnchorableInfoPanels.Add(guiderVM);
-            AnchorableInfoPanels.Add(sequence2VM);
+            AnchorableInfoPanels.Add(sequenceNavigationVM);
             AnchorableInfoPanels.Add(switchVM);
             AnchorableInfoPanels.Add(weatherDataVM);
             AnchorableInfoPanels.Add(domeVM);

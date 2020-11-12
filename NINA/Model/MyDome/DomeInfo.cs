@@ -9,79 +9,79 @@ namespace NINA.Model.MyDome {
         private ShutterState shutterStatus;
         public ShutterState ShutterStatus {
             get => shutterStatus;
-            set { shutterStatus = value; RaisePropertyChanged(); }
+            set { if (shutterStatus != value) { shutterStatus = value; RaisePropertyChanged(); } }
         }
 
         private bool driverCanFollow;
         public bool DriverCanFollow {
             get => driverCanFollow;
-            set { driverCanFollow = value; RaisePropertyChanged(); }
+            set { if (driverCanFollow != value) { driverCanFollow = value; RaisePropertyChanged(); } }
         }
 
         private bool canSetShutter;
         public bool CanSetShutter {
             get => canSetShutter;
-            set { canSetShutter = value; RaisePropertyChanged(); }
+            set { if (canSetShutter != value) { canSetShutter = value; RaisePropertyChanged(); } }
         }
 
         private bool canSetPark;
         public bool CanSetPark {
             get => canSetPark;
-            set { canSetPark = value; RaisePropertyChanged(); }
+            set { if (canSetPark != value) { canSetPark = value; RaisePropertyChanged(); } }
         }
 
         private bool canSetAzimuth;
         public bool CanSetAzimuth {
             get => canSetAzimuth;
-            set { canSetAzimuth = value; RaisePropertyChanged(); }
+            set { if (canSetAzimuth != value) { canSetAzimuth = value; RaisePropertyChanged(); } }
         }
 
         private bool canSyncAzimuth;
         public bool CanSyncAzimuth {
             get => canSyncAzimuth;
-            set { canSyncAzimuth = value; RaisePropertyChanged(); }
+            set { if (canSyncAzimuth != value) { canSyncAzimuth = value; RaisePropertyChanged(); } }
         }
 
         private bool canPark;
         public bool CanPark {
             get => canPark;
-            set { canPark = value; RaisePropertyChanged(); }
+            set { if (canPark != value) { canPark = value; RaisePropertyChanged(); } }
         }
 
         private bool canFindHome;
         public bool CanFindHome {
             get => canFindHome;
-            set { canFindHome = value; RaisePropertyChanged(); }
+            set { if (canFindHome != value) { canFindHome = value; RaisePropertyChanged(); } }
         }
 
         private bool atPark;
         public bool AtPark {
             get => atPark;
-            set { atPark = value; RaisePropertyChanged(); }
+            set { if (atPark != value) { atPark = value; RaisePropertyChanged(); } }
         }
 
         private bool atHome;
         public bool AtHome {
             get => atHome;
-            set { atHome = value; RaisePropertyChanged(); }
+            set { if (atHome != value) { atHome = value; RaisePropertyChanged(); } }
         }
 
         private bool driverFollowing;
         public bool DriverFollowing {
             get => driverFollowing;
-            set { driverFollowing = value; RaisePropertyChanged(); }
+            set { if (driverFollowing != value) { driverFollowing = value; RaisePropertyChanged(); } }
         }
 
         private bool slewing;
         public bool Slewing {
             get => slewing;
-            set { slewing = value; RaisePropertyChanged(); }
+            set { if (slewing != value) { slewing = value; RaisePropertyChanged(); } }
         }
 
         private double azimuth;
         public double Azimuth {
             get => azimuth;
-            set { azimuth = value; RaisePropertyChanged(); }
+            set { if (azimuth != value) { azimuth = value; RaisePropertyChanged(); } }
         }
     }
 }

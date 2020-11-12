@@ -560,6 +560,7 @@
     <Compile Include="Sequencer\Container\EndAreaContainer.cs" />
     <Compile Include="Sequencer\Exceptions\SequenceItemSkippedException.cs" />
     <Compile Include="Sequencer\ISequenceEntity.cs" />
+    <Compile Include="Sequencer\ISequencerFactory.cs" />
     <Compile Include="Sequencer\SequenceItem\Autofocus\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
@@ -636,6 +637,9 @@
     <Compile Include="Sequencer\Serialization\SequenceJsonConverter.cs" />
     <Compile Include="Sequencer\Serialization\SequenceRootContainerCreationConverter.cs" />
     <Compile Include="Sequencer\Serialization\SequenceTriggerCreationConverter.cs" />
+    <Compile Include="ViewModel\Sequencer\ISequenceNavigationVM.cs" />
+    <Compile Include="ViewModel\Sequencer\SequenceNavigationVM.cs" />
+    <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleDSOContainer.cs" />
     <Compile Include="Sequencer\TargetController.cs" />
     <Compile Include="Sequencer\TemplateController.cs" />
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterExposures.cs" />
@@ -711,7 +715,13 @@
     <Compile Include="ViewModel\Equipment\Dome\IDomeFollower.cs" />
     <Compile Include="ViewModel\Interfaces\IMainWindowVM.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
-    <Compile Include="View\Sequencer\Converter\SequenceEntityStatusToVisibilityConverter.cs" />
+    <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleEndContainer.cs" />
+    <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleExposure.cs" />
+    <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleStartContainer.cs" />
+    <Compile Include="View\Imaging\AnchorableSequence2View.xaml.cs">
+      <DependentUpon>AnchorableSequence2View.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sequencer\Sequence2\Converter\SequenceEntityStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\ShutterStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\OptimalExposureCalculatorAnswerConverter.cs" />
     <Compile Include="Utility\Converters\NaNToDoubleDashConverter.cs" />
@@ -968,15 +978,15 @@
     <Compile Include="ViewModel\Imaging\AnchorablePlateSolverVM.cs" />
     <Compile Include="ViewModel\Interfaces\IOptionsVM.cs" />
     <Compile Include="ViewModel\Interfaces\IPolarAlignmentVM.cs" />
-    <Compile Include="ViewModel\Interfaces\ISequenceVM.cs" />
+    <Compile Include="ViewModel\Sequencer\SimpleSequence\ISimpleSequenceVM.cs" />
     <Compile Include="ViewModel\Interfaces\ISkyAtlasVM.cs" />
     <Compile Include="ViewModel\Interfaces\IThumbnailVM.cs" />
     <Compile Include="ViewModel\Interfaces\IVersionCheckVM.cs" />
     <Compile Include="Sequencer\DragDrop\DropInParameters.cs" />
     <Compile Include="Sequencer\DragDrop\IDroppable.cs" />
     <Compile Include="ViewModel\PlateSolvingStatusVM.cs" />
-    <Compile Include="ViewModel\Sequencer\ISequence2VM.cs" />
-    <Compile Include="ViewModel\Sequencer\Sequence2VM.cs" />
+    <Compile Include="ViewModel\Sequencer\Sequence2\ISequence2VM.cs" />
+    <Compile Include="ViewModel\Sequencer\Sequence2\Sequence2VM.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="View\AboutView.xaml.cs">
       <DependentUpon>AboutView.xaml</DependentUpon>
@@ -1379,7 +1389,7 @@
     <Compile Include="ViewModel\ProfileSelectVM.cs" />
     <Compile Include="Model\RMS.cs" />
     <Compile Include="ViewModel\Equipment\Rotator\RotatorVM.cs" />
-    <Compile Include="ViewModel\SequenceVM.cs" />
+    <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleSequenceVM.cs" />
     <Compile Include="ViewModel\SkyAtlasVM.cs" />
     <Compile Include="ViewModel\TelescopeLatLongSyncVM.cs" />
     <Compile Include="ViewModel\Equipment\Telescope\TelescopeVM.cs" />
@@ -1570,47 +1580,55 @@
     <Compile Include="View\Equipment\Rotator\RotatorView.xaml.cs">
       <DependentUpon>RotatorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\GroupMenuBehavior.cs" />
-    <Compile Include="View\Sequencer\MiniSequencer\MiniCondition.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\GroupMenuBehavior.cs" />
+    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniCondition.xaml.cs">
       <DependentUpon>MiniCondition.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\MiniSequencer\MiniContainer.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniContainer.xaml.cs">
       <DependentUpon>MiniContainer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\MiniSequencer\MiniSequenceItem.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniSequenceItem.xaml.cs">
       <DependentUpon>MiniSequenceItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\MiniSequencer\MiniSequencerDataTemplateSelector.cs" />
-    <Compile Include="View\Sequencer\MiniSequencer\MiniTrigger.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniSequencerDataTemplateSelector.cs" />
+    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniTrigger.xaml.cs">
       <DependentUpon>MiniTrigger.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\SequenceBlockView.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\SequenceBlockView.xaml.cs">
       <DependentUpon>SequenceBlockView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\SequenceContainerView.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\SequenceContainerView.xaml.cs">
       <DependentUpon>SequenceContainerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\Converter\DroppableToDropIntoParametersConverter.cs" />
-    <Compile Include="View\Sequencer\MiniSequencer\MiniSequencer.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\Converter\DroppableToDropIntoParametersConverter.cs" />
+    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniSequencer.xaml.cs">
       <DependentUpon>MiniSequencer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\SequenceDataTemplateSelector.cs" />
-    <Compile Include="View\Sequencer\SequenceRootContainerView.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\SequenceDataTemplateSelector.cs" />
+    <Compile Include="View\Sequencer\Sequence2\SequenceRootContainerView.xaml.cs">
       <DependentUpon>SequenceRootContainerView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\SequenceSidebar.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\SequenceSidebar.xaml.cs">
       <DependentUpon>SequenceSidebar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\Converter\StrategyEvaluatesConditionsAndTriggersToVisibilityConverter.cs" />
-    <Compile Include="View\Sequencer\Converter\TargetAreaMinHeightConverter.cs" />
-    <Compile Include="View\SequenceView.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\Converter\StrategyEvaluatesConditionsAndTriggersToVisibilityConverter.cs" />
+    <Compile Include="View\Sequencer\Sequence2\Converter\TargetAreaMinHeightConverter.cs" />
+    <Compile Include="View\Sequencer\SequencerVMTemplateSelector.cs" />
+    <Compile Include="View\Sequencer\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\MyCamera\Simulator\SetupView.xaml.cs">
       <DependentUpon>SetupView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\SequenceView.xaml.cs">
+    <Compile Include="View\Sequencer\Sequence2\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sequencer\SimpleSequencer\SequenceModeIsRotateToVisibilityConverter.cs" />
+    <Compile Include="View\Sequencer\SimpleSequencer\SimpleDSOContainerView.xaml.cs">
+      <DependentUpon>SimpleDSOContainerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sequencer\SimpleSequencer\SimpleSequenceView.xaml.cs">
+      <DependentUpon>SimpleSequenceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SkyAtlasView.xaml.cs">
       <DependentUpon>SkyAtlasView.xaml</DependentUpon>
@@ -2018,6 +2036,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Imaging\AnchorableSequence2View.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Imaging\AnchorableSequenceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -2190,47 +2212,47 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\MiniSequencer\MiniCondition.xaml">
+    <Page Include="View\Sequencer\Sequence2\MiniSequencer\MiniCondition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\MiniSequencer\MiniContainer.xaml">
+    <Page Include="View\Sequencer\Sequence2\MiniSequencer\MiniContainer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\MiniSequencer\MiniSequenceItem.xaml">
+    <Page Include="View\Sequencer\Sequence2\MiniSequencer\MiniSequenceItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\MiniSequencer\MiniTrigger.xaml">
+    <Page Include="View\Sequencer\Sequence2\MiniSequencer\MiniTrigger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\ProgressStyle.xaml">
+    <Page Include="View\Sequencer\Sequence2\ProgressStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\SequenceBlockView.xaml">
+    <Page Include="View\Sequencer\Sequence2\SequenceBlockView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\SequenceContainerView.xaml">
+    <Page Include="View\Sequencer\Sequence2\SequenceContainerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\MiniSequencer\MiniSequencer.xaml">
+    <Page Include="View\Sequencer\Sequence2\MiniSequencer\MiniSequencer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\SequenceRootContainerView.xaml">
+    <Page Include="View\Sequencer\Sequence2\SequenceRootContainerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\SequenceSidebar.xaml">
+    <Page Include="View\Sequencer\Sequence2\SequenceSidebar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\SequenceView.xaml">
+    <Page Include="View\Sequencer\SequenceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -2238,7 +2260,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\SequenceView.xaml">
+    <Page Include="View\Sequencer\Sequence2\SequenceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sequencer\SimpleSequencer\SimpleDSOContainerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sequencer\SimpleSequencer\SimpleSequenceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -24,28 +24,28 @@ namespace NINA.Model.MyCamera {
 
         public bool CanSetTemperature {
             get { return canSetTemperature; }
-            set { canSetTemperature = value; RaisePropertyChanged(); }
+            set { if (canSetTemperature != value) { canSetTemperature = value; RaisePropertyChanged(); } }
         }
 
         private bool hasShutter;
 
         public bool HasShutter {
             get { return hasShutter; }
-            set { hasShutter = value; RaisePropertyChanged(); }
+            set { if (hasShutter != value) { hasShutter = value; RaisePropertyChanged(); } }
         }
 
         private double temperature;
 
         public double Temperature {
             get { return temperature; }
-            set { temperature = value; RaisePropertyChanged(); }
+            set { if (temperature != value) { temperature = value; RaisePropertyChanged(); } }
         }
 
         private int gain = -1;
 
         public int Gain {
             get { return gain; }
-            set { gain = value; RaisePropertyChanged(); }
+            set { if (gain != value) { gain = value; RaisePropertyChanged(); } }
         }
 
         private int defaultGain = -1;
@@ -64,14 +64,14 @@ namespace NINA.Model.MyCamera {
 
         public double ElectronsPerADU {
             get { return electronsPerADU; }
-            set { electronsPerADU = value; RaisePropertyChanged(); }
+            set { if (electronsPerADU != value) { electronsPerADU = value; RaisePropertyChanged(); } }
         }
 
         private short binxX;
 
         public short BinX {
             get { return binxX; }
-            set { binxX = value; RaisePropertyChanged(); }
+            set { if (binxX != value) { binxX = value; RaisePropertyChanged(); } }
         }
 
         private int bitDepth;
@@ -81,8 +81,10 @@ namespace NINA.Model.MyCamera {
                 return bitDepth;
             }
             set {
-                bitDepth = value;
-                RaisePropertyChanged();
+                if (bitDepth != value) {
+                    bitDepth = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -90,42 +92,42 @@ namespace NINA.Model.MyCamera {
 
         public short BinY {
             get { return binY; }
-            set { binY = value; RaisePropertyChanged(); }
+            set { if (binY != value) { binY = value; RaisePropertyChanged(); } }
         }
 
         private bool canSetOffset;
 
         public bool CanSetOffset {
             get { return canSetOffset; }
-            set { canSetOffset = value; RaisePropertyChanged(); }
+            set { if (canSetOffset != value) { canSetOffset = value; RaisePropertyChanged(); } }
         }
 
         private bool canGetGain;
 
         public bool CanGetGain {
             get { return canGetGain; }
-            set { canGetGain = value; RaisePropertyChanged(); }
+            set { if (canGetGain != value) { canGetGain = value; RaisePropertyChanged(); } }
         }
 
         public int offsetMin;
 
         public int OffsetMin {
             get { return offsetMin; }
-            set { offsetMin = value; RaisePropertyChanged(); }
+            set { if (offsetMin != value) { offsetMin = value; RaisePropertyChanged(); } }
         }
 
         public int offsetMax;
 
         public int OffsetMax {
             get { return offsetMax; }
-            set { offsetMax = value; RaisePropertyChanged(); }
+            set { if (offsetMax != value) { offsetMax = value; RaisePropertyChanged(); } }
         }
 
         private int offset;
 
         public int Offset {
             get { return offset; }
-            set { offset = value; RaisePropertyChanged(); }
+            set { if (offset != value) { offset = value; RaisePropertyChanged(); } }
         }
 
         private int defaultOffset = -1;
@@ -144,49 +146,49 @@ namespace NINA.Model.MyCamera {
 
         public int USBLimit {
             get { return usbLimit; }
-            set { usbLimit = value; RaisePropertyChanged(); }
+            set { if (usbLimit != value) { usbLimit = value; RaisePropertyChanged(); } }
         }
 
         private bool isSubSampleEnabled;
 
         public bool IsSubSampleEnabled {
             get { return isSubSampleEnabled; }
-            set { isSubSampleEnabled = value; RaisePropertyChanged(); }
+            set { if (isSubSampleEnabled != value) { isSubSampleEnabled = value; RaisePropertyChanged(); } }
         }
 
         private string cameraState;
 
         public string CameraState {
             get { return cameraState; }
-            set { cameraState = value; RaisePropertyChanged(); }
+            set { if (cameraState != value) { cameraState = value; RaisePropertyChanged(); } }
         }
 
         private int xSize;
 
         public int XSize {
             get { return xSize; }
-            set { xSize = value; RaisePropertyChanged(); }
+            set { if (xSize != value) { xSize = value; RaisePropertyChanged(); } }
         }
 
         private int ySize;
 
         public int YSize {
             get { return ySize; }
-            set { ySize = value; RaisePropertyChanged(); }
+            set { if (ySize != value) { ySize = value; RaisePropertyChanged(); } }
         }
 
         private double pixelSize;
 
         public double PixelSize {
             get { return pixelSize; }
-            set { pixelSize = value; RaisePropertyChanged(); }
+            set { if (pixelSize != value) { pixelSize = value; RaisePropertyChanged(); } }
         }
 
         private int battery;
 
         public int Battery {
             get { return battery; }
-            set { battery = value; RaisePropertyChanged(); }
+            set { if (battery != value) { battery = value; RaisePropertyChanged(); } }
         }
 
         private int gainMin;
@@ -196,8 +198,10 @@ namespace NINA.Model.MyCamera {
                 return gainMin;
             }
             set {
-                gainMin = value;
-                RaisePropertyChanged();
+                if (gainMin != value) {
+                    gainMin = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -208,8 +212,10 @@ namespace NINA.Model.MyCamera {
                 return gainMax;
             }
             set {
-                gainMax = value;
-                RaisePropertyChanged();
+                if (gainMax != value) {
+                    gainMax = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -220,8 +226,10 @@ namespace NINA.Model.MyCamera {
                 return canSetGain;
             }
             set {
-                canSetGain = value;
-                RaisePropertyChanged();
+                if (canSetGain != value) {
+                    canSetGain = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -244,8 +252,10 @@ namespace NINA.Model.MyCamera {
                 return coolerOn;
             }
             set {
-                coolerOn = value;
-                RaisePropertyChanged();
+                if (coolerOn != value) {
+                    coolerOn = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -277,42 +287,42 @@ namespace NINA.Model.MyCamera {
 
         public bool CanSubSample {
             get { return canSubSample; }
-            set { canSubSample = value; RaisePropertyChanged(); }
+            set { if (canSubSample != value) { canSubSample = value; RaisePropertyChanged(); } }
         }
 
         private int subSampleX;
 
         public int SubSampleX {
             get { return subSampleX; }
-            set { subSampleX = value; RaisePropertyChanged(); }
+            set { if (subSampleX != value) { subSampleX = value; RaisePropertyChanged(); } }
         }
 
         private int subSampleY;
 
         public int SubSampleY {
             get { return subSampleY; }
-            set { subSampleY = value; RaisePropertyChanged(); }
+            set { if (subSampleY != value) { subSampleY = value; RaisePropertyChanged(); } }
         }
 
         private int subSampleWidth;
 
         public int SubSampleWidth {
             get { return subSampleWidth; }
-            set { subSampleWidth = value; RaisePropertyChanged(); }
+            set { if (subSampleWidth != value) { subSampleWidth = value; RaisePropertyChanged(); } }
         }
 
         private int subSampleHeight;
 
         public int SubSampleHeight {
             get { return subSampleHeight; }
-            set { subSampleHeight = value; RaisePropertyChanged(); }
+            set { if (subSampleHeight != value) { subSampleHeight = value; RaisePropertyChanged(); } }
         }
 
         private double temperatureSetPoint;
 
         public double TemperatureSetPoint {
             get { return temperatureSetPoint; }
-            set { temperatureSetPoint = value; RaisePropertyChanged(); }
+            set { if (temperatureSetPoint != value) { temperatureSetPoint = value; RaisePropertyChanged(); } }
         }
 
         private IEnumerable<string> readoutModes;
@@ -330,8 +340,10 @@ namespace NINA.Model.MyCamera {
         public short ReadoutMode {
             get => readoutMode;
             set {
-                readoutMode = value;
-                RaisePropertyChanged();
+                if (readoutMode != value) {
+                    readoutMode = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -340,8 +352,10 @@ namespace NINA.Model.MyCamera {
         public short ReadoutModeForSnapImages {
             get => snapReadoutMode;
             set {
-                snapReadoutMode = value;
-                RaisePropertyChanged();
+                if (snapReadoutMode != value) {
+                    snapReadoutMode = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -350,8 +364,10 @@ namespace NINA.Model.MyCamera {
         public short ReadoutModeForNormalImages {
             get => normalReadoutMode;
             set {
-                normalReadoutMode = value;
-                RaisePropertyChanged();
+                if (normalReadoutMode != value) {
+                    normalReadoutMode = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -360,8 +376,10 @@ namespace NINA.Model.MyCamera {
         public bool IsExposing {
             get => isExposing;
             set {
-                isExposing = value;
-                RaisePropertyChanged();
+                if (isExposing != value) {
+                    isExposing = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -370,8 +388,10 @@ namespace NINA.Model.MyCamera {
         public DateTime ExposureEndTime {
             get => exposureEndTime;
             set {
-                exposureEndTime = value;
-                RaisePropertyChanged();
+                if (exposureEndTime != value) {
+                    exposureEndTime = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -380,8 +400,10 @@ namespace NINA.Model.MyCamera {
         public double NextExposureLength {
             get => nextExposureLength;
             set {
-                nextExposureLength = value;
-                RaisePropertyChanged();
+                if (nextExposureLength != value) {
+                    nextExposureLength = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -390,8 +412,10 @@ namespace NINA.Model.MyCamera {
         public double LastDownloadTime {
             get => lastDownloadTime;
             set {
-                lastDownloadTime = value;
-                RaisePropertyChanged();
+                if (lastDownloadTime != value) {
+                    lastDownloadTime = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -400,8 +424,10 @@ namespace NINA.Model.MyCamera {
         public SensorType SensorType {
             get => sensorType;
             set {
-                sensorType = value;
-                RaisePropertyChanged();
+                if (sensorType != value) {
+                    sensorType = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -410,8 +436,10 @@ namespace NINA.Model.MyCamera {
         public short BayerOffsetX {
             get => bayerOffsetX;
             set {
-                bayerOffsetX = value;
-                RaisePropertyChanged();
+                if (bayerOffsetX != value) {
+                    bayerOffsetX = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -420,8 +448,10 @@ namespace NINA.Model.MyCamera {
         public short BayerOffsetY {
             get => bayerOffsetY;
             set {
-                bayerOffsetY = value;
-                RaisePropertyChanged();
+                if (bayerOffsetY != value) {
+                    bayerOffsetY = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -440,8 +470,10 @@ namespace NINA.Model.MyCamera {
         public double ExposureMax {
             get => exposureMax;
             set {
-                exposureMax = value;
-                RaisePropertyChanged();
+                if (exposureMax != value) {
+                    exposureMax = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -450,8 +482,10 @@ namespace NINA.Model.MyCamera {
         public double ExposureMin {
             get => exposureMin;
             set {
-                exposureMin = value;
-                RaisePropertyChanged();
+                if (exposureMin != value) {
+                    exposureMin = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -460,8 +494,10 @@ namespace NINA.Model.MyCamera {
         public bool LiveViewEnabled {
             get => liveViewEnabled;
             set {
-                liveViewEnabled = value;
-                RaisePropertyChanged();
+                if (liveViewEnabled != value) {
+                    liveViewEnabled = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -470,8 +506,10 @@ namespace NINA.Model.MyCamera {
         public bool CanShowLiveView {
             get => canShowLiveView;
             set {
-                canShowLiveView = value;
-                RaisePropertyChanged();
+                if (canShowLiveView != value) {
+                    canShowLiveView = value;
+                    RaisePropertyChanged();
+                }
             }
         }
     }

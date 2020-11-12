@@ -44,7 +44,7 @@ using System.Windows.Threading;
 
 namespace NINA.ViewModel.Sequencer {
 
-    internal class Sequence2VM : DockableVM, ISequence2VM {
+    internal class Sequence2VM : BaseVM, ISequence2VM {
         private IApplicationStatusMediator applicationStatusMediator;
         private ISequenceMediator sequenceMediator;
         private DispatcherTimer validationTimer;
@@ -72,40 +72,15 @@ namespace NINA.ViewModel.Sequencer {
             ISafetyMonitorMediator safetyMonitorMediator,
             IApplicationResourceDictionary resourceDictionary,
             IApplicationMediator applicationMediator,
-            IFramingAssistantVM framingAssistantVM
-            ) : base(profileService) {
-            Title = "LblSequence";
-            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current?.Resources["SequenceSVG"];
+            IFramingAssistantVM framingAssistantVM,
+            ISequencerFactory factory
 
+            ) : base(profileService) {
             this.applicationStatusMediator = applicationStatusMediator;
 
             this.sequenceMediator = sequenceMediator;
-            this.sequenceMediator.RegisterSequencer(this);
 
-            SequencerFactory = new NINA.Sequencer.SequencerFactory(
-                profileService,
-                cameraMediator,
-                telescopeMediator,
-                focuserMediator,
-                filterWheelMediator,
-                guiderMediator,
-                rotatorMediator,
-                flatDeviceMediator,
-                weatherDataMediator,
-                imagingMediator,
-                applicationStatusMediator,
-                nighttimeCalculator,
-                planetariumFactory,
-                imageHistoryVM,
-                deepSkyObjectSearchVM,
-                domeMediator,
-                imageSaveMediator,
-                switchMediator,
-                safetyMonitorMediator,
-                resourceDictionary,
-                applicationMediator,
-                framingAssistantVM
-            );
+            SequencerFactory = factory;
 
             SequenceJsonConverter = new SequenceJsonConverter(SequencerFactory);
             TemplateController = new TemplateController(SequenceJsonConverter, profileService);
@@ -133,6 +108,7 @@ namespace NINA.ViewModel.Sequencer {
             AddTemplateCommand = new RelayCommand(AddTemplate);
             AddTargetToControllerCommand = new RelayCommand(AddTargetToController);
             LoadSequenceCommand = new RelayCommand(LoadSequence);
+            SwitchToOverviewCommand = new RelayCommand((object o) => sequenceMediator.SwitchToOverview(), (object o) => !profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer);
 
             DetachCommand = new RelayCommand((o) => {
                 var source = (o as DropIntoParameters)?.Source;
@@ -182,13 +158,6 @@ namespace NINA.ViewModel.Sequencer {
             } else {
                 TargetController.AddTarget(clonedContainer);
             }
-        }
-
-        /// <summary>
-        /// Backwards compatible ContentId due to sequencer replacement
-        /// </summary>
-        public new string ContentId {
-            get => typeof(SequenceVM).Name;
         }
 
         private void AddTemplate(object o) {
@@ -288,7 +257,7 @@ namespace NINA.ViewModel.Sequencer {
 
         public NINA.Sequencer.Sequencer Sequencer { get; }
 
-        public SequencerFactory SequencerFactory { get; }
+        public ISequencerFactory SequencerFactory { get; }
 
         public TemplateController TemplateController { get; }
         public TargetController TargetController { get; }
@@ -324,7 +293,7 @@ namespace NINA.ViewModel.Sequencer {
             set {
                 _status = value;
                 if (string.IsNullOrWhiteSpace(_status.Source)) {
-                    _status.Source = Title;
+                    _status.Source = Locale.Loc.Instance["LblSequence"];
                 }
 
                 RaisePropertyChanged();
@@ -369,6 +338,7 @@ namespace NINA.ViewModel.Sequencer {
         public ICommand CancelSequenceCommand { get; private set; }
 
         public ICommand LoadSequenceCommand { get; }
+        public ICommand SwitchToOverviewCommand { get; }
         public ICommand SaveSequenceCommand { get; }
         public ICommand SaveAsSequenceCommand { get; }
     }

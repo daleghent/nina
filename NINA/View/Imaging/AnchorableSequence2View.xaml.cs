@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -17,13 +17,12 @@ using System.Windows.Controls;
 namespace NINA.View {
 
     /// <summary>
-    /// Interaction logic for SequenceView.xaml
+    /// Interaction logic for AnchorableSequence2View.xaml
     /// </summary>
-    public partial class SequenceView : UserControl {
+    public partial class AnchorableSequence2View : UserControl {
 
-        public SequenceView() {
+        public AnchorableSequence2View() {
             InitializeComponent();
         }
-
     }
 }

@@ -73,6 +73,7 @@ namespace NINA.ViewModel.Equipment.Camera {
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
                 RefreshCameraList(null);
+                RaiseAllPropertiesChanged();  // Reload DefaultGain, and other default camera settings
             };
         }
 
@@ -106,8 +107,10 @@ namespace NINA.ViewModel.Equipment.Camera {
                 return _tempChangeRunning;
             }
             set {
-                _tempChangeRunning = value;
-                RaisePropertyChanged();
+                if (_tempChangeRunning != value) {
+                    _tempChangeRunning = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -245,9 +248,11 @@ namespace NINA.ViewModel.Equipment.Camera {
                 return _targetTemp;
             }
             set {
-                _targetTemp = value;
-                this.profileService.ActiveProfile.CameraSettings.Temperature = value;
-                RaisePropertyChanged();
+                if (_targetTemp != value) {
+                    _targetTemp = value;
+                    this.profileService.ActiveProfile.CameraSettings.Temperature = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -258,9 +263,11 @@ namespace NINA.ViewModel.Equipment.Camera {
                 return _coolingDuration;
             }
             set {
-                _coolingDuration = value;
-                this.profileService.ActiveProfile.CameraSettings.CoolingDuration = value;
-                RaisePropertyChanged();
+                if (_coolingDuration != value) {
+                    _coolingDuration = value;
+                    this.profileService.ActiveProfile.CameraSettings.CoolingDuration = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -271,9 +278,11 @@ namespace NINA.ViewModel.Equipment.Camera {
                 return _warmingDuration;
             }
             set {
-                _warmingDuration = value;
-                this.profileService.ActiveProfile.CameraSettings.WarmingDuration = value;
-                RaisePropertyChanged();
+                if (_warmingDuration != value) {
+                    _warmingDuration = value;
+                    this.profileService.ActiveProfile.CameraSettings.WarmingDuration = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -631,16 +640,20 @@ namespace NINA.ViewModel.Equipment.Camera {
         public int DefaultGain {
             get => profileService.ActiveProfile.CameraSettings.Gain ?? -1;
             set {
-                profileService.ActiveProfile.CameraSettings.Gain = value;
-                RaisePropertyChanged();
+                if (profileService.ActiveProfile.CameraSettings.Gain != value) {
+                    profileService.ActiveProfile.CameraSettings.Gain = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
         public int DefaultOffset {
             get => profileService.ActiveProfile.CameraSettings.Offset ?? -1;
             set {
-                profileService.ActiveProfile.CameraSettings.Offset = value;
-                RaisePropertyChanged();
+                if (profileService.ActiveProfile.CameraSettings.Offset != value) {
+                    profileService.ActiveProfile.CameraSettings.Offset = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 

@@ -12,25 +12,30 @@
 
 #endregion "copyright"
 
-using NINA.Sequencer.Container;
-using NINA.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace NINA.ViewModel.Sequencer {
+namespace NINA.View.SimpleSequencer {
 
-    public interface ISequence2VM : IDockableVM {
-        IAsyncCommand StartSequenceCommand { get; }
-        ICommand CancelSequenceCommand { get; }
-        NINA.Sequencer.Sequencer Sequencer { get; }
-        NINA.Sequencer.SequencerFactory SequencerFactory { get; }
+    /// <summary>
+    /// Interaction logic for SimpleDSOContainerView.xaml
+    /// </summary>
+    public partial class SimpleDSOContainerView : UserControl {
 
-        IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates();
-
-        void AddTarget(IDeepSkyObjectContainer container);
+        public SimpleDSOContainerView() {
+            InitializeComponent();
+        }
     }
 }

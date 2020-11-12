@@ -90,11 +90,11 @@ namespace NINA.Sequencer.SequenceItem {
             return TimeSpan.Zero;
         }
 
-        public void MoveDown() {
+        public virtual void MoveDown() {
             Parent?.MoveDown(this);
         }
 
-        public void MoveUp() {
+        public virtual void MoveUp() {
             Parent?.MoveUp(this);
         }
 
