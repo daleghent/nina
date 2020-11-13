@@ -64,8 +64,6 @@ namespace NINA.Utility.AvalonDock {
 
         public DataTemplate SequenceTemplate { get; set; }
 
-        public DataTemplate Sequence2Template { get; set; }
-
         public DataTemplate WeatherDataTemplate { get; set; }
 
         public DataTemplate FocuserTemplate { get; set; }
@@ -115,14 +113,7 @@ namespace NINA.Utility.AvalonDock {
                     return ImageControlTemplate;
 
                 case SequenceNavigationVM _:
-                    var sn = item as SequenceNavigationVM;
-                    if (sn.ActiveSequencerVM is SimpleSequenceVM) {
-                        return SequenceTemplate;
-                    } else if (sn.ActiveSequencerVM is Sequence2VM) {
-                        return Sequence2Template;
-                    } else {
-                        return base.SelectTemplate(item, container);
-                    }
+                    return SequenceTemplate;
 
                 case WeatherDataVM _:
                     return WeatherDataTemplate;

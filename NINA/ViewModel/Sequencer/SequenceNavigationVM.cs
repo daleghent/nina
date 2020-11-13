@@ -36,7 +36,7 @@ namespace NINA.ViewModel.Sequencer {
         /// <summary>
         /// Backwards compatible ContentId due to sequencer replacement
         /// </summary>
-        public new string ContentId {
+        public override string ContentId {
             get => "SequenceVM";
         }
 

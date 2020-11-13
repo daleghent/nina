@@ -22,7 +22,7 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
-            <util:BindingProxy x:Key="CameraInfo" Data="{Binding ActiveSequencerVM.CameraInfo}" />
+            <util:BindingProxy x:Key="CameraInfo" Data="{Binding CameraInfo}" />
             <Style
                 x:Key="IfMultipleTargets"
                 BasedOn="{StaticResource {x:Type TextBlock}}"
@@ -37,7 +37,7 @@
             <sequencer:SequenceModeIsRotateToVisibilityConverter x:Key="SequenceModeIsRotateToVisibilityConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
-    <ScrollViewer DataContext="{Binding ActiveSequencerVM}" VerticalScrollBarVisibility="Auto">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel
             Margin="5,0,5,0"
             IsEnabled="{Binding CameraInfo.Connected}"

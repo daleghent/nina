@@ -726,6 +726,9 @@
     <Compile Include="View\Imaging\AnchorableSequence2View.xaml.cs">
       <DependentUpon>AnchorableSequence2View.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Imaging\AnchorableSequenceNavigationView.xaml.cs">
+      <DependentUpon>AnchorableSequenceNavigationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sequencer\Sequence2\Converter\SequenceEntityStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\ShutterStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\OptimalExposureCalculatorAnswerConverter.cs" />
@@ -2043,6 +2046,10 @@
     <Page Include="View\Imaging\AnchorableSequence2View.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Imaging\AnchorableSequenceNavigationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Imaging\AnchorableSequenceView.xaml">
       <SubType>Designer</SubType>
