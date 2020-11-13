@@ -18,6 +18,7 @@ using NINA.Sequencer.Container;
 using NINA.Sequencer.DragDrop;
 using NINA.Sequencer.Serialization;
 using NINA.Utility;
+using NINA.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -74,59 +75,80 @@ namespace NINA.Sequencer {
         }
 
         public void AddTarget(IDeepSkyObjectContainer deepSkyObjectContainer) {
-            var jsonContainer = sequenceJsonConverter.Serialize(deepSkyObjectContainer);
-            File.WriteAllText(Path.Combine(targetPath, deepSkyObjectContainer.Name + ".json"), jsonContainer);
+            try {
+                var jsonContainer = sequenceJsonConverter.Serialize(deepSkyObjectContainer);
+                File.WriteAllText(Path.Combine(targetPath, deepSkyObjectContainer.Name + ".json"), jsonContainer);
 
-            var existingTarget = Targets.FirstOrDefault(x => x.Name == deepSkyObjectContainer.Name);
-            if (existingTarget != null) {
-                Targets.Remove(existingTarget);
-                Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer));
-            } else {
-                Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer));
+                var existingTarget = Targets.FirstOrDefault(x => x.Name == deepSkyObjectContainer.Name);
+                if (existingTarget != null) {
+                    Targets.Remove(existingTarget);
+                    Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer));
+                } else {
+                    Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer));
+                }
+
+                RefreshFilters();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTargetController_AddNewTargetFailed"]);
             }
-
-            RefreshFilters();
         }
 
         private void LoadTargets() {
-            targetPath = profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder;
+            try {
+                targetPath = profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder;
 
-            if (!Directory.Exists(targetPath)) {
-                Directory.CreateDirectory(targetPath);
-            }
-
-            foreach (var target in Targets) {
-                Application.Current.Dispatcher.Invoke(() => Targets.Remove(target));
-            }
-
-            foreach (var file in Directory.GetFiles(targetPath, "*.json", SearchOption.AllDirectories)) {
-                try {
-                    var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
-
-                    var dsoContainer = container as IDeepSkyObjectContainer;
-                    if (dsoContainer != null) {
-                        Targets.Add(new TargetSequenceContainer(profileService, dsoContainer));
-                    }
-                } catch (Exception ex) {
-                    Logger.Error($"Invalid target JSON {file}", ex);
+                if (!Directory.Exists(targetPath)) {
+                    Directory.CreateDirectory(targetPath);
                 }
+
+                foreach (var target in Targets) {
+                    Application.Current.Dispatcher.Invoke(() => Targets.Remove(target));
+                }
+
+                foreach (var file in Directory.GetFiles(targetPath, "*.json", SearchOption.AllDirectories)) {
+                    try {
+                        var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
+
+                        var dsoContainer = container as IDeepSkyObjectContainer;
+                        if (dsoContainer != null) {
+                            Targets.Add(new TargetSequenceContainer(profileService, dsoContainer));
+                        }
+                    } catch (Exception ex) {
+                        Logger.Error($"Invalid target JSON {file}", ex);
+                    }
+                }
+                RefreshFilters();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTargetController_LoadUserTargetFailed"]);
             }
-            RefreshFilters();
         }
 
         private void RefreshFilters() {
-            Application.Current.Dispatcher.Invoke(() => { TargetsView.Refresh(); TargetsMenuView.Refresh(); });
+            Application.Current.Dispatcher.Invoke(() => {
+                try {
+                    TargetsView.Refresh(); TargetsMenuView.Refresh();
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+            });
         }
 
         public void DeleteTarget(TargetSequenceContainer targetSequenceContainer) {
-            var file = Path.Combine(targetPath, targetSequenceContainer.Name + ".json");
-            if (File.Exists(file)) {
-                File.Delete(file);
+            try {
+                var file = Path.Combine(targetPath, targetSequenceContainer.Name + ".json");
+                if (File.Exists(file)) {
+                    File.Delete(file);
+                }
+
+                Targets.Remove(targetSequenceContainer);
+
+                RefreshFilters();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTargetController_DeleteTargetFailed"]);
             }
-
-            Targets.Remove(targetSequenceContainer);
-
-            RefreshFilters();
         }
     }
 

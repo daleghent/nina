@@ -4973,4 +4973,13 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="Lbl_SequenceTemplateController_LoadUserTemplatesFailed" xml:space="preserve">
     <value>An error occurred during template refresh. Refer to the logs for more details.</value>
   </data>
+  <data name="Lbl_SequenceTargetController_AddNewTargetFailed" xml:space="preserve">
+    <value>An error occurred while adding the target. Refer to the logs for more details.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_DeleteTargetFailed" xml:space="preserve">
+    <value>An error occurred while deleting the target. Refer to the logs for more details.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_LoadUserTargetFailed" xml:space="preserve">
+    <value>An error occurred while loading the list of targets. Refer to the logs for more details.</value>
+  </data>
 </root>

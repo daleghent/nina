@@ -1608,6 +1608,33 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while adding the target. Refer to the logs for more details..
+        /// </summary>
+        internal static string Lbl_SequenceTargetController_AddNewTargetFailed {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTargetController_AddNewTargetFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while deleting the target. Refer to the logs for more details..
+        /// </summary>
+        internal static string Lbl_SequenceTargetController_DeleteTargetFailed {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTargetController_DeleteTargetFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while loading the list of targets. Refer to the logs for more details..
+        /// </summary>
+        internal static string Lbl_SequenceTargetController_LoadUserTargetFailed {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTargetController_LoadUserTargetFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while adding a new template. Refer to the logs for more details..
         /// </summary>
         internal static string Lbl_SequenceTemplateController_AddNewTemplateFailed {
