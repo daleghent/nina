@@ -168,7 +168,17 @@ namespace NINA.Sequencer.Container {
                     Target.InputCoordinates.Coordinates = resp.Coordinates;
                     Target.TargetName = resp.Name;
                     this.Name = resp.Name;
-                    Target.Rotation = resp.Rotation;
+
+                    Target.Rotation = 0;
+
+                    if (s.CanGetRotationAngle) {
+                        double rotationAngle = await s.GetRotationAngle();
+
+                        if (!double.IsNaN(rotationAngle)) {
+                            Target.Rotation = rotationAngle;
+                        }
+                    }
+
                     Notification.ShowSuccess(string.Format(Locale.Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
                 }
             } catch (PlanetariumObjectNotSelectedException) {
