@@ -4964,4 +4964,13 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="LblTooltipPromoteSimpleExposure" xml:space="preserve">
     <value>Promote selected row</value>
   </data>
+  <data name="Lbl_SequenceTemplateController_AddNewTemplateFailed" xml:space="preserve">
+    <value>An error occurred while adding a new template. Refer to the logs for more details.</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_DeleteTemplateFailed" xml:space="preserve">
+    <value>An error occurred while deleting the template. Refer to the logs for more details.</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_LoadUserTemplatesFailed" xml:space="preserve">
+    <value>An error occurred during template refresh. Refer to the logs for more details.</value>
+  </data>
 </root>

@@ -8,6 +8,7 @@ using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Serialization;
 using NINA.Utility;
 using NINA.Utility.Astrometry;
+using NINA.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -103,56 +104,79 @@ namespace NINA.Sequencer {
         }
 
         private void LoadUserTemplates() {
-            userTemplatePath = profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
+            try {
+                userTemplatePath = profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
 
-            if (!Directory.Exists(userTemplatePath)) {
-                Directory.CreateDirectory(userTemplatePath);
-            }
-
-            if (sequenceTemplateFolderWatcher == null) {
-                sequenceTemplateFolderWatcher = new FileSystemWatcher(profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder, "*" + TemplateFileExtension);
-                sequenceTemplateFolderWatcher.Changed += SequenceTemplateFolderWatcher_Changed;
-                sequenceTemplateFolderWatcher.Deleted += SequenceTemplateFolderWatcher_Changed;
-                sequenceTemplateFolderWatcher.IncludeSubdirectories = true;
-                sequenceTemplateFolderWatcher.EnableRaisingEvents = true;
-            }
-
-            foreach (var template in Templates.Where(t => t.Group != DefaultTemplatesGroup).ToList()) {
-                Application.Current.Dispatcher.Invoke(() => Templates.Remove(template));
-            }
-
-            foreach (var file in Directory.GetFiles(userTemplatePath, "*" + TemplateFileExtension, SearchOption.AllDirectories)) {
-                try {
-                    var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
-                    if (container is ISequenceRootContainer) continue;
-                    var template = new TemplatedSequenceContainer(profileService, UserTemplatesGroup, container);
-                    var fileInfo = new FileInfo(file);
-                    container.Name = fileInfo.Name.Replace(TemplateFileExtension, "");
-                    template.SubGroups = fileInfo.Directory.FullName.Replace(userTemplatePath, "").Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
-                    Templates.Add(template);
-                } catch (Exception ex) {
-                    Logger.Error("Invalid template JSON", ex);
+                if (!Directory.Exists(userTemplatePath)) {
+                    Directory.CreateDirectory(userTemplatePath);
                 }
+
+                if (sequenceTemplateFolderWatcher == null) {
+                    sequenceTemplateFolderWatcher = new FileSystemWatcher(profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder, "*" + TemplateFileExtension);
+                    sequenceTemplateFolderWatcher.Changed += SequenceTemplateFolderWatcher_Changed;
+                    sequenceTemplateFolderWatcher.Deleted += SequenceTemplateFolderWatcher_Changed;
+                    sequenceTemplateFolderWatcher.IncludeSubdirectories = true;
+                    sequenceTemplateFolderWatcher.EnableRaisingEvents = true;
+                }
+
+                foreach (var template in Templates.Where(t => t.Group != DefaultTemplatesGroup).ToList()) {
+                    Application.Current.Dispatcher.Invoke(() => Templates.Remove(template));
+                }
+
+                foreach (var file in Directory.GetFiles(userTemplatePath, "*" + TemplateFileExtension, SearchOption.AllDirectories)) {
+                    try {
+                        var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
+                        if (container is ISequenceRootContainer) continue;
+                        var template = new TemplatedSequenceContainer(profileService, UserTemplatesGroup, container);
+                        var fileInfo = new FileInfo(file);
+                        container.Name = fileInfo.Name.Replace(TemplateFileExtension, "");
+                        template.SubGroups = fileInfo.Directory.FullName.Replace(userTemplatePath, "").Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
+                        Templates.Add(template);
+                    } catch (Exception ex) {
+                        Logger.Error("Invalid template JSON", ex);
+                    }
+                }
+
+                Application.Current.Dispatcher.Invoke(() => {
+                    try {
+                        TemplatesView.Refresh();
+                        TemplatesMenuView.Refresh();
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
+                });
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTemplateController_LoadUserTemplatesFailed"]);
             }
-            Application.Current.Dispatcher.Invoke(() => { TemplatesView.Refresh(); TemplatesMenuView.Refresh(); });
         }
 
         public void AddNewUserTemplate(ISequenceContainer sequenceContainer) {
-            if (sequenceContainer is IDeepSkyObjectContainer) {
-                var dso = (sequenceContainer as IDeepSkyObjectContainer);
-                dso.Target.TargetName = string.Empty;
-                dso.Target.InputCoordinates.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
-                dso.Target.Rotation = 0;
-                dso.Target = dso.Target;
-            }
+            try {
+                if (sequenceContainer is IDeepSkyObjectContainer) {
+                    var dso = (sequenceContainer as IDeepSkyObjectContainer);
+                    dso.Target.TargetName = string.Empty;
+                    dso.Target.InputCoordinates.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
+                    dso.Target.Rotation = 0;
+                    dso.Target = dso.Target;
+                }
 
-            var jsonContainer = sequenceJsonConverter.Serialize(sequenceContainer);
-            File.WriteAllText(Path.Combine(userTemplatePath, GetTemplateFileName(sequenceContainer)), jsonContainer);
+                var jsonContainer = sequenceJsonConverter.Serialize(sequenceContainer);
+                File.WriteAllText(Path.Combine(userTemplatePath, GetTemplateFileName(sequenceContainer)), jsonContainer);
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTemplateController_AddNewTemplateFailed"]);
+            }
         }
 
         public void DeleteUserTemplate(TemplatedSequenceContainer sequenceContainer) {
-            if (sequenceContainer == null) return;
-            File.Delete(Path.Combine(userTemplatePath, Path.Combine(sequenceContainer.SubGroups), GetTemplateFileName(sequenceContainer.Container)));
+            try {
+                if (sequenceContainer == null) return;
+                File.Delete(Path.Combine(userTemplatePath, Path.Combine(sequenceContainer.SubGroups), GetTemplateFileName(sequenceContainer.Container)));
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTemplateController_DeleteTemplateFailed"]);
+            }
         }
 
         private string GetTemplateFileName(ISequenceContainer container) {

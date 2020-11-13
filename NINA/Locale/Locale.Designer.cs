@@ -1608,6 +1608,33 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to An error occurred while adding a new template. Refer to the logs for more details..
+        /// </summary>
+        internal static string Lbl_SequenceTemplateController_AddNewTemplateFailed {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTemplateController_AddNewTemplateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred while deleting the template. Refer to the logs for more details..
+        /// </summary>
+        internal static string Lbl_SequenceTemplateController_DeleteTemplateFailed {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTemplateController_DeleteTemplateFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error occurred during template refresh. Refer to the logs for more details..
+        /// </summary>
+        internal static string Lbl_SequenceTemplateController_LoadUserTemplatesFailed {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTemplateController_LoadUserTemplatesFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Triggers an autofocus run after the set amount of exposures have been captured.
         /// </summary>
         internal static string Lbl_SequenceTrigger_AutofocusAfterExposures_Description {
