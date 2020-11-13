@@ -13018,6 +13018,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Demote selected row.
+        /// </summary>
+        internal static string LblTooltipDemoteSimpleExposure {
+            get {
+                return ResourceManager.GetString("LblTooltipDemoteSimpleExposure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Move target right.
         /// </summary>
         internal static string LblTooltipDemoteTarget {
@@ -13059,6 +13068,15 @@ namespace NINA.Locale {
         internal static string LblTooltipPromoteSequenceRow {
             get {
                 return ResourceManager.GetString("LblTooltipPromoteSequenceRow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Promote selected row.
+        /// </summary>
+        internal static string LblTooltipPromoteSimpleExposure {
+            get {
+                return ResourceManager.GetString("LblTooltipPromoteSimpleExposure", resourceCulture);
             }
         }
         
@@ -14128,6 +14146,24 @@ namespace NINA.Locale {
         internal static string LblWeatherReconnect {
             get {
                 return ResourceManager.GetString("LblWeatherReconnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weather Underground API Key.
+        /// </summary>
+        internal static string LblWeatherUndergroundAPIKey {
+            get {
+                return ResourceManager.GetString("LblWeatherUndergroundAPIKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Weather Underground Station Id.
+        /// </summary>
+        internal static string LblWeatherUndergroundStationID {
+            get {
+                return ResourceManager.GetString("LblWeatherUndergroundStationID", resourceCulture);
             }
         }
         

@@ -4952,4 +4952,16 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="LblWaitingForTelescopeToPark" xml:space="preserve">
     <value>Waiting For Telescope To Park</value>
   </data>
+  <data name="LblWeatherUndergroundAPIKey" xml:space="preserve">
+    <value>Weather Underground API Key</value>
+  </data>
+  <data name="LblWeatherUndergroundStationID" xml:space="preserve">
+    <value>Weather Underground Station Id</value>
+  </data>
+  <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
+    <value>Demote selected row</value>
+  </data>
+  <data name="LblTooltipPromoteSimpleExposure" xml:space="preserve">
+    <value>Promote selected row</value>
+  </data>
 </root>

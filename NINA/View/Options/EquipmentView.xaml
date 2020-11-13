@@ -614,7 +614,7 @@
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
-                                Width="160"
+                                Width="200"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblTheWeatherCompanyAPIKey}" />
@@ -643,7 +643,7 @@
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
-                                Width="160"
+                                Width="200"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblWeatherUndergroundAPIKey}" />
@@ -672,7 +672,7 @@
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
-                                Width="160"
+                                Width="200"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblWeatherUndergroundStationID}" />
