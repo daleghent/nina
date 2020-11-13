@@ -18,6 +18,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - ASCOM devices are now properly disposed after calling the setup dialog
 - The MGEN guider now doesn't autoselect guide stars that lie too close to the sensor edge, based on a stand-off distance that the user can set in the UI
 - All guiders now report when a successful connection happens
+- Disconnecting Atik Cameras from other applications on startup or scan for new devices will not happen anymore
 
 # Version 1.10 HF1
 
