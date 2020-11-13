@@ -12,10 +12,12 @@
 
 #endregion "copyright"
 
+using NINA.Model;
 using NINA.Model.MyTelescope;
 using NINA.Utility.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Equipment.Telescope;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -55,8 +57,8 @@ namespace NINA.Utility.Mediator {
             return handler.SendToSnapPort(start);
         }
 
-        public Task<bool> ParkTelescope(CancellationToken token) {
-            return handler.ParkTelescope(token);
+        public Task<bool> ParkTelescope(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            return handler.ParkTelescope(progress, token);
         }
 
         public void UnparkTelescope() {

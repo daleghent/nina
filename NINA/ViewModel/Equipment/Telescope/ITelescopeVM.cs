@@ -12,8 +12,10 @@
 
 #endregion "copyright"
 
+using NINA.Model;
 using NINA.Model.MyTelescope;
 using NINA.Utility.Astrometry;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -37,7 +39,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
         Coordinates GetCurrentPosition();
 
-        Task<bool> ParkTelescope(CancellationToken token);
+        Task<bool> ParkTelescope(IProgress<ApplicationStatus> progress, CancellationToken token);
 
         void UnparkTelescope();
 

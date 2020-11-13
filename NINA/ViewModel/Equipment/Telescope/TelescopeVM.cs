@@ -46,10 +46,15 @@ namespace NINA.ViewModel.Equipment.Telescope {
             Title = "LblTelescope";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["TelescopeSVG"];
 
+            progress = new Progress<ApplicationStatus>(p => {
+                p.Source = this.Title;
+                this.applicationStatusMediator.StatusUpdate(p);
+            });
+
             ChooseTelescopeCommand = new AsyncCommand<bool>(() => ChooseTelescope());
             CancelChooseTelescopeCommand = new RelayCommand(CancelChooseTelescope);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectTelescope());
-            ParkCommand = new AsyncCommand<bool>(() => ParkTelescope(CancellationToken.None));
+            ParkCommand = new AsyncCommand<bool>(() => ParkTelescope(progress, CancellationToken.None));
             UnparkCommand = new RelayCommand(UnparkTelescope);
             SetParkPositionCommand = new AsyncCommand<bool>(SetParkPosition);
             SlewToCoordinatesCommand = new AsyncCommand<bool>(SlewToCoordinatesInternal);
@@ -70,11 +75,6 @@ namespace NINA.ViewModel.Equipment.Telescope {
             profileService.ProfileChanged += (object sender, EventArgs e) => {
                 RefreshTelescopeList(null);
             };
-
-            progress = new Progress<ApplicationStatus>(p => {
-                p.Source = this.Title;
-                this.applicationStatusMediator.StatusUpdate(p);
-            });
         }
 
         public bool SendToSnapPort(bool start) {
@@ -97,10 +97,10 @@ namespace NINA.ViewModel.Equipment.Telescope {
             TelescopeChooserVM.GetEquipment();
         }
 
-        public async Task<bool> ParkTelescope(CancellationToken token) {
+        public async Task<bool> ParkTelescope(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Telescope.CanPark && Telescope.CanSetPark) { //Park position can be set, assume user set it properly
                 Logger.Trace("Telescope will park according to mount defined park position");
-                return await Task.Run<bool>(() => { Telescope.Park(); return true; }, token);
+                await Telescope.Park(progress, token);
             } else if (Telescope.CanPark) { //Park position cannot be set, mount could park right where it is, slew first
                 Coordinates targetCoords = GetHomeCoordinates(Telescope.Coordinates);
                 Logger.Trace(String.Format("Telescope will slew to RA {0} and Dec {1}", targetCoords.RAString, targetCoords.DecString));
@@ -108,7 +108,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                 Logger.Trace("Telescope will stop tracking");
                 SetTrackingEnabled(false);
                 Logger.Trace("Telescope will now park according to mount defined park method");
-                return await Task.Run<bool>(() => { Telescope.Park(); return true; }, token);
+                await Telescope.Park(progress, token);
             } else { //Telescope cannot park, slew and stop tracking
                 Coordinates targetCoords = GetHomeCoordinates(telescopeInfo.Coordinates);
                 Logger.Trace(String.Format("Telescope will slew to RA {0} and Dec {1}", targetCoords.RAString, targetCoords.DecString));

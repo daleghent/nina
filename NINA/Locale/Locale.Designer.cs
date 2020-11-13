@@ -9027,6 +9027,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nautical Dawn.
+        /// </summary>
+        internal static string LblNauticalDawn {
+            get {
+                return ResourceManager.GetString("LblNauticalDawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nautical Dusk.
+        /// </summary>
+        internal static string LblNauticalDusk {
+            get {
+                return ResourceManager.GetString("LblNauticalDusk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Position.
         /// </summary>
         internal static string LblNewPosition {
@@ -13941,6 +13959,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Waiting For Telescope To Park.
+        /// </summary>
+        internal static string LblWaitingForTelescopeToPark {
+            get {
+                return ResourceManager.GetString("LblWaitingForTelescopeToPark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Camera waiting to turn cooler off.
         /// </summary>
         internal static string LblWaitingToTurnCoolerOff {
@@ -14101,42 +14128,6 @@ namespace NINA.Locale {
         internal static string LblWeatherReconnect {
             get {
                 return ResourceManager.GetString("LblWeatherReconnect", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Weather Underground API key.
-        /// </summary>
-        internal static string LblWeatherUndergroundAPIKey {
-            get {
-                return ResourceManager.GetString("LblWeatherUndergroundAPIKey", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uses Weather Underground PWS Weather API. Weather data is refreshed every 10mn. .
-        /// </summary>
-        internal static string LblWeatherUndergroundClientDescription {
-            get {
-                return ResourceManager.GetString("LblWeatherUndergroundClientDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to N.I.N.A. internal Weather Underground API client..
-        /// </summary>
-        internal static string LblWeatherUndergroundClientInfo {
-            get {
-                return ResourceManager.GetString("LblWeatherUndergroundClientInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Weather Underground Station ID.
-        /// </summary>
-        internal static string LblWeatherUndergroundStationID {
-            get {
-                return ResourceManager.GetString("LblWeatherUndergroundStationID", resourceCulture);
             }
         }
         

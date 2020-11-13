@@ -54,7 +54,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Validate()) {
-                return telescopeMediator.ParkTelescope(token);
+                return telescopeMediator.ParkTelescope(progress, token);
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }

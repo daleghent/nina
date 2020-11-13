@@ -1084,14 +1084,19 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        public void Park() {
+        public async Task Park(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Connected && CanPark) {
                 try {
                     _telescope.Park();
+                    while (!AtPark) {
+                        progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblWaitingForTelescopeToPark"] });
+                        await Utility.Utility.Delay(TimeSpan.FromSeconds(5), token);
+                    }
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowError(e.Message);
                 } finally {
+                    progress?.Report(new ApplicationStatus { Status = string.Empty });
                 }
             }
         }

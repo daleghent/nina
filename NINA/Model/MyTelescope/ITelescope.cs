@@ -15,8 +15,11 @@
 using NINA.Utility.Astrometry;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System;
+using System.Threading;
 
 namespace NINA.Model.MyTelescope {
+
     public enum TrackingMode {
         Sidereal,
         Lunar,
@@ -53,7 +56,7 @@ namespace NINA.Model.MyTelescope {
         PierSide SideOfPier { get; }
         bool CanSetTrackingEnabled { get; }
         bool TrackingEnabled { get; set; }
-        IList<TrackingMode> TrackingModes {get; }
+        IList<TrackingMode> TrackingModes { get; }
         TrackingRate TrackingRate { get; }
         TrackingMode TrackingMode { get; set; }
         double SiteLatitude { get; set; }
@@ -76,7 +79,7 @@ namespace NINA.Model.MyTelescope {
 
         void PulseGuide(GuideDirections direction, int duration);
 
-        void Park();
+        Task Park(IProgress<ApplicationStatus> progress, CancellationToken token);
 
         void Setpark();
 
