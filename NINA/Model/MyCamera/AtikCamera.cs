@@ -29,7 +29,7 @@ namespace NINA.Model.MyCamera {
         public AtikCamera(int id, IProfileService profileService) {
             this.profileService = profileService;
             _cameraId = id;
-            _info = AtikCameraDll.GetCameraProperties(_cameraId);
+            Name = AtikCameraDll.GetDeviceName(_cameraId);
         }
 
         private int _cameraId;
@@ -155,7 +155,7 @@ namespace NINA.Model.MyCamera {
 
         public string Description {
             get {
-                return CleanedUpString(Info.Manufacturer) + " " + CleanedUpString(Info.Description) + " (SerialNo: " + AtikCameraDll.GetSerialNumber(_cameraP) + ")";
+                return CleanedUpString(Info.Manufacturer) + " " + Name + " (SerialNo: " + AtikCameraDll.GetSerialNumber(_cameraP) + ")";
             }
         }
 
@@ -412,17 +412,9 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        public string Id {
-            get {
-                return CleanedUpString(Info.Description);
-            }
-        }
+        public string Id => Name;
 
-        public string Name {
-            get {
-                return CleanedUpString(Info.Description);
-            }
-        }
+        public string Name { get; private set; }
 
         private string CleanedUpString(char[] values) {
             return string.Join("", values.Take(Array.IndexOf(values, '\0')));

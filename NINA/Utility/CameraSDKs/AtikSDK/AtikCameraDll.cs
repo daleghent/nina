@@ -331,6 +331,12 @@ namespace NINA.Utility.AtikSDK {
             }
         }
 
+        public static string GetDeviceName(int cameraId) {
+            StringBuilder cameraName = new StringBuilder();
+            ArtemisDeviceName(cameraId, cameraName);
+            return cameraName.ToString();
+        }
+
         /// <summary>
         /// Returns the version of the API. This number comes from the services itself.
         /// </summary>
@@ -368,7 +374,7 @@ namespace NINA.Utility.AtikSDK {
         /// iDevice is found, false otherwise.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisDeviceName", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        private static extern bool ArtemisDeviceName(int iDevice, [MarshalAs(UnmanagedType.LPStr)] string pName);
+        private static extern bool ArtemisDeviceName(int iDevice, [MarshalAs(UnmanagedType.LPStr)] StringBuilder pName);
 
         /// <summary>
         /// Sets the supplied ‘pSerial’ variable to the serial number of the given device. Returns
