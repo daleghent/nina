@@ -798,6 +798,10 @@ namespace NINA.ViewModel {
                 container.Status = SequenceEntityStatus.FINISHED;
             }
 
+            if (DoMeridianFlip) {
+                container.MeridianFlipEnabled = true;
+            }
+
             return container;
         }
 
