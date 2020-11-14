@@ -49,26 +49,26 @@ namespace NINA.Sequencer {
         }
 
         public TemplateController(SequenceJsonConverter sequenceJsonConverter, IProfileService profileService) {
-            defaultTemplatePath = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Sequencer", "Examples");
-            if (!Directory.Exists(defaultTemplatePath)) {
-                Directory.CreateDirectory(defaultTemplatePath);
-            }
-
-            profileService.ProfileChanged += ProfileService_ProfileChanged;
-            profileService.ActiveProfile.SequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
-
-            Templates = new List<TemplatedSequenceContainer>();
-
             this.sequenceJsonConverter = sequenceJsonConverter;
             this.profileService = profileService;
-            foreach (var file in Directory.GetFiles(defaultTemplatePath, "*" + TemplateFileExtension)) {
-                try {
-                    var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file)) as ISequenceContainer;
-                    if (container is ISequenceRootContainer) continue;
-                    Templates.Add(new TemplatedSequenceContainer(profileService, DefaultTemplatesGroup, container));
-                } catch (Exception ex) {
-                    Logger.Error("Invalid template JSON", ex);
+            defaultTemplatePath = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Sequencer", "Examples");
+
+            Templates = new List<TemplatedSequenceContainer>();
+            try {
+                if (!Directory.Exists(defaultTemplatePath)) {
+                    Directory.CreateDirectory(defaultTemplatePath);
                 }
+                foreach (var file in Directory.GetFiles(defaultTemplatePath, "*" + TemplateFileExtension)) {
+                    try {
+                        var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file)) as ISequenceContainer;
+                        if (container is ISequenceRootContainer) continue;
+                        Templates.Add(new TemplatedSequenceContainer(profileService, DefaultTemplatesGroup, container));
+                    } catch (Exception ex) {
+                        Logger.Error("Invalid template JSON", ex);
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.Error("Error occurred while loading default templates", ex);
             }
 
             TemplatesView = new CollectionViewSource { Source = Templates }.View;
@@ -81,6 +81,9 @@ namespace NINA.Sequencer {
             TemplatesMenuView.SortDescriptions.Add(new SortDescription("Container.Name", ListSortDirection.Ascending));
 
             LoadUserTemplates();
+
+            profileService.ProfileChanged += ProfileService_ProfileChanged;
+            profileService.ActiveProfile.SequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
         }
 
         private bool ApplyViewFilter(object obj) {

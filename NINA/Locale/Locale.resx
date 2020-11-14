@@ -4982,4 +4982,10 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="Lbl_SequenceTargetController_LoadUserTargetFailed" xml:space="preserve">
     <value>An error occurred while loading the list of targets. Refer to the logs for more details.</value>
   </data>
+  <data name="LblSequenceTemplateFolder" xml:space="preserve">
+    <value>Sequence Template Folder</value>
+  </data>
+  <data name="LblSequenceTemplateFolderTooltip" xml:space="preserve">
+    <value>The folder where sequence templates for the advanced sequencer are stored in</value>
+  </data>
 </root>

@@ -11607,6 +11607,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sequence Template Folder.
+        /// </summary>
+        internal static string LblSequenceTemplateFolder {
+            get {
+                return ResourceManager.GetString("LblSequenceTemplateFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The folder where sequence templates for the advanced sequencer are stored in.
+        /// </summary>
+        internal static string LblSequenceTemplateFolderTooltip {
+            get {
+                return ResourceManager.GetString("LblSequenceTemplateFolderTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Specifies a path to a previously exported sequence file that should be used as a template.
         ///This template will be used on startup to initialize the sequence instead of the default one..
         /// </summary>
