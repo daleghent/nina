@@ -2012,6 +2012,12 @@ Hesaplanan HFR: {2}
   <data name="LblNative" xml:space="preserve">
     <value>Yerel</value>
   </data>
+  <data name="LblNauticalDawn" xml:space="preserve">
+    <value>Nautical Dawn</value>
+  </data>
+  <data name="LblNauticalDusk" xml:space="preserve">
+    <value>Nautical Dusk</value>
+  </data>
   <data name="LblNewPosition" xml:space="preserve">
     <value>Yeni pozisyon</value>
     <comment>Newly Calulated Autofocus Position</comment>
@@ -4925,5 +4931,12 @@ There the sequence can be planned from scratch using fine granular instructions,
   </data>
   <data name="Lbl_OldSequencer_TargetPreparation" xml:space="preserve">
     <value>Target Preparation Instructions</value>
+  </data>
+  <data name="LblUnparked" xml:space="preserve">
+    <value>Unparked</value>
+    <comment>If the telescope is not in park position</comment>
+  </data>
+  <data name="LblWaitingForTelescopeToPark" xml:space="preserve">
+    <value>Waiting For Telescope To Park</value>
   </data>
 </root>
