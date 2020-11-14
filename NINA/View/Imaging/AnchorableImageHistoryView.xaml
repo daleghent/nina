@@ -91,6 +91,11 @@
                                                 <TextBlock Text=": " />
                                                 <TextBlock Text="{Binding Item.AutoFocusPoint.Temperature}" />
                                             </StackPanel>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{ns:Loc LblTime}" />
+                                                <TextBlock Text=": " />
+                                                <TextBlock Text="{Binding Item.AutoFocusPoint.Time}" />
+                                            </StackPanel>
                                         </StackPanel>
                                     </oxy:TrackerControl.Content>
                                 </oxy:TrackerControl>
