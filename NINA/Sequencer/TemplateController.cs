@@ -35,8 +35,10 @@ namespace NINA.Sequencer {
 
         public IList<TemplatedSequenceContainer> Templates { get; }
 
-        public ICollectionView TemplatesView { get; set; }
-        public ICollectionView TemplatesMenuView { get; set; }
+        private CollectionViewSource templatesView;
+        private CollectionViewSource templatesMenuView;
+        public ICollectionView TemplatesView { get => templatesView.View; }
+        public ICollectionView TemplatesMenuView { get => templatesMenuView.View; }
 
         private string viewFilter = string.Empty;
 
@@ -71,16 +73,22 @@ namespace NINA.Sequencer {
                 Logger.Error("Error occurred while loading default templates", ex);
             }
 
-            TemplatesView = new CollectionViewSource { Source = Templates }.View;
+            templatesView = new CollectionViewSource { Source = Templates };
             TemplatesView.GroupDescriptions.Add(new PropertyGroupDescription("GroupTranslated"));
             TemplatesView.SortDescriptions.Add(new SortDescription("GroupTranslated", ListSortDirection.Ascending));
             TemplatesView.SortDescriptions.Add(new SortDescription("Container.Name", ListSortDirection.Ascending));
             TemplatesView.Filter += new Predicate<object>(ApplyViewFilter);
 
-            TemplatesMenuView = new CollectionViewSource { Source = Templates }.View;
+            templatesMenuView = new CollectionViewSource { Source = Templates };
             TemplatesMenuView.SortDescriptions.Add(new SortDescription("Container.Name", ListSortDirection.Ascending));
 
             LoadUserTemplates();
+
+            sequenceTemplateFolderWatcher = new FileSystemWatcher(profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder, "*" + TemplateFileExtension);
+            sequenceTemplateFolderWatcher.Changed += SequenceTemplateFolderWatcher_Changed;
+            sequenceTemplateFolderWatcher.Deleted += SequenceTemplateFolderWatcher_Changed;
+            sequenceTemplateFolderWatcher.IncludeSubdirectories = true;
+            sequenceTemplateFolderWatcher.EnableRaisingEvents = true;
 
             profileService.ProfileChanged += ProfileService_ProfileChanged;
             profileService.ActiveProfile.SequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
@@ -109,17 +117,10 @@ namespace NINA.Sequencer {
         private void LoadUserTemplates() {
             try {
                 userTemplatePath = profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
+                var rootParts = userTemplatePath.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
 
                 if (!Directory.Exists(userTemplatePath)) {
                     Directory.CreateDirectory(userTemplatePath);
-                }
-
-                if (sequenceTemplateFolderWatcher == null) {
-                    sequenceTemplateFolderWatcher = new FileSystemWatcher(profileService.ActiveProfile.SequenceSettings.SequencerTemplatesFolder, "*" + TemplateFileExtension);
-                    sequenceTemplateFolderWatcher.Changed += SequenceTemplateFolderWatcher_Changed;
-                    sequenceTemplateFolderWatcher.Deleted += SequenceTemplateFolderWatcher_Changed;
-                    sequenceTemplateFolderWatcher.IncludeSubdirectories = true;
-                    sequenceTemplateFolderWatcher.EnableRaisingEvents = true;
                 }
 
                 foreach (var template in Templates.Where(t => t.Group != DefaultTemplatesGroup).ToList()) {
@@ -133,7 +134,8 @@ namespace NINA.Sequencer {
                         var template = new TemplatedSequenceContainer(profileService, UserTemplatesGroup, container);
                         var fileInfo = new FileInfo(file);
                         container.Name = fileInfo.Name.Replace(TemplateFileExtension, "");
-                        template.SubGroups = fileInfo.Directory.FullName.Replace(userTemplatePath, "").Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
+                        var parts = fileInfo.Directory.FullName.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
+                        template.SubGroups = parts.Except(rootParts).ToArray();
                         Templates.Add(template);
                     } catch (Exception ex) {
                         Logger.Error("Invalid template JSON", ex);
@@ -234,6 +236,10 @@ namespace NINA.Sequencer {
                 clone.IsExpanded = false;
             }
             return clone;
+        }
+
+        public override string ToString() {
+            return this.Container.Name;
         }
     }
 }
