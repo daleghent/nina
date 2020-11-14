@@ -10626,6 +10626,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Profile Chooser on Startup.
+        /// </summary>
+        internal static string LblProfileChooserOnStartup {
+            get {
+                return ResourceManager.GetString("LblProfileChooserOnStartup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profiles.
         /// </summary>
         internal static string LblProfiles {

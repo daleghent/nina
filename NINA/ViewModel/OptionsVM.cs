@@ -581,6 +581,17 @@ namespace NINA.ViewModel {
             }
         }
 
+        public bool UseSavedProfileSelection {
+            get {
+                return Properties.Settings.Default.UseSavedProfileSelection;
+            }
+            set {
+                NINA.Properties.Settings.Default.UseSavedProfileSelection = value;
+                NINA.Properties.Settings.Default.Save();
+                RaisePropertyChanged();
+            }
+        }
+
         public LogLevelEnum LogLevel {
             get {
                 return profileService.ActiveProfile.ApplicationSettings.LogLevel;

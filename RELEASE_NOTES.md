@@ -100,6 +100,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Some areas where the user interface was clipped on lower resolutions (down to 720p) are now showing all details
 - Telescope panel in imaging tab now shows an indicator when the telescope is not unparked
 - Telescope Park action will now wait for the scope to reach park position
+- Profile chooser on startup can now be re-activated in options again once it is disabled
 
 ### Guiders
 - MetaGuide is now supported

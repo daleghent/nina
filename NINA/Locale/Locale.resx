@@ -5000,4 +5000,7 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="LblResume" xml:space="preserve">
     <value>Resume</value>
   </data>
+  <data name="LblProfileChooserOnStartup" xml:space="preserve">
+    <value>Profile Chooser on Startup</value>
+  </data>
 </root>
