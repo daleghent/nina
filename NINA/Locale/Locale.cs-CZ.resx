@@ -2011,6 +2011,12 @@ Vypočtené HFR: {2}
   <data name="LblNative" xml:space="preserve">
     <value>Nativní</value>
   </data>
+  <data name="LblNauticalDawn" xml:space="preserve">
+    <value>Nautické Svítání</value>
+  </data>
+  <data name="LblNauticalDusk" xml:space="preserve">
+    <value>Nautický Soumrak</value>
+  </data>
   <data name="LblNewPosition" xml:space="preserve">
     <value>Nová Pozice</value>
     <comment>Newly Calulated Autofocus Position</comment>
@@ -4562,7 +4568,7 @@ Přidejte sekvence DSO nebo přidejte cíle pomocí Atlasu Hvězd nebo Průvodce
     <value>Cíle</value>
   </data>
   <data name="LblStartupSequenceTemplate" xml:space="preserve">
-    <value>Zahájit Šablonu Sekvencí</value>
+    <value>Sekvenci Zahájit Šablonou</value>
   </data>
   <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
     <value>Po nastavení bude tato šablona předem načtena do sekvencéru.</value>
@@ -4662,13 +4668,13 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Otevřít Sadu Cílů</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequence</value>
+    <value>Jednoduchá Sekvence</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Možnosti Ukončení Posledního Cíle</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Simple Sequence Template</value>
+    <value>Šablona Jednoduché Sekvence</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Importovat Cíle</value>
@@ -4904,29 +4910,36 @@ Příklad:
     <value>N.I.N.A. interní klient TheWeatherCompany API</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Caption" xml:space="preserve">
-    <value>Build Advanced Sequence?</value>
+    <value>Vytvořit Pokročilou Sekvenci?</value>
   </data>
   <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
-    <value>Are you sure to export the sequence to the advanced sequence?
-Note: Advanced sequences are NOT backwards compatible and it is not possible to revert to the simple sequence!</value>
+    <value>Opravdu chcete exportovat sekvenci do pokročilé sekvence?
+Poznámka: Pokročilá sekvence NENÍ kompatibilní s jednoduchou sekvencí, není možné se vrátit k jednoduché sekvenci!</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
-    <value>Advanced Sequencer</value>
+    <value>Pokročilý Sekvencer</value>
   </data>
   <data name="Lbl_OldSequencer_SwitchToAdvancedTooltip" xml:space="preserve">
-    <value>Switches to the advanced sequence planning mode.
-There the sequence can be planned from scratch using fine granular instructions, triggers and conditions.</value>
+    <value>Přepněte do režimu plánování pokročilé sekvence.
+Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů a podmínek.</value>
   </data>
   <data name="LblDisableSimpleSequencer" xml:space="preserve">
-    <value>Disable Simple Sequencer</value>
+    <value>Zakázat Jednoduchý Sekvencer</value>
   </data>
   <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
-    <value>This will disable the simple sequencer and directly show the advanced sequencer in the sequence tab.</value>
+    <value>Tímto se zakáže jednoduchý sekvencer a přímo se zobrazí pokročilý sekvencer na záložce sekvence.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
-    <value>Switch back to Sequencer Dashboard</value>
+    <value>Přepnout zpět na Ovládací panel Sekvenceru</value>
   </data>
   <data name="Lbl_OldSequencer_TargetPreparation" xml:space="preserve">
-    <value>Target Preparation Instructions</value>
+    <value>Pokyny pro Přípravu Cíle</value>
+  </data>
+  <data name="LblUnparked" xml:space="preserve">
+    <value>Od parkuj</value>
+    <comment>If the telescope is not in park position</comment>
+  </data>
+  <data name="LblWaitingForTelescopeToPark" xml:space="preserve">
+    <value>Čekat na Zaparkování Dalekohledu</value>
   </data>
 </root>
