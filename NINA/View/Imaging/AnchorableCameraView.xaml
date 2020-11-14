@@ -220,6 +220,7 @@
                                 ButtonImage="{StaticResource SnowflakeSVG}"
                                 CancelButtonImage="{StaticResource CancelSVG}"
                                 CancelCommand="{Binding CancelCoolCamCommand}"
+                                CancelToolTip="{ns:Loc LblCancel}"
                                 Command="{Binding CoolCamCommand}"
                                 IsEnabled="{Binding WarmCamCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}, FallbackValue=true}"
                                 ToolTip="{ns:Loc LblCoolCamBtnTooltip}" />
@@ -266,6 +267,7 @@
                                 ButtonImage="{StaticResource FireSVG}"
                                 CancelButtonImage="{StaticResource CancelSVG}"
                                 CancelCommand="{Binding CancelCoolCamCommand}"
+                                CancelToolTip="{ns:Loc LblCancel}"
                                 Command="{Binding WarmCamCommand}"
                                 IsEnabled="{Binding CoolCamCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBooleanConverter}, FallbackValue=true}"
                                 ToolTip="{ns:Loc LblWarmCamBtnTooltip}" />

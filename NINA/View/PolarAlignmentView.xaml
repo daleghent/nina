@@ -5,8 +5,7 @@
 
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
-    file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.-->
 <UserControl
     x:Class="NINA.View.PolarAlignmentView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -16,11 +15,12 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
     xmlns:util="clr-namespace:NINA.Utility"
+    x:Name="UC"
     d:DesignHeight="300"
     d:DesignWidth="400"
-    x:Name="UC"
     mc:Ignorable="d">
     <Grid IsEnabled="{Binding TelescopeInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
         <Border
@@ -93,11 +93,11 @@
                         <local:CameraControlView
                             IsEnabled="{Binding CameraInfo.Connected}"
                             MyBinningModes="{Binding ElementName=UC, Path=DataContext.CameraInfo.BinningModes, Mode=TwoWay}"
+                            MyDefaultGain="{Binding CameraInfo.DefaultGain}"
                             MyExposureDuration="{Binding SnapExposureDuration, Mode=TwoWay}"
                             MyFilters="{Binding Path=ActiveProfile.FilterWheelSettings.FilterWheelFilters}"
                             MySelectedBinningMode="{Binding SnapBin, Mode=TwoWay}"
-                            MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}"
-                            MyDefaultGain="{Binding CameraInfo.DefaultGain}" />
+                            MySelectedFilter="{Binding SnapFilter, Mode=TwoWay}" />
                     </Grid>
 
                     <GroupBox Grid.Row="2" Header="Altitude Measurement">
@@ -119,6 +119,7 @@
                                     ButtonImage="{StaticResource ArrowTwoSidesRotated}"
                                     CancelButtonImage="{StaticResource CancelSVG}"
                                     CancelCommand="{Binding CancelMeasureAltitudeErrorCommand}"
+                                    CancelToolTip="{ns:Loc LblCancel}"
                                     Command="{Binding MeasureAltitudeErrorCommand}"
                                     ToolTip="Measure Altitude Error&#10;Point Scope East or West and adjust Side of Pier combobox accordingly" />
                                 <TextBlock
@@ -141,6 +142,7 @@
                                     ButtonImage="{StaticResource ArrowTwoSides}"
                                     CancelButtonImage="{StaticResource CancelSVG}"
                                     CancelCommand="{Binding CancelMeasureAzimuthErrorCommand}"
+                                    CancelToolTip="{ns:Loc LblCancel}"
                                     Command="{Binding MeasureAzimuthErrorCommand}"
                                     ToolTip="Measure Azimuth Error&#10;Point Scope South near Meridian" />
                                 <TextBlock
@@ -209,6 +211,7 @@
                             ButtonText="Slew"
                             CancelButtonImage="{StaticResource CancelSVG}"
                             CancelCommand="{Binding CancelDARVSlewCommand}"
+                            CancelToolTip="{ns:Loc LblCancel}"
                             Command="{Binding DARVSlewCommand}"
                             ToolTip="This will take an exposure while slewing the scope slowly to one side and back&#10;when the lines are not aligned there is some PA error" />
                     </Grid>

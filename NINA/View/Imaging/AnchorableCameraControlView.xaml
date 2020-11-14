@@ -191,6 +191,7 @@
                         ButtonImage="{StaticResource LiveViewSVG}"
                         CancelButtonImage="{StaticResource CancelSVG}"
                         CancelCommand="{Binding StopLiveViewCommand}"
+                        CancelToolTip="{ns:Loc LblCancel}"
                         Command="{Binding StartLiveViewCommand}"
                         ToolTip="{ns:Loc LblToolTipLiveView}"
                         Visibility="{Binding ElementName=UC, Path=DataContext.CameraInfo.CanShowLiveView, FallbackValue=Collapsed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
@@ -203,6 +204,7 @@
                         ButtonImage="{StaticResource CameraSVG}"
                         CancelButtonImage="{StaticResource CancelSVG}"
                         CancelCommand="{Binding CancelSnapCommand}"
+                        CancelToolTip="{ns:Loc LblCancel}"
                         Command="{Binding SnapCommand}"
                         ToolTip="{ns:Loc LblTooltipTakeExposure}"
                         Visibility="{Binding SnapCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />

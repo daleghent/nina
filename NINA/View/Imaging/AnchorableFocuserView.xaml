@@ -148,6 +148,7 @@
                             ButtonText="{ns:Loc LblMove}"
                             CancelButtonImage="{StaticResource CancelSVG}"
                             CancelCommand="{Binding HaltFocuserCommand}"
+                            CancelToolTip="{ns:Loc LblCancel}"
                             Command="{Binding MoveFocuserCommand}"
                             ToolTip="{ns:Loc LblMoveFocuserTooltip}" />
                     </Grid>
@@ -164,6 +165,7 @@
                                 ButtonText="&lt;&lt;"
                                 CancelButtonImage="{StaticResource CancelSVG}"
                                 CancelCommand="{Binding HaltFocuserCommand}"
+                                CancelToolTip="{ns:Loc LblCancel}"
                                 Command="{Binding MoveFocuserInLargeCommand}"
                                 ToolTip="{ns:Loc LblFocuserMoveLargeTooltip}" />
                         </Grid>
@@ -176,6 +178,7 @@
                                 ButtonText="&lt;"
                                 CancelButtonImage="{StaticResource CancelSVG}"
                                 CancelCommand="{Binding HaltFocuserCommand}"
+                                CancelToolTip="{ns:Loc LblCancel}"
                                 Command="{Binding MoveFocuserInSmallCommand}"
                                 ToolTip="{ns:Loc LblFocuserMoveSmallTooltip}" />
                         </Grid>
@@ -188,6 +191,7 @@
                                 ButtonText="&gt;"
                                 CancelButtonImage="{StaticResource CancelSVG}"
                                 CancelCommand="{Binding HaltFocuserCommand}"
+                                CancelToolTip="{ns:Loc LblCancel}"
                                 Command="{Binding MoveFocuserOutSmallCommand}"
                                 ToolTip="{ns:Loc LblFocuserMoveSmallTooltip}" />
                         </Grid>
@@ -200,6 +204,7 @@
                                 ButtonText="&gt;&gt;"
                                 CancelButtonImage="{StaticResource CancelSVG}"
                                 CancelCommand="{Binding HaltFocuserCommand}"
+                                CancelToolTip="{ns:Loc LblCancel}"
                                 Command="{Binding MoveFocuserOutLargeCommand}"
                                 ToolTip="{ns:Loc LblFocuserMoveLargeTooltip}" />
                         </Grid>

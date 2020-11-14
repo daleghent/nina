@@ -104,6 +104,7 @@
                             ButtonText="{ns:Loc LblMoveMechanicalPosition}"
                             CancelButtonImage="{StaticResource CancelSVG}"
                             CancelCommand="{Binding HaltCommand}"
+                            CancelToolTip="{ns:Loc LblCancel}"
                             Command="{Binding MoveMechanicalCommand}"
                             ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
                     </Grid>
@@ -119,6 +120,7 @@
                             ButtonText="{ns:Loc LblMoveSkyPosition}"
                             CancelButtonImage="{StaticResource CancelSVG}"
                             CancelCommand="{Binding HaltCommand}"
+                            CancelToolTip="{ns:Loc LblCancel}"
                             Command="{Binding MoveCommand}"
                             ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
                     </Grid>

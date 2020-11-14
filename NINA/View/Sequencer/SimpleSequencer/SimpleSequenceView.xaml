@@ -492,6 +492,7 @@
                         ButtonImage="{StaticResource PlaySVG}"
                         CancelButtonImage="{StaticResource CancelSVG}"
                         CancelCommand="{Binding CancelSequenceCommand}"
+                        CancelToolTip="{ns:Loc LblCancelSequence}"
                         Command="{Binding StartSequenceCommand}"
                         LoadingImageBrush="{StaticResource PrimaryBrush}"
                         ToolTip="{ns:Loc LblTooltipStartSequence}" />

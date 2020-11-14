@@ -184,6 +184,7 @@
                         ButtonImage="{StaticResource PlaySVG}"
                         CancelButtonImage="{StaticResource CancelSVG}"
                         CancelCommand="{Binding CancelSolveCommand}"
+                        CancelToolTip="{ns:Loc LblCancel}"
                         Command="{Binding SolveCommand}"
                         IsEnabled="{Binding CameraInfo.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
                         ToolTip="{ns:Loc LblCaptureImageAndPlatesolve}" />

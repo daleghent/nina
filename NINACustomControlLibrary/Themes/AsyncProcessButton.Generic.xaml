@@ -37,6 +37,11 @@
                                             Fill="{TemplateBinding ButtonForegroundBrush}"
                                             RenderTransformOrigin="0.5,0.5"
                                             Stretch="Uniform" />
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                <TextBlock Text="{TemplateBinding PauseToolTip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
                                     </Button>
                                     <Button Command="{TemplateBinding ResumeCommand}" Visibility="{TemplateBinding IsPaused, Converter={StaticResource VisibilityConverter}}">
                                         <Path
@@ -46,6 +51,11 @@
                                             Fill="{TemplateBinding ButtonForegroundBrush}"
                                             RenderTransformOrigin="0.5,0.5"
                                             Stretch="Uniform" />
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                <TextBlock Text="{TemplateBinding ResumeToolTip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
                                     </Button>
                                 </Grid>
 
@@ -76,6 +86,11 @@
                                             Fill="{TemplateBinding ButtonForegroundBrush}"
                                             RenderTransformOrigin="0.5,0.5"
                                             Stretch="Uniform" />
+                                        <Button.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                <TextBlock Text="{TemplateBinding CancelToolTip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
                                     </Button>
                                 </Grid>
                             </Grid>

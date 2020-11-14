@@ -289,6 +289,7 @@
                         ButtonForegroundBrush="{StaticResource ButtonForegroundDisabledBrush}"
                         ButtonImage="{StaticResource PowerSVG}"
                         ButtonStyle="{StaticResource SecondaryBackgroundButton}"
+                        CancelToolTip="{ns:Loc LblCancel}"
                         Command="{Binding ApplicationDeviceConnectionVM.ConnectAllDevicesCommand}"
                         ToolTip="{ns:Loc LblConnect}"
                         Visibility="{Binding ApplicationDeviceConnectionVM.AllConnected, Converter={StaticResource InverseBoolToVisibilityConverter}}" />
@@ -304,6 +305,7 @@
                         ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
                         ButtonImage="{StaticResource PowerSVG}"
                         ButtonStyle="{StaticResource SecondaryBackgroundButton}"
+                        CancelToolTip="{ns:Loc LblCancel}"
                         Command="{Binding ApplicationDeviceConnectionVM.DisconnectAllDevicesCommand}"
                         ToolTip="{ns:Loc LblDisconnect}"
                         Visibility="{Binding ApplicationDeviceConnectionVM.AllConnected, Converter={StaticResource VisibilityConverter}}" />

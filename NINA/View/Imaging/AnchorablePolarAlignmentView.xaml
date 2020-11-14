@@ -65,6 +65,7 @@
                                         ButtonText="{ns:Loc LblAltitudeErrorMeasurement}"
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding CancelMeasureAltitudeErrorCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
                                         Command="{Binding MeasureAltitudeErrorCommand}"
                                         ToolTip="{ns:Loc LblAltitudeMeasurementButtonTooltip}" />
                                     <TextBlock
@@ -122,6 +123,7 @@
                                         ButtonText="{ns:Loc LblAzimuthErrorMeasurement}"
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding CancelMeasureAzimuthErrorCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
                                         Command="{Binding MeasureAzimuthErrorCommand}"
                                         ToolTip="{ns:Loc LblAzimuthMeasurementButtonTooltip}" />
                                     <TextBlock
@@ -203,6 +205,7 @@
                             ButtonText="{ns:Loc LblSlew}"
                             CancelButtonImage="{StaticResource CancelSVG}"
                             CancelCommand="{Binding CancelDARVSlewCommand}"
+                            CancelToolTip="{ns:Loc LblCancel}"
                             Command="{Binding DARVSlewCommand}"
                             ToolTip="{ns:Loc LblDARVSlewButtonTooltip}" />
                     </StackPanel>

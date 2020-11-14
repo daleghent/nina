@@ -240,6 +240,7 @@
                 ButtonImage="{StaticResource PlaySVG}"
                 CancelButtonImage="{StaticResource CancelSVG}"
                 CancelCommand="{Binding CancelSequenceCommand}"
+                CancelToolTip="{ns:Loc LblCancelSequence}"
                 Command="{Binding StartSequenceCommand}"
                 IsEnabled="{Binding CameraInfo.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
                 LoadingImageBrush="{StaticResource PrimaryBrush}"

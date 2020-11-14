@@ -202,6 +202,7 @@
                 ButtonImage="{Binding MyButtonImage}"
                 CancelButtonImage="{Binding MyCancelButtonImage}"
                 CancelCommand="{Binding MyCancelCommand}"
+                CancelToolTip="{ns:Loc LblCancel}"
                 Command="{Binding MyCommand}"
                 ToolTip="{ns:Loc LblTooltipTakeExposure}" />
         </StackPanel>

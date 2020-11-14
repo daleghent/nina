@@ -239,14 +239,17 @@
                                         ButtonImage="{StaticResource PlaySVG}"
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding CancelFlatExposureSequenceCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
                                         Command="{Binding StartFlatSequenceCommand}"
                                         IsEnabled="{Binding CameraConnected}"
                                         IsPaused="{Binding IsPaused}"
                                         LoadingImageBrush="{StaticResource PrimaryBrush}"
                                         PauseButtonImage="{StaticResource PauseSVG}"
                                         PauseCommand="{Binding PauseFlatExposureSequenceCommand}"
+                                        PauseToolTip="{ns:Loc LblPause}"
                                         ResumeButtonImage="{StaticResource PlaySVG}"
                                         ResumeCommand="{Binding ResumeFlatExposureSequenceCommand}"
+                                        ResumeToolTip="{ns:Loc LblResume}"
                                         ToolTip="{ns:Loc LblTooltipStartSequence}" />
                                 </Grid>
                             </StackPanel>
@@ -322,14 +325,17 @@
                                         ButtonImage="{StaticResource PlaySVG}"
                                         CancelButtonImage="{StaticResource CancelSVG}"
                                         CancelCommand="{Binding CancelFlatExposureSequenceCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
                                         Command="{Binding StartMultiFlatSequenceCommand}"
                                         IsEnabled="{Binding CameraConnected}"
                                         IsPaused="{Binding IsPaused}"
                                         LoadingImageBrush="{StaticResource PrimaryBrush}"
                                         PauseButtonImage="{StaticResource PauseSVG}"
                                         PauseCommand="{Binding PauseFlatExposureSequenceCommand}"
+                                        PauseToolTip="{ns:Loc LblPause}"
                                         ResumeButtonImage="{StaticResource PlaySVG}"
                                         ResumeCommand="{Binding ResumeFlatExposureSequenceCommand}"
+                                        ResumeToolTip="{ns:Loc LblResume}"
                                         ToolTip="{ns:Loc LblTooltipStartSequence}" />
                                 </Grid>
                             </StackPanel>

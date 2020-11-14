@@ -4994,4 +4994,10 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="LblWeatherUndergroundClientInfo" xml:space="preserve">
     <value>N.I.N.A. internal WU API client</value>
   </data>
+  <data name="LblPause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="LblResume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
 </root>

@@ -95,5 +95,29 @@ namespace NINACustomControlLibrary {
                 SetValue(LoadingImageBrushProperty, value);
             }
         }
+
+        public static readonly DependencyProperty PauseToolTipProperty =
+            DependencyProperty.Register(nameof(PauseToolTip), typeof(string), typeof(AsyncProcessButton), new UIPropertyMetadata(null));
+
+        public string PauseToolTip {
+            get {
+                return (string)GetValue(PauseToolTipProperty);
+            }
+            set {
+                SetValue(PauseToolTipProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty ResumeToolTipProperty =
+            DependencyProperty.Register(nameof(ResumeToolTip), typeof(string), typeof(AsyncProcessButton), new UIPropertyMetadata(null));
+
+        public string ResumeToolTip {
+            get {
+                return (string)GetValue(ResumeToolTipProperty);
+            }
+            set {
+                SetValue(ResumeToolTipProperty, value);
+            }
+        }
     }
 }

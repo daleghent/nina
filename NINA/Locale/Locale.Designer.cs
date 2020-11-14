@@ -9936,6 +9936,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pause.
+        /// </summary>
+        internal static string LblPause {
+            get {
+                return ResourceManager.GetString("LblPause", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pause between filters.
         /// </summary>
         internal static string LblPauseBetweenFilters {
@@ -11036,6 +11045,15 @@ namespace NINA.Locale {
         internal static string LblReslewToTarget {
             get {
                 return ResourceManager.GetString("LblReslewToTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resume.
+        /// </summary>
+        internal static string LblResume {
+            get {
+                return ResourceManager.GetString("LblResume", resourceCulture);
             }
         }
         

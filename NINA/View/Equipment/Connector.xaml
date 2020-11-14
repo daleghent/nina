@@ -45,7 +45,10 @@
                                     x:Name="ComboExpander"
                                     BorderBrush="{StaticResource BorderBrush}"
                                     BorderThickness="0,0,0,1">
-                                    <TextBlock FontStyle="Italic" FontWeight="Bold" Text="{Binding Name}" />
+                                    <TextBlock
+                                        FontStyle="Italic"
+                                        FontWeight="Bold"
+                                        Text="{Binding Name}" />
                                 </Border>
                                 <ItemsPresenter Grid.Row="1" />
                             </Grid>
@@ -129,6 +132,7 @@
                 ButtonImage="{StaticResource PowerSVG}"
                 CancelButtonImage="{StaticResource CancelSVG}"
                 CancelCommand="{Binding CancelCommand}"
+                CancelToolTip="{ns:Loc LblCancel}"
                 Command="{Binding ConnectCommand}"
                 IsEnabled="{Binding Connected, Converter={StaticResource InverseBooleanConverter}}"
                 ToolTip="{ns:Loc LblConnect}"

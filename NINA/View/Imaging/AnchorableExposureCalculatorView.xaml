@@ -144,6 +144,7 @@
                             HorizontalAlignment="Left"
                             ButtonText="{ns:Loc LblCalculateBias}"
                             CancelCommand="{Binding CancelDetermineBiasCommand}"
+                            CancelToolTip="{ns:Loc LblCancel}"
                             Command="{Binding DetermineBiasCommand}"
                             IsEnabled="{Binding CameraInfo.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
                             ToolTip="{ns:Loc LblCaptureImageCovered}" />
@@ -169,6 +170,7 @@
                     ButtonImage="{StaticResource CameraSVG}"
                     CancelButtonImage="{StaticResource CancelSVG}"
                     CancelCommand="{Binding CancelDetermineExposureTimeCommand}"
+                    CancelToolTip="{ns:Loc LblCancel}"
                     Command="{Binding DetermineExposureTimeCommand}"
                     IsEnabled="{Binding CameraInfo.LiveViewEnabled, FallbackValue=False, Converter={StaticResource InverseBooleanConverter}}"
                     ToolTip="{ns:Loc LblCaptureImageUncovered}" />

@@ -37,17 +37,17 @@ namespace NINACustomControlLibrary {
             }
         }
 
-        //public static readonly DependencyProperty ButtonTooltipProperty =
-        //    DependencyProperty.Register(nameof(ButtonTooltip), typeof(string), typeof(CancellableButton), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty CancelToolTipProperty =
+            DependencyProperty.Register(nameof(CancelToolTip), typeof(string), typeof(CancellableButton), new UIPropertyMetadata(null));
 
-        //public string ButtonTooltip {
-        //    get {
-        //        return (string)GetValue(ButtonTooltipProperty);
-        //    }
-        //    set {
-        //        SetValue(ButtonTooltipProperty, value);
-        //    }
-        //}
+        public string CancelToolTip {
+            get {
+                return (string)GetValue(CancelToolTipProperty);
+            }
+            set {
+                SetValue(CancelToolTipProperty, value);
+            }
+        }
 
         public static readonly DependencyProperty ButtonTextProperty =
             DependencyProperty.Register(nameof(ButtonText), typeof(string), typeof(CancellableButton), new UIPropertyMetadata(null));

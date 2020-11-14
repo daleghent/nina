@@ -263,6 +263,7 @@
                             ButtonText="{ns:Loc LblSearch}"
                             CancelButtonImage="{StaticResource CancelSVG}"
                             CancelCommand="{Binding CancelSearchCommand}"
+                            CancelToolTip="{ns:Loc LblCancel}"
                             Command="{Binding SearchCommand}"
                             Visibility="{Binding SearchCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}" />
                     </StackPanel>

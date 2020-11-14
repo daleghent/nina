@@ -84,6 +84,7 @@
                         ButtonImage="{StaticResource PlatesolveSVG}"
                         CancelButtonImage="{StaticResource CancelSVG}"
                         CancelCommand="{Binding CancelPlateSolveImageCommand}"
+                        CancelToolTip="{ns:Loc LblCancel}"
                         Command="{Binding PlateSolveImageCommand}"
                         ToolTip="{ns:Loc LblPlateSolveImage}" />
 

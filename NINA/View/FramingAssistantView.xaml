@@ -309,6 +309,7 @@
                             ButtonText="{ns:Loc LblLoadImage}"
                             CancelButtonImage="{StaticResource CancelSVG}"
                             CancelCommand="{Binding CancelLoadImageCommand}"
+                            CancelToolTip="{ns:Loc LblCancel}"
                             Command="{Binding LoadImageCommand}" />
                         <ninactrl:LoadingControl
                             Grid.Column="1"

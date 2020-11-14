@@ -52,7 +52,6 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
 
-
             <ninactrl:CancellableButton
                 Grid.Row="3"
                 Height="25"
@@ -60,6 +59,7 @@
                 ButtonText="{ns:Loc LblStartAutoFocus}"
                 CancelButtonImage="{StaticResource CancelSVG}"
                 CancelCommand="{Binding CancelAutoFocusCommand}"
+                CancelToolTip="{ns:Loc LblCancel}"
                 Command="{Binding StartAutoFocusCommand}" />
         </Grid>
     </ScrollViewer>
