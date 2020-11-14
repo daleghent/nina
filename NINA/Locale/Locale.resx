@@ -4988,4 +4988,10 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="LblSequenceTemplateFolderTooltip" xml:space="preserve">
     <value>The folder where sequence templates for the advanced sequencer are stored in</value>
   </data>
+  <data name="LblWeatherUndergroundClientDescription" xml:space="preserve">
+    <value>Uses WU PWS API. Weather is refreshed every 10m</value>
+  </data>
+  <data name="LblWeatherUndergroundClientInfo" xml:space="preserve">
+    <value>N.I.N.A. internal WU API client</value>
+  </data>
 </root>

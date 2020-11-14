@@ -14231,6 +14231,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uses WU PWS API. Weather is refreshed every 10m.
+        /// </summary>
+        internal static string LblWeatherUndergroundClientDescription {
+            get {
+                return ResourceManager.GetString("LblWeatherUndergroundClientDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N.I.N.A. internal WU API client.
+        /// </summary>
+        internal static string LblWeatherUndergroundClientInfo {
+            get {
+                return ResourceManager.GetString("LblWeatherUndergroundClientInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Weather Underground Station Id.
         /// </summary>
         internal static string LblWeatherUndergroundStationID {
