@@ -97,7 +97,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         public string ImageType { get; set; }
 
         [JsonProperty]
-        public int ExposureCount { get; private set; }
+        public int ExposureCount { get; set; }
 
         private CameraInfo cameraInfo;
 

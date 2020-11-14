@@ -789,6 +789,7 @@ namespace NINA.ViewModel {
                 exposure.Binning = item.Binning;
                 exposure.Gain = item.Gain;
                 exposure.Offset = item.Offset;
+                exposure.ExposureCount = item.ProgressExposureCount;
             }
 
             //Setting mode as last item to auto migrate simple exposure to rotate mode
