@@ -2867,7 +2867,7 @@ Tato šablona bude použita při spuštění sekvence místo výchozí.</value>
     <value>SkyServer Sky Survey</value>
   </data>
   <data name="LblSkySurveyCacheDirectory" xml:space="preserve">
-    <value>Adresář Mezipaměti Sky Survey</value>
+    <value>Adresář Mezi paměti</value>
   </data>
   <data name="LblSkyTemperature" xml:space="preserve">
     <value>Teplota Vzduchu</value>
@@ -4941,5 +4941,56 @@ Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů 
   </data>
   <data name="LblWaitingForTelescopeToPark" xml:space="preserve">
     <value>Čekat na Zaparkování Dalekohledu</value>
+  </data>
+  <data name="LblWeatherUndergroundAPIKey" xml:space="preserve">
+    <value>API Weather Underground</value>
+  </data>
+  <data name="LblWeatherUndergroundStationID" xml:space="preserve">
+    <value>Id Stanice Weather Underground</value>
+  </data>
+  <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
+    <value>Přesunout vybraný řádek dolů</value>
+  </data>
+  <data name="LblTooltipPromoteSimpleExposure" xml:space="preserve">
+    <value>Přesunout vybranou řádek nahoru</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_AddNewTemplateFailed" xml:space="preserve">
+    <value>Při přidávání nové šablony došlo k chybě. Další podrobnosti najdete v protokolech.</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_DeleteTemplateFailed" xml:space="preserve">
+    <value>Při mazání šablony došlo k chybě. Další podrobnosti najdete v protokolech.</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_LoadUserTemplatesFailed" xml:space="preserve">
+    <value>Při obnovování šablony došlo k chybě. Další podrobnosti najdete v protokolech.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_AddNewTargetFailed" xml:space="preserve">
+    <value>Při přidávání cíle došlo k chybě. Další podrobnosti najdete v protokolech.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_DeleteTargetFailed" xml:space="preserve">
+    <value>Při mazání cíle došlo k chybě. Další podrobnosti najdete v protokolech.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_LoadUserTargetFailed" xml:space="preserve">
+    <value>Při načítání seznamu cílů došlo k chybě. Další podrobnosti najdete v protokolech.</value>
+  </data>
+  <data name="LblSequenceTemplateFolder" xml:space="preserve">
+    <value>Složka Šablony Sekvence</value>
+  </data>
+  <data name="LblSequenceTemplateFolderTooltip" xml:space="preserve">
+    <value>Složka, kde jsou uloženy šablony pro pokročilý sekvencér</value>
+  </data>
+  <data name="LblWeatherUndergroundClientDescription" xml:space="preserve">
+    <value>Použít WU PWS API. Počasí se obnoví každých 10 metrů</value>
+  </data>
+  <data name="LblWeatherUndergroundClientInfo" xml:space="preserve">
+    <value>N.I.N.A. interní klient WU API</value>
+  </data>
+  <data name="LblPause" xml:space="preserve">
+    <value>Pauza</value>
+  </data>
+  <data name="LblResume" xml:space="preserve">
+    <value>Obnovit</value>
+  </data>
+  <data name="LblProfileChooserOnStartup" xml:space="preserve">
+    <value>Výběr Profilu při Spuštění</value>
   </data>
 </root>
