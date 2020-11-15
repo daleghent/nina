@@ -28,10 +28,9 @@ using System.Threading.Tasks;
 
 namespace NINA.Sequencer.SequenceItem.Camera {
 
-    // TODO: Isbeorn, can you provide an icon for this please?
     [ExportMetadata("Name", "Lbl_SequenceItem_Camera_SetReadoutMode_Name")]
     [ExportMetadata("Description", "Lbl_SequenceItem_Camera_SetReadoutMode_Description")]
-    [ExportMetadata("Icon", "Fire_NoFill_SVG")]
+    [ExportMetadata("Icon", "CameraDetailsSVG")]
     [ExportMetadata("Category", "Lbl_SequenceCategory_Camera")]
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
