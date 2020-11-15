@@ -728,6 +728,14 @@ namespace NINA.ViewModel.Equipment.Camera {
             }
         }
 
+        public void SetReadoutMode(short mode) {
+            if (CameraInfo.Connected) {
+                Cam.ReadoutMode = mode;
+                CameraInfo.ReadoutMode = mode;
+                BroadcastCameraInfo();
+            }
+        }
+
         public void SetBinning(short x, short y) {
             Cam.SetBinning(x, y);
             CameraInfo.BinX = Cam.BinX;

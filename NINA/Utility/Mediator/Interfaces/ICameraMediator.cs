@@ -35,6 +35,8 @@ namespace NINA.Utility.Mediator.Interfaces {
 
         void AbortExposure();
 
+        void SetReadoutMode(short mode);
+
         void SetBinning(short x, short y);
 
         void SetSubSample(bool subSample);

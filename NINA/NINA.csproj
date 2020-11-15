@@ -568,6 +568,7 @@
     <Compile Include="Sequencer\SequenceItem\Camera\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sequencer\SequenceItem\Camera\SetReadoutMode.cs" />
     <Compile Include="Sequencer\SequenceItem\Dome\CloseDomeShutter.cs" />
     <Compile Include="Sequencer\SequenceItem\Dome\EnableDomeSynchronization.cs" />
     <Compile Include="Sequencer\SequenceItem\Dome\OpenDomeShutter.cs" />

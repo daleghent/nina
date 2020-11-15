@@ -698,6 +698,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sets the readout mode for the camera.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_SetReadoutMode_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_SetReadoutMode_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Readout Mode.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_SetReadoutMode_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_SetReadoutMode_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warms the camera for the given duration.
         /// </summary>
         internal static string Lbl_SequenceItem_Camera_WarmCamera_Description {
@@ -1451,6 +1469,15 @@ namespace NINA.Locale {
         internal static string Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Readout mode not supported by camera. Must be a value between 0 and {0}.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_InvalidReadoutMode {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_InvalidReadoutMode", resourceCulture);
             }
         }
         
@@ -10824,11 +10851,29 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mode.
+        /// </summary>
+        internal static string LblReadoutMode {
+            get {
+                return ResourceManager.GetString("LblReadoutMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Camera Readout Mode.
         /// </summary>
         internal static string LblReadoutModePatternDescription {
             get {
                 return ResourceManager.GetString("LblReadoutModePatternDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A numeric value corresponding to your camera&apos;s readout mode.
+        /// </summary>
+        internal static string LblReadoutModeTooltip {
+            get {
+                return ResourceManager.GetString("LblReadoutModeTooltip", resourceCulture);
             }
         }
         

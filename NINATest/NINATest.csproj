@@ -286,6 +286,7 @@
     <Compile Include="Sequencer\DragDrop\DropIntoParametersTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Autofocus\RunAutofocusTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Camera\CoolCameraTest.cs" />
+    <Compile Include="Sequencer\SequenceItem\Camera\SetReadoutModeTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Camera\WarmCameraTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Dome\CloseDomeShutterTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Dome\EnableDomeSynchronizationTest.cs" />

@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 namespace NINA.ViewModel.Equipment.Camera {
 
     public interface ICameraVM : IDeviceVM<CameraInfo>, IDockableVM {
+        void SetReadoutMode(short mode);
 
         void SetBinning(short x, short y);
 

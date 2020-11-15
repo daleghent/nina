@@ -51,6 +51,10 @@ namespace NINA.Utility.Mediator {
             handler.AbortExposure();
         }
 
+        public void SetReadoutMode(short value) {
+            handler.SetReadoutMode(value);
+        }
+
         public void SetBinning(short x, short y) {
             handler.SetBinning(x, y);
         }
