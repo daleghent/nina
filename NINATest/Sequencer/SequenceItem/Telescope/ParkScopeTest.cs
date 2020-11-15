@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Moq;
+using NINA.Model;
 using NINA.Model.MyTelescope;
 using NINA.Sequencer;
 using NINA.Sequencer.Exceptions;
@@ -83,7 +84,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             var sut = new ParkScope(telescopeMediatorMock.Object);
             await sut.Execute(default, default);
 
-            telescopeMediatorMock.Verify(x => x.ParkTelescope(It.IsAny<CancellationToken>()), Times.Once);
+            telescopeMediatorMock.Verify(x => x.ParkTelescope(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -93,7 +94,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             var sut = new ParkScope(telescopeMediatorMock.Object);
             Func<Task> act = () => { return sut.Execute(default, default); };
 
-            telescopeMediatorMock.Verify(x => x.ParkTelescope(It.IsAny<CancellationToken>()), Times.Never);
+            telescopeMediatorMock.Verify(x => x.ParkTelescope(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Never);
             return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
         }
 
