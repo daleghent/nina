@@ -2322,6 +2322,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Content Include="Utility\ExifTool\exiftool.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="..\NINA.sln.licenseheader">
       <Link>NINA.sln.licenseheader</Link>
     </None>
