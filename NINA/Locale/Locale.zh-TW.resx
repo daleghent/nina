@@ -2553,6 +2553,12 @@ You can also calculate the bias by clicking the Snapshot button next to Bias Mea
   <data name="LblReadNoise" xml:space="preserve">
     <value>讀出雜訊（e）</value>
   </data>
+  <data name="LblReadoutMode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="LblReadoutModeTooltip" xml:space="preserve">
+    <value>A numeric value corresponding to your camera's readout mode</value>
+  </data>
   <data name="LblReadoutForNormalImages" xml:space="preserve">
     <value>序列的讀出模式</value>
   </data>
@@ -4241,6 +4247,15 @@ In case a longer duration is needed, a duration can be specified and the applica
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
     <value>Warm Camera</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Description" xml:space="preserve">
+    <value>Sets the readout mode for the camera</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Name" xml:space="preserve">
+    <value>Set Readout Mode</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidReadoutMode" xml:space="preserve">
+    <value>Readout mode not supported by camera. Must be a value between 0 and {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
     <value>Moves the filter wheel to the specified filter</value>

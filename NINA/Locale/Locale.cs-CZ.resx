@@ -187,11 +187,11 @@
     <value>Měření Výšky</value>
   </data>
   <data name="LblAltitudeMeasurementButtonTooltip" xml:space="preserve">
-    <value>Změřte Chybu Výšky v následujících třech krocích.
-1. Získat snímek a vypočítat aktuální souřadnice pomocí řešení v aktuální poloze
-2. Otočit dalekohled o 0,5 stupně kolem osy Ra
-3. Znovu pořídit snímek v této poloze a vypočítat souřadnice pomocí řešení
-Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</value>
+    <value>Measures Altitude Error by three steps.
+1. Takes image and platesolves for actual coordinates at current position
+2. Slew telescope using Right Ascension axis by 0.5 degrees
+3. Take another image at the new position, plate solves it for the actual position
+Using those two points the actual altitude error will be calculated and displayed</value>
   </data>
   <data name="LblAltitudeMeasurementDescription" xml:space="preserve">
     <value>Namiřte dalekohled na východ nebo na západ, blízko deklinace 0, nebo blízko obzoru.</value>
@@ -959,7 +959,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Levotočivý</value>
   </data>
   <data name="LblCoverScopeMsgBox" xml:space="preserve">
-    <value>Zakrýt dalekohled a stiskem OK spustíte snímání Vyrovnání temného pozadí.</value>
+    <value>Zakrýt dalekohled a stiskem OK spustíte snímání temných plochých snímků.</value>
   </data>
   <data name="LblCoverScopeMsgBoxTitle" xml:space="preserve">
     <value>Zakrýt dalekohled</value>
@@ -995,7 +995,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Pokud pořídíte snímek a pomalu otáčíte dalekohledem v jednom nebo opačném směru a stopy nejsou zarovnány, došlo k chybě Polárního Vyrovnání</value>
   </data>
   <data name="LblDARVSlewDescription" xml:space="preserve">
-    <value>Zadejte dobu trvání D.A.R.V. Dalekohled se bude pohybovat polovičním časem v jednom směru na ose RA a poté v opačném směru. Pokud v polárním zarovnání není chyba, zobrazí se jedna čára, v opačném případě bude čára ve tvaru písmene V. Chcete-li měřit chybu v Azimutu, přesuňte dalekohled blízko k poledníku, na východ nebo západ.</value>
+    <value>Specify the duration for the D.A.R.V. procedure. The telescope will slew half the time in one direction on RA axis and then slew back. In case of no Polar Alignment error it will display as a straight line. Otherwise a V shaped line. For Azimuth Error Measurement slew the scope near meridian, otherwise east or west.</value>
   </data>
   <data name="LblDataProvidedBy" xml:space="preserve">
     <value>Počáteční datový soubor DSO poskytl</value>
@@ -1007,7 +1007,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Datum ve formátu RRRR-MM-DD</value>
   </data>
   <data name="LblDateFormatDescription2" xml:space="preserve">
-    <value>Datum se posunulo o 12 hodin zpět ve formátu RRRR-MM-DD</value>
+    <value>Date shifted back by 12 hours with format YYYY-MM-DD</value>
   </data>
   <data name="LblDateTimeFormatDescription" xml:space="preserve">
     <value>Datum ve formátu RRRR-MM-DD_HH-mm-ss</value>
@@ -2034,7 +2034,7 @@ Vypočtené HFR: {2}
     <value>NINA</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>NINA pro Dalekohled</value>
+    <value>NINA do Dalekohledu</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Ne</value>
@@ -2091,7 +2091,7 @@ Vypočtené HFR: {2}
     <value>Bez Synch</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
-    <value>Pokud je povoleno, aplikace neposílá synchronizační příkaz do dalekohledu. Používat jen když má dalekohled má dobrý naváděcí systém, nebo existují speciální požadavky bez použití synchronizačních příkazů a software nemusí původní nastavení měnit.</value>
+    <value>Pokud je povoleno, aplikace neposílá synchronizační příkaz do dalekohledu. To by mělo být použito v případě, že existuje dobrý naváděcí model, který by se neměl měnit.</value>
   </data>
   <data name="LblNoTelescope" xml:space="preserve">
     <value>Žádný Dalekohled</value>
@@ -2482,7 +2482,7 @@ Vypočtené HFR: {2}
     <value>Příprava obrazu</value>
   </data>
   <data name="LblPreparingDarkFlatSequence" xml:space="preserve">
-    <value>Připravuje se Sekvence Vyrovnání temného pozadí</value>
+    <value>Připravuje se Sekvence Dark Flat</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
     <value>Plochý snímek pro filtr: {0}</value>
@@ -2543,6 +2543,12 @@ Vypočtené HFR: {2}
   </data>
   <data name="LblReadNoise" xml:space="preserve">
     <value>Čtecí šum v e</value>
+  </data>
+  <data name="LblReadoutMode" xml:space="preserve">
+    <value>Režim</value>
+  </data>
+  <data name="LblReadoutModeTooltip" xml:space="preserve">
+    <value>Číselná hodnota odpovídající režimu čtení kamery</value>
   </data>
   <data name="LblReadoutForNormalImages" xml:space="preserve">
     <value>Režim čtení pro sekvenci</value>
@@ -3109,7 +3115,7 @@ Synchronizovat hodnoty?</value>
     <value>Dalekohled synchronizovaný se souřadnicemi</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>Dalekohled pro NINA</value>
+    <value>Dalekohled do NINA</value>
   </data>
   <data name="LblTempComp" xml:space="preserve">
     <value>Kompen. T°</value>
@@ -3307,7 +3313,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     </value>
   </data>
   <data name="LblUnpark" xml:space="preserve">
-    <value>Od parkovat</value>
+    <value>Unpark</value>
   </data>
   <data name="LblUPBV2AmpereHours" xml:space="preserve">
     <value>Ampérhodina</value>
@@ -3460,7 +3466,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Zahřívání</value>
   </data>
   <data name="LblWarnTelescopeParked" xml:space="preserve">
-    <value>Dalekohled v parkovací poloze a automaticky se od parkuje, když uživatel zahájí sekvenci</value>
+    <value>The Telescope is parked, and will be automatically unparked if user proceeds with sequence start</value>
   </data>
   <data name="LblWeather" xml:space="preserve">
     <value>Počasí</value>
@@ -4147,19 +4153,19 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>HIPS 2 FITS Sky Survey</value>
   </data>
   <data name="LblMechanicalPosition" xml:space="preserve">
-    <value>Pozice</value>
+    <value>Mechanická Pozice</value>
   </data>
   <data name="LblSkyPosition" xml:space="preserve">
     <value>Pozice Oblohy</value>
   </data>
   <data name="LblTargetMechanicalPosition" xml:space="preserve">
-    <value>Pozice Cíle</value>
+    <value>Mechanická Pozice Cíle</value>
   </data>
   <data name="LblTargetSkyPosition" xml:space="preserve">
     <value>Cílová Pozice Oblohy</value>
   </data>
   <data name="LblMoveMechanicalPosition" xml:space="preserve">
-    <value>Pohyb Pozice</value>
+    <value>Pohyb Mechanické Pozice</value>
   </data>
   <data name="LblMoveSkyPosition" xml:space="preserve">
     <value>Pohyb Oblohy</value>
@@ -4233,6 +4239,15 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
     <value>Teplá Kamera</value>
   </data>
+  <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Description" xml:space="preserve">
+    <value>Nastavuje režim čtení kamery</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Name" xml:space="preserve">
+    <value>Nastavte Režim Čtení</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidReadoutMode" xml:space="preserve">
+    <value>Kamera nepodporuje režim čtení. Hodnota musí být mezi 0 a {0}</value>
+  </data>
   <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
     <value>Otočí kolem filtru na zadaný filtr</value>
   </data>
@@ -4288,25 +4303,25 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Vycentrovat</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
-    <value>Parkovat dalekohled do parkovací polohy</value>
+    <value>Parks the telescope to the park position</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Name" xml:space="preserve">
     <value>Parkovat Dalekohled</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description" xml:space="preserve">
-    <value>Přejezd dalekohledem na danou výšku a souřadnice azimutu</value>
+    <value>Slews the telescope to the given altitude and azimuth coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name" xml:space="preserve">
     <value>Přejezd Na Alt/Az</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description" xml:space="preserve">
-    <value>Přejezd dalekohledem na souřadnice RA a Dec</value>
+    <value>Slews the telescope to the given right ascension and declination coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name" xml:space="preserve">
     <value>Přejezd Na Ra/Dec</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_UnparkScope_Description" xml:space="preserve">
-    <value>Odparkovat dalekohled</value>
+    <value>Unparks the telescope</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_UnparkScope_Name" xml:space="preserve">
     <value>Odparkovat Dalekohled</value>
@@ -4725,13 +4740,13 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Kopule</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Description" xml:space="preserve">
-    <value>Zavřít vrata kopule</value>
+    <value>Closes the shutter of the dome</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Name" xml:space="preserve">
     <value>Zavřít Vrata</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_ParkDome_Description" xml:space="preserve">
-    <value>Parkovat kopuli do parkovací polohy</value>
+    <value>Parks the dome to the park position</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_ParkDome_Name" xml:space="preserve">
     <value>Parkovat Kopuli</value>
@@ -4758,13 +4773,13 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Odparkovat montáž při spuštění sekvence</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
-    <value>Otevřít vrata kopule</value>
+    <value>Opens the shutter of the dome</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Name" xml:space="preserve">
     <value>Otevřít Vrata</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description" xml:space="preserve">
-    <value>Zajišťuje synchronizaci kopule s dalekohledem</value>
+    <value>Ensures the dome remains synchronized with the telescope</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
     <value>Povolit Synchronizaci Kopule</value>
@@ -4936,7 +4951,7 @@ Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů 
     <value>Pokyny pro Přípravu Cíle</value>
   </data>
   <data name="LblUnparked" xml:space="preserve">
-    <value>Od parkuj</value>
+    <value>Unparked</value>
     <comment>If the telescope is not in park position</comment>
   </data>
   <data name="LblWaitingForTelescopeToPark" xml:space="preserve">

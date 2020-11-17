@@ -2555,6 +2555,12 @@ HFR calculado: {2}
   <data name="LblReadNoise" xml:space="preserve">
     <value>Lectura de ruído en electróns</value>
   </data>
+  <data name="LblReadoutMode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="LblReadoutModeTooltip" xml:space="preserve">
+    <value>A numeric value corresponding to your camera's readout mode</value>
+  </data>
   <data name="LblReadoutForNormalImages" xml:space="preserve">
     <value>Modo de lectura para secuencias</value>
   </data>
@@ -4243,6 +4249,15 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
     <value>Quentar Cámara</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Description" xml:space="preserve">
+    <value>Sets the readout mode for the camera</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Name" xml:space="preserve">
+    <value>Set Readout Mode</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidReadoutMode" xml:space="preserve">
+    <value>Readout mode not supported by camera. Must be a value between 0 and {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
     <value>Move a roda de filtros para o filtro especificado</value>
