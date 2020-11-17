@@ -4947,4 +4947,55 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="LblWaitingForTelescopeToPark" xml:space="preserve">
     <value>Waiting For Telescope To Park</value>
   </data>
+  <data name="LblWeatherUndergroundAPIKey" xml:space="preserve">
+    <value>Weather Underground API Key</value>
+  </data>
+  <data name="LblWeatherUndergroundStationID" xml:space="preserve">
+    <value>Weather Underground Station Id</value>
+  </data>
+  <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
+    <value>Demote selected row</value>
+  </data>
+  <data name="LblTooltipPromoteSimpleExposure" xml:space="preserve">
+    <value>Promote selected row</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_AddNewTemplateFailed" xml:space="preserve">
+    <value>An error occurred while adding a new template. Refer to the logs for more details.</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_DeleteTemplateFailed" xml:space="preserve">
+    <value>An error occurred while deleting the template. Refer to the logs for more details.</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_LoadUserTemplatesFailed" xml:space="preserve">
+    <value>An error occurred during template refresh. Refer to the logs for more details.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_AddNewTargetFailed" xml:space="preserve">
+    <value>An error occurred while adding the target. Refer to the logs for more details.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_DeleteTargetFailed" xml:space="preserve">
+    <value>An error occurred while deleting the target. Refer to the logs for more details.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_LoadUserTargetFailed" xml:space="preserve">
+    <value>An error occurred while loading the list of targets. Refer to the logs for more details.</value>
+  </data>
+  <data name="LblSequenceTemplateFolder" xml:space="preserve">
+    <value>Sequence Template Folder</value>
+  </data>
+  <data name="LblSequenceTemplateFolderTooltip" xml:space="preserve">
+    <value>The folder where sequence templates for the advanced sequencer are stored in</value>
+  </data>
+  <data name="LblWeatherUndergroundClientDescription" xml:space="preserve">
+    <value>Uses WU PWS API. Weather is refreshed every 10m</value>
+  </data>
+  <data name="LblWeatherUndergroundClientInfo" xml:space="preserve">
+    <value>N.I.N.A. internal WU API client</value>
+  </data>
+  <data name="LblPause" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="LblResume" xml:space="preserve">
+    <value>Resume</value>
+  </data>
+  <data name="LblProfileChooserOnStartup" xml:space="preserve">
+    <value>Profile Chooser on Startup</value>
+  </data>
 </root>
