@@ -51,29 +51,31 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             this.Triggers.Clear();
         }
 
-        private IProfileService profileService;
-        private ICameraMediator cameraMediator;
-        private IImagingMediator imagingMediator;
-        private IImageSaveMediator imageSaveMediator;
-        private IImageHistoryVM imageHistoryVM;
-        private IFilterWheelMediator filterWheelMediator;
-        private IGuiderMediator guiderMediator;
-
         [ImportingConstructor]
-        public SmartExposure(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator) {
-            this.profileService = profileService;
-            this.cameraMediator = cameraMediator;
-            this.imagingMediator = imagingMediator;
-            this.imageSaveMediator = imageSaveMediator;
-            this.imageHistoryVM = imageHistoryVM;
-            this.filterWheelMediator = filterWheelMediator;
-            this.guiderMediator = guiderMediator;
+        public SmartExposure(
+                IProfileService profileService,
+                ICameraMediator cameraMediator,
+                IImagingMediator imagingMediator,
+                IImageSaveMediator imageSaveMediator,
+                IImageHistoryVM imageHistoryVM,
+                IFilterWheelMediator filterWheelMediator,
+                IGuiderMediator guiderMediator) : this(
+                    new SwitchFilter(profileService, filterWheelMediator),
+                    new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM),
+                    new LoopCondition(),
+                    new DitherAfterExposures(guiderMediator, imageHistoryVM)
+                ) {
+        }
 
-            var switchFilter = new SwitchFilter(profileService, filterWheelMediator);
-            var takeExposure = new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM);
-            var loopCondition = new LoopCondition();
-            var ditherAfterExposures = new DitherAfterExposures(guiderMediator, imageHistoryVM);
-
+        /// <summary>
+        /// Clone Constructor
+        /// </summary>
+        public SmartExposure(
+                SwitchFilter switchFilter,
+                TakeExposure takeExposure,
+                LoopCondition loopCondition,
+                DitherAfterExposures ditherAfterExposures
+                ) {
             this.Add(switchFilter);
             this.Add(takeExposure);
             this.Add(loopCondition);
@@ -126,27 +128,17 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override object Clone() {
-            var clone = new SmartExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM, filterWheelMediator, guiderMediator) {
+            var clone = new SmartExposure(
+                    (SwitchFilter)this.GetSwitchFilter().Clone(),
+                    (TakeExposure)this.GetTakeExposure().Clone(),
+                    (LoopCondition)this.GetLoopCondition().Clone(),
+                    (DitherAfterExposures)this.GetDitherAfterExposures().Clone()
+                ) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,
-                Description = Description,
-                Items = new ObservableCollection<ISequenceItem>(Items.Select(i => i.Clone() as ISequenceItem)),
-                Triggers = new ObservableCollection<ISequenceTrigger>(Triggers.Select(t => t.Clone() as ISequenceTrigger)),
-                Conditions = new ObservableCollection<ISequenceCondition>(Conditions.Select(t => t.Clone() as ISequenceCondition)),
+                Description = Description
             };
-
-            foreach (var item in clone.Items) {
-                item.AttachNewParent(clone);
-            }
-
-            foreach (var condition in clone.Conditions) {
-                condition.AttachNewParent(clone);
-            }
-
-            foreach (var trigger in clone.Triggers) {
-                trigger.AttachNewParent(clone);
-            }
             return clone;
         }
     }

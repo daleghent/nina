@@ -42,7 +42,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
     [Export(typeof(ISequenceItem))]
     [Export(typeof(ISequenceContainer))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class TrainedFlatExposure : SequenceContainer, IImmutableContainer {
+    public class TrainedFlatExposure : SequentialContainer, IImmutableContainer {
 
         [OnDeserializing]
         public void OnDeserializing(StreamingContext context) {
@@ -52,31 +52,35 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         private IProfileService profileService;
-        private ICameraMediator cameraMediator;
-        private IImagingMediator imagingMediator;
-        private IImageSaveMediator imageSaveMediator;
-        private IImageHistoryVM imageHistoryVM;
-        private IFilterWheelMediator filterWheelMediator;
-        private IFlatDeviceMediator flatDeviceMediator;
 
         [ImportingConstructor]
-        public TrainedFlatExposure(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM, IFilterWheelMediator filterWheelMediator, IFlatDeviceMediator flatDeviceMediator) : base(new SequentialStrategy()) {
-            this.profileService = profileService;
-            this.cameraMediator = cameraMediator;
-            this.imagingMediator = imagingMediator;
-            this.imageSaveMediator = imageSaveMediator;
-            this.imageHistoryVM = imageHistoryVM;
-            this.filterWheelMediator = filterWheelMediator;
-            this.flatDeviceMediator = flatDeviceMediator;
+        public TrainedFlatExposure(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM, IFilterWheelMediator filterWheelMediator, IFlatDeviceMediator flatDeviceMediator) :
+            this(
+                profileService,
+                new CloseCover(flatDeviceMediator),
+                new ToggleLight(flatDeviceMediator) { On = true },
+                new SwitchFilter(profileService, filterWheelMediator),
+                new SetBrightness(flatDeviceMediator),
+                new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) { ImageType = CaptureSequence.ImageTypes.FLAT },
+                new LoopCondition() { Iterations = 1 },
+                new ToggleLight(flatDeviceMediator) { On = false },
+                new OpenCover(flatDeviceMediator)
 
-            var closeCover = new CloseCover(flatDeviceMediator);
-            var toggleLightOn = new ToggleLight(flatDeviceMediator) { On = true };
-            var switchFilter = new SwitchFilter(profileService, filterWheelMediator);
-            var setBrightness = new SetBrightness(flatDeviceMediator);
-            var takeExposue = new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) { ImageType = CaptureSequence.ImageTypes.FLAT };
-            var toggleLightOff = new ToggleLight(flatDeviceMediator) { On = false };
-            var openCover = new OpenCover(flatDeviceMediator);
-            var iterations = new LoopCondition() { Iterations = 1 };
+            ) {
+        }
+
+        public TrainedFlatExposure(
+            IProfileService profileService,
+            CloseCover closeCover,
+            ToggleLight toggleLightOn,
+            SwitchFilter switchFilter,
+            SetBrightness setBrightness,
+            TakeExposure takeExposure,
+            LoopCondition loopCondition,
+            ToggleLight toggleLightOff,
+            OpenCover openCover
+            ) {
+            this.profileService = profileService;
 
             this.Add(closeCover);
             this.Add(toggleLightOn);
@@ -84,8 +88,8 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             this.Add(setBrightness);
 
             var container = new SequentialContainer();
-            container.Add(iterations);
-            container.Add(takeExposue);
+            container.Add(loopCondition);
+            container.Add(takeExposure);
             this.Add(container);
 
             this.Add(toggleLightOff);
@@ -94,41 +98,60 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             IsExpanded = false;
         }
 
-        public override object Clone() {
-            var clone = new TrainedFlatExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM, filterWheelMediator, flatDeviceMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Items = new ObservableCollection<ISequenceItem>(Items.Select(i => i.Clone() as ISequenceItem)),
-                Triggers = new ObservableCollection<ISequenceTrigger>(Triggers.Select(t => t.Clone() as ISequenceTrigger)),
-                Conditions = new ObservableCollection<ISequenceCondition>(Conditions.Select(t => t.Clone() as ISequenceCondition)),
-            };
-
-            foreach (var item in clone.Items) {
-                item.AttachNewParent(clone);
-            }
-
-            foreach (var condition in clone.Conditions) {
-                condition.AttachNewParent(clone);
-            }
-
-            foreach (var trigger in clone.Triggers) {
-                trigger.AttachNewParent(clone);
-            }
-            return clone;
+        public CloseCover GetCloseCoverItem() {
+            return (Items[0] as CloseCover);
         }
 
-        public TakeExposure GetExposureItem() {
-            return ((Items[4] as SequentialContainer).Items[0] as TakeExposure);
+        public ToggleLight GetToggleLightOnItem() {
+            return (Items[1] as ToggleLight);
         }
 
         public SwitchFilter GetSwitchFilterItem() {
             return (Items[2] as SwitchFilter);
         }
 
+        public SetBrightness GetSetBrightnessItem() {
+            return (Items[3] as SetBrightness);
+        }
+
+        public SequentialContainer GetImagingContainer() {
+            return (Items[4] as SequentialContainer);
+        }
+
+        public TakeExposure GetExposureItem() {
+            return ((Items[4] as SequentialContainer).Items[0] as TakeExposure);
+        }
+
         public LoopCondition GetIterations() {
             return ((Items[4] as IConditionable).Conditions[0] as LoopCondition);
+        }
+
+        public ToggleLight GetToggleLightOffItem() {
+            return (Items[5] as ToggleLight);
+        }
+
+        public OpenCover GetOpenCoverItem() {
+            return (Items[6] as OpenCover);
+        }
+
+        public override object Clone() {
+            var clone = new TrainedFlatExposure(
+                profileService,
+                (CloseCover)this.GetCloseCoverItem().Clone(),
+                (ToggleLight)this.GetToggleLightOnItem().Clone(),
+                (SwitchFilter)this.GetSwitchFilterItem().Clone(),
+                (SetBrightness)this.GetSetBrightnessItem().Clone(),
+                (TakeExposure)this.GetExposureItem().Clone(),
+                (LoopCondition)this.GetIterations().Clone(),
+                (ToggleLight)this.GetToggleLightOffItem().Clone(),
+                (OpenCover)this.GetOpenCoverItem().Clone()
+            ) {
+                Icon = Icon,
+                Name = Name,
+                Category = Category,
+                Description = Description,
+            };
+            return clone;
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {

@@ -47,22 +47,17 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             this.Triggers.Clear();
         }
 
-        private ICameraMediator cameraMediator;
-        private IImagingMediator imagingMediator;
-        private IImageSaveMediator imageSaveMediator;
-        private IImageHistoryVM imageHistoryVM;
-        private IProfileService profileService;
-
         [ImportingConstructor]
-        public TakeManyExposures(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM) {
-            this.cameraMediator = cameraMediator;
-            this.imagingMediator = imagingMediator;
-            this.imageSaveMediator = imageSaveMediator;
-            this.imageHistoryVM = imageHistoryVM;
-            this.profileService = profileService;
+        public TakeManyExposures(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM) :
+                this(
+                    new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM),
+                    new LoopCondition() { Iterations = 1 }) {
+        }
 
-            var takeExposure = new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM);
-            var loopCondition = new LoopCondition() { Iterations = 1 };
+        /// <summary>
+        /// Clone Constructor
+        /// </summary>
+        public TakeManyExposures(TakeExposure takeExposure, LoopCondition loopCondition) {
             this.Add(takeExposure);
             this.Add(loopCondition);
 
@@ -71,6 +66,10 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
         public TakeExposure GetTakeExposure() {
             return Items[0] as TakeExposure;
+        }
+
+        public LoopCondition GetLoopCondition() {
+            return Conditions[0] as LoopCondition;
         }
 
         public override bool Validate() {
@@ -82,27 +81,14 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override object Clone() {
-            var clone = new TakeManyExposures(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) {
+            var clone = new TakeManyExposures(
+                    (TakeExposure)this.GetTakeExposure().Clone(),
+                    (LoopCondition)this.GetLoopCondition().Clone()) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,
-                Description = Description,
-                Items = new ObservableCollection<ISequenceItem>(Items.Select(i => i.Clone() as ISequenceItem)),
-                Triggers = new ObservableCollection<ISequenceTrigger>(Triggers.Select(t => t.Clone() as ISequenceTrigger)),
-                Conditions = new ObservableCollection<ISequenceCondition>(Conditions.Select(t => t.Clone() as ISequenceCondition)),
+                Description = Description
             };
-
-            foreach (var item in clone.Items) {
-                item.AttachNewParent(clone);
-            }
-
-            foreach (var condition in clone.Conditions) {
-                condition.AttachNewParent(clone);
-            }
-
-            foreach (var trigger in clone.Triggers) {
-                trigger.AttachNewParent(clone);
-            }
             return clone;
         }
     }
