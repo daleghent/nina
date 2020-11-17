@@ -21,6 +21,7 @@ using NINA.Utility.ImageAnalysis;
 using NINA.Utility.RawConverter;
 using System;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -101,6 +102,11 @@ namespace NINA.Model.ImageData {
         /// <returns></returns>
         public string FinalizeSave(string file, string pattern) {
             try {
+                if(pattern.Contains(ImagePatternKeys.SensorTemp) && double.IsNaN(this.MetaData.Camera.Temperature) && !string.IsNullOrEmpty(this.Data.RAWType)) {
+                    string sensorTemp = getSensorTempFromExifTool(file);
+                    pattern = pattern.Replace(ImagePatternKeys.SensorTemp, sensorTemp);
+                }
+
                 var imagePatterns = GetImagePatterns();
                 var fileName = imagePatterns.GetImageFileString(pattern);
                 var extension = Path.GetExtension(file);
@@ -122,6 +128,46 @@ namespace NINA.Model.ImageData {
                 throw ex;
             } finally {
             }
+        }
+
+        private string getSensorTempFromExifTool(string file) {
+            string EXIFTOOLLOCATION = @"Utility\ExifTool\exiftool.exe";
+            var sb = new StringBuilder();
+
+            System.Diagnostics.Process process = new System.Diagnostics.Process();
+            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+            startInfo.FileName = EXIFTOOLLOCATION;
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+            startInfo.RedirectStandardInput = true;
+            startInfo.CreateNoWindow = true;
+            startInfo.Arguments = $"-CameraTemperature {file}";
+            process.StartInfo = startInfo;
+            process.EnableRaisingEvents = true;
+
+            process.OutputDataReceived += (object sender, System.Diagnostics.DataReceivedEventArgs e) => {
+                sb.AppendLine(e.Data);
+            };
+
+            process.ErrorDataReceived += (object sender, System.Diagnostics.DataReceivedEventArgs e) => {
+                sb.AppendLine(e.Data);
+            };
+
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+
+            process.WaitForExit();
+
+            Logger.Trace(sb.ToString());
+
+            // remove whitespace and format
+            string tempString = sb.ToString().Replace(" ", "");
+            tempString = tempString.Substring(tempString.IndexOf(':') + 1).ToLower().Trim();
+
+            return tempString;
         }
 
         public ImagePatterns GetImagePatterns() {
