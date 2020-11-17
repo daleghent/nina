@@ -15,7 +15,7 @@ using NINA.Utility;
 using System.IO;
 
 /*
-    Versin: 48.17729.2020.0922
+    Versin: 48.17962.2020.1110
 
     For Microsoft dotNET Framework & dotNet Core
 
@@ -118,17 +118,9 @@ namespace Altair {
             EVENT_FACTORY = 0x8001  /* restore factory settings */
         };
 
-        public enum ePROCESSMODE : uint {
-            PROCESSMODE_FULL = 0x00, /* better image quality, more cpu usage. this is the default value */
-            PROCESSMODE_FAST = 0x01  /* lower image quality, less cpu usage */
-        };
-
         public enum eOPTION : uint {
             OPTION_NOFRAME_TIMEOUT = 0x01,       /* no frame timeout: 1 = enable; 0 = disable. default: disable */
             OPTION_THREAD_PRIORITY = 0x02,       /* set the priority of the internal thread which grab data from the usb device. iValue: 0 = THREAD_PRIORITY_NORMAL; 1 = THREAD_PRIORITY_ABOVE_NORMAL; 2 = THREAD_PRIORITY_HIGHEST; default: 0; see: msdn SetThreadPriority */
-            OPTION_PROCESSMODE = 0x03,       /* 0 = better image quality, more cpu usage. this is the default value
-                                                      1 = lower image quality, less cpu usage
-                                                   */
             OPTION_RAW = 0x04,       /* raw data mode, read the sensor "raw" data. This can be set only BEFORE Altaircam_StartXXX(). 0 = rgb, 1 = raw, default value: 0 */
             OPTION_HISTOGRAM = 0x05,       /* 0 = only one, 1 = continue mode */
             OPTION_BITDEPTH = 0x06,       /* 0 = 8 bits mode, 1 = 16 bits mode */
@@ -232,7 +224,9 @@ namespace Altair {
             OPTION_DENOISE = 0x35,       /* denoise, strength range: [0, 100], 0 means disable */
             OPTION_HEAT_MAX = 0x36,       /* maximum level: heat to prevent fogging up */
             OPTION_HEAT = 0x37,       /* heat to prevent fogging up */
-            OPTION_LOW_NOISE = 0x38        /* low noise mode: 1 => enable */
+            OPTION_LOW_NOISE = 0x38,       /* low noise mode: 1 => enable */
+            OPTION_POWER = 0x39,       /* get power consumption, unit: milliwatt */
+            OPTION_GLOBAL_RESET_MODE = 0x3a        /* global reset mode */
         };
 
         public enum ePIXELFORMAT : uint {
@@ -601,16 +595,6 @@ namespace Altair {
 
         [DllImport(DLLNAME, ExactSpelling = true, CallingConvention = cc)]
         private static extern uint Altaircam_get_RawFormat(SafeCamHandle h, out uint nFourCC, out uint bitdepth);
-
-        /*
-            set or get the process mode: ALTAIRCAM_PROCESSMODE_FULL or ALTAIRCAM_PROCESSMODE_FAST
-        */
-
-        [DllImport(DLLNAME, ExactSpelling = true, CallingConvention = cc)]
-        private static extern int Altaircam_put_ProcessMode(SafeCamHandle h, ePROCESSMODE nProcessMode);
-
-        [DllImport(DLLNAME, ExactSpelling = true, CallingConvention = cc)]
-        private static extern int Altaircam_get_ProcessMode(SafeCamHandle h, out ePROCESSMODE pnProcessMode);
 
         [DllImport(DLLNAME, ExactSpelling = true, CallingConvention = cc)]
         private static extern int Altaircam_put_RealTime(SafeCamHandle h, int val);
@@ -1133,7 +1117,7 @@ namespace Altair {
             Dispose();
         }
 
-        /* get the version of this dll/so, which is: 48.17729.2020.0922 */
+        /* get the version of this dll/so, which is: 48.17962.2020.1110 */
 
         public static string Version() {
             return Marshal.PtrToStringUni(Altaircam_Version());
@@ -1684,19 +1668,6 @@ namespace Altair {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
                 return false;
             return (Altaircam_get_RawFormat(_handle, out nFourCC, out bitdepth) >= 0);
-        }
-
-        public bool put_ProcessMode(ePROCESSMODE nProcessMode) {
-            if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
-                return false;
-            return (Altaircam_put_ProcessMode(_handle, nProcessMode) >= 0);
-        }
-
-        public bool get_ProcessMode(out ePROCESSMODE pnProcessMode) {
-            pnProcessMode = 0;
-            if (_handle == null || _handle.IsInvalid || _handle.IsClosed)
-                return false;
-            return (Altaircam_get_ProcessMode(_handle, out pnProcessMode) >= 0);
         }
 
         /*

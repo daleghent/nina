@@ -21,7 +21,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Disconnecting Atik Cameras from other applications on startup or scan for new devices will not happen anymore
 
 ## Included Camera SDK Versions:
-- **Altair Astro:** 48.17729.2020.922
+- **Altair Astro:** 48.17962.2020.1110
 - **Atik:** 2020.08.3.642
 - **Canon:** 13.13.0.6408
 - **FLI:** 1.104.0.0
