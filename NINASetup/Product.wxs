@@ -145,6 +145,7 @@
       <ComponentGroupRef Id="el_GR_files" />
       <ComponentGroupRef Id="Sequencer_Examples_files" />
       <ComponentGroupRef Id="cs_CZ_files" />
+      <ComponentGroupRef Id="Utility_ExifTool_files" />
     </Feature>
   </Product>
 
@@ -255,6 +256,7 @@
           <Directory Id="Utility" Name="Utility">
             <Directory Id="Utility_DCRaw" Name="DCRaw" />
             <Directory Id="Utility_ColorSchema" Name="ColorSchema" />
+            <Directory Id="Utility_ExifTool" Name="ExifTool" />
           </Directory>
           <Directory Id="Database" Name="Database">
             <Directory Id="Database_Initial" Name="Initial" />
@@ -1701,6 +1703,13 @@
     <ComponentGroup Id="cs_CZ_files" Directory="cs_CZ">
       <Component Id="cs_CZ_NINA.resources.dll" Guid="26dd6369-ae6f-47ff-b9c9-53791e99e2b5">
         <File Id="cs_CZ_NINA.resources.dll" Name="NINA.resources.dll" Source="$(var.NINA_TargetDir)cs-CZ\NINA.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="Utility_ExifTool_files" Directory="Utility_ExifTool">
+      <Component Id="Utility_ExifTool_exiftool.exe" Guid="1a22e254-9192-445d-a126-30a00c9e13e1">
+        <File Id="Utility_ExifTool_exiftool.exe" Name="exiftool.exe" Source="$(var.NINA_TargetDir)Utility\ExifTool\exiftool.exe" />
       </Component>
     </ComponentGroup>
   </Fragment>
