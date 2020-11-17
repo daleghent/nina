@@ -25,7 +25,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - **Atik:** 2020.08.3.642
 - **Canon:** 13.13.0.6408
 - **FLI:** 1.104.0.0
-- **Nikon:** 1.3.1.3001
+- **Nikon:** 1.3.2.3000
 - **Omegon:** 39.15325.2019.810
 - **QHY:** 20.8.26.3
 - **ToupTek:** 46.17309.2020.616
