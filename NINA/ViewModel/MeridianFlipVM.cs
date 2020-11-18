@@ -30,6 +30,7 @@ using System.Windows.Input;
 using NINA.ViewModel.AutoFocus;
 using NINA.Model.MyFilterWheel;
 using System.Linq;
+using NINA.ViewModel.ImageHistory;
 
 namespace NINA.ViewModel {
 
@@ -43,12 +44,14 @@ namespace NINA.ViewModel {
                 IFocuserMediator focuserMediator,
                 IImagingMediator imagingMediator,
                 IApplicationStatusMediator applicationStatusMediator,
-                IFilterWheelMediator filterWheelMediator) : base(profileService) {
+                IFilterWheelMediator filterWheelMediator,
+                IImageHistoryVM history) : base(profileService) {
             this.telescopeMediator = telescopeMediator;
             this.guiderMediator = guiderMediator;
             this.imagingMediator = imagingMediator;
             this.applicationStatusMediator = applicationStatusMediator;
             this.filterWheelMediator = filterWheelMediator;
+            this.history = history;
             AutoFocusVMFactory = new AutoFocusVMFactory(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator);
             CancelCommand = new RelayCommand(Cancel);
         }
@@ -71,6 +74,7 @@ namespace NINA.ViewModel {
         private IImagingMediator imagingMediator;
         private IApplicationStatusMediator applicationStatusMediator;
         private IFilterWheelMediator filterWheelMediator;
+        private IImageHistoryVM history;
 
         public ICommand CancelCommand {
             get {
@@ -193,7 +197,7 @@ namespace NINA.ViewModel {
                     }
 
                     var report = await autoFocus.StartAutoFocus(filter, token, progress);
-                    //history.AppendAutoFocusPoint(report);
+                    history.AppendAutoFocusPoint(report);
                 } finally {
                     service.DelayedClose(TimeSpan.FromSeconds(10));
                 }
