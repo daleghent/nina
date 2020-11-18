@@ -102,7 +102,7 @@ namespace NINA.Model.ImageData {
         /// <returns></returns>
         public string FinalizeSave(string file, string pattern) {
             try {
-                if(pattern.Contains(ImagePatternKeys.SensorTemp) && double.IsNaN(this.MetaData.Camera.Temperature) && !string.IsNullOrEmpty(this.Data.RAWType)) {
+                if (pattern.Contains(ImagePatternKeys.SensorTemp) && double.IsNaN(this.MetaData.Camera.Temperature) && !string.IsNullOrEmpty(this.Data.RAWType)) {
                     string sensorTemp = getSensorTempFromExifTool(file);
                     pattern = pattern.Replace(ImagePatternKeys.SensorTemp, sensorTemp);
                 }
@@ -131,41 +131,46 @@ namespace NINA.Model.ImageData {
         }
 
         private string getSensorTempFromExifTool(string file) {
-            string EXIFTOOLLOCATION = @"Utility\ExifTool\exiftool.exe";
-            var sb = new StringBuilder();
+            string tempString = string.Empty;
+            try {
+                string EXIFTOOLLOCATION = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Utility", "ExifTool", "exiftool.exe");
+                var sb = new StringBuilder();
 
-            System.Diagnostics.Process process = new System.Diagnostics.Process();
-            System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
-            startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
-            startInfo.FileName = EXIFTOOLLOCATION;
-            startInfo.UseShellExecute = false;
-            startInfo.RedirectStandardOutput = true;
-            startInfo.RedirectStandardError = true;
-            startInfo.RedirectStandardInput = true;
-            startInfo.CreateNoWindow = true;
-            startInfo.Arguments = $"-CameraTemperature {file}";
-            process.StartInfo = startInfo;
-            process.EnableRaisingEvents = true;
+                System.Diagnostics.Process process = new System.Diagnostics.Process();
+                System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
+                startInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden;
+                startInfo.FileName = EXIFTOOLLOCATION;
+                startInfo.UseShellExecute = false;
+                startInfo.RedirectStandardOutput = true;
+                startInfo.RedirectStandardError = true;
+                startInfo.RedirectStandardInput = true;
+                startInfo.CreateNoWindow = true;
+                startInfo.Arguments = $"-CameraTemperature {file}";
+                process.StartInfo = startInfo;
+                process.EnableRaisingEvents = true;
 
-            process.OutputDataReceived += (object sender, System.Diagnostics.DataReceivedEventArgs e) => {
-                sb.AppendLine(e.Data);
-            };
+                process.OutputDataReceived += (object sender, System.Diagnostics.DataReceivedEventArgs e) => {
+                    sb.AppendLine(e.Data);
+                };
 
-            process.ErrorDataReceived += (object sender, System.Diagnostics.DataReceivedEventArgs e) => {
-                sb.AppendLine(e.Data);
-            };
+                process.ErrorDataReceived += (object sender, System.Diagnostics.DataReceivedEventArgs e) => {
+                    sb.AppendLine(e.Data);
+                };
 
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+                process.Start();
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
 
-            process.WaitForExit();
+                process.WaitForExit();
 
-            Logger.Trace(sb.ToString());
+                Logger.Trace(sb.ToString());
 
-            // remove whitespace and format
-            string tempString = sb.ToString().Replace(" ", "");
-            tempString = tempString.Substring(tempString.IndexOf(':') + 1).ToLower().Trim();
+                // remove whitespace and format
+                tempString = sb.ToString().Replace(" ", "");
+                tempString = tempString.Substring(tempString.IndexOf(':') + 1).ToLower().Trim();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
 
             return tempString;
         }

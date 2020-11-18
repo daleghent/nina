@@ -29,7 +29,7 @@ namespace NINA.Utility.RawConverter {
         public DCRaw() {
         }
 
-        private static string DCRAWLOCATION = @"Utility\DCRaw\dcraw.exe";
+        private static string DCRAWLOCATION = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Utility", "DCRaw", "dcraw.exe");
 
         public async Task<IImageData> Convert(
             MemoryStream s,
