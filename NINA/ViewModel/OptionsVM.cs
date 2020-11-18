@@ -223,7 +223,7 @@ namespace NINA.ViewModel {
 
         private void AddFilter(object obj) {
             var pos = ActiveProfile.FilterWheelSettings.FilterWheelFilters.Count;
-            var filter = new FilterInfo(Locale.Loc.Instance["LblFilter"] + (pos + 1), 0, (short)pos, 0, null, -1, -1);
+            var filter = new FilterInfo(Locale.Loc.Instance["LblFilter"] + (pos + 1), 0, (short)pos, -1, new Model.MyCamera.BinningMode(1, 1), -1, -1);
             ActiveProfile.FilterWheelSettings.FilterWheelFilters.Add(filter);
             SelectedFilter = filter;
         }
