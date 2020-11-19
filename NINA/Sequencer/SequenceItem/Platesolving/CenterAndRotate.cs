@@ -68,10 +68,13 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 var orientation = 0.0f;
                 float rotationDistance = float.MaxValue;
 
-                while (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
-                    var centerResult = await base.DoCenter(progress, token);
+                await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
-                    orientation = (float)centerResult.Orientation;
+                /* Loop until the rotation is within tolerances*/
+                while (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
+                    var solveResult = await Solve(progress, token);
+
+                    orientation = (float)solveResult.Orientation;
 
                     rotationDistance = (float)((float)Rotation - orientation);
 
@@ -91,9 +94,40 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                         await rotatorMediator.MoveRelative(rotationDistance);
                     }
                 };
+
+                /* Once everything is in place do a centering of the object */
+                await base.DoCenter(progress, token);
             } finally {
                 service.DelayedClose(TimeSpan.FromSeconds(10));
             }
+        }
+
+        private async Task<PlateSolveResult> Solve(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
+
+            var solver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
+            var parameter = new CaptureSolverParameter() {
+                Attempts = profileService.ActiveProfile.PlateSolveSettings.NumberOfAttempts,
+                Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,
+                Coordinates = Coordinates?.Coordinates ?? telescopeMediator.GetCurrentPosition(),
+                DownSampleFactor = profileService.ActiveProfile.PlateSolveSettings.DownSampleFactor,
+                FocalLength = profileService.ActiveProfile.TelescopeSettings.FocalLength,
+                MaxObjects = profileService.ActiveProfile.PlateSolveSettings.MaxObjects,
+                PixelSize = profileService.ActiveProfile.CameraSettings.PixelSize,
+                ReattemptDelay = TimeSpan.FromMinutes(profileService.ActiveProfile.PlateSolveSettings.ReattemptDelay),
+                Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
+                SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius
+            };
+
+            var seq = new CaptureSequence(
+                profileService.ActiveProfile.PlateSolveSettings.ExposureTime,
+                CaptureSequence.ImageTypes.SNAPSHOT,
+                profileService.ActiveProfile.PlateSolveSettings.Filter,
+                new Model.MyCamera.BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
+                1
+            );
+            return await solver.Solve(seq, parameter, plateSolveStatusVM.Progress, progress, token);
         }
 
         public override void AfterParentChanged() {
