@@ -36,6 +36,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
     internal class SlewScopeToAltAzTest {
         public Mock<IProfileService> profileServiceMock;
         public Mock<ITelescopeMediator> telescopeMediatorMock;
+        public Mock<IGuiderMediator> guiderMediatorMock;
 
         [SetUp]
         public void Setup() {
@@ -43,13 +44,14 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Latitude).Returns(10);
             profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Longitude).Returns(20);
             telescopeMediatorMock = new Mock<ITelescopeMediator>();
+            guiderMediatorMock = new Mock<IGuiderMediator>();
         }
 
         [Test]
         public void Clone_ItemClonedProperly() {
             profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Latitude).Returns(1);
             profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Longitude).Returns(5);
-            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object);
             sut.Name = "SomeName";
             sut.Description = "SomeDescription";
             sut.Icon = new System.Windows.Media.GeometryGroup();
@@ -69,7 +71,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
         public void Validate_NoIssues() {
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = true });
 
-            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object);
             var valid = sut.Validate();
 
             valid.Should().BeTrue();
@@ -81,11 +83,10 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
         public void Validate_NotConnected_OneIssue() {
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = false });
 
-            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object);
             var valid = sut.Validate();
 
             valid.Should().BeFalse();
-
             sut.Issues.Should().HaveCount(1);
         }
 
@@ -98,10 +99,11 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, referenceDate);
             var topo = coordinates.Transform(Angle.ByDegree(latitude), Angle.ByDegree(longitude));
 
-            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object);
             sut.Coordinates.Coordinates = topo;
             await sut.Execute(default, default);
 
+            guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Once);
             telescopeMediatorMock
                 .Verify(
                 x => x.SlewToCoordinatesAsync(
@@ -118,16 +120,16 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
         public Task Execute_HasIssues_LogicNotCalled() {
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = false });
 
-            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object);
             Func<Task> act = () => { return sut.Execute(default, default); };
-
+            guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Never);
             telescopeMediatorMock.Verify(x => x.SlewToCoordinatesAsync(It.IsAny<TopocentricCoordinates>(), It.IsAny<CancellationToken>()), Times.Never);
             return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
         }
 
         [Test]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
-            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object);
 
             var duration = sut.GetEstimatedDuration();
 
@@ -152,9 +154,8 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
                 }
             );
 
-            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object);
+            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object);
             sut.AttachNewParent(parentMock.Object);
-
             sut.Coordinates.Should().NotBeNull();
         }
     }
