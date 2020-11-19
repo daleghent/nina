@@ -101,9 +101,11 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Telescope panel in imaging tab now shows an indicator when the telescope is not unparked
 - Telescope Park action will now wait for the scope to reach park position
 - Profile chooser on startup can now be re-activated in options again once it is disabled
+- Guiding gets stopped before any telescope-moving sequencer command gets executed 
 
 ### Guiders
 - MetaGuide is now supported
+- MGEN2 now supports unattended guide star selection and calibration, and automatic meridian flips
 
 ### Auto-focus system
 - Auto-focus can now have different settings for gain, offset and binning per filter

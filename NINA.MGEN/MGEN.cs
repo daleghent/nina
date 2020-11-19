@@ -254,6 +254,12 @@ namespace NINA.MGEN {
             return result.AutoGuiderActive;
         }
 
+        public async Task<bool> IsActivelyGuiding(CancellationToken ct = default) {
+            var command = new QueryCommand(QueryCommand.QueryCommandFlag.All);
+            var result = await this.Send(command, ct);
+            return result.AutoGuiderActive && ((result.FrameInfo.FrameIndex & 0x40) != 0);
+        }
+
         public async Task<bool> StartGuiding(CancellationToken ct = default) {
             var command = new StartGuidingCommand();
             var result = await this.Send(command, ct);

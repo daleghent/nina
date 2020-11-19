@@ -40,14 +40,16 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
     public class SlewScopeToAltAz : SequenceItem, IValidatable {
 
         [ImportingConstructor]
-        public SlewScopeToAltAz(IProfileService profileService, ITelescopeMediator telescopeMediator) {
+        public SlewScopeToAltAz(IProfileService profileService, ITelescopeMediator telescopeMediator, IGuiderMediator guiderMediator) {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
+            this.guiderMediator = guiderMediator;
             Coordinates = new InputTopocentricCoordinates(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
         }
 
         private IProfileService profileService;
         private ITelescopeMediator telescopeMediator;
+        private IGuiderMediator guiderMediator;
 
         [JsonProperty]
         public InputTopocentricCoordinates Coordinates { get; set; }
@@ -64,6 +66,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Validate()) {
+                guiderMediator.StopGuiding(token);
                 return telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
@@ -75,7 +78,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
         }
 
         public override object Clone() {
-            return new SlewScopeToAltAz(profileService, telescopeMediator) {
+            return new SlewScopeToAltAz(profileService, telescopeMediator, guiderMediator) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,

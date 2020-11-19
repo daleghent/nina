@@ -37,11 +37,13 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
     public class ParkScope : SequenceItem, IValidatable {
 
         [ImportingConstructor]
-        public ParkScope(ITelescopeMediator telescopeMediator) {
+        public ParkScope(ITelescopeMediator telescopeMediator, IGuiderMediator guiderMediator) {
             this.telescopeMediator = telescopeMediator;
+            this.guiderMediator = guiderMediator;
         }
 
         private ITelescopeMediator telescopeMediator;
+        private IGuiderMediator guiderMediator;
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -54,6 +56,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Validate()) {
+                guiderMediator.StopGuiding(token);
                 return telescopeMediator.ParkTelescope(progress, token);
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
@@ -61,7 +64,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
         }
 
         public override object Clone() {
-            return new ParkScope(telescopeMediator) {
+            return new ParkScope(telescopeMediator, guiderMediator) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,

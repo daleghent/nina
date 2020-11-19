@@ -66,7 +66,7 @@ namespace NINA.Model.MyGuider {
                 (object o) => Connected == true);
         }
 
-        private bool needsCalibration = true;
+        private bool needsCalibration = false;
 
         private bool _connected = false;
 
@@ -123,7 +123,7 @@ namespace NINA.Model.MyGuider {
 
         public async Task<bool> AutoSelectGuideStar() {
             if (await mgen.IsGuidingActive()) {
-                Logger.Debug("MGEN - Stopping Guiding");
+                Logger.Debug("MGEN - Stopping guiding to select new guide star");
                 await mgen.StopGuiding();
             }
             var imagingParameter = await mgen.GetImagingParameter();
@@ -373,12 +373,12 @@ namespace NINA.Model.MyGuider {
 
         public async Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
             try {
-                if (!await mgen.IsGuidingActive(ct)) {
-                    await StartCalibrationIfRequired(forceCalibration, ct);
-
-                    Logger.Debug("MGEN - Starting Guiding");
-                    await mgen.StartGuiding(ct);
+                if (!await mgen.IsActivelyGuiding(ct)) {
+                    await AutoSelectGuideStar();
                 }
+                await StartCalibrationIfRequired(forceCalibration, ct);
+                Logger.Debug("MGEN - Starting Guiding");
+                await mgen.StartGuiding(ct);               
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
@@ -399,11 +399,13 @@ namespace NINA.Model.MyGuider {
         private async Task<bool> StartCalibrationIfRequired(bool forceCalibration, CancellationToken ct) {
             using (ct.Register(async () => await mgen.CancelCalibration())) {
                 var calibrationStatus = await mgen.QueryCalibration(ct);
-                if (needsCalibration || !calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) || calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error)) {
+                if (forceCalibration || needsCalibration || !calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) || calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error)) {
+                    if (await mgen.IsGuidingActive()) {
+                        Logger.Debug("MGEN - Stopping guiding to start new calibration"); 
+                        await mgen.StopGuiding();
+                    }
                     Logger.Debug("MGEN - Starting Calibraiton");
-                    _ = await AutoSelectGuideStar();
                     _ = await mgen.StartCalibration(ct);
-
                     do {
                         await Task.Delay(TimeSpan.FromSeconds(1));
                         calibrationStatus = await mgen.QueryCalibration(ct);

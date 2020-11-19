@@ -39,12 +39,14 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
     public class SlewScopeToRaDec : SequenceItem, IValidatable {
 
         [ImportingConstructor]
-        public SlewScopeToRaDec(ITelescopeMediator telescopeMediator) {
+        public SlewScopeToRaDec(ITelescopeMediator telescopeMediator, IGuiderMediator guiderMediator) {
             this.telescopeMediator = telescopeMediator;
+            this.guiderMediator = guiderMediator;
             Coordinates = new InputCoordinates();
         }
 
         private ITelescopeMediator telescopeMediator;
+        private IGuiderMediator guiderMediator;
 
         private bool inherited;
 
@@ -72,6 +74,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Validate()) {
+                guiderMediator.StopGuiding(token);
                 return telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
@@ -103,7 +106,7 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
         }
 
         public override object Clone() {
-            return new SlewScopeToRaDec(telescopeMediator) {
+            return new SlewScopeToRaDec(telescopeMediator, guiderMediator) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,
