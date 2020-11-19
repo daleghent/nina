@@ -20,7 +20,7 @@ using System.Text;
 
 namespace NINA.Utility {
 
-    internal static class Logger {
+    public static class Logger {
 
         static Logger() {
             LOGDATE = DateTime.Now.ToString("yyyyMMdd-HHmmss");

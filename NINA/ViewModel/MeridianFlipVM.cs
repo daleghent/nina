@@ -34,7 +34,7 @@ using NINA.ViewModel.ImageHistory;
 
 namespace NINA.ViewModel {
 
-    internal class MeridianFlipVM : BaseVM {
+    public class MeridianFlipVM : BaseVM {
 
         public MeridianFlipVM(
                 IProfileService profileService,
