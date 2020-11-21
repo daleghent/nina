@@ -88,7 +88,7 @@ namespace NINA.Sequencer.SequenceItem.FilterWheel {
 
         public bool Validate() {
             var i = new List<string>();
-            if (!filterWheelMediator.GetInfo().Connected) {
+            if (filter != null && !filterWheelMediator.GetInfo().Connected) {
                 i.Add(Locale.Loc.Instance["LblFilterWheelNotConnected"]);
             }
             Issues = i;
