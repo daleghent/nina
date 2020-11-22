@@ -25,6 +25,10 @@
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Utility.Annotation_Mini">
+        <Grid Visibility="Collapsed" />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:MessageBox}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
