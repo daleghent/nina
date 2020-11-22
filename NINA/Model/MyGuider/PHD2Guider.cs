@@ -182,7 +182,6 @@ namespace NINA.Model.MyGuider {
                 var resp = await SendMessage(PHD2EventId.GET_PIXEL_SCALE, PHD2Methods.GET_PIXEL_SCALE);
                 if (resp.result != null)
                     PixelScale = double.Parse(resp.result.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
-
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -509,9 +508,20 @@ namespace NINA.Model.MyGuider {
                     var process = Process.Start(profileService.ActiveProfile.GuiderSettings.PHD2Path);
                     process?.WaitForInputIdle();
 
-                    await Task.Delay(1500);
+                    await Task.Delay(2000);
 
-                    return true;
+                    //Try to read the appstate and retry for 5 times. On slow systems the startup of phd can take a couple of seconds.
+                    string appState = string.Empty;
+                    int retries = 5;
+                    do {
+                        try {
+                            retries--;
+                            appState = await GetAppState(2000);
+                        } catch (Exception) {
+                        }
+                    } while (string.IsNullOrEmpty(appState) && retries > 0);
+
+                    return !string.IsNullOrEmpty(appState);
                 }
             } catch (FileNotFoundException ex) {
                 Logger.Error(Locale.Loc.Instance["LblPhd2PathNotFound"]);
