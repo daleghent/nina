@@ -46,14 +46,16 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         protected ITelescopeMediator telescopeMediator;
         protected IImagingMediator imagingMediator;
         protected IFilterWheelMediator filterWheelMediator;
+        protected IGuiderMediator guiderMediator;
         protected PlateSolvingStatusVM plateSolveStatusVM = new PlateSolvingStatusVM();
 
         [ImportingConstructor]
-        public Center(IProfileService profileService, ITelescopeMediator telescopeMediator, IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator) {
+        public Center(IProfileService profileService, ITelescopeMediator telescopeMediator, IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator) {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
             this.imagingMediator = imagingMediator;
             this.filterWheelMediator = filterWheelMediator;
+            this.guiderMediator = guiderMediator;
             Coordinates = new InputCoordinates();
         }
 
@@ -83,6 +85,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         protected virtual async Task<PlateSolveResult> DoCenter(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            await guiderMediator.StopGuiding(token);
             await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
             var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
@@ -139,7 +142,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         public override object Clone() {
-            return new Center(profileService, telescopeMediator, imagingMediator, filterWheelMediator) {
+            return new Center(profileService, telescopeMediator, imagingMediator, filterWheelMediator, guiderMediator) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,

@@ -70,10 +70,23 @@ namespace NINATest.Sequencer.SequenceItem.FilterWheel {
         }
 
         [Test]
+        public void Validate_NotConnected_NoFilterSelected_NoIssue() {
+            fwMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { Connected = false });
+
+            var sut = new SwitchFilter(profileServiceMock.Object, fwMediatorMock.Object);
+            var valid = sut.Validate();
+
+            valid.Should().BeTrue();
+
+            sut.Issues.Should().HaveCount(0);
+        }
+
+        [Test]
         public void Validate_NotConnected_OneIssue() {
             fwMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { Connected = false });
 
             var sut = new SwitchFilter(profileServiceMock.Object, fwMediatorMock.Object);
+            sut.Filter = new FilterInfo();
             var valid = sut.Validate();
 
             valid.Should().BeFalse();

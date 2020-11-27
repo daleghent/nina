@@ -46,7 +46,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         private IRotatorMediator rotatorMediator;
 
         [ImportingConstructor]
-        public CenterAndRotate(IProfileService profileService, ITelescopeMediator telescopeMediator, IImagingMediator imagingMediator, IRotatorMediator rotatorMediator, IFilterWheelMediator filterWheelMediator) : base(profileService, telescopeMediator, imagingMediator, filterWheelMediator) {
+        public CenterAndRotate(IProfileService profileService, ITelescopeMediator telescopeMediator, IImagingMediator imagingMediator, IRotatorMediator rotatorMediator, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator) : base(profileService, telescopeMediator, imagingMediator, filterWheelMediator, guiderMediator) {
             this.rotatorMediator = rotatorMediator;
         }
 
@@ -68,6 +68,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 var orientation = 0.0f;
                 float rotationDistance = float.MaxValue;
 
+                await guiderMediator.StopGuiding(token);
                 await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
                 /* Loop until the rotation is within tolerances*/
@@ -143,7 +144,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         public override object Clone() {
-            return new CenterAndRotate(profileService, telescopeMediator, imagingMediator, rotatorMediator, filterWheelMediator) {
+            return new CenterAndRotate(profileService, telescopeMediator, imagingMediator, rotatorMediator, filterWheelMediator, guiderMediator) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,
