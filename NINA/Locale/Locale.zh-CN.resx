@@ -4189,7 +4189,7 @@
     <value>翻转时间</value>
   </data>
   <data name="LblAmount" xml:space="preserve">
-    <value>次数</value>
+    <value>Amount</value>
   </data>
   <data name="LblDelta" xml:space="preserve">
     <value>Delta</value>
@@ -4426,7 +4426,7 @@
     <value>值</value>
   </data>
   <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Name" xml:space="preserve">
-    <value>设置切换值</value>
+    <value>Set Switch Value</value>
   </data>
   <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Description" xml:space="preserve">
     <value>从开关集线器设置给定的值</value>
@@ -4471,7 +4471,7 @@
     <value>添加触发器</value>
   </data>
   <data name="LblInstructions" xml:space="preserve">
-    <value>说明</value>
+    <value>Instructions</value>
   </data>
   <data name="LblTemplates" xml:space="preserve">
     <value>模板</value>
@@ -5017,5 +5017,8 @@ There the sequence can be planned from scratch using fine granular instructions,
   </data>
   <data name="LblProfileChooserOnStartup" xml:space="preserve">
     <value>Profile Chooser on Startup</value>
+  </data>
+  <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
+    <value>Target Closure Instructions</value>
   </data>
 </root>
