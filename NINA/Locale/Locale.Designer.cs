@@ -5798,7 +5798,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right when facing the celestial pole..
+        ///   Looks up a localized string similar to In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis..
         /// </summary>
         internal static string LblDomeLateralAxisLengthTooltip {
             get {
@@ -5888,7 +5888,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the right when facing the celestial pole..
+        ///   Looks up a localized string similar to Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east..
         /// </summary>
         internal static string LblDomeScopeEWTooltip {
             get {
@@ -5906,7 +5906,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is towards the celestial pole..
+        ///   Looks up a localized string similar to Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is to the north..
         /// </summary>
         internal static string LblDomeScopeNSTooltip {
             get {

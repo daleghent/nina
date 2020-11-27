@@ -65,11 +65,22 @@ namespace NINATest.Dome {
         public void Meridian_AltAz_Test() {
             var sut = Initialize(gemAxisLength: 0);
             // An AltAz (0-length GEM axis) pointed at the meridian should result in a dome perfectly centered at 0, regardless of the side of pier
-            var coordinates = GetCoordinatesFromAltAz(siteLatitude + 10.0, 0);
+            var coordinates = GetCoordinatesFromAltAz(Math.Abs(siteLatitude) + 10.0, 0);
             var eastResult = CalculateAzimuth(sut, coordinates, PierSide.pierEast);
             var westResult = CalculateAzimuth(sut, coordinates, PierSide.pierWest);
             Assert.IsTrue(eastResult.Equals(Angle.ByDegree(0.0), DEGREES_EPSILON));
             Assert.IsTrue(westResult.Equals(Angle.ByDegree(0.0), DEGREES_EPSILON));
+        }
+
+        [Test]
+        public void Meridian_AltAz_SouthernHemisphere_Test() {
+            var sut = Initialize(gemAxisLength: 0, siteLatitude: -41.3);
+            // An AltAz (0-length GEM axis) pointed at the meridian should result in a dome perfectly centered at 0, regardless of the side of pier
+            var coordinates = GetCoordinatesFromAltAz(Math.Abs(siteLatitude) + 10.0, 180.0);
+            var eastResult = CalculateAzimuth(sut, coordinates, PierSide.pierEast);
+            var westResult = CalculateAzimuth(sut, coordinates, PierSide.pierWest);
+            Assert.IsTrue(eastResult.Equals(Angle.ByDegree(180.0), DEGREES_EPSILON));
+            Assert.IsTrue(westResult.Equals(Angle.ByDegree(180.0), DEGREES_EPSILON));
         }
 
         [Test]
@@ -79,10 +90,25 @@ namespace NINATest.Dome {
         public void Meridian_EQ_Test(double length) {
             var sut = Initialize(gemAxisLength: length);
             // When pointed at the meridian, a meridian flip when the EQ mount is perfectly centered should have the same absolute distance from 0
-            var coordinates = GetCoordinatesFromAltAz(siteLatitude + 10.0, 0);
+            var coordinates = GetCoordinatesFromAltAz(Math.Abs(siteLatitude) + 10.0, 0);
             var eastResult = CalculateAzimuth(sut, coordinates, PierSide.pierEast);
-            var westResult = -1.0 * CalculateAzimuth(sut, coordinates, PierSide.pierWest);
-            Assert.IsTrue(eastResult.Equals(westResult, DEGREES_EPSILON));
+            var westResult = CalculateAzimuth(sut, coordinates, PierSide.pierWest);
+            Assert.IsTrue(eastResult.Equals(-1.0 * westResult, DEGREES_EPSILON));
+            Assert.IsTrue(eastResult.Degree >= 0 && eastResult.Degree <= 90);
+        }
+
+        [Test]
+        [TestCase(200)]
+        [TestCase(400)]
+        [TestCase(600)]
+        public void Meridian_EQ_SouthernHemisphere_Test(double length) {
+            var sut = Initialize(gemAxisLength: length);
+            // When pointed at the meridian, a meridian flip when the EQ mount is perfectly centered should have the same absolute distance from 0
+            var coordinates = GetCoordinatesFromAltAz(Math.Abs(siteLatitude) + 10.0, 180);
+            var eastResult = CalculateAzimuth(sut, coordinates, PierSide.pierEast);
+            var westResult = CalculateAzimuth(sut, coordinates, PierSide.pierWest);
+            Assert.IsTrue(eastResult.Equals(-1.0 * westResult, DEGREES_EPSILON));
+            Assert.IsTrue(eastResult.Degree >= 90 && eastResult.Degree <= 180);
         }
 
         [Test]
@@ -96,6 +122,24 @@ namespace NINATest.Dome {
         public void CelestialEquator_AltAz_Test(double azimuth) {
             // On the celestial equator, the dome aziumth should be the same as the Alt-Az mount azimuth
             var sut = Initialize(gemAxisLength: 0);
+            var coordinates = GetCoordinatesFromAltAz(0, azimuth);
+            var eastResult = CalculateAzimuth(sut, coordinates, PierSide.pierEast);
+            var westResult = CalculateAzimuth(sut, coordinates, PierSide.pierWest);
+            Assert.IsTrue(eastResult.Equals(Angle.ByDegree(azimuth), DEGREES_EPSILON));
+            Assert.IsTrue(westResult.Equals(Angle.ByDegree(azimuth), DEGREES_EPSILON));
+        }
+
+        [Test]
+        [TestCase(15)]
+        [TestCase(-15)]
+        [TestCase(35)]
+        [TestCase(-40)]
+        [TestCase(80)]
+        [TestCase(90)]
+        [TestCase(-90)]
+        public void CelestialEquator_AltAz_SouthernHemisphere_Test(double azimuth) {
+            // On the celestial equator, the dome aziumth should be the same as the Alt-Az mount azimuth
+            var sut = Initialize(gemAxisLength: 0, siteLatitude: -41.3);
             var coordinates = GetCoordinatesFromAltAz(0, azimuth);
             var eastResult = CalculateAzimuth(sut, coordinates, PierSide.pierEast);
             var westResult = CalculateAzimuth(sut, coordinates, PierSide.pierWest);
@@ -124,7 +168,7 @@ namespace NINATest.Dome {
             var sut = Initialize(lateralAxisLength: lateralAxisLength, domeRadius: domeRadius);
 
             // When pointed where the horizon and meridian intersect, we expect the dome azimuth to be +/- 60 degrees, since the lateral offset is half of the dome radius
-            var poleCoordinates = GetCoordinatesFromAltAz(this.siteLatitude, 0);
+            var poleCoordinates = GetCoordinatesFromAltAz(Math.Abs(siteLatitude), 0);
 
             var distanceFromScopeOrigin = Math.Sqrt(domeRadius * domeRadius - lateralAxisLength * lateralAxisLength);
             var northProjectionDistanceToDomeIntersection = distanceFromScopeOrigin * Math.Cos(Angle.ByDegree(this.siteLatitude).Radians);
@@ -132,6 +176,23 @@ namespace NINATest.Dome {
 
             Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierEast).Equals(Angle.ByRadians(expectedAzimuth), DEGREES_EPSILON));
             Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierWest).Equals(Angle.ByRadians(-expectedAzimuth), DEGREES_EPSILON));
+        }
+
+        [Test]
+        public void LateralOffset_CelestialPole_SouthernHemisphere_Test() {
+            var domeRadius = 1000;
+            var lateralAxisLength = 500;
+            var sut = Initialize(lateralAxisLength: lateralAxisLength, domeRadius: domeRadius, siteLatitude: -41.3);
+
+            // When pointed where the horizon and meridian intersect, we expect the dome azimuth to be +/- 60 degrees, since the lateral offset is half of the dome radius
+            var poleCoordinates = GetCoordinatesFromAltAz(Math.Abs(this.siteLatitude), 180);
+
+            var distanceFromScopeOrigin = Math.Sqrt(domeRadius * domeRadius - lateralAxisLength * lateralAxisLength);
+            var southProjectionDistanceToDomeIntersection = distanceFromScopeOrigin * Math.Cos(Angle.ByDegree(this.siteLatitude).Radians);
+            var expectedAzimuth = Math.Atan(lateralAxisLength / southProjectionDistanceToDomeIntersection);
+
+            Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierEast).Equals(Angle.ByRadians(Math.PI + expectedAzimuth), DEGREES_EPSILON));
+            Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierWest).Equals(Angle.ByRadians(Math.PI - expectedAzimuth), DEGREES_EPSILON));
         }
 
         [Test]
@@ -143,7 +204,7 @@ namespace NINATest.Dome {
             var sut = Initialize(gemAxisLength: length, mountOffsetX: 500, domeRadius: 1000);
 
             // When pointed at the celestial pole, an AltAz should still have an azimuth of 0 as long as the E/W mount offset is 0, regardless of gem length
-            var poleCoordinates = GetCoordinatesFromAltAz(this.siteLatitude, 0);
+            var poleCoordinates = GetCoordinatesFromAltAz(Math.Abs(this.siteLatitude), 0);
             Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierEast).Equals(Angle.ByDegree(0.0), DEGREES_EPSILON));
             Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierWest).Equals(Angle.ByDegree(0.0), DEGREES_EPSILON));
         }

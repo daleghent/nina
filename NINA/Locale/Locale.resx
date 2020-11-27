@@ -3880,7 +3880,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Lateral Axis Length (mm)</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
-    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right when facing the celestial pole.</value>
+    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
     <value>Dome Radius (mm)</value>
@@ -3892,7 +3892,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Scope Position E/W (mm)</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the right when facing the celestial pole.</value>
+    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
     <value>Scope Position N/S (mm)</value>
@@ -3901,7 +3901,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Cancel Sequence</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is towards the celestial pole.</value>
+    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is to the north.</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
     <value>Pause Sequence</value>
