@@ -500,6 +500,9 @@ namespace NINA.Sequencer.Container {
             await startup.Execute(progress, token);
 
             await base.Execute(progress, token);
+
+            var closure = CreateClosureContainer();
+            await closure.Execute(progress, token);
         }
 
         private SequentialContainer CreateStartupContainer() {
@@ -539,6 +542,14 @@ namespace NINA.Sequencer.Container {
             }
 
             return startup;
+        }
+
+        private SequentialContainer CreateClosureContainer() {
+            var closure = factory.GetContainer<SequentialContainer>();
+
+            closure.Add(factory.GetItem<StopGuiding>());
+
+            return closure;
         }
 
         public override object Clone() {
@@ -622,6 +633,13 @@ namespace NINA.Sequencer.Container {
             }
             imaging.Name = Locale.Loc.Instance["Lbl_OldSequencer_TargetImaging"];
             c.Add(imaging);
+
+            var closure = CreateClosureContainer();
+            closure.Name = Locale.Loc.Instance["Lbl_OldSequencer_TargetClosure"];
+            if (closure.Items.Count > 0) {
+                c.Add(closure);
+            }
+
             return c;
         }
 

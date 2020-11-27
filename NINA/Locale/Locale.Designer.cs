@@ -198,6 +198,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Closure Instructions.
+        /// </summary>
+        internal static string Lbl_OldSequencer_TargetClosure {
+            get {
+                return ResourceManager.GetString("Lbl_OldSequencer_TargetClosure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target Imaging Instructions.
         /// </summary>
         internal static string Lbl_OldSequencer_TargetImaging {
