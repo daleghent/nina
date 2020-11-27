@@ -24,6 +24,7 @@ namespace NINATest.Dome {
         private Mock<IApplicationStatusMediator> mockApplicationStatusMediator;
         private Mock<IDomeMediator> mockDomeMediator;
         private Mock<ITelescopeMediator> mockTelescopeMediator;
+        private Mock<ISafetyMonitorMediator> mockSafetyMonitorMediator;
         private Mock<IDomeFollower> mockDomeFollower;
         private Mock<IDeviceUpdateTimerFactory> mockDeviceUpdateTimerFactory;
         private Mock<IDeviceUpdateTimer> mockDeviceUpdateTimer;
@@ -71,6 +72,7 @@ namespace NINATest.Dome {
             mockApplicationStatusMediator = new Mock<IApplicationStatusMediator>();
             mockDomeMediator = new Mock<IDomeMediator>();
             mockTelescopeMediator = new Mock<ITelescopeMediator>();
+            mockSafetyMonitorMediator = new Mock<ISafetyMonitorMediator>();
             mockDomeFollower = new Mock<IDomeFollower>();
             mockDomeFollower.Setup(x => x.GetSynchronizedPosition(It.IsAny<TelescopeInfo>())).Returns(() => domeTargetAzimuth);
             mockDeviceUpdateTimer = new Mock<IDeviceUpdateTimer>();
@@ -87,7 +89,7 @@ namespace NINATest.Dome {
 
         private async Task<DomeVM> CreateSUT() {
             var domeVM = new DomeVM(mockProfileService.Object, mockDomeMediator.Object, mockApplicationStatusMediator.Object, mockTelescopeMediator.Object,
-                mockDomeDeviceChooserVM.Object, mockDomeFollower.Object, mockResourceDictionary.Object, mockDeviceUpdateTimerFactory.Object);
+                mockDomeDeviceChooserVM.Object, mockDomeFollower.Object, mockSafetyMonitorMediator.Object, mockResourceDictionary.Object, mockDeviceUpdateTimerFactory.Object);
 
             mockDome = new Mock<IDome>();
             mockDome.SetupGet(x => x.Id).Returns(() => domeId);

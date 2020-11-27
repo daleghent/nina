@@ -207,5 +207,20 @@ namespace NINA.Profile {
                 }
             }
         }
+
+        private bool closeOnUnsafe = false;
+
+        [DataMember]
+        public bool CloseOnUnsafe {
+            get {
+                return closeOnUnsafe;
+            }
+            set {
+                if (closeOnUnsafe != value) {
+                    closeOnUnsafe = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
     }
 }

@@ -4047,6 +4047,18 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
     <value>If FindHome is supported by the driver, using it before parking can ensure it goes to a precise location. This can be helpful if the shutter motor battery charges while parked.</value>
   </data>
+  <data name="LblDomeCloseOnUnsafe" xml:space="preserve">
+    <value>Close on unsafe conditions</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafeWarning" xml:space="preserve">
+    <value>Closing dome shutter due to unsafe conditions</value>
+  </data>
+  <data name="LblDomeUnsafeWarning" xml:space="preserve">
+    <value>Cannot open dome shutter due to unsafe conditions</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafeTooltip" xml:space="preserve">
+    <value>Immediately closes the dome shutter if a SafetyMonitor device reports unsafe conditions</value>
+  </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
     <value>AF Sequence Timeout</value>
   </data>

@@ -5654,6 +5654,33 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close on unsafe conditions.
+        /// </summary>
+        internal static string LblDomeCloseOnUnsafe {
+            get {
+                return ResourceManager.GetString("LblDomeCloseOnUnsafe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Immediately closes the dome shutter if a SafetyMonitor device reports unsafe conditions.
+        /// </summary>
+        internal static string LblDomeCloseOnUnsafeTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeCloseOnUnsafeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closing dome shutter due to unsafe conditions.
+        /// </summary>
+        internal static string LblDomeCloseOnUnsafeWarning {
+            get {
+                return ResourceManager.GetString("LblDomeCloseOnUnsafeWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dome connected.
         /// </summary>
         internal static string LblDomeConnected {
@@ -6082,6 +6109,15 @@ namespace NINA.Locale {
         internal static string LblDomeSyncTimeoutTooltip {
             get {
                 return ResourceManager.GetString("LblDomeSyncTimeoutTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot open dome shutter due to unsafe conditions.
+        /// </summary>
+        internal static string LblDomeUnsafeWarning {
+            get {
+                return ResourceManager.GetString("LblDomeUnsafeWarning", resourceCulture);
             }
         }
         
