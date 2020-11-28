@@ -92,7 +92,13 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore</li>
 <li>Instead the sequence panel will show a minimized representation of the set up sequence, where you can see the current running instruction set with basic details</li>
 </ul>
-<h2 id="dome-support">Dome Support</h2>
+<h2 id="flat-wizard">Flat Wizard</h2>
+<ul>
+<li>An option to have a fixed exposure time but dynamic flat panel brightness has been added.</li>
+<li>Sky Flats can now be properly taken by using the flat wizard option for sky flats. There the exposure time will be adjusted based on the time as the sun rises or sets further during flat capture.</li>
+</ul>
+<h2 id="new-hardware-support">New hardware support</h2>
+<h2 id="ascom-dome">ASCOM Dome</h2>
 <ul>
 <li>ASCOM Domes are supported throughout the application
 <ul>
@@ -107,7 +113,6 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>Open/Close shutter</li>
 <li>Park dome</li>
 </ul>
-<h2 id="new-hardware-support">New hardware support</h2>
 <h3 id="ascom-covercalibrator">ASCOM CoverCalibrator</h3>
 <ul>
 <li>With the ASCOM Platform Version 6.5 a new type of interface was added called &quot;CoverCalibrator&quot;.</li>
@@ -117,6 +122,7 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <ul>
 <li>An ASCOM device to monitor safe conditions for an imaging run</li>
 <li>These devices can be used inside the sequencer to interrupt an imaging run, when they report unsafe conditions</li>
+<li>Option to automatically close the dome shutter immediately when the safety monitor reports unsafe conditions</li>
 </ul>
 <h4 id="native-support-for-atik-efw23-and-internal-filterwheels">Native support for Atik EFW2/3 and internal Filterwheels</h4>
 <ul>
@@ -144,10 +150,12 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>Telescope panel in imaging tab now shows an indicator when the telescope is not unparked</li>
 <li>Telescope Park action will now wait for the scope to reach park position</li>
 <li>Profile chooser on startup can now be re-activated in options again once it is disabled</li>
+<li>Guiding gets stopped before any telescope-moving sequencer command gets executed</li>
 </ul>
 <h3 id="guiders">Guiders</h3>
 <ul>
 <li>MetaGuide is now supported</li>
+<li>MGEN2 now supports unattended guide star selection and calibration, and automatic meridian flips</li>
 </ul>
 <h3 id="auto-focus-system">Auto-focus system</h3>
 <ul>
@@ -624,7 +632,7 @@ Thank you for your support!</p>
 <li>Controls to change order of targets in a multi-target sequence</li>
 <li>Ability to save and load 'target sets' (a set of targets in a certain sequence)</li>
 </ul>
-<h3 id="flat-wizard">Flat Wizard</h3>
+<h3 id="flat-wizard-1">Flat Wizard</h3>
 <ul>
 <li>Progress bars have been added for remaining filters and exposures</li>
 <li>A new Slew to Zenith button has been added for easier flats. This includes an option for east or west pier side, depending on which side of pier the mount should approach zenith from.</li>
@@ -758,7 +766,7 @@ Thank you for your support!</p>
 <ul>
 <li>Add SkyAtlas image source which allows for framing based on offline SkyAtlas data</li>
 </ul>
-<h3 id="flat-wizard-1">Flat Wizard</h3>
+<h3 id="flat-wizard-2">Flat Wizard</h3>
 <ul>
 <li>Supports you taking flats</li>
 </ul>
@@ -930,5 +938,6 @@ Thank you for your support!</p>
 <li>Integrated with Windows JumpList feature to launch instance with specific profile loaded</li>
 <li>Enhanced Altitude Check to permit imaging of targets that are below the configured altitude when they are rising in the sky and display a visual cue to distinguish rising versus setting targets</li>
 </ul>
+
 </body>
 </html>

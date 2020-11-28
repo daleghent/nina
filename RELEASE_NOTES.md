@@ -56,7 +56,13 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore
 - Instead the sequence panel will show a minimized representation of the set up sequence, where you can see the current running instruction set with basic details
 
-## Dome Support
+## Flat Wizard
+- An option to have a fixed exposure time but dynamic flat panel brightness has been added.
+- Sky Flats can now be properly taken by using the flat wizard option for sky flats. There the exposure time will be adjusted based on the time as the sun rises or sets further during flat capture.
+
+## New hardware support
+
+## ASCOM Dome
 - ASCOM Domes are supported throughout the application
   - Natively provides azimuth synchronization with the telescope, so no additional applications are needed (such as ASCOM Device Hub)
   - Lateral offsets supported, enabling side-by-side telescope setups
@@ -65,9 +71,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
  - Dome actions provided in the new sequencer
   - Enable dome synchronization
   - Open/Close shutter
-  - Park dome
-
-## New hardware support
+  - Park dome  
 
 ### ASCOM CoverCalibrator
 - With the ASCOM Platform Version 6.5 a new type of interface was added called "CoverCalibrator". 
@@ -76,6 +80,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ### ASCOM SafetyMonitor
 - An ASCOM device to monitor safe conditions for an imaging run
 - These devices can be used inside the sequencer to interrupt an imaging run, when they report unsafe conditions
+- Option to automatically close the dome shutter immediately when the safety monitor reports unsafe conditions
 
 #### Native support for Atik EFW2/3 and internal Filterwheels
 - The integrated filter wheels for Atik cameras like the Atik One 9.0 are now natively supported
