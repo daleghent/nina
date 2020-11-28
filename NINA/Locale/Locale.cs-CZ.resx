@@ -5008,4 +5008,7 @@ Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů 
   <data name="LblProfileChooserOnStartup" xml:space="preserve">
     <value>Výběr Profilu při Spuštění</value>
   </data>
+  <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
+    <value>Target Closure Instructions</value>
+  </data>
 </root>

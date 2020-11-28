@@ -27,5 +27,6 @@ namespace NINA.Profile {
         int DomeSyncTimeoutSeconds { get; set; }
         bool SynchronizeDuringMountSlew { get; set; }
         double RotateDegrees { get; set; }
+        bool CloseOnUnsafe { get; set; }
     }
 }

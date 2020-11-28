@@ -5674,6 +5674,33 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close on unsafe conditions.
+        /// </summary>
+        internal static string LblDomeCloseOnUnsafe {
+            get {
+                return ResourceManager.GetString("LblDomeCloseOnUnsafe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Immediately closes the dome shutter if a SafetyMonitor device reports unsafe conditions.
+        /// </summary>
+        internal static string LblDomeCloseOnUnsafeTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeCloseOnUnsafeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closing dome shutter due to unsafe conditions.
+        /// </summary>
+        internal static string LblDomeCloseOnUnsafeWarning {
+            get {
+                return ResourceManager.GetString("LblDomeCloseOnUnsafeWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dome connected.
         /// </summary>
         internal static string LblDomeConnected {
@@ -5818,7 +5845,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right when facing the celestial pole..
+        ///   Looks up a localized string similar to In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis..
         /// </summary>
         internal static string LblDomeLateralAxisLengthTooltip {
             get {
@@ -5908,7 +5935,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the right when facing the celestial pole..
+        ///   Looks up a localized string similar to Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east..
         /// </summary>
         internal static string LblDomeScopeEWTooltip {
             get {
@@ -5926,7 +5953,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is towards the celestial pole..
+        ///   Looks up a localized string similar to Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is to the north..
         /// </summary>
         internal static string LblDomeScopeNSTooltip {
             get {
@@ -6102,6 +6129,15 @@ namespace NINA.Locale {
         internal static string LblDomeSyncTimeoutTooltip {
             get {
                 return ResourceManager.GetString("LblDomeSyncTimeoutTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot open dome shutter due to unsafe conditions.
+        /// </summary>
+        internal static string LblDomeUnsafeWarning {
+            get {
+                return ResourceManager.GetString("LblDomeUnsafeWarning", resourceCulture);
             }
         }
         

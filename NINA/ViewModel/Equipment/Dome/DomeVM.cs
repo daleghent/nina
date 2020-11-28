@@ -26,10 +26,11 @@ using NINA.Model.MyDome;
 using NINA.Model.MyTelescope;
 using NINA.Utility.Astrometry;
 using System.ComponentModel;
+using NINA.Model.MySafetyMonitor;
 
 namespace NINA.ViewModel.Equipment.Dome {
 
-    internal class DomeVM : DockableVM, IDomeVM, ITelescopeConsumer {
+    internal class DomeVM : DockableVM, IDomeVM, ITelescopeConsumer, ISafetyMonitorConsumer {
 
         public DomeVM(
             IProfileService profileService,
@@ -38,6 +39,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             ITelescopeMediator telescopeMediator,
             IDeviceChooserVM domeChooserVM,
             IDomeFollower domeFollower,
+            ISafetyMonitorMediator safetyMonitorMediator,
             IApplicationResourceDictionary resourceDictionary,
             IDeviceUpdateTimerFactory deviceUpdateTimerFactory) : base(profileService) {
             Title = "LblDome";
@@ -48,6 +50,8 @@ namespace NINA.ViewModel.Equipment.Dome {
             this.telescopeMediator = telescopeMediator;
             this.telescopeMediator.RegisterConsumer(this);
             this.applicationStatusMediator = applicationStatusMediator;
+            this.safetyMonitorMediator = safetyMonitorMediator;
+            this.safetyMonitorMediator.RegisterConsumer(this);
             DomeChooserVM = domeChooserVM;
             this.domeFollower = domeFollower;
             this.domeFollower.PropertyChanged += DomeFollower_PropertyChanged;
@@ -316,6 +320,12 @@ namespace NINA.ViewModel.Equipment.Dome {
 
         public async Task<bool> OpenShutter(CancellationToken cancellationToken) {
             if (Dome.CanSetShutter) {
+                if (SafetyMonitorInfo.Connected && !SafetyMonitorInfo.IsSafe) {
+                    Logger.Error("Cannot open dome shutter due to unsafe conditions");
+                    Notification.ShowError(Locale.Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
+                    return false;
+                }
+
                 Logger.Trace("Opening dome shutter");
                 await Dome.OpenShutter(cancellationToken);
                 return true;
@@ -484,8 +494,20 @@ namespace NINA.ViewModel.Equipment.Dome {
             get {
                 return telescopeInfo;
             }
-            set {
+            private set {
                 telescopeInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private SafetyMonitorInfo safetyMonitorInfo = DeviceInfo.CreateDefaultInstance<SafetyMonitorInfo>();
+
+        public SafetyMonitorInfo SafetyMonitorInfo {
+            get {
+                return safetyMonitorInfo;
+            }
+            private set {
+                safetyMonitorInfo = value;
                 RaisePropertyChanged();
             }
         }
@@ -493,6 +515,8 @@ namespace NINA.ViewModel.Equipment.Dome {
         public void Dispose() {
             this.telescopeMediator?.RemoveConsumer(this);
             this.telescopeMediator = null;
+            this.safetyMonitorMediator?.RemoveConsumer(this);
+            this.safetyMonitorMediator = null;
         }
 
         public async Task<bool> EnableFollowing(CancellationToken cancellationToken) {
@@ -519,11 +543,27 @@ namespace NINA.ViewModel.Equipment.Dome {
             return !FollowEnabled;
         }
 
+        public void UpdateDeviceInfo(SafetyMonitorInfo deviceInfo) {
+            SafetyMonitorInfo = deviceInfo;
+            if (Dome?.Connected == true && profileService.ActiveProfile.DomeSettings.CloseOnUnsafe) {
+                if (!deviceInfo.IsSafe && Dome?.ShutterStatus == ShutterState.ShutterOpen) {
+                    Logger.Warning("Closing dome shutter due to unsafe conditions");
+                    Notification.ShowWarning(Locale.Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
+                    Task.Run(async () => {
+                        StopAll(null);
+                        await CloseShutter(CancellationToken.None);
+                    });
+                    
+                }
+            }
+        }
+
         private readonly IDeviceUpdateTimer updateTimer;
         private readonly IDomeMediator domeMediator;
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private readonly IDomeFollower domeFollower;
         private ITelescopeMediator telescopeMediator;
+        private ISafetyMonitorMediator safetyMonitorMediator;
         public IAsyncCommand ChooseDomeCommand { get; private set; }
         public ICommand RefreshDomeListCommand { get; private set; }
         public ICommand CancelChooseDomeCommand { get; private set; }

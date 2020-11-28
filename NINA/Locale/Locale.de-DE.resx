@@ -5017,4 +5017,7 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="LblProfileChooserOnStartup" xml:space="preserve">
     <value>Profile Chooser on Startup</value>
   </data>
+  <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
+    <value>Target Closure Instructions</value>
+  </data>
 </root>
