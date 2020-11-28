@@ -226,8 +226,7 @@
     <Compile Include="FlatDevice\PegasusAstroFlatmasterTest.cs" />
     <Compile Include="FlatDevice\PegasusFlatMasterTest.cs" />
     <Compile Include="FlatDevice\PegasusResponseTest.cs" />
-    <Compile Include="FlatWizardExposureTimeFinderServiceTest.cs" />
-    <Compile Include="FlatWizardVMTest.cs" />
+    <Compile Include="FlatWizard\FlatWizardVMTest.cs" />
     <Compile Include="Focuser\AbsoluteBacklashCompensationDecoratorTest.cs" />
     <Compile Include="Focuser\ASCOM\RelativeAscomFocuserTest.cs" />
     <Compile Include="Focuser\ASCOM\AbsoluteAscomFocuserTest.cs" />

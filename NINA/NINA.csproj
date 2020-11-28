@@ -516,6 +516,7 @@
     <Compile Include="Model\MyWeatherData\UltimatePowerboxV2.cs" />
     <Compile Include="Model\MyFlatDevice\PegasusAstroFlatMaster.cs" />
     <Compile Include="Model\MyWeatherData\WeatherUnderground.cs" />
+    <Compile Include="MyMessageBox\MyMessageBoxVM.cs" />
     <Compile Include="PlateSolving\CaptureSolverParameter.cs" />
     <Compile Include="PlateSolving\CenteringSolver.cs" />
     <Compile Include="PlateSolving\CenterSolveParameter.cs" />
@@ -681,6 +682,8 @@
     <Compile Include="Utility\AllDeviceConsumer.cs" />
     <Compile Include="Utility\Astrometry\EarthRotationParameterUpdater.cs" />
     <Compile Include="Utility\Astrometry\NighttimeData.cs" />
+    <Compile Include="Utility\Astrometry\ITwilightCalculator.cs" />
+    <Compile Include="Utility\Astrometry\TwilightCalculator.cs" />
     <Compile Include="Utility\Astrometry\WorldCoordinateSystem.cs" />
     <Compile Include="Utility\Behaviors\MouseCommandBehavior.cs" />
     <Compile Include="Utility\Behaviors\MouseFollowBehavior.cs" />
@@ -776,6 +779,7 @@
     <Compile Include="Utility\FlatDeviceSDKs\Artesky\ArteskyDevice.cs" />
     <Compile Include="Utility\FlatDeviceSDKs\AllPro\USBD.cs" />
     <Compile Include="Utility\IAllDeviceConsumer.cs" />
+    <Compile Include="Utility\ImageAnalysis\HistogramMath.cs" />
     <Compile Include="Utility\IoCBindings.cs" />
     <Compile Include="Utility\Astrometry\INighttimeCalculator.cs" />
     <Compile Include="Utility\Mediator\ApplicationMediator.cs" />
@@ -963,6 +967,7 @@
     <Compile Include="ViewModel\Equipment\WeatherData\IWeatherDataVM.cs" />
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataVM.cs" />
+    <Compile Include="ViewModel\FlatWizard\IFlatWizardUserPromptVM.cs" />
     <Compile Include="ViewModel\FramingAssistant\IFramingAssistantVM.cs" />
     <Compile Include="ViewModel\ImageGeometryProvider.cs" />
     <Compile Include="ViewModel\IDeepSkyObjectSearchVM.cs" />
@@ -1128,7 +1133,6 @@
     <Compile Include="Utility\ValidationRules\DoubleRangeRule.cs" />
     <Compile Include="ViewModel\DeepSkyObjectSearchVM.cs" />
     <Compile Include="ViewModel\FocusTargetsVM.cs" />
-    <Compile Include="ViewModel\FlatWizard\FlatWizardExposureTimeFinderService.cs" />
     <Compile Include="ViewModel\FlatWizard\FlatWizardFilterSettingsWrapper.cs" />
     <Compile Include="Model\MyFilterWheel\ManualFilterWheel.cs" />
     <Compile Include="Model\MyFocuser\AscomFocuser.cs" />
@@ -1338,7 +1342,6 @@
     <Compile Include="ViewModel\EquipmentChooserVM.cs" />
     <Compile Include="ViewModel\FlatWizard\FlatWizardUserPromptVM.cs" />
     <Compile Include="ViewModel\FlatWizard\FlatWizardVM.cs" />
-    <Compile Include="ViewModel\FlatWizard\IFlatWizardExposureTimeFinderService.cs" />
     <Compile Include="ViewModel\FlatWizard\IFlatWizardVM.cs" />
     <Compile Include="ViewModel\Equipment\Focuser\FocuserVM.cs" />
     <Compile Include="ViewModel\FramingAssistant\FrameLineMatrix2.cs" />

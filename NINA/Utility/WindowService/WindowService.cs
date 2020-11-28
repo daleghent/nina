@@ -14,6 +14,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Security;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -21,7 +23,6 @@ using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace NINA.Utility.WindowService {
-
     /// <summary>
     /// A window should be associated to a viewmodel by the DataTemplates.xaml
     /// </summary>
@@ -59,12 +60,12 @@ namespace NINA.Utility.WindowService {
 
         public async Task Close() {
             await dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
-                window?.Close();                
+                window?.Close();
             }));
         }
 
-        public DispatcherOperation ShowDialog(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None, ICommand closeCommand = null) {
-            return dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
+        public IDispatcherOperationWrapper ShowDialog(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None, ICommand closeCommand = null) {
+            return new DispatcherOperationWrapper(dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                 window = new CustomWindow() {
                     SizeToContent = SizeToContent.WidthAndHeight,
                     Title = title,
@@ -89,7 +90,7 @@ namespace NINA.Utility.WindowService {
                 var result = window.ShowDialog();
                 this.OnDialogResultChanged?.Invoke(this, new DialogResultEventArgs(result));
                 mainwindow.Opacity = 1;
-            }));
+            })));
         }
 
         public event EventHandler OnDialogResultChanged;
@@ -105,10 +106,9 @@ namespace NINA.Utility.WindowService {
     }
 
     public interface IWindowService {
-
         void Show(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None);
 
-        DispatcherOperation ShowDialog(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None, ICommand closeCommand = null);
+        IDispatcherOperationWrapper ShowDialog(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None, ICommand closeCommand = null);
 
         event EventHandler OnDialogResultChanged;
 
@@ -119,8 +119,76 @@ namespace NINA.Utility.WindowService {
         Task Close();
     }
 
-    public class DialogResultEventArgs : EventArgs {
+    public interface IDispatcherOperationWrapper {
+        Dispatcher Dispatcher { get; }
+        DispatcherPriority Priority { get; set; }
+        DispatcherOperationStatus Status { get; }
+        Task Task { get; }
+        object Result { get; }
 
+        TaskAwaiter GetAwaiter();
+
+        DispatcherOperationStatus Wait();
+
+        DispatcherOperationStatus Wait(TimeSpan timeout);
+
+        bool Abort();
+
+        event EventHandler Aborted;
+
+        event EventHandler Completed;
+    }
+
+    public class DispatcherOperationWrapper : IDispatcherOperationWrapper {
+        private readonly DispatcherOperation op;
+
+        public DispatcherOperationWrapper(DispatcherOperation operation) {
+            op = operation;
+        }
+
+        public Dispatcher Dispatcher => op.Dispatcher;
+
+        public DispatcherPriority Priority {
+            get => op.Priority;
+            set => op.Priority = value;
+        }
+
+        public DispatcherOperationStatus Status => op.Status;
+        public Task Task => op.Task;
+
+        [Browsable(false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public TaskAwaiter GetAwaiter() {
+            return op.GetAwaiter();
+        }
+
+        public DispatcherOperationStatus Wait() {
+            return op.Wait();
+        }
+
+        [SecurityCritical]
+        public DispatcherOperationStatus Wait(TimeSpan timeout) {
+            return op.Wait(timeout);
+        }
+
+        public bool Abort() {
+            return op.Abort();
+        }
+
+        public object Result => op.Result;
+
+        public event EventHandler Aborted {
+            add => op.Aborted += value;
+            remove => op.Aborted -= value;
+        }
+
+        public event EventHandler Completed {
+            add => op.Completed += value;
+            remove => op.Completed -= value;
+        }
+    }
+
+    public class DialogResultEventArgs : EventArgs {
         public DialogResultEventArgs(bool? dialogResult) {
             DialogResult = dialogResult;
         }

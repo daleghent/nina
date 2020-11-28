@@ -28,7 +28,7 @@
         <TextBlock
             Grid.Row="0"
             Margin="10"
-            Text="{Binding Text}" />
+            Text="{Binding Message}" />
 
         <GroupBox Grid.Row="1" Header="{ns:Loc LblFlatUserCurrentExposureCalculation}">
             <Grid Margin="5">

@@ -1,4 +1,4 @@
-#region "copyright"
+﻿#region "copyright"
 
 /*
     Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
@@ -12,19 +12,14 @@
 
 #endregion "copyright"
 
-using System.Windows.Media;
+using System;
 
-namespace NINA.ViewModel {
+namespace NINA.Utility.Astrometry {
 
-    public interface IImageGeometryProvider {
+    internal class TwilightCalculator : ITwilightCalculator {
 
-        GeometryGroup GetImageGeometry(string imageName);
-    }
-
-    internal class ImageGeometryProvider : IImageGeometryProvider {
-
-        public GeometryGroup GetImageGeometry(string imageName) {
-            return (GeometryGroup)System.Windows.Application.Current.Resources[imageName];
+        public TimeSpan GetTwilightDuration(DateTime date, double latitude, double longitude) {
+            return Astrometry.GetSunRiseAndSet(date, latitude, longitude).Rise - Astrometry.GetNightTimes(date, latitude, longitude).Rise ?? TimeSpan.Zero;
         }
     }
 }

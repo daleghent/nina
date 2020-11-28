@@ -12,15 +12,16 @@
 
 #endregion "copyright"
 
-using NINA.Locale;
-using NINA.Model;
+using System.Collections.Generic;
 using NINA.Model.MyCamera;
 using NINA.Model.MyFilterWheel;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.Interfaces;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using NINA.Utility.WindowService;
+using Nito.AsyncEx;
 
 namespace NINA.ViewModel.FlatWizard {
 
@@ -33,9 +34,6 @@ namespace NINA.ViewModel.FlatWizard {
         ObservableCollection<FilterInfo> FilterInfos { get; }
         ObservableCollection<FlatWizardFilterSettingsWrapper> Filters { get; set; }
         int FlatCount { get; set; }
-        IFlatWizardExposureTimeFinderService FlatWizardExposureTimeFinderService { get; set; }
-        ILoc Locale { get; set; }
-        IImagingVM ImagingVM { get; }
         int Gain { get; set; }
         BitmapSource Image { get; set; }
         bool IsPaused { get; set; }
@@ -45,7 +43,14 @@ namespace NINA.ViewModel.FlatWizard {
         FilterInfo SelectedFilter { get; set; }
         FlatWizardFilterSettingsWrapper SingleFlatWizardFilterSettings { get; set; }
         IAsyncCommand StartFlatSequenceCommand { get; }
-        ApplicationStatus Status { get; set; }
         bool PauseBetweenFilters { get; set; }
+
+        IWindowService WindowService { get; set; }
+
+        Task<double> FindFlatExposureTime(PauseToken pt, FlatWizardFilterSettingsWrapper filter);
+
+        Task<double> FindFlatDeviceBrightness(PauseToken pt, FlatWizardFilterSettingsWrapper filter);
+
+        Task<bool> StartFlatMagic(IEnumerable<FlatWizardFilterSettingsWrapper> filterWrappers, PauseToken pt);
     }
 }
