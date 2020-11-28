@@ -136,7 +136,7 @@ namespace NINA.Sequencer.SequenceItem.Switch {
             var info = switchMediator.GetInfo();
             if (info?.Connected != true) {
                 //When switch gets disconnected the real list will be changed to the dummy list
-                if (!(WritableSwitches.First() is DummySwitch)) {
+                if (!(WritableSwitches.FirstOrDefault() is DummySwitch)) {
                     WritableSwitches = new ReadOnlyCollection<IWritableSwitch>(CreateDummyList());
                 }
 
@@ -145,15 +145,20 @@ namespace NINA.Sequencer.SequenceItem.Switch {
                 }
                 i.Add(Locale.Loc.Instance["LblSwitchNotConnected"]);
             } else {
-                //When switch gets connected the dummy list will be changed to the real list
-                if (WritableSwitches.First() is DummySwitch) {
-                    WritableSwitches = info.WritableSwitches;
+                if (WritableSwitches.Count > 0) {
+                    //When switch gets connected the dummy list will be changed to the real list
+                    if (WritableSwitches.FirstOrDefault() is DummySwitch) {
+                        WritableSwitches = info.WritableSwitches;
 
-                    if (switchIndex >= 0 && WritableSwitches.Count > switchIndex) {
-                        SelectedSwitch = WritableSwitches[switchIndex];
-                    } else {
-                        SelectedSwitch = null;
+                        if (switchIndex >= 0 && WritableSwitches.Count > switchIndex) {
+                            SelectedSwitch = WritableSwitches[switchIndex];
+                        } else {
+                            SelectedSwitch = null;
+                        }
                     }
+                } else {
+                    SelectedSwitch = null;
+                    i.Add(Locale.Loc.Instance["Lbl_SequenceItem_Validation_NoWritableSwitch"]);
                 }
             }
             var s = SelectedSwitch;
@@ -164,6 +169,7 @@ namespace NINA.Sequencer.SequenceItem.Switch {
                 if (Value < s.Minimum || Value > s.Maximum)
                     i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Validation_InvalidSwitchValue"], s.Minimum, s.Maximum, s.StepSize));
             }
+
             Issues = i;
             return i.Count == 0;
         }

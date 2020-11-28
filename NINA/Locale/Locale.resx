@@ -5044,4 +5044,7 @@ There the sequence can be planned from scratch using fine granular instructions,
 Large sample sizes can help prevent short term issues like wind gusts or guiding issues to trigger an autofocus.
 For quickly changing conditions a smaller sample size will help to respond more quickly to shifting focus, for example for temperature sensitive optics on a quickly changing ambient temperature.</value>
   </data>
+  <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
+    <value>No writable switch available</value>
+  </data>
 </root>

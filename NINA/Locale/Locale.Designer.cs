@@ -1509,6 +1509,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No writable switch available.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_NoWritableSwitch {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_NoWritableSwitch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE ITEM.
         /// </summary>
         internal static string Lbl_Sequencer_DeleteItem {
