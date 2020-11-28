@@ -66,6 +66,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             this.imagingMediator = imagingMediator;
             this.applicationStatusMediator = applicationStatusMediator;
             Amount = 5;
+            SampleSize = 10;
             TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator));
         }
 
@@ -101,6 +102,19 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             }
         }
 
+        private int sampleSize;
+
+        [JsonProperty]
+        public int SampleSize {
+            get => sampleSize;
+            set {
+                if (value >= 3) {
+                    sampleSize = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         private double hFRTrend;
 
         public double HFRTrend {
@@ -117,12 +131,15 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
         public override bool ShouldTrigger(ISequenceItem nextItem) {
             var lastAF = history.AutoFocusPoints?.LastOrDefault();
-            var idx = lastAF == null ? 0 : history.ImageHistory.FindIndex(x => x.Id == lastAF.Id) + 1;
+            var minimumIndex = lastAF == null ? 0 : history.ImageHistory.FindIndex(x => x.Id == lastAF.Id) + 1;
+
+            //Take either the Last AF Position as index or the sample size index, whichever is greater
+            minimumIndex = Math.Max(minimumIndex, history.ImageHistory.Count - sampleSize);
 
             //at least 3 relevant points of data must exist
-            if (history.ImageHistory.Count > idx + 3) {
+            if (history.ImageHistory.Count > minimumIndex + 3) {
                 var data = history.ImageHistory
-                    .Skip(idx)
+                    .Skip(minimumIndex)
                     .Where(x => !double.IsNaN(x.HFR) && x.HFR > 0);
 
                 if (data.Count() > 3) {
@@ -137,7 +154,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
                     //Get current smoothed out HFR
                     double currentHfrTrend = regression.Transform(history.ImageHistory.Count());
-                    double originalHfr = regression.Transform(idx);
+                    double originalHfr = regression.Transform(minimumIndex);
 
                     Logger.Debug($"Autofocus condition exrapolated original HFR: {originalHfr} extrapolated current HFR: {currentHfrTrend}");
 

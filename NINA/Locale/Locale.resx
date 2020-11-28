@@ -5021,4 +5021,12 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
     <value>Target Closure Instructions</value>
   </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize" xml:space="preserve">
+    <value>Sample Size</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSizeTooltip" xml:space="preserve">
+    <value>The maximum sample size of image HFR readings that should be used to determine the HFR trend. 
+Large sample sizes can help prevent short term issues like wind gusts or guiding issues to trigger an autofocus.
+For quickly changing conditions a smaller sample size will help to respond more quickly to shifting focus, for example for temperature sensitive optics on a quickly changing ambient temperature.</value>
+  </data>
 </root>

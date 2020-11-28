@@ -1752,6 +1752,26 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sample Size.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The maximum sample size of image HFR readings that should be used to determine the HFR trend. 
+        ///Large sample sizes can help prevent short term issues like wind gusts or guiding issues to trigger an autofocus.
+        ///For quickly changing conditions a smaller sample size will help to respond more quickly to shifting focus, for example for temperature sensitive optics on a quickly changing ambient temperature..
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSizeTooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSizeTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A trigger to initiate an autofocus run after the temperature has changed by the given amount in degrees since the last autofocus run or start of sequence.
         /// </summary>
         internal static string Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description {

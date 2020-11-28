@@ -122,6 +122,32 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         }
 
         [Test]
+        [TestCase(new double[] { 99, 99, 3, 3, 3, 10 }, 1, true)]
+        [TestCase(new double[] { 99, 99, 3, 3, 3, 3 }, 1, false)]
+        [TestCase(new double[] { 99, 99, 3, 3.1, 2.9, 3 }, 1, false)]
+        [TestCase(new double[] { 99, 99, 3, 3.1, 3.2, 3.3 }, 1, true)]
+        [TestCase(new double[] { 99, 99, 3, 3.1, 3.2, 3.3 }, 50, false)]
+        [TestCase(new double[] { 99, 99, 3, 2.9, 2.8, 2.7 }, 1, false)]
+        public void ShouldTrigger_HistoryExists_NoPreviousAFsButSampleSize_True(double[] hfrs, double changeAmount, bool shouldTrigger) {
+            var history = new List<ImageHistoryPoint>();
+            for (int i = 0; i < hfrs.Length; i++) {
+                var p = new ImageHistoryPoint(i, null);
+                p.PopulateSDPoint(new StarDetectionAnalysis() { DetectedStars = i, HFR = hfrs[i] });
+                history.Add(p);
+            }
+            historyMock.SetupGet(x => x.ImageHistory).Returns(history);
+            historyMock.SetupGet(x => x.AutoFocusPoints).Returns(new NINA.Utility.AsyncObservableCollection<ImageHistoryPoint>());
+
+            var sut = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            sut.SampleSize = 4;
+            sut.Amount = changeAmount;
+
+            var trigger = sut.ShouldTrigger(null);
+
+            trigger.Should().Be(shouldTrigger);
+        }
+
+        [Test]
         [TestCase(new double[] { 3, 3, 3, 10 }, 1, true)]
         [TestCase(new double[] { 3, 3, 3, 3 }, 1, false)]
         [TestCase(new double[] { 3, 3.1, 2.9, 3 }, 1, false)]
