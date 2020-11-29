@@ -4922,20 +4922,20 @@ Example:
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>Focuser does not expose any valid temperature</value>
   </data>
-  <data name="LblSgpServerEnabled" xml:space="preserve">
-    <value>SGP Server Enabled</value>
+  <data name="LblServerEnabled" xml:space="preserve">
+    <value>Server Enabled</value>
   </data>
-  <data name="LblSgpServerEnabledTooltip" xml:space="preserve">
-    <value>Hosts a service on port 59590 with the same API as SGP to interoperate with existing applications. If the service fails to start, you may need to update some firewall settings with netsh (see NINA documentation).</value>
+  <data name="LblServerEnabledTooltip" xml:space="preserve">
+    <value>Hosts a service on port 59590, currently with the same API as SGP to interoperate with existing applications. If the service fails to start, you may need to update some firewall settings with netsh (see NINA documentation).</value>
   </data>
-  <data name="LblSgpServerFailed" xml:space="preserve">
-    <value>SGP Server failed to start. Check the NINA documentation. {0}</value>
+  <data name="LblServerFailed" xml:space="preserve">
+    <value>Server failed to start. Check the NINA documentation. {0}</value>
   </data>
-  <data name="LblSgpServerStarted" xml:space="preserve">
-    <value>SGP Server Started</value>
+  <data name="LblServerStarted" xml:space="preserve">
+    <value>Server Started</value>
   </data>
-  <data name="LblSgpServerStopped" xml:space="preserve">
-    <value>SGP Server Stopped</value>
+  <data name="LblServerStopped" xml:space="preserve">
+    <value>Server Stopped</value>
   </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>Close All</value>

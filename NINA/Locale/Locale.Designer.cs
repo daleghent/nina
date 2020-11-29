@@ -11988,6 +11988,51 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Server Enabled.
+        /// </summary>
+        internal static string LblServerEnabled {
+            get {
+                return ResourceManager.GetString("LblServerEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hosts a service on port 59590, currently with the same API as SGP to interoperate with existing applications. If the service fails to start, you may need to update some firewall settings with netsh (see NINA documentation)..
+        /// </summary>
+        internal static string LblServerEnabledTooltip {
+            get {
+                return ResourceManager.GetString("LblServerEnabledTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server failed to start. Check the NINA documentation. {0}.
+        /// </summary>
+        internal static string LblServerFailed {
+            get {
+                return ResourceManager.GetString("LblServerFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server Started.
+        /// </summary>
+        internal static string LblServerStarted {
+            get {
+                return ResourceManager.GetString("LblServerStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server Stopped.
+        /// </summary>
+        internal static string LblServerStopped {
+            get {
+                return ResourceManager.GetString("LblServerStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Set as sequence target.
         /// </summary>
         internal static string LblSetAsSequenceTarget {
@@ -12119,51 +12164,6 @@ namespace NINA.Locale {
         internal static string LblSetTrackingRate {
             get {
                 return ResourceManager.GetString("LblSetTrackingRate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SGP Server Enabled.
-        /// </summary>
-        internal static string LblSgpServerEnabled {
-            get {
-                return ResourceManager.GetString("LblSgpServerEnabled", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Hosts a service on port 59590 with the same API as SGP to interoperate with existing applications. If the service fails to start, you may need to update some firewall settings with netsh (see NINA documentation)..
-        /// </summary>
-        internal static string LblSgpServerEnabledTooltip {
-            get {
-                return ResourceManager.GetString("LblSgpServerEnabledTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SGP Server failed to start. Check the NINA documentation. {0}.
-        /// </summary>
-        internal static string LblSgpServerFailed {
-            get {
-                return ResourceManager.GetString("LblSgpServerFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SGP Server Started.
-        /// </summary>
-        internal static string LblSgpServerStarted {
-            get {
-                return ResourceManager.GetString("LblSgpServerStarted", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to SGP Server Stopped.
-        /// </summary>
-        internal static string LblSgpServerStopped {
-            get {
-                return ResourceManager.GetString("LblSgpServerStopped", resourceCulture);
             }
         }
         

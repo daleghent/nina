@@ -56,10 +56,6 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore
 - Instead the sequence panel will show a minimized representation of the set up sequence, where you can see the current running instruction set with basic details
 
-## Flat Wizard
-- An option to have a fixed exposure time but dynamic flat panel brightness has been added.
-- Sky Flats can now be properly taken by using the flat wizard option for sky flats. There the exposure time will be adjusted based on the time as the sun rises or sets further during flat capture.
-
 ## New hardware support
 
 ## ASCOM Dome

@@ -313,12 +313,15 @@
                         <TextBlock
                             Width="150"
                             VerticalAlignment="Center"
-                            Text="{ns:Loc LblSgpServerEnabled}">
+                            Text="{ns:Loc LblServerEnabled}">
                             <TextBlock.ToolTip>
-                                <TextBlock Text="{ns:Loc LblSgpServerEnabledTooltip}" />
+                                <TextBlock Text="{ns:Loc LblServerEnabledTooltip}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <CheckBox Margin="10,0,0,0" HorizontalAlignment="Left" IsChecked="{Binding SGPServerEnabled}" />
+                        <CheckBox
+                            Margin="10,0,0,0"
+                            HorizontalAlignment="Left"
+                            IsChecked="{Binding SGPServerEnabled}" />
                     </StackPanel>
 
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">

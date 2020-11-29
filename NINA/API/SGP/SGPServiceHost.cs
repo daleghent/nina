@@ -9,8 +9,8 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.API.SGP {
-    public class SGPServiceHost : ISGPServiceHost {
 
+    public class SGPServiceHost : ISGPServiceHost {
         private readonly AsyncManualResetEvent stopServiceEvent;
         private readonly ISGPService sgpService;
         private volatile Task serviceTask;
@@ -24,11 +24,12 @@ namespace NINA.API.SGP {
         /*
          * SGP is hardcoded to listen on localhost:59590. Depending on the system, this may be either an IPv4 or IPv6 loopback, so both should be configured to allow http connections.
          * The following commands should be run from an elevated command prompt:
-         * 
+         *
          * 1) netsh http add iplisten ipaddress=::
          * 2) netsh http add iplisten ipaddress=0.0.0.0
          * 3) netsh http add urlacl url=http://+:59590/ user=Everyone
          */
+
         public void RunService() {
             if (this.serviceTask != null) {
                 Logger.Trace("SGP Service already running during start attempt");
@@ -55,11 +56,11 @@ namespace NINA.API.SGP {
                     stp.IncludeExceptionDetailInFaults = true;
                     hostWeb.Open();
 
-                    Notification.ShowInformation(Locale.Loc.Instance["LblSgpServerStarted"]);
+                    Notification.ShowInformation(Locale.Loc.Instance["LblServerStarted"]);
                     await stopServiceEvent.WaitAsync();
                 } catch (Exception ex) {
                     Logger.Error("Failed to start SGP Server", ex);
-                    Notification.ShowError(String.Format(Locale.Loc.Instance["LblSgpServerFailed"], ex.Message));
+                    Notification.ShowError(String.Format(Locale.Loc.Instance["LblServerFailed"], ex.Message));
                     throw;
                 } finally {
                     hostWeb?.Close();
@@ -73,7 +74,7 @@ namespace NINA.API.SGP {
                 stopServiceEvent.Set();
                 try {
                     serviceTask.Wait(new CancellationTokenSource(2000).Token);
-                    Notification.ShowInformation(Locale.Loc.Instance["LblSgpServerStopped"]);
+                    Notification.ShowInformation(Locale.Loc.Instance["LblServerStopped"]);
                 } catch (Exception ex) {
                     Logger.Error("Failed to stop SGP Server", ex.Message);
                 } finally {
