@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 namespace NINA.ViewModel.Equipment.Dome {
 
     public class DomeFollower : BaseINPC, IDomeFollower, ITelescopeConsumer, IDomeConsumer {
+        private static readonly double RA_DEC_WARN_THRESHOLD = 2.0;
         private readonly IProfileService profileService;
         private readonly ITelescopeMediator telescopeMediator;
         private readonly IDomeMediator domeMediator;
@@ -61,6 +62,8 @@ namespace NINA.ViewModel.Equipment.Dome {
                 throw new InvalidOperationException("Dome follower is running already");
             }
 
+            StartChecks();
+
             IsFollowing = true;
             domeFollowerTask = Task.Run(async () => {
                 domeFollowerTaskCTS?.Dispose();
@@ -76,6 +79,7 @@ namespace NINA.ViewModel.Equipment.Dome {
                 } catch (OperationCanceledException) {
                 } catch (Exception ex) {
                     Logger.Error(ex);
+                    Notification.ShowError(Locale.Loc.Instance["LblDomeFollowError"]);
                 } finally {
                     IsFollowing = false;
                 }
@@ -92,6 +96,34 @@ namespace NINA.ViewModel.Equipment.Dome {
             }
             domeFollowerTask = null;
             domeRotationCTS = null;
+        }
+
+        private void StartChecks() {
+            if (!telescopeInfo.Connected) {
+                return;
+            }
+
+            if (Double.IsNaN(telescopeInfo.Altitude) || Double.IsNaN(telescopeInfo.Azimuth) ||
+                Double.IsNaN(telescopeInfo.RightAscension) || Double.IsNaN(telescopeInfo.Declination)) {
+                Logger.Warning("Scope does not report altitude, azimuth, RA, and Dec so we cannot validate the epoch");
+                return;
+            }
+
+            var topocentricCoordinates = new TopocentricCoordinates(
+                azimuth: Angle.ByDegree(telescopeInfo.Azimuth),
+                altitude: Angle.ByDegree(telescopeInfo.Altitude),
+                latitude: Angle.ByDegree(telescopeInfo.SiteLatitude),
+                longitude: Angle.ByDegree(telescopeInfo.SiteLongitude));
+            var eqCoordinates = topocentricCoordinates.Transform(telescopeInfo.EquatorialSystem);
+
+            var error = Math.Sqrt(
+                Math.Pow(Angle.ByHours(telescopeInfo.RightAscension).Degree - eqCoordinates.RADegrees, 2.0) +
+                Math.Pow(telescopeInfo.Declination - eqCoordinates.Dec, 2.0));
+            if (error > RA_DEC_WARN_THRESHOLD) {
+                Logger.Warning($"Mount reported RA ({telescopeInfo.RightAscensionString}) and Dec ({telescopeInfo.DeclinationString}) differs substantially from the calculated RA ({eqCoordinates.RAString}) " +
+                    $"and Dec ({eqCoordinates.DecString}). Confirm your mount epoch is configured properly and do a plate solve sync.");
+                Notification.ShowWarning(Locale.Loc.Instance["LblDomeFollowPointingError"]);
+            }
         }
 
         public async Task WaitForDomeSynchronization(CancellationToken cancellationToken) {
@@ -119,10 +151,16 @@ namespace NINA.ViewModel.Equipment.Dome {
                 return;
             }
 
-            var calculatedTargetAzimuth = GetSynchronizedPosition(this.telescopeInfo);
-            var currentAzimuth = Angle.ByDegree(this.domeInfo.Azimuth);
-            var tolerance = Angle.ByDegree(profileService.ActiveProfile.DomeSettings.AzimuthTolerance_degrees);
-            this.IsSynchronized = calculatedTargetAzimuth.Equals(currentAzimuth, tolerance);
+            try {
+                var calculatedTargetAzimuth = GetSynchronizedPosition(this.telescopeInfo);
+                var currentAzimuth = Angle.ByDegree(this.domeInfo.Azimuth);
+                var tolerance = Angle.ByDegree(profileService.ActiveProfile.DomeSettings.AzimuthTolerance_degrees);
+                this.IsSynchronized = calculatedTargetAzimuth.Equals(currentAzimuth, tolerance);
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(Locale.Loc.Instance["LblDomeFollowError"]);
+                IsFollowing = false;
+            }
         }
 
         public void UpdateDeviceInfo(DomeInfo deviceInfo) {

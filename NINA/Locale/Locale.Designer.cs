@@ -5800,6 +5800,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error while syncing Dome. Dome following now stopped..
+        /// </summary>
+        internal static string LblDomeFollowError {
+            get {
+                return ResourceManager.GetString("LblDomeFollowError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dome driver is following the telescope already.
         /// </summary>
         internal static string LblDomeFollowError_DriverFollowing {
@@ -5823,6 +5832,15 @@ namespace NINA.Locale {
         internal static string LblDomeFollowing {
             get {
                 return ResourceManager.GetString("LblDomeFollowing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome following may be inaccurate. Check that your mount epoch is configured correctly and do a plate solve sync.
+        /// </summary>
+        internal static string LblDomeFollowPointingError {
+            get {
+                return ResourceManager.GetString("LblDomeFollowPointingError", resourceCulture);
             }
         }
         

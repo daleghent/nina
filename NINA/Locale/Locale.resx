@@ -3897,6 +3897,12 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDomeScopeNS" xml:space="preserve">
     <value>Scope Position N/S (mm)</value>
   </data>
+  <data name="LblDomeFollowPointingError" xml:space="preserve">
+    <value>Dome following may be inaccurate. Check that your mount epoch is configured correctly and do a plate solve sync</value>
+  </data>
+  <data name="LblDomeFollowError" xml:space="preserve">
+    <value>Error while syncing Dome. Dome following now stopped.</value>
+  </data>
   <data name="LblCancelSequence" xml:space="preserve">
     <value>Cancel Sequence</value>
   </data>

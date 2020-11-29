@@ -342,13 +342,20 @@ namespace NINA.Model.MyDome {
         public async Task FindHome(CancellationToken ct) {
             if (Connected) {
                 if (CanFindHome) {
+                    // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure FindHome works
+                    dome?.AbortSlew();
+                    await Task.Delay(1000, ct);
+
                     ct.Register(() => dome.AbortSlew());
                     await Task.Run(() => dome.FindHome(), ct);
+
+                    // Introduce an initial delay to give the dome a change to start slewing before we wait for it to complete
+                    await Task.Delay(1000, ct);
                     while (dome != null && dome.Slewing && !ct.IsCancellationRequested) {
-                        await Task.Delay(1000);
+                        await Task.Delay(1000, ct);
                     }
                     // Introduce a final delay, in case the Dome driver settles after finding the home position by backtracking
-                    await Task.Delay(2000);
+                    await Task.Delay(2000, ct);
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotFindHome"]);
                 }
@@ -360,13 +367,17 @@ namespace NINA.Model.MyDome {
         public async Task Park(CancellationToken ct) {
             if (Connected) {
                 if (CanPark) {
+                    // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure Park works
+                    dome?.AbortSlew();
+                    await Task.Delay(1000, ct);
+
                     ct.Register(() => dome?.AbortSlew());
                     await Task.Run(() => dome?.Park(), ct);
                     if (CanSetShutter) {
                         await Task.Run(() => dome?.CloseShutter(), ct);
                     }
                     while (dome != null && dome.Slewing && !ct.IsCancellationRequested) {
-                        await Task.Delay(1000);
+                       await Task.Delay(1000, ct);
                     }
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotPark"]);
