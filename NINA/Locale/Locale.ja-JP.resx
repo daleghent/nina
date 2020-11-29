@@ -3858,7 +3858,7 @@
     <value>ドーム横軸長(mm)</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
-    <value>サイドバイサイド構成では、サドルからOTA中央までの距離(横方向、mm単位) です。極軸に向かって右が正符号です。</value>
+    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
     <value>ドーム半径(mm)</value>
@@ -3870,7 +3870,7 @@
     <value>鏡筒位置 東/西 (mm)</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>ドームの中心から架台の中心までの、東または西のオフセット値(mm)を測定します。 天の極を向いているとき、プラスの値は右側になります。</value>
+    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
     <value>鏡筒位置 北/南 (mm)</value>
@@ -3879,7 +3879,7 @@
     <value>シーケンスの取り消し</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>ドームの中心から架台の中心までの、北または南のオフセット値(mm)を測定します。 プラスの値は天の極側になります。</value>
+    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is to the north.</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
     <value>シーケンスの一時停止</value>
@@ -3995,6 +3995,9 @@
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
     <value>星の明るさが回復した後、ガイド再開に失敗しました</value>
   </data>
+  <data name="LblSkyFlat" xml:space="preserve">
+    <value>Sky Flats</value>
+  </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>ドーム同期エラー. 望遠鏡に追従できません,{0}</value>
   </data>
@@ -4024,6 +4027,18 @@
   </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
     <value>If FindHome is supported by the driver, using it before parking can ensure it goes to a precise location. This can be helpful if the shutter motor battery charges while parked.</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafe" xml:space="preserve">
+    <value>Close on unsafe conditions</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafeWarning" xml:space="preserve">
+    <value>Closing dome shutter due to unsafe conditions</value>
+  </data>
+  <data name="LblDomeUnsafeWarning" xml:space="preserve">
+    <value>Cannot open dome shutter due to unsafe conditions</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafeTooltip" xml:space="preserve">
+    <value>Immediately closes the dome shutter if a SafetyMonitor device reports unsafe conditions</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
     <value>オートフォーカスシーケンスのタイムアウト</value>
@@ -4998,5 +5013,16 @@ There the sequence can be planned from scratch using fine granular instructions,
   </data>
   <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
     <value>Target Closure Instructions</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize" xml:space="preserve">
+    <value>Sample Size</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSizeTooltip" xml:space="preserve">
+    <value>The maximum sample size of image HFR readings that should be used to determine the HFR trend. 
+Large sample sizes can help prevent short term issues like wind gusts or guiding issues to trigger an autofocus.
+For quickly changing conditions a smaller sample size will help to respond more quickly to shifting focus, for example for temperature sensitive optics on a quickly changing ambient temperature.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
+    <value>No writable switch available</value>
   </data>
 </root>

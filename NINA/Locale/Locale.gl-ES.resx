@@ -3882,7 +3882,7 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>Lonxitude do eixe lateral (mm)</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
-    <value>Nunha configuración lado a lado, esta é a distancia (lateral, en mm) da cadeira ó centro OTA. Positivo é á dereita cando se enfronta o polo celeste.</value>
+    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
     <value>Raio da Cúpula (mm)</value>
@@ -3894,7 +3894,7 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>Posición do Telescopio E/O (mm)</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>Medida do desprazamento Leste ou Oeste (en mm) do centro da montura con respecto ó centro da cúpula. Positivo é cara ó polo celeste.</value>
+    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
     <value>Posición do Telescopio N/S (mm)</value>
@@ -3903,7 +3903,7 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>Cancelar Secuencia</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>Medida do desprazamento Norte ou Sur (en mm) do centro da montura con respecto ó centro da cúpula. Positivo é cara ó polo celeste.</value>
+    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is to the north.</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
     <value>Pausar Secuencia</value>
@@ -4019,6 +4019,9 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
     <value>Fallo ó volver a guiar despois de recuperarse a intensidade da estrela</value>
   </data>
+  <data name="LblSkyFlat" xml:space="preserve">
+    <value>Sky Flats</value>
+  </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Erro de sincronización da cúpula. Xa non segue o telescopio. {0}</value>
   </data>
@@ -4048,6 +4051,18 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
   </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
     <value>If FindHome is supported by the driver, using it before parking can ensure it goes to a precise location. This can be helpful if the shutter motor battery charges while parked.</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafe" xml:space="preserve">
+    <value>Close on unsafe conditions</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafeWarning" xml:space="preserve">
+    <value>Closing dome shutter due to unsafe conditions</value>
+  </data>
+  <data name="LblDomeUnsafeWarning" xml:space="preserve">
+    <value>Cannot open dome shutter due to unsafe conditions</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafeTooltip" xml:space="preserve">
+    <value>Immediately closes the dome shutter if a SafetyMonitor device reports unsafe conditions</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
     <value>Tempo Espera AF en Secuencia</value>
@@ -5022,5 +5037,16 @@ There the sequence can be planned from scratch using fine granular instructions,
   </data>
   <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
     <value>Target Closure Instructions</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize" xml:space="preserve">
+    <value>Sample Size</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSizeTooltip" xml:space="preserve">
+    <value>The maximum sample size of image HFR readings that should be used to determine the HFR trend. 
+Large sample sizes can help prevent short term issues like wind gusts or guiding issues to trigger an autofocus.
+For quickly changing conditions a smaller sample size will help to respond more quickly to shifting focus, for example for temperature sensitive optics on a quickly changing ambient temperature.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
+    <value>No writable switch available</value>
   </data>
 </root>

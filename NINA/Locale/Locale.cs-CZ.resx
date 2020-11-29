@@ -3871,7 +3871,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Délka Příčné Osy (mm)</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
-    <value>V konfiguraci dalekohledy vedle sebe je to vzdálenost (příčně, v mm) od sedla ke středu OTA. Kladné vpravo při pohledu na nebeský pól.</value>
+    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
     <value>Poloměr Kopule (mm)</value>
@@ -3883,7 +3883,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Poloha Dalekohledu V/Z (mm)</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>Změřte posun Východ nebo Západ (v mm) od středu montáže ke středu kopule. Kladné vpravo při pohledu čelem na nebeský pól.</value>
+    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
     <value>Poloha Dalekohledu S/J (mm)</value>
@@ -3892,7 +3892,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Zrušte Sekvenci</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>Změřte posun Sever nebo Jih (v mm) od středu kopule ke středu montáži. Kladné hodnoty jsou směrem k nebeskému pólu.</value>
+    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is to the north.</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
     <value>Pozastavit Sekvenci</value>
@@ -4008,6 +4008,9 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
     <value>Po obnovení pointační hvězdy se nepodařilo obnovit pointování</value>
   </data>
+  <data name="LblSkyFlat" xml:space="preserve">
+    <value>Sky Flats</value>
+  </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Chyba synchronizace kopule. Již nesleduje dalekohled. {0}</value>
   </data>
@@ -4037,6 +4040,18 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
   </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
     <value>Pokud je ovladač FindHome podporován, jeho použití před zaparkováním zajistí přejezd na přesné místo. To je užitečné, pokud se baterie k motoru vrat nabíjí, když je zaparkovaná.</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafe" xml:space="preserve">
+    <value>Close on unsafe conditions</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafeWarning" xml:space="preserve">
+    <value>Closing dome shutter due to unsafe conditions</value>
+  </data>
+  <data name="LblDomeUnsafeWarning" xml:space="preserve">
+    <value>Cannot open dome shutter due to unsafe conditions</value>
+  </data>
+  <data name="LblDomeCloseOnUnsafeTooltip" xml:space="preserve">
+    <value>Immediately closes the dome shutter if a SafetyMonitor device reports unsafe conditions</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
     <value>Časový limit Sekvence Auto-ostření</value>
@@ -5010,5 +5025,16 @@ Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů 
   </data>
   <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
     <value>Target Closure Instructions</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize" xml:space="preserve">
+    <value>Sample Size</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSizeTooltip" xml:space="preserve">
+    <value>The maximum sample size of image HFR readings that should be used to determine the HFR trend. 
+Large sample sizes can help prevent short term issues like wind gusts or guiding issues to trigger an autofocus.
+For quickly changing conditions a smaller sample size will help to respond more quickly to shifting focus, for example for temperature sensitive optics on a quickly changing ambient temperature.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
+    <value>No writable switch available</value>
   </data>
 </root>
