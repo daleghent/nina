@@ -14,9 +14,9 @@
 
 using NINA.Utility;
 using NINA.Profile;
-using System;
 using System.Linq;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel {
 
@@ -24,22 +24,11 @@ namespace NINA.ViewModel {
 
         public EquipmentChooserVM(IProfileService profileService) : base(profileService) {
             this.profileService = profileService;
+            this.Devices = new AsyncObservableCollection<Model.IDevice>();
             SetupDialogCommand = new RelayCommand(OpenSetupDialog);
         }
 
-        private AsyncObservableCollection<Model.IDevice> _devices;
-
-        public AsyncObservableCollection<Model.IDevice> Devices {
-            get {
-                if (_devices == null) {
-                    _devices = new AsyncObservableCollection<Model.IDevice>();
-                }
-                return _devices;
-            }
-            set {
-                _devices = value;
-            }
-        }
+        public IList<Model.IDevice> Devices { get; }
 
         public abstract void GetEquipment();
 

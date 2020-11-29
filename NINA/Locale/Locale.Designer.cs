@@ -12123,6 +12123,51 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SGP Server Enabled.
+        /// </summary>
+        internal static string LblSgpServerEnabled {
+            get {
+                return ResourceManager.GetString("LblSgpServerEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hosts a service on port 59590 with the same API as SGP to interoperate with existing applications. If the service fails to start, you may need to update some firewall settings with netsh (see NINA documentation)..
+        /// </summary>
+        internal static string LblSgpServerEnabledTooltip {
+            get {
+                return ResourceManager.GetString("LblSgpServerEnabledTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SGP Server failed to start. Check the NINA documentation. {0}.
+        /// </summary>
+        internal static string LblSgpServerFailed {
+            get {
+                return ResourceManager.GetString("LblSgpServerFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SGP Server Started.
+        /// </summary>
+        internal static string LblSgpServerStarted {
+            get {
+                return ResourceManager.GetString("LblSgpServerStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SGP Server Stopped.
+        /// </summary>
+        internal static string LblSgpServerStopped {
+            get {
+                return ResourceManager.GetString("LblSgpServerStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loaded {0} sensors.
         /// </summary>
         internal static string LblSharpCapSensorAnalysisLoadedFormat {

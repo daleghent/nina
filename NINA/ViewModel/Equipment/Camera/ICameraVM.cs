@@ -48,5 +48,7 @@ namespace NINA.ViewModel.Equipment.Camera {
         Task<bool> WarmCamera(TimeSpan duration, IProgress<ApplicationStatus> progress, CancellationToken ct);
 
         Model.MyCamera.ICamera Cam { get; }
+
+        IDeviceChooserVM CameraChooserVM { get; set; }
     }
 }

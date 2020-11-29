@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.API.SGP;
 using NINA.Model;
 using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFocuser;
@@ -26,6 +27,7 @@ using NINA.ViewModel.Imaging;
 using NINA.ViewModel.Interfaces;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -39,7 +41,8 @@ namespace NINA.ViewModel {
     internal class OptionsVM : DockableVM, IOptionsVM {
 
         public OptionsVM(IProfileService profileService, IFilterWheelMediator filterWheelMediator, IExposureCalculatorVM exposureCalculatorVM, IAllDeviceConsumer deviceConsumer,
-            IVersionCheckVM versionCheckVM, ProjectVersion projectVersion, IPlanetariumFactory planetariumFactory, IDockManagerVM dockManagerVM) : base(profileService) {
+            IVersionCheckVM versionCheckVM, ProjectVersion projectVersion, IPlanetariumFactory planetariumFactory, IDockManagerVM dockManagerVM,
+            ISGPServiceHost sgpServiceHost) : base(profileService) {
             Title = "LblOptions";
             CanClose = false;
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
@@ -50,6 +53,7 @@ namespace NINA.ViewModel {
             this.projectVersion = projectVersion;
             this.planetariumFactory = planetariumFactory;
             this.filterWheelMediator = filterWheelMediator;
+            this.sgpServiceHost = sgpServiceHost;
             DockManagerVM = dockManagerVM;
             OpenWebRequestCommand = new RelayCommand(OpenWebRequest);
             OpenImageFileDiagCommand = new RelayCommand(OpenImageFileDiag);
@@ -99,6 +103,7 @@ namespace NINA.ViewModel {
             profileService.ProfileChanged += (object sender, EventArgs e) => {
                 ProfileChanged();
             };
+            ToggleSGPService();
         }
 
         private void OpenStartupSequenceTemplateDiag(object obj) {
@@ -113,6 +118,7 @@ namespace NINA.ViewModel {
             }
         }
 
+        private readonly ISGPServiceHost sgpServiceHost;
         public IAllDeviceConsumer DeviceConsumer { get; }
 
         private void OpenLogFolder(object obj) {
@@ -198,10 +204,16 @@ namespace NINA.ViewModel {
             }
         }
 
-        private void SelectProfile(object obj) {
-            if (profileService.SelectProfile(SelectedProfile)) {
-                ProfileChanged();
+        private void ToggleSGPService() {
+            if (SGPServerEnabled) {
+                sgpServiceHost.RunService();
             } else {
+                sgpServiceHost.Stop();
+            }
+        }
+
+        private void SelectProfile(object obj) {
+            if (!profileService.SelectProfile(SelectedProfile)) {
                 Notification.ShowWarning(Locale.Loc.Instance["LblLoadProfileInUseWarning"]);
                 ProfileService.ActivateInstanceOfNinaReferencingProfile(SelectedProfile.Id.ToString());
             }
@@ -588,6 +600,16 @@ namespace NINA.ViewModel {
             set {
                 NINA.Properties.Settings.Default.UseSavedProfileSelection = value;
                 NINA.Properties.Settings.Default.Save();
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool SGPServerEnabled {
+            get => NINA.Properties.Settings.Default.SGPServerEnabled;
+            set {
+                NINA.Properties.Settings.Default.SGPServerEnabled = value;
+                NINA.Properties.Settings.Default.Save();
+                ToggleSGPService();
                 RaisePropertyChanged();
             }
         }

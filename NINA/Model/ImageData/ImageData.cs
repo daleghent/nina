@@ -317,7 +317,7 @@ namespace NINA.Model.ImageData {
 
         private string SaveTiff(FileSaveInfo fileSaveInfo) {
             Directory.CreateDirectory(Path.GetDirectoryName(fileSaveInfo.FilePath));
-            string uniquePath = Utility.Utility.GetUniqueFilePath(fileSaveInfo.FilePath + ".tif");
+            string uniquePath = Utility.Utility.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(".tif"));
 
             using (FileStream fs = new FileStream(uniquePath, FileMode.Create)) {
                 TiffBitmapEncoder encoder = new TiffBitmapEncoder();
@@ -349,7 +349,7 @@ namespace NINA.Model.ImageData {
             f.PopulateHeaderCards(MetaData);
 
             Directory.CreateDirectory(Path.GetDirectoryName(fileSaveInfo.FilePath));
-            string uniquePath = Utility.Utility.GetUniqueFilePath(fileSaveInfo.FilePath + ".fits");
+            string uniquePath = Utility.Utility.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(".fits"));
 
             using (FileStream fs = new FileStream(uniquePath, FileMode.Create)) {
                 f.Write(fs);
@@ -370,7 +370,7 @@ namespace NINA.Model.ImageData {
             img.AddAttachedImage(Data.FlatArray, fileSaveInfo);
 
             Directory.CreateDirectory(Path.GetDirectoryName(fileSaveInfo.FilePath));
-            string uniquePath = Utility.Utility.GetUniqueFilePath(fileSaveInfo.FilePath + ".xisf");
+            string uniquePath = Utility.Utility.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(".xisf"));
 
             using (FileStream fs = new FileStream(uniquePath, FileMode.Create)) {
                 img.Save(fs);

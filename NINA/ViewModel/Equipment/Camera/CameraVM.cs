@@ -33,11 +33,12 @@ namespace NINA.ViewModel.Equipment.Camera {
 
     internal class CameraVM : DockableVM, ICameraVM {
 
-        public CameraVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public CameraVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator,
+            IDeviceChooserVM cameraChooserVM) : base(profileService) {
             Title = "LblCamera";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CameraSVG"];
 
-            CameraChooserVM = new CameraChooserVM(profileService, telescopeMediator);
+            CameraChooserVM = cameraChooserVM;
             CameraChooserVM.GetEquipment();
 
             this.cameraMediator = cameraMediator;
@@ -98,7 +99,7 @@ namespace NINA.ViewModel.Equipment.Camera {
 
         private ICameraMediator cameraMediator;
 
-        public CameraChooserVM CameraChooserVM { get; set; }
+        public IDeviceChooserVM CameraChooserVM { get; set; }
 
         private bool _tempChangeRunning;
 

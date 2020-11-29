@@ -24,7 +24,7 @@ using NINA.Utility.AtikSDK;
 using ZWOptical.EFWSDK;
 
 namespace NINA.ViewModel.Equipment.FilterWheel {
-    internal class FilterWheelChooserVM : EquipmentChooserVM {
+    internal class FilterWheelChooserVM : EquipmentChooserVM, IDeviceChooserVM {
         public FilterWheelChooserVM(IProfileService profileService) : base(profileService) {
         }
 

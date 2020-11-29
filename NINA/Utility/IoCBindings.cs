@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.API.SGP;
 using NINA.Model.MyPlanetarium;
 using NINA.Profile;
 using NINA.Sequencer;
@@ -88,6 +89,9 @@ namespace NINA.Utility {
                 Bind<IImageHistoryVM>().To<ImageHistoryVM>().InSingletonScope();
                 Bind<IImageStatisticsVM>().To<ImageStatisticsVM>().InSingletonScope();
                 Bind<IDeviceChooserVM>().To<DomeChooserVM>().WhenInjectedExactlyInto<DomeVM>().InSingletonScope();
+                Bind<IDeviceChooserVM>().To<CameraChooserVM>().WhenInjectedExactlyInto<CameraVM>().InSingletonScope();
+                Bind<IDeviceChooserVM>().To<CameraChooserVM>().WhenInjectedExactlyInto<SGPServiceBackend>().InSingletonScope();
+                Bind<IDeviceChooserVM>().To<FilterWheelChooserVM>().WhenInjectedExactlyInto<FilterWheelVM>().InSingletonScope();
                 Bind<IDeviceChooserVM>().To<GuiderChooserVM>().WhenInjectedExactlyInto<GuiderVM>().InSingletonScope();
 
                 Bind<ProjectVersion>().ToMethod(f => new ProjectVersion(Utility.Version)).InSingletonScope();
@@ -143,6 +147,9 @@ namespace NINA.Utility {
                 Bind<ISequence2VM>().To<Sequence2VM>().InSingletonScope();
                 Bind<IImageSaveMediator>().To<ImageSaveMediator>().InSingletonScope();
                 Bind<IImageSaveController>().To<ImageSaveController>().InSingletonScope();
+                Bind<ISGPServiceHost>().To<SGPServiceHost>().InSingletonScope();
+                Bind<ISGPService>().To<SGPServiceFrontend>().InSingletonScope();
+                Bind<ISGPServiceBackend>().To<SGPServiceBackend>().InSingletonScope();
                 Bind<ISequenceNavigationVM>().To<SequenceNavigationVM>().InSingletonScope();
                 Bind<ISequencerFactory>().To<SequencerFactory>().InSingletonScope();
             } catch (Exception e) {

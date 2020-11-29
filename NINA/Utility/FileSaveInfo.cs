@@ -20,6 +20,7 @@ namespace NINA.Utility {
     public class FileSaveInfo {
         public string FilePath { get; set; }
         public string FilePattern { get; set; }
+        public string ForceExtension { get; set; }
         public FileTypeEnum FileType { get; set; } = FileTypeEnum.FITS;
         public TIFFCompressionTypeEnum TIFFCompressionType { get; set; } = TIFFCompressionTypeEnum.NONE;
         public XISFCompressionTypeEnum XISFCompressionType { get; set; } = XISFCompressionTypeEnum.NONE;
@@ -36,6 +37,10 @@ namespace NINA.Utility {
                 XISFByteShuffling = profileService.ActiveProfile.ImageFileSettings.XISFByteShuffling;
                 XISFChecksumType = profileService.ActiveProfile.ImageFileSettings.XISFChecksumType;
             }
+        }
+
+        public string GetExtension(string defaultExtension) {
+            return string.IsNullOrEmpty(ForceExtension) ? defaultExtension : ForceExtension;
         }
     }
 }

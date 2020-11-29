@@ -70,5 +70,17 @@ namespace NINA.Properties {
                 this["AutoUpdateSource"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool SGPServerEnabled {
+            get {
+                return ((bool)(this["SGPServerEnabled"]));
+            }
+            set {
+                this["SGPServerEnabled"] = value;
+            }
+        }
     }
 }

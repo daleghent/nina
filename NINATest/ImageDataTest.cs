@@ -339,7 +339,7 @@ namespace NINATest {
         [TestCase(NINA.Utility.Enum.FileTypeEnum.XISF, ".xisf")]
         [TestCase(NINA.Utility.Enum.FileTypeEnum.FITS, ".fits")]
         [TestCase(NINA.Utility.Enum.FileTypeEnum.TIFF, ".tif")]
-        public async Task SaveToDiskXISFSimpleTest(NINA.Utility.Enum.FileTypeEnum fileType, string extension) {
+        public async Task SaveToDiskSimpleTest(NINA.Utility.Enum.FileTypeEnum fileType, string extension) {
             var data = new ushort[] {
                 3,1,1,
                 3,4,5,
@@ -352,7 +352,34 @@ namespace NINATest {
                 FileType = fileType
             };
 
-            //var sut = await new ImageArrayExposureData(data, 3, 3, 16, false, new ImageMetaData()).ToImageData();
+            var sut = new ImageData(data, 3, 3, 16, false, MetaData);
+
+            var file = await sut.SaveToDisk(fileSaveInfo, default);
+
+            File.Exists(file).Should().BeTrue();
+            File.Delete(file);
+            Path.GetFileName(file).Should().Be($"{fileSaveInfo.FilePattern}{extension}");
+        }
+
+        [Test]
+        [TestCase(NINA.Utility.Enum.FileTypeEnum.XISF)]
+        [TestCase(NINA.Utility.Enum.FileTypeEnum.FITS)]
+        [TestCase(NINA.Utility.Enum.FileTypeEnum.TIFF)]
+        public async Task SaveToDiskForceExtensionTest(NINA.Utility.Enum.FileTypeEnum fileType) {
+            var data = new ushort[] {
+                3,1,1,
+                3,4,5,
+                3,2,3
+            };
+
+            var extension = ".bar";
+            var fileSaveInfo = new FileSaveInfo {
+                FilePath = TestContext.CurrentContext.TestDirectory,
+                FilePattern = "TestFile",
+                ForceExtension = extension,
+                FileType = fileType
+            };
+
             var sut = new ImageData(data, 3, 3, 16, false, MetaData);
 
             var file = await sut.SaveToDisk(fileSaveInfo, default);

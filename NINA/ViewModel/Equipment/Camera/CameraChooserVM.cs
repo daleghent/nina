@@ -26,7 +26,7 @@ using ZWOptical.ASISDK;
 
 namespace NINA.ViewModel.Equipment.Camera {
 
-    internal class CameraChooserVM : EquipmentChooserVM {
+    internal class CameraChooserVM : EquipmentChooserVM, IDeviceChooserVM {
         private ITelescopeMediator telescopeMediator;
 
         public CameraChooserVM(IProfileService profileService, ITelescopeMediator telescopeMediator) : base(profileService) {
