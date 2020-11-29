@@ -12,7 +12,12 @@
 
 #endregion "copyright"
 
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace NINA.Utility.Enum {
 
@@ -23,9 +28,6 @@ namespace NINA.Utility.Enum {
         DYNAMICEXPOSURE,
 
         [Description("LblDynamicBrightness")]
-        DYNAMICBRIGHTNESS,
-
-        [Description("LblSkyFlat")]
-        SKYFLAT
+        DYNAMICBRIGHTNESS
     }
 }

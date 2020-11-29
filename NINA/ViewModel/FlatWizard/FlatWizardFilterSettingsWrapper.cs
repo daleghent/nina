@@ -16,7 +16,6 @@ using NINA.Model.MyCamera;
 using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFlatDevice;
 using NINA.Utility;
-using NINA.Utility.ImageAnalysis;
 
 namespace NINA.ViewModel.FlatWizard {
 
@@ -66,21 +65,32 @@ namespace NINA.ViewModel.FlatWizard {
         }
 
         public FilterInfo Filter {
-            get => filterInfo;
+            get {
+                return filterInfo;
+            }
             set {
                 filterInfo = value;
                 RaisePropertyChanged();
             }
         }
 
-        public string HistogramMeanTargetADU => HistogramMath.HistogramMeanAndCameraBitDepthToAdu(settings.HistogramMeanTarget, BitDepth).ToString("0");
+        public string HistogramMeanTargetADU {
+            get {
+                return FlatWizardExposureTimeFinderService.HistogramMeanAndCameraBitDepthToAdu(settings.HistogramMeanTarget, BitDepth).ToString("0");
+            }
+        }
 
-        public string HistogramToleranceADU =>
-            HistogramMath.GetLowerToleranceBoundInAdu(settings.HistogramMeanTarget, BitDepth, settings.HistogramTolerance).ToString("0")
-            + " - " + HistogramMath.GetUpperToleranceBoundInAdu(settings.HistogramMeanTarget, BitDepth, settings.HistogramTolerance).ToString("0");
+        public string HistogramToleranceADU {
+            get {
+                return FlatWizardExposureTimeFinderService.GetLowerToleranceBoundInAdu(settings.HistogramMeanTarget, BitDepth, settings.HistogramTolerance).ToString("0")
+                    + " - " + FlatWizardExposureTimeFinderService.GetUpperToleranceBoundInAdu(settings.HistogramMeanTarget, BitDepth, settings.HistogramTolerance).ToString("0");
+            }
+        }
 
         public bool IsChecked {
-            get => isChecked;
+            get {
+                return isChecked;
+            }
 
             set {
                 isChecked = value;
@@ -89,7 +99,9 @@ namespace NINA.ViewModel.FlatWizard {
         }
 
         public FlatWizardFilterSettings Settings {
-            get => settings;
+            get {
+                return settings;
+            }
             set {
                 settings = value;
                 RaisePropertyChanged();

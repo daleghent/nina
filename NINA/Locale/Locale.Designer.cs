@@ -12069,15 +12069,6 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sky Flats.
-        /// </summary>
-        internal static string LblSkyFlat {
-            get {
-                return ResourceManager.GetString("LblSkyFlat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Sky Position.
         /// </summary>
         internal static string LblSkyPosition {

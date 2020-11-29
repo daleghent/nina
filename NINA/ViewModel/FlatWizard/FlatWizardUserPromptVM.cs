@@ -16,72 +16,93 @@ using NINA.Utility;
 
 namespace NINA.ViewModel.FlatWizard {
 
-    internal class FlatWizardUserPromptVM : BaseINPC, IFlatWizardUserPromptVM {
+    internal class FlatWizardUserPromptVM : BaseINPC {
+        private readonly string text;
+        private readonly double currentMean;
+        private readonly double cameraBitDepth;
+        private bool continueWizard;
+        private FlatWizardFilterSettingsWrapper settings;
+
+        private bool reset;
+        private readonly double expectedExposureTime;
+
         public RelayCommand ResetAndContinueCommand { get; }
         public RelayCommand ContinueCommand { get; }
         public RelayCommand CancelCommand { get; }
-        public DialogResult Result { get; set; }
 
-        public FlatWizardUserPromptVM() {
+        public FlatWizardUserPromptVM(string text, double currentMean, double cameraBitDepth, FlatWizardFilterSettingsWrapper settings, double expectedExposureTime) {
+            this.text = text;
+            this.currentMean = currentMean;
+            this.cameraBitDepth = cameraBitDepth;
+            this.expectedExposureTime = expectedExposureTime;
+            this.settings = settings;
             ResetAndContinueCommand = new RelayCommand(ResetAndContinueContinueFlatWizard);
             ContinueCommand = new RelayCommand(ContinueFlatWizard);
             CancelCommand = new RelayCommand(CancelFlatWizard);
         }
 
         private void ResetAndContinueContinueFlatWizard(object obj) {
-            Result = DialogResult.ResetAndContinue;
+            Continue = true;
+            Reset = true;
         }
 
         private void CancelFlatWizard(object obj) {
-            Result = DialogResult.Cancel;
+            Continue = false;
         }
 
         private void ContinueFlatWizard(object obj) {
-            Result = DialogResult.Continue;
+            Continue = true;
         }
 
-        private FlatWizardFilterSettingsWrapper settings;
-        private string message;
-        private double currentMean;
-        private double cameraBitDepth;
-        private double expectedExposureTime;
-
         public FlatWizardFilterSettingsWrapper Settings {
-            get => settings;
+            get {
+                return settings;
+            }
             set {
                 settings = value;
                 RaisePropertyChanged();
             }
         }
 
-        public string Message {
-            get => message;
+        public bool Continue {
+            get {
+                return continueWizard;
+            }
             set {
-                message = value;
-                RaisePropertyChanged();
+                continueWizard = value;
+            }
+        }
+
+        public string Text {
+            get {
+                return text;
             }
         }
 
         public double CurrentMean {
-            get => currentMean;
-            set {
-                currentMean = value;
-                RaisePropertyChanged();
+            get {
+                return currentMean;
             }
         }
 
         public double CameraBitDepth {
-            get => cameraBitDepth;
-            set {
-                cameraBitDepth = value;
-                RaisePropertyChanged();
+            get {
+                return cameraBitDepth;
             }
         }
 
         public double ExpectedExposureTime {
-            get => expectedExposureTime;
+            get {
+                return expectedExposureTime;
+            }
+        }
+
+        public bool Reset {
+            get {
+                return reset;
+            }
             set {
-                expectedExposureTime = value;
+                reset = value;
                 RaisePropertyChanged();
             }
         }
