@@ -387,6 +387,42 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exits the loop when the moon&apos;s altitude matches the specified parameters..
+        /// </summary>
+        internal static string Lbl_SequenceCondition_MoonAltitudeCondition_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_MoonAltitudeCondition_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moon Altitude.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_MoonAltitudeCondition_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_MoonAltitudeCondition_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exits the loop when the moon&apos;s illumination level matches the specified parameters..
+        /// </summary>
+        internal static string Lbl_SequenceCondition_MoonIlluminationCondition_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_MoonIlluminationCondition_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moon Illumination.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_MoonIlluminationCondition_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_MoonIlluminationCondition_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
         ///Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays true..
         /// </summary>
@@ -402,6 +438,24 @@ namespace NINA.Locale {
         internal static string Lbl_SequenceCondition_SafetyMonitorCondition_Name {
             get {
                 return ResourceManager.GetString("Lbl_SequenceCondition_SafetyMonitorCondition_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exits the loop when the sun&apos;s altitude matches the specified paramters..
+        /// </summary>
+        internal static string Lbl_SequenceCondition_SunAltitudeCondition_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_SunAltitudeCondition_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sun Altitude.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_SunAltitudeCondition_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_SunAltitudeCondition_Name", resourceCulture);
             }
         }
         
@@ -1415,6 +1469,60 @@ namespace NINA.Locale {
         internal static string Lbl_SequenceItem_Utility_WaitForAltitude_Progress {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForAltitude_Progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waits if the moon&apos;s altitude matches the specified parameters.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForMoonAltitude_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForMoonAltitude_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait if Moon Altitude.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForMoonAltitude_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForMoonAltitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting due to moon altitude ({0}° {1} {2}°).
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waits if the sun&apos;s altitude matches the specified parameters.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForSunAltitude_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForSunAltitude_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait if Sun Altitude.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForSunAltitude_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForSunAltitude_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting due to sun altitude ({0}° {1} {2}°).
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitForSunAltitude_Progress {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForSunAltitude_Progress", resourceCulture);
             }
         }
         
@@ -3777,6 +3885,60 @@ namespace NINA.Locale {
         internal static string LblColorSensorNotSupported {
             get {
                 return ResourceManager.GetString("LblColorSensorNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to =.
+        /// </summary>
+        internal static string LblComparatorEquals {
+            get {
+                return ResourceManager.GetString("LblComparatorEquals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &gt;.
+        /// </summary>
+        internal static string LblComparatorGreaterThan {
+            get {
+                return ResourceManager.GetString("LblComparatorGreaterThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ≥.
+        /// </summary>
+        internal static string LblComparatorGreaterThanOrEqual {
+            get {
+                return ResourceManager.GetString("LblComparatorGreaterThanOrEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ≤.
+        /// </summary>
+        internal static string LblComparatorLessThanOrEqual {
+            get {
+                return ResourceManager.GetString("LblComparatorLessThanOrEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ≠.
+        /// </summary>
+        internal static string LblComparatorNotEqual {
+            get {
+                return ResourceManager.GetString("LblComparatorNotEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;.
+        /// </summary>
+        internal static string LblCompatatorLessThan {
+            get {
+                return ResourceManager.GetString("LblCompatatorLessThan", resourceCulture);
             }
         }
         

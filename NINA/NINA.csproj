@@ -533,6 +533,9 @@
     <Compile Include="Profile\Interfaces\ISnapShotControlSettings.cs" />
     <Compile Include="Profile\SafetyMonitorSettings.cs" />
     <Compile Include="Profile\SnapShotControlSettings.cs" />
+    <Compile Include="Sequencer\Conditions\MoonIlluminationCondition.cs" />
+    <Compile Include="Sequencer\Conditions\SunAltitudeCondition.cs" />
+    <Compile Include="Sequencer\Conditions\MoonAltitudeCondition.cs" />
     <Compile Include="Sequencer\Conditions\AltitudeCondition.cs" />
     <Compile Include="Sequencer\Conditions\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
@@ -610,6 +613,8 @@
     <Compile Include="Sequencer\SequenceItem\Utility\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sequencer\SequenceItem\Utility\WaitForSunAltitude.cs" />
+    <Compile Include="Sequencer\SequenceItem\Utility\WaitForMoonAltitude.cs" />
     <Compile Include="Sequencer\Serialization\JsonCreationConverter.cs" />
     <Compile Include="Sequencer\Serialization\SequenceConditionCreationConverter.cs" />
     <Compile Include="Sequencer\Serialization\SequenceContainerCreationConverter.cs" />
@@ -642,6 +647,8 @@
     <Compile Include="Sequencer\Utility\DateTimeProvider\NauticalDawnProvider.cs" />
     <Compile Include="Sequencer\Utility\DateTimeProvider\NauticalDuskProvider.cs" />
     <Compile Include="Utility\Astrometry\RiseAndSet\NauticalTwilightRiseAndSet.cs" />
+    <Compile Include="Utility\AttributeHelper.cs" />
+    <Compile Include="Utility\Enum\ComparisonOperatorEnum.cs" />
     <Compile Include="ViewModel\Sequencer\ISequenceNavigationVM.cs" />
     <Compile Include="ViewModel\Sequencer\SequenceNavigationVM.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleDSOContainer.cs" />

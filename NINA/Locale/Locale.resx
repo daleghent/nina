@@ -5036,6 +5036,60 @@ There the sequence can be planned from scratch using fine granular instructions,
   <data name="LblProfileChooserOnStartup" xml:space="preserve">
     <value>Profile Chooser on Startup</value>
   </data>
+  <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Description" xml:space="preserve">
+    <value>Exits the loop when the moon's altitude matches the specified parameters.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
+    <value>Moon Altitude</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
+    <value>Exits the loop when the sun's altitude matches the specified paramters.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
+    <value>Sun Altitude</value>
+  </data>
+  <data name="LblComparatorEquals" xml:space="preserve">
+    <value>=</value>
+  </data>
+  <data name="LblComparatorGreaterThan" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
+  <data name="LblComparatorGreaterThanOrEqual" xml:space="preserve">
+    <value>≥</value>
+  </data>
+  <data name="LblComparatorLessThanOrEqual" xml:space="preserve">
+    <value>≤</value>
+  </data>
+  <data name="LblComparatorNotEqual" xml:space="preserve">
+    <value>≠</value>
+  </data>
+  <data name="LblCompatatorLessThan" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Description" xml:space="preserve">
+    <value>Waits if the moon's altitude matches the specified parameters</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Name" xml:space="preserve">
+    <value>Wait if Moon Altitude</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress" xml:space="preserve">
+    <value>Waiting due to moon altitude ({0}° {1} {2}°)</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Description" xml:space="preserve">
+    <value>Waits if the sun's altitude matches the specified parameters</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Name" xml:space="preserve">
+    <value>Wait if Sun Altitude</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Progress" xml:space="preserve">
+    <value>Waiting due to sun altitude ({0}° {1} {2}°)</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Description" xml:space="preserve">
+    <value>Exits the loop when the moon's illumination level matches the specified parameters.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Name" xml:space="preserve">
+    <value>Moon Illumination</value>
+  </data>
   <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
     <value>Target Closure Instructions</value>
   </data>

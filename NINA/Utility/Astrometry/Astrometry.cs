@@ -555,6 +555,26 @@ namespace NINA.Utility.Astrometry {
             return CalculateMoonIllumination(date);
         }
 
+        public static double GetMoonAltitude(DateTime date, double latitude, double longitude) {
+            var jd = GetJulianDate(date);
+            var tuple = GetMoonAndSunPosition(date, jd);
+
+            var siderealTime = GetLocalSiderealTime(date, longitude);
+            var hourAngle = HoursToDegrees(GetHourAngle(siderealTime, tuple.Item1.RA));
+
+            return GetAltitude(hourAngle, latitude, tuple.Item1.Dec);
+        }
+
+        public static double GetSunAltitude(DateTime date, double latitude, double longitude) {
+            var jd = GetJulianDate(date);
+            var tuple = GetMoonAndSunPosition(date, jd);
+
+            var siderealTime = GetLocalSiderealTime(date, longitude);
+            var hourAngle = HoursToDegrees(GetHourAngle(siderealTime, tuple.Item2.RA));
+
+            return GetAltitude(hourAngle, latitude, tuple.Item2.Dec);
+        }
+
         /// <summary>
         /// Calculates arcseconds per pixel for given pixelsize and focallength
         /// </summary>

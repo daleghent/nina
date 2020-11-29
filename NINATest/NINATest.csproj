@@ -276,8 +276,11 @@
     <Compile Include="RMSTest.cs" />
     <Compile Include="Sequencer\Conditions\AltitudeConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\LoopConditionTest.cs" />
+    <Compile Include="Sequencer\Conditions\MoonIlluminationConditionTest.cs" />
+    <Compile Include="Sequencer\Conditions\SunAltitudeConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\SafetyMonitorConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\SequenceConditionTest.cs" />
+    <Compile Include="Sequencer\Conditions\MoonAltitudeConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\TimeConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\TimeSpanConditionTest.cs" />
     <Compile Include="Sequencer\Container\ExecutionStrategy\ParallelStrategyTest.cs" />
@@ -314,6 +317,8 @@
     <Compile Include="Sequencer\SequenceItem\Utility\AnnotationTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\ExternalScriptTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\MessageBoxTest.cs" />
+    <Compile Include="Sequencer\SequenceItem\Utility\WaitForSunAltitudeTest.cs" />
+    <Compile Include="Sequencer\SequenceItem\Utility\WaitForMoonAltitudeTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\WaitForAltitudeTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\WaitForTimeSpanTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\WaitForTimeTest.cs" />

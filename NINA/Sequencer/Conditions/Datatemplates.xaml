@@ -452,4 +452,178 @@
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
     </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Conditions.MoonAltitudeCondition_Mini">
+        <mini:MiniCondition DataContext="{Binding}">
+            <mini:MiniCondition.ConditionProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc Lbl_SequenceCondition_MoonAltitudeCondition_Name}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text=":" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CurrentMoonAltitude, StringFormat={}{0:0.00}}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Comparator}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding UserMoonAltitude, StringFormat={}{0:0.00}}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                </StackPanel>
+            </mini:MiniCondition.ConditionProgressContent>
+        </mini:MiniCondition>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:MoonAltitudeCondition}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblLoopUntil}" />
+                        <TextBlock VerticalAlignment="Center" Text=":" />
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAltitude}" Margin="5,0,0,0" />
+                        <ComboBox
+                            Margin="5,0,0,0"
+                            SelectedValue="{Binding Comparator}"
+                            ItemsSource="{Binding ComparisonOperators}" />
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            TextAlignment="Right">
+                            <TextBox.Text>
+                                <Binding Path="UserMoonAltitude" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:DoubleRangeRule>
+                                            <rules:DoubleRangeRule.ValidRange>
+                                                <rules:DoubleRangeChecker Minimum="-90" Maximum="90" />
+                                            </rules:DoubleRangeRule.ValidRange>
+                                        </rules:DoubleRangeRule>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock VerticalAlignment="Center" Text="°" />
+                    </StackPanel>
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+            <view:SequenceBlockView.SequenceItemProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAltitude}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text=":" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CurrentMoonAltitude, StringFormat={}{0:0.00}}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemProgressContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Conditions.MoonIlluminationCondition_Mini">
+        <mini:MiniCondition DataContext="{Binding}">
+            <mini:MiniCondition.ConditionProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc Lbl_SequenceCondition_MoonIlluminationCondition_Name}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text=":" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CurrentMoonIllumination, StringFormat={}{0:0.00}}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="%" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Comparator}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding UserMoonIllumination, StringFormat={}{0:0.00}}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="%" />
+                </StackPanel>
+            </mini:MiniCondition.ConditionProgressContent>
+        </mini:MiniCondition>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:MoonIlluminationCondition}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblLoopUntil}" />
+                        <TextBlock VerticalAlignment="Center" Text=":" />
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIllumination}" Margin="5,0,0,0" />
+                        <ComboBox
+                            Margin="5,0,0,0"
+                            SelectedValue="{Binding Comparator}"
+                            ItemsSource="{Binding ComparisonOperators}" />
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            TextAlignment="Right">
+                            <TextBox.Text>
+                                <Binding Path="UserMoonIllumination" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:DoubleRangeRule>
+                                            <rules:DoubleRangeRule.ValidRange>
+                                                <rules:DoubleRangeChecker Minimum="0" Maximum="100" />
+                                            </rules:DoubleRangeRule.ValidRange>
+                                        </rules:DoubleRangeRule>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock VerticalAlignment="Center" Text="%" />
+                    </StackPanel>
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+            <view:SequenceBlockView.SequenceItemProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIllumination}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text=":" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CurrentMoonIllumination, StringFormat={}{0:0.00}}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="%" />
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemProgressContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Conditions.SunAltitudeCondition_Mini">
+        <mini:MiniCondition DataContext="{Binding}">
+            <mini:MiniCondition.ConditionProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc Lbl_SequenceCondition_SunAltitudeCondition_Name}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text=":" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CurrentSunAltitude, StringFormat={}{0:0.00}}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Comparator}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding UserSunAltitude, StringFormat={}{0:0.00}}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                </StackPanel>
+            </mini:MiniCondition.ConditionProgressContent>
+        </mini:MiniCondition>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:SunAltitudeCondition}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblLoopUntil}" />
+                        <TextBlock VerticalAlignment="Center" Text=":" />
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAltitude}" Margin="5,0,0,0" />
+                        <ComboBox
+                            Margin="5,0,0,0"
+                            SelectedValue="{Binding Comparator}"
+                            ItemsSource="{Binding ComparisonOperators}" />
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            TextAlignment="Right">
+                            <TextBox.Text>
+                                <Binding Path="UserSunAltitude" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:DoubleRangeRule>
+                                            <rules:DoubleRangeRule.ValidRange>
+                                                <rules:DoubleRangeChecker Minimum="-90" Maximum="90" />
+                                            </rules:DoubleRangeRule.ValidRange>
+                                        </rules:DoubleRangeRule>
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock VerticalAlignment="Center" Text="°" />
+                    </StackPanel>
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+            <view:SequenceBlockView.SequenceItemProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAltitude}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text=":" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CurrentSunAltitude, StringFormat={}{0:0.00}}" Margin="5,0,0,0" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemProgressContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
 </ResourceDictionary>
