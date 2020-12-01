@@ -252,6 +252,10 @@ namespace NINA.Sequencer.Container {
             set {
                 this.rotateLoopCondition.Iterations = value;
                 RaisePropertyChanged();
+                this.ResetProgressCascaded();
+                foreach (var item in Items) {
+                    item.ResetProgress();
+                }
             }
         }
 

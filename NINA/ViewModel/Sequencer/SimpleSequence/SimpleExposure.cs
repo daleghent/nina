@@ -196,11 +196,13 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
         }
 
         private void LoopCondition_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            var loopCondition = (LoopCondition)sender;
-            foreach (var item in loopCondition.Parent?.Items) {
-                item.ResetProgress();
+            if (e.PropertyName == nameof(LoopCondition.Iterations)) {
+                var loopCondition = (LoopCondition)sender;
+                foreach (var item in loopCondition.Parent?.Items) {
+                    item.ResetProgress();
+                }
+                loopCondition.Parent?.ResetProgressCascaded();
             }
-            loopCondition.Parent?.ResetProgressCascaded();
         }
     }
 }
