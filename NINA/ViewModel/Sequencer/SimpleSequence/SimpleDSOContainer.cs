@@ -199,6 +199,7 @@ namespace NINA.Sequencer.Container {
 
             SelectedSimpleExposure = item;
             ActiveExposure = Items.FirstOrDefault() as SimpleExposure;
+            this.ResetProgressCascaded();
             return item;
         }
 
@@ -227,6 +228,7 @@ namespace NINA.Sequencer.Container {
 
         private void ResetSimpleExposure(object obj) {
             SelectedSimpleExposure?.ResetAll();
+            this.ResetProgressCascaded();
         }
 
         private void PromoteSimpleExposure(object obj) {

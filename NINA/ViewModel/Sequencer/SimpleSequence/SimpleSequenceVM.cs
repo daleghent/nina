@@ -410,6 +410,7 @@ namespace NINA.ViewModel {
                     SelectedTarget = (SimpleDSOContainer)Targets.Items.FirstOrDefault();
                 }
             }
+            SelectedTarget?.ResetProgressCascaded();
             return Targets?.Items.Count > 0;
         }
 
@@ -421,6 +422,7 @@ namespace NINA.ViewModel {
         private void AddDefaultTarget(object obj) {
             this.Targets.Add(GetTemplate());
             SelectedTarget = Targets.Items.Last() as SimpleDSOContainer;
+            SelectedTarget?.ResetProgressCascaded();
         }
 
         public void AddTarget(DeepSkyObject deepSkyObject) {
@@ -430,6 +432,7 @@ namespace NINA.ViewModel {
             target.Target.Rotation = deepSkyObject.Rotation;
             this.Targets.Add(target);
             SelectedTarget = Targets.Items.Last() as SimpleDSOContainer;
+            SelectedTarget?.ResetProgressCascaded();
         }
 
         private void SaveTargetSet(object obj) {
@@ -477,6 +480,7 @@ namespace NINA.ViewModel {
                     SelectedTarget = Targets.Items.FirstOrDefault() as SimpleDSOContainer;
                 }
             }
+            SelectedTarget?.ResetProgressCascaded();
             return Targets?.Items.Count > 0;
         }
 
@@ -507,6 +511,7 @@ namespace NINA.ViewModel {
                     }
                 }
             }
+            SelectedTarget?.ResetProgressCascaded();
             return Targets?.Items.Count > 0;
         }
 

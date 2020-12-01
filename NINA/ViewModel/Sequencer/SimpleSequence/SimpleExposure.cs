@@ -63,6 +63,8 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
             this.Add(takeExposure);
             this.Add(loopCondition);
 
+            loopCondition.PropertyChanged += LoopCondition_PropertyChanged;
+
             IsExpanded = false;
             Enabled = true;
         }
@@ -187,7 +189,18 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
             foreach (var trigger in clone.Triggers) {
                 trigger.AttachNewParent(clone);
             }
+
+            clone.GetLoopCondition().PropertyChanged += LoopCondition_PropertyChanged;
+
             return clone;
+        }
+
+        private void LoopCondition_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+            var loopCondition = (LoopCondition)sender;
+            foreach (var item in loopCondition.Parent?.Items) {
+                item.ResetProgress();
+            }
+            loopCondition.Parent?.ResetProgressCascaded();
         }
     }
 }
