@@ -3892,6 +3892,12 @@ No caso de ser necessário efectuar o aquecimento de uma forma mais prolongada, 
   <data name="LblDomeScopeNS" xml:space="preserve">
     <value>Scope Position N/S (mm)</value>
   </data>
+  <data name="LblDomeFollowPointingError" xml:space="preserve">
+    <value>Dome following may be inaccurate. Check that your mount epoch is configured correctly and do a plate solve sync</value>
+  </data>
+  <data name="LblDomeFollowError" xml:space="preserve">
+    <value>Error while syncing Dome. Dome following now stopped.</value>
+  </data>
   <data name="LblCancelSequence" xml:space="preserve">
     <value>Cancel Sequence</value>
   </data>
@@ -4011,9 +4017,6 @@ No caso de ser necessário efectuar o aquecimento de uma forma mais prolongada, 
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
     <value>Failed to resume guiding after star intensity recovered</value>
-  </data>
-  <data name="LblSkyFlat" xml:space="preserve">
-    <value>Sky Flats</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Dome synchronization error. No longer following telescope. {0}</value>
@@ -4914,6 +4917,21 @@ Example:
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>Focuser does not expose any valid temperature</value>
   </data>
+  <data name="LblServerEnabled" xml:space="preserve">
+    <value>Server Enabled</value>
+  </data>
+  <data name="LblServerEnabledTooltip" xml:space="preserve">
+    <value>Hosts a service on port 59590, currently with the same API as SGP to interoperate with existing applications. If the service fails to start, you may need to update some firewall settings with netsh (see NINA documentation).</value>
+  </data>
+  <data name="LblServerFailed" xml:space="preserve">
+    <value>Server failed to start. Check the NINA documentation. {0}</value>
+  </data>
+  <data name="LblServerStarted" xml:space="preserve">
+    <value>Server Started</value>
+  </data>
+  <data name="LblServerStopped" xml:space="preserve">
+    <value>Server Stopped</value>
+  </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>Close All</value>
   </data>
@@ -5027,6 +5045,60 @@ There the sequence can be planned from scratch using fine granular instructions,
   </data>
   <data name="LblProfileChooserOnStartup" xml:space="preserve">
     <value>Profile Chooser on Startup</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Description" xml:space="preserve">
+    <value>Exits the loop when the moon's altitude matches the specified parameters.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
+    <value>Moon Altitude</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
+    <value>Exits the loop when the sun's altitude matches the specified paramters.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
+    <value>Sun Altitude</value>
+  </data>
+  <data name="LblComparatorEquals" xml:space="preserve">
+    <value>=</value>
+  </data>
+  <data name="LblComparatorGreaterThan" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
+  <data name="LblComparatorGreaterThanOrEqual" xml:space="preserve">
+    <value>≥</value>
+  </data>
+  <data name="LblComparatorLessThanOrEqual" xml:space="preserve">
+    <value>≤</value>
+  </data>
+  <data name="LblComparatorNotEqual" xml:space="preserve">
+    <value>≠</value>
+  </data>
+  <data name="LblCompatatorLessThan" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Description" xml:space="preserve">
+    <value>Waits if the moon's altitude matches the specified parameters</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Name" xml:space="preserve">
+    <value>Wait if Moon Altitude</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress" xml:space="preserve">
+    <value>Waiting due to moon altitude ({0}° {1} {2}°)</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Description" xml:space="preserve">
+    <value>Waits if the sun's altitude matches the specified parameters</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Name" xml:space="preserve">
+    <value>Wait if Sun Altitude</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Progress" xml:space="preserve">
+    <value>Waiting due to sun altitude ({0}° {1} {2}°)</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Description" xml:space="preserve">
+    <value>Exits the loop when the moon's illumination level matches the specified parameters.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Name" xml:space="preserve">
+    <value>Moon Illumination</value>
   </data>
   <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
     <value>Target Closure Instructions</value>
