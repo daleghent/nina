@@ -525,20 +525,25 @@ namespace NINA.ViewModel {
         }
 
         private void SaveAsSequence(object obj) {
-            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
-            dialog.Title = Locale.Loc.Instance["LblSaveAsSequence"];
-            dialog.DefaultExt = ".xml";
-            dialog.Filter = "XML documents|*.xml";
-            dialog.OverwritePrompt = true;
+            try {
+                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+                dialog.Title = Locale.Loc.Instance["LblSaveAsSequence"];
+                dialog.DefaultExt = ".xml";
+                dialog.Filter = "XML documents|*.xml";
+                dialog.OverwritePrompt = true;
 
-            Regex r = new Regex($"[{new string(Path.GetInvalidFileNameChars())}]");
-            dialog.FileName = r.Replace(SelectedTarget.Target.TargetName, "-");
+                Regex r = new Regex($"[{new string(Path.GetInvalidFileNameChars())}]");
+                dialog.FileName = r.Replace(SelectedTarget.Target.TargetName, "-");
 
-            if (dialog.ShowDialog().Value) {
-                SelectedTarget.FileName = dialog.FileName;
-                var csl = MigrateToCaptureSequenceList(SelectedTarget);
-                csl.Save(dialog.FileName);
+                if (dialog.ShowDialog().Value) {
+                    SelectedTarget.FileName = dialog.FileName;
+                    var csl = MigrateToCaptureSequenceList(SelectedTarget);
+                    csl.Save(dialog.FileName);
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(ex.Message);
             }
         }
 
