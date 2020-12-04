@@ -65,6 +65,8 @@ namespace NINA.Sequencer {
         [ImportMany(typeof(ResourceDictionary))]
         public IEnumerable<ResourceDictionary> DataTemplateImports { get; private set; }
 
+        private List<Assembly> assemblies = new List<Assembly>();
+
         public SequencerFactory(
                 IProfileService profileService,
                 ICameraMediator cameraMediator,
@@ -113,11 +115,14 @@ namespace NINA.Sequencer {
                         plugin.Parts.ToArray();
 
                         catalog.Catalogs.Add(plugin);
+                        assemblies.Add(plugin.Assembly);
                     } catch (Exception ex) {
                         Logger.Error($"Failed to load plugin {file}", ex);
                     }
                 }
             }
+
+            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
             container = new CompositionContainer(catalog);
             container.ComposeExportedValue(profileService);
@@ -171,6 +176,10 @@ namespace NINA.Sequencer {
             ItemsView.SortDescriptions.Add(new SortDescription("Category", ListSortDirection.Ascending));
             ItemsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
             ItemsView.Filter += new Predicate<object>(ApplyViewFilter);
+        }
+
+        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
+            return this.assemblies.FirstOrDefault(x => x.GetName().Name == args.Name);
         }
 
         /// <summary>
