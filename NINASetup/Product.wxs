@@ -146,6 +146,8 @@
       <ComponentGroupRef Id="Sequencer_Examples_files" />
       <ComponentGroupRef Id="cs_CZ_files" />
       <ComponentGroupRef Id="Utility_ExifTool_files" />
+      <ComponentGroupRef Id="External_x86_MGEN_files" />
+      <ComponentGroupRef Id="External_x64_MGEN_files" />
     </Feature>
   </Product>
 
@@ -209,6 +211,7 @@
               <Directory Id="External_x64_NOVAS" Name="NOVAS" />
               <Directory Id="External_x64_SOFA" Name="SOFA" />
               <Directory Id="External_x64_FTDI" Name="FTDI" />
+              <Directory Id="External_x64_MGEN" Name="MGEN" />
             </Directory>
             <Directory Id="External_x86" Name="x86">
               <Directory Id="External_x86_Nikon" Name="Nikon">
@@ -251,6 +254,7 @@
               <Directory Id="External_x86_NOVAS" Name="NOVAS" />
               <Directory Id="External_x86_SOFA" Name="SOFA" />
               <Directory Id="External_x86_FTDI" Name="FTDI" />
+              <Directory Id="External_x86_MGEN" Name="MGEN" />
             </Directory>
           </Directory>
           <Directory Id="Utility" Name="Utility">
@@ -1710,6 +1714,20 @@
     <ComponentGroup Id="Utility_ExifTool_files" Directory="Utility_ExifTool">
       <Component Id="Utility_ExifTool_exiftool.exe" Guid="1a22e254-9192-445d-a126-30a00c9e13e1">
         <File Id="Utility_ExifTool_exiftool.exe" Name="exiftool.exe" Source="$(var.NINA_TargetDir)Utility\ExifTool\exiftool.exe" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="External_x86_MGEN_files" Directory="External_x86_MGEN">
+      <Component Win64="$(var.Win64)" Id="External_x86_MGEN_MG3lib.dll" Guid="201815f1-ab9e-462e-97e7-496cf9bdd053">
+        <File  DefaultVersion="65535.0.0.0" Id="External_x86_MGEN_MG3lib.dll" Name="MG3lib.dll" Source="$(var.NINA_TargetDir)External\x86\MGEN\MG3lib.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="External_x64_MGEN_files" Directory="External_x64_MGEN">
+      <Component Win64="$(var.Win64)" Id="External_x64_MGEN_MG3lib.dll" Guid="25032fe1-1d0f-4a32-b73e-0a6ff8895766">
+        <File  DefaultVersion="65535.0.0.0" Id="External_x64_MGEN_MG3lib.dll" Name="MG3lib.dll" Source="$(var.NINA_TargetDir)External\x64\MGEN\MG3lib.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
