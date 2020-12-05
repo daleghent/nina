@@ -457,7 +457,7 @@ namespace NINA.MGEN3 {
             LFD_IGNORE_KNOWN = 0x20,
         }
 
-        [StructLayout(LayoutKind.Sequential, Size = 80)]
+        [StructLayout(LayoutKind.Sequential)]
         public struct MGEN3_FrameData {
             public uint strSize;
             public uint query;
@@ -476,7 +476,11 @@ namespace NINA.MGEN3 {
             public float cal_ra_y;
             public float cal_dec_x;
             public float cal_dec_y;
+
+            [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I2)]
             public short[] pimage;
+
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
             public byte[] size;
         }
 
