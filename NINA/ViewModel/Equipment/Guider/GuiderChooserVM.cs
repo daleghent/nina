@@ -22,6 +22,7 @@ using System;
 using System.IO;
 
 namespace NINA.ViewModel.Equipment.Guider {
+
     internal class GuiderChooserVM : EquipmentChooserVM, IDeviceChooserVM {
         private readonly ICameraMediator cameraMediator;
         private readonly ITelescopeMediator telescopeMediator;
@@ -50,11 +51,13 @@ namespace NINA.ViewModel.Equipment.Guider {
                 Logger.Error(ex);
             }
 
-            try {
-                var mgen3 = new MGEN3.MGEN3(Path.Combine("FTDI", "ftd2xx.dll"), Path.Combine("MGEN", "MG3lib.dll"), new MGenLogger());
-                Devices.Add(new MGENGuider(mgen3, "Lacerta MGEN-3 Autoguider", "Lacerta_MGEN-3_Autoguider", profileService));
-            } catch (Exception ex) {
-                Logger.Error(ex);
+            if (!Utility.DllLoader.IsX86()) {
+                try {
+                    var mgen3 = new MGEN3.MGEN3(Path.Combine("FTDI", "ftd2xx.dll"), Path.Combine("MGEN", "MG3lib.dll"), new MGenLogger());
+                    Devices.Add(new MGENGuider(mgen3, "Lacerta MGEN-3 Autoguider", "Lacerta_MGEN-3_Autoguider", profileService));
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
             }
 
             DetermineSelectedDevice(profileService.ActiveProfile.GuiderSettings.GuiderName);
