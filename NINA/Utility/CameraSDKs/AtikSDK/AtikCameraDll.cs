@@ -639,7 +639,7 @@ namespace NINA.Utility.AtikSDK {
         /// </summary>
         /// <param name="deviceNr"></param>
         /// <returns></returns>
-        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWIsPresent", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
+        [DllImport(DLLNAME, EntryPoint = "ArtemisEFWIsPresent", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
         public static extern bool ArtemisEfwIsPresent(int deviceId);
 
         /// <summary>

@@ -21,7 +21,6 @@ using System.Threading.Tasks;
 #pragma warning disable 1998
 
 namespace NINA.Model.MyGuider {
-
     public class DummyGuider : BaseINPC, IGuider {
         private IProfileService profileService;
 
@@ -99,7 +98,6 @@ namespace NINA.Model.MyGuider {
         }
 
         public void SetupDialog() {
-            throw new NotImplementedException();
         }
     }
 }

@@ -22,7 +22,6 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyGuider {
-
     public class DirectGuider : BaseINPC, IGuider, ITelescopeConsumer {
         private IProfileService profileService;
         private ITelescopeMediator telescopeMediator;
@@ -220,7 +219,6 @@ namespace NINA.Model.MyGuider {
         }
 
         public void SetupDialog() {
-            throw new NotImplementedException();
         }
     }
 }

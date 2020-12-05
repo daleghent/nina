@@ -305,7 +305,6 @@ namespace NINA.Model.MyGuider.PHD2 {
         }
 
         public void SetupDialog() {
-            throw new NotImplementedException();
         }
     }
 }

@@ -725,6 +725,7 @@
     <Compile Include="Utility\Converters\DataTypeToStringConverter.cs" />
     <Compile Include="Utility\Converters\DateTimeZeroToVisibilityCollapsedConverter.cs" />
     <Compile Include="Utility\Converters\DecDegreeConverter.cs" />
+    <Compile Include="Utility\Converters\DrawingToMediaBrushConverter.cs" />
     <Compile Include="Utility\Converters\IntListToTextBlockListConverter.cs" />
     <Compile Include="Utility\Converters\MinusOneToBaseValueConverter.cs" />
     <Compile Include="Utility\Converters\FilterWheelFilterConverter.cs" />
@@ -740,6 +741,7 @@
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleEndContainer.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleExposure.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleStartContainer.cs" />
+    <Compile Include="View\Equipment\Guider\IsMGEN2ToVisibilityConverter.cs" />
     <Compile Include="View\Imaging\AnchorableSequence2View.xaml.cs">
       <DependentUpon>AnchorableSequence2View.xaml</DependentUpon>
     </Compile>
@@ -2409,6 +2411,9 @@
     <Content Include="External\x64\FTDI\ftd2xx.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="External\x64\MGEN\MG3lib.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External\x64\NOVAS\NOVAS31lib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -2464,6 +2469,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="External\x86\FTDI\ftd2xx.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x86\MGEN\MG3lib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="External\x86\NOVAS\NOVAS31lib.dll">

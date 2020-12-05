@@ -58,6 +58,14 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ## New hardware support
 
+## MGEN3
+- Full control of the MGEN3 by mirroring the controller display into N.I.N.A.'s user interface
+- Automatic power-on when connecting
+- Starts guiding on sequence start
+- Performs calibration and star auto-selection when required
+- Displays star drift during guiding in a graph
+- Dithering during sequencing
+
 ## ASCOM Dome
 - ASCOM Domes are supported throughout the application
   - Natively provides azimuth synchronization with the telescope, so no additional applications are needed (such as ASCOM Device Hub)

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,9 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.MGEN.Commands;
-using NINA.MGEN.Commands.AppMode;
-using NINA.MGEN.Exceptions;
+using NINA.MGEN;
+using NINA.Exceptions;
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Astrometry;
@@ -25,6 +24,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,10 +35,13 @@ using System.Windows.Media.Imaging;
 namespace NINA.Model.MyGuider {
 
     internal class MGENGuider : BaseINPC, IGuider {
-        private MGEN.MGEN mgen;
+        public readonly IMGEN MGen;
         private IProfileService profileService;
 
-        public MGENGuider(IProfileService profileService) {
+        public MGENGuider(IMGEN mgen, string name, string id, IProfileService profileService) {
+            this.MGen = mgen;
+            this.Name = name;
+            this.Id = id;
             this.profileService = profileService;
             MGenUpCommand = new AsyncCommand<bool>((object o) => {
                 return PressButton(MGEN.MGENButton.UP, default);
@@ -97,8 +100,7 @@ namespace NINA.Model.MyGuider {
 
         public double PixelScale {
             get {
-                // According to documentation the pixel size reported is normalized to 4.85
-                return Astrometry.ArcsecPerPixel(4.85, FocalLength);
+                return Astrometry.ArcsecPerPixel(this.MGen.PixelSize, FocalLength);
             }
 
             set {
@@ -115,79 +117,54 @@ namespace NINA.Model.MyGuider {
             }
         }
 
-        public string Name {
-            get => "Lacerta MGEN Superguider";
-        }
+        public string Name { get; }
 
         public event EventHandler<IGuideStep> GuideEvent;
 
         public async Task<bool> AutoSelectGuideStar() {
-            if (await mgen.IsGuidingActive()) {
+            if (await MGen.IsGuidingActive()) {
                 Logger.Debug("MGEN - Stopping guiding to select new guide star");
-                await mgen.StopGuiding();
+                await MGen.StopGuiding();
             }
-            var imagingParameter = await mgen.GetImagingParameter();
-            var ditherAmplitude = await mgen.GetDitherAmplitude();
+            var imagingParameter = await MGen.GetImagingParameter();
+            var ditherAmplitude = await MGen.GetDitherAmplitude();
             Logger.Debug($"MGEN - Dither amplitude {ditherAmplitude.Amplitude} pixels");
             Logger.Debug($"MGEN - Pixel margin {PixelMargin} pixels");
             Logger.Debug("MGEN - Starting Camera");
-            await mgen.StartCamera();
+            await MGen.StartCamera();
             Logger.Debug($"MGEN - Starting Star Search - Gain: {imagingParameter.Gain} ExposureTime: {imagingParameter.ExposureTime}");
-            var result = await mgen.StartStarSearch(imagingParameter.Gain, imagingParameter.ExposureTime);
-            Logger.Debug($"MGEN - Star Search Done - {result.NumberOfStars} stars found");
-            var starSearchSuccess = new MGENResult(false);
-            if (result.NumberOfStars > 0) {
-                StarData starDetail = null;
-                for (byte starIndex = 0; starIndex < result.NumberOfStars; starIndex++)
-                {
-                    starDetail = await mgen.GetStarData(starIndex);
+            var numberOfStars = await MGen.StartStarSearch(imagingParameter.Gain, imagingParameter.ExposureTime);
+            Logger.Debug($"MGEN - Star Search Done - {numberOfStars} stars found");
+            if (numberOfStars > 0 && MGen is MGEN2.MGEN) {
+                //MGEN3 Star Search is different and doesn't need to set a single star therefore this is skipped
+                bool starSearchSuccess = false;
+                for (byte starIndex = 0; starIndex < numberOfStars; starIndex++) {
+                    var starDetail = await MGen.GetStarData(starIndex);
                     if (starDetail.PositionX > Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
-                        starDetail.PositionX < mgen.SensorSizeX - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) && 
-                        starDetail.PositionY > Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) && 
-                        starDetail.PositionY < mgen.SensorSizeY - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)))
-                    {
+                        starDetail.PositionX < MGen.SensorSizeX - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
+                        starDetail.PositionY > Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
+                        starDetail.PositionY < MGen.SensorSizeY - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude))) {
                         Logger.Debug($"MGEN - Got Star Detail and setting new guiding position - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
-                        starSearchSuccess = await mgen.SetNewGuidingPosition(starDetail);
-                        Logger.Debug($"MGEN - Set New Guiding Position: {starSearchSuccess.Success}");
+                        starSearchSuccess = await MGen.SetNewGuidingPosition(starDetail);
+                        Logger.Debug($"MGEN - Set New Guiding Position: {starSearchSuccess}");
                         needsCalibration = true;
                         Logger.Debug($"MGEN - Setting Imaging Parameter - Gain: {imagingParameter.Gain} ExposureTime: {imagingParameter.ExposureTime} Threshold: {imagingParameter.Threshold}");
-                        await mgen.SetImagingParameter(imagingParameter.Gain, imagingParameter.ExposureTime, imagingParameter.Threshold);
+                        await MGen.SetImagingParameter(imagingParameter.Gain, imagingParameter.ExposureTime, imagingParameter.Threshold);
                         break;
-                    }
-                    else
-                    {
+                    } else {
                         Logger.Debug($"MGEN - Got Star Detail but skipping star because too close to edge - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
                     }
                 }
+                if (!starSearchSuccess) {
+                    Logger.Error($"MGEN - No guide star found!");
+                }
+                return starSearchSuccess;
             }
-            if (!starSearchSuccess.Success) {
-                Logger.Error($"MGEN - No guide star found!");
-            }
-            return starSearchSuccess.Success;
+            return numberOfStars > 0;
         }
 
-        public async Task<bool> Connect(CancellationToken token) {
-            try {
-                refreshCts?.Cancel();
-                refreshCts?.Dispose();
-                refreshCts = new CancellationTokenSource();
-
-                mgen = new MGEN.MGEN(Path.Combine("FTDI", "ftd2xx.dll"));
-                await mgen.DetectAndOpen(token);
-                token.ThrowIfCancellationRequested();
-                await RefreshDisplay();
-                Connected = true;
-
-                _ = QueryDeviceBackgroundTask();
-
-                RaisePropertyChanged(nameof(PixelScale));
-            } catch (Exception ex) {
-                Logger.Error(ex);
-                Notification.ShowError(ex.Message);
-                refreshCts?.Cancel();
-                return false;
-            }
-            return true;
+        public Task<bool> Connect() {
+            return Connect(default);
         }
 
         private CancellationTokenSource refreshCts;
@@ -207,15 +184,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private async Task RefreshLEDs() {
-            var ledCommand = await mgen.ReadLEDState(refreshCts.Token);
-            if (ledCommand.Success) {
-                LEDBlueActive = ledCommand.LEDs.HasFlag(MGEN.LEDS.BLUE);
-                LEDGreenActive = ledCommand.LEDs.HasFlag(MGEN.LEDS.GREEN);
-                LEDRedUpActive = ledCommand.LEDs.HasFlag(MGEN.LEDS.UP_RED);
-                LEDRedDownActive = ledCommand.LEDs.HasFlag(MGEN.LEDS.DOWN_RED);
-                LEDRedLeftActive = ledCommand.LEDs.HasFlag(MGEN.LEDS.LEFT_RED);
-                LEDRedRightActive = ledCommand.LEDs.HasFlag(MGEN.LEDS.RIGHT_RED);
-            }
+            LEDState = await MGen.ReadLEDState(refreshCts.Token);
         }
 
         private async Task RefreshDisplay() {
@@ -223,16 +192,16 @@ namespace NINA.Model.MyGuider {
             var primary = System.Drawing.Color.FromArgb(mediaColor1.A, mediaColor1.R, mediaColor1.G, mediaColor1.B);
             var mediaColor2 = profileService.ActiveProfile.ColorSchemaSettings.ColorSchema.SecondaryBackgroundColor;
             var background = System.Drawing.Color.FromArgb(mediaColor2.A, mediaColor2.R, mediaColor2.G, mediaColor2.B);
-            var display = await mgen.ReadDisplay(primary, background, refreshCts.Token);
-            Display = ImageUtility.ConvertBitmap(display, PixelFormats.Bgra32);
+            var display = await MGen.ReadDisplay(primary, background, refreshCts.Token);
+            Display = ImageUtility.ConvertBitmap(display);
         }
 
         private MGENGuideStep _lastStep;
         private int _lastStepNumber = 0;
 
         private async Task RefreshGuideState() {
-            if (await mgen.IsGuidingActive(refreshCts.Token)) {
-                var state = await mgen.QueryGuideState(refreshCts.Token);
+            if (await MGen.IsGuidingActive(refreshCts.Token)) {
+                var state = await MGen.QueryGuideState(refreshCts.Token);
                 if (_lastStep?.Frame != state.FrameInfo.FrameIndex) {
                     _lastStep = new MGENGuideStep() {
                         Frame = state.FrameInfo.FrameIndex,
@@ -271,67 +240,17 @@ namespace NINA.Model.MyGuider {
         }
 
         private async Task<bool> PressButton(MGEN.MGENButton button, CancellationToken ct) {
-            var press = await mgen.PressButton(button, ct);
+            var press = await MGen.PressButton(button, ct);
             await RefreshDisplay();
             return press;
         }
 
-        private bool _ledBlueActive;
+        private LEDState _ledState;
 
-        public bool LEDBlueActive {
-            get => _ledBlueActive;
+        public LEDState LEDState {
+            get => _ledState;
             set {
-                _ledBlueActive = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _ledGreenActive;
-
-        public bool LEDGreenActive {
-            get => _ledGreenActive;
-            set {
-                _ledGreenActive = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _ledRedUpActive;
-
-        public bool LEDRedUpActive {
-            get => _ledRedUpActive;
-            set {
-                _ledRedUpActive = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _ledRedDownActive;
-
-        public bool LEDRedDownActive {
-            get => _ledRedDownActive;
-            set {
-                _ledRedDownActive = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _ledRedLeftActive;
-
-        public bool LEDRedLeftActive {
-            get => _ledRedLeftActive;
-            set {
-                _ledRedLeftActive = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _ledRedRightActive;
-
-        public bool LEDRedRightActive {
-            get => _ledRedRightActive;
-            set {
-                _ledRedRightActive = value;
+                _ledState = value;
                 RaisePropertyChanged();
             }
         }
@@ -349,18 +268,18 @@ namespace NINA.Model.MyGuider {
 
         public void Disconnect() {
             refreshCts?.Cancel();
-            mgen.Disconnect();
+            MGen.Disconnect();
             Display = null;
             Connected = false;
         }
 
         public async Task<bool> Dither(CancellationToken ct) {
             try {
-                if (await mgen.IsGuidingActive(ct)) {
+                if (await MGen.IsGuidingActive(ct)) {
                     Logger.Debug("MGEN - Dithering");
-                    await mgen.Dither(ct);
-                    return true;
+                    return await MGen.Dither(ct);
                 } else {
+                    Logger.Error("Guiding is not active. Unable to dither");
                     Notification.ShowError("Guiding is not active. Unable to dither");
                 }
             } catch (OperationCanceledException) {
@@ -373,12 +292,12 @@ namespace NINA.Model.MyGuider {
 
         public async Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
             try {
-                if (!await mgen.IsActivelyGuiding(ct)) {
+                if (!await MGen.IsActivelyGuiding(ct)) {
                     await AutoSelectGuideStar();
                 }
                 await StartCalibrationIfRequired(forceCalibration, ct);
                 Logger.Debug("MGEN - Starting Guiding");
-                await mgen.StartGuiding(ct);               
+                await MGen.StartGuiding(ct);
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
@@ -388,27 +307,19 @@ namespace NINA.Model.MyGuider {
             return true;
         }
 
-        public bool CanClearCalibration {
-            get => true;
-        }
-
-        public Task<bool> ClearCalibration(CancellationToken ct) {
-            return Task.FromResult(true);
-        }
-
         private async Task<bool> StartCalibrationIfRequired(bool forceCalibration, CancellationToken ct) {
-            using (ct.Register(async () => await mgen.CancelCalibration())) {
-                var calibrationStatus = await mgen.QueryCalibration(ct);
+            using (ct.Register(async () => await MGen.CancelCalibration())) {
+                var calibrationStatus = await MGen.QueryCalibration(ct);
                 if (forceCalibration || needsCalibration || !calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) || calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error)) {
-                    if (await mgen.IsGuidingActive()) {
-                        Logger.Debug("MGEN - Stopping guiding to start new calibration"); 
-                        await mgen.StopGuiding();
+                    if (await MGen.IsGuidingActive()) {
+                        Logger.Debug("MGEN - Stopping guiding to start new calibration");
+                        await MGen.StopGuiding();
                     }
                     Logger.Debug("MGEN - Starting Calibraiton");
-                    _ = await mgen.StartCalibration(ct);
+                    _ = await MGen.StartCalibration(ct);
                     do {
-                        await Task.Delay(TimeSpan.FromSeconds(1));
-                        calibrationStatus = await mgen.QueryCalibration(ct);
+                        await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                        calibrationStatus = await MGen.QueryCalibration(ct);
                         State = calibrationStatus.CalibrationStatus.ToString();
                     } while (!calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Done) && !calibrationStatus.CalibrationStatus.HasFlag(MGEN.CalibrationStatus.Error));
 
@@ -424,16 +335,45 @@ namespace NINA.Model.MyGuider {
             }
         }
 
+        public bool CanClearCalibration {
+            get => true;
+        }
+
+        public Task<bool> ClearCalibration(CancellationToken ct) {
+            return Task.FromResult(true);
+        }
+
         public async Task<bool> StopGuiding(CancellationToken ct) {
-            if (await mgen.IsGuidingActive(ct)) {
+            if (await MGen.IsGuidingActive(ct)) {
                 Logger.Debug("MGEN - Stopping Guiding");
-                await mgen.StopGuiding(ct);
+                await MGen.StopGuiding(ct);
+            }
+            return true;
+        }
+
+        public async Task<bool> Connect(CancellationToken token) {
+            try {
+                refreshCts?.Cancel();
+                refreshCts?.Dispose();
+                refreshCts = new CancellationTokenSource();
+
+                await MGen.DetectAndOpen();
+                await RefreshDisplay();
+                Connected = true;
+
+                _ = QueryDeviceBackgroundTask();
+
+                RaisePropertyChanged(nameof(PixelScale));
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(ex.Message);
+                refreshCts?.Cancel();
+                return false;
             }
             return true;
         }
 
         public void SetupDialog() {
-            throw new NotImplementedException();
         }
 
         public ICommand MGenUpCommand { get; }
@@ -443,18 +383,47 @@ namespace NINA.Model.MyGuider {
         public ICommand MGenESCCommand { get; }
         public ICommand MGenSetCommand { get; }
 
-        public string Id {
-            get => "Lacerta_MGEN_Superguider";
-        }
+        public string Id { get; }
 
         public bool HasSetupDialog => false;
 
-        public string Category => "Guiders";
+        public string Category => "Lacerta";
 
-        public string Description => "MGEN2";
+        public string Description => "";
 
-        public string DriverInfo => "MGEN2";
+        public string DriverInfo => "";
 
-        public string DriverVersion => "1.0";
+        public string DriverVersion => "";
+    }
+
+    internal class MGenLogger : NINA.MGEN.ILogger {
+
+        public void Debug(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") {
+            Logger.Debug(message, memberName, sourceFilePath);
+        }
+
+        public void Error(Exception ex, [CallerMemberName] string memberName = "", string sourceFilePath = "") {
+            Logger.Error(ex, memberName, sourceFilePath);
+        }
+
+        public void Error(string customMsg, Exception ex, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") {
+            Logger.Error(customMsg, ex, memberName, sourceFilePath);
+        }
+
+        public void Error(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") {
+            Logger.Error(message, memberName, sourceFilePath);
+        }
+
+        public void Info(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") {
+            Logger.Info(message, memberName, sourceFilePath);
+        }
+
+        public void Trace(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") {
+            Logger.Trace(message, memberName, sourceFilePath);
+        }
+
+        public void Warning(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") {
+            Logger.Warning(message, memberName, sourceFilePath);
+        }
     }
 }

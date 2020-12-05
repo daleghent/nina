@@ -129,6 +129,25 @@ namespace NINA.Utility.ImageAnalysis {
             return map;
         }
 
+        public static BitmapSource ConvertBitmap(System.Drawing.Bitmap bitmap) {
+            System.Windows.Media.PixelFormat pf;
+
+            switch (bitmap.PixelFormat) {
+                case System.Drawing.Imaging.PixelFormat.Format16bppRgb565:
+                    pf = System.Windows.Media.PixelFormats.Bgr565;
+                    break;
+
+                case System.Drawing.Imaging.PixelFormat.Format32bppRgb:
+                    pf = System.Windows.Media.PixelFormats.Bgra32;
+                    break;
+
+                default:
+                    pf = System.Windows.Media.PixelFormats.Gray16;
+                    break;
+            }
+            return ConvertBitmap(bitmap, pf);
+        }
+
         public static BitmapSource ConvertBitmap(System.Drawing.Bitmap bitmap, System.Windows.Media.PixelFormat pf) {
             var bitmapData = bitmap.LockBits(
                 new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),

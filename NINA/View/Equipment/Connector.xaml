@@ -106,7 +106,8 @@
             Width="40"
             Height="40"
             Margin="1,0,0,0"
-            Command="{Binding RefreshCommand}">
+            Command="{Binding RefreshCommand}"
+            Visibility="{Binding RefreshCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
             <Button.ToolTip>
                 <ToolTip ToolTipService.ShowOnDisabled="False">
                     <TextBlock Text="{ns:Loc LblRescanDevices}" />

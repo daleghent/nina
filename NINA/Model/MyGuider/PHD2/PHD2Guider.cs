@@ -34,9 +34,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace NINA.Model.MyGuider.PHD2 {
-
     public class PHD2Guider : BaseINPC, IGuider {
-
         public PHD2Guider(IProfileService profileService, IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
             this.windowServiceFactory = windowServiceFactory;
@@ -686,7 +684,6 @@ namespace NINA.Model.MyGuider.PHD2 {
 
         [DataContract]
         public class PhdEvent : BaseINPC, IGuideEvent {
-
             [DataMember]
             public string Event { get; set; }
 
@@ -799,7 +796,6 @@ namespace NINA.Model.MyGuider.PHD2 {
 
         [DataContract]
         public class PhdEventGuideStep : PhdEvent, IGuideStep {
-
             [DataMember]
             private double frame;
 

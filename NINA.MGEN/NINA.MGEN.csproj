@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,45 +48,54 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="CalibrationStatusReport.cs" />
+    <Compile Include="DitherAmplitude.cs" />
+    <Compile Include="GuideState.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="ImagingParameter.cs" />
     <Compile Include="CalibrationStatus.cs" />
-    <Compile Include="Commands\AppMode\AppModeCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\AutoGuidingCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\CancelCalibrationCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\GetImagingParameterCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\GetStarDataCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\QueryCalibrationCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\QueryCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\SetImagingParameterCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\SetNewGuidingPositionCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\StartCalibrationCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\StartCameraCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\StartGuidingCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\StartStarSearchCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\StopCameraCommand.cs" />
-    <Compile Include="Commands\AppMode\AutoGuidingCommands\StopGuidingCommand.cs" />
-    <Compile Include="Commands\AppMode\DitheringCommands\GetDitherAmplitudeCommand.cs" />
-    <Compile Include="Commands\AppMode\DitheringCommands\DitheringCommand.cs" />
-    <Compile Include="Commands\AppMode\DitheringCommands\GetDitherStateCommand.cs" />
-    <Compile Include="Commands\AppMode\DitheringCommands\StartDitherCommand.cs" />
-    <Compile Include="Commands\AppMode\ExposureCommands\ExposureCommand.cs" />
-    <Compile Include="Commands\AppMode\FirmwareVersionCommand.cs" />
-    <Compile Include="Commands\AppMode\GroupedCommand.cs" />
-    <Compile Include="Commands\AppMode\IOCommands\ButtonCommand.cs" />
-    <Compile Include="Commands\AppMode\IOCommands\GetLEDStatesCommand.cs" />
-    <Compile Include="Commands\AppMode\IOCommands\IOCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AppModeCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\AutoGuidingCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\CancelCalibrationCommand.cs" />
+    <Compile Include="FrameInfo.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\GetImagingParameterCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\GetStarDataCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\QueryCalibrationCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\QueryCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\SetImagingParameterCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\SetNewGuidingPositionCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\StartCalibrationCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\StartCameraCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\StartGuidingCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\StartStarSearchCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\StopCameraCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\AutoGuidingCommands\StopGuidingCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\DitheringCommands\DitheringCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\DitheringCommands\GetDitherAmplitudeCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\DitheringCommands\GetDitherStateCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\DitheringCommands\StartDitherCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\ExposureCommands\ExposureCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\FirmwareVersionCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\GroupedCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\IOCommands\ButtonCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\IOCommands\GetLEDStatesCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\IOCommands\IOCommand.cs" />
+    <Compile Include="IMGEN.cs" />
+    <Compile Include="MGEN3\IMG3SDK.cs" />
+    <Compile Include="MGEN3\LoggingMG3SDK.cs" />
     <Compile Include="MGENButton.cs" />
-    <Compile Include="Commands\AppMode\IOCommands\ReadDisplayCommand.cs" />
-    <Compile Include="Commands\AppMode\NoOp2Command.cs" />
-    <Compile Include="Commands\AppMode\NoOpCommand.cs" />
-    <Compile Include="Commands\BootMode\BootModeCommand.cs" />
-    <Compile Include="Commands\BootMode\PowerOff.cs" />
-    <Compile Include="Commands\CompatibilityMode\CompatibilityModeCommand.cs" />
-    <Compile Include="Commands\CompatibilityMode\EnterNormalModeCommand.cs" />
-    <Compile Include="Commands\CompatibilityMode\QueryDeviceCommand.cs" />
-    <Compile Include="Commands\IMGENCommand.cs" />
-    <Compile Include="Commands\IMGENResult.cs" />
-    <Compile Include="Commands\MGENCommand.cs" />
-    <Compile Include="Commands\MGENResult.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\IOCommands\ReadDisplayCommand.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\NoOp2Command.cs" />
+    <Compile Include="MGEN2\Commands\AppMode\NoOpCommand.cs" />
+    <Compile Include="MGEN2\Commands\BootMode\BootModeCommand.cs" />
+    <Compile Include="MGEN2\Commands\BootMode\PowerOff.cs" />
+    <Compile Include="MGEN2\Commands\CompatibilityMode\CompatibilityModeCommand.cs" />
+    <Compile Include="MGEN2\Commands\CompatibilityMode\EnterNormalModeCommand.cs" />
+    <Compile Include="MGEN2\Commands\CompatibilityMode\QueryDeviceCommand.cs" />
+    <Compile Include="MGEN2\Commands\IMGENCommand.cs" />
+    <Compile Include="MGEN2\Commands\IMGENResult.cs" />
+    <Compile Include="MGEN2\Commands\MGENCommand.cs" />
+    <Compile Include="MGEN2\Commands\MGENResult.cs" />
     <Compile Include="DllLoader.cs" />
     <Compile Include="Exceptions\AnotherCommandInProgressException.cs" />
     <Compile Include="Exceptions\AutoGuidingActiveException.cs" />
@@ -106,12 +117,17 @@
     <Compile Include="FTD2XX\FT_STATUS.cs" />
     <Compile Include="FTD2XX\FT_STOP_BITS.cs" />
     <Compile Include="FTD2XX\IFTDI.cs" />
-    <Compile Include="LEDS.cs" />
-    <Compile Include="MGEN.cs" />
+    <Compile Include="LEDState.cs" />
+    <Compile Include="MGEN2\MGEN2.cs" />
+    <Compile Include="MGEN3\MG3SDK.cs" />
+    <Compile Include="MGEN3\MGEN3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StarData.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="LMG_USB_interface_protocol_v261.pdf" />
+    <None Include="MGEN2\LMG_USB_interface_protocol_v261.pdf" />
+    <None Include="MGEN3\LACERTA MGen-3 API Manual v.1.04.pdf" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

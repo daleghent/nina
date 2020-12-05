@@ -18,7 +18,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NINA.MGEN.Exceptions {
+namespace NINA.Exceptions {
 
     public class AutoGuidingActiveException : Exception {
 

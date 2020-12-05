@@ -81,4 +81,5 @@
     <converters:DataTypeToStringConverter x:Key="DataTypeToStringConverter" />
     <converters:SubstractConverter x:Key="SubstractConverter" />
     <converters:DefaultBinningModesConverter x:Key="DefaultBinningModesConverter" />
+    <converters:DrawingToMediaBrushConverter x:Key="DrawingToMediaBrushConverter" />
 </ResourceDictionary>

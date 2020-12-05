@@ -18,6 +18,9 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
+        <Grid.Resources>
+            <local:IsMGEN2ToVisibilityConverter x:Key="IsMGEN2ToVisibilityConverter" />
+        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
@@ -25,25 +28,35 @@
         </Grid.RowDefinitions>
         <Image Source="{Binding Display}" />
 
-        <DockPanel Grid.Row="1"
+        <DockPanel
+            Grid.Row="1"
+            Width="Auto"
             Margin="0,5,0,5"
-            LastChildFill="True" Width="Auto" >
+            LastChildFill="True">
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFocalLength}" />
-                <TextBox MinWidth="50" Margin="5,0,0,0" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding FocalLength}" />
+                <TextBox
+                    MinWidth="50"
+                    Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding FocalLength}" />
             </StackPanel>
 
-            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+            <StackPanel
+                DockPanel.Dock="Right"
+                Orientation="Horizontal"
+                Visibility="{Binding Converter={StaticResource IsMGEN2ToVisibilityConverter}}">
                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPixelMargin}" />
                 <TextBox
-                MinWidth="50"
-                Margin="5,0,0,0"
-                VerticalAlignment="Center"
-                VerticalContentAlignment="Center"
-                Text="{Binding PixelMargin}" />
+                    MinWidth="50"
+                    Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding PixelMargin}" />
                 <TextBlock VerticalAlignment="Center" Text="px " />
             </StackPanel>
-            <StackPanel/>
+            <StackPanel />
         </DockPanel>
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
@@ -60,41 +73,38 @@
 
             <StackPanel Orientation="Vertical">
                 <Button Height="20" Command="{Binding MGenESCCommand}">ESC</Button>
-                <Ellipse
+                <Rectangle
                     Width="10"
                     Height="10"
                     Margin="0,5,0,0"
-                    Fill="Blue"
-                    Stroke="Blue"
-                    StrokeThickness="1"
-                    Visibility="{Binding LEDBlueActive, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                    Fill="{Binding LEDState.TopLeft, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    Stroke="{Binding LEDState.TopLeft, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    StrokeThickness="1" />
             </StackPanel>
 
             <StackPanel Grid.Column="2" Orientation="Vertical">
                 <Button Height="20" Command="{Binding MGenSetCommand}">
                     Set
                 </Button>
-                <Ellipse
+                <Rectangle
                     Width="10"
                     Height="10"
                     Margin="0,5,0,0"
-                    Fill="Green"
-                    Stroke="Green"
-                    StrokeThickness="1"
-                    Visibility="{Binding LEDGreenActive, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                    Fill="{Binding LEDState.TopRight, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    Stroke="{Binding LEDState.TopRight, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    StrokeThickness="1" />
             </StackPanel>
 
             <StackPanel
                 Grid.Row="1"
                 Grid.Column="1"
                 Orientation="Vertical">
-                <Ellipse
+                <Rectangle
                     Width="10"
                     Height="10"
-                    Fill="Red"
-                    Stroke="Red"
-                    StrokeThickness="1"
-                    Visibility="{Binding LEDRedUpActive, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                    Fill="{Binding LEDState.Up, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    Stroke="{Binding LEDState.Up, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    StrokeThickness="1" />
                 <Button
                     Height="20"
                     Margin="0,5,0,0"
@@ -104,13 +114,12 @@
             </StackPanel>
 
             <StackPanel Grid.Row="2" Orientation="Vertical">
-                <Ellipse
+                <Rectangle
                     Width="10"
                     Height="10"
-                    Fill="Red"
-                    Stroke="Red"
-                    StrokeThickness="1"
-                    Visibility="{Binding LEDRedLeftActive, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                    Fill="{Binding LEDState.Left, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    Stroke="{Binding LEDState.Left, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    StrokeThickness="1" />
                 <Button
                     Height="20"
                     Margin="0,5,0,0"
@@ -123,13 +132,12 @@
                 Grid.Row="2"
                 Grid.Column="3"
                 Orientation="Vertical">
-                <Ellipse
+                <Rectangle
                     Width="10"
                     Height="10"
-                    Fill="Red"
-                    Stroke="Red"
-                    StrokeThickness="1"
-                    Visibility="{Binding LEDRedRightActive, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                    Fill="{Binding LEDState.Right, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    Stroke="{Binding LEDState.Right, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    StrokeThickness="1" />
                 <Button
                     Height="20"
                     Margin="0,5,0,0"
@@ -142,13 +150,12 @@
                 Grid.Row="3"
                 Grid.Column="1"
                 Orientation="Vertical">
-                <Ellipse
+                <Rectangle
                     Width="10"
                     Height="10"
-                    Fill="Red"
-                    Stroke="Red"
-                    StrokeThickness="1"
-                    Visibility="{Binding LEDRedDownActive, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}" />
+                    Fill="{Binding LEDState.Down, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    Stroke="{Binding LEDState.Down, Converter={StaticResource DrawingToMediaBrushConverter}}"
+                    StrokeThickness="1" />
                 <Button
                     Height="20"
                     Margin="0,5,0,0"
