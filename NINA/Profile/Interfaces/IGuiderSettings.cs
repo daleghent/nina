@@ -38,5 +38,6 @@ namespace NINA.Profile {
         int MetaGuideMinIntensity { get; set; }
         int MetaGuideDitherSettleSeconds { get; set; }
         bool MetaGuideLockWhenGuiding { get; set; }
+        int PHD2ROIPct { get; }
     }
 }

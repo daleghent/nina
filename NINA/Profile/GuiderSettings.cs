@@ -18,9 +18,11 @@ using System.IO;
 using System.Runtime.Serialization;
 
 namespace NINA.Profile {
+
     [Serializable()]
     [DataContract]
     public class GuiderSettings : Settings, IGuiderSettings {
+
         [OnDeserializing]
         public void OnDeserializing(StreamingContext context) {
             SetDefaultValues();
@@ -34,6 +36,7 @@ namespace NINA.Profile {
             pHD2ServerPort = 4400;
             pHD2LargeHistorySize = 100;
             pHD2GuiderScale = GuiderScaleEnum.PIXELS;
+            phd2ROIPct = 100;
             settlePixels = 1.5;
             settleTimeout = 40;
             directGuideDuration = 2;
@@ -293,6 +296,7 @@ namespace NINA.Profile {
         }
 
         private int mgenPixelMargin;
+
         [DataMember]
         public int MGENPixelMargin {
             get => mgenPixelMargin;
@@ -338,6 +342,19 @@ namespace NINA.Profile {
             set {
                 if (metaGuideLockWhenGuiding != value) {
                     metaGuideLockWhenGuiding = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int phd2ROIPct;
+
+        [DataMember]
+        public int PHD2ROIPct {
+            get => phd2ROIPct;
+            set {
+                if (phd2ROIPct != value) {
+                    phd2ROIPct = value;
                     RaisePropertyChanged();
                 }
             }

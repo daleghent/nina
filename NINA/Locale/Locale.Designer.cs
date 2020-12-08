@@ -10343,6 +10343,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ROI Percentage to find Guidestar.
+        /// </summary>
+        internal static string LblPHD2ROIPct {
+            get {
+                return ResourceManager.GetString("LblPHD2ROIPct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The percentage of the frame to be considered for finding a guidestar in PHD2 measured from the center of the frame.
+        /// </summary>
+        internal static string LblPHD2ROIPctTooltip {
+            get {
+                return ResourceManager.GetString("LblPHD2ROIPctTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PHD2 Server Connection lost!.
         /// </summary>
         internal static string LblPhd2ServerConnectionLost {

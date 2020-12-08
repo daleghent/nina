@@ -78,6 +78,11 @@ namespace NINA.Model.MyGuider.PHD2 {
         public int Timeout { get; set; }
     }
 
+    public class Phd2GetCameraFrameSize : Phd2Method {
+        public override string Id { get => PHD2EventId.GET_CAMERA_FRAME_SIZE; }
+        public override string Method { get => "get_camera_frame_size"; }
+    }
+
     public class Phd2FindStar : Phd2Method<Phd2FindStarParameter> {
         public override string Id { get => PHD2EventId.AUTO_SELECT_STAR; }
         public override string Method { get => "find_star"; }
@@ -144,9 +149,37 @@ namespace NINA.Model.MyGuider.PHD2 {
         public const string PAUSE = "10";
         public const string SET_CONNECTED = "20";
 
+        public const string GET_CAMERA_FRAME_SIZE = "95";
         public const string GET_PIXEL_SCALE = "96";
         public const string GET_STAR_IMAGE = "97";
         public const string GET_EXPOSURE = "98";
         public const string GET_APP_STATE = "99";
+    }
+
+    public class PhdMethodResponse {
+        public string jsonrpc;
+        public PhdError error;
+        public int id;
+    }
+
+    public class GenericPhdMethodResponse : PhdMethodResponse {
+        public object result;
+    }
+
+    public class GetCameraFrameSizeResponse : PhdMethodResponse {
+        public int[] result;
+    }
+
+    public class PhdImageResult {
+        public int frame;
+        public int width;
+        public int height;
+        public double[] star_pos;
+        public string pixels;
+    }
+
+    public class PhdError {
+        public int code;
+        public string message;
     }
 }

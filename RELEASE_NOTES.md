@@ -58,7 +58,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ## New hardware support
 
-## MGEN3
+### MGEN3
 - Full control of the MGEN3 by mirroring the controller display into N.I.N.A.'s user interface
 - Automatic power-on when connecting
 - Starts guiding on sequence start
@@ -66,7 +66,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Displays star drift during guiding in a graph
 - Dithering during sequencing
 
-## ASCOM Dome
+### ASCOM Dome
 - ASCOM Domes are supported throughout the application
   - Natively provides azimuth synchronization with the telescope, so no additional applications are needed (such as ASCOM Device Hub)
   - Lateral offsets supported, enabling side-by-side telescope setups
@@ -115,6 +115,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ### Guiders
 - MetaGuide is now supported
 - MGEN2 now supports unattended guide star selection and calibration, and automatic meridian flips
+- A ROI percentage can now be set for PHD2 to be considered during guidestar search
 
 ### Auto-focus system
 - Auto-focus can now have different settings for gain, offset and binning per filter

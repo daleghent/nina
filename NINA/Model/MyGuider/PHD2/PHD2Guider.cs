@@ -34,7 +34,9 @@ using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace NINA.Model.MyGuider.PHD2 {
+
     public class PHD2Guider : BaseINPC, IGuider {
+
         public PHD2Guider(IProfileService profileService, IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
             this.windowServiceFactory = windowServiceFactory;
@@ -288,13 +290,41 @@ namespace NINA.Model.MyGuider.PHD2 {
                     await Task.Delay(TimeSpan.FromSeconds(5));
                 }
 
-                var findStarMsg = new Phd2FindStar();
+                var findStarMsg = new Phd2FindStar() {
+                    Parameters = new Phd2FindStarParameter() {
+                        Roi = await GetROI()
+                    }
+                };
 
                 await SendMessage(findStarMsg);
 
                 return true;
             }
             return false;
+        }
+
+        private async Task<int[]> GetROI() {
+            if (profileService.ActiveProfile.GuiderSettings.PHD2ROIPct < 100) {
+                var cameraSize = new Phd2GetCameraFrameSize();
+                var size = await SendMessage<GetCameraFrameSizeResponse>(cameraSize);
+                if (size.result.Length == 2) {
+                    int width = size.result[0];
+                    int height = size.result[1];
+                    double pct = profileService.ActiveProfile.GuiderSettings.PHD2ROIPct / 100d;
+                    double invertPct = 1 - pct;
+
+                    int halfWidth = width / 2;
+                    int halfHeight = height / 2;
+
+                    int roiX = (int)(halfWidth - halfWidth * pct);
+                    int roiY = (int)(halfHeight - halfHeight * pct);
+                    int roiWidth = (int)(halfWidth + halfWidth * pct);
+                    int roiHeight = (int)(halfHeight + halfHeight * pct);
+
+                    return new int[] { roiX, roiY, roiWidth, roiHeight };
+                }
+            }
+            return null;
         }
 
         private async Task<string> GetAppState(
@@ -342,7 +372,8 @@ namespace NINA.Model.MyGuider.PHD2 {
                             Time = profileService.ActiveProfile.GuiderSettings.SettleTime,
                             Timeout = profileService.ActiveProfile.GuiderSettings.SettleTimeout
                         },
-                        Recalibrate = forceCalibration
+                        Recalibrate = forceCalibration,
+                        Roi = await GetROI()
                     }
                 };
 
@@ -429,7 +460,11 @@ namespace NINA.Model.MyGuider.PHD2 {
             return true;
         }
 
-        private async Task<PhdMethodResponse> SendMessage(Phd2Method msg, int receiveTimeout = 0) {
+        private Task<GenericPhdMethodResponse> SendMessage(Phd2Method msg, int receiveTimeout = 0) {
+            return SendMessage<GenericPhdMethodResponse>(msg, receiveTimeout);
+        }
+
+        private async Task<T> SendMessage<T>(Phd2Method msg, int receiveTimeout = 0) where T : PhdMethodResponse {
             using (var client = new TcpClient()) {
                 client.ReceiveTimeout = receiveTimeout;
                 await client.ConnectAsync(
@@ -450,7 +485,7 @@ namespace NINA.Model.MyGuider.PHD2 {
                             phdevent = t.ToString();
                         }
                         if (phdevent == msg.Id) {
-                            var response = o.ToObject<PhdMethodResponse>();
+                            var response = o.ToObject<T>();
                             CheckPhdError(response);
                             return response;
                         }
@@ -662,28 +697,9 @@ namespace NINA.Model.MyGuider.PHD2 {
 
         public event EventHandler<IGuideStep> GuideEvent;
 
-        public class PhdMethodResponse {
-            public string jsonrpc;
-            public object result;
-            public PhdError error;
-            public int id;
-        }
-
-        public class PhdImageResult {
-            public int frame;
-            public int width;
-            public int height;
-            public double[] star_pos;
-            public string pixels;
-        }
-
-        public class PhdError {
-            public int code;
-            public string message;
-        }
-
         [DataContract]
         public class PhdEvent : BaseINPC, IGuideEvent {
+
             [DataMember]
             public string Event { get; set; }
 
@@ -796,6 +812,7 @@ namespace NINA.Model.MyGuider.PHD2 {
 
         [DataContract]
         public class PhdEventGuideStep : PhdEvent, IGuideStep {
+
             [DataMember]
             private double frame;
 
