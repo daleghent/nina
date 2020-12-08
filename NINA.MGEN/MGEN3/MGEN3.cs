@@ -51,7 +51,7 @@ namespace NINA.MGEN3 {
         /// </summary>
         /// <param name="MGEN3LibPath">path to the MG3lib.dll</param>
         public MGEN3(string ftdiDllPath, string mg3DllPath, ILogger logger) {
-            this.sdk = new LoggingMG3SDK(new MG3SDK(ftdiDllPath, mg3DllPath), logger);
+            this.sdk = new LoggingMG3SDK(new MG3SDK(ftdiDllPath, mg3DllPath, logger), logger);
             this.logger = logger;
         }
 

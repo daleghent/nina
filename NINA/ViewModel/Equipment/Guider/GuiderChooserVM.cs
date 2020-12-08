@@ -45,19 +45,17 @@ namespace NINA.ViewModel.Equipment.Guider {
             Devices.Add(new MetaGuideGuider(profileService, windowServiceFactory));
 
             try {
-                var mgen2 = new MGEN2.MGEN(Path.Combine("FTDI", "ftd2xx.dll"));
+                var mgen2 = new MGEN2.MGEN(Path.Combine("FTDI", "ftd2xx.dll"), new MGenLogger());
                 Devices.Add(new MGENGuider(mgen2, "Lacerta MGEN Superguider", "Lacerta_MGEN_Superguider", profileService));
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
-            if (!Utility.DllLoader.IsX86()) {
-                try {
-                    var mgen3 = new MGEN3.MGEN3(Path.Combine("FTDI", "ftd2xx.dll"), Path.Combine("MGEN", "MG3lib.dll"), new MGenLogger());
-                    Devices.Add(new MGENGuider(mgen3, "Lacerta MGEN-3 Autoguider", "Lacerta_MGEN-3_Autoguider", profileService));
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                }
+            try {
+                var mgen3 = new MGEN3.MGEN3(Path.Combine("FTDI", "ftd2xx.dll"), Path.Combine("MGEN", "MG3lib.dll"), new MGenLogger());
+                Devices.Add(new MGENGuider(mgen3, "Lacerta MGEN-3 Autoguider", "Lacerta_MGEN-3_Autoguider", profileService));
+            } catch (Exception ex) {
+                Logger.Error(ex);
             }
 
             DetermineSelectedDevice(profileService.ActiveProfile.GuiderSettings.GuiderName);

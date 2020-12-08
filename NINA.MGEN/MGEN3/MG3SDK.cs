@@ -28,9 +28,9 @@ namespace NINA.MGEN3 {
         private object lockobj = new object();
         private IntPtr handle = IntPtr.Zero;
 
-        public MG3SDK(string ftdiDllPath, string mg3DllPath) {
-            DllLoader.LoadDll(ftdiDllPath);
-            DllLoader.LoadDll(mg3DllPath);
+        public MG3SDK(string ftdiDllPath, string mg3DllPath, ILogger logger) {
+            DllLoader.LoadDll(ftdiDllPath, logger);
+            DllLoader.LoadDll(mg3DllPath, logger);
         }
 
         public int PollDevice() {
@@ -142,7 +142,7 @@ namespace NINA.MGEN3 {
                     prefer_long_expo = 0
                 };
                 pss.strSize = (uint)(System.Runtime.InteropServices.Marshal.SizeOf(pss));
-                return MG3lib_Function_StarSearch(handle, pss);
+                return MG3lib_Function_StarSearch(handle, ref pss);
             }
         }
 
@@ -164,7 +164,7 @@ namespace NINA.MGEN3 {
                 data.frame_idx = 0xffffffff;
                 data.pimage = null;
                 data.size = new byte[] { 0, 0 };
-                return MG3lib_ReadLastFrameData(handle, data);
+                return MG3lib_ReadLastFrameData(handle, ref data);
             }
         }
 
@@ -302,7 +302,7 @@ namespace NINA.MGEN3 {
         /// </summary>
         /// <returns></returns>
         [DllImport(DLLNAME, EntryPoint = "MG3cmd_SetAGPrms", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int MG3lib_SetAGPrms(IntPtr handle, MGEN3_AutoGuidingParameters pag, int ax);
+        private static extern int MG3lib_SetAGPrms(IntPtr handle, ref MGEN3_AutoGuidingParameters pag, int ax);
 
         /// <summary>
         /// read dithering parameters
@@ -316,14 +316,14 @@ namespace NINA.MGEN3 {
         /// </summary>
         /// <returns></returns>
         [DllImport(DLLNAME, EntryPoint = "MG3cmd_SetDitheringPrms", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int MG3lib_SetDitheringPrms(IntPtr handle, MGEN3_DitherParameters pd);
+        private static extern int MG3lib_SetDitheringPrms(IntPtr handle, ref MGEN3_DitherParameters pd);
 
         /// <summary>
         /// read last frame's data
         /// </summary>
         /// <returns></returns>
         [DllImport(DLLNAME, EntryPoint = "MG3cmd_ReadLastFrameData", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int MG3lib_ReadLastFrameData(IntPtr handle, MGEN3_FrameData pfd);
+        private static extern int MG3lib_ReadLastFrameData(IntPtr handle, ref MGEN3_FrameData pfd);
 
         /// <summary>
         /// read current calibration data
@@ -337,7 +337,7 @@ namespace NINA.MGEN3 {
         /// </summary>
         /// <returns></returns>
         [DllImport(DLLNAME, EntryPoint = "MG3cmd_SetCalibration", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int MG3lib_SetCalibration(IntPtr handle, MGEN3_Calibration pc);
+        private static extern int MG3lib_SetCalibration(IntPtr handle, ref MGEN3_Calibration pc);
 
         /// <summary>
         /// read dithering state
@@ -372,7 +372,7 @@ namespace NINA.MGEN3 {
         /// </summary>
         /// <returns></returns>
         [DllImport(DLLNAME, EntryPoint = "MG3cmd_Function_StarSearch", CallingConvention = CallingConvention.Cdecl)]
-        private static extern int MG3lib_Function_StarSearch(IntPtr handle, MGEN3_StarSearch pss);
+        private static extern int MG3lib_Function_StarSearch(IntPtr handle, ref MGEN3_StarSearch pss);
 
         /// <summary>
         /// starts a Calibration procedure
@@ -457,12 +457,12 @@ namespace NINA.MGEN3 {
             LFD_IGNORE_KNOWN = 0x20,
         }
 
-        [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Sequential, Pack = 4)]
         public struct MGEN3_FrameData {
             public uint strSize;
             public uint query;
-            public short star_present;
-            public short ag_enabled;
+            public int star_present;
+            public int ag_enabled;
             public uint frame_idx;
             public float pos_x;
             public float pos_y;
@@ -480,7 +480,7 @@ namespace NINA.MGEN3 {
             [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VarEnum.VT_I2)]
             public short[] pimage;
 
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2)]
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 2, ArraySubType = UnmanagedType.U1)]
             public byte[] size;
         }
 

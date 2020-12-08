@@ -38,6 +38,7 @@ namespace NINA.MGEN2 {
         private byte cbus_dir;
         private byte cbus_val;
         private string ftdiDllPath;
+        private ILogger logger;
 
         public int SensorSizeX { get; } = 752;
 
@@ -51,8 +52,9 @@ namespace NINA.MGEN2 {
         ///
         /// </summary>
         /// <param name="ftdiDllPath">path to the ftd2xx dll</param>
-        public MGEN(string ftdiDllPath) {
+        public MGEN(string ftdiDllPath, ILogger logger) {
             this.ftdiDllPath = ftdiDllPath;
+            this.logger = logger;
         }
 
         public uint GetDriverVersion() {
@@ -66,7 +68,7 @@ namespace NINA.MGEN2 {
             try {
                 await lockObj.WaitAsync(ct);
 
-                this.FTDI = new FTD2XX(this.ftdiDllPath);
+                this.FTDI = new FTD2XX(this.ftdiDllPath, this.logger);
                 var status = this.FTDI.GetDeviceList(out var ftdiDeviceList);
                 if (status == FT_STATUS.FT_OK) {
                     return new List<FT_DEVICE_INFO_NODE>(ftdiDeviceList);

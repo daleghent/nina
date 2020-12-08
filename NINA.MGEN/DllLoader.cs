@@ -30,7 +30,7 @@ namespace NINA.MGEN {
 
         private static object lockobj = new object();
 
-        public static void LoadDll(string dllSubPath) {
+        public static void LoadDll(string dllSubPath, ILogger logger) {
             lock (lockobj) {
                 String path;
 
@@ -44,7 +44,10 @@ namespace NINA.MGEN {
 
                 if (LoadLibrary(path) == IntPtr.Zero) {
                     var error = Marshal.GetLastWin32Error().ToString();
-                    var message = $"DllLoader failed to load library {dllSubPath} due to error code {error}";
+                    var message = $"DllLoader failed to load library {path} due to error code {error}";
+                    logger.Error(message);
+                } else {
+                    logger.Debug($"Successfully loaded {path}");
                 }
 
                 SetDllDirectory(string.Empty);

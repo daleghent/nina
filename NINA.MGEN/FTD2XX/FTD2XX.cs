@@ -29,8 +29,8 @@ namespace FTD2XX_NET {
         private IntPtr handle;
         private static object lockObj = new object();
 
-        public FTD2XX(string ftdiDllPath) {
-            DllLoader.LoadDll(ftdiDllPath);
+        public FTD2XX(string ftdiDllPath, ILogger logger) {
+            DllLoader.LoadDll(ftdiDllPath, logger);
         }
 
         public bool IsOpen => handle != IntPtr.Zero;
