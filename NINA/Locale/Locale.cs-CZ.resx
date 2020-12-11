@@ -187,11 +187,11 @@
     <value>Měření Výšky</value>
   </data>
   <data name="LblAltitudeMeasurementButtonTooltip" xml:space="preserve">
-    <value>Measures Altitude Error by three steps.
-1. Takes image and platesolves for actual coordinates at current position
-2. Slew telescope using Right Ascension axis by 0.5 degrees
-3. Take another image at the new position, plate solves it for the actual position
-Using those two points the actual altitude error will be calculated and displayed</value>
+    <value>Změřte Chybu Výšky v následujících třech krocích.
+1. Získejte snímek a výpočtem aktuální souřadnice pomocí platesolvingu získáte aktuální polohu
+2. Otočte dalekohled o 0,5 stupně kolem osy RA
+3. Znovu pořiďte snímek v této poloze a pomocí platesolvingu vypočítáte nové souřadnice
+Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</value>
   </data>
   <data name="LblAltitudeMeasurementDescription" xml:space="preserve">
     <value>Namiřte dalekohled na východ nebo na západ, blízko deklinace 0, nebo blízko obzoru.</value>
@@ -396,11 +396,11 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Měření Azimutu</value>
   </data>
   <data name="LblAzimuthMeasurementButtonTooltip" xml:space="preserve">
-    <value>Measures Azimuth Error by three steps.
-1. Takes image and platesolves for actual coordinates at current position
-2. Slew telescope using Right Ascension axis by 0.5 degrees
-3. Take another image at the new position, plate solves it for the actual position
-Using those two points the actual azimuth error will be calculated and displayed</value>
+    <value>Změření Chyby Výšky v následujících třech krocích.
+1. Získat snímek a vypočítat souřadnice pomocí platesolvingu z aktuální polohy
+2. Otočit dalekohled o 0,5 stupně kolem osy Ra
+3. Znovu podpořit snímek v této poloze a vypočítat souřadnice pomocí platesolvingu
+Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</value>
   </data>
   <data name="LblAzimuthMeasurementDescription" xml:space="preserve">
     <value>Namiřte dalekohled na jih poblíž deklinace 0 stupňů poblíž poledníku</value>
@@ -542,7 +542,7 @@ Filtr: {3}</value>
     <value>Na fotoaparátu Canon došlo k chybě: {0}</value>
   </data>
   <data name="LblCaptureImageAndPlatesolve" xml:space="preserve">
-    <value>Capture Image and Platesolve</value>
+    <value>Pořídit Snímek a Platesolving</value>
   </data>
   <data name="LblCaptureImageCovered" xml:space="preserve">
     <value>Zakrýt Senzor a Pořídit Snímek</value>
@@ -940,8 +940,8 @@ Zavřít sekvenci a vše ztratit?</value>
     <value>Metoda Detekce Kontrastu</value>
   </data>
   <data name="LblCoolCamBtnTooltip" xml:space="preserve">
-    <value>Zapne chlazení kamery na nastavenou teplotu. Doba trvání je volitelná. Většina řadičů již automaticky reguluje chladicí systém a postupně snižuje teplotu.
-V případě, že je nutné provádět chlazení déle, lze určit dobu trvání a aplikace se pokusí pomalu dosáhnout teploty na základě definované doby.</value>
+    <value>Zapne chlazení kamery na nastavenou teplotu. Čas trvání je volitelné. Většina ovladačů již automaticky reguluje chladicí systém a postupně snižuje teplotu.
+V případě, že je nutné provádět chlazení déle, lze určit čas trvání a aplikace se pokusí pomalu dosáhnout teploty na základě definované doby.</value>
   </data>
   <data name="LblCoolerOn" xml:space="preserve">
     <value>Chlazení</value>
@@ -995,7 +995,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Pokud pořídíte snímek a pomalu otáčíte dalekohledem v jednom nebo opačném směru a stopy nejsou zarovnány, došlo k chybě Polárního Vyrovnání</value>
   </data>
   <data name="LblDARVSlewDescription" xml:space="preserve">
-    <value>Zadejte dobu trvání procedury D.A.R.V. Dalekohled se bude pohybovat polovičním časem v jednom směru na ose RA a poté v opačném směru. Pokud v polárním zarovnání není chyba, zobrazí se jedna čára, v opačném případě bude čára ve tvaru písmene V. Chcete-li měřit chybu v Azimutu, přesuňte dalekohled blízko k poledníku, na východ nebo západ.</value>
+    <value>Zadejte čas trvání procedury D.A.R.V. Dalekohled se bude pohybovat polovičním časem v jednom směru na ose RA a poté v opačném směru. Pokud v polárním zarovnání není chyba, zobrazí se jedna čára, v opačném případě bude čára ve tvaru písmene V. Chcete-li měřit chybu v Azimutu, přesuňte dalekohled blízko k poledníku, na východ nebo západ.</value>
   </data>
   <data name="LblDataProvidedBy" xml:space="preserve">
     <value>Počáteční datový soubor DSO poskytl</value>
@@ -1100,7 +1100,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Digital Sky Survey</value>
   </data>
   <data name="LblDirectGuideDuration" xml:space="preserve">
-    <value>Doba Přímé Pointace</value>
+    <value>Čas Přímé Pointace</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
     <value>Pointace se nepřipojila k Dalekohledu</value>
@@ -1250,7 +1250,7 @@ V případě, že je nutné provádět chlazení déle, lze určit dobu trvání
     <value>Verze Ovladače</value>
   </data>
   <data name="LblDuration" xml:space="preserve">
-    <value>Doba trvání</value>
+    <value>Čas trvání</value>
   </data>
   <data name="LblDusk" xml:space="preserve">
     <value>Soumrak</value>
@@ -1790,7 +1790,7 @@ Vypočtené HFR: {2}
     <value>Informace</value>
   </data>
   <data name="LblInitiatePlatesolve" xml:space="preserve">
-    <value>Initiate Platesolve</value>
+    <value>Zahájit Platesolving</value>
   </data>
   <data name="LblInvalidMode" xml:space="preserve">
     <value>Neplatný režim</value>
@@ -1865,7 +1865,7 @@ Vypočtené HFR: {2}
     <value>Nahrát soubor cíle</value>
   </data>
   <data name="LblLocalPlatesolver" xml:space="preserve">
-    <value>Local Platesolver</value>
+    <value>Místní Platesolving</value>
   </data>
   <data name="LblLocation" xml:space="preserve">
     <value>Poloha</value>
@@ -1967,7 +1967,7 @@ Vypočtené HFR: {2}
     <value>Min</value>
   </data>
   <data name="LblMinDuration" xml:space="preserve">
-    <value>Min. Doba trvání</value>
+    <value>Min. Čas trvání</value>
   </data>
   <data name="LblMinExposureTimeDownloadRatio" xml:space="preserve">
     <value>Minimální Čas expozice z Poměru Stahování</value>
@@ -2401,55 +2401,55 @@ Vypočtené HFR: {2}
     <value>Platesolve2 exe nenalezen</value>
   </data>
   <data name="LblPlateSolvedPolarAlignment" xml:space="preserve">
-    <value>Astrometrie Polárního Zarovnání</value>
+    <value>Platesolving Polárního Zarovnání</value>
   </data>
   <data name="LblPlateSolveEnding" xml:space="preserve">
-    <value>PlateSolve reached maximum number of attempts, or Meridian Flip necessary.</value>
+    <value>Platesolving dosáhl maximálního počtu pokusů, nebo je nutné změnit překlopení poledníku.</value>
   </data>
   <data name="LblPlatesolveFailed" xml:space="preserve">
-    <value>Platesolve failed</value>
+    <value>Platesolving selhal</value>
   </data>
   <data name="LblPlateSolveFailedDelay" xml:space="preserve">
     <value>Zpoždění mezi pokusy</value>
   </data>
   <data name="LblPlateSolveFailedDelayTooltip" xml:space="preserve">
-    <value>Delay, in minutes, between two plate solve attempts</value>
+    <value>Interval v minutách mezi dvěma neúspěšnými pokusy o platesolving</value>
   </data>
   <data name="LblPlateSolveImage" xml:space="preserve">
-    <value>Plate solve current image</value>
+    <value>Platesolving aktuálního obrazu</value>
   </data>
   <data name="LblPlateSolveNbOfAttempts" xml:space="preserve">
     <value>Počet Pokusů</value>
   </data>
   <data name="LblPlateSolveNbOfAttemptsTooltip" xml:space="preserve">
-    <value>How many times a mid-sequence platesolve operation will attempt until considered failed</value>
+    <value>Kolik neúspěšných pokusů platesolvingu se považuje za selhání během prováděné sekvence</value>
   </data>
   <data name="LblPlatesolveNoCoordinates" xml:space="preserve">
     <value>Neexistují žádné referenční souřadnice</value>
   </data>
   <data name="LblPlateSolveNoFocalLength" xml:space="preserve">
-    <value>Plate solve aborted. The telescope's effective focal length must be specified under Options &gt; Equipment</value>
+    <value>Platesolving přerušen. Upřesněte ohniskovou vzdálenost dalekohledu pomocí Možnosti &gt; Zařízení</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceRepeating" xml:space="preserve">
     <value>Dalekohled je mimo toleranci. Opakuji...</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceReslew" xml:space="preserve">
-    <value>Dalekohled je mimo toleranci. Znovu přejet na cíl...</value>
+    <value>Dalekohled je mimo toleranci. Znovu přejíždím na cíl...</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceSyncing" xml:space="preserve">
-    <value>Dalekohled je mimo toleranci. Synchronizace...</value>
+    <value>Dalekohled je mimo toleranci. Synchronizuji...</value>
   </data>
   <data name="LblPlatesolveProvidedBy" xml:space="preserve">
-    <value>Platesolve service provided by</value>
+    <value>Službu Platesolvingu poskytuje</value>
   </data>
   <data name="LblPlateSolver" xml:space="preserve">
     <value>Plate Solver</value>
   </data>
   <data name="LblPlateSolveReattemptDelay" xml:space="preserve">
-    <value>Waiting for next plate solve attempt: {0}</value>
+    <value>Počkat na další pokus platesolvingu: {0}</value>
   </data>
   <data name="LblPlateSolveSettings" xml:space="preserve">
-    <value>Plate Solver Settings</value>
+    <value>Nastavení Platesolvingu</value>
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
     <value>Plate Solving</value>
@@ -2560,7 +2560,7 @@ Vypočtené HFR: {2}
     <value>Režim čtení pro snímky</value>
   </data>
   <data name="LblReadoutForSnapImagesToolTip" xml:space="preserve">
-    <value>Tento režim čtení kamery se použije k provedení řešení, rámování a auto-ostření</value>
+    <value>Tento režim čtení kamery se použije k provedení platesolvingu, rámování a auto-ostření</value>
   </data>
   <data name="LblRecenter" xml:space="preserve">
     <value>Vycentrovat</value>
@@ -2882,7 +2882,7 @@ Tato šablona bude použita při spuštění sekvence místo výchozí.</value>
     <value>Přejezd</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
-    <value>Doba Přejezdu</value>
+    <value>Čas Přejezdu</value>
   </data>
   <data name="LblSlewEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>Přejezd k cíli je povolen, ale dalekohled není připojen</value>
@@ -3308,7 +3308,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
   <data name="LblUnlinkedStretchTooltip" xml:space="preserve">
     <value>
         Pokud jsou povoleny barevné kanály, ty se jednotlivě roztáhnou a usnadní skrytí
-        pozadí oblohy a zvýší spolehlivost auto-ostření a řešení. To je vhodné zejména v oblastech
+        pozadí oblohy a zvýší spolehlivost auto-ostření a platesolvingu. To je vhodné zejména v oblastech
         se světelným znečištěním. Čas zpracování však bude delší.
     </value>
   </data>
@@ -3418,7 +3418,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>USB Limit</value>
   </data>
   <data name="LblUseBlindSolveFailover" xml:space="preserve">
-    <value>Plate solve failed. Try to solve using Blind Solver?</value>
+    <value>Platesolving se nezdařil. Spustit Řešení Naslepo?</value>
   </data>
   <data name="LblUseBlindSolveNoCoordinatesRollover" xml:space="preserve">
     <value>Referenční souřadnice nezjištěny. Použít řešení naslepo?</value>
@@ -3741,7 +3741,7 @@ Metodu kompenzace zpětné vůle lze změnit, pouze když je zaostření odpojen
   <data name="LblWarmCamBtnTooltip" xml:space="preserve">
     <value>Zahřát kameru zpět na okolní teplotu a vypnout chladič.
 Délka je volitelná. Většina ovladačů kamery již automaticky reguluje chladicí kapacitu a teplotu zvyšuje pouze postupně.
-Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zadané doby pomalu zvyšuje cílovou teplotu kamery.</value>
+Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadaného času pomalu zvyšuje cílovou teplotu kamery.</value>
   </data>
   <data name="LblWaitForImageSaving" xml:space="preserve">
     <value>Čekání, na uložení obrazu</value>
@@ -3871,7 +3871,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Délka Příčné Osy (mm)</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
-    <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis.</value>
+    <value>V konfiguraci vedle sebe je to vzdálenost (příčně mm) od rybiny ke středu OTA. Pozitivní je vpravo podél osy OTA.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
     <value>Poloměr Kopule (mm)</value>
@@ -3883,22 +3883,22 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Poloha Dalekohledu V/Z (mm)</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
-    <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east.</value>
+    <value>Změřte východní nebo západní odsazení (v mm) od středu montáže ke středu kopule. Pozitivní je na východ.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
     <value>Poloha Dalekohledu S/J (mm)</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
-    <value>Dome following may be inaccurate. Check that your mount epoch is configured correctly and do a plate solve sync</value>
+    <value>Sledování kupole může být nepřesné. Zkontrolujte, zda je vaše epocha správně nakonfigurována, a proveďte platesolving a synchronizaci</value>
   </data>
   <data name="LblDomeFollowError" xml:space="preserve">
-    <value>Error while syncing Dome. Dome following now stopped.</value>
+    <value>Chyba při synchronizaci kupole. Sledování kopule se nyní zastavilo.</value>
   </data>
   <data name="LblCancelSequence" xml:space="preserve">
     <value>Zrušte Sekvenci</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
-    <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is to the north.</value>
+    <value>Změřte severní nebo jižní odsazení (v mm) od středu montáže ke středu kopule. Pozitivní je na sever.</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
     <value>Pozastavit Sekvenci</value>
@@ -4045,16 +4045,16 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Pokud je ovladač FindHome podporován, jeho použití před zaparkováním zajistí přejezd na přesné místo. To je užitečné, pokud se baterie k motoru vrat nabíjí, když je zaparkovaná.</value>
   </data>
   <data name="LblDomeCloseOnUnsafe" xml:space="preserve">
-    <value>Close on unsafe conditions</value>
+    <value>Zavřít při nebezpečných podmínek</value>
   </data>
   <data name="LblDomeCloseOnUnsafeWarning" xml:space="preserve">
-    <value>Closing dome shutter due to unsafe conditions</value>
+    <value>Uzavření vrat kopule nastalo kvůli nebezpečným podmínkám</value>
   </data>
   <data name="LblDomeUnsafeWarning" xml:space="preserve">
-    <value>Cannot open dome shutter due to unsafe conditions</value>
+    <value>Vrata kopule nelze otevřít z důvodu nebezpečných podmínek</value>
   </data>
   <data name="LblDomeCloseOnUnsafeTooltip" xml:space="preserve">
-    <value>Immediately closes the dome shutter if a SafetyMonitor device reports unsafe conditions</value>
+    <value>Okamžitě zavřít vrata kopule, pokud zařízení SafetyMonitor ohlásí nebezpečné podmínky</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
     <value>Časový limit Sekvence Auto-ostření</value>
@@ -4165,7 +4165,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Povolí Režim Ultra pro velmi nízký čtecí šum </value>
   </data>
   <data name="LblRotatorReverseTooltip" xml:space="preserve">
-    <value>Reverse movement direction of rotator. Toggle this, if the platesolver rotates into the wrong direction.</value>
+    <value>Otočit směr pohybu rotátoru. Přepnout pokud se rotátor po platesolvingu otáčí špatným směrem.</value>
   </data>
   <data name="LblHips2FitsSurvey" xml:space="preserve">
     <value>HIPS 2 FITS Sky Survey</value>
@@ -4246,13 +4246,13 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Spustit Auto-ostření</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_CoolCamera_Description" xml:space="preserve">
-    <value>Chladí kameru na zadanou teplotu a dobu</value>
+    <value>Chladí kameru na zadaný čas a teplotu</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_CoolCamera_Name" xml:space="preserve">
     <value>Chlazení Kamery</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Description" xml:space="preserve">
-    <value>Zahřívá kameru po zadanou dobu</value>
+    <value>Zahřívá kameru po zadaný čas</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
     <value>Teplá Kamera</value>
@@ -4303,19 +4303,19 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Zastavit Pointaci</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Description" xml:space="preserve">
-    <value>Provede expozici pro danou dobu, zisk a offset</value>
+    <value>Provede expozici pro daný čas, zisk a offset</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Name" xml:space="preserve">
     <value>Provede Expozici</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Otočí rotátor a vycentruje dalekohled na souřadnice a směr dané řešením</value>
+    <value>Otočí rotátor a vycentruje dalekohled na souřadnice a směr dané platesolvingem</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
     <value>Vycentrovat a Otočit</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Vycentruje dalekohled pomocí astrometrie pro dané souřadnice</value>
+    <value>Vycentruje dalekohled pomocí platesolvingu pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
     <value>Vycentrovat</value>
@@ -4537,13 +4537,13 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
     <value>Vytvoří sekvenci pro plánovanou sadu cílů</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Description" xml:space="preserve">
-    <value>Provede expozice v uvedeném množství, trvání, zisku a offsetu. Spouštěč a podmínky se hodnotí mezi expozicemi.</value>
+    <value>Provede expozice v uvedeném množství, času, zisku a offsetu. Spouštěč a podmínky se hodnotí mezi expozicemi.</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Name" xml:space="preserve">
     <value>Provede Mnoho Expozic</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_Description" xml:space="preserve">
-    <value>Provede expozice v uvedeném množství, filtru, době trvání, zisku a offsetu, po určitém množství expozic je zahájen dithering. Spouštěč a podmínky se hodnotí mezi expozicemi.</value>
+    <value>Provede expozice v uvedeném množství, filtru, času trvání, zisku a offsetu, po určitém množství expozic je zahájen dithering. Spouštěč a podmínky se hodnotí mezi expozicemi.</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_Name" xml:space="preserve">
     <value>Chytrá Expozice</value>
@@ -4586,7 +4586,7 @@ Je-li požadováný delší čas, lze zadat délku a aplikovat na základě zada
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
     <value>Cílová Oblast Sekvence
-Přidejte sekvence DSO nebo přidejte cíle pomocí Atlasu Hvězd nebo Průvodcem Rámováním</value>
+Přidejte sekvence DSO nebo cíle pomocí Atlasu Hvězd či Průvodcem Rámování</value>
   </data>
   <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
     <value>Stav Smyčky</value>
@@ -4864,11 +4864,10 @@ Použijte ve spojení s jinou podmínkou smyčky, abyste neskončili v nekonečn
     <value>Neplatný Offset. Offset musí být mezi {0} a {1}, ale je nastaven na {2}</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Takes an image and solves the image using the current telescope position as reference.
-After solving the frame successfully the telescope will be synced to the solved position.</value>
+    <value>Pořídí snímek a s pomocí aktuální polohy dalekohledu provést platesolving. Po úspěšném platesolvingu bude dalekohled synchronizován do této polohy.</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
-    <value>Solve and Sync</value>
+    <value>Platesolving a Synchronizace</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DragOver_AddTarget" xml:space="preserve">
     <value>ULOŽIT CÍL</value>
@@ -4914,19 +4913,19 @@ Příklad:
     <value>Zaostřovač nezjistil žádnou teplotu</value>
   </data>
   <data name="LblServerEnabled" xml:space="preserve">
-    <value>Server Enabled</value>
+    <value>Server Povolen</value>
   </data>
   <data name="LblServerEnabledTooltip" xml:space="preserve">
-    <value>Hosts a service on port 59590, currently with the same API as SGP to interoperate with existing applications. If the service fails to start, you may need to update some firewall settings with netsh (see NINA documentation).</value>
+    <value>Hostuje službu na portu 59590, která má stejné API jako SGP pro spolupráci se stávajícími aplikacemi. Pokud se služba nespustí, možná budete muset změnit některá nastavení Firewallu nástrojem netsh (viz dokumentace NINA).</value>
   </data>
   <data name="LblServerFailed" xml:space="preserve">
-    <value>Server failed to start. Check the NINA documentation. {0}</value>
+    <value>Server se nespustil. Zkontrolujte dokumentaci NINA. {0}</value>
   </data>
   <data name="LblServerStarted" xml:space="preserve">
-    <value>Server Started</value>
+    <value>Server Spuštěn</value>
   </data>
   <data name="LblServerStopped" xml:space="preserve">
-    <value>Server Stopped</value>
+    <value>Server Zastaven</value>
   </data>
   <data name="LblCloseAll" xml:space="preserve">
     <value>Zavřít Vše</value>
@@ -5043,16 +5042,16 @@ Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů 
     <value>Výběr Profilu při Spuštění</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Description" xml:space="preserve">
-    <value>Exits the loop when the moon's altitude matches the specified parameters.</value>
+    <value>Ukončí smyčku, pokud výška Měsíce odpovídá zadaným parametrům.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
-    <value>Moon Altitude</value>
+    <value>Výška Měsíce</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
-    <value>Exits the loop when the sun's altitude matches the specified paramters.</value>
+    <value>Ukončí smyčku, pokud výška Slunce odpovídá zadaným parametrům.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
-    <value>Sun Altitude</value>
+    <value>Výška Slunce</value>
   </data>
   <data name="LblComparatorEquals" xml:space="preserve">
     <value>=</value>
@@ -5073,41 +5072,47 @@ Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů 
     <value>&lt;</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Description" xml:space="preserve">
-    <value>Waits if the moon's altitude matches the specified parameters</value>
+    <value>Počkat, až výška Měsíce bude odpovídat zadaným parametrům</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Name" xml:space="preserve">
-    <value>Wait if Moon Altitude</value>
+    <value>Čekat, pokud je výška Měsíce</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress" xml:space="preserve">
-    <value>Waiting due to moon altitude ({0}° {1} {2}°)</value>
+    <value>Čekání kvůli výšce Měsíce ({0}° {1} {2}°)</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Description" xml:space="preserve">
-    <value>Waits if the sun's altitude matches the specified parameters</value>
+    <value>Počkat, až výška Slunce bude odpovídat zadaným parametrům</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Name" xml:space="preserve">
-    <value>Wait if Sun Altitude</value>
+    <value>Čekat, až bude výška Slunce</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Progress" xml:space="preserve">
-    <value>Waiting due to sun altitude ({0}° {1} {2}°)</value>
+    <value>Čekání kvůli výšce Slunce ({0}° {1} {2}°)</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Description" xml:space="preserve">
-    <value>Exits the loop when the moon's illumination level matches the specified parameters.</value>
+    <value>Ukončí smyčku, když úroveň osvětlení Měsíce odpovídá zadaným parametrům.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Name" xml:space="preserve">
-    <value>Moon Illumination</value>
+    <value>Osvětlení Měsíce</value>
   </data>
   <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
-    <value>Target Closure Instructions</value>
+    <value>Pokyny Uzavření Cíle</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize" xml:space="preserve">
-    <value>Sample Size</value>
+    <value>Velikost Vzorku</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSizeTooltip" xml:space="preserve">
-    <value>The maximum sample size of image HFR readings that should be used to determine the HFR trend. 
-Large sample sizes can help prevent short term issues like wind gusts or guiding issues to trigger an autofocus.
-For quickly changing conditions a smaller sample size will help to respond more quickly to shifting focus, for example for temperature sensitive optics on a quickly changing ambient temperature.</value>
+    <value>Maximální velikost vzorku obrazových HFR odečtů, které by měly být použity k určení trendu HFR. 
+Velká velikost vzorků může pomoci zabránit krátkodobým problémům, jako jsou poryvy větru nebo problémy s pointací, které aktivují automatické zaostření.
+U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reagovat na posunutí zaostření, například u optiky citlivé na teplotu při rychle se měnící teplotě okolí.</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
-    <value>No writable switch available</value>
+    <value>Žádný přepisovatelný přepínač</value>
+  </data>
+  <data name="LblPHD2ROIPct" xml:space="preserve">
+    <value>Procento ROI pro nalezení Pointační hvězdy</value>
+  </data>
+  <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
+    <value>Procento snímku, které je třeba brát v úvahu pro nalezení pointační hvězdy v PHD2, měřeno od středu snímku</value>
   </data>
 </root>

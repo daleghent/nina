@@ -1979,7 +1979,7 @@
     <value>分</value>
   </data>
   <data name="LblMinutesAfterMeridian" xml:space="preserve">
-    <value>子午線通過後時間分</value>
+    <value>子午線通過後の分数</value>
   </data>
   <data name="LblMinutesShort" xml:space="preserve">
     <value>分</value>
@@ -5096,5 +5096,11 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
     <value>No writable switch available</value>
+  </data>
+  <data name="LblPHD2ROIPct" xml:space="preserve">
+    <value>ROI Percentage to find Guidestar</value>
+  </data>
+  <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
+    <value>The percentage of the frame to be considered for finding a guidestar in PHD2 measured from the center of the frame</value>
   </data>
 </root>

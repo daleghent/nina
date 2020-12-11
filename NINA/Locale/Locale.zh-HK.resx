@@ -5119,4 +5119,10 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
     <value>No writable switch available</value>
   </data>
+  <data name="LblPHD2ROIPct" xml:space="preserve">
+    <value>ROI Percentage to find Guidestar</value>
+  </data>
+  <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
+    <value>The percentage of the frame to be considered for finding a guidestar in PHD2 measured from the center of the frame</value>
+  </data>
 </root>

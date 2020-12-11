@@ -5112,4 +5112,10 @@ Dec: {1}</value>
   <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
     <value>Переключатель для записи не доступен</value>
   </data>
+  <data name="LblPHD2ROIPct" xml:space="preserve">
+    <value>Процент ROI для поиска гидирующей звезды</value>
+  </data>
+  <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
+    <value>Процент кадра, который должен быть рассмотрен для нахождения гидирующей звезды в PHD2 измеряется от центра кадра</value>
+  </data>
 </root>
