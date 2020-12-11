@@ -158,6 +158,9 @@ namespace NINA.Sequencer.Container {
                     duration += TimeSpan.FromSeconds((se.GetTakeExposure().GetEstimatedDuration().TotalSeconds + profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime.TotalSeconds) * (se.GetLoopCondition().Iterations - se.GetLoopCondition().CompletedIterations));
                 }
             }
+            if (Mode == SequenceMode.ROTATE) {
+                duration = TimeSpan.FromSeconds(duration.TotalSeconds * (this.rotateLoopCondition.Iterations - this.rotateLoopCondition.CompletedIterations));
+            }
             return duration;
         }
 
