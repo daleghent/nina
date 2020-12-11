@@ -141,6 +141,10 @@ namespace NINA.Utility.ImageAnalysis {
                     pf = System.Windows.Media.PixelFormats.Bgra32;
                     break;
 
+                case System.Drawing.Imaging.PixelFormat.Format32bppArgb:
+                    pf = System.Windows.Media.PixelFormats.Bgra32;
+                    break;
+
                 default:
                     pf = System.Windows.Media.PixelFormats.Gray16;
                     break;
