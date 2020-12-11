@@ -21,5 +21,6 @@ namespace NINA.ViewModel {
         public DataPoint Focuspoint { get; set; }
         public DateTime Timestamp { get; set; }
         public double Temperature { get; set; }
+        public string Filter { get; set; }
     }
 }

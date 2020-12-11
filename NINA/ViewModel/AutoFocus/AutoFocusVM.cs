@@ -223,7 +223,7 @@ namespace NINA.ViewModel {
                 var report = JsonConvert.DeserializeObject<AutoFocusReport>(File.ReadAllText(SelectedChart.FilePath));
 
                 FinalFocusPoint = new DataPoint(report.CalculatedFocusPoint.Position, report.CalculatedFocusPoint.Value);
-                LastAutoFocusPoint = new AutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = report.Temperature, Timestamp = report.Timestamp };
+                LastAutoFocusPoint = new AutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = report.Temperature, Timestamp = report.Timestamp, Filter = report.Filter };
 
                 foreach (FocusPoint fp in report.MeasurePoints) {
                     FocusPoints.AddSorted(new ScatterErrorPoint(Convert.ToInt32(fp.Position), fp.Value, 0, fp.Error), comparer);
@@ -551,6 +551,7 @@ namespace NINA.ViewModel {
             int numberOfAttempts = 0;
             int initialFocusPosition = focuserInfo.Position;
             double initialHFR = 0;
+            LastAutoFocusPoint = null;
             //Remember imaging filter, and get autofocus filter, if any
             FilterInfo imagingFilter = filter;
             FilterInfo defaultFocusFilter = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters.Where(f => f.AutoFocusFilter == true).FirstOrDefault();
@@ -660,7 +661,7 @@ namespace NINA.ViewModel {
 
                     report = GenerateReport(initialFocusPosition, initialHFR, filter?.Name ?? string.Empty);
 
-                    LastAutoFocusPoint = new AutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = focuserInfo.Temperature, Timestamp = DateTime.Now };
+                    LastAutoFocusPoint = new AutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = focuserInfo.Temperature, Timestamp = DateTime.Now, Filter = filter?.Name };
 
                     //Set the filter to the autofocus filter if necessary, but do not move to it yet (otherwise filter offset will be ignored in final validation). This will be done as part of the capture in ValidateCalculatedFocusPosition
                     if (defaultFocusFilter != null && profileService.ActiveProfile.FocuserSettings.UseFilterWheelOffsets) {
