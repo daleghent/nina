@@ -212,6 +212,16 @@ namespace NINA.Model.MyGuider.PHD2 {
 
         public async Task<bool> Dither(CancellationToken ct) {
             if (Connected) {
+                var state = await GetAppState();
+                if (state != PhdAppState.GUIDING) {
+                    if (state == PhdAppState.LOSTLOCK) {
+                        Notification.ShowWarning(Locale.Loc.Instance["LblDitherSkippedBecauseNotLostLock"]);
+                    } else {
+                        Notification.ShowWarning(Locale.Loc.Instance["LblDitherSkippedBecauseNotGuiding"]);
+                    }
+
+                    return false;
+                }
                 _isDithering = true;
 
                 var ditherMsg = new Phd2Dither() {

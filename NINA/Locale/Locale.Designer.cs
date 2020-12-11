@@ -5665,6 +5665,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dither was skipped because PHD2 was not actively guiding.
+        /// </summary>
+        internal static string LblDitherSkippedBecauseNotGuiding {
+            get {
+                return ResourceManager.GetString("LblDitherSkippedBecauseNotGuiding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dither was skipped because PHD2 has lost the locked guide star.
+        /// </summary>
+        internal static string LblDitherSkippedBecauseNotLostLock {
+            get {
+                return ResourceManager.GetString("LblDitherSkippedBecauseNotLostLock", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Documentation.
         /// </summary>
         internal static string LblDocumentation {

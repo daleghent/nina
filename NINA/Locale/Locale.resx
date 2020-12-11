@@ -5125,4 +5125,10 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
     <value>The percentage of the frame to be considered for finding a guidestar in PHD2 measured from the center of the frame</value>
   </data>
+  <data name="LblDitherSkippedBecauseNotGuiding" xml:space="preserve">
+    <value>Dither was skipped because PHD2 was not actively guiding</value>
+  </data>
+  <data name="LblDitherSkippedBecauseNotLostLock" xml:space="preserve">
+    <value>Dither was skipped because PHD2 has lost the locked guide star</value>
+  </data>
 </root>
