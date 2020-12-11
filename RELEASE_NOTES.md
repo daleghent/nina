@@ -116,6 +116,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - MetaGuide is now supported
 - MGEN2 now supports unattended guide star selection and calibration, and automatic meridian flips
 - A ROI percentage can now be set for PHD2 to be considered during guidestar search
+- PHD2 - Dither will be skipped when not actively guiding or the guide star was lost
 
 ### Auto-focus system
 - Auto-focus can now have different settings for gain, offset and binning per filter
