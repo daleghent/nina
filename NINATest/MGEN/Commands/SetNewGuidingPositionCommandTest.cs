@@ -15,8 +15,10 @@
 using FluentAssertions;
 using FTD2XX_NET;
 using Moq;
-using NINA.MGEN.Commands.AppMode;
-using NINA.MGEN.Exceptions;
+using NINA.Exceptions;
+using NINA.MGEN;
+using NINA.MGEN2.Commands.AppMode;
+
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

@@ -15,9 +15,9 @@
 using FluentAssertions;
 using FTD2XX_NET;
 using Moq;
-using NINA.MGEN.Commands.AppMode;
+using NINA.MGEN2.Commands.AppMode;
 
-using NINA.MGEN.Exceptions;
+
 
 using NUnit.Framework;
 using System;
