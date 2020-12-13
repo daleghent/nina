@@ -19,6 +19,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The MGEN guider now doesn't autoselect guide stars that lie too close to the sensor edge, based on a stand-off distance that the user can set in the UI
 - All guiders now report when a successful connection happens
 - Disconnecting Atik Cameras from other applications on startup or scan for new devices will not happen anymore
+- Fixed an issue in Framing Assistant when solving a file, that the near solver was incorrectly used as the blind solver
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 48.17962.2020.1110
