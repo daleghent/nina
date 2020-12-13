@@ -28,7 +28,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
     [ExportMetadata("Name", "Lbl_SequenceItem_Utility_WaitForSunAltitude_Name")]
     [ExportMetadata("Description", "Lbl_SequenceItem_Utility_WaitForSunAltitude_Description")]
-    [ExportMetadata("Icon", "NewMoonSVG")]
+    [ExportMetadata("Icon", "SunriseSVG")]
     [ExportMetadata("Category", "Lbl_SequenceCategory_Utility")]
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]

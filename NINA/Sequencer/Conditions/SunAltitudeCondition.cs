@@ -27,7 +27,7 @@ namespace NINA.Sequencer.Conditions {
 
     [ExportMetadata("Name", "Lbl_SequenceCondition_SunAltitudeCondition_Name")]
     [ExportMetadata("Description", "Lbl_SequenceCondition_SunAltitudeCondition_Description")]
-    [ExportMetadata("Icon", "NewMoonSVG")]
+    [ExportMetadata("Icon", "SunriseSVG")]
     [ExportMetadata("Category", "Lbl_SequenceCategory_Condition")]
     [Export(typeof(ISequenceCondition))]
     [JsonObject(MemberSerialization.OptIn)]
