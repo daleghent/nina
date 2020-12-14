@@ -141,21 +141,15 @@ namespace NINA.ViewModel.FramingAssistant {
                 applicationMediator.ChangeTab(ApplicationTab.SEQUENCE);
 
                 var template = o as IDeepSkyObjectContainer;
-                var first = true;
-                foreach (var rect in CameraRectangles) {
-                    var container = (IDeepSkyObjectContainer)template.Clone();
-                    var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Locale.Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
-                    container.Name = name;
-                    container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude)) {
-                        TargetName = name,
-                        Rotation = Rectangle.TotalRotation,
-                        InputCoordinates = new InputCoordinates() {
-                            Coordinates = rect.Coordinates
-                        }
-                    };
-                    container.IsExpanded = first;
-                    first = false;
+                foreach (var container in GetDSOContainerListFromFraming(template)) {
                     sequenceMediator.AddAdvancedTarget(container);
+                }
+            }, (object o) => RectangleCalculated);
+
+            AddTargetToTargetListCommand = new RelayCommand((object o) => {
+                var template = o as IDeepSkyObjectContainer;
+                foreach (var container in GetDSOContainerListFromFraming(template)) {
+                    sequenceMediator.AddTargetToTargetList(container);
                 }
             }, (object o) => RectangleCalculated);
 
@@ -175,6 +169,27 @@ namespace NINA.ViewModel.FramingAssistant {
                     resizeTimer.Start();
                 }
             });
+        }
+
+        private IList<IDeepSkyObjectContainer> GetDSOContainerListFromFraming(IDeepSkyObjectContainer template) {
+            var l = new List<IDeepSkyObjectContainer>();
+            var first = true;
+            foreach (var rect in CameraRectangles) {
+                var container = (IDeepSkyObjectContainer)template.Clone();
+                var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Locale.Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
+                container.Name = name;
+                container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude)) {
+                    TargetName = name,
+                    Rotation = Rectangle.TotalRotation,
+                    InputCoordinates = new InputCoordinates() {
+                        Coordinates = rect.Coordinates
+                    }
+                };
+                l.Add(container);
+                container.IsExpanded = first;
+                first = false;
+            }
+            return l;
         }
 
         public IList<IDeepSkyObjectContainer> DSOTemplates { get; private set; }
@@ -1011,6 +1026,7 @@ namespace NINA.ViewModel.FramingAssistant {
         public ICommand CancelLoadImageCommand { get; private set; }
         public ICommand SetOldSequencerTargetCommand { get; private set; }
         public ICommand SetSequencerTargetCommand { get; private set; }
+        public ICommand AddTargetToTargetListCommand { get; private set; }
         public ICommand GetDSOTemplatesCommand { get; private set; }
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
         public IAsyncCommand RecenterCommand { get; private set; }

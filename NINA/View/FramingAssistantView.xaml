@@ -490,6 +490,71 @@
                                 </Style>
                             </Button.Style>
                         </Button>
+                        <Button
+                            Height="25"
+                            Margin="5"
+                            HorizontalAlignment="Stretch"
+                            Command="{Binding GetDSOTemplatesCommand}">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Foreground="{StaticResource ButtonForegroundBrush}"
+                                Text="{ns:Loc LblAddTargetToTargetList}"
+                                TextWrapping="Wrap" />
+                            <Button.ToolTip>
+                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAddTargetToTargetListTooltip}" />
+                                </ToolTip>
+                            </Button.ToolTip>
+                            <Button.Style>
+                                <Style BasedOn="{StaticResource StandardButton}" TargetType="{x:Type Button}">
+                                    <Style.Resources>
+                                        <Border
+                                            x:Key="MenuHeader"
+                                            MinHeight="30"
+                                            x:Shared="false"
+                                            Background="Transparent">
+                                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+                                        </Border>
+                                        <Path
+                                            x:Key="MenuIcon"
+                                            Width="20"
+                                            Height="20"
+                                            Margin="5"
+                                            x:Shared="false"
+                                            Data="{Binding Icon}"
+                                            Fill="{StaticResource PrimaryBrush}"
+                                            Stretch="Uniform" />
+                                    </Style.Resources>
+                                    <Style.Triggers>
+                                        <EventTrigger RoutedEvent="Click">
+                                            <EventTrigger.Actions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                                                        </BooleanAnimationUsingKeyFrames>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger.Actions>
+                                        </EventTrigger>
+                                    </Style.Triggers>
+                                    <Setter Property="ContextMenu">
+                                        <Setter.Value>
+                                            <ContextMenu ItemsSource="{Binding Source={StaticResource Context}, Path=Data.DSOTemplates}">
+                                                <ContextMenu.ItemContainerStyle>
+                                                    <Style TargetType="MenuItem">
+                                                        <Setter Property="Header" Value="{StaticResource MenuHeader}" />
+                                                        <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
+                                                        <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.AddTargetToTargetListCommand}" />
+                                                        <Setter Property="CommandParameter" Value="{Binding}" />
+                                                    </Style>
+                                                </ContextMenu.ItemContainerStyle>
+                                            </ContextMenu>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </UniformGrid>
                 </StackPanel>
                 <Grid

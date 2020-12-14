@@ -32,5 +32,6 @@ namespace NINA.ViewModel.Sequencer {
         IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates();
 
         void AddTarget(IDeepSkyObjectContainer container);
+        void AddTargetToTargetList(IDeepSkyObjectContainer container);
     }
 }

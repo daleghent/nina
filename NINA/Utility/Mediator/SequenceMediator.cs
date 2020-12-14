@@ -59,5 +59,9 @@ namespace NINA.Utility.Mediator {
         public void SwitchToOverview() {
             sequenceNavigation.SwitchToOverview();
         }
+
+        public void AddTargetToTargetList(IDeepSkyObjectContainer container) {
+            sequenceNavigation.AddTargetToTargetList(container);
+        }
     }
 }

@@ -35,5 +35,6 @@ namespace NINA.Utility.Mediator.Interfaces {
 
         void SwitchToAdvancedView();
         void SwitchToOverview();
+        void AddTargetToTargetList(IDeepSkyObjectContainer container);
     }
 }

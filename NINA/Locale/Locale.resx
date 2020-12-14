@@ -5140,4 +5140,13 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
     <value>The connected camera lacks a dew heater that can be controlled</value>
   </data>
+  <data name="LblAddTargetToTargetList" xml:space="preserve">
+    <value>Add Target To Target List</value>
+  </data>
+  <data name="LblAddTargetToTargetListTooltip" xml:space="preserve">
+    <value>Adds the framed target to the target list section in the advanced sequencer sidebar for later use</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_SavedTarget" xml:space="preserve">
+    <value>Target {0} saved to target list</value>
+  </data>
 </root>

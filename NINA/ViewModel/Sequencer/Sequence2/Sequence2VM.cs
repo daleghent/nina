@@ -173,8 +173,9 @@ namespace NINA.ViewModel.Sequencer {
                 addTemplate = result == System.Windows.MessageBoxResult.OK;
             }
 
-            if (addTemplate)
+            if (addTemplate) {
                 TemplateController.AddNewUserTemplate(clonedContainer);
+            }
         }
 
         private void LoadSequence(object obj) {
@@ -328,6 +329,12 @@ namespace NINA.ViewModel.Sequencer {
 
         public void AddTarget(IDeepSkyObjectContainer container) {
             (this.Sequencer.MainContainer.Items[1] as ISequenceContainer).Add(container);
+        }
+
+        public void AddTargetToTargetList(IDeepSkyObjectContainer container) {
+            var d = new DropIntoParameters(container);
+            d.Position = Utility.Enum.DropTargetEnum.Center;
+            AddTargetToController(d);
         }
 
         public ICommand AddTemplateCommand { get; private set; }

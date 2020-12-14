@@ -1815,6 +1815,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target {0} saved to target list.
+        /// </summary>
+        internal static string Lbl_SequenceTargetController_SavedTarget {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTargetController_SavedTarget", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An error occurred while adding a new template. Refer to the logs for more details..
         /// </summary>
         internal static string Lbl_SequenceTemplateController_AddNewTemplateFailed {
@@ -2101,6 +2110,24 @@ namespace NINA.Locale {
         internal static string LblAddTargetToSequence {
             get {
                 return ResourceManager.GetString("LblAddTargetToSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Target To Target List.
+        /// </summary>
+        internal static string LblAddTargetToTargetList {
+            get {
+                return ResourceManager.GetString("LblAddTargetToTargetList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adds the framed target to the target list section in the advanced sequencer sidebar for later use.
+        /// </summary>
+        internal static string LblAddTargetToTargetListTooltip {
+            get {
+                return ResourceManager.GetString("LblAddTargetToTargetListTooltip", resourceCulture);
             }
         }
         

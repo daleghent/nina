@@ -128,5 +128,9 @@ namespace NINA.ViewModel.Sequencer {
         public IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates() {
             return Sequence2VM.GetDeepSkyObjectContainerTemplates();
         }
+
+        public void AddTargetToTargetList(IDeepSkyObjectContainer container) {
+            Sequence2VM.AddTargetToTargetList(container);
+        }
     }
 }
