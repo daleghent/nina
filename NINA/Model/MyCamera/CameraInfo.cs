@@ -14,7 +14,6 @@
 
 using NINA.Utility;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace NINA.Model.MyCamera {
@@ -267,6 +266,18 @@ namespace NINA.Model.MyCamera {
             }
             set {
                 _coolerPower = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool hasDewHeater;
+
+        public bool HasDewHeater {
+            get {
+                return hasDewHeater;
+            }
+            set {
+                hasDewHeater = value;
                 RaisePropertyChanged();
             }
         }

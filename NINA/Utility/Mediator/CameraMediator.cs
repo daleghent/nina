@@ -96,5 +96,9 @@ namespace NINA.Utility.Mediator {
                 return handler.TargetTemp;
             }
         }
+
+        public void SetDewHeater(bool onOff) {
+            handler.SetDewHeater(onOff);
+        }
     }
 }
