@@ -78,7 +78,7 @@
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding On}" />
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding OnOff}" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
