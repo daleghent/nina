@@ -5120,4 +5120,28 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
     <value>The percentage of the frame to be considered for finding a guidestar in PHD2 measured from the center of the frame</value>
   </data>
+  <data name="LblDitherSkippedBecauseNotGuiding" xml:space="preserve">
+    <value>Dither was skipped because PHD2 was not actively guiding</value>
+  </data>
+  <data name="LblDitherSkippedBecauseNotLostLock" xml:space="preserve">
+    <value>Dither was skipped because PHD2 has lost the locked guide star</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_DewHeater_Description" xml:space="preserve">
+    <value>Turns the camera's dew heater on or off</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_DewHeater_Name" xml:space="preserve">
+    <value>Dew Heater</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
+    <value>The connected camera lacks a dew heater that can be controlled</value>
+  </data>
+  <data name="LblAddTargetToTargetList" xml:space="preserve">
+    <value>Add Target To Target List</value>
+  </data>
+  <data name="LblAddTargetToTargetListTooltip" xml:space="preserve">
+    <value>Adds the framed target to the target list section in the advanced sequencer sidebar for later use</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_SavedTarget" xml:space="preserve">
+    <value>Target {0} saved to target list</value>
+  </data>
 </root>

@@ -986,7 +986,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Adresář Cygwin</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Počet Vyrovnání Temného pozadí</value>
+    <value>Počet Dark Flats</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
     <value>D.A.R.V. Přejezd</value>
@@ -1397,7 +1397,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Vypočtený Průměr Cílového Histogramu</value>
   </data>
   <data name="LblFlatCount" xml:space="preserve">
-    <value>Počet Plochých snímků</value>
+    <value>Počet Flats</value>
   </data>
   <data name="LblFlatDevice" xml:space="preserve">
     <value>FlatBox</value>
@@ -1406,7 +1406,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Jas</value>
   </data>
   <data name="LblFlatDeviceChooseSerialPort" xml:space="preserve">
-    <value>Vyberte sériový port</value>
+    <value>Vybrat sériový port</value>
   </data>
   <data name="LblFlatDeviceClearValues" xml:space="preserve">
     <value>Vymazat Hodnoty</value>
@@ -1418,7 +1418,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Po ukončení sekvence zavřít kryt</value>
   </data>
   <data name="LblFlatDeviceClosed" xml:space="preserve">
-    <value>Zavřeno</value>
+    <value>Zavřít</value>
   </data>
   <data name="LblFlatDeviceConnected" xml:space="preserve">
     <value>FlatBox připojen.</value>
@@ -1457,13 +1457,13 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Otevřít</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Otevřít kryt pro Vyrovnání temného pozadí v průvodci plochým snímkem</value>
+    <value>Otevřít kryt pro dark flats v průvodci flat</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Nastavit</value>
   </data>
   <data name="LblFlatDeviceTrainedFilterTimes" xml:space="preserve">
-    <value>Čas Definovaný Průvodcem Plochých snímků</value>
+    <value>Čas Definovaný Průvodcem Flat</value>
   </data>
   <data name="LblFlatDeviceUnknown" xml:space="preserve">
     <value>Neznámý</value>
@@ -1472,7 +1472,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Použít expoziční časy získané pomocí průvodcem plochých snímků</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
-    <value>Průměrné ADU {0}, výpočet Času Expozice začíná v {1}</value>
+    <value>Průměrné ADU bylo {0}, výpočet Času Expozice začíná v {1}</value>
   </data>
   <data name="LblFlatExposureCalcFinished" xml:space="preserve">
     <value>Průměrné ADU je {0} cílový Čas Expozice je {1}</value>
@@ -1487,40 +1487,40 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Tolerance Střední hodnoty</value>
   </data>
   <data name="LblFlatMaxExposureTime" xml:space="preserve">
-    <value>Ploché snímky Max. Expozice</value>
+    <value>Max. Expozice Flat</value>
   </data>
   <data name="LblFlatMinExposureTime" xml:space="preserve">
-    <value>Ploché snímky Min. Expozice</value>
+    <value>Min. Expozice Flat</value>
   </data>
   <data name="LblFlatSequenceCancelled" xml:space="preserve">
-    <value>Sekvence Plochého snímku Zrušena. Čas expozice nebylo možné určit</value>
+    <value>Sekvence Flat Zrušena. Čas expozice nebylo možné určit</value>
   </data>
   <data name="LblFlatStepSize" xml:space="preserve">
-    <value>Velikost Kroku Plochého snímku</value>
+    <value>Velikost Kroku Flat</value>
   </data>
   <data name="LblFlatUserCurrentExposureCalculation" xml:space="preserve">
     <value>Výpočet Aktuální Expozice</value>
   </data>
   <data name="LblFlatUserFlatSettings" xml:space="preserve">
-    <value>Průvodce Nastavení Plochého snímku</value>
+    <value>Průvodce Nastavení Flat</value>
   </data>
   <data name="LblFlatUserPromptCancel" xml:space="preserve">
-    <value>Zrušit Průvodce Plochého snímku</value>
+    <value>Zrušit Průvodce Flat</value>
   </data>
   <data name="LblFlatUserPromptFailure" xml:space="preserve">
-    <value>Nepodařilo se získat ideální Expozici pro Plochý snímek</value>
+    <value>Nepodařilo se získat ideální Expozici pro Flat</value>
   </data>
   <data name="LblFlatUserPromptFlatTooBright" xml:space="preserve">
-    <value>Plochý snímek je příliš jasný. Snižte množství světla nebo upravte toleranci, průměrnou hodnotu nebo na minimální expoziční čas</value>
+    <value>Flat je příliš jasný. Snižte množství světla nebo upravte toleranci, průměrnou hodnotu nebo minimální expoziční čas</value>
   </data>
   <data name="LblFlatUserPromptFlatTooDim" xml:space="preserve">
-    <value>Plochý snímek je příliš tmavý. Zvyšte množství světla nebo upravte toleranci, průměrnou hodnotu nebo na minimální expoziční čas</value>
+    <value>Flat je příliš tmavý. Zvyšte množství světla nebo upravte toleranci, průměrnou hodnotu nebo minimální expoziční čas</value>
   </data>
   <data name="LblFlatWizard" xml:space="preserve">
     <value>Průvodce Flat</value>
   </data>
   <data name="LblFlatWizardCapture" xml:space="preserve">
-    <value>Snímání Průvodcem Plochých sním.</value>
+    <value>Průvodcem Flat Snímáním</value>
   </data>
   <data name="LblFLICameraSetup" xml:space="preserve">
     <value>Nastavení Kamery FLI</value>
@@ -2485,7 +2485,7 @@ Vypočtené HFR: {2}
     <value>Připravuje se Sekvence Dark Flat</value>
   </data>
   <data name="LblPrepFlatFilterMsgBox" xml:space="preserve">
-    <value>Plochý snímek pro filtr: {0}</value>
+    <value>Flats pro filtr: {0}</value>
   </data>
   <data name="LblPreSequenceChecklist" xml:space="preserve">
     <value>Byly nalezeny potenciální problémy se sekvencí:</value>
@@ -3928,10 +3928,10 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Spustit Sekvenci</value>
   </data>
   <data name="LblSequenceContainsDarksAndLights" xml:space="preserve">
-    <value>Kamera nemá mechanickou závěrku, není připojen žádný automatický FlatBox a sekvence obsahuje pouze DARK / BIAS položky smíchané s LIGHT.</value>
+    <value>Kamera nemá mechanickou závěrku, není připojen žádný automatický FlatBox a sekvence obsahuje pouze DARK/BIAS položky smíchané s LIGHT.</value>
   </data>
   <data name="LblSequenceContainsDarksOnly" xml:space="preserve">
-    <value>Kamera nemá mechanickou závěrku, není připojen žádný automatický FlatBox a sekvence obsahuje pouze položky DARK/ BIAS. Ujistěte se, že je kamera zakrytá.</value>
+    <value>Kamera nemá mechanickou závěrku, není připojen žádný automatický FlatBox a sekvence obsahuje pouze položky DARK/BIAS. Ujistěte se, že je kamera zakrytá.</value>
   </data>
   <data name="LblAutoFocusFilterSettings" xml:space="preserve">
     <value>Nastavení Filtru Auto-ostření</value>
@@ -4123,7 +4123,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Po Opakování</value>
   </data>
   <data name="LblFlatDeviceNotConnected" xml:space="preserve">
-    <value>Zařízení Plochého snímku nepřipojeno</value>
+    <value>Zařízení Flat snímku nepřipojeno</value>
   </data>
   <data name="LblEnterMessage" xml:space="preserve">
     <value>Zadejte Zprávu</value>
@@ -4728,7 +4728,7 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Filtrové Kolo</value>
   </data>
   <data name="Lbl_SequenceCategory_FlatDevice" xml:space="preserve">
-    <value>Zařízení Ploch. sním.</value>
+    <value>Zařízení Flat</value>
   </data>
   <data name="Lbl_SequenceCategory_Focuser" xml:space="preserve">
     <value>Zaostřovač</value>
@@ -4852,7 +4852,7 @@ Použijte ve spojení s jinou podmínkou smyčky, abyste neskončili v nekonečn
     <value>Smyčka po Zadaný Čas</value>
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
-    <value>Zařízení Plochého snímku odpojeno!</value>
+    <value>Zařízení Flat odpojeno!</value>
   </data>
   <data name="LblNoSafetyMonitor" xml:space="preserve">
     <value>Žádný Bezpečnostní Monitor</value>
@@ -5114,5 +5114,29 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   </data>
   <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
     <value>Procento snímku, které je třeba brát v úvahu pro nalezení pointační hvězdy v PHD2, měřeno od středu snímku</value>
+  </data>
+  <data name="LblDitherSkippedBecauseNotGuiding" xml:space="preserve">
+    <value>Dithering přeskočen, protože PHD2 aktivně nepointuje</value>
+  </data>
+  <data name="LblDitherSkippedBecauseNotLostLock" xml:space="preserve">
+    <value>Dithering přeskočen, protože PHD2 ztratil zamčenou pointační hvězdu</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_DewHeater_Description" xml:space="preserve">
+    <value>Turns the camera's dew heater on or off</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_DewHeater_Name" xml:space="preserve">
+    <value>Dew Heater</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
+    <value>The connected camera lacks a dew heater that can be controlled</value>
+  </data>
+  <data name="LblAddTargetToTargetList" xml:space="preserve">
+    <value>Add Target To Target List</value>
+  </data>
+  <data name="LblAddTargetToTargetListTooltip" xml:space="preserve">
+    <value>Adds the framed target to the target list section in the advanced sequencer sidebar for later use</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_SavedTarget" xml:space="preserve">
+    <value>Target {0} saved to target list</value>
   </data>
 </root>
