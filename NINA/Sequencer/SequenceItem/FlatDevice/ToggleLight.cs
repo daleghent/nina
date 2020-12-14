@@ -50,20 +50,20 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             }
         }
 
-        private bool on;
+        private bool onOff;
 
         [JsonProperty]
-        public bool On {
-            get => on;
+        public bool OnOff {
+            get => onOff;
             set {
-                on = value;
+                onOff = value;
                 RaisePropertyChanged();
             }
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             // Todo - this interface lacks progress and token
-            return Task.Run(() => flatDeviceMediator.ToggleLight(On));
+            return Task.Run(() => flatDeviceMediator.ToggleLight(OnOff));
         }
 
         public override object Clone() {
@@ -72,7 +72,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 Name = Name,
                 Category = Category,
                 Description = Description,
-                On = On,
+                OnOff = OnOff,
             };
         }
 

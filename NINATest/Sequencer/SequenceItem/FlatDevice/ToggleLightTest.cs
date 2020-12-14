@@ -45,7 +45,7 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
             sut.Name = "SomeName";
             sut.Description = "SomeDescription";
             sut.Icon = new System.Windows.Media.GeometryGroup();
-            sut.On = true;
+            sut.OnOff = true;
 
             var item2 = (ToggleLight)sut.Clone();
 
@@ -53,7 +53,7 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
             item2.Name.Should().BeSameAs(sut.Name);
             item2.Description.Should().BeSameAs(sut.Description);
             item2.Icon.Should().BeSameAs(sut.Icon);
-            item2.On.Should().Be(sut.On);
+            item2.OnOff.Should().Be(sut.OnOff);
         }
 
         [Test]
@@ -89,10 +89,10 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
             fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = true, SupportsOpenClose = true });
 
             var sut = new ToggleLight(fdMediatorMock.Object);
-            sut.On = onoff;
+            sut.OnOff = onoff;
             await sut.Execute(default, default);
 
-            fdMediatorMock.Verify(x => x.ToggleLight(It.Is<bool>(b => b == sut.On)), Times.Once);
+            fdMediatorMock.Verify(x => x.ToggleLight(It.Is<bool>(b => b == sut.OnOff)), Times.Once);
         }
 
         [Test]
