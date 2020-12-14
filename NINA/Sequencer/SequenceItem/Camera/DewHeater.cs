@@ -27,7 +27,7 @@ namespace NINA.Sequencer.SequenceItem.Camera {
 
     [ExportMetadata("Name", "Lbl_SequenceItem_Camera_DewHeater_Name")]
     [ExportMetadata("Description", "Lbl_SequenceItem_Camera_DewHeater_Description")]
-    [ExportMetadata("Icon", "DropsSVG")]
+    [ExportMetadata("Icon", "AntiDropsSVG")]
     [ExportMetadata("Category", "Lbl_SequenceCategory_Camera")]
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
