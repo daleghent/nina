@@ -27,7 +27,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Accord.Statistics.Models.Regression.Linear;
 using Dasync.Collections;
-using NINA.ViewModel.Interfaces;
 
 namespace NINA.ViewModel.Equipment.Camera {
 
@@ -357,6 +356,7 @@ namespace NINA.ViewModel.Equipment.Camera {
                                 Connected = true,
                                 CoolerOn = Cam.CoolerOn,
                                 CoolerPower = Cam.CoolerPower,
+                                HasDewHeater = Cam.HasDewHeater,
                                 DewHeaterOn = Cam.DewHeaterOn,
                                 CanSetGain = Cam.CanSetGain,
                                 Gains = Cam.Gains,
@@ -784,6 +784,13 @@ namespace NINA.ViewModel.Equipment.Camera {
         public void SetSubSample(bool subSample) {
             if (CameraInfo.Connected == true) {
                 Cam.EnableSubSample = subSample;
+                BroadcastCameraInfo();
+            }
+        }
+
+        public void SetDewHeater(bool onOff) {
+            if (CameraInfo.Connected == true && CameraInfo.HasDewHeater == true) {
+                Cam.DewHeaterOn = onOff;
                 BroadcastCameraInfo();
             }
         }

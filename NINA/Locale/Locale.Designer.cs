@@ -761,6 +761,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Turns the camera&apos;s dew heater on or off.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_DewHeater_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_DewHeater_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dew Heater.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Camera_DewHeater_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Camera_DewHeater_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sets the readout mode for the camera.
         /// </summary>
         internal static string Lbl_SequenceItem_Camera_SetReadoutMode_Description {
@@ -1559,6 +1577,15 @@ namespace NINA.Locale {
         internal static string Lbl_SequenceItem_Utility_WaitForTimeSpan_Name {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForTimeSpan_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The connected camera lacks a dew heater that can be controlled.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent", resourceCulture);
             }
         }
         

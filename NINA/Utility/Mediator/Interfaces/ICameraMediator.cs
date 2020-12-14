@@ -13,10 +13,8 @@
 #endregion "copyright"
 
 using NINA.Model;
-using NINA.Model.ImageData;
 using NINA.Model.MyCamera;
 using NINA.ViewModel.Equipment.Camera;
-using NINA.ViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -42,6 +40,8 @@ namespace NINA.Utility.Mediator.Interfaces {
         void SetSubSample(bool subSample);
 
         void SetSubSampleArea(int x, int y, int width, int height);
+
+        void SetDewHeater(bool onOff);
 
         bool AtTargetTemp { get; }
 

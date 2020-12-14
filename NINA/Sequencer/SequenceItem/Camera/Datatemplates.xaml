@@ -74,6 +74,16 @@
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type local:DewHeater}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox VerticalAlignment="Center" IsChecked="{Binding On}" />
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type local:SetReadoutMode}">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>

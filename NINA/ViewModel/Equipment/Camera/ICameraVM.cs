@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 namespace NINA.ViewModel.Equipment.Camera {
 
     public interface ICameraVM : IDeviceVM<CameraInfo>, IDockableVM {
+
         void SetReadoutMode(short mode);
 
         void SetBinning(short x, short y);
@@ -31,6 +32,8 @@ namespace NINA.ViewModel.Equipment.Camera {
         void SetSubSampleArea(int x, int y, int width, int height);
 
         void AbortExposure();
+
+        void SetDewHeater(bool onOff);
 
         bool AtTargetTemp { get; }
 
