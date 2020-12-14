@@ -40,7 +40,7 @@ namespace NINA.ViewModel.Equipment.Guider {
             Devices.Clear();
             Devices.Add(new DummyGuider(profileService));
             Devices.Add(new PHD2Guider(profileService, windowServiceFactory));
-            Devices.Add(new SynchronizedPHD2Guider(profileService, cameraMediator, windowServiceFactory));
+            //Devices.Add(new SynchronizedPHD2Guider(profileService, cameraMediator, windowServiceFactory)); Non-Functional with current sequencer
             Devices.Add(new DirectGuider(profileService, telescopeMediator));
             Devices.Add(new MetaGuideGuider(profileService, windowServiceFactory));
 
