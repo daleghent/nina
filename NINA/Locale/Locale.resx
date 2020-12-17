@@ -3987,6 +3987,9 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDisconnectTelescope" xml:space="preserve">
     <value>Disconnect Telescope?</value>
   </data>
+  <data name="LblTelescopeParkedWarning" xml:space="preserve">
+    <value>Telescope is parked. You may need to unpark your scope before slewing.</value>
+  </data>
   <data name="LblSideOfPier" xml:space="preserve">
     <value>Side of Pier</value>
   </data>

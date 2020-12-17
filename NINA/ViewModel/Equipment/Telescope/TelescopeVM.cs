@@ -656,6 +656,10 @@ namespace NINA.ViewModel.Equipment.Telescope {
                         }
                     );
 
+                    if (Telescope?.CanPark == true && Telescope?.AtPark == true) {
+                        Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeParkedWarning"]);
+                    }
+
                     await Task.Run(() => {
                         Telescope.SlewToCoordinates(coords);
                     }, token);

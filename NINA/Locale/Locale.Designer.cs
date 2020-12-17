@@ -13208,6 +13208,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Telescope is parked. You may need to unpark your scope before slewing..
+        /// </summary>
+        internal static string LblTelescopeParkedWarning {
+            get {
+                return ResourceManager.GetString("LblTelescopeParkedWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telescope Snap Port.
         /// </summary>
         internal static string LblTelescopeSnapPort {
