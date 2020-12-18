@@ -112,6 +112,11 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Profile chooser on startup can now be re-activated in options again once it is disabled
 - Guiding gets stopped before any telescope-moving sequencer command gets executed 
 
+### Local Horizon Display
+- It is now possible to define a custom horizon to be used and displayed in the altitude charts
+- The horizon file consists of a simple mapping of azimuth to altitude values
+- Using these custom horizons it should be a lot more convenient to plan targets when only a portion of the sky is available
+
 ### Guiders
 - MetaGuide is now supported
 - MGEN2 now supports unattended guide star selection and calibration, and automatic meridian flips

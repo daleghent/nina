@@ -86,6 +86,7 @@ namespace NINA.Utility.Astrometry {
         [XmlElement(nameof(Epoch))]
         public Epoch Epoch { get; set; }
 
+        [XmlIgnore]
         public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
 
         /// <summary>
