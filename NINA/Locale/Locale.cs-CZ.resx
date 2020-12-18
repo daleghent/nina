@@ -1088,10 +1088,10 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Interval Detekce Zařízení</value>
   </data>
   <data name="LblDewHeater" xml:space="preserve">
-    <value>Topné Pásky</value>
+    <value>Topný Pásek</value>
   </data>
   <data name="LblDewHeaterShort" xml:space="preserve">
-    <value>Topné Pásky</value>
+    <value>Topný Pásek</value>
   </data>
   <data name="LblDewpoint" xml:space="preserve">
     <value>Rosný bod</value>
@@ -1373,7 +1373,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Název Filtru</value>
   </data>
   <data name="LblFilterNotFoundForPosition" xml:space="preserve">
-    <value>Na pozici {0} nezjištěn žádný filtr. Zkontrolujte filtry v nastavení a ujistěte se, že jsou kompatibilní s filtrovým kolem!</value>
+    <value>Na pozici {0} nezjištěn filtr. Zkontrolujte filtry v nastavení a ujistěte se, že jsou kompatibilní s filtrovým kolem!</value>
   </data>
   <data name="LblFilterSetButFilterWheelNotConnected" xml:space="preserve">
     <value>Jedna nebo více položek sekvence obsahuje sadu filtrů, ale filtrové kolo není připojeno</value>
@@ -3331,7 +3331,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Data Zařízení</value>
   </data>
   <data name="LblUPBV2DewHeater" xml:space="preserve">
-    <value>Porty Topného Pásku</value>
+    <value>Port Topného Pásku</value>
   </data>
   <data name="LblUPBV2DewHeaterPorts" xml:space="preserve">
     <value>Topné Pásky</value>
@@ -3977,6 +3977,9 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
   </data>
   <data name="LblDisconnectTelescope" xml:space="preserve">
     <value>Odpojit Dalekohled?</value>
+  </data>
+  <data name="LblTelescopeParkedWarning" xml:space="preserve">
+    <value>Dalekohled v parkovací poloze. Před zahájením pohybu jej možná budete muset odparkovat.</value>
   </data>
   <data name="LblSideOfPier" xml:space="preserve">
     <value>Poloha Dalekohledu</value>
@@ -4934,7 +4937,7 @@ Příklad:
     <value>Připojit všechna zařízení?</value>
   </data>
   <data name="LblCollapseSequencerTemplatesByDefault" xml:space="preserve">
-    <value>Ve výchozím nastavení Sbalte Šablony Sekvencí</value>
+    <value>Ve výchozím nastavení Sbalit Šablony Sekvencí</value>
   </data>
   <data name="LblCollapseSequencerTemplatesByDefaultTooltip" xml:space="preserve">
     <value>Pokud je tato možnost povolena, přidá šablonu a cíl v sekvencéru ve sbaleném stavu.</value>
@@ -5122,21 +5125,51 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
     <value>Dithering přeskočen, protože PHD2 ztratil zamčenou pointační hvězdu</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_DewHeater_Description" xml:space="preserve">
-    <value>Turns the camera's dew heater on or off</value>
+    <value>Zapnout nebo vypnout topný pásek kamery</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_DewHeater_Name" xml:space="preserve">
-    <value>Dew Heater</value>
+    <value>Topné Pásky</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
-    <value>The connected camera lacks a dew heater that can be controlled</value>
+    <value>Připojené kameře chybí topný pásek, který lze ovládat</value>
   </data>
   <data name="LblAddTargetToTargetList" xml:space="preserve">
-    <value>Add Target To Target List</value>
+    <value>Přidat Cíl Do Seznamu Cílů</value>
   </data>
   <data name="LblAddTargetToTargetListTooltip" xml:space="preserve">
-    <value>Adds the framed target to the target list section in the advanced sequencer sidebar for later use</value>
+    <value>Přidá nastavený cíl do cílové sekce seznamu v postranním panelu pokročilé sekvencer pro pozdější použití</value>
   </data>
   <data name="Lbl_SequenceTargetController_SavedTarget" xml:space="preserve">
-    <value>Target {0} saved to target list</value>
+    <value>Cíl {0} uložen do seznamu cílů</value>
+  </data>
+  <data name="LblCustomHorizon" xml:space="preserve">
+    <value>Custom Horizon</value>
+  </data>
+  <data name="LblCustomHorizonTooltip" xml:space="preserve">
+    <value>Load a custom horizon file to be used to determine local horizon limits and display the limit in the altitude charts.</value>
+  </data>
+  <data name="LblFailedToLoadCustomHorizon" xml:space="preserve">
+    <value>Failed to load custom horizon</value>
+  </data>
+  <data name="LblPlanetariumLocationTooltip" xml:space="preserve">
+    <value>Get location from the Planetarium Software</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description" xml:space="preserve">
+    <value>Waits until the target altitude is above the horizon. If a custom horizon is used, that altitude is used instead of 0</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
+    <value>Wait until above horizon</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
+    <value>Waiting until target is above horizon. Target Altitude {0}° / Horizon Altitude {1}°</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
+    <value>A condition that loops while the target is above the horizon and then stops the current instruction set</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
+    <value>Loop While Altitude Above Horizon</value>
+  </data>
+  <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
+    <value>Target will never be above the horizon</value>
   </data>
 </root>

@@ -3979,6 +3979,9 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDisconnectTelescope" xml:space="preserve">
     <value>Disconnect Telescope?</value>
   </data>
+  <data name="LblTelescopeParkedWarning" xml:space="preserve">
+    <value>Telescope is parked. You may need to unpark your scope before slewing.</value>
+  </data>
   <data name="LblSideOfPier" xml:space="preserve">
     <value>Side of Pier</value>
   </data>
@@ -5140,5 +5143,35 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="Lbl_SequenceTargetController_SavedTarget" xml:space="preserve">
     <value>Target {0} saved to target list</value>
+  </data>
+  <data name="LblCustomHorizon" xml:space="preserve">
+    <value>Custom Horizon</value>
+  </data>
+  <data name="LblCustomHorizonTooltip" xml:space="preserve">
+    <value>Load a custom horizon file to be used to determine local horizon limits and display the limit in the altitude charts.</value>
+  </data>
+  <data name="LblFailedToLoadCustomHorizon" xml:space="preserve">
+    <value>Failed to load custom horizon</value>
+  </data>
+  <data name="LblPlanetariumLocationTooltip" xml:space="preserve">
+    <value>Get location from the Planetarium Software</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description" xml:space="preserve">
+    <value>Waits until the target altitude is above the horizon. If a custom horizon is used, that altitude is used instead of 0</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
+    <value>Wait until above horizon</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
+    <value>Waiting until target is above horizon. Target Altitude {0}° / Horizon Altitude {1}°</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
+    <value>A condition that loops while the target is above the horizon and then stops the current instruction set</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
+    <value>Loop While Altitude Above Horizon</value>
+  </data>
+  <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
+    <value>Target will never be above the horizon</value>
   </data>
 </root>
