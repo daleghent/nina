@@ -484,7 +484,7 @@ namespace NINA.Model {
         public DeepSkyObject DSO {
             get {
                 if (_dso == null) {
-                    _dso = new DeepSkyObject(string.Empty, Coordinates, string.Empty);
+                    _dso = new DeepSkyObject(string.Empty, Coordinates, string.Empty, null);
                 }
                 return _dso;
             }

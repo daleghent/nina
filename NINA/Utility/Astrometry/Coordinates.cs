@@ -86,6 +86,8 @@ namespace NINA.Utility.Astrometry {
         [XmlElement(nameof(Epoch))]
         public Epoch Epoch { get; set; }
 
+        public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
+
         /// <summary>
         /// Creates new coordinates
         /// </summary>
@@ -503,11 +505,11 @@ namespace NINA.Utility.Astrometry {
             return $"RA: {this.RAString}; Dec: {this.DecString}; Epoch: {Epoch}";
         }
 
-        public Coordinates Clone() => 
+        public Coordinates Clone() =>
             new Coordinates(
-                this.raAngle, 
-                this.decAngle, 
-                this.Epoch, 
+                this.raAngle,
+                this.decAngle,
+                this.Epoch,
                 this.creationDate);
     }
 

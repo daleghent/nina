@@ -16,7 +16,7 @@ using NINA.Utility.Astrometry;
 using NUnit.Framework;
 using System;
 
-namespace NINATest {
+namespace NINATest.AstrometryTest {
 
     [TestFixture]
     public class AstrometryTest {

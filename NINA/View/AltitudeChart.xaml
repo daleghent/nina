@@ -88,6 +88,13 @@
                     ItemsSource="{Binding Altitudes}"
                     TrackerFormatString="X: {2:HH:mm}h&#x0a;Y: {4:0.00}°"
                     Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
+
+                <oxy:AreaSeries
+                    DataFieldX="Key"
+                    DataFieldY="Value"
+                    ItemsSource="{Binding Horizon}"
+                    TrackerFormatString="X: {2:HH:mm}h&#x0a;Y: {4:0.00}°"
+                    Color="{Binding Path=Color, Source={StaticResource ButtonBackgroundBrush}}" />
             </oxy:Plot.Series>
             <oxy:Plot.Annotations>
                 <oxy:LineAnnotation

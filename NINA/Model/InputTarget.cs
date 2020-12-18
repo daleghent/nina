@@ -26,13 +26,12 @@ namespace NINA.Model {
     [JsonObject(MemberSerialization.OptIn)]
     public class InputTarget : BaseINPC {
 
-        public InputTarget(Angle latitude, Angle longitude) {
+        public InputTarget(Angle latitude, Angle longitude, CustomHorizon horizon) {
             this.latitude = latitude;
             this.longitude = longitude;
-            DeepSkyObject = new DeepSkyObject(string.Empty, string.Empty);
+            DeepSkyObject = new DeepSkyObject(string.Empty, new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000), string.Empty, horizon);
             DeepSkyObject.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), latitude.Degree, longitude.Degree);
             InputCoordinates = new InputCoordinates();
-            InputCoordinates.PropertyChanged += InputCoordinates_PropertyChanged;
         }
 
         private void InputCoordinates_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
@@ -102,6 +101,15 @@ namespace NINA.Model {
                 if (inputCoordinates != null) {
                     InputCoordinates.PropertyChanged += InputCoordinates_PropertyChanged;
                 }
+                RaiseCoordinatesChanged();
+            }
+        }
+
+        public void SetPosition(Angle latitude, Angle longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+            if (this.DeepSkyObject != null) {
+                this.DeepSkyObject.SetDateAndPosition(Utility.Astrometry.NighttimeCalculator.GetReferenceDate(DateTime.Now), latitude.Degree, longitude.Degree);
                 RaiseCoordinatesChanged();
             }
         }

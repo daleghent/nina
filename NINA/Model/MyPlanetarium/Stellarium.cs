@@ -89,7 +89,7 @@ namespace NINA.Model.MyPlanetarium {
                 }
 
                 var coordinates = new Coordinates(ra, dec, Epoch.J2000);
-                var dso = new DeepSkyObject(string.Empty, coordinates, string.Empty);
+                var dso = new DeepSkyObject(string.Empty, coordinates, string.Empty, null);
 
                 return dso;
             } catch (Exception ex) {
@@ -116,7 +116,7 @@ namespace NINA.Model.MyPlanetarium {
                 var dec = status.Declination;
 
                 var coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
-                var dso = new DeepSkyObject(status.Name, coordinates, string.Empty);
+                var dso = new DeepSkyObject(status.Name, coordinates, string.Empty, null);
                 return dso;
             } catch (Exception ex) {
                 Logger.Error($"Stellarium: Failed to import object info: {ex}");

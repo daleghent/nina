@@ -351,6 +351,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A condition that loops while the target is above the horizon and then stops the current instruction set.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_AboveHorizonCondition_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_AboveHorizonCondition_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop While Altitude Above Horizon.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_AboveHorizonCondition_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_AboveHorizonCondition_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A condition that loops while the target is above the given altitude and then stops the current instruction set.
         /// </summary>
         internal static string Lbl_SequenceCondition_AltitudeCondition_Description {
@@ -1577,6 +1595,33 @@ namespace NINA.Locale {
         internal static string Lbl_SequenceItem_Utility_WaitForTimeSpan_Name {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitForTimeSpan_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waits until the target altitude is above the horizon. If a custom horizon is used, that altitude is used instead of 0.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait until above horizon.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting until target is above horizon. Target Altitude {0}° / Horizon Altitude {1}°.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress", resourceCulture);
             }
         }
         
@@ -5088,6 +5133,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Custom Horizon.
+        /// </summary>
+        internal static string LblCustomHorizon {
+            get {
+                return ResourceManager.GetString("LblCustomHorizon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Load a custom horizon file to be used to determine local horizon limits and display the limit in the altitude charts..
+        /// </summary>
+        internal static string LblCustomHorizonTooltip {
+            get {
+                return ResourceManager.GetString("LblCustomHorizonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cygwin bash not found.
         /// </summary>
         internal static string LblCygwinBashNotFound {
@@ -6842,6 +6905,15 @@ namespace NINA.Locale {
         internal static string LblExposureTimeDescription {
             get {
                 return ResourceManager.GetString("LblExposureTimeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load custom horizon.
+        /// </summary>
+        internal static string LblFailedToLoadCustomHorizon {
+            get {
+                return ResourceManager.GetString("LblFailedToLoadCustomHorizon", resourceCulture);
             }
         }
         
@@ -10619,6 +10691,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Get location from the Planetarium Software.
+        /// </summary>
+        internal static string LblPlanetariumLocationTooltip {
+            get {
+                return ResourceManager.GetString("LblPlanetariumLocationTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There is no object currently selected in {0}.
         /// </summary>
         internal static string LblPlanetariumObjectNotSelected {
@@ -14047,6 +14128,15 @@ namespace NINA.Locale {
         internal static string LblUnreachableAltitude {
             get {
                 return ResourceManager.GetString("LblUnreachableAltitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target will never be above the horizon.
+        /// </summary>
+        internal static string LblUnreachableAltitudeForHorizon {
+            get {
+                return ResourceManager.GetString("LblUnreachableAltitudeForHorizon", resourceCulture);
             }
         }
         

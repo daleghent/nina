@@ -60,7 +60,7 @@ namespace NINA.ViewModel.FramingAssistant {
             SkyMapAnnotator = new SkyMapAnnotator(telescopeMediator);
 
             var defaultCoordinates = new Coordinates(0, 0, Epoch.J2000, Coordinates.RAType.Degrees);
-            DSO = new DeepSkyObject(string.Empty, defaultCoordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
+            DSO = new DeepSkyObject(string.Empty, defaultCoordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
 
             FramingAssistantSource = profileService.ActiveProfile.FramingAssistantSettings.LastSelectedImageSource;
 
@@ -101,7 +101,11 @@ namespace NINA.ViewModel.FramingAssistant {
             resizeTimer.Tick += ResizeTimer_Tick;
 
             profileService.LocationChanged += (object sender, EventArgs e) => {
-                DSO = new DeepSkyObject(DSO.Name, DSO.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
+                DSO = new DeepSkyObject(DSO.Name, DSO.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
+            };
+
+            profileService.HorizonChanged += (object sender, EventArgs e) => {
+                DSO?.SetCustomHorizon(profileService.ActiveProfile.AstrometrySettings.Horizon);
             };
 
             InitializeCommands();
@@ -131,7 +135,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 var deepSkyObjects = new List<DeepSkyObject>();
                 foreach (var rect in CameraRectangles) {
                     var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Locale.Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
-                    var dso = new DeepSkyObject(name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
+                    var dso = new DeepSkyObject(name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
                     dso.Rotation = Rectangle.TotalRotation;
                     dso.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
                     sequenceMediator.AddSimpleTarget(dso);
@@ -178,7 +182,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 var container = (IDeepSkyObjectContainer)template.Clone();
                 var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Locale.Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
                 container.Name = name;
-                container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude)) {
+                container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon) {
                     TargetName = name,
                     Rotation = Rectangle.TotalRotation,
                     InputCoordinates = new InputCoordinates() {
@@ -234,7 +238,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         private void DeepSkyObjectSearchVM_PropertyChanged(object sender, PropertyChangedEventArgs e) {
             if (e.PropertyName == nameof(DeepSkyObjectSearchVM.Coordinates) && DeepSkyObjectSearchVM.Coordinates != null) {
-                DSO = new DeepSkyObject(DeepSkyObjectSearchVM.SelectedTargetSearchResult.Column1, DeepSkyObjectSearchVM.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
+                DSO = new DeepSkyObject(DeepSkyObjectSearchVM.SelectedTargetSearchResult.Column1, DeepSkyObjectSearchVM.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
                 RaiseCoordinatesChanged();
             } else if (e.PropertyName == nameof(DeepSkyObjectSearchVM.TargetName) && DSO != null) {
                 DSO.Name = DeepSkyObjectSearchVM.TargetName;
@@ -323,7 +327,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public async Task<bool> SetCoordinates(DeepSkyObject dso) {
             DeepSkyObjectSearchVM.SetTargetNameWithoutSearch(dso.Name);
-            this.DSO = new DeepSkyObject(dso.Name, dso.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository);
+            this.DSO = new DeepSkyObject(dso.Name, dso.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
             FramingAssistantSource = profileService.ActiveProfile.FramingAssistantSettings.LastSelectedImageSource;
             if (FramingAssistantSource == SkySurveySource.CACHE || FramingAssistantSource == SkySurveySource.FILE) {
                 FramingAssistantSource = SkySurveySource.HIPS2FITS;
@@ -833,7 +837,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     var name = _selectedImageCacheInfo.Attribute("Name").Value;
                     var coordinates = new Coordinates(ra, dec, Epoch.J2000, Coordinates.RAType.Hours);
                     FieldOfView = Astrometry.ArcminToDegree(double.Parse(_selectedImageCacheInfo.Attribute("FoVW").Value, CultureInfo.InvariantCulture));
-                    DSO = new DeepSkyObject(name, coordinates, string.Empty);
+                    DSO = new DeepSkyObject(name, coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
                     RaiseCoordinatesChanged();
                 }
                 RaisePropertyChanged();

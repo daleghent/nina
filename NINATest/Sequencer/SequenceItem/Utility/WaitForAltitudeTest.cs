@@ -75,7 +75,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             parentMock
                 .SetupGet(x => x.Target)
                 .Returns(
-                new NINA.Model.InputTarget(Angle.ByDegree(1), Angle.ByDegree(2)) {
+                new NINA.Model.InputTarget(Angle.ByDegree(1), Angle.ByDegree(2), null) {
                     InputCoordinates = new NINA.Model.InputCoordinates() {
                         Coordinates = coordinates
                     }

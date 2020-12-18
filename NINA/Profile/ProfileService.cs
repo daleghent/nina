@@ -14,6 +14,7 @@
 
 using NINA.Utility;
 using NINA.Utility.Astrometry;
+using NINA.Utility.Notification;
 using System;
 using System.Globalization;
 using System.IO;
@@ -237,9 +238,25 @@ namespace NINA.Profile {
             LocationChanged?.Invoke(this, null);
         }
 
+        public void ChangeHorizon(string horizonFilePath) {
+            ActiveProfile.AstrometrySettings.HorizonFilePath = horizonFilePath;
+
+            try {
+                ActiveProfile.AstrometrySettings.Horizon = Utility.Astrometry.CustomHorizon.FromFile(horizonFilePath);
+            } catch (Exception ex) {
+                ActiveProfile.AstrometrySettings.HorizonFilePath = string.Empty;
+                Logger.Error(ex);
+                Notification.ShowError(Locale.Loc.Instance["LblFailedToLoadCustomHorizon"] + ex.Message);
+            }
+
+            HorizonChanged?.Invoke(this, null);
+        }
+
         public event EventHandler LocationChanged;
 
         public event EventHandler ProfileChanged;
+
+        public event EventHandler HorizonChanged;
 
         public AsyncObservableCollection<ProfileMeta> Profiles { get; set; }
 
@@ -391,17 +408,13 @@ namespace NINA.Profile {
         #endregion Migration
 
         public static void ActivateInstanceOfNinaReferencingProfile(string startWithProfileId) {
-
             using (var waitHandle = new EventWaitHandle(false,
 
                 EventResetMode.ManualReset,
 
                 "NINA_ActivateInstance:" + startWithProfileId)) {
-
                 waitHandle.Set();
-
             }
-
         }
 
         public static System.Threading.Tasks.Task ActivateInstanceWatcher(

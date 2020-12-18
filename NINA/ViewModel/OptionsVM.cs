@@ -66,6 +66,7 @@ namespace NINA.ViewModel {
             OpenPS2FileDiagCommand = new RelayCommand(OpenPS2FileDiag);
             OpenASPSFileDiagCommand = new RelayCommand(OpenASPSFileDiag);
             OpenASTAPFileDiagCommand = new RelayCommand(OpenASTAPFileDiag);
+            OpenHorizonFilePathDiagCommand = new RelayCommand(OpenHorizonFilePathDiag);
             OpenLogFolderCommand = new RelayCommand(OpenLogFolder);
             ToggleColorsCommand = new RelayCommand(ToggleColors);
             DownloadIndexesCommand = new RelayCommand(DownloadIndexes);
@@ -104,6 +105,13 @@ namespace NINA.ViewModel {
                 ProfileChanged();
             };
             ToggleSGPService();
+        }
+
+        private void OpenHorizonFilePathDiag(object obj) {
+            var dialog = GetFilteredFileDialog(string.Empty, string.Empty, "Horizon File|*.hrz");
+            if (dialog.ShowDialog() == true) {
+                profileService.ChangeHorizon(dialog.FileName);
+            }
         }
 
         private void OpenStartupSequenceTemplateDiag(object obj) {
@@ -423,6 +431,8 @@ namespace NINA.ViewModel {
         public ICommand OpenPS2FileDiagCommand { get; private set; }
 
         public ICommand OpenASPSFileDiagCommand { get; private set; }
+
+        public ICommand OpenHorizonFilePathDiagCommand { get; private set; }
 
         public ICommand OpenASTAPFileDiagCommand { get; private set; }
 

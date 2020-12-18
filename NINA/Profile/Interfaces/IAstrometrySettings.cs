@@ -20,5 +20,7 @@ namespace NINA.Profile {
         Hemisphere HemisphereType { get; set; }
         double Latitude { get; set; }
         double Longitude { get; set; }
+        string HorizonFilePath { get; set; }
+        CustomHorizon Horizon { get; set; }
     }
 }

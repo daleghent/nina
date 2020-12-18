@@ -40,6 +40,8 @@ namespace NINA.Profile {
 
         void ChangeLongitude(double longitude);
 
+        void ChangeHorizon(string horizonFilePath);
+
         void PauseSave();
 
         void ResumeSave();
@@ -49,5 +51,7 @@ namespace NINA.Profile {
         event EventHandler LocationChanged;
 
         event EventHandler ProfileChanged;
+
+        event EventHandler HorizonChanged;
     }
 }

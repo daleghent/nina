@@ -64,7 +64,7 @@ namespace NINA.Model.MyPlanetarium {
                                                      double.Parse(raDecName[1], System.Globalization.CultureInfo.InvariantCulture),
                                                      Epoch.J2000, Coordinates.RAType.Hours);
 
-                return new DeepSkyObject(raDecName[2], newCoordinates, string.Empty);
+                return new DeepSkyObject(raDecName[2], newCoordinates, string.Empty, null);
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw ex;

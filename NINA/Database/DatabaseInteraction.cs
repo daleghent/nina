@@ -238,6 +238,7 @@ namespace NINA.Database {
 
         public async Task<List<DeepSkyObject>> GetDeepSkyObjects(
             string imageRepository,
+            CustomHorizon horizon,
             DeepSkyObjectSearchParams searchParams,
             CancellationToken token) {
             using (MyStopWatch.Measure()) {
@@ -340,7 +341,7 @@ namespace NINA.Database {
                         foreach (var row in dsoResult) {
                             var id = row.id;
                             var coords = new Coordinates(row.ra, row.dec, Epoch.J2000, Coordinates.RAType.Degrees);
-                            var dso = new DeepSkyObject(row.id, coords, imageRepository);
+                            var dso = new DeepSkyObject(row.id, coords, imageRepository, horizon);
 
                             dso.DSOType = row.dsotype;
 

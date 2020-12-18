@@ -67,7 +67,7 @@ namespace NINA.ViewModel.FramingAssistant {
             }
 
             if (dbDSOs == null) {
-                dbDSOs = (await dbInstance.GetDeepSkyObjects(string.Empty, new DatabaseInteraction.DeepSkyObjectSearchParams(), ct)).ToDictionary(x => x.Id, y => y);
+                dbDSOs = (await dbInstance.GetDeepSkyObjects(string.Empty, null, new DatabaseInteraction.DeepSkyObjectSearchParams(), ct)).ToDictionary(x => x.Id, y => y);
             }
 
             ConstellationsInViewport.Clear();

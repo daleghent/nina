@@ -106,7 +106,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             Func<Task> act = () => { return sut.Execute(default, default); };
 
             telescopeMediatorMock.Verify(x => x.SlewToCoordinatesAsync(It.IsAny<Coordinates>(), It.IsAny<CancellationToken>()), Times.Never);
-            guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Never); 
+            guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Never);
             return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
         }
 
@@ -128,7 +128,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             parentMock
                 .SetupGet(x => x.Target)
                 .Returns(
-                new NINA.Model.InputTarget(Angle.ByDegree(1), Angle.ByDegree(2)) {
+                new NINA.Model.InputTarget(Angle.ByDegree(1), Angle.ByDegree(2), null) {
                     InputCoordinates = new NINA.Model.InputCoordinates() {
                         Coordinates = coordinates
                     }

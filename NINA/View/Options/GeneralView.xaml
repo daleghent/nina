@@ -723,7 +723,7 @@
             <GroupBox Grid.Row="2" Header="{ns:Loc LblAstrometry}">
                 <StackPanel Margin="0,5,0,0">
                     <UniformGrid Columns="2">
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal">
                             <TextBlock
                                 Width="100"
                                 VerticalAlignment="Center"
@@ -733,6 +733,37 @@
                                 Margin="10,0,0,0"
                                 ItemsSource="{Binding Source={util:EnumBindingSource {x:Type astrometry:Hemisphere}}}"
                                 SelectedItem="{Binding ActiveProfile.AstrometrySettings.HemisphereType}" />
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button
+                                Width="40"
+                                Height="25"
+                                HorizontalAlignment="Center"
+                                Command="{Binding SiteFromGPSCommand}">
+                                <Button.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblGPSTooltip}" />
+                                </Button.ToolTip>
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource GPSSVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    Stretch="Uniform" />
+                            </Button>
+                            <Button
+                                Width="40"
+                                Height="25"
+                                Margin="5,0,0,0"
+                                HorizontalAlignment="Center"
+                                Command="{Binding SiteFromPlanetariumCommand}">
+                                <Button.ToolTip>
+                                    <TextBlock Text="{ns:Loc LblPlanetariumLocationTooltip}" />
+                                </Button.ToolTip>
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource GetCoordsSVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    Stretch="Uniform" />
+                            </Button>
                         </StackPanel>
                     </UniformGrid>
 
@@ -761,39 +792,45 @@
                                 VerticalAlignment="Center"
                                 Text="{Binding Longitude}" />
                         </StackPanel>
-                        <StackPanel Orientation="Horizontal">
-                            <Button
-                                Width="40"
-                                Height="30"
-                                Margin="5"
-                                HorizontalAlignment="Center"
-                                Command="{Binding SiteFromGPSCommand}">
-                                <Button.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblGPSTooltip}" />
-                                </Button.ToolTip>
-                                <Path
-                                    Margin="5"
-                                    Data="{StaticResource GPSSVG}"
-                                    Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
-                            </Button>
-                            <Button
-                                Width="40"
-                                Height="30"
-                                Margin="5"
-                                HorizontalAlignment="Center"
-                                Command="{Binding SiteFromPlanetariumCommand}">
-                                <Button.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblPlanetariumTooltip}" />
-                                </Button.ToolTip>
-                                <Path
-                                    Margin="5"
-                                    Data="{StaticResource GetCoordsSVG}"
-                                    Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
-                            </Button>
-                        </StackPanel>
                     </UniformGrid>
+                    <Grid Margin="0,2,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblCustomHorizon}" />
+
+                        <TextBox
+                            Grid.Column="1"
+                            Margin="10,0,0,0"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center">
+                            <TextBox.Text>
+                                <Binding Path="ActiveProfile.AstrometrySettings.HorizonFilePath" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:FileExistsRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+
+                        <Button
+                            Grid.Column="2"
+                            Width="30"
+                            Height="30"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Command="{Binding OpenHorizonFilePathDiagCommand}">
+                            <Path
+                                Margin="4,17,4,4"
+                                Data="{StaticResource DotsSVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
+                        </Button>
+                    </Grid>
                 </StackPanel>
             </GroupBox>
         </Grid>

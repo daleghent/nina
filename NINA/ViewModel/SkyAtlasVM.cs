@@ -188,6 +188,7 @@ namespace NINA.ViewModel {
 
                     var result = await db.GetDeepSkyObjects(
                         profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository,
+                        profileService.ActiveProfile.AstrometrySettings.Horizon,
                         searchParams,
                         _searchTokenSource.Token
                     );

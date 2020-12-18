@@ -27,10 +27,21 @@ namespace NINA.Profile {
             SetDefaultValues();
         }
 
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context) {
+            try {
+                if (!string.IsNullOrWhiteSpace(HorizonFilePath)) {
+                    Horizon = CustomHorizon.FromFile(HorizonFilePath);
+                }
+            } catch (Exception) {
+            }
+        }
+
         protected override void SetDefaultValues() {
             hemisphereType = Hemisphere.NORTHERN;
             latitude = 0;
             longitude = 0;
+            horizonFilePath = string.Empty;
         }
 
         private Hemisphere hemisphereType;
@@ -75,6 +86,29 @@ namespace NINA.Profile {
                     longitude = value;
                     RaisePropertyChanged();
                 }
+            }
+        }
+
+        private string horizonFilePath;
+
+        [DataMember]
+        public string HorizonFilePath {
+            get => horizonFilePath;
+            set {
+                if (horizonFilePath != value) {
+                    horizonFilePath = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private CustomHorizon horizon;
+
+        public CustomHorizon Horizon {
+            get => horizon;
+            set {
+                horizon = value;
+                RaisePropertyChanged();
             }
         }
     }

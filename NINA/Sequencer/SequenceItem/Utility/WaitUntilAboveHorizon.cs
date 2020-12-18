@@ -17,10 +17,7 @@ using NINA.Model;
 using NINA.Profile;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
 using NINA.Utility.Astrometry;
-using NINA.Utility.Enum;
-using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -31,24 +28,20 @@ using System.Threading.Tasks;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
-    [ExportMetadata("Name", "Lbl_SequenceItem_Utility_WaitForAltitude_Name")]
-    [ExportMetadata("Description", "Lbl_SequenceItem_Utility_WaitForAltitude_Description")]
+    [ExportMetadata("Name", "Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name")]
+    [ExportMetadata("Description", "Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description")]
     [ExportMetadata("Icon", "WaitForAltitudeSVG")]
     [ExportMetadata("Category", "Lbl_SequenceCategory_Utility")]
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class WaitForAltitude : SequenceItem, IValidatable {
+    public class WaitUntilAboveHorizon : SequenceItem, IValidatable {
         private IProfileService profileService;
-        private string aboveOrBelow;
-        private double altitude;
         private bool hasDsoParent;
 
         [ImportingConstructor]
-        public WaitForAltitude(IProfileService profileService) {
+        public WaitUntilAboveHorizon(IProfileService profileService) {
             this.profileService = profileService;
             Coordinates = new InputCoordinates();
-            AboveOrBelow = ">=";
-            Altitude = 30;
         }
 
         [JsonProperty]
@@ -63,24 +56,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             }
         }
 
-        [JsonProperty]
-        public double Altitude {
-            get => altitude;
-            set {
-                altitude = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        [JsonProperty]
-        public string AboveOrBelow {
-            get => aboveOrBelow;
-            set {
-                aboveOrBelow = value;
-                RaisePropertyChanged();
-            }
-        }
-
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -91,32 +66,37 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             }
         }
 
+        public int UpdateInterval { get; set; } = 1;
+
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             do {
                 var coordinates = Coordinates.Coordinates;
                 var altaz = coordinates.Transform(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
-                progress?.Report(new ApplicationStatus() {
-                    Status = string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Utility_WaitForAltitude_Progress"], Math.Round(altaz.Altitude.Degree, 2), Altitude)
-                });
+                var horizon = profileService.ActiveProfile.AstrometrySettings.Horizon;
 
-                if (aboveOrBelow == ">=" && altaz.Altitude.Degree >= Altitude) {
-                    break;
-                } else if (aboveOrBelow == "<=" && altaz.Altitude.Degree <= Altitude) {
-                    break;
+                var horizonAltitude = 0d;
+                if (horizon != null) {
+                    horizonAltitude = horizon.GetAltitude(altaz.Azimuth.Degree);
                 }
 
-                await NINA.Utility.Utility.Delay(TimeSpan.FromSeconds(1), token);
+                progress?.Report(new ApplicationStatus() {
+                    Status = string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress"], Math.Round(altaz.Altitude.Degree, 2), Math.Round(horizonAltitude, 2))
+                });
+
+                if (altaz.Altitude.Degree > horizonAltitude) {
+                    break;
+                } else {
+                    await NINA.Utility.Utility.Delay(TimeSpan.FromSeconds(UpdateInterval), token);
+                }
             } while (true);
         }
 
         public override object Clone() {
-            return new WaitForAltitude(profileService) {
+            return new WaitUntilAboveHorizon(profileService) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,
                 Description = Description,
-                Altitude = Altitude,
-                AboveOrBelow = AboveOrBelow,
                 Coordinates = Coordinates.Clone()
             };
         }
@@ -133,23 +113,19 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(WaitForAltitude)}, Altitude: {AboveOrBelow}{Altitude}";
+            return $"Category: {Category}, Item: {nameof(WaitUntilAboveHorizon)}";
         }
 
         public bool Validate() {
             var issues = new List<string>();
 
             var maxAlt = Astrometry.GetAltitude(0, profileService.ActiveProfile.AstrometrySettings.Latitude, Coordinates.DecDegrees);
-            var minAlt = Astrometry.GetAltitude(180, profileService.ActiveProfile.AstrometrySettings.Latitude, Coordinates.DecDegrees);
 
-            if (aboveOrBelow == ">=") {
-                if (maxAlt < Altitude) {
-                    issues.Add(Locale.Loc.Instance["LblUnreachableAltitude"]);
-                }
-            } else {
-                if (minAlt > Altitude) {
-                    issues.Add(Locale.Loc.Instance["LblUnreachableAltitude"]);
-                }
+            var horizon = profileService.ActiveProfile.AstrometrySettings.Horizon;
+            var minHorizonAlt = horizon?.GetMinAltitude() ?? 0;
+
+            if (maxAlt < minHorizonAlt) {
+                issues.Add(Locale.Loc.Instance["LblUnreachableAltitudeForHorizon"]);
             }
 
             Issues = issues;

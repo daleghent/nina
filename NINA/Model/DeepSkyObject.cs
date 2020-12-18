@@ -28,16 +28,11 @@ namespace NINA.Model {
 
     public class DeepSkyObject : BaseINPC {
 
-        private DeepSkyObject(string imageRepository) {
-            this.imageRepository = imageRepository;
-        }
-
-        public DeepSkyObject(string id, string imageRepository) : this(imageRepository) {
+        public DeepSkyObject(string id, Coordinates coords, string imageRepository, CustomHorizon customHorizon) {
             Id = id;
             Name = id;
-        }
-
-        public DeepSkyObject(string id, Coordinates coords, string imageRepository) : this(id, imageRepository) {
+            this.imageRepository = imageRepository;
+            this.customHorizon = customHorizon;
             _coordinates = coords;
         }
 
@@ -74,7 +69,7 @@ namespace NINA.Model {
             set {
                 _coordinates = value;
                 if (_coordinates != null) {
-                    CalculateAltitude();
+                    CalculateAltAz();
                 }
                 RaisePropertyChanged();
             }
@@ -154,6 +149,10 @@ namespace NINA.Model {
 
         private DataPoint _maxAltitude;
 
+        public void Refresh() {
+            CalculateAltAz();
+        }
+
         public DataPoint MaxAltitude {
             get {
                 return _maxAltitude;
@@ -170,12 +169,27 @@ namespace NINA.Model {
             get {
                 if (_altitudes == null) {
                     _altitudes = new List<DataPoint>();
-                    CalculateAltitude();
+                    CalculateAltAz();
                 }
                 return _altitudes;
             }
             set {
                 _altitudes = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private List<DataPoint> _horizon;
+
+        public List<DataPoint> Horizon {
+            get {
+                if (_horizon == null) {
+                    _horizon = new List<DataPoint>();
+                }
+                return _horizon;
+            }
+            set {
+                _horizon = value;
                 RaisePropertyChanged();
             }
         }
@@ -206,16 +220,31 @@ namespace NINA.Model {
             this._altitudes = null;
         }
 
-        private void CalculateAltitude() {
+        public void SetCustomHorizon(CustomHorizon customHorizon) {
+            this.customHorizon = customHorizon;
+            this.CalculateAltAz();
+        }
+
+        private void CalculateAltAz() {
             var start = this._referenceDate;
             Altitudes.Clear();
+            Horizon.Clear();
             var siderealTime = Astrometry.GetLocalSiderealTime(start, _longitude);
             var hourAngle = Astrometry.GetHourAngle(siderealTime, this.Coordinates.RA);
 
             for (double angle = hourAngle; angle < hourAngle + 24; angle += 0.1) {
                 var degAngle = Astrometry.HoursToDegrees(angle);
                 var altitude = Astrometry.GetAltitude(degAngle, _latitude, this.Coordinates.Dec);
+
+                var azimuth = Astrometry.GetAzimuth(degAngle, altitude, _latitude, this.Coordinates.Dec);
+
                 Altitudes.Add(new DataPoint(DateTimeAxis.ToDouble(start), altitude));
+
+                if (customHorizon != null) {
+                    var horizonAltitude = customHorizon.GetAltitude(azimuth);
+                    Horizon.Add(new DataPoint(DateTimeAxis.ToDouble(start), horizonAltitude));
+                }
+
                 start = start.AddHours(0.1);
             }
 
@@ -254,6 +283,7 @@ namespace NINA.Model {
 
         private BitmapSource _image;
         private string imageRepository;
+        private CustomHorizon customHorizon;
 
         public BitmapSource Image {
             get {

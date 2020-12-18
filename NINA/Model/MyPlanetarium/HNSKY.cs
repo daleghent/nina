@@ -62,7 +62,7 @@ namespace NINA.Model.MyPlanetarium {
                                                          Astrometry.ToDegree(double.Parse(info[1].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)),
                                                          Epoch.J2000, Coordinates.RAType.Hours);
 
-                    DeepSkyObject dso = new DeepSkyObject(info[2], newCoordinates, string.Empty);
+                    DeepSkyObject dso = new DeepSkyObject(info[2], newCoordinates, string.Empty, null);
                     return dso;
                 } else {
                     throw new PlanetariumObjectNotSelectedException();

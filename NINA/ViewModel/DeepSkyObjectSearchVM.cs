@@ -145,7 +145,7 @@ namespace NINA.ViewModel {
                 var searchParams = new DatabaseInteraction.DeepSkyObjectSearchParams();
                 searchParams.ObjectName = searchString;
                 searchParams.Limit = Limit;
-                var result = await db.GetDeepSkyObjects(string.Empty, searchParams, ct);
+                var result = await db.GetDeepSkyObjects(string.Empty, null, searchParams, ct);
                 var list = new List<IAutoCompleteItem>();
                 foreach (var item in result) {
                     list.Add(new DSOAutoCompleteItem() { Column1 = item.Name, Column2 = item.Coordinates.RAString, Column3 = item.Coordinates.DecString });
