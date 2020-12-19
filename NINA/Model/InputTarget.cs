@@ -34,7 +34,7 @@ namespace NINA.Model {
             InputCoordinates = new InputCoordinates();
         }
 
-        private void InputCoordinates_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+        private void InputCoordinates_OnCoordinatesChanged(object sender, EventArgs e) {
             RaiseCoordinatesChanged();
         }
 
@@ -95,11 +95,11 @@ namespace NINA.Model {
             get => inputCoordinates;
             set {
                 if (inputCoordinates != null) {
-                    InputCoordinates.PropertyChanged -= InputCoordinates_PropertyChanged;
+                    InputCoordinates.CoordinatesChanged -= InputCoordinates_OnCoordinatesChanged;
                 }
                 inputCoordinates = value;
                 if (inputCoordinates != null) {
-                    InputCoordinates.PropertyChanged += InputCoordinates_PropertyChanged;
+                    InputCoordinates.CoordinatesChanged += InputCoordinates_OnCoordinatesChanged; ;
                 }
                 RaiseCoordinatesChanged();
             }
@@ -121,6 +121,10 @@ namespace NINA.Model {
             DeepSkyObject.Name = TargetName;
             DeepSkyObject.Coordinates = InputCoordinates.Coordinates;
             DeepSkyObject.Rotation = Rotation;
+
+            this.CoordinatesChanged?.Invoke(this, new EventArgs());
         }
+
+        public event EventHandler CoordinatesChanged;
     }
 }

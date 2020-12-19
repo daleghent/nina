@@ -105,17 +105,17 @@ namespace NINA.Sequencer.Container {
             get => target;
             set {
                 if (Target != null) {
-                    Target.PropertyChanged -= Target_PropertyChanged;
+                    Target.CoordinatesChanged -= Target_OnCoordinatesChanged;
                 }
                 target = value;
                 if (Target != null) {
-                    Target.PropertyChanged += Target_PropertyChanged;
+                    Target.CoordinatesChanged += Target_OnCoordinatesChanged;
                 }
                 RaisePropertyChanged();
             }
         }
 
-        private void Target_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+        private void Target_OnCoordinatesChanged(object sender, EventArgs e) {
             AfterParentChanged();
         }
 

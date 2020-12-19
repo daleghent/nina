@@ -149,7 +149,11 @@ namespace NINA.Model {
             RaisePropertyChanged(nameof(DecMinutes));
             RaisePropertyChanged(nameof(DecSeconds));
             NegativeDec = Coordinates?.Dec < 0;
+
+            this.CoordinatesChanged?.Invoke(this, new EventArgs());
         }
+
+        public event EventHandler CoordinatesChanged;
 
         public InputCoordinates Clone() =>
             new InputCoordinates(coordinates.Clone());
