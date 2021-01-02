@@ -23,7 +23,7 @@ namespace NINA.Profile {
             ScopePositionUpDown_mm = 0.0;
             DomeRadius_mm = 0.0;
             GemAxis_mm = 0.0;
-            AzimuthTolerance_degrees = 1.0;
+            AzimuthTolerance_degrees = 2.0;
             FindHomeBeforePark = false;
             DomeSyncTimeoutSeconds = 120;
         }
@@ -133,7 +133,7 @@ namespace NINA.Profile {
             }
         }
 
-        private double azimuthTolerance_degrees = 1.0;
+        private double azimuthTolerance_degrees = 2.0;
 
         [DataMember]
         public double AzimuthTolerance_degrees {
