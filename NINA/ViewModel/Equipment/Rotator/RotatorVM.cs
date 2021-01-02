@@ -88,7 +88,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     // Focuser position should be in [0, 360)
                     targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
                     rotator.MoveAbsolute(targetPosition);
-                    while (RotatorInfo.IsMoving || Math.Ceiling(RotatorInfo.Position) != Math.Ceiling(targetPosition)) {
+                    while (RotatorInfo.IsMoving || (Math.Abs(RotatorInfo.Position - targetPosition) > 0.01)) {
                         _moveCts.Token.ThrowIfCancellationRequested();
                     }
                     RotatorInfo.Position = targetPosition;
@@ -110,7 +110,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     // Focuser position should be in [0, 360)
                     targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
                     rotator.MoveAbsoluteMechanical(targetPosition);
-                    while (RotatorInfo.IsMoving || Math.Ceiling(RotatorInfo.Position) != Math.Ceiling(targetPosition)) {
+                    while (RotatorInfo.IsMoving || (Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) > 0.01)) {
                         _moveCts.Token.ThrowIfCancellationRequested();
                     }
                     RotatorInfo.Position = targetPosition;
