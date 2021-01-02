@@ -854,7 +854,7 @@
                 </local:ImageView.ImageAreaContent>
             </local:ImageView>
             <StackPanel
-                Margin="5,0,0,5"
+                Margin="5,0,0,20"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
                 Orientation="Vertical">
