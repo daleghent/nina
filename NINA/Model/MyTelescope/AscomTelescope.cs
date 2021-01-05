@@ -974,10 +974,15 @@ namespace NINA.Model.MyTelescope {
                     TrackingEnabled = true;
                 }
 
-                var targetSideOfPier = PierSide.pierUnknown;
-                if (CanSetPierSide) {
-                    targetSideOfPier = SideOfPier == PierSide.pierWest ? PierSide.pierEast : PierSide.pierWest;
-                    Logger.Debug($"Mount can set SideOfPier, so setting to {targetSideOfPier} as part of the meridian flip");
+                var targetSideOfPier = Utility.MeridianFlip.ExpectedPierSide(
+                    coordinates: targetCoordinates,
+                    localSiderealTime: Angle.ByHours(SiderealTime));
+                if (profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier) {
+                    Logger.Debug($"Mount side of pier is currently {SideOfPier}, and target is {targetSideOfPier}");
+                    if (targetSideOfPier == SideOfPier) {
+                        // No flip required
+                        return true;
+                    }
                 }
 
                 targetCoordinates = targetCoordinates.Transform(EquatorialSystem);
@@ -1196,35 +1201,25 @@ namespace NINA.Model.MyTelescope {
             _telescope.Dispose();
         }
 
-        public double HoursToMeridian {
-            get {
-                var hourstomed = RightAscension - SiderealTime;
-                if (hourstomed < 0) {
-                    hourstomed = hourstomed + 24;
-                }
-                return hourstomed;
-            }
-        }
+        public double HoursToMeridian => Utility.MeridianFlip.TimeToMeridian(
+            coordinates: Coordinates, 
+            localSiderealTime: Angle.ByHours(SiderealTime)).TotalHours;
 
-        public string HoursToMeridianString {
-            get {
-                return Astrometry.HoursToHMS(HoursToMeridian);
-            }
-        }
+        public string HoursToMeridianString => Astrometry.HoursToHMS(HoursToMeridian);
 
         public double TimeToMeridianFlip {
             get {
-                var hourstomed = double.MaxValue;
                 try {
-                    hourstomed = RightAscension + (profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian / 60) - SiderealTime;
-                    if (hourstomed < 0) {
-                        hourstomed += 24;
-                    }
+                    return Utility.MeridianFlip.TimeToMeridianFlip(
+                        settings: profileService.ActiveProfile.MeridianFlipSettings,
+                        coordinates: Coordinates,
+                        localSiderealTime: Angle.ByHours(SiderealTime),
+                        currentSideOfPier: SideOfPier).TotalHours;
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError(ex.Message);
+                    return double.MaxValue;
                 }
-                return hourstomed;
             }
         }
 

@@ -14,13 +14,13 @@
 
 using Newtonsoft.Json;
 using NINA.Model;
-using NINA.Model.MyTelescope;
+using NINA.Utility;
 using NINA.Profile;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
+using NINA.Utility.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel;
 using NINA.ViewModel.ImageHistory;
@@ -28,8 +28,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -98,9 +96,6 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         public override Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             var target = ItemUtility.RetrieveContextCoordinates(context).Item1 ?? telescopeMediator.GetCurrentPosition();
 
-            //Todo: The MeridianFlipVM could be completely replaced by sequential instructions and dedicated ui template
-            var info = telescopeMediator.GetInfo();
-
             var timeToFlip = CalculateMinimumTimeRemaining();
             if (timeToFlip > TimeSpan.FromHours(2)) {
                 //Assume a delayed flip when the time is more than two hours and flip immediately
@@ -150,7 +145,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
             if ((DateTime.Now - lastFlipTime) < TimeSpan.FromHours(11)) {
                 //A flip for the same target is only expected every 12 hours on planet earth
-                Logger.Debug($"Meridian Flip - Flip for the current target already happened at {lastFlipTime }. Flip will be skipped");
+                Logger.Debug($"Meridian Flip - Flip for the current target already happened at {lastFlipTime}. Flip will be skipped");
                 return false;
             }
 
@@ -166,22 +161,18 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             }
 
             if (minimumTimeRemaining <= TimeSpan.Zero && maximumTimeRemaining > TimeSpan.Zero) {
-                // We are in the zone between the minimum time and the maximum time. Flip is possible now.
-                if (settings.UseSideOfPier) {
-                    //Flip when the telescope is on the west side
-                    return telescopeInfo.SideOfPier == PierSide.pierWest;
-                } else {
-                    //No pier info is available. Flip now.
-                    Logger.Debug("Meridian Flip - Remaining Time is between minimum and maximum flip time. Flip should happen now");
-                    return true;
-                }
+                Logger.Debug("Meridian Flip - Remaining Time is between minimum and maximum flip time. Flip should happen now");
+                return true;
             } else {
                 //The minimum time to flip has not been reached yet. Check if a flip is required based on the estimation of the next instruction
                 var noRemainingTime = maximumTimeRemaining <= TimeSpan.FromSeconds(exposureTime);
 
                 if (settings.UseSideOfPier) {
-                    if (telescopeInfo.SideOfPier == PierSide.pierEast) {
-                        Logger.Debug("Meridian Flip - Telescope reports East Side of Pier, Automated Flip will not be performed.");
+                    var targetSideOfPier = NINA.Utility.MeridianFlip.ExpectedPierSide(
+                        coordinates: telescopeInfo.Coordinates,
+                        localSiderealTime: Angle.ByHours(telescopeInfo.SiderealTime));
+                    if (telescopeInfo.SideOfPier == targetSideOfPier) {
+                        Logger.Debug($"Meridian Flip - Telescope already reports {telescopeInfo.SideOfPier}, Automated Flip will not be performed.");
                         return false;
                     } else {
                         if (noRemainingTime) {
@@ -189,15 +180,16 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                             return true;
                         }
 
-                        //When pier side is still West, but remaining time indicating that a flip happend, the flip seems to have not happened yet and must be done immediately
+                        // When pier side doesn't match the target, but remaining time indicating that a flip happened, the flip seems to have not happened yet and must be done immediately
+                        // Only allow delayed flip behavior for the first 6 hours after a flip should've happened
                         var delayedFlip = maximumTimeRemaining
-                            >= (TimeSpan.FromSeconds(12 * 60 * 60)
+                            >= (TimeSpan.FromHours(18)
                                 - TimeSpan.FromMinutes(settings.MaxMinutesAfterMeridian)
                                 - TimeSpan.FromMinutes(settings.PauseTimeBeforeMeridian)
                               );
 
                         if (delayedFlip) {
-                            Logger.Info("Meridian Flip - Flip seems to not happened in time as Side Of Pier is West but expected to be East. Flip should happen now");
+                            Logger.Info($"Meridian Flip - Flip seems to not happened in time as Side Of Pier is {telescopeInfo.SideOfPier} but expected to be {targetSideOfPier}. Flip should happen now");
                         }
                         return delayedFlip;
                     }

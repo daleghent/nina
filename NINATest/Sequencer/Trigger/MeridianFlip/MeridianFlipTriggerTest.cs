@@ -18,6 +18,7 @@ using NINA.Model.MyTelescope;
 using NINA.Profile;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger.MeridianFlip;
+using NINA.Utility.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.ImageHistory;
 using NUnit.Framework;
@@ -175,24 +176,47 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
         }
 
         [Test]
-        [TestCase(5, 5, -1, PierSide.pierWest, true)]
-        [TestCase(5, 5, 0, PierSide.pierWest, true)]
-        [TestCase(5, 5, 2, PierSide.pierWest, true)]
-        [TestCase(5, 5, 4, PierSide.pierWest, true)]
-        [TestCase(5, 5, 5, PierSide.pierWest, true)]
-        [TestCase(5, 10, 8, PierSide.pierWest, false)]
-        [TestCase(5, 10, 10, PierSide.pierWest, false)]
-        [TestCase(5, 10, 11, PierSide.pierWest, false)]
-        /* Same tests as before, but with pier side East, therefore no flip is expected in each case */
-        [TestCase(5, 5, -1, PierSide.pierEast, false)]
-        [TestCase(5, 5, 0, PierSide.pierEast, false)]
-        [TestCase(5, 5, 2, PierSide.pierEast, false)]
-        [TestCase(5, 5, 4, PierSide.pierEast, false)]
-        [TestCase(5, 5, 5, PierSide.pierEast, false)]
-        [TestCase(5, 10, 8, PierSide.pierEast, false)]
-        [TestCase(5, 10, 10, PierSide.pierEast, false)]
-        [TestCase(5, 10, 11, PierSide.pierEast, false)]
-        public void ShouldFlip_BetweenMinimumAndMaximumTime_NoPause_UsePierSide_FlipWhenExpected(double minTimeToFlip, double maxTimeToFlip, double remainingTimeToFlip, PierSide pierSide, bool expectToFlip) {
+        [TestCase(5, 5, -1, PierSide.pierWest, PierSide.pierEast, true)]
+        [TestCase(5, 5, 0, PierSide.pierWest, PierSide.pierEast, true)]
+        [TestCase(5, 5, 2, PierSide.pierWest, PierSide.pierEast, true)]
+        [TestCase(5, 5, 4, PierSide.pierWest, PierSide.pierEast, true)]
+        [TestCase(5, 5, 5, PierSide.pierWest, PierSide.pierEast, true)]
+        [TestCase(5, 10, 8, PierSide.pierWest, PierSide.pierEast, false)]
+        [TestCase(5, 10, 10, PierSide.pierWest, PierSide.pierEast, false)]
+        [TestCase(5, 10, 11, PierSide.pierWest, PierSide.pierEast, false)]
+        /* Same tests as above, except target and current pier sides are inverted, so the results should be the same */
+        [TestCase(5, 5, -1, PierSide.pierEast, PierSide.pierWest, true)]
+        [TestCase(5, 5, 0, PierSide.pierEast, PierSide.pierWest, true)]
+        [TestCase(5, 5, 2, PierSide.pierEast, PierSide.pierWest, true)]
+        [TestCase(5, 5, 4, PierSide.pierEast, PierSide.pierWest, true)]
+        [TestCase(5, 5, 5, PierSide.pierEast, PierSide.pierWest, true)]
+        [TestCase(5, 10, 8, PierSide.pierEast, PierSide.pierWest, false)]
+        [TestCase(5, 10, 10, PierSide.pierEast, PierSide.pierWest, false)]
+        [TestCase(5, 10, 11, PierSide.pierEast, PierSide.pierWest, false)]
+        /* Same tests as before, but with pier side inverted, therefore no flip is expected in each case */
+        [TestCase(5, 5, -1, PierSide.pierEast, PierSide.pierEast, false)]
+        [TestCase(5, 5, 0, PierSide.pierEast, PierSide.pierEast, false)]
+        [TestCase(5, 5, 2, PierSide.pierEast, PierSide.pierEast, false)]
+        [TestCase(5, 5, 4, PierSide.pierEast, PierSide.pierEast, false)]
+        [TestCase(5, 5, 5, PierSide.pierEast, PierSide.pierEast, false)]
+        [TestCase(5, 10, 8, PierSide.pierEast, PierSide.pierEast, false)]
+        [TestCase(5, 10, 10, PierSide.pierEast, PierSide.pierEast, false)]
+        [TestCase(5, 10, 11, PierSide.pierEast, PierSide.pierEast, false)]
+        [TestCase(5, 5, -1, PierSide.pierWest, PierSide.pierWest, false)]
+        [TestCase(5, 5, 0, PierSide.pierWest, PierSide.pierWest, false)]
+        [TestCase(5, 5, 2, PierSide.pierWest, PierSide.pierWest, false)]
+        [TestCase(5, 5, 4, PierSide.pierWest, PierSide.pierWest, false)]
+        [TestCase(5, 5, 5, PierSide.pierWest, PierSide.pierWest, false)]
+        [TestCase(5, 10, 8, PierSide.pierWest, PierSide.pierWest, false)]
+        [TestCase(5, 10, 10, PierSide.pierWest, PierSide.pierWest, false)]
+        [TestCase(5, 10, 11, PierSide.pierWest, PierSide.pierWest, false)]
+        public void ShouldFlip_BetweenMinimumAndMaximumTime_NoPause_UsePierSide_FlipWhenExpected(
+            double minTimeToFlip, 
+            double maxTimeToFlip, 
+            double remainingTimeToFlip, 
+            PierSide pierSide, 
+            PierSide targetPierSide,
+            bool expectToFlip) {
             var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
 
             var settings = new Mock<IMeridianFlipSettings>();
@@ -202,10 +226,18 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             settings.SetupGet(m => m.UseSideOfPier).Returns(true);
 
             profileServiceMock.SetupGet(m => m.ActiveProfile.MeridianFlipSettings).Returns(settings.Object);
+            var rightAscension = 12.9;
+            var localSiderealTime = 13.0;
+            if (targetPierSide == PierSide.pierWest) {
+                rightAscension -= 12.0;
+            }
+            var coordinates = new Coordinates(Angle.ByHours(rightAscension), Angle.ByDegree(20.0), Epoch.JNOW);
 
             var telescopeInfo = new TelescopeInfo() {
                 TimeToMeridianFlip = TimeSpan.FromMinutes(remainingTimeToFlip).TotalHours,
                 SideOfPier = pierSide,
+                Coordinates = coordinates,
+                SiderealTime = localSiderealTime,
                 Connected = true
             };
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(telescopeInfo);
@@ -222,17 +254,34 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
          * Remaining time to exceed maximum time is 8 minutes
          * => The exposure still fits in, no flip yet
          */
-        [TestCase(7, 5, 10, 8, PierSide.pierWest, false)]
+        [TestCase(7, 5, 10, 8, PierSide.pierWest, PierSide.pierEast, false)]
+        [TestCase(7, 5, 10, 8, PierSide.pierEast, PierSide.pierWest, false)]
         /* Exposure time is 9 minutes
          * Remaining time to exceed minimum time is 3 minutes
          * Remaining time to exceed maximum time is 8 minutes
          * => The exposure does not fit, flip needs to start with a wait time
          */
-        [TestCase(9, 5, 10, 8, PierSide.pierWest, true)]
+        [TestCase(9, 5, 10, 8, PierSide.pierWest, PierSide.pierEast, true)]
+        [TestCase(9, 5, 10, 8, PierSide.pierEast, PierSide.pierWest, true)]
         /* Same Test as before, but pier side is already correct and no flip required */
-        [TestCase(9, 5, 10, 8, PierSide.pierEast, false)]
-        public void ShouldFlip_BeforeMinimumTime_NoPause_PierSideIsUsed_EvaluateIfFlipIsNecessary(double nextItemExpectedTime, double minTimeToFlip, double maxTimeToFlip, double remainingTimeToFlip, PierSide pierSide, bool expectToFlip) {
+        [TestCase(9, 5, 10, 8, PierSide.pierEast, PierSide.pierEast, false)]
+        [TestCase(9, 5, 10, 8, PierSide.pierWest, PierSide.pierWest, false)]
+        public void ShouldFlip_BeforeMinimumTime_NoPause_PierSideIsUsed_EvaluateIfFlipIsNecessary(
+            double nextItemExpectedTime, 
+            double minTimeToFlip, 
+            double maxTimeToFlip, 
+            double remainingTimeToFlip, 
+            PierSide pierSide,
+            PierSide targetPierSide,
+            bool expectToFlip) {
             var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+
+            var rightAscension = 12.9;
+            var localSiderealTime = 13.0;
+            if (targetPierSide == PierSide.pierWest) {
+                rightAscension -= 12.0;
+            }
+            var coordinates = new Coordinates(Angle.ByHours(rightAscension), Angle.ByDegree(20.0), Epoch.JNOW);
 
             var settings = new Mock<IMeridianFlipSettings>();
             settings.SetupGet(m => m.MinutesAfterMeridian).Returns(minTimeToFlip);
@@ -245,6 +294,8 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var telescopeInfo = new TelescopeInfo() {
                 TimeToMeridianFlip = TimeSpan.FromMinutes(remainingTimeToFlip).TotalHours,
                 SideOfPier = pierSide,
+                Coordinates = coordinates,
+                SiderealTime = localSiderealTime,
                 Connected = true
             };
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(telescopeInfo);

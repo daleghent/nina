@@ -663,6 +663,7 @@
     <Compile Include="Utility\AttributeHelper.cs" />
     <Compile Include="Utility\CustomDateTime.cs" />
     <Compile Include="Utility\Enum\ComparisonOperatorEnum.cs" />
+    <Compile Include="Utility\MeridianFlip.cs" />
     <Compile Include="ViewModel\Sequencer\ISequenceNavigationVM.cs" />
     <Compile Include="ViewModel\Sequencer\SequenceNavigationVM.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleDSOContainer.cs" />
