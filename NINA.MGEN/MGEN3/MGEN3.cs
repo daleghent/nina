@@ -321,8 +321,8 @@ namespace NINA.MGEN3 {
                         data.frame_idx,
                         data.pos_x,
                         data.pos_y,
-                        driftRA,
-                        driftDEC
+                        driftRA * 256,
+                        driftDEC * 256
                     );
 
                     var state = new GuideState(data.ag_enabled > 0, frameInfo);

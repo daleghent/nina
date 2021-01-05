@@ -143,7 +143,8 @@ namespace NINA.Model.MyGuider {
                     if (starDetail.PositionX > Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
                         starDetail.PositionX < MGen.SensorSizeX - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
                         starDetail.PositionY > Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
-                        starDetail.PositionY < MGen.SensorSizeY - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude))) {
+                        starDetail.PositionY < MGen.SensorSizeY - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
+                        starDetail.Pixels < 90) {
                         Logger.Debug($"MGEN - Got Star Detail and setting new guiding position - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
                         starSearchSuccess = await MGen.SetNewGuidingPosition(starDetail);
                         Logger.Debug($"MGEN - Set New Guiding Position: {starSearchSuccess}");
@@ -152,7 +153,7 @@ namespace NINA.Model.MyGuider {
                         await MGen.SetImagingParameter(imagingParameter.Gain, imagingParameter.ExposureTime, imagingParameter.Threshold);
                         break;
                     } else {
-                        Logger.Debug($"MGEN - Got Star Detail but skipping star because too close to edge - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
+                        Logger.Debug($"MGEN - Got Star Detail but skipping star because too close to edge or too big - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
                     }
                 }
                 if (!starSearchSuccess) {
