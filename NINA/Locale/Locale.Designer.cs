@@ -5368,6 +5368,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Declination Guide Rate.
+        /// </summary>
+        internal static string LblDeclinationGuideRate {
+            get {
+                return ResourceManager.GetString("LblDeclinationGuideRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Declination guide rate in arcseconds per second.
+        /// </summary>
+        internal static string LblDeclinationGuideRateTooltip {
+            get {
+                return ResourceManager.GetString("LblDeclinationGuideRateTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dec Pix Error.
         /// </summary>
         internal static string LblDecPixError {
@@ -5575,6 +5593,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Typical pulse guide duration in seconds.
+        /// </summary>
+        internal static string LblDirectGuideDurationTooltip {
+            get {
+                return ResourceManager.GetString("LblDirectGuideDurationTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Direct Guider could not connect to Telescope.
         /// </summary>
         internal static string LblDirectGuiderConnectionFail {
@@ -5769,6 +5796,15 @@ namespace NINA.Locale {
         internal static string LblDitherPixels {
             get {
                 return ResourceManager.GetString("LblDitherPixels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Typical number of pixels to dither by. Dithering follows a normal distribution centered at the target, which this value as the standard deviation. 67% of dithers will be within this distance.
+        /// </summary>
+        internal static string LblDitherPixelsDirectGuiderTooltip {
+            get {
+                return ResourceManager.GetString("LblDitherPixelsDirectGuiderTooltip", resourceCulture);
             }
         }
         
@@ -10628,6 +10664,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pixel scale in arcseconds per pixel.
+        /// </summary>
+        internal static string LblPixelScaleTooltip {
+            get {
+                return ResourceManager.GetString("LblPixelScaleTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pixel Size.
         /// </summary>
         internal static string LblPixelSize {
@@ -11605,6 +11650,24 @@ namespace NINA.Locale {
         internal static string LblRightAscension {
             get {
                 return ResourceManager.GetString("LblRightAscension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right Ascension Guide Rate.
+        /// </summary>
+        internal static string LblRightAscensionGuideRate {
+            get {
+                return ResourceManager.GetString("LblRightAscensionGuideRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right Ascension guide rate in arcseconds per second.
+        /// </summary>
+        internal static string LblRightAscensionGuideRateTooltip {
+            get {
+                return ResourceManager.GetString("LblRightAscensionGuideRateTooltip", resourceCulture);
             }
         }
         
@@ -13240,6 +13303,24 @@ namespace NINA.Locale {
         internal static string LblTelescopeControl {
             get {
                 return ResourceManager.GetString("LblTelescopeControl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dec Guide Rate.
+        /// </summary>
+        internal static string LblTelescopeGuideRateDec {
+            get {
+                return ResourceManager.GetString("LblTelescopeGuideRateDec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to RA Guide Rate.
+        /// </summary>
+        internal static string LblTelescopeGuideRateRA {
+            get {
+                return ResourceManager.GetString("LblTelescopeGuideRateRA", resourceCulture);
             }
         }
         

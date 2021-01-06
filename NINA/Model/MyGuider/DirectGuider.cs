@@ -20,11 +20,14 @@ using NINA.Model.MyTelescope;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Model.MyCamera;
+using NINA.Utility.Astrometry;
+using Accord.Statistics.Distributions.Univariate;
 
 namespace NINA.Model.MyGuider {
     public class DirectGuider : BaseINPC, IGuider, ITelescopeConsumer {
-        private IProfileService profileService;
-        private ITelescopeMediator telescopeMediator;
+        private readonly IProfileService profileService;
+        private readonly ITelescopeMediator telescopeMediator;
 
         public DirectGuider(IProfileService profileService, ITelescopeMediator telescopeMediator) {
             this.profileService = profileService;
@@ -40,22 +43,37 @@ namespace NINA.Model.MyGuider {
 
         public void UpdateDeviceInfo(TelescopeInfo telescopeInfo) {
             this.telescopeInfo = telescopeInfo;
+            if (Connected && !this.telescopeInfo.Connected) {
+                Notification.ShowWarning(Locale.Loc.Instance["LblDirectGuiderTelescopeDisconnect"]);
+                Logger.Warning("Telescope is disconnected. Direct Guide will disconnect. Dither will not occur.");
+                Disconnect();
+            } else {
+                // arcseconds per pixel
+                PixelScale = Astrometry.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
+                WestEastGuideRate = ToNormalizedGuideRate(telescopeInfo.GuideRateRightAscensionArcsecPerSec);
+                NorthSouthGuideRate = ToNormalizedGuideRate(telescopeInfo.GuideRateDeclinationArcsecPerSec);
+
+                // arcseconds per second
+                var guidingRateArcsecondsPerSecond = Math.Max(WestEastGuideRate, NorthSouthGuideRate);
+                // pixels * (arcseconds per pixel) / (arcseconds per second) = seconds
+                // This is purely an informational value to know how your settings translate into a typical dither duration
+                DirectGuideDuration = profileService.ActiveProfile.GuiderSettings.DitherPixels * PixelScale / guidingRateArcsecondsPerSecond;
+            }
+        }
+
+        private static double ToNormalizedGuideRate(double arcsecPerSecond) {
+            if (double.IsNaN(arcsecPerSecond) || arcsecPerSecond <= 0) {
+                // Default guiding rate is 0.5x sidereal
+                return Astrometry.SIDEREAL_RATE_ARCSECONDS_PER_SECOND / 2.0;
+            }
+            return arcsecPerSecond;
         }
 
         private bool _connected;
 
         public bool Connected {
             get {
-                if (_connected) {
-                    if (telescopeInfo.Connected) {
-                        return true;
-                    } else {
-                        Notification.ShowWarning(Locale.Loc.Instance["LblDirectGuiderTelescopeDisconnect"]);
-                        Logger.Warning("Telescope is disconnected. Direct Guide will disconnect. Dither will not occur.");
-                        Disconnect();
-                    }
-                }
-                return false;
+                return _connected;
             }
             set {
                 if (_connected != value) {
@@ -65,7 +83,56 @@ namespace NINA.Model.MyGuider {
             }
         }
 
-        public double PixelScale { get; set; }
+        private double _pixelScale = -1.0;
+        public double PixelScale {
+            get {
+                return _pixelScale;
+            } set {
+                if (_pixelScale != value) {
+                    _pixelScale = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double _directGuideDuration = 0.0;
+        public double DirectGuideDuration {
+            get {
+                return _directGuideDuration;
+            }
+            set {
+                if (_directGuideDuration != value) {
+                    _directGuideDuration = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double _westEastGuideRate = 0.0;
+        public double WestEastGuideRate {
+            get {
+                return _westEastGuideRate;
+            }
+            set {
+                if (_westEastGuideRate != value) {
+                    _westEastGuideRate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double _northSouthGuideRate = 0.0;
+        public double NorthSouthGuideRate {
+            get {
+                return _northSouthGuideRate;
+            }
+            set {
+                if (_northSouthGuideRate != value) {
+                    _northSouthGuideRate = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         private string _state = "Idle";
 
@@ -134,38 +201,37 @@ namespace NINA.Model.MyGuider {
             return Task.FromResult(true);
         }
 
-        private Random random = new Random();
-
-        private double previousAngle = 0;
+        private readonly Random random = new Random();
+        private double previousWestEastOffsetPixels = 0.0;
+        private double previousNorthSouthOffsetPixels = 0.0;
 
         public event EventHandler<IGuideStep> GuideEvent { add { } remove { } }
 
         public async Task<bool> Dither(CancellationToken ct) {
             State = "Dithering...";
 
-            TimeSpan Duration = TimeSpan.FromSeconds(profileService.ActiveProfile.GuiderSettings.DirectGuideDuration);
-            TimeSpan SettleTime = TimeSpan.FromSeconds(profileService.ActiveProfile.GuiderSettings.SettleTime);
+            var settleTime = TimeSpan.FromSeconds(profileService.ActiveProfile.GuiderSettings.SettleTime);
+            var ditherRAOnly = profileService.ActiveProfile.GuiderSettings.DitherRAOnly;
 
-            bool DitherRAOnly = profileService.ActiveProfile.GuiderSettings.DitherRAOnly;
-
-            //In theory should not be hit as guider gets disconnected when telescope disconnects
+            // Extra defense against telescope disconnection right before a dithering operation
             if (!telescopeInfo.Connected) {
                 return false;
             } else {
-                GuidePulses PulseInstructions = SelectDitherPulse(Duration);
-                if (!DitherRAOnly) {
-                    telescopeMediator.PulseGuide(PulseInstructions.directionWestEast, (int)PulseInstructions.durationWestEast.TotalMilliseconds);
-                    await Utility.Utility.Delay(PulseInstructions.durationWestEast, ct);
-                    telescopeMediator.PulseGuide(PulseInstructions.directionNorthSouth, (int)PulseInstructions.durationNorthSouth.TotalMilliseconds);
-                    await Utility.Utility.Delay(PulseInstructions.durationNorthSouth, ct);
-                    await Utility.Utility.Delay(SettleTime, ct);
-                } else {
-                    //Adjust Pulse Duration for RA only dithering. Otherwise RA only dithering will likely provide terrible results.
-                    Duration = TimeSpan.FromMilliseconds((int)Math.Round(Duration.TotalMilliseconds * (0.5 + random.NextDouble())));
-                    telescopeMediator.PulseGuide(PulseInstructions.directionWestEast, (int)Duration.TotalMilliseconds);
-                    await Utility.Utility.Delay(Duration, ct);
-                    await Utility.Utility.Delay(SettleTime, ct);
+                var pulseInstructions = SelectDitherPulse();
+
+                // Note: According to the ASCOM specification, PulseGuide returns immediately (asynchronous) if the mount supports back to back axis moves, otherwise
+                // it waits until completion. To be strictly correct here we'd start a counter here instead to avoid a potential extra wait. However, DirectGuiding is
+                // primarily aimed at high end mounts which probably can do this anyways.
+                telescopeMediator.PulseGuide(pulseInstructions.directionWestEast, (int)Math.Round(pulseInstructions.durationWestEast.TotalMilliseconds));
+                var pulseGuideDelayMilliseconds = pulseInstructions.durationWestEast.TotalMilliseconds;
+                if (!ditherRAOnly) {
+                    telescopeMediator.PulseGuide(pulseInstructions.directionNorthSouth, (int)Math.Round(pulseInstructions.durationNorthSouth.TotalMilliseconds));
+                    pulseGuideDelayMilliseconds = Math.Max(pulseGuideDelayMilliseconds, pulseInstructions.durationNorthSouth.TotalMilliseconds);
                 }
+                await Utility.Utility.Delay(TimeSpan.FromMilliseconds(pulseGuideDelayMilliseconds), ct);
+
+                State = "Dither settling...";
+                await Utility.Utility.Delay(settleTime, ct);
             }
             State = "Idle";
             return true;
@@ -179,38 +245,52 @@ namespace NINA.Model.MyGuider {
         }
 
         /// <summary>
-        /// This function will figure out what guiding pulses to send to the mount to achieve
-        /// a random guide direction equivalent to a total guide pulse duration set by the user.
-        /// Note that total guide pulse duration sent to mount will be more than the guide
-        /// pulse duration set by the user, but overall distance from origin will be the same
-        /// as if the pulse had been fully applied to one of the N/S/W/E axes. Guide directions are
-        /// set to be roughly countering one another, to avoid too much deviation from target.
+        /// Determines what dither pulses to send in N/S and W/E directions so that deviations are normally distributed
+        /// around the target, with standard deviation equal to the configured "DitherPixels", and distances clamped to +- 3 times that.
+        /// This is accomplished by computing a vector from the previous randomly chosen offset to the target and sending a pulse guide
+        /// accordingly. Durations are chosen by factoring in the mount-reported guiding rate (using 0.5x sidereal as a fallback) and the camera pixel scale,
+        /// which also factors in telescope focal length
         /// </summary>
-        /// <param name="duration">Rather than a time, should be considered as actual distance from origin prior to dither</param>
         /// <returns>Parameters for two guide pulses, one in N/S direction and one in E/W direction</returns>
 
-        private GuidePulses SelectDitherPulse(TimeSpan duration) {
-            double ditherAngle = (previousAngle + Math.PI) + random.NextDouble() * Math.PI - Math.PI / 2;
-            previousAngle = ditherAngle;
+        private GuidePulses SelectDitherPulse() {
+            double ditherAngle = random.NextDouble() * Math.PI;
             double cosAngle = Math.Cos(ditherAngle);
             double sinAngle = Math.Sin(ditherAngle);
-            GuidePulses resultPulses = new GuidePulses();
+            var expectedDitherPixels = profileService.ActiveProfile.GuiderSettings.DitherPixels;
 
-            if (cosAngle >= 0) {
+            // Generate a normally distributed distance from 0 with standard deviation equal to the configured "Dither Pixels", and clamped to +- 3 standard deviations
+            double targetDistancePixels = NormalDistribution.Random(mean: 0.0, stdDev: expectedDitherPixels);
+            targetDistancePixels = Math.Min(3.0d * expectedDitherPixels, Math.Max(-3.0d * expectedDitherPixels, targetDistancePixels));
+
+            double targetWestEastOffsetPixels = targetDistancePixels * cosAngle;
+            double targetNorthSouthOffsetPixels = targetDistancePixels * sinAngle;
+
+            // RA axis is East/West
+            // Dec axis is North/South
+            // pixels * (arcseconds per pixel) / (arcseconds per second) = seconds
+            double westEastDuration = (targetWestEastOffsetPixels - previousWestEastOffsetPixels) * PixelScale / WestEastGuideRate;
+            double northSouthDuration = (targetNorthSouthOffsetPixels - previousNorthSouthOffsetPixels) * PixelScale / NorthSouthGuideRate;
+            Logger.Info($"Dither target from ({previousWestEastOffsetPixels}, {previousNorthSouthOffsetPixels}) to ({targetWestEastOffsetPixels}, {targetNorthSouthOffsetPixels}) using guide durations of {westEastDuration} and {northSouthDuration} seconds");
+
+            previousWestEastOffsetPixels = targetWestEastOffsetPixels;
+            previousNorthSouthOffsetPixels = targetNorthSouthOffsetPixels;
+
+            GuidePulses resultPulses = new GuidePulses();
+            if (westEastDuration >= 0) {
                 resultPulses.directionWestEast = GuideDirections.guideEast;
             } else {
                 resultPulses.directionWestEast = GuideDirections.guideWest;
             }
 
-            if (sinAngle >= 0) {
+            if (northSouthDuration >= 0) {
                 resultPulses.directionNorthSouth = GuideDirections.guideNorth;
             } else {
                 resultPulses.directionNorthSouth = GuideDirections.guideSouth;
             }
 
-            resultPulses.durationWestEast = TimeSpan.FromMilliseconds((int)Math.Round(Math.Abs(duration.TotalMilliseconds * cosAngle)));
-            resultPulses.durationNorthSouth = TimeSpan.FromMilliseconds((int)Math.Round(Math.Abs(duration.TotalMilliseconds * sinAngle)));
-
+            resultPulses.durationWestEast = TimeSpan.FromSeconds(Math.Abs(westEastDuration));
+            resultPulses.durationNorthSouth = TimeSpan.FromSeconds(Math.Abs(northSouthDuration));
             return resultPulses;
         }
 

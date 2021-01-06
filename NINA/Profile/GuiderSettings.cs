@@ -39,7 +39,6 @@ namespace NINA.Profile {
             phd2ROIPct = 100;
             settlePixels = 1.5;
             settleTimeout = 40;
-            directGuideDuration = 2;
             autoRetryStartGuiding = false;
             autoRetryStartGuidingTimeoutSeconds = 60;
             maxY = 4;
@@ -187,20 +186,6 @@ namespace NINA.Profile {
             set {
                 if (settleTimeout != value) {
                     settleTimeout = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        private double directGuideDuration;
-
-        [DataMember]
-        public double DirectGuideDuration {
-            get => directGuideDuration;
-
-            set {
-                if (directGuideDuration != value) {
-                    directGuideDuration = value;
                     RaisePropertyChanged();
                 }
             }

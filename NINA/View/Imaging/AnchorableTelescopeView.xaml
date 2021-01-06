@@ -146,6 +146,24 @@
                     <TextBlock Margin="5,0,0,0" Text="{Binding TelescopeInfo.SideOfPier, Converter={StaticResource SideOfPierConverter}}" />
                 </UniformGrid>
             </Border>
+            <Border
+                Margin="0,5,0,0"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0">
+                <UniformGrid VerticalAlignment="Center" Columns="2">
+                    <TextBlock Text="{ns:Loc LblTelescopeGuideRateRA}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding TelescopeInfo.GuideRateRightAscensionArcsecPerSec, StringFormat=\{0:0.000\}}" />
+                </UniformGrid>
+            </Border>
+            <Border
+                Margin="0,5,0,0"
+                BorderBrush="{StaticResource BorderBrush}"
+                BorderThickness="0">
+                <UniformGrid VerticalAlignment="Center" Columns="2">
+                    <TextBlock Text="{ns:Loc LblTelescopeGuideRateDec}" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding TelescopeInfo.GuideRateDeclinationArcsecPerSec, StringFormat=\{0:0.000\}}" />
+                </UniformGrid>
+            </Border>
         </StackPanel>
     </ScrollViewer>
 </UserControl>

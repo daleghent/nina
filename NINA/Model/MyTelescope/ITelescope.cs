@@ -72,6 +72,8 @@ namespace NINA.Model.MyTelescope {
         Coordinates TargetCoordinates { get; }
         PierSide? TargetSideOfPier { get; }
         bool Slewing { get; }
+        double GuideRateRightAscensionArcsecPerSec { get; }
+        double GuideRateDeclinationArcsecPerSec { get; }
 
         Task<bool> MeridianFlip(Coordinates targetCoordinates);
 

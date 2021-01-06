@@ -82,7 +82,8 @@
                     <TextBlock
                         MinWidth="200"
                         VerticalAlignment="Center"
-                        Text="{ns:Loc LblDirectGuideDuration}" />
+                        Text="{ns:Loc LblDitherPixels}" 
+                        ToolTip="{ns:Loc LblDitherPixelsDirectGuiderTooltip}"/>
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -91,7 +92,7 @@
                         <TextBox>
                             <TextBox.Text>
                                 <Binding
-                                    Path="ActiveProfile.GuiderSettings.DirectGuideDuration"
+                                    Path="ActiveProfile.GuiderSettings.DitherPixels"
                                     Source="{StaticResource ProfileService}"
                                     UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -100,9 +101,44 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center">s</TextBlock>
                     </Grid>
                 </UniformGrid>
+                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                    <UniformGrid
+                        Margin="5,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock Text="{ns:Loc LblPixelScale}" ToolTip="{ns:Loc LblPixelScaleTooltip}" />
+                        <TextBlock Margin="5,0,0,0" Text="{Binding PixelScale, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.000\}}" />
+                    </UniformGrid>
+                </Border>
+                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                    <UniformGrid
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock Text="{ns:Loc LblDirectGuideDuration}" ToolTip="{ns:Loc LblDirectGuideDurationTooltip}" />
+                        <TextBlock Margin="5,0,0,0" Text="{Binding DirectGuideDuration, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.000\}}" />
+                    </UniformGrid>
+                </Border>
+                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                    <UniformGrid
+                        Margin="5,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock Text="{ns:Loc LblRightAscensionGuideRate}" ToolTip="{ns:Loc LblRightAscensionGuideRateTooltip}" />
+                        <TextBlock Margin="5,0,0,0" Text="{Binding WestEastGuideRate, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.000\}}" />
+                    </UniformGrid>
+                </Border>
+                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                    <UniformGrid
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock Text="{ns:Loc LblDeclinationGuideRate}" ToolTip="{ns:Loc LblDeclinationGuideRateTooltip}" />
+                        <TextBlock Margin="5,0,0,0" Text="{Binding NorthSouthGuideRate, UpdateSourceTrigger=PropertyChanged, StringFormat=\{0:0.000\}}" />
+                    </UniformGrid>
+                </Border>
             </UniformGrid>
         </StackPanel>
     </Grid>

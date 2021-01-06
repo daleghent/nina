@@ -606,10 +606,10 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        public double GuideRateDeclination {
+        public double GuideRateDeclinationArcsecPerSec {
             get {
                 if (Connected) {
-                    return _telescope.GuideRateDeclination;
+                    return _telescope.GuideRateDeclination * 3600.0;
                 } else {
                     return -1;
                 }
@@ -628,10 +628,10 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        public double GuideRateRightAscension {
+        public double GuideRateRightAscensionArcsecPerSec {
             get {
                 if (Connected) {
-                    return _telescope.GuideRateRightAscension;
+                    return _telescope.GuideRateRightAscension * 3600.0;
                 } else {
                     return -1;
                 }

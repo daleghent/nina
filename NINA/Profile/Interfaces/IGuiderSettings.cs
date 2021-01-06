@@ -27,7 +27,6 @@ namespace NINA.Profile {
         int SettleTime { get; set; }
         double SettlePixels { get; set; }
         int SettleTimeout { get; set; }
-        double DirectGuideDuration { get; set; }
         string PHD2Path { get; set; }
         bool AutoRetryStartGuiding { get; set; }
         int AutoRetryStartGuidingTimeoutSeconds { get; set; }

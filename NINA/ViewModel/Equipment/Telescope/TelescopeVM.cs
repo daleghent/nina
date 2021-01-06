@@ -293,7 +293,9 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 HasUnknownEpoch = Telescope.HasUnknownEpoch,
                                 TargetCoordinates = Telescope.TargetCoordinates,
                                 TargetSideOfPier = Telescope.TargetSideOfPier,
-                                Slewing = Telescope.Slewing
+                                Slewing = Telescope.Slewing,
+                                GuideRateRightAscensionArcsecPerSec = Telescope.GuideRateRightAscensionArcsecPerSec,
+                                GuideRateDeclinationArcsecPerSec = Telescope.GuideRateDeclinationArcsecPerSec,
                             };
 
                             // Supporting custom would require an additional dialog box to input the custom rates. We can add that later if there's demand for it
@@ -438,6 +440,12 @@ namespace NINA.ViewModel.Equipment.Telescope {
             telescopeValues.TryGetValue(nameof(TelescopeInfo.Slewing), out o);
             TelescopeInfo.Slewing = (bool)(o ?? false);
 
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.GuideRateRightAscensionArcsecPerSec), out o);
+            TelescopeInfo.GuideRateRightAscensionArcsecPerSec = (double)(o ?? double.NaN);
+
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.GuideRateDeclinationArcsecPerSec), out o);
+            TelescopeInfo.GuideRateDeclinationArcsecPerSec = (double)(o ?? double.NaN);
+
             BroadcastTelescopeInfo();
         }
 
@@ -471,6 +479,8 @@ namespace NINA.ViewModel.Equipment.Telescope {
             telescopeValues.Add(nameof(TelescopeInfo.TargetCoordinates), _telescope?.TargetCoordinates ?? null);
             telescopeValues.Add(nameof(TelescopeInfo.TargetSideOfPier), _telescope?.TargetSideOfPier ?? null);
             telescopeValues.Add(nameof(TelescopeInfo.Slewing), _telescope?.Slewing ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.GuideRateRightAscensionArcsecPerSec), _telescope?.GuideRateRightAscensionArcsecPerSec ?? double.NaN);
+            telescopeValues.Add(nameof(TelescopeInfo.GuideRateDeclinationArcsecPerSec), _telescope?.GuideRateDeclinationArcsecPerSec ?? double.NaN);
 
             return telescopeValues;
         }

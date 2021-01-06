@@ -285,5 +285,19 @@ namespace NINA.Model.MyTelescope {
             get { return slewing; }
             set { slewing = value; RaisePropertyChanged(); }
         }
+
+        private double guideRateRightAscensionArcsecPerSec;
+
+        public double GuideRateRightAscensionArcsecPerSec {
+            get { return guideRateRightAscensionArcsecPerSec; }
+            set { guideRateRightAscensionArcsecPerSec = value; RaisePropertyChanged(); }
+        }
+
+        private double guideRateDeclinationArcsecPerSec;
+
+        public double GuideRateDeclinationArcsecPerSec {
+            get { return guideRateDeclinationArcsecPerSec; }
+            set { guideRateDeclinationArcsecPerSec = value; RaisePropertyChanged(); }
+        }
     }
 }

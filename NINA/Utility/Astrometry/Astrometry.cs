@@ -34,6 +34,7 @@ namespace NINA.Utility.Astrometry {
         private static double RadianstoHourFactor = 12d / Math.PI;
         private static double DaysToSecondsFactor = 60d * 60d * 24d;
         private static double SecondsToDaysFactor = 1.0 / (60d * 60d * 24d);
+        public static readonly double SIDEREAL_RATE_ARCSECONDS_PER_SECOND = 15.041;
 
         /// <summary>
         /// Convert degree to radians
