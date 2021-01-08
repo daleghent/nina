@@ -48,9 +48,6 @@
                             Command="{Binding Path=DataContext.SelectCommand, ElementName=ScrollViewer}"
                             CommandParameter="{Binding}">
                             <Grid Width="120" Margin="2">
-                                <Grid.CacheMode>
-                                    <BitmapCache />
-                                </Grid.CacheMode>
                                 <Grid.ToolTip>
                                     <TextBlock Text="{Binding ImagePath}" />
                                 </Grid.ToolTip>
