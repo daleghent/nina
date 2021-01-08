@@ -77,7 +77,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - **Omegon:** 39.15325.2019.810
 - **QHY:** 20.8.26.3
 - **ToupTek:** 46.17309.2020.616
-- **ZWO:** 1.15.9.15
+- **ZWO:** 1.16.3.0
 
 # Version 1.10
 
