@@ -139,6 +139,7 @@
                                     <Path
                                         Grid.Column="2"
                                         Width="20"
+                                        Height="20"
                                         Margin="5,0,3,0"
                                         Data="{Binding Icon}"
                                         Fill="{StaticResource ButtonForegroundBrush}"
