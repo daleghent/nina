@@ -82,7 +82,6 @@
                                     VerticalAlignment="Center"
                                     Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
-                                    FontWeight="Bold"
                                     Text="{ns:Loc LblMean}" />
 
                                 <TextBlock
@@ -93,7 +92,6 @@
                                     VerticalAlignment="Center"
                                     Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
-                                    FontWeight="Bold"
                                     Text="{Binding Mean, StringFormat=\{0:#\}}" />
 
                                 <TextBlock
@@ -105,7 +103,6 @@
                                     VerticalAlignment="Center"
                                     Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
-                                    FontWeight="Bold"
                                     Text="{ns:Loc LblHFR}" />
                                 <TextBlock
                                     Grid.Row="1"
@@ -115,7 +112,6 @@
                                     VerticalAlignment="Center"
                                     Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
-                                    FontWeight="Bold"
                                     Text="{Binding HFR, StringFormat=\{0:0.00\}, Converter={StaticResource NaNToDoubleDashConverter}}" />
                                 <TextBlock
                                     Grid.Row="2"
@@ -126,7 +122,6 @@
                                     VerticalAlignment="Center"
                                     Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
-                                    FontWeight="Bold"
                                     Text="{ns:Loc LblFilter}" />
                                 <TextBlock
                                     Grid.Row="2"
@@ -136,7 +131,6 @@
                                     VerticalAlignment="Center"
                                     Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
-                                    FontWeight="Bold"
                                     Text="{Binding Filter}" />
                                 <TextBlock
                                     Grid.Row="4"
@@ -147,7 +141,6 @@
                                     VerticalAlignment="Center"
                                     Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
-                                    FontWeight="Bold"
                                     Text="{ns:Loc LblDuration}" />
                                 <TextBlock
                                     Grid.Row="4"
@@ -157,7 +150,6 @@
                                     VerticalAlignment="Center"
                                     Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
-                                    FontWeight="Bold"
                                     Text="{Binding Duration, StringFormat='{}{0:0.00}s'}" />
                                 <TextBlock
                                     Grid.Row="5"
@@ -168,7 +160,6 @@
                                     VerticalAlignment="Center"
                                     Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
-                                    FontWeight="Bold"
                                     Text="{ns:Loc LblTime}" />
                                 <TextBlock
                                     Grid.Row="5"
@@ -178,7 +169,6 @@
                                     VerticalAlignment="Center"
                                     Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
-                                    FontWeight="Bold"
                                     Text="{Binding Date, StringFormat='{}{0:HH:mm:ss}'}" />
                             </Grid>
                         </Button>
