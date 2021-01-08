@@ -69,7 +69,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Fixed an issue when using the file camera together with dithering, where the dither signal was triggered directly after starting the exposure, as the file camera directly switched to download state. Instead the file camera will wait for the exposure time instead before switching to download state.
 
 ## Included Camera SDK Versions:
-- **Altair Astro:** 48.17729.2020.922
+- **Altair Astro:** 48.18195.2020.1222
 - **Atik:** 2020.08.3.642
 - **Canon:** 13.12.31
 - **FLI:** 1.104.0.0
