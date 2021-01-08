@@ -163,6 +163,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - The MGEN guider now doesn't autoselect guide stars that lie too close to the sensor edge, based on a stand-off distance that the user can set in the UI
 - All guiders now report when a successful connection happens
 - Disconnecting Atik Cameras from other applications on startup or scan for new devices will not happen anymore
+- Fixed an issue in Framing Assistant when solving a file, that the near solver was incorrectly used as the blind solver
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 48.17962.2020.1110
@@ -212,7 +213,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Fixed an issue when using the file camera together with dithering, where the dither signal was triggered directly after starting the exposure, as the file camera directly switched to download state. Instead the file camera will wait for the exposure time instead before switching to download state.
 
 ## Included Camera SDK Versions:
-- **Altair Astro:** 48.17729.2020.922
+- **Altair Astro:** 48.18195.2020.1222
 - **Atik:** 2020.08.3.642
 - **Canon:** 13.12.31
 - **FLI:** 1.104.0.0
@@ -220,7 +221,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - **Omegon:** 39.15325.2019.810
 - **QHY:** 20.8.26.3
 - **ToupTek:** 46.17309.2020.616
-- **ZWO:** 1.15.9.15
+- **ZWO:** 1.16.3.0
 
 # Version 1.10
 

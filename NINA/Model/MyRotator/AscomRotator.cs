@@ -21,9 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyRotator {
-
     internal class AscomRotator : BaseINPC, IRotator, IDisposable {
-
         public AscomRotator(string id, string name) {
             this.Id = id;
             this.Name = name;
