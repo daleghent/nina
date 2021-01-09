@@ -724,7 +724,6 @@
                     DataContext="{Binding Coordinates}"
                     Orientation="Horizontal"
                     Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type view:SequenceBlockView}}, Path=DataContext.HasDsoParent, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
-                    <TextBlock Margin="5,0,5,0" VerticalAlignment="Center">|</TextBlock>
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblRA}" />
                     <TextBox
                         MinWidth="40"

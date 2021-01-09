@@ -44,8 +44,9 @@
                 </Style>
             </Grid.Style>
             <Border
-                Width="200"
+                MinWidth="200"
                 MinHeight="30"
+                Padding="0,0,5,0"
                 VerticalAlignment="Stretch"
                 BorderBrush="Transparent"
                 DataContext="{Binding}">

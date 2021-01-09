@@ -4788,10 +4788,10 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Utility</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
-    <value>A condition that loops while the target is above the given altitude and then stops the current instruction set</value>
+    <value>A condition that loops until the target sets below the given altitude and then stops the current instruction set</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Loop While Altitude Above</value>
+    <value>Loop Until Altitude Sets Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Dome</value>

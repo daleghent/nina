@@ -369,7 +369,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A condition that loops while the target is above the given altitude and then stops the current instruction set.
+        ///   Looks up a localized string similar to A condition that loops until the target sets below the given altitude and then stops the current instruction set.
         /// </summary>
         internal static string Lbl_SequenceCondition_AltitudeCondition_Description {
             get {
@@ -378,7 +378,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Loop While Altitude Above.
+        ///   Looks up a localized string similar to Loop Until Altitude Sets Below.
         /// </summary>
         internal static string Lbl_SequenceCondition_AltitudeCondition_Name {
             get {
