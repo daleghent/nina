@@ -1103,6 +1103,21 @@ Daha uzun bir süre gerektiğinde, bir süre belirtilebilir ve uygulama, verilen
   <data name="LblDirectGuideDuration" xml:space="preserve">
     <value>Direkt takip süresi</value>
   </data>
+  <data name="LblDirectGuideDurationTooltip" xml:space="preserve">
+    <value>Typical pulse guide duration in seconds</value>
+  </data>
+  <data name="LblRightAscensionGuideRate" xml:space="preserve">
+    <value>Right Ascension Guide Rate</value>
+  </data>
+  <data name="LblRightAscensionGuideRateTooltip" xml:space="preserve">
+    <value>Right Ascension guide rate in arcseconds per second</value>
+  </data>
+  <data name="LblDeclinationGuideRate" xml:space="preserve">
+    <value>Declination Guide Rate</value>
+  </data>
+  <data name="LblDeclinationGuideRateTooltip" xml:space="preserve">
+    <value>Declination guide rate in arcseconds per second</value>
+  </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
     <value>Direkt takipçi teleskopa bağlanamadı</value>
   </data>
@@ -1144,6 +1159,9 @@ Daha uzun bir süre gerektiğinde, bir süre belirtilebilir ve uygulama, verilen
   </data>
   <data name="LblDitherPixels" xml:space="preserve">
     <value>Dither Pixels</value>
+  </data>
+  <data name="LblDitherPixelsDirectGuiderTooltip" xml:space="preserve">
+    <value>Typical number of pixels to dither by. Dithering follows a normal distribution centered at the target, which this value as the standard deviation. 67% of dithers will be within this distance</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
     <value>Sadece RA'da Dither uygula</value>
@@ -2356,6 +2374,9 @@ Hesaplanan HFR: {2}
   <data name="LblPixelScale" xml:space="preserve">
     <value>Piksel ölçüsü</value>
   </data>
+  <data name="LblPixelScaleTooltip" xml:space="preserve">
+    <value>Pixel scale in arcseconds per pixel</value>
+  </data>
   <data name="LblPixelSize" xml:space="preserve">
     <value>Piksel boyu</value>
   </data>
@@ -3115,6 +3136,12 @@ Devam etmeden önce, lütfen sisteminizin şu anda iyi veya iyiye yakın odaklan
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
     <value>Teleskoptan NINA'ya</value>
+  </data>
+  <data name="LblTelescopeGuideRateRA" xml:space="preserve">
+    <value>RA Guide Rate</value>
+  </data>
+  <data name="LblTelescopeGuideRateDec" xml:space="preserve">
+    <value>Dec Guide Rate</value>
   </data>
   <data name="LblTempComp" xml:space="preserve">
     <value>Sıcaklık denkleme</value>
@@ -4748,10 +4775,10 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Utility</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
-    <value>A condition that loops while the target is above the given altitude and then stops the current instruction set</value>
+    <value>A condition that loops until the target sets below the given altitude and then stops the current instruction set</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Loop While Altitude Above</value>
+    <value>Loop Until Altitude Sets Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Dome</value>

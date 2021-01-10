@@ -1104,6 +1104,21 @@ Dec: {1}</value>
   <data name="LblDirectGuideDuration" xml:space="preserve">
     <value>Длительность прямого гидирования</value>
   </data>
+  <data name="LblDirectGuideDurationTooltip" xml:space="preserve">
+    <value>Длительность обычного гидирования пульсации в секундах</value>
+  </data>
+  <data name="LblRightAscensionGuideRate" xml:space="preserve">
+    <value>Скорость гидирования прямого восхождения</value>
+  </data>
+  <data name="LblRightAscensionGuideRateTooltip" xml:space="preserve">
+    <value>Скорость гидирования прямого восхождения в угл. секундах в секунду</value>
+  </data>
+  <data name="LblDeclinationGuideRate" xml:space="preserve">
+    <value>Скорость гидирования склонения</value>
+  </data>
+  <data name="LblDeclinationGuideRateTooltip" xml:space="preserve">
+    <value>Скорость гидирования склонения в угл. секундах в секунду</value>
+  </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
     <value>Прямой гид не смог подключиться к телескопу</value>
   </data>
@@ -1145,6 +1160,9 @@ Dec: {1}</value>
   </data>
   <data name="LblDitherPixels" xml:space="preserve">
     <value>Пиксели межкадровой подвижки</value>
+  </data>
+  <data name="LblDitherPixelsDirectGuiderTooltip" xml:space="preserve">
+    <value>Типичное число пикселей для межкадровой подвижки. Межкадровая подвижка следует обычному распределению, расположенному по цели, которое это значение является стандартным отклонением. 67% подвижек будут находиться в пределах этого расстояния</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
     <value>Межкадровые подвижки только по П.В.</value>
@@ -2357,6 +2375,9 @@ Dec: {1}</value>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Размер пикселя</value>
   </data>
+  <data name="LblPixelScaleTooltip" xml:space="preserve">
+    <value>Масштаб пикселей в угл. секундах на пиксель</value>
+  </data>
   <data name="LblPixelSize" xml:space="preserve">
     <value>Размер пикселя</value>
   </data>
@@ -3118,6 +3139,12 @@ Dec: {1}</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
     <value>Телескоп в NINA</value>
+  </data>
+  <data name="LblTelescopeGuideRateRA" xml:space="preserve">
+    <value>Скорость гидирования П.В.</value>
+  </data>
+  <data name="LblTelescopeGuideRateDec" xml:space="preserve">
+    <value>Скорость гидирования Скл.</value>
   </data>
   <data name="LblTempComp" xml:space="preserve">
     <value>Комп темп</value>
@@ -4215,13 +4242,13 @@ Dec: {1}</value>
     <value>Статистика HFR</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopCondition_Description" xml:space="preserve">
-    <value>Условие для петли контейнера серии для заданного количества циклов</value>
+    <value>Условие для создания цикла контейнера последовательности для указанного количества циклов</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopCondition_Name" xml:space="preserve">
     <value>Цикл для итераций</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Description" xml:space="preserve">
-    <value>Условие, которое зацикливает до заданного определенного времени, а затем останавливает текущий набор инструкций</value>
+    <value>Условие, которое повторяется до тех пор, пока не будет достигнуто указанное время, а затем останавливает текущий набор инструкций</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeCondition_Name" xml:space="preserve">
     <value>Цикл до времени</value>
@@ -4754,10 +4781,10 @@ Dec: {1}</value>
     <value>Утилита</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
-    <value>Условие, которое зацикливает при достижении цели выше заданной высоты, а затем останавливает текущую инструкцию</value>
+    <value>Условие, которое повторяется до тех пор, пока цель не опустится ниже заданной высоты, а затем останавливает текущий набор инструкций</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Цикл при высоте выше</value>
+    <value>Цикл, пока высота не будет установлена ниже</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Купол</value>
@@ -4851,7 +4878,7 @@ Dec: {1}</value>
     <value>Временной размах</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
-    <value>Цикл задач для заданной продолжительности. По окончании продолжительности оставшиеся инструкции будут пропущены.</value>
+    <value>Набор инструкций цикла на заданную продолжительность. Когда время истечет, остальные инструкции внутри набора будут пропущены.</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
     <value>Цикл времени</value>
@@ -5054,7 +5081,7 @@ Dec: {1}</value>
     <value>Высота Луны</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
-    <value>Выход из цикла когда высота Солнца совпадает с указанными параметрами.</value>
+    <value>Выход из цикла когда высота Солнца соответствует заданным параметрам.</value>
   </data>
   <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
     <value>Высота Солнца</value>
@@ -5167,7 +5194,7 @@ Dec: {1}</value>
     <value>Ожидание до цели выше горизонта. Высота цели {0}° / высота горизонта {1}°</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
-    <value>Условие, которое зацикливает при достижении цели выше горизонта, а затем останавливает текущую инструкцию</value>
+    <value>Условие, которое повторяется, пока цель находится над горизонтом, а затем останавливает текущий набор инструкций</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
     <value>Цикл пока высота над горизонтом</value>

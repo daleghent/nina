@@ -1103,6 +1103,21 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
   <data name="LblDirectGuideDuration" xml:space="preserve">
     <value>Duración de Guiado Directo</value>
   </data>
+  <data name="LblDirectGuideDurationTooltip" xml:space="preserve">
+    <value>Typical pulse guide duration in seconds</value>
+  </data>
+  <data name="LblRightAscensionGuideRate" xml:space="preserve">
+    <value>Right Ascension Guide Rate</value>
+  </data>
+  <data name="LblRightAscensionGuideRateTooltip" xml:space="preserve">
+    <value>Right Ascension guide rate in arcseconds per second</value>
+  </data>
+  <data name="LblDeclinationGuideRate" xml:space="preserve">
+    <value>Declination Guide Rate</value>
+  </data>
+  <data name="LblDeclinationGuideRateTooltip" xml:space="preserve">
+    <value>Declination guide rate in arcseconds per second</value>
+  </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
     <value>Guiado directo no pudo conectarse con telescopio</value>
   </data>
@@ -1144,6 +1159,9 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
   </data>
   <data name="LblDitherPixels" xml:space="preserve">
     <value>Píxeles en el dither</value>
+  </data>
+  <data name="LblDitherPixelsDirectGuiderTooltip" xml:space="preserve">
+    <value>Typical number of pixels to dither by. Dithering follows a normal distribution centered at the target, which this value as the standard deviation. 67% of dithers will be within this distance</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
     <value>Dither AR Solamente</value>
@@ -2356,6 +2374,9 @@ Calculado HFR: {2}
   <data name="LblPixelScale" xml:space="preserve">
     <value>Escala de Píxel</value>
   </data>
+  <data name="LblPixelScaleTooltip" xml:space="preserve">
+    <value>Pixel scale in arcseconds per pixel</value>
+  </data>
   <data name="LblPixelSize" xml:space="preserve">
     <value>Tamaño Píxel</value>
   </data>
@@ -3117,6 +3138,12 @@ Antes de continuar, por favor, confirme que su sistema está actualmente en o ce
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
     <value>Telescopio a NINA</value>
+  </data>
+  <data name="LblTelescopeGuideRateRA" xml:space="preserve">
+    <value>RA Guide Rate</value>
+  </data>
+  <data name="LblTelescopeGuideRateDec" xml:space="preserve">
+    <value>Dec Guide Rate</value>
   </data>
   <data name="LblTempComp" xml:space="preserve">
     <value>Comp Temp</value>
@@ -4751,10 +4778,10 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
     <value>Utilidad</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
-    <value>Una condición que crea un bucle mientras el objetivo está por encima de la altitud dada y luego detiene el conjunto actual de instrucciones</value>
+    <value>A condition that loops until the target sets below the given altitude and then stops the current instruction set</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>En bucle mientras la altitud esté por encima</value>
+    <value>Loop Until Altitude Sets Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Cúpula</value>

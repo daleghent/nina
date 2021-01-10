@@ -1102,6 +1102,21 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
   <data name="LblDirectGuideDuration" xml:space="preserve">
     <value>Čas Přímé Pointace</value>
   </data>
+  <data name="LblDirectGuideDurationTooltip" xml:space="preserve">
+    <value>Typická doba trvání pointačních pulzů v sekundách</value>
+  </data>
+  <data name="LblRightAscensionGuideRate" xml:space="preserve">
+    <value>Míra Pointace Rektascenze</value>
+  </data>
+  <data name="LblRightAscensionGuideRateTooltip" xml:space="preserve">
+    <value>Míra pointace Rektascenze v obloukových sekundách za sekundu</value>
+  </data>
+  <data name="LblDeclinationGuideRate" xml:space="preserve">
+    <value>Míra Pointace Deklinace</value>
+  </data>
+  <data name="LblDeclinationGuideRateTooltip" xml:space="preserve">
+    <value>Míra pointace deklinace v obloukových sekundách za sekundu</value>
+  </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
     <value>Pointace se nepřipojila k Dalekohledu</value>
   </data>
@@ -1130,7 +1145,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Odpojit všechna zařízení?</value>
   </data>
   <data name="LblDistance" xml:space="preserve">
-    <value>Vzdálenost</value>
+    <value>Oblast</value>
   </data>
   <data name="LblDither" xml:space="preserve">
     <value>Dithering</value>
@@ -1143,6 +1158,9 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
   </data>
   <data name="LblDitherPixels" xml:space="preserve">
     <value>Dithering Pixely</value>
+  </data>
+  <data name="LblDitherPixelsDirectGuiderTooltip" xml:space="preserve">
+    <value>Typický počet pixelů ditheringu. Dithering následuje normální rozdělení zaměřené na cíl a tato hodnota se považuje za směrodatnou odchylku. 67% ditheringu bude v této oblasti</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
     <value>Dithering jen RA</value>
@@ -2355,6 +2373,9 @@ Vypočtené HFR: {2}
   <data name="LblPixelScale" xml:space="preserve">
     <value>Měřítko Pixelu</value>
   </data>
+  <data name="LblPixelScaleTooltip" xml:space="preserve">
+    <value>Měřítko pixelů v obloukových sekundách na pixel</value>
+  </data>
   <data name="LblPixelSize" xml:space="preserve">
     <value>Velikost Pixelu</value>
   </data>
@@ -2533,7 +2554,7 @@ Vypočtené HFR: {2}
     <value>RA Pix chyba</value>
   </data>
   <data name="LblRate" xml:space="preserve">
-    <value>Rychlost</value>
+    <value>Míra</value>
   </data>
   <data name="LblRawConverter" xml:space="preserve">
     <value>Raw konvertor</value>
@@ -2822,7 +2843,7 @@ Tato šablona bude použita při spuštění sekvence místo výchozí.</value>
     <value>Časový limit Zahájení Pointace (v sekundách)</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
-    <value>Pokud pointace po uplynutí zadaného času nehlásí pointování, zkuste obnovit příkaz StartGuiding.</value>
+    <value>Pokud pointace po uplynutí zadaného času nehlásí pointování, obnovit příkaz StartGuiding.</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeoutTooltip" xml:space="preserve">
     <value>Časový limit v sekundách před přerušením příkazu StartGuiding před dalším pokusem.</value>
@@ -3116,6 +3137,12 @@ Synchronizovat hodnoty?</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
     <value>Dalekohled do NINA</value>
+  </data>
+  <data name="LblTelescopeGuideRateRA" xml:space="preserve">
+    <value>Míra Pointace RA</value>
+  </data>
+  <data name="LblTelescopeGuideRateDec" xml:space="preserve">
+    <value>Míra Pointace Dec</value>
   </data>
   <data name="LblTempComp" xml:space="preserve">
     <value>Kompen. T°</value>
@@ -4519,7 +4546,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Spustí Auto-ostření po výměně filtru</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name" xml:space="preserve">
-    <value>Auto-ostření po Změně Filtru</value>
+    <value>Auto-ostření Po Změně Filtru</value>
   </data>
   <data name="LblLastFilter" xml:space="preserve">
     <value>Poslední Filtr</value>
@@ -4752,10 +4779,10 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Nástroj</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
-    <value>Podmínka, která se opakuje, pokud je cíl nad danou výškou, pak zastaví aktuální sadu pokynů</value>
+    <value>Podmínka, která se opakuje, dokud se cíl nedostane pod danou výšku, a poté zastaví aktuální sadu instrukcí</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Smyčka Nad Výškou</value>
+    <value>Smyčka, Dokud Výška Neklesne Pod</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Kopule</value>
