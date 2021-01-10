@@ -73,35 +73,11 @@
               "Parent": {
                 "$ref": "6"
               }
-            },
-            {
-              "$id": "12",
-              "$type": "NINA.Sequencer.SequenceItem.FlatDevice.CloseCover, NINA",
-              "Name": "Close Flat Panel Cover",
-              "Parent": {
-                "$ref": "6"
-              }
-            },
-            {
-              "$id": "13",
-              "$type": "NINA.Sequencer.SequenceItem.Dome.ParkDome, NINA",
-              "Name": "Park Dome",
-              "Parent": {
-                "$ref": "6"
-              }
-            },
-            {
-              "$id": "14",
-              "$type": "NINA.Sequencer.SequenceItem.Dome.CloseDomeShutter, NINA",
-              "Name": "Close Dome Shutter",
-              "Parent": {
-                "$ref": "6"
-              }
             }
           ]
         },
         "Triggers": {
-          "$id": "15",
+          "$id": "12",
           "$type": "System.Collections.ObjectModel.ObservableCollection`1[[NINA.Sequencer.Trigger.ISequenceTrigger, NINA]], System",
           "$values": []
         },
@@ -111,9 +87,18 @@
         }
       },
       {
-        "$id": "16",
+        "$id": "13",
+        "$type": "NINA.Sequencer.SequenceItem.Utility.Annotation, NINA",
+        "Text": "Once the above parallel instructions are done, the external script will be called",
+        "Name": "Annotation",
+        "Parent": {
+          "$ref": "1"
+        }
+      },
+      {
+        "$id": "14",
         "$type": "NINA.Sequencer.SequenceItem.Utility.ExternalScript, NINA",
-        "Script": "C:\\Users\\Isbeorn\\Documents\\N.I.N.A\\What an amazing piece.json",
+        "Script": "",
         "Name": "External Script",
         "Parent": {
           "$ref": "1"
@@ -122,7 +107,7 @@
     ]
   },
   "Triggers": {
-    "$id": "17",
+    "$id": "15",
     "$type": "System.Collections.ObjectModel.ObservableCollection`1[[NINA.Sequencer.Trigger.ISequenceTrigger, NINA]], System",
     "$values": []
   },

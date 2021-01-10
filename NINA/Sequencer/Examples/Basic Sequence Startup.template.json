@@ -40,30 +40,14 @@
         "Parent": {
           "$ref": "1"
         }
-      },
-      {
-        "$id": "7",
-        "$type": "NINA.Sequencer.SequenceItem.Dome.OpenDomeShutter, NINA",
-        "Name": "Open Dome Shutter",
-        "Parent": {
-          "$ref": "1"
-        }
-      },
-      {
-        "$id": "8",
-        "$type": "NINA.Sequencer.SequenceItem.FlatDevice.OpenCover, NINA",
-        "Name": "Open Flat Panel Cover",
-        "Parent": {
-          "$ref": "1"
-        }
       }
     ]
   },
   "Triggers": {
-    "$id": "9",
+    "$id": "7",
     "$type": "System.Collections.ObjectModel.ObservableCollection`1[[NINA.Sequencer.Trigger.ISequenceTrigger, NINA]], System",
     "$values": []
   },
-  "Name": "Basic Parallel Sequence Startup",
+  "Name": "Basic Sequence Startup",
   "Parent": null
 }
