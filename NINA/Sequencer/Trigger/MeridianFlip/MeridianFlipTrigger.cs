@@ -183,7 +183,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                         // When pier side doesn't match the target, but remaining time indicating that a flip happened, the flip seems to have not happened yet and must be done immediately
                         // Only allow delayed flip behavior for the first 6 hours after a flip should've happened
                         var delayedFlip = maximumTimeRemaining
-                            >= (TimeSpan.FromHours(18)
+                            >= (TimeSpan.FromHours(6)
                                 - TimeSpan.FromMinutes(settings.MaxMinutesAfterMeridian)
                                 - TimeSpan.FromMinutes(settings.PauseTimeBeforeMeridian)
                               );
