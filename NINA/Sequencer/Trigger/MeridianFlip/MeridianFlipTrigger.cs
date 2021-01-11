@@ -167,7 +167,11 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 //The minimum time to flip has not been reached yet. Check if a flip is required based on the estimation of the next instruction
                 var noRemainingTime = maximumTimeRemaining <= TimeSpan.FromSeconds(exposureTime);
 
-                if (settings.UseSideOfPier) {
+                if (settings.UseSideOfPier && telescopeInfo.SideOfPier != Model.MyTelescope.PierSide.pierUnknown) {
+                    Logger.Error("Side of Pier is enabled, however the side of pier reported by the driver is unknown. Ignoring side of pier to calculate the flip time");
+                }
+
+                if (settings.UseSideOfPier && telescopeInfo.SideOfPier != Model.MyTelescope.PierSide.pierUnknown) {
                     var targetSideOfPier = NINA.Utility.MeridianFlip.ExpectedPierSide(
                         coordinates: telescopeInfo.Coordinates,
                         localSiderealTime: Angle.ByHours(telescopeInfo.SiderealTime));

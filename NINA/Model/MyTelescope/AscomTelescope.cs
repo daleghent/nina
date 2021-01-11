@@ -1201,25 +1201,35 @@ namespace NINA.Model.MyTelescope {
             _telescope.Dispose();
         }
 
-        public double HoursToMeridian => Utility.MeridianFlip.TimeToMeridian(
-            coordinates: Coordinates, 
-            localSiderealTime: Angle.ByHours(SiderealTime)).TotalHours;
+        public double HoursToMeridian {
+            get {
+                if (TrackingEnabled) {
+                    return Utility.MeridianFlip.TimeToMeridian(
+                    coordinates: Coordinates,
+                    localSiderealTime: Angle.ByHours(SiderealTime)).TotalHours;
+                }
+                return double.MaxValue;
+            }
+        }
+        
 
         public string HoursToMeridianString => Astrometry.HoursToHMS(HoursToMeridian);
 
         public double TimeToMeridianFlip {
             get {
                 try {
-                    return Utility.MeridianFlip.TimeToMeridianFlip(
-                        settings: profileService.ActiveProfile.MeridianFlipSettings,
-                        coordinates: Coordinates,
-                        localSiderealTime: Angle.ByHours(SiderealTime),
-                        currentSideOfPier: SideOfPier).TotalHours;
+                    if (TrackingEnabled) {
+                        return Utility.MeridianFlip.TimeToMeridianFlip(
+                            settings: profileService.ActiveProfile.MeridianFlipSettings,
+                            coordinates: Coordinates,
+                            localSiderealTime: Angle.ByHours(SiderealTime),
+                            currentSideOfPier: SideOfPier).TotalHours;
+                    }
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError(ex.Message);
-                    return double.MaxValue;
                 }
+                return double.MaxValue;
             }
         }
 

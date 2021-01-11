@@ -386,6 +386,8 @@ namespace NINA.Utility.Astrometry {
         /// <param name="hours"></param>
         /// <returns></returns>
         public static string HoursToHMS(double hours) {
+            if (hours == double.MaxValue) return string.Empty;
+
             return DegreesToDMS(hours, "{0:00}:{1:00}:{2:00}");
         }
 
