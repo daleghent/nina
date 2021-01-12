@@ -21,7 +21,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyRotator {
+
     internal class AscomRotator : BaseINPC, IRotator, IDisposable {
+
         public AscomRotator(string id, string name) {
             this.Id = id;
             this.Name = name;
@@ -207,24 +209,23 @@ namespace NINA.Model.MyRotator {
         }
 
         public void Sync(float skyAngle) {
-            Logger.Debug($"ASCOM - Sync Position to Sky Angle {skyAngle}°");
-            offset = MechanicalPosition - skyAngle;
+            offset = skyAngle - MechanicalPosition;
             RaisePropertyChanged(nameof(Position));
             Synced = true;
+            Logger.Debug($"ASCOM - Mechanical Position is {MechanicalPosition}° - Sync Position to Sky Angle {skyAngle}° using offset {offset}");
         }
 
-        public void Move(float position) {
+        public void Move(float angle) {
             if (Connected) {
-                if (position >= 360) {
-                    position = Astrometry.EuclidianModulus(position, 360);
+                if (angle >= 360) {
+                    angle = Astrometry.EuclidianModulus(angle, 360);
                 }
-                if (position <= -360) {
-                    position = Astrometry.EuclidianModulus(position, -360);
+                if (angle <= -360) {
+                    angle = Astrometry.EuclidianModulus(angle, -360);
                 }
 
-                Logger.Debug($"ASCOM - Move Relative by {position}°");
-                rotator?.Move(position);
-                Logger.Debug($"ASCOM - New Position {Position}° - Position reported by rotator {rotator?.Position}°");
+                Logger.Debug($"ASCOM - Move relative by {angle}° - Mechanical Position reported by rotator {MechanicalPosition}° and offset {offset}");
+                rotator?.Move(angle);
             }
         }
 

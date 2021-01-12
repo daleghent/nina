@@ -28,6 +28,7 @@ using System.Windows.Input;
 namespace NINA.ViewModel.Equipment.Rotator {
 
     internal class RotatorVM : DockableVM, IRotatorVM {
+        private IProgress<ApplicationStatus> progress;
 
         public RotatorVM(IProfileService profileService, IRotatorMediator rotatorMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = "LblRotator";
@@ -36,6 +37,11 @@ namespace NINA.ViewModel.Equipment.Rotator {
             this.rotatorMediator = rotatorMediator;
             this.rotatorMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
+
+            progress = new Progress<ApplicationStatus>(p => {
+                p.Source = this.Title;
+                this.applicationStatusMediator.StatusUpdate(p);
+            });
 
             ConnectCommand = new AsyncCommand<bool>(() => Connect());
             CancelConnectCommand = new RelayCommand(CancelConnectRotator);
@@ -82,14 +88,20 @@ namespace NINA.ViewModel.Equipment.Rotator {
             _moveCts?.Dispose();
             _moveCts = new CancellationTokenSource();
             float pos = float.NaN;
-            await Task.Run(() => {
+            await Task.Run(async () => {
                 try {
                     RotatorInfo.IsMoving = true;
                     // Focuser position should be in [0, 360)
                     targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
+
+                    progress.Report(new ApplicationStatus() { Status = string.Format(Locale.Loc.Instance["LblMovingRotatorToPosition"], targetPosition) });
+                    Logger.Debug($"Move rotator to {targetPosition}°");
+
                     rotator.MoveAbsolute(targetPosition);
-                    while (RotatorInfo.IsMoving || (Math.Abs(RotatorInfo.Position - targetPosition) > 0.01)) {
+                    while (RotatorInfo.IsMoving || (Math.Abs(RotatorInfo.Position - targetPosition) > 1)) {
                         _moveCts.Token.ThrowIfCancellationRequested();
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.Position} - Target Position {targetPosition}");
                     }
                     RotatorInfo.Position = targetPosition;
                     pos = targetPosition;
@@ -104,14 +116,20 @@ namespace NINA.ViewModel.Equipment.Rotator {
             _moveCts?.Dispose();
             _moveCts = new CancellationTokenSource();
             float pos = float.NaN;
-            await Task.Run(() => {
+            await Task.Run(async () => {
                 try {
                     RotatorInfo.IsMoving = true;
                     // Focuser position should be in [0, 360)
                     targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
+
+                    progress.Report(new ApplicationStatus() { Status = string.Format(Locale.Loc.Instance["LblMovingRotatorToMechanicalPosition"], targetPosition) });
+                    Logger.Debug($"Move rotator mechanical to {targetPosition}°");
+
                     rotator.MoveAbsoluteMechanical(targetPosition);
-                    while (RotatorInfo.IsMoving || (Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) > 0.01)) {
+                    while (RotatorInfo.IsMoving || (Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) > 1)) {
                         _moveCts.Token.ThrowIfCancellationRequested();
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.MechanicalPosition} - Target Position {targetPosition}");
                     }
                     RotatorInfo.Position = targetPosition;
                     pos = targetPosition;
