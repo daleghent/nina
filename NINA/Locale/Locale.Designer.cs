@@ -9515,6 +9515,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Moving rotator to mechanical position {0}.
+        /// </summary>
+        internal static string LblMovingRotatorToMechanicalPosition {
+            get {
+                return ResourceManager.GetString("LblMovingRotatorToMechanicalPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moving rotator to position {0}.
+        /// </summary>
+        internal static string LblMovingRotatorToPosition {
+            get {
+                return ResourceManager.GetString("LblMovingRotatorToPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name.
         /// </summary>
         internal static string LblName {
