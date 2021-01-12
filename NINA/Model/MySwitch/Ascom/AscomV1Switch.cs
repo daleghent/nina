@@ -36,9 +36,10 @@ namespace NINA.Model.MySwitch {
         public async Task<bool> Poll() {
             var success = await Task.Run(() => {
                 try {
-                    Logger.Trace($"Try getting values for switch id {Id}");
                     this.Value = ascomSwitchHub.GetSwitch(Id) ? 1d : 0d;
+                    Logger.Trace($"Retrieved values for switch id {Id}: {this.Value}");
                 } catch (Exception) {
+                    Logger.Trace($"Failed to retrieve value sfor switch id {Id}");
                     return false;
                 }
                 return true;
