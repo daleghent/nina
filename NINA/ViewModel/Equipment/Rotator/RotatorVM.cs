@@ -107,6 +107,8 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     pos = targetPosition;
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
+                } finally {
+                    progress?.Report(new ApplicationStatus() { Status = string.Empty });
                 }
             });
             return pos;
@@ -135,6 +137,8 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     pos = targetPosition;
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
+                } finally {
+                    progress?.Report(new ApplicationStatus() { Status = string.Empty });
                 }
             });
             return pos;
