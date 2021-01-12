@@ -52,7 +52,11 @@
                                     Fill="{TemplateBinding ButtonForegroundBrush}"
                                     RenderTransformOrigin="0.5,0.5"
                                     Stretch="Uniform" />
-                                <TextBlock Foreground="{TemplateBinding ButtonForegroundBrush}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Text="{TemplateBinding ButtonText}" />
+                                <TextBlock
+                                    Padding="3,0,3,0"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    Foreground="{TemplateBinding ButtonForegroundBrush}"
+                                    Text="{TemplateBinding ButtonText}" />
                             </Grid>
                         </Button>
                     </Grid>
