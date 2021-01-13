@@ -1208,10 +1208,9 @@ namespace NINA.Model.MyTelescope {
                     coordinates: Coordinates,
                     localSiderealTime: Angle.ByHours(SiderealTime)).TotalHours;
                 }
-                return double.MaxValue;
+                return 24;
             }
         }
-        
 
         public string HoursToMeridianString => Astrometry.HoursToHMS(HoursToMeridian);
 
@@ -1229,7 +1228,7 @@ namespace NINA.Model.MyTelescope {
                     Logger.Error(ex);
                     Notification.ShowError(ex.Message);
                 }
-                return double.MaxValue;
+                return 24;
             }
         }
 
