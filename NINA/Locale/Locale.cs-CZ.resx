@@ -1502,7 +1502,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Cílový Průměr Histogramu</value>
   </data>
   <data name="LblFlatHistogramTolerance" xml:space="preserve">
-    <value>Tolerance Střední hodnoty</value>
+    <value>Tolerance Průměru</value>
   </data>
   <data name="LblFlatMaxExposureTime" xml:space="preserve">
     <value>Max. Expozice Flat</value>
@@ -5198,5 +5198,11 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>Cíl nebude nikdy nad horizontem</value>
+  </data>
+  <data name="LblMovingRotatorToMechanicalPosition" xml:space="preserve">
+    <value>Pohyb rotátoru do mechanické polohy {0}</value>
+  </data>
+  <data name="LblMovingRotatorToPosition" xml:space="preserve">
+    <value>Pohyb rotátoru do polohy {0}</value>
   </data>
 </root>

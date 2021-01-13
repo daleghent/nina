@@ -5184,4 +5184,10 @@
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>Target will never be above the horizon</value>
   </data>
+  <data name="LblMovingRotatorToMechanicalPosition" xml:space="preserve">
+    <value>Moving rotator to mechanical position {0}</value>
+  </data>
+  <data name="LblMovingRotatorToPosition" xml:space="preserve">
+    <value>Moving rotator to position {0}</value>
+  </data>
 </root>
