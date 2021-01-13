@@ -5199,4 +5199,10 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>El objetivo no va a estar nunca sobre el horizonte</value>
   </data>
+  <data name="LblMovingRotatorToMechanicalPosition" xml:space="preserve">
+    <value>Moving rotator to mechanical position {0}</value>
+  </data>
+  <data name="LblMovingRotatorToPosition" xml:space="preserve">
+    <value>Moving rotator to position {0}</value>
+  </data>
 </root>

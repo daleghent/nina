@@ -5206,4 +5206,10 @@ Un nombre plus restreint aidera à répondre plus rapidement à un changement de
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
     <value>La cible ne sera jamais au-dessus de l'horizon</value>
   </data>
+  <data name="LblMovingRotatorToMechanicalPosition" xml:space="preserve">
+    <value>Moving rotator to mechanical position {0}</value>
+  </data>
+  <data name="LblMovingRotatorToPosition" xml:space="preserve">
+    <value>Moving rotator to position {0}</value>
+  </data>
 </root>
