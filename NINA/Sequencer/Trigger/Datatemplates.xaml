@@ -25,12 +25,20 @@
                 <StackPanel
                     HorizontalAlignment="Right"
                     Orientation="Horizontal"
-                    Visibility="{Binding FlipTime, Converter={StaticResource DateTimeZeroToVisibilityCollapsedConverter}}">
+                    Visibility="{Binding EarliestFlipTime, Converter={StaticResource DateTimeZeroToVisibilityCollapsedConverter}}">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlipTime}" />
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding FlipTime, StringFormat='{}{0:HH:mm:ss}'}" />
+                        Text="{Binding EarliestFlipTime, StringFormat='{}{0:HH:mm:ss}'}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="-" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding LatestFlipTime, StringFormat='{}{0:HH:mm:ss}'}" />
                 </StackPanel>
             </mini:MiniTrigger.TriggerProgressContent>
         </mini:MiniTrigger>
@@ -42,12 +50,20 @@
                 <StackPanel
                     HorizontalAlignment="Right"
                     Orientation="Horizontal"
-                    Visibility="{Binding FlipTime, Converter={StaticResource DateTimeZeroToVisibilityCollapsedConverter}}">
+                    Visibility="{Binding EarliestFlipTime, Converter={StaticResource DateTimeZeroToVisibilityCollapsedConverter}}">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlipTime}" />
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding FlipTime, StringFormat='{}{0:HH:mm:ss}'}" />
+                        Text="{Binding EarliestFlipTime, StringFormat='{}{0:HH:mm:ss}'}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="-" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding LatestFlipTime, StringFormat='{}{0:HH:mm:ss}'}" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>

@@ -81,14 +81,23 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             };
         }
 
-        private DateTime flipTime;
+        private DateTime latestFlipTime;
+        private DateTime earliestFlipTime;
         private IFocuserMediator focuserMediator;
         private IImageHistoryVM history;
 
-        public DateTime FlipTime {
-            get => flipTime;
+        public DateTime LatestFlipTime {
+            get => latestFlipTime;
             private set {
-                flipTime = value;
+                latestFlipTime = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public DateTime EarliestFlipTime {
+            get => earliestFlipTime;
+            private set {
+                earliestFlipTime = value;
                 RaisePropertyChanged();
             }
         }
@@ -140,9 +149,6 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 return false;
             }
 
-            //Update the FlipTime
-            FlipTime = DateTime.Now + TimeSpan.FromHours(telescopeInfo.TimeToMeridianFlip);
-
             if ((DateTime.Now - lastFlipTime) < TimeSpan.FromHours(11)) {
                 //A flip for the same target is only expected every 12 hours on planet earth
                 Logger.Debug($"Meridian Flip - Flip for the current target already happened at {lastFlipTime}. Flip will be skipped");
@@ -154,11 +160,14 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             //The time to meridian flip reported by the telescop is the latest time for a flip to happen
             var minimumTimeRemaining = CalculateMinimumTimeRemaining();
             var maximumTimeRemaining = CalculateMaximumTimeRemainaing();
+            var originalMaximumTimeRemaining = maximumTimeRemaining;
             if (settings.PauseTimeBeforeMeridian != 0) {
                 //A pause prior to a meridian flip is a hard limit due to equipment obstruction. There is no possibility for a timerange as we have to pause early and wait for meridian to pass
                 minimumTimeRemaining = minimumTimeRemaining - TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian) - TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian);
                 maximumTimeRemaining = minimumTimeRemaining;
             }
+
+            UpdateMeridianFlipTimeTriggerValues(minimumTimeRemaining, originalMaximumTimeRemaining, TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian), TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian));
 
             if (minimumTimeRemaining <= TimeSpan.Zero && maximumTimeRemaining > TimeSpan.Zero) {
                 Logger.Debug("Meridian Flip - Remaining Time is between minimum and maximum flip time. Flip should happen now");
@@ -167,14 +176,16 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 //The minimum time to flip has not been reached yet. Check if a flip is required based on the estimation of the next instruction
                 var noRemainingTime = maximumTimeRemaining <= TimeSpan.FromSeconds(exposureTime);
 
-                if (settings.UseSideOfPier && telescopeInfo.SideOfPier != Model.MyTelescope.PierSide.pierUnknown) {
+                if (settings.UseSideOfPier && telescopeInfo.SideOfPier == Model.MyTelescope.PierSide.pierUnknown) {
                     Logger.Error("Side of Pier is enabled, however the side of pier reported by the driver is unknown. Ignoring side of pier to calculate the flip time");
                 }
 
                 if (settings.UseSideOfPier && telescopeInfo.SideOfPier != Model.MyTelescope.PierSide.pierUnknown) {
+                    // Project sidereal time to the time at flip to retrieve the expected side of pier
+                    var projectedSiderealTime = Angle.ByHours(Astrometry.EuclidianModulus(telescopeInfo.SiderealTime + originalMaximumTimeRemaining.TotalHours, 24));
                     var targetSideOfPier = NINA.Utility.MeridianFlip.ExpectedPierSide(
                         coordinates: telescopeInfo.Coordinates,
-                        localSiderealTime: Angle.ByHours(telescopeInfo.SiderealTime));
+                        localSiderealTime: projectedSiderealTime);
                     if (telescopeInfo.SideOfPier == targetSideOfPier) {
                         Logger.Debug($"Meridian Flip - Telescope already reports {telescopeInfo.SideOfPier}, Automated Flip will not be performed.");
                         return false;
@@ -205,6 +216,17 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 }
 
                 return false;
+            }
+        }
+
+        private void UpdateMeridianFlipTimeTriggerValues(TimeSpan minimumTimeRemaining, TimeSpan maximumTimeRemaining, TimeSpan pauseBeforeMeridian, TimeSpan maximumTimeAfterMeridian) {
+            //Update the FlipTimes
+            if (pauseBeforeMeridian == TimeSpan.Zero) {
+                EarliestFlipTime = DateTime.Now + minimumTimeRemaining;
+                LatestFlipTime = DateTime.Now + maximumTimeRemaining;
+            } else {
+                EarliestFlipTime = DateTime.Now + maximumTimeRemaining - maximumTimeAfterMeridian - pauseBeforeMeridian;
+                LatestFlipTime = DateTime.Now + maximumTimeRemaining - maximumTimeAfterMeridian - pauseBeforeMeridian;
             }
         }
 

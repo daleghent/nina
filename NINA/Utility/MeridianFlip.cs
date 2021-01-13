@@ -37,10 +37,10 @@ namespace NINA.Utility {
             Coordinates coordinates,
             Angle localSiderealTime,
             PierSide currentSideOfPier) {
-            // Shift the coordiantes by the time after the meridian to retrieve the time to the flip instead of the time to the meridian
+            // Shift the sidereal time by the time after the meridian to retrieve the time to the flip instead of the time to the meridian
             // This is critical to do instead of just adding to the meridian time, when the scope is already past the meridian but not past the flip
-            var flipCoordinatesProjected = new Coordinates(Angle.ByHours(coordinates.RA + settings.MaxMinutesAfterMeridian / 60d), Angle.ByDegree(coordinates.Dec), coordinates.Epoch);
-            var timeToMeridianFlip = TimeToMeridian(flipCoordinatesProjected, localSiderealTime: localSiderealTime);
+            var projectedSiderealTime = Angle.ByHours(Astrometry.Astrometry.EuclidianModulus(localSiderealTime.Hours - settings.MaxMinutesAfterMeridian / 60d, 24));
+            var timeToMeridianFlip = TimeToMeridian(coordinates, localSiderealTime: projectedSiderealTime);
 
             if (settings.UseSideOfPier) {
                 if (currentSideOfPier == PierSide.pierUnknown) {
