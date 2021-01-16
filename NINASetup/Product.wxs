@@ -74,6 +74,10 @@
       <ComponentGroupRef Id="External_x64_Nikon_Type0022_files" />
       <ComponentGroupRef Id="External_x64_Nikon_Type0023_files" />
       <ComponentGroupRef Id="External_x64_Nikon_Type0024_files" />
+      <ComponentGroupRef Id="External_x64_Nikon_Type0025_files" />
+      <ComponentGroupRef Id="External_x64_Nikon_Type0026_files" />
+      <ComponentGroupRef Id="External_x64_Nikon_Type0027_files" />
+      <ComponentGroupRef Id="External_x64_Nikon_Type0028_files" />
       <ComponentGroupRef Id="External_x86_AllPro_files" />
       <ComponentGroupRef Id="External_x86_ASI_files" />
       <ComponentGroupRef Id="External_x86_Atik_files" />
@@ -105,6 +109,10 @@
       <ComponentGroupRef Id="External_x86_Nikon_Type0022_files" />
       <ComponentGroupRef Id="External_x86_Nikon_Type0023_files" />
       <ComponentGroupRef Id="External_x86_Nikon_Type0024_files" />
+      <ComponentGroupRef Id="External_x86_Nikon_Type0025_files" />
+      <ComponentGroupRef Id="External_x86_Nikon_Type0026_files" />
+      <ComponentGroupRef Id="External_x86_Nikon_Type0027_files" />
+      <ComponentGroupRef Id="External_x86_Nikon_Type0028_files" />
       <ComponentGroupRef Id="Utility_ColorSchema_files" />
       <ComponentGroupRef Id="Utility_DCRaw_files" />
       <ComponentGroupRef Id="External_x64_Canon_files" />
@@ -198,6 +206,10 @@
                 <Directory Id="External_x64_Nikon_Type0003" Name="Type0003" />
                 <Directory Id="External_x64_Nikon_Type0023" Name="Type0023" />
                 <Directory Id="External_x64_Nikon_Type0024" Name="Type0024" />
+                <Directory Id="External_x64_Nikon_Type0025" Name="Type0025" />
+                <Directory Id="External_x64_Nikon_Type0026" Name="Type0026" />
+                <Directory Id="External_x64_Nikon_Type0027" Name="Type0027" />
+                <Directory Id="External_x64_Nikon_Type0028" Name="Type0028" />
               </Directory>
               <Directory Id="External_x64_SQLite" Name="SQLite" />
               <Directory Id="External_x64_Altair" Name="Altair" />
@@ -233,6 +245,10 @@
                 <Directory Id="External_x86_Nikon_Type0001" Name="Type0001" />
                 <Directory Id="External_x86_Nikon_Type0023" Name="Type0023" />
                 <Directory Id="External_x86_Nikon_Type0024" Name="Type0024" />
+                <Directory Id="External_x86_Nikon_Type0025" Name="Type0025" />
+                <Directory Id="External_x86_Nikon_Type0026" Name="Type0026" />
+                <Directory Id="External_x86_Nikon_Type0027" Name="Type0027" />
+                <Directory Id="External_x86_Nikon_Type0028" Name="Type0028" />
               </Directory>
               <Directory Id="External_x86_AllPro" Name="AllPro" />
               <Directory Id="External_x86_FreeImage" Name="FreeImage" />
@@ -1016,6 +1032,50 @@
   </Fragment>
 
   <Fragment>
+    <ComponentGroup Id="External_x64_Nikon_Type0025_files" Directory="External_x64_Nikon_Type0025">
+      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0025_NkdPTP.dll" Guid="C631350B-4783-4035-802E-C2F316875B2A">
+        <File Id="External_x64_Nikon_Type0025_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0025\NkdPTP.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0025_Type0025.md3" Guid="C35CFDCF-0C29-4EAF-BECD-79A855F7E0C5">
+        <File Id="External_x64_Nikon_Type0025_Type0025.md3" Name="Type0025.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0025\Type0025.md3" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="External_x64_Nikon_Type0026_files" Directory="External_x64_Nikon_Type0026">
+      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0026_NkdPTP.dll" Guid="C631350B-4783-4035-802E-C2F316875B2A">
+        <File Id="External_x64_Nikon_Type0026_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0026\NkdPTP.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0026_Type0026.md3" Guid="C35CFDCF-0C29-4EAF-BECD-79A855F7E0C5">
+        <File Id="External_x64_Nikon_Type0026_Type0026.md3" Name="Type0026.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0026\Type0026.md3" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="External_x64_Nikon_Type0027_files" Directory="External_x64_Nikon_Type0027">
+      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0027_NkdPTP.dll" Guid="C631350B-4783-4035-802E-C2F316875B2A">
+        <File Id="External_x64_Nikon_Type0027_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0027\NkdPTP.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0027_Type0027.md3" Guid="C35CFDCF-0C29-4EAF-BECD-79A855F7E0C5">
+        <File Id="External_x64_Nikon_Type0027_Type0027.md3" Name="Type0027.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0027\Type0027.md3" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="External_x64_Nikon_Type0028_files" Directory="External_x64_Nikon_Type0028">
+      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0028_NkdPTP.dll" Guid="C631350B-4783-4035-802E-C2F316875B2A">
+        <File Id="External_x64_Nikon_Type0028_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0028\NkdPTP.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="External_x64_Nikon_Type0028_Type0028.md3" Guid="C35CFDCF-0C29-4EAF-BECD-79A855F7E0C5">
+        <File Id="External_x64_Nikon_Type0028_Type0028.md3" Name="Type0028.md3" Source="$(var.NINA_ProjectDir)External\x64\Nikon\Type0028\Type0028.md3" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
     <ComponentGroup Id="External_x86_AllPro_files" Directory="External_x86_AllPro">
       <Component Win64="$(var.Win64)" Id="External_x86_AllPro_spikausbd.dll" Guid="C5D19C7B-7020-4E88-A263-D153DB5515E1">
         <File Id="External_x86_AllPro_spikausbd.dll" Name="spikausbd.dll" Source="$(var.NINA_ProjectDir)External\x86\AllPro\spikausbd.dll" />
@@ -1349,6 +1409,50 @@
       </Component>
       <Component Win64="$(var.Win64)" Id="External_x86_Nikon_Type0024_Type0024.md3" Guid="2455A44E-6652-4146-9F62-13252CDFA044">
         <File Id="External_x86_Nikon_Type0024_Type0024.md3" Name="Type0024.md3" Source="$(var.NINA_ProjectDir)External\x86\Nikon\Type0024\Type0024.md3" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="External_x86_Nikon_Type0025_files" Directory="External_x86_Nikon_Type0025">
+      <Component Win64="$(var.Win64)" Id="External_x86_Nikon_Type0025_NkdPTP.dll" Guid="3DAC9C1F-00DE-468B-906C-0C1733DAA696">
+        <File Id="External_x86_Nikon_Type0025_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x86\Nikon\Type0025\NkdPTP.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="External_x86_Nikon_Type0025_Type0025.md3" Guid="2455A44E-6652-4146-9F62-13252CDFA044">
+        <File Id="External_x86_Nikon_Type0025_Type0025.md3" Name="Type0025.md3" Source="$(var.NINA_ProjectDir)External\x86\Nikon\Type0025\Type0025.md3" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="External_x86_Nikon_Type0026_files" Directory="External_x86_Nikon_Type0026">
+      <Component Win64="$(var.Win64)" Id="External_x86_Nikon_Type0026_NkdPTP.dll" Guid="3DAC9C1F-00DE-468B-906C-0C1733DAA696">
+        <File Id="External_x86_Nikon_Type0026_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x86\Nikon\Type0026\NkdPTP.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="External_x86_Nikon_Type0026_Type0026.md3" Guid="2455A44E-6652-4146-9F62-13252CDFA044">
+        <File Id="External_x86_Nikon_Type0026_Type0026.md3" Name="Type0026.md3" Source="$(var.NINA_ProjectDir)External\x86\Nikon\Type0026\Type0026.md3" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="External_x86_Nikon_Type0027_files" Directory="External_x86_Nikon_Type0027">
+      <Component Win64="$(var.Win64)" Id="External_x86_Nikon_Type0027_NkdPTP.dll" Guid="3DAC9C1F-00DE-468B-906C-0C1733DAA696">
+        <File Id="External_x86_Nikon_Type0027_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x86\Nikon\Type0027\NkdPTP.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="External_x86_Nikon_Type0027_Type0027.md3" Guid="2455A44E-6652-4146-9F62-13252CDFA044">
+        <File Id="External_x86_Nikon_Type0027_Type0027.md3" Name="Type0027.md3" Source="$(var.NINA_ProjectDir)External\x86\Nikon\Type0027\Type0027.md3" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="External_x86_Nikon_Type0028_files" Directory="External_x86_Nikon_Type0028">
+      <Component Win64="$(var.Win64)" Id="External_x86_Nikon_Type0028_NkdPTP.dll" Guid="3DAC9C1F-00DE-468B-906C-0C1733DAA696">
+        <File Id="External_x86_Nikon_Type0028_NkdPTP.dll" Name="NkdPTP.dll" Source="$(var.NINA_ProjectDir)External\x86\Nikon\Type0028\NkdPTP.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="External_x86_Nikon_Type0028_Type0028.md3" Guid="2455A44E-6652-4146-9F62-13252CDFA044">
+        <File Id="External_x86_Nikon_Type0028_Type0028.md3" Name="Type0028.md3" Source="$(var.NINA_ProjectDir)External\x86\Nikon\Type0028\Type0028.md3" />
       </Component>
     </ComponentGroup>
   </Fragment>
