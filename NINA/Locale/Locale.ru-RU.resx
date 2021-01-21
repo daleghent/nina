@@ -5203,9 +5203,9 @@ Dec: {1}</value>
     <value>Цель никогда не будет выше горизонта</value>
   </data>
   <data name="LblMovingRotatorToMechanicalPosition" xml:space="preserve">
-    <value>Moving rotator to mechanical position {0}</value>
+    <value>Перемещение вращателя в механическое положение {0}</value>
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
-    <value>Moving rotator to position {0}</value>
+    <value>Перемещение ротатора в позицию {0}</value>
   </data>
 </root>
