@@ -214,7 +214,12 @@ namespace NINA.ViewModel.Equipment.Dome {
 
         public Angle GetSynchronizedPosition(TelescopeInfo telescopeInfo) {
             var targetCoordinates = telescopeInfo.TargetCoordinates ?? telescopeInfo.Coordinates;
-            var targetSideOfPier = telescopeInfo.TargetSideOfPier ?? telescopeInfo.SideOfPier;
+            PierSide targetSideOfPier;
+            if (this.profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier) {
+                targetSideOfPier = telescopeInfo.TargetSideOfPier ?? telescopeInfo.SideOfPier;
+            } else {
+                targetSideOfPier = MeridianFlip.ExpectedPierSide(targetCoordinates, Angle.ByHours(telescopeInfo.SiderealTime));
+            }
             return domeSynchronization.TargetDomeAzimuth(
                 scopeCoordinates: targetCoordinates,
                 localSiderealTime: telescopeInfo.SiderealTime,
