@@ -476,7 +476,7 @@
                     Orientation="Horizontal">
                     <TextBlock Text="{ns:Loc LblUPBV2Temperature}" />
                     <TextBlock Text=": " />
-                    <TextBlock Text="{Binding DataProvider.Temperature}" />
+                    <TextBlock Text="{Binding DataProvider.Temperature, Converter={StaticResource NaNToDoubleDashConverter}}" />
                     <TextBlock Margin="0,0,10,0" Text="C" />
                 </StackPanel>
                 <StackPanel
@@ -485,7 +485,7 @@
                     Orientation="Horizontal">
                     <TextBlock Text="{ns:Loc LblUPBV2RelativeHumidity}" />
                     <TextBlock Text=": " />
-                    <TextBlock Text="{Binding DataProvider.Humidity}" />
+                    <TextBlock Text="{Binding DataProvider.Humidity, Converter={StaticResource NaNToDoubleDashConverter}}" />
                     <TextBlock Margin="0,0,10,0" Text="%" />
                 </StackPanel>
                 <StackPanel
@@ -494,7 +494,7 @@
                     Orientation="Horizontal">
                     <TextBlock Text="{ns:Loc LblUPBV2DewPoint}" />
                     <TextBlock Text=": " />
-                    <TextBlock Text="{Binding DataProvider.DewPoint}" />
+                    <TextBlock Text="{Binding DataProvider.DewPoint, Converter={StaticResource NaNToDoubleDashConverter}}" />
                     <TextBlock Text="C" />
                 </StackPanel>
                 <StackPanel
