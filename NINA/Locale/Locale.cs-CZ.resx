@@ -345,7 +345,7 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Pokud auto-ostření selže, protože HFR je horší než původní zaostření, určuje, kolik pokusů auto-ostření má být provedeno, než bude úspěšné. Jinak bude obnovena původní poloha zaostření.</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPoint" xml:space="preserve">
-    <value>Auto-ostření Počet Rámců na Bod</value>
+    <value>Auto-ostření Počet Snímků na Bod</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPointTooltip" xml:space="preserve">
     <value>Kolik snímků se použije k určení ostřícího bodu. Pokud je hodnota větší než 1, použije se více snímků a bod zaostření se vypočítá z jejich průměru</value>
@@ -2467,7 +2467,7 @@ Vypočtené HFR: {2}
     <value>Plate Solver</value>
   </data>
   <data name="LblPlateSolveReattemptDelay" xml:space="preserve">
-    <value>Počkat na další pokus platesolvingu: {0}</value>
+    <value>Čekání na další pokus platesolvingu: {0}</value>
   </data>
   <data name="LblPlateSolveSettings" xml:space="preserve">
     <value>Nastavení Platesolvingu</value>
@@ -2719,7 +2719,7 @@ Vypočtené HFR: {2}
     <value>Uložit nastavení cíle</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Čas ustálení dalekohledu po překlopení poledníku (sekundy)</value>
+    <value>Stabilizace dalekohledu po překlopení poledníku (sekundy)</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Hledat</value>
@@ -3469,7 +3469,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Čekání na konec ditheringu</value>
   </data>
   <data name="LblWaitForImageProcessing" xml:space="preserve">
-    <value>Čekaní na dokončení zpracování předchozího obrazu</value>
+    <value>Čekat na dokončení zpracování předchozího obrazu</value>
   </data>
   <data name="LblWaitForTemperatureStep" xml:space="preserve">
     <value>Čekání, až kamera dosáhne dalšího teplotního kroku</value>
@@ -4099,7 +4099,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Časový limit Synchronizace</value>
   </data>
   <data name="LblDomeSyncTimeoutTooltip" xml:space="preserve">
-    <value>Maximální čas v sekundách pro kopuli a dalekohled pro synchronizaci jejich pozic</value>
+    <value>Maximální čas čekání v sekundách pro kopuli a dalekohled pro synchronizaci jejich pozic</value>
   </data>
   <data name="LblC2A" xml:space="preserve">
     <value>C2A</value>
@@ -4174,7 +4174,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Čas stabilizace ditheringu</value>
   </data>
   <data name="LblMetaGuideDitherSettleTimeTooltip" xml:space="preserve">
-    <value>Čas, v sekundách, čekání na dokončení ditheringu</value>
+    <value>Čas, čekání v sekundách, na dokončení ditheringu</value>
   </data>
   <data name="LblMetaGuideLockWhenGuiding" xml:space="preserve">
     <value>Při pointování zamknout hvězdu</value>
@@ -4402,22 +4402,22 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Okno Zprávy</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Description" xml:space="preserve">
-    <value>Čeká na dosažení výšky pro dané souřadnice</value>
+    <value>Čekat na dosažení výšky pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Name" xml:space="preserve">
-    <value>Čeká na Výšku</value>
+    <value>Čekat na Výšku</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Description" xml:space="preserve">
-    <value>Čeká na zadaný čas v sekundách</value>
+    <value>Čekat na danou dobu v sekundách</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Name" xml:space="preserve">
-    <value>Čeká na Zadaný Čas</value>
+    <value>Čekat na Zadaný Čas</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Description" xml:space="preserve">
-    <value>Čeká na zadaný čas ve formátu hh:mm:ss. Kromě toho je k dispozici nástroj, který automaticky vyplní informace o západu slunce, soumraku, úsvitu a východu slunce</value>
+    <value>Čekat na zadaný čas ve formátu hh:mm:ss. Kromě toho je k dispozici nástroj, který automaticky vyplní informace o západu slunce, soumraku, úsvitu a východu slunce</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
-    <value>Čeká na Čas</value>
+    <value>Čekat na Čas</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Spouštěč, který spouští auto-ostření po změně HFR o danou hodnotu v procentech od posledního automatického spuštění nebo spuštění sekvence</value>
@@ -4698,7 +4698,7 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Resetuje stav i průběh aktuálního pokynu.</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Progress" xml:space="preserve">
-    <value>Čeká, až cíl dosáhne stanovené výšky. {0}° / {1}°</value>
+    <value>Čekat, až cíl dosáhne stanovené výšky. {0}° / {1}°</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequence" xml:space="preserve">
     <value>Konec Sekvence Pokynů</value>
@@ -5102,22 +5102,22 @@ Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů 
     <value>&lt;</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Description" xml:space="preserve">
-    <value>Počkat, až výška Měsíce bude odpovídat zadaným parametrům</value>
+    <value>Čekat, až výška Měsíce bude odpovídat zadaným parametrům</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Name" xml:space="preserve">
     <value>Čekat, pokud je výška Měsíce</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress" xml:space="preserve">
-    <value>Čekání kvůli výšce Měsíce ({0}° {1} {2}°)</value>
+    <value>Čekat kvůli výšce Měsíce ({0}° {1} {2}°)</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Description" xml:space="preserve">
-    <value>Počkat, až výška Slunce bude odpovídat zadaným parametrům</value>
+    <value>Čekat, až výška Slunce bude odpovídat zadaným parametrům</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Name" xml:space="preserve">
     <value>Čekat, až bude výška Slunce</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Progress" xml:space="preserve">
-    <value>Čekání kvůli výšce Slunce ({0}° {1} {2}°)</value>
+    <value>Čekat kvůli výšce Slunce ({0}° {1} {2}°)</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Description" xml:space="preserve">
     <value>Ukončí smyčku, když úroveň osvětlení Měsíce odpovídá zadaným parametrům.</value>
@@ -5182,13 +5182,13 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
     <value>Získat polohu z Programu Planetária</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description" xml:space="preserve">
-    <value>Počkat, až se výška cíle dostane nad horizont. Pokud se použije vlastní horizont, použije se tato nadmořská výška místo 0</value>
+    <value>Čekat, až se výška cíle dostane nad horizont. Pokud se použije vlastní horizont, použije se tato nadmořská výška místo 0</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Počkat, až bude nad horizontem</value>
+    <value>Čekat, až bude nad horizontem</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
-    <value>Počkat, až bude cíl nad horizontem. Cílová Výška {0}° / Výška Horizontu {1}°</value>
+    <value>Čekat, až bude cíl nad horizontem. Cílová Výška {0}° / Výška Horizontu {1}°</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
     <value>Podmínka, která se opakuje, dokud je cíl nad horizontem, poté se zastaví aktuální sadu instrukcí</value>

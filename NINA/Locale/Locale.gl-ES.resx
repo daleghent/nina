@@ -142,7 +142,7 @@
     <value>Detalles Secuencia Activa</value>
   </data>
   <data name="LblAddSequenceTarget" xml:space="preserve">
-    <value>Engadir como Obxectivo de secuencia</value>
+    <value>Add as Sequence Target</value>
   </data>
   <data name="LblAdvancedSettings" xml:space="preserve">
     <value>Config. Avanzada</value>
@@ -981,7 +981,7 @@ No caso de precisarse unha duración maior, pódese especificar unha duración e
     <value>Posición Actual</value>
   </data>
   <data name="LblCurrentSequenceEstimates" xml:space="preserve">
-    <value>Tempo final estimado (obx.)</value>
+    <value>Est. finish time (this target)</value>
   </data>
   <data name="LblCurrentUIColorSchema" xml:space="preserve">
     <value>Cor de Interface Actual</value>
@@ -1420,10 +1420,10 @@ Cando este desencadeador estea desactivado, a aplicación omite o inicio de expo
     <value>FITS</value>
   </data>
   <data name="LblFlatCalculatedExposureTime" xml:space="preserve">
-    <value>Tempo de Exposición do Obxectivo Calculado</value>
+    <value>Calculated Target Exposure Time</value>
   </data>
   <data name="LblFlatCalculatedHistogramMean" xml:space="preserve">
-    <value>Media do Histograma do Obxectivo Calculado</value>
+    <value>Calculated Target Histogram Mean</value>
   </data>
   <data name="LblFlatCount" xml:space="preserve">
     <value>Flats a tirar</value>
@@ -2014,7 +2014,7 @@ HFR calculado: {2}
     <value>Minutos</value>
   </data>
   <data name="LblMinutesAfterMeridian" xml:space="preserve">
-    <value>Minutos despois do Meridiano</value>
+    <value>Minutes after Meridian</value>
   </data>
   <data name="LblMinutesShort" xml:space="preserve">
     <value>min</value>
@@ -3090,7 +3090,7 @@ Deben resincronizarse os valores?</value>
     <value>Nome do obxectivo se está dispoñible</value>
   </data>
   <data name="LblTargetPosition" xml:space="preserve">
-    <value>Posición do obxectivo</value>
+    <value>Target Position</value>
   </data>
   <data name="LblTargetRA" xml:space="preserve">
     <value>AR do obxectivo</value>
@@ -3099,7 +3099,7 @@ Deben resincronizarse os valores?</value>
     <value>Obxectivos</value>
   </data>
   <data name="LblTargetTemp" xml:space="preserve">
-    <value>Temperatura do obxectivo</value>
+    <value>Target Temperature</value>
   </data>
   <data name="LblTargetTempShort" xml:space="preserve">
     <value>Temp. Obxectivo</value>
@@ -4233,7 +4233,7 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>Keep guide stars off sensor edges by at least</value>
   </data>
   <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
-    <value>Engadir {0} a Minutos despois do Meridiano</value>
+    <value>Add {0} to Minutes after Meridian</value>
   </data>
   <data name="LblFlipTime" xml:space="preserve">
     <value>Tempo de volteo</value>
@@ -4551,7 +4551,7 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>BORRAR ITEM</value>
   </data>
   <data name="LblAddTargetToSequence" xml:space="preserve">
-    <value>Engadir Obxectivo á Secuencia</value>
+    <value>Add Target to Sequence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description" xml:space="preserve">
     <value>Iniciar o enfoque automático tras detectar un cambio de filtro</value>
