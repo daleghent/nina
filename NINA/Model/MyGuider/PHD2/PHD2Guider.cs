@@ -426,8 +426,8 @@ namespace NINA.Model.MyGuider.PHD2 {
             }
             try {
                 string state = await GetAppState(3000);
-                if (state == PhdAppState.STOPPED) {
-                    return true;
+                if (state != PhdAppState.GUIDING && state != PhdAppState.CALIBRATING) {
+                    return false;
                 }
                 var msg = new Phd2StopCapture();
                 var stopCapture = await SendMessage(
