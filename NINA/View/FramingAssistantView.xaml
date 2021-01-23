@@ -21,6 +21,7 @@
     xmlns:s="clr-namespace:System;assembly=mscorlib"
     xmlns:survey="clr-namespace:NINA.Utility.SkySurvey"
     xmlns:util="clr-namespace:NINA.Utility"
+    xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Name="UC"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -411,17 +412,13 @@
                                 Text="{ns:Loc LblSlew}"
                                 TextWrapping="Wrap" />
                         </Button>
-                        <Button
+                        <Grid />
+                        <xceed:SplitButton
                             Height="25"
-                            Margin="5"
-                            HorizontalAlignment="Stretch"
+                            Margin="5,0,5,0"
                             Command="{Binding GetDSOTemplatesCommand}">
-                            <TextBlock
-                                Foreground="{StaticResource ButtonForegroundBrush}"
-                                Text="{ns:Loc LblAddTargetToSequence}"
-                                TextWrapping="Wrap" />
-                            <Button.Style>
-                                <Style BasedOn="{StaticResource StandardButton}" TargetType="{x:Type Button}">
+                            <xceed:SplitButton.Style>
+                                <Style BasedOn="{StaticResource StandardSplitButton}" TargetType="{x:Type xceed:SplitButton}">
                                     <Style.Resources>
                                         <Border
                                             x:Key="MenuHeader"
@@ -488,73 +485,79 @@
                                         </Setter.Value>
                                     </Setter>
                                 </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button
-                            Height="25"
-                            Margin="5"
-                            HorizontalAlignment="Stretch"
-                            Command="{Binding GetDSOTemplatesCommand}">
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                Foreground="{StaticResource ButtonForegroundBrush}"
-                                Text="{ns:Loc LblAddTargetToTargetList}"
-                                TextWrapping="Wrap" />
-                            <Button.ToolTip>
-                                <ToolTip ToolTipService.ShowOnDisabled="False">
-                                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAddTargetToTargetListTooltip}" />
-                                </ToolTip>
-                            </Button.ToolTip>
-                            <Button.Style>
-                                <Style BasedOn="{StaticResource StandardButton}" TargetType="{x:Type Button}">
-                                    <Style.Resources>
-                                        <Border
-                                            x:Key="MenuHeader"
-                                            MinHeight="30"
-                                            x:Shared="false"
-                                            Background="Transparent">
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
-                                        </Border>
-                                        <Path
-                                            x:Key="MenuIcon"
-                                            Width="20"
-                                            Height="20"
-                                            Margin="5"
-                                            x:Shared="false"
-                                            Data="{Binding Icon}"
-                                            Fill="{StaticResource PrimaryBrush}"
-                                            Stretch="Uniform" />
-                                    </Style.Resources>
-                                    <Style.Triggers>
-                                        <EventTrigger RoutedEvent="Click">
-                                            <EventTrigger.Actions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
-                                                            <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
-                                                        </BooleanAnimationUsingKeyFrames>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </EventTrigger.Actions>
-                                        </EventTrigger>
-                                    </Style.Triggers>
-                                    <Setter Property="ContextMenu">
-                                        <Setter.Value>
-                                            <ContextMenu ItemsSource="{Binding Source={StaticResource Context}, Path=Data.DSOTemplates}">
-                                                <ContextMenu.ItemContainerStyle>
-                                                    <Style TargetType="MenuItem">
-                                                        <Setter Property="Header" Value="{StaticResource MenuHeader}" />
-                                                        <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
-                                                        <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.AddTargetToTargetListCommand}" />
-                                                        <Setter Property="CommandParameter" Value="{Binding}" />
-                                                    </Style>
-                                                </ContextMenu.ItemContainerStyle>
-                                            </ContextMenu>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </Button.Style>
-                        </Button>
+                            </xceed:SplitButton.Style>
+                            <xceed:SplitButton.Content>
+                                <TextBlock
+                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                    Text="{ns:Loc LblAddTargetToSequence}"
+                                    TextWrapping="Wrap" />
+                            </xceed:SplitButton.Content>
+                            <xceed:SplitButton.DropDownContent>
+                                <Button HorizontalAlignment="Stretch" Command="{Binding GetDSOTemplatesCommand}">
+                                    <TextBlock
+                                        Padding="4"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                        Text="{ns:Loc LblAddTargetToTargetList}"
+                                        TextWrapping="Wrap" />
+                                    <Button.ToolTip>
+                                        <ToolTip ToolTipService.ShowOnDisabled="False">
+                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAddTargetToTargetListTooltip}" />
+                                        </ToolTip>
+                                    </Button.ToolTip>
+                                    <Button.Style>
+                                        <Style BasedOn="{StaticResource BackgroundButton}" TargetType="{x:Type Button}">
+                                            <Style.Resources>
+                                                <Border
+                                                    x:Key="MenuHeader"
+                                                    MinHeight="30"
+                                                    x:Shared="false"
+                                                    Background="Transparent">
+                                                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+                                                </Border>
+                                                <Path
+                                                    x:Key="MenuIcon"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Margin="5"
+                                                    x:Shared="false"
+                                                    Data="{Binding Icon}"
+                                                    Fill="{StaticResource PrimaryBrush}"
+                                                    Stretch="Uniform" />
+                                            </Style.Resources>
+                                            <Style.Triggers>
+                                                <EventTrigger RoutedEvent="Click">
+                                                    <EventTrigger.Actions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="ContextMenu.IsOpen">
+                                                                    <DiscreteBooleanKeyFrame KeyTime="0:0:0" Value="True" />
+                                                                </BooleanAnimationUsingKeyFrames>
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </EventTrigger.Actions>
+                                                </EventTrigger>
+                                            </Style.Triggers>
+                                            <Setter Property="ContextMenu">
+                                                <Setter.Value>
+                                                    <ContextMenu ItemsSource="{Binding Source={StaticResource Context}, Path=Data.DSOTemplates}">
+                                                        <ContextMenu.ItemContainerStyle>
+                                                            <Style TargetType="MenuItem">
+                                                                <Setter Property="Header" Value="{StaticResource MenuHeader}" />
+                                                                <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
+                                                                <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.AddTargetToTargetListCommand}" />
+                                                                <Setter Property="CommandParameter" Value="{Binding}" />
+                                                            </Style>
+                                                        </ContextMenu.ItemContainerStyle>
+                                                    </ContextMenu>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </xceed:SplitButton.DropDownContent>
+                        </xceed:SplitButton>
                     </UniformGrid>
                 </StackPanel>
                 <Grid
