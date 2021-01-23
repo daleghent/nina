@@ -26,10 +26,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace NINA.ViewModel.Equipment.Rotator {
-
     internal class RotatorVM : DockableVM, IRotatorVM {
-        private IProgress<ApplicationStatus> progress;
-
         public RotatorVM(IProfileService profileService, IRotatorMediator rotatorMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = "LblRotator";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["RotatorSVG"];
@@ -37,11 +34,6 @@ namespace NINA.ViewModel.Equipment.Rotator {
             this.rotatorMediator = rotatorMediator;
             this.rotatorMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
-
-            progress = new Progress<ApplicationStatus>(p => {
-                p.Source = this.Title;
-                this.applicationStatusMediator.StatusUpdate(p);
-            });
 
             ConnectCommand = new AsyncCommand<bool>(() => Connect());
             CancelConnectCommand = new RelayCommand(CancelConnectRotator);
@@ -94,7 +86,13 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     // Focuser position should be in [0, 360)
                     targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
 
-                    progress.Report(new ApplicationStatus() { Status = string.Format(Locale.Loc.Instance["LblMovingRotatorToPosition"], targetPosition) });
+                    applicationStatusMediator.StatusUpdate(
+                        new ApplicationStatus() {
+                            Source = Title,
+                            Status = string.Format(Locale.Loc.Instance["LblMovingRotatorToPosition"], Math.Round(targetPosition, 2))
+                        }
+                    );
+
                     Logger.Debug($"Move rotator to {targetPosition}°");
 
                     rotator.MoveAbsolute(targetPosition);
@@ -108,7 +106,12 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
                 } finally {
-                    progress?.Report(new ApplicationStatus() { Status = string.Empty });
+                    applicationStatusMediator.StatusUpdate(
+                        new ApplicationStatus() {
+                            Source = Title,
+                            Status = string.Empty
+                        }
+                    );
                 }
             });
             return pos;
@@ -124,7 +127,13 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     // Focuser position should be in [0, 360)
                     targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
 
-                    progress.Report(new ApplicationStatus() { Status = string.Format(Locale.Loc.Instance["LblMovingRotatorToMechanicalPosition"], targetPosition) });
+                    applicationStatusMediator.StatusUpdate(
+                        new ApplicationStatus() {
+                            Source = Title,
+                            Status = string.Format(Locale.Loc.Instance["LblMovingRotatorToMechanicalPosition"], Math.Round(targetPosition, 2))
+                        }
+                    );
+
                     Logger.Debug($"Move rotator mechanical to {targetPosition}°");
 
                     rotator.MoveAbsoluteMechanical(targetPosition);
@@ -138,7 +147,12 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
                 } finally {
-                    progress?.Report(new ApplicationStatus() { Status = string.Empty });
+                    applicationStatusMediator.StatusUpdate(
+                        new ApplicationStatus() {
+                            Source = Title,
+                            Status = string.Empty
+                        }
+                    );
                 }
             });
             return pos;
