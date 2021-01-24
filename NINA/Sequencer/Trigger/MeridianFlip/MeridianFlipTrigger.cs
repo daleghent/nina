@@ -155,7 +155,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 return false;
             }
 
-            var exposureTime = nextItem.GetEstimatedDuration().TotalSeconds;
+            var nextInstructionTime = nextItem.GetEstimatedDuration().TotalSeconds;
 
             //The time to meridian flip reported by the telescop is the latest time for a flip to happen
             var minimumTimeRemaining = CalculateMinimumTimeRemaining();
@@ -170,14 +170,14 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             UpdateMeridianFlipTimeTriggerValues(minimumTimeRemaining, originalMaximumTimeRemaining, TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian), TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian));
 
             if (minimumTimeRemaining <= TimeSpan.Zero && maximumTimeRemaining > TimeSpan.Zero) {
-                Logger.Debug("Meridian Flip - Remaining Time is between minimum and maximum flip time. Flip should happen now");
+                Logger.Info($"Meridian Flip - Remaining Time is between minimum and maximum flip time. Minimum time remaining {minimumTimeRemaining}, maximum time remaining {maximumTimeRemaining}. Flip should happen now");
                 return true;
             } else {
                 //The minimum time to flip has not been reached yet. Check if a flip is required based on the estimation of the next instruction
-                var noRemainingTime = maximumTimeRemaining <= TimeSpan.FromSeconds(exposureTime);
+                var noRemainingTime = maximumTimeRemaining <= TimeSpan.FromSeconds(nextInstructionTime);
 
                 if (settings.UseSideOfPier && telescopeInfo.SideOfPier == Model.MyTelescope.PierSide.pierUnknown) {
-                    Logger.Error("Side of Pier is enabled, however the side of pier reported by the driver is unknown. Ignoring side of pier to calculate the flip time");
+                    Logger.Error("Side of Pier usage is enabled, however the side of pier reported by the driver is unknown. Ignoring side of pier to calculate the flip time");
                 }
 
                 if (settings.UseSideOfPier && telescopeInfo.SideOfPier != Model.MyTelescope.PierSide.pierUnknown) {
@@ -187,7 +187,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                         coordinates: telescopeInfo.Coordinates,
                         localSiderealTime: projectedSiderealTime);
                     if (telescopeInfo.SideOfPier == targetSideOfPier) {
-                        Logger.Debug($"Meridian Flip - Telescope already reports {telescopeInfo.SideOfPier}, Automated Flip will not be performed.");
+                        Logger.Info($"Meridian Flip - Telescope already reports {telescopeInfo.SideOfPier}. Automated Flip will not be performed.");
                         return false;
                     } else {
                         if (noRemainingTime) {
@@ -210,7 +210,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                     }
                 } else {
                     if (noRemainingTime) {
-                        Logger.Info("Meridian Flip - No more remaining time available before flip. Flip should happen now");
+                        Logger.Info($"Meridian Flip - No more remaining time available before flip. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}. Flip should happen now");
                         return true;
                     }
                 }
