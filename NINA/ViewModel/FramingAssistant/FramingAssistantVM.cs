@@ -38,6 +38,8 @@ using System.Xml.Linq;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using NINA.Sequencer.Container;
+using NINA.Sequencer.SequenceItem.Platesolving;
+using System.Linq;
 
 namespace NINA.ViewModel.FramingAssistant {
 
@@ -46,7 +48,7 @@ namespace NINA.ViewModel.FramingAssistant {
         public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
             IApplicationStatusMediator applicationStatusMediator, INighttimeCalculator nighttimeCalculator, IPlanetariumFactory planetariumFactory,
             ISequenceMediator sequenceMediator, IApplicationMediator applicationMediator, IDeepSkyObjectSearchVM deepSkyObjectSearchVM,
-            IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator) : base(profileService) {
+            IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator, IRotatorMediator rotatorMediator) : base(profileService) {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
@@ -58,6 +60,8 @@ namespace NINA.ViewModel.FramingAssistant {
             this.applicationMediator = applicationMediator;
             this.imagingMediator = imagingMediator;
             this.filterWheelMediator = filterWheelMediator;
+            this.guiderMediator = guiderMediator;
+            this.rotatorMediator = rotatorMediator;
             Opacity = 0.2;
 
             SkyMapAnnotator = new SkyMapAnnotator(telescopeMediator);
@@ -166,12 +170,23 @@ namespace NINA.ViewModel.FramingAssistant {
                 return true;
             }, (object o) => RectangleCalculated);
 
-            SlewToCoordinatesCommand = new AsyncCommand<bool>(async () =>
-                await SlewToCoordinates(Rectangle.Coordinates, CancellationToken.None),
-                (object o) => RectangleCalculated);
-            SlewToCoordinatesCenterCommand = new AsyncCommand<bool>(async () =>
-                await SlewToCoordinates(Rectangle.Coordinates, CancellationToken.None, center: true),
-                (object o) => RectangleCalculated);
+            SlewToCoordinatesCommand = new AsyncCommand<bool>(async (object o) => {
+                slewTokenSource?.Cancel();
+                slewTokenSource?.Dispose();
+                slewTokenSource = new CancellationTokenSource();
+                switch (o.ToString()) {
+                    case "Center":
+                        return await Center(Rectangle.Coordinates, slewTokenSource.Token);
+
+                    case "Rotate":
+                        return await CenterAndRotate(Rectangle.Coordinates, Rectangle.TotalRotation, slewTokenSource.Token);
+
+                    default:
+                        return await SlewToCoordinates(Rectangle.Coordinates, slewTokenSource.Token);
+                }
+            }, (object o) => RectangleCalculated);
+
+            CancelSlewToCoordinatesCommand = new RelayCommand((object o) => slewTokenSource?.Cancel());
 
             ScrollViewerSizeChangedCommand = new RelayCommand((parameter) => {
                 resizeTimer.Stop();
@@ -181,42 +196,41 @@ namespace NINA.ViewModel.FramingAssistant {
             });
         }
 
-        private async Task<bool> SlewToCoordinates(
-            Coordinates coordinates,
-            CancellationToken token,
-            bool center = false) {
-            var slewSuccess = await telescopeMediator.SlewToCoordinatesAsync(coordinates, token);
-            if (!center || !slewSuccess) {
-                return slewSuccess;
+        private async Task<bool> Center(Coordinates coordinates, CancellationToken token) {
+            var center = new Center(profileService, telescopeMediator, imagingMediator, filterWheelMediator, guiderMediator);
+
+            center.Coordinates = new InputCoordinates(coordinates);
+            var isValid = center.Validate();
+
+            if (!isValid) {
+                Notification.ShowError(string.Join(Environment.NewLine, center.Issues));
+                return false;
             }
 
-            var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
-            var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
-            var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator);
-            var parameter = new CenterSolveParameter() {
-                Attempts = profileService.ActiveProfile.PlateSolveSettings.NumberOfAttempts,
-                Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,
-                Coordinates = telescopeMediator.GetCurrentPosition(),
-                DownSampleFactor = profileService.ActiveProfile.PlateSolveSettings.DownSampleFactor,
-                FocalLength = profileService.ActiveProfile.TelescopeSettings.FocalLength,
-                MaxObjects = profileService.ActiveProfile.PlateSolveSettings.MaxObjects,
-                PixelSize = profileService.ActiveProfile.CameraSettings.PixelSize,
-                ReattemptDelay = TimeSpan.FromMinutes(profileService.ActiveProfile.PlateSolveSettings.ReattemptDelay),
-                Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
-                SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
-                Threshold = profileService.ActiveProfile.PlateSolveSettings.Threshold,
-                NoSync = !profileService.ActiveProfile.PlateSolveSettings.Sync
-            };
+            await center.Run(_statusUpdate, token);
+            return true;
+        }
 
-            var seq = new CaptureSequence(
-                profileService.ActiveProfile.PlateSolveSettings.ExposureTime,
-                CaptureSequence.ImageTypes.SNAPSHOT,
-                profileService.ActiveProfile.PlateSolveSettings.Filter,
-                new Model.MyCamera.BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
-                1
-            );
-            var result = await solver.Center(seq, parameter, default, this._statusUpdate, token);
-            return result.Success;
+        private async Task<bool> CenterAndRotate(Coordinates coordinates, double rotation, CancellationToken token) {
+            var centerAndRotate = new CenterAndRotate(profileService, telescopeMediator, imagingMediator, rotatorMediator, filterWheelMediator, guiderMediator);
+
+            centerAndRotate.Coordinates = new InputCoordinates(coordinates);
+            centerAndRotate.Rotation = rotation;
+            var isValid = centerAndRotate.Validate();
+
+            if (!isValid) {
+                Notification.ShowError(string.Join(Environment.NewLine, centerAndRotate.Issues));
+                return false;
+            }
+
+            await centerAndRotate.Run(_statusUpdate, token);
+            return true;
+        }
+
+        private Task<bool> SlewToCoordinates(
+            Coordinates coordinates,
+            CancellationToken token) {
+            return telescopeMediator.SlewToCoordinatesAsync(coordinates, token);
         }
 
         private IList<IDeepSkyObjectContainer> GetDSOContainerListFromFraming(IDeepSkyObjectContainer template) {
@@ -427,6 +441,8 @@ namespace NINA.ViewModel.FramingAssistant {
         private IApplicationMediator applicationMediator;
         private IImagingMediator imagingMediator;
         private IFilterWheelMediator filterWheelMediator;
+        private IGuiderMediator guiderMediator;
+        private IRotatorMediator rotatorMediator;
         private NighttimeData nighttimeData;
 
         public NighttimeData NighttimeData {
@@ -730,6 +746,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private IProgress<int> _progress;
 
         private CancellationTokenSource _loadImageSource;
+        private CancellationTokenSource slewTokenSource;
 
         private IProgress<ApplicationStatus> _statusUpdate;
 
@@ -1079,7 +1096,7 @@ namespace NINA.ViewModel.FramingAssistant {
         public ICommand AddTargetToTargetListCommand { get; private set; }
         public ICommand GetDSOTemplatesCommand { get; private set; }
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
-        public IAsyncCommand SlewToCoordinatesCenterCommand { get; private set; }
+        public ICommand CancelSlewToCoordinatesCommand { get; private set; }
         public IAsyncCommand RecenterCommand { get; private set; }
         public ICommand CancelLoadImageFromFileCommand { get; private set; }
         public ICommand ClearCacheCommand { get; private set; }

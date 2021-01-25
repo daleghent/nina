@@ -5218,4 +5218,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Moving rotator to position {0}</value>
   </data>
+  <data name="LblSlewCenterRotate" xml:space="preserve">
+    <value>Slew, Center and Rotate</value>
+  </data>
 </root>
