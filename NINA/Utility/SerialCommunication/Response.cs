@@ -63,7 +63,7 @@ namespace NINA.Utility.SerialCommunication {
             if (double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out fieldValue)) return true;
 
             // Account for various flavors of NaN (nan, NAN, etc.) that InvariantCulture does not know about
-            if (token.Equals("nan", StringComparison.OrdinalIgnoreCase)) { fieldValue = double.NaN; return true; }
+            if (token?.Equals("nan", StringComparison.OrdinalIgnoreCase) == true) { fieldValue = double.NaN; return true; }
 
             Logger.Error($"Could not parse {fieldName} from response: {token}");
             return false;

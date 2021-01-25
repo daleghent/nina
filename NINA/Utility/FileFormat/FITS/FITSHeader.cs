@@ -258,11 +258,11 @@ namespace NINA.Utility.FileFormat.FITS {
             }
 
             if (_headerCards.TryGetValue("ROTATOR", out card)) {
-                metaData.Rotator.Position = ParseDouble(card.OriginalValue);
+                metaData.Rotator.MechanicalPosition = ParseDouble(card.OriginalValue);
             }
 
             if (_headerCards.TryGetValue("ROTATANG", out card)) {
-                metaData.Rotator.Position = ParseDouble(card.OriginalValue);
+                metaData.Rotator.MechanicalPosition = ParseDouble(card.OriginalValue);
             }
 
             if (_headerCards.TryGetValue("ROTSTPSZ", out card)) {
@@ -535,12 +535,12 @@ namespace NINA.Utility.FileFormat.FITS {
                 Add("ROTNAME", metaData.Rotator.Name, "Rotator equipment name");
             }
 
-            if (!double.IsNaN(metaData.Rotator.Position)) {
+            if (!double.IsNaN(metaData.Rotator.MechanicalPosition)) {
                 /* fits4win */
-                Add("ROTATOR", metaData.Rotator.Position, "[deg] Rotator angle");
+                Add("ROTATOR", metaData.Rotator.MechanicalPosition, "[deg] Mechanical rotator angle");
 
                 /* MaximDL, several observatories */
-                Add("ROTATANG", metaData.Rotator.Position, "[deg] Rotator angle");
+                Add("ROTATANG", metaData.Rotator.MechanicalPosition, "[deg] Mechanical rotator angle");
             }
 
             if (!double.IsNaN(metaData.Rotator.StepSize)) {
