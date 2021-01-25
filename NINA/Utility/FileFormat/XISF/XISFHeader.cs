@@ -517,12 +517,12 @@ namespace NINA.Utility.FileFormat.XISF {
                 AddImageFITSKeyword("ROTNAME", metaData.Rotator.Name, "Rotator equipment name");
             }
 
-            if (!double.IsNaN(metaData.Rotator.Position)) {
+            if (!double.IsNaN(metaData.Rotator.MechanicalPosition)) {
                 /* fits4win */
-                AddImageFITSKeyword("ROTATOR", metaData.Rotator.Position, "[deg] Rotator angle");
+                AddImageFITSKeyword("ROTATOR", metaData.Rotator.MechanicalPosition, "[deg] Mechanical rotator angle");
 
                 /* MaximDL, several observatories */
-                AddImageFITSKeyword("ROTATANG", metaData.Rotator.Position, "[deg] Rotator angle");
+                AddImageFITSKeyword("ROTATANG", metaData.Rotator.MechanicalPosition, "[deg] Mechanical rotator angle");
             }
 
             if (!double.IsNaN(metaData.Rotator.StepSize)) {

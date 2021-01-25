@@ -250,8 +250,8 @@ namespace NINA.Model.ImageData {
                 p.Set(ImagePatternKeys.Telescope, metadata.Telescope.Name);
             }
 
-            if (!double.IsNaN(metadata.Rotator.Position)) {
-                p.Set(ImagePatternKeys.RotatorAngle, metadata.Rotator.Position);
+            if (!double.IsNaN(metadata.Rotator.MechanicalPosition)) {
+                p.Set(ImagePatternKeys.RotatorAngle, metadata.Rotator.MechanicalPosition);
             }
 
             if (this.StarDetectionAnalysis.DetectedStars >= 0) {

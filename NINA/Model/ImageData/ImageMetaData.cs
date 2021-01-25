@@ -125,6 +125,7 @@ namespace NINA.Model.ImageData {
                 if (string.IsNullOrWhiteSpace(Rotator.Name)) {
                     Rotator.Name = info.Name;
                 }
+                Rotator.MechanicalPosition = info.MechanicalPosition;
                 Rotator.Position = info.Position;
                 Rotator.StepSize = info.StepSize;
             }
@@ -210,6 +211,7 @@ namespace NINA.Model.ImageData {
 
     public class RotatorParameter {
         public string Name { get; set; } = string.Empty;
+        public double MechanicalPosition { get; set; } = double.NaN;
         public double Position { get; set; } = double.NaN;
         public double StepSize { get; set; } = double.NaN;
     }

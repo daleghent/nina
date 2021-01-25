@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace NINATest.Dome {
 
     [TestFixture]
-    class DomeFollowerTest {
+    internal class DomeFollowerTest {
         private Mock<IProfileService> mockProfileService;
         private Mock<ITelescopeMediator> mockTelescopeMediator;
         private Mock<IDomeMediator> mockDomeMediator;
@@ -52,6 +52,7 @@ namespace NINATest.Dome {
 
         [Test]
         public void Test_DomeSynchronize_ReceivesCorrectParameters() {
+            mockProfileService.SetupGet(p => p.ActiveProfile.MeridianFlipSettings.UseSideOfPier).Returns(() => false);
             var sut = CreateSUT();
             var t1 = new TelescopeInfo() {
                 Connected = true,
@@ -73,6 +74,7 @@ namespace NINATest.Dome {
 
         [Test]
         public async Task Test_SlewIfExceedsTolerance() {
+            mockProfileService.SetupGet(p => p.ActiveProfile.MeridianFlipSettings.UseSideOfPier).Returns(() => false);
             var sut = CreateSUT();
             domeAzimuth = 0.0;
             domeTargetAzimuth = Angle.ByDegree(2);
