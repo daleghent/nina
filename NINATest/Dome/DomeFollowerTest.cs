@@ -25,6 +25,7 @@ namespace NINATest.Dome {
         private double domeAzimuth;
         private bool synchronizeDuringMountSlew;
         private double domeAzimuthToleranceDegrees;
+        private bool useSideOfPier;
 
         [SetUp]
         public void Init() {
@@ -38,9 +39,11 @@ namespace NINATest.Dome {
             domeTargetAzimuth = Angle.ByDegree(0.0);
             siteLatitude = Angle.ByDegree(41.5);
             siteLongitude = Angle.ByDegree(-23.2);
+            useSideOfPier = true;
 
             mockProfileService.SetupGet(p => p.ActiveProfile.DomeSettings.AzimuthTolerance_degrees).Returns(() => domeAzimuthToleranceDegrees);
             mockProfileService.SetupGet(p => p.ActiveProfile.DomeSettings.SynchronizeDuringMountSlew).Returns(() => synchronizeDuringMountSlew);
+            mockProfileService.SetupGet(p => p.ActiveProfile.MeridianFlipSettings.UseSideOfPier).Returns(() => useSideOfPier);
             mockDomeSynchronization
                 .Setup(x => x.TargetDomeAzimuth(It.IsAny<Coordinates>(), It.IsAny<double>(), It.IsAny<Angle>(), It.IsAny<Angle>(), It.IsAny<PierSide>()))
                 .Returns(() => domeTargetAzimuth);

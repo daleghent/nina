@@ -45,7 +45,8 @@ namespace NINA.ViewModel.FramingAssistant {
 
         public FramingAssistantVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator,
             IApplicationStatusMediator applicationStatusMediator, INighttimeCalculator nighttimeCalculator, IPlanetariumFactory planetariumFactory,
-            ISequenceMediator sequenceMediator, IApplicationMediator applicationMediator, IDeepSkyObjectSearchVM deepSkyObjectSearchVM) : base(profileService) {
+            ISequenceMediator sequenceMediator, IApplicationMediator applicationMediator, IDeepSkyObjectSearchVM deepSkyObjectSearchVM,
+            IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator) : base(profileService) {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.telescopeMediator = telescopeMediator;
@@ -55,6 +56,8 @@ namespace NINA.ViewModel.FramingAssistant {
             this.planetariumFactory = planetariumFactory;
             this.sequenceMediator = sequenceMediator;
             this.applicationMediator = applicationMediator;
+            this.imagingMediator = imagingMediator;
+            this.filterWheelMediator = filterWheelMediator;
             Opacity = 0.2;
 
             SkyMapAnnotator = new SkyMapAnnotator(telescopeMediator);
@@ -164,7 +167,10 @@ namespace NINA.ViewModel.FramingAssistant {
             }, (object o) => RectangleCalculated);
 
             SlewToCoordinatesCommand = new AsyncCommand<bool>(async () =>
-                await telescopeMediator.SlewToCoordinatesAsync(Rectangle.Coordinates, CancellationToken.None),
+                await SlewToCoordinates(Rectangle.Coordinates, CancellationToken.None),
+                (object o) => RectangleCalculated);
+            SlewToCoordinatesCenterCommand = new AsyncCommand<bool>(async () =>
+                await SlewToCoordinates(Rectangle.Coordinates, CancellationToken.None, center: true),
                 (object o) => RectangleCalculated);
 
             ScrollViewerSizeChangedCommand = new RelayCommand((parameter) => {
@@ -173,6 +179,44 @@ namespace NINA.ViewModel.FramingAssistant {
                     resizeTimer.Start();
                 }
             });
+        }
+
+        private async Task<bool> SlewToCoordinates(
+            Coordinates coordinates,
+            CancellationToken token,
+            bool center = false) {
+            var slewSuccess = await telescopeMediator.SlewToCoordinatesAsync(coordinates, token);
+            if (!center || !slewSuccess) {
+                return slewSuccess;
+            }
+
+            var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator);
+            var parameter = new CenterSolveParameter() {
+                Attempts = profileService.ActiveProfile.PlateSolveSettings.NumberOfAttempts,
+                Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,
+                Coordinates = telescopeMediator.GetCurrentPosition(),
+                DownSampleFactor = profileService.ActiveProfile.PlateSolveSettings.DownSampleFactor,
+                FocalLength = profileService.ActiveProfile.TelescopeSettings.FocalLength,
+                MaxObjects = profileService.ActiveProfile.PlateSolveSettings.MaxObjects,
+                PixelSize = profileService.ActiveProfile.CameraSettings.PixelSize,
+                ReattemptDelay = TimeSpan.FromMinutes(profileService.ActiveProfile.PlateSolveSettings.ReattemptDelay),
+                Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
+                SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
+                Threshold = profileService.ActiveProfile.PlateSolveSettings.Threshold,
+                NoSync = !profileService.ActiveProfile.PlateSolveSettings.Sync
+            };
+
+            var seq = new CaptureSequence(
+                profileService.ActiveProfile.PlateSolveSettings.ExposureTime,
+                CaptureSequence.ImageTypes.SNAPSHOT,
+                profileService.ActiveProfile.PlateSolveSettings.Filter,
+                new Model.MyCamera.BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
+                1
+            );
+            var result = await solver.Center(seq, parameter, default, this._statusUpdate, token);
+            return result.Success;
         }
 
         private IList<IDeepSkyObjectContainer> GetDSOContainerListFromFraming(IDeepSkyObjectContainer template) {
@@ -381,6 +425,8 @@ namespace NINA.ViewModel.FramingAssistant {
         private INighttimeCalculator nighttimeCalculator;
         private ISequenceMediator sequenceMediator;
         private IApplicationMediator applicationMediator;
+        private IImagingMediator imagingMediator;
+        private IFilterWheelMediator filterWheelMediator;
         private NighttimeData nighttimeData;
 
         public NighttimeData NighttimeData {
@@ -1033,6 +1079,7 @@ namespace NINA.ViewModel.FramingAssistant {
         public ICommand AddTargetToTargetListCommand { get; private set; }
         public ICommand GetDSOTemplatesCommand { get; private set; }
         public IAsyncCommand SlewToCoordinatesCommand { get; private set; }
+        public IAsyncCommand SlewToCoordinatesCenterCommand { get; private set; }
         public IAsyncCommand RecenterCommand { get; private set; }
         public ICommand CancelLoadImageFromFileCommand { get; private set; }
         public ICommand ClearCacheCommand { get; private set; }

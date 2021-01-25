@@ -2911,6 +2911,9 @@ This template will be used on startup to initialize the sequence instead of the 
   <data name="LblSlew" xml:space="preserve">
     <value>Slew</value>
   </data>
+  <data name="LblSlewCenter" xml:space="preserve">
+    <value>Slew and Center</value>
+  </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Slew Duration</value>
   </data>

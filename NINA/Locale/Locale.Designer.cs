@@ -12600,6 +12600,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Slew and Center.
+        /// </summary>
+        internal static string LblSlewCenter {
+            get {
+                return ResourceManager.GetString("LblSlewCenter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slew Duration.
         /// </summary>
         internal static string LblSlewDuration {
