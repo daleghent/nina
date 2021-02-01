@@ -2115,6 +2115,7 @@
     <Folder Include="External\x64\Nikon\Type0026\" />
     <Folder Include="External\x64\Nikon\Type0027\" />
     <Folder Include="External\x64\Nikon\Type0028\" />
+    <Folder Include="External\x64\Nikon\Type0029\" />
     <Folder Include="External\x86\Altair\" />
     <Folder Include="External\x86\Canon\" />
     <Folder Include="External\x86\Nikon\Type0001\" />
@@ -2145,6 +2146,7 @@
     <Folder Include="External\x86\Nikon\Type0026\" />
     <Folder Include="External\x86\Nikon\Type0027\" />
     <Folder Include="External\x86\Nikon\Type0028\" />
+    <Folder Include="External\x86\Nikon\Type0029\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
