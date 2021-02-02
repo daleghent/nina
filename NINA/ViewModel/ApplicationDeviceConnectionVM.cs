@@ -206,13 +206,19 @@ namespace NINA.ViewModel {
             }
 
             try {
+                switchMediator.Disconnect();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
+            try {
                 weatherDataMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                this.safetyMonitorMediator.Disconnect();
+                safetyMonitorMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
