@@ -183,8 +183,8 @@ namespace NINA.Model.MyWeatherData {
                     // humidity in percent
                     Humidity = wunderdata.Observations[0].Humidity;
 
-                    // wind speed in meters per second
-                    WindSpeed = wunderdata.Observations[0].metric.WindSpeed;
+                    // wind speed in meters per second from kph
+                    WindSpeed = wunderdata.Observations[0].metric.WindSpeed * 0.2778;
 
                     // wind heading in degrees
                     WindDirection = wunderdata.Observations[0].Winddir;
