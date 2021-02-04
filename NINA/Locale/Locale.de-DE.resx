@@ -2911,6 +2911,9 @@ Diese Vorlage wird beim Starten der Applikation geladen, statt der Standard Sequ
   <data name="LblSlew" xml:space="preserve">
     <value>Schwenken</value>
   </data>
+  <data name="LblSlewCenter" xml:space="preserve">
+    <value>Slew and Center</value>
+  </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Schwenkdauer</value>
   </data>
@@ -5213,5 +5216,8 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Moving rotator to position {0}</value>
+  </data>
+  <data name="LblSlewCenterRotate" xml:space="preserve">
+    <value>Slew, Center and Rotate</value>
   </data>
 </root>

@@ -2901,6 +2901,9 @@ Dit sjabloon zal worden gebruikt bij het opstarten om de sequentie te initialise
   <data name="LblSlew" xml:space="preserve">
     <value>Zwenken</value>
   </data>
+  <data name="LblSlewCenter" xml:space="preserve">
+    <value>Slew and Center</value>
+  </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Duur zwenken</value>
   </data>
@@ -5202,5 +5205,8 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Moving rotator to position {0}</value>
+  </data>
+  <data name="LblSlewCenterRotate" xml:space="preserve">
+    <value>Slew, Center and Rotate</value>
   </data>
 </root>

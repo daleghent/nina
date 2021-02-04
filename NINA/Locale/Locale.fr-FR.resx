@@ -2911,6 +2911,9 @@ Ce modèle sera utilisé au démarrage pour initialiser la séquence au lieu de 
   <data name="LblSlew" xml:space="preserve">
     <value>Pointer</value>
   </data>
+  <data name="LblSlewCenter" xml:space="preserve">
+    <value>Slew and Center</value>
+  </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Temps Pointage</value>
   </data>
@@ -5211,5 +5214,8 @@ Un nombre plus restreint aidera à répondre plus rapidement à un changement de
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Moving rotator to position {0}</value>
+  </data>
+  <data name="LblSlewCenterRotate" xml:space="preserve">
+    <value>Slew, Center and Rotate</value>
   </data>
 </root>

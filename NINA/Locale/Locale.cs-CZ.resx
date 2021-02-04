@@ -2902,6 +2902,9 @@ Tato šablona bude použita při spuštění sekvence místo výchozí.</value>
   <data name="LblSlew" xml:space="preserve">
     <value>Přejezd</value>
   </data>
+  <data name="LblSlewCenter" xml:space="preserve">
+    <value>Přejezd a Vycentrovat</value>
+  </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Čas Přejezdu</value>
   </data>
@@ -3264,7 +3267,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Sledovat</value>
   </data>
   <data name="LblTracking" xml:space="preserve">
-    <value>Sledování</value>
+    <value>Sledovat</value>
   </data>
   <data name="LblTrackingRate" xml:space="preserve">
     <value>Rychlost Sledování</value>
@@ -3967,7 +3970,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Překlopení Poledníku v</value>
   </data>
   <data name="LblMeridianFlipCenterFailed" xml:space="preserve">
-    <value>Zarovnání na Střed po Překlopení Poledníku Selhalo</value>
+    <value>Vycentrování po Překlopení Poledníku Selhalo</value>
   </data>
   <data name="LblDefaultGain" xml:space="preserve">
     <value>Výchozí Zisk</value>
@@ -4279,7 +4282,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Chladí kameru na zadaný čas a teplotu</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_CoolCamera_Name" xml:space="preserve">
-    <value>Chlazení Kamery</value>
+    <value>Chladit Kameru</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Description" xml:space="preserve">
     <value>Zahřívá kameru po zadaný čas</value>
@@ -4291,7 +4294,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Nastavuje režim čtení kamery</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Name" xml:space="preserve">
-    <value>Nastavte Režim Čtení</value>
+    <value>Nastavit Režim Čtení</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_InvalidReadoutMode" xml:space="preserve">
     <value>Kamera nepodporuje režim čtení. Hodnota musí být mezi 0 a {0}</value>
@@ -4324,7 +4327,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Zahájí Auto-pointaci</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StartGuiding_Name" xml:space="preserve">
-    <value>Zahájí Pointaci</value>
+    <value>Zahájit Pointaci</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StopGuiding_Description" xml:space="preserve">
     <value>Zastaví Auto-pointaci</value>
@@ -4336,10 +4339,10 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Provede expozici pro daný čas, zisk a offset</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Name" xml:space="preserve">
-    <value>Provede Expozici</value>
+    <value>Provést Expozici</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Otočí rotátor a vycentruje dalekohled na souřadnice a směr dané platesolvingem</value>
+    <value>Vycentruje a otáčí dalekohled pomocí platesolvingem a rotátorem pro dané souřadnice a rotaci</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
     <value>Vycentrovat a Otočit</value>
@@ -4348,7 +4351,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Vycentruje dalekohled pomocí platesolvingu pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Vycentrovat</value>
+    <value>Ve středu</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Zaparkovat dalekohled do parkovací polohy</value>
@@ -4423,19 +4426,19 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Spouštěč, který spouští auto-ostření po změně HFR o danou hodnotu v procentech od posledního automatického spuštění nebo spuštění sekvence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Name" xml:space="preserve">
-    <value>Auto-ostření Po Změně HFR</value>
+    <value>Auto-Ostřit Po Změně HFR</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description" xml:space="preserve">
     <value>Spouštěč, který spouští auto-ostření po změně teploty o danou částku ve stupních od posledního automatického spuštění nebo spuštění sekvence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Name" xml:space="preserve">
-    <value>Auto-ostření Po Změně Teploty</value>
+    <value>Auto-Ostřit Po Změně Teploty</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Description" xml:space="preserve">
     <value>Spouštěč, který spouští auto-ostření po uplynutí nastaveného času od posledního provedení auto-ostření nebo spuštění sekvence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Name" xml:space="preserve">
-    <value>Auto-ostření Po Čase</value>
+    <value>Auto-Ostřit Po Čase</value>
   </data>
   <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Description" xml:space="preserve">
     <value>Spouštěč zahájí překlopení poledníku, pokud jsou splněny podmínky</value>
@@ -4546,7 +4549,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Spustí Auto-ostření po výměně filtru</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name" xml:space="preserve">
-    <value>Auto-ostření Po Změně Filtru</value>
+    <value>Auto-Ostřit Po Změně Filtru</value>
   </data>
   <data name="LblLastFilter" xml:space="preserve">
     <value>Poslední Filtr</value>
@@ -4555,7 +4558,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Po pořízení zadaného počtu snímků provede auto-ostření</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Name" xml:space="preserve">
-    <value>Auto-ostření Po # Expozicích</value>
+    <value>Auto-Ostřit Po # Expozicích</value>
   </data>
   <data name="LblUnreachableAltitude" xml:space="preserve">
     <value>Výšky nebude dosaženo</value>
@@ -4570,7 +4573,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Provede expozice v uvedeném množství, času, zisku a offsetu. Spouštěč a podmínky se hodnotí mezi expozicemi.</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Name" xml:space="preserve">
-    <value>Provede Mnoho Expozic</value>
+    <value>Provést Mnoho Expozic</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_Description" xml:space="preserve">
     <value>Provede expozice v uvedeném množství, filtru, času trvání, zisku, offsetu a po určitém množství expozic je zahájen dithering. Spouštěč a podmínky se hodnotí mezi expozicemi.</value>
@@ -4842,7 +4845,7 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Sledování Bezpečí odpojeno!</value>
   </data>
   <data name="LblSafetyMonitor" xml:space="preserve">
-    <value>Sledování Bezpečí</value>
+    <value>Sledovat Bezpečí</value>
   </data>
   <data name="LblDisconnectSafetyMonitor" xml:space="preserve">
     <value>Sledování Bezpečí Odpojeno</value>
@@ -5105,7 +5108,7 @@ Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů 
     <value>Čekat, až výška Měsíce bude odpovídat zadaným parametrům</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Name" xml:space="preserve">
-    <value>Čekat, pokud je výška Měsíce</value>
+    <value>Čekat, až bude výška Měsíce</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress" xml:space="preserve">
     <value>Čekat kvůli výšce Měsíce ({0}° {1} {2}°)</value>
@@ -5204,5 +5207,8 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Pohyb rotátoru do polohy {0}</value>
+  </data>
+  <data name="LblSlewCenterRotate" xml:space="preserve">
+    <value>Přejezd, Vycentrovat a Otočit</value>
   </data>
 </root>

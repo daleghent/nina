@@ -295,7 +295,7 @@ Debe aplicación intentar recuperarse do erro? (Isto pode ocasionar un comportam
     <value>Tras # exposicións</value>
   </data>
   <data name="LblAutoFocusAfterSetTime" xml:space="preserve">
-    <value>Tras tempo transcorrido</value>
+    <value>After elapsed Time</value>
   </data>
   <data name="LblAutoFocusAfterTemperatureChange" xml:space="preserve">
     <value>Tras mudar a temperatura</value>
@@ -533,10 +533,10 @@ para compensar as variacións da temperatura ambiente</value>
     <value>Estado Cámara</value>
   </data>
   <data name="LblCameraXSize" xml:space="preserve">
-    <value>Tamaño X Cámara</value>
+    <value>Camera X Size</value>
   </data>
   <data name="LblCameraYSize" xml:space="preserve">
-    <value>Tamaño Y Cámara</value>
+    <value>Camera Y Size</value>
   </data>
   <data name="LblCamInfo" xml:space="preserve">
     <value>Info Cámara</value>
@@ -1096,7 +1096,7 @@ cara atrás; cando as liñas non están aliñadas hai algún erro de aliñación
     <value>Estrelas Detectadas</value>
   </data>
   <data name="LblDevicePollingInterval" xml:space="preserve">
-    <value>Intervalo de sondaxe dispositivo</value>
+    <value>Device polling interval</value>
   </data>
   <data name="LblDewHeater" xml:space="preserve">
     <value>Quentador de Orballo</value>
@@ -1186,7 +1186,7 @@ cara atrás; cando as liñas non están aliñadas hai algún erro de aliñación
     <value>O controlador pode continuar</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
-    <value>Estado do obturador</value>
+    <value>Shutter status</value>
   </data>
   <data name="LblDomeCanSetShutter" xml:space="preserve">
     <value>Pódese configurar a obturación</value>
@@ -1333,13 +1333,13 @@ cara atrás; cando as liñas non están aliñadas hai algún erro de aliñación
     <value>ESO Sky Survey</value>
   </data>
   <data name="LblEstimatedDownloadTime" xml:space="preserve">
-    <value>Tempo Descarga Estimado</value>
+    <value>Estimated Download Time</value>
   </data>
   <data name="LblEstimatedExposureTime" xml:space="preserve">
-    <value>Tempo Exposición Estimado</value>
+    <value>Estimated Exposure Time</value>
   </data>
   <data name="LblETA" xml:space="preserve">
-    <value>Tempo remate estimado</value>
+    <value>Estimated Finish Time</value>
   </data>
   <data name="LblExposing" xml:space="preserve">
     <value>Exposición</value>
@@ -1516,10 +1516,10 @@ Cando este desencadeador estea desactivado, a aplicación omite o inicio de expo
     <value>Tolerancia Media</value>
   </data>
   <data name="LblFlatMaxExposureTime" xml:space="preserve">
-    <value>Máx. Expos. Flat</value>
+    <value>Flat Max Exposure</value>
   </data>
   <data name="LblFlatMinExposureTime" xml:space="preserve">
-    <value>Expos. Mínima Flat</value>
+    <value>Flat Min Exposure</value>
   </data>
   <data name="LblFlatSequenceCancelled" xml:space="preserve">
     <value>Cancelada a Secuencia de Flat, non se puido calcular o tempo de exposición do flat</value>
@@ -1615,7 +1615,7 @@ Cando este desencadeador estea desactivado, a aplicación omite o inicio de expo
     <value>Tempo de Asentamento Enfocador</value>
   </data>
   <data name="LblFocuserSettleTimeTooltip" xml:space="preserve">
-    <value>Se o enfocador introduce un desprazamento da imaxe cando se move, poñer un tempo de estabilización en segundos aquí.</value>
+    <value>If the focuser introduces image shift when moving, set a settle time in seconds here.</value>
   </data>
   <data name="LblFocuserTempDescription" xml:space="preserve">
     <value>Temperatura do Enfocador</value>
@@ -1837,7 +1837,7 @@ HFR calculado: {2}
     <value>Movéndose</value>
   </data>
   <data name="LblIsSettling" xml:space="preserve">
-    <value>Estabilización</value>
+    <value>Is Settling</value>
   </data>
   <data name="LblItemsPerPage" xml:space="preserve">
     <value>Ítems por páxina</value>
@@ -1849,7 +1849,7 @@ HFR calculado: {2}
     <value>JNOW</value>
   </data>
   <data name="LblLanguage" xml:space="preserve">
-    <value>Linguaxe</value>
+    <value>Language</value>
   </data>
   <data name="LblLaplace" xml:space="preserve">
     <value>Laplace</value>
@@ -2117,7 +2117,7 @@ HFR calculado: {2}
     <value>Sen Cambiador</value>
   </data>
   <data name="LblNoSync" xml:space="preserve">
-    <value>Sen Sincr.</value>
+    <value>No Sync</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
     <value>Cando está activada, a aplicación nunca enviará un comando de sincronización ó telescopio. Isto só debe usarse cando se teña un bo modelo de apuntamento que non se debe alterar de ningún xeito.</value>
@@ -2391,10 +2391,10 @@ HFR calculado: {2}
     <value>Tamaño de Píxel</value>
   </data>
   <data name="LblPixelSizeX" xml:space="preserve">
-    <value>Tamaño de Píxel X</value>
+    <value>Pixel Size X</value>
   </data>
   <data name="LblPixelSizeY" xml:space="preserve">
-    <value>Tamaño de Píxel Y</value>
+    <value>Pixel Size Y</value>
   </data>
   <data name="LblPlanetarium" xml:space="preserve">
     <value>Planetario</value>
@@ -2784,7 +2784,7 @@ HFR calculado: {2}
     <value>Comando de fin de secuencia non atopado '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Atraso do inicio (segundos)</value>
+    <value>Delay start (seconds)</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Inicio de secuencia en {0} segundos</value>
@@ -2842,10 +2842,10 @@ Este modelo empregarase no inicio para inicializar a secuencia no canto da prede
     <value>Tolerancia de Píxel de Asentamento</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
-    <value>Tempo asentamento tras Ir a...</value>
+    <value>Settle time after slew</value>
   </data>
   <data name="LblSettleTimeout" xml:space="preserve">
-    <value>Tempo de Asentamento</value>
+    <value>Settle Timeout</value>
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Volver a Iniciar Guiado</value>
@@ -2890,7 +2890,7 @@ Este modelo empregarase no inicio para inicializar a secuencia no canto da prede
     <value>Sky Atlas</value>
   </data>
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
-    <value>Cartafol de Imaxes de Sky Atlas</value>
+    <value>Sky Atlas Image Directory</value>
   </data>
   <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
     <value>SkyAtlas (Encadre fóra de liña)</value>
@@ -2905,13 +2905,16 @@ Este modelo empregarase no inicio para inicializar a secuencia no canto da prede
     <value>SkyServer Sky Survey</value>
   </data>
   <data name="LblSkySurveyCacheDirectory" xml:space="preserve">
-    <value>Cartafol do caché de Sky Survey</value>
+    <value>Sky Survey Cache Directory</value>
   </data>
   <data name="LblSkyTemperature" xml:space="preserve">
     <value>Temperatura do ceo</value>
   </data>
   <data name="LblSlew" xml:space="preserve">
     <value>Ir a...</value>
+  </data>
+  <data name="LblSlewCenter" xml:space="preserve">
+    <value>Slew and Center</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Duración de ir a...</value>
@@ -3716,19 +3719,19 @@ O valor predeterminado de Auto usa calquera patrón que o controlador da cámara
     <value>Método de Compensación de Backlash</value>
   </data>
   <data name="LblFocuserBacklashMethodTooltip" xml:space="preserve">
-    <value>Controla o método de compensación de Backlash empregado.
+    <value>This controls the backlash compensation method used.
 
-Absoluto:
-  Cando o enfocador cambie de dirección, engadirase un valor absoluto ó movemento do foco.
-  Backlash DENTRO: cando o enfocador cambia de moverse cara a fóra a pasar cara a dentro engadirase o valor de Backlash DENTRO
-  Backlash FÓRA: cando o enfocador cambia de moverse cara a dentro a pasar cara a fóra, engadirase o valor de Backlash FÓRA
+Absolute: 
+  When the focuser changes directions, an absolute value will be added to the focuser movement.
+  Backlash IN: when the focuser changes from moving outwards to moving inwards the Backlash IN value will be added
+  Backlash OUT: when the focuser changes from moving inwards to moving outwards the Backlash OUT value will be added
   
-Sobrepasar:
-  Este método compensará o retroceso superando por moito a posición de destino e despois movendo o enfocador cara á posición inicialmente solicitada.
-  Debido a esta compensación, o último movemento do foco será sempre na mesma dirección (sempre cara a dentro ou sempre cara a fóra)
-  Para Backlash DENTRO e FÓRA só hai que configurar un destes dous! Ó configurar DENTRO, a cantidade aplicarase en cada movemento cara ó interior, polo que o movemento final sempre será cara a fóra. Para Backlash FÓRA, será ó revés.
+Overshoot:
+  This method will compensate for Backlash by overshooting the target position by a large amount and then moving the focuser back to the initially requested position.
+  Due to this compensation the last movement of the focuser will always be in the same direction (either always inwards or always outwards)
+  For Backlash IN and OUT only ONE of these two must be set! When setting IN, the amount will be applied on each inward movement, so the final movement will always be outwards. For Backlash OUT, it will be the other way around.
 
-O método só se pode cambiar cando o enfocador non está conectado.</value>
+The method can only be changed when the focuser is not connected!</value>
   </data>
   <data name="LblOvershoot" xml:space="preserve">
     <value>Sobrepasar</value>
@@ -3741,10 +3744,10 @@ O método só se pode cambiar cando o enfocador non está conectado.</value>
     <value>Despraza o foco un pouco usando a metade do Paso do AutoFoco </value>
   </data>
   <data name="LblMoveFocuserTooltip" xml:space="preserve">
-    <value>Move o enfocador á posición especificada</value>
+    <value>Moves focuser to the specified target position</value>
   </data>
   <data name="LblMoveRotatorTooltip" xml:space="preserve">
-    <value>Move o rotador á posición especificada</value>
+    <value>Moves rotator to the specified target position</value>
   </data>
   <data name="LblIncompatibleGainsInSequence" xml:space="preserve">
     <value>A secuencia contén elementos que usan unha configuración de ganancia incompatible. Serán ignorados!</value>
@@ -3897,7 +3900,7 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>Usar Seguimento Directo de NINA</value>
   </data>
   <data name="LblDomeFindHome" xml:space="preserve">
-    <value>Atopar posición Inicial</value>
+    <value>Find Home</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
     <value>Lonxitude do Eixe GEM (mm)</value>
@@ -4074,7 +4077,7 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>When Dome Following is enabled, NINA will frequently check if the Dome needs to be rotated to line up with the telescope. When an external application, such as a planetarium or a handset, moves the telescope it may be helpful to wait until the telescope is no longer moving to rotate the dome.</value>
   </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
-    <value>Atopar a posición Home antes de aparcar</value>
+    <value>Find home before parking</value>
   </data>
   <data name="LblDomeSlewCW" xml:space="preserve">
     <value>Move CW</value>
@@ -4730,16 +4733,16 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
     <value>Crea un duplicado do elemento actual e engádeo ó conxunto de instrucións pai</value>
   </data>
   <data name="Lbl_OldSequencer_EmptyAreaDescription" xml:space="preserve">
-    <value>Engade un novo Obxectivo de Secuencia a través do botón +, abre un obxectivo existente ou engade obxectivos a través do asistente de encadre</value>
+    <value>Add a new Sequence Target via the + Button, open an existing Target or add Targets via Framing Assistant</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Engadir novo Obxectivo</value>
+    <value>Add new Target</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
     <value>Cargar Obxectivo</value>
   </data>
   <data name="Lbl_OldSequencer_OpenTargetSet" xml:space="preserve">
-    <value>Abrir Conxunto de Obxectivos</value>
+    <value>Open Target Set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
     <value>Simple Sequence</value>
@@ -4847,7 +4850,7 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
     <value>A Secuencia contén filas desactivadas ou nas que a suma do progreso de exposición é igual á suma da exposición total. Estes elementos omítense e non se xeran ítems destas filas para o secuenciador.</value>
   </data>
   <data name="LblRotateTarget" xml:space="preserve">
-    <value>Rotar Obxectivo</value>
+    <value>Rotate Target</value>
   </data>
   <data name="LblSafetyMonitorConnectionLost" xml:space="preserve">
     <value>Perdeuse a conexión co Monitor de Seguridade!</value>
@@ -5216,5 +5219,8 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Moving rotator to position {0}</value>
+  </data>
+  <data name="LblSlewCenterRotate" xml:space="preserve">
+    <value>Slew, Center and Rotate</value>
   </data>
 </root>

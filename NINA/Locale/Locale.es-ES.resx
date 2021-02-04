@@ -2903,6 +2903,9 @@ Esta plantilla se usará al inicio para iniciar la secuencia en vez de la usada 
   <data name="LblSlew" xml:space="preserve">
     <value>Ir a</value>
   </data>
+  <data name="LblSlewCenter" xml:space="preserve">
+    <value>Slew and Center</value>
+  </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Duracion de Ir a</value>
   </data>
@@ -5204,5 +5207,8 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Moving rotator to position {0}</value>
+  </data>
+  <data name="LblSlewCenterRotate" xml:space="preserve">
+    <value>Slew, Center and Rotate</value>
   </data>
 </root>

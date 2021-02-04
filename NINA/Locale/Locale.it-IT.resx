@@ -2911,6 +2911,9 @@ Questo tempalte sarà usato all'avvio per inizializzare la sequenza invece di qu
   <data name="LblSlew" xml:space="preserve">
     <value>Muovi</value>
   </data>
+  <data name="LblSlewCenter" xml:space="preserve">
+    <value>Slew and Center</value>
+  </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Durata Slew</value>
   </data>
@@ -5212,5 +5215,8 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Moving rotator to position {0}</value>
+  </data>
+  <data name="LblSlewCenterRotate" xml:space="preserve">
+    <value>Slew, Center and Rotate</value>
   </data>
 </root>
