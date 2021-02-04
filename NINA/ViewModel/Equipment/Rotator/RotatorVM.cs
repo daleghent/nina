@@ -26,7 +26,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace NINA.ViewModel.Equipment.Rotator {
+
     internal class RotatorVM : DockableVM, IRotatorVM {
+
         public RotatorVM(IProfileService profileService, IRotatorMediator rotatorMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = "LblRotator";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["RotatorSVG"];
@@ -96,7 +98,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     Logger.Debug($"Move rotator to {targetPosition}°");
 
                     rotator.MoveAbsolute(targetPosition);
-                    while (RotatorInfo.IsMoving || (Math.Abs(RotatorInfo.Position - targetPosition) > 1) || (Math.Abs(RotatorInfo.Position - targetPosition) < 359)) {
+                    while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.Position - targetPosition) > 1) && (Math.Abs(RotatorInfo.Position - targetPosition) < 359))) {
                         _moveCts.Token.ThrowIfCancellationRequested();
                         await Task.Delay(TimeSpan.FromSeconds(1));
                         Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.Position} - Target Position {targetPosition}");
@@ -137,7 +139,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     Logger.Debug($"Move rotator mechanical to {targetPosition}°");
 
                     rotator.MoveAbsoluteMechanical(targetPosition);
-                    while (RotatorInfo.IsMoving || (Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) > 1) || (Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) < 359)) {
+                    while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) > 1) && (Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) < 359))) {
                         _moveCts.Token.ThrowIfCancellationRequested();
                         await Task.Delay(TimeSpan.FromSeconds(1));
                         Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.MechanicalPosition} - Target Position {targetPosition}");
