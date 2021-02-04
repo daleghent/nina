@@ -158,6 +158,7 @@
       <ComponentGroupRef Id="Utility_ExifTool_files" />
       <ComponentGroupRef Id="External_x86_MGEN_files" />
       <ComponentGroupRef Id="External_x64_MGEN_files" />
+      <ComponentGroupRef Id="ca_ES_files" />
     </Feature>
   </Product>
 
@@ -308,6 +309,7 @@
             <Directory Id="Sequencer_Examples" Name="Examples" />
           </Directory>
           <Directory Id="cs_CZ" Name="cs-CZ" />
+          <Directory Id="ca_ES" Name="ca-ES" />
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -384,9 +386,9 @@
       <Component Win64="$(var.Win64)" Id="EntityFramework.SqlServer.dll" Guid="18df716e-b515-49c3-a315-23c5a943a404">
         <File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="$(var.NINA_TargetDir)EntityFramework.SqlServer.dll" />
       </Component>
-	  <Component Win64="$(var.Win64)" Id="Fastenshtein.dll" Guid="3A028268-64BC-4C7E-9895-56BEC5BA259C">
-		<File Id="Fastenshtein.dll" Name="Fastenshtein.dll" Source="$(var.NINA_TargetDir)Fastenshtein.dll" />
-	  </Component>
+      <Component Win64="$(var.Win64)" Id="Fastenshtein.dll" Guid="3A028268-64BC-4C7E-9895-56BEC5BA259C">
+        <File Id="Fastenshtein.dll" Name="Fastenshtein.dll" Source="$(var.NINA_TargetDir)Fastenshtein.dll" />
+      </Component>
       <Component Win64="$(var.Win64)" Id="Microsoft.Expression.Interactions.dll" Guid="910f12b3-7310-493b-8ccd-0332a42f3a7c">
         <File Id="Microsoft.Expression.Interactions.dll" Name="Microsoft.Expression.Interactions.dll" Source="$(var.NINA_TargetDir)Microsoft.Expression.Interactions.dll" />
       </Component>
@@ -1853,14 +1855,21 @@
   <Fragment>
     <ComponentGroup Id="External_x86_MGEN_files" Directory="External_x86_MGEN">
       <Component Win64="$(var.Win64)" Id="External_x86_MGEN_MG3lib.dll" Guid="201815f1-ab9e-462e-97e7-496cf9bdd053">
-        <File  DefaultVersion="65535.0.0.0" Id="External_x86_MGEN_MG3lib.dll" Name="MG3lib.dll" Source="$(var.NINA_TargetDir)External\x86\MGEN\MG3lib.dll" />
+        <File DefaultVersion="65535.0.0.0" Id="External_x86_MGEN_MG3lib.dll" Name="MG3lib.dll" Source="$(var.NINA_TargetDir)External\x86\MGEN\MG3lib.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
     <ComponentGroup Id="External_x64_MGEN_files" Directory="External_x64_MGEN">
       <Component Win64="$(var.Win64)" Id="External_x64_MGEN_MG3lib.dll" Guid="25032fe1-1d0f-4a32-b73e-0a6ff8895766">
-        <File  DefaultVersion="65535.0.0.0" Id="External_x64_MGEN_MG3lib.dll" Name="MG3lib.dll" Source="$(var.NINA_TargetDir)External\x64\MGEN\MG3lib.dll" />
+        <File DefaultVersion="65535.0.0.0" Id="External_x64_MGEN_MG3lib.dll" Name="MG3lib.dll" Source="$(var.NINA_TargetDir)External\x64\MGEN\MG3lib.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="ca_ES_files" Directory="ca_ES">
+      <Component Id="ca_ES_NINA.resources.dll" Guid="ae5beabb-255a-4314-9b9e-65c0d1b53a5e">
+        <File Id="ca_ES_NINA.resources.dll" Name="NINA.resources.dll" Source="$(var.NINA_TargetDir)ca-ES\NINA.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

@@ -2552,6 +2552,7 @@
     <None Include="packages.config" />
     <None Include="Resources\avalondock.config" />
     <SplashScreen Include="Resources\ninasplash.png" />
+    <EmbeddedResource Include="Locale\Locale.ca-ES.resx" />
     <EmbeddedResource Include="Locale\Locale.cs-CZ.resx" />
     <EmbeddedResource Include="Locale\Locale.da-DK.resx">
       <SubType>Designer</SubType>
