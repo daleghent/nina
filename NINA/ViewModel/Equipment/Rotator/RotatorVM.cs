@@ -98,7 +98,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     Logger.Debug($"Move rotator to {targetPosition}°");
 
                     rotator.MoveAbsolute(targetPosition);
-                    while (RotatorInfo.IsMoving || (Math.Abs(RotatorInfo.Position - targetPosition) > 1)) {
+                    while (RotatorInfo.IsMoving || (Math.Abs(RotatorInfo.Position - targetPosition) > 1) || (Math.Abs(RotatorInfo.Position - targetPosition) < 359)) {
                         _moveCts.Token.ThrowIfCancellationRequested();
                         await Task.Delay(TimeSpan.FromSeconds(1));
                         Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.Position} - Target Position {targetPosition}");
