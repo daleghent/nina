@@ -19,7 +19,6 @@ using QHYCCD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -115,13 +114,7 @@ namespace NINA.Model.MyCamera {
 
         public short BinX {
             get => Info.CurBin;
-            set {
-                if (CameraP != IntPtr.Zero && LibQHYCCD.SetQHYCCDBinMode(CameraP, (uint)value, (uint)value) == LibQHYCCD.QHYCCD_SUCCESS) {
-                    Info.CurBin = value;
-                } else {
-                    Logger.Warning($"QHYCCD: Failed to set BIN mode {value}x{value}");
-                }
-            }
+            set => Info.CurBin = value;
         }
 
         /// <summary>
@@ -359,8 +352,24 @@ namespace NINA.Model.MyCamera {
 
         public int OffsetMax => Info.OffMax;
         public int OffsetMin => Info.OffMin;
-        public double PixelSizeX => Info.PixelX;
-        public double PixelSizeY => Info.PixelY;
+
+        public double PixelSizeX {
+            get => Info.PixelX;
+            private set {
+                Logger.Debug($"QHYCCD: Setting PixelSizeX to {value}");
+                Info.PixelX = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public double PixelSizeY {
+            get => Info.PixelY;
+            private set {
+                Logger.Debug($"QHYCCD: Setting PixelSizeY to {value}");
+                Info.PixelY = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public short ReadoutModeForNormalImages {
             get => _readoutModeForNormalImages;
@@ -403,7 +412,12 @@ namespace NINA.Model.MyCamera {
 
                     if ((rv = LibQHYCCD.SetQHYCCDReadMode(CameraP, (uint)value)) != LibQHYCCD.QHYCCD_SUCCESS) {
                         Logger.Error($"QHYCCD: SetQHYCCDReadMode() failed. Returned {rv}");
+                        return;
                     }
+
+                    LibQHYCCD.N_InitQHYCCD(CameraP);
+
+                    SetImageResolution();
                 }
             }
         }
@@ -637,51 +651,21 @@ namespace NINA.Model.MyCamera {
                  * from now on.
                  */
                 CameraP = LibQHYCCD.N_OpenQHYCCD(cameraID);
-
-                /*
-                 * Set whether we will call GetQHYCCDSingleFrame and friends, or GetQHYCCDLiveFrame and friends.
-                 * Note that changing this value requires completely disconnecting and reconnecting the camera,
-                 * which is handled in ReconnectForLiveView.
-                 */
-                if (LiveViewEnabled) {
-                    Logger.Debug($"QHYCCD: Stream mode is video stream");
-                    ThrowOnFailure("SetQHYCCDStreamMode", LibQHYCCD.SetQHYCCDStreamMode(CameraP, (byte)LibQHYCCD.QHYCCD_CAMERA_MODE.VIDEO_STREAM));
-                } else {
-                    Logger.Debug($"QHYCCD: Stream mode is single exposure");
-                    ThrowOnFailure("SetQHYCCDStreamMode", LibQHYCCD.SetQHYCCDStreamMode(CameraP, (byte)LibQHYCCD.QHYCCD_CAMERA_MODE.SINGLE_EXPOSURE));
-                }
+                ThrowOnFailure("SetQHYCCDStreamMode", LibQHYCCD.SetQHYCCDStreamMode(CameraP, (byte)LibQHYCCD.QHYCCD_CAMERA_MODE.SINGLE_EXPOSURE));
 
                 /*
                  * Initialize the camera and make it available for use
                  */
                 LibQHYCCD.N_InitQHYCCD(CameraP);
 
-                ThrowOnFailure("GetQHYCCDChipInfo", LibQHYCCD.GetQHYCCDChipInfo(CameraP,
-                    ref Info.ChipX, ref Info.ChipY,
-                    ref Info.ImageX, ref Info.ImageY,
-                    ref Info.PixelX, ref Info.PixelY,
-                    ref Info.Bpp));
-
-                Logger.Debug($"QHYCCD: Chip Info: ChipX={Info.ChipX}mm, ChipY={Info.ChipY}mm, ImageX={Info.ImageX}, ImageY={Info.ImageY}, PixelX={Info.PixelX}um, PixelY={Info.PixelY}um, bpp={Info.Bpp}");
-
-                /*
-                    * The Effective Area is a sensor's real imaging area. On sensors that have an overscan area, the effective area will be smaller than
-                    * the sensor's dimensions that were reported by GetQHYCCDChipInfo(). If the sensor does not have an overscan area, the values should be equal.
-                    */
-                ThrowOnFailure("GetQHYCCDEffectiveArea", LibQHYCCD.GetQHYCCDEffectiveArea(CameraP, ref Info.EffectiveArea.StartX, ref Info.EffectiveArea.StartY, ref Info.EffectiveArea.SizeX, ref Info.EffectiveArea.SizeY));
-                Logger.Debug($"QHYCCD: Effective Area: StartX={Info.EffectiveArea.StartX}, StartY={Info.EffectiveArea.StartY}, SizeX={Info.EffectiveArea.SizeX}, SizeY={Info.EffectiveArea.SizeY}");
-
-                ThrowOnFailure("GetQHYCCDOverScanArea", LibQHYCCD.GetQHYCCDOverScanArea(CameraP, ref Info.OverscanArea.StartX, ref Info.OverscanArea.StartY, ref Info.OverscanArea.SizeX, ref Info.OverscanArea.SizeY));
-                Logger.Debug($"QHYCCD: Overscan Area: StartX={Info.OverscanArea.StartX}, StartY={Info.OverscanArea.StartY}, SizeX={Info.OverscanArea.SizeX}, SizeY={Info.OverscanArea.SizeY}");
-
                 SetImageResolution();
 
                 /*
-                    * Is this a color sensor or not?
-                    * If so, do not debayer the image data
-                    */
+                 * Is this a color sensor or not?
+                 * If so, do not debayer the image data
+                 */
                 if (GetSensorType() == true) {
-                    Logger.Info($"QHYCCD: Color camera detected (pattern = {Info.BayerPattern.ToString()}). Setting debayering to off");
+                    Logger.Info($"QHYCCD: Color camera detected (pattern = {Info.BayerPattern}). Setting debayering to off");
                     ThrowOnFailure("SetQHYCCDDebayerOnOff", LibQHYCCD.SetQHYCCDDebayerOnOff(CameraP, false));
                     Info.IsColorCam = true;
                 } else {
@@ -982,6 +966,7 @@ namespace NINA.Model.MyCamera {
 
         public void StartExposure(CaptureSequence sequence) {
             RaiseIfNotConnected();
+            uint rv;
             uint startx, starty, sizex, sizey;
             bool isSnap;
 
@@ -1004,10 +989,8 @@ namespace NINA.Model.MyCamera {
                 }
             }
 
-            if (!SetResolution(out startx, out starty, out sizex, out sizey)) {
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                return;
-            }
+            /* Exposure readout mode */
+            ReadoutMode = isSnap ? ReadoutModeForSnapImages : ReadoutModeForNormalImages;
 
             /* Exposure bit depth */
             if (LibQHYCCD.SetQHYCCDBitsMode(CameraP, (uint)BitDepth) != LibQHYCCD.QHYCCD_SUCCESS) {
@@ -1022,8 +1005,23 @@ namespace NINA.Model.MyCamera {
                 return;
             }
 
-            /* Exposure readout mode */
-            ReadoutMode = isSnap ? ReadoutModeForSnapImages : ReadoutModeForNormalImages;
+            /*
+             * Set binning
+             * Certain models of camera require a 200ms pause after setting the bin mode.
+             * SetQHYCCDBinMode() will return QHYCCD_DELAY_200MS if that is required.
+             */
+            if ((rv = LibQHYCCD.SetQHYCCDBinMode(CameraP, (uint)BinX, (uint)BinY)) != LibQHYCCD.QHYCCD_SUCCESS) {
+                if (rv == LibQHYCCD.QHYCCD_DELAY_200MS) {
+                    Thread.Sleep(200);
+                } else {
+                    Logger.Warning($"QHYCCD: Failed to set BIN mode {BinX}x{BinY}");
+                }
+            }
+
+            if (!SetResolution(out startx, out starty, out sizex, out sizey)) {
+                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
+                return;
+            }
 
             /*
              * Calculate exposure array size, with overflow protection.
@@ -1036,30 +1034,16 @@ namespace NINA.Model.MyCamera {
              * Initiate the exposure
              */
             Logger.Debug("QHYCCD: Starting exposure...");
-
+            CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.EXPOSING.ToString();
             if (LibQHYCCD.ExpQHYCCDSingleFrame(CameraP) == LibQHYCCD.QHYCCD_ERROR) {
                 Logger.Warning("QHYCCD: Failed to initiate the exposure!");
                 CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
                 return;
             }
 
-            CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.EXPOSING.ToString();
-
             downloadExposureTaskCTS?.Dispose();
             downloadExposureTaskCTS = new CancellationTokenSource();
             downloadExposureTask = StartDownloadExposure(downloadExposureTaskCTS.Token);
-        }
-
-        private void ReconnectForLiveView() {
-            // Steps documented as required when changing live view:
-            // CloseQHYCCD
-            // ReleaseQHYCCDResource
-            // ScanQHYCCD
-            // OpenQHYCCD
-            // SetLiveStreamMode
-            // It appears that ReleaseQHYCCDResource and ScanQHYCCD can be skipped in newer drivers?
-            Disconnect();
-            ConnectSync();
         }
 
         public void StartLiveView() {
@@ -1086,19 +1070,47 @@ namespace NINA.Model.MyCamera {
         }
 
         private void SetImageResolution() {
-            if (QhyIncludeOverscan) {
-                StartPixelX = 0;
-                StartPixelY = 0;
-                CameraXSize = (int)Info.ImageX;
-                CameraYSize = (int)Info.ImageY;
-            } else {
-                StartPixelX = Info.EffectiveArea.StartX;
-                StartPixelY = Info.EffectiveArea.StartY;
-                CameraXSize = (int)Info.EffectiveArea.SizeX;
-                CameraYSize = (int)Info.EffectiveArea.SizeY;
+            double pixelx = 0, pixely = 0;
+
+            /*
+             * Get full sensor size and pixel dimensions
+             */
+            ThrowOnFailure("GetQHYCCDChipInfo", LibQHYCCD.GetQHYCCDChipInfo(CameraP,
+                ref Info.ChipX, ref Info.ChipY,
+                ref Info.FullArea.SizeX, ref Info.FullArea.SizeY,
+                ref pixelx, ref pixely,
+                ref Info.Bpp));
+
+            Info.FullArea.StartX = Info.FullArea.StartY = 0;
+            Logger.Debug($"QHYCCD: Chip Info: ChipX={Info.ChipX}mm, ChipY={Info.ChipY}mm, SizeX={Info.FullArea.SizeX}, SizeY={Info.FullArea.SizeY}, PixelX={pixelx}um, PixelY={pixely}um, bpp={Info.Bpp}");
+
+            /*
+             * Update the pixel size if it has changed (eg; QHY294M/C Pro)
+             * Other NINA processes depend on pixel size being accurate and source this info from the profile, so we must update that as well.
+             */
+            if (PixelSizeX != pixelx) {
+                profileService.ActiveProfile.CameraSettings.PixelSize = PixelSizeX = pixelx;
+                PixelSizeY = pixely;
             }
 
-            Logger.Debug($"QHYCCD: Base sensor dimensions used: Overscan={QhyIncludeOverscan}, startx={StartPixelX}, starty={StartPixelY}, width={CameraXSize}, height={CameraYSize}");
+            /*
+             * The Effective Area is a sensor's real imaging area. On sensors that have an overscan area, the effective area will be smaller than
+             * the sensor's dimensions that were reported by GetQHYCCDChipInfo(). If the sensor does not have an overscan area, the values should be equal.
+             */
+            ThrowOnFailure("GetQHYCCDEffectiveArea", LibQHYCCD.GetQHYCCDEffectiveArea(CameraP, ref Info.EffectiveArea.StartX, ref Info.EffectiveArea.StartY, ref Info.EffectiveArea.SizeX, ref Info.EffectiveArea.SizeY));
+            Logger.Debug($"QHYCCD: Effective Area: StartX={Info.EffectiveArea.StartX}, StartY={Info.EffectiveArea.StartY}, SizeX={Info.EffectiveArea.SizeX}, SizeY={Info.EffectiveArea.SizeY}");
+
+            if (QhyIncludeOverscan) {
+                CameraXSize = (int)Info.FullArea.SizeX;
+                CameraYSize = (int)Info.FullArea.SizeY;
+                SetControlValue(LibQHYCCD.CONTROL_ID.CAM_IGNOREOVERSCAN_INTERFACE, 0d);
+            } else {
+                CameraXSize = (int)Info.EffectiveArea.SizeX;
+                CameraYSize = (int)Info.EffectiveArea.SizeY;
+                SetControlValue(LibQHYCCD.CONTROL_ID.CAM_IGNOREOVERSCAN_INTERFACE, 1d);
+            }
+
+            Logger.Debug($"QHYCCD: Sensor dimensions used: Overscan={QhyIncludeOverscan}, SizeX={CameraXSize}, SizeY={CameraYSize}");
         }
 
         private uint StartPixelX {

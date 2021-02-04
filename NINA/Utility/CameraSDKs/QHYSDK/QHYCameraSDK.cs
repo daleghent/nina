@@ -35,14 +35,24 @@ namespace QHYCCD {
         #region "QHY SDK constants"
 
         /// <summary>
-        /// SDK Return code: Error
+        /// SDK return code: Error
         /// </summary>
         public const uint QHYCCD_ERROR = 0xFFFFFFFF;
 
         /// <summary>
-        /// SDK eturn code: Success
+        /// SDK return code: Success
         /// </summary>
         public const uint QHYCCD_SUCCESS = 0;
+
+        /// <summary>
+        /// SDK return code: Wait 200ms
+        /// </summary>
+        public const uint QHYCCD_DELAY_200MS = 0x2000;
+
+        /// <summary>
+        /// SDK return code: Wait 200ms
+        /// </summary>
+        public const uint QHYCCD_READ_DIRECTLY = 0x2001;
 
         /// <summary>
         /// Sensor bayer mask pattern
@@ -492,6 +502,9 @@ namespace QHYCCD {
         [DllImport(DLLNAME, EntryPoint = "GetQHYCCDNumberOfReadModes", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public unsafe static extern uint GetQHYCCDNumberOfReadModes(IntPtr handle, ref uint num_modes);
 
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDReadModeResolution", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public unsafe static extern uint GetQHYCCDReadModeResolution(IntPtr handle, uint mode, ref uint width, ref uint height);
+
         [DllImport(DLLNAME, EntryPoint = "GetQHYCCDReadModeName", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
         public unsafe static extern uint GetQHYCCDReadModeName(IntPtr handle, uint mode, StringBuilder mode_name);
 
@@ -512,7 +525,7 @@ namespace QHYCCD {
             uint year = 0, month = 0, day = 0, subday = 0;
             CheckReturn(GetQHYCCDSDKVersion(ref year, ref month, ref day, ref subday), MethodBase.GetCurrentMethod());
 
-            return "20" + year.ToString("D2") + month.ToString("D2") + day.ToString("D2") + "_" + subday.ToString();
+            return year.ToString("D2") + "." + month.ToString("D2") + "." + day.ToString("D2") + "." + subday.ToString();
         }
 
         [DllImport(DLLNAME, EntryPoint = "InitQHYCCD", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
@@ -664,14 +677,14 @@ namespace QHYCCD {
             public QHYCCD_SENSOR_AREA CurImage;
 
             /// <summary>
+            /// The sensor's full dimensions
+            /// </summary>
+            public QHYCCD_SENSOR_AREA FullArea;
+
+            /// <summary>
             /// The sensor's Effective Area dimensions
             /// </summary>
             public QHYCCD_SENSOR_AREA EffectiveArea;
-
-            /// <summary>
-            /// The sensor's Overscan Area dimensions
-            /// </summary>
-            public QHYCCD_SENSOR_AREA OverscanArea;
 
             /// <summary>
             /// Maximum shutter speed
@@ -754,16 +767,6 @@ namespace QHYCCD {
             /// Image array size (bytes)
             /// </summary>
             public uint ImageSize;
-
-            /// <summary>
-            /// Maximum image width (pixels)
-            /// </summary>
-            public uint ImageX;
-
-            /// <summary>
-            /// Maximum image height (pixels)
-            /// </summary>
-            public uint ImageY;
 
             /// <summary>
             /// Camera index number

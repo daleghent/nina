@@ -535,6 +535,9 @@ namespace NINA.ViewModel.Equipment.Camera {
             cameraValues.TryGetValue(nameof(CameraInfo.ExposureMin), out o);
             CameraInfo.ExposureMin = (double)(o ?? 0.0d);
 
+            cameraValues.TryGetValue(nameof(CameraInfo.PixelSize), out o);
+            CameraInfo.PixelSize = (double)(o ?? 0.0d);
+
             DateTime x = DateTime.Now;
             CoolerPowerHistory.Add(new KeyValuePair<DateTime, double>(x, CameraInfo.CoolerPower));
             CCDTemperatureHistory.Add(new KeyValuePair<DateTime, double>(x, CameraInfo.Temperature));
@@ -558,6 +561,7 @@ namespace NINA.ViewModel.Equipment.Camera {
             cameraValues.Add(nameof(CameraInfo.SubSampleHeight), _cam?.SubSampleHeight ?? -1);
             cameraValues.Add(nameof(CameraInfo.ReadoutMode), _cam?.ReadoutMode ?? 0);
             cameraValues.Add(nameof(CameraInfo.ExposureMin), _cam?.ExposureMin ?? 0);
+            cameraValues.Add(nameof(CameraInfo.PixelSize), _cam?.PixelSizeX ?? 0);
 
             if (_cam != null && _cam.CanSetGain) {
                 cameraValues.Add(nameof(CameraInfo.Gain), _cam?.Gain ?? -1);
