@@ -70,7 +70,23 @@
         </mini:MiniSequenceItem>
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type local:TrainedFlatExposure}">
+    <DataTemplate x:Key="NINA.Sequencer.SequenceItem.FlatDevice.TrainedDarkFlatExposure_Mini">
+        <mini:MiniSequenceItem>
+            <mini:MiniSequenceItem.SequenceItemProgressContent>
+                <WrapPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblProgress}" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Text="{Binding Items[4].Conditions[0].CompletedIterations}" />
+                    <TextBlock VerticalAlignment="Center" Text="/" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding Items[4].Conditions[0].Iterations}" />
+                </WrapPanel>
+            </mini:MiniSequenceItem.SequenceItemProgressContent>
+        </mini:MiniSequenceItem>
+    </DataTemplate>
+
+    <ControlTemplate x:Key="TrainedFlatExposureTemplate">
         <view:SequenceBlockView DataContext="{Binding}">
             <view:SequenceBlockView.SequenceItemContent>
                 <WrapPanel DataContext="{Binding Items[4]}" Orientation="Horizontal">
@@ -287,5 +303,13 @@
                 </WrapPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
+    </ControlTemplate>
+
+    <DataTemplate DataType="{x:Type local:TrainedFlatExposure}">
+        <view:SequenceBlockView Template="{StaticResource TrainedFlatExposureTemplate}" />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:TrainedDarkFlatExposure}">
+        <view:SequenceBlockView Template="{StaticResource TrainedFlatExposureTemplate}" />
     </DataTemplate>
 </ResourceDictionary>

@@ -1013,6 +1013,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Looks up the trained exposure value for the specified parameters and takes dark flat exposures.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trained Dark Flat Exposure.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Looks up the trained exposure value for the specified parameters and takes flat exposures.
         /// </summary>
         internal static string Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description {

@@ -596,6 +596,7 @@
     <Compile Include="Sequencer\SequenceItem\FlatDevice\OpenCover.cs" />
     <Compile Include="Sequencer\SequenceItem\FlatDevice\SetBrightness.cs" />
     <Compile Include="Sequencer\SequenceItem\FlatDevice\ToggleLight.cs" />
+    <Compile Include="Sequencer\SequenceItem\FlatDevice\TrainedDarkFlatExposure.cs" />
     <Compile Include="Sequencer\SequenceItem\FlatDevice\TrainedFlatExposure.cs" />
     <Compile Include="Sequencer\SequenceItem\Focuser\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
