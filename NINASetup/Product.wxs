@@ -384,6 +384,9 @@
       <Component Win64="$(var.Win64)" Id="EntityFramework.SqlServer.dll" Guid="18df716e-b515-49c3-a315-23c5a943a404">
         <File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="$(var.NINA_TargetDir)EntityFramework.SqlServer.dll" />
       </Component>
+	  <Component Win64="$(var.Win64)" Id="Fastenshtein.dll" Guid="3A028268-64BC-4C7E-9895-56BEC5BA259C">
+		<File Id="Fastenshtein.dll" Name="Fastenshtein.dll" Source="$(var.NINA_TargetDir)Fastenshtein.dll" />
+	  </Component>
       <Component Win64="$(var.Win64)" Id="Microsoft.Expression.Interactions.dll" Guid="910f12b3-7310-493b-8ccd-0332a42f3a7c">
         <File Id="Microsoft.Expression.Interactions.dll" Name="Microsoft.Expression.Interactions.dll" Source="$(var.NINA_TargetDir)Microsoft.Expression.Interactions.dll" />
       </Component>

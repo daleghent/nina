@@ -6,6 +6,7 @@ MIT
 
 applies to:
     - AsyncEnumerator
+    - Fastenshtein
     - Newtonsoft.Json
     - Nito.AsyncEx
     - NJsonSchema

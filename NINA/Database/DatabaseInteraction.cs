@@ -28,6 +28,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Utility.Extensions;
+using System.Text.RegularExpressions;
 
 namespace NINA.Database {
 
@@ -309,7 +310,7 @@ namespace NINA.Database {
                         }
 
                         if (!string.IsNullOrEmpty(searchParams.ObjectName)) {
-                            var name = searchParams.ObjectName.ToLower();
+                            var name = searchParams.ObjectName.Trim().ToLower();
                             var idQuery = context.CatalogueNrSet.Where(x => x.dsodetailid.ToLower().Contains(name) || (x.catalogue + x.designation).ToLower().Contains(name) || (x.catalogue + " " + x.designation).ToLower().Contains(name)).Select(x => x.dsodetailid).Distinct();
 
                             query = query.Join(idQuery, dsoDetail => dsoDetail.id, e => e, (dsoDetail, id) => dsoDetail);
@@ -355,8 +356,7 @@ namespace NINA.Database {
 
                             dso.AlsoKnownAs = catalogueResult[row.id].Select(x => x.designation).ToList();
 
-                            var longestName = dso.AlsoKnownAs.Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur);
-                            dso.Name = longestName;
+                            dso.Name = GetDisplayAlias(searchParams.ObjectName, dso.AlsoKnownAs);
 
                             if (!string.IsNullOrEmpty(row.constellation)) {
                                 dso.Constellation = row.constellation;
@@ -379,6 +379,59 @@ namespace NINA.Database {
 
                 return dsos;
             }
+        }
+
+        /// <summary>
+        /// Display alias is determined in the following order:
+        ///   1) No value provided, use the longest alias
+        ///   2) Use the alias that starts with the same token as our input, if multiple match, use longest
+        ///   3) Use the alias that has the smallest levenshtein distance, length breaks ties, longest wins.
+        /// </summary>
+        /// <param name="searchName">Token searched for</param>
+        /// <param name="aliases">List of alternate names for a dso</param>
+        /// <returns></returns>
+        public string GetDisplayAlias(string searchName, List<string> aliases) {
+            // No search by name, default to longest
+            if(string.IsNullOrEmpty(searchName)) {
+                return aliases.Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur);
+            }
+
+            string cleanedSearchName = cleanForSearching(searchName);
+
+            var cleanedAliases = aliases
+                .Select(name => new {
+                    name = name,
+                    cleanName = cleanForSearching(name)
+                })
+                .OrderByDescending(alias => alias.cleanName.Length)
+                .ToList();
+
+            // Do any of them start with what we're typing? If so, go with the longest
+            string result = cleanedAliases
+                .Where(alias => alias.cleanName.StartsWith(cleanedSearchName))
+                .Select(alias => alias.name)
+                .FirstOrDefault();
+
+            if (null != result) {
+                return result;
+            }
+
+            // None of them start with it, so let's use levenshtein distance, length breaks ties
+            return cleanedAliases
+                .OrderBy(alias => Fastenshtein.Levenshtein.Distance(cleanedSearchName, alias.cleanName))
+                .ThenByDescending(alias => alias.cleanName.Length)
+                .Select(alias => alias.name)
+                .FirstOrDefault();
+        }
+
+
+        /// <summary>
+        /// Removes non-word characters from a search string, excluding dashes. It leaves dashes in.
+        /// </summary>
+        /// <param name="searchString">Search string to clean</param>
+        /// <returns>Cleaned search string, safe to use to compare</returns>
+        private string cleanForSearching(string token) {
+            return Regex.Replace(token, @"[^\w\-]*", "", RegexOptions.Multiline).ToUpper();
         }
     }
 }

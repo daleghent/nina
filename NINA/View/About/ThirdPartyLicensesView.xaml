@@ -276,6 +276,17 @@
             <TextBlock Grid.Row="19" Grid.Column="2">
                 <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">Apache 2.0</Hyperlink>
             </TextBlock>
+            
+            <TextBlock
+                Grid.Row="20"
+                Grid.Column="0"
+                Text="Fastenshtein" />
+            <TextBlock Grid.Row="20" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/DanHarltey/Fastenshtein" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/DanHarltey/Fastenshtein</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="20" Grid.Column="2">
+                <Hyperlink NavigateUri="https://github.com/DanHarltey/Fastenshtein/blob/master/LICENSE" RequestNavigate="Hyperlink_RequestNavigate">The MIT License</Hyperlink>
+            </TextBlock>
         </Grid>
     </Grid>
 </UserControl>
