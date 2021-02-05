@@ -114,7 +114,7 @@ namespace NINA.Model {
 
         public bool Set(string key, string value) {
             if (patterns.ContainsKey(key) && value != null) {
-                patterns[key].Value = ReplaceAllInvalidFilenameChars(value.Trim());
+                patterns[key].Value = Utility.Utility.ReplaceAllInvalidFilenameChars(value.Trim());
                 return true;
             }
 
@@ -147,35 +147,13 @@ namespace NINA.Model {
 
             var imageFileString = string.Empty;
             for (int i = 0; i < path.Length; i++) {
-                imageFileString = Path.Combine(imageFileString, ReplaceInvalidFilenameChars(path[i]));
+                imageFileString = Path.Combine(imageFileString, Utility.Utility.ReplaceInvalidFilenameChars(path[i]));
             }
 
             return imageFileString;
         }
 
         /// <summary>
-        /// Sanitizes strings for unwanted or illegal filename characters and replaces them with alternatives
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        private string ReplaceAllInvalidFilenameChars(string str) {
-            // Replace forward and back slash with a hyphen
-            str = str.Replace(@"\", "-").Replace(@"/", "-");
-
-            // Replace any invalid path characters with an underscore (OS or filesystem dependent)
-            str = ReplaceInvalidFilenameChars(str);
-
-            return str;
-        }
-
-        /// <summary>
-        /// Sanitizes strings for illegal filename characters
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        private string ReplaceInvalidFilenameChars(string str) {
-            return string.Join("_", str.Split(Path.GetInvalidFileNameChars()));
-        }
 
         internal static ImagePatterns CreateExample() {
             var p = new ImagePatterns();

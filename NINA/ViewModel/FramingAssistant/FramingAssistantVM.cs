@@ -360,6 +360,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 var diagResult = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblClearCache"] + "?", "", MessageBoxButton.YesNo, MessageBoxResult.No);
                 if (diagResult == MessageBoxResult.Yes) {
                     Cache.Clear();
+                    ImageCacheInfo = Cache.Cache;
                     RaisePropertyChanged(nameof(ImageCacheInfo));
                 }
             }
@@ -784,6 +785,10 @@ namespace NINA.ViewModel.FramingAssistant {
 
                     if (skySurveyImage != null) {
                         skySurveyImage.Image.Freeze();
+                        if (!string.IsNullOrWhiteSpace(DeepSkyObjectSearchVM.TargetName)) {
+                            skySurveyImage.Name = DeepSkyObjectSearchVM.TargetName;
+                        }
+
                         if (FramingAssistantSource == SkySurveySource.FILE) {
                             var fileSkySurveyImage = skySurveyImage as FileSkySurveyImage;
 

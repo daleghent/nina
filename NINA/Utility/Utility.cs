@@ -148,5 +148,29 @@ namespace NINA.Utility {
             }
             return "0 Bytes";
         }
+
+        /// <summary>
+        /// Sanitizes strings for illegal filename characters
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string ReplaceInvalidFilenameChars(string str) {
+            return string.Join("_", str.Split(Path.GetInvalidFileNameChars()));
+        }
+
+        /// <summary>
+        /// Sanitizes strings for unwanted or illegal filename characters and replaces them with alternatives
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string ReplaceAllInvalidFilenameChars(string str) {
+            // Replace forward and back slash with a hyphen
+            str = str.Replace(@"\", "-").Replace(@"/", "-");
+
+            // Replace any invalid path characters with an underscore (OS or filesystem dependent)
+            str = ReplaceInvalidFilenameChars(str);
+
+            return str;
+        }
     }
 }

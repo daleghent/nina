@@ -99,7 +99,8 @@ namespace NINA.Utility.SkySurvey {
                             Directory.CreateDirectory(framingAssistantCachePath);
                         }
 
-                        var imgFilePath = Path.Combine(framingAssistantCachePath, skySurveyImage.Name + ".jpg");
+                        var sanitizedName = Utility.ReplaceAllInvalidFilenameChars(skySurveyImage.Name);
+                        var imgFilePath = Path.Combine(framingAssistantCachePath, sanitizedName + ".jpg");
 
                         imgFilePath = Utility.GetUniqueFilePath(imgFilePath);
                         var name = Path.GetFileNameWithoutExtension(imgFilePath);
