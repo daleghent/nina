@@ -173,7 +173,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - **Nikon:** 1.3.2.3000
 - **Omegon:** 39.15325.2019.810
 - **QHY:** 20.8.26.3
-- **ToupTek:** 46.17309.2020.616
+- **ToupTek:** 48.18081.2020.1205
 - **ZWO:** 1.15.9.15
 
 # Version 1.10 HF1
