@@ -185,7 +185,7 @@ namespace NINA.Sequencer {
         }
 
         private string GetTemplateFileName(ISequenceContainer container) {
-            return container.Name + TemplateFileExtension;
+            return NINA.Utility.Utility.ReplaceAllInvalidFilenameChars(container.Name) + TemplateFileExtension;
         }
     }
 

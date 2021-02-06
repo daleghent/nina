@@ -77,7 +77,7 @@ namespace NINA.Sequencer {
         public void AddTarget(IDeepSkyObjectContainer deepSkyObjectContainer) {
             try {
                 var jsonContainer = sequenceJsonConverter.Serialize(deepSkyObjectContainer);
-                File.WriteAllText(Path.Combine(targetPath, deepSkyObjectContainer.Name + ".json"), jsonContainer);
+                File.WriteAllText(Path.Combine(targetPath, NINA.Utility.Utility.ReplaceAllInvalidFilenameChars(deepSkyObjectContainer.Name) + ".json"), jsonContainer);
 
                 var existingTarget = Targets.FirstOrDefault(x => x.Name == deepSkyObjectContainer.Name);
                 if (existingTarget != null) {
@@ -138,7 +138,7 @@ namespace NINA.Sequencer {
 
         public void DeleteTarget(TargetSequenceContainer targetSequenceContainer) {
             try {
-                var file = Path.Combine(targetPath, targetSequenceContainer.Name + ".json");
+                var file = Path.Combine(targetPath, NINA.Utility.Utility.ReplaceAllInvalidFilenameChars(targetSequenceContainer.Name) + ".json");
                 if (File.Exists(file)) {
                     File.Delete(file);
                 }
