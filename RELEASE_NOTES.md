@@ -166,7 +166,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Fixed an issue in Framing Assistant when solving a file, that the near solver was incorrectly used as the blind solver
 
 ## Included Camera SDK Versions:
-- **Altair Astro:** 48.17962.2020.1110
+- **Altair Astro:** 48.18421.20210202
 - **Atik:** 2020.08.3.642
 - **Canon:** 13.13.0.6408
 - **FLI:** 1.104.0.0
