@@ -34,6 +34,12 @@ namespace NINA.Profile {
             if (Culture == "es-US") {
                 Culture = "es-ES";
             }
+            if (!Directory.Exists(SkySurveyCacheDirectory)) {
+                SkySurveyCacheDirectory = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "FramingAssistantCache");
+            }
+            if (!Directory.Exists(SkyAtlasImageRepository)) {
+                SkyAtlasImageRepository = string.Empty;
+            }
         }
 
         protected override void SetDefaultValues() {

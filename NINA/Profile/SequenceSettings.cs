@@ -31,6 +31,25 @@ namespace NINA.Profile {
             SetDefaultValues();
         }
 
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context) {
+            if (!Directory.Exists(DefaultSequenceFolder)) {
+                DefaultSequenceFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A");
+            }
+            if (!Directory.Exists(SequencerTemplatesFolder)) {
+                SequencerTemplatesFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A", "Templates");
+            }
+            if (!Directory.Exists(SequencerTargetsFolder)) {
+                SequencerTargetsFolder = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A", "Targets");
+            }
+            if (!File.Exists(TemplatePath)) {
+                TemplatePath = string.Empty;
+            }
+            if (!File.Exists(StartupSequenceTemplate)) {
+                StartupSequenceTemplate = string.Empty;
+            }
+        }
+
         protected override void SetDefaultValues() {
             doMeridianFlip = false;
             parkMountAtSequenceEnd = false;
