@@ -1089,7 +1089,7 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        public void Park(IProgress<ApplicationStatus> progress, CancellationToken token) {
+        public void Park() {
             if (Connected && CanPark) {
                 _telescope.Park();
             }
