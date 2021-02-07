@@ -84,7 +84,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         public void ShouldTrigger_HistoryNotLargeEnough_False(int sampleSize) {
             var history = new List<ImageHistoryPoint>();
             for (int i = 0; i < sampleSize; i++) {
-                history.Add(new ImageHistoryPoint(0, null));
+                history.Add(new ImageHistoryPoint(0, null, "LIGHT"));
             }
             historyMock.SetupGet(x => x.ImageHistory).Returns(history);
 
@@ -106,8 +106,8 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         public void ShouldTrigger_HistoryExists_NoPreviousAFs_True(double[] hfrs, double changeAmount, bool shouldTrigger) {
             var history = new List<ImageHistoryPoint>();
             for (int i = 0; i < hfrs.Length; i++) {
-                var p = new ImageHistoryPoint(i, null);
-                p.PopulateSDPoint(new StarDetectionAnalysis() { DetectedStars = i, HFR = hfrs[i] });
+                var p = new ImageHistoryPoint(i, null, "LIGHT");
+                p.PopulateProperties(new ImageSavedEventArgs() { StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = 1, HFR = hfrs[i] } });
                 history.Add(p);
             }
             historyMock.SetupGet(x => x.ImageHistory).Returns(history);
@@ -131,8 +131,9 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         public void ShouldTrigger_HistoryExists_NoPreviousAFsButSampleSize_True(double[] hfrs, double changeAmount, bool shouldTrigger) {
             var history = new List<ImageHistoryPoint>();
             for (int i = 0; i < hfrs.Length; i++) {
-                var p = new ImageHistoryPoint(i, null);
-                p.PopulateSDPoint(new StarDetectionAnalysis() { DetectedStars = i, HFR = hfrs[i] });
+                var p = new ImageHistoryPoint(i, null, "LIGHT");
+                //p.PopulateSDPoint(new StarDetectionAnalysis() { DetectedStars = i, HFR = hfrs[i] });
+                p.PopulateProperties(new ImageSavedEventArgs() { StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = 1, HFR = hfrs[i] } });
                 history.Add(p);
             }
             historyMock.SetupGet(x => x.ImageHistory).Returns(history);
@@ -156,12 +157,12 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         [TestCase(new double[] { 3, 2.9, 2.8, 2.7 }, 1, false)]
         public void ShouldTrigger_HistoryExists_PreviousAFsExists_True(double[] hfrs, double changeAmount, bool shouldTrigger) {
             var history = new List<ImageHistoryPoint>();
-            history.Add(new ImageHistoryPoint(0, null));
-            history.Add(new ImageHistoryPoint(1, null));
-            history.Add(new ImageHistoryPoint(2, null));
-            history.Add(new ImageHistoryPoint(3, null));
+            history.Add(new ImageHistoryPoint(0, null, "LIGHT"));
+            history.Add(new ImageHistoryPoint(1, null, "LIGHT"));
+            history.Add(new ImageHistoryPoint(2, null, "LIGHT"));
+            history.Add(new ImageHistoryPoint(3, null, "LIGHT"));
 
-            var afPoint = new ImageHistoryPoint(4, null);
+            var afPoint = new ImageHistoryPoint(4, null, "LIGHT");
             afPoint.PopulateAFPoint(new NINA.ViewModel.AutoFocus.AutoFocusReport() {
                 InitialFocusPoint = new NINA.ViewModel.AutoFocus.FocusPoint() { Position = 1000 },
                 CalculatedFocusPoint = new NINA.ViewModel.AutoFocus.FocusPoint() { Position = 1200 },
@@ -170,8 +171,9 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             });
             history.Add(afPoint);
             for (int i = 0; i < hfrs.Length; i++) {
-                var p = new ImageHistoryPoint(i, null);
-                p.PopulateSDPoint(new StarDetectionAnalysis() { DetectedStars = i + 5, HFR = hfrs[i] });
+                var p = new ImageHistoryPoint(i, null, "LIGHT");
+                //p.PopulateSDPoint(new StarDetectionAnalysis() { DetectedStars = i + 5, HFR = hfrs[i] });
+                p.PopulateProperties(new ImageSavedEventArgs() { StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = 1 + 5, HFR = hfrs[i] } });
                 history.Add(p);
             }
             historyMock.SetupGet(x => x.ImageHistory).Returns(history);

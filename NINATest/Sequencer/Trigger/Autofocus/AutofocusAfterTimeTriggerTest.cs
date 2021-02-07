@@ -81,7 +81,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         public void ShouldTrigger_LastAFAsPerInput_ReturnExpected(double lastAFTime, double afterAFTime, bool shouldTrigger) {
             var afHistory = new NINA.Utility.AsyncObservableCollection<ImageHistoryPoint>();
             var report = new AutoFocusReport() { Timestamp = DateTime.Now - TimeSpan.FromMinutes(lastAFTime) };
-            var point = new ImageHistoryPoint(0, null);
+            var point = new ImageHistoryPoint(0, null, "LIGHT");
             point.PopulateAFPoint(report);
             afHistory.Add(point);
 

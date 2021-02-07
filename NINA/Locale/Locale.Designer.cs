@@ -8282,6 +8282,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        internal static string LblHFRHistoryAllFilters {
+            get {
+                return ResourceManager.GetString("LblHFRHistoryAllFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Calculated HFR of image (HFR detection has to be enabled).
         /// </summary>
         internal static string LblHFRPatternDescription {
@@ -8827,6 +8836,15 @@ namespace NINA.Locale {
         internal static string LblLblBlackClippingTooltip {
             get {
                 return ResourceManager.GetString("LblLblBlackClippingTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left side.
+        /// </summary>
+        internal static string LblLeftside {
+            get {
+                return ResourceManager.GetString("LblLeftside", resourceCulture);
             }
         }
         
@@ -11708,6 +11726,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Right side.
+        /// </summary>
+        internal static string LblRightside {
+            get {
+                return ResourceManager.GetString("LblRightside", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rotate Target.
         /// </summary>
         internal static string LblRotateTarget {
@@ -12465,6 +12492,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Snapshots.
+        /// </summary>
+        internal static string LblShowSnapshots {
+            get {
+                return ResourceManager.GetString("LblShowSnapshots", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Side of Pier.
         /// </summary>
         internal static string LblSideOfPier {
@@ -12776,6 +12812,15 @@ namespace NINA.Locale {
         internal static string LblStarFWHM {
             get {
                 return ResourceManager.GetString("LblStarFWHM", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stars.
+        /// </summary>
+        internal static string LblStars {
+            get {
+                return ResourceManager.GetString("LblStars", resourceCulture);
             }
         }
         

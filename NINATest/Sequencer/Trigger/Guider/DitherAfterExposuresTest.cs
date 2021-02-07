@@ -93,7 +93,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
         public void ShouldTrigger_HistoryExists_NoPreviousAFs_True(int historyItems, int afterExpsoures, bool shouldTrigger) {
             var history = new List<ImageHistoryPoint>();
             for (int i = 0; i < historyItems; i++) {
-                history.Add(new ImageHistoryPoint(i, null));
+                history.Add(new ImageHistoryPoint(i, null, "LIGHT"));
             }
             historyMock.SetupGet(x => x.ImageHistory).Returns(history);
 
@@ -109,7 +109,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
         public async Task ShouldTrigger_WithExecute_FlowTest() {
             var history = new List<ImageHistoryPoint>();
             for (int i = 0; i < 10; i++) {
-                history.Add(new ImageHistoryPoint(i, null));
+                history.Add(new ImageHistoryPoint(i, null, "LIGHT"));
             }
             historyMock.SetupGet(x => x.ImageHistory).Returns(history);
 
@@ -120,7 +120,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
             await sut.Execute(default, default, default);
             var test2 = sut.ShouldTrigger(null);
 
-            history.Add(new ImageHistoryPoint(100, null));
+            history.Add(new ImageHistoryPoint(100, null, "LIGHT"));
             var test3 = sut.ShouldTrigger(null);
 
             test1.Should().BeTrue();

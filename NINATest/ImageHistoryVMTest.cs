@@ -38,9 +38,9 @@ namespace NINATest {
         public void ImageHistory_ConcurrentId_Order_Test() {
             var sut = new ImageHistoryVM(profileServiceMock.Object, imageSaveMediatorMock.Object);
 
-            Parallel.For(0, 100, (i) => {
-                sut.Add(null);
-            });
+            for (int i = 1; i < 101; i++) {
+                sut.Add(i, null, "LIGHT");
+            }
 
             for (int i = 0; i < 100; i++) {
                 sut.ImageHistory[i].Id.Should().Be(i + 1);
@@ -52,25 +52,29 @@ namespace NINATest {
             var sut = new ImageHistoryVM(profileServiceMock.Object, imageSaveMediatorMock.Object);
             var hfr = 10.1234;
             var stars = 12323;
+            var duration = 300;
+            var filter = "Red";
 
-            sut.Add(null);
-            sut.AppendStarDetection(new StarDetectionAnalysis() { DetectedStars = stars, HFR = hfr });
+            sut.Add(1, null, "LIGHT");
+            sut.AppendImageProperties(new ImageSavedEventArgs() { StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = stars, HFR = hfr }, Duration = duration, Filter = filter, MetaData = new ImageMetaData { Image = new ImageParameter { Id = 1 } } });
 
             sut.ObservableImageHistory.First().HFR.Should().Be(hfr);
-            sut.ObservableImageHistory.First().DetectedStars.Should().Be(stars);
+            sut.ObservableImageHistory.First().Stars.Should().Be(stars);
             sut.ImageHistory[0].HFR.Should().Be(hfr);
-            sut.ImageHistory[0].DetectedStars.Should().Be(stars);
+            sut.ImageHistory[0].Stars.Should().Be(stars);
+            sut.ImageHistory[0].Duration.Should().Be(duration);
+            sut.ImageHistory[0].Filter.Should().Be(filter);
         }
 
         [Test]
         public void ImageHistory_LimitedStack_FullConcurrency_Test() {
             var sut = new ImageHistoryVM(profileServiceMock.Object, imageSaveMediatorMock.Object);
 
-            Parallel.For(0, 300, (i) => {
-                sut.Add(null);
-                sut.AppendStarDetection(new StarDetectionAnalysis() { DetectedStars = i, HFR = i });
+            for (int i = 0; i < 300; i++) {
+                sut.Add(i + 1, null, "LIGHT");
+                sut.AppendImageProperties(new ImageSavedEventArgs() { StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = 1, HFR = 1 }, MetaData = new ImageMetaData { Image = new ImageParameter { Id = i + 1 } } });
                 sut.AppendAutoFocusPoint(new NINA.ViewModel.AutoFocus.AutoFocusReport());
-            });
+            }
 
             sut.AutoFocusPoints.Select(x => x.Id).Distinct().ToList().Count.Should().BeLessOrEqualTo(300);
             sut.ObservableImageHistory.Count.Should().Be(300);
@@ -81,11 +85,11 @@ namespace NINATest {
         public void ImageHistory_ClearPlot_Test() {
             var sut = new ImageHistoryVM(profileServiceMock.Object, imageSaveMediatorMock.Object);
 
-            Parallel.For(0, 100, (i) => {
-                sut.Add(null);
-                sut.AppendStarDetection(new StarDetectionAnalysis() { DetectedStars = i, HFR = i });
+            for (int i = 0; i < 100; i++) {
+                sut.Add(i + 1, null, "LIGHT");
+                sut.AppendImageProperties(new ImageSavedEventArgs() { StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = 1, HFR = 1 }, MetaData = new ImageMetaData { Image = new ImageParameter { Id = i + 1 } } });
                 sut.AppendAutoFocusPoint(new NINA.ViewModel.AutoFocus.AutoFocusReport());
-            });
+            }
 
             sut.PlotClear();
 

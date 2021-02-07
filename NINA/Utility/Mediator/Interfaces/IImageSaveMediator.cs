@@ -38,6 +38,7 @@ namespace NINA.Utility.Mediator.Interfaces {
     }
 
     public class ImageSavedEventArgs : EventArgs {
+        public ImageMetaData MetaData { get; set; }
         public BitmapSource Image { get; set; }
         public IImageStatistics Statistics { get; set; }
         public IStarDetectionAnalysis StarDetectionAnalysis { get; set; }

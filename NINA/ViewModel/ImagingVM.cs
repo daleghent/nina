@@ -78,6 +78,8 @@ namespace NINA.ViewModel {
 
         private IWeatherDataMediator weatherDataMediator;
 
+        private static int _exposuerId = 0;
+
         public ImagingVM(IProfileService profileService,
                 IImagingMediator imagingMediator,
                 ICameraMediator cameraMediator,
@@ -156,6 +158,7 @@ namespace NINA.ViewModel {
                 DateTime start,
                 RMS rms,
                 string targetName) {
+            metaData.Image.Id = this.ExposureId;
             metaData.Image.ExposureStart = start;
             metaData.Image.Binning = sequence.Binning.Name;
             metaData.Image.ExposureNumber = sequence.ProgressExposureCount;
@@ -364,5 +367,7 @@ namespace NINA.ViewModel {
         public void UpdateDeviceInfo(WeatherDataInfo deviceInfo) {
             this.weatherDataInfo = deviceInfo;
         }
+
+        private int ExposureId { get { return Interlocked.Increment(ref _exposuerId); } }
     }
 }

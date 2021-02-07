@@ -154,6 +154,7 @@ namespace NINA.Model.ImageData {
     }
 
     public class ImageParameter {
+        public int Id { get; set; } = -1;
         public DateTime ExposureStart { get; set; } = DateTime.MinValue;
         public int ExposureNumber { get; set; } = -1;
         public string ImageType { get; set; } = string.Empty;

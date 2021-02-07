@@ -23,6 +23,13 @@ using System.Linq;
 using NINA.ViewModel.Interfaces;
 using NINA.Utility.Mediator.Interfaces;
 using System;
+using NINA.Utility.Enum;
+using System.ComponentModel;
+using System.Windows.Data;
+using System.Windows.Forms;
+using System.IO;
+using CsvHelper;
+using System.Globalization;
 
 namespace NINA.ViewModel.ImageHistory {
 
@@ -38,19 +45,30 @@ namespace NINA.ViewModel.ImageHistory {
             this.imageSaveMediator = imageSaveMediator;
             this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
 
-            _nextStatHistoryId = 0;
             ObservableImageHistory = new AsyncObservableCollection<ImageHistoryPoint>();
+            ObservableImageHistoryView = new AsyncObservableCollection<ImageHistoryPoint>();
             AutoFocusPoints = new AsyncObservableCollection<ImageHistoryPoint>();
+            AutoFocusPointsView = new AsyncObservableCollection<ImageHistoryPoint>();
+
+            ImageHistoryLeftSelected = ImageHistoryEnum.HFR;
+            ImageHistoryRightSelected = ImageHistoryEnum.Stars;
+
+            FilterList = new AsyncObservableCollection<string>();
+            AllFilters = Locale.Loc.Instance["LblHFRHistoryAllFilters"];
+            FilterList.Add(AllFilters);
+            SelectedFilter = AllFilters;
 
             PlotClearCommand = new RelayCommand((object o) => PlotClear());
+            PlotSaveCommand = new RelayCommand((object o) => PlotSave());
         }
 
+        private string AllFilters { get; set; }
+
         private void ImageSaveMediator_ImageSaved(object sender, ImageSavedEventArgs e) {
-            this.AppendStarDetection(e.StarDetectionAnalysis);
+            this.AppendImageProperties(e);
         }
 
         private IImageSaveMediator imageSaveMediator;
-        private int _nextStatHistoryId;
         private AsyncObservableCollection<ImageHistoryPoint> _limitedImageHistoryStack;
 
         public AsyncObservableCollection<ImageHistoryPoint> ObservableImageHistory {
@@ -60,6 +78,48 @@ namespace NINA.ViewModel.ImageHistory {
             set {
                 _limitedImageHistoryStack = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        private AsyncObservableCollection<ImageHistoryPoint> _observableImageHistoryView;
+
+        public AsyncObservableCollection<ImageHistoryPoint> ObservableImageHistoryView {
+            get { return this._observableImageHistoryView; }
+            private set {
+                if (value == this._observableImageHistoryView) {
+                    return;
+                }
+
+                this._observableImageHistoryView = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private int index { get; set; }
+
+        public void FilterImageHistoryList() {
+            // Clear the view and recreate it based on selected filters
+            ObservableImageHistoryView.Clear();
+            index = 1;
+            foreach (ImageHistoryPoint imageHistoryPoint in ObservableImageHistory) {
+                if ((this.SelectedFilter.Equals(AllFilters) || imageHistoryPoint.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || imageHistoryPoint.type == "LIGHT")) {
+                    imageHistoryPoint.Index = index++;
+                    ObservableImageHistoryView.Add(imageHistoryPoint);
+                }
+            }
+            // Now check if AutoFocus points need to be filtered.
+            FilterAutoFocusPoints();
+        }
+
+        public void FilterAutoFocusPoints() {
+            AutoFocusPointsView.Clear();
+            // Check if the autofocuspoint is not filtered
+            foreach (ImageHistoryPoint imageHistoryPoint in AutoFocusPoints) {
+                var imageHistoryItem = ObservableImageHistoryView.FirstOrDefault(item => item.Id == imageHistoryPoint.Id);
+                if (imageHistoryItem != null) {
+                    imageHistoryPoint.Index = imageHistoryItem.Index;
+                    AutoFocusPointsView.Add(imageHistoryPoint);
+                }
             }
         }
 
@@ -75,24 +135,104 @@ namespace NINA.ViewModel.ImageHistory {
             }
         }
 
+        private AsyncObservableCollection<ImageHistoryPoint> autoFocusPointsView;
+
+        public AsyncObservableCollection<ImageHistoryPoint> AutoFocusPointsView {
+            get {
+                return autoFocusPointsView;
+            }
+            set {
+                autoFocusPointsView = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private AsyncObservableCollection<string> _filterList;
+
+        public AsyncObservableCollection<string> FilterList {
+            get {
+                return _filterList;
+            }
+            set {
+                _filterList = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string _selectedFilter;
+
+        public string SelectedFilter {
+            get {
+                return _selectedFilter;
+            }
+            set {
+                _selectedFilter = value;
+                FilterImageHistoryList();
+                RaisePropertyChanged();
+            }
+        }
+
+        private ImageHistoryEnum _imageHistoryLeftSelected;
+
+        public ImageHistoryEnum ImageHistoryLeftSelected {
+            get {
+                return _imageHistoryLeftSelected;
+            }
+            set {
+                _imageHistoryLeftSelected = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private ImageHistoryEnum _imageHistoryRightSelected;
+
+        public ImageHistoryEnum ImageHistoryRightSelected {
+            get {
+                return _imageHistoryRightSelected;
+            }
+            set {
+                _imageHistoryRightSelected = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool showSnapshots = false;
+
+        public bool ShowSnapshots {
+            get => showSnapshots;
+            set {
+                showSnapshots = value;
+                FilterImageHistoryList();
+                RaisePropertyChanged();
+            }
+        }
+
         public List<ImageHistoryPoint> ImageHistory { get; private set; } = new List<ImageHistoryPoint>();
 
         private object lockObj = new object();
 
-        public void Add(IImageStatistics statistics) {
+        public void Add(int id, IImageStatistics statistics, string imageType) {
             lock (lockObj) {
-                var point = new ImageHistoryPoint(Interlocked.Increment(ref _nextStatHistoryId), statistics);
+                var point = new ImageHistoryPoint(id, statistics, imageType);
                 ImageHistory.Add(point);
             }
         }
 
-        public void AppendStarDetection(IStarDetectionAnalysis starDetectionAnalysis) {
-            if (starDetectionAnalysis != null) {
+        public void AppendImageProperties(ImageSavedEventArgs imageSavedEventArgs) {
+            if (imageSavedEventArgs != null) {
                 lock (lockObj) {
-                    var last = ImageHistory.LastOrDefault();
-                    if (last != null) {
-                        last.PopulateSDPoint(starDetectionAnalysis);
-                        ObservableImageHistory.Add(last);
+                    var imageHistoryItem = ImageHistory.FirstOrDefault(item => item.Id == imageSavedEventArgs.MetaData.Image.Id);
+                    if (imageHistoryItem != null) {
+                        imageHistoryItem.PopulateProperties(imageSavedEventArgs);
+                        ObservableImageHistory.Add(imageHistoryItem);
+                        // Check if the filter needs to be added to the list
+                        if (!FilterList.Contains(imageSavedEventArgs.Filter))
+                            FilterList.Add(imageSavedEventArgs.Filter);
+                        // Add to view if it's not filtered
+                        if ((this.SelectedFilter.Equals(AllFilters) || imageHistoryItem.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || imageHistoryItem.type == "LIGHT")) {
+                            imageHistoryItem.Index = index++;
+                            ObservableImageHistoryView.Add(imageHistoryItem);
+                        }
                     }
                 }
             }
@@ -113,8 +253,22 @@ namespace NINA.ViewModel.ImageHistory {
         public void PlotClear() {
             this.ObservableImageHistory.Clear();
             this.AutoFocusPoints.Clear();
+            this.ObservableImageHistoryView.Clear();
+        }
+
+        public void PlotSave() {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.FileName = "history.csv";
+            if (sfd.ShowDialog() == DialogResult.OK) {
+                using (var writer = new StreamWriter(sfd.FileName))
+                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
+                    csv.Configuration.RegisterClassMap<ImageHistoryPointMap>();
+                    csv.WriteRecords(ObservableImageHistory);
+                }
+            }
         }
 
         public ICommand PlotClearCommand { get; private set; }
+        public ICommand PlotSaveCommand { get; private set; }
     }
 }

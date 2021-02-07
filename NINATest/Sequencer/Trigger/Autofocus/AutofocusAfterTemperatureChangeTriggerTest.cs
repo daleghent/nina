@@ -82,7 +82,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         public void ShouldTrigger_LastAFExists(double initialTemp, double tempAmount, double changedTemp, bool shouldTrigger) {
             var afHistory = new NINA.Utility.AsyncObservableCollection<ImageHistoryPoint>();
             var report = new AutoFocusReport() { Temperature = initialTemp };
-            var point = new ImageHistoryPoint(0, null);
+            var point = new ImageHistoryPoint(0, null, "LIGHT");
             point.PopulateAFPoint(report);
             afHistory.Add(point);
             historyMock.SetupGet(x => x.AutoFocusPoints).Returns(afHistory);

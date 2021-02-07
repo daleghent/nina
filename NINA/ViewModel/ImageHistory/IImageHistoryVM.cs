@@ -1,5 +1,6 @@
 ﻿using NINA.Model.ImageData;
 using NINA.Utility;
+using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.AutoFocus;
 using System.Collections.Generic;
 using System.Windows.Input;
@@ -12,9 +13,9 @@ namespace NINA.ViewModel.ImageHistory {
         AsyncObservableCollection<ImageHistoryPoint> ObservableImageHistory { get; set; }
         ICommand PlotClearCommand { get; }
 
-        void Add(IImageStatistics statistics);
+        void Add(int id, IImageStatistics statistics, string imageType);
 
-        void AppendStarDetection(IStarDetectionAnalysis starDetectionAnalysis);
+        void AppendImageProperties(ImageSavedEventArgs imageSavedEventArgs);
 
         void AppendAutoFocusPoint(AutoFocusReport report);
 

@@ -21,6 +21,7 @@ using NINA.Utility;
 using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
+using NINA.ViewModel.ImageHistory;
 using System;
 using System.Linq;
 using System.Threading;
@@ -45,13 +46,15 @@ namespace NINA.ViewModel.Imaging {
         private IImagingMediator imagingMediator;
         private IImageSaveMediator imageSaveMediator;
         private IProgress<ApplicationStatus> progress;
+        private IImageHistoryVM imageHistoryVM;
 
         public AnchorableSnapshotVM(
                 IProfileService profileService,
                 IImagingMediator imagingMediator,
                 ICameraMediator cameraMediator,
                 IApplicationStatusMediator applicationStatusMediator,
-                IImageSaveMediator imageSaveMediator) : base(profileService) {
+                IImageSaveMediator imageSaveMediator,
+                IImageHistoryVM imageHistoryVM) : base(profileService) {
             Title = "LblImaging";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ImagingSVG"];
             this.applicationStatusMediator = applicationStatusMediator;
@@ -59,6 +62,7 @@ namespace NINA.ViewModel.Imaging {
             this.cameraMediator.RegisterConsumer(this);
             this.imagingMediator = imagingMediator;
             this.imageSaveMediator = imageSaveMediator;
+            this.imageHistoryVM = imageHistoryVM;
             progress = new Progress<ApplicationStatus>(p => Status = p);
             SnapCommand = new AsyncCommand<bool>(async () => {
                 cameraMediator.RegisterCaptureBlock(this);
@@ -271,8 +275,8 @@ namespace NINA.ViewModel.Imaging {
                     prepareTask = imagingMediator.PrepareImage(imageData, new PrepareImageParameters(), _captureImageToken.Token);
                     if (SnapSave) {
                         progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSavingImage"] });
-
                         await imageSaveMediator.Enqueue(imageData, prepareTask, progress, _captureImageToken.Token);
+                        imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageTypes.SNAPSHOT);
                     }
 
                     _captureImageToken.Token.ThrowIfCancellationRequested();

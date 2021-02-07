@@ -66,6 +66,7 @@ namespace NINA.ViewModel {
 
                     imageSaveMediator.OnImageSaved(
                         new ImageSavedEventArgs() {
+                            MetaData = preparedData.RawImageData.MetaData,
                             PathToImage = new Uri(path),
                             Image = preparedData.Image,
                             FileType = profileService.ActiveProfile.ImageFileSettings.FileType,

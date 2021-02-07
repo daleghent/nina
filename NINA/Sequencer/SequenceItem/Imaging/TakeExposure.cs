@@ -164,7 +164,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 await imageSaveMediator.Enqueue(imageData, prepareTask, progress, token);
 
                 if (IsLightSequence()) {
-                    imageHistoryVM.Add(await imageData.Statistics);
+                    imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageType);
                 }
 
                 ExposureCount++;
