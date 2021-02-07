@@ -539,6 +539,9 @@
       <Component Id="CsvHelper.dll" Guid="baf61ce7-a975-487c-b788-a87f47a31fe1">
         <File Id="CsvHelper.dll" Name="CsvHelper.dll" Source="$(var.NINA_TargetDir)CsvHelper.dll" />
       </Component>
+      <Component Id="System.Threading.Tasks.Extensions.dll" Guid="4470cd68-bc00-49fd-848f-898082bd6ff9">
+        <File Id="System.Threading.Tasks.Extensions.dll" Name="System.Threading.Tasks.Extensions.dll" Source="$(var.NINA_TargetDir)System.Threading.Tasks.Extensions.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
   <!--<Fragment>
