@@ -98,26 +98,44 @@ namespace NINA.ViewModel.Equipment.Telescope {
         }
 
         public async Task<bool> ParkTelescope(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Telescope.CanPark && Telescope.CanSetPark) { //Park position can be set, assume user set it properly
-                Logger.Trace("Telescope will park according to mount defined park position");
-                await Telescope.Park(progress, token);
-            } else if (Telescope.CanPark) { //Park position cannot be set, mount could park right where it is, slew first
-                Coordinates targetCoords = GetHomeCoordinates(Telescope.Coordinates);
-                Logger.Trace(String.Format("Telescope will slew to RA {0} and Dec {1}", targetCoords.RAString, targetCoords.DecString));
-                await SlewToCoordinatesAsync(targetCoords, token);
-                Logger.Trace("Telescope will stop tracking");
-                SetTrackingEnabled(false);
-                Logger.Trace("Telescope will now park according to mount defined park method");
-                await Telescope.Park(progress, token);
-            } else { //Telescope cannot park, slew and stop tracking
-                Coordinates targetCoords = GetHomeCoordinates(telescopeInfo.Coordinates);
-                Logger.Trace(String.Format("Telescope will slew to RA {0} and Dec {1}", targetCoords.RAString, targetCoords.DecString));
-                await SlewToCoordinatesAsync(targetCoords, token);
-                Logger.Trace("Telescope will stop tracking");
-                SetTrackingEnabled(false);
-            }
-            Logger.Trace("Telescope has been parked");
-            return true;
+            bool result = true;
+
+            await Task.Run(async () => {
+                Logger.Trace("Telescope has been commanded to park");
+
+                try {
+                    if (Telescope.CanPark) {
+                        if (!Telescope.AtPark) {
+                            progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblWaitingForTelescopeToPark"] });
+                            Telescope.Park();
+
+                            while (!Telescope.AtPark) {
+                                await Utility.Utility.Delay(TimeSpan.FromSeconds(2), CancellationToken.None);
+                            }
+                        } else {
+                            Logger.Info("Telescope commanded to park but it is already parked");
+                        }
+                    } else { // Telescope is incapable of parking. Slew safely to the celestial pole and stop tracking instead
+                        Coordinates targetCoords = GetHomeCoordinates(telescopeInfo.Coordinates);
+                        Logger.Trace($"Telescope cannot park. Will slew to RA {targetCoords.RAString}, Dec {targetCoords.DecString}");
+                        await SlewToCoordinatesAsync(targetCoords, token);
+
+                        Logger.Trace("Telescope will stop tracking");
+                        result = SetTrackingEnabled(false);
+                    }
+                } catch (Exception e) {
+                    Logger.Error($"An error occured while attmepting to park: {e}");
+                    Notification.ShowError(e.Message);
+
+                    result = false;
+                } finally {
+                    progress?.Report(new ApplicationStatus { Status = string.Empty });
+                }
+
+                Logger.Trace("Telescope has parked");
+            });
+
+            return result;
         }
 
         public async Task<bool> SetParkPosition() {

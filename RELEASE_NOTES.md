@@ -153,6 +153,8 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.
 
 ## Bugfixes
+- The telescope will no longer go on a journey to the celestial pole before going to the park position
+- Parking the telescope from the Equipment > Telescope screen will no longer cause the UI to freeze while the telescope is in the process of parking
 - When rotator reports final position too early while still reporting IsMoving as true, N.I.N.A. will now still wait for the movement to complete
 - SkyAtlas File Source will now consider binning for solving
 - Fixed issue with filter wheel filter import in options when filters have the same name

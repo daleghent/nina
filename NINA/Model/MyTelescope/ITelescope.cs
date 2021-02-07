@@ -81,7 +81,7 @@ namespace NINA.Model.MyTelescope {
 
         void PulseGuide(GuideDirections direction, int duration);
 
-        Task Park(IProgress<ApplicationStatus> progress, CancellationToken token);
+        void Park();
 
         void Setpark();
 
