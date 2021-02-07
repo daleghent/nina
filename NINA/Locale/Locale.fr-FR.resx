@@ -4614,6 +4614,12 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
     <value>Valeur d'exposition de flat</value>
   </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
+    <value>Looks up the trained exposure value for the specified parameters and takes dark flat exposures</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
+    <value>Trained Dark Flat Exposure</value>
+  </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
     <value>Aucune valeur d'exposition n'a été trouvée pour la combinaison de filtre {0}, gain {1}, binning {2}</value>
   </data>

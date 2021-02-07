@@ -4607,6 +4607,12 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
     <value>Trained Flat Exposure</value>
   </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
+    <value>Looks up the trained exposure value for the specified parameters and takes dark flat exposures</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
+    <value>Trained Dark Flat Exposure</value>
+  </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
     <value>No trained exposure value was found for the combination of filter {0}, gain {1}, binning {2}</value>
   </data>

@@ -4610,6 +4610,12 @@ Dec: {1}</value>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
     <value>Обученная флэт экспозиция</value>
   </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
+    <value>Looks up the trained exposure value for the specified parameters and takes dark flat exposures</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
+    <value>Trained Dark Flat Exposure</value>
+  </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
     <value>Не найдено обученное значение экспозиции для комбинации фильтра {0}, усиления {1}, биннинга {2}</value>
   </data>

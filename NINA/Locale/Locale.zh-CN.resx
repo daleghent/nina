@@ -4617,6 +4617,12 @@
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
     <value>受过训练的平场曝光</value>
   </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
+    <value>Looks up the trained exposure value for the specified parameters and takes dark flat exposures</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
+    <value>Trained Dark Flat Exposure</value>
+  </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
     <value>没有找到以下组合的训练曝光时间：滤镜 {0}，增益 {1}，合并像素 {2}</value>
   </data>

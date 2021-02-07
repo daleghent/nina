@@ -1175,7 +1175,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Ovladač může sledovat</value>
   </data>
   <data name="LblDomeShutterStatus" xml:space="preserve">
-    <value>Stav vrat</value>
+    <value>Stav štěrbiny</value>
   </data>
   <data name="LblDomeCanSetShutter" xml:space="preserve">
     <value>Lze nastavit štěrbinu</value>
@@ -3202,14 +3202,14 @@ Synchronizovat hodnoty?</value>
     <value>Přidat nový prázdný řetězec</value>
   </data>
   <data name="LblTooltipAutoStretch" xml:space="preserve">
-    <value>Zapíná/vypíná automatické Autorozpětí obrazu (pouze náhled)</value>
+    <value>Přepíná automatické Autorozpětí obrazu (pouze náhled)</value>
   </data>
   <data name="LblTooltipBahtinovAnalyzer" xml:space="preserve">
     <value>Bahtinovův analyzátor
 Přetáhněte obdélník na hvězdu s bahtinovskými čarami. NINA provede vyhodnocení a zobrazí chybu.</value>
   </data>
   <data name="LblTooltipCrossHair" xml:space="preserve">
-    <value>Zapíná/vypíná křížový zaměřovač</value>
+    <value>Přepíná křížový zaměřovač</value>
   </data>
   <data name="LblTooltipDemoteSequenceRow" xml:space="preserve">
     <value>Posune řádek dolů v seznamu sekvencí</value>
@@ -3218,7 +3218,7 @@ Přetáhněte obdélník na hvězdu s bahtinovskými čarami. NINA provede vyhod
     <value>Přesune cíl doprava</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Zapne/vypne automatickou detekci a analýzu hvězd (HFR)</value>
+    <value>Přepíná automatickou detekci a analýzu hvězd (HFR)</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Živý Náhled</value>
@@ -3853,7 +3853,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Synchronizuje azimut kupole s hodnotou vypočítanou ze směru dalekohledu a měření kupole</value>
   </data>
   <data name="LblDomeStopTooltip" xml:space="preserve">
-    <value>Zastaví pohyb vrat a otáčení kopule</value>
+    <value>Zastaví pohyb štěrbiny a otáčení kopule</value>
   </data>
   <data name="LblDomeManualSlewTooltip" xml:space="preserve">
     <value>Otočit kopuli na azimut cíle</value>
@@ -4075,13 +4075,13 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Pohyb Levotoč</value>
   </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
-    <value>Pokud je ovladač FindHome podporován, jeho použití před zaparkováním zajistí přejezd na přesné místo. To je užitečné, pokud se baterie k motoru vrat nabíjí, když je zaparkovaná.</value>
+    <value>Pokud je ovladač FindHome podporován, jeho použití před zaparkováním zajistí přejezd na přesné místo. To je užitečné, pokud se baterie k motoru štěrbiny nabíjí, když je zaparkovaná.</value>
   </data>
   <data name="LblDomeCloseOnUnsafe" xml:space="preserve">
     <value>Zavřít při nebezpečných podmínek</value>
   </data>
   <data name="LblDomeCloseOnUnsafeWarning" xml:space="preserve">
-    <value>Uzavření vrat kopule nastalo kvůli nebezpečným podmínkám</value>
+    <value>Uzavření štěrbiny kopule kvůli nebezpečným podmínkám</value>
   </data>
   <data name="LblDomeUnsafeWarning" xml:space="preserve">
     <value>Štěrbinu kopule nelze otevřít z důvodu nebezpečných podmínek</value>
@@ -4597,16 +4597,22 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Jas</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Description" xml:space="preserve">
-    <value>Zapíná nebo vypíná světlo flat zařízení</value>
+    <value>Přepíná světlo flat zařízení</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Name" xml:space="preserve">
     <value>Zapnout Světlo</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description" xml:space="preserve">
-    <value>Zkontroluje cílovou hodnotu expozice pro zadané parametry a provede flat expozice</value>
+    <value>Vyhledá hodnotu expozice z průvodce pro zadané parametry a provede flat expozice</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
     <value>Průvodce Expozicí Flat snímku</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
+    <value>Vyhledá hodnotu expozice z průvodce pro zadané parametry a provede dark flat expozice</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
+    <value>Průvodce Expozicí Dark Flat snímku</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
     <value>Pro kombinaci filtru {0}, zesílení {1}, binningu {2} nebyla nalezena žádná optimální hodnota expozice</value>

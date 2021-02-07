@@ -4608,6 +4608,12 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
     <value>Exposició de flats entrenada</value>
   </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
+    <value>Cerca el valor d’exposició entrenat per als paràmetres especificats i pren exposicions dark flat</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
+    <value>Exposició de dark flat entrenada</value>
+  </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
     <value>No s'ha trobat cap valor d'exposició entrenat per a la combinació de filtre {0}, guany {1}, combinació {2}</value>
   </data>
