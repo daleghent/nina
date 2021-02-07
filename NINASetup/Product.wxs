@@ -536,6 +536,9 @@
       <Component Win64="$(var.Win64)" Id="Microsoft.Bcl.AsyncInterfaces.dll" Guid="35410b3f-f440-4399-b0bc-fa0e4ad5e906">
         <File Id="Microsoft.Bcl.AsyncInterfaces.dll" Name="Microsoft.Bcl.AsyncInterfaces.dll" Source="$(var.NINA_TargetDir)Microsoft.Bcl.AsyncInterfaces.dll" />
       </Component>
+      <Component Id="CsvHelper.dll" Guid="baf61ce7-a975-487c-b788-a87f47a31fe1">
+        <File Id="CsvHelper.dll" Name="CsvHelper.dll" Source="$(var.NINA_TargetDir)CsvHelper.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
   <!--<Fragment>

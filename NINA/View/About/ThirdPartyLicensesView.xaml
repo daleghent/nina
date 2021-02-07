@@ -55,6 +55,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock FontWeight="Bold">Library</TextBlock>
@@ -276,7 +277,7 @@
             <TextBlock Grid.Row="19" Grid.Column="2">
                 <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">Apache 2.0</Hyperlink>
             </TextBlock>
-            
+
             <TextBlock
                 Grid.Row="20"
                 Grid.Column="0"
@@ -286,6 +287,17 @@
             </TextBlock>
             <TextBlock Grid.Row="20" Grid.Column="2">
                 <Hyperlink NavigateUri="https://github.com/DanHarltey/Fastenshtein/blob/master/LICENSE" RequestNavigate="Hyperlink_RequestNavigate">The MIT License</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="21"
+                Grid.Column="0"
+                Text="CsvHelper" />
+            <TextBlock Grid.Row="21" Grid.Column="1">
+                <Hyperlink NavigateUri="https://joshclose.github.io/CsvHelper/" RequestNavigate="Hyperlink_RequestNavigate">https://joshclose.github.io/CsvHelper/</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="21" Grid.Column="2">
+                <Hyperlink NavigateUri="https://opensource.org/licenses/MS-PL" RequestNavigate="Hyperlink_RequestNavigate">Microsoft Public License (MS-PL)</Hyperlink>
             </TextBlock>
         </Grid>
     </Grid>
