@@ -114,14 +114,14 @@
                                     VerticalAlignment="Center"
                                     Columns="2">
                                     <TextBlock Text="{ns:Loc LblSiteLatitude}" />
-                                    <TextBlock Margin="5,0,0,0" Text="{Binding Telescope.SiteLatitude}" />
+                                    <TextBlock Margin="5,0,0,0" Text="{Binding Telescope.SiteLatitude, Converter={StaticResource DegreesToDMSConverter}}" />
                                 </UniformGrid>
                                 <UniformGrid
                                     Margin="0,6,0,6"
                                     VerticalAlignment="Center"
                                     Columns="2">
                                     <TextBlock Text="{ns:Loc LblSiteLongitude}" />
-                                    <TextBlock Margin="5,0,0,0" Text="{Binding Telescope.SiteLongitude}" />
+                                    <TextBlock Margin="5,0,0,0" Text="{Binding Telescope.SiteLongitude, Converter={StaticResource DegreesToDMSConverter}}" />
                                 </UniformGrid>
                             </UniformGrid>
                         </Border>
@@ -586,8 +586,5 @@
                 </Grid>
             </Grid>
         </Grid>
-
-
-
     </Grid>
 </UserControl>
