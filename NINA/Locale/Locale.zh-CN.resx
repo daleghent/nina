@@ -1729,6 +1729,9 @@
   <data name="LblHFRHistory" xml:space="preserve">
     <value>HFR 历史</value>
   </data>
+  <data name="LblHFRHistoryAllFilters" xml:space="preserve">
+    <value>All</value>
+  </data>
   <data name="LblHFRPatternDescription" xml:space="preserve">
     <value>计算图像的 HFR（必须启用HFR检测）</value>
   </data>
@@ -5223,6 +5226,18 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Moving rotator to position {0}</value>
+  </data>
+  <data name="LblLeftside" xml:space="preserve">
+    <value>Left side</value>
+  </data>
+  <data name="LblRightside" xml:space="preserve">
+    <value>Right side</value>
+  </data>
+  <data name="LblStars" xml:space="preserve">
+    <value>Stars</value>
+  </data>
+  <data name="LblShowSnapshots" xml:space="preserve">
+    <value>Snapshots</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
     <value>Slew, Center and Rotate</value>

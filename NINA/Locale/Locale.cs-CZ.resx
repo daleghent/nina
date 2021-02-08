@@ -1720,6 +1720,9 @@ Vypočtené HFR: {2}
   <data name="LblHFRHistory" xml:space="preserve">
     <value>Historie HFR</value>
   </data>
+  <data name="LblHFRHistoryAllFilters" xml:space="preserve">
+    <value>Vše</value>
+  </data>
   <data name="LblHFRPatternDescription" xml:space="preserve">
     <value>Vypočítaný obraz HFR (povolit detekci HFR)</value>
   </data>
@@ -5213,6 +5216,18 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Pohyb rotátoru do polohy {0}</value>
+  </data>
+  <data name="LblLeftside" xml:space="preserve">
+    <value>Levá strana</value>
+  </data>
+  <data name="LblRightside" xml:space="preserve">
+    <value>Pravá strana</value>
+  </data>
+  <data name="LblStars" xml:space="preserve">
+    <value>Hvězdy</value>
+  </data>
+  <data name="LblShowSnapshots" xml:space="preserve">
+    <value>Fotka</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
     <value>Přejezd, Vycentrovat a Otočit</value>

@@ -1724,6 +1724,9 @@ HFR calculat: {2}    </value>
   <data name="LblHFRHistory" xml:space="preserve">
     <value>Històric HFR</value>
   </data>
+  <data name="LblHFRHistoryAllFilters" xml:space="preserve">
+    <value>Tot</value>
+  </data>
   <data name="LblHFRPatternDescription" xml:space="preserve">
     <value>HFR calculat de la imatge (s’ha d’habilitar la detecció HFR)</value>
   </data>
@@ -5214,6 +5217,18 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Movent el rotador a la posició {0}</value>
+  </data>
+  <data name="LblLeftside" xml:space="preserve">
+    <value>Costat esquerra</value>
+  </data>
+  <data name="LblRightside" xml:space="preserve">
+    <value>Costat dret</value>
+  </data>
+  <data name="LblStars" xml:space="preserve">
+    <value>Estrelles</value>
+  </data>
+  <data name="LblShowSnapshots" xml:space="preserve">
+    <value>Instantànies</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
     <value>Gira, Centra i Rota</value>

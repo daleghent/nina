@@ -1722,6 +1722,9 @@ Dec: {1}</value>
   <data name="LblHFRHistory" xml:space="preserve">
     <value>История HFR</value>
   </data>
+  <data name="LblHFRHistoryAllFilters" xml:space="preserve">
+    <value>Все</value>
+  </data>
   <data name="LblHFRPatternDescription" xml:space="preserve">
     <value>Вычисленное значение HFR для изображения (вычисление HFR должно быть включено)</value>
   </data>
@@ -2905,7 +2908,7 @@ Dec: {1}</value>
     <value>Навести</value>
   </data>
   <data name="LblSlewCenter" xml:space="preserve">
-    <value>Slew and Center</value>
+    <value>Двигаться и отцентрировать</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Длительность наведения</value>
@@ -4611,10 +4614,10 @@ Dec: {1}</value>
     <value>Обученная флэт экспозиция</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
-    <value>Looks up the trained exposure value for the specified parameters and takes dark flat exposures</value>
+    <value>Находит настроенное значение экспозиции для указанных параметров и делает темные флэт экспозиции</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
-    <value>Trained Dark Flat Exposure</value>
+    <value>Обученная дарк флэт экспозиция</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
     <value>Не найдено обученное значение экспозиции для комбинации фильтра {0}, усиления {1}, биннинга {2}</value>
@@ -5217,7 +5220,19 @@ Dec: {1}</value>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
     <value>Перемещение ротатора в позицию {0}</value>
   </data>
+  <data name="LblLeftside" xml:space="preserve">
+    <value>Левая сторона</value>
+  </data>
+  <data name="LblRightside" xml:space="preserve">
+    <value>Правая сторона</value>
+  </data>
+  <data name="LblStars" xml:space="preserve">
+    <value>Звезды</value>
+  </data>
+  <data name="LblShowSnapshots" xml:space="preserve">
+    <value>Снимки</value>
+  </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
-    <value>Slew, Center and Rotate</value>
+    <value>Двигаться, отцентрировать и вращать</value>
   </data>
 </root>
