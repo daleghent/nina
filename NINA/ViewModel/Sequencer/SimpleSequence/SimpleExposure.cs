@@ -178,6 +178,10 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
                 Conditions = new ObservableCollection<ISequenceCondition>(Conditions.Select(t => t.Clone() as ISequenceCondition)),
             };
 
+            clone.Enabled = this.Enabled;
+            clone.Dither = this.Dither;
+            clone.ditherAfterExposures.AfterExposures = this.ditherAfterExposures.AfterExposures;
+
             foreach (var item in clone.Items) {
                 item.AttachNewParent(clone);
             }
