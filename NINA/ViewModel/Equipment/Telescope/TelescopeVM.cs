@@ -54,11 +54,19 @@ namespace NINA.ViewModel.Equipment.Telescope {
             ChooseTelescopeCommand = new AsyncCommand<bool>(() => ChooseTelescope());
             CancelChooseTelescopeCommand = new RelayCommand(CancelChooseTelescope);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectTelescope());
-            ParkCommand = new AsyncCommand<bool>(() => ParkTelescope(progress, CancellationToken.None));
+            ParkCommand = new AsyncCommand<bool>(() => {
+                InitCancelSlewTelescope();
+                return ParkTelescope(progress, _cancelSlewTelescopeSource.Token);
+            });
+
             UnparkCommand = new RelayCommand(UnparkTelescope);
             SetParkPositionCommand = new AsyncCommand<bool>(SetParkPosition);
             SlewToCoordinatesCommand = new AsyncCommand<bool>(SlewToCoordinatesInternal);
             RefreshTelescopeListCommand = new RelayCommand(RefreshTelescopeList, o => !(Telescope?.Connected == true));
+            FindHomeCommand = new AsyncCommand<bool>(() => {
+                InitCancelSlewTelescope();
+                return FindHome(progress, _cancelSlewTelescopeSource.Token);
+            });
 
             MoveCommand = new RelayCommand(Move);
             StopMoveCommand = new RelayCommand(StopMove);
@@ -109,8 +117,14 @@ namespace NINA.ViewModel.Equipment.Telescope {
                             progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblWaitingForTelescopeToPark"] });
                             Telescope.Park();
 
+                            // Defend against drivers that might surprise us with a non-conformant async Park()
+                            // Also catch cases where the user cancelled the procedure by hitting the Stop button
                             while (!Telescope.AtPark) {
-                                await Utility.Utility.Delay(TimeSpan.FromSeconds(2), CancellationToken.None);
+                                if (token.IsCancellationRequested) {
+                                    throw new OperationCanceledException("Park canceled by user");
+                                }
+
+                                await Utility.Utility.Delay(TimeSpan.FromSeconds(2), token);
                             }
                         } else {
                             Logger.Info("Telescope commanded to park but it is already parked");
@@ -123,6 +137,9 @@ namespace NINA.ViewModel.Equipment.Telescope {
                         Logger.Trace("Telescope will stop tracking");
                         result = SetTrackingEnabled(false);
                     }
+                } catch (OperationCanceledException e) {
+                    Logger.Warning(e.Message);
+                    Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeParkCancelled"]);
                 } catch (Exception e) {
                     Logger.Error($"An error occured while attmepting to park: {e}");
                     Notification.ShowError(e.Message);
@@ -184,6 +201,69 @@ namespace NINA.ViewModel.Equipment.Telescope {
             if (Telescope.Connected && Telescope.CanUnpark && Telescope.AtPark) {
                 Telescope.Unpark();
             }
+        }
+
+        public async Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            bool success = false;
+            Logger.Trace("Telescope ordered to locate home position");
+
+            await Task.Run(async () => {
+                string reason = string.Empty;
+
+                if (Telescope.Connected) {
+                    if (Telescope.CanFindHome) {
+                        if (!Telescope.AtHome) {
+                            if (!Telescope.AtPark) {
+                                try {
+                                    progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblWaitingForTelescopeToFindHome"] });
+                                    Telescope.FindHome();
+
+                                    // Defend against drivers that might surprise us with a non-conformant async FindHome()
+                                    // Also catch cases where the user cancelled the procedure by hitting the Stop button
+                                    while (!Telescope.AtHome) {
+                                        if (token.IsCancellationRequested) {
+                                            throw new OperationCanceledException("Find home canceled by user");
+                                        }
+
+                                        await Utility.Utility.Delay(TimeSpan.FromSeconds(2), token);
+                                    }
+
+                                    // We are home
+                                    success = true;
+                                } catch (OperationCanceledException e) {
+                                    Logger.Warning(e.Message);
+                                    Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeFindHomeCancelled"]);
+                                } catch (Exception e) {
+                                    reason = e.Message;
+                                    Notification.ShowError(e.Message);
+                                } finally {
+                                    progress?.Report(new ApplicationStatus { Status = string.Empty });
+                                }
+                            } else {
+                                // AtPark == true
+                                Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeAtHomeParkedWarn"]);
+                                reason = "it is parked";
+                            }
+                        } else {
+                            // AtHome == true
+                            Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeAtHomeWarn"]);
+                            reason = "it is already at the home position";
+                        }
+                    } else {
+                        // CanFindHome == false
+                        Notification.ShowError(Locale.Loc.Instance["LblTelescopeNoFindHomeError"]);
+                        reason = "it is not capable of doing so";
+                    }
+                }
+
+                if (success) {
+                    Logger.Trace("Telescope has located its home position");
+                } else {
+                    Logger.Error($"Telescope cannot locate home because {reason}");
+                }
+            });
+
+            return success;
         }
 
         //private DispatcherTimer _updateTelescope;
@@ -283,6 +363,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 Altitude = Telescope.Altitude,
                                 AltitudeString = Telescope.AltitudeString,
                                 AtPark = Telescope.AtPark,
+                                AtHome = Telescope.AtHome,
                                 Azimuth = Telescope.Azimuth,
                                 AzimuthString = Telescope.AzimuthString,
                                 Connected = true,
@@ -305,6 +386,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 TrackingRate = Telescope.TrackingRate,
                                 TrackingEnabled = Telescope.TrackingEnabled,
                                 CanSetTrackingEnabled = Telescope.CanSetTrackingEnabled,
+                                CanFindHome = Telescope.CanFindHome,
                                 CanPark = Telescope.CanPark,
                                 CanSetPark = Telescope.CanSetPark,
                                 EquatorialSystem = Telescope.EquatorialSystem,
@@ -416,6 +498,9 @@ namespace NINA.ViewModel.Equipment.Telescope {
             telescopeValues.TryGetValue(nameof(TelescopeInfo.AtPark), out o);
             TelescopeInfo.AtPark = (bool)(o ?? false);
 
+            telescopeValues.TryGetValue(nameof(TelescopeInfo.AtHome), out o);
+            TelescopeInfo.AtHome = (bool)(o ?? false);
+
             telescopeValues.TryGetValue(nameof(TelescopeInfo.SiteLatitude), out o);
             TelescopeInfo.SiteLatitude = (double)(o ?? double.NaN);
 
@@ -472,6 +557,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
             telescopeValues.Add(nameof(TelescopeInfo.Connected), _telescope?.Connected ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.AtPark), _telescope?.AtPark ?? false);
+            telescopeValues.Add(nameof(TelescopeInfo.AtHome), _telescope?.AtHome ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.CanSetTrackingEnabled), _telescope?.CanSetTrackingEnabled ?? false);
             telescopeValues.Add(nameof(TelescopeInfo.TrackingRate), _telescope?.TrackingRate ?? TrackingRate.STOPPED);
             telescopeValues.Add(nameof(TelescopeInfo.TrackingEnabled), _telescope?.TrackingEnabled ?? false);
@@ -508,6 +594,17 @@ namespace NINA.ViewModel.Equipment.Telescope {
         }
 
         private CancellationTokenSource _cancelChooseTelescopeSource;
+
+        private CancellationTokenSource _cancelSlewTelescopeSource;
+
+        private void InitCancelSlewTelescope() {
+            _cancelSlewTelescopeSource?.Dispose();
+            _cancelSlewTelescopeSource = new CancellationTokenSource();
+        }
+
+        private void CancelSlewTelescope() {
+            _cancelSlewTelescopeSource?.Cancel();
+        }
 
         private async Task<bool> DisconnectTelescope() {
             var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectTelescope"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
@@ -590,6 +687,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
         private void StopSlew(object obj) {
             Telescope.StopSlew();
+            CancelSlewTelescope();
         }
 
         private int _targetDeclinationDegrees;
@@ -820,5 +918,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
         public ICommand SetTrackingEnabledCommand { get; private set; }
 
         public ICommand SetTrackingModeCommand { get; private set; }
+
+        public IAsyncCommand FindHomeCommand { get; private set; }
     }
 }

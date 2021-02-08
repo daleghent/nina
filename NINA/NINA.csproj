@@ -630,6 +630,7 @@
     <Compile Include="Sequencer\SequenceItem\Telescope\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sequencer\SequenceItem\Telescope\FindHome.cs" />
     <Compile Include="Sequencer\SequenceItem\Telescope\SetTracking.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
@@ -671,6 +672,7 @@
     <Compile Include="Utility\Astrometry\CustomHorizon.cs" />
     <Compile Include="Utility\Astrometry\RiseAndSet\NauticalTwilightRiseAndSet.cs" />
     <Compile Include="Utility\AttributeHelper.cs" />
+    <Compile Include="Utility\Converters\InverseMultiBooleanORConverter.cs" />
     <Compile Include="Utility\CustomDateTime.cs" />
     <Compile Include="Utility\Enum\ComparisonOperatorEnum.cs" />
     <Compile Include="Utility\MeridianFlip.cs" />

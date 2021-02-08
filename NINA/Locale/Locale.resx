@@ -5242,4 +5242,37 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblSlewCenterRotate" xml:space="preserve">
     <value>Slew, Center and Rotate</value>
   </data>
+  <data name="LblFindHomeToolTip" xml:space="preserve">
+    <value>Instructs the telescope to locate the home postion</value>
+  </data>
+  <data name="LblHome" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="LblTelescopeAtHomeParkedWarn" xml:space="preserve">
+    <value>Telescope is parked. Cannot locate the home position while parked.</value>
+  </data>
+  <data name="LblTelescopeAtHomeWarn" xml:space="preserve">
+    <value>Telescope is already at the home position.</value>
+  </data>
+  <data name="LblTelescopeCannotFindHome" xml:space="preserve">
+    <value>The telescope does not have a home location capabiltiy.</value>
+  </data>
+  <data name="LblWaitingForTelescopeToFindHome" xml:space="preserve">
+    <value>Waiting for telescope to locate the home position</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_FindHome_Description" xml:space="preserve">
+    <value>Instructs the telescope to locate the home postion. This cannot be done if the telescope is parked</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_FindHome_Name" xml:space="preserve">
+    <value>Find Home</value>
+  </data>
+  <data name="LblTelescopeNoFindHomeError" xml:space="preserve">
+    <value>The telescope has no home location capability</value>
+  </data>
+  <data name="LblTelescopeFindHomeCancelled" xml:space="preserve">
+    <value>Home locate operation cancelled</value>
+  </data>
+  <data name="LblTelescopeParkCancelled" xml:space="preserve">
+    <value>Park operation cancelled</value>
+  </data>
 </root>

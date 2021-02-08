@@ -80,5 +80,9 @@ namespace NINA.Utility.Mediator {
         public bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate) {
             return handler.SetCustomTrackingRate(rightAscensionRate, declinationRate);
         }
+
+        public Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            return handler.FindHome(progress, token);
+        }
     }
 }

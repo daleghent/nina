@@ -63,6 +63,8 @@ namespace NINA.Model.MyTelescope {
         double SiteLongitude { get; set; }
         double SiteElevation { get; }
         bool CanSetSiteLatLong { get; }
+        bool AtHome { get; }
+        bool CanFindHome { get; }
         bool AtPark { get; }
         bool CanPark { get; }
         bool CanUnpark { get; }
@@ -96,5 +98,7 @@ namespace NINA.Model.MyTelescope {
         void SendCommandString(string command);
 
         void SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
+
+        void FindHome();
     }
 }

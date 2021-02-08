@@ -351,7 +351,8 @@
                                 Height="50"
                                 Margin="5"
                                 HorizontalAlignment="Left"
-                                Command="{Binding SlewToCoordinatesCommand}">
+                                Command="{Binding SlewToCoordinatesCommand}"
+                                IsEnabled="{Binding TelescopeInfo.AtPark, Converter={StaticResource InverseBooleanConverter}}">
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSlew}" />
                             </Button>
                         </Grid>
@@ -376,7 +377,7 @@
                                 <RowDefinition Height="100" />
                                 <RowDefinition Height="100" />
                                 <RowDefinition Height="100" />
-                                <RowDefinition Height="50" />
+                                <RowDefinition Height="100" />
                             </Grid.RowDefinitions>
                             <StackPanel
                                 Grid.Row="0"
@@ -426,7 +427,8 @@
                                 Grid.Column="0"
                                 Width="80"
                                 Height="80"
-                                HorizontalAlignment="Right">
+                                HorizontalAlignment="Right"
+                                IsEnabled="{Binding TelescopeInfo.AtPark, Converter={StaticResource InverseBooleanConverter}}">
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblAbbrWest}" />
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewStylusDown">
@@ -454,7 +456,8 @@
                                 Grid.Column="2"
                                 Width="80"
                                 Height="80"
-                                HorizontalAlignment="Left">
+                                HorizontalAlignment="Left"
+                                IsEnabled="{Binding TelescopeInfo.AtPark, Converter={StaticResource InverseBooleanConverter}}">
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblAbbrEast}" />
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewStylusDown">
@@ -482,7 +485,8 @@
                                 Grid.Column="1"
                                 Width="80"
                                 Height="80"
-                                VerticalAlignment="Bottom">
+                                VerticalAlignment="Bottom"
+                                IsEnabled="{Binding TelescopeInfo.AtPark, Converter={StaticResource InverseBooleanConverter}}">
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblAbbrNorth}" />
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewStylusDown">
@@ -510,7 +514,8 @@
                                 Grid.Column="1"
                                 Width="80"
                                 Height="80"
-                                VerticalAlignment="Top">
+                                VerticalAlignment="Top"
+                                IsEnabled="{Binding TelescopeInfo.AtPark, Converter={StaticResource InverseBooleanConverter}}">
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblAbbrSouth}" />
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="PreviewStylusDown">
@@ -539,7 +544,8 @@
                                 Grid.Column="1"
                                 Width="80"
                                 Height="80"
-                                Command="{Binding StopSlewCommand}">
+                                Command="{Binding StopSlewCommand}"
+                                IsEnabled="{Binding TelescopeInfo.AtPark, Converter={StaticResource InverseBooleanConverter}}">
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblStop}" />
                             </Button>
 
@@ -570,6 +576,8 @@
                                 Grid.Column="3"
                                 Width="80"
                                 Height="40"
+                                Margin="0,0,0,0"
+                                VerticalAlignment="Top"
                                 HorizontalAlignment="Right"
                                 Command="{Binding SetParkPositionCommand}"
                                 IsEnabled="{Binding TelescopeInfo.AtPark, Converter={StaticResource InverseBooleanConverter}}"
@@ -580,6 +588,30 @@
                                     </ToolTip>
                                 </Button.ToolTip>
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSetPark}" />
+                            </Button>
+
+                            <Button
+                                Grid.Row="4"
+                                Grid.Column="3"
+                                Width="80"
+                                Height="40"
+                                Margin="0,0,0,10"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Right"
+                                Command="{Binding FindHomeCommand}"
+                                Visibility="{Binding TelescopeInfo.CanFindHome, Converter={StaticResource VisibilityConverter}}">
+                                <Button.IsEnabled>
+                                    <MultiBinding Converter="{StaticResource InverseMultiBooleanORConverter}">
+                                        <Binding Path="TelescopeInfo.AtHome" />
+                                        <Binding Path="TelescopeInfo.AtPark" />
+                                    </MultiBinding>
+                                </Button.IsEnabled>
+                                <Button.ToolTip>
+                                    <ToolTip ToolTipService.ShowOnDisabled="True">
+                                        <TextBlock Text="{ns:Loc LblFindHomeToolTip}" />
+                                    </ToolTip>
+                                </Button.ToolTip>
+                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblHome}" />
                             </Button>
                         </Grid>
                     </GroupBox>

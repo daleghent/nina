@@ -1356,6 +1356,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Instructs the telescope to locate the home postion. This cannot be done if the telescope is parked.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_FindHome_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_FindHome_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find Home.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Telescope_FindHome_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Telescope_FindHome_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Parks the telescope to the park position.
         /// </summary>
         internal static string Lbl_SequenceItem_Telescope_ParkScope_Description {
@@ -7128,6 +7146,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Instructs the telescope to locate the home postion.
+        /// </summary>
+        internal static string LblFindHomeToolTip {
+            get {
+                return ResourceManager.GetString("LblFindHomeToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FITS.
         /// </summary>
         internal static string LblFits {
@@ -8395,6 +8422,15 @@ namespace NINA.Locale {
         internal static string LblHNSKY {
             get {
                 return ResourceManager.GetString("LblHNSKY", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        internal static string LblHome {
+            get {
+                return ResourceManager.GetString("LblHome", resourceCulture);
             }
         }
         
@@ -13361,6 +13397,33 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Telescope is parked. Cannot locate the home position while parked..
+        /// </summary>
+        internal static string LblTelescopeAtHomeParkedWarn {
+            get {
+                return ResourceManager.GetString("LblTelescopeAtHomeParkedWarn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telescope is already at the home position..
+        /// </summary>
+        internal static string LblTelescopeAtHomeWarn {
+            get {
+                return ResourceManager.GetString("LblTelescopeAtHomeWarn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The telescope does not have a home location capabiltiy..
+        /// </summary>
+        internal static string LblTelescopeCannotFindHome {
+            get {
+                return ResourceManager.GetString("LblTelescopeCannotFindHome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telescope cannot Pulse Guide.
         /// </summary>
         internal static string LblTelescopeCannotPulseGuide {
@@ -13406,6 +13469,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Home locate operation cancelled.
+        /// </summary>
+        internal static string LblTelescopeFindHomeCancelled {
+            get {
+                return ResourceManager.GetString("LblTelescopeFindHomeCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dec Guide Rate.
         /// </summary>
         internal static string LblTelescopeGuideRateDec {
@@ -13433,6 +13505,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The telescope has no home location capability.
+        /// </summary>
+        internal static string LblTelescopeNoFindHomeError {
+            get {
+                return ResourceManager.GetString("LblTelescopeNoFindHomeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telescope not connected.
         /// </summary>
         internal static string LblTelescopeNotConnected {
@@ -13456,6 +13537,15 @@ namespace NINA.Locale {
         internal static string LblTelescopeNotTrackingForSync {
             get {
                 return ResourceManager.GetString("LblTelescopeNotTrackingForSync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Park operation cancelled.
+        /// </summary>
+        internal static string LblTelescopeParkCancelled {
+            get {
+                return ResourceManager.GetString("LblTelescopeParkCancelled", resourceCulture);
             }
         }
         
@@ -14785,6 +14875,15 @@ namespace NINA.Locale {
         internal static string LblWaitingForCamera {
             get {
                 return ResourceManager.GetString("LblWaitingForCamera", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for telescope to locate the home position.
+        /// </summary>
+        internal static string LblWaitingForTelescopeToFindHome {
+            get {
+                return ResourceManager.GetString("LblWaitingForTelescopeToFindHome", resourceCulture);
             }
         }
         

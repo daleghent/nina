@@ -1175,6 +1175,17 @@ namespace NINA.Model.MyTelescope {
             return success;
         }
 
+        public void FindHome() {
+            if (Connected && CanFindHome) {
+                try {
+                    _telescope.FindHome();
+                } catch (Exception e) {
+                    Logger.Error(e);
+                    Notification.ShowError(e.Message);
+                }
+            }
+        }
+
         public void Unpark() {
             if (Connected && CanUnpark) {
                 try {

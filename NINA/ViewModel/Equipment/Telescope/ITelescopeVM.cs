@@ -50,5 +50,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
         bool SetTrackingMode(TrackingMode trackingMode);
 
         bool SetCustomTrackingRate(double rightAscensionRate, double declinationRate);
+
+        Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token);
     }
 }

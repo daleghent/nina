@@ -82,4 +82,5 @@
     <converters:SubstractConverter x:Key="SubstractConverter" />
     <converters:DefaultBinningModesConverter x:Key="DefaultBinningModesConverter" />
     <converters:DrawingToMediaBrushConverter x:Key="DrawingToMediaBrushConverter" />
+    <converters:InverseMultiBooleanORConverter x:Key="InverseMultiBooleanORConverter" />
 </ResourceDictionary>

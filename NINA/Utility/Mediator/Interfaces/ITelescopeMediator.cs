@@ -51,5 +51,7 @@ namespace NINA.Utility.Mediator.Interfaces {
         void UnparkTelescope();
 
         Task WaitForSlew(CancellationToken cancellationToken);
+
+        Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token);
     }
 }
