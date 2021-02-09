@@ -1,7 +1,7 @@
-#region "copyright"
+ï»¿#region "copyright"
 
 /*
-    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ï¿½ 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -206,6 +206,17 @@ namespace NINA.Model.MyCamera {
             }
         }
 
+        public bool CanFastReadout {
+            get {
+                if (Connected) {
+                    return Info.HasReadoutSpeed;
+                }
+
+                return false;
+            }
+            private set => Info.HasReadoutSpeed = value;
+        }
+
         public bool CanShowLiveView => false;
         public bool CanSubSample => true;
 
@@ -393,9 +404,13 @@ namespace NINA.Model.MyCamera {
                 uint rv;
 
                 if (Connected) {
-                    if ((rv = LibQHYCCD.GetQHYCCDReadMode(CameraP, ref mode)) != LibQHYCCD.QHYCCD_SUCCESS) {
-                        Logger.Error($"QHYCCD: GetQHYCCDReadMode() failed. Returned {rv}");
-                        return -1;
+                    if (CanFastReadout) {
+                        mode = (uint)GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_SPEED);
+                    } else {
+                        if ((rv = LibQHYCCD.GetQHYCCDReadMode(CameraP, ref mode)) != LibQHYCCD.QHYCCD_SUCCESS) {
+                            Logger.Error($"QHYCCD: GetQHYCCDReadMode() failed. Returned {rv}");
+                            return -1;
+                        }
                     }
 
                     return (short)mode;
@@ -405,19 +420,30 @@ namespace NINA.Model.MyCamera {
             }
             set {
                 uint rv;
+                string modeName = ReadoutModes[value];
 
-                if (Connected && (value != ReadoutMode) && (value < ReadoutModes.Count)) {
-                    string modeName = ReadoutModes[value];
-                    Logger.Debug($"QHYCCD: ReadoutMode: Setting readout mode to {value} ({modeName})");
+                if (Connected) {
+                    if (CanFastReadout) {
+                        if (value >= Info.ReadoutSpeedMin && value <= Info.ReadoutSpeedMax) {
+                            Logger.Debug($"QHYCCD: ReadoutMode: Setting readout speed to {value} ({modeName})");
+                            SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_SPEED, value);
+                        } else {
+                            Logger.Error($"QHYCCD: Invalid readout speed: {value}");
+                            return;
+                        }
+                    } else {
+                        if ((value != ReadoutMode) && (value < ReadoutModes.Count)) {
+                            Logger.Debug($"QHYCCD: ReadoutMode: Setting readout mode to {value} ({modeName})");
+                        }
+                        if ((rv = LibQHYCCD.SetQHYCCDReadMode(CameraP, (uint)value)) != LibQHYCCD.QHYCCD_SUCCESS) {
+                            Logger.Error($"QHYCCD: SetQHYCCDReadMode() failed. Returned {rv}");
+                            return;
+                        }
 
-                    if ((rv = LibQHYCCD.SetQHYCCDReadMode(CameraP, (uint)value)) != LibQHYCCD.QHYCCD_SUCCESS) {
-                        Logger.Error($"QHYCCD: SetQHYCCDReadMode() failed. Returned {rv}");
-                        return;
+                        LibQHYCCD.N_InitQHYCCD(CameraP);
+
+                        SetImageResolution();
                     }
-
-                    LibQHYCCD.N_InitQHYCCD(CameraP);
-
-                    SetImageResolution();
                 }
             }
         }
@@ -673,21 +699,40 @@ namespace NINA.Model.MyCamera {
                 }
 
                 /*
-                    * See if this camera has any readout modes and build a list of their names if so
-                    */
-                ThrowOnFailure("GetQHYCCDNumberOfReadModes", LibQHYCCD.GetQHYCCDNumberOfReadModes(CameraP, ref num_modes));
-                Logger.Debug($"QHYCCD: Camera has {num_modes} readout mode(s)");
+                 * See if the camera offers a fast readout speed
+                 * Readout speeds and readout modes are mutually exclusive and no camera should have both.
+                 */
+                if ((CanFastReadout = IsQHYControl(LibQHYCCD.CONTROL_ID.CONTROL_SPEED)) == true) {
+                    ThrowOnFailure("GetQHYCCDParamMinMaxStep", LibQHYCCD.GetQHYCCDParamMinMaxStep(CameraP,
+                        LibQHYCCD.CONTROL_ID.CONTROL_SPEED, ref min, ref max, ref step));
 
-                /*
-                    * Every camera always has 1 readout mode. We are only interested in getting names for ones that have more than 1
-                    */
-                if (num_modes > 1) {
-                    for (uint i = 0; i < num_modes; i++) {
-                        ThrowOnFailure("GetQHYCCDReadModeName", LibQHYCCD.GetQHYCCDReadModeName(CameraP, i, modeName));
-                        Logger.Debug($"QHYCCD: Found readout mode \"{modeName}\"");
-                        modeList.Add(modeName.ToString());
-                    }
+                    Info.ReadoutSpeedMin = (uint)min;
+                    Info.ReadoutSpeedMax = (uint)max;
+                    Info.ReadoutSpeedStep = (uint)step;
+                    Logger.Debug($"QHYCCD: ReadoutSpeedMin={Info.ReadoutSpeedMin}, ReadoutSpeedMax={Info.ReadoutSpeedMax}, ReadoutSpeedStep={Info.ReadoutSpeedStep}");
+
+                    modeList.Add(Locale.Loc.Instance["LblNormal"]);
+                    modeList.Add(Locale.Loc.Instance["LblFast"]);
                 } else {
+                    /*
+                     * See if this camera has any readout modes and build a list of their names if so
+                     */
+                    ThrowOnFailure("GetQHYCCDNumberOfReadModes", LibQHYCCD.GetQHYCCDNumberOfReadModes(CameraP, ref num_modes));
+                    Logger.Debug($"QHYCCD: Camera has {num_modes} readout mode(s)");
+
+                    /*
+                     * Every camera always has 1 readout mode. We are only interested in getting names for ones that have more than 1
+                     */
+                    if (num_modes > 1) {
+                        for (uint i = 0; i < num_modes; i++) {
+                            ThrowOnFailure("GetQHYCCDReadModeName", LibQHYCCD.GetQHYCCDReadModeName(CameraP, i, modeName));
+                            Logger.Debug($"QHYCCD: Found readout mode \"{modeName}\"");
+                            modeList.Add(modeName.ToString());
+                        }
+                    }
+                }
+
+                if (modeList.Count == 0) {
                     modeList.Add("Default");
                 }
 

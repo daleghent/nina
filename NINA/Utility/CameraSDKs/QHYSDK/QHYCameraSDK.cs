@@ -749,6 +749,11 @@ namespace QHYCCD {
             public bool HasOffset;
 
             /// <summary>
+            /// Camera has readout speeds?
+            /// </summary>
+            public bool HasReadoutSpeed;
+
+            /// <summary>
             /// Camera has mechanical shutter?
             /// </summary>
             public bool HasShutter;
@@ -818,6 +823,21 @@ namespace QHYCCD {
             /// List of readout mode names
             /// </summary>
             public IList<string> ReadoutModes;
+
+            /// <summary>
+            /// Maximum readout speed
+            /// </summary>
+            public uint ReadoutSpeedMax;
+
+            /// <summary>
+            /// Minimum readout speed
+            /// </summary>
+            public uint ReadoutSpeedMin;
+
+            /// <summary>
+            /// Minimum readout speed increment
+            /// </summary>
+            public uint ReadoutSpeedStep;
 
             /// <summary>
             /// List of support bin modes

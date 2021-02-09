@@ -6979,7 +6979,16 @@ namespace NINA.Locale {
                 return ResourceManager.GetString("LblExposureTimeDescription", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Fast.
+        /// </summary>
+        internal static string LblFast {
+            get {
+                return ResourceManager.GetString("LblFast", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Failed to load custom horizon.
         /// </summary>

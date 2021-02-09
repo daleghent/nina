@@ -151,6 +151,8 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ## Improvements
 - Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.
+- Updates to various vendor-supplied SDKs for bug fixes and new model support in the respective native drivers
+- QHY: Legacy CCD models can now select Normal or Fast readout speeds when using the native driver
 
 ## Bugfixes
 - The telescope will no longer go on a journey to the celestial pole before going to the park position
@@ -166,6 +168,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - All guiders now report when a successful connection happens
 - Disconnecting Atik Cameras from other applications on startup or scan for new devices will not happen anymore
 - Fixed an issue in Framing Assistant when solving a file, that the near solver was incorrectly used as the blind solver
+- QHY294M/C Pro is properly handled by the QHY native driver
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 48.18421.20210202
@@ -174,9 +177,9 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - **FLI:** 1.104.0.0
 - **Nikon:** 1.3.2.3000
 - **Omegon:** 39.15325.2019.810
-- **QHY:** 20.8.26.3
+- **QHY:** 21.02.01.10
 - **ToupTek:** 48.18081.2020.1205
-- **ZWO:** 1.15.9.15
+- **ZWO:** 1.16.3
 
 # Version 1.10 HF1
 

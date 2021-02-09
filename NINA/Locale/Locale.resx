@@ -5275,4 +5275,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblTelescopeParkCancelled" xml:space="preserve">
     <value>Park operation cancelled</value>
   </data>
+  <data name="LblFast" xml:space="preserve">
+    <value>Fast</value>
+  </data>
 </root>
