@@ -110,6 +110,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
             await Task.Run(async () => {
                 Logger.Trace("Telescope has been commanded to park");
+                IsParkingOrHoming = true;
 
                 try {
                     if (Telescope.CanPark) {
@@ -117,14 +118,22 @@ namespace NINA.ViewModel.Equipment.Telescope {
                             progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblWaitingForTelescopeToPark"] });
                             Telescope.Park();
 
-                            // Defend against drivers that might surprise us with a non-conformant async Park()
-                            // Also catch cases where the user cancelled the procedure by hitting the Stop button
-                            while (!Telescope.AtPark) {
-                                if (token.IsCancellationRequested) {
-                                    throw new OperationCanceledException("Park canceled by user");
-                                }
+                            // Detect if the parking process was cancelled by an external force, such as the user hitting the stop button
+                            // in another app or in the driver's own UI, external to NINA.
+                            if (!Telescope.AtPark && !Telescope.Slewing) {
+                                Logger.Warning("Park operation appears to have been cancelled by an external process");
+                                throw new OperationCanceledException();
+                            } else {
+                                // Defend against drivers that might surprise us with a non-conformant async Park()
+                                // Also catch cases where the user cancelled the procedure by hitting the Stop button
+                                while (!Telescope.AtPark && Telescope.Slewing) {
+                                    if (token.IsCancellationRequested) {
+                                        Logger.Warning("Park operation cancelled");
+                                        throw new OperationCanceledException();
+                                    }
 
-                                await Utility.Utility.Delay(TimeSpan.FromSeconds(2), token);
+                                    await Utility.Utility.Delay(TimeSpan.FromSeconds(2), token);
+                                }
                             }
                         } else {
                             Logger.Info("Telescope commanded to park but it is already parked");
@@ -138,18 +147,21 @@ namespace NINA.ViewModel.Equipment.Telescope {
                         result = SetTrackingEnabled(false);
                     }
                 } catch (OperationCanceledException e) {
-                    Logger.Warning(e.Message);
                     Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeParkCancelled"]);
+                    result = false;
                 } catch (Exception e) {
                     Logger.Error($"An error occured while attmepting to park: {e}");
                     Notification.ShowError(e.Message);
 
                     result = false;
                 } finally {
+                    IsParkingOrHoming = false;
                     progress?.Report(new ApplicationStatus { Status = string.Empty });
                 }
 
-                Logger.Trace("Telescope has parked");
+                if (result) {
+                    Logger.Trace("Telescope has parked");
+                }
             });
 
             return result;
@@ -209,6 +221,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
             await Task.Run(async () => {
                 string reason = string.Empty;
+                IsParkingOrHoming = true;
 
                 if (Telescope.Connected) {
                     if (Telescope.CanFindHome) {
@@ -218,25 +231,32 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                     progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblWaitingForTelescopeToFindHome"] });
                                     Telescope.FindHome();
 
-                                    // Defend against drivers that might surprise us with a non-conformant async FindHome()
-                                    // Also catch cases where the user cancelled the procedure by hitting the Stop button
-                                    while (!Telescope.AtHome) {
-                                        if (token.IsCancellationRequested) {
-                                            throw new OperationCanceledException("Find home canceled by user");
+                                    // Detect if the homing process was cancelled by an external force, such as the user hitting the stop button
+                                    // in another app or in the driver's own UI, external to NINA.
+                                    if (!Telescope.AtHome && !Telescope.Slewing) {
+                                        Logger.Warning("Find home operation appears to have been cancelled by an external process");
+                                        throw new OperationCanceledException();
+                                    } else {
+                                        // Defend against drivers that might surprise us with a non-conformant async FindHome()
+                                        // Also catch cases where the user cancelled the procedure by hitting the Stop button
+                                        while (!Telescope.AtHome && Telescope.Slewing) {
+                                            if (token.IsCancellationRequested) {
+                                                Logger.Warning("Find home cancelled");
+                                                throw new OperationCanceledException();
+                                            }
+
+                                            await Utility.Utility.Delay(TimeSpan.FromSeconds(2), token);
                                         }
-
-                                        await Utility.Utility.Delay(TimeSpan.FromSeconds(2), token);
                                     }
-
                                     // We are home
                                     success = true;
                                 } catch (OperationCanceledException e) {
-                                    Logger.Warning(e.Message);
                                     Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeFindHomeCancelled"]);
                                 } catch (Exception e) {
                                     reason = e.Message;
                                     Notification.ShowError(e.Message);
                                 } finally {
+                                    IsParkingOrHoming = false;
                                     progress?.Report(new ApplicationStatus { Status = string.Empty });
                                 }
                             } else {
@@ -686,8 +706,13 @@ namespace NINA.ViewModel.Equipment.Telescope {
         }
 
         private void StopSlew(object obj) {
-            Telescope.StopSlew();
-            CancelSlewTelescope();
+            try {
+                Telescope.StopSlew();
+                CancelSlewTelescope();
+            } catch (Exception e) {
+                Logger.Error(e);
+                Notification.ShowError(e.Message);
+            }
         }
 
         private int _targetDeclinationDegrees;
@@ -769,6 +794,21 @@ namespace NINA.ViewModel.Equipment.Telescope {
             set {
                 _targetRightAscencionSeconds = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        private bool isParkingOrHoming = false;
+
+        /// <summary>
+        ///  Is <see langword="true"/> only while the telescope is in the process of parking. Is <see langword="false"/> at any other time, including when the telescope is parked.
+        /// </summary>
+        public bool IsParkingOrHoming {
+            get => isParkingOrHoming;
+            private set {
+                if (isParkingOrHoming != value) {
+                    isParkingOrHoming = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
