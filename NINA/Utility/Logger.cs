@@ -31,7 +31,7 @@ namespace NINA.Utility {
             if (!Directory.Exists(logDir)) {
                 Directory.CreateDirectory(logDir);
             } else {
-                Utility.DirectoryCleanup(logDir, TimeSpan.FromDays(-30));
+                Utility.DirectoryCleanup(logDir, TimeSpan.FromDays(-90));
             }
 
             InitiateLog();

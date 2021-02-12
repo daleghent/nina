@@ -46,7 +46,7 @@ namespace NINA.ViewModel {
             if (!Directory.Exists(ReportDirectory)) {
                 Directory.CreateDirectory(ReportDirectory);
             } else {
-                Utility.Utility.DirectoryCleanup(ReportDirectory, TimeSpan.FromDays(-30));
+                Utility.Utility.DirectoryCleanup(ReportDirectory, TimeSpan.FromDays(-180));
             }
         }
 
