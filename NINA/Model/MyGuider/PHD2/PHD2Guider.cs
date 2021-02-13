@@ -388,18 +388,19 @@ namespace NINA.Model.MyGuider.PHD2 {
                 };
 
                 var guideMsgResponse = await SendMessage(guideMsg);
-                if (guideMsgResponse.error != null) {
-                    return false;
-                } else {
-                    Settling = true;
-                    await WaitForSettling(ct);
-                    return true;
-                }
+                return guideMsgResponse.error == null;
+            }
+
+            async Task<bool> WaitForGuidingStarted() {
+                await WaitForAppState(PhdAppState.GUIDING, ct);
+                Settling = true;
+                await WaitForSettling(ct);
+                return true;
             }
 
             if (!autoRetry) {
                 return await TryStartGuideCommand()
-                    && await WaitForAppState(PhdAppState.GUIDING, ct);
+                    && await WaitForGuidingStarted();
             }
 
             while (!ct.IsCancellationRequested) {
@@ -410,9 +411,7 @@ namespace NINA.Model.MyGuider.PHD2 {
                     var timeout = Task.Delay(
                         retryAfterSeconds,
                         cancelOnTimeoutOrParent.Token);
-                    var guidingHasBegun = WaitForAppState(
-                        PhdAppState.GUIDING,
-                        cancelOnTimeoutOrParent.Token);
+                    var guidingHasBegun = WaitForGuidingStarted();
 
                     if ((await Task.WhenAny(timeout, guidingHasBegun)) == guidingHasBegun) {
                         return await guidingHasBegun;
