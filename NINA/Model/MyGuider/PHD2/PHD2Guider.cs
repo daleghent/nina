@@ -90,27 +90,18 @@ namespace NINA.Model.MyGuider.PHD2 {
             }
         }
 
-        private PhdEventSettling _settling;
+        private bool settling;
 
-        public PhdEventSettling Settling {
+        public bool Settling {
             get {
-                return _settling;
+                lock (lockobj) {
+                    return settling;
+                }
             }
-            set {
-                _settling = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private PhdEventSettleDone _settleDone;
-
-        public PhdEventSettleDone SettleDone {
-            get {
-                return _settleDone;
-            }
-            set {
-                _settleDone = value;
-                RaisePropertyChanged();
+            private set {
+                lock (lockobj) {
+                    settling = value;
+                }
             }
         }
 
@@ -143,8 +134,6 @@ namespace NINA.Model.MyGuider.PHD2 {
                 }
             }
         }
-
-        private bool _isDithering;
 
         private double _pixelScale;
 
@@ -222,7 +211,8 @@ namespace NINA.Model.MyGuider.PHD2 {
 
                     return false;
                 }
-                _isDithering = true;
+
+                await WaitForSettling(ct);
 
                 var ditherMsg = new Phd2Dither() {
                     Parameters = new Phd2DitherParameter() {
@@ -239,24 +229,32 @@ namespace NINA.Model.MyGuider.PHD2 {
                 var ditherMsgResponse = await SendMessage(ditherMsg);
                 if (ditherMsgResponse.error != null) {
                     /* Dither failed */
-                    _isDithering = false;
                     return false;
                 }
+                Settling = true;
+                await WaitForSettling(ct);
+            }
+            return true;
+        }
+
+        private async Task WaitForSettling(CancellationToken ct) {
+            try {
                 await Task.Run<bool>(async () => {
                     var elapsed = new TimeSpan();
-                    while (_isDithering == true) {
+                    while (Settling == true) {
                         elapsed += await Utility.Utility.Delay(500, ct);
 
                         if (elapsed.TotalSeconds > 120) {
                             //Failsafe when phd is not sending settlingdone message
                             Notification.ShowWarning(Locale.Loc.Instance["LblGuiderNoSettleDone"]);
-                            _isDithering = false;
+                            Settling = false;
                         }
                     }
                     return true;
                 });
+            } catch (OperationCanceledException ex) {
+                Settling = false;
             }
-            return true;
         }
 
         public async Task<bool> Pause(bool pause, CancellationToken ct) {
@@ -375,6 +373,8 @@ namespace NINA.Model.MyGuider.PHD2 {
                 return await WaitForAppState(PhdAppState.GUIDING, ct);
 
             async Task<bool> TryStartGuideCommand() {
+                await WaitForSettling(ct);
+
                 var guideMsg = new Phd2Guide() {
                     Parameters = new Phd2GuideParameter() {
                         Settle = new Phd2Settle() {
@@ -388,7 +388,13 @@ namespace NINA.Model.MyGuider.PHD2 {
                 };
 
                 var guideMsgResponse = await SendMessage(guideMsg);
-                return guideMsgResponse.error == null;
+                if (guideMsgResponse.error != null) {
+                    return false;
+                } else {
+                    Settling = true;
+                    await WaitForSettling(ct);
+                    return true;
+                }
             }
 
             if (!autoRetry) {
@@ -397,9 +403,9 @@ namespace NINA.Model.MyGuider.PHD2 {
             }
 
             while (!ct.IsCancellationRequested) {
-                if (!await TryStartGuideCommand())
+                if (!await TryStartGuideCommand()) {
                     return false;
-
+                }
                 using (var cancelOnTimeoutOrParent = CancellationTokenSource.CreateLinkedTokenSource(ct)) {
                     var timeout = Task.Delay(
                         retryAfterSeconds,
@@ -530,22 +536,19 @@ namespace NINA.Model.MyGuider.PHD2 {
                         break;
                     }
                 case "GuidingDithered": {
-                        SettleDone = null;
                         GuidingDithered = message.ToObject<PhdEventGuidingDithered>();
                         break;
                     }
                 case "Settling": {
-                        SettleDone = null;
-                        Settling = message.ToObject<PhdEventSettling>();
+                        Settling = true;
                         break;
                     }
                 case "SettleDone": {
                         GuidingDithered = null;
-                        Settling = null;
-                        _isDithering = false;
-                        SettleDone = message.ToObject<PhdEventSettleDone>();
-                        if (SettleDone.Error != null) {
-                            Notification.ShowError("PHD2 Error: " + SettleDone.Error);
+                        Settling = false;
+                        var settleDone = message.ToObject<PhdEventSettleDone>();
+                        if (settleDone.Error != null) {
+                            Notification.ShowError("PHD2 Error: " + settleDone.Error);
                         }
                         break;
                     }
@@ -679,7 +682,7 @@ namespace NINA.Model.MyGuider.PHD2 {
                     Notification.ShowError("PHD2 Error: " + ex.Message);
                     throw;
                 } finally {
-                    _isDithering = false;
+                    Settling = false;
                     AppState = new PhdEventAppState() { State = "" };
                     PixelScale = 0.0d;
                     Connected = false;
