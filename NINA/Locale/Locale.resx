@@ -5278,4 +5278,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblFast" xml:space="preserve">
     <value>Fast</value>
   </data>
+  <data name="LblSetButtonMoveRateToolTip" xml:space="preserve">
+    <value>Set the button slew rate in degrees per second</value>
+  </data>
 </root>
