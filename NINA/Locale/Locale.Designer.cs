@@ -5887,6 +5887,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mechanical Position.
+        /// </summary>
+        internal static string LblMechanicalPosition {
+            get {
+                return ResourceManager.GetString("LblMechanicalPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Median.
         /// </summary>
         internal static string LblMedian {
@@ -6067,11 +6076,47 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move Mechanical Position.
+        /// </summary>
+        internal static string LblMoveMechanicalPosition {
+            get {
+                return ResourceManager.GetString("LblMoveMechanicalPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Moves rotator to the specified target position.
         /// </summary>
         internal static string LblMoveRotatorTooltip {
             get {
                 return ResourceManager.GetString("LblMoveRotatorTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Sky Position.
+        /// </summary>
+        internal static string LblMoveSkyPosition {
+            get {
+                return ResourceManager.GetString("LblMoveSkyPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moving rotator to mechanical position {0}.
+        /// </summary>
+        internal static string LblMovingRotatorToMechanicalPosition {
+            get {
+                return ResourceManager.GetString("LblMovingRotatorToMechanicalPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moving rotator to position {0}.
+        /// </summary>
+        internal static string LblMovingRotatorToPosition {
+            get {
+                return ResourceManager.GetString("LblMovingRotatorToPosition", resourceCulture);
             }
         }
         
@@ -7104,6 +7149,15 @@ namespace NINA.Locale {
         internal static string LblPHD2TotalRMS {
             get {
                 return ResourceManager.GetString("LblPHD2TotalRMS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Keep guide stars off sensor edges by at least.
+        /// </summary>
+        internal static string LblPixelMargin {
+            get {
+                return ResourceManager.GetString("LblPixelMargin", resourceCulture);
             }
         }
         
@@ -8738,6 +8792,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sky Position.
+        /// </summary>
+        internal static string LblSkyPosition {
+            get {
+                return ResourceManager.GetString("LblSkyPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sky Quality.
         /// </summary>
         internal static string LblSkyQuality {
@@ -9310,6 +9373,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Mechanical Position.
+        /// </summary>
+        internal static string LblTargetMechanicalPosition {
+            get {
+                return ResourceManager.GetString("LblTargetMechanicalPosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target Name.
         /// </summary>
         internal static string LblTargetName {
@@ -9351,6 +9423,15 @@ namespace NINA.Locale {
         internal static string LblTargets {
             get {
                 return ResourceManager.GetString("LblTargets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Sky Position.
+        /// </summary>
+        internal static string LblTargetSkyPosition {
+            get {
+                return ResourceManager.GetString("LblTargetSkyPosition", resourceCulture);
             }
         }
         

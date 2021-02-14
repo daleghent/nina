@@ -61,6 +61,7 @@
             <TextBlock Text="Niccolò Coli" />
             <TextBlock Text="Igor von Nyssen" />
             <TextBlock Text="Simon Kapadia" />
+            <TextBlock Text="Francesco Meschia" />
         </StackPanel>
     </StackPanel>
 </UserControl>

@@ -41,7 +41,8 @@ namespace NINA.ViewModel.Equipment.Rotator {
             CancelConnectCommand = new RelayCommand(CancelConnectRotator);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
             RefreshRotatorListCommand = new RelayCommand(RefreshRotatorList, o => !(rotator?.Connected == true));
-            MoveCommand = new AsyncCommand<float>(() => Move(TargetPosition), (p) => RotatorInfo.Connected);
+            MoveCommand = new AsyncCommand<float>(() => Move(TargetPosition), (p) => RotatorInfo.Connected && RotatorInfo.Synced);
+            MoveMechanicalCommand = new AsyncCommand<float>(() => MoveMechanical(TargetPosition), (p) => RotatorInfo.Connected);
             HaltCommand = new RelayCommand(Halt);
             ReverseCommand = new RelayCommand(Reverse);
 
@@ -69,8 +70,10 @@ namespace NINA.ViewModel.Equipment.Rotator {
 
         public void Sync(float skyAngle) {
             if (RotatorInfo.Connected) {
+                Logger.Info($"Syncing Rotator to Sky Angle {skyAngle}°");
                 rotator.Sync(skyAngle);
                 RotatorInfo.Position = rotator.Position;
+                RotatorInfo.Synced = true;
                 BroadcastRotatorInfo();
             }
         }
@@ -79,19 +82,79 @@ namespace NINA.ViewModel.Equipment.Rotator {
             _moveCts?.Dispose();
             _moveCts = new CancellationTokenSource();
             float pos = float.NaN;
-            await Task.Run(() => {
+            await Task.Run(async () => {
                 try {
                     RotatorInfo.IsMoving = true;
                     // Focuser position should be in [0, 360)
                     targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
+
+                    applicationStatusMediator.StatusUpdate(
+                        new ApplicationStatus() {
+                            Source = Title,
+                            Status = string.Format(Locale.Loc.Instance["LblMovingRotatorToPosition"], Math.Round(targetPosition, 2))
+                        }
+                    );
+
+                    Logger.Debug($"Move rotator to {targetPosition}°");
+
                     rotator.MoveAbsolute(targetPosition);
-                    while (RotatorInfo.IsMoving && RotatorInfo.Position != targetPosition) {
+                    while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.Position - targetPosition) > 1) && (Math.Abs(RotatorInfo.Position - targetPosition) < 359))) {
                         _moveCts.Token.ThrowIfCancellationRequested();
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.Position} - Target Position {targetPosition}");
                     }
                     RotatorInfo.Position = targetPosition;
                     pos = targetPosition;
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
+                } finally {
+                    applicationStatusMediator.StatusUpdate(
+                        new ApplicationStatus() {
+                            Source = Title,
+                            Status = string.Empty
+                        }
+                    );
+                }
+            });
+            return pos;
+        }
+
+        public async Task<float> MoveMechanical(float targetPosition) {
+            _moveCts?.Dispose();
+            _moveCts = new CancellationTokenSource();
+            float pos = float.NaN;
+            await Task.Run(async () => {
+                try {
+                    RotatorInfo.IsMoving = true;
+                    // Focuser position should be in [0, 360)
+                    targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
+
+                    applicationStatusMediator.StatusUpdate(
+                        new ApplicationStatus() {
+                            Source = Title,
+                            Status = string.Format(Locale.Loc.Instance["LblMovingRotatorToMechanicalPosition"], Math.Round(targetPosition, 2))
+                        }
+                    );
+
+                    Logger.Debug($"Move rotator mechanical to {targetPosition}°");
+
+                    rotator.MoveAbsoluteMechanical(targetPosition);
+                    while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) > 1) && (Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) < 359))) {
+                        _moveCts.Token.ThrowIfCancellationRequested();
+                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.MechanicalPosition} - Target Position {targetPosition}");
+                    }
+                    RotatorInfo.Position = targetPosition;
+                    pos = targetPosition;
+                    BroadcastRotatorInfo();
+                } catch (OperationCanceledException) {
+                } finally {
+                    applicationStatusMediator.StatusUpdate(
+                        new ApplicationStatus() {
+                            Source = Title,
+                            Status = string.Empty
+                        }
+                    );
                 }
             });
             return pos;
@@ -123,6 +186,12 @@ namespace NINA.ViewModel.Equipment.Rotator {
             rotatorValues.TryGetValue(nameof(RotatorInfo.Reverse), out o);
             RotatorInfo.Reverse = (bool)(o ?? false);
 
+            rotatorValues.TryGetValue(nameof(RotatorInfo.Synced), out o);
+            RotatorInfo.Synced = (bool)(o ?? false);
+
+            rotatorValues.TryGetValue(nameof(RotatorInfo.MechanicalPosition), out o);
+            RotatorInfo.MechanicalPosition = (float)(o ?? 0f);
+
             BroadcastRotatorInfo();
         }
 
@@ -133,6 +202,8 @@ namespace NINA.ViewModel.Equipment.Rotator {
             rotatorValues.Add(nameof(RotatorInfo.IsMoving), rotator?.IsMoving ?? false);
             rotatorValues.Add(nameof(RotatorInfo.StepSize), rotator?.StepSize ?? 0);
             rotatorValues.Add(nameof(RotatorInfo.Reverse), rotator?.Reverse ?? false);
+            rotatorValues.Add(nameof(RotatorInfo.Synced), rotator?.Synced ?? false);
+            rotatorValues.Add(nameof(RotatorInfo.MechanicalPosition), rotator?.MechanicalPosition ?? 0f);
 
             return rotatorValues;
         }
@@ -192,6 +263,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
         public ICommand DisconnectCommand { get; private set; }
         public ICommand RefreshRotatorListCommand { get; private set; }
         public IAsyncCommand MoveCommand { get; private set; }
+        public IAsyncCommand MoveMechanicalCommand { get; private set; }
         public ICommand HaltCommand { get; private set; }
         public ICommand ReverseCommand { get; private set; }
 

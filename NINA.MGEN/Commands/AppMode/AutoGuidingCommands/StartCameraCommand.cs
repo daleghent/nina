@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 namespace NINA.MGEN.Commands.AppMode {
 
     public class StartCameraCommand : AutoGuidingCommand<MGENResult> {
-        public new uint Timeout { get; } = 3000;
+        public override uint Timeout { get; } = 3000;
         public override byte SubCommandCode { get; } = 0xc1;
 
         protected override MGENResult ExecuteSubCommand(IFTDI device) {

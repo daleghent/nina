@@ -38,6 +38,7 @@ using NINA.Model.ImageData;
 using NINA.Utility.Exceptions;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
+using System.Linq;
 
 namespace NINA.ViewModel.FramingAssistant {
 
@@ -701,13 +702,13 @@ namespace NINA.ViewModel.FramingAssistant {
                 referenceCoordinates = null;
             }
             var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
-            var blindSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
 
             var focalLength = double.IsNaN(skySurveyImage.Data.MetaData.Telescope.FocalLength) ? this.FocalLength : skySurveyImage.Data.MetaData.Telescope.FocalLength;
             var pixelSize = double.IsNaN(skySurveyImage.Data.MetaData.Camera.PixelSize) ? this.CameraPixelSize : skySurveyImage.Data.MetaData.Camera.PixelSize;
 
             var parameter = new PlateSolveParameter() {
-                Binning = 1,
+                Binning = skySurveyImage.Data.MetaData.Camera.BinX,
                 Coordinates = referenceCoordinates,
                 DownSampleFactor = profileService.ActiveProfile.PlateSolveSettings.DownSampleFactor,
                 FocalLength = focalLength,

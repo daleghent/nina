@@ -495,7 +495,7 @@ namespace NINA.Model.MyCamera {
                 Logger.Debug("QHYCCD: CoolerWorker task started");
                 while (true) {
                     if (Info.CoolerOn) {
-                        Logger.Debug($"QHYCCD: CoolerWorker setting camera target temp to {Info.CoolerTargetTemp}");
+                        Logger.Trace($"QHYCCD: CoolerWorker setting camera target temp to {Info.CoolerTargetTemp}");
                         LibQHYCCD.ControlQHYCCDTemp(CameraP, Info.CoolerTargetTemp);
                     } else if (previous == true) {
                         Logger.Debug("QHYCCD: CoolerWorker turning off TEC due user request");

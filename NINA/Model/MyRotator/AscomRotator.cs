@@ -45,7 +45,7 @@ namespace NINA.Model.MyRotator {
 
         public bool Reverse {
             get {
-                if (Connected) {
+                if (CanReverse) {
                     return rotator.Reverse;
                 } else {
                     return false;
@@ -69,13 +69,29 @@ namespace NINA.Model.MyRotator {
             }
         }
 
-        private float position = 0;
+        private bool synced;
+
+        public bool Synced {
+            get => synced;
+            private set {
+                synced = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private float offset = 0;
 
         public float Position {
-            get => position;
-            private set {
-                position = Astrometry.EuclidianModulus(value, 360);
-                RaisePropertyChanged();
+            get => Astrometry.EuclidianModulus(MechanicalPosition + offset, 360);
+        }
+
+        public float MechanicalPosition {
+            get {
+                if (Connected) {
+                    return rotator.Position;
+                } else {
+                    return float.NaN;
+                }
             }
         }
 
@@ -157,9 +173,10 @@ namespace NINA.Model.MyRotator {
         public async Task<bool> Connect(CancellationToken token) {
             return await Task<bool>.Run(() => {
                 try {
-                    Position = 0;
+                    offset = 0;
                     rotator = new Rotator(Id);
                     Connected = true;
+                    Synced = false;
                     if (Connected) {
                         RaiseAllPropertiesChanged();
                     }
@@ -192,13 +209,30 @@ namespace NINA.Model.MyRotator {
         }
 
         public void Sync(float skyAngle) {
-            Position = skyAngle;
+            offset = skyAngle - MechanicalPosition;
+            RaisePropertyChanged(nameof(Position));
+            Synced = true;
+            Logger.Debug($"ASCOM - Mechanical Position is {MechanicalPosition}° - Sync Position to Sky Angle {skyAngle}° using offset {offset}");
         }
 
-        public void Move(float position) {
+        public void Move(float angle) {
             if (Connected) {
-                rotator?.Move(position);
-                Position += position;
+                if (angle >= 360) {
+                    angle = Astrometry.EuclidianModulus(angle, 360);
+                }
+                if (angle <= -360) {
+                    angle = Astrometry.EuclidianModulus(angle, -360);
+                }
+
+                Logger.Debug($"ASCOM - Move relative by {angle}° - Mechanical Position reported by rotator {MechanicalPosition}° and offset {offset}");
+                rotator?.Move(angle);
+            }
+        }
+
+        public void MoveAbsoluteMechanical(float targetPosition) {
+            if (Connected) {
+                var movement = targetPosition - MechanicalPosition;
+                Move(movement);
             }
         }
 
@@ -214,6 +248,7 @@ namespace NINA.Model.MyRotator {
                     bool dispose = false;
                     if (rotator == null) {
                         rotator = new Rotator(Id);
+                        dispose = true;
                     }
                     rotator.SetupDialog();
                     if (dispose) {

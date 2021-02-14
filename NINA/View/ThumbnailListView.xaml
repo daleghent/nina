@@ -5,8 +5,7 @@
 
     This Source Code Form is subject to the terms of the Mozilla Public
     License, v. 2.0. If a copy of the MPL was not distributed with this
-    file, You can obtain one at http://mozilla.org/MPL/2.0/.
--->
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.-->
 <UserControl
     x:Class="NINA.View.ThumbnailListView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -14,6 +13,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:nc="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
     d:DesignHeight="300"
     d:DesignWidth="300"
@@ -47,7 +47,7 @@
                             VerticalContentAlignment="Stretch"
                             Command="{Binding Path=DataContext.SelectCommand, ElementName=ScrollViewer}"
                             CommandParameter="{Binding}">
-                            <Grid Margin="2">
+                            <Grid Width="120" Margin="2">
                                 <Grid.ToolTip>
                                     <TextBlock Text="{Binding ImagePath}" />
                                 </Grid.ToolTip>
@@ -58,77 +58,113 @@
                                         Stretch="UniformToFill" />
                                 </Grid.Background>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="12" />
-                                    <RowDefinition Height="12" />
-                                    <RowDefinition Height="12" />
-                                    <RowDefinition Height="40" />
-                                    <RowDefinition Height="12" />
-                                    <RowDefinition Height="12" />
+                                    <RowDefinition Height="16" />
+                                    <RowDefinition Height="16" />
+                                    <RowDefinition Height="16" />
+                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="16" />
+                                    <RowDefinition Height="16" />
                                 </Grid.RowDefinitions>
 
                                 <TextBlock
                                     Grid.Row="0"
                                     Grid.Column="0"
+                                    Margin="3,0,0,0"
+                                    Padding="2,0,2,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
                                     Text="{ns:Loc LblMean}" />
+
                                 <TextBlock
                                     Grid.Row="0"
                                     Grid.Column="1"
+                                    Padding="2,0,2,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
                                     Text="{Binding Mean, StringFormat=\{0:#\}}" />
 
                                 <TextBlock
                                     Grid.Row="1"
                                     Grid.Column="0"
+                                    Margin="3,0,0,0"
+                                    Padding="2,0,2,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
                                     Text="{ns:Loc LblHFR}" />
                                 <TextBlock
                                     Grid.Row="1"
                                     Grid.Column="1"
+                                    Padding="2,0,2,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
                                     Text="{Binding HFR, StringFormat=\{0:0.00\}, Converter={StaticResource NaNToDoubleDashConverter}}" />
                                 <TextBlock
                                     Grid.Row="2"
                                     Grid.Column="0"
+                                    Margin="3,0,0,0"
+                                    Padding="2,0,2,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
                                     Text="{ns:Loc LblFilter}" />
                                 <TextBlock
                                     Grid.Row="2"
                                     Grid.Column="1"
+                                    Padding="2,0,2,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
                                     Text="{Binding Filter}" />
                                 <TextBlock
                                     Grid.Row="4"
                                     Grid.Column="0"
+                                    Margin="3,0,0,0"
+                                    Padding="2,0,2,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
                                     Text="{ns:Loc LblDuration}" />
                                 <TextBlock
                                     Grid.Row="4"
                                     Grid.Column="1"
+                                    Padding="2,0,2,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
                                     Text="{Binding Duration, StringFormat='{}{0:0.00}s'}" />
                                 <TextBlock
                                     Grid.Row="5"
                                     Grid.Column="0"
+                                    Margin="3,0,0,0"
+                                    Padding="2,0,2,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
                                     Text="{ns:Loc LblTime}" />
                                 <TextBlock
                                     Grid.Row="5"
                                     Grid.Column="1"
+                                    Padding="2,0,2,0"
+                                    HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
+                                    Background="{StaticResource BackgroundBrush}"
                                     FontSize="12"
                                     Text="{Binding Date, StringFormat='{}{0:HH:mm:ss}'}" />
                             </Grid>

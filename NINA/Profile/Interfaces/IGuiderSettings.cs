@@ -33,5 +33,6 @@ namespace NINA.Profile {
         bool AutoRetryStartGuiding { get; set; }
         int AutoRetryStartGuidingTimeoutSeconds { get; set; }
         int MGENFocalLength { get; set; }
+        int MGENPixelMargin { get; set; }
     }
 }

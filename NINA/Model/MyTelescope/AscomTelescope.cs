@@ -25,9 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyTelescope {
-
     internal class AscomTelescope : BaseINPC, ITelescope, IDisposable {
-
         public AscomTelescope(string telescopeId, string name, IProfileService profileService) {
             this.profileService = profileService;
             Id = telescopeId;
@@ -1046,13 +1044,7 @@ namespace NINA.Model.MyTelescope {
 
         public void Park() {
             if (Connected && CanPark) {
-                try {
-                    _telescope.Park();
-                } catch (Exception e) {
-                    Logger.Error(e);
-                    Notification.ShowError(e.Message);
-                } finally {
-                }
+                _telescope.Park();
             }
         }
 
@@ -1256,6 +1248,7 @@ namespace NINA.Model.MyTelescope {
                     bool dispose = false;
                     if (_telescope == null) {
                         _telescope = new Telescope(Id);
+                        dispose = true;
                     }
                     _telescope.SetupDialog();
                     if (dispose) {

@@ -25,18 +25,26 @@
         </Grid.RowDefinitions>
         <Image Source="{Binding Display}" />
 
-        <StackPanel
-            Grid.Row="1"
+        <DockPanel Grid.Row="1"
             Margin="0,5,0,5"
-            Orientation="Horizontal">
-            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFocalLength}" />
-            <TextBox
+            LastChildFill="True" Width="Auto" >
+            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFocalLength}" />
+                <TextBox MinWidth="50" Margin="5,0,0,0" VerticalAlignment="Center" VerticalContentAlignment="Center" Text="{Binding FocalLength}" />
+            </StackPanel>
+
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPixelMargin}" />
+                <TextBox
                 MinWidth="50"
                 Margin="5,0,0,0"
                 VerticalAlignment="Center"
                 VerticalContentAlignment="Center"
-                Text="{Binding FocalLength}" />
-        </StackPanel>
+                Text="{Binding PixelMargin}" />
+                <TextBlock VerticalAlignment="Center" Text="px " />
+            </StackPanel>
+            <StackPanel/>
+        </DockPanel>
         <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition />

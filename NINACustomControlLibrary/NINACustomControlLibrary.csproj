@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="CardinalSplineShape.cs" />
     <Compile Include="GridHelpers.cs" />
+    <Compile Include="OutlinedTextBlock.cs" />
     <Compile Include="TickSlider.cs" />
     <Page Include="Themes\Arc.Generic.xaml">
       <SubType>Designer</SubType>

@@ -3,6 +3,37 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 1.10 HF2
+
+## Improvements
+- Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.
+
+## Bugfixes
+- The telescope will no longer go on a journey to the celestial pole before going to the park position
+- Parking the telescope from the Equipment > Telescope screen will no longer cause the UI to freeze while the telescope is in the process of parking
+- When rotator reports final position too early while still reporting IsMoving as true, N.I.N.A. will now still wait for the movement to complete
+- SkyAtlas File Source will now consider binning for solving
+- Fixed issue with filter wheel filter import in options when filters have the same name
+- The MGEN2 guider can now auto select a guide star unattended, with a new calibration just downstream of that, which enables auto meridian flips
+- The timeout values for the MGEN2 guider can now be overridden in the implementations of IMGENCommand
+- The MGEN2 guider drift values are now correctly reported in fractional pixels
+- ASCOM devices are now properly disposed after calling the setup dialog
+- The MGEN guider now doesn't autoselect guide stars that lie too close to the sensor edge, based on a stand-off distance that the user can set in the UI
+- All guiders now report when a successful connection happens
+- Disconnecting Atik Cameras from other applications on startup or scan for new devices will not happen anymore
+- Fixed an issue in Framing Assistant when solving a file, that the near solver was incorrectly used as the blind solver
+
+## Included Camera SDK Versions:
+- **Altair Astro:** 48.18421.20210202
+- **Atik:** 2020.08.3.642
+- **Canon:** 13.13.0.6408
+- **FLI:** 1.104.0.0
+- **Nikon:** 1.3.2.3000
+- **Omegon:** 39.15325.2019.810
+- **QHY:** 20.8.26.3
+- **ToupTek:** 48.18081.2020.1205
+- **ZWO:** 1.15.9.15
+
 # Version 1.10 HF1
 
 ## Features
@@ -40,7 +71,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Fixed an issue when using the file camera together with dithering, where the dither signal was triggered directly after starting the exposure, as the file camera directly switched to download state. Instead the file camera will wait for the exposure time instead before switching to download state.
 
 ## Included Camera SDK Versions:
-- **Altair Astro:** 48.17729.2020.922
+- **Altair Astro:** 48.18195.2020.1222
 - **Atik:** 2020.08.3.642
 - **Canon:** 13.12.31
 - **FLI:** 1.104.0.0
@@ -48,7 +79,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - **Omegon:** 39.15325.2019.810
 - **QHY:** 20.8.26.3
 - **ToupTek:** 46.17309.2020.616
-- **ZWO:** 1.15.9.15
+- **ZWO:** 1.16.3.0
 
 # Version 1.10
 

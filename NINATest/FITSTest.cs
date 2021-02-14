@@ -294,13 +294,14 @@ namespace NINATest {
             var now = DateTime.Now;
             var metaData = new ImageMetaData();
             metaData.Rotator.Name = "TEST";
-            metaData.Rotator.Position = 123.11;
+            metaData.Rotator.MechanicalPosition = 123.11;
+            metaData.Rotator.Position = 10;
             metaData.Rotator.StepSize = 10.23;
 
             var expectedHeaderCards = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("ROTNAME", metaData.Rotator.Name, "Rotator equipment name"),
-                new FITSHeaderCard("ROTATOR", metaData.Rotator.Position, "[deg] Rotator angle"),
-                new FITSHeaderCard("ROTATANG", metaData.Rotator.Position, "[deg] Rotator angle"),
+                new FITSHeaderCard("ROTATOR", metaData.Rotator.MechanicalPosition, "[deg] Mechanical rotator angle"),
+                new FITSHeaderCard("ROTATANG", metaData.Rotator.MechanicalPosition, "[deg] Mechanical rotator angle"),
                 new FITSHeaderCard("ROTSTPSZ", metaData.Rotator.StepSize, "[deg] Rotator step size"),
             };
 

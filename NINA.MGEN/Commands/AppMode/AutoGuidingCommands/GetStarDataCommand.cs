@@ -46,7 +46,7 @@ namespace NINA.MGEN.Commands.AppMode {
                     var peak = starDataArray[7];
                     return new StarData(positionX, positionY, brightness, pixels, peak);
                 } else {
-                    throw new Exception("Invalid Star Index");
+                    throw new Exception($"Invalid Star Index {mirror[0]}");
                 }
             } else if (data[0] == 0xf2) {
                 throw new CameraIsOffException();

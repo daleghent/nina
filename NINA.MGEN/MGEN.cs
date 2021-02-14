@@ -38,6 +38,10 @@ namespace NINA.MGEN {
         private byte cbus_val;
         private string ftdiDllPath;
 
+        public int SensorSizeX { get; } = 752;
+
+        public int SensorSizeY { get; } = 582;
+
         public bool Connected { get => this.FTDI?.IsOpen ?? false; }
 
         /// <summary>
@@ -285,6 +289,12 @@ namespace NINA.MGEN {
                 } while (state.Dithering);
             }
             return true;
+        }
+
+        public async Task<DitherAmplitudeResult> GetDitherAmplitude(CancellationToken ct = default) {
+            var ditherAmplitudeCommand = new GetDitherAmplitudeCommand();
+            var ditherAmplitude = await this.Send(ditherAmplitudeCommand, ct);
+            return ditherAmplitude;
         }
 
         public async Task<CalibrationStatusResult> QueryCalibration(CancellationToken ct = default) {

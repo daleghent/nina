@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System;
 using System.Globalization;
 
 namespace NINA.Utility.SerialCommunication {
@@ -60,25 +61,29 @@ namespace NINA.Utility.SerialCommunication {
 
         protected static bool TryParseDouble(string token, string fieldName, out double fieldValue) {
             if (double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out fieldValue)) return true;
-            Logger.Error($"Could not parse {fieldName} from response: {token}.");
+
+            // Account for various flavors of NaN (nan, NAN, etc.) that InvariantCulture does not know about
+            if (token?.Equals("nan", StringComparison.OrdinalIgnoreCase) == true) { fieldValue = double.NaN; return true; }
+
+            Logger.Error($"Could not parse {fieldName} from response: {token}");
             return false;
         }
 
         protected static bool TryParseShort(string token, string fieldName, out short fieldValue) {
             if (short.TryParse(token, NumberStyles.Integer, CultureInfo.InvariantCulture, out fieldValue)) return true;
-            Logger.Error($"Could not parse {fieldName} from response: {token}.");
+            Logger.Error($"Could not parse {fieldName} from response: {token}");
             return false;
         }
 
         protected static bool TryParseInteger(string token, string fieldName, out int fieldValue) {
             if (int.TryParse(token, NumberStyles.Integer, CultureInfo.InvariantCulture, out fieldValue)) return true;
-            Logger.Error($"Could not parse {fieldName} from response: {token}.");
+            Logger.Error($"Could not parse {fieldName} from response: {token}");
             return false;
         }
 
         protected static bool TryParseLong(string token, string fieldName, out long fieldValue) {
             if (long.TryParse(token, NumberStyles.Integer, CultureInfo.InvariantCulture, out fieldValue)) return true;
-            Logger.Error($"Could not parse {fieldName} from response: {token}.");
+            Logger.Error($"Could not parse {fieldName} from response: {token}");
             return false;
         }
     }

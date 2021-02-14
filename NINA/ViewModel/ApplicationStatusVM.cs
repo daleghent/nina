@@ -62,7 +62,7 @@ namespace NINA.ViewModel {
         private IApplicationStatusMediator applicationStatusMediator;
 
         public void StatusUpdate(ApplicationStatus status) {
-            _dispatcher.Invoke(DispatcherPriority.Normal, new Action(() => {
+            _dispatcher.BeginInvoke(DispatcherPriority.Normal, new Action(() => {
                 var item = ApplicationStatus.Where((x) => x.Source == status.Source).FirstOrDefault();
                 if (item != null) {
                     if (!string.IsNullOrEmpty(status.Status)) {
@@ -100,8 +100,6 @@ namespace NINA.ViewModel {
                         });
                     }
                 }
-
-                RaisePropertyChanged(nameof(ApplicationStatus));
             }));
         }
     }

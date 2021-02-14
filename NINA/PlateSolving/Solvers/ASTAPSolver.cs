@@ -164,16 +164,6 @@ namespace NINA.PlateSolving.Solvers {
                     throw new ASTAPValidationFailedException($"ASTAP version below 0.9.1.0 does not allow auto downsample factor value of 0! Please update your ASTAP version!");
                 }
             }
-            string astapPath = Path.GetDirectoryName(this.executableLocation);
-            string[] g16Files = Directory.GetFiles(astapPath, "g16_*");
-            string[] g17Files = Directory.GetFiles(astapPath, "g17_*");
-            string[] g18Files = Directory.GetFiles(astapPath, "g18_*");
-            string[] v16Files = Directory.GetFiles(astapPath, "v16_*");
-            string[] v17Files = Directory.GetFiles(astapPath, "v17_*");
-            string[] v18Files = Directory.GetFiles(astapPath, "v18_*");
-            if (g16Files.Length == 0 && g17Files.Length == 0 && g18Files.Length == 0 && v16Files.Length == 0 && v17Files.Length == 0 && v18Files.Length == 0) {
-                throw new ASTAPValidationFailedException($"No star database not found in {astapPath}");
-            }
         }
 
         protected override string GetOutputPath(string imageFilePath) {

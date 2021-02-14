@@ -205,6 +205,7 @@
     <Compile Include="MGEN\Commands\CommandTestRunner.cs" />
     <Compile Include="MGEN\Commands\EnterNormalModeCommandTest.cs" />
     <Compile Include="MGEN\Commands\FirmwareVersionCommandTest.cs" />
+    <Compile Include="MGEN\Commands\GetDitherAmplitudeCommandTest.cs" />
     <Compile Include="MGEN\Commands\GetDitherStateCommandTest.cs" />
     <Compile Include="MGEN\Commands\GetImagingParameterCommandTest.cs" />
     <Compile Include="MGEN\Commands\GetLEDStatesCommandTest.cs" />
