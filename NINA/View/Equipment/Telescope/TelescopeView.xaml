@@ -424,7 +424,13 @@
                                 <TextBlock
                                     Margin="0,0,5,0"
                                     VerticalAlignment="Center"
-                                    Text="{ns:Loc LblRate}" />
+                                    Text="{ns:Loc LblRate}">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip ToolTipService.ShowOnDisabled="True">
+                                            <TextBlock Text="{ns:Loc LblSetButtonMoveRateToolTip}" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
                                 <ninactrl:StepperControl Value="{Binding Telescope.MovingRate, Mode=TwoWay}" />
                             </StackPanel>
                             <Button

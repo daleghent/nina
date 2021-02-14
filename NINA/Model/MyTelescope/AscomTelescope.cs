@@ -1237,10 +1237,14 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        private double _movingRate;
+        private double _movingRate = double.NaN;
 
         public double MovingRate {
             get {
+                if (double.IsNaN(_movingRate)) {
+                    MovingRate = _movingRate;
+                }
+
                 return _movingRate;
             }
             set {
@@ -1270,7 +1274,7 @@ namespace NINA.Model.MyTelescope {
                             result = item.Maximum;
                         }
                     }
-                    if (result > max) result = max;
+                    if (result > max || double.IsNaN(_movingRate)) result = max;
                     if (result < min) result = min;
 
                     _movingRate = result;

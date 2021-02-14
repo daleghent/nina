@@ -6979,22 +6979,22 @@ namespace NINA.Locale {
                 return ResourceManager.GetString("LblExposureTimeDescription", resourceCulture);
             }
         }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Fast.
-        /// </summary>
-        internal static string LblFast {
-            get {
-                return ResourceManager.GetString("LblFast", resourceCulture);
-            }
-        }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Failed to load custom horizon.
         /// </summary>
         internal static string LblFailedToLoadCustomHorizon {
             get {
                 return ResourceManager.GetString("LblFailedToLoadCustomHorizon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fast.
+        /// </summary>
+        internal static string LblFast {
+            get {
+                return ResourceManager.GetString("LblFast", resourceCulture);
             }
         }
         
@@ -12398,6 +12398,15 @@ namespace NINA.Locale {
         internal static string LblSetAutoFocusFilterTooltip {
             get {
                 return ResourceManager.GetString("LblSetAutoFocusFilterTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set the button slew rate in degrees per second.
+        /// </summary>
+        internal static string LblSetButtonMoveRateToolTip {
+            get {
+                return ResourceManager.GetString("LblSetButtonMoveRateToolTip", resourceCulture);
             }
         }
         
