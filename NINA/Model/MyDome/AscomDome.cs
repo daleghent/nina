@@ -121,7 +121,7 @@ namespace NINA.Model.MyDome {
                     connected = value;
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblDomeReconnect"] + Environment.NewLine + ex.Message);
+                    Notification.ShowError(Locale.Loc.Instance["LblDomeConnectionLost"] + Environment.NewLine + ex.Message);
                     connected = false;
                 }
                 RaisePropertyChanged();
