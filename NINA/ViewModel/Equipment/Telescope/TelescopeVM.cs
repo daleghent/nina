@@ -29,7 +29,6 @@ using System.Linq;
 using System.Collections.Immutable;
 
 namespace NINA.ViewModel.Equipment.Telescope {
-
     internal class TelescopeVM : DockableVM, ITelescopeVM {
         private static double LAT_LONG_TOLERANCE = 0.001;
 

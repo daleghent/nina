@@ -27,7 +27,6 @@ using System.Threading.Tasks;
 using System.Collections.Immutable;
 
 namespace NINA.Model.MyTelescope {
-
     internal class AscomTelescope : BaseINPC, ITelescope, IDisposable {
         private static readonly TimeSpan MERIDIAN_FLIP_SLEW_RETRY_WAIT = TimeSpan.FromMinutes(1);
         private static readonly int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 20;
