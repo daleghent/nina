@@ -22,6 +22,7 @@ using NINA.Utility.RawConverter;
 using System;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
@@ -145,7 +146,7 @@ namespace NINA.Model.ImageData {
                 startInfo.RedirectStandardError = true;
                 startInfo.RedirectStandardInput = true;
                 startInfo.CreateNoWindow = true;
-                startInfo.Arguments = $"-CameraTemperature {file}";
+                startInfo.Arguments = $"-CameraTemperature \"{file}\"";
                 process.StartInfo = startInfo;
                 process.EnableRaisingEvents = true;
 
@@ -168,6 +169,11 @@ namespace NINA.Model.ImageData {
                 // remove whitespace and format
                 tempString = sb.ToString().Replace(" ", "");
                 tempString = tempString.Substring(tempString.IndexOf(':') + 1).ToLower().Trim();
+
+                if (!Regex.IsMatch(tempString, "^[0-9]{1,4}[cCfFkK]$")) {
+                    Logger.Error($"Value returned by EXIF Tool is no valid temperature: {tempString}");
+                    tempString = string.Empty;
+                }
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
