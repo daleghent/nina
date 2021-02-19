@@ -62,8 +62,6 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
         private static SemaphoreSlim semaphoreSlim = new SemaphoreSlim(1, 1);
 
         public async Task<FilterInfo> ChangeFilter(FilterInfo inputFilter, CancellationToken token = new CancellationToken(), IProgress<ApplicationStatus> progress = null) {
-            progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSwitchingFilter"] });
-
             //Lock access so only one instance can change the filter
             await semaphoreSlim.WaitAsync(token);
             try {
@@ -102,6 +100,8 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
                             }
                         });
 
+                        progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSwitchingFilter"] });
+
                         if (changeFocus != null) {
                             await changeFocus;
                         }
@@ -113,12 +113,13 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
                     await Disconnect();
                 }
             } finally {
+                progress?.Report(new ApplicationStatus() { Status = string.Empty });
+
                 BroadcastFilterWheelInfo();
                 //unlock access
                 FilterWheelInfo.IsMoving = false;
                 semaphoreSlim.Release();
             }
-            progress?.Report(new ApplicationStatus() { Status = string.Empty });
             return FilterWheelInfo.SelectedFilter;
         }
 
