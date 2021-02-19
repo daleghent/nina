@@ -56,7 +56,7 @@ namespace NINATest.Sequencer.Conditions {
 
             var sut = new AboveHorizonCondition(profileServiceMock.Object);
             var mockDateProvider = new Mock<ICustomDateTime>();
-            mockDateProvider.SetupGet(x => x.Now).Returns(new DateTime(2020, 1, 1, 0, 0, 0));
+            mockDateProvider.SetupGet(x => x.Now).Returns(DateTime.ParseExact("20191231T23:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             coordinates.DateTime = mockDateProvider.Object;
 
             sut.Coordinates.Coordinates = coordinates;
@@ -89,7 +89,7 @@ namespace NINATest.Sequencer.Conditions {
 
             var sut = new AboveHorizonCondition(profileServiceMock.Object);
             var mockDateProvider = new Mock<ICustomDateTime>();
-            mockDateProvider.SetupGet(x => x.Now).Returns(new DateTime(2020, 1, 1, 23, 0, 0));
+            mockDateProvider.SetupGet(x => x.Now).Returns(DateTime.ParseExact("20200101T22:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             coordinates.DateTime = mockDateProvider.Object;
 
             sut.Coordinates.Coordinates = coordinates;

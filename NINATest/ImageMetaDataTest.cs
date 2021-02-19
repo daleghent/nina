@@ -202,7 +202,7 @@ namespace NINATest {
 
         [Test]
         public void FromTelescopeInfoConnectedTest() {
-            var coordinates = new Coordinates(Angle.ByHours(4), Angle.ByDegree(29), Epoch.JNOW, new DateTime(2020, 06, 16));
+            var coordinates = new Coordinates(Angle.ByHours(4), Angle.ByDegree(29), Epoch.JNOW, DateTime.ParseExact("20200615T22:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             var telescopeInfo = new TelescopeInfo() {
                 Connected = true,
                 Name = "TestName",
@@ -239,7 +239,7 @@ namespace NINATest {
 
         [Test]
         public void TargetCoordinateTransformTest() {
-            var coordinates = new Coordinates(Angle.ByHours(4), Angle.ByDegree(29), Epoch.JNOW, new DateTime(2020, 06, 16));
+            var coordinates = new Coordinates(Angle.ByHours(4), Angle.ByDegree(29), Epoch.JNOW, DateTime.ParseExact("20200615T22:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
 
             var sut = new ImageMetaData() {
                 Target = new TargetParameter() {

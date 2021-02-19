@@ -94,7 +94,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
 
             var mockDateProvider = new Mock<ICustomDateTime>();
-            mockDateProvider.SetupGet(x => x.Now).Returns(new DateTime(2020, 1, 1, 0, 0, 0));
+            mockDateProvider.SetupGet(x => x.Now).Returns(DateTime.ParseExact("20191231T23:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             coordinates.DateTime = mockDateProvider.Object;
 
             sut.Coordinates.Coordinates = coordinates;
@@ -111,9 +111,9 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
 
             var mockDateProvider = new Mock<ICustomDateTime>();
             mockDateProvider.SetupSequence(x => x.Now)
-                .Returns(new DateTime(2020, 1, 1, 11, 0, 0))
-                .Returns(new DateTime(2020, 1, 1, 11, 30, 0))
-                .Returns(new DateTime(2020, 1, 1, 12, 0, 0));
+                .Returns(DateTime.ParseExact("20200101T10:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture))
+                .Returns(DateTime.ParseExact("20200101T10:30:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture))
+                .Returns(DateTime.ParseExact("20200101T11:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             coordinates.DateTime = mockDateProvider.Object;
 
             sut.Coordinates.Coordinates = coordinates;
@@ -135,7 +135,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
 
             var mockDateProvider = new Mock<ICustomDateTime>();
-            mockDateProvider.SetupGet(x => x.Now).Returns(new DateTime(2020, 1, 1, 23, 0, 0));
+            mockDateProvider.SetupGet(x => x.Now).Returns(DateTime.ParseExact("20200101T22:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             coordinates.DateTime = mockDateProvider.Object;
 
             sut.Coordinates.Coordinates = coordinates;
@@ -157,10 +157,10 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
 
             var mockDateProvider = new Mock<ICustomDateTime>();
             mockDateProvider.SetupSequence(x => x.Now)
-                .Returns(new DateTime(2020, 1, 1, 12, 0, 0))
-                .Returns(new DateTime(2020, 1, 1, 12, 30, 0))
-                .Returns(new DateTime(2020, 1, 1, 13, 0, 0))
-                .Returns(new DateTime(2020, 1, 1, 14, 0, 0));
+                .Returns(DateTime.ParseExact("20200101T11:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture))
+                .Returns(DateTime.ParseExact("20200101T11:30:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture))
+                .Returns(DateTime.ParseExact("20200101T12:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture))
+                .Returns(DateTime.ParseExact("20200101T13:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
             coordinates.DateTime = mockDateProvider.Object;
 
             sut.Coordinates.Coordinates = coordinates;
