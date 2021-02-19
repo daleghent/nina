@@ -672,6 +672,7 @@
     <Compile Include="Utility\Astrometry\CustomHorizon.cs" />
     <Compile Include="Utility\Astrometry\RiseAndSet\NauticalTwilightRiseAndSet.cs" />
     <Compile Include="Utility\AttributeHelper.cs" />
+    <Compile Include="Utility\Converters\FilenameConverter.cs" />
     <Compile Include="Utility\Converters\InverseMultiBooleanORConverter.cs" />
     <Compile Include="Utility\CustomDateTime.cs" />
     <Compile Include="Utility\Enum\ComparisonOperatorEnum.cs" />

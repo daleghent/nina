@@ -156,13 +156,13 @@ namespace NINA.Sequencer.Trigger.Autofocus {
                     double currentHfrTrend = regression.Transform(history.ImageHistory.Count());
                     double originalHfr = regression.Transform(minimumIndex);
 
-                    Logger.Debug($"Autofocus condition exrapolated original HFR: {originalHfr} extrapolated current HFR: {currentHfrTrend}");
+                    Logger.Debug($"Autofocus condition extrapolated original HFR: {originalHfr} extrapolated current HFR: {currentHfrTrend}");
 
                     HFRTrend = Math.Round((1 - (originalHfr / currentHfrTrend)) * 100, 2);
 
                     if (HFRTrend > Amount) {
                         /* Trigger autofocus after HFR change */
-                        Logger.Debug($"Autofocus after HFR change has been triggered, as current HFR trend is {100 * (currentHfrTrend / originalHfr - 1)}% higher compared to threshold of {Amount}%");
+                        Logger.Debug($"Autofocus after HFR change has been triggered, as current HFR trend is {HFRTrend}% higher compared to threshold of {Amount}%");
                         return true;
                     }
                 }

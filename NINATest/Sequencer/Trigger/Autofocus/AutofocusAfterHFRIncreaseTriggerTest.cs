@@ -103,6 +103,8 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         [TestCase(new double[] { 3, 3.1, 3.2, 3.3 }, 1, true)]
         [TestCase(new double[] { 3, 3.1, 3.2, 3.3 }, 50, false)]
         [TestCase(new double[] { 3, 2.9, 2.8, 2.7 }, 1, false)]
+        [TestCase(new double[] { 3.4, 2.9, 3.1, 2.7, 3.3, 3.0, 3.5 }, 10, false)]
+        [TestCase(new double[] { 2.068, 1.968, 2.016, 2.053, 2.044, 2.084, 2.060, 2.048, 2.131, 2.063 }, 8, false)]
         public void ShouldTrigger_HistoryExists_NoPreviousAFs_True(double[] hfrs, double changeAmount, bool shouldTrigger) {
             var history = new List<ImageHistoryPoint>();
             for (int i = 0; i < hfrs.Length; i++) {
@@ -155,6 +157,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         [TestCase(new double[] { 3, 3.1, 3.2, 3.3 }, 1, true)]
         [TestCase(new double[] { 3, 3.1, 3.2, 3.3 }, 50, false)]
         [TestCase(new double[] { 3, 2.9, 2.8, 2.7 }, 1, false)]
+        [TestCase(new double[] { 2.068, 1.968, 2.016, 2.053, 2.044, 2.084, 2.060, 2.048, 2.131, 2.063 }, 8, false)]
         public void ShouldTrigger_HistoryExists_PreviousAFsExists_True(double[] hfrs, double changeAmount, bool shouldTrigger) {
             var history = new List<ImageHistoryPoint>();
             history.Add(new ImageHistoryPoint(0, null, "LIGHT"));
@@ -171,7 +174,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             });
             history.Add(afPoint);
             for (int i = 0; i < hfrs.Length; i++) {
-                var p = new ImageHistoryPoint(i, null, "LIGHT");
+                var p = new ImageHistoryPoint(i + 5, null, "LIGHT");
                 //p.PopulateSDPoint(new StarDetectionAnalysis() { DetectedStars = i + 5, HFR = hfrs[i] });
                 p.PopulateProperties(new ImageSavedEventArgs() { StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = 1 + 5, HFR = hfrs[i] } });
                 history.Add(p);

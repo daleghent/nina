@@ -245,6 +245,9 @@ namespace NINA.ViewModel.ImageHistory {
                     if (last != null) {
                         last.PopulateAFPoint(report);
                         AutoFocusPoints.Add(last);
+                        if ((this.SelectedFilter.Equals(AllFilters) || last.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || last.type == "LIGHT")) {
+                            AutoFocusPointsView.Add(last);
+                        }
                     }
                 }
             }
@@ -257,13 +260,15 @@ namespace NINA.ViewModel.ImageHistory {
         }
 
         public void PlotSave() {
-            SaveFileDialog sfd = new SaveFileDialog();
-            sfd.FileName = "history.csv";
-            if (sfd.ShowDialog() == DialogResult.OK) {
-                using (var writer = new StreamWriter(sfd.FileName))
-                using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
-                    csv.Configuration.RegisterClassMap<ImageHistoryPointMap>();
-                    csv.WriteRecords(ObservableImageHistory);
+            if (this.ObservableImageHistory.Count != 0) {
+                SaveFileDialog sfd = new SaveFileDialog();
+                sfd.FileName = "history.csv";
+                if (sfd.ShowDialog() == DialogResult.OK) {
+                    using (var writer = new StreamWriter(sfd.FileName))
+                    using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
+                        csv.Configuration.RegisterClassMap<ImageHistoryPointMap>();
+                        csv.WriteRecords(ObservableImageHistory);
+                    }
                 }
             }
         }

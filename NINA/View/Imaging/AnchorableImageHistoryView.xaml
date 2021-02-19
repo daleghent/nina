@@ -10,6 +10,7 @@
     x:Class="NINA.View.AnchorableImageHistoryView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="clr-namespace:NINA.Utility.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="clr-namespace:NINA.Utility.Enum"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -20,6 +21,9 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <conv:FilenameConverter x:Key="FileConverter" />
+    </UserControl.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid Margin="5,0,5,0">
             <Grid.RowDefinitions>
@@ -182,9 +186,8 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{ns:Loc LblFile}" />
                                                 <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.Filename}" TextTrimming="WordEllipsis" />
+                                                <TextBlock Text="{Binding Item.Filename, Converter={StaticResource FileConverter}}" />
                                             </StackPanel>
-
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{ns:Loc LblTime}" />
                                                 <TextBlock Text=": " />
@@ -221,7 +224,7 @@
                                                 <TextBlock Text="{Binding Item.Duration}" />
                                             </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal" Visibility="{Binding Item.Filter, Converter={StaticResource VisibilityConverter}}">
+                                            <StackPanel Orientation="Horizontal" Visibility="{Binding Item.Filter, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
                                                 <TextBlock Text="{ns:Loc LblFilter}" />
                                                 <TextBlock Text=": " />
                                                 <TextBlock Text="{Binding Item.Filter}" />
@@ -238,7 +241,7 @@
                         Key="Left"
                         AxislineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                         EndPosition="1"
-                        IsPanEnabled="False"
+                        IsPanEnabled="True"
                         IsZoomEnabled="False"
                         MajorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=70}"
                         MajorGridlineStyle="LongDash"
@@ -252,7 +255,7 @@
                         Key="Right"
                         AxislineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                         EndPosition="1"
-                        IsPanEnabled="False"
+                        IsPanEnabled="True"
                         IsZoomEnabled="False"
                         MajorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=70}"
                         MajorGridlineStyle="LongDash"
@@ -262,7 +265,14 @@
                         StartPosition="0"
                         TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                         TicklineColor="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
-                    <oxy:LinearAxis Position="Bottom" TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}" />
+                    <oxy:LinearAxis
+                        IsPanEnabled="False"
+                        IsZoomEnabled="False"
+                        MaximumPadding="0.1"
+                        MinimumPadding="0.1"
+                        Position="Bottom"
+                        StartPosition="0"
+                        TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}" />
                 </oxy:Plot.Axes>
                 <oxy:Plot.Series>
                     <oxy:LineSeries
