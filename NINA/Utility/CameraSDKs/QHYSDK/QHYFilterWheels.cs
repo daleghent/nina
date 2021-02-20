@@ -13,17 +13,16 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace QHYCCD {
 
-    public static class QHYFilterWheels {
+    public class QHYFilterWheels {
+        public IQhySdk Sdk { get; set; } = QhySdk.Instance;
 
-        public static List<string> GetFilterWheels() {
-            IntPtr FWheelP;
-            StringBuilder cameraId = new StringBuilder(LibQHYCCD.QHYCCD_ID_LEN);
+        public List<string> GetFilterWheels() {
+            StringBuilder cameraId = new StringBuilder(QhySdk.QHYCCD_ID_LEN);
             StringBuilder cameraModel = new StringBuilder(0);
             List<string> FWheels = new List<string>();
             uint positions;
@@ -33,15 +32,17 @@ namespace QHYCCD {
              * For each camera we find, open it and see if it has a filter wheel.
              * If it has a filter wheel, add the camera's ID to a list
              */
-            if ((num = LibQHYCCD.ScanQHYCCD()) > 0) {
+            Sdk.InitSdk();
+
+            if ((num = Sdk.Scan()) > 0) {
                 for (uint i = 0; i < num; i++) {
-                    LibQHYCCD.N_GetQHYCCDId(i, cameraId);
-                    LibQHYCCD.N_GetQHYCCDModel(cameraId, cameraModel);
+                    Sdk.GetId(i, cameraId);
+                    Sdk.GetModel(cameraId, cameraModel);
 
-                    FWheelP = LibQHYCCD.N_OpenQHYCCD(cameraId);
+                    Sdk.Open(cameraId);
 
-                    if (LibQHYCCD.IsQHYCCDCFWPlugged(FWheelP) == LibQHYCCD.QHYCCD_SUCCESS) {
-                        positions = (uint)LibQHYCCD.GetQHYCCDParam(FWheelP, LibQHYCCD.CONTROL_ID.CONTROL_CFWSLOTSNUM);
+                    if (Sdk.IsCfwPlugged()) {
+                        positions = (uint)Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_CFWSLOTSNUM);
 
                         /*
                          * Ensure that the filter wheel we found is reporting that it has filter slots.
@@ -54,7 +55,7 @@ namespace QHYCCD {
                         }
                     }
 
-                    LibQHYCCD.N_CloseQHYCCD(FWheelP);
+                    Sdk.Close();
                 }
             }
 

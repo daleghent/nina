@@ -133,6 +133,14 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ### Device-related Improvements
 - Canon CR3 image format is now supported
 
+### QHYCCD native driver improvements
+- Improvements to reliability
+- Seamless switching between 11M and 47M modes for the QHY294 Pro
+- QHY CCDs that have fast and slow readout modes can now select the mode
+- QHY cameras that have sensor chamber air pressure and humidity sensors will display their readings on the Equipment > Camera screen
+- QHY camera firmware and FPGA versions are now displayed on the Equipment > Camera screen
+- The integrated filter wheels of A-Series cameras should now operate correctly
+
 ### Image Preview
 - Ability to inspect pixel area and pixel values in detail by holding right click
 
@@ -152,7 +160,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ## Improvements
 - Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.
 - Updates to various vendor-supplied SDKs for bug fixes and new model support in the respective native drivers
-- QHY: Legacy CCD models can now select Normal or Fast readout speeds when using the native driver
+- QHY: Legacy CCD and A-series cameras can now select Normal or Fast readout speeds when using the native driver
 
 ## Bugfixes
 - The telescope will no longer go on a journey to the celestial pole before going to the park position
@@ -168,7 +176,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - All guiders now report when a successful connection happens
 - Disconnecting Atik Cameras from other applications on startup or scan for new devices will not happen anymore
 - Fixed an issue in Framing Assistant when solving a file, that the near solver was incorrectly used as the blind solver
-- QHY294M/C Pro is properly handled by the QHY native driver
+- QHY: QHY294M/C Pro is properly handled by the QHY native driver
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 48.18421.20210202
@@ -177,7 +185,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - **FLI:** 1.104.0.0
 - **Nikon:** 1.3.2.3000
 - **Omegon:** 39.15325.2019.810
-- **QHY:** 21.02.01.10
+- **QHY:** 21.02.19.19
 - **ToupTek:** 48.18081.2020.1205
 - **ZWO:** 1.16.3
 

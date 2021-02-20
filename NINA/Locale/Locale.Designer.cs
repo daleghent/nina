@@ -7164,6 +7164,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Firmware Version.
+        /// </summary>
+        internal static string LblFirmwareVersion {
+            get {
+                return ResourceManager.GetString("LblFirmwareVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FITS.
         /// </summary>
         internal static string LblFits {
@@ -8008,6 +8017,15 @@ namespace NINA.Locale {
         internal static string LblForceGuidingCalibration {
             get {
                 return ResourceManager.GetString("LblForceGuidingCalibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FPGA Version.
+        /// </summary>
+        internal static string LblFPGAVersion {
+            get {
+                return ResourceManager.GetString("LblFPGAVersion", resourceCulture);
             }
         }
         
@@ -12113,11 +12131,29 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sensor air pressure.
+        /// </summary>
+        internal static string LblSensorAirPressure {
+            get {
+                return ResourceManager.GetString("LblSensorAirPressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sensor Analysis is irregular, and may not produce accurate results. Consider re-running it..
         /// </summary>
         internal static string LblSensorAnalysisPoorFit {
             get {
                 return ResourceManager.GetString("LblSensorAnalysisPoorFit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sensor humidity.
+        /// </summary>
+        internal static string LblSensorHumidity {
+            get {
+                return ResourceManager.GetString("LblSensorHumidity", resourceCulture);
             }
         }
         

@@ -5281,6 +5281,18 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblSetButtonMoveRateToolTip" xml:space="preserve">
     <value>Set the button slew rate in degrees per second</value>
   </data>
+  <data name="LblFirmwareVersion" xml:space="preserve">
+    <value>Firmware Version</value>
+  </data>
+  <data name="LblFPGAVersion" xml:space="preserve">
+    <value>FPGA Version</value>
+  </data>
+  <data name="LblSensorAirPressure" xml:space="preserve">
+    <value>Sensor air pressure</value>
+  </data>
+  <data name="LblSensorHumidity" xml:space="preserve">
+    <value>Sensor humidity</value>
+  </data>
   <data name="LblUnknownInstruction" xml:space="preserve">
     <value>Unknown Instruction</value>
   </data>

@@ -12,10 +12,10 @@
 
 #endregion "copyright"
 
+using ASCOM;
 using NINA.Profile;
 using NINA.Utility;
 using QHYCCD;
-using System;
 using System.Collections;
 using System.Linq;
 using System.Text;
@@ -25,25 +25,27 @@ using System.Threading.Tasks;
 namespace NINA.Model.MyFilterWheel {
 
     public class QHYFilterWheel : BaseINPC, IFilterWheel {
-        private IntPtr FWheelP;
-        private LibQHYCCD.QHYCCD_FILTER_WHEEL_INFO Info;
+        private QhySdk.QHYCCD_FILTER_WHEEL_INFO Info;
         private bool _connected = false;
         private IProfileService profileService;
+        private bool moveRequested = false;
+        private string destinationPostition = string.Empty;
+        public IQhySdk Sdk { get; set; } = QhySdk.Instance;
 
         public QHYFilterWheel(string fwheel, IProfileService profileService) {
             this.profileService = profileService;
+
             StringBuilder FWheelId = new StringBuilder(32);
             StringBuilder cameraModel = new StringBuilder(0);
 
             FWheelId.Append(fwheel);
-            LibQHYCCD.N_GetQHYCCDModel(FWheelId, cameraModel);
+            Sdk.GetModel(FWheelId, cameraModel);
 
             Info.Id = FWheelId;
+            Sdk.Open(Info.Id);
 
-            FWheelP = LibQHYCCD.N_OpenQHYCCD(Info.Id);
-
-            if (LibQHYCCD.IsQHYCCDCFWPlugged(FWheelP) == LibQHYCCD.QHYCCD_SUCCESS) {
-                Info.Positions = (uint)LibQHYCCD.GetQHYCCDParam(FWheelP, LibQHYCCD.CONTROL_ID.CONTROL_CFWSLOTSNUM);
+            if (Sdk.IsCfwPlugged()) {
+                Info.Positions = (uint)Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_CFWSLOTSNUM);
             } else {
                 Logger.Error($"QHYCFW: {Id} suddenly has no filter wheel!");
                 return;
@@ -51,7 +53,7 @@ namespace NINA.Model.MyFilterWheel {
 
             Info.Name = string.Format($"{cameraModel} {Info.Positions}-Slot Filter Wheel");
 
-            LibQHYCCD.N_CloseQHYCCD(FWheelP);
+            Sdk.Close();
 
             Logger.Debug($"QHYCFW: Found filter wheel: {Name}");
         }
@@ -60,11 +62,21 @@ namespace NINA.Model.MyFilterWheel {
             return await Task.Run(() => {
                 byte[] position = new byte[1];
 
-                Logger.Debug($"QHYCFW: Connecting to filter wheel {Name}");
-                FWheelP = LibQHYCCD.N_OpenQHYCCD(Info.Id);
+                Sdk.InitSdk();
 
-                Connected = true;
-                return Connected;
+                Logger.Debug($"QHYCFW: Connecting to filter wheel {Name}");
+                Sdk.Open(Info.Id);
+                Sdk.InitCamera();
+
+                if (!Sdk.IsCfwPlugged()) {
+                    Sdk.Close();
+
+                    string errMessage = $"CFW {Name} is not found on the connected camera!";
+                    Logger.Error($"QHYCFW: " + errMessage);
+                    throw new InvalidOperationException(errMessage);
+                }
+
+                return Connected = true;
             });
         }
 
@@ -95,7 +107,7 @@ namespace NINA.Model.MyFilterWheel {
                 short position;
                 string statusString;
 
-                if ((rv = LibQHYCCD.GetQHYCCDCFWStatus(FWheelP, status)) != LibQHYCCD.QHYCCD_SUCCESS) {
+                if ((rv = Sdk.GetCfwStatus(status)) != QhySdk.QHYCCD_SUCCESS) {
                     Logger.Error($"QHYCFW: Failed to get filter wheel position: {rv}");
                     return -1;
                 }
@@ -104,23 +116,33 @@ namespace NINA.Model.MyFilterWheel {
                 Logger.Debug($"QHYCFW: Current position: {statusString}");
 
                 /*
-                 * GetQHYCCDCFWStatus() returns a status of "N" while the filter wheel is in motion. Return -1 in this case per the ASCOM specification
+                 * GetQHYCCDCFWStatus() can return the following status:
+                 * - CFW2, CFW3: ASCII 78 "N" while the filter wheel is in motion.
+                 * - A-Series cameras: ASCII 47 "/" file filter wheel is initializing, but the position number the wheel is at while it is moving
+                 * We return -1 while the filter wheel is moving, per the ASCOM specification
                  */
-                if (statusString == "N") {
+                if (statusString == "N" || statusString == "/" || (moveRequested && !statusString.Equals(destinationPostition))) {
+                    // The filter wheel is in motion
                     position = -1;
                 } else {
+                    // The filter wheel is at a filter postition
+                    moveRequested = false;
+                    destinationPostition = string.Empty;
                     short.TryParse(statusString, out position);
                 }
 
                 return position;
             }
             set {
-                string position = value.ToString("X1");
+                string position = destinationPostition = value.ToString("X1");
+                moveRequested = true;
 
                 Logger.Debug($"QHYCFW: Moving to position {value} (str: {position})");
 
-                if (LibQHYCCD.SendOrder2QHYCCDCFW(FWheelP, position, position.Length) != LibQHYCCD.QHYCCD_SUCCESS) {
+                if (Sdk.SendOrderToCfw(position, position.Length) != QhySdk.QHYCCD_SUCCESS) {
                     Logger.Error($"QHYCFW: Failed to order move to position {value} (str: {position})!");
+                    moveRequested = false;
+                    destinationPostition = string.Empty;
                     return;
                 }
 
@@ -134,8 +156,8 @@ namespace NINA.Model.MyFilterWheel {
             Logger.Debug($"QHYCFW: Closing filter wheel {Name}");
 
             Connected = false;
-            LibQHYCCD.N_CloseQHYCCD(FWheelP);
-            FWheelP = IntPtr.Zero;
+            Sdk.Close();
+            Sdk.ReleaseSdk();
         }
 
         public AsyncObservableCollection<FilterInfo> Filters {
