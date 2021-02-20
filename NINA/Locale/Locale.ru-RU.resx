@@ -4613,6 +4613,991 @@ Dec: {1}</value>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
     <value>Обученная флэт экспозиция</value>
   </data>
+  <data name="Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound" xml:space="preserve">
+    <value>Не найдено обученное значение экспозиции для комбинации фильтра {0}, усиления {1}, биннинга {2}</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_EndArea" xml:space="preserve">
+    <value>Конечная область серии</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_StartArea" xml:space="preserve">
+    <value>Начальная зона серии</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
+    <value>Целевая область серии
+Добавить серию объектов глубокого космоса здесь или добавить цели через Небесный Атлас или Помощник Кадрирования</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Conditions_Header" xml:space="preserve">
+    <value>Условия цикла</value>
+  </data>
+  <data name="Lbl_SequenceContainer_EndAreaContainer_Name" xml:space="preserve">
+    <value>Конец</value>
+  </data>
+  <data name="Lbl_SequenceContainer_StartAreaContainer_Name" xml:space="preserve">
+    <value>Начало</value>
+  </data>
+  <data name="Lbl_SequenceContainer_TargetAreaContainer_Name" xml:space="preserve">
+    <value>Цели</value>
+  </data>
+  <data name="LblStartupSequenceTemplate" xml:space="preserve">
+    <value>Шаблон начала серии</value>
+  </data>
+  <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
+    <value>Когда установлено, этот шаблон будет предварительно загружен в серию.</value>
+  </data>
+  <data name="LblForceGuidingCalibration" xml:space="preserve">
+    <value>Принудительная калибровка</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_NoSwitchSelected" xml:space="preserve">
+    <value>Переключатель не выбран!</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_DitherTooltip" xml:space="preserve">
+    <value>Команда межкадровой подвижки после указанного количества экспозиций. Значение 0 отключит межкадровую подвижку для этого элемента.</value>
+  </data>
+  <data name="LblInstructionSet" xml:space="preserve">
+    <value>Набор инструкций</value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddCondition_Tooltip" xml:space="preserve">
+    <value>Добавьте условие цикла к набору инструкций.
+Набор инструкций будет выполняться и повторяться при добавлении одного или нескольких условий в контейнер, если эти условия истинны.
+Как только одно из условий цикла больше не верно, выполнение оставшихся инструкций внутри набора будет пропущено.
+Условия цикла также действительны для текущего набора инструкций и каждого поднабора внутри набора. </value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddInstruction_Tooltip" xml:space="preserve">
+    <value>Добавьте инструкцию к набору инструкций.
+Инструкция - это единая инструкция или набор инструкций, которые будут выполнены, когда они верны. 
+Неправильные инструкции (обозначенные красным круговым восклицательным знаком) будут пропущены.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_AddTrigger_Tooltip" xml:space="preserve">
+    <value>Добавьте триггер к набору инструкций.
+Триггеры являются инструкциями, выполняемыми только тогда, когда указанные параметры выполняются с их выполнением. 
+Параметры триггера будут обновлены и оценены после завершения инструкции.
+Кроме того, триггеры действительны для текущего набора инструкций и каждого поднабора внутри набора.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Delete_Tooltip" xml:space="preserve">
+    <value>Удаляет текущий набор инструкций и все его элементы из серии.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_MoveDown_Tooltip" xml:space="preserve">
+    <value>Перемещает набор инструкций и все их содержимое вниз по одной позиции.
+Если позиция ниже это набор инструкций, который будет развернут, он будет перемещен внутри набора инструкций.
+Если позиция ниже это набор инструкций, который в настоящее время не развернут, он будет перемещен ниже набора инструкций.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_MoveUp_Tooltip" xml:space="preserve">
+    <value>Перемещает набор инструкций и все их содержимое на одну позицию.
+Если позиция выше это набор инструкций, который будет развернут, он будет перемещен внутри набора инструкций.
+Если позиция выше является набором инструкций, которые в настоящее время не разворачиваются, он будет перемещен выше набора инструкций.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Reset_Tooltip" xml:space="preserve">
+    <value>Сбрасывает состояние и ход текущего набора инструкций и все внутри.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Delete_Tooltip" xml:space="preserve">
+    <value>Удаляет текущую инструкцию из набора инструкций.</value>
+  </data>
+  <data name="Lbl_SequenceItem_MoveDown_Tooltip" xml:space="preserve">
+    <value>Перемещает инструкцию вниз по одной позиции.
+Если позиция ниже это набор инструкций, который будет развернут, он будет перемещен внутри набора инструкций.
+Если позиция ниже это набор инструкций, который в настоящее время не развернут, он будет перемещен ниже набора инструкций.</value>
+  </data>
+  <data name="Lbl_SequenceItem_MoveUp_Tooltip" xml:space="preserve">
+    <value>Перемещает инструкцию вверх на одну позицию.
+Если позиция выше это набор инструкций, который будет развернут, он будет перемещен внутри набора инструкций.
+Если позиция выше является набором инструкций, которые в настоящее время не разворачиваются, он будет перемещен выше набора инструкций.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Reset_Tooltip" xml:space="preserve">
+    <value>Сбрасывает состояние и ход текущей инструкции.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Progress" xml:space="preserve">
+    <value>Ожидание достижения целью указанной высоты. {0}° / {1}°</value>
+  </data>
+  <data name="Lbl_OldSequencer_EndOfSequence" xml:space="preserve">
+    <value>Инструкции конца серии</value>
+  </data>
+  <data name="Lbl_OldSequencer_ParallelEndOfSequence" xml:space="preserve">
+    <value>Параллельное завершение инструкций по серии</value>
+  </data>
+  <data name="Lbl_OldSequencer_TargetImaging" xml:space="preserve">
+    <value>Инструкция к съёмке цели</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_Name" xml:space="preserve">
+    <value>Серия</value>
+  </data>
+  <data name="Lbl_SequenceContainer_Duplicate_Tooltip" xml:space="preserve">
+    <value>Создает дубликат текущего набора и всех его элементов и добавляет его в родительскую инструкцию</value>
+  </data>
+  <data name="Lbl_SequenceItem_Duplicate_Tooltip" xml:space="preserve">
+    <value>Создает дубликат текущего элемента и добавляет его в родительскую инструкцию</value>
+  </data>
+  <data name="Lbl_OldSequencer_EmptyAreaDescription" xml:space="preserve">
+    <value>Добавить новую цель серии с помощью кнопки +, открыть существующую цель или добавить цели через Помощник Кадрирования</value>
+  </data>
+  <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
+    <value>Добавить новую цель</value>
+  </data>
+  <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
+    <value>Загрузить цель</value>
+  </data>
+  <data name="Lbl_OldSequencer_OpenTargetSet" xml:space="preserve">
+    <value>Открыть набор цели</value>
+  </data>
+  <data name="Lbl_OldSequencer_Title" xml:space="preserve">
+    <value>Простая серия</value>
+  </data>
+  <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
+    <value>Опции окончания последней цели</value>
+  </data>
+  <data name="Lbl_OldSequencer_Template" xml:space="preserve">
+    <value>Шаблон простой серии</value>
+  </data>
+  <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
+    <value>Импортировать цель</value>
+  </data>
+  <data name="Lbl_Sequencer_Title" xml:space="preserve">
+    <value>Серия</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Camera" xml:space="preserve">
+    <value>Камера</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Condition" xml:space="preserve">
+    <value>Условие цикла</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Container" xml:space="preserve">
+    <value>* Набор инструкций *</value>
+  </data>
+  <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
+    <value>Колесо фильтров</value>
+  </data>
+  <data name="Lbl_SequenceCategory_FlatDevice" xml:space="preserve">
+    <value>Флэт устройство</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Focuser" xml:space="preserve">
+    <value>Фокусер</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Guider" xml:space="preserve">
+    <value>Гид</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Switch" xml:space="preserve">
+    <value>Переключатель</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Telescope" xml:space="preserve">
+    <value>Телескоп</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Trigger" xml:space="preserve">
+    <value>Триггер</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Utility" xml:space="preserve">
+    <value>Утилита</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
+    <value>Условие, которое повторяется до тех пор, пока цель не опустится ниже заданной высоты, а затем останавливает текущий набор инструкций</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
+    <value>Цикл, пока высота не будет установлена ниже</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
+    <value>Купол</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Description" xml:space="preserve">
+    <value>Закрывает затвор купола</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Name" xml:space="preserve">
+    <value>Закрыть затвор купола</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_ParkDome_Description" xml:space="preserve">
+    <value>Паркует купол на позицию в парке</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_ParkDome_Name" xml:space="preserve">
+    <value>Запарковать купол</value>
+  </data>
+  <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
+    <value>Параллельный старт инструкций по серии</value>
+  </data>
+  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
+    <value>Настройки запуска первой цели</value>
+  </data>
+  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
+    <value>Охладить камеру при запуске серии</value>
+  </data>
+  <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
+    <value>Открывать крышу при запуске серии</value>
+  </data>
+  <data name="LblOpenDomeShutterAtSequenceStart" xml:space="preserve">
+    <value>Открыть затвор купола при запуске серии</value>
+  </data>
+  <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
+    <value>Распарковка купола в начале серии</value>
+  </data>
+  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
+    <value>Распарковка монтировки при начале серии</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
+    <value>Открывает затвор купола</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Name" xml:space="preserve">
+    <value>Открыть затвор купола</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description" xml:space="preserve">
+    <value>Гарантирует что купол останется синхронизирован с телескопом</value>
+  </data>
+  <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
+    <value>Включить синхронизацию купола</value>
+  </data>
+  <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
+    <value>Серия содержит строки, которые либо неактивны, либо количество экспозиций в прогрессе равно общему количеству экспозиций. Эти элементы пропущены, и для этих строк не создаются никаких элементов для серии.</value>
+  </data>
+  <data name="LblRotateTarget" xml:space="preserve">
+    <value>Повернуть цель</value>
+  </data>
+  <data name="LblSafetyMonitorConnectionLost" xml:space="preserve">
+    <value>Соединение с монитором безопасности потеряно!</value>
+  </data>
+  <data name="LblSafetyMonitor" xml:space="preserve">
+    <value>Монитор безопасности</value>
+  </data>
+  <data name="LblDisconnectSafetyMonitor" xml:space="preserve">
+    <value>Отключить монитор безопасности</value>
+  </data>
+  <data name="LblSafetyMonitorConnected" xml:space="preserve">
+    <value>Монитор безопасности подключен</value>
+  </data>
+  <data name="LblIsSafe" xml:space="preserve">
+    <value>Безопасно</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
+    <value>Условие которое проверяет подключенное устройство безопасности на предмет его безопасности и зацикливать инструкцию до тех пор, пока безопасность не будет безопасной. Если устройство возвращается в небезопасный режим, текущий набор инструкций остановлен.
+Лучше всего использовать в сочетании с другим циклом, чтобы не попасть в бесконечный цикл, когда монитор безопасности остается истинным.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
+    <value>Монитор безопасности</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
+    <value>Сохранить текущий набор инструкций и все его содержимое в качестве шаблона для повторного использования</value>
+  </data>
+  <data name="LblSafetyMonitorNotConnected" xml:space="preserve">
+    <value>Монитор безопасности не подключен</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveSequence_Notification" xml:space="preserve">
+    <value>Серия "{0}" успешно сохранена в {1}</value>
+  </data>
+  <data name="LblSetTrackingRate" xml:space="preserve">
+    <value>Установить скорость слежения</value>
+  </data>
+  <data name="LblTimeSpan" xml:space="preserve">
+    <value>Временной размах</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
+    <value>Набор инструкций цикла на заданную продолжительность. Когда время истечет, остальные инструкции внутри набора будут пропущены.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeSpanCondition_Name" xml:space="preserve">
+    <value>Цикл времени</value>
+  </data>
+  <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
+    <value>Соединение с флэт устройством потеряно!</value>
+  </data>
+  <data name="LblNoSafetyMonitor" xml:space="preserve">
+    <value>Нет монитора безопасности</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain" xml:space="preserve">
+    <value>Неверное усиление. Усиление должно быть установлено в диапазоне {0} и {1} , но установлено в {2}</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset" xml:space="preserve">
+    <value>Недопустимое смещение. Смещение должно быть установлено между {0} и {1} , но установлено в {2}</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
+    <value>Делает снимок и разрешает изображение, используя в качестве ссылки текущую позицию телескопа.
+После успешного разрешения кадра телескоп будет синхронизирован с решенной позицией.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
+    <value>Разрешить и синхронизировать</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DragOver_AddTarget" xml:space="preserve">
+    <value>СОХРАНИТЬ ЦЕЛЬ</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DropTargetHere" xml:space="preserve">
+    <value>Перетащите серии глубокого космоса из Серии здесь, чтобы сохранить вашу цель</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Caption" xml:space="preserve">
+    <value>Перезаписать цель?</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text" xml:space="preserve">
+    <value>Цель '{0}' уже существует. Вы хотите перезаписать существующую цель? Это действие необратимо.</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption" xml:space="preserve">
+    <value>Удалить цель?</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text" xml:space="preserve">
+    <value>Цель '{0}' будет удалена. Вы хотите удалить существующую цель? Это действие необратимо.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SaveAsTarget_Tooltip" xml:space="preserve">
+    <value>Сохранить текущую цель и все ее содержимое для повторного использования</value>
+  </data>
+  <data name="LblIntercept" xml:space="preserve">
+    <value>Перехват</value>
+    <comment>The line intersection of the y axis</comment>
+  </data>
+  <data name="LblSlope" xml:space="preserve">
+    <value>Откос</value>
+    <comment>The slope of a line</comment>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description" xml:space="preserve">
+    <value>Это определит положение фокуса на основе температуры с использованием углового коэффициента и перехвата.
+Пример:
+  - Уклон = 2
+  - Перехват = 1000
+  - Текущая температура = 10°C
+    =&gt; Позиция = 2 * 10 + 1000 = 1020</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
+    <value>Переместить фокусер по температуре</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
+    <value>Фокусер не имеет корректной температуры</value>
+  </data>
+  <data name="LblServerEnabled" xml:space="preserve">
+    <value>Сервер включен</value>
+  </data>
+  <data name="LblServerEnabledTooltip" xml:space="preserve">
+    <value>Хостинг службы на порту 59590, в настоящее время с таким же API, как SGP для взаимодействия с существующими приложениями. Если служба не запускается, возможно, потребуется обновить некоторые настройки брандмауэра с помощью netsh (см. документацию NINA).</value>
+  </data>
+  <data name="LblServerFailed" xml:space="preserve">
+    <value>Не удалось запустить сервер. Проверьте документацию NINA. {0}</value>
+  </data>
+  <data name="LblServerStarted" xml:space="preserve">
+    <value>Сервер запущен</value>
+  </data>
+  <data name="LblServerStopped" xml:space="preserve">
+    <value>Сервер остановлен</value>
+  </data>
+  <data name="LblCloseAll" xml:space="preserve">
+    <value>Закрыть все</value>
+  </data>
+  <data name="LblConnectAll" xml:space="preserve">
+    <value>Подключить все устройства?</value>
+  </data>
+  <data name="LblCollapseSequencerTemplatesByDefault" xml:space="preserve">
+    <value>Свернуть шаблоны серий по умолчанию</value>
+  </data>
+  <data name="LblCollapseSequencerTemplatesByDefaultTooltip" xml:space="preserve">
+    <value>Когда эта опция включена, добавление шаблонов и целей в серию создаст их в сворачиваемом состоянии.</value>
+  </data>
+  <data name="LblMaxMinutesAfterMeridian" xml:space="preserve">
+    <value>Макс. минут после меридиана</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty" xml:space="preserve">
+    <value>Не указана папка для сохранения изображений. Пожалуйста, установите корректную папку в настройках файла изображения</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid" xml:space="preserve">
+    <value>Папка, указанная внутри параметров файла изображения для сохранения изображений, не найдена. Пожалуйста, проверьте папку, указанную в настройках файла изображения.</value>
+  </data>
+  <data name="LblTheWeatherCompanyAPIKey" xml:space="preserve">
+    <value>Ключ API TheWeatherCompany</value>
+  </data>
+  <data name="LblTheWeatherCompanyClientDescription" xml:space="preserve">
+    <value>Использует текущий API WeatherCompany. Данные о погоде обновляются каждые 10 минут.</value>
+  </data>
+  <data name="LblTheWeatherCompanyClientInfo" xml:space="preserve">
+    <value>N.I.N.A. внутренний API клиент TheWeatherCompany</value>
+  </data>
+  <data name="Lbl_OldSequencer_BuildAdvanced_Caption" xml:space="preserve">
+    <value>Построить расширенную серию?</value>
+  </data>
+  <data name="Lbl_OldSequencer_BuildAdvanced_Text" xml:space="preserve">
+    <value>Вы уверены, что хотите экспортировать серию в расширенную серию?
+Примечание: Дополнительные серии НЕ совместимы с обратной стороной и невозможно вернуться к простой серии!</value>
+  </data>
+  <data name="Lbl_OldSequencer_SwitchToAdvanced" xml:space="preserve">
+    <value>Расширенная серия</value>
+  </data>
+  <data name="Lbl_OldSequencer_SwitchToAdvancedTooltip" xml:space="preserve">
+    <value>Переключение в расширенный режим планирования серии.
+Там можно спланировать серию с нуля с помощью мелких гранулярных инструкций, триггеров и условий.</value>
+  </data>
+  <data name="LblDisableSimpleSequencer" xml:space="preserve">
+    <value>Отключить простую серию</value>
+  </data>
+  <data name="LblDisableSimpleSequencerTooltip" xml:space="preserve">
+    <value>Это отключит простую серию и напрямую отобразит расширенную последовательность на вкладке серии.</value>
+  </data>
+  <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
+    <value>Вернуться к панели серии</value>
+  </data>
+  <data name="Lbl_OldSequencer_TargetPreparation" xml:space="preserve">
+    <value>Инструкции по подготовке целей</value>
+  </data>
+  <data name="LblUnparked" xml:space="preserve">
+    <value>Распаркован</value>
+    <comment>If the telescope is not in park position</comment>
+  </data>
+  <data name="LblWaitingForTelescopeToPark" xml:space="preserve">
+    <value>Ожидание парковки телескопа</value>
+  </data>
+  <data name="LblWeatherUndergroundAPIKey" xml:space="preserve">
+    <value>Ключ API для Weather Underground</value>
+  </data>
+  <data name="LblWeatherUndergroundStationID" xml:space="preserve">
+    <value>Id станции Weather Underground</value>
+  </data>
+  <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
+    <value>Понизить выбранную строку</value>
+  </data>
+  <data name="LblTooltipPromoteSimpleExposure" xml:space="preserve">
+    <value>Повысить выбранную строку</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_AddNewTemplateFailed" xml:space="preserve">
+    <value>Произошла ошибка при добавлении нового шаблона. Обратитесь к журналам для получения более подробной информации.</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_DeleteTemplateFailed" xml:space="preserve">
+    <value>Произошла ошибка при удалении шаблона. Обратитесь к журналам для получения более подробной информации.</value>
+  </data>
+  <data name="Lbl_SequenceTemplateController_LoadUserTemplatesFailed" xml:space="preserve">
+    <value>Произошла ошибка во время обновления шаблона. Обратитесь к журналам для получения более подробной информации.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_AddNewTargetFailed" xml:space="preserve">
+    <value>Произошла ошибка при добавлении цели. Обратитесь к журналам для получения более подробной информации.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_DeleteTargetFailed" xml:space="preserve">
+    <value>Произошла ошибка при удалении цели. Обратитесь к журналам для получения более подробной информации.</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_LoadUserTargetFailed" xml:space="preserve">
+    <value>Произошла ошибка при загрузке списка целей. Обратитесь к журналам для получения более подробной информации.</value>
+  </data>
+  <data name="LblSequenceTemplateFolder" xml:space="preserve">
+    <value>Папка с шаблоном серии</value>
+  </data>
+  <data name="LblSequenceTemplateFolderTooltip" xml:space="preserve">
+    <value>Папка, в которой хранятся шаблоны последовательностей для расширенной серии</value>
+  </data>
+  <data name="LblWeatherUndergroundClientDescription" xml:space="preserve">
+    <value>Использует WU PWS API. Погода обновляется каждые 10 м</value>
+  </data>
+  <data name="LblWeatherUndergroundClientInfo" xml:space="preserve">
+    <value>N.I.N.A. внутренний клиент WU API</value>
+  </data>
+  <data name="LblPause" xml:space="preserve">
+    <value>Пауза</value>
+  </data>
+  <data name="LblResume" xml:space="preserve">
+    <value>Возобновить</value>
+  </data>
+  <data name="LblProfileChooserOnStartup" xml:space="preserve">
+    <value>Выбор профиля при запуске</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Description" xml:space="preserve">
+    <value>Выход из цикла когда высота Луны соответствует заданным параметрам.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Name" xml:space="preserve">
+    <value>Высота Луны</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SunAltitudeCondition_Description" xml:space="preserve">
+    <value>Выход из цикла когда высота Солнца соответствует заданным параметрам.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_SunAltitudeCondition_Name" xml:space="preserve">
+    <value>Высота Солнца</value>
+  </data>
+  <data name="LblComparatorEquals" xml:space="preserve">
+    <value>=</value>
+  </data>
+  <data name="LblComparatorGreaterThan" xml:space="preserve">
+    <value>&gt;</value>
+  </data>
+  <data name="LblComparatorGreaterThanOrEqual" xml:space="preserve">
+    <value>≥</value>
+  </data>
+  <data name="LblComparatorLessThanOrEqual" xml:space="preserve">
+    <value>≤</value>
+  </data>
+  <data name="LblComparatorNotEqual" xml:space="preserve">
+    <value>≠</value>
+  </data>
+  <data name="LblCompatatorLessThan" xml:space="preserve">
+    <value>&lt;</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Description" xml:space="preserve">
+    <value>Ожидание если высота Луны соответствует заданным параметрам</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Name" xml:space="preserve">
+    <value>Ожидание высоты Луны</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress" xml:space="preserve">
+    <value>Ожидание из-за высоты Луны ({0}° {1} {2}°)</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Description" xml:space="preserve">
+    <value>Ожидание если высота Солнца соответствует заданным параметрам</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Name" xml:space="preserve">
+    <value>Ожидание высоты Солнца</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Progress" xml:space="preserve">
+    <value>Ожидание из-за высоты Солнца ({0}° {1} {2}°)</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Description" xml:space="preserve">
+    <value>Выход из цикла когда освещённость Луны соответствует заданным параметрам.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Name" xml:space="preserve">
+    <value>Освещенность Луны</value>
+  </data>
+  <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
+    <value>Инструкции к закрытию цели</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize" xml:space="preserve">
+    <value>Размер образца</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSizeTooltip" xml:space="preserve">
+    <value>Максимальный размер изображения с HFR показания, которые должны использоваться для определения тренда HFR. 
+Большие выборочные размеры могут помочь предотвратить краткосрочные проблемы, такие как ветровые порывы или проблемы ориентации для автофокуса.
+Для быстрого изменения условий меньший размер выборки поможет быстрее реагировать на сдвиг фокуса, Например, для термочувствительной оптики при быстроизменяющейся температуре окружающей среды.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_NoWritableSwitch" xml:space="preserve">
+    <value>Переключатель для записи не доступен</value>
+  </data>
+  <data name="LblPHD2ROIPct" xml:space="preserve">
+    <value>Процент ROI для поиска гидирующей звезды</value>
+  </data>
+  <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
+    <value>Процент кадра, который должен быть рассмотрен для нахождения гидирующей звезды в PHD2 измеряется от центра кадра</value>
+  </data>
+  <data name="LblDitherSkippedBecauseNotGuiding" xml:space="preserve">
+    <value>Межкадровая подвижка была пропущена потому что PHD2 не гидировал активно</value>
+  </data>
+  <data name="LblDitherSkippedBecauseNotLostLock" xml:space="preserve">
+    <value>Межкадровая подвижка была пропущена потому что PHD2 потерял привязанную звезду для гидирования</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_DewHeater_Description" xml:space="preserve">
+    <value>Включает или выключает обогреватель камеры</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_DewHeater_Name" xml:space="preserve">
+    <value>Нагреватель от росы</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
+    <value>В подключенной камере не хватает обогрева, которым можно управлять</value>
+  </data>
+  <data name="LblAddTargetToTargetList" xml:space="preserve">
+    <value>Добавить цель в список целей</value>
+  </data>
+  <data name="LblAddTargetToTargetListTooltip" xml:space="preserve">
+    <value>Добавляет выделенную цель в список целей в расширенной боковой панели последовательности для последующего использования</value>
+  </data>
+  <data name="Lbl_SequenceTargetController_SavedTarget" xml:space="preserve">
+    <value>Цель {0} сохранена в список целей</value>
+  </data>
+  <data name="LblCustomHorizon" xml:space="preserve">
+    <value>Пользовательский горизонт</value>
+  </data>
+  <data name="LblCustomHorizonTooltip" xml:space="preserve">
+    <value>Загрузить пользовательский файл горизонта для определения локальных границ горизонта и отображения лимита в диаграммах высоты.</value>
+  </data>
+  <data name="LblFailedToLoadCustomHorizon" xml:space="preserve">
+    <value>Не удалось загрузить пользовательский горизонт</value>
+  </data>
+  <data name="LblPlanetariumLocationTooltip" xml:space="preserve">
+    <value>Получить местоположение от программы планетария</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description" xml:space="preserve">
+    <value>Ждёт пока высота цели выше горизонта. Если используется пользовательский горизонт, эта высота используется вместо 0</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
+    <value>Дождитесь пока выше горизонта</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
+    <value>Ожидание до цели выше горизонта. Высота цели {0}° / высота горизонта {1}°</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
+    <value>Условие, которое повторяется, пока цель находится над горизонтом, а затем останавливает текущий набор инструкций</value>
+  </data>
+  <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
+    <value>Цикл пока высота над горизонтом</value>
+  </data>
+  <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
+    <value>Цель никогда не будет выше горизонта</value>
+  </data>
+  <data name="LblMovingRotatorToMechanicalPosition" xml:space="preserve">
+    <value>Перемещение вращателя в механическое положение {0}</value>
+  </data>
+  <data name="LblMovingRotatorToPosition" xml:space="preserve">
+    <value>Перемещение ротатора в позицию {0}</value>
+  </data>
+  <data name="LblMeridianFlipWaitLonger" xml:space="preserve">
+    <value>Добавить {0} в минуты после меридиана</value>
+  </data>
+  <data name="LblFlipTime" xml:space="preserve">
+    <value>Время перекладки</value>
+  </data>
+  <data name="LblAmount" xml:space="preserve">
+    <value>Сумма</value>
+  </data>
+  <data name="LblDelta" xml:space="preserve">
+    <value>Дельта</value>
+  </data>
+  <data name="LblElapsed" xml:space="preserve">
+    <value>Прошло</value>
+  </data>
+  <data name="LblHFRTrend" xml:space="preserve">
+    <value>Статистика HFR</value>
+  </data>
+  <data name="Lbl_SequenceCondition_LoopCondition_Description" xml:space="preserve">
+    <value>Условие для создания цикла контейнера последовательности для указанного количества циклов</value>
+  </data>
+  <data name="Lbl_SequenceCondition_LoopCondition_Name" xml:space="preserve">
+    <value>Цикл для итераций</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeCondition_Description" xml:space="preserve">
+    <value>Условие, которое повторяется до тех пор, пока не будет достигнуто указанное время, а затем останавливает текущий набор инструкций</value>
+  </data>
+  <data name="Lbl_SequenceCondition_TimeCondition_Name" xml:space="preserve">
+    <value>Цикл до времени</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Description" xml:space="preserve">
+    <value>Работает как последовательный набор инструкций, но глубокий объект неба может быть указан внутри, который будет автоматически заполнять все инструкции внутри него координатами и вращением при необходимости.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
+    <value>Серия объекта глубокого космоса</value>
+  </data>
+  <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
+    <value>Все инструкции в этом наборе выполняются параллельно. Этот набор инструкций не будет оценивать никаких условий или триггеров до тех пор, пока не будут выполнены все инструкции.</value>
+  </data>
+  <data name="Lbl_SequenceContainer_ParallelContainer_Name" xml:space="preserve">
+    <value>Параллельный набор инструкций</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequentialContainer_Description" xml:space="preserve">
+    <value>Выполняет все пункты в последовательном порядке. Триггер и условия вычисляются после каждого элемента</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequentialContainer_Name" xml:space="preserve">
+    <value>Набор серийной инструкции</value>
+  </data>
+  <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Description" xml:space="preserve">
+    <value>Выполняет запуск автофокуса</value>
+  </data>
+  <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Name" xml:space="preserve">
+    <value>Запустить автофокус</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_CoolCamera_Description" xml:space="preserve">
+    <value>Охлаждает камеру до заданной температуры и продолжительности</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_CoolCamera_Name" xml:space="preserve">
+    <value>Охлаждение камеры</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_WarmCamera_Description" xml:space="preserve">
+    <value>Разогревает камеру на заданную длительность</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
+    <value>Прогрев камеры</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Description" xml:space="preserve">
+    <value>Устанавливает режим чтения для камеры</value>
+  </data>
+  <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Name" xml:space="preserve">
+    <value>Установить режим чтения</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidReadoutMode" xml:space="preserve">
+    <value>Режим чтения не поддерживается камерой. Значение должно быть между 0 и {0}</value>
+  </data>
+  <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
+    <value>Перемещает колесо фильтров на указанный фильтр</value>
+  </data>
+  <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Name" xml:space="preserve">
+    <value>Переключить фильтр</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Description" xml:space="preserve">
+    <value>Закрывает крышку флэт панели</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Name" xml:space="preserve">
+    <value>Закрыть крышку флэт панели</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
+    <value>Перемещает фокусер в заданное абсолютное положение</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
+    <value>Переместить фокусер</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
+    <value>Посылает сигнал межкадровой подвижки гиду</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_Dither_Name" xml:space="preserve">
+    <value>Дизеринг</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StartGuiding_Description" xml:space="preserve">
+    <value>Запускает автогид</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StartGuiding_Name" xml:space="preserve">
+    <value>Начать гидирование</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StopGuiding_Description" xml:space="preserve">
+    <value>Остановить авто-гидирование</value>
+  </data>
+  <data name="Lbl_SequenceItem_Guider_StopGuiding_Name" xml:space="preserve">
+    <value>Остановить гидирование</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Description" xml:space="preserve">
+    <value>Делает экспозицию заданной длительности, усиления и смещения</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeExposure_Name" xml:space="preserve">
+    <value>Сделать экспозицию</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
+    <value>Центрирует и поворачивает телескоп с помощью плейтсолвера, а также вращателя для заданных координат и вращения</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
+    <value>Отцентрировать и вращать</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
+    <value>Центрирует телескоп посредством плейтсолва для заданных координат</value>
+  </data>
+  <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
+    <value>По центру</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
+    <value>Паркует телескоп к позиции парка</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_ParkScope_Name" xml:space="preserve">
+    <value>Запарковать телескоп</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description" xml:space="preserve">
+    <value>Двигает телескоп к заданным координатам высоты и азимута</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name" xml:space="preserve">
+    <value>Движение к Альт/Аз</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description" xml:space="preserve">
+    <value>Двигает телескоп к заданным координатам прямого восхождения и склонения</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name" xml:space="preserve">
+    <value>Движение к П.В./Скл</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_UnparkScope_Description" xml:space="preserve">
+    <value>Распаркует телескоп</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_UnparkScope_Name" xml:space="preserve">
+    <value>Распарковать телескоп</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SetTracking_Name" xml:space="preserve">
+    <value>Задать слежение</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_SetTracking_Description" xml:space="preserve">
+    <value>Устанавливает режим отслеживания у монтировки</value>
+  </data>
+  <data name="LblTrackingModeNotSupported" xml:space="preserve">
+    <value>Режим отслеживания не поддерживается монтировкой</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_Annotation_Description" xml:space="preserve">
+    <value>Удобный элемент для добавления примечаний в серию</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_Annotation_Name" xml:space="preserve">
+    <value>Аннотация</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_ExternalScript_Description" xml:space="preserve">
+    <value>Вызывает внешний скрипт для данного пути</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_ExternalScript_Name" xml:space="preserve">
+    <value>Внешний скрипт</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_MessageBox_Description" xml:space="preserve">
+    <value>Открывает окно с текстом для нажатия. Может использоваться как ручная остановка, например, для покрытия области для темных кадров</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_MessageBox_Name" xml:space="preserve">
+    <value>Окно сообщения</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Description" xml:space="preserve">
+    <value>Ожидание достижения высоты для заданных координат</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Name" xml:space="preserve">
+    <value>Дождитесь высоты</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Description" xml:space="preserve">
+    <value>Ждать заданную длительность в секундах</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Name" xml:space="preserve">
+    <value>Время ожидания</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTime_Description" xml:space="preserve">
+    <value>Ждёт заданного времени в формате чч:мм:сс. Дополнительно окно утилиты доступно для автозаполнения заката, сумерек, рассвета и восхода Солнца</value>
+  </data>
+  <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
+    <value>Ожидание времени</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
+    <value>Триггер для инициирования автофокуса после того, как HFR увеличился на заданное количество в процентах с момента последнего автофокуса или начала серии</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Name" xml:space="preserve">
+    <value>АФ после увеличения HFR</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description" xml:space="preserve">
+    <value>Триггер для инициирования автофокуса после изменения температуры на заданное количество в градусах с момента последнего автофокуса или начала серии</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Name" xml:space="preserve">
+    <value>АФ после изменения температуры</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Description" xml:space="preserve">
+    <value>Триггер для запуска автофокуса после времени, прошедшего на заданное количество минут с момента последнего автофокуса или начала серии</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Name" xml:space="preserve">
+    <value>АФ после времени</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Description" xml:space="preserve">
+    <value>Триггер для инициирования перекладки меридиана при соблюдении условий</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Name" xml:space="preserve">
+    <value>Перекладка меридиана</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_CameraCannotSetTemperature" xml:space="preserve">
+    <value>Камера не имеет охлаждения и не может установить температуру</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose" xml:space="preserve">
+    <value>Флэт устройство не поддерживает открытие или закрытие крышки</value>
+  </data>
+  <data name="Lbl_Sequencer_LoadSequence_Tooltip" xml:space="preserve">
+    <value>Загрузить полную серию из JSON файла</value>
+  </data>
+  <data name="Lbl_Sequencer_RootElementMustBeRootContainer" xml:space="preserve">
+    <value>Невозможно загрузить серию - корневой элемент последовательности должен быть корневым контейнером!</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveSequence_Tooltip" xml:space="preserve">
+    <value>Сохранить полную серию в JSON файл</value>
+  </data>
+  <data name="Lbl_Sequencer_UnableToDeserializeJSON" xml:space="preserve">
+    <value>Невозможно десериализовать JSON</value>
+  </data>
+  <data name="LblValue" xml:space="preserve">
+    <value>Значение</value>
+  </data>
+  <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Name" xml:space="preserve">
+    <value>Установить значение переключателя</value>
+  </data>
+  <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Description" xml:space="preserve">
+    <value>Задает значение для заданного переключателя с хаба</value>
+  </data>
+  <data name="LblSwitchNotConnected" xml:space="preserve">
+    <value>Переключатель не подключен!</value>
+  </data>
+  <data name="Lbl_SequenceItem_Validation_InvalidSwitchValue" xml:space="preserve">
+    <value>Недопустимое значение для выбранного переключателя! Минимум {0} / максимум {1} / шаг {2}</value>
+  </data>
+  <data name="LblContainer" xml:space="preserve">
+    <value>Контейнер</value>
+  </data>
+  <data name="LblUtility" xml:space="preserve">
+    <value>Утилита</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Description" xml:space="preserve">
+    <value>Отправляет команду межкадровой подвижки к гиду после указанного количества экспозиций</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
+    <value>Межкадровая подвижка после экспозиций</value>
+  </data>
+  <data name="LblAfterExposures" xml:space="preserve">
+    <value>После экспозиций</value>
+  </data>
+  <data name="LblDragOver_BottomText" xml:space="preserve">
+    <value>ВСТАВИТЬ ИНСТРУКЦИЮ НИЖЕ</value>
+  </data>
+  <data name="LblDragOver_CenterText" xml:space="preserve">
+    <value>ДОБАВИТЬ ИНСТРУКЦИЮ ЗДЕСЬ</value>
+  </data>
+  <data name="LblDragOver_TopText" xml:space="preserve">
+    <value>ВСТАВИТЬ ИНСТРУКЦИЮ ВЫШЕ</value>
+  </data>
+  <data name="LblDragOver_AddCondition" xml:space="preserve">
+    <value>ДОБАВИТЬ УСЛОВИЕ ЦИКЛА</value>
+  </data>
+  <data name="LblDragOver_AddTemplate" xml:space="preserve">
+    <value>СОЗДАТЬ НОВЫЙ ШАБЛОН</value>
+  </data>
+  <data name="LblDragOver_AddTrigger" xml:space="preserve">
+    <value>ДОБАВИТЬ ТРИГГЕР</value>
+  </data>
+  <data name="LblInstructions" xml:space="preserve">
+    <value>Инструкции</value>
+  </data>
+  <data name="LblTemplates" xml:space="preserve">
+    <value>Шаблоны</value>
+  </data>
+  <data name="LblTemplate_DefaultTemplates" xml:space="preserve">
+    <value>Шаблоны по умолчанию</value>
+  </data>
+  <data name="LblTemplate_DropTemplateHere" xml:space="preserve">
+    <value>Перетащите набор инструкций серии из последовательности здесь, чтобы создать новый шаблон</value>
+  </data>
+  <data name="LblTemplate_OverwriteTemplateMessageBox_Caption" xml:space="preserve">
+    <value>Перезаписать шаблон?</value>
+  </data>
+  <data name="LblTemplate_OverwriteTemplateMessageBox_Text" xml:space="preserve">
+    <value>Шаблон '{0}' уже существует. Вы хотите перезаписать существующий шаблон? Это действие необратимо.</value>
+  </data>
+  <data name="LblTemplate_UserTemplates" xml:space="preserve">
+    <value>Шаблоны пользователей</value>
+  </data>
+  <data name="LblTemplate_DeleteTemplateMessageBox_Caption" xml:space="preserve">
+    <value>Удалить шаблон?</value>
+  </data>
+  <data name="LblTemplate_DeleteTemplateMessageBox_Text" xml:space="preserve">
+    <value>Шаблон '{0}' будет удалён. Вы хотите удалить существующий шаблон? Это действие необратимо.</value>
+  </data>
+  <data name="Lbl_Sequencer_DeleteItem" xml:space="preserve">
+    <value>УДАЛИТЬ ЦЕЛЬ</value>
+  </data>
+  <data name="LblAddTargetToSequence" xml:space="preserve">
+    <value>Добавить цель к серии</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description" xml:space="preserve">
+    <value>Запускает автофокусировку после изменения фильтра</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name" xml:space="preserve">
+    <value>АФ после изменения фильтра</value>
+  </data>
+  <data name="LblLastFilter" xml:space="preserve">
+    <value>Последний фильтр</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Description" xml:space="preserve">
+    <value>Запускает процедуру автофокуса после того как заданное количество экспозиций было сделано</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Name" xml:space="preserve">
+    <value>АФ после # экспозиций</value>
+  </data>
+  <data name="LblUnreachableAltitude" xml:space="preserve">
+    <value>Высота никогда не будет достигнута</value>
+  </data>
+  <data name="LblPlugin" xml:space="preserve">
+    <value>Плагин</value>
+  </data>
+  <data name="LblBuildSequenceTooltip" xml:space="preserve">
+    <value>Построение серии запланированного набора целей</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Description" xml:space="preserve">
+    <value>Принимает экспозиции по заданному количеству, продолжительности, усилению и смещению. Триггеры и условия оцениваются между экспозициями.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_TakeManyExposures_Name" xml:space="preserve">
+    <value>Сделать множество экспозиций</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_Description" xml:space="preserve">
+    <value>Делает экспозиции заданной величины, фильтра, продолжительности, усиления и смещения и инициирует межкадровую подвижку после количества экспозиций. Триггеры и условия оцениваются между экспозициями.</value>
+  </data>
+  <data name="Lbl_SequenceItem_Imaging_SmartExposure_Name" xml:space="preserve">
+    <value>Умная экспозиция</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveAsSequence_Tooltip" xml:space="preserve">
+    <value>Сохранить полную серию в новый файл JSON</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Description" xml:space="preserve">
+    <value>Открывает крышку флэт панели</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Name" xml:space="preserve">
+    <value>Открыть крышку флэт панели</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Description" xml:space="preserve">
+    <value>Устанавливает яркость флэт устройства в указанное значение</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Name" xml:space="preserve">
+    <value>Установить яркость</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Description" xml:space="preserve">
+    <value>Включение или выключение лампы флэт устройства</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Name" xml:space="preserve">
+    <value>Включение света</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Description" xml:space="preserve">
+    <value>Ищет обученное значение экспозиции по указанным параметрам и принимает плоские экспозиции</value>
+  </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name" xml:space="preserve">
+    <value>Обученная флэт экспозиция</value>
+  </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
     <value>Находит настроенное значение экспозиции для указанных параметров и делает темные флэт экспозиции</value>
   </data>
@@ -5234,5 +6219,44 @@ Dec: {1}</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
     <value>Двигаться, отцентрировать и вращать</value>
+  </data>
+  <data name="LblFindHomeToolTip" xml:space="preserve">
+    <value>Дает указание телескопу определить исходное положение</value>
+  </data>
+  <data name="LblHome" xml:space="preserve">
+    <value>Домашний</value>
+  </data>
+  <data name="LblTelescopeAtHomeParkedWarn" xml:space="preserve">
+    <value>Телескоп запаркован. Не удается определить домашнее положение во время парковки.</value>
+  </data>
+  <data name="LblTelescopeAtHomeWarn" xml:space="preserve">
+    <value>Телескоп уже находится в домашнем положении.</value>
+  </data>
+  <data name="LblTelescopeCannotFindHome" xml:space="preserve">
+    <value>У телескопа нет возможности местоположения дома.</value>
+  </data>
+  <data name="LblWaitingForTelescopeToFindHome" xml:space="preserve">
+    <value>Ожидание нахождения домашнего положения телескопа</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_FindHome_Description" xml:space="preserve">
+    <value>Дает указание телескопу определить исходное положение. Этого нельзя сделать, если телескоп припаркован</value>
+  </data>
+  <data name="Lbl_SequenceItem_Telescope_FindHome_Name" xml:space="preserve">
+    <value>Найти дом</value>
+  </data>
+  <data name="LblTelescopeNoFindHomeError" xml:space="preserve">
+    <value>У телескопа нет возможности определения местоположения дома</value>
+  </data>
+  <data name="LblTelescopeFindHomeCancelled" xml:space="preserve">
+    <value>Операция определения местоположения дома отменена</value>
+  </data>
+  <data name="LblTelescopeParkCancelled" xml:space="preserve">
+    <value>Операция парковки отменена</value>
+  </data>
+  <data name="LblFast" xml:space="preserve">
+    <value>Быстро</value>
+  </data>
+  <data name="LblSetButtonMoveRateToolTip" xml:space="preserve">
+    <value>Установить скорость кнопки движения в градусах в секунду</value>
   </data>
 </root>
