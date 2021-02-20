@@ -632,6 +632,7 @@
     </Compile>
     <Compile Include="Sequencer\SequenceItem\Telescope\FindHome.cs" />
     <Compile Include="Sequencer\SequenceItem\Telescope\SetTracking.cs" />
+    <Compile Include="Sequencer\SequenceItem\UnknownSequenceItem.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>

@@ -31,10 +31,14 @@ namespace NINA.Sequencer.Serialization {
             if (jObject.SelectToken("Strategy.$type") != null) {
                 return sequenceContainerCreationConverter.Create(objectType, jObject);
             } else {
-                var t = Type.GetType(jObject.GetValue("$type").ToString());
-                var method = factory.GetType().GetMethod(nameof(factory.GetItem)).MakeGenericMethod(new Type[] { t });
-                var obj = method.Invoke(factory, null);
-                return (ISequenceItem)obj;
+                try {
+                    var t = Type.GetType(jObject.GetValue("$type").ToString());
+                    var method = factory.GetType().GetMethod(nameof(factory.GetItem)).MakeGenericMethod(new Type[] { t });
+                    var obj = method.Invoke(factory, null);
+                    return (ISequenceItem)obj;
+                } catch (Exception e) {
+                    return new UnknownSequenceItem();
+                }
             }
         }
     }

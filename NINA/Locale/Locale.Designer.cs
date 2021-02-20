@@ -14353,6 +14353,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown Instruction.
+        /// </summary>
+        internal static string LblUnknownInstruction {
+            get {
+                return ResourceManager.GetString("LblUnknownInstruction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unlinked Stretch.
         /// </summary>
         internal static string LblUnlinkedStretch {
