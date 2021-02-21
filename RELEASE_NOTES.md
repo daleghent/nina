@@ -134,6 +134,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Canon CR3 image format is now supported
 
 ### QHYCCD native driver improvements
+- <span style="color:red">**IMPORTANT:**</span> NINA 1.11 #47 (and later) require *at least* [QHY System Pack](https://www.qhyccd.com/download.html) version 21.02.20.19 to be installed
 - Improvements to reliability
 - Seamless switching between 11M and 47M modes for the QHY294 Pro
 - QHY CCDs that have fast and slow readout modes can now select the mode
