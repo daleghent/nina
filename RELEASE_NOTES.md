@@ -134,12 +134,14 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Canon CR3 image format is now supported
 
 ### QHYCCD native driver improvements
+- <span style="color:red">**IMPORTANT:**</span> NINA 1.11 #47 (and later) require *at least* [QHY System Pack](https://www.qhyccd.com/download.html) version 21.02.20.19 to be installed
 - Improvements to reliability
 - Seamless switching between 11M and 47M modes for the QHY294 Pro
 - QHY CCDs that have fast and slow readout modes can now select the mode
 - QHY cameras that have sensor chamber air pressure and humidity sensors will display their readings on the Equipment > Camera screen
 - QHY camera firmware and FPGA versions are now displayed on the Equipment > Camera screen
 - The integrated filter wheels of A-Series cameras should now operate correctly
+- The version of the QHY USB driver will be checked and a warning will be presented if it is not the minimum recommended version
 
 ### Image Preview
 - Ability to inspect pixel area and pixel values in detail by holding right click

@@ -11294,6 +11294,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The installed QHYCCD USB driver&apos;s version of {0} is below the minimum recommeneded version of {1}. Driver updates are available on the QHYCCD website and are recommended for optimal camera function.
+        /// </summary>
+        internal static string LblQhyccdDriverVersionWarning {
+            get {
+                return ResourceManager.GetString("LblQhyccdDriverVersionWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Include Overscan Area.
         /// </summary>
         internal static string LblQhyIncludeOverscan {

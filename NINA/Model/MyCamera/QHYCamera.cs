@@ -19,6 +19,7 @@ using QHYCCD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -888,6 +889,11 @@ namespace NINA.Model.MyCamera {
                 QhyFPGAVersion = GetFPGAVersion();
 
                 /*
+                 * Check the USB3 driver version and emit a warning if it's below the recommended minimum version
+                 */
+                Fx3DriverVersionCheck();
+
+                /*
                  * Announce that this camera is now initialized and ready
                  */
                 CameraState = QhySdk.QHYCCD_CAMERA_STATE.IDLE.ToString();
@@ -1280,6 +1286,43 @@ namespace NINA.Model.MyCamera {
             set {
                 Logger.Debug($"QHYCCD: Setting ImageSize to {value} bytes");
                 Info.ImageSize = value;
+            }
+        }
+
+        private void Fx3DriverVersionCheck() {
+            // Update this if there is a new recommended minimum version
+            string minimumVersion = "21.2.20.0";
+
+            string driverName = "QHY5IIISeries_IO";
+            string runningVersion = string.Empty;
+
+            try {
+                var searchObject = new ManagementObjectSearcher($"SELECT DriverVersion FROM Win32_PnPSignedDriver WHERE DeviceName = '{driverName}'");
+                var objCollection = searchObject.Get();
+
+                if (objCollection.Count > 0) {
+                    // We are interested in only one instance if there are multiple cameras connected. They should all have the same version.
+                    var obj = objCollection.OfType<ManagementObject>().FirstOrDefault();
+
+                    if (!string.IsNullOrEmpty(obj["DriverVersion"].ToString())) {
+                        runningVersion = obj["DriverVersion"].ToString();
+                        Logger.Debug($"QHYCCD: {driverName} driver version: {runningVersion}");
+                    }
+
+                    var minVer = new Version(minimumVersion);
+                    var runVer = new Version(runningVersion);
+                    var compare = minVer.CompareTo(runVer);
+
+                    if (compare > 0) {
+                        Logger.Warning($"QHYCCD: Installed USB driver version {runningVersion} is older than recommended version {minimumVersion}. Operation of the camera may not be reliable and updating is HIGHLY suggested.");
+                        Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblQhyccdDriverVersionWarning"], runningVersion, minimumVersion));
+                    }
+                }
+
+                objCollection.Dispose();
+                searchObject.Dispose();
+            } catch (Exception e) {
+                Logger.Error($"QHYCCD: Fx3DriverVersionCheck failed: {e}");
             }
         }
 
