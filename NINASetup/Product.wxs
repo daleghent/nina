@@ -542,6 +542,9 @@
       <Component Id="System.Threading.Tasks.Extensions.dll" Guid="4470cd68-bc00-49fd-848f-898082bd6ff9">
         <File Id="System.Threading.Tasks.Extensions.dll" Name="System.Threading.Tasks.Extensions.dll" Source="$(var.NINA_TargetDir)System.Threading.Tasks.Extensions.dll" />
       </Component>
+      <Component Id="Microsoft.Bcl.HashCode.dll" Guid="0090cbc7-81f2-47e4-ad04-26559fcd5456">
+        <File Id="Microsoft.Bcl.HashCode.dll" Name="Microsoft.Bcl.HashCode.dll" Source="$(var.NINA_TargetDir)Microsoft.Bcl.HashCode.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
   <!--<Fragment>
