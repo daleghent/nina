@@ -59,6 +59,7 @@ namespace NINA.Utility {
                 Append(PadBoth("Major {0} Minor {1}", 70, '-', os.Version.Major.ToString(), os.Version.Minor.ToString()));
                 Append(PadBoth("Service Pack {0}", 70, '-', os.ServicePack));
                 Append(PadBoth("", 70, '-'));
+                Append("DATE|LEVEL|SOURCE|MEMBER|LINE|MESSAGE");
             }
         }
 
@@ -89,9 +90,10 @@ namespace NINA.Utility {
                 string message,
                 string stacktrace,
                 string memberName,
-                string sourceFilePath) {
+                string sourceFilePath,
+                int lineNumber) {
             message = message + "\t" + stacktrace;
-            Append(EnrichLogMessage(LogLevelEnum.ERROR, message, memberName, sourceFilePath));
+            Append(EnrichLogMessage(LogLevelEnum.ERROR, message, memberName, sourceFilePath, lineNumber));
         }
 
         public static LogLevelEnum LogLevel { get; private set; }
@@ -103,67 +105,72 @@ namespace NINA.Utility {
         public static void Error(
                 Exception ex,
                 [CallerMemberName] string memberName = "",
-                [CallerFilePath] string sourceFilePath = "") {
-            Error(ex?.Message ?? string.Empty, ex?.StackTrace ?? string.Empty, memberName, sourceFilePath);
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int lineNumber = 0) {
+            Error(ex?.Message ?? string.Empty, ex?.StackTrace ?? string.Empty, memberName, sourceFilePath, lineNumber);
         }
 
         public static void Error(
                 string customMsg,
                 Exception ex,
                 [CallerMemberName] string memberName = "",
-                [CallerFilePath] string sourceFilePath = "") {
-            Error(customMsg + ex?.Message ?? string.Empty, ex?.StackTrace ?? string.Empty, memberName, sourceFilePath);
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int lineNumber = 0) {
+            Error(customMsg + ex?.Message ?? string.Empty, ex?.StackTrace ?? string.Empty, memberName, sourceFilePath, lineNumber);
         }
 
         public static void Error(string message,
                 [CallerMemberName] string memberName = "",
-                [CallerFilePath] string sourceFilePath = "") {
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int lineNumber = 0) {
             if (LogLevel >= 0) {
-                Append(EnrichLogMessage(LogLevelEnum.ERROR, message, memberName, sourceFilePath));
+                Append(EnrichLogMessage(LogLevelEnum.ERROR, message, memberName, sourceFilePath, lineNumber));
             }
         }
 
         public static void Info(string message,
                 [CallerMemberName] string memberName = "",
-                [CallerFilePath] string sourceFilePath = "") {
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int lineNumber = 0) {
             if ((int)LogLevel >= 1) {
-                Append(EnrichLogMessage(LogLevelEnum.INFO, message, memberName, sourceFilePath));
+                Append(EnrichLogMessage(LogLevelEnum.INFO, message, memberName, sourceFilePath, lineNumber));
             }
         }
 
         public static void Warning(string message,
                 [CallerMemberName] string memberName = "",
-                [CallerFilePath] string sourceFilePath = "") {
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int lineNumber = 0) {
             if ((int)LogLevel >= 2) {
-                Append(EnrichLogMessage(LogLevelEnum.WARNING, message, memberName, sourceFilePath));
+                Append(EnrichLogMessage(LogLevelEnum.WARNING, message, memberName, sourceFilePath, lineNumber));
             }
         }
 
         public static void Debug(string message,
                 [CallerMemberName] string memberName = "",
-                [CallerFilePath] string sourceFilePath = "") {
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int lineNumber = 0) {
             if ((int)LogLevel >= 3) {
-                Append(EnrichLogMessage(LogLevelEnum.DEBUG, message, memberName, sourceFilePath));
+                Append(EnrichLogMessage(LogLevelEnum.DEBUG, message, memberName, sourceFilePath, lineNumber));
             }
         }
 
         public static void Trace(string message,
-                             [CallerMemberName] string memberName = "",
-                             [CallerFilePath] string sourceFilePath = "") {
+                [CallerMemberName] string memberName = "",
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int lineNumber = 0) {
             if ((int)LogLevel >= 4) {
-                Append(EnrichLogMessage(LogLevelEnum.TRACE, message, memberName, sourceFilePath));
+                Append(EnrichLogMessage(LogLevelEnum.TRACE, message, memberName, sourceFilePath, lineNumber));
             }
         }
 
-        private static string EnrichLogMessage(LogLevelEnum level, string message, string memberName, string sourceFilePath) {
-            var sb = new StringBuilder();
+        private static string EnrichLogMessage(LogLevelEnum level, string message, string memberName, string sourceFilePath, int lineNumber) {
             var d = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.ffff");
-            var prefix = string.Format("[{0}] \t [{1}]", d, level.ToString());
 
-            sb.AppendLine(string.Format("{0} \t [MemberName] {1}", prefix, memberName));
-            sb.AppendLine(string.Format("{0} \t [FileName] {1}", prefix, sourceFilePath));
-            sb.AppendLine(string.Format("{0} \t [Message] {1}", prefix, message));
-            return sb.ToString();
+            string file = string.Empty;
+            try { file = Path.GetFileName(sourceFilePath); } catch (Exception) { }
+
+            return $"{d}|{level}|{file}|{memberName}|{lineNumber}|{message}";
         }
     }
 }
