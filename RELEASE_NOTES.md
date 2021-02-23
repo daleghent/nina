@@ -141,6 +141,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - QHY cameras that have sensor chamber air pressure and humidity sensors will display their readings on the Equipment > Camera screen
 - QHY camera firmware and FPGA versions are now displayed on the Equipment > Camera screen
 - The integrated filter wheels of A-Series cameras should now operate correctly
+- The version of the QHY USB driver will be checked and a warning will be presented if it is not the minimum recommended version
 
 ### Image Preview
 - Ability to inspect pixel area and pixel values in detail by holding right click
