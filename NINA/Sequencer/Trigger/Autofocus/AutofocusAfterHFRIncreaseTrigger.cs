@@ -147,14 +147,14 @@ namespace NINA.Sequencer.Trigger.Autofocus {
                         .Select(img => img.HFR)
                         .ToArray();
 
-                    double[] inputs = data.Select(x => (double)x.Id).ToArray();
+                    double[] inputs = Enumerable.Range(1, data.Count()).Select(i => (double)i).ToArray();
 
                     OrdinaryLeastSquares ols = new OrdinaryLeastSquares();
                     SimpleLinearRegression regression = ols.Learn(inputs, outputs);
 
                     //Get current smoothed out HFR
-                    double currentHfrTrend = regression.Transform(history.ImageHistory.Count());
-                    double originalHfr = regression.Transform(minimumIndex);
+                    double originalHfr = regression.Transform(1);
+                    double currentHfrTrend = regression.Transform(inputs.LastOrDefault());
 
                     Logger.Debug($"Autofocus condition extrapolated original HFR: {originalHfr} extrapolated current HFR: {currentHfrTrend}");
 
