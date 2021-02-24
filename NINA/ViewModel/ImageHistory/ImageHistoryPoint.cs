@@ -32,7 +32,7 @@ namespace NINA.ViewModel.ImageHistory {
                 StDev = statistics.StDev;
                 MAD = statistics.MedianAbsoluteDeviation;
             }
-            type = imageType;
+            Type = imageType;
         }
 
         public void PopulateAFPoint(AutoFocus.AutoFocusReport report) {
@@ -83,7 +83,7 @@ namespace NINA.ViewModel.ImageHistory {
 
         public DateTime dateTime { get; private set; } = DateTime.Now;
 
-        public string type { get; private set; }
+        public string Type { get; private set; }
 
         public TargetParameter Target { get; private set; }
     }

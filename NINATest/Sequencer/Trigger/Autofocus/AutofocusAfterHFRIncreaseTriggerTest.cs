@@ -124,12 +124,12 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         }
 
         [Test]
-        [TestCase(new double[] { 99, 99, 3, 3, 3, 10 }, 1, true)]
-        [TestCase(new double[] { 99, 99, 3, 3, 3, 3 }, 1, false)]
-        [TestCase(new double[] { 99, 99, 3, 3.1, 2.9, 3 }, 1, false)]
-        [TestCase(new double[] { 99, 99, 3, 3.1, 3.2, 3.3 }, 1, true)]
-        [TestCase(new double[] { 99, 99, 3, 3.1, 3.2, 3.3 }, 50, false)]
-        [TestCase(new double[] { 99, 99, 3, 2.9, 2.8, 2.7 }, 1, false)]
+        [TestCase(new double[] { 3, 99, 99, 3, 3, 3, 10 }, 1, true)]
+        [TestCase(new double[] { 3, 99, 99, 3, 3, 3, 3 }, 1, false)]
+        [TestCase(new double[] { 3, 99, 99, 3, 3.1, 2.9, 3 }, 1, false)]
+        [TestCase(new double[] { 3, 99, 99, 3, 3.1, 3.2, 3.3 }, 1, true)]
+        [TestCase(new double[] { 3, 99, 99, 3, 3.1, 3.2, 3.3 }, 50, false)]
+        [TestCase(new double[] { 3, 99, 99, 3, 2.9, 2.8, 2.7 }, 1, false)]
         public void ShouldTrigger_HistoryExists_NoPreviousAFsButSampleSize_True(double[] hfrs, double changeAmount, bool shouldTrigger) {
             var history = new List<ImageHistoryPoint>();
             for (int i = 0; i < hfrs.Length; i++) {
@@ -210,6 +210,41 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var sut = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
             var tostring = sut.ToString();
             tostring.Should().Be("Trigger: AutofocusAfterHFRIncreaseTrigger, Amount: 5");
+        }
+
+        [Test]
+        [TestCase(new double[] { 3, 3, 100, 100, 10 }, 1, true)] // index 2+3 are for a different filter
+        [TestCase(new double[] { 3, 3, 100, 100, 3, 3 }, 1, false)]
+        [TestCase(new double[] { 3, 3.1, 100, 100, 2.9, 3 }, 1, false)]
+        [TestCase(new double[] { 3, 3.1, 100, 100, 3.2, 3.3 }, 1, true)]
+        [TestCase(new double[] { 3, 3.1, 100, 100, 3.2, 3.3 }, 50, false)]
+        [TestCase(new double[] { 3, 2.9, 100, 100, 2.8, 2.7 }, 1, false)]
+        [TestCase(new double[] { 3.4, 2.9, 100, 100, 3.1, 2.7, 3.3, 3.0, 3.5 }, 10, false)]
+        [TestCase(new double[] { 2.068, 1.968, 100, 100, 2.016, 2.053, 2.044, 2.084, 2.060, 2.048, 2.131, 2.063 }, 8, false)]
+        public void ShouldTrigger_HistoryExists_NoPreviousAFs_OnlyTestFilterConsidered_True(double[] hfrs, double changeAmount, bool shouldTrigger) {
+            var history = new List<ImageHistoryPoint>();
+            for (int i = 0; i < hfrs.Length; i++) {
+                if (i > 1 && i < 4) {
+                    var p = new ImageHistoryPoint(i, null, "LIGHT");
+                    p.PopulateProperties(new ImageSavedEventArgs() { Filter = "OtherFilter", StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = 1, HFR = hfrs[i] } });
+                    history.Add(p);
+                } else {
+                    var p = new ImageHistoryPoint(i, null, "LIGHT");
+                    p.PopulateProperties(new ImageSavedEventArgs() { Filter = "TestFilter", StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = 1, HFR = hfrs[i] } });
+                    history.Add(p);
+                }
+            }
+            historyMock.SetupGet(x => x.ImageHistory).Returns(history);
+            historyMock.SetupGet(x => x.AutoFocusPoints).Returns(new NINA.Utility.AsyncObservableCollection<ImageHistoryPoint>());
+
+            filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { Connected = true, SelectedFilter = new FilterInfo() { Name = "TestFilter" } });
+
+            var sut = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            sut.Amount = changeAmount;
+
+            var trigger = sut.ShouldTrigger(null);
+
+            trigger.Should().Be(shouldTrigger);
         }
     }
 }

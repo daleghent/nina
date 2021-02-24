@@ -102,7 +102,7 @@ namespace NINA.ViewModel.ImageHistory {
             ObservableImageHistoryView.Clear();
             index = 1;
             foreach (ImageHistoryPoint imageHistoryPoint in ObservableImageHistory) {
-                if ((this.SelectedFilter.Equals(AllFilters) || imageHistoryPoint.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || imageHistoryPoint.type == "LIGHT")) {
+                if ((this.SelectedFilter.Equals(AllFilters) || imageHistoryPoint.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || imageHistoryPoint.Type == "LIGHT")) {
                     imageHistoryPoint.Index = index++;
                     ObservableImageHistoryView.Add(imageHistoryPoint);
                 }
@@ -229,7 +229,7 @@ namespace NINA.ViewModel.ImageHistory {
                         if (!FilterList.Contains(imageSavedEventArgs.Filter))
                             FilterList.Add(imageSavedEventArgs.Filter);
                         // Add to view if it's not filtered
-                        if ((this.SelectedFilter.Equals(AllFilters) || imageHistoryItem.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || imageHistoryItem.type == "LIGHT")) {
+                        if ((this.SelectedFilter.Equals(AllFilters) || imageHistoryItem.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || imageHistoryItem.Type == "LIGHT")) {
                             imageHistoryItem.Index = index++;
                             ObservableImageHistoryView.Add(imageHistoryItem);
                         }
@@ -245,7 +245,7 @@ namespace NINA.ViewModel.ImageHistory {
                     if (last != null) {
                         last.PopulateAFPoint(report);
                         AutoFocusPoints.Add(last);
-                        if ((this.SelectedFilter.Equals(AllFilters) || last.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || last.type == "LIGHT")) {
+                        if ((this.SelectedFilter.Equals(AllFilters) || last.Filter.Equals(this.SelectedFilter)) && (ShowSnapshots || last.Type == "LIGHT")) {
                             AutoFocusPointsView.Add(last);
                         }
                     }
