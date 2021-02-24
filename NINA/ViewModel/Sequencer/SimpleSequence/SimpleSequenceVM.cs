@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Accord.Statistics.Models.Regression.Linear;
+using CsvHelper;
 using NINA.Model;
 using NINA.Model.ImageData;
 using NINA.Model.MyCamera;
@@ -338,69 +339,54 @@ namespace NINA.ViewModel {
 
             if (dialog.ShowDialog() == true) {
                 try {
-                    var s = File.ReadAllText(dialog.FileName);
-                    using (var reader = new System.IO.StringReader(s)) {
-                        string headerLine = reader.ReadLine();
-                        string[] headerColumns = headerLine.Split(',').Select(p => p.Trim()).ToArray();
-
-                        if (Array.FindIndex(headerColumns, x => x.ToLower() == "pane") > -1) {
+                    using (var reader = new StreamReader(dialog.FileName)) {
+                        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture)) {
                             this.Targets.Items.Clear();
-                            var idxPane = Array.FindIndex(headerColumns, x => x.ToLower() == "pane");
-                            var idxRA = Array.FindIndex(headerColumns, x => x.ToLower() == "ra");
-                            var idxDec = Array.FindIndex(headerColumns, x => x.ToLower() == "dec");
-                            var idxAngle = Array.FindIndex(headerColumns, x => x.ToLower() == "position angle (east)");
+                            csv.Configuration.PrepareHeaderForMatch = (string header, int index) => header.ToLower().Trim();
+                            csv.Configuration.CultureInfo = CultureInfo.InvariantCulture;
+                            csv.Configuration.BadDataFound = null;
 
-                            string line;
-                            while ((line = reader.ReadLine()) != null) {
-                                //Telescopius Mosaic Plan
-                                var columns = line.Split(',').Select(p => p.Trim()).ToArray();
+                            csv.Read();
+                            csv.ReadHeader();
 
-                                var name = columns[idxPane];
-                                var ra = Astrometry.HMSToDegrees(columns[idxRA]);
-                                var dec = Astrometry.DMSToDegrees(columns[idxDec]);
-                                //Nina orientation is not east of north, but flipped
-                                var angle = 360 - Astrometry.EuclidianModulus(double.Parse(columns[idxAngle], CultureInfo.InvariantCulture), 360);
+                            while (csv.Read()) {
+                                string name = string.Empty;
+                                if (csv.TryGetField("pane", out name)) {
+                                    var ra = Astrometry.HMSToDegrees(csv.GetField("ra"));
+                                    var dec = Astrometry.DMSToDegrees(csv.GetField("dec"));
 
-                                var template = GetTemplate();
-                                template.Name = name;
-                                template.Target.TargetName = name;
-                                template.Target.InputCoordinates.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
-                                template.Target.Rotation = angle;
-                                this.Targets.Add(template);
-                            }
-                        } else if (Array.FindIndex(headerColumns, x => x.ToLower() == "familiar name") > -1) {
-                            this.Targets.Items.Clear();
-                            //Telescopius Observing List
-                            var idxCatalogue = Array.FindIndex(headerColumns, x => x.ToLower() == "catalogue entry");
-                            var idxName = Array.FindIndex(headerColumns, x => x.ToLower() == "familiar name");
-                            var idxRA = Array.FindIndex(headerColumns, x => x.ToLower() == "right ascension");
-                            var idxDec = Array.FindIndex(headerColumns, x => x.ToLower() == "declination");
-                            var idxAngle = Array.FindIndex(headerColumns, x => x.ToLower() == "position angle (east)");
-
-                            string line;
-                            while ((line = reader.ReadLine()) != null) {
-                                var columns = line.Split(',').Select(p => p.Trim()).ToArray();
-
-                                var name = columns[idxName];
-                                var ra = Astrometry.HMSToDegrees(columns[idxRA]);
-                                var dec = Astrometry.DMSToDegrees(columns[idxDec]);
-
-                                var template = GetTemplate();
-                                template.Name = string.IsNullOrWhiteSpace(name) ? columns[idxCatalogue] : name; ;
-                                template.Target.TargetName = string.IsNullOrWhiteSpace(name) ? columns[idxCatalogue] : name; ;
-                                template.Target.InputCoordinates.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
-                                if (idxAngle >= 0 && !string.IsNullOrWhiteSpace(columns[idxAngle])) {
                                     //Nina orientation is not east of north, but flipped
-                                    var angle = 360 - Astrometry.EuclidianModulus(double.Parse(columns[idxAngle], CultureInfo.InvariantCulture), 360);
+                                    var angle = 360 - Astrometry.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
+
+                                    var template = GetTemplate();
+                                    template.Name = name;
+                                    template.Target.TargetName = name;
+                                    template.Target.InputCoordinates.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
                                     template.Target.Rotation = angle;
-                                } else {
+                                    this.Targets.Add(template);
+                                } else if (csv.TryGetField<string>("familiar name", out name)) {
+                                    var catalogue = csv.GetField("catalogue entry");
+                                    var ra = Astrometry.HMSToDegrees(csv.GetField("right ascension"));
+                                    var dec = Astrometry.DMSToDegrees(csv.GetField("declination"));
+
+                                    var template = GetTemplate();
+                                    template.Name = string.IsNullOrWhiteSpace(name) ? catalogue : name; ;
+                                    template.Target.TargetName = string.IsNullOrWhiteSpace(name) ? catalogue : name; ;
+                                    template.Target.InputCoordinates.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
+                                    if (csv.TryGetField<string>("position angle (east)", out var stringAngle) && !string.IsNullOrWhiteSpace(stringAngle)) {
+                                        //Nina orientation is not east of north, but flipped
+                                        var angle = 360 - Astrometry.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
+                                        template.Target.Rotation = angle;
+                                    } else {
+                                        template.Target.Rotation = 0;
+                                    }
                                     template.Target.Rotation = 0;
+                                    this.Targets.Add(template);
                                 }
-                                template.Target.Rotation = 0;
-                                this.Targets.Add(template);
                             }
-                        } else {
-                            Notification.ShowError(Locale.Loc.Instance["LblUnknownImportFormat"]);
+                            if (!(this.Targets?.Items?.Count > 0)) {
+                                Notification.ShowError(Locale.Loc.Instance["LblUnknownImportFormat"]);
+                            }
                         }
                     }
                 } catch (Exception ex) {
