@@ -5288,4 +5288,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblUnknownInstruction" xml:space="preserve">
     <value>Unknown Instruction</value>
   </data>
+  <data name="LblQhyccdDriverVersionWarning" xml:space="preserve">
+    <value>The installed QHYCCD USB driver's version of {0} is below the minimum recommeneded version of {1}. Driver updates are available on the QHYCCD website and are recommended for optimal camera function</value>
+  </data>
 </root>
