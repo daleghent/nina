@@ -605,7 +605,7 @@ namespace NINA.Model.MyCamera {
                         }
                     } catch (PropertyNotImplementedException) {
                         CanGetGain = false;
-                        ASCOMInteraction.LogComplianceIssue($"{nameof(Gain)} GET");
+                        Logger.Info("ASCOM - Driver does not implement Gain GET");
                     }
                 }
                 return val;
@@ -623,7 +623,7 @@ namespace NINA.Model.MyCamera {
                         }
                     } catch (PropertyNotImplementedException) {
                         CanSetGain = false;
-                        ASCOMInteraction.LogComplianceIssue($"{nameof(Gain)} SET");
+                        Logger.Info("ASCOM - Driver does not implement Gain SET");
                     } catch (InvalidValueException ex) {
                         Logger.Error(ex.Message);
                         Notification.ShowWarning(ex.Message);
@@ -999,7 +999,7 @@ namespace NINA.Model.MyCamera {
                     try {
                         val = _camera.SensorName;
                     } catch (PropertyNotImplementedException) {
-                        ASCOMInteraction.LogComplianceIssue();
+                        Logger.Info("ASCOM - Driver does not implement SensorName");
                     }
                 }
                 return val;
@@ -1009,41 +1009,44 @@ namespace NINA.Model.MyCamera {
         public SensorType SensorType {
             get {
                 if (Connected) {
-                    SensorType type;
-                    switch (_camera.SensorType) {
-                        case ASCOM.DeviceInterface.SensorType.Monochrome:
-                            type = SensorType.Monochrome;
-                            break;
+                    try {
+                        SensorType type;
+                        switch (_camera.SensorType) {
+                            case ASCOM.DeviceInterface.SensorType.Monochrome:
+                                type = SensorType.Monochrome;
+                                break;
 
-                        case ASCOM.DeviceInterface.SensorType.Color:
-                            type = SensorType.Color;
-                            break;
+                            case ASCOM.DeviceInterface.SensorType.Color:
+                                type = SensorType.Color;
+                                break;
 
-                        case ASCOM.DeviceInterface.SensorType.RGGB:
-                            type = SensorType.RGGB;
-                            break;
+                            case ASCOM.DeviceInterface.SensorType.RGGB:
+                                type = SensorType.RGGB;
+                                break;
 
-                        case ASCOM.DeviceInterface.SensorType.CMYG:
-                            type = SensorType.CMYG;
-                            break;
+                            case ASCOM.DeviceInterface.SensorType.CMYG:
+                                type = SensorType.CMYG;
+                                break;
 
-                        case ASCOM.DeviceInterface.SensorType.CMYG2:
-                            type = SensorType.CMYG2;
-                            break;
+                            case ASCOM.DeviceInterface.SensorType.CMYG2:
+                                type = SensorType.CMYG2;
+                                break;
 
-                        case ASCOM.DeviceInterface.SensorType.LRGB:
-                            type = SensorType.LRGB;
-                            break;
+                            case ASCOM.DeviceInterface.SensorType.LRGB:
+                                type = SensorType.LRGB;
+                                break;
 
-                        default:
-                            type = SensorType.Monochrome;
-                            break;
+                            default:
+                                type = SensorType.Monochrome;
+                                break;
+                        }
+
+                        return type;
+                    } catch (PropertyNotImplementedException) {
+                        Logger.Info("ASCOM - Driver does not implement SensorType. Assuming monochrome sensor");
                     }
-
-                    return type;
-                } else {
-                    return SensorType.Monochrome;
                 }
+                return SensorType.Monochrome;
             }
         }
 
