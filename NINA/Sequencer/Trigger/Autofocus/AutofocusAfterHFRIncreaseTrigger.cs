@@ -162,58 +162,66 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         public override bool ShouldTrigger(ISequenceItem nextItem) {
             var fwInfo = this.filterWheelMediator.GetInfo();
 
-            var imageHistory = history.ImageHistory.Where(x => x.Type == "LIGHT").ToList();
             var lastAF = history.AutoFocusPoints?.LastOrDefault();
+            var imageHistory = history.ImageHistory.Where(x => x.Type == "LIGHT").ToList(); ;
+
+            if (lastAF != null) {
+                //Take all items that are after the last autofocus into consideration
+                imageHistory = imageHistory.Where(point => point.Id > lastAF.Id).ToList();
+            }
 
             if (fwInfo != null && fwInfo.Connected && fwInfo.SelectedFilter != null) {
+                //Further filter the history to only considere items by the current filter
                 Filter = fwInfo.SelectedFilter.Name;
 
                 imageHistory = imageHistory.Where(x => x.Filter == filter).ToList();
-                lastAF = history.AutoFocusPoints?.LastOrDefault(x => x.Filter == filter);
             } else {
                 Filter = string.Empty;
             }
 
-            var minimumIndex = lastAF == null ? 0 : imageHistory.FindIndex(x => x.Id == lastAF.Id) + 1;
+            if (imageHistory.Count > 0) {
+                var first = imageHistory.First();
+                OriginalHFR = first.HFR;
 
-            //Take either the Last AF Position as index or the sample size index, whichever is greater
-            var minimumSampleIndex = Math.Max(minimumIndex, imageHistory.Count - sampleSize);
+                //Take either the last point after AF Position as index or the sample size index, whichever is greater
+                var minimumSampleIndex = Math.Max(0, imageHistory.Count - sampleSize);
 
-            //at least 3 relevant points of data must exist
-            if (imageHistory.Count > minimumSampleIndex + 2) {
-                var data = imageHistory
+                if (imageHistory.Count > minimumSampleIndex + 2) {
+                    var data = imageHistory
                     .Skip(minimumSampleIndex)
                     .Where(x => !double.IsNaN(x.HFR) && x.HFR > 0);
 
-                if (data.Count() >= 3) {
-                    double[] outputs = data
-                        .Select(img => img.HFR)
-                        .ToArray();
+                    if (data.Count() >= 3) {
+                        double[] outputs = data
+                            .Select(img => img.HFR)
+                            .ToArray();
 
-                    double[] inputs = Enumerable.Range(1, data.Count()).Select(i => (double)i).ToArray();
+                        double[] inputs = Enumerable.Range(1, data.Count()).Select(i => (double)i).ToArray();
 
-                    OrdinaryLeastSquares ols = new OrdinaryLeastSquares();
-                    SimpleLinearRegression regression = ols.Learn(inputs, outputs);
+                        OrdinaryLeastSquares ols = new OrdinaryLeastSquares();
+                        SimpleLinearRegression regression = ols.Learn(inputs, outputs);
 
-                    //Get current smoothed out HFR
-                    HFRTrend = regression.Transform(imageHistory.Count());
-                    OriginalHFR = imageHistory[minimumIndex].HFR;
+                        //Get current smoothed out HFR
+                        HFRTrend = regression.Transform(data.Count());
 
-                    Logger.Debug($"Autofocus condition extrapolated original HFR: {OriginalHFR} extrapolated current HFR: {HFRTrend}");
+                        Logger.Debug($"Autofocus condition extrapolated original HFR: {OriginalHFR} extrapolated current HFR: {HFRTrend}");
 
-                    HFRTrendPercentage = Math.Round((1 - (OriginalHFR / HFRTrend)) * 100, 2);
+                        HFRTrendPercentage = Math.Round((1 - (OriginalHFR / HFRTrend)) * 100, 2);
 
-                    if (HFRTrendPercentage > Amount) {
-                        /* Trigger autofocus after HFR change */
-                        Logger.Debug($"Autofocus after HFR change has been triggered, as current HFR trend is {HFRTrendPercentage}% higher compared to threshold of {Amount}%");
-                        return true;
+                        if (HFRTrendPercentage > Amount) {
+                            /* Trigger autofocus after HFR change */
+                            Logger.Debug($"Autofocus after HFR change has been triggered, as current HFR trend is {HFRTrendPercentage}% higher compared to threshold of {Amount}%");
+                            return true;
+                        }
                     }
+                } else {
+                    HFRTrendPercentage = 0;
+                    HFRTrend = 0;
                 }
             } else {
-                HFRTrendPercentage = 0;
                 OriginalHFR = 0;
-                HFRTrend = 0;
             }
+
             return false;
         }
 

@@ -123,6 +123,8 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         }
 
         public override bool ShouldTrigger(ISequenceItem nextItem) {
+            if (history.ImageHistory.Count == 0) { return false; }
+
             var lastAF = history.AutoFocusPoints.LastOrDefault();
             var info = focuserMediator.GetInfo();
             if (lastAF == null && !double.IsNaN(initialTemperature)) {
