@@ -226,7 +226,21 @@ namespace Altair {
             OPTION_HEAT = 0x37,       /* heat to prevent fogging up */
             OPTION_LOW_NOISE = 0x38,       /* low noise mode: 1 => enable */
             OPTION_POWER = 0x39,       /* get power consumption, unit: milliwatt */
-            OPTION_GLOBAL_RESET_MODE = 0x3a        /* global reset mode */
+            OPTION_GLOBAL_RESET_MODE = 0x3a,       /* global reset mode */
+            OPTION_OPEN_USB_ERRORCODE = 0x3b,       /* open usb error code */
+            OPTION_LINUX_USB_ZEROCOPY = 0x3c,       /* global option for linux platform:
+                                                       enable or disable usb zerocopy (helps to reduce memory copy and improve efficiency. Requires kernel version >= 4.6 and hardware platform support)
+                                                       if the image is wrong, this indicates that the hardware platform does not support this feature, please disable it when the program starts:
+                                                         Altaircam_put_Option((this is a global option, the camera handle parameter is not required, use nullptr), ALTAIRCAM_OPTION_LINUX_USB_ZEROCOPY, 0)
+                                                       default value:
+                                                         disable(0): android or arm32
+                                                         enable(1):  others
+                                                    */
+            OPTION_FLUSH = 0x3d         /* 1 = hard flush, discard frames cached by camera DDR (if any)
+                                                       2 = soft flush, discard frames cached by altaircam.dll (if any)
+                                                       3 = both flush
+                                                       Altaircam_Flush means 'both flush'
+                                                    */
         };
 
         public enum ePIXELFORMAT : uint {

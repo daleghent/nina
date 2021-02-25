@@ -202,7 +202,42 @@ namespace Omegon {
                                              9: chromatic diagonal stripes
                                          */
             OPTION_AUTOEXP_THRESHOLD = 0x29, /* threshold of auto exposure, default value: 5, range = [1, 25] */
-            OPTION_BYTEORDER = 0x2a  /* Byte order, BGR or RGB: 0->RGB, 1->BGR, default value: 1(Win), 0(macOS, Linux, Android) */
+            OPTION_BYTEORDER = 0x2a,       /* Byte order, BGR or RGB: 0->RGB, 1->BGR, default value: 1(Win), 0(macOS, Linux, Android) */
+            OPTION_NOPACKET_TIMEOUT = 0x2b,       /* no packet timeout: 0 = disable, positive value = timeout milliseconds. default: disable */
+            OPTION_MAX_PRECISE_FRAMERATE = 0x2c,       /* precise frame rate maximum value in 0.1 fps, such as 115 means 11.5 fps. E_NOTIMPL means not supported */
+            OPTION_PRECISE_FRAMERATE = 0x2d,       /* precise frame rate current value in 0.1 fps, range:[1~maximum] */
+            OPTION_BANDWIDTH = 0x2e,       /* bandwidth, [1-100]% */
+            OPTION_RELOAD = 0x2f,       /* reload the last frame in trigger mode */
+            OPTION_CALLBACK_THREAD = 0x30,       /* dedicated thread for callback */
+            OPTION_FRAME_DEQUE_LENGTH = 0x31,       /* frame buffer deque length, range: [2, 1024], default: 3 */
+            OPTION_MIN_PRECISE_FRAMERATE = 0x32,       /* precise frame rate minimum value in 0.1 fps, such as 15 means 1.5 fps */
+            OPTION_SEQUENCER_ONOFF = 0x33,       /* sequencer trigger: on/off */
+            OPTION_SEQUENCER_NUMBER = 0x34,       /* sequencer trigger: number, range = [1, 255] */
+            OPTION_SEQUENCER_EXPOTIME = 0x01000000, /* sequencer trigger: exposure time, iOption = OPTION_SEQUENCER_EXPOTIME | index, iValue = exposure time
+                                                        For example, to set the exposure time of the third group to 50ms, call:
+                                                           Toupcam_put_Option(TOUPCAM_OPTION_SEQUENCER_EXPOTIME | 3, 50000)
+                                                   */
+            OPTION_SEQUENCER_EXPOGAIN = 0x02000000, /* sequencer trigger: exposure gain, iOption = OPTION_SEQUENCER_EXPOGAIN | index, iValue = gain */
+            OPTION_DENOISE = 0x35,       /* denoise, strength range: [0, 100], 0 means disable */
+            OPTION_HEAT_MAX = 0x36,       /* maximum level: heat to prevent fogging up */
+            OPTION_HEAT = 0x37,       /* heat to prevent fogging up */
+            OPTION_LOW_NOISE = 0x38,       /* low noise mode: 1 => enable */
+            OPTION_POWER = 0x39,       /* get power consumption, unit: milliwatt */
+            OPTION_GLOBAL_RESET_MODE = 0x3a,       /* global reset mode */
+            OPTION_OPEN_USB_ERRORCODE = 0x3b,       /* open usb error code */
+            OPTION_LINUX_USB_ZEROCOPY = 0x3c,       /* global option for linux platform:
+                                                       enable or disable usb zerocopy (helps to reduce memory copy and improve efficiency. Requires kernel version >= 4.6 and hardware platform support)
+                                                       if the image is wrong, this indicates that the hardware platform does not support this feature, please disable it when the program starts:
+                                                         sdk_put_Option((this is a global option, the camera handle parameter is not required, use nullptr), sdk_OPTION_LINUX_USB_ZEROCOPY, 0)
+                                                       default value:
+                                                         disable(0): android or arm32
+                                                         enable(1):  others
+                                                    */
+            OPTION_FLUSH = 0x3d         /* 1 = hard flush, discard frames cached by camera DDR (if any)
+                                                       2 = soft flush, discard frames cached by sdk.dll (if any)
+                                                       3 = both flush
+                                                       sdk_Flush means 'both flush'
+                                                    */
         };
 
         public enum ePIXELFORMAT : uint {
@@ -483,7 +518,7 @@ namespace Omegon {
         private static extern int Omegonprocam_PullStillImageWithRowPitch(SafeCamHandle h, IntPtr pImageData, int bits, int rowPitch, out uint pnWidth, out uint pnHeight);
 
         [DllImport(DLLNAME, ExactSpelling = true, CallingConvention = cc)]
-        private static extern int Omegonprocam_PullImageV2(SafeCamHandle h, [Out]ushort[] pImageData, int bits, out FrameInfoV2 pInfo);
+        private static extern int Omegonprocam_PullImageV2(SafeCamHandle h, [Out] ushort[] pImageData, int bits, out FrameInfoV2 pInfo);
 
         [DllImport(DLLNAME, ExactSpelling = true, CallingConvention = cc)]
         private static extern int Omegonprocam_PullStillImageV2(SafeCamHandle h, IntPtr pImageData, int bits, out FrameInfoV2 pInfo);

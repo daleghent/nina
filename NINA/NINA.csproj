@@ -488,13 +488,16 @@
     <Compile Include="Model\MyCamera\FileCamera.cs" />
     <Compile Include="Model\MyCamera\FLICamera.cs" />
     <Compile Include="Model\MyCamera\IExposureData.cs" />
-    <Compile Include="Model\MyCamera\OmegonCamera.cs" />
     <Compile Include="Model\MyCamera\PersistSettingsCameraDecorator.cs" />
     <Compile Include="Model\MyCamera\Simulator\ImageSettings.cs" />
     <Compile Include="Model\MyCamera\Simulator\RandomSettings.cs" />
     <Compile Include="Model\MyCamera\Simulator\Settings.cs" />
     <Compile Include="Model\MyCamera\Simulator\SkySurveySettings.cs" />
     <Compile Include="Model\MyCamera\Simulator\CameraType.cs" />
+    <Compile Include="Model\MyCamera\ToupTekAlike\AltairSDKWrapper.cs" />
+    <Compile Include="Model\MyCamera\ToupTekAlike\IToupTekAlikeCameraSDK.cs" />
+    <Compile Include="Model\MyCamera\ToupTekAlike\OmegonSDKWrapper.cs" />
+    <Compile Include="Model\MyCamera\ToupTekAlike\ToupTekSDKWrapper.cs" />
     <Compile Include="Model\MyFilterWheel\AtikFilterWheel.cs" />
     <Compile Include="Model\MyFilterWheel\AtikFilterWheelBase.cs" />
     <Compile Include="Model\MyFilterWheel\AtikInternalFilterWheel.cs" />
@@ -1134,7 +1137,7 @@
     <Compile Include="Model\GuideStepsHistory.cs" />
     <Compile Include="Model\IDevice.cs" />
     <Compile Include="Model\ImagePattern.cs" />
-    <Compile Include="Model\MyCamera\AltairCamera.cs" />
+    <Compile Include="Model\MyCamera\ToupTekAlikeCamera.cs" />
     <Compile Include="Model\MyCamera\AtikCamera.cs" />
     <Compile Include="Model\MyCamera\CameraDataToManaged.cs" />
     <Compile Include="Model\MyCamera\CameraInfo.cs" />
@@ -1147,7 +1150,6 @@
     <Compile Include="Model\MyFilterWheel\FilterInfo.cs" />
     <Compile Include="Model\MyCamera\QHYCamera.cs" />
     <Compile Include="Model\MyCamera\SensorType.cs" />
-    <Compile Include="Model\MyCamera\ToupTekCamera.cs" />
     <Compile Include="Model\MyFilterWheel\FilterWheelInfo.cs" />
     <Compile Include="Model\MyFilterWheel\FlatWizardFilterSettings.cs" />
     <Compile Include="Utility\Astrometry\Angle.cs" />

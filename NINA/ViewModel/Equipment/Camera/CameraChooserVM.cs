@@ -15,6 +15,7 @@
 using EDSDKLib;
 using FLI;
 using NINA.Model.MyCamera;
+using NINA.Model.MyCamera.ToupTekAlike;
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.AtikSDK;
@@ -56,7 +57,7 @@ namespace NINA.ViewModel.Equipment.Camera {
             try {
                 Logger.Trace("Adding Altair Cameras");
                 foreach (var instance in Altair.AltairCam.EnumV2()) {
-                    var cam = new AltairCamera(instance, profileService);
+                    var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new AltairSDKWrapper(), profileService);
                     Devices.Add(cam);
                 }
             } catch (Exception ex) {
@@ -120,7 +121,7 @@ namespace NINA.ViewModel.Equipment.Camera {
             try {
                 Logger.Debug("Adding ToupTek Cameras");
                 foreach (var instance in ToupTek.ToupCam.EnumV2()) {
-                    var cam = new ToupTekCamera(instance, profileService);
+                    var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new ToupTekSDKWrapper(), profileService);
                     Devices.Add(cam);
                 }
             } catch (Exception ex) {
@@ -131,7 +132,7 @@ namespace NINA.ViewModel.Equipment.Camera {
             try {
                 Logger.Debug("Adding Omegon Cameras");
                 foreach (var instance in Omegon.Omegonprocam.EnumV2()) {
-                    var cam = new OmegonCamera(instance, profileService);
+                    var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new OmegonSDKWrapper(), profileService);
                     Devices.Add(cam);
                 }
             } catch (Exception ex) {

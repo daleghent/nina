@@ -12,36 +12,41 @@
 
 #endregion "copyright"
 
+using Altair;
 using NINA.Model.ImageData;
+using NINA.Model.MyCamera.ToupTekAlike;
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Notification;
-using Omegon;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyCamera {
 
-    internal class OmegonCamera : BaseINPC, ICamera {
-        private Omegonprocam.eFLAG flags;
-        private Omegonprocam camera;
+    internal class ToupTekAlikeCamera : BaseINPC, ICamera {
+        private ToupTekAlikeFlag flags;
+        private IToupTekAlikeCameraSDK sdk;
 
-        public OmegonCamera(Omegonprocam.DeviceV2 instance, IProfileService profileService) {
+        public ToupTekAlikeCamera(ToupTekAlikeDeviceInfo deviceInfo, IToupTekAlikeCameraSDK sdk, IProfileService profileService) {
             this.profileService = profileService;
-            this.Id = instance.id;
-            this.Name = instance.displayname;
-            this.Description = instance.model.name;
-            this.PixelSizeX = Math.Round(instance.model.xpixsz, 2);
-            this.PixelSizeY = Math.Round(instance.model.ypixsz, 2);
+            this.sdk = sdk;
+            this.Id = deviceInfo.id;
+            this.Name = deviceInfo.displayname;
+            this.Description = deviceInfo.model.name;
+            this.PixelSizeX = Math.Round(deviceInfo.model.xpixsz, 2);
+            this.PixelSizeY = Math.Round(deviceInfo.model.ypixsz, 2);
 
-            this.flags = (Omegonprocam.eFLAG)instance.model.flag;
+            this.flags = (ToupTekAlikeFlag)deviceInfo.model.flag;
+
+            Category = sdk.Category;
         }
 
         private IProfileService profileService;
 
-        public string Category { get; } = "Omegon";
+        public string Category { get; }
 
         public bool HasShutter {
             get {
@@ -51,7 +56,7 @@ namespace NINA.Model.MyCamera {
 
         public double Temperature {
             get {
-                camera.get_Temperature(out var temp);
+                sdk.get_Temperature(out var temp);
                 return temp / 10.0;
             }
         }
@@ -59,7 +64,7 @@ namespace NINA.Model.MyCamera {
         public double TemperatureSetPoint {
             get {
                 if (CanSetTemperature) {
-                    camera.get_Option(Omegonprocam.eOPTION.OPTION_TECTARGET, out var target);
+                    sdk.get_Option(ToupTekAlikeOption.OPTION_TECTARGET, out var target);
                     return target / 10.0;
                 } else {
                     return double.NaN;
@@ -67,7 +72,7 @@ namespace NINA.Model.MyCamera {
             }
             set {
                 if (CanSetTemperature) {
-                    if (camera.put_Option(Omegonprocam.eOPTION.OPTION_TECTARGET, (int)(value * 10))) {
+                    if (sdk.put_Option(ToupTekAlikeOption.OPTION_TECTARGET, (int)(value * 10))) {
                         RaisePropertyChanged();
                     }
                 }
@@ -118,14 +123,14 @@ namespace NINA.Model.MyCamera {
 
         public double ExposureMin {
             get {
-                camera.get_ExpTimeRange(out var min, out var max, out var def);
+                sdk.get_ExpTimeRange(out var min, out var max, out var def);
                 return min / 1000000.0;
             }
         }
 
         public double ExposureMax {
             get {
-                camera.get_ExpTimeRange(out var min, out var max, out var def);
+                sdk.get_ExpTimeRange(out var min, out var max, out var def);
                 return max / 1000000.0;
             }
         }
@@ -166,14 +171,14 @@ namespace NINA.Model.MyCamera {
 
         public bool CoolerOn {
             get {
-                camera.get_Option(Omegonprocam.eOPTION.OPTION_TEC, out var cooler);
+                sdk.get_Option(ToupTekAlikeOption.OPTION_TEC, out var cooler);
                 return cooler == 1;
             }
 
             set {
-                if (camera.put_Option(Omegonprocam.eOPTION.OPTION_TEC, value ? 1 : 0)) {
+                if (sdk.put_Option(ToupTekAlikeOption.OPTION_TEC, value ? 1 : 0)) {
                     //Toggle fan, if supported
-                    camera.put_Option(Omegonprocam.eOPTION.OPTION_FAN, value ? 1 : 0);
+                    sdk.put_Option(ToupTekAlikeOption.OPTION_FAN, value ? 1 : 0);
                     RaisePropertyChanged();
                 }
             }
@@ -203,11 +208,11 @@ namespace NINA.Model.MyCamera {
                 coolerPowerReadoutCts?.Dispose();
                 coolerPowerReadoutCts = new CancellationTokenSource();
                 try {
-                    camera.get_Option(Omegonprocam.eOPTION.OPTION_TEC_VOLTAGE_MAX, out var maxVoltage);
+                    sdk.get_Option(ToupTekAlikeOption.OPTION_TEC_VOLTAGE_MAX, out var maxVoltage);
                     while (true) {
                         coolerPowerReadoutCts.Token.ThrowIfCancellationRequested();
 
-                        camera.get_Option(Omegonprocam.eOPTION.OPTION_TEC_VOLTAGE, out var voltage);
+                        sdk.get_Option(ToupTekAlikeOption.OPTION_TEC_VOLTAGE, out var voltage);
 
                         CoolerPower = 100 * voltage / (double)maxVoltage;
 
@@ -219,17 +224,35 @@ namespace NINA.Model.MyCamera {
             });
         }
 
+        private bool hasDewHeater;
+
         public bool HasDewHeater {
-            get {
-                return false;
+            get => hasDewHeater;
+            private set {
+                hasDewHeater = value;
+                RaisePropertyChanged();
             }
         }
 
         public bool DewHeaterOn {
             get {
-                return false;
+                if (HasDewHeater) {
+                    sdk.get_Option(ToupTekAlikeOption.OPTION_HEAT, out var heat);
+                    return heat > 0;
+                } else {
+                    return false;
+                }
             }
             set {
+                if (HasDewHeater) {
+                    if (value) {
+                        sdk.get_Option(ToupTekAlikeOption.OPTION_HEAT_MAX, out var max);
+                        sdk.put_Option(ToupTekAlikeOption.OPTION_HEAT, max);
+                    } else {
+                        sdk.put_Option(ToupTekAlikeOption.OPTION_HEAT, 0);
+                    }
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -243,7 +266,7 @@ namespace NINA.Model.MyCamera {
         public bool CanSubSample {
             get {
                 /*
-                 Currently Omegon Cameras are fixed to certain subsample resolutions, which is incompatible to NINA's approach
+                 Currently ToupTek Cameras are fixed to certain subsample resolutions, which is incompatible to NINA's approach
                  */
                 return false;
             }
@@ -271,11 +294,11 @@ namespace NINA.Model.MyCamera {
 
         public int Offset {
             get {
-                camera.get_Option(Omegonprocam.eOPTION.OPTION_BLACKLEVEL, out var level);
+                sdk.get_Option(ToupTekAlikeOption.OPTION_BLACKLEVEL, out var level);
                 return level;
             }
             set {
-                if (!camera.put_Option(Omegonprocam.eOPTION.OPTION_BLACKLEVEL, value)) {
+                if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BLACKLEVEL, value)) {
                 } else {
                     RaisePropertyChanged();
                 }
@@ -296,12 +319,12 @@ namespace NINA.Model.MyCamera {
 
         public int USBLimit {
             get {
-                camera.get_Speed(out var speed);
+                sdk.get_Speed(out var speed);
                 return speed;
             }
             set {
                 if (value >= USBLimitMin && value <= USBLimitMax) {
-                    camera.put_Speed((ushort)value);
+                    sdk.put_Speed((ushort)value);
                     RaisePropertyChanged();
                 }
             }
@@ -315,7 +338,7 @@ namespace NINA.Model.MyCamera {
 
         public int USBLimitMax {
             get {
-                return (int)camera.MaxSpeed;
+                return (int)sdk.MaxSpeed;
             }
         }
 
@@ -339,7 +362,7 @@ namespace NINA.Model.MyCamera {
 
         public bool CanGetGain {
             get {
-                return camera.get_ExpoAGain(out var gain);
+                return sdk.get_ExpoAGain(out var gain);
             }
         }
 
@@ -351,27 +374,27 @@ namespace NINA.Model.MyCamera {
 
         public int GainMax {
             get {
-                camera.get_ExpoAGainRange(out var min, out var max, out var def);
+                sdk.get_ExpoAGainRange(out var min, out var max, out var def);
                 return max;
             }
         }
 
         public int GainMin {
             get {
-                camera.get_ExpoAGainRange(out var min, out var max, out var def);
+                sdk.get_ExpoAGainRange(out var min, out var max, out var def);
                 return min;
             }
         }
 
         public int Gain {
             get {
-                camera.get_ExpoAGain(out var gain);
+                sdk.get_ExpoAGain(out var gain);
                 return gain;
             }
 
             set {
                 if (value >= GainMin && value <= GainMax) {
-                    camera.put_ExpoAGain((ushort)value);
+                    sdk.put_ExpoAGain((ushort)value);
                     RaisePropertyChanged();
                 }
             }
@@ -384,7 +407,7 @@ namespace NINA.Model.MyCamera {
             set { }
         }
 
-        private short _readoutModeForSnapImages;
+        private short _readoutModeForSnapImages = 0;
 
         public short ReadoutModeForSnapImages {
             get => _readoutModeForSnapImages;
@@ -394,7 +417,7 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        private short _readoutModeForNormalImages;
+        private short _readoutModeForNormalImages = 0;
 
         public short ReadoutModeForNormalImages {
             get => _readoutModeForNormalImages;
@@ -482,13 +505,13 @@ namespace NINA.Model.MyCamera {
 
         public string DriverInfo {
             get {
-                return "Omegon SDK";
+                return $"{Category} SDK";
             }
         }
 
         public string DriverVersion {
             get {
-                return Omegonprocam.Version();
+                return sdk?.Version() ?? string.Empty;
             }
         }
 
@@ -515,69 +538,80 @@ namespace NINA.Model.MyCamera {
                     imageReadyTCS?.TrySetCanceled();
                     imageReadyTCS = null;
 
-                    camera = Omegonprocam.Open(this.Id);
-
+                    sdk = sdk.Open(this.Id);
                     success = true;
 
                     /* Use maximum bit depth */
-                    if (!camera.put_Option(Omegonprocam.eOPTION.OPTION_BITDEPTH, 1)) {
-                        throw new Exception("OmegonCamera - Could not set bit depth");
+                    if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BITDEPTH, 1)) {
+                        throw new Exception($"{Category} - Could not set bit depth");
                     }
 
                     /* Use RAW Mode */
-                    if (!camera.put_Option(Omegonprocam.eOPTION.OPTION_RAW, 1)) {
-                        throw new Exception("OmegonCamera - Could not set RAW mode");
+                    if (!sdk.put_Option(ToupTekAlikeOption.OPTION_RAW, 1)) {
+                        throw new Exception($"{Category} - Could not set RAW mode");
                     }
 
-                    camera.put_AutoExpoEnable(false);
+                    sdk.put_AutoExpoEnable(false);
 
                     ReadOutBinning();
 
-                    camera.get_Size(out var width, out var height);
+                    sdk.get_Size(out var width, out var height);
                     this.CameraXSize = width;
                     this.CameraYSize = height;
 
                     /* Readout flags */
-                    if ((this.flags & Omegonprocam.eFLAG.FLAG_TEC_ONOFF) != 0) {
+                    if ((this.flags & ToupTekAlikeFlag.FLAG_TEC_ONOFF) != 0) {
                         /* Can set Target Temp */
                         CanSetTemperature = true;
                         TemperatureSetPoint = 20;
                         CoolerPowerUpdateTask();
                     }
 
-                    if ((this.flags & Omegonprocam.eFLAG.FLAG_GETTEMPERATURE) != 0) {
+                    if ((this.flags & ToupTekAlikeFlag.FLAG_GETTEMPERATURE) != 0) {
                         /* Can get Target Temp */
                         CanGetTemperature = true;
                     }
 
-                    if ((this.flags & Omegonprocam.eFLAG.FLAG_BLACKLEVEL) != 0) {
+                    if ((this.flags & ToupTekAlikeFlag.FLAG_BLACKLEVEL) != 0) {
                         CanSetOffset = true;
                     }
 
-                    if (((this.flags & Omegonprocam.eFLAG.FLAG_CG) != 0) || ((this.flags & Omegonprocam.eFLAG.FLAG_CGHDR) != 0)) {
-                        Logger.Trace("OmegonCamera - Camera has High Conversion Gain option");
+                    if ((this.flags & ToupTekAlikeFlag.FLAG_HEAT) != 0) {
+                        HasDewHeater = true;
+                    }
+
+                    if ((this.flags & ToupTekAlikeFlag.FLAG_LOW_NOISE) != 0) {
+                        HasLowNoiseMode = true;
+                    }
+
+                    if (((this.flags & ToupTekAlikeFlag.FLAG_CG) != 0) || ((this.flags & ToupTekAlikeFlag.FLAG_CGHDR) != 0)) {
+                        Logger.Trace($"{Category} - Camera has High Conversion Gain option");
                         HasHighGain = true;
                         HighGainMode = true;
                     } else {
                         HasHighGain = false;
                     }
 
-                    if ((this.flags & Omegonprocam.eFLAG.FLAG_TRIGGER_SOFTWARE) == 0) {
-                        throw new Exception("OmegonCamera - This camera is not capable to be triggered by software and is not supported");
+                    if ((this.flags & ToupTekAlikeFlag.FLAG_TRIGGER_SOFTWARE) == 0) {
+                        throw new Exception($"{Category} - This camera is not capable to be triggered by software and is not supported");
                     }
 
-                    if (!camera.put_Option(Omegonprocam.eOPTION.OPTION_TRIGGER, 1)) {
-                        throw new Exception("OmegonCamera - Could not set Trigger manual mode");
+                    if (!sdk.put_Option(ToupTekAlikeOption.OPTION_TRIGGER, 1)) {
+                        throw new Exception($"{Category} - Could not set Trigger manual mode");
                     }
 
-                    if (!camera.StartPullModeWithCallback(new Omegonprocam.DelegateEventCallback(OnEventCallback))) {
-                        throw new Exception("OmegonCamera - Could not start pull mode");
+                    if (!sdk.StartPullModeWithCallback(new ToupTekAlikeCallback(OnEventCallback))) {
+                        throw new Exception($"{Category} - Could not start pull mode");
                     }
 
-                    if (!camera.get_RawFormat(out var fourCC, out var bitDepth)) {
-                        throw new Exception("OmegonCamera - Unable to get format information");
+                    if (!sdk.put_Option(ToupTekAlikeOption.OPTION_FLUSH, 3)) {
+                        Logger.Debug($"{Category} - Unable to flush camera");
+                    }
+
+                    if (!sdk.get_RawFormat(out var fourCC, out var bitDepth)) {
+                        throw new Exception($"{Category} - Unable to get format information");
                     } else {
-                        if (camera.MonoMode) {
+                        if (sdk.MonoMode) {
                             SensorType = SensorType.Monochrome;
                         } else {
                             SensorType = GetSensorType(fourCC);
@@ -607,6 +641,35 @@ namespace NINA.Model.MyCamera {
             return SensorType.RGGB;
         }
 
+        private bool _hasLowNoiseMode;
+
+        public bool HasLowNoiseMode {
+            get => _hasLowNoiseMode;
+            set {
+                _hasLowNoiseMode = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool LowNoiseMode {
+            get {
+                if (HasLowNoiseMode) {
+                    sdk.get_Option(ToupTekAlikeOption.OPTION_LOW_NOISE, out var value);
+                    Logger.Trace($"{Category} - Low Noise Mode is set to {value}");
+                    return value == 1;
+                } else {
+                    return false;
+                }
+            }
+            set {
+                if (HasLowNoiseMode) {
+                    Logger.Debug($"{Category} - Setting Low Noise Mode to {value}");
+                    sdk.put_Option(ToupTekAlikeOption.OPTION_LOW_NOISE, value ? 1 : 0);
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         private bool _hasHighGain;
 
         public bool HasHighGain {
@@ -620,8 +683,8 @@ namespace NINA.Model.MyCamera {
         public bool HighGainMode {
             get {
                 if (HasHighGain) {
-                    camera.get_Option(Omegonprocam.eOPTION.OPTION_CG, out var value);
-                    Logger.Trace($"OmegonCamera - Conversion Gain is set to {value}");
+                    sdk.get_Option(ToupTekAlikeOption.OPTION_CG, out var value);
+                    Logger.Trace($"{Category} - Conversion Gain is set to {value}");
                     return value == 1 ? true : false;
                 } else {
                     return false;
@@ -629,43 +692,44 @@ namespace NINA.Model.MyCamera {
             }
             set {
                 if (HasHighGain) {
-                    Logger.Trace($"OmegonCamera - Setting Conversion Gain to {value}");
-                    camera.put_Option(Omegonprocam.eOPTION.OPTION_CG, value ? 1 : 0);
+                    Logger.Trace($"{Category} - Setting Conversion Gain to {value}");
+                    sdk.put_Option(ToupTekAlikeOption.OPTION_CG, value ? 1 : 0);
                     RaisePropertyChanged();
                 }
             }
         }
 
-        private void OnEventCallback(Omegonprocam.eEVENT nEvent) {
-            Logger.Trace($"OmegonCamera - OnEventCallback {nEvent}");
+        private void OnEventCallback(ToupTekAlikeEvent nEvent) {
+            Logger.Trace($"{Category} - OnEventCallback {nEvent}");
             switch (nEvent) {
-                case Omegonprocam.eEVENT.EVENT_IMAGE: // Live View Image
-                    Logger.Trace($"OmegonCamera - Setting DownloadExposure Result on Task {imageReadyTCS.Task.Id}");
+                case ToupTekAlikeEvent.EVENT_IMAGE: // Live View Image
+                    var id = imageReadyTCS?.Task?.Id ?? -1;
+                    Logger.Trace("{Category} - Setting DownloadExposure Result on Task {id}");
                     var success = imageReadyTCS?.TrySetResult(true);
-                    Logger.Trace($"OmegonCamera - DownloadExposure Result on Task {imageReadyTCS.Task.Id} set successfully: {success}");
+                    Logger.Trace($"{Category} - DownloadExposure Result on Task {id} set successfully: {success}");
                     break;
 
-                case Omegonprocam.eEVENT.EVENT_STILLIMAGE: // Still Image
-                    Logger.Warning("OmegonCamera - Still image event received, but not expected to get one!");
+                case ToupTekAlikeEvent.EVENT_STILLIMAGE: // Still Image
+                    Logger.Warning($"{Category} - Still image event received, but not expected to get one!");
                     imageReadyTCS?.TrySetResult(true);
                     break;
 
-                case Omegonprocam.eEVENT.EVENT_TIMEOUT:
-                    Logger.Error("OmegonCamera - Timout event occurred!");
+                case ToupTekAlikeEvent.EVENT_NOFRAMETIMEOUT:
+                    Logger.Error($"{Category} - Timout event occurred!");
                     break;
 
-                case Omegonprocam.eEVENT.EVENT_TRIGGERFAIL:
-                    Logger.Error("OmegonCamera - Trigger Fail event received!");
+                case ToupTekAlikeEvent.EVENT_TRIGGERFAIL:
+                    Logger.Error($"{Category} - Trigger Fail event received!");
                     break;
 
-                case Omegonprocam.eEVENT.EVENT_ERROR: // Error
-                    Logger.Error("OmegonCamera - Camera reported a generic error!");
+                case ToupTekAlikeEvent.EVENT_ERROR: // Error
+                    Logger.Error($"{Category} - Camera reported a generic error!");
                     Notification.ShowError("Camera reported a generic error and needs to be reconnected!");
                     Disconnect();
                     break;
 
-                case Omegonprocam.eEVENT.EVENT_DISCONNECTED:
-                    Logger.Warning("OmegonCamera - Camera disconnected! Maybe USB connection was interrupted.");
+                case ToupTekAlikeEvent.EVENT_DISCONNECTED:
+                    Logger.Warning($"{Category} - Camera disconnected! Maybe USB connection was interrupted.");
                     Notification.ShowError("Camera disconnected! Maybe USB connection was interrupted.");
                     OnEventDisconnected();
                     break;
@@ -674,16 +738,20 @@ namespace NINA.Model.MyCamera {
 
         private IExposureData PullImage() {
             /* peek the width and height */
-            camera.get_Option(Omegonprocam.eOPTION.OPTION_BINNING, out var binning);
+            sdk.get_Option(ToupTekAlikeOption.OPTION_BINNING, out var binning);
             var width = CameraXSize / binning;
             var height = CameraYSize / binning;
 
             var size = width * height;
             var data = new ushort[size];
 
-            if (!camera.PullImageV2(data, BitDepth, out var info)) {
-                Logger.Error("OmegonCamera - Failed to pull image");
+            if (!sdk.PullImageV2(data, BitDepth, out var info)) {
+                Logger.Error($"{Category} - Failed to pull image");
                 return null;
+            }
+
+            if (!sdk.put_Option(ToupTekAlikeOption.OPTION_FLUSH, 3)) {
+                Logger.Debug($"{Category} - Unable to flush camera");
             }
 
             var bitScaling = this.profileService.ActiveProfile.CameraSettings.BitScaling;
@@ -708,8 +776,8 @@ namespace NINA.Model.MyCamera {
         public void Disconnect() {
             coolerPowerReadoutCts?.Cancel();
             Connected = false;
-            camera.Close();
-            camera = null;
+            sdk.Close();
+            sdk = null;
         }
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
@@ -722,7 +790,7 @@ namespace NINA.Model.MyCamera {
             if (imageReadyTCS.Task.IsCanceled) { return null; }
             using (token.Register(() => imageReadyTCS.TrySetCanceled())) {
                 using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(15))) {
-                    using (cts.Token.Register(() => { Logger.Error("OmegonCamera - No Image Callback Event received"); imageReadyTCS.TrySetResult(true); })) {
+                    using (cts.Token.Register(() => { Logger.Error($"{Category} - No Image Callback Event received"); imageReadyTCS.TrySetResult(true); })) {
                         var imageReady = await imageReadyTCS.Task;
                         return PullImage();
                     }
@@ -731,12 +799,12 @@ namespace NINA.Model.MyCamera {
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken token) {
-            throw new NotImplementedException();
+            throw new System.NotImplementedException();
         }
 
         public void SetBinning(short x, short y) {
             if (x <= MaxBinX) {
-                camera.put_Option(Omegonprocam.eOPTION.OPTION_BINNING, x);
+                sdk.put_Option(ToupTekAlikeOption.OPTION_BINNING, x);
             }
         }
 
@@ -756,20 +824,20 @@ namespace NINA.Model.MyCamera {
             }
 
             var µsTime = (uint)(time * 1000000);
-            if (!camera.put_ExpoTime(µsTime)) {
-                throw new Exception("OmegonCamera - Could not set exposure time");
+            if (!sdk.put_ExpoTime(µsTime)) {
+                throw new Exception($"{Category} - Could not set exposure time");
             }
         }
 
         public void StartExposure(CaptureSequence sequence) {
             imageReadyTCS?.TrySetCanceled();
             imageReadyTCS = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            Logger.Trace($"OmegonCamera - created new downloadExposure Task with Id {imageReadyTCS.Task.Id}");
+            Logger.Trace($"{Category} - created new downloadExposure Task with Id {imageReadyTCS.Task.Id}");
 
             SetExposureTime(sequence.ExposureTime);
 
-            if (!camera.Trigger(1)) {
-                throw new Exception("OmegonCamera - Failed to trigger camera");
+            if (!sdk.Trigger(1)) {
+                throw new Exception($"{Category} - Failed to trigger camera");
             }
         }
 
@@ -796,8 +864,8 @@ namespace NINA.Model.MyCamera {
         }
 
         public void StopExposure() {
-            if (!camera.Trigger(0)) {
-                Logger.Warning("OmegonCamera - Could not stop exposure");
+            if (!sdk.Trigger(0)) {
+                Logger.Warning($"{Category} - Could not stop exposure");
             }
             imageReadyTCS.TrySetCanceled();
         }

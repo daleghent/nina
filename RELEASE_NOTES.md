@@ -157,6 +157,17 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ## BugFixes
 - Weather information in equipment tab now shows correct wind direction.
 
+## Included Camera SDK Versions:
+- **Altair Astro:** 48.18421.20210202
+- **Atik:** 2020.08.3.642
+- **Canon:** 13.13.0.6408
+- **FLI:** 1.104.0.0
+- **Nikon:** 1.3.2.3000
+- **Omegon:** 48.17739.2020.924
+- **QHY:** 21.02.01.10
+- **ToupTek:** 48.18081.2020.1205
+- **ZWO:** 1.16.3
+
 # Version 1.10 HF2
 
 ## Improvements
