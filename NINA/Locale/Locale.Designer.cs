@@ -12059,6 +12059,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SDK Version.
+        /// </summary>
+        internal static string LblSDKVersion {
+            get {
+                return ResourceManager.GetString("LblSDKVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         internal static string LblSearch {
@@ -14794,6 +14803,15 @@ namespace NINA.Locale {
         internal static string LblURL {
             get {
                 return ResourceManager.GetString("LblURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USB Driver Version.
+        /// </summary>
+        internal static string LblUsbDriverVersion {
+            get {
+                return ResourceManager.GetString("LblUsbDriverVersion", resourceCulture);
             }
         }
         

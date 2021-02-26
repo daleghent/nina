@@ -1220,6 +1220,16 @@ namespace QHYCCD {
             public string FPGAVersion;
 
             /// <summary>
+            /// QHY SDK version
+            /// </summary>
+            public string SdkVersion;
+
+            /// <summary>
+            /// QHY USB driver version
+            /// </summary>
+            public string UsbDriverVersion;
+
+            /// <summary>
             /// Has a sensor chamber air pressure sensor?
             /// </summary>
             public bool HasSensorAirPressure;

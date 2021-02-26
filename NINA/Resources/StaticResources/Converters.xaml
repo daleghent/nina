@@ -83,4 +83,5 @@
     <converters:DefaultBinningModesConverter x:Key="DefaultBinningModesConverter" />
     <converters:DrawingToMediaBrushConverter x:Key="DrawingToMediaBrushConverter" />
     <converters:InverseMultiBooleanORConverter x:Key="InverseMultiBooleanORConverter" />
+    <converters:NullOrEmptyStringToVisibilityCollapsedConverter x:Key="NullOrEmptyStringToVisibilityCollapsedConverter" />
 </ResourceDictionary>

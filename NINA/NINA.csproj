@@ -679,6 +679,7 @@
     <Compile Include="Utility\Converters\FilenameConverter.cs" />
     <Compile Include="Utility\CameraSDKs\QHYSDK\IQhyccdSdk.cs" />
     <Compile Include="Utility\Converters\InverseMultiBooleanORConverter.cs" />
+    <Compile Include="Utility\Converters\NullOrEmptyStringToVisibilityCollapsedConverter.cs" />
     <Compile Include="Utility\CustomDateTime.cs" />
     <Compile Include="Utility\Enum\ComparisonOperatorEnum.cs" />
     <Compile Include="Utility\MeridianFlip.cs" />
