@@ -123,10 +123,20 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         }
 
         public override bool ShouldTrigger(ISequenceItem nextItem) {
+            if (history.ImageHistory == null) { return false; }
             if (history.ImageHistory.Count == 0) { return false; }
 
             var lastAF = history.AutoFocusPoints.LastOrDefault();
             var info = focuserMediator.GetInfo();
+
+            if (double.IsNaN(info?.Temperature ?? double.NaN)) {
+                return false;
+            }
+
+            if (lastAF == null && double.IsNaN(initialTemperature)) {
+                initialTemperature = info?.Temperature ?? double.NaN;
+            }
+
             if (lastAF == null && !double.IsNaN(initialTemperature)) {
                 DeltaT = Math.Round(Math.Abs(initialTemperature - info.Temperature), 2);
                 return Math.Abs(initialTemperature - info.Temperature) >= Amount;

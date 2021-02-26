@@ -85,6 +85,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var point = new ImageHistoryPoint(0, null, "LIGHT");
             point.PopulateAFPoint(report);
             afHistory.Add(point);
+            historyMock.SetupGet(x => x.ImageHistory).Returns(afHistory.ToList());
             historyMock.SetupGet(x => x.AutoFocusPoints).Returns(afHistory);
 
             focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyFocuser.FocuserInfo() { Temperature = changedTemp });
@@ -99,12 +100,38 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
         [Test]
         [TestCase(40, 1, 40, false)]
+        [TestCase(40, 1, 41, false)]
+        [TestCase(40, 1, 39, false)]
+        [TestCase(50, 10, 40, false)]
+        [TestCase(50, 5, 52, false)]
+        [TestCase(50, 5, 48, false)]
+        public void ShouldTrigger_LastAFDoesNotExists_NoHistoryExists_NeverFocus(double initialTemp, double tempAmount, double changedTemp, bool shouldTrigger) {
+            historyMock.SetupGet(x => x.ImageHistory).Returns(new List<ImageHistoryPoint>());
+            historyMock.SetupGet(x => x.AutoFocusPoints).Returns(new NINA.Utility.AsyncObservableCollection<ImageHistoryPoint>());
+
+            focuserMediatorMock.SetupSequence(x => x.GetInfo())
+                .Returns(new NINA.Model.MyFocuser.FocuserInfo() { Connected = true, Temperature = initialTemp })
+                .Returns(new NINA.Model.MyFocuser.FocuserInfo() { Temperature = initialTemp })
+                .Returns(new NINA.Model.MyFocuser.FocuserInfo() { Temperature = changedTemp });
+
+            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            sut.Initialize();
+            sut.Amount = tempAmount;
+
+            var trigger = sut.ShouldTrigger(null);
+
+            trigger.Should().Be(shouldTrigger);
+        }
+
+        [Test]
+        [TestCase(40, 1, 40, false)]
         [TestCase(40, 1, 41, true)]
         [TestCase(40, 1, 39, true)]
         [TestCase(50, 10, 40, true)]
         [TestCase(50, 5, 52, false)]
         [TestCase(50, 5, 48, false)]
-        public void ShouldTrigger_LastAFDoesNotExist(double initialTemp, double tempAmount, double changedTemp, bool shouldTrigger) {
+        public void ShouldTrigger_LastAFDoesNotExists_ButHistoryExists_(double initialTemp, double tempAmount, double changedTemp, bool shouldTrigger) {
+            historyMock.SetupGet(x => x.ImageHistory).Returns(new List<ImageHistoryPoint>() { new ImageHistoryPoint(1, null, "LIGHT") });
             historyMock.SetupGet(x => x.AutoFocusPoints).Returns(new NINA.Utility.AsyncObservableCollection<ImageHistoryPoint>());
 
             focuserMediatorMock.SetupSequence(x => x.GetInfo())
