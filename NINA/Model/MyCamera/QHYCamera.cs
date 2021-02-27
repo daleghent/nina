@@ -422,37 +422,41 @@ namespace NINA.Model.MyCamera {
                 }
             }
             set {
-                uint rv;
-                string modeName = ReadoutModes[value];
-                uint mode = (uint)value;
+                if (value < ReadoutModes.Count) {
+                    uint rv;
+                    string modeName = ReadoutModes[value];
+                    uint mode = (uint)value;
 
-                if (Connected) {
-                    if (CanFastReadout) {
-                        if (mode >= Info.ReadoutSpeedMin && value <= Info.ReadoutSpeedMax) {
-                            Logger.Debug($"QHYCCD: ReadoutMode: Setting readout speed to {mode} ({modeName})");
-                            Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_SPEED, mode);
+                    if (Connected) {
+                        if (CanFastReadout) {
+                            if (mode >= Info.ReadoutSpeedMin && value <= Info.ReadoutSpeedMax) {
+                                Logger.Debug($"QHYCCD: ReadoutMode: Setting readout speed to {mode} ({modeName})");
+                                Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_SPEED, mode);
+                            } else {
+                                Logger.Error($"QHYCCD: Invalid readout speed: {mode}");
+                                return;
+                            }
                         } else {
-                            Logger.Error($"QHYCCD: Invalid readout speed: {mode}");
-                            return;
-                        }
-                    } else {
-                        if (mode != ReadoutMode) {
-                            if (mode < 0 && mode > ReadoutModes.Count - 1) {
-                                Logger.Error($"QHYCCD: Invalid readout mode {mode}");
-                                return;
+                            if (mode != ReadoutMode) {
+                                if (mode < 0 && mode > ReadoutModes.Count - 1) {
+                                    Logger.Error($"QHYCCD: Invalid readout mode {mode}");
+                                    return;
+                                }
+
+                                Logger.Debug($"QHYCCD: ReadoutMode: Setting readout mode to {mode} ({modeName})");
+
+                                if ((rv = Sdk.SetReadMode(mode)) != QhySdk.QHYCCD_SUCCESS) {
+                                    Logger.Error($"QHYCCD: SetQHYCCDReadMode() failed. Returned {rv}");
+                                    return;
+                                }
+
+                                Sdk.InitCamera();
+                                SetImageResolution();
                             }
-
-                            Logger.Debug($"QHYCCD: ReadoutMode: Setting readout mode to {mode} ({modeName})");
-
-                            if ((rv = Sdk.SetReadMode(mode)) != QhySdk.QHYCCD_SUCCESS) {
-                                Logger.Error($"QHYCCD: SetQHYCCDReadMode() failed. Returned {rv}");
-                                return;
-                            }
-
-                            Sdk.InitCamera();
-                            SetImageResolution();
                         }
                     }
+                } else {
+                    Logger.Warning($"QHYCCD: ReadoutMode: Index for readoutmode does not exist {value}");
                 }
             }
         }
