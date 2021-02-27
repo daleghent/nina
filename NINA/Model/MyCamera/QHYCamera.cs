@@ -268,8 +268,8 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        public string DriverInfo => "QHYCCD SDK";
-        public string DriverVersion => Sdk.GetSdkVersion();
+        public string DriverInfo => "Native driver for QHYCCD cameras";
+        public string DriverVersion => string.Empty;
         public bool EnableSubSample { get; set; }
         public double ExposureMax => Info.ExpMax / 1e6;
         public double ElectronsPerADU => double.NaN;
@@ -891,11 +891,12 @@ namespace NINA.Model.MyCamera {
 
                 QhyFirmwareVersion = GetFirmwareVersion();
                 QhyFPGAVersion = GetFPGAVersion();
+                QhySdkVersion = GetSdkVersion();
 
                 /*
-                 * Check the USB3 driver version and emit a warning if it's below the recommended minimum version
+                 * Check the USB driver version and emit a warning if it's below the recommended minimum version
                  */
-                Fx3DriverVersionCheck();
+                DriverVersionCheck();
 
                 /*
                  * Announce that this camera is now initialized and ready
@@ -1225,6 +1226,20 @@ namespace NINA.Model.MyCamera {
             return Sdk.GetFpgaVersion();
         }
 
+        private string GetSdkVersion() {
+            return Sdk.GetSdkVersion();
+        }
+
+        public string QhySdkVersion {
+            get => Info.SdkVersion;
+            private set => Info.SdkVersion = value;
+        }
+
+        public string QhyUsbDriverVersion {
+            get => Info.UsbDriverVersion;
+            private set => Info.UsbDriverVersion = value;
+        }
+
         private void SetImageResolution() {
             double pixelx = 0, pixely = 0;
 
@@ -1293,33 +1308,64 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        private void Fx3DriverVersionCheck() {
-            // Update this if there is a new recommended minimum version
-            string minimumVersion = "21.2.20.0";
+        private void DriverVersionCheck() {
+            // Minimum driver versions. Key: Driver name. Value: Minimum driver version
+            Dictionary<string, string> driverDatabase = new Dictionary<string, string> {
+                { "QHY5IIISeries_IO", "21.2.20.0" },
+                { "QHY5II_IO", "0.0.9.0" },
+                { "QHY8LBASE", "0.0.9.0" },
+                { "QHY8PBASE", "0.0.9.0" },
+                { "QHY9BASE", "0.0.9.0" },
+                { "QHY10BASE", "0.0.9.0" },
+                { "QHY11BASE", "0.0.9.0" },
+                { "QHY12BASE", "0.0.9.0" },
+                { "QHY22BASE", "0.0.9.0" },
+                { "IMG2PBASE", "0.0.9.0" },
+                { "QHY90A_IO", "0.0.9.0" },
+                { "QHY695A_IO", "0.0.9.0" },
+                { "QHY814A_IO", "0.0.9.0" },
+                { "QHY09000A_IO", "0.0.9.0" },
+                { "QHY16200A_IO", "0.0.9.0" },
+                { "QHY16803A_IO", "0.0.9.0" }
+            };
 
-            string driverName = "QHY5IIISeries_IO";
-            string runningVersion = string.Empty;
+            QhyUsbDriverVersion = string.Empty;
 
             try {
-                var searchObject = new ManagementObjectSearcher($"SELECT DriverVersion FROM Win32_PnPSignedDriver WHERE DeviceName = '{driverName}'");
-                var objCollection = searchObject.Get();
+                ManagementObjectSearcher searchObject = null;
+                ManagementObjectCollection objCollection = null;
 
-                if (objCollection.Count > 0) {
-                    // We are interested in only one instance if there are multiple cameras connected. They should all have the same version.
-                    var obj = objCollection.OfType<ManagementObject>().FirstOrDefault();
+                foreach (KeyValuePair<string, string> driverInfo in driverDatabase) {
+                    string driverName = driverInfo.Key;
+                    string minimumVersion = driverInfo.Value;
 
-                    if (!string.IsNullOrEmpty(obj["DriverVersion"].ToString())) {
-                        runningVersion = obj["DriverVersion"].ToString();
-                        Logger.Debug($"QHYCCD: {driverName} driver version: {runningVersion}");
-                    }
+                    searchObject = new ManagementObjectSearcher($"SELECT DriverVersion FROM Win32_PnPSignedDriver WHERE DeviceName = '{driverName}'");
+                    objCollection = searchObject.Get();
 
-                    var minVer = new Version(minimumVersion);
-                    var runVer = new Version(runningVersion);
-                    var compare = minVer.CompareTo(runVer);
+                    if (objCollection.Count > 0) {
+                        // We are interested in only one instance if there are multiple cameras connected. They should all have the same version.
+                        var obj = objCollection.OfType<ManagementObject>().FirstOrDefault();
 
-                    if (compare > 0) {
-                        Logger.Warning($"QHYCCD: Installed USB driver version {runningVersion} is older than recommended version {minimumVersion}. Operation of the camera may not be reliable and updating is HIGHLY suggested.");
-                        Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblQhyccdDriverVersionWarning"], runningVersion, minimumVersion));
+                        if (!string.IsNullOrEmpty(obj["DriverVersion"].ToString())) {
+                            QhyUsbDriverVersion = obj["DriverVersion"].ToString();
+                            Logger.Debug($"QHYCCD: {driverName} driver version: {QhyUsbDriverVersion}");
+                        }
+
+                        // Emit a warning to the user if the USB3 driver is behind
+                        // Per QHY, the USB2 drivers aren't of major concern
+                        if (driverName.Equals("QHY5IIISeries_IO")) {
+                            var minVer = new Version(minimumVersion);
+                            var runVer = new Version(QhyUsbDriverVersion);
+                            var compare = minVer.CompareTo(runVer);
+
+                            if (compare > 0) {
+                                Logger.Warning($"QHYCCD: Installed USB driver version {QhyUsbDriverVersion} is older than recommended version {minimumVersion}. Operation of the camera may not be reliable and updating is HIGHLY suggested.");
+                                Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblQhyccdDriverVersionWarning"], QhyUsbDriverVersion, minimumVersion));
+                            }
+                        }
+
+                        // We found this camera's driver. Move on.
+                        break;
                     }
                 }
 
