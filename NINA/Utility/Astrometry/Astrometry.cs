@@ -447,6 +447,38 @@ namespace NINA.Utility.Astrometry {
             return signFactor * (degree + minutes + seconds);
         }
 
+        /// <summary>
+        /// Attempts to determine if a string is a recognizable DMS format
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>true if string matches a recognizable DMS format</returns>
+        /// <example>
+        /// -05 24 44.3 => True
+        /// 055° 3' 45" => True
+        /// 16 06 01.335 => True
+        /// 124.3435463 => False
+        /// </example>
+        public static bool IsDMS(string value) {
+            const string pattern = @"^[-+]?\d{1,3}(\s|°)\d{1,2}(\s|')\d{1,2}(\.\d+)?";
+            return Regex.IsMatch(value, pattern);
+        }
+
+        /// <summary>
+        /// Attempts to determine if a string is a recognizable HMS format
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>true if string matches a recognizable HMS format</returns>
+        /// <example>
+        /// 05 24 44.3 => True
+        /// 12:3:45 => True
+        /// 16 06 01.335 => True
+        /// 15.3435463 => False
+        /// </example>
+        public static bool IsHMS(string value) {
+            const string pattern = @"^\d{1,2}(\s|:)\d{1,2}(\s|:)\d{1,2}(\.\d+)?";
+            return Regex.IsMatch(value, pattern);
+        }
+
         private static Tuple<NOVAS.SkyPosition, NOVAS.SkyPosition> GetMoonAndSunPosition(DateTime date, double jd) {
             var deltaT = DeltaT(date);
 

@@ -187,9 +187,24 @@ namespace NINA.Utility.FileFormat.FITS {
             }
 
             if (_headerCards.ContainsKey("RA") && _headerCards.ContainsKey("DEC")) {
-                var ra = ParseDouble(_headerCards["RA"].OriginalValue);
-                var dec = ParseDouble(_headerCards["DEC"].OriginalValue);
-                metaData.Telescope.Coordinates = new Astrometry.Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
+                string raHdrVal = _headerCards["RA"].OriginalValue;
+                string decHdrVal = _headerCards["DEC"].OriginalValue;
+                double ra;
+                double dec;
+
+                if (Astrometry.Astrometry.IsHMS(raHdrVal)) {
+                    ra = Astrometry.Astrometry.HMSToDegrees(raHdrVal);
+                } else {
+                    ra = ParseDouble(raHdrVal);
+                }
+
+                if (Astrometry.Astrometry.IsDMS(decHdrVal)) {
+                    dec = Astrometry.Astrometry.DMSToDegrees(decHdrVal);
+                } else {
+                    dec = ParseDouble(decHdrVal);
+                }
+
+                metaData.Telescope.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
             }
 
             if (_headerCards.TryGetValue("CENTALT", out card) || _headerCards.TryGetValue("OBJCTALT", out card)) {
@@ -206,15 +221,32 @@ namespace NINA.Utility.FileFormat.FITS {
             }
 
             if (_headerCards.TryGetValue("SITELAT", out card)) {
-                metaData.Observer.Latitude = ParseDouble(card.OriginalValue);
+                string hdrVal = card.OriginalValue;
+                double value;
+
+                if (Astrometry.Astrometry.IsDMS(hdrVal)) {
+                    value = Astrometry.Astrometry.DMSToDegrees(hdrVal);
+                } else {
+                    value = ParseDouble(hdrVal);
+                }
+
+                metaData.Observer.Latitude = value;
             }
 
             if (_headerCards.TryGetValue("SITELONG", out card)) {
-                metaData.Observer.Longitude = ParseDouble(card.OriginalValue);
+                string hdrVal = card.OriginalValue;
+                double value;
+
+                if (Astrometry.Astrometry.IsDMS(hdrVal)) {
+                    value = Astrometry.Astrometry.DMSToDegrees(hdrVal);
+                } else {
+                    value = ParseDouble(hdrVal);
+                }
+
+                metaData.Observer.Longitude = value;
             }
 
             /* Filter Wheel */
-
             if (_headerCards.TryGetValue("FWHEEL", out card)) {
                 metaData.FilterWheel.Name = card.OriginalValue;
             }
@@ -229,9 +261,24 @@ namespace NINA.Utility.FileFormat.FITS {
             }
 
             if (_headerCards.ContainsKey("OBJCTRA") && _headerCards.ContainsKey("OBJCTDEC")) {
-                var ra = Astrometry.Astrometry.HMSToDegrees(_headerCards["OBJCTRA"].OriginalValue);
-                var dec = Astrometry.Astrometry.DMSToDegrees(_headerCards["OBJCTDEC"].OriginalValue);
-                metaData.Target.Coordinates = new Astrometry.Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
+                string raHdrVal = _headerCards["OBJCTRA"].OriginalValue;
+                string decHdrVal = _headerCards["OBJCTDEC"].OriginalValue;
+                double ra;
+                double dec;
+
+                if (Astrometry.Astrometry.IsHMS(raHdrVal)) {
+                    ra = Astrometry.Astrometry.HMSToDegrees(raHdrVal);
+                } else {
+                    ra = ParseDouble(raHdrVal);
+                }
+
+                if (Astrometry.Astrometry.IsDMS(decHdrVal)) {
+                    dec = Astrometry.Astrometry.DMSToDegrees(decHdrVal);
+                } else {
+                    dec = ParseDouble(decHdrVal);
+                }
+
+                metaData.Target.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
             }
 
             if (_headerCards.TryGetValue("OBJCTROT", out card)) {

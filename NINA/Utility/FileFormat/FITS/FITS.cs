@@ -60,20 +60,25 @@ namespace NINA.Utility.FileFormat.FITS {
                 var iterator = hdu.Header.GetCursor();
                 while (iterator.MoveNext()) {
                     HeaderCard card = (HeaderCard)((DictionaryEntry)iterator.Current).Value;
-                    if (card.Value != null) {
-                        if (card.IsStringValue) {
-                            header.Add(card.Key, card.Value, card.Comment);
-                        } else {
-                            if (card.Value == "T") {
-                                header.Add(card.Key, true, card.Comment);
-                            } else if (card.Value.Contains(".")) {
-                                if (double.TryParse(card.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
-                                    header.Add(card.Key, value, card.Comment);
-                                }
-                            } else {
-                                if (int.TryParse(card.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out var value))
-                                    header.Add(card.Key, value, card.Comment);
+
+                    if (string.IsNullOrEmpty(card.Value) || card.Key.Equals("COMMENT") || card.Key.Equals("HISTORY")) {
+                        continue;
+                    }
+
+                    if (card.IsStringValue) {
+                        header.Add(card.Key, card.Value, card.Comment);
+                    } else {
+                        if (card.Value.Equals("T")) {
+                            header.Add(card.Key, true, card.Comment);
+                        } else if (card.Value.Equals("F")) {
+                            header.Add(card.Key, false, card.Comment);
+                        } else if (card.Value.Contains(".")) {
+                            if (double.TryParse(card.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out var value)) {
+                                header.Add(card.Key, value, card.Comment);
                             }
+                        } else {
+                            if (int.TryParse(card.Value, NumberStyles.Number, CultureInfo.InvariantCulture, out var value))
+                                header.Add(card.Key, value, card.Comment);
                         }
                     }
                 }

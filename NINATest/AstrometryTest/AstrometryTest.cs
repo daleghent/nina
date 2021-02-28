@@ -224,6 +224,37 @@ namespace NINATest.AstrometryTest {
         }
 
         [Test]
+        [TestCase("00°00'00\"", true)]
+        [TestCase("90°00'00\"", true)]
+        [TestCase("-90°00'00\"", true)]
+        [TestCase("91°00'00\"", true)]
+        [TestCase("-91°00'00\"", true)]
+        [TestCase("72°01'00\"", true)]
+        [TestCase("-72°01'00.6664\"", true)]
+        [TestCase("34°00'00\"", true)]
+        [TestCase("-34°00'00\"", true)]
+        [TestCase("44 00 00.24", true)]
+        [TestCase("-153 30 05.95", true)]
+        [TestCase("+46d 46m 04s", false)]
+        public void IsDmsTest(string coordinate, bool expected) {
+            var value = Astrometry.IsDMS(coordinate);
+
+            Assert.AreEqual(expected, value);
+        }
+
+        [Test]
+        [TestCase("00 00 00", true)]
+        [TestCase("13:00:00", true)]
+        [TestCase("4:02:35.3452", true)]
+        [TestCase("-02 00 00", false)]
+        [TestCase("34°00'00\"", false)]
+        public void IsHmsTest(string coordinate, bool expected) {
+            var value = Astrometry.IsHMS(coordinate);
+
+            Assert.AreEqual(expected, value);
+        }
+
+        [Test]
         /* Expected values taken from http://www.table-references.info/meteo-table-dew-point.php#celsius */
         [TestCase(-20, 100, -20)]
         [TestCase(-18, 100, -18)]
