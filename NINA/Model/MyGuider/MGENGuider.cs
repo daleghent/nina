@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2020 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -33,7 +33,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace NINA.Model.MyGuider {
-
     internal class MGENGuider : BaseINPC, IGuider {
         public readonly IMGEN MGen;
         private IProfileService profileService;
@@ -398,7 +397,6 @@ namespace NINA.Model.MyGuider {
     }
 
     internal class MGenLogger : NINA.MGEN.ILogger {
-
         public void Debug(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") {
             Logger.Debug(message, memberName, sourceFilePath);
         }
