@@ -5287,6 +5287,12 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
     <value>Neznámá Instrukce</value>
   </data>
   <data name="LblQhyccdDriverVersionWarning" xml:space="preserve">
-    <value>The installed QHYCCD USB driver's version of {0} is below the minimum recommeneded version of {1}. Driver updates are available on the QHYCCD website and are recommended for optimal camera function</value>
+    <value>Verze nainstalovaného ovladače QHYCCD USB {0} je pod minimální doporučenou verzí ovladače {1}. Aktualizace ovladačů jsou k dispozici na webových stránkách QHYCCD a jsou doporučeny pro optimální funkci fotoaparátu</value>
+  </data>
+  <data name="LblSDKVersion" xml:space="preserve">
+    <value>SDK Verze</value>
+  </data>
+  <data name="LblUsbDriverVersion" xml:space="preserve">
+    <value>Verze Ovladače USB</value>
   </data>
 </root>

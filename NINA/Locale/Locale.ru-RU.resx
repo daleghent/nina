@@ -5275,21 +5275,27 @@ Dec: {1}</value>
     <value>Установить скорость кнопки движения в градусах в секунду</value>
   </data>
   <data name="LblFirmwareVersion" xml:space="preserve">
-    <value>Firmware Version</value>
+    <value>Версия прошивки</value>
   </data>
   <data name="LblFPGAVersion" xml:space="preserve">
-    <value>FPGA Version</value>
+    <value>Версия FPGA</value>
   </data>
   <data name="LblSensorAirPressure" xml:space="preserve">
-    <value>Sensor air pressure</value>
+    <value>Давление воздуха датчика</value>
   </data>
   <data name="LblSensorHumidity" xml:space="preserve">
-    <value>Sensor humidity</value>
+    <value>Влажность датчика</value>
   </data>
   <data name="LblUnknownInstruction" xml:space="preserve">
-    <value>Unknown Instruction</value>
+    <value>Неизвестная инструкция</value>
   </data>
   <data name="LblQhyccdDriverVersionWarning" xml:space="preserve">
-    <value>The installed QHYCCD USB driver's version of {0} is below the minimum recommeneded version of {1}. Driver updates are available on the QHYCCD website and are recommended for optimal camera function</value>
+    <value>Установленная версия USB драйвера QHYCCD {0} ниже минимальной рекомендуемой версии {1}. Обновления драйверов доступны на сайте QHYCCD и рекомендуются для оптимальной работы камеры</value>
+  </data>
+  <data name="LblSDKVersion" xml:space="preserve">
+    <value>SDK Version</value>
+  </data>
+  <data name="LblUsbDriverVersion" xml:space="preserve">
+    <value>USB Driver Version</value>
   </data>
 </root>

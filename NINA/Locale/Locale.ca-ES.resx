@@ -5290,4 +5290,10 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   <data name="LblQhyccdDriverVersionWarning" xml:space="preserve">
     <value>La versió {0} del controlador USB QHYCCD instal·lat està per sota de la versió mínima recomanada de {1}. Les actualitzacions del controlador estan disponibles al lloc web QHYCCD i es recomanen per a una funció òptima de la càmera</value>
   </data>
+  <data name="LblSDKVersion" xml:space="preserve">
+    <value>Versió SDK</value>
+  </data>
+  <data name="LblUsbDriverVersion" xml:space="preserve">
+    <value>Versió del controlador USB</value>
+  </data>
 </root>
