@@ -27,20 +27,17 @@ using System.Threading.Tasks;
 using System.Collections.Immutable;
 
 namespace NINA.Model.MyTelescope {
-    internal class AscomTelescope : BaseINPC, ITelescope, IDisposable {
+
+    internal class AscomTelescope : AscomDevice<Telescope>, ITelescope, IDisposable {
         private static readonly TimeSpan MERIDIAN_FLIP_SLEW_RETRY_WAIT = TimeSpan.FromMinutes(1);
         private static readonly int MERIDIAN_FLIP_SLEW_RETRY_ATTEMPTS = 20;
         private static double TRACKING_RATE_EPSILON = 0.000001;
 
-        public AscomTelescope(string telescopeId, string name, IProfileService profileService) {
+        public AscomTelescope(string telescopeId, string name, IProfileService profileService) : base(telescopeId, name) {
             this.profileService = profileService;
-            Id = telescopeId;
-            Name = name;
         }
 
         private IProfileService profileService;
-
-        public string Category { get; } = "ASCOM";
 
         private void Initialize() {
             _canGetAlignmentMode = true;
@@ -63,20 +60,6 @@ namespace NINA.Model.MyTelescope {
             _hasUnknownEpoch = false;
         }
 
-        private string _id;
-
-        public string Id {
-            get {
-                return _id;
-            }
-            set {
-                _id = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Telescope _telescope;
-
         private bool _canGetAlignmentMode;
 
         public AlignmentModes AlignmentMode {
@@ -84,7 +67,7 @@ namespace NINA.Model.MyTelescope {
                 AlignmentModes val = AlignmentModes.algGermanPolar;
                 try {
                     if (Connected && _canGetAlignmentMode) {
-                        val = _telescope.AlignmentMode;
+                        val = device.AlignmentMode;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetAlignmentMode = false;
@@ -107,7 +90,7 @@ namespace NINA.Model.MyTelescope {
             get {
                 try {
                     if (Connected && _canGetAltitude) {
-                        _altitude = _telescope.Altitude;
+                        _altitude = device.Altitude;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetAltitude = false;
@@ -126,7 +109,7 @@ namespace NINA.Model.MyTelescope {
             get {
                 try {
                     if (Connected && _canGetAzimuth) {
-                        _azimuth = _telescope.Azimuth;
+                        _azimuth = device.Azimuth;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetAzimuth = false;
@@ -144,7 +127,7 @@ namespace NINA.Model.MyTelescope {
                 double val = -1;
                 try {
                     if (Connected && _canGetApertureArea) {
-                        val = _telescope.Altitude;
+                        val = device.Altitude;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetApertureArea = false;
@@ -160,7 +143,7 @@ namespace NINA.Model.MyTelescope {
                 double val = -1;
                 try {
                     if (Connected && _canGetApertureDiameter) {
-                        val = _telescope.ApertureDiameter;
+                        val = device.ApertureDiameter;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetApertureDiameter = false;
@@ -172,7 +155,7 @@ namespace NINA.Model.MyTelescope {
         public bool AtHome {
             get {
                 if (Connected) {
-                    return _telescope.AtHome;
+                    return device.AtHome;
                 } else {
                     return false;
                 }
@@ -182,7 +165,7 @@ namespace NINA.Model.MyTelescope {
         public bool AtPark {
             get {
                 if (Connected) {
-                    return _telescope.AtPark;
+                    return device.AtPark;
                 } else {
                     return false;
                 }
@@ -192,7 +175,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanFindHome {
             get {
                 if (Connected) {
-                    return _telescope.CanFindHome;
+                    return device.CanFindHome;
                 } else {
                     return false;
                 }
@@ -202,7 +185,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanPark {
             get {
                 if (Connected) {
-                    return _telescope.CanPark;
+                    return device.CanPark;
                 } else {
                     return false;
                 }
@@ -212,7 +195,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanPulseGuide {
             get {
                 if (Connected) {
-                    return _telescope.CanPulseGuide;
+                    return device.CanPulseGuide;
                 } else {
                     return false;
                 }
@@ -222,7 +205,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSetDeclinationRate {
             get {
                 if (Connected) {
-                    return _telescope.CanSetDeclinationRate;
+                    return device.CanSetDeclinationRate;
                 } else {
                     return false;
                 }
@@ -232,7 +215,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSetGuideRates {
             get {
                 if (Connected) {
-                    return _telescope.CanSetGuideRates;
+                    return device.CanSetGuideRates;
                 } else {
                     return false;
                 }
@@ -242,7 +225,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSetPark {
             get {
                 if (Connected) {
-                    return _telescope.CanSetPark;
+                    return device.CanSetPark;
                 } else {
                     return false;
                 }
@@ -252,7 +235,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSetPierSide {
             get {
                 if (Connected) {
-                    return _telescope.CanSetPierSide;
+                    return device.CanSetPierSide;
                 } else {
                     return false;
                 }
@@ -262,7 +245,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSetRightAscensionRate {
             get {
                 if (Connected) {
-                    return _telescope.CanSetRightAscensionRate;
+                    return device.CanSetRightAscensionRate;
                 } else {
                     return false;
                 }
@@ -272,7 +255,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSetTrackingRate {
             get {
                 if (Connected) {
-                    return _telescope.CanSetTracking;
+                    return device.CanSetTracking;
                 } else {
                     return false;
                 }
@@ -282,7 +265,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSlew {
             get {
                 if (Connected) {
-                    return _telescope.CanSlew;
+                    return device.CanSlew;
                 } else {
                     return false;
                 }
@@ -292,7 +275,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSlewAltAz {
             get {
                 if (Connected) {
-                    return _telescope.CanSlewAltAz;
+                    return device.CanSlewAltAz;
                 } else {
                     return false;
                 }
@@ -302,7 +285,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSlewAltAzAsync {
             get {
                 if (Connected) {
-                    return _telescope.CanSlewAltAzAsync;
+                    return device.CanSlewAltAzAsync;
                 } else {
                     return false;
                 }
@@ -312,7 +295,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSlewAsync {
             get {
                 if (Connected) {
-                    return _telescope.CanSlewAsync;
+                    return device.CanSlewAsync;
                 } else {
                     return false;
                 }
@@ -322,7 +305,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSync {
             get {
                 if (Connected) {
-                    return _telescope.CanSync;
+                    return device.CanSync;
                 } else {
                     return false;
                 }
@@ -332,7 +315,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanSyncAltAz {
             get {
                 if (Connected) {
-                    return _telescope.CanSyncAltAz;
+                    return device.CanSyncAltAz;
                 } else {
                     return false;
                 }
@@ -342,7 +325,7 @@ namespace NINA.Model.MyTelescope {
         public bool CanUnpark {
             get {
                 if (Connected) {
-                    return _telescope.CanUnpark;
+                    return device.CanUnpark;
                 } else {
                     return false;
                 }
@@ -358,7 +341,7 @@ namespace NINA.Model.MyTelescope {
         public double Declination {
             get {
                 if (Connected) {
-                    return _telescope.Declination;
+                    return device.Declination;
                 } else {
                     return -1;
                 }
@@ -374,7 +357,7 @@ namespace NINA.Model.MyTelescope {
         public double DeclinationRate {
             get {
                 if (Connected) {
-                    return _telescope.DeclinationRate;
+                    return device.DeclinationRate;
                 } else {
                     return -1;
                 }
@@ -382,7 +365,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && CanSetDeclinationRate) {
-                        _telescope.DeclinationRate = value;
+                        device.DeclinationRate = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -396,7 +379,7 @@ namespace NINA.Model.MyTelescope {
         public double RightAscensionRate {
             get {
                 if (Connected) {
-                    return _telescope.RightAscensionRate;
+                    return device.RightAscensionRate;
                 } else {
                     return -1;
                 }
@@ -404,7 +387,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && CanSetRightAscensionRate) {
-                        _telescope.RightAscensionRate = value;
+                        device.RightAscensionRate = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -422,7 +405,7 @@ namespace NINA.Model.MyTelescope {
                 PierSide val = PierSide.pierUnknown;
                 try {
                     if (Connected && _canGetSideOfPier) {
-                        val = (PierSide)_telescope.SideOfPier;
+                        val = (PierSide)device.SideOfPier;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetSideOfPier = false;
@@ -432,23 +415,13 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && CanSetPierSide) {
-                        _telescope.SideOfPier = (ASCOM.DeviceInterface.PierSide)value;
+                        device.SideOfPier = (ASCOM.DeviceInterface.PierSide)value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
                     Logger.Warning(ex.Message);
                 } catch (InvalidValueException ex) {
                     Logger.Warning(ex.Message);
-                }
-            }
-        }
-
-        public string Description {
-            get {
-                if (Connected) {
-                    return _telescope.Description;
-                } else {
-                    return string.Empty;
                 }
             }
         }
@@ -460,32 +433,12 @@ namespace NINA.Model.MyTelescope {
                 bool val = false;
                 try {
                     if (Connected && _canDoRefraction) {
-                        val = _telescope.DoesRefraction;
+                        val = device.DoesRefraction;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canDoRefraction = false;
                 }
                 return val;
-            }
-        }
-
-        public string DriverInfo {
-            get {
-                if (Connected) {
-                    return _telescope.DriverInfo;
-                } else {
-                    return string.Empty;
-                }
-            }
-        }
-
-        public string DriverVersion {
-            get {
-                if (Connected) {
-                    return _telescope.DriverVersion;
-                } else {
-                    return string.Empty;
-                }
             }
         }
 
@@ -506,7 +459,7 @@ namespace NINA.Model.MyTelescope {
                 double val = -1;
                 try {
                     if (Connected && _canGetFocalLength) {
-                        val = _telescope.FocalLength;
+                        val = device.FocalLength;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetFocalLength = false;
@@ -518,29 +471,17 @@ namespace NINA.Model.MyTelescope {
         public short InterfaceVersion {
             get {
                 if (Connected) {
-                    return _telescope.InterfaceVersion;
+                    return device.InterfaceVersion;
                 } else {
                     return -1;
                 }
             }
         }
 
-        private string _name;
-
-        public string Name {
-            get {
-                return _name;
-            }
-            set {
-                _name = value;
-                RaisePropertyChanged();
-            }
-        }
-
         public double RightAscension {
             get {
                 if (Connected) {
-                    return _telescope.RightAscension;
+                    return device.RightAscension;
                 } else {
                     return -1;
                 }
@@ -556,7 +497,7 @@ namespace NINA.Model.MyTelescope {
         public double SiderealTime {
             get {
                 if (Connected) {
-                    return _telescope.SiderealTime;
+                    return device.SiderealTime;
                 } else {
                     return -1;
                 }
@@ -576,7 +517,7 @@ namespace NINA.Model.MyTelescope {
                 bool val = false;
                 try {
                     if (Connected && _canGetSlewing) {
-                        val = _telescope.Slewing;
+                        val = device.Slewing;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetSlewing = false;
@@ -588,7 +529,7 @@ namespace NINA.Model.MyTelescope {
         public ArrayList SupportedActions {
             get {
                 if (Connected) {
-                    return _telescope.SupportedActions;
+                    return device.SupportedActions;
                 } else {
                     return new ArrayList();
                 }
@@ -598,7 +539,7 @@ namespace NINA.Model.MyTelescope {
         public bool IsPulseGuiding {
             get {
                 if (Connected && CanPulseGuide) {
-                    return _telescope.IsPulseGuiding;
+                    return device.IsPulseGuiding;
                 } else {
                     return false;
                 }
@@ -608,7 +549,7 @@ namespace NINA.Model.MyTelescope {
         public double GuideRateDeclinationArcsecPerSec {
             get {
                 if (Connected) {
-                    return _telescope.GuideRateDeclination * 3600.0;
+                    return device.GuideRateDeclination * 3600.0;
                 } else {
                     return -1;
                 }
@@ -616,7 +557,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && CanSetGuideRates) {
-                        _telescope.GuideRateDeclination = value;
+                        device.GuideRateDeclination = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -630,7 +571,7 @@ namespace NINA.Model.MyTelescope {
         public double GuideRateRightAscensionArcsecPerSec {
             get {
                 if (Connected) {
-                    return _telescope.GuideRateRightAscension * 3600.0;
+                    return device.GuideRateRightAscension * 3600.0;
                 } else {
                     return -1;
                 }
@@ -638,7 +579,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && CanSetGuideRates) {
-                        _telescope.GuideRateRightAscension = value;
+                        device.GuideRateRightAscension = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -654,7 +595,7 @@ namespace NINA.Model.MyTelescope {
         public DateTime UTCDate {
             get {
                 if (Connected) {
-                    return _telescope.UTCDate;
+                    return device.UTCDate;
                 } else {
                     return DateTime.MinValue;
                 }
@@ -662,7 +603,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && _canSetUTCDate) {
-                        _telescope.UTCDate = value;
+                        device.UTCDate = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -680,7 +621,7 @@ namespace NINA.Model.MyTelescope {
                 double val = -1;
                 if (Connected && _canGetSiteElevation) {
                     try {
-                        val = _telescope.SiteElevation;
+                        val = device.SiteElevation;
                     } catch (PropertyNotImplementedException) {
                         _canGetSiteElevation = false;
                     }
@@ -690,7 +631,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && _canSetSiteElevation) {
-                        _telescope.SiteElevation = value;
+                        device.SiteElevation = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -712,7 +653,7 @@ namespace NINA.Model.MyTelescope {
                 double val = -1;
                 if (Connected && _canGetSiteLatLong) {
                     try {
-                        val = _telescope.SiteLatitude;
+                        val = device.SiteLatitude;
                     } catch (PropertyNotImplementedException) {
                         _canGetSiteLatLong = false;
                     }
@@ -722,7 +663,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && _canSetSiteLatLong) {
-                        _telescope.SiteLatitude = value;
+                        device.SiteLatitude = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -741,7 +682,7 @@ namespace NINA.Model.MyTelescope {
                 double val = -1;
                 if (Connected && _canGetSiteLatLong) {
                     try {
-                        val = _telescope.SiteLongitude;
+                        val = device.SiteLongitude;
                     } catch (PropertyNotImplementedException) {
                         _canGetSiteLatLong = false;
                     }
@@ -751,7 +692,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && _canSetSiteLatLong) {
-                        _telescope.SiteLongitude = value;
+                        device.SiteLongitude = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -772,7 +713,7 @@ namespace NINA.Model.MyTelescope {
                 short val = -1;
                 if (Connected && _canSetSlewSettleTime) {
                     try {
-                        val = _telescope.SlewSettleTime;
+                        val = device.SlewSettleTime;
                     } catch (PropertyNotImplementedException) {
                         _canSetSlewSettleTime = false;
                     }
@@ -782,7 +723,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && _canSetSlewSettleTime) {
-                        _telescope.SlewSettleTime = value;
+                        device.SlewSettleTime = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -802,7 +743,7 @@ namespace NINA.Model.MyTelescope {
                 double val = double.NaN;
                 if (Connected && _canGetTargetRaDec && Slewing) {
                     try {
-                        val = _telescope.TargetDeclination;
+                        val = device.TargetDeclination;
                     } catch (PropertyNotImplementedException) {
                         _canGetTargetRaDec = false;
                     } catch (DriverAccessCOMException ex) {
@@ -816,7 +757,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && _canSetTargetRaDec) {
-                        _telescope.TargetDeclination = value;
+                        device.TargetDeclination = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -835,7 +776,7 @@ namespace NINA.Model.MyTelescope {
                 double val = double.NaN;
                 if (Connected && _canGetTargetRaDec && Slewing) {
                     try {
-                        val = _telescope.TargetRightAscension;
+                        val = device.TargetRightAscension;
                     } catch (PropertyNotImplementedException) {
                         _canGetTargetRaDec = false;
                     } catch (DriverAccessCOMException ex) {
@@ -849,7 +790,7 @@ namespace NINA.Model.MyTelescope {
             set {
                 try {
                     if (Connected && _canSetTargetRaDec) {
-                        _telescope.TargetRightAscension = value;
+                        device.TargetRightAscension = value;
                         RaisePropertyChanged();
                     }
                 } catch (PropertyNotImplementedException ex) {
@@ -892,51 +833,6 @@ namespace NINA.Model.MyTelescope {
                 targetSideOfPier = value;
                 RaisePropertyChanged();
             }
-        }
-
-        private bool _connected;
-
-        public bool Connected {
-            get {
-                if (_connected) {
-                    bool val = false;
-                    try {
-                        val = _telescope.Connected;
-                        if (_connected != val) {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeConnectionLost"]);
-                            Disconnect();
-                        }
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                        Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeConnectionLost"]);
-                        try {
-                            Disconnect();
-                        } catch (Exception disconnectEx) {
-                            Logger.Error(disconnectEx);
-                        }
-                    }
-                    return val;
-                } else {
-                    return false;
-                }
-            }
-            private set {
-                try {
-                    _connected = value;
-                    _telescope.Connected = value;
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblReconnectTelescope"] + Environment.NewLine + ex.Message);
-                    _connected = false;
-                }
-                RaisePropertyChanged();
-            }
-        }
-
-        public void Disconnect() {
-            Connected = false;
-            _telescope?.Dispose();
-            _telescope = null;
         }
 
         private bool _hasUnknownEpoch;
@@ -1051,7 +947,7 @@ namespace NINA.Model.MyTelescope {
                                     translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisPrimary;
                                     break;
                             }
-                            _telescope.MoveAxis(translatedAxis, rate);
+                            device.MoveAxis(translatedAxis, rate);
                         } catch (Exception e) {
                             Logger.Error(e);
                             Notification.ShowError(e.Message);
@@ -1072,7 +968,7 @@ namespace NINA.Model.MyTelescope {
                 if (CanPulseGuide) {
                     if (!AtPark) {
                         try {
-                            _telescope.PulseGuide((ASCOM.DeviceInterface.GuideDirections)direction, duration);
+                            device.PulseGuide((ASCOM.DeviceInterface.GuideDirections)direction, duration);
                         } catch (Exception e) {
                             Logger.Error(e);
                             Notification.ShowError(e.Message);
@@ -1090,14 +986,14 @@ namespace NINA.Model.MyTelescope {
 
         public void Park() {
             if (Connected && CanPark) {
-                _telescope.Park();
+                device.Park();
             }
         }
 
         public void Setpark() {
             if (Connected && CanSetPark) {
                 try {
-                    _telescope.SetPark();
+                    device.SetPark();
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowError(e.Message);
@@ -1107,18 +1003,18 @@ namespace NINA.Model.MyTelescope {
 
         public bool CanSetTrackingEnabled {
             get {
-                return Connected && _telescope.CanSetTracking;
+                return Connected && device.CanSetTracking;
             }
         }
 
         public bool TrackingEnabled {
             get {
-                return Connected && _telescope.Tracking;
+                return Connected && device.Tracking;
             }
             set {
                 if (Connected && CanSetTrackingEnabled) {
-                    if (_telescope.Tracking != value) {
-                        _telescope.Tracking = value;
+                    if (device.Tracking != value) {
+                        device.Tracking = value;
                         RaisePropertyChanged();
                         RaisePropertyChanged(nameof(TrackingMode));
                         RaisePropertyChanged(nameof(TrackingRate));
@@ -1132,7 +1028,7 @@ namespace NINA.Model.MyTelescope {
                 try {
                     TrackingEnabled = true;
                     TargetCoordinates = coordinates.Transform(EquatorialSystem);
-                    _telescope.SlewToCoordinates(TargetCoordinates.RA, TargetCoordinates.Dec);
+                    device.SlewToCoordinates(TargetCoordinates.RA, TargetCoordinates.Dec);
                     return true;
                 } catch (Exception e) {
                     Logger.Error(e);
@@ -1146,7 +1042,7 @@ namespace NINA.Model.MyTelescope {
 
         public void StopSlew() {
             if (Connected && CanSlew) {
-                _telescope.AbortSlew();
+                device.AbortSlew();
             }
         }
 
@@ -1161,7 +1057,7 @@ namespace NINA.Model.MyTelescope {
                 if (TrackingEnabled) {
                     try {
                         coordinates = coordinates.Transform(EquatorialSystem);
-                        _telescope.SyncToCoordinates(coordinates.RA, coordinates.Dec);
+                        device.SyncToCoordinates(coordinates.RA, coordinates.Dec);
                         success = true;
                     } catch (Exception ex) {
                         Logger.Error(ex);
@@ -1177,7 +1073,7 @@ namespace NINA.Model.MyTelescope {
         public void FindHome() {
             if (Connected && CanFindHome) {
                 try {
-                    _telescope.FindHome();
+                    device.FindHome();
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowError(e.Message);
@@ -1188,16 +1084,12 @@ namespace NINA.Model.MyTelescope {
         public void Unpark() {
             if (Connected && CanUnpark) {
                 try {
-                    _telescope.Unpark();
+                    device.Unpark();
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowError(e.Message);
                 }
             }
-        }
-
-        public void Dispose() {
-            _telescope.Dispose();
         }
 
         public double HoursToMeridian {
@@ -1255,7 +1147,7 @@ namespace NINA.Model.MyTelescope {
 
                     double max = double.MinValue;
                     double min = double.MaxValue;
-                    IAxisRates r = _telescope.AxisRates(ASCOM.DeviceInterface.TelescopeAxes.axisSecondary);
+                    IAxisRates r = device.AxisRates(ASCOM.DeviceInterface.TelescopeAxes.axisSecondary);
                     IEnumerator e = r.GetEnumerator();
                     foreach (IRate item in r) {
                         if (min > item.Minimum) {
@@ -1283,70 +1175,19 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        public bool HasSetupDialog {
-            get {
-                return true;
-            }
-        }
-
-        public void SetupDialog() {
-            if (HasSetupDialog) {
-                try {
-                    bool dispose = false;
-                    if (_telescope == null) {
-                        _telescope = new Telescope(Id);
-                        dispose = true;
-                    }
-                    _telescope.SetupDialog();
-                    if (dispose) {
-                        _telescope.Dispose();
-                        _telescope = null;
-                    }
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
-                }
-            }
-        }
-
         public void SendCommandString(string command) {
             if (Connected) {
-                _telescope.CommandString(command, true);
+                device.CommandString(command, true);
             } else {
                 Notification.ShowError(Locale.Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
             }
         }
 
-        public async Task<bool> Connect(CancellationToken token) {
-            return await Task<bool>.Run(() => {
-                try {
-                    _telescope = new Telescope(Id);
-                    Connected = true;
-                    if (Connected) {
-                        Initialize();
-                        EquatorialSystem = DetermineEquatorialSystem();
-                        SiteLongitude = SiteLongitude;
-                        SiteLatitude = SiteLatitude;
-                        trackingModes = GetTrackingModes();
-                        RaiseAllPropertiesChanged();
-                    }
-                } catch (ASCOM.DriverAccessCOMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (System.Runtime.InteropServices.COMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError("Unable to connect to telescope " + ex.Message);
-                }
-                return Connected;
-            });
-        }
-
         private Epoch DetermineEquatorialSystem() {
             Epoch epoch = Epoch.JNOW;
 
-            if (_telescope.InterfaceVersion > 1) {
-                EquatorialCoordinateType mountEqSystem = _telescope.EquatorialSystem;
+            if (device.InterfaceVersion > 1) {
+                EquatorialCoordinateType mountEqSystem = device.EquatorialSystem;
 
                 switch (mountEqSystem) {
                     case EquatorialCoordinateType.equB1950:
@@ -1372,7 +1213,7 @@ namespace NINA.Model.MyTelescope {
         }
 
         private ImmutableList<TrackingMode> GetTrackingModes() {
-            var trackingRateEnum = _telescope.TrackingRates.GetEnumerator();
+            var trackingRateEnum = device.TrackingRates.GetEnumerator();
             var trackingModes = ImmutableList.CreateBuilder<TrackingMode>();
             trackingModes.Add(TrackingMode.Sidereal);
             while (!trackingRateEnum.MoveNext()) {
@@ -1392,7 +1233,7 @@ namespace NINA.Model.MyTelescope {
                 }
             }
 
-            if (_telescope.CanSetRightAscensionRate && _telescope.CanSetDeclinationRate) {
+            if (device.CanSetRightAscensionRate && device.CanSetDeclinationRate) {
                 trackingModes.Add(TrackingMode.Custom);
             }
             trackingModes.Add(TrackingMode.Stopped);
@@ -1409,19 +1250,19 @@ namespace NINA.Model.MyTelescope {
 
         public TrackingRate TrackingRate {
             get {
-                if (!Connected || !_telescope.Tracking) {
+                if (!Connected || !device.Tracking) {
                     return new TrackingRate() { TrackingMode = TrackingMode.Stopped };
-                } else if (!_telescope.CanSetTracking) {
+                } else if (!device.CanSetTracking) {
                     return new TrackingRate() { TrackingMode = TrackingMode.Sidereal };
                 }
 
-                var ascomTrackingRate = _telescope.TrackingRate;
+                var ascomTrackingRate = device.TrackingRate;
                 if (ascomTrackingRate == DriveRates.driveSidereal && (
-                    Math.Abs(_telescope.DeclinationRate) >= TRACKING_RATE_EPSILON) || (Math.Abs(_telescope.RightAscensionRate) >= TRACKING_RATE_EPSILON)) {
+                    Math.Abs(device.DeclinationRate) >= TRACKING_RATE_EPSILON) || (Math.Abs(device.RightAscensionRate) >= TRACKING_RATE_EPSILON)) {
                     return new TrackingRate() {
                         TrackingMode = TrackingMode.Custom,
-                        CustomRightAscensionRate = _telescope.RightAscensionRate,
-                        CustomDeclinationRate = _telescope.DeclinationRate
+                        CustomRightAscensionRate = device.RightAscensionRate,
+                        CustomDeclinationRate = device.DeclinationRate
                     };
                 }
                 var trackingMode = TrackingMode.Sidereal;
@@ -1451,28 +1292,28 @@ namespace NINA.Model.MyTelescope {
                     throw new ArgumentException("TrackingMode cannot be set to Custom. Use SetCustomTrackingRate");
                 }
 
-                if (Connected && _telescope.CanSetTracking) {
+                if (Connected && device.CanSetTracking) {
                     // Set the mode regardless of whether it is the same as what is currently set
                     // Some ASCOM drivers incorrectly report custom rates as Sidereal, and this can help force set the tracking mode to the desired value
                     var currentTrackingMode = TrackingRate.TrackingMode;
                     switch (value) {
                         case TrackingMode.Sidereal:
-                            _telescope.TrackingRate = DriveRates.driveSidereal;
+                            device.TrackingRate = DriveRates.driveSidereal;
                             break;
 
                         case TrackingMode.Lunar:
-                            _telescope.TrackingRate = DriveRates.driveLunar;
+                            device.TrackingRate = DriveRates.driveLunar;
                             break;
 
                         case TrackingMode.Solar:
-                            _telescope.TrackingRate = DriveRates.driveSolar;
+                            device.TrackingRate = DriveRates.driveSolar;
                             break;
 
                         case TrackingMode.King:
-                            _telescope.TrackingRate = DriveRates.driveKing;
+                            device.TrackingRate = DriveRates.driveKing;
                             break;
                     }
-                    _telescope.Tracking = (value != TrackingMode.Stopped);
+                    device.Tracking = (value != TrackingMode.Stopped);
                     if (currentTrackingMode != value) {
                         RaisePropertyChanged();
                         RaisePropertyChanged(nameof(TrackingRate));
@@ -1482,18 +1323,33 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
+        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblTelescopeConnectionLost"];
+
         public void SetCustomTrackingRate(double rightAscensionRate, double declinationRate) {
             if (!this.TrackingModes.Contains(TrackingMode.Custom) || !this.CanSetTrackingRate) {
                 throw new NotSupportedException("Custom tracking rate not supported");
             }
 
-            this._telescope.TrackingRate = DriveRates.driveSidereal;
-            this._telescope.Tracking = true;
-            this._telescope.RightAscensionRate = rightAscensionRate;
-            this._telescope.DeclinationRate = declinationRate;
+            this.device.TrackingRate = DriveRates.driveSidereal;
+            this.device.Tracking = true;
+            this.device.RightAscensionRate = rightAscensionRate;
+            this.device.DeclinationRate = declinationRate;
             RaisePropertyChanged(nameof(TrackingMode));
             RaisePropertyChanged(nameof(TrackingRate));
             RaisePropertyChanged(nameof(TrackingEnabled));
+        }
+
+        protected override Task PostConnect() {
+            Initialize();
+            EquatorialSystem = DetermineEquatorialSystem();
+            SiteLongitude = SiteLongitude;
+            SiteLatitude = SiteLatitude;
+            trackingModes = GetTrackingModes();
+            return Task.CompletedTask;
+        }
+
+        protected override Telescope GetInstance(string id) {
+            return new Telescope(id);
         }
     }
 }

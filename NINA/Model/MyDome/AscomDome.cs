@@ -62,70 +62,9 @@ namespace NINA.Model.MyDome {
         }
     }
 
-    internal class AscomDome : BaseINPC, IDome, IDisposable {
+    internal class AscomDome : AscomDevice<Dome>, IDome, IDisposable {
 
-        public AscomDome(string domeId, string domeName) {
-            Id = domeId;
-            Name = domeName;
-        }
-
-        private Dome dome;
-
-        public bool HasSetupDialog => true;
-
-        private string id;
-
-        public string Id {
-            get => id;
-            set {
-                id = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private string name;
-
-        public string Name {
-            get => name;
-            set {
-                name = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string Category => "ASCOM";
-
-        private bool connected;
-
-        public bool Connected {
-            get {
-                if (connected) {
-                    bool val = false;
-                    try {
-                        val = dome.Connected;
-                        if (connected != val) {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblDomeConnectionLost"]);
-                            Disconnect();
-                        }
-                    } catch (Exception) {
-                        Disconnect();
-                    }
-                    return val;
-                } else {
-                    return false;
-                }
-            }
-            private set {
-                try {
-                    dome.Connected = value;
-                    connected = value;
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblDomeConnectionLost"] + Environment.NewLine + ex.Message);
-                    connected = false;
-                }
-                RaisePropertyChanged();
-            }
+        public AscomDome(string domeId, string domeName) : base(domeId, domeName) {
         }
 
         private T TryGetProperty<T>(Func<T> supplier, T defaultT, ref bool isImplemented) {
@@ -143,111 +82,57 @@ namespace NINA.Model.MyDome {
             }
         }
 
-        public string Description => Connected ? dome?.Description ?? string.Empty : string.Empty;
-
-        public string DriverInfo => Connected ? dome?.DriverInfo ?? string.Empty : string.Empty;
-
-        public string DriverVersion => Connected ? dome?.DriverVersion ?? string.Empty : string.Empty;
-
         private bool canSlaveImplemented = true;
-        public bool DriverCanFollow => TryGetProperty(() => dome.CanSlave, false, ref canSlaveImplemented);
+        public bool DriverCanFollow => TryGetProperty(() => device.CanSlave, false, ref canSlaveImplemented);
 
         private bool canSetShutterImplemented = true;
-        public bool CanSetShutter => TryGetProperty(() => dome.CanSetShutter, false, ref canSetShutterImplemented);
+        public bool CanSetShutter => TryGetProperty(() => device.CanSetShutter, false, ref canSetShutterImplemented);
 
         private bool canSetParkImplemented = true;
-        public bool CanSetPark => TryGetProperty(() => dome.CanSetPark, false, ref canSetParkImplemented);
+        public bool CanSetPark => TryGetProperty(() => device.CanSetPark, false, ref canSetParkImplemented);
 
         private bool canSetAzimuthImplemented = true;
-        public bool CanSetAzimuth => TryGetProperty(() => dome.CanSetAzimuth, false, ref canSetAzimuthImplemented);
+        public bool CanSetAzimuth => TryGetProperty(() => device.CanSetAzimuth, false, ref canSetAzimuthImplemented);
 
         private bool canParkImplemented = true;
-        public bool CanPark => TryGetProperty(() => dome.CanPark, false, ref canParkImplemented);
+        public bool CanPark => TryGetProperty(() => device.CanPark, false, ref canParkImplemented);
 
         private bool canFindHomeImplemented = true;
-        public bool CanFindHome => TryGetProperty(() => dome.CanFindHome, false, ref canFindHomeImplemented);
+        public bool CanFindHome => TryGetProperty(() => device.CanFindHome, false, ref canFindHomeImplemented);
 
         private bool azimuthImplemented = true;
-        public double Azimuth => TryGetProperty(() => dome.Azimuth, -1, ref azimuthImplemented);
+        public double Azimuth => TryGetProperty(() => device.Azimuth, -1, ref azimuthImplemented);
 
         private bool atParkImplemented = true;
-        public bool AtPark => TryGetProperty(() => dome.AtPark, false, ref atParkImplemented);
+        public bool AtPark => TryGetProperty(() => device.AtPark, false, ref atParkImplemented);
 
         private bool atHomeImplemented = true;
-        public bool AtHome => TryGetProperty(() => dome.AtPark, false, ref atHomeImplemented);
+        public bool AtHome => TryGetProperty(() => device.AtPark, false, ref atHomeImplemented);
 
         private bool slavedImplemented = true;
+
         public bool DriverFollowing {
             get {
-                return TryGetProperty<bool>(() => dome.Slaved, false, ref slavedImplemented);
+                return TryGetProperty<bool>(() => device.Slaved, false, ref slavedImplemented);
             }
             set {
                 if (Connected) {
-                    dome.Slaved = value;
+                    device.Slaved = value;
                     RaisePropertyChanged();
                 }
             }
         }
 
         private bool slewingImplemented = true;
-        public bool Slewing => TryGetProperty(() => dome.Slewing, false, ref slewingImplemented);
+        public bool Slewing => TryGetProperty(() => device.Slewing, false, ref slewingImplemented);
 
         private bool shutterStatusImplemented = true;
 
-        public ShutterState ShutterStatus => TryGetProperty(() => dome.ShutterStatus.FromASCOM(), ShutterState.ShutterNone, ref shutterStatusImplemented);
+        public ShutterState ShutterStatus => TryGetProperty(() => device.ShutterStatus.FromASCOM(), ShutterState.ShutterNone, ref shutterStatusImplemented);
 
-        public bool CanSyncAzimuth => Connected && dome.CanSyncAzimuth;
+        public bool CanSyncAzimuth => Connected && device.CanSyncAzimuth;
 
-        public async Task<bool> Connect(CancellationToken token) {
-            return await Task.Run(() => {
-                try {
-                    dome = new Dome(Id);
-                    Connected = true;
-                    if (Connected) {
-                        Init();
-                        RaiseAllPropertiesChanged();
-                    }
-                } catch (DriverAccessCOMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (System.Runtime.InteropServices.COMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblDomeASCOMConnectFailed"] + ex.Message);
-                }
-                return Connected;
-            });
-        }
-
-        public void Dispose() {
-            dome?.Dispose();
-        }
-
-        public void Disconnect() {
-            Connected = false;
-            dome?.Dispose();
-            dome = null;
-        }
-
-        public void SetupDialog() {
-            if (HasSetupDialog) {
-                try {
-                    bool dispose = false;
-                    if (dome == null) {
-                        dome = new Dome(Id);
-                        dispose = true;
-                    }
-                    dome.SetupDialog();
-                    if (dispose) {
-                        dome.Dispose();
-                        dome = null;
-                    }
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
-                }
-            }
-        }
+        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblDomeConnectionLost"];
 
         private void Init() {
         }
@@ -257,8 +142,8 @@ namespace NINA.Model.MyDome {
                 if (CanSetAzimuth) {
                     ct.Register(StopSlewing);
                     await Task.Run(async () => {
-                        dome?.SlewToAzimuth(azimuth);
-                        while (dome != null && dome.Slewing && !ct.IsCancellationRequested) {
+                        device?.SlewToAzimuth(azimuth);
+                        while (device != null && device.Slewing && !ct.IsCancellationRequested) {
                             await Task.Delay(1000, ct);
                         }
                     }, ct);
@@ -276,11 +161,11 @@ namespace NINA.Model.MyDome {
                 // when this command is received, try and continue the operation afterwards
                 Task.Run(() => {
                     var priorShutterStatus = ShutterStatus;
-                    dome?.AbortSlew();
+                    device?.AbortSlew();
                     if (priorShutterStatus == ShutterState.ShutterClosing) {
-                        dome?.CloseShutter();
+                        device?.CloseShutter();
                     } else if (priorShutterStatus == ShutterState.ShutterOpening) {
-                        dome?.OpenShutter();
+                        device?.OpenShutter();
                     }
                 });
             } else {
@@ -297,7 +182,7 @@ namespace NINA.Model.MyDome {
         public void StopAll() {
             if (Connected) {
                 // Fire and forget
-                Task.Run(() => dome?.AbortSlew());
+                Task.Run(() => device?.AbortSlew());
             } else {
                 Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
             }
@@ -306,13 +191,13 @@ namespace NINA.Model.MyDome {
         public async Task OpenShutter(CancellationToken ct) {
             if (Connected) {
                 if (CanSetShutter) {
-                    ct.Register(() => dome?.AbortSlew());
+                    ct.Register(() => device?.AbortSlew());
                     if (ShutterStatus == ShutterState.ShutterError) {
                         // If shutter is in the error state, you must close it before re-opening
                         await CloseShutter(ct);
                     }
-                    await Task.Run(() => dome?.OpenShutter(), ct);
-                    while (dome != null && ShutterStatus == ShutterState.ShutterOpening && !ct.IsCancellationRequested) {
+                    await Task.Run(() => device?.OpenShutter(), ct);
+                    while (device != null && ShutterStatus == ShutterState.ShutterOpening && !ct.IsCancellationRequested) {
                         await Task.Delay(1000, ct);
                     };
                 } else {
@@ -326,9 +211,9 @@ namespace NINA.Model.MyDome {
         public async Task CloseShutter(CancellationToken ct) {
             if (Connected) {
                 if (CanSetShutter) {
-                    ct.Register(() => dome?.AbortSlew());
-                    await Task.Run(() => dome?.CloseShutter(), ct);
-                    while (dome != null && ShutterStatus == ShutterState.ShutterClosing && !ct.IsCancellationRequested) {
+                    ct.Register(() => device?.AbortSlew());
+                    await Task.Run(() => device?.CloseShutter(), ct);
+                    while (device != null && ShutterStatus == ShutterState.ShutterClosing && !ct.IsCancellationRequested) {
                         await Task.Delay(1000, ct);
                     };
                 } else {
@@ -343,15 +228,15 @@ namespace NINA.Model.MyDome {
             if (Connected) {
                 if (CanFindHome) {
                     // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure FindHome works
-                    dome?.AbortSlew();
+                    device?.AbortSlew();
                     await Task.Delay(1000, ct);
 
-                    ct.Register(() => dome.AbortSlew());
-                    await Task.Run(() => dome.FindHome(), ct);
+                    ct.Register(() => device.AbortSlew());
+                    await Task.Run(() => device.FindHome(), ct);
 
                     // Introduce an initial delay to give the dome a change to start slewing before we wait for it to complete
                     await Task.Delay(1000, ct);
-                    while (dome != null && dome.Slewing && !ct.IsCancellationRequested) {
+                    while (device != null && device.Slewing && !ct.IsCancellationRequested) {
                         await Task.Delay(1000, ct);
                     }
                     // Introduce a final delay, in case the Dome driver settles after finding the home position by backtracking
@@ -368,16 +253,16 @@ namespace NINA.Model.MyDome {
             if (Connected) {
                 if (CanPark) {
                     // ASCOM domes make no promise that a slew operation can take place if one is already in progress, so we do a hard abort up front to ensure Park works
-                    dome?.AbortSlew();
+                    device?.AbortSlew();
                     await Task.Delay(1000, ct);
 
-                    ct.Register(() => dome?.AbortSlew());
-                    await Task.Run(() => dome?.Park(), ct);
+                    ct.Register(() => device?.AbortSlew());
+                    await Task.Run(() => device?.Park(), ct);
                     if (CanSetShutter) {
-                        await Task.Run(() => dome?.CloseShutter(), ct);
+                        await Task.Run(() => device?.CloseShutter(), ct);
                     }
-                    while (dome != null && dome.Slewing && !ct.IsCancellationRequested) {
-                       await Task.Delay(1000, ct);
+                    while (device != null && device.Slewing && !ct.IsCancellationRequested) {
+                        await Task.Delay(1000, ct);
                     }
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotPark"]);
@@ -390,7 +275,7 @@ namespace NINA.Model.MyDome {
         public void SetPark() {
             if (Connected) {
                 if (CanSetPark) {
-                    dome.SetPark();
+                    device.SetPark();
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSetPark"]);
                 }
@@ -402,13 +287,22 @@ namespace NINA.Model.MyDome {
         public void SyncToAzimuth(double azimuth) {
             if (Connected) {
                 if (CanSyncAzimuth) {
-                    dome.SyncToAzimuth(azimuth);
+                    device.SyncToAzimuth(azimuth);
                 } else {
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSyncAzimuth"]);
                 }
             } else {
                 Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
             }
+        }
+
+        protected override Task PostConnect() {
+            Init();
+            return Task.CompletedTask;
+        }
+
+        protected override Dome GetInstance(string id) {
+            return new Dome(id);
         }
     }
 }

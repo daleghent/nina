@@ -22,21 +22,15 @@ using System.Threading.Tasks;
 
 namespace NINA.Model.MyRotator {
 
-    internal class AscomRotator : BaseINPC, IRotator, IDisposable {
+    internal class AscomRotator : AscomDevice<Rotator>, IRotator, IDisposable {
 
-        public AscomRotator(string id, string name) {
-            this.Id = id;
-            this.Name = name;
+        public AscomRotator(string id, string name) : base(id, name) {
         }
-
-        private Rotator rotator;
-
-        public string Category { get; } = "ASCOM";
 
         public bool CanReverse {
             get {
                 if (Connected) {
-                    return rotator.CanReverse;
+                    return device.CanReverse;
                 } else {
                     return false;
                 }
@@ -46,14 +40,14 @@ namespace NINA.Model.MyRotator {
         public bool Reverse {
             get {
                 if (CanReverse) {
-                    return rotator.Reverse;
+                    return device.Reverse;
                 } else {
                     return false;
                 }
             }
             set {
                 if (CanReverse) {
-                    rotator.Reverse = value;
+                    device.Reverse = value;
                     RaisePropertyChanged();
                 }
             }
@@ -62,7 +56,7 @@ namespace NINA.Model.MyRotator {
         public bool IsMoving {
             get {
                 if (Connected) {
-                    return rotator.IsMoving;
+                    return device.IsMoving;
                 } else {
                     return false;
                 }
@@ -88,7 +82,7 @@ namespace NINA.Model.MyRotator {
         public float MechanicalPosition {
             get {
                 if (Connected) {
-                    return rotator.Position;
+                    return device.Position;
                 } else {
                     return float.NaN;
                 }
@@ -98,113 +92,18 @@ namespace NINA.Model.MyRotator {
         public float StepSize {
             get {
                 if (Connected) {
-                    return rotator.StepSize;
+                    return device.StepSize;
                 } else {
                     return float.NaN;
                 }
             }
         }
 
-        public bool HasSetupDialog {
-            get {
-                return true;
-            }
-        }
-
-        public string Id { get; }
-
-        public string Name { get; }
-
-        private bool _connected;
-
-        public bool Connected {
-            get {
-                if (_connected) {
-                    bool val = false;
-                    try {
-                        val = rotator.Connected;
-                        if (_connected != val) {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblRotatorConnectionLost"]);
-                            Disconnect();
-                        }
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                        Notification.ShowWarning(Locale.Loc.Instance["LblRotatorConnectionLost"]);
-                        try {
-                            Disconnect();
-                        } catch (Exception disconnectEx) {
-                            Logger.Error(disconnectEx);
-                        }
-                    }
-                    return val;
-                } else {
-                    return false;
-                }
-            }
-            private set {
-                try {
-                    rotator.Connected = value;
-                    _connected = value;
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    _connected = false;
-                }
-            }
-        }
-
-        public string Description {
-            get {
-                return rotator.Description;
-            }
-        }
-
-        public string DriverInfo {
-            get {
-                return rotator.DriverInfo;
-            }
-        }
-
-        public string DriverVersion {
-            get {
-                return rotator.DriverVersion;
-            }
-        }
-
-        public async Task<bool> Connect(CancellationToken token) {
-            return await Task<bool>.Run(() => {
-                try {
-                    offset = 0;
-                    rotator = new Rotator(Id);
-                    Connected = true;
-                    Synced = false;
-                    if (Connected) {
-                        RaiseAllPropertiesChanged();
-                    }
-                } catch (ASCOM.DriverAccessCOMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (System.Runtime.InteropServices.COMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError("Unable to connect to rotator " + ex.Message);
-                }
-                return Connected;
-            });
-        }
-
-        public void Disconnect() {
-            Connected = false;
-            Dispose();
-        }
-
-        public void Dispose() {
-            rotator?.Dispose();
-            rotator = null;
-        }
+        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblRotatorConnectionLost"];
 
         public void Halt() {
             if (IsMoving) {
-                rotator?.Halt();
+                device?.Halt();
             }
         }
 
@@ -225,7 +124,7 @@ namespace NINA.Model.MyRotator {
                 }
 
                 Logger.Debug($"ASCOM - Move relative by {angle}° - Mechanical Position reported by rotator {MechanicalPosition}° and offset {offset}");
-                rotator?.Move(angle);
+                device?.Move(angle);
             }
         }
 
@@ -242,24 +141,14 @@ namespace NINA.Model.MyRotator {
             }
         }
 
-        public void SetupDialog() {
-            if (HasSetupDialog) {
-                try {
-                    bool dispose = false;
-                    if (rotator == null) {
-                        rotator = new Rotator(Id);
-                        dispose = true;
-                    }
-                    rotator.SetupDialog();
-                    if (dispose) {
-                        rotator.Dispose();
-                        rotator = null;
-                    }
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
-                }
-            }
+        protected override Task PreConnect() {
+            offset = 0;
+            Synced = false;
+            return Task.CompletedTask;
+        }
+
+        protected override Rotator GetInstance(string id) {
+            return new Rotator(id);
         }
     }
 }

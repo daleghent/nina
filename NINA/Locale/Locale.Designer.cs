@@ -6981,6 +6981,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to change connection state of device..
+        /// </summary>
+        internal static string LblFailedChangingConnectionState {
+            get {
+                return ResourceManager.GetString("LblFailedChangingConnectionState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load custom horizon.
         /// </summary>
         internal static string LblFailedToLoadCustomHorizon {

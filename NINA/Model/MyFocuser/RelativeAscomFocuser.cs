@@ -1,10 +1,12 @@
 ﻿using ASCOM.DeviceInterface;
+using ASCOM.DriverAccess;
 using System;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyFocuser {
+
     internal class RelativeAscomFocuser : IFocuserV3Ex {
         private readonly IFocuserV3 focuser;
 
@@ -107,6 +109,10 @@ namespace NINA.Model.MyFocuser {
                     TempComp = true;
                 }
             }
+        }
+
+        public IFocuserV3 GetASCOMInstance() {
+            return focuser;
         }
     }
 }

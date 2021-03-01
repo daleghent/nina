@@ -25,139 +25,25 @@ using System.Threading.Tasks;
 
 namespace NINA.Model.MySafetyMonitor {
 
-    internal class AscomSafetyMonitor : BaseINPC, ISafetyMonitor {
-        private SafetyMonitor safetyMonitor;
+    internal class AscomSafetyMonitor : AscomDevice<SafetyMonitor>, ISafetyMonitor {
 
-        public AscomSafetyMonitor(string id, string name) {
-            this.Id = id;
-            this.Name = name;
+        public AscomSafetyMonitor(string id, string name) : base(id, name) {
         }
 
         public bool IsSafe {
             get {
                 if (Connected) {
-                    return safetyMonitor.IsSafe;
+                    return device.IsSafe;
                 } else {
                     return false;
                 }
             }
         }
 
-        public bool HasSetupDialog {
-            get {
-                return true;
-            }
-        }
+        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblSafetyMonitorConnectionLost"];
 
-        public string Id { get; }
-
-        public string Name { get; }
-
-        public string Category { get; } = "ASCOM";
-
-        private bool _connected;
-
-        public bool Connected {
-            get {
-                if (_connected) {
-                    bool val = false;
-                    try {
-                        val = safetyMonitor.Connected;
-                        if (_connected != val) {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblSafetyMonitorConnectionLost"]);
-                            Disconnect();
-                        }
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                        Notification.ShowWarning(Locale.Loc.Instance["LblSafetyMonitorConnectionLost"]);
-                        try {
-                            Disconnect();
-                        } catch (Exception disconnectEx) {
-                            Logger.Error(disconnectEx);
-                        }
-                    }
-                    return val;
-                } else {
-                    return false;
-                }
-            }
-            private set {
-                try {
-                    safetyMonitor.Connected = value;
-                    _connected = value;
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    _connected = false;
-                }
-            }
-        }
-
-        public string Description {
-            get {
-                return safetyMonitor.Description;
-            }
-        }
-
-        public string DriverInfo {
-            get {
-                return safetyMonitor.DriverInfo;
-            }
-        }
-
-        public string DriverVersion {
-            get {
-                return safetyMonitor.DriverVersion;
-            }
-        }
-
-        public async Task<bool> Connect(CancellationToken token) {
-            return await Task<bool>.Run(() => {
-                try {
-                    safetyMonitor = new SafetyMonitor(Id);
-                    Connected = true;
-                    if (Connected) {
-                        RaiseAllPropertiesChanged();
-                    }
-                } catch (ASCOM.DriverAccessCOMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (System.Runtime.InteropServices.COMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError("Unable to connect to safety monitor " + ex.Message);
-                }
-                return Connected;
-            });
-        }
-
-        public void Disconnect() {
-            Connected = false;
-            Dispose();
-        }
-
-        public void Dispose() {
-            safetyMonitor?.Dispose();
-            safetyMonitor = null;
-        }
-
-        public void SetupDialog() {
-            if (HasSetupDialog) {
-                try {
-                    bool dispose = false;
-                    if (safetyMonitor == null) {
-                        safetyMonitor = new SafetyMonitor(Id);
-                        dispose = true;
-                    }
-                    safetyMonitor.SetupDialog();
-                    if (dispose) {
-                        safetyMonitor.Dispose();
-                        safetyMonitor = null;
-                    }
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
-                }
-            }
+        protected override SafetyMonitor GetInstance(string id) {
+            return new SafetyMonitor(id);
         }
     }
 }

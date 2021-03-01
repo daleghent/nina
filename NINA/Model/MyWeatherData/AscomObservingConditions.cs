@@ -22,37 +22,10 @@ using System.Threading.Tasks;
 
 namespace NINA.Model.MyWeatherData {
 
-    internal class AscomObservingConditions : BaseINPC, IWeatherData, IDisposable {
-        private const string _category = "ASCOM";
+    internal class AscomObservingConditions : AscomDevice<ObservingConditions>, IWeatherData, IDisposable {
 
-        public AscomObservingConditions(string weatherDataId, string weatherDataName) {
-            Id = weatherDataId;
-            Name = weatherDataName;
+        public AscomObservingConditions(string weatherDataId, string weatherDataName) : base(weatherDataId, weatherDataName) {
         }
-
-        private ObservingConditions _obscond;
-
-        private string _id;
-
-        public string Id {
-            get => _id;
-            set {
-                _id = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private string _name;
-
-        public string Name {
-            get => _name;
-            set {
-                _name = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string Category { get => _category; }
 
         private bool _hasAveragePeriod;
 
@@ -61,7 +34,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasAveragePeriod) {
-                        wxstat = _obscond.AveragePeriod;
+                        wxstat = device.AveragePeriod;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasAveragePeriod = false;
@@ -71,7 +44,7 @@ namespace NINA.Model.MyWeatherData {
             set {
                 try {
                     if (Connected && _hasAveragePeriod) {
-                        _obscond.AveragePeriod = value;
+                        device.AveragePeriod = value;
                     }
                 } catch (InvalidValueException ex) {
                     Logger.Error(ex);
@@ -87,7 +60,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasCloudCover) {
-                        wxstat = _obscond.CloudCover;
+                        wxstat = device.CloudCover;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasCloudCover = false;
@@ -103,7 +76,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasDewPoint) {
-                        wxstat = _obscond.DewPoint;
+                        wxstat = device.DewPoint;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasDewPoint = false;
@@ -119,7 +92,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasHumidity) {
-                        wxstat = _obscond.Humidity;
+                        wxstat = device.Humidity;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasHumidity = false;
@@ -135,7 +108,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasPressure) {
-                        wxstat = _obscond.Pressure;
+                        wxstat = device.Pressure;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasPressure = false;
@@ -151,7 +124,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasRainRate) {
-                        wxstat = _obscond.RainRate;
+                        wxstat = device.RainRate;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasRainRate = false;
@@ -167,7 +140,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasSkyBrightness) {
-                        wxstat = _obscond.SkyBrightness;
+                        wxstat = device.SkyBrightness;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasSkyBrightness = false;
@@ -183,7 +156,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasSkyQuality) {
-                        wxstat = _obscond.SkyQuality;
+                        wxstat = device.SkyQuality;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasSkyQuality = false;
@@ -199,7 +172,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasSkyTemperature) {
-                        wxstat = _obscond.SkyTemperature;
+                        wxstat = device.SkyTemperature;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasSkyTemperature = false;
@@ -215,7 +188,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasStarFWHM) {
-                        wxstat = _obscond.StarFWHM;
+                        wxstat = device.StarFWHM;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasStarFWHM = false;
@@ -231,7 +204,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasTemperature) {
-                        wxstat = _obscond.Temperature;
+                        wxstat = device.Temperature;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasTemperature = false;
@@ -247,7 +220,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasWindDirection) {
-                        wxstat = _obscond.WindDirection;
+                        wxstat = device.WindDirection;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasWindDirection = false;
@@ -263,7 +236,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasWindGust) {
-                        wxstat = _obscond.WindGust;
+                        wxstat = device.WindGust;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasWindGust = false;
@@ -279,7 +252,7 @@ namespace NINA.Model.MyWeatherData {
                 double wxstat = double.NaN;
                 try {
                     if (Connected && _hasWindSpeed) {
-                        wxstat = _obscond.WindSpeed;
+                        wxstat = device.WindSpeed;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasWindSpeed = false;
@@ -288,101 +261,7 @@ namespace NINA.Model.MyWeatherData {
             }
         }
 
-        private bool _connected;
-
-        public bool Connected {
-            get {
-                if (_connected) {
-                    bool val = false;
-                    try {
-                        val = _obscond.Connected;
-                        if (_connected != val) {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblWeatherConnectionLost"]);
-                            Disconnect();
-                        }
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                        Notification.ShowWarning(Locale.Loc.Instance["LblWeatherConnectionLost"]);
-                        try {
-                            Disconnect();
-                        } catch (Exception disconnectEx) {
-                            Logger.Error(disconnectEx);
-                        }
-                    }
-                    return val;
-                } else {
-                    return false;
-                }
-            }
-            private set {
-                try {
-                    _obscond.Connected = value;
-                    _connected = value;
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblWeatherReconnect"] + Environment.NewLine + ex.Message);
-                    _connected = false;
-                }
-                RaisePropertyChanged();
-            }
-        }
-
-        public string Description => Connected ? _obscond?.Description ?? string.Empty : string.Empty;
-        public string DriverInfo => Connected ? _obscond?.DriverInfo ?? string.Empty : string.Empty;
-        public string DriverVersion => Connected ? _obscond?.DriverVersion ?? string.Empty : string.Empty;
-
-        public bool HasSetupDialog => true;
-
-        public void SetupDialog() {
-            if (HasSetupDialog) {
-                try {
-                    bool dispose = false;
-                    if (_obscond == null) {
-                        _obscond = new ObservingConditions(Id);
-                        dispose = true;
-                    }
-                    _obscond.SetupDialog();
-                    if (dispose) {
-                        _obscond.Dispose();
-                        _obscond = null;
-                    }
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
-                }
-            }
-        }
-
-        public async Task<bool> Connect(CancellationToken token) {
-            return await Task.Run(() => {
-                try {
-                    _obscond = new ObservingConditions(Id);
-                    Connected = true;
-                    if (Connected) {
-                        Init();
-                        RaiseAllPropertiesChanged();
-                    }
-                } catch (DriverAccessCOMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (System.Runtime.InteropServices.COMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblWeatherASCOMConnectFailed"] + ex.Message);
-                }
-                return Connected;
-            });
-        }
-
-        public void Dispose() {
-            _obscond?.Dispose();
-        }
-
-        public void Disconnect() {
-            Connected = false;
-            _obscond?.Dispose();
-            _obscond = null;
-        }
+        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblWeatherConnectionLost"];
 
         private void Init() {
             _hasAveragePeriod = true;
@@ -399,6 +278,15 @@ namespace NINA.Model.MyWeatherData {
             _hasWindDirection = true;
             _hasWindGust = true;
             _hasWindSpeed = true;
+        }
+
+        protected override Task PostConnect() {
+            Init();
+            return Task.CompletedTask;
+        }
+
+        protected override ObservingConditions GetInstance(string id) {
+            return new ObservingConditions(id); ;
         }
     }
 }

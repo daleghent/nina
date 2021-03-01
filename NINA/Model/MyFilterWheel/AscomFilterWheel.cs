@@ -23,151 +23,33 @@ using System.Windows.Threading;
 
 namespace NINA.Model.MyFilterWheel {
 
-    internal class AscomFilterWheel : BaseINPC, IFilterWheel, IDisposable {
+    internal class AscomFilterWheel : AscomDevice<FilterWheel>, IFilterWheel, IDisposable {
 
-        public AscomFilterWheel(string filterWheelId, string name) {
-            Id = filterWheelId;
-            Name = name;
-        }
-
-        private void init() {
-            var l = new AsyncObservableCollection<FilterInfo>();
-            for (int i = 0; i < Names.Length; i++) {
-                l.Add(new FilterInfo(Names[i], FocusOffsets[i], (short)i));
-            }
-            Filters = l;
-        }
-
-        public string Category { get; } = "ASCOM";
-
-        private string _id;
-
-        public string Id {
-            get {
-                return _id;
-            }
-            set {
-                _id = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private FilterWheel _filterwheel;
-
-        public async Task<bool> Connect(CancellationToken token) {
-            return await Task<bool>.Run(() => {
-                try {
-                    _filterwheel = new FilterWheel(Id);
-                    Connected = true;
-                    if (Connected) {
-                        init();
-                        RaiseAllPropertiesChanged();
-                    }
-                } catch (ASCOM.DriverAccessCOMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (System.Runtime.InteropServices.COMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError("Unable to connect to filter wheel " + ex.Message);
-                }
-                return Connected;
-            });
-        }
-
-        private bool _connected;
-
-        public bool Connected {
-            get {
-                if (_connected) {
-                    bool val = false;
-                    try {
-                        val = _filterwheel.Connected;
-                        if (_connected != val) {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblFilterwheelConnectionLost"]);
-                            Disconnect();
-                        }
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                        Notification.ShowWarning(Locale.Loc.Instance["LblFilterwheelConnectionLost"]);
-                        try {
-                            Disconnect();
-                        } catch (Exception disconnectEx) {
-                            Logger.Error(disconnectEx);
-                        }
-                    }
-                    return val;
-                } else {
-                    return false;
-                }
-            }
-            private set {
-                try {
-                    _connected = value;
-                    _filterwheel.Connected = value;
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblReconnectFilterwheel"] + Environment.NewLine + ex.Message);
-                    _connected = false;
-                }
-                RaisePropertyChanged();
-            }
-        }
-
-        public string Description {
-            get {
-                return _filterwheel?.Description ?? string.Empty;
-            }
-        }
-
-        private string _name;
-
-        public string Name {
-            get {
-                return _name;
-            }
-            set {
-                _name = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string DriverInfo {
-            get {
-                return Connected ? _filterwheel?.DriverInfo ?? string.Empty : string.Empty;
-            }
-        }
-
-        public string DriverVersion {
-            get {
-                return Connected ? _filterwheel?.DriverVersion ?? string.Empty : string.Empty;
-            }
+        public AscomFilterWheel(string filterWheelId, string name) : base(filterWheelId, name) {
         }
 
         public short InterfaceVersion {
             get {
-                return _filterwheel.InterfaceVersion;
+                return device.InterfaceVersion;
             }
         }
 
         public int[] FocusOffsets {
             get {
-                return _filterwheel.FocusOffsets;
+                return device.FocusOffsets;
             }
         }
 
         public string[] Names {
             get {
-                return _filterwheel.Names;
+                return device.Names;
             }
         }
-
-        private Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
 
         public short Position {
             get {
                 if (Connected) {
-                    return _filterwheel.Position;
+                    return device.Position;
                 } else {
                     return -1;
                 }
@@ -176,7 +58,7 @@ namespace NINA.Model.MyFilterWheel {
                 if (Connected) {
                     try {
                         Logger.Debug($"ASCOM FW: Moving to position {value}");
-                        _filterwheel.Position = value;
+                        device.Position = value;
                     } catch (ASCOM.DriverAccessCOMException ex) {
                         Notification.ShowWarning(ex.Message);
                     }
@@ -188,19 +70,8 @@ namespace NINA.Model.MyFilterWheel {
 
         public ArrayList SupportedActions {
             get {
-                return _filterwheel.SupportedActions;
+                return device.SupportedActions;
             }
-        }
-
-        public void Disconnect() {
-            Connected = false;
-            Filters?.Clear();
-            _filterwheel?.Dispose();
-            _filterwheel = null;
-        }
-
-        public void Dispose() {
-            _filterwheel.Dispose();
         }
 
         private AsyncObservableCollection<FilterInfo> _filters;
@@ -215,30 +86,23 @@ namespace NINA.Model.MyFilterWheel {
             }
         }
 
-        public bool HasSetupDialog {
-            get {
-                return true;
+        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblFilterwheelConnectionLost"];
+
+        protected override Task PostConnect() {
+            var l = new AsyncObservableCollection<FilterInfo>();
+            for (int i = 0; i < Names.Length; i++) {
+                l.Add(new FilterInfo(Names[i], FocusOffsets[i], (short)i));
             }
+            Filters = l;
+            return Task.CompletedTask;
         }
 
-        public void SetupDialog() {
-            if (HasSetupDialog) {
-                try {
-                    bool dispose = false;
-                    if (_filterwheel == null) {
-                        _filterwheel = new FilterWheel(Id);
-                        dispose = true;
-                    }
-                    _filterwheel.SetupDialog();
-                    if (dispose) {
-                        _filterwheel.Dispose();
-                        _filterwheel = null;
-                    }
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
-                }
-            }
+        protected override FilterWheel GetInstance(string id) {
+            return new FilterWheel(id);
+        }
+
+        protected override void PostDisconnect() {
+            Filters?.Clear();
         }
     }
 }

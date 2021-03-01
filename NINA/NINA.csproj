@@ -467,6 +467,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Locale.zh-TW.resx</DependentUpon>
     </Compile>
+    <Compile Include="Model\AscomDevice.cs" />
     <Compile Include="Model\ImageData\AllImageStatistics.cs" />
     <Compile Include="Model\ImageData\ImageProperties.cs" />
     <Compile Include="Model\ImageData\IImageData.cs" />

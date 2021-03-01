@@ -30,30 +30,13 @@ using System.Threading.Tasks;
 
 namespace NINA.Model.MyCamera {
 
-    internal class AscomCamera : BaseINPC, ICamera, IDisposable {
+    internal class AscomCamera : AscomDevice<Camera>, ICamera, IDisposable {
 
-        public AscomCamera(string cameraId, string name, IProfileService profileService) {
+        public AscomCamera(string cameraId, string name, IProfileService profileService) : base(cameraId, name) {
             this.profileService = profileService;
-            Id = cameraId;
-            Name = name;
         }
 
-        private string _id;
         private IProfileService profileService;
-
-        public string Category { get; } = "ASCOM";
-
-        public string Id {
-            get {
-                return _id;
-            }
-            set {
-                _id = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private Camera _camera;
 
         private void Initialize() {
             _hasBayerOffset = true;
@@ -77,8 +60,8 @@ namespace NINA.Model.MyCamera {
 
             Gains.Clear();
             try {
-                var gains = _camera.Gains;
-                foreach (object o in _camera.Gains) {
+                var gains = device.Gains;
+                foreach (object o in device.Gains) {
                     if (o.GetType() == typeof(string)) {
                         var gain = Regex.Match(o.ToString(), @"\d+").Value;
                         Gains.Add(int.Parse(gain, CultureInfo.InvariantCulture));
@@ -90,7 +73,7 @@ namespace NINA.Model.MyCamera {
             //Determine Offset Capabilities
             try {
                 //Check if Offset is implemented at all in ICameraV3 Driver
-                _ = _camera.Offset;
+                _ = device.Offset;
                 CanSetOffset = true;
             } catch (PropertyNotImplementedException) {
                 Logger.Trace("Offset is not implemented in this driver");
@@ -106,7 +89,7 @@ namespace NINA.Model.MyCamera {
             if (CanSetOffset) {
                 try {
                     //Check if offset mode is in value mode
-                    _ = _camera.OffsetMin;
+                    _ = device.OffsetMin;
                     offsetValueMode = true;
                 } catch (PropertyNotImplementedException) {
                     Logger.Trace("Offset operates in index mode");
@@ -116,7 +99,7 @@ namespace NINA.Model.MyCamera {
                 if (!offsetValueMode) {
                     try {
                         //Check when mode is likely to be index mode if the offsets property is implemented
-                        var arrayListOffsets = _camera.Offsets;
+                        var arrayListOffsets = device.Offsets;
 
                         //Map offsets to integer values
                         offsets.Clear();
@@ -156,7 +139,7 @@ namespace NINA.Model.MyCamera {
                 short offset = -1;
                 try {
                     if (Connected && _hasBayerOffset) {
-                        offset = _camera.BayerOffsetX;
+                        offset = device.BayerOffsetX;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasBayerOffset = false;
@@ -170,7 +153,7 @@ namespace NINA.Model.MyCamera {
                 short offset = -1;
                 try {
                     if (Connected && _hasBayerOffset) {
-                        offset = _camera.BayerOffsetY;
+                        offset = device.BayerOffsetY;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasBayerOffset = false;
@@ -182,7 +165,7 @@ namespace NINA.Model.MyCamera {
         public short BinX {
             get {
                 if (Connected) {
-                    return _camera.BinX;
+                    return device.BinX;
                 } else {
                     return -1;
                 }
@@ -190,7 +173,7 @@ namespace NINA.Model.MyCamera {
             set {
                 if (Connected) {
                     try {
-                        _camera.BinX = value;
+                        device.BinX = value;
                     } catch (InvalidValueException ex) {
                         Logger.Error(ex);
                         Notification.ShowError(ex.Message);
@@ -203,7 +186,7 @@ namespace NINA.Model.MyCamera {
         public short BinY {
             get {
                 if (Connected) {
-                    return _camera.BinY;
+                    return device.BinY;
                 } else {
                     return -1;
                 }
@@ -211,7 +194,7 @@ namespace NINA.Model.MyCamera {
             set {
                 if (Connected) {
                     try {
-                        _camera.BinY = value;
+                        device.BinY = value;
                     } catch (InvalidValueException ex) {
                         Logger.Error(ex);
                         Notification.ShowError(ex.Message);
@@ -226,7 +209,7 @@ namespace NINA.Model.MyCamera {
                 string state;
                 try {
                     if (Connected) {
-                        state = _camera.CameraState.ToString();
+                        state = device.CameraState.ToString();
                     } else {
                         state = CameraStates.cameraIdle.ToString();
                     }
@@ -243,7 +226,7 @@ namespace NINA.Model.MyCamera {
             get {
                 int size = -1;
                 if (Connected) {
-                    size = _camera.CameraXSize;
+                    size = device.CameraXSize;
                 }
                 return size;
             }
@@ -253,7 +236,7 @@ namespace NINA.Model.MyCamera {
             get {
                 int size = -1;
                 if (Connected) {
-                    size = _camera.CameraYSize;
+                    size = device.CameraYSize;
                 }
                 return size;
             }
@@ -262,7 +245,7 @@ namespace NINA.Model.MyCamera {
         public bool CanAbortExposure {
             get {
                 if (Connected) {
-                    return _camera.CanAbortExposure;
+                    return device.CanAbortExposure;
                 } else {
                     return false;
                 }
@@ -274,7 +257,7 @@ namespace NINA.Model.MyCamera {
         public bool CanAsymmetricBin {
             get {
                 if (Connected) {
-                    return _camera.CanAsymmetricBin;
+                    return device.CanAsymmetricBin;
                 } else {
                     return false;
                 }
@@ -285,7 +268,7 @@ namespace NINA.Model.MyCamera {
             get {
                 if (Connected) {
                     try {
-                        return _camera.CanFastReadout;
+                        return device.CanFastReadout;
                     } catch (PropertyNotImplementedException) {
                         ASCOMInteraction.LogComplianceIssue($"{nameof(CanFastReadout)} GET");
                     }
@@ -297,7 +280,7 @@ namespace NINA.Model.MyCamera {
         public bool CanGetCoolerPower {
             get {
                 if (Connected) {
-                    return _camera.CanGetCoolerPower;
+                    return device.CanGetCoolerPower;
                 } else {
                     return false;
                 }
@@ -307,7 +290,7 @@ namespace NINA.Model.MyCamera {
         public bool CanPulseGuide {
             get {
                 if (Connected) {
-                    return _camera.CanPulseGuide;
+                    return device.CanPulseGuide;
                 } else {
                     return false;
                 }
@@ -317,7 +300,7 @@ namespace NINA.Model.MyCamera {
         public bool CanSetTemperature {
             get {
                 if (Connected) {
-                    return _camera.CanSetCCDTemperature;
+                    return device.CanSetCCDTemperature;
                 } else {
                     return false;
                 }
@@ -327,7 +310,7 @@ namespace NINA.Model.MyCamera {
         public bool CanStopExposure {
             get {
                 if (Connected) {
-                    return _camera.CanStopExposure;
+                    return device.CanStopExposure;
                 } else {
                     return false;
                 }
@@ -341,7 +324,7 @@ namespace NINA.Model.MyCamera {
                 double val = -1;
                 try {
                     if (Connected && _hasCCDTemperature) {
-                        val = _camera.CCDTemperature;
+                        val = device.CCDTemperature;
                     }
                 } catch (InvalidValueException) {
                     _hasCCDTemperature = false;
@@ -352,45 +335,6 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        private bool _connected;
-
-        public bool Connected {
-            get {
-                if (_connected) {
-                    bool val = false;
-                    try {
-                        val = _camera.Connected;
-                        if (_connected != val) {
-                            Notification.ShowError(Locale.Loc.Instance["LblCameraConnectionLost"]);
-                            Disconnect();
-                        }
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                        Notification.ShowError(Locale.Loc.Instance["LblCameraConnectionLost"]);
-                        try {
-                            Disconnect();
-                        } catch (Exception disconnectEx) {
-                            Logger.Error(disconnectEx);
-                        }
-                    }
-                    return val;
-                } else {
-                    return false;
-                }
-            }
-            private set {
-                try {
-                    _connected = value;
-                    _camera.Connected = value;
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblReconnectCamera"] + Environment.NewLine + ex.Message);
-                    _connected = false;
-                }
-                RaisePropertyChanged();
-            }
-        }
-
         private bool _hasCooler;
 
         public bool CoolerOn {
@@ -398,7 +342,7 @@ namespace NINA.Model.MyCamera {
                 bool val = false;
                 try {
                     if (Connected && _hasCooler) {
-                        val = _camera.CoolerOn;
+                        val = device.CoolerOn;
                     }
                 } catch (Exception) {
                     _hasCooler = false;
@@ -408,7 +352,7 @@ namespace NINA.Model.MyCamera {
             set {
                 try {
                     if (Connected && _hasCooler) {
-                        _camera.CoolerOn = value;
+                        device.CoolerOn = value;
                         RaisePropertyChanged();
                     }
                 } catch (Exception) {
@@ -420,7 +364,7 @@ namespace NINA.Model.MyCamera {
         public double CoolerPower {
             get {
                 if (Connected && CanGetCoolerPower) {
-                    return _camera.CoolerPower;
+                    return device.CoolerPower;
                 } else {
                     return -1;
                 }
@@ -441,45 +385,6 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        public string Description {
-            get {
-                string val = string.Empty;
-                if (Connected) {
-                    try {
-                        val = _camera.Description;
-                    } catch (DriverException) {
-                    }
-                }
-                return val;
-            }
-        }
-
-        public string DriverInfo {
-            get {
-                string val = string.Empty;
-                if (Connected) {
-                    try {
-                        val = _camera.DriverInfo;
-                    } catch (DriverException) {
-                    }
-                }
-                return val;
-            }
-        }
-
-        public string DriverVersion {
-            get {
-                string val = string.Empty;
-                if (Connected) {
-                    try {
-                        val = _camera.DriverVersion;
-                    } catch (DriverException) {
-                    }
-                }
-                return val;
-            }
-        }
-
         private bool canReadElectronsPerADU = true;
 
         public double ElectronsPerADU {
@@ -487,7 +392,7 @@ namespace NINA.Model.MyCamera {
                 double val = double.NaN;
                 if (canReadElectronsPerADU && Connected) {
                     try {
-                        val = _camera.ElectronsPerADU;
+                        val = device.ElectronsPerADU;
                     } catch (Exception) {
                         val = double.NaN;
                         canReadElectronsPerADU = false;
@@ -502,7 +407,7 @@ namespace NINA.Model.MyCamera {
                 double val = -1;
                 if (Connected) {
                     try {
-                        val = _camera.ExposureMax;
+                        val = device.ExposureMax;
                     } catch (InvalidValueException) {
                     }
                 }
@@ -515,7 +420,7 @@ namespace NINA.Model.MyCamera {
                 double val = -1;
                 if (Connected) {
                     try {
-                        val = _camera.ExposureMin;
+                        val = device.ExposureMin;
                     } catch (InvalidValueException) {
                     }
                 }
@@ -528,7 +433,7 @@ namespace NINA.Model.MyCamera {
                 double val = -1;
                 if (Connected) {
                     try {
-                        val = _camera.ExposureResolution;
+                        val = device.ExposureResolution;
                     } catch (InvalidValueException) {
                     }
                 }
@@ -541,7 +446,7 @@ namespace NINA.Model.MyCamera {
                 bool val = false;
                 if (Connected && CanFastReadout) {
                     try {
-                        val = _camera.FastReadout;
+                        val = device.FastReadout;
                     } catch (PropertyNotImplementedException) {
                         ASCOMInteraction.LogComplianceIssue($"{nameof(FastReadout)} GET");
                     }
@@ -551,7 +456,7 @@ namespace NINA.Model.MyCamera {
             set {
                 if (Connected && CanFastReadout) {
                     try {
-                        _camera.FastReadout = value;
+                        device.FastReadout = value;
                     } catch (PropertyNotImplementedException) {
                         ASCOMInteraction.LogComplianceIssue($"{nameof(FastReadout)} SET");
                     }
@@ -563,7 +468,7 @@ namespace NINA.Model.MyCamera {
             get {
                 double val = -1;
                 if (Connected) {
-                    val = _camera.FullWellCapacity;
+                    val = device.FullWellCapacity;
                 }
                 return val;
             }
@@ -599,9 +504,9 @@ namespace NINA.Model.MyCamera {
                 if (Connected && CanGetGain) {
                     try {
                         if (Gains.Count > 0) {
-                            val = (int)Gains[_camera.Gain];
+                            val = (int)Gains[device.Gain];
                         } else {
-                            val = _camera.Gain;
+                            val = device.Gain;
                         }
                     } catch (PropertyNotImplementedException) {
                         CanGetGain = false;
@@ -616,10 +521,10 @@ namespace NINA.Model.MyCamera {
                         if (Gains.Count > 0) {
                             short idx = (short)Gains.IndexOf(value);
                             if (idx >= 0) {
-                                _camera.Gain = idx;
+                                device.Gain = idx;
                             }
                         } else {
-                            _camera.Gain = (short)value;
+                            device.Gain = (short)value;
                         }
                     } catch (PropertyNotImplementedException) {
                         CanSetGain = false;
@@ -682,7 +587,7 @@ namespace NINA.Model.MyCamera {
                 if (Connected) {
                     if (_canGetGainMinMax) {
                         try {
-                            val = _camera.GainMax;
+                            val = device.GainMax;
                         } catch (PropertyNotImplementedException) {
                             _canGetGainMinMax = false;
                         } catch (ASCOM.InvalidOperationException) {
@@ -706,7 +611,7 @@ namespace NINA.Model.MyCamera {
                 if (Connected) {
                     if (_canGetGainMinMax) {
                         try {
-                            val = _camera.GainMin;
+                            val = device.GainMin;
                         } catch (PropertyNotImplementedException) {
                             _canGetGainMinMax = false;
                         } catch (ASCOM.InvalidOperationException) {
@@ -738,7 +643,7 @@ namespace NINA.Model.MyCamera {
         public bool HasShutter {
             get {
                 if (Connected) {
-                    return _camera.HasShutter;
+                    return device.HasShutter;
                 } else {
                     return false;
                 }
@@ -748,7 +653,7 @@ namespace NINA.Model.MyCamera {
         public double HeatSinkTemperature {
             get {
                 if (Connected) {
-                    return _camera.HeatSinkTemperature;
+                    return device.HeatSinkTemperature;
                 } else {
                     return double.MinValue;
                 }
@@ -758,7 +663,7 @@ namespace NINA.Model.MyCamera {
         public object ImageArray {
             get {
                 if (Connected) {
-                    return _camera.ImageArray;
+                    return device.ImageArray;
                 } else {
                     return null;
                 }
@@ -768,7 +673,7 @@ namespace NINA.Model.MyCamera {
         public object ImageArrayVariant {
             get {
                 if (Connected) {
-                    return _camera.ImageArrayVariant;
+                    return device.ImageArrayVariant;
                 } else {
                     return null;
                 }
@@ -778,7 +683,7 @@ namespace NINA.Model.MyCamera {
         public bool ImageReady {
             get {
                 if (Connected) {
-                    return _camera.ImageReady;
+                    return device.ImageReady;
                 } else {
                     return false;
                 }
@@ -789,7 +694,7 @@ namespace NINA.Model.MyCamera {
             get {
                 short val = -1;
                 try {
-                    val = _camera.InterfaceVersion;
+                    val = device.InterfaceVersion;
                 } catch (DriverException) {
                 }
                 return val;
@@ -799,7 +704,7 @@ namespace NINA.Model.MyCamera {
         public bool IsPulseGuiding {
             get {
                 if (Connected) {
-                    return _camera.IsPulseGuiding;
+                    return device.IsPulseGuiding;
                 } else {
                     return false;
                 }
@@ -813,7 +718,7 @@ namespace NINA.Model.MyCamera {
                 double val = -1;
                 try {
                     if (Connected && _hasLastExposureInfo) {
-                        val = _camera.LastExposureDuration;
+                        val = device.LastExposureDuration;
                     }
                 } catch (ASCOM.InvalidOperationException) {
                 } catch (PropertyNotImplementedException) {
@@ -828,7 +733,7 @@ namespace NINA.Model.MyCamera {
                 string val = string.Empty;
                 try {
                     if (Connected && _hasLastExposureInfo) {
-                        val = _camera.LastExposureStartTime;
+                        val = device.LastExposureStartTime;
                     }
                 } catch (ASCOM.InvalidOperationException) {
                 } catch (PropertyNotImplementedException) {
@@ -841,7 +746,7 @@ namespace NINA.Model.MyCamera {
         public int MaxADU {
             get {
                 if (Connected) {
-                    return _camera.MaxADU;
+                    return device.MaxADU;
                 } else {
                     return -1;
                 }
@@ -851,7 +756,7 @@ namespace NINA.Model.MyCamera {
         public short MaxBinX {
             get {
                 if (Connected) {
-                    return _camera.MaxBinX;
+                    return device.MaxBinX;
                 } else {
                     return -1;
                 }
@@ -861,29 +766,17 @@ namespace NINA.Model.MyCamera {
         public short MaxBinY {
             get {
                 if (Connected) {
-                    return _camera.MaxBinY;
+                    return device.MaxBinY;
                 } else {
                     return -1;
                 }
             }
         }
 
-        private string _name;
-
-        public string Name {
-            get {
-                return _name;
-            }
-            set {
-                _name = value;
-                RaisePropertyChanged();
-            }
-        }
-
         public int NumX {
             get {
                 if (Connected) {
-                    return _camera.NumX;
+                    return device.NumX;
                 } else {
                     return -1;
                 }
@@ -893,7 +786,7 @@ namespace NINA.Model.MyCamera {
                     if (value % 2 > 0) {
                         value--;
                     }
-                    _camera.NumX = value;
+                    device.NumX = value;
                     RaisePropertyChanged();
                 }
             }
@@ -902,7 +795,7 @@ namespace NINA.Model.MyCamera {
         public int NumY {
             get {
                 if (Connected) {
-                    return _camera.NumY;
+                    return device.NumY;
                 } else {
                     return -1;
                 }
@@ -912,7 +805,7 @@ namespace NINA.Model.MyCamera {
                     if (value % 2 > 0) {
                         value--;
                     }
-                    _camera.NumY = value;
+                    device.NumY = value;
                     RaisePropertyChanged();
                 }
             }
@@ -925,7 +818,7 @@ namespace NINA.Model.MyCamera {
                 short val = -1;
                 try {
                     if (_hasPercentCompleted) {
-                        val = _camera.PercentCompleted;
+                        val = device.PercentCompleted;
                     }
                 } catch (ASCOM.InvalidOperationException) {
                 } catch (PropertyNotImplementedException) {
@@ -938,7 +831,7 @@ namespace NINA.Model.MyCamera {
         public double PixelSizeX {
             get {
                 if (Connected) {
-                    return _camera.PixelSizeX;
+                    return device.PixelSizeX;
                 } else {
                     return -1;
                 }
@@ -948,7 +841,7 @@ namespace NINA.Model.MyCamera {
         public double PixelSizeY {
             get {
                 if (Connected) {
-                    return _camera.PixelSizeY;
+                    return device.PixelSizeY;
                 } else {
                     return -1;
                 }
@@ -959,7 +852,7 @@ namespace NINA.Model.MyCamera {
             get {
                 if (Connected) {
                     try {
-                        return _camera.ReadoutMode;
+                        return device.ReadoutMode;
                     } catch (PropertyNotImplementedException) {
                         ASCOMInteraction.LogComplianceIssue($"{nameof(ReadoutMode)} GET");
                     }
@@ -971,7 +864,7 @@ namespace NINA.Model.MyCamera {
             set {
                 if (Connected && (value != ReadoutMode) && (value < ReadoutModes.Count)) {
                     try {
-                        _camera.ReadoutMode = value;
+                        device.ReadoutMode = value;
                     } catch (InvalidValueException ex) {
                         Logger.Error(ex);
                         Notification.ShowError(ex.Message);
@@ -986,7 +879,7 @@ namespace NINA.Model.MyCamera {
             get {
                 ArrayList val = new ArrayList();
                 if (Connected && !CanFastReadout) {
-                    val = _camera.ReadoutModes;
+                    val = device.ReadoutModes;
                 }
                 return val;
             }
@@ -997,7 +890,7 @@ namespace NINA.Model.MyCamera {
                 string val = string.Empty;
                 if (Connected) {
                     try {
-                        val = _camera.SensorName;
+                        val = device.SensorName;
                     } catch (PropertyNotImplementedException) {
                         Logger.Info("ASCOM - Driver does not implement SensorName");
                     }
@@ -1011,7 +904,7 @@ namespace NINA.Model.MyCamera {
                 if (Connected) {
                     try {
                         SensorType type;
-                        switch (_camera.SensorType) {
+                        switch (device.SensorType) {
                             case ASCOM.DeviceInterface.SensorType.Monochrome:
                                 type = SensorType.Monochrome;
                                 break;
@@ -1054,14 +947,14 @@ namespace NINA.Model.MyCamera {
             get {
                 double val = double.NaN;
                 if (Connected && CanSetTemperature) {
-                    val = _camera.SetCCDTemperature;
+                    val = device.SetCCDTemperature;
                 }
                 return val;
             }
             set {
                 if (Connected && CanSetTemperature) {
                     try {
-                        _camera.SetCCDTemperature = value;
+                        device.SetCCDTemperature = value;
                         RaisePropertyChanged();
                     } catch (InvalidValueException ex) {
                         Logger.Error(ex);
@@ -1074,14 +967,14 @@ namespace NINA.Model.MyCamera {
         public int StartX {
             get {
                 if (Connected) {
-                    return _camera.StartX;
+                    return device.StartX;
                 } else {
                     return -1;
                 }
             }
             set {
                 if (Connected) {
-                    _camera.StartX = value;
+                    device.StartX = value;
                     RaisePropertyChanged();
                 }
             }
@@ -1090,14 +983,14 @@ namespace NINA.Model.MyCamera {
         public int StartY {
             get {
                 if (Connected) {
-                    return _camera.StartY;
+                    return device.StartY;
                 } else {
                     return -1;
                 }
             }
             set {
                 if (Connected) {
-                    _camera.StartY = value;
+                    device.StartY = value;
                     RaisePropertyChanged();
                 }
             }
@@ -1108,7 +1001,7 @@ namespace NINA.Model.MyCamera {
                 ArrayList val = new ArrayList();
                 try {
                     if (Connected) {
-                        val = _camera?.SupportedActions;
+                        val = device?.SupportedActions;
                     }
                 } catch (DriverException) {
                 }
@@ -1117,31 +1010,6 @@ namespace NINA.Model.MyCamera {
         }
 
         public AsyncObservableCollection<BinningMode> BinningModes { get; private set; }
-
-        [System.Obsolete("Use async Connect")]
-        public bool Connect() {
-            try {
-                _camera = new Camera(Id);
-                Connected = true;
-                if (Connected) {
-                    Initialize();
-                    RaiseAllPropertiesChanged();
-                }
-            } catch (ASCOM.DriverAccessCOMException ex) {
-                Logger.Error(ex);
-                Notification.ShowError(ex.Message);
-            } catch (Exception ex) {
-                Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["LblUnableToConnectCamera"] + ex.Message);
-            }
-            return Connected;
-        }
-
-        public void Disconnect() {
-            Connected = false;
-            _camera?.Dispose();
-            _camera = null;
-        }
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
             using (token.Register(() => AbortExposure())) {
@@ -1202,13 +1070,13 @@ namespace NINA.Model.MyCamera {
                               sequence.ImageType == CaptureSequence.ImageTypes.BIAS ||
                               sequence.ImageType == CaptureSequence.ImageTypes.DARKFLAT);
 
-            _camera.StartExposure(sequence.ExposureTime, isLightFrame);
+            device.StartExposure(sequence.ExposureTime, isLightFrame);
         }
 
         public void StopExposure() {
             if (CanStopExposure) {
                 try {
-                    _camera.StopExposure();
+                    device.StopExposure();
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowError(e.Message);
@@ -1219,7 +1087,7 @@ namespace NINA.Model.MyCamera {
         public void AbortExposure() {
             if (CanAbortExposure) {
                 try {
-                    _camera.AbortExposure();
+                    device.AbortExposure();
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowError(e.Message);
@@ -1235,16 +1103,6 @@ namespace NINA.Model.MyCamera {
             var newY = CameraYSize / y;
             NumX = newX;
             NumY = newY;
-        }
-
-        public void Dispose() {
-            _camera.Dispose();
-        }
-
-        public bool HasSetupDialog {
-            get {
-                return true;
-            }
         }
 
         private IList<int> offsets = new List<int>();
@@ -1266,7 +1124,7 @@ namespace NINA.Model.MyCamera {
                 var offsetMin = 0;
                 if (Connected && CanSetOffset) {
                     if (offsetValueMode) {
-                        offsetMin = _camera.OffsetMin;
+                        offsetMin = device.OffsetMin;
                     } else {
                         if (offsets.Count > 0) {
                             offsetMin = offsets.Aggregate((l, r) => l < r ? l : r);
@@ -1282,7 +1140,7 @@ namespace NINA.Model.MyCamera {
                 var offsetMax = 0;
                 if (Connected && CanSetOffset) {
                     if (offsetValueMode) {
-                        offsetMax = _camera.OffsetMax;
+                        offsetMax = device.OffsetMax;
                     } else {
                         if (offsets.Count > 0) {
                             offsetMax = offsets.Aggregate((l, r) => l > r ? l : r);
@@ -1304,9 +1162,9 @@ namespace NINA.Model.MyCamera {
                 var offset = -1;
                 if (Connected && CanSetOffset) {
                     if (offsetValueMode) {
-                        offset = _camera.Offset;
+                        offset = device.Offset;
                     } else {
-                        offset = offsets[_camera.Offset];
+                        offset = offsets[device.Offset];
                     }
                 }
                 return offset;
@@ -1322,11 +1180,11 @@ namespace NINA.Model.MyCamera {
                                 value = OffsetMax;
                             }
 
-                            _camera.Offset = value;
+                            device.Offset = value;
                         } else {
                             var idx = offsets.IndexOf(value);
                             if (idx >= 0) {
-                                _camera.Offset = idx;
+                                device.Offset = idx;
                             }
                         }
                         RaisePropertyChanged();
@@ -1350,48 +1208,6 @@ namespace NINA.Model.MyCamera {
         public int USBLimitMin => -1;
         public int USBLimitStep => -1;
 
-        public void SetupDialog() {
-            if (HasSetupDialog) {
-                try {
-                    bool dispose = false;
-                    if (_camera == null) {
-                        _camera = new Camera(Id);
-                        dispose = true;
-                    }
-
-                    _camera.SetupDialog();
-                    if (dispose) {
-                        _camera.Dispose();
-                        _camera = null;
-                    }
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
-                }
-            }
-        }
-
-        public async Task<bool> Connect(CancellationToken token) {
-            return await Task<bool>.Run(() => {
-                try {
-                    _camera = new Camera(Id);
-                    Connected = true;
-                    if (Connected) {
-                        Initialize();
-                        RaiseAllPropertiesChanged();
-                    }
-                } catch (ASCOM.DriverAccessCOMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (System.Runtime.InteropServices.COMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError("Unable to connect to camera " + ex.Message);
-                }
-                return Connected;
-            });
-        }
-
         public void StartLiveView() {
             throw new System.NotImplementedException();
         }
@@ -1402,6 +1218,15 @@ namespace NINA.Model.MyCamera {
 
         public void StopLiveView() {
             throw new System.NotImplementedException();
+        }
+
+        protected override Task PostConnect() {
+            Initialize();
+            return Task.CompletedTask;
+        }
+
+        protected override Camera GetInstance(string id) {
+            return new Camera(id);
         }
 
         public bool LiveViewEnabled { get => false; set => throw new System.NotImplementedException(); }
@@ -1415,5 +1240,7 @@ namespace NINA.Model.MyCamera {
                 return (int)profileService.ActiveProfile.CameraSettings.BitDepth;
             }
         }
+
+        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblCameraConnectionLost"];
     }
 }
