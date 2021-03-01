@@ -30,21 +30,20 @@ namespace NINA.Utility.SkySurvey {
     /// Description can be found at http://alasky.u-strasbg.fr/hips-image-services/hips2fits
     /// </summary>
     internal class Hips2FitsSurvey : ISkySurvey {
-        private const string Url = "http://alaskybis.u-strasbg.fr/hips-image-services/hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
+        private const string Url = "http://alasky.u-strasbg.fr/hips-image-services/hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
+        private const string AltUrl = "http://alaskybis.u-strasbg.fr/hips-image-services/hips2fits?projection=STG&hips=CDS%2FP%2FDSS2%2Fcolor&width={0}&height={1}&fov={2}&ra={3}&dec={4}&format=jpg";
 
         public async Task<SkySurveyImage> GetImage(string name, Coordinates coordinates, double fieldOfView, int width,
             int height, CancellationToken ct, IProgress<int> progress) {
             fieldOfView = Math.Round(fieldOfView, 2);
 
-            var request = new Http.HttpDownloadImageRequest(
-               Url,
-               2000,
-               2000,
-               Astrometry.Astrometry.ArcminToDegree(fieldOfView),
-               coordinates.RADegrees,
-               coordinates.Dec
-           );
-            var image = await request.Request(ct, progress);
+            BitmapSource image;
+            try {
+                image = await QueryImage(Url, coordinates, fieldOfView, ct, progress);
+            } catch (Exception) {
+                image = await QueryImage(AltUrl, coordinates, fieldOfView, ct, progress);
+            }
+
             if (image.DpiX != 96) {
                 image = ConvertBitmapTo96DPI(image);
             }
@@ -59,6 +58,18 @@ namespace NINA.Utility.SkySurvey {
                 Rotation = 0,
                 Coordinates = coordinates
             };
+        }
+
+        private async Task<BitmapSource> QueryImage(string url, Coordinates coordinates, double fieldOfView, CancellationToken ct, IProgress<int> progress) {
+            var request = new Http.HttpDownloadImageRequest(
+                   url,
+                   2000,
+                   2000,
+                   Astrometry.Astrometry.ArcminToDegree(fieldOfView),
+                   coordinates.RADegrees,
+                   coordinates.Dec
+                );
+            return await request.Request(ct, progress);
         }
 
         private BitmapSource ConvertBitmapTo96DPI(BitmapSource bitmapImage) {
