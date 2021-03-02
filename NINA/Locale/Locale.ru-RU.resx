@@ -5298,4 +5298,7 @@ Dec: {1}</value>
   <data name="LblUsbDriverVersion" xml:space="preserve">
     <value>USB Driver Version</value>
   </data>
+  <data name="LblFailedChangingConnectionState" xml:space="preserve">
+    <value>Failed to change connection state of device.</value>
+  </data>
 </root>

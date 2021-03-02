@@ -4231,7 +4231,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Přidat {0} do Minut po Poledníku</value>
   </data>
   <data name="LblFlipTime" xml:space="preserve">
-    <value>Čas Otočení</value>
+    <value>Čas Překlopení</value>
   </data>
   <data name="LblAmount" xml:space="preserve">
     <value>Hodnota</value>
@@ -4354,7 +4354,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Vycentruje dalekohled pomocí platesolvingu pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Ve středu</value>
+    <value>Na Střed</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Zaparkovat dalekohled do parkovací polohy</value>
@@ -5294,5 +5294,8 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   </data>
   <data name="LblUsbDriverVersion" xml:space="preserve">
     <value>Verze Ovladače USB</value>
+  </data>
+  <data name="LblFailedChangingConnectionState" xml:space="preserve">
+    <value>Failed to change connection state of device.</value>
   </data>
 </root>
