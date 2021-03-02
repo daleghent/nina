@@ -366,11 +366,20 @@ namespace NINA.Model.MyGuider.PHD2 {
                 return false;
 
             string state = await GetAppState();
-            if (state == PhdAppState.GUIDING)
+            if (state == PhdAppState.GUIDING) {
+                Logger.Info("Phd2 - App is already guiding. Skipping start guiding");
                 return true;
+            }
 
-            if (state == PhdAppState.CALIBRATING)
+            if (state == PhdAppState.CALIBRATING) {
+                Logger.Info("Phd2 - App is already calibrating. Waiting for guiding to start");
                 return await WaitForAppState(PhdAppState.GUIDING, ct);
+            }
+
+            if (state == PhdAppState.LOSTLOCK) {
+                Logger.Info("Phd2 - App has lost guide star and needs to stop before starting guiding again");
+                await StopGuiding(ct);
+            }
 
             async Task<bool> TryStartGuideCommand() {
                 await WaitForSettling(ct);
@@ -482,6 +491,7 @@ namespace NINA.Model.MyGuider.PHD2 {
 
         private async Task<T> SendMessage<T>(Phd2Method msg, int receiveTimeout = 0) where T : PhdMethodResponse {
             using (var client = new TcpClient()) {
+                Logger.Debug($"Phd2 - Sending message '{JsonConvert.SerializeObject(msg)}'");
                 client.ReceiveTimeout = receiveTimeout;
                 await client.ConnectAsync(
                     profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl,
@@ -501,6 +511,7 @@ namespace NINA.Model.MyGuider.PHD2 {
                             phdevent = t.ToString();
                         }
                         if (phdevent == msg.Id) {
+                            Logger.Debug($"Phd2 - Received message answer '{line}'");
                             var response = o.ToObject<T>();
                             CheckPhdError(response);
                             return response;
