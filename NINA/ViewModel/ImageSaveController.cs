@@ -36,9 +36,10 @@ namespace NINA.ViewModel {
         private Task worker;
         private CancellationTokenSource workerCTS;
 
-        public ImageSaveController(IProfileService profileService, IImageSaveMediator imageSaveMediator) : base(profileService) {
+        public ImageSaveController(IProfileService profileService, IImageSaveMediator imageSaveMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             this.imageSaveMediator = imageSaveMediator;
             this.imageSaveMediator.RegisterHandler(this);
+            this.applicationStatusMediator = applicationStatusMediator;
 
             // This queue size could be adjustable for systems with lots of memory available
             queue = new AsyncProducerConsumerQueue<PrepareSaveItem>(1);
@@ -46,6 +47,7 @@ namespace NINA.ViewModel {
             worker = Task.Run(DoWork);
         }
 
+        private IApplicationStatusMediator applicationStatusMediator;
         private AsyncProducerConsumerQueue<PrepareSaveItem> queue;
 
         public Task Enqueue(IImageData imageData, Task<IRenderedImage> prepareTask, IProgress<ApplicationStatus> progress, CancellationToken token) {
@@ -57,6 +59,7 @@ namespace NINA.ViewModel {
                 try {
                     var item = await queue.DequeueAsync(workerCTS.Token);
 
+                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = "Save", Status = Locale.Loc.Instance["LblSavingImage"] });
                     var path = await item.Data.PrepareSave(new FileSaveInfo(profileService), default);
 
                     var preparedData = await item.PrepareTask;
@@ -81,6 +84,8 @@ namespace NINA.ViewModel {
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError(ex.Message);
+                } finally {
+                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = "Save", Status = string.Empty });
                 }
             }
         }
