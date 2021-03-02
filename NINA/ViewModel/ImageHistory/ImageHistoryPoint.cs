@@ -58,6 +58,12 @@ namespace NINA.ViewModel.ImageHistory {
             if (imageSavedEventArgs.MetaData?.Target != null) {
                 Target = imageSavedEventArgs.MetaData.Target;
             }
+
+            if (imageSavedEventArgs.MetaData?.Focuser?.Temperature != null) {
+                Temperature = imageSavedEventArgs.MetaData.Focuser.Temperature;
+            } else if (imageSavedEventArgs.MetaData?.WeatherData?.Temperature != null) {
+                Temperature = imageSavedEventArgs.MetaData.WeatherData.Temperature;
+            }
         }
 
         public int Id { get; private set; }
@@ -82,6 +88,7 @@ namespace NINA.ViewModel.ImageHistory {
         public string Filename { get; private set; }
 
         public DateTime dateTime { get; private set; } = DateTime.Now;
+        public double Temperature { get; private set; }
 
         public string Type { get; private set; }
 
@@ -98,6 +105,7 @@ namespace NINA.ViewModel.ImageHistory {
             Map(m => m.Target.Rotation);
             Map(m => m.Filename);
             Map(m => m.dateTime);
+            Map(m => m.Temperature);
             Map(m => m.Duration);
             Map(m => m.Filter);
             Map(m => m.HFR);

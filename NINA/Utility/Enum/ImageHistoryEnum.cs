@@ -24,6 +24,9 @@ namespace NINA.Utility.Enum {
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]
     public enum ImageHistoryEnum {
 
+        [Description("LblNone")]
+        NONE,
+
         [Description("LblHFR")]
         HFR,
 
@@ -40,6 +43,9 @@ namespace NINA.Utility.Enum {
         StDev,
 
         [Description("LblMAD")]
-        MAD
+        MAD,
+
+        [Description("LblTemperature")]
+        Temperature
     }
 }

@@ -257,13 +257,16 @@ namespace NINA.ViewModel.ImageHistory {
             this.ObservableImageHistory.Clear();
             this.AutoFocusPoints.Clear();
             this.ObservableImageHistoryView.Clear();
+            this.AutoFocusPointsView.Clear();
         }
 
         public void PlotSave() {
             if (this.ObservableImageHistory.Count != 0) {
                 SaveFileDialog sfd = new SaveFileDialog();
-                sfd.FileName = "history.csv";
+                sfd.FileName = Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd") + "_history.csv";
+                sfd.InitialDirectory = Path.GetDirectoryName(ActiveProfile.SequenceSettings.DefaultSequenceFolder);
                 if (sfd.ShowDialog() == DialogResult.OK) {
+                    if (!sfd.FileName.ToLower().EndsWith(".csv")) sfd.FileName += ".csv";
                     using (var writer = new StreamWriter(sfd.FileName))
                     using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
                         csv.Configuration.RegisterClassMap<ImageHistoryPointMap>();

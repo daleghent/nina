@@ -197,7 +197,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{ns:Loc LblHFR}" />
                                                 <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.HFR}" />
+                                                <TextBlock Text="{Binding Item.HFR, StringFormat='{}{0:N2}'}" />
                                             </StackPanel>
 
                                             <StackPanel Orientation="Horizontal">
@@ -209,13 +209,13 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{ns:Loc LblMedian}" />
                                                 <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.Median}" />
+                                                <TextBlock Text="{Binding Item.Median, StringFormat='{}{0:N0}'}" />
                                             </StackPanel>
 
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{ns:Loc LblMean}" />
                                                 <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.Mean}" />
+                                                <TextBlock Text="{Binding Item.Mean, StringFormat='{}{0:N0}'}" />
                                             </StackPanel>
 
                                             <StackPanel Orientation="Horizontal">
