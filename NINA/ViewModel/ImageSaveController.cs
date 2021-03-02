@@ -59,7 +59,7 @@ namespace NINA.ViewModel {
                 try {
                     var item = await queue.DequeueAsync(workerCTS.Token);
 
-                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = "Save", Status = Locale.Loc.Instance["LblSavingImage"] });
+                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Locale.Loc.Instance["LblSave"], Status = Locale.Loc.Instance["LblSavingImage"] });
                     var path = await item.Data.PrepareSave(new FileSaveInfo(profileService), default);
 
                     var preparedData = await item.PrepareTask;
@@ -85,7 +85,7 @@ namespace NINA.ViewModel {
                     Logger.Error(ex);
                     Notification.ShowError(ex.Message);
                 } finally {
-                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = "Save", Status = string.Empty });
+                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Locale.Loc.Instance["LblSave"], Status = string.Empty });
                 }
             }
         }
