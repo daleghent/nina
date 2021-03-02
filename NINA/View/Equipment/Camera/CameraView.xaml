@@ -62,8 +62,7 @@
                 <Grid>
                     <StackPanel>
                         <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                            <UniformGrid
-                                Columns="2">
+                            <UniformGrid Columns="2">
                                 <UniformGrid
                                     Margin="0,6,0,6"
                                     VerticalAlignment="Center"
@@ -269,50 +268,50 @@
                                     <StackPanel>
                                         <UniformGrid Columns="2">
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2">
                                                 <TextBlock Text="{ns:Loc LblSDKVersion}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhySdkVersion}" />
                                             </UniformGrid>
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2">
                                                 <TextBlock Text="{ns:Loc LblUsbDriverVersion}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhyUsbDriverVersion}" />
                                             </UniformGrid>
                                         </UniformGrid>
                                         <UniformGrid Columns="2">
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2">
                                                 <TextBlock Text="{ns:Loc LblFirmwareVersion}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhyFirmwareVersion}" />
                                             </UniformGrid>
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2">
                                                 <TextBlock Text="{ns:Loc LblFPGAVersion}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhyFPGAVersion}" />
                                             </UniformGrid>
                                         </UniformGrid>
                                         <UniformGrid Columns="2">
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2"
-                                            Visibility="{Binding QhyHasSensorAirPressure, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2"
+                                                Visibility="{Binding QhyHasSensorAirPressure, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
                                                 <TextBlock Text="{ns:Loc LblSensorAirPressure}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhySensorAirPressure, StringFormat=\{0:0.00\} hPa, Converter={StaticResource NaNToDoubleDashConverter}}" />
                                             </UniformGrid>
                                             <UniformGrid
-                                            Margin="0,6,0,6"
-                                            VerticalAlignment="Center"
-                                            Columns="2"
-                                            Visibility="{Binding QhyHasSensorHumidity, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                                Margin="0,6,0,6"
+                                                VerticalAlignment="Center"
+                                                Columns="2"
+                                                Visibility="{Binding QhyHasSensorHumidity, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
                                                 <TextBlock Text="{ns:Loc LblSensorHumidity}" />
                                                 <TextBlock Margin="5,0,0,0" Text="{Binding QhySensorHumidity, StringFormat=\{0:0.00\}%, Converter={StaticResource NaNToDoubleDashConverter}}" />
                                             </UniformGrid>
@@ -322,7 +321,8 @@
                                 <local:CameraTemplateSelector
                                     x:Key="ContentSelector"
                                     Default="{StaticResource Default}"
-                                    QhyCcd="{StaticResource QhyCcd}" />
+                                    QhyCcd="{StaticResource QhyCcd}"
+                                    Touptek="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
                                 Content="{Binding}"
@@ -483,9 +483,9 @@
                             </DataTemplate>
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
-                                Altair="{StaticResource Altair}"
                                 Default="{StaticResource Default}"
-                                QhyCcd="{StaticResource QhyCcd}" />
+                                QhyCcd="{StaticResource QhyCcd}"
+                                Touptek="{StaticResource Altair}" />
                         </Grid.Resources>
                         <ContentControl
                             Content="{Binding}"

@@ -777,7 +777,6 @@ namespace NINA.Model.MyCamera {
             coolerPowerReadoutCts?.Cancel();
             Connected = false;
             sdk.Close();
-            sdk = null;
         }
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
