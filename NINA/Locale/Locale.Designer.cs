@@ -11816,6 +11816,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rms.
+        /// </summary>
+        internal static string LblRms {
+            get {
+                return ResourceManager.GetString("LblRms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rotate Target.
         /// </summary>
         internal static string LblRotateTarget {

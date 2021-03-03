@@ -145,6 +145,7 @@
                                     Position="{Binding Position}">
                                     <oxy:TrackerControl.Content>
                                         <StackPanel Orientation="Vertical">
+
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{ns:Loc LblNewPosition}" />
                                                 <TextBlock Text=": " />
@@ -183,52 +184,122 @@
                                     Position="{Binding Position}">
                                     <oxy:TrackerControl.Content>
                                         <StackPanel Orientation="Vertical">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{ns:Loc LblFile}" />
-                                                <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.Filename, Converter={StaticResource FileConverter}}" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{ns:Loc LblTime}" />
-                                                <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.dateTime, StringFormat='{}{0:HH:mm:ss}'}" />
-                                            </StackPanel>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition />
+                                                    <ColumnDefinition />
+                                                </Grid.ColumnDefinitions>
 
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{ns:Loc LblHFR}" />
-                                                <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.HFR, StringFormat='{}{0:N2}'}" />
-                                            </StackPanel>
+                                                <StackPanel
+                                                    Grid.Row="0"
+                                                    Grid.ColumnSpan="2"
+                                                    Margin="2,0,2,0"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock Text="{ns:Loc LblFile}" />
+                                                    <TextBlock Text=": " />
+                                                    <TextBlock Text="{Binding Item.Filename, Converter={StaticResource FileConverter}}" />
+                                                </StackPanel>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    Margin="2,0,2,0"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock Text="{ns:Loc LblTime}" />
+                                                    <TextBlock Text=": " />
+                                                    <TextBlock Text="{Binding Item.dateTime, StringFormat='{}{0:HH:mm:ss}'}" />
+                                                </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{ns:Loc LblStarCount}" />
-                                                <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.Stars}" />
-                                            </StackPanel>
+                                                <StackPanel
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Margin="2,0,2,0"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock Text="{ns:Loc LblDuration}" />
+                                                    <TextBlock Text=": " />
+                                                    <TextBlock Text="{Binding Item.Duration}" />
+                                                </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{ns:Loc LblMedian}" />
-                                                <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.Median, StringFormat='{}{0:N0}'}" />
-                                            </StackPanel>
+                                                <StackPanel
+                                                    Grid.Row="2"
+                                                    Grid.Column="0"
+                                                    Margin="2,0,2,0"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock Text="{ns:Loc LblHFR}" />
+                                                    <TextBlock Text=": " />
+                                                    <TextBlock Text="{Binding Item.HFR, StringFormat='{}{0:N2}'}" />
+                                                </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{ns:Loc LblMean}" />
-                                                <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.Mean, StringFormat='{}{0:N0}'}" />
-                                            </StackPanel>
+                                                <StackPanel
+                                                    Grid.Row="2"
+                                                    Grid.Column="1"
+                                                    Margin="2,0,2,0"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock Text="{ns:Loc LblStarCount}" />
+                                                    <TextBlock Text=": " />
+                                                    <TextBlock Text="{Binding Item.Stars}" />
+                                                </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{ns:Loc LblDuration}" />
-                                                <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.Duration}" />
-                                            </StackPanel>
+                                                <StackPanel
+                                                    Grid.Row="3"
+                                                    Grid.Column="0"
+                                                    Margin="2,0,2,0"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock Text="{ns:Loc LblMedian}" />
+                                                    <TextBlock Text=": " />
+                                                    <TextBlock Text="{Binding Item.Median, StringFormat='{}{0:N0}'}" />
+                                                </StackPanel>
 
-                                            <StackPanel Orientation="Horizontal" Visibility="{Binding Item.Filter, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
-                                                <TextBlock Text="{ns:Loc LblFilter}" />
-                                                <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.Filter}" />
-                                            </StackPanel>
+                                                <StackPanel
+                                                    Grid.Row="3"
+                                                    Grid.Column="1"
+                                                    Margin="2,0,2,0"
+                                                    Orientation="Horizontal">
+                                                    <TextBlock Text="{ns:Loc LblMean}" />
+                                                    <TextBlock Text=": " />
+                                                    <TextBlock Text="{Binding Item.Mean, StringFormat='{}{0:N0}'}" />
+                                                </StackPanel>
+
+                                                <StackPanel
+                                                    Grid.Row="4"
+                                                    Grid.Column="0"
+                                                    Margin="2,0,2,0"
+                                                    Orientation="Horizontal"
+                                                    Visibility="{Binding Item.Temperature, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                                                    <TextBlock Text="{ns:Loc LblTemperature}" />
+                                                    <TextBlock Text=": " />
+                                                    <TextBlock Text="{Binding Item.Temperature, StringFormat='{}{0:N2}'}" />
+                                                </StackPanel>
+
+                                                <StackPanel
+                                                    Grid.Row="4"
+                                                    Grid.Column="1"
+                                                    Margin="2,0,2,0"
+                                                    Orientation="Horizontal"
+                                                    Visibility="{Binding Item.Rms, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                                                    <TextBlock Text="{ns:Loc LblRms}" />
+                                                    <TextBlock Text=": " />
+                                                    <TextBlock Text="{Binding Item.Rms, StringFormat='{}{0:N2}'}" />
+                                                </StackPanel>
+
+                                                <StackPanel
+                                                    Grid.Row="5"
+                                                    Grid.ColumnSpan="2"
+                                                    Margin="2,0,2,0"
+                                                    Orientation="Horizontal"
+                                                    Visibility="{Binding Item.Filter, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                                                    <TextBlock Text="{ns:Loc LblFilter}" />
+                                                    <TextBlock Text=": " />
+                                                    <TextBlock Text="{Binding Item.Filter}" />
+                                                </StackPanel>
+                                            </Grid>
                                         </StackPanel>
                                     </oxy:TrackerControl.Content>
                                 </oxy:TrackerControl>

@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using CsvHelper.Configuration;
+using NINA.Model;
 using NINA.Model.ImageData;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
@@ -58,11 +59,15 @@ namespace NINA.ViewModel.ImageHistory {
             if (imageSavedEventArgs.MetaData?.Target != null) {
                 Target = imageSavedEventArgs.MetaData.Target;
             }
-
-            if (imageSavedEventArgs.MetaData?.Focuser?.Temperature != null) {
+            if (imageSavedEventArgs.MetaData?.Focuser != null && !double.IsNaN((double)imageSavedEventArgs.MetaData?.Focuser?.Temperature)) {
                 Temperature = imageSavedEventArgs.MetaData.Focuser.Temperature;
-            } else if (imageSavedEventArgs.MetaData?.WeatherData?.Temperature != null) {
+            } else if (imageSavedEventArgs.MetaData?.WeatherData != null && !double.IsNaN((double)imageSavedEventArgs.MetaData?.WeatherData?.Temperature)) {
                 Temperature = imageSavedEventArgs.MetaData.WeatherData.Temperature;
+            }
+
+            if (imageSavedEventArgs.MetaData?.Image?.RecordedRMS != null) {
+                RecordedRMS = imageSavedEventArgs.MetaData.Image.RecordedRMS;
+                Rms = imageSavedEventArgs.MetaData.Image.RecordedRMS.Total;
             }
         }
 
@@ -89,6 +94,8 @@ namespace NINA.ViewModel.ImageHistory {
 
         public DateTime dateTime { get; private set; } = DateTime.Now;
         public double Temperature { get; private set; }
+        public double Rms { get; private set; }
+        public RMS RecordedRMS { get; private set; }
 
         public string Type { get; private set; }
 
@@ -114,6 +121,9 @@ namespace NINA.ViewModel.ImageHistory {
             Map(m => m.Mean);
             Map(m => m.StDev);
             Map(m => m.MAD);
+            Map(m => m.RecordedRMS.RA);
+            Map(m => m.RecordedRMS.Dec);
+            Map(m => m.RecordedRMS.Total);
         }
     }
 }

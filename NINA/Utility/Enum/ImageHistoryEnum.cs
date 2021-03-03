@@ -46,6 +46,9 @@ namespace NINA.Utility.Enum {
         MAD,
 
         [Description("LblTemperature")]
-        Temperature
+        Temperature,
+
+        [Description("LblRms")]
+        Rms
     }
 }
