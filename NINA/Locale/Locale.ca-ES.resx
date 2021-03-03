@@ -5297,6 +5297,6 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
     <value>Versió del controlador USB</value>
   </data>
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
-    <value>Failed to change connection state of device.</value>
+    <value>No s'ha pogut canviar l'estat de la connexió del dispositiu.</value>
   </data>
 </root>

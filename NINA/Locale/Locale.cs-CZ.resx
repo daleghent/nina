@@ -2587,13 +2587,13 @@ Vypočtené HFR: {2}
     <value>Tento režim čtení kamery se použije k provedení platesolvingu, rámování a auto-ostření</value>
   </data>
   <data name="LblRecenter" xml:space="preserve">
-    <value>Vycentrovat</value>
+    <value>Znovu Vycentrovat</value>
   </data>
   <data name="LblRecenterAfterFlip" xml:space="preserve">
-    <value>Vycentrovat cíl po Překlopení</value>
+    <value>Znovu Vycentrovat po Překlopení</value>
   </data>
   <data name="LblRecenterImage" xml:space="preserve">
-    <value>Vycentrovat Obraz</value>
+    <value>Znovu Vycentrovat Obraz</value>
   </data>
   <data name="LblRecommendedExposureTime" xml:space="preserve">
     <value>Doporučený Čas Expozice</value>
@@ -4354,7 +4354,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Vycentruje dalekohled pomocí platesolvingu pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Na Střed</value>
+    <value>Vycentrovat</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Zaparkovat dalekohled do parkovací polohy</value>
@@ -5296,6 +5296,6 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
     <value>Verze Ovladače USB</value>
   </data>
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
-    <value>Failed to change connection state of device.</value>
+    <value>Nepodařilo se změnit stav připojení zařízení.</value>
   </data>
 </root>

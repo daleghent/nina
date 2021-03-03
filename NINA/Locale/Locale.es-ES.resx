@@ -5272,30 +5272,30 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
     <value>Establecer la velocidad de desplazamiento del botón en grados por segundo</value>
   </data>
   <data name="LblFirmwareVersion" xml:space="preserve">
-    <value>Firmware Version</value>
+    <value>Versión del firmware</value>
   </data>
   <data name="LblFPGAVersion" xml:space="preserve">
-    <value>FPGA Version</value>
+    <value>Versión de FPGA</value>
   </data>
   <data name="LblSensorAirPressure" xml:space="preserve">
-    <value>Sensor air pressure</value>
+    <value>Sensor de presión del aire</value>
   </data>
   <data name="LblSensorHumidity" xml:space="preserve">
-    <value>Sensor humidity</value>
+    <value>Sensor de humedad</value>
   </data>
   <data name="LblUnknownInstruction" xml:space="preserve">
-    <value>Unknown Instruction</value>
+    <value>Instrucción desconocida</value>
   </data>
   <data name="LblQhyccdDriverVersionWarning" xml:space="preserve">
-    <value>The installed QHYCCD USB driver's version of {0} is below the minimum recommeneded version of {1}. Driver updates are available on the QHYCCD website and are recommended for optimal camera function</value>
+    <value>La versión instalada del controlador USB QHYCCD de {0} está por debajo de la versión mínima establecida de {1}. Las actualizaciones de los controladores están disponibles en el sitio web QHYCCD y se recomienda para una óptima función de la cámara</value>
   </data>
   <data name="LblSDKVersion" xml:space="preserve">
-    <value>SDK Version</value>
+    <value>Versión SDK</value>
   </data>
   <data name="LblUsbDriverVersion" xml:space="preserve">
-    <value>USB Driver Version</value>
+    <value>Versión del controlador USB</value>
   </data>
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
-    <value>Failed to change connection state of device.</value>
+    <value>Error al cambiar el estado de conexión del dispositivo.</value>
   </data>
 </root>
