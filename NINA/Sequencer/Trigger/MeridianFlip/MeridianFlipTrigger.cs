@@ -149,9 +149,13 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 return false;
             }
 
+            if (!telescopeInfo.TrackingEnabled) {
+                Logger.Info("Meridian Flip - Telescope is not tracking. Skip flip evaluation");
+            }
+
             if ((DateTime.Now - lastFlipTime) < TimeSpan.FromHours(11)) {
                 //A flip for the same target is only expected every 12 hours on planet earth
-                Logger.Debug($"Meridian Flip - Flip for the current target already happened at {lastFlipTime}. Flip will be skipped");
+                Logger.Debug($"Meridian Flip - Flip for the current target already happened at {lastFlipTime}. Skip flip evaluation");
                 return false;
             }
 
