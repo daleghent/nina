@@ -543,19 +543,23 @@ namespace NINA.ViewModel.Equipment.Dome {
             return !FollowEnabled;
         }
 
+        private bool previousIsSafe = false;
+
         public void UpdateDeviceInfo(SafetyMonitorInfo deviceInfo) {
             SafetyMonitorInfo = deviceInfo;
             if (Dome?.Connected == true && profileService.ActiveProfile.DomeSettings.CloseOnUnsafe) {
-                if (!deviceInfo.IsSafe && Dome?.ShutterStatus == ShutterState.ShutterOpen) {
+                //Close dome when state switches from safe to unsafe
+                if (previousIsSafe && !deviceInfo.IsSafe && Dome?.ShutterStatus == ShutterState.ShutterOpen) {
                     Logger.Warning("Closing dome shutter due to unsafe conditions");
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
                     Task.Run(async () => {
                         StopAll(null);
                         await CloseShutter(CancellationToken.None);
                     });
-                    
                 }
             }
+
+            previousIsSafe = deviceInfo.IsSafe;
         }
 
         private readonly IDeviceUpdateTimer updateTimer;
