@@ -48,6 +48,13 @@ namespace NINA.Sequencer.Conditions {
             Ticker.PropertyChanged += Ticker_PropertyChanged;
         }
 
+        public TimeCondition(IList<IDateTimeProvider> dateTimeProviders, IDateTimeProvider selectedProvider) {
+            this.DateTimeProviders = dateTimeProviders;
+            this.SelectedProvider = selectedProvider;
+            Ticker = new Ticker(TimeSpan.FromSeconds(1));
+            Ticker.PropertyChanged += Ticker_PropertyChanged;
+        }
+
         private void Ticker_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             RaisePropertyChanged(nameof(RemainingTime));
         }
@@ -132,7 +139,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override object Clone() {
-            return new TimeCondition(DateTimeProviders) {
+            return new TimeCondition(DateTimeProviders, SelectedProvider) {
                 Icon = Icon,
                 Hours = Hours,
                 Minutes = Minutes,

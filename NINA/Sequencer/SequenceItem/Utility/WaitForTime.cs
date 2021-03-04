@@ -42,6 +42,11 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             this.SelectedProvider = DateTimeProviders?.FirstOrDefault();
         }
 
+        public WaitForTime(IList<IDateTimeProvider> dateTimeProviders, IDateTimeProvider selectedProvider) {
+            this.DateTimeProviders = dateTimeProviders;
+            this.SelectedProvider = selectedProvider;
+        }
+
         private int hours;
 
         [JsonProperty]
@@ -76,7 +81,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         public override object Clone() {
-            return new WaitForTime(DateTimeProviders) {
+            return new WaitForTime(DateTimeProviders, SelectedProvider) {
                 Icon = Icon,
                 Hours = Hours,
                 Minutes = Minutes,
