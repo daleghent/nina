@@ -521,6 +521,9 @@ namespace NINA.Model.MyTelescope {
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetSlewing = false;
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                    Notification.ShowError(Locale.Loc.Instance["LblTelescope"] + Environment.NewLine + ex.Message);
                 }
                 return val;
             }
