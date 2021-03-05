@@ -244,7 +244,7 @@ Má se aplikace pokusit chybu opravit? (Může vést k neočekávanému chován�
     <value>Vzestupně</value>
   </data>
   <data name="LblAscomInterOpDriverException" xml:space="preserve">
-    <value>V ovladači ASCOM došlo k výjimce interoperability. Pravděpodobně kvůli nekompatibilitě mezi ovladačem, který je nainstalovaný jako {0}, a N.I.N.A. je {1}. Nainstalujte ovladač jako {1}</value>
+    <value>V ovladači ASCOM došlo k chybě interoperability. Pravděpodobně kvůli nekompatibilitě mezi ovladačem, který je nainstalovaný jako {0}, a N.I.N.A. je {1}. Nainstalujte ovladač jako {1}</value>
   </data>
   <data name="LblASIImageDownloadError" xml:space="preserve">
     <value>Chyba při načítání obrazových dat z kamery!</value>
@@ -3333,7 +3333,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Došlo k neočekávané chybě</value>
   </data>
   <data name="LblUnhandledException" xml:space="preserve">
-    <value>Došlo k Neošetřené výjimce</value>
+    <value>Došlo k Neošetřené chybě</value>
   </data>
   <data name="LblUnlinkedStretch" xml:space="preserve">
     <value>Rozpětí bez Propojení</value>
@@ -5297,5 +5297,8 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   </data>
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
     <value>Nepodařilo se změnit stav připojení zařízení.</value>
+  </data>
+  <data name="LblRms" xml:space="preserve">
+    <value>RMS</value>
   </data>
 </root>

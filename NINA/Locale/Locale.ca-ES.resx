@@ -5299,4 +5299,7 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
     <value>No s'ha pogut canviar l'estat de la connexió del dispositiu.</value>
   </data>
+  <data name="LblRms" xml:space="preserve">
+    <value>Rms</value>
+  </data>
 </root>
