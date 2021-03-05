@@ -67,7 +67,8 @@ namespace NINA.ViewModel.ImageHistory {
 
             if (imageSavedEventArgs.MetaData?.Image?.RecordedRMS != null) {
                 RecordedRMS = imageSavedEventArgs.MetaData.Image.RecordedRMS;
-                Rms = imageSavedEventArgs.MetaData.Image.RecordedRMS.Total;
+                Rms = RecordedRMS.Total * RecordedRMS.Scale;
+                RmsText = RecordedRMS.TotalText;
             }
         }
 
@@ -95,6 +96,7 @@ namespace NINA.ViewModel.ImageHistory {
         public DateTime dateTime { get; private set; } = DateTime.Now;
         public double Temperature { get; private set; }
         public double Rms { get; private set; }
+        public string RmsText { get; private set; }
         public RMS RecordedRMS { get; private set; }
 
         public string Type { get; private set; }
@@ -124,6 +126,8 @@ namespace NINA.ViewModel.ImageHistory {
             Map(m => m.RecordedRMS.RA);
             Map(m => m.RecordedRMS.Dec);
             Map(m => m.RecordedRMS.Total);
+            Map(m => m.RecordedRMS.Scale);
+            Map(m => m.RecordedRMS.TotalText);
         }
     }
 }
