@@ -511,12 +511,7 @@
     <Compile Include="Model\MyFilterWheel\ASIFilterWheel.cs" />
     <Compile Include="Model\MyFlatDevice\AllProSpikeAFlat.cs" />
     <Compile Include="Model\MyFlatDevice\AscomCoverCalibrator.cs" />
-    <Compile Include="Model\MyFocuser\AbsoluteAscomFocuser.cs" />
-    <Compile Include="Model\MyFocuser\IFocuserV3Ex.cs" />
-    <Compile Include="Model\MyFocuser\RelativeAscomFocuser.cs" />
     <Compile Include="Model\MyFocuser\UltimatePowerboxV2.cs" />
-    <Compile Include="Model\MyFocuser\AscomFocuserProvider.cs" />
-    <Compile Include="Model\MyFocuser\IAscomFocuserProvider.cs" />
     <Compile Include="Model\MyFlatDevice\ArteskyFlatBox.cs" />
     <Compile Include="Model\MySwitch\DummySwitch.cs" />
     <Compile Include="Model\MyWeatherData\TheWeatherCompany.cs" />

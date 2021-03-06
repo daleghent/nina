@@ -28,12 +28,21 @@ namespace NINA.Model.MyFocuser {
         public AscomFocuser(string focuser, string name) : base(focuser, name) {
         }
 
-        public IAscomFocuserProvider FocuserProvider { get; set; } = new AscomFocuserProvider();
+        public Focuser Device => device;
+
+        public virtual bool Absolute {
+            get {
+                if (Connected) {
+                    return device.Absolute;
+                }
+                return true;
+            }
+        }
 
         public bool IsMoving {
             get {
                 if (Connected) {
-                    return instance.IsMoving;
+                    return device.IsMoving;
                 } else {
                     return false;
                 }
@@ -43,7 +52,7 @@ namespace NINA.Model.MyFocuser {
         public int MaxIncrement {
             get {
                 if (Connected) {
-                    return Math.Abs(instance.MaxIncrement);
+                    return Math.Abs(device.MaxIncrement);
                 } else {
                     return -1;
                 }
@@ -53,7 +62,7 @@ namespace NINA.Model.MyFocuser {
         public int MaxStep {
             get {
                 if (Connected) {
-                    return Math.Abs(instance.MaxStep);
+                    return Math.Abs(device.MaxStep);
                 } else {
                     return -1;
                 }
@@ -62,23 +71,30 @@ namespace NINA.Model.MyFocuser {
 
         private bool _canGetPosition;
 
+        //Used for relative focusers
+        private int internalPosition = 5000;
+
         public int Position {
             get {
-                int pos = -1;
-                try {
-                    if (Connected && _canGetPosition) {
-                        pos = Math.Abs(instance.Position);
+                if (Absolute) {
+                    int pos = -1;
+                    try {
+                        if (Connected && _canGetPosition) {
+                            pos = Math.Abs(device.Position);
+                        }
+                    } catch (PropertyNotImplementedException) {
+                        _canGetPosition = false;
+                    } catch (System.NotImplementedException) {
+                        _canGetPosition = false;
+                    } catch (DriverException ex) {
+                        Logger.Error(ex);
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
                     }
-                } catch (PropertyNotImplementedException) {
-                    _canGetPosition = false;
-                } catch (System.NotImplementedException) {
-                    _canGetPosition = false;
-                } catch (DriverException ex) {
-                    Logger.Error(ex);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
+                    return pos;
+                } else {
+                    return internalPosition;
                 }
-                return pos;
             }
         }
 
@@ -89,7 +105,7 @@ namespace NINA.Model.MyFocuser {
                 double stepSize = double.NaN;
                 try {
                     if (Connected && _canGetStepSize) {
-                        stepSize = instance.StepSize;
+                        stepSize = device.StepSize;
                     }
                 } catch (PropertyNotImplementedException) {
                     _canGetStepSize = false;
@@ -107,7 +123,7 @@ namespace NINA.Model.MyFocuser {
         public bool TempCompAvailable {
             get {
                 if (Connected) {
-                    return instance.TempCompAvailable;
+                    return device.TempCompAvailable;
                 } else {
                     return false;
                 }
@@ -116,15 +132,15 @@ namespace NINA.Model.MyFocuser {
 
         public bool TempComp {
             get {
-                if (Connected && instance.TempCompAvailable) {
-                    return instance.TempComp;
+                if (Connected && device.TempCompAvailable) {
+                    return device.TempComp;
                 } else {
                     return false;
                 }
             }
             set {
-                if (Connected && instance.TempCompAvailable) {
-                    instance.TempComp = value;
+                if (Connected && device.TempCompAvailable) {
+                    device.TempComp = value;
                 }
             }
         }
@@ -136,7 +152,7 @@ namespace NINA.Model.MyFocuser {
                 double temperature = double.NaN;
                 try {
                     if (Connected && _hasTemperature) {
-                        temperature = instance.Temperature;
+                        temperature = device.Temperature;
                     }
                 } catch (PropertyNotImplementedException) {
                     _hasTemperature = false;
@@ -151,8 +167,59 @@ namespace NINA.Model.MyFocuser {
             }
         }
 
-        public async Task Move(int position, CancellationToken ct, int waitInMs = 1000) {
-            await instance.MoveAsync(position, ct, waitInMs);
+        public Task Move(int position, CancellationToken ct, int waitInMs = 1000) {
+            if (Absolute) {
+                return MoveInternalAbsolute(position, ct, waitInMs);
+            } else {
+                return MoveInternalRelative(position, ct, waitInMs);
+            }
+        }
+
+        private async Task MoveInternalAbsolute(int position, CancellationToken ct, int waitInMs = 1000) {
+            if (Connected) {
+                var reEnableTempComp = TempComp;
+                if (reEnableTempComp) {
+                    TempComp = false;
+                }
+
+                while (position != device.Position) {
+                    device.Move(position);
+                    while (IsMoving) {
+                        await Utility.Utility.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
+                    }
+                }
+
+                if (reEnableTempComp) {
+                    TempComp = true;
+                }
+            }
+        }
+
+        private async Task MoveInternalRelative(int position, CancellationToken ct, int waitInMs = 1000) {
+            if (Connected) {
+                var reEnableTempComp = TempComp;
+                if (reEnableTempComp) {
+                    TempComp = false;
+                }
+
+                var relativeOffsetRemaining = position - this.Position;
+                while (relativeOffsetRemaining != 0) {
+                    var moveAmount = Math.Min(MaxStep, Math.Abs(relativeOffsetRemaining));
+                    if (relativeOffsetRemaining < 0) {
+                        moveAmount *= -1;
+                    }
+                    device.Move(moveAmount);
+                    while (IsMoving) {
+                        await Utility.Utility.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
+                    }
+                    relativeOffsetRemaining -= moveAmount;
+                    internalPosition += moveAmount;
+                }
+
+                if (reEnableTempComp) {
+                    TempComp = true;
+                }
+            }
         }
 
         private bool _canHalt;
@@ -160,7 +227,7 @@ namespace NINA.Model.MyFocuser {
         public void Halt() {
             if (Connected && _canHalt) {
                 try {
-                    instance.Halt();
+                    device.Halt();
                 } catch (MethodNotImplementedException) {
                     _canHalt = false;
                 } catch (Exception ex) {
@@ -170,10 +237,6 @@ namespace NINA.Model.MyFocuser {
         }
 
         protected override string ConnectionLostMessage => Locale.Loc.Instance["LblFocuserConnectionLost"];
-
-        private IFocuserV3Ex GetFocuser(bool connect) {
-            return FocuserProvider.GetFocuser(Id, connect);
-        }
 
         private void Initialize() {
             _canGetPosition = true;
@@ -187,11 +250,8 @@ namespace NINA.Model.MyFocuser {
             return Task.CompletedTask;
         }
 
-        private IFocuserV3Ex instance;
-
         protected override Focuser GetInstance(string id) {
-            instance = GetFocuser(true);
-            return instance.GetASCOMInstance() as Focuser;
+            return new Focuser(id);
         }
     }
 }
