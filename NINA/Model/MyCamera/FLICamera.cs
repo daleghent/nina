@@ -704,6 +704,8 @@ namespace NINA.Model.MyCamera {
                 ushort[] rowData = new ushort[width];
                 ushort[] imgData = new ushort[imgSize];
 
+                BGFlushStop();
+
                 Logger.Debug($"FLI: Fetching {height} rows from the camera");
 
                 for (int r = 0; r < height; r++) {

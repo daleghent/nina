@@ -5301,4 +5301,7 @@ Dec: {1}</value>
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
     <value>Failed to change connection state of device.</value>
   </data>
+  <data name="LblRms" xml:space="preserve">
+    <value>Rms</value>
+  </data>
 </root>

@@ -286,7 +286,7 @@
                                                     Visibility="{Binding Item.Rms, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
                                                     <TextBlock Text="{ns:Loc LblRms}" />
                                                     <TextBlock Text=": " />
-                                                    <TextBlock Text="{Binding Item.Rms, StringFormat='{}{0:N2}'}" />
+                                                    <TextBlock Text="{Binding Item.RmsText}" />
                                                 </StackPanel>
 
                                                 <StackPanel

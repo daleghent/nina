@@ -160,7 +160,7 @@
     <value>Despois</value>
   </data>
   <data name="LblAFUseBrightestStars" xml:space="preserve">
-    <value>Usar n estrelas brillantes</value>
+    <value>Use brightest n stars</value>
   </data>
   <data name="LblAFUseBrightestStarsTooltip" xml:space="preserve">
     <value>Limitar AutoFoco ás estrelas máis brillantes. 0 significa que non hai límite.</value>
@@ -212,7 +212,7 @@ Usando eses dous puntos calcularase e mostrarase o erro real de altitude</value>
     <value>Activar Grella</value>
   </data>
   <data name="LblAnnotateImage" xml:space="preserve">
-    <value>Marcar Imaxe</value>
+    <value>Annotate Image</value>
   </data>
   <data name="LblAnnotateImageTooltip" xml:space="preserve">
     <value>Se está marcado e se aplica a detección de estrelas para unha imaxe, esta marcarase coas estrelas atopadas e o seu respectivo valor HFR</value>
@@ -5309,5 +5309,8 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
     <value>Failed to change connection state of device.</value>
+  </data>
+  <data name="LblRms" xml:space="preserve">
+    <value>Rms</value>
   </data>
 </root>
