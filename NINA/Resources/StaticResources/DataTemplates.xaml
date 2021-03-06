@@ -19,6 +19,7 @@
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:phd2="clr-namespace:NINA.Model.MyGuider.PHD2"
     xmlns:rotator="clr-namespace:NINA.Model.MyRotator"
+    xmlns:safety="clr-namespace:NINA.Model.MySafetyMonitor"
     xmlns:simulator="clr-namespace:NINA.Model.MyCamera.Simulator"
     xmlns:switch="clr-namespace:NINA.Model.MySwitch"
     xmlns:switchview="clr-namespace:NINA.View.Equipment.Switch"
@@ -104,5 +105,9 @@
 
     <DataTemplate DataType="{x:Type flatdevice:ArteskyFlatBox}">
         <equip:ArteskyFlatBoxSetupView />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type safety:SafetyMonitorSimulator}">
+        <safety:SafetyMonitorSimulatorSetup />
     </DataTemplate>
 </ResourceDictionary>

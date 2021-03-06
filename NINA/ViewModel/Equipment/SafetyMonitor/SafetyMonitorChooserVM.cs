@@ -42,6 +42,8 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
                 Logger.Error(ex);
             }
 
+            Devices.Add(new NINA.Model.MySafetyMonitor.SafetyMonitorSimulator());
+
             DetermineSelectedDevice(profileService.ActiveProfile.RotatorSettings.Id);
         }
     }

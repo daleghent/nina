@@ -513,6 +513,10 @@
     <Compile Include="Model\MyFlatDevice\AscomCoverCalibrator.cs" />
     <Compile Include="Model\MyFocuser\UltimatePowerboxV2.cs" />
     <Compile Include="Model\MyFlatDevice\ArteskyFlatBox.cs" />
+    <Compile Include="Model\MySafetyMonitor\SafetyMonitorSimulator.cs" />
+    <Compile Include="Model\MySafetyMonitor\SafetyMonitorSimulatorSetup.xaml.cs">
+      <DependentUpon>SafetyMonitorSimulatorSetup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\MySwitch\DummySwitch.cs" />
     <Compile Include="Model\MyWeatherData\TheWeatherCompany.cs" />
     <Compile Include="Model\MyPlanetarium\C2A.cs" />
@@ -1720,6 +1724,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Model\MySafetyMonitor\SafetyMonitorSimulatorSetup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MyMessageBox\MyMessageBoxView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
