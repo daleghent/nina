@@ -6889,6 +6889,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Estimated Flat Panel Brightness.
+        /// </summary>
+        internal static string LblEstimatedFlatPanelBrightness {
+            get {
+                return ResourceManager.GetString("LblEstimatedFlatPanelBrightness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Estimated Finish Time.
         /// </summary>
         internal static string LblETA {
@@ -7524,6 +7533,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mean ADU was {0}, starting Exposure Brightness calculation at {1}.
+        /// </summary>
+        internal static string LblFlatExposureCalcContinueBrightness {
+            get {
+                return ResourceManager.GetString("LblFlatExposureCalcContinueBrightness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Mean ADU is {0} target Exposure Time is {1}.
         /// </summary>
         internal static string LblFlatExposureCalcFinished {
@@ -7533,11 +7551,29 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Mean ADU is {0} target Exposure Brightness is {1}.
+        /// </summary>
+        internal static string LblFlatExposureCalcFinishedBrightness {
+            get {
+                return ResourceManager.GetString("LblFlatExposureCalcFinishedBrightness", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Starting Exposure Time calculation at {0}.
         /// </summary>
         internal static string LblFlatExposureCalcStart {
             get {
                 return ResourceManager.GetString("LblFlatExposureCalcStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting Exposure Brightness calculation at {0}.
+        /// </summary>
+        internal static string LblFlatExposureCalcStartBrightness {
+            get {
+                return ResourceManager.GetString("LblFlatExposureCalcStartBrightness", resourceCulture);
             }
         }
         
@@ -7637,6 +7673,15 @@ namespace NINA.Locale {
         internal static string LblFlatUserFlatSettings {
             get {
                 return ResourceManager.GetString("LblFlatUserFlatSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The wizard did not find the right brightness level after 5 tries. Please try changing the step size or the tolerance..
+        /// </summary>
+        internal static string LblFLatUserPromptAdjustStepSize {
+            get {
+                return ResourceManager.GetString("LblFLatUserPromptAdjustStepSize", resourceCulture);
             }
         }
         
@@ -12726,6 +12771,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sky Flats.
+        /// </summary>
+        internal static string LblSkyFlat {
+            get {
+                return ResourceManager.GetString("LblSkyFlat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sky Position.
         /// </summary>
         internal static string LblSkyPosition {
@@ -15259,7 +15313,7 @@ namespace NINA.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Wizard Operation Mode.
+        ///   Looks up a localized string similar to Wizard Mode.
         /// </summary>
         internal static string LblWizardOperationMode {
             get {

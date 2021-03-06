@@ -28,11 +28,12 @@
         <TextBlock
             Grid.Row="0"
             Margin="10"
-            Text="{Binding Text}" />
+            Text="{Binding Message}" />
 
         <GroupBox Grid.Row="1" Header="{ns:Loc LblFlatUserCurrentExposureCalculation}">
             <Grid Margin="5">
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -48,7 +49,7 @@
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="1"
-                    Text="{Binding CurrentMean}" />
+                    Text="{Binding CurrentMean, StringFormat={}{0:N0}}" />
                 <TextBlock
                     Grid.Row="1"
                     Grid.Column="0"
@@ -60,16 +61,26 @@
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="0"
-                    Text="{ns:Loc LblEstimatedExposureTime}" />
+                    Text="{ns:Loc LblEstimatedExposureTime, StringFormat={}{0:N5}}" />
                 <TextBlock
                     Grid.Row="2"
                     Grid.Column="1"
-                    Text="{Binding ExpectedExposureTime}" />
+                    Text="{Binding ExpectedExposureTime, StringFormat={}{0:N5}}" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Visibility="{Binding FlatDeviceInfo.Connected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=False}"
+                    Text="{ns:Loc LblEstimatedFlatPanelBrightness}" />
+                <TextBlock
+                    Grid.Row="3"
+                    Grid.Column="1"
+                    Visibility="{Binding FlatDeviceInfo.Connected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, FallbackValue=False}"
+                    Text="{Binding ExpectedBrightness}" />
             </Grid>
         </GroupBox>
 
         <GroupBox Grid.Row="2" Header="{ns:Loc LblFlatUserFlatSettings}">
-            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" x:Name="SettingsHost">
                 <ContentControl Content="{Binding Settings, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             </ScrollViewer>
         </GroupBox>

@@ -29,7 +29,6 @@ using System.IO;
 using System.Threading.Tasks;
 
 namespace NINATest.Sequencer.SequenceItem.Utility {
-
     [TestFixture]
     public class WaitUntilAboveHorizonTest {
         private Mock<IProfileService> profileServiceMock;

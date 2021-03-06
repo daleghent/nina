@@ -34,7 +34,6 @@
         </Grid.ColumnDefinitions>
         <GroupBox
             Grid.Row="0"
-            Grid.RowSpan="2"
             Grid.Column="0"
             Header="{ns:Loc LblFlatWizard}">
             <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
@@ -156,7 +155,6 @@
                                     </TextBox.Text>
                                 </TextBox>
                                 <ComboBox
-                                    Grid.Column="1"
                                     DisplayMemberPath="Text"
                                     IsSynchronizedWithCurrentItem="True"
                                     SelectedValuePath="Text"
@@ -188,16 +186,37 @@
                         </UniformGrid>
                     </Border>
 
-                    <UniformGrid Margin="0,0,0,5" Columns="2">
-                        <ComboBox ItemsSource="{util:EnumBindingSource {x:Type enum:AltitudeSite}}" SelectedItem="{Binding AltitudeSite}" />
-                        <Button
-                            Margin="5,0,0,0"
-                            VerticalAlignment="Stretch"
-                            Command="{Binding SlewToZenithCommand}">
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSlewToZenith}" />
-                        </Button>
-                    </UniformGrid>
-                    <TabControl>
+                    <Border
+                        Margin="0,0,0,5"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0,0,0,0">
+                        <UniformGrid Margin="0,0,0,5" Columns="2">
+                            <ComboBox ItemsSource="{util:EnumBindingSource {x:Type enum:AltitudeSite}}" SelectedItem="{Binding AltitudeSite}" />
+                            <Button
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Stretch"
+                                Command="{Binding SlewToZenithCommand}">
+                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblSlewToZenith}" />
+                            </Button>
+                        </UniformGrid>
+                    </Border>
+                    <Border
+                        Margin="0,0,0,15"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0,0,0,0">
+                        <UniformGrid Margin="0,0,0,5" Columns="2">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblWizardOperationMode}"
+                                TextWrapping="WrapWithOverflow" />
+                            <ComboBox
+                                Margin="5,0,0,0"
+                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:FlatWizardMode}}}"
+                                SelectedItem="{Binding FlatWizardMode}" />
+                        </UniformGrid>
+                    </Border>
+
+                    <TabControl x:Name="SettingsHost">
                         <TabItem Header="Single Mode">
                             <StackPanel Orientation="Vertical">
                                 <Border
@@ -357,7 +376,7 @@
             <local:ImageView
                 Grid.Row="0"
                 Grid.Column="0"
-                Grid.ColumnSpan="3"
+                Grid.ColumnSpan="2"
                 Image="{Binding Image}" />
             <Border
                 Grid.Row="1"
@@ -400,7 +419,7 @@
                         Grid.Column="1"
                         VerticalAlignment="Center"
                         IsEnabled="False"
-                        Text="{Binding CalculatedHistogramMean, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0} ADU}" />
+                        Text="{Binding CalculatedHistogramMean, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:N0} ADU}" />
                 </Grid>
             </Border>
         </Grid>

@@ -12,97 +12,123 @@
 
 #endregion "copyright"
 
+using NINA.Model.MyCamera;
+using NINA.Model.MyFlatDevice;
 using NINA.Utility;
+using NINA.Utility.Enum;
 
 namespace NINA.ViewModel.FlatWizard {
 
-    internal class FlatWizardUserPromptVM : BaseINPC {
-        private readonly string text;
-        private readonly double currentMean;
-        private readonly double cameraBitDepth;
-        private bool continueWizard;
-        private FlatWizardFilterSettingsWrapper settings;
-
-        private bool reset;
-        private readonly double expectedExposureTime;
-
+    internal class FlatWizardUserPromptVM : BaseINPC, IFlatWizardUserPromptVM {
         public RelayCommand ResetAndContinueCommand { get; }
         public RelayCommand ContinueCommand { get; }
         public RelayCommand CancelCommand { get; }
+        public FlatWizardUserPromptResult Result { get; set; }
 
-        public FlatWizardUserPromptVM(string text, double currentMean, double cameraBitDepth, FlatWizardFilterSettingsWrapper settings, double expectedExposureTime) {
-            this.text = text;
-            this.currentMean = currentMean;
-            this.cameraBitDepth = cameraBitDepth;
-            this.expectedExposureTime = expectedExposureTime;
-            this.settings = settings;
+        public FlatWizardUserPromptVM() {
             ResetAndContinueCommand = new RelayCommand(ResetAndContinueContinueFlatWizard);
             ContinueCommand = new RelayCommand(ContinueFlatWizard);
             CancelCommand = new RelayCommand(CancelFlatWizard);
         }
 
         private void ResetAndContinueContinueFlatWizard(object obj) {
-            Continue = true;
-            Reset = true;
+            Result = FlatWizardUserPromptResult.ResetAndContinue;
         }
 
         private void CancelFlatWizard(object obj) {
-            Continue = false;
+            Result = FlatWizardUserPromptResult.Cancel;
         }
 
         private void ContinueFlatWizard(object obj) {
-            Continue = true;
+            Result = FlatWizardUserPromptResult.Continue;
         }
 
+        private FlatWizardFilterSettingsWrapper settings;
+
         public FlatWizardFilterSettingsWrapper Settings {
-            get {
-                return settings;
-            }
+            get => settings;
             set {
                 settings = value;
                 RaisePropertyChanged();
             }
         }
 
-        public bool Continue {
-            get {
-                return continueWizard;
-            }
+        private string message;
+
+        public string Message {
+            get => message;
             set {
-                continueWizard = value;
+                message = value;
+                RaisePropertyChanged();
             }
         }
 
-        public string Text {
-            get {
-                return text;
-            }
-        }
+        private double currentMean;
 
         public double CurrentMean {
-            get {
-                return currentMean;
+            get => currentMean;
+            set {
+                currentMean = value;
+                RaisePropertyChanged();
             }
         }
+
+        private double cameraBitDepth;
 
         public double CameraBitDepth {
-            get {
-                return cameraBitDepth;
+            get => cameraBitDepth;
+            set {
+                cameraBitDepth = value;
+                RaisePropertyChanged();
             }
         }
+
+        private double expectedExposureTime;
 
         public double ExpectedExposureTime {
-            get {
-                return expectedExposureTime;
+            get => expectedExposureTime;
+            set {
+                expectedExposureTime = value;
+                RaisePropertyChanged();
             }
         }
 
-        public bool Reset {
-            get {
-                return reset;
-            }
+        private double expectedBrightness;
+
+        public double ExpectedBrightness {
+            get => expectedBrightness;
             set {
-                reset = value;
+                expectedBrightness = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private FlatWizardMode flatWizardMode;
+
+        public FlatWizardMode FlatWizardMode {
+            get => flatWizardMode;
+            set {
+                flatWizardMode = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private CameraInfo cameraInfo;
+
+        public CameraInfo CameraInfo {
+            get => cameraInfo;
+            set {
+                cameraInfo = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private FlatDeviceInfo flatDeviceInfo;
+
+        public FlatDeviceInfo FlatDeviceInfo {
+            get => flatDeviceInfo;
+            set {
+                flatDeviceInfo = value;
                 RaisePropertyChanged();
             }
         }

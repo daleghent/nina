@@ -32,6 +32,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINATest.FlatDevice {
+
     [TestFixture]
     public class FlatDeviceVMTest {
         private FlatDeviceVM sut;
@@ -374,7 +375,6 @@ namespace NINATest.FlatDevice {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
             sut.ToggleLight(true);
             sut.LightOn.Should().BeFalse();
-            mockFlatDevice.Verify(m => m.LightOn, Times.Never);
         }
 
         [Test]

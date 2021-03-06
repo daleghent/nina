@@ -54,8 +54,8 @@
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 ActualValue="{Binding Settings.MinFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                ActualValueMaximum="{Binding CameraInfo.ExposureMax, FallbackValue=30}"
-                                ActualValueMinimum="{Binding CameraInfo.ExposureMin, FallbackValue=0.00025}"
+                                ActualValueMaximum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.CameraInfo.ExposureMax}"
+                                ActualValueMinimum="{Binding ElementName=SettingsHost, FallbackValue=0.00025, Path=DataContext.CameraInfo.ExposureMin}"
                                 InitialSpeedTickValue="0.5"
                                 MaxActualValueIncreasePerTick="1"
                                 SpeedTickPercentageChangePerTick="0.9" />
@@ -95,8 +95,8 @@
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 ActualValue="{Binding Settings.MaxFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                ActualValueMaximum="{Binding CameraInfo.ExposureMax, FallbackValue=30}"
-                                ActualValueMinimum="{Binding Settings.MinFlatExposureTime, FallbackValue=0.00025}"
+                                ActualValueMaximum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.CameraInfo.ExposureMax}"
+                                ActualValueMinimum="{Binding ElementName=SettingsHost, FallbackValue=0.00025, Path=DataContext.CameraInfo.ExposureMin}"
                                 InitialSpeedTickValue="0.5"
                                 MaxActualValueIncreasePerTick="1"
                                 SpeedTickPercentageChangePerTick="0.9" />
@@ -149,7 +149,7 @@
                         Margin="0,0,0,5"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0,0,0,1"
-                        Visibility="{Binding FlatDeviceInfo.Connected, Converter={StaticResource VisibilityConverter}}">
+                        Visibility="{Binding ElementName=SettingsHost, Path=DataContext.FlatDeviceInfo.Connected, FallbackValue=Collapsed, Converter={StaticResource BooleanToVisibilityCollapsedConverter}, UpdateSourceTrigger=PropertyChanged}">
                         <Grid VerticalAlignment="Center">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
@@ -169,7 +169,7 @@
                             <TextBox
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="{Binding Settings.MaxFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" />
+                                Text="{Binding Settings.MaxFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
                             <Slider
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -215,7 +215,7 @@
                             <TextBox
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="{Binding Settings.MinFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" />
+                                Text="{Binding Settings.MinFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
                             <Slider
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -255,7 +255,7 @@
                             <TextBox
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="{Binding Settings.MaxFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" />
+                                Text="{Binding Settings.MaxFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
                             <Slider
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -295,7 +295,7 @@
                             <TextBox
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="{Binding Settings.FlatDeviceStepSize, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" />
+                                Text="{Binding Settings.FlatDeviceStepSize, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
                             <Slider
                                 Grid.Row="1"
                                 Grid.Column="0"
@@ -347,45 +347,149 @@
                 </StackPanel>
                 <!--  End Dynamic Brightness Mode  -->
             </DataTemplate>
+            <DataTemplate x:Key="SkyFlat">
+                <!--  Start SkyFlat Mode  -->
+                <StackPanel Orientation="Vertical">
+                    <Border
+                        Margin="0,0,0,5"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0,0,0,1">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="15px" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblFlatMinExposureTime}"
+                                TextWrapping="WrapWithOverflow" />
+                            <TextBox
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding Settings.MinFlatExposureTime, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" />
+                            <ninactrl:TickSlider
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                ActualValue="{Binding Settings.MinFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                ActualValueMaximum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.CameraInfo.ExposureMax}"
+                                ActualValueMinimum="{Binding ElementName=SettingsHost, FallbackValue=0.00025, Path=DataContext.CameraInfo.ExposureMin}"
+                                InitialSpeedTickValue="0.5"
+                                MaxActualValueIncreasePerTick="1"
+                                SpeedTickPercentageChangePerTick="0.9" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                HorizontalAlignment="Right"
+                                Text="s" />
+                        </Grid>
+                    </Border>
+                    <Border
+                        Margin="0,0,0,5"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0,0,0,1">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="15px" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblFlatMaxExposureTime}"
+                                TextWrapping="WrapWithOverflow" />
+                            <TextBox
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding Settings.MaxFlatExposureTime, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" />
+                            <ninactrl:TickSlider
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                ActualValue="{Binding Settings.MaxFlatExposureTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                ActualValueMaximum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.CameraInfo.ExposureMax}"
+                                ActualValueMinimum="{Binding ElementName=SettingsHost, FallbackValue=0.00025, Path=DataContext.CameraInfo.ExposureMin}"
+                                InitialSpeedTickValue="0.5"
+                                MaxActualValueIncreasePerTick="1"
+                                SpeedTickPercentageChangePerTick="0.9" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                HorizontalAlignment="Right"
+                                Text="s" />
+                        </Grid>
+                    </Border>
+                    <Border
+                        Margin="0,0,0,5"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0,0,0,1">
+                        <Grid VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="15px" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblFlatStepSize}"
+                                TextWrapping="WrapWithOverflow" />
+                            <TextBox
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                Text="{Binding Settings.StepSize, UpdateSourceTrigger=PropertyChanged, StringFormat=N5}" />
+                            <Slider
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Maximum="3"
+                                Minimum="0.00025"
+                                Value="{Binding Settings.StepSize, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                HorizontalAlignment="Right"
+                                Text="s" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+                <!--  End SkyFlat Mode  -->
+            </DataTemplate>
             <DataTemplate x:Key="Default">
                 <Grid />
             </DataTemplate>
         </StackPanel.Resources>
 
-        <!--
-        Currently only the dynamic exposure mode with fixed panel brightness is supported.
-        Needs to be enhanced for 1.11
-        <Border
-            Margin="0,0,0,5"
-            BorderBrush="{StaticResource BorderBrush}"
-            BorderThickness="0,0,0,1">
-            <Grid VerticalAlignment="Center">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="1*" />
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    VerticalAlignment="Center"
-                    Text="{ns:Loc LblWizardOperationMode}"
-                    TextWrapping="WrapWithOverflow" />
-                <ComboBox
-                    Grid.Column="1"
-                    ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:FlatWizardMode}}}"
-                    SelectedItem="{Binding Settings.FlatWizardMode}" />
-            </Grid>
-        </Border>-->
-
         <ContentControl Content="{Binding}" DataContext="{Binding}">
             <ContentControl.Style>
                 <Style TargetType="ContentControl">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Settings.FlatWizardMode}" Value="0">
+                        <DataTrigger Binding="{Binding ElementName=SettingsHost, Path=DataContext.FlatWizardMode}" Value="0">
                             <Setter Property="ContentTemplate" Value="{StaticResource DynamicExposure}" />
                         </DataTrigger>
-                        <DataTrigger Binding="{Binding Settings.FlatWizardMode}" Value="1">
+                        <DataTrigger Binding="{Binding ElementName=SettingsHost, Path=DataContext.FlatWizardMode}" Value="1">
                             <Setter Property="ContentTemplate" Value="{StaticResource DynamicBrightness}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding ElementName=SettingsHost, Path=DataContext.FlatWizardMode}" Value="2">
+                            <Setter Property="ContentTemplate" Value="{StaticResource SkyFlat}" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
@@ -418,7 +522,7 @@
                     Grid.Column="1"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Text="{Binding HistogramMeanTargetADU, Mode=OneWay}" />
+                    Text="{Binding HistogramMeanTargetADU, Mode=OneWay, StringFormat={}{0:N0}}" />
                 <TextBox
                     Grid.Row="0"
                     Grid.Column="2"

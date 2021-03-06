@@ -43,9 +43,10 @@ using NINA.ViewModel.Sequencer;
 using Ninject;
 using Ninject.Modules;
 using System;
+using System.Windows;
+using NINA.MyMessageBox;
 
 namespace NINA.Utility {
-
     internal class IoCBindings : NinjectModule {
         private readonly IProfileService _profileService;
 
@@ -93,21 +94,22 @@ namespace NINA.Utility {
                 Bind<IDeviceChooserVM>().To<CameraChooserVM>().WhenInjectedExactlyInto<SGPServiceBackend>().InSingletonScope();
                 Bind<IDeviceChooserVM>().To<FilterWheelChooserVM>().WhenInjectedExactlyInto<FilterWheelVM>().InSingletonScope();
                 Bind<IDeviceChooserVM>().To<GuiderChooserVM>().WhenInjectedExactlyInto<GuiderVM>().InSingletonScope();
+                Bind<IFlatWizardUserPromptVM>().To<FlatWizardUserPromptVM>().InSingletonScope();
+                Bind<ITwilightCalculator>().To<TwilightCalculator>().InSingletonScope();
 
                 Bind<ProjectVersion>().ToMethod(f => new ProjectVersion(Utility.Version)).InSingletonScope();
 
-                Bind<IFlatWizardVM>().ToMethod(f => {
-                    return new FlatWizardVM(f.Kernel.Get<IProfileService>(),
-                        new ImagingVM(
-                            f.Kernel.Get<IProfileService>(), new ImagingMediator(), f.Kernel.Get<ICameraMediator>(),
-                            f.Kernel.Get<ITelescopeMediator>(), f.Kernel.Get<IFilterWheelMediator>(), f.Kernel.Get<IFocuserMediator>(),
-                            f.Kernel.Get<IRotatorMediator>(), f.Kernel.Get<IGuiderMediator>(), f.Kernel.Get<IWeatherDataMediator>(),
-                            f.Kernel.Get<IApplicationStatusMediator>(),
-                            new ImageControlVM(f.Kernel.Get<IProfileService>(), f.Kernel.Get<ICameraMediator>(), f.Kernel.Get<ITelescopeMediator>(), f.Kernel.Get<IApplicationStatusMediator>()),
-                            new ImageStatisticsVM(f.Kernel.Get<IProfileService>())),
-                        f.Kernel.Get<ICameraMediator>(), f.Kernel.Get<IFilterWheelMediator>(), f.Kernel.Get<ITelescopeMediator>(),
-                        f.Kernel.Get<IFlatDeviceMediator>(), f.Kernel.Get<IApplicationResourceDictionary>(), f.Kernel.Get<IApplicationStatusMediator>());
-                }).InSingletonScope();
+                Bind<IFlatWizardVM>().ToMethod(f => new FlatWizardVM(f.Kernel.Get<IProfileService>(),
+                    new ImagingVM(
+                        f.Kernel.Get<IProfileService>(), new ImagingMediator(), f.Kernel.Get<ICameraMediator>(),
+                        f.Kernel.Get<ITelescopeMediator>(), f.Kernel.Get<IFilterWheelMediator>(), f.Kernel.Get<IFocuserMediator>(),
+                        f.Kernel.Get<IRotatorMediator>(), f.Kernel.Get<IGuiderMediator>(), f.Kernel.Get<IWeatherDataMediator>(),
+                        f.Kernel.Get<IApplicationStatusMediator>(),
+                        new ImageControlVM(f.Kernel.Get<IProfileService>(), f.Kernel.Get<ICameraMediator>(), f.Kernel.Get<ITelescopeMediator>(), f.Kernel.Get<IApplicationStatusMediator>()),
+                        new ImageStatisticsVM(f.Kernel.Get<IProfileService>())), f.Kernel.Get<IFlatWizardUserPromptVM>(),
+                    f.Kernel.Get<ICameraMediator>(), f.Kernel.Get<IFilterWheelMediator>(), f.Kernel.Get<ITelescopeMediator>(),
+                    f.Kernel.Get<IFlatDeviceMediator>(), f.Kernel.Get<IImageGeometryProvider>(), f.Kernel.Get<IApplicationStatusMediator>(), f.Kernel.Get<IMyMessageBoxVM>(),
+                    f.Kernel.Get<ITwilightCalculator>())).InSingletonScope();
 
                 Bind<IAnchorablePlateSolverVM>().To<AnchorablePlateSolverVM>().InSingletonScope();
                 Bind<IAnchorableSnapshotVM>().To<AnchorableSnapshotVM>().InSingletonScope();
@@ -152,6 +154,7 @@ namespace NINA.Utility {
                 Bind<ISGPServiceBackend>().To<SGPServiceBackend>().InSingletonScope();
                 Bind<ISequenceNavigationVM>().To<SequenceNavigationVM>().InSingletonScope();
                 Bind<ISequencerFactory>().To<SequencerFactory>().InSingletonScope();
+                Bind<IMyMessageBoxVM>().To<MyMessageBoxVM>();
             } catch (Exception e) {
                 Logger.Error(e);
                 throw e;
