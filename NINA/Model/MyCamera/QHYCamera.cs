@@ -1,7 +1,7 @@
-#region "copyright"
+﻿#region "copyright"
 
 /*
-    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -19,7 +19,7 @@ using QHYCCD;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
+using System.Management;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,9 +27,8 @@ using NINA.Model.ImageData;
 using Nito.AsyncEx;
 
 namespace NINA.Model.MyCamera {
-
     public class QHYCamera : BaseINPC, ICamera {
-        private static IntPtr CameraP;
+        private static readonly TimeSpan COOLING_TIMEOUT = TimeSpan.FromSeconds(2);
         private AsyncObservableCollection<BinningMode> _binningModes;
         private bool _connected = false;
         private bool _liveViewEnabled = false;
@@ -37,15 +36,18 @@ namespace NINA.Model.MyCamera {
         private short _readoutModeForSnapImages;
         private Task coolerTask;
         private CancellationTokenSource coolerWorkerCts;
-        private LibQHYCCD.QHYCCD_CAMERA_INFO Info;
-        private IProfileService profileService;
-
-        private CancellationTokenSource DownloadExposureTaskCTS;
-        private Task<IExposureData> DownloadExposureTask;
+        private Task sensorStatsTask;
+        private CancellationTokenSource sensorStatsCts;
+        private QhySdk.QHYCCD_CAMERA_INFO Info;
+        private readonly IProfileService profileService;
+        private CancellationTokenSource downloadExposureTaskCTS;
+        private Task<IExposureData> downloadExposureTask;
+        public IQhySdk Sdk { get; set; } = QhySdk.Instance;
 
         public QHYCamera(uint cameraIdx, IProfileService profileService) {
             this.profileService = profileService;
-            StringBuilder cameraId = new StringBuilder(LibQHYCCD.QHYCCD_ID_LEN);
+
+            StringBuilder cameraId = new StringBuilder(QhySdk.QHYCCD_ID_LEN);
             StringBuilder cameraModel = new StringBuilder(0);
 
             /*
@@ -53,14 +55,14 @@ namespace NINA.Model.MyCamera {
              * The QHY SDK uses this to internally identify connected cameras
              * and this we need this to create a handle for our camera.
              */
-            LibQHYCCD.N_GetQHYCCDId(cameraIdx, cameraId);
+            Sdk.GetId(cameraIdx, cameraId);
 
             /*
              * Camera model short form, eg: "QHY183C"
              * We use this to put in the camera equipment selection menu
              * rather than the long form above.
              */
-            LibQHYCCD.N_GetQHYCCDModel(cameraId, cameraModel);
+            Sdk.GetModel(cameraId, cameraModel);
 
             Name = cameraModel.ToString();
             Info.Index = cameraIdx;
@@ -74,19 +76,23 @@ namespace NINA.Model.MyCamera {
         private List<int> SupportedBinFactors {
             get {
                 if (Info.SupportedBins == null) {
-                    Info.SupportedBins = new List<int>();
+                    var supportedBins = new List<int>();
+                    if (Sdk.IsControl(QhySdk.CONTROL_ID.CAM_BIN1X1MODE)) {
+                        supportedBins.Add(1);
+                    }
 
-                    if (IsQHYControl(LibQHYCCD.CONTROL_ID.CAM_BIN1X1MODE))
-                        Info.SupportedBins.Add(1);
+                    if (Sdk.IsControl(QhySdk.CONTROL_ID.CAM_BIN2X2MODE)) {
+                        supportedBins.Add(2);
+                    }
 
-                    if (IsQHYControl(LibQHYCCD.CONTROL_ID.CAM_BIN2X2MODE))
-                        Info.SupportedBins.Add(2);
+                    if (Sdk.IsControl(QhySdk.CONTROL_ID.CAM_BIN3X3MODE)) {
+                        supportedBins.Add(3);
+                    }
 
-                    if (IsQHYControl(LibQHYCCD.CONTROL_ID.CAM_BIN3X3MODE))
-                        Info.SupportedBins.Add(3);
-
-                    if (IsQHYControl(LibQHYCCD.CONTROL_ID.CAM_BIN4X4MODE))
-                        Info.SupportedBins.Add(4);
+                    if (Sdk.IsControl(QhySdk.CONTROL_ID.CAM_BIN4X4MODE)) {
+                        supportedBins.Add(4);
+                    }
+                    Info.SupportedBins = supportedBins;
                 }
                 return Info.SupportedBins;
             }
@@ -111,13 +117,7 @@ namespace NINA.Model.MyCamera {
 
         public short BinX {
             get => Info.CurBin;
-            set {
-                if (LibQHYCCD.SetQHYCCDBinMode(CameraP, (uint)value, (uint)value) == LibQHYCCD.QHYCCD_SUCCESS) {
-                    Info.CurBin = value;
-                } else {
-                    Logger.Warning($"QHYCCD: Failed to set BIN mode {value}x{value}");
-                }
-            }
+            set => Info.CurBin = value;
         }
 
         /// <summary>
@@ -161,8 +161,9 @@ namespace NINA.Model.MyCamera {
 
         public bool CanGetGain {
             get {
-                if (Connected)
+                if (Connected) {
                     return Info.HasGain;
+                }
 
                 return false;
             }
@@ -170,8 +171,9 @@ namespace NINA.Model.MyCamera {
 
         public bool CanSetGain {
             get {
-                if (Connected)
+                if (Connected) {
                     return Info.HasGain;
+                }
 
                 return false;
             }
@@ -179,8 +181,9 @@ namespace NINA.Model.MyCamera {
 
         public bool CanSetOffset {
             get {
-                if (Connected)
+                if (Connected) {
                     return Info.HasOffset;
+                }
 
                 return false;
             }
@@ -206,7 +209,18 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        public bool CanShowLiveView => true;
+        public bool CanFastReadout {
+            get {
+                if (Connected) {
+                    return Info.HasReadoutSpeed;
+                }
+
+                return false;
+            }
+            private set => Info.HasReadoutSpeed = value;
+        }
+
+        public bool CanShowLiveView => false;
         public bool CanSubSample => true;
 
         public bool Connected {
@@ -234,7 +248,7 @@ namespace NINA.Model.MyCamera {
                 double rv = double.NaN;
 
                 if (Connected && CanSetTemperature) {
-                    if ((rv = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_CURPWM)) != LibQHYCCD.QHYCCD_ERROR) {
+                    if ((rv = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_CURPWM)) != QhySdk.QHYCCD_ERROR) {
                         /*
                          * This needs to be returned as a percentage of Info.CoolerPwmMax.
                          */
@@ -254,8 +268,8 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        public string DriverInfo => "QHYCCD SDK";
-        public string DriverVersion => LibQHYCCD.GetSDKFormattedVersion();
+        public string DriverInfo => "Native driver for QHYCCD cameras";
+        public string DriverVersion => string.Empty;
         public bool EnableSubSample { get; set; }
         public double ExposureMax => Info.ExpMax / 1e6;
         public double ElectronsPerADU => double.NaN;
@@ -274,7 +288,7 @@ namespace NINA.Model.MyCamera {
                     if (Info.HasUnreliableGain) {
                         rv = Info.CurGain;
                     } else {
-                        rv = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_GAIN);
+                        rv = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_GAIN);
                     }
 
                     return unchecked((int)rv);
@@ -284,7 +298,7 @@ namespace NINA.Model.MyCamera {
             }
             set {
                 if (Connected && CanSetGain) {
-                    if (SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_GAIN, value)) {
+                    if (Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_GAIN, value)) {
                         Info.CurGain = value;
                         RaisePropertyChanged();
                     }
@@ -301,8 +315,9 @@ namespace NINA.Model.MyCamera {
 
         public bool HasShutter {
             get {
-                if (Connected)
+                if (Connected) {
                     return Info.HasShutter;
+                }
 
                 return false;
             }
@@ -322,7 +337,7 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        public short MaxBinX => (short)Info.SupportedBins.Max();
+        public short MaxBinX => (short)SupportedBinFactors.DefaultIfEmpty(1).Max();
         public short MaxBinY => MaxBinX;
 
         public string Name {
@@ -338,7 +353,7 @@ namespace NINA.Model.MyCamera {
                 if (Connected) {
                     double rv;
 
-                    if ((rv = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_OFFSET)) != LibQHYCCD.QHYCCD_ERROR) {
+                    if ((rv = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_OFFSET)) != QhySdk.QHYCCD_ERROR) {
                         if (Info.InflatedOff != 0) {
                             return unchecked((int)(rv - Info.InflatedOff));
                         } else {
@@ -351,16 +366,33 @@ namespace NINA.Model.MyCamera {
             }
             set {
                 if (Connected && CanSetOffset) {
-                    if (SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_OFFSET, value))
+                    if (Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_OFFSET, value)) {
                         RaisePropertyChanged();
+                    }
                 }
             }
         }
 
         public int OffsetMax => Info.OffMax;
         public int OffsetMin => Info.OffMin;
-        public double PixelSizeX => Info.PixelX;
-        public double PixelSizeY => Info.PixelY;
+
+        public double PixelSizeX {
+            get => Info.PixelX;
+            private set {
+                Logger.Debug($"QHYCCD: Setting PixelSizeX to {value}");
+                Info.PixelX = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public double PixelSizeY {
+            get => Info.PixelY;
+            private set {
+                Logger.Debug($"QHYCCD: Setting PixelSizeY to {value}");
+                Info.PixelY = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public short ReadoutModeForNormalImages {
             get => _readoutModeForNormalImages;
@@ -384,13 +416,14 @@ namespace NINA.Model.MyCamera {
                 uint rv;
 
                 if (Connected) {
-                    if ((rv = LibQHYCCD.GetQHYCCDReadMode(CameraP, ref mode)) != LibQHYCCD.QHYCCD_SUCCESS) {
-                        Logger.Error($"QHYCCD: GetQHYCCDReadMode() failed. Returned {rv}");
-
-                        return -1;
+                    if (CanFastReadout) {
+                        mode = (uint)Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_SPEED);
+                    } else {
+                        if ((rv = Sdk.GetReadMode(ref mode)) != QhySdk.QHYCCD_SUCCESS) {
+                            Logger.Error($"QHYCCD: GetQHYCCDReadMode() failed. Returned {rv}");
+                            return -1;
+                        }
                     }
-
-                    Logger.Trace($"QHYCCD: Current readout mode: {mode} ({ReadoutModes[(int)mode]})");
 
                     return (short)mode;
                 } else {
@@ -398,15 +431,41 @@ namespace NINA.Model.MyCamera {
                 }
             }
             set {
-                uint rv;
-
-                if (Connected && (value != ReadoutMode) && (value < ReadoutModes.Count)) {
+                if (value < ReadoutModes.Count) {
+                    uint rv;
                     string modeName = ReadoutModes[value];
-                    Logger.Debug($"QHYCCD: ReadoutMode: Setting readout mode to {value} ({modeName})");
+                    uint mode = (uint)value;
 
-                    if ((rv = LibQHYCCD.SetQHYCCDReadMode(CameraP, (uint)value)) != LibQHYCCD.QHYCCD_SUCCESS) {
-                        Logger.Error($"QHYCCD: SetQHYCCDReadMode() failed. Returned {rv}");
+                    if (Connected) {
+                        if (CanFastReadout) {
+                            if (mode >= Info.ReadoutSpeedMin && value <= Info.ReadoutSpeedMax) {
+                                Logger.Debug($"QHYCCD: ReadoutMode: Setting readout speed to {mode} ({modeName})");
+                                Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_SPEED, mode);
+                            } else {
+                                Logger.Error($"QHYCCD: Invalid readout speed: {mode}");
+                                return;
+                            }
+                        } else {
+                            if (mode != ReadoutMode) {
+                                if (mode < 0 && mode > ReadoutModes.Count - 1) {
+                                    Logger.Error($"QHYCCD: Invalid readout mode {mode}");
+                                    return;
+                                }
+
+                                Logger.Debug($"QHYCCD: ReadoutMode: Setting readout mode to {mode} ({modeName})");
+
+                                if ((rv = Sdk.SetReadMode(mode)) != QhySdk.QHYCCD_SUCCESS) {
+                                    Logger.Error($"QHYCCD: SetQHYCCDReadMode() failed. Returned {rv}");
+                                    return;
+                                }
+
+                                Sdk.InitCamera();
+                                SetImageResolution();
+                            }
+                        }
                     }
+                } else {
+                    Logger.Warning($"QHYCCD: ReadoutMode: Index for readoutmode does not exist {value}");
                 }
             }
         }
@@ -430,7 +489,7 @@ namespace NINA.Model.MyCamera {
                 double rv = double.NaN;
 
                 if (Connected && Info.HasChipTemp) {
-                    if ((rv = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_CURTEMP)) != LibQHYCCD.QHYCCD_ERROR)
+                    if ((rv = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_CURTEMP)) != QhySdk.QHYCCD_ERROR)
                         return rv;
                 }
 
@@ -459,14 +518,14 @@ namespace NINA.Model.MyCamera {
             get {
                 double rv;
 
-                if (Connected && ((rv = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_USBTRAFFIC)) != LibQHYCCD.QHYCCD_ERROR))
+                if (Connected && ((rv = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_USBTRAFFIC)) != QhySdk.QHYCCD_ERROR))
                     return unchecked((int)rv);
 
                 return -1;
             }
             set {
                 if (Connected && CanSetUSBLimit) {
-                    if (SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_USBTRAFFIC, value))
+                    if (Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_USBTRAFFIC, value))
                         RaisePropertyChanged();
                 }
             }
@@ -493,172 +552,203 @@ namespace NINA.Model.MyCamera {
                 bool previous = Info.CoolerOn;
 
                 Logger.Debug("QHYCCD: CoolerWorker task started");
-                while (true) {
+                while (!ct.IsCancellationRequested) {
                     if (Info.CoolerOn) {
                         Logger.Trace($"QHYCCD: CoolerWorker setting camera target temp to {Info.CoolerTargetTemp}");
-                        LibQHYCCD.ControlQHYCCDTemp(CameraP, Info.CoolerTargetTemp);
+                        Sdk.ControlTemp(Info.CoolerTargetTemp);
                     } else if (previous == true) {
                         Logger.Debug("QHYCCD: CoolerWorker turning off TEC due user request");
-                        _ = SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_MANULPWM, 0);
+                        _ = Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_MANULPWM, 0);
                     }
 
                     previous = Info.CoolerOn;
 
                     /* sleep (cancelable) */
-                    await Task.Delay(LibQHYCCD.QHYCCD_COOLER_DELAY, ct);
+                    await Task.Delay(QhySdk.QHYCCD_COOLER_DELAY, ct);
                 }
             } catch (OperationCanceledException) {
                 Logger.Debug("QHYCCD: CoolerWorker task cancelled");
             }
         }
 
-        private double GetControlValue(LibQHYCCD.CONTROL_ID type) {
-            double rv;
+        private async Task SensorStatsWorker(CancellationToken ct) {
+            try {
+                Logger.Debug("QHYCCD: SensorStatsWorker task started");
 
-            if ((rv = LibQHYCCD.GetQHYCCDParam(CameraP, type)) != LibQHYCCD.QHYCCD_ERROR) {
-                Logger.Trace($"QHYCCD: Got Control {type} = {rv}");
-                return rv;
-            } else {
-                Logger.Error($"QHYCCD: Failed to Get value for control {type}");
-                return LibQHYCCD.QHYCCD_ERROR;
+                while (!ct.IsCancellationRequested) {
+                    if (QhyHasSensorAirPressure) {
+                        QhySensorAirPressure = GetQhySensorAirPressure();
+                    }
+
+                    if (QhyHasSensorHumidity) {
+                        QhySensorHumidity = GetQhySensorHumidity();
+                    }
+
+                    /* sleep (cancelable) */
+                    await Task.Delay(TimeSpan.FromSeconds(10), ct);
+                }
+            } catch (OperationCanceledException) {
+                Logger.Debug("QHYCCD: SensorStatsWorker task cancelled");
             }
         }
 
         private bool GetSensorType() {
-            Info.BayerPattern = (LibQHYCCD.BAYER_ID)LibQHYCCD.IsQHYCCDControlAvailable(CameraP, LibQHYCCD.CONTROL_ID.CAM_COLOR);
+            Info.BayerPattern = Sdk.GetBayerType();
 
             switch (Info.BayerPattern) {
-                case LibQHYCCD.BAYER_ID.BAYER_GB:
+                case QhySdk.BAYER_ID.BAYER_GB:
                     SensorType = SensorType.GBRG;
                     break;
 
-                case LibQHYCCD.BAYER_ID.BAYER_GR:
+                case QhySdk.BAYER_ID.BAYER_GR:
                     SensorType = SensorType.GRBG;
                     break;
 
-                case LibQHYCCD.BAYER_ID.BAYER_BG:
+                case QhySdk.BAYER_ID.BAYER_BG:
                     SensorType = SensorType.BGGR;
                     break;
 
-                case LibQHYCCD.BAYER_ID.BAYER_RG:
+                case QhySdk.BAYER_ID.BAYER_RG:
                     SensorType = SensorType.RGGB;
                     break;
 
                 default:
                     return false;
             }
-
             return true;
         }
 
         public short BayerOffsetX => 0;
         public short BayerOffsetY => 0;
 
-        private bool IsQHYControl(LibQHYCCD.CONTROL_ID type) {
-            if (LibQHYCCD.IsQHYCCDControlAvailable(CameraP, type) == LibQHYCCD.QHYCCD_SUCCESS) {
-                Logger.Debug($"QHYCCD: Control {type} exists");
-                return true;
-            } else {
-                Logger.Debug($"QHYCCD: Control Value {type} is not available");
-                return false;
-            }
-        }
-
-        private bool SetControlValue(LibQHYCCD.CONTROL_ID type, double value) {
-            if (LibQHYCCD.SetQHYCCDParam(CameraP, type, value) == LibQHYCCD.QHYCCD_SUCCESS) {
-                Logger.Debug($"QHYCCD: Setting Control {type} to {value}");
-                return true;
-            } else {
-                Logger.Warning($"QHYCCD: Failed to Set Control {type} with value {value}");
-                return false;
-            }
-        }
-
         public void AbortExposure() {
             StopExposure();
         }
 
         public Task<bool> Connect(CancellationToken ct) {
-            return Task.Run(() => ConnectSync(false), ct);
+            return Task.Run(() => ConnectSync(), ct);
         }
 
-        public bool ConnectSync(bool isReconnecting) {
+        private void CancelCoolingSync() {
+            if (!Connected || !Info.HasCooler) {
+                return;
+            }
+
+            Logger.Debug("QHYCCD: Terminating CoolerWorker task");
+
+            CoolerOn = false;
+            coolerWorkerCts.Cancel();
+            coolerWorkerCts.Dispose();
+            try {
+                using (var timeoutSource = new CancellationTokenSource(COOLING_TIMEOUT)) {
+                    coolerTask?.Wait(timeoutSource.Token);
+                }
+            } catch (Exception ex) {
+                Logger.Error($"QHYCCD: Cooling thread failed to terminate within {COOLING_TIMEOUT}", ex);
+            } finally {
+                coolerWorkerCts = null;
+                coolerTask = null;
+            }
+
+            /* CoolerWorker task was killed. Make sure the TEC is turned off before closing the camera. */
+            Logger.Debug("QHYCCD: CoolerWorker task cancelled, turning off TEC");
+            _ = Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_MANULPWM, 0);
+        }
+
+        private void CancelSensorStatsSync() {
+            if (!Connected && !QhyHasSensorHumidity && !QhyHasSensorAirPressure) {
+                return;
+            }
+
+            Logger.Debug("QHYCCD: Terminating SensorStatsWorker task");
+
+            sensorStatsCts.Cancel();
+            sensorStatsCts.Dispose();
+            try {
+                using (var timeoutSource = new CancellationTokenSource(COOLING_TIMEOUT)) {
+                    sensorStatsTask?.Wait(timeoutSource.Token);
+                }
+            } catch (Exception ex) {
+                Logger.Error($"QHYCCD: SensorStats thread failed to terminate within {COOLING_TIMEOUT}", ex);
+            } finally {
+                sensorStatsCts = null;
+                sensorStatsTask = null;
+            }
+        }
+
+        private void ThrowOnFailure(string op, uint result) {
+            if (result != QhySdk.QHYCCD_SUCCESS) {
+                throw new Exception($"QHYCCD: {op} failed");
+            }
+        }
+
+        public bool ConnectSync() {
+            if (Connected) {
+                return true;
+            }
+
             var success = false;
             double min = 0, max = 0, step = 0;
             List<string> modeList = new List<string>();
-            StringBuilder cameraID = new StringBuilder(LibQHYCCD.QHYCCD_ID_LEN);
+            StringBuilder cameraID = new StringBuilder(QhySdk.QHYCCD_ID_LEN);
             StringBuilder modeName = new StringBuilder(0);
             uint num_modes = 0;
 
             try {
+                Sdk.InitSdk();
+
                 Logger.Info($"QHYCCD: Connecting to {Info.Id}");
 
                 /*
                  * Get our selected camera's ID from the SDK
                  */
-                LibQHYCCD.N_GetQHYCCDId(Info.Index, cameraID);
+                Sdk.GetId(Info.Index, cameraID);
 
                 /*
                  * CameraP is the handle we use to reference this camera
                  * from now on.
                  */
-                CameraP = LibQHYCCD.N_OpenQHYCCD(cameraID);
-
-                /*
-                 * Set whether we will call GetQHYCCDSingleFrame and friends, or GetQHYCCDLiveFrame and friends.
-                 * Note that changing this value requires completely disconnecting and reconnecting the camera,
-                 * which is handled in ReconnectForLiveView.
-                 */
-                if (LiveViewEnabled) {
-                    Logger.Debug($"QHYCCD: Stream mode is video stream");
-                    LibQHYCCD.SetQHYCCDStreamMode(CameraP, (byte)LibQHYCCD.QHYCCD_CAMERA_MODE.VIDEO_STREAM);
-                } else {
-                    Logger.Debug($"QHYCCD: Stream mode is single exposure");
-                    LibQHYCCD.SetQHYCCDStreamMode(CameraP, (byte)LibQHYCCD.QHYCCD_CAMERA_MODE.SINGLE_EXPOSURE);
-                }
+                Sdk.Open(cameraID);
+                ThrowOnFailure("SetQHYCCDStreamMode", Sdk.SetStreamMode((byte)QhySdk.QHYCCD_CAMERA_MODE.SINGLE_EXPOSURE));
 
                 /*
                  * Initialize the camera and make it available for use
                  */
-                LibQHYCCD.N_InitQHYCCD(CameraP);
+                Sdk.InitCamera();
 
-                if (!isReconnecting) {
-                    _ = LibQHYCCD.GetQHYCCDChipInfo(CameraP,
-                        ref Info.ChipX, ref Info.ChipY,
-                        ref Info.ImageX, ref Info.ImageY,
-                        ref Info.PixelX, ref Info.PixelY,
-                        ref Info.Bpp);
+                SetImageResolution();
 
-                    Logger.Debug($"QHYCCD: Chip Info: ChipX={Info.ChipX}mm, ChipY={Info.ChipY}mm, ImageX={Info.ImageX}, ImageY={Info.ImageY}, PixelX={Info.PixelX}um, PixelY={Info.PixelY}um, bpp={Info.Bpp}");
+                /*
+                 * Is this a color sensor or not?
+                 * If so, do not debayer the image data
+                 */
+                if (GetSensorType() == true) {
+                    Logger.Info($"QHYCCD: Color camera detected (pattern = {Info.BayerPattern}). Setting debayering to off");
+                    ThrowOnFailure("SetQHYCCDDebayerOnOff", Sdk.SetDebayerOnOff(false));
+                    Info.IsColorCam = true;
+                } else {
+                    Info.IsColorCam = false;
+                }
 
-                    /*
-                     * The Effective Area is a sensor's real imaging area. On sensors that have an overscan area, the effective area will be smaller than
-                     * the sensor's dimensions that were reported by GetQHYCCDChipInfo(). If the sensor does not have an overscan area, the values should be equal.
-                     */
-                    _ = LibQHYCCD.GetQHYCCDEffectiveArea(CameraP, ref Info.EffectiveArea.StartX, ref Info.EffectiveArea.StartY, ref Info.EffectiveArea.SizeX, ref Info.EffectiveArea.SizeY);
-                    Logger.Debug($"QHYCCD: Effective Area: StartX={Info.EffectiveArea.StartX}, StartY={Info.EffectiveArea.StartY}, SizeX={Info.EffectiveArea.SizeX}, SizeY={Info.EffectiveArea.SizeY}");
+                /*
+                 * See if the camera offers a fast readout speed
+                 * Readout speeds and readout modes are mutually exclusive and no camera should have both.
+                 */
+                if ((CanFastReadout = Sdk.IsControl(QhySdk.CONTROL_ID.CONTROL_SPEED)) == true) {
+                    ThrowOnFailure("GetQHYCCDParamMinMaxStep", Sdk.GetParamMinMaxStep(QhySdk.CONTROL_ID.CONTROL_SPEED, ref min, ref max, ref step));
 
-                    _ = LibQHYCCD.GetQHYCCDOverScanArea(CameraP, ref Info.OverscanArea.StartX, ref Info.OverscanArea.StartY, ref Info.OverscanArea.SizeX, ref Info.OverscanArea.SizeY);
-                    Logger.Debug($"QHYCCD: Overscan Area: StartX={Info.OverscanArea.StartX}, StartY={Info.OverscanArea.StartY}, SizeX={Info.OverscanArea.SizeX}, SizeY={Info.OverscanArea.SizeY}");
+                    Info.ReadoutSpeedMin = (uint)min;
+                    Info.ReadoutSpeedMax = (uint)max;
+                    Info.ReadoutSpeedStep = (uint)step;
+                    Logger.Debug($"QHYCCD: ReadoutSpeedMin={Info.ReadoutSpeedMin}, ReadoutSpeedMax={Info.ReadoutSpeedMax}, ReadoutSpeedStep={Info.ReadoutSpeedStep}");
 
-                    SetImageResolution();
-
-                    /*
-                     * Is this a color sensor or not?
-                     * If so, do not debayer the image data
-                     */
-                    if (GetSensorType() == true) {
-                        Logger.Info($"QHYCCD: Color camera detected (pattern = {Info.BayerPattern.ToString()}). Setting debayering to off");
-                        _ = LibQHYCCD.SetQHYCCDDebayerOnOff(CameraP, false);
-                        Info.IsColorCam = true;
-                    } else {
-                        Info.IsColorCam = false;
-                    }
-
+                    modeList.Add(Locale.Loc.Instance["LblNormal"]);
+                    modeList.Add(Locale.Loc.Instance["LblFast"]);
+                } else {
                     /*
                      * See if this camera has any readout modes and build a list of their names if so
                      */
-                    _ = LibQHYCCD.GetQHYCCDNumberOfReadModes(CameraP, ref num_modes);
+                    ThrowOnFailure("GetQHYCCDNumberOfReadModes", Sdk.GetNumberOfReadModes(ref num_modes));
                     Logger.Debug($"QHYCCD: Camera has {num_modes} readout mode(s)");
 
                     /*
@@ -666,141 +756,161 @@ namespace NINA.Model.MyCamera {
                      */
                     if (num_modes > 1) {
                         for (uint i = 0; i < num_modes; i++) {
-                            _ = LibQHYCCD.GetQHYCCDReadModeName(CameraP, i, modeName);
+                            ThrowOnFailure("GetQHYCCDReadModeName", Sdk.GetReadModeName(i, modeName));
                             Logger.Debug($"QHYCCD: Found readout mode \"{modeName}\"");
                             modeList.Add(modeName.ToString());
                         }
-                    } else {
-                        modeList.Add("Default");
                     }
-
-                    Logger.Debug($"QHYCCD: Readout mode names: {string.Join(", ", modeList)}");
-                    ReadoutModes = modeList;
-
-                    /*
-                     * Get our min and max shutter speed (exposure times)
-                     * The QHY SDK reports this value in microseconds (us)
-                     */
-                    _ = LibQHYCCD.GetQHYCCDParamMinMaxStep(CameraP,
-                        LibQHYCCD.CONTROL_ID.CONTROL_EXPOSURE, ref min, ref max, ref step);
-
-                    Info.ExpMin = min;
-                    Info.ExpMax = max;
-                    Info.ExpStep = step;
-                    Logger.Debug($"QHYCCD: ExpMin={Info.ExpMin}, ExpMax={Info.ExpMax}, ExpStep={Info.ExpStep}");
-
-                    /*
-                     * Get our min and max gain
-                     */
-                    _ = LibQHYCCD.GetQHYCCDParamMinMaxStep(CameraP,
-                        LibQHYCCD.CONTROL_ID.CONTROL_GAIN, ref min, ref max, ref step);
-
-                    Info.GainMin = (short)min;
-                    Info.GainMax = (short)max;
-                    Info.GainStep = step;
-                    Logger.Debug($"QHYCCD: GainMin={Info.GainMin}, GainMax={Info.GainMax}, GainStep={Info.GainStep}");
-
-                    /*
-                     * Check for gain setting bugs
-                     */
-                    Info.HasUnreliableGain = QuirkUnreliableGain();
-
-                    /*
-                     * If we have to keep track of gain ourselves, initialize the gain to Info.GainMin
-                     */
-                    if (Info.HasUnreliableGain == true) {
-                        Gain = Info.GainMin;
-                    }
-
-                    /*
-                     * Get our min and max offset
-                     */
-                    _ = LibQHYCCD.GetQHYCCDParamMinMaxStep(CameraP,
-                        LibQHYCCD.CONTROL_ID.CONTROL_OFFSET,
-                        ref min, ref max, ref step);
-
-                    Info.OffMin = (int)min;
-                    Info.OffMax = (int)max;
-                    Info.OffStep = step;
-                    Logger.Debug($"QHYCCD: OffMin={Info.OffMin}, OffMax={Info.OffMax}, OffStep={Info.OffStep}");
-
-                    QuirkInflatedOffset();
-
-                    /*
-                     * Fetch our min and max PWM settings for
-                     * the cooler.
-                     */
-                    Info.HasCooler = IsQHYControl(LibQHYCCD.CONTROL_ID.CONTROL_COOLER);
-                    Info.HasChipTemp = IsQHYControl(LibQHYCCD.CONTROL_ID.CONTROL_CURTEMP);
-
-                    if (Info.HasCooler == true) {
-                        _ = LibQHYCCD.GetQHYCCDParamMinMaxStep(CameraP,
-                            LibQHYCCD.CONTROL_ID.CONTROL_MANULPWM, ref min, ref max, ref step);
-
-                        Info.CoolerPwmMin = min;
-                        Info.CoolerPwmMax = max;
-                        Info.CoolerPwmStep = step;
-                        Logger.Debug($"QHYCCD: CoolerPwmMin={Info.CoolerPwmMin}, CoolerPwmMax={Info.CoolerPwmMax}, CoolerPwmStep={Info.CoolerPwmStep}");
-
-                        /*
-                         * Initialize cooler's target temperature to 0C
-                         */
-                        Info.CoolerTargetTemp = 0;
-
-                        /*
-                         * Force any TEC cooler to off upon startup
-                         */
-                        CoolerOn = false;
-
-                        /*
-                         * Start the thread that operates the TEC
-                         * This thread will operate the TEC in accordance with the user turning the cooler on or off
-                         * and program the camera's TEC to cool to the desired temperature. This thread will operate
-                         * for as long as the camera is connected.
-                         */
-                        Logger.Debug("QHYCCD: Starting CoolerWorker task");
-                        coolerWorkerCts?.Dispose();
-                        coolerWorkerCts = new CancellationTokenSource();
-                        coolerTask = CoolerWorker(coolerWorkerCts.Token);
-                    }
-
-                    /*
-                     * QHY SDK offers no way to get the current bin mode! So we track
-                     * it manually using QHYCCD_CAMERA_INFO.CurBin. We initialize the
-                     * camera with 1x1 binning.
-                     */
-                    Info.CurBin = 1;
-                    SetBinning(Info.CurBin, Info.CurBin);
-
-                    HasShutter = IsQHYControl(LibQHYCCD.CONTROL_ID.CAM_MECHANICALSHUTTER);
-                    Info.HasGain = IsQHYControl(LibQHYCCD.CONTROL_ID.CONTROL_GAIN);
-                    Info.HasOffset = IsQHYControl(LibQHYCCD.CONTROL_ID.CONTROL_OFFSET);
                 }
+
+                if (modeList.Count == 0) {
+                    modeList.Add("Default");
+                }
+
+                Logger.Debug($"QHYCCD: Readout mode names: {string.Join(", ", modeList)}");
+                ReadoutModes = modeList;
+
+                /*
+                 * Get our min and max shutter speed (exposure times)
+                 * The QHY SDK reports this value in microseconds (us)
+                 */
+                ThrowOnFailure("GetQHYCCDParamMinMaxStep(Exposure)", Sdk.GetParamMinMaxStep(QhySdk.CONTROL_ID.CONTROL_EXPOSURE, ref min, ref max, ref step));
+
+                Info.ExpMin = min;
+                Info.ExpMax = max;
+                Info.ExpStep = step;
+                Logger.Debug($"QHYCCD: ExpMin={Info.ExpMin}, ExpMax={Info.ExpMax}, ExpStep={Info.ExpStep}");
+
+                /*
+                 * Get our min and max gain
+                 */
+                ThrowOnFailure("GetQHYCCDParamMinMaxStep(Gain)", Sdk.GetParamMinMaxStep(QhySdk.CONTROL_ID.CONTROL_GAIN, ref min, ref max, ref step));
+
+                Info.GainMin = (short)min;
+                Info.GainMax = (short)max;
+                Info.GainStep = step;
+                Logger.Debug($"QHYCCD: GainMin={Info.GainMin}, GainMax={Info.GainMax}, GainStep={Info.GainStep}");
+
+                /*
+                 * Check for gain setting bugs
+                 */
+                Info.HasUnreliableGain = QuirkUnreliableGain();
+
+                /*
+                 * If we have to keep track of gain ourselves, initialize the gain to Info.GainMin
+                 */
+                if (Info.HasUnreliableGain == true) {
+                    Gain = Info.GainMin;
+                }
+
+                /*
+                 * Get our min and max offset
+                 */
+                ThrowOnFailure("GetQHYCCDParamMinMaxStep(Offset)", Sdk.GetParamMinMaxStep(QhySdk.CONTROL_ID.CONTROL_OFFSET, ref min, ref max, ref step));
+
+                Info.OffMin = (int)min;
+                Info.OffMax = (int)max;
+                Info.OffStep = step;
+                Logger.Debug($"QHYCCD: OffMin={Info.OffMin}, OffMax={Info.OffMax}, OffStep={Info.OffStep}");
+
+                QuirkInflatedOffset();
+
+                /*
+                 * Fetch our min and max PWM settings for
+                 * the cooler.
+                 */
+                Info.HasCooler = Sdk.IsControl(QhySdk.CONTROL_ID.CONTROL_COOLER);
+                Info.HasChipTemp = Sdk.IsControl(QhySdk.CONTROL_ID.CONTROL_CURTEMP);
+
+                if (Info.HasCooler) {
+                    // Ignore the return code due to a bug in the SDK causes this to return a failure even if it succeeds
+                    Sdk.GetParamMinMaxStep(QhySdk.CONTROL_ID.CONTROL_MANULPWM, ref min, ref max, ref step);
+
+                    Info.CoolerPwmMin = min;
+                    Info.CoolerPwmMax = max;
+                    Info.CoolerPwmStep = step;
+                    Logger.Debug($"QHYCCD: CoolerPwmMin={Info.CoolerPwmMin}, CoolerPwmMax={Info.CoolerPwmMax}, CoolerPwmStep={Info.CoolerPwmStep}");
+
+                    /*
+                     * Initialize cooler's target temperature to 0C
+                     */
+                    Info.CoolerTargetTemp = 0;
+
+                    /*
+                     * Force any TEC cooler to off upon startup
+                     */
+                    CoolerOn = false;
+
+                    /*
+                     * Start the thread that operates the TEC
+                     * This thread will operate the TEC in accordance with the user turning the cooler on or off
+                     * and program the camera's TEC to cool to the desired temperature. This thread will operate
+                     * for as long as the camera is connected.
+                     */
+                    Logger.Debug("QHYCCD: Starting CoolerWorker task");
+                    CancelCoolingSync();
+                    coolerWorkerCts = new CancellationTokenSource();
+                    coolerTask = CoolerWorker(coolerWorkerCts.Token);
+                }
+
+                /*
+                 * QHY SDK offers no way to get the current bin mode! So we track
+                 * it manually using QHYCCD_CAMERA_INFO.CurBin. We initialize the
+                 * camera with 1x1 binning.
+                 */
+                Info.CurBin = 1;
+                SetBinning(Info.CurBin, Info.CurBin);
+
+                HasShutter = Sdk.IsControl(QhySdk.CONTROL_ID.CAM_MECHANICALSHUTTER);
+                Info.HasGain = Sdk.IsControl(QhySdk.CONTROL_ID.CONTROL_GAIN);
+                Info.HasOffset = Sdk.IsControl(QhySdk.CONTROL_ID.CONTROL_OFFSET);
 
                 /*
                  * Fetch our min and max USB bandwidth settings. The QHY163M
                  * changes whether CONTROL_USBTRAFFIC based on the StreamMode,
                  * so recompute this when reconnecting.
                  */
-                Info.HasUSBTraffic = IsQHYControl(LibQHYCCD.CONTROL_ID.CONTROL_USBTRAFFIC);
+                Info.HasUSBTraffic = Sdk.IsControl(QhySdk.CONTROL_ID.CONTROL_USBTRAFFIC);
 
-                if (Info.HasUSBTraffic == true) {
-                    _ = LibQHYCCD.GetQHYCCDParamMinMaxStep(CameraP,
-                        LibQHYCCD.CONTROL_ID.CONTROL_USBTRAFFIC, ref min, ref max, ref step);
+                if (Info.HasUSBTraffic) {
+                    ThrowOnFailure("GetQHYCCDParamMinMaxStep(USBTraffic)", Sdk.GetParamMinMaxStep(QhySdk.CONTROL_ID.CONTROL_USBTRAFFIC, ref min, ref max, ref step));
 
                     Info.USBMin = min;
                     Info.USBMax = max;
                     Info.USBStep = step;
                     Logger.Debug($"QHYCCD: USBMin={Info.USBMin}, USBMax={Info.USBMax}, USBStep={Info.USBStep}");
 
-                    if (QuirkNoUSBTraffic())
+                    if (QuirkNoUSBTraffic()) {
                         Info.HasUSBTraffic = false;
+                    }
                 }
+
+                /*
+                 * Detect if this camera has sensor chamber air pressure and humidity sensors
+                 */
+                QhyHasSensorAirPressure = Sdk.IsControl(QhySdk.CONTROL_ID.CAM_PRESSURE);
+                QhyHasSensorHumidity = Sdk.IsControl(QhySdk.CONTROL_ID.CAM_HUMIDITY);
+
+                if (QhyHasSensorAirPressure || QhyHasSensorHumidity) {
+                    Logger.Debug("QHYCCD: Starting SensorStatsWorker task");
+
+                    sensorStatsCts = new CancellationTokenSource();
+                    sensorStatsTask = SensorStatsWorker(coolerWorkerCts.Token);
+                }
+
+                QhyFirmwareVersion = GetFirmwareVersion();
+                QhyFPGAVersion = GetFPGAVersion();
+                QhySdkVersion = GetSdkVersion();
+
+                /*
+                 * Check the USB driver version and emit a warning if it's below the recommended minimum version
+                 */
+                DriverVersionCheck();
 
                 /*
                  * Announce that this camera is now initialized and ready
                  */
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.IDLE.ToString();
+                CameraState = QhySdk.QHYCCD_CAMERA_STATE.IDLE.ToString();
                 Connected = true;
                 success = true;
 
@@ -809,42 +919,35 @@ namespace NINA.Model.MyCamera {
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
+                Disconnect();
             }
             return success;
         }
 
-        public void Disconnect() => Disconnect(false);
-
-        private void Disconnect(bool willReconnect) {
-            if (Connected == false)
+        public void Disconnect() {
+            if (!Connected) {
                 return;
-
-            if (!willReconnect) {
-                /*
-                 * Terminate the cooler task.
-                 */
-                if (Info.HasCooler) {
-                    Logger.Debug("QHYCCD: Terminating CoolerWorker task");
-                    CoolerOn = false;
-                    coolerWorkerCts.Cancel();
-                    coolerWorkerCts.Dispose();
-
-                    /* CoolerWorker task was killed. Make sure the TEC is turned off before closing the camera. */
-                    Logger.Debug("QHYCCD: CoolerWorker task cancelled, turning off TEC");
-                    _ = SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_MANULPWM, 0);
-                }
-
-                Connected = false;
             }
 
-            Logger.Info($"QHYCCD: Closing camera {Info.Id}");
-            LibQHYCCD.N_CloseQHYCCD(CameraP);
+            try {
+                Connected = false;
+
+                CancelCoolingSync();
+                CancelSensorStatsSync();
+
+                Logger.Info($"QHYCCD: Closing camera {Info.Id}");
+                Sdk.Close();
+                Sdk.ReleaseSdk();
+            } catch (Exception ex) {
+                Logger.Error("QHYCCD: Failed to disconnect", ex);
+            }
         }
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
-            using (token.Register(() => { AbortExposure(); DownloadExposureTaskCTS.Cancel(); })) {
-                if (DownloadExposureTask != null) {
-                    await DownloadExposureTask;
+            RaiseIfNotConnected();
+            using (token.Register(() => { AbortExposure(); downloadExposureTaskCTS.Cancel(); })) {
+                if (downloadExposureTask != null) {
+                    await downloadExposureTask;
                 }
             }
         }
@@ -859,8 +962,7 @@ namespace NINA.Model.MyCamera {
 
                 Logger.Debug("QHYCCD: Downloading exposure...");
 
-                /* Wait for exposure to finish */
-                while (LibQHYCCD.GetQHYCCDExposureRemaining(CameraP) > 0) {
+                while (Sdk.GetExposureRemaining() > 0) {
                     await Task.Delay(100, ct);
                 }
 
@@ -875,24 +977,24 @@ namespace NINA.Model.MyCamera {
                 /*
                  * Download the image from the camera
                  */
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.DOWNLOADING.ToString();
+                CameraState = QhySdk.QHYCCD_CAMERA_STATE.DOWNLOADING.ToString();
                 if (is16bit) {
-                    rv = LibQHYCCD.GetQHYCCDSingleFrame(CameraP, ref width, ref height, ref bpp, ref channels, ImgData);
+                    rv = Sdk.GetSingleFrame(ref width, ref height, ref bpp, ref channels, ImgData);
                 } else {
                     byte[] ImgDataBytes = new byte[numPixels];
-                    rv = LibQHYCCD.GetQHYCCDSingleFrame(CameraP, ref width, ref height, ref bpp, ref channels, ImgDataBytes);
+                    rv = Sdk.GetSingleFrame(ref width, ref height, ref bpp, ref channels, ImgDataBytes);
                     for (int i = 0; i < ImgDataBytes.Length; i++) {
                         ImgData[i] = ImgDataBytes[i];
                     }
                 }
-                if (rv != LibQHYCCD.QHYCCD_SUCCESS) {
+                if (rv != QhySdk.QHYCCD_SUCCESS) {
                     Logger.Warning($"QHYCCD: Failed to download image from camera! rv = {rv }");
                     throw new Exception(Locale.Loc.Instance["LblASIImageDownloadError"]);
                 }
 
                 Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
 
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.IDLE.ToString();
+                CameraState = QhySdk.QHYCCD_CAMERA_STATE.IDLE.ToString();
 
                 return new ImageArrayExposureData(
                     input: ImgData,
@@ -905,72 +1007,20 @@ namespace NINA.Model.MyCamera {
         }
 
         public async Task<IExposureData> DownloadExposure(CancellationToken ct) {
-            using (ct.Register(() => DownloadExposureTaskCTS.Cancel())) {
-                return await DownloadExposureTask.WaitAsync(ct);
+            using (ct.Register(() => downloadExposureTaskCTS.Cancel())) {
+                return await downloadExposureTask.WaitAsync(ct);
+            }
+        }
+
+        private void RaiseIfNotConnected() {
+            // Check for connection status and raise exceptions explicitly since using invalid CameraP handles can cause hard application crashes
+            if (!Connected) {
+                throw new Exception("QHYCCD is not connected");
             }
         }
 
         public Task<IExposureData> DownloadLiveView(CancellationToken ct) {
-            return Task.Run<IExposureData>(async () => {
-                uint rv;
-                uint width = 0;
-                uint height = 0;
-                uint bpp = 0;
-                uint channels = 0;
-
-                Logger.Debug("QHYCCD: Downloading exposure...");
-
-                /*
-                 * Ask the SDK how big the exposure will be
-                 */
-                var size = LibQHYCCD.GetQHYCCDMemLength(CameraP);
-
-                if (size == 0) {
-                    Logger.Warning("QHYCCD: SDK reported a 0-length image buffer!");
-                    throw new Exception(Locale.Loc.Instance["LblASIImageDownloadError"]);
-                }
-                Logger.Debug($"QHYCCD: Image size will be {size} bytes");
-
-                /*
-                 * Size the image data byte array for the image
-                 */
-                var ImgData = new byte[size];
-
-                while (true) {
-                    rv = LibQHYCCD.GetQHYCCDLiveFrame(CameraP, ref width, ref height, ref bpp, ref channels, ImgData);
-                    if (rv == uint.MaxValue) {
-                        await Task.Yield();
-                        // GetQHYCCDLiveFrame returns -1 when the data isn't available yet, requiring looping.
-                        continue;
-                    } else if (rv != LibQHYCCD.QHYCCD_SUCCESS) {
-                        Logger.Warning($"QHYCCD: Failed to download image from camera! rv = {rv}");
-                        throw new Exception(Locale.Loc.Instance["LblASIImageDownloadError"]);
-                    }
-                    break;
-                }
-
-                Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
-
-                /*
-                 * Copy the image byte array to an allocated buffer
-                 */
-                IntPtr buf = Marshal.AllocHGlobal(ImgData.Length);
-                Marshal.Copy(ImgData, 0, buf, ImgData.Length);
-                var cameraDataToManaged = new CameraDataToManaged(buf, (int)width, (int)height, (int)bpp, bitScaling: false);
-                var arr = cameraDataToManaged.GetData();
-                ImgData = null;
-                Marshal.FreeHGlobal(buf);
-
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.IDLE.ToString();
-
-                return new ImageArrayExposureData(
-                    input: arr,
-                    width: (int)width,
-                    height: (int)height,
-                    bitDepth: this.BitDepth,
-                    isBayered: this.SensorType != SensorType.Monochrome,
-                    metaData: new ImageMetaData());
-            }, ct);
+            throw new NotImplementedException();
         }
 
         public void SetBinning(short x, short y) {
@@ -981,30 +1031,7 @@ namespace NINA.Model.MyCamera {
         public void SetupDialog() {
         }
 
-        public void StartExposure(CaptureSequence sequence) {
-            uint rv;
-            uint startx, starty, sizex, sizey;
-            bool isSnap;
-
-            /*
-             * Setup camera with the desired exposure setttings
-             */
-
-            isSnap = sequence.ImageType == CaptureSequence.ImageTypes.SNAPSHOT;
-
-            /* Open or close the shutter if camera is equipped with one */
-            if (HasShutter == true) {
-                if (sequence.ImageType == CaptureSequence.ImageTypes.DARK ||
-                        sequence.ImageType == CaptureSequence.ImageTypes.DARKFLAT ||
-                        sequence.ImageType == CaptureSequence.ImageTypes.BIAS) {
-                    Logger.Debug($"QHYCCD: Closing shutter for {sequence.ImageType} frame");
-                    _ = LibQHYCCD.ControlQHYCCDShutter(CameraP, 1);
-                } else {
-                    Logger.Debug($"QHYCCD: Opening shutter for {sequence.ImageType} frame");
-                    _ = LibQHYCCD.ControlQHYCCDShutter(CameraP, 0);
-                }
-            }
-
+        private bool SetResolution(out uint startx, out uint starty, out uint sizex, out uint sizey) {
             /* ROI coordinates and resolution */
             if (EnableSubSample == true) {
                 startx = (uint)SubSampleX / (uint)BinX;
@@ -1018,29 +1045,79 @@ namespace NINA.Model.MyCamera {
                 sizey = (uint)CameraYSize / (uint)BinY;
             }
 
+            uint rv;
             Logger.Debug($"QHYCCD: Setting image resolution: startx={startx}, starty={starty}, sizex={sizex}, sizey={sizey}");
-
-            if ((rv = LibQHYCCD.SetQHYCCDResolution(CameraP, startx, starty, sizex, sizey)) != LibQHYCCD.QHYCCD_SUCCESS) {
+            if ((rv = Sdk.SetResolution(startx, starty, sizex, sizey)) != QhySdk.QHYCCD_SUCCESS) {
                 Logger.Warning($"QHYCCD: Failed to set exposure resolution: rv = {rv}");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                return;
+                CameraState = QhySdk.QHYCCD_CAMERA_STATE.ERROR.ToString();
+                return false;
             }
+            return true;
+        }
 
-            /* Exposure bit depth */
-            if (LibQHYCCD.SetQHYCCDBitsMode(CameraP, (uint)BitDepth) != LibQHYCCD.QHYCCD_SUCCESS) {
-                Logger.Warning("QHYCCD: Failed to set exposure bit depth. This may not be a fatal error.");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-            }
+        public void StartExposure(CaptureSequence sequence) {
+            RaiseIfNotConnected();
+            uint rv;
+            uint startx, starty, sizex, sizey;
+            bool isSnap;
+            short readoutMode;
 
-            /* Exposure length (in microseconds) */
-            if (!SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_EXPOSURE, sequence.ExposureTime * 1e6)) {
-                Logger.Warning("QHYCCD: Failed to set exposure time");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                return;
+            /*
+             * Setup camera with the desired exposure setttings
+             */
+
+            isSnap = sequence.ImageType == CaptureSequence.ImageTypes.SNAPSHOT;
+
+            /* Open or close the shutter if camera is equipped with one */
+            if (HasShutter == true) {
+                if (sequence.ImageType == CaptureSequence.ImageTypes.DARK ||
+                        sequence.ImageType == CaptureSequence.ImageTypes.DARKFLAT ||
+                        sequence.ImageType == CaptureSequence.ImageTypes.BIAS) {
+                    Logger.Debug($"QHYCCD: Closing shutter for {sequence.ImageType} frame");
+                    _ = Sdk.ControlShutter(1);
+                } else {
+                    Logger.Debug($"QHYCCD: Opening shutter for {sequence.ImageType} frame");
+                    _ = Sdk.ControlShutter(0);
+                }
             }
 
             /* Exposure readout mode */
-            ReadoutMode = isSnap ? ReadoutModeForSnapImages : ReadoutModeForNormalImages;
+            readoutMode = isSnap ? ReadoutModeForSnapImages : ReadoutModeForNormalImages;
+
+            if (ReadoutMode != readoutMode) {
+                ReadoutMode = readoutMode;
+            }
+
+            /* Exposure bit depth */
+            if (Sdk.SetBitsMode((uint)BitDepth) != QhySdk.QHYCCD_SUCCESS) {
+                Logger.Warning("QHYCCD: Failed to set exposure bit depth. This may not be a fatal error.");
+                CameraState = QhySdk.QHYCCD_CAMERA_STATE.ERROR.ToString();
+            }
+
+            /* Exposure length (in microseconds) */
+            if (!Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_EXPOSURE, sequence.ExposureTime * 1e6)) {
+                Logger.Warning("QHYCCD: Failed to set exposure time");
+                CameraState = QhySdk.QHYCCD_CAMERA_STATE.ERROR.ToString();
+                return;
+            }
+
+            /*
+             * Set binning
+             * Certain models of camera require a 200ms pause after setting the bin mode.
+             * SetQHYCCDBinMode() will return QHYCCD_DELAY_200MS if that is required.
+             */
+            if ((rv = Sdk.SetBinMode((uint)BinX, (uint)BinY)) != QhySdk.QHYCCD_SUCCESS) {
+                if (rv == QhySdk.QHYCCD_DELAY_200MS) {
+                    Thread.Sleep(200);
+                } else {
+                    Logger.Warning($"QHYCCD: Failed to set BIN mode {BinX}x{BinY}");
+                }
+            }
+
+            if (!SetResolution(out startx, out starty, out sizex, out sizey)) {
+                CameraState = QhySdk.QHYCCD_CAMERA_STATE.ERROR.ToString();
+                return;
+            }
 
             /*
              * Calculate exposure array size, with overflow protection.
@@ -1053,77 +1130,31 @@ namespace NINA.Model.MyCamera {
              * Initiate the exposure
              */
             Logger.Debug("QHYCCD: Starting exposure...");
-
-            if (LibQHYCCD.ExpQHYCCDSingleFrame(CameraP) == LibQHYCCD.QHYCCD_ERROR) {
+            CameraState = QhySdk.QHYCCD_CAMERA_STATE.EXPOSING.ToString();
+            if (Sdk.ExpSingleFrame() == QhySdk.QHYCCD_ERROR) {
                 Logger.Warning("QHYCCD: Failed to initiate the exposure!");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
+                CameraState = QhySdk.QHYCCD_CAMERA_STATE.ERROR.ToString();
                 return;
             }
 
-            CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.EXPOSING.ToString();
-
-            DownloadExposureTaskCTS?.Dispose();
-            DownloadExposureTaskCTS = new CancellationTokenSource();
-            DownloadExposureTask = StartDownloadExposure(DownloadExposureTaskCTS.Token);
-        }
-
-        private void ReconnectForLiveView() {
-            // Steps documented as required when changing live view:
-            // CloseQHYCCD
-            // ReleaseQHYCCDResource
-            // ScanQHYCCD
-            // OpenQHYCCD
-            // SetLiveStreamMode
-            // It appears that ReleaseQHYCCDResource and ScanQHYCCD can be skipped in newer drivers?
-            Disconnect(true);
-            ConnectSync(true);
+            downloadExposureTaskCTS?.Dispose();
+            downloadExposureTaskCTS = new CancellationTokenSource();
+            downloadExposureTask = StartDownloadExposure(downloadExposureTaskCTS.Token);
         }
 
         public void StartLiveView() {
-            LiveViewEnabled = true;
-            ReconnectForLiveView();
-
-            // TODO: Use controls on the exposure tab to adjust gain and exposure
-            if (!SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_EXPOSURE, 1e6)) {
-                Logger.Warning("QHYCCD: Failed to set exposure time");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                return;
-            }
-
-            if (!SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_GAIN, ((double)Info.GainMin + Info.GainMax) / 2)) {
-                Logger.Warning("QHYCCD: Failed to set gain");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                return;
-            }
-
-            if (LibQHYCCD.BeginQHYCCDLive(CameraP) != LibQHYCCD.QHYCCD_SUCCESS) {
-                Logger.Warning("QHYCCD: Failed to start live view");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                LiveViewEnabled = false;
-                ReconnectForLiveView();
-                return;
-            }
-            CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.EXPOSING.ToString();
-
-            Logger.Debug("QHYCCD: Enabled live view");
+            throw new NotImplementedException();
         }
 
         public void StopExposure() {
-            if (LibQHYCCD.CancelQHYCCDExposingAndReadout(CameraP) != LibQHYCCD.QHYCCD_ERROR)
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.IDLE.ToString();
+            RaiseIfNotConnected();
+            if (Sdk.CancelExposingAndReadout() != QhySdk.QHYCCD_ERROR) {
+                CameraState = QhySdk.QHYCCD_CAMERA_STATE.IDLE.ToString();
+            }
         }
 
         public void StopLiveView() {
-            if (LibQHYCCD.StopQHYCCDLive(CameraP) != LibQHYCCD.QHYCCD_SUCCESS) {
-                Logger.Warning("QHYCCD: Failed to stop live view");
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.ERROR.ToString();
-                // Continue on to reconnecting the camera
-            } else {
-                CameraState = LibQHYCCD.QHYCCD_CAMERA_STATE.IDLE.ToString();
-            }
-            LiveViewEnabled = false;
-            ReconnectForLiveView();
-            Logger.Debug("QHYCCD: Disabled live view");
+            throw new NotImplementedException();
         }
 
         public bool QhyIncludeOverscan {
@@ -1134,20 +1165,132 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        private void SetImageResolution() {
-            if (QhyIncludeOverscan) {
-                StartPixelX = 0;
-                StartPixelY = 0;
-                CameraXSize = (int)Info.ImageX;
-                CameraYSize = (int)Info.ImageY;
-            } else {
-                StartPixelX = Info.EffectiveArea.StartX;
-                StartPixelY = Info.EffectiveArea.StartY;
-                CameraXSize = (int)Info.EffectiveArea.SizeX;
-                CameraYSize = (int)Info.EffectiveArea.SizeY;
+        public bool QhyHasSensorAirPressure {
+            get => Info.HasSensorAirPressure;
+            private set => Info.HasSensorAirPressure = value;
+        }
+
+        public bool QhyHasSensorHumidity {
+            get => Info.HasSensorHumidity;
+            private set => Info.HasSensorHumidity = value;
+        }
+
+        public double QhySensorAirPressure {
+            get => Info.SensorAirPressure;
+            private set {
+                if (Info.SensorAirPressure != value) {
+                    Info.SensorAirPressure = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public double QhySensorHumidity {
+            get => Info.SensorHumidity;
+            private set {
+                if (Info.SensorHumidity != value) {
+                    Info.SensorHumidity = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double GetQhySensorAirPressure() {
+            double pressure = double.NaN;
+
+            if (Connected && QhyHasSensorHumidity) {
+                Sdk.GetPressure(ref pressure);
             }
 
-            Logger.Debug($"QHYCCD: Base sensor dimensions used: Overscan={QhyIncludeOverscan}, startx={StartPixelX}, starty={StartPixelY}, width={CameraXSize}, height={CameraYSize}");
+            Logger.Trace($"QHYCCD: Sensor air pressure: {pressure} hPa");
+            return pressure;
+        }
+
+        private double GetQhySensorHumidity() {
+            double rh = double.NaN;
+
+            if (Connected && QhyHasSensorHumidity) {
+                Sdk.GetHumidity(ref rh);
+            }
+
+            Logger.Trace($"QHYCCD: Sensor humidity: {rh}%");
+            return rh;
+        }
+
+        public string QhyFirmwareVersion {
+            get => Info.FirmwareVersion;
+            private set => Info.FirmwareVersion = value;
+        }
+
+        public string QhyFPGAVersion {
+            get => Info.FPGAVersion;
+            private set => Info.FPGAVersion = value;
+        }
+
+        private string GetFirmwareVersion() {
+            return Sdk.GetFwVersion();
+        }
+
+        private string GetFPGAVersion() {
+            return Sdk.GetFpgaVersion();
+        }
+
+        private string GetSdkVersion() {
+            return Sdk.GetSdkVersion();
+        }
+
+        public string QhySdkVersion {
+            get => Info.SdkVersion;
+            private set => Info.SdkVersion = value;
+        }
+
+        public string QhyUsbDriverVersion {
+            get => Info.UsbDriverVersion;
+            private set => Info.UsbDriverVersion = value;
+        }
+
+        private void SetImageResolution() {
+            double pixelx = 0, pixely = 0;
+
+            /*
+             * Get full sensor size and pixel dimensions
+             */
+            ThrowOnFailure("GetQHYCCDChipInfo", Sdk.GetChipInfo(
+                ref Info.ChipX, ref Info.ChipY,
+                ref Info.FullArea.SizeX, ref Info.FullArea.SizeY,
+                ref pixelx, ref pixely,
+                ref Info.Bpp));
+
+            Info.FullArea.StartX = Info.FullArea.StartY = 0;
+            Logger.Debug($"QHYCCD: Chip Info: ChipX={Info.ChipX}mm, ChipY={Info.ChipY}mm, SizeX={Info.FullArea.SizeX}, SizeY={Info.FullArea.SizeY}, PixelX={pixelx}um, PixelY={pixely}um, bpp={Info.Bpp}");
+
+            /*
+             * Update the pixel size if it has changed (eg; QHY294M/C Pro)
+             * Other NINA processes depend on pixel size being accurate and source this info from the profile, so we must update that as well.
+             */
+            if (PixelSizeX != pixelx) {
+                profileService.ActiveProfile.CameraSettings.PixelSize = PixelSizeX = pixelx;
+                PixelSizeY = pixely;
+            }
+
+            /*
+             * The Effective Area is a sensor's real imaging area. On sensors that have an overscan area, the effective area will be smaller than
+             * the sensor's dimensions that were reported by GetQHYCCDChipInfo(). If the sensor does not have an overscan area, the values should be equal.
+             */
+            ThrowOnFailure("GetQHYCCDEffectiveArea", Sdk.GetEffectiveArea(ref Info.EffectiveArea.StartX, ref Info.EffectiveArea.StartY, ref Info.EffectiveArea.SizeX, ref Info.EffectiveArea.SizeY));
+            Logger.Debug($"QHYCCD: Effective Area: StartX={Info.EffectiveArea.StartX}, StartY={Info.EffectiveArea.StartY}, SizeX={Info.EffectiveArea.SizeX}, SizeY={Info.EffectiveArea.SizeY}");
+
+            if (QhyIncludeOverscan) {
+                CameraXSize = (int)Info.FullArea.SizeX;
+                CameraYSize = (int)Info.FullArea.SizeY;
+                Sdk.SetControlValue(QhySdk.CONTROL_ID.CAM_IGNOREOVERSCAN_INTERFACE, 0d);
+            } else {
+                CameraXSize = (int)Info.EffectiveArea.SizeX;
+                CameraYSize = (int)Info.EffectiveArea.SizeY;
+                Sdk.SetControlValue(QhySdk.CONTROL_ID.CAM_IGNOREOVERSCAN_INTERFACE, 1d);
+            }
+
+            Logger.Debug($"QHYCCD: Sensor dimensions used: Overscan={QhyIncludeOverscan}, SizeX={CameraXSize}, SizeY={CameraYSize}");
         }
 
         private uint StartPixelX {
@@ -1174,7 +1317,73 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        #region "Quirks"
+        private void DriverVersionCheck() {
+            // Minimum driver versions. Key: Driver name. Value: Minimum driver version
+            Dictionary<string, string> driverDatabase = new Dictionary<string, string> {
+                { "QHY5IIISeries_IO", "21.2.20.0" },
+                { "QHY5II_IO", "0.0.9.0" },
+                { "QHY8LBASE", "0.0.9.0" },
+                { "QHY8PBASE", "0.0.9.0" },
+                { "QHY9BASE", "0.0.9.0" },
+                { "QHY10BASE", "0.0.9.0" },
+                { "QHY11BASE", "0.0.9.0" },
+                { "QHY12BASE", "0.0.9.0" },
+                { "QHY22BASE", "0.0.9.0" },
+                { "IMG2PBASE", "0.0.9.0" },
+                { "QHY90A_IO", "0.0.9.0" },
+                { "QHY695A_IO", "0.0.9.0" },
+                { "QHY814A_IO", "0.0.9.0" },
+                { "QHY09000A_IO", "0.0.9.0" },
+                { "QHY16200A_IO", "0.0.9.0" },
+                { "QHY16803A_IO", "0.0.9.0" }
+            };
+
+            QhyUsbDriverVersion = string.Empty;
+
+            try {
+                ManagementObjectSearcher searchObject = null;
+                ManagementObjectCollection objCollection = null;
+
+                foreach (KeyValuePair<string, string> driverInfo in driverDatabase) {
+                    string driverName = driverInfo.Key;
+                    string minimumVersion = driverInfo.Value;
+
+                    searchObject = new ManagementObjectSearcher($"SELECT DriverVersion FROM Win32_PnPSignedDriver WHERE DeviceName = '{driverName}'");
+                    objCollection = searchObject.Get();
+
+                    if (objCollection.Count > 0) {
+                        // We are interested in only one instance if there are multiple cameras connected. They should all have the same version.
+                        var obj = objCollection.OfType<ManagementObject>().FirstOrDefault();
+
+                        if (!string.IsNullOrEmpty(obj["DriverVersion"].ToString())) {
+                            QhyUsbDriverVersion = obj["DriverVersion"].ToString();
+                            Logger.Debug($"QHYCCD: {driverName} driver version: {QhyUsbDriverVersion}");
+                        }
+
+                        // Emit a warning to the user if the USB3 driver is behind
+                        // Per QHY, the USB2 drivers aren't of major concern
+                        if (driverName.Equals("QHY5IIISeries_IO")) {
+                            var minVer = new Version(minimumVersion);
+                            var runVer = new Version(QhyUsbDriverVersion);
+                            var compare = minVer.CompareTo(runVer);
+
+                            if (compare > 0) {
+                                Logger.Warning($"QHYCCD: Installed USB driver version {QhyUsbDriverVersion} is older than recommended version {minimumVersion}. Operation of the camera may not be reliable and updating is HIGHLY suggested.");
+                                Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblQhyccdDriverVersionWarning"], QhyUsbDriverVersion, minimumVersion));
+                            }
+                        }
+
+                        // We found this camera's driver. Move on.
+                        break;
+                    }
+                }
+
+                objCollection.Dispose();
+                searchObject.Dispose();
+            } catch (Exception e) {
+                Logger.Error($"QHYCCD: Fx3DriverVersionCheck failed: {e}");
+            }
+        }
 
         ///<summary>
         // Camera models usually accept CONTROL_GAIN values as a normal integer
@@ -1200,19 +1409,19 @@ namespace NINA.Model.MyCamera {
         ///</summary>
         private bool QuirkUnreliableGain() {
             /* Save a copy of what our current gain is so we can restore it later */
-            double saveGain = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_GAIN);
+            double saveGain = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_GAIN);
 
             /*
              * Set the gain to the maximum gain value minus one step for the camera. We will then query the camera and
              * test whether we get the value we set or not (which indicates the bug).
              */
             double wantGain = Info.GainMax - Info.GainStep;
-            _ = SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_GAIN, wantGain);
+            _ = Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_GAIN, wantGain);
 
-            double curGain = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_GAIN);
+            double curGain = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_GAIN);
 
             /* Restore our original gain setting */
-            _ = SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_GAIN, saveGain);
+            _ = Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_GAIN, saveGain);
 
             if (wantGain != curGain) {
                 Logger.Debug("QHYCCD_QUIRK: This camera reports false gain values");
@@ -1229,13 +1438,13 @@ namespace NINA.Model.MyCamera {
         // Valid issue as of SDK V20180502_0
         ///</summary>
         private void QuirkInflatedOffset() {
-            double saveOffset = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_OFFSET);
+            double saveOffset = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_OFFSET);
 
             double wantOffset = 1;
             double gotOffset;
 
-            _ = SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_OFFSET, wantOffset);
-            gotOffset = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_OFFSET) - wantOffset;
+            _ = Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_OFFSET, wantOffset);
+            gotOffset = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_OFFSET) - wantOffset;
 
             if (gotOffset != 0) {
                 Logger.Debug($"QHYCCD_QUIRK: This camera inflates its Offset by {gotOffset}");
@@ -1245,7 +1454,7 @@ namespace NINA.Model.MyCamera {
             }
 
             /* Restore our original gain setting */
-            _ = SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_OFFSET, saveOffset);
+            _ = Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_OFFSET, saveOffset);
         }
 
         ///<summary>
@@ -1259,15 +1468,15 @@ namespace NINA.Model.MyCamera {
         ///</summary>
         private bool QuirkNoUSBTraffic() {
             double wantUSB;
-            double saveUSB = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_USBTRAFFIC);
+            double saveUSB = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_USBTRAFFIC);
 
             if (saveUSB != Info.USBMax) {
                 wantUSB = Info.USBMax;
             } else {
                 wantUSB = Info.USBMax - Info.USBStep;
             }
-            _ = SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_USBTRAFFIC, wantUSB);
-            double gotUSB = GetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_USBTRAFFIC);
+            _ = Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_USBTRAFFIC, wantUSB);
+            double gotUSB = Sdk.GetControlValue(QhySdk.CONTROL_ID.CONTROL_USBTRAFFIC);
 
             /* Check to see if it really changed */
             if (gotUSB == saveUSB) {
@@ -1276,11 +1485,8 @@ namespace NINA.Model.MyCamera {
             }
 
             /* Restore the original USB traffic setting */
-            _ = SetControlValue(LibQHYCCD.CONTROL_ID.CONTROL_USBTRAFFIC, saveUSB);
-
+            _ = Sdk.SetControlValue(QhySdk.CONTROL_ID.CONTROL_USBTRAFFIC, saveUSB);
             return false;
         }
-
-        #endregion "Quirks"
     }
 }

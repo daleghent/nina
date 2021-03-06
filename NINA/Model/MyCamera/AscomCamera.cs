@@ -598,8 +598,8 @@ namespace NINA.Model.MyCamera {
                         readoutModes.Add(mode);
                     }
                 } else if (CanFastReadout) {
-                    readoutModes.Add("Default");
-                    readoutModes.Add("Fast Readout");
+                    readoutModes.Add(Locale.Loc.Instance["LblNormal"]);
+                    readoutModes.Add(Locale.Loc.Instance["LblFast"]);
                 } else {
                     readoutModes.Add("Default");
                 }

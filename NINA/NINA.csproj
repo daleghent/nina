@@ -462,6 +462,8 @@
     <Compile Include="Profile\Interfaces\IExposureCalculatorSettings.cs" />
     <Compile Include="Profile\Interfaces\ISnapShotControlSettings.cs" />
     <Compile Include="Profile\SnapShotControlSettings.cs" />
+    <Compile Include="Utility\CameraSDKs\QHYSDK\IQhyccdSdk.cs" />
+    <Compile Include="Utility\Converters\NullOrEmptyStringToVisibilityCollapsedConverter.cs" />
     <Compile Include="Utility\Astrometry\EarthRotationParameterUpdater.cs" />
     <Compile Include="Utility\Astrometry\WorldCoordinateSystem.cs" />
     <Compile Include="Utility\Behaviors\MouseCommandBehavior.cs" />
@@ -838,7 +840,7 @@
     <Compile Include="Utility\BindingProxy.cs" />
     <Compile Include="Utility\ButtonHelper.cs" />
     <Compile Include="Utility\CameraSDKs\QHYSDK\QHYCameras.cs" />
-    <Compile Include="Utility\CameraSDKs\QHYSDK\QHYCameraSDK.cs" />
+    <Compile Include="Utility\CameraSDKs\QHYSDK\QhyccdSdk.cs" />
     <Compile Include="Utility\CameraSDKs\ToupTekSDK\ToupCam.cs" />
     <Compile Include="Utility\ColorSchema\ColorSchema.cs" />
     <Compile Include="Utility\Converters\ArcsecToLabelConverter.cs" />

@@ -3,10 +3,35 @@
 If N.I.N.A. helps you in your journey for amazing deep sky images, please consider a donation. Each backer will help keeping the project alive and active.  
 More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">nighttime-imaging.eu/donate/</a>
 
+# Version 1.10 HF3
+
+### QHYCCD native driver improvements
+- <span style="color:red">**IMPORTANT:**</span> NINA 1.10 HF3 (and later) require *at least* [QHY System Pack](https://www.qhyccd.com/download.html) version 21.02.20.19 to be installed
+- Improvements to reliability
+- Seamless switching between 11M and 47M modes for the QHY294 Pro
+- QHY CCDs that have fast and slow readout modes can now select the mode
+- QHY cameras that have sensor chamber air pressure and humidity sensors will display their readings on the Equipment > Camera screen
+- QHY camera firmware and FPGA versions are now displayed on the Equipment > Camera screen
+- The integrated filter wheels of A-Series cameras should now operate correctly
+- Live View function has been disabled for QHY cameras. It was functionally inoperative and will be discontinued for all but Canon and Nikon in 1.11
+- The version of the QHY USB driver will be checked and a warning will be presented if it is not the minimum recommended version
+
+## Included Camera SDK Versions:
+- **Altair Astro:** 48.18421.20210202
+- **Atik:** 2020.08.3.642
+- **Canon:** 13.13.0.6408
+- **FLI:** 1.104.0.0
+- **Nikon:** 1.3.2.3000
+- **Omegon:** 39.15325.2019.810
+- **QHY:** 21.02.19.19
+- **ToupTek:** 48.18081.2020.1205
+- **ZWO:** 1.16.3
+
 # Version 1.10 HF2
 
 ## Improvements
 - Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.
+- Updates to various vendor-supplied SDKs for bug fixes and new model support in the respective native drivers
 
 ## Bugfixes
 - The telescope will no longer go on a journey to the celestial pole before going to the park position
@@ -32,7 +57,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - **Omegon:** 39.15325.2019.810
 - **QHY:** 20.8.26.3
 - **ToupTek:** 48.18081.2020.1205
-- **ZWO:** 1.15.9.15
+- **ZWO:** 1.16.3
 
 # Version 1.10 HF1
 

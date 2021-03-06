@@ -3864,7 +3864,16 @@ namespace NINA.Locale {
                 return ResourceManager.GetString("LblExposureTimeDescription", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Fast.
+        /// </summary>
+        internal static string LblFast {
+            get {
+                return ResourceManager.GetString("LblFast", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Field Of View.
         /// </summary>
@@ -4009,6 +4018,15 @@ namespace NINA.Locale {
         internal static string LblFilterwheelConnectionLost {
             get {
                 return ResourceManager.GetString("LblFilterwheelConnectionLost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Firmware Version.
+        /// </summary>
+        internal static string LblFirmwareVersion {
+            get {
+                return ResourceManager.GetString("LblFirmwareVersion", resourceCulture);
             }
         }
         
@@ -4803,6 +4821,15 @@ namespace NINA.Locale {
         internal static string LblFolderToWatch {
             get {
                 return ResourceManager.GetString("LblFolderToWatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FPGA Version.
+        /// </summary>
+        internal static string LblFPGAVersion {
+            get {
+                return ResourceManager.GetString("LblFPGAVersion", resourceCulture);
             }
         }
         
@@ -7657,6 +7684,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The installed QHYCCD USB driver&apos;s version of {0} is below the minimum recommeneded version of {1}. Driver updates are available on the QHYCCD website and are recommended for optimal camera function.
+        /// </summary>
+        internal static string LblQhyccdDriverVersionWarning {
+            get {
+                return ResourceManager.GetString("LblQhyccdDriverVersionWarning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Include Overscan Area.
         /// </summary>
         internal static string LblQhyIncludeOverscan {
@@ -8285,7 +8321,16 @@ namespace NINA.Locale {
                 return ResourceManager.GetString("LblScopeSettleTimeAfterFlip", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to SDK Version.
+        /// </summary>
+        internal static string LblSDKVersion {
+            get {
+                return ResourceManager.GetString("LblSDKVersion", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
@@ -8359,11 +8404,29 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sensor air pressure.
+        /// </summary>
+        internal static string LblSensorAirPressure {
+            get {
+                return ResourceManager.GetString("LblSensorAirPressure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sensor Analysis is irregular, and may not produce accurate results. Consider re-running it..
         /// </summary>
         internal static string LblSensorAnalysisPoorFit {
             get {
                 return ResourceManager.GetString("LblSensorAnalysisPoorFit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sensor humidity.
+        /// </summary>
+        internal static string LblSensorHumidity {
+            get {
+                return ResourceManager.GetString("LblSensorHumidity", resourceCulture);
             }
         }
         
@@ -10455,6 +10518,15 @@ namespace NINA.Locale {
         internal static string LblURL {
             get {
                 return ResourceManager.GetString("LblURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USB Driver Version.
+        /// </summary>
+        internal static string LblUsbDriverVersion {
+            get {
+                return ResourceManager.GetString("LblUsbDriverVersion", resourceCulture);
             }
         }
         
