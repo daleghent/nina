@@ -549,7 +549,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             SafetyMonitorInfo = deviceInfo;
             if (Dome?.Connected == true && profileService.ActiveProfile.DomeSettings.CloseOnUnsafe) {
                 //Close dome when state switches from safe to unsafe
-                if (previousIsSafe && !deviceInfo.IsSafe && Dome?.ShutterStatus == ShutterState.ShutterOpen) {
+                if (deviceInfo.Connected && previousIsSafe && !deviceInfo.IsSafe && Dome?.ShutterStatus == ShutterState.ShutterOpen) {
                     Logger.Warning("Closing dome shutter due to unsafe conditions");
                     Notification.ShowWarning(Locale.Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
                     Task.Run(async () => {
