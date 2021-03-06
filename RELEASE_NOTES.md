@@ -5,6 +5,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 
 # Version 1.10 HF3
 
+## Improvements
+- A secondary HIPS2 server will be attempted if the main HIPS2 image server is not available
+
 ### QHYCCD native driver improvements
 - <span style="color:red">**IMPORTANT:**</span> NINA 1.10 HF3 (and later) require *at least* [QHY System Pack](https://www.qhyccd.com/download.html) version 21.02.20.19 to be installed
 - Improvements to reliability
@@ -15,6 +18,10 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The integrated filter wheels of A-Series cameras should now operate correctly
 - Live View function has been disabled for QHY cameras. It was functionally inoperative and will be discontinued for all but Canon and Nikon in 1.11
 - The version of the QHY USB driver will be checked and a warning will be presented if it is not the minimum recommended version
+
+## Bug fixes
+- FLI: Stop background flush prior to reading out the sensor
+- ASCOM camera: SensorType is no longer considered to be a mandadory property
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 48.18421.20210202
