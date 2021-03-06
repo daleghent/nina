@@ -30,15 +30,6 @@ namespace NINA.Model.MyFocuser {
 
         public Focuser Device => device;
 
-        public virtual bool Absolute {
-            get {
-                if (Connected) {
-                    return device.Absolute;
-                }
-                return true;
-            }
-        }
-
         public bool IsMoving {
             get {
                 if (Connected) {
@@ -70,13 +61,14 @@ namespace NINA.Model.MyFocuser {
         }
 
         private bool _canGetPosition;
+        private bool _isAbsolute;
 
         //Used for relative focusers
-        private int internalPosition = 5000;
+        private int internalPosition;
 
         public int Position {
             get {
-                if (Absolute) {
+                if (_isAbsolute) {
                     int pos = -1;
                     try {
                         if (Connected && _canGetPosition) {
@@ -168,7 +160,7 @@ namespace NINA.Model.MyFocuser {
         }
 
         public Task Move(int position, CancellationToken ct, int waitInMs = 1000) {
-            if (Absolute) {
+            if (_isAbsolute) {
                 return MoveInternalAbsolute(position, ct, waitInMs);
             } else {
                 return MoveInternalRelative(position, ct, waitInMs);
@@ -239,6 +231,8 @@ namespace NINA.Model.MyFocuser {
         protected override string ConnectionLostMessage => Locale.Loc.Instance["LblFocuserConnectionLost"];
 
         private void Initialize() {
+            internalPosition = device.MaxStep / 2;
+            _isAbsolute = device.Absolute;
             _canGetPosition = true;
             _canGetStepSize = true;
             _hasTemperature = true;

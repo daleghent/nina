@@ -135,6 +135,11 @@ namespace NINA.ViewModel.Equipment.Focuser {
                 position = 0;
             }
 
+            if (position > Focuser.MaxStep) {
+                Logger.Warning($"Requested to move to position {position}, which higher than max position. Moving to {Focuser.MaxStep} instead.");
+                position = Focuser.MaxStep;
+            }
+
             await Task.Run(async () => {
                 var tempComp = false;
                 if (Focuser.TempCompAvailable && Focuser.TempComp) {
