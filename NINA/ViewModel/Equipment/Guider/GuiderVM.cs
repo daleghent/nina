@@ -30,20 +30,23 @@ using NINA.Model.MyGuider.PHD2;
 using NINA.Utility.Notification;
 
 namespace NINA.ViewModel.Equipment.Guider {
+
     internal class GuiderVM : DockableVM, IGuiderVM {
+
         public GuiderVM(IProfileService profileService, IGuiderMediator guiderMediator, IApplicationStatusMediator applicationStatusMediator, IDeviceChooserVM deviceChooser) : base(profileService) {
             Title = "LblGuider";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["GuiderSVG"];
 
             this.guiderMediator = guiderMediator;
             this.guiderMediator.RegisterHandler(this);
+            GuiderChooserVM = deviceChooser;
+            Task.Run(() => GuiderChooserVM.GetEquipment());
 
             this.applicationStatusMediator = applicationStatusMediator;
 
             ConnectGuiderCommand = new AsyncCommand<bool>(Connect);
             CancelConnectGuiderCommand = new RelayCommand(CancelConnectGuider);
             RefreshGuiderListCommand = new RelayCommand(RefreshGuiderList, o => !(Guider?.Connected == true));
-            GuiderChooserVM = deviceChooser;
             DisconnectGuiderCommand = new RelayCommand((object o) => Disconnect(), (object o) => Guider?.Connected == true);
             ClearGraphCommand = new RelayCommand((object o) => ResetGraphValues());
 

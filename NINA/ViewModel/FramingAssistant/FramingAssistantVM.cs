@@ -40,6 +40,7 @@ using System.Windows.Media;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem.Platesolving;
 using System.Linq;
+using System.Diagnostics;
 
 namespace NINA.ViewModel.FramingAssistant {
 
@@ -54,7 +55,6 @@ namespace NINA.ViewModel.FramingAssistant {
             this.telescopeMediator = telescopeMediator;
             this.applicationStatusMediator = applicationStatusMediator;
             this.nighttimeCalculator = nighttimeCalculator;
-            this.NighttimeData = this.nighttimeCalculator.Calculate();
             this.planetariumFactory = planetariumFactory;
             this.sequenceMediator = sequenceMediator;
             this.applicationMediator = applicationMediator;
@@ -116,7 +116,10 @@ namespace NINA.ViewModel.FramingAssistant {
             };
 
             InitializeCommands();
-            InitializeCache();
+            Task.Run(() => {
+                this.NighttimeData = this.nighttimeCalculator.Calculate();
+                InitializeCache();
+            });
         }
 
         private void InitializeCommands() {

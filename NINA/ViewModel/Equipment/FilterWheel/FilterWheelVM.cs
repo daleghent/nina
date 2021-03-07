@@ -36,6 +36,7 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
 
             this.filterWheelMediator = filterWheelMediator;
             this.filterWheelMediator.RegisterHandler(this);
+            Task.Run(() => FilterWheelChooserVM.GetEquipment());
 
             this.focuserMediator = focuserMediator;
             this.applicationStatusMediator = applicationStatusMediator;
@@ -303,7 +304,6 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
             get {
                 if (_filterWheelChooserVM == null) {
                     _filterWheelChooserVM = new FilterWheelChooserVM(profileService);
-                    _filterWheelChooserVM.GetEquipment();
                 }
                 return _filterWheelChooserVM;
             }

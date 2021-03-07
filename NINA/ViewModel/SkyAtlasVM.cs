@@ -40,8 +40,6 @@ namespace NINA.ViewModel {
         public SkyAtlasVM(IProfileService profileService, ITelescopeMediator telescopeMediator,
             IFramingAssistantVM framingAssistantVM, ISequenceMediator sequenceMediator, INighttimeCalculator nighttimeCalculator, IApplicationMediator applicationMediator) : base(profileService) {
             this.nighttimeCalculator = nighttimeCalculator;
-            ResetFilters(null);
-            NighttimeData = this.nighttimeCalculator.Calculate(FilterDate);
 
             SearchCommand = new AsyncCommand<bool>(() => Search());
             CancelSearchCommand = new RelayCommand(CancelSearch);
@@ -76,7 +74,7 @@ namespace NINA.ViewModel {
                 return await framingAssistantVM.SetCoordinates(SearchResult.SelectedItem);
             });
 
-            InitializeFilters();
+            Task.Run(() => { ResetFilters(null); InitializeFilters(); });
             PageSize = 50;
 
             profileService.LocationChanged += (object sender, EventArgs e) => {

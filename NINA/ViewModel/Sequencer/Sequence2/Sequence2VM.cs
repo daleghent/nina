@@ -38,6 +38,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
 using System.Windows.Threading;
@@ -82,25 +83,6 @@ namespace NINA.ViewModel.Sequencer {
 
             SequencerFactory = factory;
 
-            SequenceJsonConverter = new SequenceJsonConverter(SequencerFactory);
-            TemplateController = new TemplateController(SequenceJsonConverter, profileService);
-            TargetController = new TargetController(SequenceJsonConverter, profileService);
-
-            var rootContainer = SequencerFactory.GetContainer<SequenceRootContainer>();
-            rootContainer.Add(SequencerFactory.GetContainer<StartAreaContainer>());
-            rootContainer.Add(SequencerFactory.GetContainer<TargetAreaContainer>());
-            rootContainer.Add(SequencerFactory.GetContainer<EndAreaContainer>());
-
-            Sequencer = new NINA.Sequencer.Sequencer(
-                rootContainer
-            );
-
-            validationTimer = new DispatcherTimer(DispatcherPriority.Background);
-            validationTimer.Interval = TimeSpan.FromSeconds(5);
-            validationTimer.IsEnabled = true;
-            validationTimer.Tick += (sender, args) => Sequencer.MainContainer.Validate();
-            validationTimer.Start();
-
             StartSequenceCommand = new AsyncCommand<bool>(StartSequence);
             CancelSequenceCommand = new RelayCommand(CancelSequence);
             SaveAsSequenceCommand = new RelayCommand(SaveAsSequence);
@@ -131,14 +113,41 @@ namespace NINA.ViewModel.Sequencer {
                 }
             });
 
-            if (File.Exists(profileService.ActiveProfile.SequenceSettings.StartupSequenceTemplate)) {
-                try {
-                    LoadSequenceFromFile(profileService.ActiveProfile.SequenceSettings.StartupSequenceTemplate);
-                    SavePath = string.Empty;
-                } catch (Exception ex) {
-                    Logger.Error("Startup Sequence failed to load", ex);
+            Task.Run(async () => {
+                while (!factory.Initialized) {
+                    await Task.Delay(300);
                 }
-            }
+
+                await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => {
+                    SequenceJsonConverter = new SequenceJsonConverter(SequencerFactory);
+                    TemplateController = new TemplateController(SequenceJsonConverter, profileService);
+                    TargetController = new TargetController(SequenceJsonConverter, profileService);
+
+                    var rootContainer = SequencerFactory.GetContainer<SequenceRootContainer>();
+                    rootContainer.Add(SequencerFactory.GetContainer<StartAreaContainer>());
+                    rootContainer.Add(SequencerFactory.GetContainer<TargetAreaContainer>());
+                    rootContainer.Add(SequencerFactory.GetContainer<EndAreaContainer>());
+
+                    Sequencer = new NINA.Sequencer.Sequencer(
+                        rootContainer
+                    );
+
+                    validationTimer = new DispatcherTimer(DispatcherPriority.Background);
+                    validationTimer.Interval = TimeSpan.FromSeconds(5);
+                    validationTimer.IsEnabled = true;
+                    validationTimer.Tick += (sender, args) => Sequencer.MainContainer.Validate();
+                    validationTimer.Start();
+
+                    if (File.Exists(profileService.ActiveProfile.SequenceSettings.StartupSequenceTemplate)) {
+                        try {
+                            LoadSequenceFromFile(profileService.ActiveProfile.SequenceSettings.StartupSequenceTemplate);
+                            SavePath = string.Empty;
+                        } catch (Exception ex) {
+                            Logger.Error("Startup Sequence failed to load", ex);
+                        }
+                    }
+                }));
+            });
         }
 
         private void AddTargetToController(object obj) {
@@ -256,14 +265,14 @@ namespace NINA.ViewModel.Sequencer {
             }
         }
 
-        public NINA.Sequencer.Sequencer Sequencer { get; }
+        public NINA.Sequencer.Sequencer Sequencer { get; private set; }
 
         public ISequencerFactory SequencerFactory { get; }
 
-        public TemplateController TemplateController { get; }
-        public TargetController TargetController { get; }
+        public TemplateController TemplateController { get; private set; }
+        public TargetController TargetController { get; private set; }
 
-        public SequenceJsonConverter SequenceJsonConverter { get; }
+        public SequenceJsonConverter SequenceJsonConverter { get; private set; }
 
         private bool isRunning;
 

@@ -35,6 +35,7 @@ namespace NINA.ViewModel.Equipment.WeatherData {
             this.weatherDataMediator = weatherDataMediator;
             this.weatherDataMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
+            Task.Run(() => WeatherDataChooserVM.GetEquipment());
 
             ChooseWeatherDataCommand = new AsyncCommand<bool>(() => ChooseWeatherData());
             CancelChooseWeatherDataCommand = new RelayCommand(CancelChooseWeatherData);
@@ -283,7 +284,6 @@ namespace NINA.ViewModel.Equipment.WeatherData {
             get {
                 if (_weatherDataChooserVM == null) {
                     _weatherDataChooserVM = new WeatherDataChooserVM(profileService);
-                    _weatherDataChooserVM.GetEquipment();
                 }
                 return _weatherDataChooserVM;
             }

@@ -107,7 +107,7 @@ namespace NINA.Sequencer.Container {
             this.planetariumFactory = planetariumFactory;
 
             CameraInfo = this.cameraMediator.GetInfo();
-            NighttimeData = nighttimeCalculator.Calculate();
+            Task.Run(() => NighttimeData = nighttimeCalculator.Calculate());
             Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon);
             CoordsToFramingCommand = new AsyncCommand<bool>(() => Task.Run(CoordsToFraming));
             CoordsFromPlanetariumCommand = new AsyncCommand<bool>(() => Task.Run(CoordsFromPlanetarium));
@@ -504,7 +504,7 @@ namespace NINA.Sequencer.Container {
             }
         }
 
-        public NighttimeData NighttimeData { get; }
+        public NighttimeData NighttimeData { get; private set; }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             var startup = CreateStartupContainer();

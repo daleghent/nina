@@ -8750,6 +8750,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Initializing Layout.
+        /// </summary>
+        internal static string LblInitializingLayout {
+            get {
+                return ResourceManager.GetString("LblInitializingLayout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Initializing Sequencer....
+        /// </summary>
+        internal static string LblInitializingSequencer {
+            get {
+                return ResourceManager.GetString("LblInitializingSequencer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Initiate Platesolve.
         /// </summary>
         internal static string LblInitiatePlatesolve {

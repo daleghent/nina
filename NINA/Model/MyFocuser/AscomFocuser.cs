@@ -22,9 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Model.MyFocuser {
-
     internal class AscomFocuser : AscomDevice<Focuser>, IFocuser, IDisposable {
-
         public AscomFocuser(string focuser, string name) : base(focuser, name) {
         }
 

@@ -13,10 +13,11 @@
 #endregion "copyright"
 
 using NINA.Profile;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel.Equipment.FlatDevice {
 
-    internal class FlatDeviceChooserVM : EquipmentChooserVM, IDeviceChooserVM {
+    internal class FlatDeviceChooserVM : DeviceChooserVM {
         private readonly IDeviceFactory deviceFactory;
 
         public FlatDeviceChooserVM(IProfileService profileService, IDeviceFactory deviceFactory) : base(profileService) {
@@ -24,12 +25,16 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
         }
 
         public override void GetEquipment() {
-            Devices.Clear();
+            lock (lockObj) {
+                var devices = new List<Model.IDevice>();
 
-            foreach (var device in deviceFactory.GetDevices()) {
-                Devices.Add(device);
+                foreach (var device in deviceFactory.GetDevices()) {
+                    devices.Add(device);
+                }
+
+                Devices = devices;
+                DetermineSelectedDevice(profileService.ActiveProfile.FlatDeviceSettings.Id);
             }
-            DetermineSelectedDevice(profileService.ActiveProfile.FlatDeviceSettings.Id);
         }
     }
 }

@@ -15,6 +15,7 @@
     xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:util="clr-namespace:NINA.Utility.AvalonDock"
     xmlns:view="clr-namespace:NINA.View"
@@ -26,175 +27,196 @@
     <UserControl.Resources>
         <dock:BoolToVisibilityConverter x:Key="btvc" />
     </UserControl.Resources>
+    <Grid>
+        <Grid Visibility="{Binding LoadAvalonDockLayoutCommand.Execution.IsCompleted, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-    <Grid Background="{StaticResource TertiaryBackgroundBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
-        <Grid>
-            <StackPanel
-                Margin="2,0,0,0"
-                HorizontalAlignment="Left"
-                Orientation="Horizontal">
-                <ItemsControl ItemsSource="{Binding AnchorableInfoPanels}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ToggleButton
-                                Width="30"
-                                Height="30"
-                                Margin="2.5"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Command="{Binding HideCommand}"
-                                IsChecked="{Binding IsVisible, Mode=OneWay}">
-                                <ToggleButton.ToolTip>
-                                    <TextBlock Text="{Binding Title}" />
-                                </ToggleButton.ToolTip>
-                                <ToggleButton.Style>
-                                    <Style BasedOn="{StaticResource AvalonSideBarToggleButton}" TargetType="ToggleButton">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Content">
-                                                    <Setter.Value>
-                                                        <Path
-                                                            Margin="5"
-                                                            Data="{Binding ImageGeometry}"
-                                                            Fill="Pink"
-                                                            Stretch="Uniform" />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Content">
-                                                    <Setter.Value>
-                                                        <Path
-                                                            Margin="5"
-                                                            Data="{Binding ImageGeometry}"
-                                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="False">
-                                                <Setter Property="Content">
-                                                    <Setter.Value>
-                                                        <Path
-                                                            Margin="5"
-                                                            Data="{Binding ImageGeometry}"
-                                                            Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                            Stretch="Uniform" />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ToggleButton.Style>
-                            </ToggleButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+            <StackPanel Grid.Row="1" Orientation="Vertical">
+                <ninactrl:LoadingControl
+                    Width="50"
+                    Height="50"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    LoadingImageBrush="{StaticResource PrimaryBrush}" />
                 <TextBlock
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Foreground="{StaticResource ButtonForegroundBrush}"
-                    Text="{ns:Loc LblInfo}"
-                    TextAlignment="Center" />
-            </StackPanel>
-
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Foreground="{StaticResource ButtonForegroundBrush}"
-                    Text="{ns:Loc LblTools}"
-                    TextAlignment="Center" />
-                <ItemsControl ItemsSource="{Binding AnchorableTools}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Horizontal" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <ToggleButton
-                                Width="30"
-                                Height="30"
-                                Margin="2.5"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Command="{Binding HideCommand}"
-                                IsChecked="{Binding IsVisible, Mode=OneWay}">
-                                <ToggleButton.ToolTip>
-                                    <TextBlock Text="{Binding Title}" />
-                                </ToggleButton.ToolTip>
-                                <ToggleButton.Style>
-                                    <Style BasedOn="{StaticResource AvalonSideBarToggleButton}" TargetType="ToggleButton">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Content">
-                                                    <Setter.Value>
-                                                        <Path
-                                                            Margin="5"
-                                                            Data="{Binding ImageGeometry}"
-                                                            Fill="Pink"
-                                                            Stretch="Uniform" />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="True">
-                                                <Setter Property="Content">
-                                                    <Setter.Value>
-                                                        <Path
-                                                            Margin="5"
-                                                            Data="{Binding ImageGeometry}"
-                                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Trigger>
-                                            <Trigger Property="IsChecked" Value="False">
-                                                <Setter Property="Content">
-                                                    <Setter.Value>
-                                                        <Path
-                                                            Margin="5"
-                                                            Data="{Binding ImageGeometry}"
-                                                            Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                                                            Stretch="Uniform" />
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </ToggleButton.Style>
-                            </ToggleButton>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    FontSize="20"
+                    Text="{ns:Loc LblInitializingLayout}" />
             </StackPanel>
         </Grid>
-        <dock:DockingManager
-            x:Name="dockManager"
-            Grid.Row="1"
-            Margin="1,0,0,0"
-            AnchorablesSource="{Binding Anchorables}"
-            DataContext="{Binding}">
-            <!--<dock:DockingManager.Theme>
+        <Grid Background="{StaticResource TertiaryBackgroundBrush}" Visibility="{Binding LoadAvalonDockLayoutCommand.Execution.IsCompleted, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid>
+                <StackPanel
+                    Margin="2,0,0,0"
+                    HorizontalAlignment="Left"
+                    Orientation="Horizontal">
+                    <ItemsControl ItemsSource="{Binding AnchorableInfoPanels}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton
+                                    Width="30"
+                                    Height="30"
+                                    Margin="2.5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Command="{Binding HideCommand}"
+                                    IsChecked="{Binding IsVisible, Mode=OneWay}">
+                                    <ToggleButton.ToolTip>
+                                        <TextBlock Text="{Binding Title}" />
+                                    </ToggleButton.ToolTip>
+                                    <ToggleButton.Style>
+                                        <Style BasedOn="{StaticResource AvalonSideBarToggleButton}" TargetType="ToggleButton">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <Path
+                                                                Margin="5"
+                                                                Data="{Binding ImageGeometry}"
+                                                                Fill="Pink"
+                                                                Stretch="Uniform" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <Path
+                                                                Margin="5"
+                                                                Data="{Binding ImageGeometry}"
+                                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                                Stretch="Uniform" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="False">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <Path
+                                                                Margin="5"
+                                                                Data="{Binding ImageGeometry}"
+                                                                Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                                Stretch="Uniform" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource ButtonForegroundBrush}"
+                        Text="{ns:Loc LblInfo}"
+                        TextAlignment="Center" />
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Foreground="{StaticResource ButtonForegroundBrush}"
+                        Text="{ns:Loc LblTools}"
+                        TextAlignment="Center" />
+                    <ItemsControl ItemsSource="{Binding AnchorableTools}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <ToggleButton
+                                    Width="30"
+                                    Height="30"
+                                    Margin="2.5"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Command="{Binding HideCommand}"
+                                    IsChecked="{Binding IsVisible, Mode=OneWay}">
+                                    <ToggleButton.ToolTip>
+                                        <TextBlock Text="{Binding Title}" />
+                                    </ToggleButton.ToolTip>
+                                    <ToggleButton.Style>
+                                        <Style BasedOn="{StaticResource AvalonSideBarToggleButton}" TargetType="ToggleButton">
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <Path
+                                                                Margin="5"
+                                                                Data="{Binding ImageGeometry}"
+                                                                Fill="Pink"
+                                                                Stretch="Uniform" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="True">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <Path
+                                                                Margin="5"
+                                                                Data="{Binding ImageGeometry}"
+                                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                                Stretch="Uniform" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                                <Trigger Property="IsChecked" Value="False">
+                                                    <Setter Property="Content">
+                                                        <Setter.Value>
+                                                            <Path
+                                                                Margin="5"
+                                                                Data="{Binding ImageGeometry}"
+                                                                Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                                                                Stretch="Uniform" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ToggleButton.Style>
+                                </ToggleButton>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Grid>
+            <dock:DockingManager
+                x:Name="dockManager"
+                Grid.Row="1"
+                Margin="1,0,0,0"
+                AnchorablesSource="{Binding Anchorables}"
+                DataContext="{Binding}">
+                <!--<dock:DockingManager.Theme>
                 <dock:MetroTheme />
             </dock:DockingManager.Theme>-->
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="Loaded">
-                    <i:InvokeCommandAction Command="{Binding LoadAvalonDockLayoutCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dock:DockingManager}}}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Loaded">
+                        <i:InvokeCommandAction Command="{Binding LoadAvalonDockLayoutCommand}" CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type dock:DockingManager}}}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
 
-            <!--<dock:DockingManager.Resources>
+                <!--<dock:DockingManager.Resources>
                 <DataTemplate DataType="{x:Type vm:CameraVM}">
                     <view:AnchorableCameraView />
                 </DataTemplate>
@@ -264,164 +286,164 @@
                 </DataTemplate>
             </dock:DockingManager.Resources>-->
 
-            <dock:DockingManager.LayoutItemTemplateSelector>
-                <util:PaneTemplateSelector>
-                    <util:PaneTemplateSelector.CameraTemplate>
-                        <DataTemplate>
-                            <view:AnchorableCameraView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.CameraTemplate>
+                <dock:DockingManager.LayoutItemTemplateSelector>
+                    <util:PaneTemplateSelector>
+                        <util:PaneTemplateSelector.CameraTemplate>
+                            <DataTemplate>
+                                <view:AnchorableCameraView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.CameraTemplate>
 
-                    <util:PaneTemplateSelector.TelescopeTemplate>
-                        <DataTemplate>
-                            <view:AnchorableTelescopeView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.TelescopeTemplate>
+                        <util:PaneTemplateSelector.TelescopeTemplate>
+                            <DataTemplate>
+                                <view:AnchorableTelescopeView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.TelescopeTemplate>
 
-                    <util:PaneTemplateSelector.DomeTemplate>
-                        <DataTemplate>
-                            <view:AnchorableDomeView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.DomeTemplate>
+                        <util:PaneTemplateSelector.DomeTemplate>
+                            <DataTemplate>
+                                <view:AnchorableDomeView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.DomeTemplate>
 
-                    <util:PaneTemplateSelector.ImageControlTemplate>
-                        <DataTemplate>
-                            <view:ImageControlView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.ImageControlTemplate>
+                        <util:PaneTemplateSelector.ImageControlTemplate>
+                            <DataTemplate>
+                                <view:ImageControlView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.ImageControlTemplate>
 
-                    <util:PaneTemplateSelector.ThumbnailTemplate>
-                        <DataTemplate>
-                            <view:ThumbnailListView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.ThumbnailTemplate>
+                        <util:PaneTemplateSelector.ThumbnailTemplate>
+                            <DataTemplate>
+                                <view:ThumbnailListView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.ThumbnailTemplate>
 
-                    <util:PaneTemplateSelector.FocusTargetsTemplate>
-                        <DataTemplate>
-                            <view:AnchorableFocusTargetsView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.FocusTargetsTemplate>
+                        <util:PaneTemplateSelector.FocusTargetsTemplate>
+                            <DataTemplate>
+                                <view:AnchorableFocusTargetsView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.FocusTargetsTemplate>
 
-                    <util:PaneTemplateSelector.PlatesolveTemplate>
-                        <DataTemplate>
-                            <view:AnchorablePlateSolveView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.PlatesolveTemplate>
+                        <util:PaneTemplateSelector.PlatesolveTemplate>
+                            <DataTemplate>
+                                <view:AnchorablePlateSolveView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.PlatesolveTemplate>
 
-                    <util:PaneTemplateSelector.PolarAlignmentTemplate>
-                        <DataTemplate>
-                            <view:AnchorablePolarAlignmentView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.PolarAlignmentTemplate>
+                        <util:PaneTemplateSelector.PolarAlignmentTemplate>
+                            <DataTemplate>
+                                <view:AnchorablePolarAlignmentView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.PolarAlignmentTemplate>
 
-                    <util:PaneTemplateSelector.GuiderTemplate>
-                        <DataTemplate>
-                            <view:AnchorableGuiderView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.GuiderTemplate>
+                        <util:PaneTemplateSelector.GuiderTemplate>
+                            <DataTemplate>
+                                <view:AnchorableGuiderView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.GuiderTemplate>
 
-                    <util:PaneTemplateSelector.FilterWheelTemplate>
-                        <DataTemplate>
-                            <view:AnchorableFilterWheelView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.FilterWheelTemplate>
+                        <util:PaneTemplateSelector.FilterWheelTemplate>
+                            <DataTemplate>
+                                <view:AnchorableFilterWheelView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.FilterWheelTemplate>
 
-                    <util:PaneTemplateSelector.ImagingTemplate>
-                        <DataTemplate>
-                            <view:AnchorableCameraControlView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.ImagingTemplate>
+                        <util:PaneTemplateSelector.ImagingTemplate>
+                            <DataTemplate>
+                                <view:AnchorableCameraControlView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.ImagingTemplate>
 
-                    <util:PaneTemplateSelector.ImageHistoryTemplate>
-                        <DataTemplate>
-                            <view:AnchorableImageHistoryView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.ImageHistoryTemplate>
+                        <util:PaneTemplateSelector.ImageHistoryTemplate>
+                            <DataTemplate>
+                                <view:AnchorableImageHistoryView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.ImageHistoryTemplate>
 
-                    <util:PaneTemplateSelector.ImageStatisticsTemplate>
-                        <DataTemplate>
-                            <view:AnchorableImageStatisticsView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.ImageStatisticsTemplate>
+                        <util:PaneTemplateSelector.ImageStatisticsTemplate>
+                            <DataTemplate>
+                                <view:AnchorableImageStatisticsView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.ImageStatisticsTemplate>
 
-                    <util:PaneTemplateSelector.SequenceTemplate>
-                        <DataTemplate>
-                            <view:AnchorableSequenceNavigationView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.SequenceTemplate>
+                        <util:PaneTemplateSelector.SequenceTemplate>
+                            <DataTemplate>
+                                <view:AnchorableSequenceNavigationView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.SequenceTemplate>
 
-                    <util:PaneTemplateSelector.RotatorTemplate>
-                        <DataTemplate>
-                            <view:AnchorableRotatorView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.RotatorTemplate>
+                        <util:PaneTemplateSelector.RotatorTemplate>
+                            <DataTemplate>
+                                <view:AnchorableRotatorView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.RotatorTemplate>
 
-                    <util:PaneTemplateSelector.SafetyMonitorTemplate>
-                        <DataTemplate>
-                            <view:AnchorableSafetyMonitorView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.SafetyMonitorTemplate>
+                        <util:PaneTemplateSelector.SafetyMonitorTemplate>
+                            <DataTemplate>
+                                <view:AnchorableSafetyMonitorView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.SafetyMonitorTemplate>
 
-                    <util:PaneTemplateSelector.WeatherDataTemplate>
-                        <DataTemplate>
-                            <view:AnchorableWeatherDataView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.WeatherDataTemplate>
+                        <util:PaneTemplateSelector.WeatherDataTemplate>
+                            <DataTemplate>
+                                <view:AnchorableWeatherDataView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.WeatherDataTemplate>
 
-                    <util:PaneTemplateSelector.FocuserTemplate>
-                        <DataTemplate>
-                            <view:AnchorableFocuserView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.FocuserTemplate>
+                        <util:PaneTemplateSelector.FocuserTemplate>
+                            <DataTemplate>
+                                <view:AnchorableFocuserView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.FocuserTemplate>
 
-                    <util:PaneTemplateSelector.AutoFocusTemplate>
-                        <DataTemplate>
-                            <view:AnchorableAutoFocusView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.AutoFocusTemplate>
+                        <util:PaneTemplateSelector.AutoFocusTemplate>
+                            <DataTemplate>
+                                <view:AnchorableAutoFocusView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.AutoFocusTemplate>
 
-                    <util:PaneTemplateSelector.SwitchTemplate>
-                        <DataTemplate>
-                            <view:AnchorableSwitchHubView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.SwitchTemplate>
+                        <util:PaneTemplateSelector.SwitchTemplate>
+                            <DataTemplate>
+                                <view:AnchorableSwitchHubView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.SwitchTemplate>
 
-                    <util:PaneTemplateSelector.FlatDeviceTemplate>
-                        <DataTemplate>
-                            <view:AnchorableFlatDeviceView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.FlatDeviceTemplate>
+                        <util:PaneTemplateSelector.FlatDeviceTemplate>
+                            <DataTemplate>
+                                <view:AnchorableFlatDeviceView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.FlatDeviceTemplate>
 
-                    <util:PaneTemplateSelector.ExposureCalculatorTemplate>
-                        <DataTemplate>
-                            <view:AnchorableExposureTimeRecommendationView />
-                        </DataTemplate>
-                    </util:PaneTemplateSelector.ExposureCalculatorTemplate>
-                </util:PaneTemplateSelector>
-            </dock:DockingManager.LayoutItemTemplateSelector>
+                        <util:PaneTemplateSelector.ExposureCalculatorTemplate>
+                            <DataTemplate>
+                                <view:AnchorableExposureTimeRecommendationView />
+                            </DataTemplate>
+                        </util:PaneTemplateSelector.ExposureCalculatorTemplate>
+                    </util:PaneTemplateSelector>
+                </dock:DockingManager.LayoutItemTemplateSelector>
 
-            <dock:DockingManager.LayoutItemContainerStyleSelector>
-                <util:PaneStyleSelector>
-                    <util:PaneStyleSelector.AnchorableStyle>
-                        <Style TargetType="{x:Type dock:LayoutAnchorableItem}">
-                            <Setter Property="Title" Value="{Binding Model.Title}" />
-                            <Setter Property="HideCommand" Value="{Binding Model.HideCommand}" />
-                            <Setter Property="Visibility" Value="{Binding Model.IsVisible, ConverterParameter={x:Static Visibility.Hidden}, Converter={StaticResource btvc}, Mode=TwoWay}" />
-                            <Setter Property="CanClose" Value="{Binding Model.CanClose}" />
-                            <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
-                        </Style>
-                    </util:PaneStyleSelector.AnchorableStyle>
-                    <!--<util:PaneStyleSelector.DocumentStyle>
+                <dock:DockingManager.LayoutItemContainerStyleSelector>
+                    <util:PaneStyleSelector>
+                        <util:PaneStyleSelector.AnchorableStyle>
+                            <Style TargetType="{x:Type dock:LayoutAnchorableItem}">
+                                <Setter Property="Title" Value="{Binding Model.Title}" />
+                                <Setter Property="HideCommand" Value="{Binding Model.HideCommand}" />
+                                <Setter Property="Visibility" Value="{Binding Model.IsVisible, ConverterParameter={x:Static Visibility.Hidden}, Converter={StaticResource btvc}, Mode=TwoWay}" />
+                                <Setter Property="CanClose" Value="{Binding Model.CanClose}" />
+                                <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
+                            </Style>
+                        </util:PaneStyleSelector.AnchorableStyle>
+                        <!--<util:PaneStyleSelector.DocumentStyle>
                         <Style TargetType="{x:Type dock:LayoutItem}">
                             <Setter Property="Title" Value="{Binding Model.Title}" />
                             <Setter Property="CanClose" Value="{Binding Model.CanClose}" />
                             <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
                         </Style>
                     </util:PaneStyleSelector.DocumentStyle>-->
-                </util:PaneStyleSelector>
-            </dock:DockingManager.LayoutItemContainerStyleSelector>
+                    </util:PaneStyleSelector>
+                </dock:DockingManager.LayoutItemContainerStyleSelector>
 
-            <!--<dock:DockingManager.DocumentHeaderTemplate>
+                <!--<dock:DockingManager.DocumentHeaderTemplate>
                                 <DataTemplate>
                                     <Grid Background="{StaticResource ButtonBackgroundBrush}">
                                         <Grid  Height="50" Width="50">
@@ -433,18 +455,19 @@
                                 </DataTemplate>
                             </dock:DockingManager.DocumentHeaderTemplate>-->
 
-            <dock:DockingManager.LayoutUpdateStrategy>
-                <util:LayoutInitializer />
-            </dock:DockingManager.LayoutUpdateStrategy>
+                <dock:DockingManager.LayoutUpdateStrategy>
+                    <util:LayoutInitializer />
+                </dock:DockingManager.LayoutUpdateStrategy>
 
-            <dock:LayoutRoot>
-                <dock:LayoutPanel Orientation="Horizontal">
-                    <!--<dock:LayoutAnchorablePane Name="ToolsPaneLeft" DockWidth="*">
+                <dock:LayoutRoot>
+                    <dock:LayoutPanel Orientation="Horizontal">
+                        <!--<dock:LayoutAnchorablePane Name="ToolsPaneLeft" DockWidth="*">
                     </dock:LayoutAnchorablePane>-->
-                    <!--<dock:LayoutDocumentPane DockWidth="4*" />-->
-                    <dock:LayoutAnchorablePane Name="ToolsPane" DockWidth="*" />
-                </dock:LayoutPanel>
-            </dock:LayoutRoot>
-        </dock:DockingManager>
+                        <!--<dock:LayoutDocumentPane DockWidth="4*" />-->
+                        <dock:LayoutAnchorablePane Name="ToolsPane" DockWidth="*" />
+                    </dock:LayoutPanel>
+                </dock:LayoutRoot>
+            </dock:DockingManager>
+        </Grid>
     </Grid>
 </UserControl>

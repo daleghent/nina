@@ -33,6 +33,9 @@ using NINA.ViewModel.Equipment.FlatDevice;
 using NINA.ViewModel.Sequencer;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Equipment.SafetyMonitor;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace NINA.ViewModel {
 
@@ -44,7 +47,7 @@ namespace NINA.ViewModel {
             IPolarAlignmentVM polarAlignmentVM, IAnchorablePlateSolverVM plateSolverVM, ITelescopeVM telescopeVM, IGuiderVM guiderVM,
             IFocusTargetsVM focusTargetsVM, IAutoFocusVM autoFocusVM, IExposureCalculatorVM exposureCalculatorVM, IImageHistoryVM imageHistoryVM,
             IImageControlVM imageControlVM, IImageStatisticsVM imageStatisticsVM, IFlatDeviceVM flatDeviceVM, ISafetyMonitorVM safetyMonitorVM) : base(profileService) {
-            LoadAvalonDockLayoutCommand = new RelayCommand(LoadAvalonDockLayout);
+            LoadAvalonDockLayoutCommand = new AsyncCommand<bool>((object o) => Task.Run(() => LoadAvalonDockLayout(o)));
             ResetDockLayoutCommand = new RelayCommand(ResetDockLayout, (object o) => _dockmanager != null);
 
             Anchorables.Add(imageControlVM);
@@ -164,31 +167,36 @@ namespace NINA.ViewModel {
         private Xceed.Wpf.AvalonDock.DockingManager _dockmanager;
         private bool _dockloaded = false;
         private object lockObj = new object();
+        private Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
 
-        public void LoadAvalonDockLayout(object o) {
+        public bool LoadAvalonDockLayout(object o) {
             lock (lockObj) {
                 if (!_dockloaded) {
-                    _dockmanager = (Xceed.Wpf.AvalonDock.DockingManager)o;
+                    _dispatcher.Invoke(new Action(() => {
+                        _dockmanager = (Xceed.Wpf.AvalonDock.DockingManager)o;
 
-                    var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
-                    serializer.LayoutSerializationCallback += (s, args) => {
-                        args.Content = args.Content;
-                    };
+                        var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
+                        serializer.LayoutSerializationCallback += (s, args) => {
+                            args.Content = args.Content;
+                        };
 
-                    if (System.IO.File.Exists(Utility.AvalonDock.LayoutInitializer.LAYOUTFILEPATH)) {
-                        try {
-                            serializer.Deserialize(Utility.AvalonDock.LayoutInitializer.LAYOUTFILEPATH);
-                            _dockloaded = true;
-                        } catch (Exception ex) {
-                            Logger.Error("Failed to load AvalonDock Layout. Loading default Layout!", ex);
-                            using (var stream = new StringReader(Properties.Resources.avalondock)) {
-                                serializer.Deserialize(stream);
+                        if (System.IO.File.Exists(Utility.AvalonDock.LayoutInitializer.LAYOUTFILEPATH)) {
+                            try {
+                                serializer.Deserialize(Utility.AvalonDock.LayoutInitializer.LAYOUTFILEPATH);
+                                _dockloaded = true;
+                            } catch (Exception ex) {
+                                Logger.Error("Failed to load AvalonDock Layout. Loading default Layout!", ex);
+                                using (var stream = new StringReader(Properties.Resources.avalondock)) {
+                                    serializer.Deserialize(stream);
+                                    _dockloaded = true;
+                                }
                             }
+                        } else {
+                            LoadDefaultLayout(serializer);
                         }
-                    } else {
-                        LoadDefaultLayout(serializer);
-                    }
+                    }), System.Windows.Threading.DispatcherPriority.Background);
                 }
+                return true;
             }
         }
 
@@ -218,7 +226,7 @@ namespace NINA.ViewModel {
             }
         }
 
-        public ICommand LoadAvalonDockLayoutCommand { get; private set; }
+        public IAsyncCommand LoadAvalonDockLayoutCommand { get; private set; }
         public ICommand ResetDockLayoutCommand { get; }
 
         public ICommand ClosingCommand { get; private set; }

@@ -34,6 +34,7 @@ using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
@@ -101,81 +102,102 @@ namespace NINA.Sequencer {
                 new SunriseProvider(nighttimeCalculator)
             };
 
-            var catalog = new AggregateCatalog();
+            Task.Run(() => {
+                var catalog = new AggregateCatalog();
 
-            var types = GetCoreSequencerTypes();
-            var coreCatalog = new TypeCatalog(types);
-            catalog.Catalogs.Add(coreCatalog);
+                var types = GetCoreSequencerTypes();
+                var coreCatalog = new TypeCatalog(types);
+                catalog.Catalogs.Add(coreCatalog);
 
-            var extensionsFolder = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Plugins");
-            if (Directory.Exists(extensionsFolder)) {
-                foreach (var file in Directory.GetFiles(extensionsFolder, "*.dll")) {
-                    try {
-                        var plugin = new AssemblyCatalog(file);
-                        plugin.Parts.ToArray();
+                var extensionsFolder = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Plugins");
+                if (Directory.Exists(extensionsFolder)) {
+                    foreach (var file in Directory.GetFiles(extensionsFolder, "*.dll")) {
+                        try {
+                            var plugin = new AssemblyCatalog(file);
+                            plugin.Parts.ToArray();
 
-                        catalog.Catalogs.Add(plugin);
-                        assemblies.Add(plugin.Assembly);
-                    } catch (Exception ex) {
-                        Logger.Error($"Failed to load plugin {file}", ex);
+                            catalog.Catalogs.Add(plugin);
+                            assemblies.Add(plugin.Assembly);
+                        } catch (Exception ex) {
+                            Logger.Error($"Failed to load plugin {file}", ex);
+                        }
                     }
                 }
+
+                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
+
+                container = new CompositionContainer(catalog);
+                container.ComposeExportedValue(profileService);
+                container.ComposeExportedValue(cameraMediator);
+                container.ComposeExportedValue(telescopeMediator);
+                container.ComposeExportedValue(focuserMediator);
+                container.ComposeExportedValue(filterWheelMediator);
+                container.ComposeExportedValue(guiderMediator);
+                container.ComposeExportedValue(rotatorMediator);
+                container.ComposeExportedValue(flatDeviceMediator);
+                container.ComposeExportedValue(weatherDataMediator);
+                container.ComposeExportedValue(imagingMediator);
+                container.ComposeExportedValue(applicationStatusMediator);
+                container.ComposeExportedValue(nighttimeCalculator);
+                container.ComposeExportedValue(planetariumFactory);
+                container.ComposeExportedValue(imageHistoryVM);
+                container.ComposeExportedValue(deepSkyObjectSearchVM);
+                container.ComposeExportedValue(domeMediator);
+                container.ComposeExportedValue(imageSaveMediator);
+                container.ComposeExportedValue(switchMediator);
+                container.ComposeExportedValue(resourceDictionary);
+                container.ComposeExportedValue(DateTimeProviders);
+                container.ComposeExportedValue(safetyMonitorMediator);
+                container.ComposeExportedValue(applicationMediator);
+                container.ComposeExportedValue(framingAssistantVM);
+
+                container.ComposeParts(this);
+
+                foreach (var template in DataTemplateImports) {
+                    Application.Current?.Resources.MergedDictionaries.Add(template);
+                }
+
+                Items = new ObservableCollection<ISequenceItem>(Assign(ItemImports, resourceDictionary));
+                Conditions = new ObservableCollection<ISequenceCondition>(Assign(ConditionImports, resourceDictionary));
+                Triggers = new ObservableCollection<ISequenceTrigger>(Assign(TriggerImports, resourceDictionary));
+                Container = new ObservableCollection<ISequenceContainer>(Assign(ContainerImports, resourceDictionary));
+
+                var instructions = new List<ISequenceEntity>();
+                foreach (var item in Items) {
+                    instructions.Add(item);
+                }
+                foreach (var condition in Conditions) {
+                    instructions.Add(condition);
+                }
+                foreach (var trigger in Triggers) {
+                    instructions.Add(trigger);
+                }
+
+                ItemsView = CollectionViewSource.GetDefaultView(instructions);
+                ItemsView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
+                ItemsView.SortDescriptions.Add(new SortDescription("Category", ListSortDirection.Ascending));
+                ItemsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+                ItemsView.Filter += new Predicate<object>(ApplyViewFilter);
+
+                Initialized = true;
+            });
+        }
+
+        private object lockObj = new object();
+
+        private bool initialized;
+
+        public bool Initialized {
+            get {
+                lock (lockObj) {
+                    return initialized;
+                }
             }
-
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
-            container = new CompositionContainer(catalog);
-            container.ComposeExportedValue(profileService);
-            container.ComposeExportedValue(cameraMediator);
-            container.ComposeExportedValue(telescopeMediator);
-            container.ComposeExportedValue(focuserMediator);
-            container.ComposeExportedValue(filterWheelMediator);
-            container.ComposeExportedValue(guiderMediator);
-            container.ComposeExportedValue(rotatorMediator);
-            container.ComposeExportedValue(flatDeviceMediator);
-            container.ComposeExportedValue(weatherDataMediator);
-            container.ComposeExportedValue(imagingMediator);
-            container.ComposeExportedValue(applicationStatusMediator);
-            container.ComposeExportedValue(nighttimeCalculator);
-            container.ComposeExportedValue(planetariumFactory);
-            container.ComposeExportedValue(imageHistoryVM);
-            container.ComposeExportedValue(deepSkyObjectSearchVM);
-            container.ComposeExportedValue(domeMediator);
-            container.ComposeExportedValue(imageSaveMediator);
-            container.ComposeExportedValue(switchMediator);
-            container.ComposeExportedValue(resourceDictionary);
-            container.ComposeExportedValue(DateTimeProviders);
-            container.ComposeExportedValue(safetyMonitorMediator);
-            container.ComposeExportedValue(applicationMediator);
-            container.ComposeExportedValue(framingAssistantVM);
-
-            container.ComposeParts(this);
-
-            foreach (var template in DataTemplateImports) {
-                Application.Current?.Resources.MergedDictionaries.Add(template);
+            set {
+                lock (lockObj) {
+                    initialized = value;
+                }
             }
-
-            Items = new ObservableCollection<ISequenceItem>(Assign(ItemImports, resourceDictionary));
-            Conditions = new ObservableCollection<ISequenceCondition>(Assign(ConditionImports, resourceDictionary));
-            Triggers = new ObservableCollection<ISequenceTrigger>(Assign(TriggerImports, resourceDictionary));
-            Container = new ObservableCollection<ISequenceContainer>(Assign(ContainerImports, resourceDictionary));
-
-            var instructions = new List<ISequenceEntity>();
-            foreach (var item in Items) {
-                instructions.Add(item);
-            }
-            foreach (var condition in Conditions) {
-                instructions.Add(condition);
-            }
-            foreach (var trigger in Triggers) {
-                instructions.Add(trigger);
-            }
-
-            ItemsView = CollectionViewSource.GetDefaultView(instructions);
-            ItemsView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
-            ItemsView.SortDescriptions.Add(new SortDescription("Category", ListSortDirection.Ascending));
-            ItemsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-            ItemsView.Filter += new Predicate<object>(ApplyViewFilter);
         }
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {

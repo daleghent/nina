@@ -43,7 +43,7 @@ namespace NINA.ViewModel {
             this.telescopeMediator = telescopeMediator;
             telescopeMediator.RegisterConsumer(this);
 
-            AsyncContext.Run(LoadFocusTargets);
+            _ = LoadFocusTargets();
 
             updateTimer = new System.Timers.Timer(TimeSpan.FromMinutes(1).TotalMilliseconds) { AutoReset = true };
             updateTimer.Elapsed += (sender, args) => CalculateVisibleStars();
@@ -84,14 +84,16 @@ namespace NINA.ViewModel {
 
         public IAsyncCommand SlewToCoordinatesCommand { get; }
 
-        private async Task LoadFocusTargets() {
-            try {
-                var db = new DatabaseInteraction();
-                allFocusTargets = await db.GetBrightStars();
-                CalculateVisibleStars();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
+        private Task LoadFocusTargets() {
+            return Task.Run(async () => {
+                try {
+                    var db = new DatabaseInteraction();
+                    allFocusTargets = await db.GetBrightStars();
+                    CalculateVisibleStars();
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+            });
         }
 
         private void CalculateVisibleStars() {

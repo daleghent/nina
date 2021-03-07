@@ -140,7 +140,7 @@ namespace NINA.Utility.Astrometry {
         /// <param name="pixelX">x pixel value</param>
         /// <param name="pixelY">y pixel value</param>
         /// <returns>Coordinates at position x|y</returns>
-        public Coordinates GetCoordinates(int pixelX, int pixelY) {
+        public Coordinates GetCoordinates(double pixelX, double pixelY) {
             return Coordinates.Shift(pixelX - Point.X, pixelY - Point.Y, Rotation, PixelScaleX, PixelScaleY, Coordinates.ProjectionType.Gnomonic);
         }
     }

@@ -15,28 +15,32 @@ namespace NINA.Utility.Astrometry {
 
         private IDictionary<string, NighttimeData> Cache;
 
+        private object lockObj = new object();
+
         public NighttimeData Calculate(DateTime? date = null) {
-            var selectedDate = date.HasValue ? date.Value : DateTime.Now;
-            var referenceDate = GetReferenceDate(selectedDate);
-            var latitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
-            var longitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
+            lock (lockObj) {
+                var selectedDate = date.HasValue ? date.Value : DateTime.Now;
+                var referenceDate = GetReferenceDate(selectedDate);
+                var latitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
+                var longitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
 
-            var key = $"{referenceDate:yyyy-MM-dddd-HH-mm-ss}_{latitude}_{longitude}";
+                var key = $"{referenceDate:yyyy-MM-dddd-HH-mm-ss}_{latitude}_{longitude}";
 
-            if (Cache.TryGetValue(key, out var nighttimeData)) {
-                return nighttimeData;
-            } else {
-                var twilightRiseAndSet = Astrometry.GetNightTimes(referenceDate, latitude, longitude);
-                var nauticalTwilightRiseAndSet = Astrometry.GetNauticalNightTimes(referenceDate, latitude, longitude);
-                var moonRiseAndSet = Astrometry.GetMoonRiseAndSet(referenceDate, latitude, longitude);
-                var sunRiseAndSet = Astrometry.GetSunRiseAndSet(referenceDate, latitude, longitude);
-                var moonPhase = Astrometry.GetMoonPhase(referenceDate);
-                var illumination = Astrometry.GetMoonIllumination(referenceDate);
+                if (Cache.TryGetValue(key, out var nighttimeData)) {
+                    return nighttimeData;
+                } else {
+                    var twilightRiseAndSet = Astrometry.GetNightTimes(referenceDate, latitude, longitude);
+                    var nauticalTwilightRiseAndSet = Astrometry.GetNauticalNightTimes(referenceDate, latitude, longitude);
+                    var moonRiseAndSet = Astrometry.GetMoonRiseAndSet(referenceDate, latitude, longitude);
+                    var sunRiseAndSet = Astrometry.GetSunRiseAndSet(referenceDate, latitude, longitude);
+                    var moonPhase = Astrometry.GetMoonPhase(referenceDate);
+                    var illumination = Astrometry.GetMoonIllumination(referenceDate);
 
-                var data = new NighttimeData(date: selectedDate, referenceDate: referenceDate, moonPhase: moonPhase, moonIllumination: illumination, twilightRiseAndSet: twilightRiseAndSet, nauticalTwilightRiseAndSet: nauticalTwilightRiseAndSet,
-                    sunRiseAndSet: sunRiseAndSet, moonRiseAndSet: moonRiseAndSet);
-                Cache[key] = data;
-                return data;
+                    var data = new NighttimeData(date: selectedDate, referenceDate: referenceDate, moonPhase: moonPhase, moonIllumination: illumination, twilightRiseAndSet: twilightRiseAndSet, nauticalTwilightRiseAndSet: nauticalTwilightRiseAndSet,
+                        sunRiseAndSet: sunRiseAndSet, moonRiseAndSet: moonRiseAndSet);
+                    Cache[key] = data;
+                    return data;
+                }
             }
         }
 

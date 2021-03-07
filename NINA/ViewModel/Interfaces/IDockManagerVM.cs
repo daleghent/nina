@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using NINA.Utility;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace NINA.ViewModel.Interfaces {
@@ -7,10 +8,10 @@ namespace NINA.ViewModel.Interfaces {
         ObservableCollection<IDockableVM> AnchorableInfoPanels { get; }
         ObservableCollection<IDockableVM> Anchorables { get; }
         ObservableCollection<IDockableVM> AnchorableTools { get; }
-        ICommand LoadAvalonDockLayoutCommand { get; }
+        IAsyncCommand LoadAvalonDockLayoutCommand { get; }
         ICommand ResetDockLayoutCommand { get; }
 
-        void LoadAvalonDockLayout(object o);
+        bool LoadAvalonDockLayout(object o);
 
         void SaveAvalonDockLayout();
     }

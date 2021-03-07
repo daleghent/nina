@@ -17,28 +17,32 @@ using NINA.Model.MyTelescope;
 using NINA.Utility;
 using NINA.Profile;
 using System;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel.Equipment.Telescope {
 
-    internal class TelescopeChooserVM : EquipmentChooserVM {
+    internal class TelescopeChooserVM : DeviceChooserVM {
 
         public TelescopeChooserVM(IProfileService profileService) : base(profileService) {
         }
 
         public override void GetEquipment() {
-            Devices.Clear();
+            lock (lockObj) {
+                var devices = new List<Model.IDevice>();
 
-            Devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoTelescope"]));
+                devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoTelescope"]));
 
-            try {
-                foreach (ITelescope telescope in ASCOMInteraction.GetTelescopes(profileService)) {
-                    Devices.Add(telescope);
+                try {
+                    foreach (ITelescope telescope in ASCOMInteraction.GetTelescopes(profileService)) {
+                        devices.Add(telescope);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
 
-            DetermineSelectedDevice(profileService.ActiveProfile.TelescopeSettings.Id);
+                Devices = devices;
+                DetermineSelectedDevice(profileService.ActiveProfile.TelescopeSettings.Id);
+            }
         }
     }
 }

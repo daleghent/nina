@@ -53,6 +53,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             this.safetyMonitorMediator = safetyMonitorMediator;
             this.safetyMonitorMediator.RegisterConsumer(this);
             DomeChooserVM = domeChooserVM;
+            Task.Run(() => DomeChooserVM.GetEquipment());
             this.domeFollower = domeFollower;
             this.domeFollower.PropertyChanged += DomeFollower_PropertyChanged;
 

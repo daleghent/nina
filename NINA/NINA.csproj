@@ -379,9 +379,6 @@
     <Compile Include="Database\Schema\EarthRotationParameters.cs" />
     <Compile Include="Database\NINADbContext.cs" />
     <Compile Include="Database\Schema\VisualDescription.cs" />
-    <Compile Include="EquipmentChooser\EquipmentChooser.xaml.cs">
-      <DependentUpon>EquipmentChooser.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Locale\Locale.de-DE.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1317,7 +1314,6 @@
     <Compile Include="Profile\Settings.cs" />
     <Compile Include="Utility\RawConverter\DCRaw.cs" />
     <Compile Include="Utility\DialogCloser.cs" />
-    <Compile Include="EquipmentChooser\EquipmentChooserVM.cs" />
     <Compile Include="Utility\AvalonDock\LayoutInitializer.cs" />
     <Compile Include="Utility\DllLoader.cs" />
     <Compile Include="Utility\CameraSDKs\EDSDK\EDSDK.cs" />
@@ -1385,7 +1381,7 @@
     <Compile Include="ViewModel\AutoFocus\AutoFocusVM.cs" />
     <Compile Include="ViewModel\DockableVM.cs" />
     <Compile Include="ViewModel\DockManagerVM.cs" />
-    <Compile Include="ViewModel\EquipmentChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\DeviceChooserVM.cs" />
     <Compile Include="ViewModel\FlatWizard\FlatWizardUserPromptVM.cs" />
     <Compile Include="ViewModel\FlatWizard\FlatWizardVM.cs" />
     <Compile Include="ViewModel\FlatWizard\IFlatWizardVM.cs" />
@@ -1709,10 +1705,6 @@
       <DependentUpon>VersionCheckView.xaml</DependentUpon>
     </Compile>
     <Page Include="AstrometryIndexDownloader\AstrometryIndexDownloader.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="EquipmentChooser\EquipmentChooser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

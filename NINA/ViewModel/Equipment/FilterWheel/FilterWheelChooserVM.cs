@@ -25,118 +25,121 @@ using ZWOptical.EFWSDK;
 
 namespace NINA.ViewModel.Equipment.FilterWheel {
 
-    internal class FilterWheelChooserVM : EquipmentChooserVM, IDeviceChooserVM {
+    internal class FilterWheelChooserVM : DeviceChooserVM {
 
         public FilterWheelChooserVM(IProfileService profileService) : base(profileService) {
         }
 
         public override void GetEquipment() {
-            Devices.Clear();
+            lock (lockObj) {
+                var devices = new List<Model.IDevice>();
 
-            Devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoFilterwheel"]));
+                devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoFilterwheel"]));
 
-            /*
-             * FLI
-             */
-            try {
-                Logger.Trace("Adding FLI filter wheels");
-                List<string> fwheels = FLIFilterWheels.GetFilterWheels();
+                /*
+                 * FLI
+                 */
+                try {
+                    Logger.Trace("Adding FLI filter wheels");
+                    List<string> fwheels = FLIFilterWheels.GetFilterWheels();
 
-                if (fwheels.Count > 0) {
-                    foreach (var entry in fwheels) {
-                        var fwheel = new FLIFilterWheel(entry, profileService);
+                    if (fwheels.Count > 0) {
+                        foreach (var entry in fwheels) {
+                            var fwheel = new FLIFilterWheel(entry, profileService);
 
-                        if (!string.IsNullOrEmpty(fwheel.Name)) {
-                            Logger.Debug($"Adding FLI Filter Wheel {fwheel.Id} (as {fwheel.Name})");
-                            Devices.Add(fwheel);
+                            if (!string.IsNullOrEmpty(fwheel.Name)) {
+                                Logger.Debug($"Adding FLI Filter Wheel {fwheel.Id} (as {fwheel.Name})");
+                                devices.Add(fwheel);
+                            }
                         }
                     }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
 
-            // Atik EFW
-            try {
-                Logger.Trace("Adding Atik EFW filter wheels");
-                for (int i = 0; i < 10; i++) {
-                    if (AtikCameraDll.ArtemisEfwIsPresent(i)) {
-                        var wheel = new AtikFilterWheel(i, profileService);
-                        Logger.Debug($"Adding Atik Filter Wheel {i} as {wheel.Name}");
-                        Devices.Add(wheel);
-                    }
-                }
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            // Atik internal Wheels
-            try {
-                Logger.Trace("Adding Atik internal filter wheels");
-                var atikDevices = AtikCameraDll.GetDevicesCount();
-                Logger.Trace($"Cameras found: {atikDevices}");
-                for (int i = 0; i < atikDevices; i++) {
-                    var wheel = new AtikInternalFilterWheel(i, profileService);
-                    if (wheel.CameraHasInternalFilterWheel) {
-                        Logger.Debug($"Adding Atik internal Filter Wheel {i} as {wheel.Name}");
-                        Devices.Add(wheel);
-                    }
-                }
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            /*
-             * QHY - Integrated or 4-pin connected filter wheels only
-             */
-            try {
-                var qhy = new QHYFilterWheels();
-                Logger.Trace("Adding QHY integrated/4-pin filter wheels");
-                List<string> fwheels = qhy.GetFilterWheels();
-
-                if (fwheels.Count > 0) {
-                    foreach (var entry in fwheels) {
-                        var fwheel = new QHYFilterWheel(entry, profileService);
-
-                        if (!string.IsNullOrEmpty(fwheel.Name)) {
-                            Logger.Debug($"Adding QHY Filter Wheel {fwheel.Id} (as {fwheel.Name})");
-                            Devices.Add(fwheel);
+                // Atik EFW
+                try {
+                    Logger.Trace("Adding Atik EFW filter wheels");
+                    for (int i = 0; i < 10; i++) {
+                        if (AtikCameraDll.ArtemisEfwIsPresent(i)) {
+                            var wheel = new AtikFilterWheel(i, profileService);
+                            Logger.Debug($"Adding Atik Filter Wheel {i} as {wheel.Name}");
+                            devices.Add(wheel);
                         }
                     }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
 
-            /* ZWO filter wheels */
-            try {
-                Logger.Trace("Adding ZWOptical filter wheels");
-
-                var wheels = EFWdll.GetNum();
-
-                for (int i = 0; i < wheels; i++) {
-                    var fw = new ASIFilterWheel(i, profileService);
-                    Logger.Debug($"Adding ZWOptical Filter Wheel {i})");
-                    Devices.Add(fw);
+                // Atik internal Wheels
+                try {
+                    Logger.Trace("Adding Atik internal filter wheels");
+                    var atikDevices = AtikCameraDll.GetDevicesCount();
+                    Logger.Trace($"Cameras found: {atikDevices}");
+                    for (int i = 0; i < atikDevices; i++) {
+                        var wheel = new AtikInternalFilterWheel(i, profileService);
+                        if (wheel.CameraHasInternalFilterWheel) {
+                            Logger.Debug($"Adding Atik internal Filter Wheel {i} as {wheel.Name}");
+                            devices.Add(wheel);
+                        }
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
 
-            /*
-             * ASCOM devices
-             */
-            try {
-                foreach (IFilterWheel fw in ASCOMInteraction.GetFilterWheels(profileService)) {
-                    Devices.Add(fw);
+                /*
+                 * QHY - Integrated or 4-pin connected filter wheels only
+                 */
+                try {
+                    var qhy = new QHYFilterWheels();
+                    Logger.Trace("Adding QHY integrated/4-pin filter wheels");
+                    List<string> fwheels = qhy.GetFilterWheels();
+
+                    if (fwheels.Count > 0) {
+                        foreach (var entry in fwheels) {
+                            var fwheel = new QHYFilterWheel(entry, profileService);
+
+                            if (!string.IsNullOrEmpty(fwheel.Name)) {
+                                Logger.Debug($"Adding QHY Filter Wheel {fwheel.Id} (as {fwheel.Name})");
+                                devices.Add(fwheel);
+                            }
+                        }
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
-            } catch (Exception ex) {
-                Logger.Error(ex);
+
+                /* ZWO filter wheels */
+                try {
+                    Logger.Trace("Adding ZWOptical filter wheels");
+
+                    var wheels = EFWdll.GetNum();
+
+                    for (int i = 0; i < wheels; i++) {
+                        var fw = new ASIFilterWheel(i, profileService);
+                        Logger.Debug($"Adding ZWOptical Filter Wheel {i})");
+                        devices.Add(fw);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                /*
+                 * ASCOM devices
+                 */
+                try {
+                    foreach (IFilterWheel fw in ASCOMInteraction.GetFilterWheels(profileService)) {
+                        devices.Add(fw);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                devices.Add(new ManualFilterWheel(this.profileService));
+
+                Devices = devices;
+                DetermineSelectedDevice(profileService.ActiveProfile.FilterWheelSettings.Id);
             }
-
-            Devices.Add(new ManualFilterWheel(this.profileService));
-
-            DetermineSelectedDevice(profileService.ActiveProfile.FilterWheelSettings.Id);
         }
     }
 }

@@ -24,27 +24,29 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.SafetyMonitor {
 
-    internal class SafetyMonitorChooserVM : EquipmentChooserVM {
+    internal class SafetyMonitorChooserVM : DeviceChooserVM {
 
         public SafetyMonitorChooserVM(IProfileService profileService) : base(profileService) {
         }
 
         public override void GetEquipment() {
-            Devices.Clear();
+            lock (lockObj) {
+                var devices = new List<Model.IDevice>();
 
-            Devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoSafetyMonitor"]));
+                devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoSafetyMonitor"]));
 
-            try {
-                foreach (ISafetyMonitor safetyMonitor in ASCOMInteraction.GetSafetyMonitors(profileService)) {
-                    Devices.Add(safetyMonitor);
+                try {
+                    foreach (ISafetyMonitor safetyMonitor in ASCOMInteraction.GetSafetyMonitors(profileService)) {
+                        devices.Add(safetyMonitor);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
-            } catch (Exception ex) {
-                Logger.Error(ex);
+
+                Devices.Add(new NINA.Model.MySafetyMonitor.SafetyMonitorSimulator());
+                Devices = devices;
+                DetermineSelectedDevice(profileService.ActiveProfile.SafetyMonitorSettings.Id);
             }
-
-            Devices.Add(new NINA.Model.MySafetyMonitor.SafetyMonitorSimulator());
-
-            DetermineSelectedDevice(profileService.ActiveProfile.RotatorSettings.Id);
         }
     }
 }

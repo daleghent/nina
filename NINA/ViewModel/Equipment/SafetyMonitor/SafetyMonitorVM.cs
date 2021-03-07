@@ -43,6 +43,7 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
             this.safetyMonitorMediator = safetyMonitorMediator;
             this.safetyMonitorMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
+            Task.Run(() => SafetyMonitorChooserVM.GetEquipment());
 
             ConnectCommand = new AsyncCommand<bool>(() => Connect());
             CancelConnectCommand = new RelayCommand(CancelConnect);
@@ -66,7 +67,6 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
             get {
                 if (safetyMonitorChooserVM == null) {
                     safetyMonitorChooserVM = new SafetyMonitorChooserVM(profileService);
-                    safetyMonitorChooserVM.GetEquipment();
                 }
                 return safetyMonitorChooserVM;
             }

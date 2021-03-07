@@ -20,10 +20,11 @@ using NINA.Model.MyGuider.PHD2;
 using NINA.Utility;
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel.Equipment.Guider {
 
-    internal class GuiderChooserVM : EquipmentChooserVM, IDeviceChooserVM {
+    internal class GuiderChooserVM : DeviceChooserVM {
         private readonly ICameraMediator cameraMediator;
         private readonly ITelescopeMediator telescopeMediator;
         private readonly IWindowServiceFactory windowServiceFactory;
@@ -33,32 +34,34 @@ namespace NINA.ViewModel.Equipment.Guider {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
             this.windowServiceFactory = windowServiceFactory;
-            GetEquipment();
         }
 
         public override void GetEquipment() {
-            Devices.Clear();
-            Devices.Add(new DummyGuider(profileService));
-            Devices.Add(new PHD2Guider(profileService, windowServiceFactory));
-            //Devices.Add(new SynchronizedPHD2Guider(profileService, cameraMediator, windowServiceFactory)); Non-Functional with current sequencer
-            Devices.Add(new DirectGuider(profileService, telescopeMediator));
-            Devices.Add(new MetaGuideGuider(profileService, windowServiceFactory));
+            lock (lockObj) {
+                var devices = new List<Model.IDevice>();
+                devices.Add(new DummyGuider(profileService));
+                devices.Add(new PHD2Guider(profileService, windowServiceFactory));
+                //devices.Add(new SynchronizedPHD2Guider(profileService, cameraMediator, windowServiceFactory)); Non-Functional with current sequencer
+                devices.Add(new DirectGuider(profileService, telescopeMediator));
+                devices.Add(new MetaGuideGuider(profileService, windowServiceFactory));
 
-            try {
-                var mgen2 = new MGEN2.MGEN(Path.Combine("FTDI", "ftd2xx.dll"), new MGenLogger());
-                Devices.Add(new MGENGuider(mgen2, "Lacerta MGEN Superguider", "Lacerta_MGEN_Superguider", profileService));
-            } catch (Exception ex) {
-                Logger.Error(ex);
+                try {
+                    var mgen2 = new MGEN2.MGEN(Path.Combine("FTDI", "ftd2xx.dll"), new MGenLogger());
+                    devices.Add(new MGENGuider(mgen2, "Lacerta MGEN Superguider", "Lacerta_MGEN_Superguider", profileService));
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                try {
+                    var mgen3 = new MGEN3.MGEN3(Path.Combine("FTDI", "ftd2xx.dll"), Path.Combine("MGEN", "MG3lib.dll"), new MGenLogger());
+                    devices.Add(new MGENGuider(mgen3, "Lacerta MGEN-3 Autoguider", "Lacerta_MGEN-3_Autoguider", profileService));
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                Devices = devices;
+                DetermineSelectedDevice(profileService.ActiveProfile.GuiderSettings.GuiderName);
             }
-
-            try {
-                var mgen3 = new MGEN3.MGEN3(Path.Combine("FTDI", "ftd2xx.dll"), Path.Combine("MGEN", "MG3lib.dll"), new MGenLogger());
-                Devices.Add(new MGENGuider(mgen3, "Lacerta MGEN-3 Autoguider", "Lacerta_MGEN-3_Autoguider", profileService));
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            DetermineSelectedDevice(profileService.ActiveProfile.GuiderSettings.GuiderName);
         }
     }
 }

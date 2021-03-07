@@ -14,8 +14,10 @@
 
 using NINA.Model;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment {
+
     public interface IDeviceChooserVM {
         IDevice SelectedDevice { get; set; }
 

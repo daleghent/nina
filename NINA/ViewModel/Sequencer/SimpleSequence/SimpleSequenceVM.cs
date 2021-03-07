@@ -64,7 +64,6 @@ using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -101,13 +100,11 @@ namespace NINA.ViewModel {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             this.nighttimeCalculator = nighttimeCalculator;
-            this.NighttimeData = this.nighttimeCalculator.Calculate();
+            Task.Run(() => this.NighttimeData = this.nighttimeCalculator.Calculate());
             this.planetariumFactory = planetariumFactory;
             this.framingAssistantVM = framingAssistantVM;
             this.applicationMediator = applicationMediator;
             this.profileService = profileService;
-
-            this.factory = factory;
 
             AddTargetCommand = new RelayCommand(AddDefaultTarget);
             BuildSequenceCommand = new RelayCommand((object o) => {
@@ -125,11 +122,6 @@ namespace NINA.ViewModel {
             CancelSequenceCommand = new RelayCommand(CancelSequence);
             SwitchToOverviewCommand = new RelayCommand((object o) => sequenceMediator.SwitchToOverview(), (object o) => !profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer);
 
-            autoUpdateTimer = new DispatcherTimer(DispatcherPriority.Background);
-            autoUpdateTimer.Interval = TimeSpan.FromSeconds(1);
-            autoUpdateTimer.IsEnabled = true;
-            autoUpdateTimer.Tick += (sender, args) => CalculateETA();
-
             profileService.LocationChanged += (object sender, EventArgs e) => {
                 foreach (var item in this.Targets.Items) {
                     var target = item as SimpleDSOContainer;
@@ -139,21 +131,34 @@ namespace NINA.ViewModel {
                 }
             };
 
-            autoUpdateTimer.Start();
-            var targetArea = factory.GetContainer<TargetAreaContainer>();
-            var rootContainer = factory.GetContainer<SequenceRootContainer>();
-            rootContainer.Add(new SimpleStartContainer(factory, profileService));
-            rootContainer.Add(targetArea);
-            rootContainer.Add(new SimpleEndContainer(factory, profileService));
-            (targetArea.Items as ObservableCollection<ISequenceItem>).CollectionChanged += SimpleSequenceVM_CollectionChanged;
+            Task.Run(async () => {
+                this.factory = factory;
+                while (!factory.Initialized) {
+                    await Task.Delay(300);
+                }
+                await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => {
+                    var targetArea = factory.GetContainer<TargetAreaContainer>();
+                    var rootContainer = factory.GetContainer<SequenceRootContainer>();
+                    rootContainer.Add(new SimpleStartContainer(factory, profileService));
+                    rootContainer.Add(targetArea);
+                    rootContainer.Add(new SimpleEndContainer(factory, profileService));
+                    (targetArea.Items as ObservableCollection<ISequenceItem>).CollectionChanged += SimpleSequenceVM_CollectionChanged;
 
-            Sequencer = new NINA.Sequencer.Sequencer(
-                rootContainer
-            );
+                    Sequencer = new NINA.Sequencer.Sequencer(
+                        rootContainer
+                    );
 
-            DoMeridianFlip = profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
+                    DoMeridianFlip = profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
 
-            EstimatedDownloadTime = profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime;
+                    EstimatedDownloadTime = profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime;
+
+                    autoUpdateTimer = new DispatcherTimer(DispatcherPriority.Background);
+                    autoUpdateTimer.Interval = TimeSpan.FromSeconds(1);
+                    autoUpdateTimer.IsEnabled = true;
+                    autoUpdateTimer.Tick += (sender, args) => CalculateETA();
+                    autoUpdateTimer.Start();
+                }));
+            });
         }
 
         private void SimpleSequenceVM_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e) {
@@ -244,7 +249,7 @@ namespace NINA.ViewModel {
             cts?.Cancel();
         }
 
-        public NINA.Sequencer.Sequencer Sequencer { get; }
+        public NINA.Sequencer.Sequencer Sequencer { get; private set; }
 
         public bool DoMeridianFlip {
             get => profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;

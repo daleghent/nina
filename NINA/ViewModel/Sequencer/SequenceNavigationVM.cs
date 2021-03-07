@@ -14,6 +14,7 @@
 
 using NINA.Model;
 using NINA.Profile;
+using NINA.Sequencer;
 using NINA.Sequencer.Container;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
@@ -31,6 +32,7 @@ namespace NINA.ViewModel.Sequencer {
         private object activeSequencerVM;
         private ISequence2VM sequence2VM;
         private ISequenceMediator sequenceMediator;
+        private ISequencerFactory factory;
         private ISimpleSequenceVM simpleSequenceVM;
 
         /// <summary>
@@ -40,10 +42,11 @@ namespace NINA.ViewModel.Sequencer {
             get => "SequenceVM";
         }
 
-        public SequenceNavigationVM(IProfileService profileService, ISequenceMediator sequenceMediator, ISimpleSequenceVM simpleSequenceVM, ISequence2VM sequence2VM) : base(profileService) {
+        public SequenceNavigationVM(IProfileService profileService, ISequenceMediator sequenceMediator, ISimpleSequenceVM simpleSequenceVM, ISequence2VM sequence2VM, ISequencerFactory factory) : base(profileService) {
             Title = "LblSequence";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current?.Resources["SequenceSVG"];
 
+            this.factory = factory;
             this.simpleSequenceVM = simpleSequenceVM;
             this.sequence2VM = sequence2VM;
             this.sequenceMediator = sequenceMediator;
@@ -70,11 +73,17 @@ namespace NINA.ViewModel.Sequencer {
             });
             SwitchToAdvancedSequenceCommand = new RelayCommand((object o) => SwitchToAdvancedView());
 
-            if (profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer) {
-                this.ActiveSequencerVM = sequence2VM;
-            } else {
-                ActiveSequencerVM = this;
-            }
+            Task.Run(async () => {
+                while (!Initialized) {
+                    await Task.Delay(300);
+                }
+                RaisePropertyChanged(nameof(Initialized));
+                if (profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer) {
+                    this.ActiveSequencerVM = sequence2VM;
+                } else {
+                    ActiveSequencerVM = this;
+                }
+            });
         }
 
         public object ActiveSequencerVM {
@@ -97,6 +106,10 @@ namespace NINA.ViewModel.Sequencer {
 
         public ISequence2VM Sequence2VM {
             get => sequence2VM;
+        }
+
+        public bool Initialized {
+            get => factory.Initialized;
         }
 
         public override string ToString() {

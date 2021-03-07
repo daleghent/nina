@@ -29,6 +29,7 @@ using System.Linq;
 using System.Collections.Immutable;
 
 namespace NINA.ViewModel.Equipment.Telescope {
+
     internal class TelescopeVM : DockableVM, ITelescopeVM {
         private static double LAT_LONG_TOLERANCE = 0.001;
 
@@ -49,6 +50,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                 p.Source = this.Title;
                 this.applicationStatusMediator.StatusUpdate(p);
             });
+            Task.Run(() => TelescopeChooserVM.GetEquipment());
 
             ChooseTelescopeCommand = new AsyncCommand<bool>(() => ChooseTelescope());
             CancelChooseTelescopeCommand = new RelayCommand(CancelChooseTelescope);
@@ -305,7 +307,6 @@ namespace NINA.ViewModel.Equipment.Telescope {
             get {
                 if (_telescopeChooserVM == null) {
                     _telescopeChooserVM = new TelescopeChooserVM(profileService);
-                    _telescopeChooserVM.GetEquipment();
                 }
                 return _telescopeChooserVM;
             }

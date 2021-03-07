@@ -17,33 +17,37 @@ using NINA.Model.MyWeatherData;
 using NINA.Utility;
 using NINA.Profile;
 using System;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel.Equipment.WeatherData {
 
-    internal class WeatherDataChooserVM : EquipmentChooserVM {
+    internal class WeatherDataChooserVM : DeviceChooserVM {
 
         public WeatherDataChooserVM(IProfileService profileService) : base(profileService) {
         }
 
         public override void GetEquipment() {
-            Devices.Clear();
+            lock (lockObj) {
+                var devices = new List<Model.IDevice>();
 
-            Devices.Add(new DummyDevice(Locale.Loc.Instance["LblWeatherNoSource"]));
+                devices.Add(new DummyDevice(Locale.Loc.Instance["LblWeatherNoSource"]));
 
-            try {
-                foreach (IWeatherData obsdev in ASCOMInteraction.GetWeatherDataSources(profileService)) {
-                    Devices.Add(obsdev);
+                try {
+                    foreach (IWeatherData obsdev in ASCOMInteraction.GetWeatherDataSources(profileService)) {
+                        devices.Add(obsdev);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
-            } catch (Exception ex) {
-                Logger.Error(ex);
+
+                devices.Add(new OpenWeatherMap(this.profileService));
+                devices.Add(new UltimatePowerboxV2(profileService));
+                devices.Add(new TheWeatherCompany(this.profileService));
+                devices.Add(new WeatherUnderground(this.profileService));
+
+                Devices = devices;
+                DetermineSelectedDevice(profileService.ActiveProfile.WeatherDataSettings.Id);
             }
-
-            Devices.Add(new OpenWeatherMap(this.profileService));
-            Devices.Add(new UltimatePowerboxV2(profileService));
-            Devices.Add(new TheWeatherCompany(this.profileService));
-            Devices.Add(new WeatherUnderground(this.profileService));
-
-            DetermineSelectedDevice(profileService.ActiveProfile.WeatherDataSettings.Id);
         }
     }
 }

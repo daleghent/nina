@@ -18,17 +18,27 @@ using System.Linq;
 using System.Windows.Input;
 using System.Collections.Generic;
 
-namespace NINA.ViewModel {
+namespace NINA.ViewModel.Equipment {
 
-    internal abstract class EquipmentChooserVM : BaseVM {
+    internal abstract class DeviceChooserVM : BaseVM, IDeviceChooserVM {
 
-        public EquipmentChooserVM(IProfileService profileService) : base(profileService) {
+        public DeviceChooserVM(IProfileService profileService) : base(profileService) {
             this.profileService = profileService;
-            this.Devices = new AsyncObservableCollection<Model.IDevice>();
+            this.Devices = new List<Model.IDevice>();
             SetupDialogCommand = new RelayCommand(OpenSetupDialog);
         }
 
-        public IList<Model.IDevice> Devices { get; }
+        protected object lockObj = new object();
+
+        private IList<Model.IDevice> devices;
+
+        public IList<Model.IDevice> Devices {
+            get => devices;
+            protected set {
+                devices = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public abstract void GetEquipment();
 

@@ -25,6 +25,7 @@ using System.Windows;
 namespace NINA.Sequencer {
 
     public interface ISequencerFactory {
+        bool Initialized { get; }
         IEnumerable<Lazy<ISequenceCondition, Dictionary<string, object>>> ConditionImports { get; }
         IList<ISequenceCondition> Conditions { get; }
         IList<ISequenceContainer> Container { get; }

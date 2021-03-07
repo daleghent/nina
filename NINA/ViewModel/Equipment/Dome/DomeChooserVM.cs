@@ -17,29 +17,32 @@ using NINA.Utility;
 using NINA.Profile;
 using System;
 using NINA.Model.MyDome;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel.Equipment.Dome {
 
-    internal class DomeChooserVM : EquipmentChooserVM, IDeviceChooserVM {
+    internal class DomeChooserVM : DeviceChooserVM {
 
         public DomeChooserVM(IProfileService profileService) : base(profileService) {
-            GetEquipment();
         }
 
         public override void GetEquipment() {
-            Devices.Clear();
+            lock (lockObj) {
+                var devices = new List<Model.IDevice>();
 
-            Devices.Add(new DummyDevice(Locale.Loc.Instance["LblDomeNoSource"]));
+                devices.Add(new DummyDevice(Locale.Loc.Instance["LblDomeNoSource"]));
 
-            try {
-                foreach (IDome dome in ASCOMInteraction.GetDomes(profileService)) {
-                    Devices.Add(dome);
+                try {
+                    foreach (IDome dome in ASCOMInteraction.GetDomes(profileService)) {
+                        devices.Add(dome);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
 
-            DetermineSelectedDevice(profileService.ActiveProfile.DomeSettings.Id);
+                Devices = devices;
+                DetermineSelectedDevice(profileService.ActiveProfile.DomeSettings.Id);
+            }
         }
     }
 }

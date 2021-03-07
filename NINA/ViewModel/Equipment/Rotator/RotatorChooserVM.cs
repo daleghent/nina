@@ -17,30 +17,34 @@ using NINA.Model.MyRotator;
 using NINA.Utility;
 using NINA.Profile;
 using System;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel.Equipment.Rotator {
 
-    internal class RotatorChooserVM : EquipmentChooserVM {
+    internal class RotatorChooserVM : DeviceChooserVM {
 
         public RotatorChooserVM(IProfileService profileService) : base(profileService) {
         }
 
         public override void GetEquipment() {
-            Devices.Clear();
+            lock (lockObj) {
+                var devices = new List<Model.IDevice>();
 
-            Devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoRotator"]));
+                devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoRotator"]));
 
-            try {
-                foreach (IRotator rotator in ASCOMInteraction.GetRotators(profileService)) {
-                    Devices.Add(rotator);
+                try {
+                    foreach (IRotator rotator in ASCOMInteraction.GetRotators(profileService)) {
+                        devices.Add(rotator);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
                 }
-            } catch (Exception ex) {
-                Logger.Error(ex);
+
+                devices.Add(new ManualRotator(profileService));
+
+                Devices = devices;
+                DetermineSelectedDevice(profileService.ActiveProfile.RotatorSettings.Id);
             }
-
-            Devices.Add(new ManualRotator(profileService));
-
-            DetermineSelectedDevice(profileService.ActiveProfile.RotatorSettings.Id);
         }
     }
 }

@@ -50,7 +50,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             FlatDeviceChooserVM = flatDeviceChooserVm;
-            FlatDeviceChooserVM.GetEquipment();
+            Task.Run(() => FlatDeviceChooserVM.GetEquipment());
 
             Title = "LblFlatDevice";
             ImageGeometry = imageGeometryProvider.GetImageGeometry("LightBulbSVG");

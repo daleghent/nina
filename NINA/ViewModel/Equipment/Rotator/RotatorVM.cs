@@ -36,6 +36,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
             this.rotatorMediator = rotatorMediator;
             this.rotatorMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
+            Task.Run(() => RotatorChooserVM.GetEquipment());
 
             ConnectCommand = new AsyncCommand<bool>(() => Connect());
             CancelConnectCommand = new RelayCommand(CancelConnectRotator);
@@ -238,7 +239,6 @@ namespace NINA.ViewModel.Equipment.Rotator {
             get {
                 if (rotatorChooserVM == null) {
                     rotatorChooserVM = new RotatorChooserVM(profileService);
-                    rotatorChooserVM.GetEquipment();
                 }
                 return rotatorChooserVM;
             }

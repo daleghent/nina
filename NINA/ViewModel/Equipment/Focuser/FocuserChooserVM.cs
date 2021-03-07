@@ -13,10 +13,11 @@
 #endregion "copyright"
 
 using NINA.Profile;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel.Equipment.Focuser {
 
-    internal class FocuserChooserVM : EquipmentChooserVM, IDeviceChooserVM {
+    internal class FocuserChooserVM : DeviceChooserVM {
         private IDeviceFactory focuserFactory;
 
         public FocuserChooserVM(IProfileService profileService, IDeviceFactory focuserFactory) : base(profileService) {
@@ -24,13 +25,16 @@ namespace NINA.ViewModel.Equipment.Focuser {
         }
 
         public override void GetEquipment() {
-            Devices.Clear();
+            lock (lockObj) {
+                var devices = new List<Model.IDevice>();
 
-            foreach (var device in focuserFactory.GetDevices()) {
-                Devices.Add(device);
+                foreach (var device in focuserFactory.GetDevices()) {
+                    devices.Add(device);
+                }
+
+                Devices = devices;
+                DetermineSelectedDevice(profileService.ActiveProfile.FocuserSettings.Id);
             }
-
-            DetermineSelectedDevice(profileService.ActiveProfile.FocuserSettings.Id);
         }
     }
 }

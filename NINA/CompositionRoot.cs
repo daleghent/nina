@@ -8,6 +8,7 @@ using NINA.ViewModel.Interfaces;
 using NINA.ViewModel.Sequencer;
 using Ninject;
 using System;
+using System.Diagnostics;
 
 namespace NINA {
 
@@ -16,28 +17,90 @@ namespace NINA {
         public static IMainWindowVM Compose(IProfileService profileService) {
             try {
                 IReadOnlyKernel _kernel =
-                    new KernelConfiguration(
-                        new IoCBindings(profileService))
-                    .BuildReadonlyKernel();
+                new KernelConfiguration(
+                    new IoCBindings(profileService))
+                .BuildReadonlyKernel();
 
-                return new MainWindowVM {
-                    AppVM = _kernel.Get<IApplicationVM>(),
-                    ImageSaveController = _kernel.Get<IImageSaveController>(),
-                    ImagingVM = _kernel.Get<IImagingVM>(),
-                    EquipmentVM = _kernel.Get<IEquipmentVM>(),
-                    SkyAtlasVM = _kernel.Get<ISkyAtlasVM>(),
-                    SequenceNavigationVM = _kernel.Get<ISequenceNavigationVM>(),
-                    FramingAssistantVM = _kernel.Get<IFramingAssistantVM>(),
-                    FlatWizardVM = _kernel.Get<IFlatWizardVM>(),
-                    DockManagerVM = _kernel.Get<IDockManagerVM>(),
+                Stopwatch sw;
 
-                    OptionsVM = _kernel.Get<IOptionsVM>(),
-                    ApplicationDeviceConnectionVM = _kernel.Get<IApplicationDeviceConnectionVM>(),
-                    VersionCheckVM = _kernel.Get<IVersionCheckVM>(),
-                    ApplicationStatusVM = _kernel.Get<IApplicationStatusVM>(),
+                sw = Stopwatch.StartNew();
+                var appvm = _kernel.Get<IApplicationVM>();
+                Debug.Print($"Time to create IApplicationVM {sw.Elapsed}");
 
-                    ImageHistoryVM = _kernel.Get<IImageHistoryVM>()
+                sw = Stopwatch.StartNew();
+                var imageSaveController = _kernel.Get<IImageSaveController>();
+                Debug.Print($"Time to create IImageSaveController {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var imagingVM = _kernel.Get<IImagingVM>();
+                Debug.Print($"Time to create IImagingVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var equipmentVM = _kernel.Get<IEquipmentVM>();
+                Debug.Print($"Time to create IEquipmentVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var skyAtlasVM = _kernel.Get<ISkyAtlasVM>();
+                Debug.Print($"Time to create ISkyAtlasVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var sequenceNavigationVM = _kernel.Get<ISequenceNavigationVM>();
+                Debug.Print($"Time to create ISequenceNavigationVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var framingAssistantVM = _kernel.Get<IFramingAssistantVM>();
+                Debug.Print($"Time to create IFramingAssistantVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var flatWizardVM = _kernel.Get<IFlatWizardVM>();
+                Debug.Print($"Time to create IFlatWizardVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var dockManagerVM = _kernel.Get<IDockManagerVM>();
+                Debug.Print($"Time to create IDockManagerVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var optionsVM = _kernel.Get<IOptionsVM>();
+                Debug.Print($"Time to create IOptionsVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var applicationDeviceConnectionVM = _kernel.Get<IApplicationDeviceConnectionVM>();
+                Debug.Print($"Time to create IApplicationDeviceConnectionVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var versionCheckVM = _kernel.Get<IVersionCheckVM>();
+                Debug.Print($"Time to create IVersionCheckVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var applicationStatusVM = _kernel.Get<IApplicationStatusVM>();
+                Debug.Print($"Time to create IApplicationStatusVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var imageHistoryVM = _kernel.Get<IImageHistoryVM>();
+                Debug.Print($"Time to create IImageHistoryVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
+                var mainWindowVM = new MainWindowVM {
+                    AppVM = appvm,
+                    ImageSaveController = imageSaveController,
+                    ImagingVM = imagingVM,
+                    EquipmentVM = equipmentVM,
+                    SkyAtlasVM = skyAtlasVM,
+                    SequenceNavigationVM = sequenceNavigationVM,
+                    FramingAssistantVM = framingAssistantVM,
+                    FlatWizardVM = flatWizardVM,
+                    DockManagerVM = dockManagerVM,
+
+                    OptionsVM = optionsVM,
+                    ApplicationDeviceConnectionVM = applicationDeviceConnectionVM,
+                    VersionCheckVM = versionCheckVM,
+                    ApplicationStatusVM = applicationStatusVM,
+
+                    ImageHistoryVM = imageHistoryVM
                 };
+                Debug.Print($"Time to create MainWindowVM {sw.Elapsed}");
+
+                return mainWindowVM;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw ex;

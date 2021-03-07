@@ -24,32 +24,37 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.Switch {
 
-    internal class SwitchChooserVM : EquipmentChooserVM {
+    internal class SwitchChooserVM : DeviceChooserVM {
 
         public SwitchChooserVM(IProfileService profileService) : base(profileService) {
         }
 
         public override void GetEquipment() {
-            Devices.Clear();
+            lock (lockObj) {
+                {
+                    var devices = new List<Model.IDevice>();
 
-            Devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoSwitch"]));
+                    devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoSwitch"]));
 
-            /* ASCOM */
-            try {
-                foreach (ISwitchHub ascomSwitch in ASCOMInteraction.GetSwitches(profileService)) {
-                    Devices.Add(ascomSwitch);
+                    /* ASCOM */
+                    try {
+                        foreach (ISwitchHub ascomSwitch in ASCOMInteraction.GetSwitches(profileService)) {
+                            devices.Add(ascomSwitch);
+                        }
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                    }
+
+                    /* PrimaLuceLab EAGLE */
+                    devices.Add(new Eagle(profileService));
+
+                    /* Pegasus Astro Ultimate Powerbox V2 */
+                    devices.Add(new UltimatePowerBoxV2(profileService));
+
+                    Devices = devices;
+                    DetermineSelectedDevice(profileService.ActiveProfile.SwitchSettings.Id);
                 }
-            } catch (Exception ex) {
-                Logger.Error(ex);
             }
-
-            /* PrimaLuceLab EAGLE */
-            Devices.Add(new Eagle(profileService));
-
-            /* Pegasus Astro Ultimate Powerbox V2 */
-            Devices.Add(new UltimatePowerBoxV2(profileService));
-
-            DetermineSelectedDevice(profileService.ActiveProfile.SwitchSettings.Id);
         }
     }
 }

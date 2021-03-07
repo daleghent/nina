@@ -41,7 +41,7 @@ namespace NINA.ViewModel.Equipment.Focuser {
             this.focuserMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
             FocuserChooserVM = focuserChooserVm;
-            FocuserChooserVM.GetEquipment();
+            Task.Run(() => FocuserChooserVM.GetEquipment());
 
             ChooseFocuserCommand = new AsyncCommand<bool>(() => ChooseFocuser());
             CancelChooseFocuserCommand = new RelayCommand(CancelChooseFocuser);
