@@ -133,12 +133,13 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>These devices can be used inside the sequencer to interrupt an imaging run, when they report unsafe conditions</li>
 <li>Option to automatically close the dome shutter immediately when the safety monitor reports unsafe conditions</li>
 </ul>
-<h4 id="native-support-for-atik-efw23-and-internal-filterwheels">Native support for Atik EFW2/3 and internal Filterwheels</h4>
+<h3 id="native-support-for-atik-efw23-and-internal-filterwheels">Native support for Atik EFW2/3 and internal Filterwheels</h3>
 <ul>
 <li>The integrated filter wheels for Atik cameras like the Atik One 9.0 are now natively supported</li>
 <li>This allows usage of native camera drivers for Atik cameras with integrated filter wheels</li>
 <li>The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver</li>
 </ul>
+<h3 id="native-support-for-risingcams">Native support for Risingcams</h3>
 <h2 id="application-improvements">Application Improvements</h2>
 <h3 id="general">General</h3>
 <ul>
@@ -187,6 +188,17 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <ul>
 <li>Canon CR3 image format is now supported</li>
 </ul>
+<h3 id="qhyccd-native-driver-improvements">QHYCCD native driver improvements</h3>
+<ul>
+<li><span style="color:red"><strong>IMPORTANT:</strong></span> NINA 1.11 #47 (and later) require <em>at least</em> <a href="https://www.qhyccd.com/download.html">QHY System Pack</a> version 21.02.20.19 to be installed</li>
+<li>Improvements to reliability</li>
+<li>Seamless switching between 11M and 47M modes for the QHY294 Pro</li>
+<li>QHY CCDs that have fast and slow readout modes can now select the mode</li>
+<li>QHY cameras that have sensor chamber air pressure and humidity sensors will display their readings on the Equipment &gt; Camera screen</li>
+<li>QHY camera firmware and FPGA versions are now displayed on the Equipment &gt; Camera screen</li>
+<li>The integrated filter wheels of A-Series cameras should now operate correctly</li>
+<li>The version of the QHY USB driver will be checked and a warning will be presented if it is not the minimum recommended version</li>
+</ul>
 <h3 id="image-preview">Image Preview</h3>
 <ul>
 <li>Ability to inspect pixel area and pixel values in detail by holding right click</li>
@@ -215,13 +227,14 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li><strong>QHY:</strong> 21.02.01.10</li>
 <li><strong>ToupTek:</strong> 48.18081.2020.1205</li>
 <li><strong>ZWO:</strong> 1.16.3</li>
+<li><strong>Risingcam</strong> 48.18332.20210120</li>
 </ul>
 <h1 id="version-1.10-hf2">Version 1.10 HF2</h1>
 <h2 id="improvements">Improvements</h2>
 <ul>
 <li>Rotator now displays mechanical position as well as sky position. Sky position will be displayed once the rotator is synced at least once.</li>
 <li>Updates to various vendor-supplied SDKs for bug fixes and new model support in the respective native drivers</li>
-<li>QHY: Legacy CCD models can now select Normal or Fast readout speeds when using the native driver</li>
+<li>QHY: Legacy CCD and A-series cameras can now select Normal or Fast readout speeds when using the native driver</li>
 </ul>
 <h2 id="bugfixes-1">Bugfixes</h2>
 <ul>
@@ -238,7 +251,7 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>All guiders now report when a successful connection happens</li>
 <li>Disconnecting Atik Cameras from other applications on startup or scan for new devices will not happen anymore</li>
 <li>Fixed an issue in Framing Assistant when solving a file, that the near solver was incorrectly used as the blind solver</li>
-<li>QHY294M/C Pro is properly handled by the QHY native driver</li>
+<li>QHY: QHY294M/C Pro is properly handled by the QHY native driver</li>
 </ul>
 <h2 id="included-camera-sdk-versions-1">Included Camera SDK Versions:</h2>
 <ul>
@@ -248,7 +261,7 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li><strong>FLI:</strong> 1.104.0.0</li>
 <li><strong>Nikon:</strong> 1.3.2.3000</li>
 <li><strong>Omegon:</strong> 39.15325.2019.810</li>
-<li><strong>QHY:</strong> 21.02.01.10</li>
+<li><strong>QHY:</strong> 21.02.19.19</li>
 <li><strong>ToupTek:</strong> 48.18081.2020.1205</li>
 <li><strong>ZWO:</strong> 1.16.3</li>
 </ul>

@@ -159,6 +159,8 @@
       <ComponentGroupRef Id="External_x86_MGEN_files" />
       <ComponentGroupRef Id="External_x64_MGEN_files" />
       <ComponentGroupRef Id="ca_ES_files" />
+      <ComponentGroupRef Id="External_x64_Risingcam_files" />
+      <ComponentGroupRef Id="External_x86_Risingcam_files" />
     </Feature>
   </Product>
 
@@ -228,6 +230,7 @@
               <Directory Id="External_x64_SOFA" Name="SOFA" />
               <Directory Id="External_x64_FTDI" Name="FTDI" />
               <Directory Id="External_x64_MGEN" Name="MGEN" />
+              <Directory Id="External_x64_Risingcam" Name="Risingcam" />
             </Directory>
             <Directory Id="External_x86" Name="x86">
               <Directory Id="External_x86_Nikon" Name="Nikon">
@@ -276,6 +279,7 @@
               <Directory Id="External_x86_SOFA" Name="SOFA" />
               <Directory Id="External_x86_FTDI" Name="FTDI" />
               <Directory Id="External_x86_MGEN" Name="MGEN" />
+              <Directory Id="External_x86_Risingcam" Name="Risingcam" />
             </Directory>
           </Directory>
           <Directory Id="Utility" Name="Utility">
@@ -488,37 +492,37 @@
       <Component Win64="$(var.Win64)" Id="Namotion.Reflection.dll" Guid="e280d86e-104f-49ea-9c32-b98e532d648d">
         <File Id="Namotion.Reflection.dll" Name="Namotion.Reflection.dll" Source="$(var.NINA_TargetDir)Namotion.Reflection.dll" />
       </Component>
-      <Component Id="Accord.Math.dll" Guid="e8a942ea-bc91-44a7-ba5f-aa19800d3beb">
+      <Component Win64="$(var.Win64)" Id="Accord.Math.dll" Guid="e8a942ea-bc91-44a7-ba5f-aa19800d3beb">
         <File Id="Accord.Math.dll" Name="Accord.Math.dll" Source="$(var.NINA_TargetDir)Accord.Math.dll" />
       </Component>
-      <Component Id="Accord.Math.Core.dll" Guid="6593c698-4f88-4a15-8990-218573db4288">
+      <Component Win64="$(var.Win64)" Id="Accord.Math.Core.dll" Guid="6593c698-4f88-4a15-8990-218573db4288">
         <File Id="Accord.Math.Core.dll" Name="Accord.Math.Core.dll" Source="$(var.NINA_TargetDir)Accord.Math.Core.dll" />
       </Component>
-      <Component Id="Accord.dll" Guid="2ea6a34b-6c9a-42da-bb4c-24dcf06e9ef2">
+      <Component Win64="$(var.Win64)" Id="Accord.dll" Guid="2ea6a34b-6c9a-42da-bb4c-24dcf06e9ef2">
         <File Id="Accord.dll" Name="Accord.dll" Source="$(var.NINA_TargetDir)Accord.dll" />
       </Component>
-      <Component Id="Accord.Statistics.dll" Guid="814d20c3-c7fc-4644-bc5c-ac1d8f172fb2">
+      <Component Win64="$(var.Win64)" Id="Accord.Statistics.dll" Guid="814d20c3-c7fc-4644-bc5c-ac1d8f172fb2">
         <File Id="Accord.Statistics.dll" Name="Accord.Statistics.dll" Source="$(var.NINA_TargetDir)Accord.Statistics.dll" />
       </Component>
-      <Component Id="Accord.Imaging.dll" Guid="e01df832-9853-4564-9a43-2bbd5191486d">
+      <Component Win64="$(var.Win64)" Id="Accord.Imaging.dll" Guid="e01df832-9853-4564-9a43-2bbd5191486d">
         <File Id="Accord.Imaging.dll" Name="Accord.Imaging.dll" Source="$(var.NINA_TargetDir)Accord.Imaging.dll" />
       </Component>
-      <Component Id="Accord.dll.config" Guid="c7614cb9-9003-4cdc-965b-46c3b76a789a">
+      <Component Win64="$(var.Win64)" Id="Accord.dll.config" Guid="c7614cb9-9003-4cdc-965b-46c3b76a789a">
         <File Id="Accord.dll.config" Name="Accord.dll.config" Source="$(var.NINA_TargetDir)Accord.dll.config" />
       </Component>
-      <Component Id="NINA.MGEN.dll" Guid="aff16aed-fbcc-4db3-8ae6-30387f4995e9">
+      <Component Win64="$(var.Win64)" Id="NINA.MGEN.dll" Guid="aff16aed-fbcc-4db3-8ae6-30387f4995e9">
         <File Id="NINA.MGEN.dll" Name="NINA.MGEN.dll" Source="$(var.NINA.MGEN_TargetDir)NINA.MGEN.dll" />
       </Component>
-      <Component Id="Zlib.Portable.dll" Guid="e029186f-d493-4b7e-aee1-e84ba51eaf7a">
+      <Component Win64="$(var.Win64)" Id="Zlib.Portable.dll" Guid="e029186f-d493-4b7e-aee1-e84ba51eaf7a">
         <File Id="Zlib.Portable.dll" Name="Zlib.Portable.dll" Source="$(var.NINA_TargetDir)Zlib.Portable.dll" />
       </Component>
-      <Component Id="Zlib.Portable.xml" Guid="5bb512d3-1eed-4214-907a-5e07bc8ae739">
+      <Component Win64="$(var.Win64)" Id="Zlib.Portable.xml" Guid="5bb512d3-1eed-4214-907a-5e07bc8ae739">
         <File Id="Zlib.Portable.xml" Name="Zlib.Portable.xml" Source="$(var.NINA_TargetDir)Zlib.Portable.xml" />
       </Component>
-      <Component Id="SHA3.dll" Guid="029f3b52-4cfc-4008-a413-0dc6cf32bdad">
+      <Component Win64="$(var.Win64)" Id="SHA3.dll" Guid="029f3b52-4cfc-4008-a413-0dc6cf32bdad">
         <File Id="SHA3.dll" Name="SHA3.dll" Source="$(var.NINA_TargetDir)SHA3.dll" />
       </Component>
-      <Component Id="SHA3Managed.dll" Guid="35435550-119d-4bf5-a30e-7f51612d1380">
+      <Component Win64="$(var.Win64)" Id="SHA3Managed.dll" Guid="35435550-119d-4bf5-a30e-7f51612d1380">
         <File Id="SHA3Managed.dll" Name="SHA3Managed.dll" Source="$(var.NINA_TargetDir)SHA3Managed.dll" />
       </Component>
       <Component Win64="$(var.Win64)" Id="thirdparty" Guid="3C8404A3-D6E6-48DE-81FA-03028AEE884D">
@@ -536,13 +540,13 @@
       <Component Win64="$(var.Win64)" Id="Microsoft.Bcl.AsyncInterfaces.dll" Guid="35410b3f-f440-4399-b0bc-fa0e4ad5e906">
         <File Id="Microsoft.Bcl.AsyncInterfaces.dll" Name="Microsoft.Bcl.AsyncInterfaces.dll" Source="$(var.NINA_TargetDir)Microsoft.Bcl.AsyncInterfaces.dll" />
       </Component>
-      <Component Id="CsvHelper.dll" Guid="baf61ce7-a975-487c-b788-a87f47a31fe1">
+      <Component Win64="$(var.Win64)" Id="CsvHelper.dll" Guid="baf61ce7-a975-487c-b788-a87f47a31fe1">
         <File Id="CsvHelper.dll" Name="CsvHelper.dll" Source="$(var.NINA_TargetDir)CsvHelper.dll" />
       </Component>
-      <Component Id="System.Threading.Tasks.Extensions.dll" Guid="4470cd68-bc00-49fd-848f-898082bd6ff9">
+      <Component Win64="$(var.Win64)" Id="System.Threading.Tasks.Extensions.dll" Guid="4470cd68-bc00-49fd-848f-898082bd6ff9">
         <File Id="System.Threading.Tasks.Extensions.dll" Name="System.Threading.Tasks.Extensions.dll" Source="$(var.NINA_TargetDir)System.Threading.Tasks.Extensions.dll" />
       </Component>
-      <Component Id="Microsoft.Bcl.HashCode.dll" Guid="0090cbc7-81f2-47e4-ad04-26559fcd5456">
+      <Component Win64="$(var.Win64)" Id="Microsoft.Bcl.HashCode.dll" Guid="0090cbc7-81f2-47e4-ad04-26559fcd5456">
         <File Id="Microsoft.Bcl.HashCode.dll" Name="Microsoft.Bcl.HashCode.dll" Source="$(var.NINA_TargetDir)Microsoft.Bcl.HashCode.dll" />
       </Component>
     </ComponentGroup>
@@ -1879,6 +1883,20 @@
     <ComponentGroup Id="ca_ES_files" Directory="ca_ES">
       <Component Id="ca_ES_NINA.resources.dll" Guid="ae5beabb-255a-4314-9b9e-65c0d1b53a5e">
         <File Id="ca_ES_NINA.resources.dll" Name="NINA.resources.dll" Source="$(var.NINA_TargetDir)ca-ES\NINA.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="External_x64_Risingcam_files" Directory="External_x64_Risingcam">
+      <Component Win64="$(var.Win64)" Id="External_x64_Risingcam_nncam.dll" Guid="4686cc8e-bd19-4fed-8da5-4fc026b4d614">
+        <File Id="External_x64_Risingcam_nncam.dll" Name="nncam.dll" Source="$(var.NINA_TargetDir)External\x64\Risingcam\nncam.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="External_x86_Risingcam_files" Directory="External_x86_Risingcam">
+      <Component Win64="$(var.Win64)" Id="External_x86_Risingcam_nncam.dll" Guid="f594227c-947d-40c2-b306-b3155b37760b">
+        <File Id="External_x86_Risingcam_nncam.dll" Name="nncam.dll" Source="$(var.NINA_TargetDir)External\x86\Risingcam\nncam.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

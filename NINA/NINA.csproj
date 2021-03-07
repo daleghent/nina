@@ -498,6 +498,7 @@
     <Compile Include="Model\MyCamera\ToupTekAlike\AltairSDKWrapper.cs" />
     <Compile Include="Model\MyCamera\ToupTekAlike\IToupTekAlikeCameraSDK.cs" />
     <Compile Include="Model\MyCamera\ToupTekAlike\OmegonSDKWrapper.cs" />
+    <Compile Include="Model\MyCamera\ToupTekAlike\RisingcamSDKWrapper.cs" />
     <Compile Include="Model\MyCamera\ToupTekAlike\ToupTekSDKWrapper.cs" />
     <Compile Include="Model\MyFilterWheel\AtikFilterWheel.cs" />
     <Compile Include="Model\MyFilterWheel\AtikFilterWheelBase.cs" />
@@ -677,6 +678,7 @@
     <Compile Include="Utility\Astrometry\CustomHorizon.cs" />
     <Compile Include="Utility\Astrometry\RiseAndSet\NauticalTwilightRiseAndSet.cs" />
     <Compile Include="Utility\AttributeHelper.cs" />
+    <Compile Include="Utility\CameraSDKs\RisingcamSDK\nncam.cs" />
     <Compile Include="Utility\Converters\FilenameConverter.cs" />
     <Compile Include="Utility\CameraSDKs\QHYSDK\IQhyccdSdk.cs" />
     <Compile Include="Utility\Converters\InverseMultiBooleanORConverter.cs" />
@@ -2377,6 +2379,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Content Include="External\x64\Risingcam\nncam.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="External\x86\Risingcam\nncam.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Utility\ExifTool\exiftool.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

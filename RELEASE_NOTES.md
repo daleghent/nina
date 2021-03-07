@@ -86,10 +86,12 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - These devices can be used inside the sequencer to interrupt an imaging run, when they report unsafe conditions
 - Option to automatically close the dome shutter immediately when the safety monitor reports unsafe conditions
 
-#### Native support for Atik EFW2/3 and internal Filterwheels
+### Native support for Atik EFW2/3 and internal Filterwheels
 - The integrated filter wheels for Atik cameras like the Atik One 9.0 are now natively supported
 - This allows usage of native camera drivers for Atik cameras with integrated filter wheels
 - The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver
+
+### Native support for Risingcams
 
 ## Application Improvements
 ### General
@@ -168,6 +170,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - **QHY:** 21.02.01.10
 - **ToupTek:** 48.18081.2020.1205
 - **ZWO:** 1.16.3
+- **Risingcam** 48.18332.20210120
 
 # Version 1.10 HF2
 

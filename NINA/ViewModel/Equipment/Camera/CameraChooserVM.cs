@@ -139,6 +139,17 @@ namespace NINA.ViewModel.Equipment.Camera {
                 Logger.Error(ex);
             }
 
+            /* Risingcam */
+            try {
+                Logger.Debug("Adding RisingCam Cameras");
+                foreach (var instance in Nncam.EnumV2()) {
+                    var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new RisingcamSDKWrapper(), profileService);
+                    Devices.Add(cam);
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
             /* ASCOM */
             try {
                 foreach (ICamera cam in ASCOMInteraction.GetCameras(profileService)) {
