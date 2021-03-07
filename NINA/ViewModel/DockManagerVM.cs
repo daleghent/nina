@@ -201,11 +201,9 @@ namespace NINA.ViewModel {
         }
 
         private void LoadDefaultLayout(Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer serializer) {
-            lock (lockObj) {
-                using (var stream = new StringReader(Properties.Resources.avalondock)) {
-                    serializer.Deserialize(stream);
-                    _dockloaded = true;
-                }
+            using (var stream = new StringReader(Properties.Resources.avalondock)) {
+                serializer.Deserialize(stream);
+                _dockloaded = true;
             }
         }
 
