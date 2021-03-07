@@ -3879,7 +3879,7 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Brillo mínimo del panel de flats</value>
   </data>
   <data name="LblWizardOperationMode" xml:space="preserve">
-    <value>Modo de Operación con Asistente</value>
+    <value>Wizard Mode</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
     <value>Tolerancia en acimut (grados)</value>
@@ -4048,6 +4048,9 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
     <value>Error al reanudar el guiado tras recuperar intensidad la estrella</value>
+  </data>
+  <data name="LblSkyFlat" xml:space="preserve">
+    <value>Sky Flats</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Error de sincronización de la cúpula. Ya no sigue al telescopio. {0}</value>
@@ -5265,6 +5268,18 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
   <data name="LblTelescopeParkCancelled" xml:space="preserve">
     <value>Anulado el aparcamiento del telescopio.</value>
   </data>
+  <data name="LblEstimatedFlatPanelBrightness" xml:space="preserve">
+    <value>Estimated Flat Panel Brightness</value>
+  </data>
+  <data name="LblFlatExposureCalcContinueBrightness" xml:space="preserve">
+    <value>Mean ADU was {0}, starting Exposure Brightness calculation at {1}</value>
+  </data>
+  <data name="LblFlatExposureCalcFinishedBrightness" xml:space="preserve">
+    <value>Mean ADU is {0} target Exposure Brightness is {1}</value>
+  </data>
+  <data name="LblFlatExposureCalcStartBrightness" xml:space="preserve">
+    <value>Starting Exposure Brightness calculation at {0}</value>
+  </data>
   <data name="LblFast" xml:space="preserve">
     <value>Rápido</value>
   </data>
@@ -5300,5 +5315,8 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
   </data>
   <data name="LblRms" xml:space="preserve">
     <value>Rms</value>
+  </data>
+  <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
+    <value>The wizard did not find the right brightness level after 5 tries. Please try changing the step size or the tolerance.</value>
   </data>
 </root>

@@ -2012,7 +2012,7 @@ Vypočtené HFR: {2}
     <value>min</value>
   </data>
   <data name="LblMode" xml:space="preserve">
-    <value>Mód</value>
+    <value>Režim</value>
   </data>
   <data name="LblMoonRise" xml:space="preserve">
     <value>Východ Měsíce</value>
@@ -3457,7 +3457,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Referenční souřadnice nezjištěny. Použít řešení naslepo?</value>
   </data>
   <data name="LblUseBuldMode" xml:space="preserve">
-    <value>Použít bulb mód</value>
+    <value>Použít bulb režim</value>
   </data>
   <data name="LblUseSharpCapSensorAnalysis" xml:space="preserve">
     <value>Použít Analýzu Senzoru SharpCap</value>
@@ -3780,7 +3780,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Čekání, na uložení obrazu</value>
   </data>
   <data name="LblHighGainMode" xml:space="preserve">
-    <value>Mód s Vysokým Ziskem</value>
+    <value>Režim Vysokého Zisku</value>
   </data>
   <data name="LblHighGainModeTooltip" xml:space="preserve">
     <value>Nastaví kameru do režimu vysokého zisku. Tento režim zesílení má ve srovnání s nízkým zesílením méně odečítaného šumu a je doporučeno jej vždy povolit, pokud nechcete použít nejnižší možný zisk s nejvyšším dynamickým rozsahem.</value>
@@ -3880,7 +3880,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Minimální Jas FlatBoxu</value>
   </data>
   <data name="LblWizardOperationMode" xml:space="preserve">
-    <value>Průvodce Operačním Módem</value>
+    <value>Režim Průvodce</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
     <value>Azimutová Tolerance (stupně)</value>
@@ -4049,6 +4049,9 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
     <value>Po obnovení pointační hvězdy se nepodařilo obnovit pointování</value>
+  </data>
+  <data name="LblSkyFlat" xml:space="preserve">
+    <value>Sky Flats</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Chyba synchronizace kopule. Již nesleduje dalekohled. {0}</value>
@@ -5265,6 +5268,18 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   <data name="LblTelescopeParkCancelled" xml:space="preserve">
     <value>Operace parkování zrušena</value>
   </data>
+  <data name="LblEstimatedFlatPanelBrightness" xml:space="preserve">
+    <value>Odhadovaný Jas FlatBoxu</value>
+  </data>
+  <data name="LblFlatExposureCalcContinueBrightness" xml:space="preserve">
+    <value>Průměrné ADU bylo {0}, výpočet Času Jasu Expozice začíná v {1}</value>
+  </data>
+  <data name="LblFlatExposureCalcFinishedBrightness" xml:space="preserve">
+    <value>Průměrné ADU je {0} cílový Čas Expozice je {1}</value>
+  </data>
+  <data name="LblFlatExposureCalcStartBrightness" xml:space="preserve">
+    <value>Výpočet Času Jasu Expozice začíná v {0}</value>
+  </data>
   <data name="LblFast" xml:space="preserve">
     <value>Rychle</value>
   </data>
@@ -5300,5 +5315,8 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   </data>
   <data name="LblRms" xml:space="preserve">
     <value>RMS</value>
+  </data>
+  <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
+    <value>Průvodce po 5 pokusech nenašel správnou úroveň jasu. Zkuste změnit velikost kroku nebo toleranci.</value>
   </data>
 </root>

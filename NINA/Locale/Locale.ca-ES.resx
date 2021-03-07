@@ -3880,7 +3880,7 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Lluminositat mínima del Panell de Flats</value>
   </data>
   <data name="LblWizardOperationMode" xml:space="preserve">
-    <value>Mode d'Operació amb Assitent</value>
+    <value>Mode Assitent</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
     <value>Tolerància en Azimut (graus)</value>
@@ -4049,6 +4049,9 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
     <value>No s'ha pogut reprendre el guiatge després de recuperar la intensitat de l'estrella</value>
+  </data>
+  <data name="LblSkyFlat" xml:space="preserve">
+    <value>Flats del Cel</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Error de sincronització de la cúpula. Ja no segueix el telescopi. {0}</value>
@@ -5266,6 +5269,18 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   <data name="LblTelescopeParkCancelled" xml:space="preserve">
     <value>Cancel·lada l'operació d'aparcament</value>
   </data>
+  <data name="LblEstimatedFlatPanelBrightness" xml:space="preserve">
+    <value>Lluminositat estimada del Panell de Flats</value>
+  </data>
+  <data name="LblFlatExposureCalcContinueBrightness" xml:space="preserve">
+    <value>La mitjana d'ADU era {0}, començant el càlcul de la lluminositat de l'exposició a {1}</value>
+  </data>
+  <data name="LblFlatExposureCalcFinishedBrightness" xml:space="preserve">
+    <value>La ADU mitjana és {0} objectiu de la lluminositat de l'exposició és {1}</value>
+  </data>
+  <data name="LblFlatExposureCalcStartBrightness" xml:space="preserve">
+    <value>Inici del càlcul de la brillantor de l'exposició a {0}</value>
+  </data>
   <data name="LblFast" xml:space="preserve">
     <value>Ràpid</value>
   </data>
@@ -5301,5 +5316,8 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   </data>
   <data name="LblRms" xml:space="preserve">
     <value>Rms</value>
+  </data>
+  <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
+    <value>L’assistent no ha trobar el nivell de lluminositat adequat després de 5 intents. Proveu canviant la mida del pas o la tolerància.</value>
   </data>
 </root>

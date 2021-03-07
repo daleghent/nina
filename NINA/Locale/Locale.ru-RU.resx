@@ -3882,7 +3882,7 @@ Dec: {1}</value>
     <value>Минимальная яркость флэт панели</value>
   </data>
   <data name="LblWizardOperationMode" xml:space="preserve">
-    <value>Режим работы мастера</value>
+    <value>Wizard Mode</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
     <value>Допуск на Азимут (градусов)</value>
@@ -4051,6 +4051,9 @@ Dec: {1}</value>
   </data>
   <data name="LblMetaGuideLowIntensityRestoreGuidingFailed" xml:space="preserve">
     <value>Не удалось возобновить гидирование после восстановления интенсивности звезды</value>
+  </data>
+  <data name="LblSkyFlat" xml:space="preserve">
+    <value>Sky Flats</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Ошибка синхронизации купола. Больше не следует за телескопом. {0}</value>
@@ -5268,6 +5271,18 @@ Dec: {1}</value>
   <data name="LblTelescopeParkCancelled" xml:space="preserve">
     <value>Операция парковки отменена</value>
   </data>
+  <data name="LblEstimatedFlatPanelBrightness" xml:space="preserve">
+    <value>Estimated Flat Panel Brightness</value>
+  </data>
+  <data name="LblFlatExposureCalcContinueBrightness" xml:space="preserve">
+    <value>Mean ADU was {0}, starting Exposure Brightness calculation at {1}</value>
+  </data>
+  <data name="LblFlatExposureCalcFinishedBrightness" xml:space="preserve">
+    <value>Mean ADU is {0} target Exposure Brightness is {1}</value>
+  </data>
+  <data name="LblFlatExposureCalcStartBrightness" xml:space="preserve">
+    <value>Starting Exposure Brightness calculation at {0}</value>
+  </data>
   <data name="LblFast" xml:space="preserve">
     <value>Быстро</value>
   </data>
@@ -5303,5 +5318,8 @@ Dec: {1}</value>
   </data>
   <data name="LblRms" xml:space="preserve">
     <value>Rms</value>
+  </data>
+  <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
+    <value>The wizard did not find the right brightness level after 5 tries. Please try changing the step size or the tolerance.</value>
   </data>
 </root>
