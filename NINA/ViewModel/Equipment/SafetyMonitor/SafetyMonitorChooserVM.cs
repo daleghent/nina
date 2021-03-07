@@ -43,7 +43,7 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
                     Logger.Error(ex);
                 }
 
-                Devices.Add(new NINA.Model.MySafetyMonitor.SafetyMonitorSimulator());
+                devices.Add(new NINA.Model.MySafetyMonitor.SafetyMonitorSimulator());
                 Devices = devices;
                 DetermineSelectedDevice(profileService.ActiveProfile.SafetyMonitorSettings.Id);
             }
