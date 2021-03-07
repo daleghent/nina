@@ -213,56 +213,5 @@ namespace NINATest.Focuser {
             deviceInfo.TempComp.Should().Be(tempComp);
             deviceInfo.Temperature.Should().Be(temperature);
         }
-
-        [Test]
-        public async Task TestMove() {
-            mockProfileService.Setup(m => m.ActiveProfile.FocuserSettings.BacklashCompensationModel)
-                .Returns(BacklashCompensationModel.OVERSHOOT);
-            mockFocuser.Setup(m => m.Connected).Returns(true);
-            mockFocuser.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
-            mockFocuserChooserVm.Setup(m => m.SelectedDevice).Returns(mockFocuser.Object);
-
-            (await sut.Connect()).Should().BeTrue();
-
-            var result = await sut.MoveFocuser(2000, new CancellationToken());
-
-            result.Should().Be(2000);
-            sut.FocuserInfo.Position.Should().Be(2000);
-        }
-
-        [Test]
-        public async Task TestMoveTempCompOn() {
-            mockProfileService.Setup(m => m.ActiveProfile.FocuserSettings.BacklashCompensationModel)
-                .Returns(BacklashCompensationModel.OVERSHOOT);
-            mockFocuser.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
-            mockFocuser.Setup(m => m.Connected).Returns(true);
-            mockFocuser.Setup(m => m.TempCompAvailable).Returns(true);
-            mockFocuser.SetupProperty(m => m.TempComp, true);
-            mockFocuser.Setup(m => m.Position).Returns(1000);
-            mockFocuserChooserVm.Setup(m => m.SelectedDevice).Returns(mockFocuser.Object);
-
-            (await sut.Connect()).Should().BeTrue();
-
-            _ = await sut.MoveFocuser(1000, new CancellationToken());
-
-            mockFocuser.VerifySet(m => m.TempComp = false, Times.Once);
-            mockFocuser.VerifySet(m => m.TempComp = true, Times.Once);
-        }
-
-        [Test]
-        public async Task TestMoveRelative() {
-            mockProfileService.Setup(m => m.ActiveProfile.FocuserSettings.BacklashCompensationModel)
-                .Returns(BacklashCompensationModel.OVERSHOOT);
-            mockFocuser.Setup(m => m.Position).Returns(1000);
-            mockFocuser.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
-            mockFocuser.Setup(m => m.Connected).Returns(true);
-            mockFocuserChooserVm.Setup(m => m.SelectedDevice).Returns(mockFocuser.Object);
-
-            (await sut.Connect()).Should().BeTrue();
-
-            var result = await sut.MoveFocuserRelative(10, new CancellationToken());
-
-            sut.FocuserInfo.Position.Should().Be(1010);
-        }
     }
 }
