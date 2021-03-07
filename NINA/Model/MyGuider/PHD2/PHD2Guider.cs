@@ -244,7 +244,7 @@ namespace NINA.Model.MyGuider.PHD2 {
                     while (Settling == true) {
                         elapsed += await Utility.Utility.Delay(500, ct);
 
-                        if (elapsed.TotalSeconds > 120) {
+                        if (elapsed.TotalSeconds > (profileService.ActiveProfile.GuiderSettings.SettleTimeout + 10)) {
                             //Failsafe when phd is not sending settlingdone message
                             Notification.ShowWarning(Locale.Loc.Instance["LblGuiderNoSettleDone"]);
                             Settling = false;
@@ -349,12 +349,16 @@ namespace NINA.Model.MyGuider.PHD2 {
             CancellationToken ct,
             int receiveTimeout = 0) {
             return Task.Run(async () => {
-                var state = await GetAppState();
-                while (state != targetState) {
-                    await Task.Delay(1000, ct);
-                    state = await GetAppState();
+                try {
+                    var state = await GetAppState();
+                    while (state != targetState) {
+                        await Task.Delay(1000, ct);
+                        state = await GetAppState();
+                    }
+                    return true;
+                } catch (OperationCanceledException) {
+                    return false;
                 }
-                return true;
             });
         }
 
@@ -381,57 +385,62 @@ namespace NINA.Model.MyGuider.PHD2 {
                 await StopGuiding(ct);
             }
 
-            async Task<bool> TryStartGuideCommand() {
-                await WaitForSettling(ct);
-
-                var guideMsg = new Phd2Guide() {
-                    Parameters = new Phd2GuideParameter() {
-                        Settle = new Phd2Settle() {
-                            Pixels = profileService.ActiveProfile.GuiderSettings.SettlePixels,
-                            Time = profileService.ActiveProfile.GuiderSettings.SettleTime,
-                            Timeout = profileService.ActiveProfile.GuiderSettings.SettleTimeout
-                        },
-                        Recalibrate = forceCalibration,
-                        Roi = await GetROI()
-                    }
-                };
-
-                var guideMsgResponse = await SendMessage(guideMsg);
-                return guideMsgResponse.error == null;
-            }
-
-            async Task<bool> WaitForGuidingStarted() {
-                await WaitForAppState(PhdAppState.GUIDING, ct);
-                Settling = true;
-                await WaitForSettling(ct);
-                return true;
-            }
-
             if (!autoRetry) {
-                return await TryStartGuideCommand()
-                    && await WaitForGuidingStarted();
+                return await TryStartGuideCommand(forceCalibration, ct)
+                    && await WaitForGuidingStarted(ct);
             }
 
             while (!ct.IsCancellationRequested) {
-                if (!await TryStartGuideCommand()) {
+                if (!await TryStartGuideCommand(forceCalibration, ct)) {
                     return false;
                 }
                 using (var cancelOnTimeoutOrParent = CancellationTokenSource.CreateLinkedTokenSource(ct)) {
                     var timeout = Task.Delay(
                         retryAfterSeconds,
                         cancelOnTimeoutOrParent.Token);
-                    var guidingHasBegun = WaitForGuidingStarted();
+                    var guidingHasBegun = WaitForGuidingStarted(cancelOnTimeoutOrParent.Token);
 
                     if ((await Task.WhenAny(timeout, guidingHasBegun)) == guidingHasBegun) {
                         return await guidingHasBegun;
                     }
                     cancelOnTimeoutOrParent.Cancel();
-                    await Task.Delay(100, ct); // 100ms sleep between retries
+                    await Task.Delay(5000, ct); // 5000ms sleep between retries
 
                     await StopGuiding(ct); // used to visual inspect that the guider is in the stopped state before retrying.
+
+                    await Task.Delay(1000, ct); // 1000ms sleep between retries
                 }
             }
             return false;
+        }
+
+        private async Task<bool> TryStartGuideCommand(bool forceCalibration, CancellationToken ct) {
+            await WaitForSettling(ct);
+
+            var guideMsg = new Phd2Guide() {
+                Parameters = new Phd2GuideParameter() {
+                    Settle = new Phd2Settle() {
+                        Pixels = profileService.ActiveProfile.GuiderSettings.SettlePixels,
+                        Time = profileService.ActiveProfile.GuiderSettings.SettleTime,
+                        Timeout = profileService.ActiveProfile.GuiderSettings.SettleTimeout
+                    },
+                    Recalibrate = forceCalibration,
+                    Roi = await GetROI()
+                }
+            };
+
+            var guideMsgResponse = await SendMessage(guideMsg);
+            return guideMsgResponse.error == null;
+        }
+
+        private async Task<bool> WaitForGuidingStarted(CancellationToken ct) {
+            if (await WaitForAppState(PhdAppState.GUIDING, ct)) {
+                Settling = true;
+                await WaitForSettling(ct);
+                return true;
+            } else {
+                return false;
+            }
         }
 
         public async Task<bool> StopGuiding(CancellationToken token) {

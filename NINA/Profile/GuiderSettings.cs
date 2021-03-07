@@ -40,7 +40,7 @@ namespace NINA.Profile {
             settlePixels = 1.5;
             settleTimeout = 40;
             autoRetryStartGuiding = false;
-            autoRetryStartGuidingTimeoutSeconds = 60;
+            autoRetryStartGuidingTimeoutSeconds = 300;
             maxY = 4;
             metaGuideIP = "127.0.1.1";
             metaGuidePort = 1277;
