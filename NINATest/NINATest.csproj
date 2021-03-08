@@ -308,6 +308,7 @@
     <Compile Include="Sequencer\SequenceItem\Guider\StopGuidingTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Imaging\TakeExposureTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Imaging\TakeManyExposuresTest.cs" />
+    <Compile Include="Sequencer\SequenceItem\Rotator\MoveRotatorMechanicalTest.cs" />
     <Compile Include="Sequencer\SequenceItem\SequenceItemTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Switch\SetSwitchValueTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Telescope\ParkScopeTest.cs" />

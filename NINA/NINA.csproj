@@ -626,6 +626,10 @@
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
     <Compile Include="Sequencer\SequenceItem\Platesolving\SolveAndSync.cs" />
+    <Compile Include="Sequencer\SequenceItem\Rotator\DataTemplates.xaml.cs">
+      <DependentUpon>DataTemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Sequencer\SequenceItem\Rotator\MoveRotatorMechanical.cs" />
     <Compile Include="Sequencer\SequenceItem\Switch\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
@@ -683,6 +687,7 @@
     <Compile Include="Utility\Converters\NullOrEmptyStringToVisibilityCollapsedConverter.cs" />
     <Compile Include="Utility\CustomDateTime.cs" />
     <Compile Include="Utility\Enum\ComparisonOperatorEnum.cs" />
+    <Compile Include="Utility\ValidationRules\FloatRangeRule.cs" />
     <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
     <Compile Include="Utility\MeridianFlip.cs" />
     <Compile Include="ViewModel\Sequencer\ISequenceNavigationVM.cs" />
@@ -1902,6 +1907,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Sequencer\SequenceItem\Rotator\DataTemplates.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Sequencer\SequenceItem\Switch\Datatemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -2787,7 +2796,6 @@
     <Folder Include="External\x86\Nikon\Type0027\" />
     <Folder Include="External\x86\Nikon\Type0028\" />
     <Folder Include="External\x86\Nikon\Type0029\" />
-    <Folder Include="Sequencer\SequenceItem\Rotator\" />
     <Folder Include="Sequencer\SequenceItem\WeatherData\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

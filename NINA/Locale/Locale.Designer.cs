@@ -315,6 +315,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rotator.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_Rotator {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_Rotator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Switch.
         /// </summary>
         internal static string Lbl_SequenceCategory_Switch {
@@ -1352,6 +1361,24 @@ namespace NINA.Locale {
         internal static string Lbl_SequenceItem_Reset_Tooltip {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Reset_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Moves the rotator to the mechanical angle.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Rotator Mechanical.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name", resourceCulture);
             }
         }
         
