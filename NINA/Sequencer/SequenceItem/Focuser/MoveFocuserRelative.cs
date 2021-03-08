@@ -30,7 +30,7 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
 
     [ExportMetadata("Name", "Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name")]
     [ExportMetadata("Description", "Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description")]
-    [ExportMetadata("Icon", "MoveFocuserSVG")]
+    [ExportMetadata("Icon", "MoveFocuserRelativeSVG")]
     [ExportMetadata("Category", "Lbl_SequenceCategory_Focuser")]
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
