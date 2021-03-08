@@ -1583,7 +1583,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Velikost Kroku Auto-ostření</value>
   </data>
   <data name="LblFocuserAutoFocusStepSizeTooltip" xml:space="preserve">
-    <value>Velikost kroku pro auto-ostření. Jeden krok musí být menší než tolerance kritického bodu zaostření</value>
+    <value>Velikost jednoho zaostřovacího kroku použitého pro automatické zaostřování. Jeden krok musí být menší než tolerance kritického bodu zaostření</value>
   </data>
   <data name="LblFocuserBacklash" xml:space="preserve">
     <value>Zpětná vůle DOVNITŘ/VEN</value>
@@ -2647,10 +2647,10 @@ Vypočtené HFR: {2}
     <value>Resetovat a Pokračovat</value>
   </data>
   <data name="LblResetDockLayout" xml:space="preserve">
-    <value>Obnovit rozložení obrazovky</value>
+    <value>Obnovit rozvržení</value>
   </data>
   <data name="LblResetDockLayoutConfirmation" xml:space="preserve">
-    <value>Resetovat rozložení obrazovky?</value>
+    <value>Resetovat rozvržení obrazovky?</value>
   </data>
   <data name="LblReslewToTarget" xml:space="preserve">
     <value>Znovu přejet na Cíl</value>
@@ -2795,7 +2795,7 @@ Vypočtené HFR: {2}
   </data>
   <data name="LblSequenceTemplateTooltip" xml:space="preserve">
     <value>Zadejte cestu k dříve exportovanému souboru sekvence a použijte jej jako šablonu.
-Tato šablona bude použita při spuštění sekvence místo výchozí.</value>
+Tato šablona bude použita při spuštění generování sekvence místo výchozí.</value>
   </data>
   <data name="LblSerialPort" xml:space="preserve">
     <value>Sériový Port</value>
@@ -3018,7 +3018,7 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
     <value>Stsci Sky Survey</value>
   </data>
   <data name="LblSubSample" xml:space="preserve">
-    <value>Povolit Pod Vzorkování</value>
+    <value>Povolit Podvzorkování</value>
   </data>
   <data name="LblSuccess" xml:space="preserve">
     <value>Úspěch</value>
@@ -3733,7 +3733,7 @@ Metodu kompenzace zpětné vůle lze změnit, pouze když je zaostření odpojen
     <value>Pohyb zaostření o hodnotu 5x větší, než je velikost kroku auto-ostření</value>
   </data>
   <data name="LblFocuserMoveSmallTooltip" xml:space="preserve">
-    <value>Pohyb zaostření s poloviční velikostí kroku Auto-ostření </value>
+    <value>Pohyb zaostřovačem o malé množství pomocí poloviční velikosti automatického zaostřování </value>
   </data>
   <data name="LblMoveFocuserTooltip" xml:space="preserve">
     <value>Pohyb zaostření do zadané cílové polohy</value>
@@ -5318,5 +5318,11 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   </data>
   <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
     <value>Průvodce po 5 pokusech nenašel správnou úroveň jasu. Zkuste změnit velikost kroku nebo toleranci.</value>
+  </data>
+  <data name="LblInitializingSequencer" xml:space="preserve">
+    <value>Generování Sekvenceru...</value>
+  </data>
+  <data name="LblInitializingLayout" xml:space="preserve">
+    <value>Generování Rozvržení</value>
   </data>
 </root>

@@ -5319,4 +5319,10 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
   <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
     <value>The wizard did not find the right brightness level after 5 tries. Please try changing the step size or the tolerance.</value>
   </data>
+  <data name="LblInitializingSequencer" xml:space="preserve">
+    <value>Initializing Sequencer...</value>
+  </data>
+  <data name="LblInitializingLayout" xml:space="preserve">
+    <value>Initializing Layout</value>
+  </data>
 </root>
