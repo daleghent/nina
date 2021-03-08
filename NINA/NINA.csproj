@@ -612,6 +612,7 @@
     <Compile Include="Sequencer\SequenceItem\Focuser\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Sequencer\SequenceItem\Focuser\MoveFocuserRelative.cs" />
     <Compile Include="Sequencer\SequenceItem\Focuser\MoveFocuserByTemperature.cs" />
     <Compile Include="Sequencer\SequenceItem\Guider\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>

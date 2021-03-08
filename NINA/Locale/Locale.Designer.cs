@@ -1099,6 +1099,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Moves the focuser to the given relative position.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Move Focuser Relative.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sends a dither signal to the guider.
         /// </summary>
         internal static string Lbl_SequenceItem_Guider_Dither_Description {
@@ -11650,6 +11668,15 @@ namespace NINA.Locale {
         internal static string LblRelativeFocuserNotSupported {
             get {
                 return ResourceManager.GetString("LblRelativeFocuserNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relative Position.
+        /// </summary>
+        internal static string LblRelativePosition {
+            get {
+                return ResourceManager.GetString("LblRelativePosition", resourceCulture);
             }
         }
         
