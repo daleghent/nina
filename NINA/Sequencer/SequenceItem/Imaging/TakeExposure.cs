@@ -84,20 +84,30 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             }
         }
 
-        [JsonProperty]
-        public int Gain { get; set; }
+        private int gain;
 
         [JsonProperty]
-        public int Offset { get; set; }
+        public int Gain { get => gain; set { gain = value; RaisePropertyChanged(); } }
+
+        private int offset;
 
         [JsonProperty]
-        public BinningMode Binning { get; set; }
+        public int Offset { get => offset; set { offset = value; RaisePropertyChanged(); } }
+
+        private BinningMode binning;
 
         [JsonProperty]
-        public string ImageType { get; set; }
+        public BinningMode Binning { get => binning; set { binning = value; RaisePropertyChanged(); } }
+
+        private string imageType;
 
         [JsonProperty]
-        public int ExposureCount { get; set; }
+        public string ImageType { get => imageType; set { imageType = value; RaisePropertyChanged(); } }
+
+        private int exposureCount;
+
+        [JsonProperty]
+        public int ExposureCount { get => exposureCount; set { exposureCount = value; RaisePropertyChanged(); } }
 
         private CameraInfo cameraInfo;
 
