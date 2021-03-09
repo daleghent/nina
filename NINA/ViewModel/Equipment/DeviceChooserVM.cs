@@ -46,11 +46,15 @@ namespace NINA.ViewModel.Equipment {
 
         public Model.IDevice SelectedDevice {
             get {
-                return _selectedDevice;
+                lock (lockObj) {
+                    return _selectedDevice;
+                }
             }
             set {
-                _selectedDevice = value;
-                RaisePropertyChanged();
+                lock (lockObj) {
+                    _selectedDevice = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
