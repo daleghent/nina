@@ -151,7 +151,7 @@
     <value>Detekce Kontrastu (Experimentální)</value>
   </data>
   <data name="LblAFOnButFocuserNotConnected" xml:space="preserve">
-    <value>Auto-ostření povoleno, ale ostřič není připojen</value>
+    <value>Auto-ostření povoleno, ale zaostření není připojen</value>
   </data>
   <data name="LblAFStarHFR" xml:space="preserve">
     <value>Hvězda HFR</value>
@@ -313,7 +313,7 @@ Má se aplikace pokusit chybu opravit? (Může vést k neočekávanému chován�
     <value>Filtr Auto-ostření</value>
   </data>
   <data name="LblAutoFocusGearNotConnected" xml:space="preserve">
-    <value>Nelze spustit Auto-ostření. Kamera nebo Zaostřovač není připojen!</value>
+    <value>Nelze spustit Auto-ostření. Kamera nebo Zaostření není připojen!</value>
   </data>
   <data name="LblAutoFocusInnerCropRatio" xml:space="preserve">
     <value>Poměr Vnitřního Oříznutí Auto-ostření</value>
@@ -333,7 +333,7 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Nový bod zaostření HFR {0} je výrazně horší než původní HFR {1}</value>
   </data>
   <data name="LblAutoFocusNotEnoughtSpreadedPoints" xml:space="preserve">
-    <value>Hodnoty HFR ostřících bodů jsou příliš blízko u sebe. Buď je zaostřovač příliš daleko od zaostření, nebo je nastavená příliš malá velikost kroku.</value>
+    <value>Hodnoty HFR ostřících bodů jsou příliš blízko u sebe. Buď je zaostření příliš daleko od zaostření, nebo je nastavená příliš malá velikost kroku.</value>
   </data>
   <data name="LblAutoFocusNrOfExposures" xml:space="preserve">
     <value># expozice</value>
@@ -412,7 +412,7 @@ Z těchto dvou souřadnic se vypočítá a zobrazí aktuální chyba výšky</va
     <value>Během měření zpětné vůle došlo k chybě. Hodnoty zpětné vůle mohou být špatné.</value>
   </data>
   <data name="LblBacklashMeasurements" xml:space="preserve">
-    <value>Budou zaznamenány následující hodnoty zpětné vůle zaostřovače. VSTUP: {0}, VÝSTUP: {1}</value>
+    <value>Budou zaznamenány následující hodnoty zpětné vůle zaostření. VSTUP: {0}, VÝSTUP: {1}</value>
   </data>
   <data name="LblBeta" xml:space="preserve">
     <value>Beta</value>
@@ -1571,19 +1571,19 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Světelnost</value>
   </data>
   <data name="LblFocuser" xml:space="preserve">
-    <value>Zaostřovač</value>
+    <value>Zaostření</value>
   </data>
   <data name="LblFocuserAutoFocusInitialOffsetSteps" xml:space="preserve">
     <value>Počáteční Krok Auto-ostření</value>
   </data>
   <data name="LblFocuserAutoFocusInitialOffsetStepsTooltip" xml:space="preserve">
-    <value>Prvotní počet kroků, které zastřovač posune směrem ven před zahájením procesu auto-ostření.</value>
+    <value>Prvotní počet kroků, které zastření posune směrem ven před zahájením procesu auto-ostření.</value>
   </data>
   <data name="LblFocuserAutoFocusStepSize" xml:space="preserve">
     <value>Velikost Kroku Auto-ostření</value>
   </data>
   <data name="LblFocuserAutoFocusStepSizeTooltip" xml:space="preserve">
-    <value>Velikost jednoho zaostřovacího kroku použitého pro automatické zaostřování. Jeden krok musí být menší než tolerance kritického bodu zaostření</value>
+    <value>Velikost jednoho ostřícího kroku použitého pro automatické zaostřování. Jeden krok musí být menší než tolerance kritického bodu zaostření</value>
   </data>
   <data name="LblFocuserBacklash" xml:space="preserve">
     <value>Zpětná vůle DOVNITŘ/VEN</value>
@@ -1595,7 +1595,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Zaostření připojeno</value>
   </data>
   <data name="LblFocuserConnectionLost" xml:space="preserve">
-    <value>Zaostřovač odpojeno! Připojit zaostření!</value>
+    <value>Zaostření odpojeno! Připojit zaostření!</value>
   </data>
   <data name="LblFocuserPositionDescription" xml:space="preserve">
     <value>Aktuální poloha zaostření</value>
@@ -1607,7 +1607,7 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Pokud zaostření způsobí posun obrazu, zde nastavte čas stabilizace v sekundách.</value>
   </data>
   <data name="LblFocuserTempDescription" xml:space="preserve">
-    <value>Teplota Zaostřovače</value>
+    <value>Teplota Zaostření</value>
   </data>
   <data name="LblFocuserUseFilterWheelOffsets" xml:space="preserve">
     <value>Použít hodnoty offsetu na filtrové kolo</value>
@@ -2079,7 +2079,7 @@ Vypočtené HFR: {2}
     <value>Žádné Filtrové kolo</value>
   </data>
   <data name="LblNoFocuser" xml:space="preserve">
-    <value>Žádný Zaostřovač</value>
+    <value>Žádné Zaostření</value>
   </data>
   <data name="LblNoGuider" xml:space="preserve">
     <value>Žádná Pointace</value>
@@ -2493,6 +2493,9 @@ Vypočtené HFR: {2}
   <data name="LblPosition" xml:space="preserve">
     <value>Pozice</value>
   </data>
+  <data name="LblRelativePosition" xml:space="preserve">
+    <value>Relativní Pozice</value>
+  </data>
   <data name="LblClearGuidingCalibration" xml:space="preserve">
     <value>Vymazat kalibraci</value>
   </data>
@@ -2701,7 +2704,7 @@ Vypočtené HFR: {2}
     <value>Uložit Sekvenci jako nový soubor xml</value>
   </data>
   <data name="LblSaveBacklashQuestion" xml:space="preserve">
-    <value>Uložit Měření Zpětné Vůle Zaostřovače?</value>
+    <value>Uložit Měření Zpětné Vůle Zaostření?</value>
   </data>
   <data name="LblSaveImageAs" xml:space="preserve">
     <value>Uložit obraz jako</value>
@@ -3733,7 +3736,7 @@ Metodu kompenzace zpětné vůle lze změnit, pouze když je zaostření odpojen
     <value>Pohyb zaostření o hodnotu 5x větší, než je velikost kroku auto-ostření</value>
   </data>
   <data name="LblFocuserMoveSmallTooltip" xml:space="preserve">
-    <value>Pohyb zaostřovačem o malé množství pomocí poloviční velikosti automatického zaostřování </value>
+    <value>Pohyb zaostření o hodnotu 5x větší, než je velikost kroku auto-ostření </value>
   </data>
   <data name="LblMoveFocuserTooltip" xml:space="preserve">
     <value>Pohyb zaostření do zadané cílové polohy</value>
@@ -4003,7 +4006,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Odpojit Filtrové kolo?</value>
   </data>
   <data name="LblDisconnectFocuser" xml:space="preserve">
-    <value>Odpojit Zaostřovač?</value>
+    <value>Odpojit Zaostření?</value>
   </data>
   <data name="LblDisconnectRotator" xml:space="preserve">
     <value>Odpojit Rotátor?</value>
@@ -4129,7 +4132,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Filtrové kolo nepřipojeno</value>
   </data>
   <data name="LblFocuserNotConnected" xml:space="preserve">
-    <value>Zaostřovač nepřipojen</value>
+    <value>Zaostření nepřipojeno</value>
   </data>
   <data name="LblGuiderNotConnected" xml:space="preserve">
     <value>Pointace nepřipojena</value>
@@ -4318,10 +4321,16 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Zavřít Kryt FlatBoxu</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
-    <value>Pohyb zaostřovače do dané absolutní polohy</value>
+    <value>Pohyb zaostřením do dané absolutní polohy</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description" xml:space="preserve">
+    <value>Pohyb zaostřením do dané relativní polohy</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
-    <value>Pohyb Zaostřovače</value>
+    <value>Pohyb Zaostření</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name" xml:space="preserve">
+    <value>Relativní Pohyb Zaostření</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
     <value>Odešle signál ditheringu do pointace</value>
@@ -4938,7 +4947,7 @@ Použijte ve spojení s jinou podmínkou smyčky, abyste neskončili v nekonečn
     <comment>The slope of a line</comment>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Description" xml:space="preserve">
-    <value>Tím se určí poloha zaostřovače na základě teploty pomocí sklonu a průsečíku.
+    <value>Tím se určí poloha ostření na základě teploty pomocí sklonu a průsečíku.
 Příklad:
   - Sklon= 2
   - Průsečík= 1000
@@ -4946,10 +4955,10 @@ Příklad:
     =&gt; Pozice= 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Pohyb Zaostřovače dle Teploty</value>
+    <value>Pohyb Zaostřením dle Teploty</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
-    <value>Zaostřovač nezjistil žádnou teplotu</value>
+    <value>Zaostření nezjistilo žádnou teplotu</value>
   </data>
   <data name="LblServerEnabled" xml:space="preserve">
     <value>Server Povolen</value>
@@ -5324,5 +5333,17 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
     <value>Generování Rozvržení</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
+    <value>Rotátor</value>
+  </data>
+  <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
+    <value>Přesune rotátor do mechanického úhlu</value>
+  </data>
+  <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
+    <value>Mechanický Pohyb Rotátoru</value>
+  </data>
+  <data name="LblMeridian" xml:space="preserve">
+    <value>Meridian</value>
   </data>
 </root>

@@ -2502,6 +2502,9 @@
   <data name="LblPosition" xml:space="preserve">
     <value>方向</value>
   </data>
+  <data name="LblRelativePosition" xml:space="preserve">
+    <value>Relative Position</value>
+  </data>
   <data name="LblClearGuidingCalibration" xml:space="preserve">
     <value>清除校准</value>
   </data>
@@ -4329,8 +4332,14 @@
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
     <value>将调焦器移动到指定位置</value>
   </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description" xml:space="preserve">
+    <value>Moves the focuser to the given relative position</value>
+  </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
     <value>移动对焦器</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name" xml:space="preserve">
+    <value>Move Focuser Relative</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
     <value>向导星发送抖动信号</value>
@@ -5334,5 +5343,17 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
     <value>Initializing Layout</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
+    <value>Rotator</value>
+  </data>
+  <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
+    <value>Moves the rotator to the mechanical angle</value>
+  </data>
+  <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
+    <value>Move Rotator Mechanical</value>
+  </data>
+  <data name="LblMeridian" xml:space="preserve">
+    <value>Meridian</value>
   </data>
 </root>

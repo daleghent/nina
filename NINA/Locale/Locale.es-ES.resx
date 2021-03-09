@@ -2494,6 +2494,9 @@ Calculado HFR: {2}
   <data name="LblPosition" xml:space="preserve">
     <value>Posición</value>
   </data>
+  <data name="LblRelativePosition" xml:space="preserve">
+    <value>Relative Position</value>
+  </data>
   <data name="LblClearGuidingCalibration" xml:space="preserve">
     <value>Limpiar Calibración</value>
   </data>
@@ -4319,8 +4322,14 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
     <value>Mueve el enfocador a la posición absoluta dada</value>
   </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description" xml:space="preserve">
+    <value>Moves the focuser to the given relative position</value>
+  </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
     <value>Mover Enfocador</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name" xml:space="preserve">
+    <value>Move Focuser Relative</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
     <value>Envía una señal de dither al guiad</value>
@@ -5324,5 +5333,17 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
     <value>Initializing Layout</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
+    <value>Rotador</value>
+  </data>
+  <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
+    <value>Mueve el rotador al ángulo mecánico</value>
+  </data>
+  <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
+    <value>Mueve el rotador mecánico</value>
+  </data>
+  <data name="LblMeridian" xml:space="preserve">
+    <value>Meridian</value>
   </data>
 </root>

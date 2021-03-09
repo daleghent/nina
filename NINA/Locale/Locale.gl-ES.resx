@@ -181,7 +181,7 @@
     <value>Altitude</value>
   </data>
   <data name="LblAltitudeErrorMeasurement" xml:space="preserve">
-    <value>Medida Erro Altitude</value>
+    <value>Measure Altitude Error</value>
   </data>
   <data name="LblAltitudeMeasurement" xml:space="preserve">
     <value>Medición da Altitude</value>
@@ -227,9 +227,9 @@ Usando eses dous puntos calcularase e mostrarase o erro real de altitude</value>
     <value>Tamaño Aparente</value>
   </data>
   <data name="LblApplicationInBreakMode" xml:space="preserve">
-    <value>A aplicación atopou unha excepción inesperada e talvez haxa que pechar.
-O erro quedou rexistrado en "%localappdata%\NINA\Logs".
-Debe aplicación intentar recuperarse do erro? (Isto pode ocasionar un comportamento inesperado)</value>
+    <value>The Application ran into an unhandled exception and most likely has to shut down.
+The error has been logged to "%localappdata%\NINA\Logs".
+Should the Application try to recover from the error? (Can lead to unexpected behavior)</value>
   </data>
   <data name="LblApplicationStartDateDescription" xml:space="preserve">
     <value>Data de inicio da aplicación con formato YYYY-MM-DD</value>
@@ -319,23 +319,21 @@ Debe aplicación intentar recuperarse do erro? (Isto pode ocasionar un comportam
     <value>Ratio de recorte interno do AutoFoco</value>
   </data>
   <data name="LblAutoFocusInnerCropRatioTooltip" xml:space="preserve">
-    <value>Se está definido nun valor inferior a un, a detección de estrelas durante o AutoFoco
-só empregará un recadro centrado do sensor total (se o permite a cámara). 
-Se non o permite a cámara, as estrelas próximas ó bordo serán ignoradas 
-durante a detección de estrelas. Se se usa en combinación cunha ratio de
-recorte inferior inferior a 1, usarase para o AutoFoco unha área rectangular da imaxe (entre o rectángulo
-interior e o rectángulo exterior).</value>
+    <value>If set to a value less than one, star detection during autofocus will only use
+a centered subframe of the total sensor (if supported by camera). If unsupported
+by the camera, stars near the edge will be ignored during star detection. If used in combination
+with a lower than 1 Outer Crop Ratio, a rectangular sliver of the image (between the inner rectangle and the
+outer rectangle) will be used for autofocus.</value>
   </data>
   <data name="LblAutoFocusMethod" xml:space="preserve">
     <value>Método AutoFoco</value>
   </data>
   <data name="LblAutoFocusMethodTooltip" xml:space="preserve">
-    <value>Cando se selecciona HFR da Estrela, NINA detecta as estrelas na imaxe,
-calcula o seu HFR en varios puntos de enfoque e busca o HFR mínimo.
-O método de detección por contraste usa técnicas de procesamento de imaxes 
-para estimar o contraste en varios puntos de enfoque e utiliza o contraste máis alto. 
-Este método funciona con obxectos terrestres ou obxectos do sistema solar, pero 
-tamén pode ser sensible ó ruído.</value>
+    <value>When Star HFR is selected, NINA will detect stars in the FOV,
+compute their HFR across multiple focus points, and find the minimum HFR.
+The Contrast Detection method uses image processing techniques to estimate contrast
+across multiple focus points, and finds the highest contrast. This method works on
+terrestrial objects or solar system objects as well, but can be sensitive to noise.</value>
   </data>
   <data name="LblAutoFocusNewWorseThanOriginal" xml:space="preserve">
     <value>O novo punto de enfoque HFR {0} é significativamente peor có HFR orixinal {1}</value>
@@ -350,13 +348,13 @@ tamén pode ser sensible ó ruído.</value>
     <value>Nº de intentos de AutoFoco</value>
   </data>
   <data name="LblAutoFocusNumberOfAttemptsTooltip" xml:space="preserve">
-    <value>Se o AutoFoco falla porque empeorou o HFR con relación ó foco orixinal, cantas veces reintenta a rutina de AutoEnfoque ata que teña éxito ou se teña que volver á posición de enfoque orixinal.</value>
+    <value>If autofocus fails because it got worse HFR than original focus, how many times to reattempt autofocus routine until it is either successful or it moves back to original focus position.</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPoint" xml:space="preserve">
     <value>Nº de capturas en cada punto</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPointTooltip" xml:space="preserve">
-    <value>Cantas tomas haberá por cada punto de enfoque. Se o valor é superior a un faranse varias tomas para cada punto de enfoque e medirarase o seu HFR medio para calcular o punto de enfoque</value>
+    <value>How many frames to take for each focus point. If greater than one, multiple frames will be taken for a focus point, and their HFR will be averaged to compute focus point HFR</value>
   </data>
   <data name="LblAutoFocusOnFilterChange" xml:space="preserve">
     <value>Ó cambiar o filtro</value>
@@ -389,7 +387,7 @@ tamén pode ser sensible ó ruído.</value>
     <value>Factor de AutoEstiramento</value>
   </data>
   <data name="LblAutoStretchFactorTooltip" xml:space="preserve">
-    <value>Factor para o algoritmo de autoestiramento que se usa para amosar unha imaxe e detectar estrelas. O valor debe estar entre 0 e 1. Un valor de 0,2 debe funcionar ben na maioría dos casos.</value>
+    <value>The factor for the autostretch algorithm that is used to display an image and detect stars. Must be a value between 0 and 1. A value of 0.2 should work most of the time.</value>
   </data>
   <data name="LblAutoUpdateSource" xml:space="preserve">
     <value>Tipo de Autoactualización</value>
@@ -2504,6 +2502,9 @@ HFR calculado: {2}
   <data name="LblPosition" xml:space="preserve">
     <value>Posición</value>
   </data>
+  <data name="LblRelativePosition" xml:space="preserve">
+    <value>Relative Position</value>
+  </data>
   <data name="LblClearGuidingCalibration" xml:space="preserve">
     <value>Limpar calibración</value>
   </data>
@@ -4331,8 +4332,14 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
     <value>Move o enfocador a unha posición absoluta dada</value>
   </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description" xml:space="preserve">
+    <value>Moves the focuser to the given relative position</value>
+  </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
     <value>Mover o Enfocador</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name" xml:space="preserve">
+    <value>Move Focuser Relative</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
     <value>Envía un sinal dither ó guiado</value>
@@ -5336,5 +5343,17 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
     <value>Initializing Layout</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
+    <value>Rotator</value>
+  </data>
+  <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
+    <value>Moves the rotator to the mechanical angle</value>
+  </data>
+  <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
+    <value>Move Rotator Mechanical</value>
+  </data>
+  <data name="LblMeridian" xml:space="preserve">
+    <value>Meridian</value>
   </data>
 </root>
