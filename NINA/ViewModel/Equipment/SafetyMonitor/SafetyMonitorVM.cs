@@ -95,11 +95,11 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
         }
 
         private Dictionary<string, object> GetMonitorValues() {
-            Dictionary<string, object> rotatorValues = new Dictionary<string, object>();
-            rotatorValues.Add(nameof(SafetyMonitorInfo.Connected), safetyMonitor?.Connected ?? false);
-            rotatorValues.Add(nameof(SafetyMonitorInfo.IsSafe), safetyMonitor?.IsSafe ?? false);
+            Dictionary<string, object> safetyMonitorValues = new Dictionary<string, object>();
+            safetyMonitorValues.Add(nameof(SafetyMonitorInfo.Connected), safetyMonitor?.Connected ?? false);
+            safetyMonitorValues.Add(nameof(SafetyMonitorInfo.IsSafe), safetyMonitor?.IsSafe ?? false);
 
-            return rotatorValues;
+            return safetyMonitorValues;
         }
 
         public async Task<bool> Connect() {
@@ -146,7 +146,7 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
                             updateTimer.Interval = profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval;
                             updateTimer.Start();
 
-                            profileService.ActiveProfile.RotatorSettings.Id = sm.Id;
+                            profileService.ActiveProfile.SafetyMonitorSettings.Id = sm.Id;
 
                             Logger.Info($"Successfully connected Safety Monitor. Id: {sm.Id} Name: {sm.Name} Driver Version: {sm.DriverVersion}");
 
