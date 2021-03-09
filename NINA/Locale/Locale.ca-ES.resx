@@ -2497,6 +2497,9 @@ HFR calculat: {2}    </value>
   <data name="LblPosition" xml:space="preserve">
     <value>Posició</value>
   </data>
+  <data name="LblRelativePosition" xml:space="preserve">
+    <value>Posició Relativa</value>
+  </data>
   <data name="LblClearGuidingCalibration" xml:space="preserve">
     <value>Netejar calibratge</value>
   </data>
@@ -4320,8 +4323,14 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
     <value>Mou l'enfocador a la posició absoluta donada</value>
   </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description" xml:space="preserve">
+    <value>Mou l'enfocador a la posició relativa donada</value>
+  </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
     <value>Moure l'Enfocador</value>
+  </data>
+  <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name" xml:space="preserve">
+    <value>Mou l'enfocador relatiu</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
     <value>Envia un senyal de dither al guiat</value>
@@ -5325,5 +5334,17 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
     <value>Inicialització del disseny</value>
+  </data>
+  <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
+    <value>Rotador</value>
+  </data>
+  <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
+    <value>Mou el rotador a l’angle mecànic</value>
+  </data>
+  <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
+    <value>Mou el Rotador Mecànic</value>
+  </data>
+  <data name="LblMeridian" xml:space="preserve">
+    <value>Meridian</value>
   </data>
 </root>
