@@ -105,10 +105,7 @@ namespace NINA.Sequencer.Conditions {
             set {
                 selectedProvider = value;
                 if (selectedProvider != null) {
-                    var t = selectedProvider.GetDateTime();
-                    Hours = t.Hour;
-                    Minutes = t.Minute;
-                    Seconds = t.Second;
+                    UpdateTime();
                     RaisePropertyChanged();
                 }
             }
@@ -148,6 +145,17 @@ namespace NINA.Sequencer.Conditions {
                 Category = Category,
                 Description = Description,
             };
+        }
+
+        private void UpdateTime() {
+            var t = selectedProvider.GetDateTime(this);
+            Hours = t.Hour;
+            Minutes = t.Minute;
+            Seconds = t.Second;
+        }
+
+        public override void AfterParentChanged() {
+            UpdateTime();
         }
 
         public override void ResetProgress() {

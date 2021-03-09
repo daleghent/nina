@@ -99,7 +99,8 @@ namespace NINA.Sequencer {
                 new DawnProvider(nighttimeCalculator),
                 new NauticalDawnProvider(nighttimeCalculator),
                 new NauticalDuskProvider(nighttimeCalculator),
-                new SunriseProvider(nighttimeCalculator)
+                new SunriseProvider(nighttimeCalculator),
+                new MeridianProvider(profileService)
             };
 
             Task.Run(() => {

@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
+using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Astrometry;
 using System;
@@ -24,22 +25,24 @@ using System.Threading.Tasks;
 namespace NINA.Sequencer.Utility.DateTimeProvider {
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class NauticalDuskProvider : IDateTimeProvider {
-        private INighttimeCalculator nighttimeCalculator;
+    public class MeridianProvider : IDateTimeProvider {
+        private IProfileService profileService;
 
-        public NauticalDuskProvider(INighttimeCalculator nighttimeCalculator) {
-            this.nighttimeCalculator = nighttimeCalculator;
+        public MeridianProvider(IProfileService profileService) {
+            this.profileService = profileService;
         }
 
-        public string Name { get; } = Locale.Loc.Instance["LblNauticalDusk"];
+        public string Name { get; } = Locale.Loc.Instance["LblMeridian"];
         public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
 
         public DateTime GetDateTime(ISequenceEntity context) {
-            var night = nighttimeCalculator.Calculate().NauticalTwilightRiseAndSet.Set;
-            if (!night.HasValue) {
-                night = DateTime.Now;
+            var contextCoordinates = Utility.ItemUtility.RetrieveContextCoordinates(context?.Parent);
+            if (contextCoordinates.Item1 != null) {
+                var siderealTime = Angle.ByHours(Astrometry.GetLocalSiderealTime(DateTime.Now, profileService.ActiveProfile.AstrometrySettings.Longitude));
+                var timeToMeridian = MeridianFlip.TimeToMeridian(contextCoordinates.Item1, siderealTime);
+                return DateTime.Now + timeToMeridian;
             }
-            return night.Value;
+            return DateTime.Now;
         }
     }
 }

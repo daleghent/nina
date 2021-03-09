@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Sequencer.SequenceItem;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +24,6 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
     public interface IDateTimeProvider {
         string Name { get; }
 
-        DateTime GetDateTime();
+        DateTime GetDateTime(ISequenceEntity context);
     }
 }

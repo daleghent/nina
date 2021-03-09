@@ -100,7 +100,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             set {
                 selectedProvider = value;
                 if (selectedProvider != null) {
-                    var t = selectedProvider.GetDateTime();
+                    var t = selectedProvider.GetDateTime(this);
                     Hours = t.Hour;
                     Minutes = t.Minute;
                     Seconds = t.Second;
@@ -117,6 +117,17 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 dateTimeProviders = value;
                 RaisePropertyChanged();
             }
+        }
+
+        private void UpdateTime() {
+            var t = selectedProvider.GetDateTime(this);
+            Hours = t.Hour;
+            Minutes = t.Minute;
+            Seconds = t.Second;
+        }
+
+        public override void AfterParentChanged() {
+            UpdateTime();
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {

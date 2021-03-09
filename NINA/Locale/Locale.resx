@@ -5353,4 +5353,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
     <value>Move Rotator Mechanical</value>
   </data>
+  <data name="LblMeridian" xml:space="preserve">
+    <value>Meridian</value>
+  </data>
 </root>

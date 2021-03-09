@@ -28,8 +28,8 @@ namespace NINA.Utility.Astrometry {
         public DateTime Date { get; private set; }
         public double Latitude { get; private set; }
         public double Longitude { get; private set; }
-        public DateTime? Rise { get; private set; }
-        public DateTime? Set { get; private set; }
+        public virtual DateTime? Rise { get; private set; }
+        public virtual DateTime? Set { get; private set; }
 
         protected abstract double AdjustAltitude(Body body);
 
@@ -40,7 +40,7 @@ namespace NINA.Utility.Astrometry {
         /// Caveat: does not consider more than one rise and one set event
         /// </summary>
         /// <returns></returns>
-        public Task<bool> Calculate() {
+        public virtual Task<bool> Calculate() {
             return Task.Run(async () => {
                 // Check rise and set events in two hour periods
                 var offset = 0;

@@ -332,6 +332,14 @@
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterFilterChangeTest.cs" />
     <Compile Include="Sequencer\Trigger\Guider\DitherAfterExposuresTest.cs" />
     <Compile Include="Sequencer\Trigger\MeridianFlip\MeridianFlipTriggerTest.cs" />
+    <Compile Include="Sequencer\Utility\DateTimeProvider\DawnProviderTest.cs" />
+    <Compile Include="Sequencer\Utility\DateTimeProvider\DuskProviderTest.cs" />
+    <Compile Include="Sequencer\Utility\DateTimeProvider\MeridianProviderTest.cs" />
+    <Compile Include="Sequencer\Utility\DateTimeProvider\NauticalDawnProviderTest.cs" />
+    <Compile Include="Sequencer\Utility\DateTimeProvider\NauticalDuskProviderTest.cs" />
+    <Compile Include="Sequencer\Utility\DateTimeProvider\SunriseProviderTest.cs" />
+    <Compile Include="Sequencer\Utility\DateTimeProvider\SunsetProviderTest.cs" />
+    <Compile Include="Sequencer\Utility\DateTimeProvider\TimeProviderTest.cs" />
     <Compile Include="SerialCommunication\ResponseTests.cs" />
     <Compile Include="SerialCommunication\SerialSdkTest.cs" />
     <Compile Include="SerialCommunication\ResponseCacheTest.cs" />

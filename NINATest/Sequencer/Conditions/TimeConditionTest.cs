@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Moq;
+using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Utility.DateTimeProvider;
@@ -57,7 +58,7 @@ namespace NINATest.Sequencer.Conditions {
         [Test]
         public void TimeCondition_SelectProviderInConstructor_TimeExtracted() {
             var providerMock = new Mock<IDateTimeProvider>();
-            providerMock.Setup(x => x.GetDateTime()).Returns(new DateTime(2000, 2, 3, 4, 5, 6));
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 2, 3, 4, 5, 6));
 
             var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object });
 
@@ -69,9 +70,10 @@ namespace NINATest.Sequencer.Conditions {
         [Test]
         public void TimeCondition_SelectProvider_TimeExtracted() {
             var providerMock = new Mock<IDateTimeProvider>();
-            providerMock.Setup(x => x.GetDateTime()).Returns(new DateTime(1, 2, 3, 4, 5, 6));
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(1, 2, 3, 4, 5, 6));
             var provider2Mock = new Mock<IDateTimeProvider>();
-            provider2Mock.Setup(x => x.GetDateTime()).Returns(new DateTime(2000, 10, 30, 10, 20, 30));
+            provider2Mock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 10, 30, 10, 20, 30));
+            provider2Mock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 10, 30, 10, 20, 30));
 
             var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object, provider2Mock.Object });
             sut.SelectedProvider = sut.DateTimeProviders.Last();

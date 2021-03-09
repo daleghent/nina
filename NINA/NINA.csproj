@@ -675,9 +675,11 @@
     <Compile Include="Sequencer\Serialization\SequenceJsonConverter.cs" />
     <Compile Include="Sequencer\Serialization\SequenceRootContainerCreationConverter.cs" />
     <Compile Include="Sequencer\Serialization\SequenceTriggerCreationConverter.cs" />
+    <Compile Include="Sequencer\Utility\DateTimeProvider\MeridianProvider.cs" />
     <Compile Include="Sequencer\Utility\DateTimeProvider\NauticalDawnProvider.cs" />
     <Compile Include="Sequencer\Utility\DateTimeProvider\NauticalDuskProvider.cs" />
     <Compile Include="Utility\Astrometry\CustomHorizon.cs" />
+    <Compile Include="Utility\Astrometry\RiseAndSet\CustomRiseAndSet.cs" />
     <Compile Include="Utility\Astrometry\RiseAndSet\NauticalTwilightRiseAndSet.cs" />
     <Compile Include="Utility\AttributeHelper.cs" />
     <Compile Include="Utility\CameraSDKs\RisingcamSDK\nncam.cs" />

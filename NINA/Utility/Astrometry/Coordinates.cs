@@ -87,7 +87,23 @@ namespace NINA.Utility.Astrometry {
         public Epoch Epoch { get; set; }
 
         [XmlIgnore]
-        public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
+        public ICustomDateTime DateTime { get; }
+
+        /// <summary>
+        /// Creates new coordinates
+        /// </summary>
+        /// <param name="ra">    Right Ascension</param>
+        /// <param name="dec">   Declination</param>
+        /// <param name="epoch"> J2000|JNOW</param>
+        /// <remarks>CreationDate will use DateTime.Now of the system time</remarks>
+        public Coordinates(Angle ra, Angle dec, Epoch epoch) {
+            this.DateTime = new SystemDateTime();
+            this.creationDate = DateTime.Now;
+
+            this.raAngle = ra;
+            this.decAngle = dec;
+            this.Epoch = epoch;
+        }
 
         /// <summary>
         /// Creates new coordinates
@@ -96,14 +112,14 @@ namespace NINA.Utility.Astrometry {
         /// <param name="dec">   Declination in degrees</param>
         /// <param name="epoch"> J2000|JNOW</param>
         /// <param name="ratype">Degrees|Hours</param>
-        public Coordinates(double ra, double dec, Epoch epoch, RAType ratype, DateTime? referenceDate = null)
+        /// <remarks>CreationDate will use DateTime.Now of the system time</remarks>
+        public Coordinates(double ra, double dec, Epoch epoch, RAType ratype)
             : this(
                   ratype == RAType.Hours
                     ? Angle.ByHours(ra)
                     : Angle.ByDegree(ra),
                   Angle.ByDegree(dec),
-                  epoch,
-                  referenceDate
+                  epoch
             ) {
         }
 
@@ -113,20 +129,38 @@ namespace NINA.Utility.Astrometry {
         /// <param name="ra">    Right Ascension</param>
         /// <param name="dec">   Declination</param>
         /// <param name="epoch"> J2000|JNOW</param>
-        /// <param name="referenceDate">Optional: Default is DateTime.Now.
+        /// <param name="referenceDate">
         ///     Will be used for transformation from JNOW to J2000.
         ///     As JNOW is constantly progressing but the creation was at a specific time this date is used as reference
         /// </param>
-        public Coordinates(Angle ra, Angle dec, Epoch epoch, DateTime? referenceDate = null) {
-            if (referenceDate.HasValue) {
-                this.creationDate = referenceDate.Value;
-            } else {
-                this.creationDate = DateTime.Now;
-            }
+        public Coordinates(Angle ra, Angle dec, Epoch epoch, DateTime referenceDate) : this(ra, dec, epoch) {
+            this.creationDate = referenceDate;
+        }
 
-            this.raAngle = ra;
-            this.decAngle = dec;
-            this.Epoch = epoch;
+        /// <summary>
+        /// Creates new coordinates
+        /// </summary>
+        /// <param name="ra">    Right Ascension</param>
+        /// <param name="dec">   Declination</param>
+        /// <param name="epoch"> J2000|JNOW</param>
+        /// <param name="referenceDate">
+        ///     Will be used for transformation from JNOW to J2000.
+        ///     As JNOW is constantly progressing but the creation was at a specific time this date is used as reference
+        /// </param>
+        /// <param name="dateTime">A custom DateTime provider to serve DateTime.Now that differs from system time</param>
+        public Coordinates(Angle ra, Angle dec, Epoch epoch, DateTime referenceDate, ICustomDateTime dateTime) : this(ra, dec, epoch, referenceDate) {
+            this.DateTime = dateTime;
+        }
+
+        /// <summary>
+        /// Creates new coordinates
+        /// </summary>
+        /// <param name="ra">    Right Ascension</param>
+        /// <param name="dec">   Declination</param>
+        /// <param name="epoch"> J2000|JNOW</param>
+        /// <param name="dateTime">A custom DateTime provider to serve DateTime.Now that differs from system time</param>
+        /// <remarks>CreationDate will use DateTime.Now of the custom date time</remarks>
+        public Coordinates(Angle ra, Angle dec, Epoch epoch, ICustomDateTime dateTime) : this(ra, dec, epoch, dateTime.Now, dateTime) {
         }
 
         /// <summary>
@@ -136,7 +170,7 @@ namespace NINA.Utility.Astrometry {
         /// <returns></returns>
         public Coordinates Transform(Epoch targetEpoch) {
             if (Epoch == targetEpoch) {
-                return new Coordinates(this.raAngle, this.decAngle, this.Epoch, this.creationDate);
+                return new Coordinates(this.raAngle, this.decAngle, this.Epoch, this.creationDate, DateTime);
             }
 
             if (targetEpoch == Epoch.JNOW) {
@@ -162,7 +196,7 @@ namespace NINA.Utility.Astrometry {
             var raApparent = Angle.ByRadians(SOFA.Anp(ri - eo));
             var decApparent = Angle.ByRadians(di);
 
-            var jnowCoordinates = new Coordinates(raApparent, decApparent, Epoch.JNOW, now);
+            var jnowCoordinates = new Coordinates(raApparent, decApparent, Epoch.JNOW, now, DateTime);
             return jnowCoordinates;
         }
 
@@ -190,7 +224,7 @@ namespace NINA.Utility.Astrometry {
             var raCelestial = Angle.ByRadians(rc);
             var decCelestial = Angle.ByRadians(dc);
 
-            return new Coordinates(raCelestial, decCelestial, Epoch.J2000);
+            return new Coordinates(raCelestial, decCelestial, Epoch.J2000, creationDate, DateTime);
         }
 
         public TopocentricCoordinates Transform(Angle latitude, Angle longitude) {
@@ -259,7 +293,9 @@ namespace NINA.Utility.Astrometry {
             return new Coordinates(
                 targetRA,
                 targetDec,
-                Epoch
+                Epoch,
+                creationDate,
+                DateTime
             );
         }
 
@@ -304,7 +340,9 @@ namespace NINA.Utility.Astrometry {
             return new Coordinates(
                 targetRA,
                 targetDec,
-                Epoch
+                Epoch,
+                creationDate,
+                DateTime
             );
         }
 
@@ -494,12 +532,12 @@ namespace NINA.Utility.Astrometry {
 
         public static Coordinates operator +(Coordinates a, Separation b) {
             var ra = Astrometry.EuclidianModulus((Angle.ByDegree(a.RADegrees) + b.RA).Degree, 360);
-            return new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(a.Dec) + b.Dec, a.Epoch);
+            return new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(a.Dec) + b.Dec, a.Epoch, a.creationDate, a.DateTime);
         }
 
         public static Coordinates operator -(Coordinates a, Separation b) {
             var ra = Astrometry.EuclidianModulus((Angle.ByDegree(a.RADegrees) - b.RA).Degree, 360);
-            return new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(a.Dec) - b.Dec, a.Epoch);
+            return new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(a.Dec) - b.Dec, a.Epoch, a.creationDate, a.DateTime);
         }
 
         public override string ToString() {
@@ -511,7 +549,8 @@ namespace NINA.Utility.Astrometry {
                 this.raAngle,
                 this.decAngle,
                 this.Epoch,
-                this.creationDate);
+                this.creationDate,
+                this.DateTime);
     }
 
     /// <summary>

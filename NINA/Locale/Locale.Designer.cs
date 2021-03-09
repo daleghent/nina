@@ -9389,6 +9389,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Meridian.
+        /// </summary>
+        internal static string LblMeridian {
+            get {
+                return ResourceManager.GetString("LblMeridian", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Center after Meridian Flip Failed.
         /// </summary>
         internal static string LblMeridianFlipCenterFailed {

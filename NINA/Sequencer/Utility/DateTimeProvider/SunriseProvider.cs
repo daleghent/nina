@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
+using NINA.Utility;
 using NINA.Utility.Astrometry;
 using System;
 using System.Collections.Generic;
@@ -31,8 +32,9 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
         }
 
         public string Name { get; } = Locale.Loc.Instance["LblSunRise"];
+        public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
 
-        public DateTime GetDateTime() {
+        public DateTime GetDateTime(ISequenceEntity context) {
             var night = nighttimeCalculator.Calculate().SunRiseAndSet.Rise;
             if (!night.HasValue) {
                 night = DateTime.Now;

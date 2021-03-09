@@ -56,7 +56,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
         [Test]
         public void WaitForTime_SelectProviderInConstructor_TimeExtracted() {
             var providerMock = new Mock<IDateTimeProvider>();
-            providerMock.Setup(x => x.GetDateTime()).Returns(new DateTime(2000, 2, 3, 4, 5, 6));
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 2, 3, 4, 5, 6));
 
             var sut = new WaitForTime(new List<IDateTimeProvider>() { providerMock.Object });
 
@@ -68,9 +68,9 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
         [Test]
         public void WaitForTime_SelectProvider_TimeExtracted() {
             var providerMock = new Mock<IDateTimeProvider>();
-            providerMock.Setup(x => x.GetDateTime()).Returns(new DateTime(1, 2, 3, 4, 5, 6));
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(1, 2, 3, 4, 5, 6));
             var provider2Mock = new Mock<IDateTimeProvider>();
-            provider2Mock.Setup(x => x.GetDateTime()).Returns(new DateTime(2000, 10, 30, 10, 20, 30));
+            provider2Mock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 10, 30, 10, 20, 30));
 
             var sut = new WaitForTime(new List<IDateTimeProvider>() { providerMock.Object, provider2Mock.Object });
             sut.SelectedProvider = sut.DateTimeProviders.Last();

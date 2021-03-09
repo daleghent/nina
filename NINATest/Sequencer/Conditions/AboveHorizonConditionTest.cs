@@ -52,12 +52,10 @@ namespace NINATest.Sequencer.Conditions {
 
         [Test]
         public void StandardHorizon_AboveHorizon_CheckTrue() {
-            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
-
             var sut = new AboveHorizonCondition(profileServiceMock.Object);
             var mockDateProvider = new Mock<ICustomDateTime>();
             mockDateProvider.SetupGet(x => x.Now).Returns(DateTime.ParseExact("20191231T23:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
-            coordinates.DateTime = mockDateProvider.Object;
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
             sut.Coordinates.Coordinates = coordinates;
 
@@ -66,12 +64,10 @@ namespace NINATest.Sequencer.Conditions {
 
         [Test]
         public void StandardHorizon_AboveHorizon_CheckFalse() {
-            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
-
             var sut = new AboveHorizonCondition(profileServiceMock.Object);
             var mockDateProvider = new Mock<ICustomDateTime>();
             mockDateProvider.SetupGet(x => x.Now).Returns(new DateTime(2020, 1, 1, 1, 0, 0));
-            coordinates.DateTime = mockDateProvider.Object;
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
             sut.Coordinates.Coordinates = coordinates;
 
@@ -85,12 +81,11 @@ namespace NINATest.Sequencer.Conditions {
                 var horizon = CustomHorizon.FromReader(sr);
                 profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
             }
-            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
 
             var sut = new AboveHorizonCondition(profileServiceMock.Object);
             var mockDateProvider = new Mock<ICustomDateTime>();
             mockDateProvider.SetupGet(x => x.Now).Returns(DateTime.ParseExact("20200101T22:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
-            coordinates.DateTime = mockDateProvider.Object;
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
             sut.Coordinates.Coordinates = coordinates;
 
@@ -104,12 +99,11 @@ namespace NINATest.Sequencer.Conditions {
                 var horizon = CustomHorizon.FromReader(sr);
                 profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
             }
-            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
 
             var sut = new AboveHorizonCondition(profileServiceMock.Object);
             var mockDateProvider = new Mock<ICustomDateTime>();
             mockDateProvider.SetupGet(x => x.Now).Returns(new DateTime(2020, 1, 1, 0, 0, 0));
-            coordinates.DateTime = mockDateProvider.Object;
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
             sut.Coordinates.Coordinates = coordinates;
 

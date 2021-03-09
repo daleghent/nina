@@ -29,6 +29,7 @@ using System.IO;
 using System.Threading.Tasks;
 
 namespace NINATest.Sequencer.SequenceItem.Utility {
+
     [TestFixture]
     public class WaitUntilAboveHorizonTest {
         private Mock<IProfileService> profileServiceMock;
@@ -90,30 +91,26 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
 
         [Test]
         public async Task StandardHorizon_TargetIsAboveHorizon_ItemExecuted() {
-            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
-
             var mockDateProvider = new Mock<ICustomDateTime>();
             mockDateProvider.SetupGet(x => x.Now).Returns(DateTime.ParseExact("20191231T23:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
-            coordinates.DateTime = mockDateProvider.Object;
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
             sut.Coordinates.Coordinates = coordinates;
 
             await sut.Run(default, default);
 
             sut.Status.Should().Be(SequenceEntityStatus.FINISHED);
-            mockDateProvider.VerifyGet(x => x.Now, Times.Once);
+            mockDateProvider.VerifyGet(x => x.Now, Times.Exactly(2));
         }
 
         [Test]
         public async Task StandardHorizon_TargetStartsBelowHorizon_RisesAboveHorizon_ItemExecuted() {
-            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
-
             var mockDateProvider = new Mock<ICustomDateTime>();
             mockDateProvider.SetupSequence(x => x.Now)
                 .Returns(DateTime.ParseExact("20200101T10:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture))
                 .Returns(DateTime.ParseExact("20200101T10:30:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture))
                 .Returns(DateTime.ParseExact("20200101T11:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
-            coordinates.DateTime = mockDateProvider.Object;
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
             sut.Coordinates.Coordinates = coordinates;
 
@@ -131,18 +128,16 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
                 profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
             }
 
-            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
-
             var mockDateProvider = new Mock<ICustomDateTime>();
             mockDateProvider.SetupGet(x => x.Now).Returns(DateTime.ParseExact("20200101T22:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
-            coordinates.DateTime = mockDateProvider.Object;
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
             sut.Coordinates.Coordinates = coordinates;
 
             await sut.Run(default, default);
 
             sut.Status.Should().Be(SequenceEntityStatus.FINISHED);
-            mockDateProvider.VerifyGet(x => x.Now, Times.Once);
+            mockDateProvider.VerifyGet(x => x.Now, Times.Exactly(2));
         }
 
         [Test]
@@ -152,7 +147,6 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
                 var horizon = CustomHorizon.FromReader(sr);
                 profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
             }
-            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
 
             var mockDateProvider = new Mock<ICustomDateTime>();
             mockDateProvider.SetupSequence(x => x.Now)
@@ -160,7 +154,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
                 .Returns(DateTime.ParseExact("20200101T11:30:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture))
                 .Returns(DateTime.ParseExact("20200101T12:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture))
                 .Returns(DateTime.ParseExact("20200101T13:00:00Z", "yyyyMMddTHH:mm:ssZ", System.Globalization.CultureInfo.InvariantCulture));
-            coordinates.DateTime = mockDateProvider.Object;
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
             sut.Coordinates.Coordinates = coordinates;
 
