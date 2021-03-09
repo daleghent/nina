@@ -51,6 +51,10 @@ namespace NINA.PlateSolving {
                 var oldFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
                 var renderedImage = await imagingMediator.CaptureAndPrepareImage(seq, new PrepareImageParameters(), ct, progress);
 
+                if (renderedImage == null) {
+                    return new PlateSolveResult() { Success = false }; ;
+                }
+
                 Task filterChangeTask = Task.CompletedTask;
                 if (oldFilter != null) {
                     filterChangeTask = filterWheelMediator.ChangeFilter(oldFilter);

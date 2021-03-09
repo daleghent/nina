@@ -267,6 +267,10 @@ namespace NINA.ViewModel.Imaging {
                     seq.Gain = SnapGain;
 
                     var exposureData = await imagingMediator.CaptureImage(seq, _captureImageToken.Token, progress);
+                    if (exposureData == null) {
+                        return false;
+                    }
+
                     var imageData = await exposureData.ToImageData(progress, _captureImageToken.Token);
 
                     if (prepareTask?.Status < TaskStatus.RanToCompletion) {
