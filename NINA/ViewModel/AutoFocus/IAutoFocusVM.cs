@@ -30,8 +30,6 @@ namespace NINA.ViewModel {
         Boolean ChartListSelectable { get; }
         ICommand LoadChartCommand { get; }
 
-        void Dispose();
-
         Task<AutoFocusReport> StartAutoFocus(FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress);
 
         void UpdateDeviceInfo(CameraInfo cameraInfo);

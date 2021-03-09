@@ -147,7 +147,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                         Logger.Trace("Telescope will stop tracking");
                         result = SetTrackingEnabled(false);
                     }
-                } catch (OperationCanceledException e) {
+                } catch (OperationCanceledException) {
                     Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeParkCancelled"]);
                     result = false;
                 } catch (Exception e) {
@@ -251,7 +251,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                     }
                                     // We are home
                                     success = true;
-                                } catch (OperationCanceledException e) {
+                                } catch (OperationCanceledException) {
                                     Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeFindHomeCancelled"]);
                                 } catch (Exception e) {
                                     reason = e.Message;

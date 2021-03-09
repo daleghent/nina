@@ -15,6 +15,7 @@
 using System;
 using NINA.Sequencer.SequenceItem;
 using Newtonsoft.Json.Linq;
+using NINA.Utility;
 
 namespace NINA.Sequencer.Serialization {
 
@@ -30,15 +31,16 @@ namespace NINA.Sequencer.Serialization {
         public override ISequenceItem Create(Type objectType, JObject jObject) {
             if (jObject.SelectToken("Strategy.$type") != null) {
                 return sequenceContainerCreationConverter.Create(objectType, jObject);
-            } else {
-                try {
-                    var t = Type.GetType(jObject.GetValue("$type").ToString());
-                    var method = factory.GetType().GetMethod(nameof(factory.GetItem)).MakeGenericMethod(new Type[] { t });
-                    var obj = method.Invoke(factory, null);
-                    return (ISequenceItem)obj;
-                } catch (Exception e) {
-                    return new UnknownSequenceItem();
-                }
+            }
+
+            try {
+                var t = Type.GetType(jObject.GetValue("$type").ToString());
+                var method = factory.GetType().GetMethod(nameof(factory.GetItem)).MakeGenericMethod(new Type[] { t });
+                var obj = method.Invoke(factory, null);
+                return (ISequenceItem)obj;
+            } catch (Exception e) {
+                Logger.Error("Encountered unknown sequence item:", e);
+                return new UnknownSequenceItem();
             }
         }
     }

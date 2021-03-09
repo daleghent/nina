@@ -252,7 +252,7 @@ namespace NINA.Model.MyGuider.PHD2 {
                     }
                     return true;
                 });
-            } catch (OperationCanceledException ex) {
+            } catch (OperationCanceledException) {
                 Settling = false;
             }
         }
