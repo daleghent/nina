@@ -33,14 +33,19 @@ namespace NINATest.Sequencer.Utility.DateTimeProvider {
     public class MeridianProviderTest {
 
         [Test]
-        [TestCase(18, 10, 0, 20)]
-        [TestCase(17, 10, 11, 20)]
-        [TestCase(12, 10, 6, 20)]
-        [TestCase(10, 10, 4, 20)]
-        [TestCase(8, 10, 2, 20)]
-        [TestCase(6, 10, 0, 20)]
-        [TestCase(5, 10, 11, 20)]
+        [TestCase(19, 10, 0, 20)]
+        [TestCase(18, 10, 11, 20)]
+        [TestCase(13, 10, 6, 20)]
+        [TestCase(11, 10, 4, 20)]
+        [TestCase(9, 10, 2, 20)]
+        [TestCase(7, 10, 0, 20)]
+        [TestCase(6, 10, 11, 20)]
         public void GetDateTime_EntityHasParentWithCoordinates_CalculatesTimeToMeridian(double ra, double dec, int expectedHour, int expectedMinute) {
+            //Shift RA/Dec depending on the time zone to have consistent tests, as this is location dependent
+            var offset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
+            ra = Astrometry.EuclidianModulus(ra - offset.TotalHours, 24);
+            dec = Astrometry.EuclidianModulus(dec - offset.TotalHours * 15, 360);
+
             var profileServiceMock = new Mock<IProfileService>();
             profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Latitude).Returns(10);
 
@@ -63,7 +68,7 @@ namespace NINATest.Sequencer.Utility.DateTimeProvider {
             var date = sut.GetDateTime(entityMock.Object);
 
             date.Hour.Should().Be(expectedHour);
-            date.Minute.Should().Be(expectedMinute);
+            date.Minute.Should().BeCloseTo(expectedMinute, 1);
         }
 
         public void GetDateTime_ConextIsNull_ReturnNow() {

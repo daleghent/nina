@@ -52,38 +52,38 @@ namespace NINA.PlateSolving {
                 var renderedImage = await imagingMediator.CaptureAndPrepareImage(seq, new PrepareImageParameters(), ct, progress);
 
                 if (renderedImage == null) {
-                    return new PlateSolveResult() { Success = false }; ;
-                }
-
-                Task filterChangeTask = Task.CompletedTask;
-                if (oldFilter != null) {
-                    filterChangeTask = filterWheelMediator.ChangeFilter(oldFilter);
-                }
-
-                solveProgress?.Report(
-                    new PlateSolveProgress {
-                        Thumbnail = await renderedImage.GetThumbnail()
-                    }
-                );
-
-                ct.ThrowIfCancellationRequested();
-
-                if (renderedImage != null) {
-                    plateSolveResult = await ImageSolver.Solve(renderedImage.RawImageData, parameter, progress, ct);
+                    plateSolveResult = new PlateSolveResult() { Success = false }; ;
                 } else {
-                    plateSolveResult = new PlateSolveResult() { Success = false };
-                }
-
-                solveProgress?.Report(
-                    new PlateSolveProgress {
-                        PlateSolveResult = plateSolveResult
+                    Task filterChangeTask = Task.CompletedTask;
+                    if (oldFilter != null) {
+                        filterChangeTask = filterWheelMediator.ChangeFilter(oldFilter);
                     }
-                );
 
-                await filterChangeTask;
+                    solveProgress?.Report(
+                        new PlateSolveProgress {
+                            Thumbnail = await renderedImage.GetThumbnail()
+                        }
+                    );
 
-                if (!plateSolveResult.Success && remainingAttempts > 0) {
-                    await Utility.Utility.Wait(parameter.ReattemptDelay, ct, progress);
+                    ct.ThrowIfCancellationRequested();
+
+                    if (renderedImage != null) {
+                        plateSolveResult = await ImageSolver.Solve(renderedImage.RawImageData, parameter, progress, ct);
+                    } else {
+                        plateSolveResult = new PlateSolveResult() { Success = false };
+                    }
+
+                    solveProgress?.Report(
+                        new PlateSolveProgress {
+                            PlateSolveResult = plateSolveResult
+                        }
+                    );
+
+                    await filterChangeTask;
+
+                    if (!plateSolveResult.Success && remainingAttempts > 0) {
+                        await Utility.Utility.Wait(parameter.ReattemptDelay, ct, progress);
+                    }
                 }
             } while (!plateSolveResult.Success && remainingAttempts > 0);
             return plateSolveResult;
