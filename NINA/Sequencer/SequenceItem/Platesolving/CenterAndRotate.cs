@@ -74,6 +74,9 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 /* Loop until the rotation is within tolerances*/
                 while (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
                     var solveResult = await Solve(progress, token);
+                    if (!solveResult.Success) {
+                        throw new Exception(Locale.Loc.Instance["LblPlatesolveFailed"]);
+                    }
 
                     orientation = (float)solveResult.Orientation;
 
@@ -97,7 +100,10 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 };
 
                 /* Once everything is in place do a centering of the object */
-                await base.DoCenter(progress, token);
+                var centerResult = await base.DoCenter(progress, token);
+                if (!centerResult.Success) {
+                    throw new Exception(Locale.Loc.Instance["LblPlatesolveFailed"]);
+                }
             } finally {
                 service.DelayedClose(TimeSpan.FromSeconds(10));
             }
