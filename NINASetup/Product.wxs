@@ -552,7 +552,7 @@
       <Component Win64="$(var.Win64)" Id="Microsoft.Bcl.HashCode.dll" Guid="0090cbc7-81f2-47e4-ad04-26559fcd5456">
         <File Id="Microsoft.Bcl.HashCode.dll" Name="Microsoft.Bcl.HashCode.dll" Source="$(var.NINA_TargetDir)Microsoft.Bcl.HashCode.dll" />
       </Component>
-      <Component Id="System.Runtime.CompilerServices.Unsafe.dll" Guid="ebce0cd8-13a0-4e6b-b02e-343675da79b2">
+      <Component Win64="$(var.Win64)" Id="System.Runtime.CompilerServices.Unsafe.dll" Guid="ebce0cd8-13a0-4e6b-b02e-343675da79b2">
         <File Id="System.Runtime.CompilerServices.Unsafe.dll" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.NINA_TargetDir)System.Runtime.CompilerServices.Unsafe.dll" />
       </Component>
     </ComponentGroup>
