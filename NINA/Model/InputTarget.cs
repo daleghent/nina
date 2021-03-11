@@ -126,5 +126,9 @@ namespace NINA.Model {
         }
 
         public event EventHandler CoordinatesChanged;
+
+        public override string ToString() {
+            return $"{InputCoordinates}; Rotation: {Rotation}";
+        }
     }
 }

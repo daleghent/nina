@@ -157,5 +157,9 @@ namespace NINA.Model {
 
         public InputCoordinates Clone() =>
             new InputCoordinates(coordinates.Clone());
+
+        public override string ToString() {
+            return Coordinates.ToString();
+        }
     }
 }
