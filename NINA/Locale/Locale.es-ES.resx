@@ -5344,6 +5344,6 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
     <value>Mueve el rotador mecánico</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
-    <value>Meridian</value>
+    <value>Meridiano</value>
   </data>
 </root>
