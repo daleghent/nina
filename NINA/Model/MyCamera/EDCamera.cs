@@ -290,10 +290,23 @@ namespace NINA.Model.MyCamera {
 
         protected event EDSDK.EdsObjectEventHandler SDKObjectEvent;
 
+        protected event EDSDK.EdsStateEventHandler SDKStateEvent;
+
         private void SubscribeEvents() {
             SDKObjectEvent += new EDSDK.EdsObjectEventHandler(Camera_SDKObjectEvent);
+            SDKStateEvent = new EDSDK.EdsStateEventHandler(Camera_SDKStateEvent);
 
-            EDSDK.EdsSetObjectEventHandler(_cam, EDSDK.ObjectEvent_All, SDKObjectEvent, _cam);
+            EDSDK.EdsSetObjectEventHandler(_cam, EDSDK.ObjectEvent_All, SDKObjectEvent, IntPtr.Zero);
+            EDSDK.EdsSetCameraStateEventHandler(_cam, EDSDK.StateEvent_All, SDKStateEvent, IntPtr.Zero);
+        }
+
+        private uint Camera_SDKStateEvent(uint inEvent, uint inParameter, IntPtr inContext) {
+            if (inEvent == EDSDK.StateEvent_WillSoonShutDown) {
+                Logger.Info("CANON: Will soon shutdown - sending request to extend shutdown timer");
+                CheckError(EDSDK.EdsSendCommand(_cam, EDSDK.CameraCommand_ExtendShutDownTimer, 0));
+            }
+
+            return EDSDK.EDS_ERR_OK;
         }
 
         private uint Camera_SDKObjectEvent(uint inEvent, IntPtr inRef, IntPtr inContext) {
