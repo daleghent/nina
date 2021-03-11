@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using ZWOptical.ASISDK;
 
 namespace NINA.ViewModel.Equipment.Camera {
+
     internal class CameraChooserVM : DeviceChooserVM {
         private ITelescopeMediator telescopeMediator;
 
@@ -162,13 +163,6 @@ namespace NINA.ViewModel.Equipment.Camera {
                 /* CANON */
                 try {
                     IntPtr cameraList;
-                    try {
-                        EDSDKLocal.Initialize();
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                        Utility.Notification.Notification.ShowError(ex.Message);
-                    }
-
                     uint err = EDSDK.EdsGetCameraList(out cameraList);
                     if (err == EDSDK.EDS_ERR_OK) {
                         int count;

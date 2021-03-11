@@ -28,6 +28,14 @@ namespace NINA {
                 Debug.Print($"Time to create IApplicationVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
+                try {
+                    EDSDKLib.EDSDKLocal.Initialize();
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+                Debug.Print($"Time to initialize EDSDK {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
                 var imageSaveController = _kernel.Get<IImageSaveController>();
                 Debug.Print($"Time to create IImageSaveController {sw.Elapsed}");
 
