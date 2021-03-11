@@ -93,6 +93,10 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ### Native support for Risingcams
 
+
+### Device-related Improvements
+- Canon: Automatically send request to increase shutdown time, when camera is about to shutdown
+
 ## Application Improvements
 ### General
 - Current sequence progress is now displayed in the task bar, also visualizes pause and non-capture tasks during the sequence

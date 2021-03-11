@@ -140,6 +140,10 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver</li>
 </ul>
 <h3 id="native-support-for-risingcams">Native support for Risingcams</h3>
+<h3 id="device-related-improvements">Device-related Improvements</h3>
+<ul>
+<li>Canon: Automatically send request to increase shutdown time, when camera is about to shutdown</li>
+</ul>
 <h2 id="application-improvements">Application Improvements</h2>
 <h3 id="general">General</h3>
 <ul>
@@ -184,7 +188,7 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter</li>
 <li>Added support for fetching sky view and location coordinates from the <a href="http://www.astrosurf.com/c2a/">C2A</a> planetarium program</li>
 </ul>
-<h3 id="device-related-improvements">Device-related Improvements</h3>
+<h3 id="device-related-improvements-1">Device-related Improvements</h3>
 <ul>
 <li>Canon CR3 image format is now supported</li>
 </ul>
@@ -215,6 +219,7 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <h2 id="bugfixes">BugFixes</h2>
 <ul>
 <li>Weather information in equipment tab now shows correct wind direction.</li>
+<li>FLI: Background flush is now disabled prior to readout to prevent a hung readout</li>
 </ul>
 <h2 id="included-camera-sdk-versions">Included Camera SDK Versions:</h2>
 <ul>
@@ -492,7 +497,7 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>Coordinate input fields in the Framing Assistant and Sequence windows now allow for <code>-0</code> to be entered for declination</li>
 <li>When loading an image file into the Framing Assistant, the rectangle dimensions are now correctly calculated</li>
 </ul>
-<h3 id="device-related-improvements-1">Device-related improvements</h3>
+<h3 id="device-related-improvements-2">Device-related improvements</h3>
 <ul>
 <li>The following camera settings are now saved to the active profile: USB Limit, Offset, Gain, Binning, Readout Mode, Temperature, Cooling and Warming Duration</li>
 <li>Images from OSC cameras now use their advertised bayer pattern instead of RGGB being assumed all the time</li>
