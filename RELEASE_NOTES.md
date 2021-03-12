@@ -165,7 +165,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - FLI: Background flush is now disabled prior to readout to prevent a hung readout
 
 ## Included Camera SDK Versions:
-- **Altair Astro:** 48.18421.20210202
+- **Altair Astro:** 49.18598.20210310
 - **Atik:** 2020.08.3.642
 - **Canon:** 13.13.0.6408
 - **FLI:** 1.104.0.0
