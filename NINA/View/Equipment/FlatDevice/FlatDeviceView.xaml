@@ -290,9 +290,12 @@
                                     MinWidth="65"
                                     Margin="5,0,0,0"
                                     HorizontalContentAlignment="Right"
-                                    Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.SettleTime, Mode=TwoWay}"
-                                    IsEnabled="{Binding FlatDeviceInfo.Connected}" />
-                                <TextBlock Text=" ms" IsEnabled="{Binding FlatDeviceInfo.Connected}" />
+                                    IsEnabled="{Binding FlatDeviceInfo.Connected}"
+                                    Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.SettleTime, Mode=TwoWay}" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    IsEnabled="{Binding FlatDeviceInfo.Connected}"
+                                    Text=" ms" />
                             </StackPanel>
                         </UniformGrid>
                     </Border>
