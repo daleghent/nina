@@ -19,8 +19,6 @@ using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -62,8 +60,8 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            // Todo - this interface lacks progress and token
-            return Task.Run(() => flatDeviceMediator.ToggleLight(OnOff));
+            // Todo - this interface lacks progress
+            return flatDeviceMediator.ToggleLight(OnOff, token);
         }
 
         public override object Clone() {

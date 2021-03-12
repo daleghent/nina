@@ -95,7 +95,7 @@ namespace NINA.Utility {
 
         public static async Task<TimeSpan> Delay(TimeSpan span, CancellationToken token) {
             var now = DateTime.UtcNow;
-            await Task.Delay(span, token);
+            if (span.Ticks >= 0) await Task.Delay(span, token);
             return DateTime.UtcNow.Subtract(now);
         }
 

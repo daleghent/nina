@@ -57,13 +57,13 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
 
             ConnectCommand = new AsyncCommand<bool>(Connect);
             CancelConnectCommand = new RelayCommand(CancelConnectFlatDevice);
-            DisconnectCommand = new AsyncCommand<bool>(() => DisconnectFlatDeviceDialog());
-            OpenCoverCommand = new AsyncCommand<bool>(OpenCover);
-            CloseCoverCommand = new AsyncCommand<bool>(CloseCover);
+            DisconnectCommand = new AsyncCommand<bool>(DisconnectFlatDeviceDialog);
+            OpenCoverCommand = new AsyncCommand<bool>(() => OpenCover(CancellationToken.None));
+            CloseCoverCommand = new AsyncCommand<bool>(() => CloseCover(CancellationToken.None));
             RefreshFlatDeviceListCommand =
                 new RelayCommand(RefreshFlatDeviceList, o => flatDevice?.Connected != true);
-            SetBrightnessCommand = new RelayCommand(SetBrightness);
-            ToggleLightCommand = new RelayCommand(ToggleLight);
+            SetBrightnessCommand = new AsyncCommand<bool>(o => SetBrightness(o, CancellationToken.None));
+            ToggleLightCommand = new AsyncCommand<bool>(o => ToggleLight(o, CancellationToken.None));
             AddGainCommand = new RelayCommand(AddGain);
             AddBinningCommand = new RelayCommand(AddBinning);
             DeleteGainCommand = new RelayCommand(DeleteGainDialog);
@@ -111,20 +111,28 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
 
         public double Brightness {
             get => brightness;
-
             set { brightness = value; RaisePropertyChanged(); }
         }
 
-        public bool LightOn { get; set; }
+        private bool lightOn;
 
-        public void SetBrightness(double value) {
-            SetBrightness((object)(value * 100d));
+        public bool LightOn {
+            get => lightOn;
+            set { lightOn = value; RaisePropertyChanged(); }
         }
 
-        public void SetBrightness(object o) {
-            if (flatDevice == null || !flatDevice.Connected) return;
-            if (!double.TryParse(o.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)) return;
-            flatDevice.Brightness = result / 100d;
+        public Task<bool> SetBrightness(double value, CancellationToken token) {
+            return SetBrightness((object)(value * 100d), token);
+        }
+
+        public Task<bool> SetBrightness(object o, CancellationToken token) {
+            if (flatDevice == null || !flatDevice.Connected) return Task.FromResult(false);
+            if (!double.TryParse(o.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)) return Task.FromResult(false);
+            return Task.Run(async () => {
+                flatDevice.Brightness = result / 100d;
+                await Utility.Utility.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                return true;
+            }, token);
         }
 
         private readonly SemaphoreSlim ssConnect = new SemaphoreSlim(1, 1);
@@ -302,15 +310,17 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
 
         private readonly SemaphoreSlim ssOpen = new SemaphoreSlim(1, 1);
 
-        public async Task<bool> OpenCover() {
-            await ssOpen.WaitAsync();
+        public async Task<bool> OpenCover(CancellationToken token) {
+            await ssOpen.WaitAsync(token);
             try {
                 var device = FlatDeviceChooserVM.SelectedDevice;
                 if (device == null || device.Id == "No_Device") return false;
                 var flatD = (IFlatDevice)device;
                 if (flatD.Connected == false) return false;
                 if (!flatD.SupportsOpenClose) return false;
-                return await flatD.Open(new CancellationToken());
+                var result = await flatD.Open(token);
+                await Utility.Utility.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                return result;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 return false;
@@ -321,15 +331,17 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
 
         private readonly SemaphoreSlim ssClose = new SemaphoreSlim(1, 1);
 
-        public async Task<bool> CloseCover() {
-            await ssClose.WaitAsync();
+        public async Task<bool> CloseCover(CancellationToken token) {
+            await ssClose.WaitAsync(token);
             try {
                 var device = FlatDeviceChooserVM.SelectedDevice;
                 if (device == null || device.Id == "No_Device") return false;
                 var flatD = (IFlatDevice)device;
                 if (flatD.Connected == false) return false;
                 if (!flatD.SupportsOpenClose) return false;
-                return await flatD.Close(new CancellationToken());
+                var result = await flatD.Close(token);
+                await Utility.Utility.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                return result;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 return false;
@@ -388,9 +400,13 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             return flatDeviceValues;
         }
 
-        public void ToggleLight(object o) {
-            if (flatDevice == null || flatDevice.Connected == false) return;
-            flatDevice.LightOn = o is bool b && b;
+        public Task<bool> ToggleLight(object o, CancellationToken token) {
+            if (flatDevice == null || flatDevice.Connected == false) return Task.FromResult(false);
+            return Task.Run(async () => {
+                flatDevice.LightOn = o is bool b && b;
+                await Utility.Utility.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                return true;
+            }, token);
         }
 
         public WizardGrid WizardGrid { get; } = new WizardGrid();

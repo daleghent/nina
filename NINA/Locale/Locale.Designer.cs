@@ -7542,6 +7542,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Settle Time.
+        /// </summary>
+        internal static string LblFlatDeviceSettleTime {
+            get {
+                return ResourceManager.GetString("LblFlatDeviceSettleTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Flat Wizard Trained Exposure Times.
         /// </summary>
         internal static string LblFlatDeviceTrainedFilterTimes {

@@ -19,10 +19,7 @@ using NINA.Sequencer.Validations;
 using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -54,11 +51,11 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Validate()) {
-                // Todo - this interface lacks progress and token
-                return flatDeviceMediator.OpenCover();
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
+                // Todo - this interface lacks progress
+                return flatDeviceMediator.OpenCover(token);
             }
+
+            throw new SequenceItemSkippedException(string.Join(",", Issues));
         }
 
         public override object Clone() {

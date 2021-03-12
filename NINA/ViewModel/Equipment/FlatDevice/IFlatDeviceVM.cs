@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System.Threading;
 using NINA.Model.MyFlatDevice;
 using System.Threading.Tasks;
 
@@ -19,18 +20,18 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
 
     public interface IFlatDeviceVM : IDeviceVM<FlatDeviceInfo>, IDockableVM {
 
-        Task<bool> OpenCover();
+        Task<bool> OpenCover(CancellationToken token);
 
-        Task<bool> CloseCover();
+        Task<bool> CloseCover(CancellationToken token);
 
         double Brightness { get; set; }
         bool LightOn { get; set; }
         FlatDeviceInfo FlatDeviceInfo { get; set; }
 
-        void ToggleLight(object o);
+        Task<bool> ToggleLight(object o, CancellationToken token);
 
-        void SetBrightness(double value);
+        Task<bool> SetBrightness(double value, CancellationToken token);
 
-        void SetBrightness(object o);
+        Task<bool> SetBrightness(object o, CancellationToken token);
     }
 }

@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System.Threading;
 using System.Threading.Tasks;
 using NINA.Model.MyFlatDevice;
 using NINA.Utility.Mediator.Interfaces;
@@ -21,20 +22,20 @@ namespace NINA.Utility.Mediator {
 
     internal class FlatDeviceMediator : DeviceMediator<IFlatDeviceVM, IFlatDeviceConsumer, FlatDeviceInfo>, IFlatDeviceMediator {
 
-        public void SetBrightness(double brightness) {
-            handler.SetBrightness(brightness);
+        public Task SetBrightness(double brightness, CancellationToken token) {
+            return handler.SetBrightness(brightness, token);
         }
 
-        public Task CloseCover() {
-            return handler.CloseCover();
+        public Task CloseCover(CancellationToken token) {
+            return handler.CloseCover(token);
         }
 
-        public void ToggleLight(object o) {
-            handler.ToggleLight(o);
+        public Task ToggleLight(object o, CancellationToken token) {
+            return handler.ToggleLight(o, token);
         }
 
-        public Task OpenCover() {
-            return handler.OpenCover();
+        public Task OpenCover(CancellationToken token) {
+            return handler.OpenCover(token);
         }
     }
 }

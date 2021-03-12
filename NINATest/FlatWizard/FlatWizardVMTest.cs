@@ -275,8 +275,8 @@ namespace NINATest.FlatWizard {
                 applicationStatusMediatorMock.Object, messageBoxVMMock.Object, twilightCalculatorMock.Object);
 
             sut.StartFlatSequenceCommand.Execute(new object());
-            flatDeviceMediatorMock.Verify(m => m.CloseCover(), Times.Never);
-            flatDeviceMediatorMock.Verify(m => m.OpenCover(), Times.Never);
+            flatDeviceMediatorMock.Verify(m => m.CloseCover(It.IsAny<CancellationToken>()), Times.Never);
+            flatDeviceMediatorMock.Verify(m => m.OpenCover(It.IsAny<CancellationToken>()), Times.Never);
         }
 
         private static Task<IImageData> GetMeanImage(int mean) {
@@ -317,7 +317,7 @@ namespace NINATest.FlatWizard {
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(1d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Once);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -342,7 +342,7 @@ namespace NINATest.FlatWizard {
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(2d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Exactly(2));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
         [Test]
@@ -452,7 +452,7 @@ namespace NINATest.FlatWizard {
                     new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(1d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Exactly(3));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(3));
         }
 
         [Test]
@@ -491,7 +491,7 @@ namespace NINATest.FlatWizard {
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(1d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Exactly(7));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(7));
         }
 
         [Test]
@@ -524,7 +524,7 @@ namespace NINATest.FlatWizard {
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(10d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Once);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -550,7 +550,7 @@ namespace NINATest.FlatWizard {
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(20d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Exactly(2));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
         [Test]
@@ -620,7 +620,7 @@ namespace NINATest.FlatWizard {
                     new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(10d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Exactly(2));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
         [Test]
@@ -660,7 +660,7 @@ namespace NINATest.FlatWizard {
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(10d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Exactly(7));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(7));
         }
 
         [Test]
@@ -700,7 +700,7 @@ namespace NINATest.FlatWizard {
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(10d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Exactly(7));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(7));
         }
 
         [Test]
@@ -738,7 +738,7 @@ namespace NINATest.FlatWizard {
             var result = await sut.StartFlatMagic(new List<FlatWizardFilterSettingsWrapper> { settings }, new PauseToken());
 
             result.Should().BeTrue();
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Exactly(2));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
             profileMock.Verify(m => m.FlatDeviceSettings.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Once);
             imagingVMMock.Verify(m => m.CaptureImage(It.IsAny<CaptureSequence>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<String>()),
                 Times.Exactly(3));
@@ -781,7 +781,7 @@ namespace NINATest.FlatWizard {
             var result = await sut.StartFlatMagic(new List<FlatWizardFilterSettingsWrapper> { settings }, new PauseToken());
 
             result.Should().BeTrue();
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>()), Times.Never);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Never);
             profileMock.Verify(m => m.FlatDeviceSettings.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Never);
             imagingVMMock.Verify(m => m.CaptureImage(It.IsAny<CaptureSequence>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<String>()),
                 Times.Exactly(3));
