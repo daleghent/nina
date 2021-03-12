@@ -278,6 +278,24 @@
                                 IsEnabled="{Binding FlatDeviceInfo.Connected}" />
                         </UniformGrid>
                     </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid
+                            Margin="0,6,0,6"
+                            VerticalAlignment="Top"
+                            Columns="2">
+                            <TextBlock Text="{ns:Loc LblFlatDeviceSettleTime}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox
+                                    Height="25"
+                                    MinWidth="65"
+                                    Margin="5,0,0,0"
+                                    HorizontalContentAlignment="Right"
+                                    Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.SettleTime, Mode=TwoWay}"
+                                    IsEnabled="{Binding FlatDeviceInfo.Connected}" />
+                                <TextBlock Text=" ms" IsEnabled="{Binding FlatDeviceInfo.Connected}" />
+                            </StackPanel>
+                        </UniformGrid>
+                    </Border>
                 </StackPanel>
             </Grid>
         </GroupBox>

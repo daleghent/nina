@@ -84,14 +84,14 @@ namespace NINATest.FlatDevice {
         [Test]
         public async Task TestOpenCoverNullFlatDevice() {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
-            (await sut.OpenCover()).Should().BeFalse();
+            (await sut.OpenCover(It.IsAny<CancellationToken>())).Should().BeFalse();
         }
 
         [Test]
         public async Task TestOpenCoverNotConnectedFlatDevice() {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
             mockFlatDevice.Setup(m => m.Connected).Returns(false);
-            (await sut.OpenCover()).Should().BeFalse();
+            (await sut.OpenCover(It.IsAny<CancellationToken>())).Should().BeFalse();
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace NINATest.FlatDevice {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(false);
-            (await sut.OpenCover()).Should().BeFalse();
+            (await sut.OpenCover(It.IsAny<CancellationToken>())).Should().BeFalse();
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             mockFlatDevice.Setup(m => m.Open(It.IsAny<CancellationToken>(), It.IsAny<int>())).Returns(Task.FromResult(expected));
-            (await sut.OpenCover()).Should().Be(expected);
+            (await sut.OpenCover(CancellationToken.None)).Should().Be(expected);
         }
 
         [Test]
@@ -122,20 +122,20 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             mockFlatDevice.Setup(m => m.Open(It.IsAny<CancellationToken>(), It.IsAny<int>()))
                 .Callback((CancellationToken ct, int delay) => throw new OperationCanceledException());
-            (await sut.OpenCover()).Should().BeFalse();
+            (await sut.OpenCover(CancellationToken.None)).Should().BeFalse();
         }
 
         [Test]
         public async Task TestCloseCoverNullFlatDevice() {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
-            (await sut.CloseCover()).Should().BeFalse();
+            (await sut.CloseCover(CancellationToken.None)).Should().BeFalse();
         }
 
         [Test]
         public async Task TestCloseCoverNotConnectedFlatDevice() {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
             mockFlatDevice.Setup(m => m.Connected).Returns(false);
-            (await sut.CloseCover()).Should().BeFalse();
+            (await sut.CloseCover(CancellationToken.None)).Should().BeFalse();
         }
 
         [Test]
@@ -143,7 +143,7 @@ namespace NINATest.FlatDevice {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, mockFlatDevice.Object);
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(false);
-            (await sut.CloseCover()).Should().BeFalse();
+            (await sut.CloseCover(CancellationToken.None)).Should().BeFalse();
         }
 
         [Test]
@@ -155,7 +155,7 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             mockFlatDevice.Setup(m => m.Close(It.IsAny<CancellationToken>(), It.IsAny<int>())).Returns(Task.FromResult(expected));
-            (await sut.CloseCover()).Should().Be(expected);
+            (await sut.CloseCover(CancellationToken.None)).Should().Be(expected);
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.SupportsOpenClose).Returns(true);
             mockFlatDevice.Setup(m => m.Close(It.IsAny<CancellationToken>(), It.IsAny<int>()))
                 .Callback((CancellationToken ct, int delay) => throw new OperationCanceledException());
-            (await sut.CloseCover()).Should().BeFalse();
+            (await sut.CloseCover(CancellationToken.None)).Should().BeFalse();
         }
 
         [Test]
@@ -351,9 +351,9 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        public void TestSetBrightnessNullFlatDevice() {
+        public async Task TestSetBrightnessNullFlatDevice() {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
-            sut.SetBrightness(1.0);
+            (await sut.SetBrightness(1.0, CancellationToken.None)).Should().Be(false);
             sut.Brightness.Should().Be(0d);
             mockFlatDevice.Verify(m => m.Brightness, Times.Never);
         }
@@ -365,15 +365,15 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
             mockFlatDevice.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
             await sut.Connect();
-            sut.SetBrightness(1.0);
+            (await sut.SetBrightness(1.0, CancellationToken.None)).Should().Be(true);
             sut.Brightness.Should().Be(0d);
             mockFlatDevice.VerifySet(m => m.Brightness = 1d, Times.Once);
         }
 
         [Test]
-        public void TestToggleLightNullFlatDevice() {
+        public async Task TestToggleLightNullFlatDevice() {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
-            sut.ToggleLight(true);
+            (await sut.ToggleLight(true, CancellationToken.None)).Should().Be(false);
             sut.LightOn.Should().BeFalse();
         }
 
@@ -386,7 +386,7 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.Connected).Returns(true);
             mockFlatDevice.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
             await sut.Connect();
-            sut.ToggleLight(expected);
+            (await sut.ToggleLight(expected, CancellationToken.None)).Should().Be(true);
             mockFlatDevice.VerifySet(m => m.LightOn = expected, Times.Once);
         }
 

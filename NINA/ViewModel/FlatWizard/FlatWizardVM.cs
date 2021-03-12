@@ -426,7 +426,7 @@ namespace NINA.ViewModel.FlatWizard {
             do {
                 // Set flat panel brightness to static brightness
                 if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
-                    flatDeviceMediator.SetBrightness(Math.Round(filter.Settings.MaxFlatDeviceBrightness / 100d, BRIGHTNESS_PRECISION));
+                    await flatDeviceMediator.SetBrightness(Math.Round(filter.Settings.MaxFlatDeviceBrightness / 100d, BRIGHTNESS_PRECISION), flatSequenceCts.Token);
                 }
 
                 var sequence = new CaptureSequence(exposureTime, CaptureSequence.ImageTypes.FLAT, filter.Filter, BinningMode, 1) { Gain = Gain };
@@ -576,7 +576,7 @@ namespace NINA.ViewModel.FlatWizard {
             var brightness = filter.Settings.MinFlatDeviceBrightness;
             HistogramMath.ExposureAduState exposureAduState;
             do {
-                flatDeviceMediator.SetBrightness(Math.Round(brightness / 100d, BRIGHTNESS_PRECISION));
+                await flatDeviceMediator.SetBrightness(Math.Round(brightness / 100d, BRIGHTNESS_PRECISION), flatSequenceCts.Token);
 
                 var sequence = new CaptureSequence(filter.Settings.MaxFlatExposureTime, CaptureSequence.ImageTypes.FLAT, filter.Filter, BinningMode, 1) { Gain = Gain };
 
@@ -730,11 +730,11 @@ namespace NINA.ViewModel.FlatWizard {
                 flatSequenceCts = new CancellationTokenSource();
                 var filterCount = 0;
                 if (flatDeviceInfo != null && flatDeviceInfo.Connected && flatDeviceInfo.SupportsOpenClose) {
-                    await flatDeviceMediator.CloseCover();
+                    await flatDeviceMediator.CloseCover(flatSequenceCts.Token);
                 }
 
                 if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
-                    flatDeviceMediator.ToggleLight((object)true);
+                    await flatDeviceMediator.ToggleLight((object)true, flatSequenceCts.Token);
                 }
 
                 var regularTimes = new Dictionary<FlatWizardFilterSettingsWrapper, (double time, double brightness)>();
@@ -800,7 +800,7 @@ namespace NINA.ViewModel.FlatWizard {
                 Logger.Error(ex);
                 return false;
             } finally {
-                if (flatDeviceInfo != null && flatDeviceInfo.Connected) { flatDeviceMediator.ToggleLight((object)false); }
+                if (flatDeviceInfo != null && flatDeviceInfo.Connected) { await flatDeviceMediator.ToggleLight(false, flatSequenceCts.Token); }
                 imagingVM.DestroyImage();
                 Image = null;
                 GC.Collect();
@@ -817,7 +817,7 @@ namespace NINA.ViewModel.FlatWizard {
             exposureTimes.Add(filter, (time, brightness));
 
             if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
-                flatDeviceMediator.SetBrightness(brightness);
+                await flatDeviceMediator.SetBrightness(brightness, flatSequenceCts.Token);
             }
             var flatSequence = new CaptureSequence(time, CaptureSequence.ImageTypes.FLAT, filter.Filter, BinningMode, FlatCount) { Gain = Gain };
             await CaptureImages(flatSequence, pt);
@@ -912,8 +912,8 @@ namespace NINA.ViewModel.FlatWizard {
             Dictionary<FlatWizardFilterSettingsWrapper, List<double>> skyFlatTimes, PauseToken pt) {
             if ((exposureTimes.Count > 0 || skyFlatTimes.Count > 0) && DarkFlatCount > 0) {
                 progress.Report(new ApplicationStatus { Status = Loc.Instance["LblPreparingDarkFlatSequence"], Source = Title });
-                if (flatDeviceInfo != null && flatDeviceInfo.Connected) { flatDeviceMediator.ToggleLight(false); }
-                if (flatDeviceInfo != null && flatDeviceInfo.Connected && flatDeviceInfo.SupportsOpenClose && profileService.ActiveProfile.FlatDeviceSettings.OpenForDarkFlats) { await flatDeviceMediator.OpenCover(); }
+                if (flatDeviceInfo != null && flatDeviceInfo.Connected) { await flatDeviceMediator.ToggleLight(false, flatSequenceCts.Token); }
+                if (flatDeviceInfo != null && flatDeviceInfo.Connected && flatDeviceInfo.SupportsOpenClose && profileService.ActiveProfile.FlatDeviceSettings.OpenForDarkFlats) { await flatDeviceMediator.OpenCover(flatSequenceCts.Token); }
                 var dialogResult = messageBox.Show(Loc.Instance["LblCoverScopeMsgBox"],
                     Loc.Instance["LblCoverScopeMsgBoxTitle"], MessageBoxButton.OKCancel, MessageBoxResult.OK);
                 if (dialogResult == MessageBoxResult.OK) {

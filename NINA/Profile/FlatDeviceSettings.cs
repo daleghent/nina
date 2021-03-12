@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using NINA.Model.MyFilterWheel;
 
 namespace NINA.Profile {
 
@@ -46,38 +45,38 @@ namespace NINA.Profile {
             Id = "No_Device";
         }
 
-        private string _id;
+        private string id;
 
         [DataMember]
         public string Id {
-            get => _id;
+            get => id;
             set {
-                if (_id == value) return;
-                _id = value;
+                if (id == value) return;
+                id = value;
                 RaisePropertyChanged();
             }
         }
 
-        private string _name;
+        private string name;
 
         [DataMember]
         public string Name {
-            get => _name;
+            get => name;
             set {
-                if (_name == value) return;
-                _name = value;
+                if (name == value) return;
+                name = value;
                 RaisePropertyChanged();
             }
         }
 
-        private string _portName;
+        private string portName;
 
         [DataMember]
         public string PortName {
-            get => _portName;
+            get => portName;
             set {
-                if (_portName == value) return;
-                _portName = value;
+                if (portName == value) return;
+                portName = value;
                 RaisePropertyChanged();
             }
         }
@@ -94,49 +93,61 @@ namespace NINA.Profile {
             }
         }
 
-        private bool _closeAtSequenceEnd;
+        private bool closeAtSequenceEnd;
 
         [DataMember]
         public bool CloseAtSequenceEnd {
-            get => _closeAtSequenceEnd;
+            get => closeAtSequenceEnd;
             set {
-                if (_closeAtSequenceEnd == value) return;
-                _closeAtSequenceEnd = value;
+                if (closeAtSequenceEnd == value) return;
+                closeAtSequenceEnd = value;
                 RaisePropertyChanged();
             }
         }
 
-        private bool _openForDarkFlats;
+        private bool openForDarkFlats;
 
         [DataMember]
         public bool OpenForDarkFlats {
-            get => _openForDarkFlats;
+            get => openForDarkFlats;
             set {
-                if (_openForDarkFlats == value) return;
-                _openForDarkFlats = value;
+                if (openForDarkFlats == value) return;
+                openForDarkFlats = value;
                 RaisePropertyChanged();
             }
         }
 
-        private bool _useWizardTrainedValues;
+        private bool useWizardTrainedValues;
 
         [DataMember]
         public bool UseWizardTrainedValues {
-            get => _useWizardTrainedValues;
+            get => useWizardTrainedValues;
             set {
-                if (_useWizardTrainedValues == value) return;
-                _useWizardTrainedValues = value;
+                if (useWizardTrainedValues == value) return;
+                useWizardTrainedValues = value;
                 RaisePropertyChanged();
             }
         }
 
-        private Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue> _filterSettings;
+        private int settleTime;
+
+        [DataMember]
+        public int SettleTime {
+            get => settleTime;
+            set {
+                if (settleTime == value) return;
+                settleTime = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue> filterSettings;
 
         [DataMember]
         public Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue> FilterSettings {
-            get => _filterSettings;
+            get => filterSettings;
             set {
-                _filterSettings = value;
+                filterSettings = value;
                 RaisePropertyChanged();
             }
         }

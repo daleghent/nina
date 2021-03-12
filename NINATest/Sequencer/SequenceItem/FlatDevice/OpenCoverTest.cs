@@ -87,7 +87,7 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
             var sut = new OpenCover(fdMediatorMock.Object);
             await sut.Execute(default, default);
 
-            fdMediatorMock.Verify(x => x.OpenCover(), Times.Once);
+            fdMediatorMock.Verify(x => x.OpenCover(It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -100,7 +100,7 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
             var sut = new OpenCover(fdMediatorMock.Object);
             Func<Task> act = () => { return sut.Execute(default, default); };
 
-            fdMediatorMock.Verify(x => x.OpenCover(), Times.Never);
+            fdMediatorMock.Verify(x => x.OpenCover(It.IsAny<CancellationToken>()), Times.Never);
             return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
         }
 

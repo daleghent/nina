@@ -19,8 +19,6 @@ using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -62,7 +60,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            return Task.Run(() => flatDeviceMediator.SetBrightness(Brightness / 100));
+            return flatDeviceMediator.SetBrightness(Brightness / 100, token);
         }
 
         public override object Clone() {

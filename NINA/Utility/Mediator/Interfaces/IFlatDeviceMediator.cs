@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System.Threading;
 using System.Threading.Tasks;
 using NINA.Model.MyFlatDevice;
 using NINA.ViewModel.Equipment.FlatDevice;
@@ -20,12 +21,12 @@ namespace NINA.Utility.Mediator.Interfaces {
 
     public interface IFlatDeviceMediator : IDeviceMediator<IFlatDeviceVM, IFlatDeviceConsumer, FlatDeviceInfo> {
 
-        void SetBrightness(double brightness);
+        Task SetBrightness(double brightness, CancellationToken token);
 
-        Task CloseCover();
+        Task CloseCover(CancellationToken token);
 
-        void ToggleLight(object o);
+        Task ToggleLight(object o, CancellationToken token);
 
-        Task OpenCover();
+        Task OpenCover(CancellationToken token);
     }
 }

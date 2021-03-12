@@ -23,6 +23,7 @@ namespace NINA.Profile {
         string Name { get; set; }
         string PortName { get; set; }
         bool OpenForDarkFlats { get; set; }
+        int SettleTime { get; set; }
         bool OpenAtSequenceStart { get; set; }
         bool CloseAtSequenceEnd { get; set; }
         bool UseWizardTrainedValues { get; set; }
