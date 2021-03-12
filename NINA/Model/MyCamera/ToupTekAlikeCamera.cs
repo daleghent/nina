@@ -563,7 +563,12 @@ namespace NINA.Model.MyCamera {
                     if ((this.flags & ToupTekAlikeFlag.FLAG_TEC_ONOFF) != 0) {
                         /* Can set Target Temp */
                         CanSetTemperature = true;
-                        TemperatureSetPoint = 20;
+                        sdk.get_Option(ToupTekAlikeOption.OPTION_TECTARGET, out var target);
+                        if (target >= -280 && target <= 100) {
+                            TemperatureSetPoint = target;
+                        } else {
+                            TemperatureSetPoint = 20;
+                        }
                         CoolerPowerUpdateTask();
                     }
 

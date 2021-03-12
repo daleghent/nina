@@ -773,6 +773,9 @@ namespace NINA.ViewModel.FlatWizard {
                                 break;
 
                             case FlatWizardMode.DYNAMICBRIGHTNESS:
+                                if (FlatDeviceInfo?.Connected != true) {
+                                    throw new Exception(Locale.Loc.Instance["LblFlatDeviceNotConnected"]);
+                                }
                                 time = filter.Settings.MaxFlatExposureTime;
                                 brightness = await FindFlatDeviceBrightness(pt, filter);
                                 await TakeRegularFlats(regularTimes, time, brightness, filter, pt);
@@ -798,6 +801,7 @@ namespace NINA.ViewModel.FlatWizard {
                 await TakeDarkFlats(regularTimes, skyFlatTimes, pt);
             } catch (Exception ex) {
                 Logger.Error(ex);
+                Notification.ShowError(ex.Message);
                 return false;
             } finally {
                 if (flatDeviceInfo != null && flatDeviceInfo.Connected) { await flatDeviceMediator.ToggleLight(false, flatSequenceCts.Token); }
