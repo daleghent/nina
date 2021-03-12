@@ -117,18 +117,24 @@ namespace NINA.Model.MyFlatDevice {
             }
         }
 
-        public Task<bool> Open(CancellationToken ct, int delay = 300) {
+        public async Task<bool> Open(CancellationToken ct, int delay = 300) {
             if (SupportsOpenClose) {
                 device.OpenCover();
+                while (CoverState != CoverState.Unknown && CoverState == CoverState.NeitherOpenNorClosed) {
+                    await Task.Delay(delay);
+                }
             }
-            return Task.FromResult(true);
+            return CoverState == CoverState.Open;
         }
 
-        public Task<bool> Close(CancellationToken ct, int delay = 300) {
+        public async Task<bool> Close(CancellationToken ct, int delay = 300) {
             if (SupportsOpenClose) {
                 device.CloseCover();
+                while (CoverState != CoverState.Unknown && CoverState == CoverState.NeitherOpenNorClosed) {
+                    await Task.Delay(delay);
+                }
             }
-            return Task.FromResult(true);
+            return CoverState == CoverState.Closed;
         }
 
         protected override Task PostConnect() {
