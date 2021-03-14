@@ -161,7 +161,7 @@
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{ns:Loc LblTemperature}" />
                                                 <TextBlock Text=": " />
-                                                <TextBlock Text="{Binding Item.AutoFocusPoint.Temperature}" />
+                                                <TextBlock Text="{Binding Item.AutoFocusPoint.Temperature, StringFormat='{}{0:N2}'}" />
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
                                                 <TextBlock Text="{ns:Loc LblTime}" />
