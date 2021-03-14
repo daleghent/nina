@@ -24,6 +24,7 @@ namespace NINA.Utility.Astrometry {
     public class Coordinates {
 
         private Coordinates() {
+            this.DateTime = new SystemDateTime();
         }
 
         public enum RAType {

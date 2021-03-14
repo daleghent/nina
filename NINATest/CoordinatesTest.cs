@@ -13,9 +13,13 @@
 #endregion "copyright"
 
 using FluentAssertions;
+using NINA.Model;
 using NINA.Utility.Astrometry;
 using NUnit.Framework;
+using System.IO;
+using System.Text;
 using System.Windows;
+using System.Xml.Serialization;
 
 namespace NINATest {
 
@@ -414,6 +418,23 @@ namespace NINATest {
 
             sut.RADegrees.Should().Be(expectedRA);
             sut.Dec.Should().Be(expectedDec);
+        }
+
+        [Test]
+        public void DeserializationTest() {
+            string xml = "<Coordinates><RA>12</RA><Dec>13</Dec><Epoch>JNOW</Epoch></Coordinates>";
+
+            byte[] byteArray = Encoding.ASCII.GetBytes(xml);
+            using (var stream = new MemoryStream(byteArray)) {
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(Coordinates));
+
+                var sut = (Coordinates)xmlSerializer.Deserialize(stream);
+
+                sut.DateTime.Should().NotBeNull();
+                sut.RA.Should().Be(12);
+                sut.Dec.Should().Be(13);
+                sut.Epoch.Should().Be(Epoch.JNOW);
+            }
         }
     }
 }
