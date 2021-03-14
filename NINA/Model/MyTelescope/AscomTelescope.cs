@@ -892,9 +892,8 @@ namespace NINA.Model.MyTelescope {
                     if (!pierSideSuccess) {
                         pierSideSuccess = await SetPierSide(targetSideOfPier);
                     }
-                    if (!slewSuccess) {
-                        slewSuccess = SlewToCoordinates(targetCoordinates);
-                    }
+                    // Keep attempting slews as well, in case that's what it takes to flip to the other side of pier
+                    slewSuccess = SlewToCoordinates(targetCoordinates);
                     if (!pierSideSuccess) {
                         pierSideSuccess = SideOfPier == targetSideOfPier;
                     }
