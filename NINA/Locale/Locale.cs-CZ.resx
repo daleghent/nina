@@ -1205,7 +1205,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Ovladač sleduje dalekohled</value>
   </data>
   <data name="LblDomeSlewing" xml:space="preserve">
-    <value>Otáčení</value>
+    <value>Přejíždění</value>
   </data>
   <data name="LblDomeAzimuth" xml:space="preserve">
     <value>Azimut</value>
@@ -1991,7 +1991,7 @@ Vypočtené HFR: {2}
     <value>Min. Čas trvání</value>
   </data>
   <data name="LblMinExposureTimeDownloadRatio" xml:space="preserve">
-    <value>Minimální Čas expozice z Poměru Stahování</value>
+    <value>Minimální Čas Expozice z Poměru Stahování</value>
   </data>
   <data name="LblMinExpTime" xml:space="preserve">
     <value>Minimální Expoziční Čas</value>
@@ -2837,10 +2837,10 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Tolerance Stabilizace v Pixlech</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
-    <value>Čas stabilizace po pohybu</value>
+    <value>Čas stabilizace po přejezdu</value>
   </data>
   <data name="LblSettleTimeout" xml:space="preserve">
-    <value>Čas Stabilizace</value>
+    <value>Časový limit Stabilizace</value>
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Zahájit nový Pokus o Pointaci</value>
@@ -3112,7 +3112,7 @@ Synchronizovat hodnoty?</value>
     <value>Dalekohled nemůže provádět Pulzní Pointování</value>
   </data>
   <data name="LblTelescopeCannotSlew" xml:space="preserve">
-    <value>Dalekohledem není možné pohybovat</value>
+    <value>Dalekohledem není možné přejíždět</value>
   </data>
   <data name="LblTelescopeConnected" xml:space="preserve">
     <value>Dalekohled připojen</value>
@@ -4015,7 +4015,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Odpojit Dalekohled?</value>
   </data>
   <data name="LblTelescopeParkedWarning" xml:space="preserve">
-    <value>Dalekohled v parkovací poloze. Před zahájením pohybu jej možná budete muset odparkovat.</value>
+    <value>Dalekohled v parkovací poloze. Před zahájením přejezdu jej možná budete muset odparkovat.</value>
   </data>
   <data name="LblSideOfPier" xml:space="preserve">
     <value>Poloha Dalekohledu</value>
@@ -4069,7 +4069,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Na konci sekvence zaparkovat kopuli</value>
   </data>
   <data name="LblDomeSyncDuringMountSlew" xml:space="preserve">
-    <value>Povolit synchronizaci, zatímco se montáž přesouvá</value>
+    <value>Povolit synchronizaci, zatímco montáž přejíždí</value>
   </data>
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
     <value>Když je povoleno sledování kopule, NINA často kontroluje, zda je třeba kopuli otočit, aby se vyrovnala s dalekohledem. Když planetárium nebo mobilní aplikace pohne dalekohledem, je vhodné počkat, až se dalekohled přestane pohybovat, aby otočil kopuli.</value>
@@ -4078,10 +4078,10 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Před zaparkováním najít domovskou pozici</value>
   </data>
   <data name="LblDomeSlewCW" xml:space="preserve">
-    <value>Pohyb Pravotoč</value>
+    <value>Pohyb Vpravo</value>
   </data>
   <data name="LblDomeSlewCCW" xml:space="preserve">
-    <value>Pohyb Levotoč</value>
+    <value>Pohyb Vlevo</value>
   </data>
   <data name="LblDomeFindHomeBeforeParkTooltip" xml:space="preserve">
     <value>Pokud je ovladač FindHome podporován, jeho použití před zaparkováním zajistí přejezd na přesné místo. To je užitečné, pokud se baterie k motoru štěrbiny nabíjí, když je zaparkovaná.</value>
@@ -4375,13 +4375,13 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Parkovat Dalekohled</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Description" xml:space="preserve">
-    <value>Přejede dalekohledem na danou výšku a souřadnice azimutu</value>
+    <value>Přejezd dalekohledem na danou výšku a souřadnice azimutu</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToAltAz_Name" xml:space="preserve">
     <value>Přejezd Na Alt/Az</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Description" xml:space="preserve">
-    <value>Přejede dalekohledem na souřadnice RA a Dec</value>
+    <value>Přejezd dalekohledem na souřadnice RA a Dec</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SlewScopeToRaDec_Name" xml:space="preserve">
     <value>Přejezd Na Ra/Dec</value>
@@ -5293,7 +5293,7 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
     <value>Rychle</value>
   </data>
   <data name="LblSetButtonMoveRateToolTip" xml:space="preserve">
-    <value>Nastavte rychlost otáčení tlačítka ve stupních za sekundu</value>
+    <value>Nastavte rychlost tlačítka přejezdu ve stupních za sekundu</value>
   </data>
   <data name="LblFirmwareVersion" xml:space="preserve">
     <value>Verze Firmwaru</value>
@@ -5327,6 +5327,9 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   </data>
   <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
     <value>Průvodce po 5 pokusech nenašel správnou úroveň jasu. Zkuste změnit velikost kroku nebo toleranci.</value>
+  </data>
+  <data name="LblFlatDeviceSettleTime" xml:space="preserve">
+    <value>Čas Stabilizace</value>
   </data>
   <data name="LblInitializingSequencer" xml:space="preserve">
     <value>Generování Sekvenceru...</value>

@@ -5331,6 +5331,9 @@ Dec: {1}</value>
   <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
     <value>Мастер не обнаружил правильного уровня яркости после 5 попыток. Пожалуйста, попробуйте изменить размер шага или допусков.</value>
   </data>
+  <data name="LblFlatDeviceSettleTime" xml:space="preserve">
+    <value>Settle Time</value>
+  </data>
   <data name="LblInitializingSequencer" xml:space="preserve">
     <value>Инициализация последовательности...</value>
   </data>

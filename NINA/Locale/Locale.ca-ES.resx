@@ -5329,6 +5329,9 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
     <value>L’assistent no ha trobar el nivell de lluminositat adequat després de 5 intents. Proveu canviant la mida del pas o la tolerància.</value>
   </data>
+  <data name="LblFlatDeviceSettleTime" xml:space="preserve">
+    <value>Temps d'estabilització</value>
+  </data>
   <data name="LblInitializingSequencer" xml:space="preserve">
     <value>Inicialitzant el Seqüenciador...</value>
   </data>
