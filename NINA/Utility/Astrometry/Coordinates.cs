@@ -97,8 +97,7 @@ namespace NINA.Utility.Astrometry {
         /// <param name="dec">   Declination</param>
         /// <param name="epoch"> J2000|JNOW</param>
         /// <remarks>CreationDate will use DateTime.Now of the system time</remarks>
-        public Coordinates(Angle ra, Angle dec, Epoch epoch) {
-            this.DateTime = new SystemDateTime();
+        public Coordinates(Angle ra, Angle dec, Epoch epoch) : this() {
             this.creationDate = DateTime.Now;
 
             this.raAngle = ra;
