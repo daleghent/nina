@@ -58,6 +58,7 @@
                                     RenderTransformOrigin="0.5,0.5"
                                     Stretch="Uniform" />
                                 <TextBlock
+                                    Padding="{TemplateBinding Padding}"
                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                     Foreground="{TemplateBinding ButtonForegroundBrush}"
                                     Text="{TemplateBinding ButtonText}" />

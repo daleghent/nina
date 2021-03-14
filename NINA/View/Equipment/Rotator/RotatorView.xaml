@@ -114,11 +114,11 @@
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
                         IsEnabled="{Binding RotatorInfo.CanReverse}">
-                        <UniformGrid Columns="2">
-                            <UniformGrid
-                                Margin="0,6,0,6"
-                                VerticalAlignment="Center"
-                                Columns="2">
+                        <UniformGrid
+                            Margin="0,6,0,6"
+                            VerticalAlignment="Center"
+                            Columns="2">
+                            <UniformGrid Columns="2">
                                 <TextBlock Text="{ns:Loc LblReverse}">
                                     <TextBlock.ToolTip>
                                         <TextBlock Text="{ns:Loc LblRotatorReverseTooltip}" />
@@ -126,7 +126,7 @@
                                 </TextBlock>
                                 <CheckBox
                                     Width="120"
-                                    Margin="5,0,0,0"
+                                    Margin="-25,0,0,0"
                                     HorizontalAlignment="Left"
                                     Command="{Binding ReverseCommand}"
                                     CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}"
@@ -173,70 +173,79 @@
                     </Border>
 
                     <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                        <UniformGrid Columns="2">
-                            <UniformGrid
-                                Margin="0,6,0,6"
-                                VerticalAlignment="Center"
-                                Columns="2">
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetMechanicalPosition}" />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBox
+                        <Grid Margin="0,6,0,6" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetMechanicalPosition}" />
+                            <StackPanel
+                                Grid.Column="1"
+                                Grid.ColumnSpan="3"
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal">
+                                <TextBox
+                                    Height="25"
+                                    MinWidth="50"
+                                    Margin="5,0,0,0"
+                                    Text="{Binding TargetPosition}" />
+                                <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
+                                    <ninactrl:CancellableButton
                                         Height="25"
-                                        MinWidth="90"
-                                        Margin="5,0,0,0"
-                                        Text="{Binding TargetPosition}" />
-                                    <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
-                                        <ninactrl:CancellableButton
-                                            Width="200"
-                                            Height="25"
-                                            Margin="5"
-                                            HorizontalAlignment="Left"
-                                            HorizontalContentAlignment="Center"
-                                            ButtonText="{ns:Loc LblMoveMechanicalPosition}"
-                                            CancelButtonImage="{StaticResource CancelSVG}"
-                                            CancelCommand="{Binding HaltCommand}"
-                                            CancelToolTip="{ns:Loc LblCancel}"
-                                            Command="{Binding MoveMechanicalCommand}"
-                                            ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
-                                    </Grid>
-                                </StackPanel>
-                            </UniformGrid>
-                        </UniformGrid>
+                                        Margin="5"
+                                        Padding="5,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        HorizontalContentAlignment="Center"
+                                        ButtonText="{ns:Loc LblMoveMechanicalPosition}"
+                                        CancelButtonImage="{StaticResource CancelSVG}"
+                                        CancelCommand="{Binding HaltCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
+                                        Command="{Binding MoveMechanicalCommand}"
+                                        ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
                     </Border>
 
                     <Border
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
                         Visibility="{Binding RotatorInfo.Synced, Converter={StaticResource VisibilityConverter}}">
-                        <UniformGrid Columns="2">
-                            <UniformGrid
-                                Margin="0,6,0,6"
-                                VerticalAlignment="Center"
-                                Columns="2">
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetSkyPosition}" />
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBox
+                        <Grid Margin="0,6,0,6" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetSkyPosition}" />
+                            <StackPanel
+                                Grid.Column="1"
+                                Grid.ColumnSpan="3"
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal">
+                                <TextBox
+                                    Height="25"
+                                    MinWidth="50"
+                                    Margin="5,0,0,0"
+                                    Text="{Binding TargetPosition}" />
+                                <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
+                                    <ninactrl:CancellableButton
                                         Height="25"
-                                        MinWidth="90"
-                                        Margin="5,0,0,0"
-                                        Text="{Binding TargetPosition}" />
-                                    <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
-                                        <ninactrl:CancellableButton
-                                            Width="200"
-                                            Height="25"
-                                            Margin="5"
-                                            HorizontalAlignment="Left"
-                                            HorizontalContentAlignment="Center"
-                                            ButtonText="{ns:Loc LblMoveSkyPosition}"
-                                            CancelButtonImage="{StaticResource CancelSVG}"
-                                            CancelCommand="{Binding HaltCommand}"
-                                            CancelToolTip="{ns:Loc LblCancel}"
-                                            Command="{Binding MoveCommand}"
-                                            ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
-                                    </Grid>
-                                </StackPanel>
-                            </UniformGrid>
-                        </UniformGrid>
+                                        Margin="5"
+                                        HorizontalAlignment="Left"
+                                        HorizontalContentAlignment="Center"
+                                        ButtonText="{ns:Loc LblMoveSkyPosition}"
+                                        CancelButtonImage="{StaticResource CancelSVG}"
+                                        CancelCommand="{Binding HaltCommand}"
+                                        CancelToolTip="{ns:Loc LblCancel}"
+                                        Command="{Binding MoveCommand}"
+                                        ToolTip="{ns:Loc LblMoveRotatorTooltip}" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
                     </Border>
                 </StackPanel>
             </Grid>
