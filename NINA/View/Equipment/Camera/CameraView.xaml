@@ -589,6 +589,7 @@
                                                     <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
                                                         <Binding Path="CameraInfo.Connected" />
                                                         <Binding Path="CameraInfo.CanSetTemperature" />
+                                                        <Binding Path="CameraInfo.CoolerOn" />
                                                     </MultiBinding>
                                                 </TextBlock.Visibility>
                                             </TextBlock>
@@ -600,6 +601,7 @@
                                                     <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
                                                         <Binding Path="CameraInfo.Connected" />
                                                         <Binding Path="CameraInfo.CanSetTemperature" />
+                                                        <Binding Path="CameraInfo.CoolerOn" />
                                                     </MultiBinding>
                                                 </TextBlock.Visibility>
                                             </TextBlock>
