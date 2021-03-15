@@ -2696,6 +2696,24 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Astronomical Dawn.
+        /// </summary>
+        internal static string LblAstronomicalDawn {
+            get {
+                return ResourceManager.GetString("LblAstronomicalDawn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Astronomical Dusk.
+        /// </summary>
+        internal static string LblAstronomicalDusk {
+            get {
+                return ResourceManager.GetString("LblAstronomicalDusk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authors.
         /// </summary>
         internal static string LblAuthors {

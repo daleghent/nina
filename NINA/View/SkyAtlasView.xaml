@@ -326,7 +326,27 @@
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDawn}" />
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSunSet}" />
+                            <TextBlock Text="{Binding NighttimeData.SunRiseAndSet.Set, StringFormat={}{0:HH:mm}}" />
+                        </UniformGrid>
+                    </Border>
+
+                    <Border
+                        MinHeight="30"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0">
+                        <UniformGrid VerticalAlignment="Center" Columns="2">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAstronomicalDusk}" />
+                            <TextBlock Text="{Binding NighttimeData.TwilightRiseAndSet.Set, StringFormat={}{0:HH:mm}}" />
+                        </UniformGrid>
+                    </Border>
+
+                    <Border
+                        MinHeight="30"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0">
+                        <UniformGrid VerticalAlignment="Center" Columns="2">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAstronomicalDawn}" />
                             <TextBlock Text="{Binding NighttimeData.TwilightRiseAndSet.Rise, StringFormat={}{0:HH:mm}}" />
                         </UniformGrid>
                     </Border>
@@ -338,26 +358,6 @@
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSunRise}" />
                             <TextBlock Text="{Binding NighttimeData.SunRiseAndSet.Rise, StringFormat={}{0:HH:mm}}" />
-                        </UniformGrid>
-                    </Border>
-
-                    <Border
-                        MinHeight="30"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="0">
-                        <UniformGrid VerticalAlignment="Center" Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSunSet}" />
-                            <TextBlock Text="{Binding NighttimeData.SunRiseAndSet.Set, StringFormat={}{0:HH:mm}}" />
-                        </UniformGrid>
-                    </Border>
-
-                    <Border
-                        MinHeight="30"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="0">
-                        <UniformGrid VerticalAlignment="Center" Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDusk}" />
-                            <TextBlock Text="{Binding NighttimeData.TwilightRiseAndSet.Set, StringFormat={}{0:HH:mm}}" />
                         </UniformGrid>
                     </Border>
                 </StackPanel>

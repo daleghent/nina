@@ -31,7 +31,7 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
             this.nighttimeCalculator = nighttimeCalculator;
         }
 
-        public string Name { get; } = Locale.Loc.Instance["LblDawn"];
+        public string Name { get; } = Locale.Loc.Instance["LblAstronomicalDawn"];
         public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
 
         public DateTime GetDateTime(ISequenceEntity context) {
