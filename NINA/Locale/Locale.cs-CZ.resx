@@ -1787,7 +1787,7 @@ Vypočtené HFR: {2}
     <value>Vzor Souboru</value>
   </data>
   <data name="LblImageHistory" xml:space="preserve">
-    <value>Historie Obrazů</value>
+    <value>Historie Snímků</value>
   </data>
   <data name="LblImageOptions" xml:space="preserve">
     <value>Možnosti Obrazu</value>
@@ -2470,7 +2470,7 @@ Vypočtené HFR: {2}
     <value>Plate Solver</value>
   </data>
   <data name="LblPlateSolveReattemptDelay" xml:space="preserve">
-    <value>Čekání na další pokus platesolvingu: {0}</value>
+    <value>Počkat na další pokus platesolvingu: {0}</value>
   </data>
   <data name="LblPlateSolveSettings" xml:space="preserve">
     <value>Nastavení Platesolvingu</value>
@@ -3157,7 +3157,7 @@ Synchronizovat hodnoty?</value>
     <value>Kompen. T°</value>
   </data>
   <data name="LblTempControl" xml:space="preserve">
-    <value>Regulace Teploty</value>
+    <value>Úprava Teploty</value>
   </data>
   <data name="LblTemperature" xml:space="preserve">
     <value>Teplota</value>
@@ -3475,19 +3475,19 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Svislé Panely</value>
   </data>
   <data name="LblWaitForDither" xml:space="preserve">
-    <value>Čekání na konec ditheringu</value>
+    <value>Počkat na konec ditheringu</value>
   </data>
   <data name="LblWaitForImageProcessing" xml:space="preserve">
     <value>Čekat na dokončení zpracování předchozího obrazu</value>
   </data>
   <data name="LblWaitForTemperatureStep" xml:space="preserve">
-    <value>Čekání, až kamera dosáhne dalšího teplotního kroku</value>
+    <value>Počkat, až kamera dosáhne dalšího teplotního kroku</value>
   </data>
   <data name="LblWaiting" xml:space="preserve">
-    <value>Čekání</value>
+    <value>Počkat</value>
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
-    <value>Čekání na Kameru</value>
+    <value>Počkat na Kameru</value>
   </data>
   <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
     <value>Na konci sekvence zahřát kameru</value>
@@ -3780,7 +3780,7 @@ Délka je volitelná. Většina ovladačů kamery již automaticky reguluje chla
 Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadaného času pomalu zvyšuje cílovou teplotu kamery.</value>
   </data>
   <data name="LblWaitForImageSaving" xml:space="preserve">
-    <value>Čekání, na uložení obrazu</value>
+    <value>Počkat, na uložení obrazu</value>
   </data>
   <data name="LblHighGainMode" xml:space="preserve">
     <value>Režim Vysokého Zisku</value>
