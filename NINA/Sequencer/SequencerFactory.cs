@@ -95,10 +95,10 @@ namespace NINA.Sequencer {
             this.DateTimeProviders = new ObservableCollection<IDateTimeProvider>() {
                 new TimeProvider(),
                 new SunsetProvider(nighttimeCalculator),
+                new NauticalDuskProvider(nighttimeCalculator),
                 new DuskProvider(nighttimeCalculator),
                 new DawnProvider(nighttimeCalculator),
                 new NauticalDawnProvider(nighttimeCalculator),
-                new NauticalDuskProvider(nighttimeCalculator),
                 new SunriseProvider(nighttimeCalculator),
                 new MeridianProvider(profileService)
             };
