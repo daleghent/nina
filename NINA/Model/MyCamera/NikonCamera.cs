@@ -733,6 +733,13 @@ namespace NINA.Model.MyCamera {
 
         public void StartExposure(CaptureSequence sequence) {
             if (Connected) {
+                if (_downloadExposure != null && _downloadExposure.Task.Status <= TaskStatus.Running) {
+                    Notification.ShowWarning("Another exposure still in progress. Cancelling it to start another.");
+                    Logger.Warning("An exposure was still in progress. Cancelling it to start another.");
+                    bulbCompletionCTS?.Cancel();
+                    _downloadExposure.TrySetCanceled();
+                }
+
                 double exposureTime = sequence.ExposureTime;
                 Logger.Debug("Prepare start of exposure: " + sequence);
                 _downloadExposure = new TaskCompletionSource<object>();
@@ -826,6 +833,9 @@ namespace NINA.Model.MyCamera {
             }
         }
 
+        private Task bulbCompletionTask = null;
+        private CancellationTokenSource bulbCompletionCTS = null;
+
         private void BulbCapture(double exposureTime, Action capture, Action stopCapture) {
             SetCameraToManual();
 
@@ -840,16 +850,18 @@ namespace NINA.Model.MyCamera {
                 }
             }
 
-            /*Stop Exposure after exposure time */
-            Task.Run(async () => {
-                await Utility.Utility.Wait(TimeSpan.FromSeconds(exposureTime));
-
-                stopCapture();
-
-                Logger.Debug("Restore previous shutter speed");
-                // Restore original shutter speed
-                SetCameraShutterSpeed(_prevShutterSpeed);
-            });
+            /*Stop Exposure after exposure time or upon cancellation*/
+            bulbCompletionCTS?.Cancel();
+            bulbCompletionCTS = new CancellationTokenSource();
+            bulbCompletionTask = Task.Run(async () => {
+                await Utility.Utility.Wait(TimeSpan.FromSeconds(exposureTime), bulbCompletionCTS.Token);
+                if (!bulbCompletionCTS.IsCancellationRequested) {
+                    stopCapture();
+                    Logger.Debug("Restore previous shutter speed");
+                    // Restore original shutter speed
+                    SetCameraShutterSpeed(_prevShutterSpeed);
+                }
+            }, bulbCompletionCTS.Token);
         }
 
         private void StartBulbCapture() {
