@@ -523,6 +523,8 @@ namespace NINA.Utility.Astrometry {
             var diff = HoursToDegrees(moonPosition.RA - sunPosition.RA);
             if (diff > 180) {
                 return diff - 360;
+            } else if (diff < -180) {
+                return diff + 360;
             } else {
                 return diff;
             }
