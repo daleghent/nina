@@ -172,7 +172,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - **FLI:** 1.104.0.0
 - **Nikon:** 1.3.2.3000
 - **Omegon:** 48.17739.2020.924
-- **QHY:** 21.02.01.10
+- **QHY:** 21.3.13.17
 - **ToupTek:** 48.18081.2020.1205
 - **ZWO:** 1.16.3
 - **Risingcam** 48.18332.20210120
