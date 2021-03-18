@@ -6,6 +6,7 @@
     xmlns:enum="clr-namespace:NINA.Utility.Enum"
     xmlns:local="clr-namespace:NINA.View.Options"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
@@ -440,28 +441,38 @@
                                 Header="{ns:Loc LblAutoFocusExposureTime}">
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
-                                        <TextBox>
-                                            <TextBox.Text>
-                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
-                                                    <MultiBinding.ValidationRules>
+                                        <ninactrl:HintTextBox
+                                            MinWidth="40"
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            VerticalContentAlignment="Center"
+                                            Foreground="{StaticResource PrimaryBrush}"
+                                            TextAlignment="Center">
+                                            <ninactrl:HintTextBox.HintText>
+                                                <Binding
+                                                    Converter="{StaticResource CameraDefaultValueConverter}"
+                                                    Mode="OneWay"
+                                                    Path="ActiveProfile.FocuserSettings.AutoFocusExposureTime"
+                                                    Source="{StaticResource ProfileService}"
+                                                    UpdateSourceTrigger="PropertyChanged" />
+                                            </ninactrl:HintTextBox.HintText>
+                                            <ninactrl:HintTextBox.Text>
+                                                <Binding
+                                                    Converter="{StaticResource MinusOneToEmptyStringConverter}"
+                                                    Mode="TwoWay"
+                                                    Path="AutoFocusExposureTime"
+                                                    UpdateSourceTrigger="LostFocus">
+                                                    <Binding.ValidationRules>
                                                         <rules:DoubleRangeRule>
                                                             <rules:DoubleRangeRule.ValidRange>
-                                                                <rules:DoubleRangeChecker Maximum="600" Minimum="0.01" />
+                                                                <rules:DoubleRangeChecker Maximum="600" Minimum="-1" />
                                                             </rules:DoubleRangeRule.ValidRange>
                                                         </rules:DoubleRangeRule>
-                                                    </MultiBinding.ValidationRules>
-                                                    <Binding
-                                                        Mode="TwoWay"
-                                                        Path="AutoFocusExposureTime"
-                                                        UpdateSourceTrigger="PropertyChanged" />
-                                                    <Binding
-                                                        Mode="OneWay"
-                                                        Path="ActiveProfile.FocuserSettings.AutoFocusExposureTime"
-                                                        Source="{StaticResource ProfileService}"
-                                                        UpdateSourceTrigger="PropertyChanged" />
-                                                </MultiBinding>
-                                            </TextBox.Text>
-                                        </TextBox>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </ninactrl:HintTextBox.Text>
+                                        </ninactrl:HintTextBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                                 <DataGridTemplateColumn.CellTemplate>
@@ -618,29 +629,38 @@
                                 </DataGridTemplateColumn.Visibility>
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
-                                        <TextBox>
-                                            <TextBox.Text>
-                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
-                                                    <Binding
-                                                        Mode="TwoWay"
-                                                        Path="AutoFocusGain"
-                                                        UpdateSourceTrigger="PropertyChanged">
-                                                        <Binding.ValidationRules>
-                                                            <util:ShortRangeRule>
-                                                                <util:ShortRangeRule.ValidRange>
-                                                                    <util:ShortRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
-                                                                </util:ShortRangeRule.ValidRange>
-                                                            </util:ShortRangeRule>
-                                                        </Binding.ValidationRules>
-                                                    </Binding>
-                                                    <Binding
-                                                        Mode="OneWay"
-                                                        Path="Data.DefaultGain"
-                                                        Source="{StaticResource CameraInfo}"
-                                                        UpdateSourceTrigger="PropertyChanged" />
-                                                </MultiBinding>
-                                            </TextBox.Text>
-                                        </TextBox>
+                                        <ninactrl:HintTextBox
+                                            MinWidth="40"
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            VerticalContentAlignment="Center"
+                                            Foreground="{StaticResource PrimaryBrush}"
+                                            TextAlignment="Center">
+                                            <ninactrl:HintTextBox.HintText>
+                                                <Binding
+                                                    Converter="{StaticResource CameraDefaultValueConverter}"
+                                                    Mode="OneWay"
+                                                    Path="Data.DefaultGain"
+                                                    Source="{StaticResource CameraInfo}"
+                                                    UpdateSourceTrigger="PropertyChanged" />
+                                            </ninactrl:HintTextBox.HintText>
+                                            <ninactrl:HintTextBox.Text>
+                                                <Binding
+                                                    Converter="{StaticResource MinusOneToEmptyStringConverter}"
+                                                    Mode="TwoWay"
+                                                    Path="AutoFocusGain"
+                                                    UpdateSourceTrigger="LostFocus">
+                                                    <Binding.ValidationRules>
+                                                        <util:ShortRangeRule>
+                                                            <util:ShortRangeRule.ValidRange>
+                                                                <util:ShortRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
+                                                            </util:ShortRangeRule.ValidRange>
+                                                        </util:ShortRangeRule>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </ninactrl:HintTextBox.Text>
+                                        </ninactrl:HintTextBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                                 <DataGridTemplateColumn.CellTemplate>
@@ -682,29 +702,38 @@
                                 </DataGridTemplateColumn.Visibility>
                                 <DataGridTemplateColumn.CellEditingTemplate>
                                     <DataTemplate>
-                                        <TextBox>
-                                            <TextBox.Text>
-                                                <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
-                                                    <Binding
-                                                        Mode="TwoWay"
-                                                        Path="Offset"
-                                                        UpdateSourceTrigger="PropertyChanged">
-                                                        <Binding.ValidationRules>
-                                                            <util:ShortRangeRule>
-                                                                <util:ShortRangeRule.ValidRange>
-                                                                    <util:ShortRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.OffsetMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.OffsetMin}" />
-                                                                </util:ShortRangeRule.ValidRange>
-                                                            </util:ShortRangeRule>
-                                                        </Binding.ValidationRules>
-                                                    </Binding>
-                                                    <Binding
-                                                        Mode="OneWay"
-                                                        Path="Data.DefaultOffset"
-                                                        Source="{StaticResource CameraInfo}"
-                                                        UpdateSourceTrigger="PropertyChanged" />
-                                                </MultiBinding>
-                                            </TextBox.Text>
-                                        </TextBox>
+                                        <ninactrl:HintTextBox
+                                            MinWidth="40"
+                                            Margin="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            HorizontalContentAlignment="Center"
+                                            VerticalContentAlignment="Center"
+                                            Foreground="{StaticResource PrimaryBrush}"
+                                            TextAlignment="Center">
+                                            <ninactrl:HintTextBox.HintText>
+                                                <Binding
+                                                    Converter="{StaticResource CameraDefaultValueConverter}"
+                                                    Mode="OneWay"
+                                                    Path="Data.DefaultOffset"
+                                                    Source="{StaticResource CameraInfo}"
+                                                    UpdateSourceTrigger="PropertyChanged" />
+                                            </ninactrl:HintTextBox.HintText>
+                                            <ninactrl:HintTextBox.Text>
+                                                <Binding
+                                                    Converter="{StaticResource MinusOneToEmptyStringConverter}"
+                                                    Mode="TwoWay"
+                                                    Path="AutoFocusOffset"
+                                                    UpdateSourceTrigger="LostFocus">
+                                                    <Binding.ValidationRules>
+                                                        <util:ShortRangeRule>
+                                                            <util:ShortRangeRule.ValidRange>
+                                                                <util:ShortRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.OffsetMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.OffsetMin}" />
+                                                            </util:ShortRangeRule.ValidRange>
+                                                        </util:ShortRangeRule>
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </ninactrl:HintTextBox.Text>
+                                        </ninactrl:HintTextBox>
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellEditingTemplate>
                                 <DataGridTemplateColumn.CellTemplate>

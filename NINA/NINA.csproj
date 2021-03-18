@@ -686,6 +686,7 @@
     <Compile Include="Utility\Converters\FilenameConverter.cs" />
     <Compile Include="Utility\CameraSDKs\QHYSDK\IQhyccdSdk.cs" />
     <Compile Include="Utility\Converters\InverseMultiBooleanORConverter.cs" />
+    <Compile Include="Utility\Converters\CameraDefaultValueConverter.cs" />
     <Compile Include="Utility\Converters\NullOrEmptyStringToVisibilityCollapsedConverter.cs" />
     <Compile Include="Utility\CustomDateTime.cs" />
     <Compile Include="Utility\Enum\ComparisonOperatorEnum.cs" />
@@ -778,6 +779,9 @@
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleEndContainer.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleExposure.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleStartContainer.cs" />
+    <Compile Include="View\CameraControlView.xaml.cs">
+      <DependentUpon>CameraControlView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Equipment\Guider\IsMGEN2ToVisibilityConverter.cs" />
     <Compile Include="View\Imaging\AnchorableSequence2View.xaml.cs">
       <DependentUpon>AnchorableSequence2View.xaml</DependentUpon>
@@ -1532,9 +1536,6 @@
     <Compile Include="View\AutoFocusChart.xaml.cs">
       <DependentUpon>AutoFocusChart.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\CameraControlView.xaml.cs">
-      <DependentUpon>CameraControlView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Equipment\Camera\CameraCoolingChartsView.xaml.cs">
       <DependentUpon>CameraCoolingChartsView.xaml</DependentUpon>
     </Compile>
@@ -1965,6 +1966,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\CameraControlView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Equipment\Guider\MetaGuideSetupView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -2134,10 +2139,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AutoFocusChart.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\CameraControlView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

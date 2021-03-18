@@ -84,4 +84,5 @@
     <converters:DrawingToMediaBrushConverter x:Key="DrawingToMediaBrushConverter" />
     <converters:InverseMultiBooleanORConverter x:Key="InverseMultiBooleanORConverter" />
     <converters:NullOrEmptyStringToVisibilityCollapsedConverter x:Key="NullOrEmptyStringToVisibilityCollapsedConverter" />
+    <converters:CameraDefaultValueConverter x:Key="CameraDefaultValueConverter" />
 </ResourceDictionary>

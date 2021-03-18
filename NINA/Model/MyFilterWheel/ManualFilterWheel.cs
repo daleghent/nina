@@ -135,6 +135,11 @@ namespace NINA.Model.MyFilterWheel {
 
         public Task<bool> Connect(CancellationToken token) {
             Connected = true;
+            if (Filters.Count == 0) {
+                var filter = new FilterInfo(Locale.Loc.Instance["LblFilter"] + 1, 0, 0, -1, new Model.MyCamera.BinningMode(1, 1), -1, -1);
+                profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters.Add(filter);
+                RaisePropertyChanged(nameof(Filters));
+            }
             return Task.FromResult(true);
         }
 

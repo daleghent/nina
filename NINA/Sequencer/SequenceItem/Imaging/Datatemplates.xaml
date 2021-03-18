@@ -13,6 +13,7 @@
     xmlns:filter="clr-namespace:NINA.Model.MyFilterWheel"
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.Imaging"
     xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale"
     xmlns:util="clr-namespace:NINA.Utility"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
@@ -124,33 +125,38 @@
                 VerticalAlignment="Center"
                 Text="|" />
             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblGain}" />
-            <TextBox
+            <ninactrl:HintTextBox
                 MinWidth="40"
                 Margin="5,0,0,0"
                 VerticalAlignment="Center"
+                HorizontalContentAlignment="Right"
+                VerticalContentAlignment="Center"
+                Foreground="{StaticResource PrimaryBrush}"
                 TextAlignment="Right">
-                <TextBox.Text>
-                    <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
-                        <Binding
-                            Mode="TwoWay"
-                            Path="Gain"
-                            UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <util:ShortRangeRule>
-                                    <util:ShortRangeRule.ValidRange>
-                                        <util:ShortRangeChecker Maximum="32767" Minimum="-1" />
-                                    </util:ShortRangeRule.ValidRange>
-                                </util:ShortRangeRule>
-                            </Binding.ValidationRules>
-                        </Binding>
-                        <Binding
-                            Mode="OneWay"
-                            Path="Data.DefaultGain"
-                            Source="{StaticResource CameraInfo}"
-                            UpdateSourceTrigger="PropertyChanged" />
-                    </MultiBinding>
-                </TextBox.Text>
-            </TextBox>
+                <ninactrl:HintTextBox.HintText>
+                    <Binding
+                        Converter="{StaticResource CameraDefaultValueConverter}"
+                        Mode="OneWay"
+                        Path="Data.DefaultGain"
+                        Source="{StaticResource CameraInfo}"
+                        UpdateSourceTrigger="PropertyChanged" />
+                </ninactrl:HintTextBox.HintText>
+                <ninactrl:HintTextBox.Text>
+                    <Binding
+                        Converter="{StaticResource MinusOneToEmptyStringConverter}"
+                        Mode="TwoWay"
+                        Path="Gain"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <util:ShortRangeRule>
+                                <util:ShortRangeRule.ValidRange>
+                                    <util:ShortRangeChecker Maximum="32767" Minimum="-1" />
+                                </util:ShortRangeRule.ValidRange>
+                            </util:ShortRangeRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ninactrl:HintTextBox.Text>
+            </ninactrl:HintTextBox>
         </WrapPanel>
 
         <!--  Offset  -->
@@ -170,33 +176,38 @@
                 VerticalAlignment="Center"
                 Text="|" />
             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblOffset}" />
-            <TextBox
+            <ninactrl:HintTextBox
                 MinWidth="40"
                 Margin="5,0,0,0"
                 VerticalAlignment="Center"
+                HorizontalContentAlignment="Right"
+                VerticalContentAlignment="Center"
+                Foreground="{StaticResource PrimaryBrush}"
                 TextAlignment="Right">
-                <TextBox.Text>
-                    <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
-                        <Binding
-                            Mode="TwoWay"
-                            Path="Offset"
-                            UpdateSourceTrigger="PropertyChanged">
-                            <Binding.ValidationRules>
-                                <util:ShortRangeRule>
-                                    <util:ShortRangeRule.ValidRange>
-                                        <util:ShortRangeChecker Maximum="32767" Minimum="-1" />
-                                    </util:ShortRangeRule.ValidRange>
-                                </util:ShortRangeRule>
-                            </Binding.ValidationRules>
-                        </Binding>
-                        <Binding
-                            Mode="OneWay"
-                            Path="Data.DefaultOffset"
-                            Source="{StaticResource CameraInfo}"
-                            UpdateSourceTrigger="PropertyChanged" />
-                    </MultiBinding>
-                </TextBox.Text>
-            </TextBox>
+                <ninactrl:HintTextBox.HintText>
+                    <Binding
+                        Converter="{StaticResource CameraDefaultValueConverter}"
+                        Mode="OneWay"
+                        Path="Data.DefaultOffset"
+                        Source="{StaticResource CameraInfo}"
+                        UpdateSourceTrigger="PropertyChanged" />
+                </ninactrl:HintTextBox.HintText>
+                <ninactrl:HintTextBox.Text>
+                    <Binding
+                        Converter="{StaticResource MinusOneToEmptyStringConverter}"
+                        Mode="TwoWay"
+                        Path="Offset"
+                        UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <util:ShortRangeRule>
+                                <util:ShortRangeRule.ValidRange>
+                                    <util:ShortRangeChecker Maximum="32767" Minimum="-1" />
+                                </util:ShortRangeRule.ValidRange>
+                            </util:ShortRangeRule>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </ninactrl:HintTextBox.Text>
+            </ninactrl:HintTextBox>
         </WrapPanel>
     </WrapPanel>
 

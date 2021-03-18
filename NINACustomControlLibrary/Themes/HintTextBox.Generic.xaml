@@ -37,7 +37,8 @@
                             Foreground="{TemplateBinding Foreground}"
                             IsHitTestVisible="False"
                             Opacity="0.4"
-                            Text="{TemplateBinding HintText}">
+                            Text="{TemplateBinding HintText}"
+                            TextAlignment="{TemplateBinding TextAlignment}">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
                                     <Setter Property="Visibility" Value="Collapsed" />
