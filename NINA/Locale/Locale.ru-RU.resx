@@ -5332,7 +5332,7 @@ Dec: {1}</value>
     <value>Мастер не обнаружил правильного уровня яркости после 5 попыток. Пожалуйста, попробуйте изменить размер шага или допусков.</value>
   </data>
   <data name="LblFlatDeviceSettleTime" xml:space="preserve">
-    <value>Settle Time</value>
+    <value>Тайм-аут успокоения</value>
   </data>
   <data name="LblInitializingSequencer" xml:space="preserve">
     <value>Инициализация последовательности...</value>
@@ -5350,6 +5350,6 @@ Dec: {1}</value>
     <value>Переместить вращатель механически</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
-    <value>Meridian</value>
+    <value>Меридиан</value>
   </data>
 </root>
