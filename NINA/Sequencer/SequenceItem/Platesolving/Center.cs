@@ -85,7 +85,6 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         protected virtual async Task<PlateSolveResult> DoCenter(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            await guiderMediator.StopGuiding(token);
             await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
             var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
@@ -121,7 +120,11 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             var service = WindowServiceFactory.Create();
             service.Show(plateSolveStatusVM, plateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
             try {
+                var stoppedGuiding = await guiderMediator.StopGuiding(token);
                 var result = await DoCenter(progress, token);
+                if (stoppedGuiding) {
+                    await guiderMediator.StartGuiding(false, progress, token);
+                }
                 if (result.Success == false) {
                     throw new Exception(Locale.Loc.Instance["LblPlatesolveFailed"]);
                 }

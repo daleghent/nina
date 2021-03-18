@@ -68,7 +68,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 var orientation = 0.0f;
                 float rotationDistance = float.MaxValue;
 
-                await guiderMediator.StopGuiding(token);
+                var stoppedGuiding = await guiderMediator.StopGuiding(token);
                 await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
                 /* Loop until the rotation is within tolerances*/
@@ -101,6 +101,11 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
                 /* Once everything is in place do a centering of the object */
                 var centerResult = await base.DoCenter(progress, token);
+
+                if (stoppedGuiding) {
+                    await guiderMediator.StartGuiding(false, progress, token);
+                }
+
                 if (!centerResult.Success) {
                     throw new Exception(Locale.Loc.Instance["LblPlatesolveFailed"]);
                 }

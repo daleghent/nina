@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Moq;
+using NINA.Model;
 using NINA.Model.MyTelescope;
 using NINA.Sequencer;
 using NINA.Sequencer.Container;
@@ -88,6 +89,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
         [Test]
         public async Task Execute_NoIssues_LogicCalled() {
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = true });
+            guiderMediatorMock.Setup(x => x.StopGuiding(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
             var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
 
             var sut = new SlewScopeToRaDec(telescopeMediatorMock.Object, guiderMediatorMock.Object);
@@ -96,6 +98,22 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
 
             telescopeMediatorMock.Verify(x => x.SlewToCoordinatesAsync(It.Is<Coordinates>(c => c == coordinates), It.IsAny<CancellationToken>()), Times.Once);
             guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Once);
+            guiderMediatorMock.Verify(x => x.StartGuiding(It.IsAny<bool>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
+        public async Task Execute_NoIssues_LogicCalled_GuidingNotStoppedAndNotResumed() {
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = true });
+            guiderMediatorMock.Setup(x => x.StopGuiding(It.IsAny<CancellationToken>())).Returns(Task.FromResult(false));
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
+
+            var sut = new SlewScopeToRaDec(telescopeMediatorMock.Object, guiderMediatorMock.Object);
+            sut.Coordinates.Coordinates = coordinates;
+            await sut.Execute(default, default);
+
+            telescopeMediatorMock.Verify(x => x.SlewToCoordinatesAsync(It.Is<Coordinates>(c => c == coordinates), It.IsAny<CancellationToken>()), Times.Once);
+            guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Once);
+            guiderMediatorMock.Verify(x => x.StartGuiding(It.IsAny<bool>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]
