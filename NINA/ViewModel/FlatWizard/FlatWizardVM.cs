@@ -425,7 +425,7 @@ namespace NINA.ViewModel.FlatWizard {
             HistogramMath.ExposureAduState exposureAduState;
             do {
                 // Set flat panel brightness to static brightness
-                if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
+                if (flatDeviceInfo?.Connected == true) {
                     await flatDeviceMediator.SetBrightness(Math.Round(filter.Settings.MaxFlatDeviceBrightness / 100d, BRIGHTNESS_PRECISION), flatSequenceCts.Token);
                 }
 
@@ -454,7 +454,7 @@ namespace NINA.ViewModel.FlatWizard {
                     case HistogramMath.ExposureAduState.ExposureWithinBounds:
                         CalculatedHistogramMean = imageStatistics.Mean;
                         result = exposureTime;
-                        if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
+                        if (flatDeviceInfo?.Connected == true) {
                             var actualGain = Gain == -1 ? profileService.ActiveProfile.CameraSettings.Gain ?? -1 : Gain;
                             profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(
                                 new FlatDeviceFilterSettingsKey(filter.Filter?.Position, BinningMode, actualGain),
@@ -509,6 +509,7 @@ namespace NINA.ViewModel.FlatWizard {
                         break;
 
                     default:
+                        Logger.Error($"Invalid Histogram State {exposureAduState}.");
                         throw new ArgumentOutOfRangeException();
                 }
 
@@ -561,7 +562,7 @@ namespace NINA.ViewModel.FlatWizard {
         }
 
         public async Task<double> FindFlatDeviceBrightness(PauseToken pt, FlatWizardFilterSettingsWrapper filter) {
-            if (!(flatDeviceInfo != null && flatDeviceInfo.Connected)) return 0;
+            if (flatDeviceInfo?.Connected != true) throw new Exception(Loc.Instance["LblFlatDeviceNotConnected"]); ;
             var result = 0d;
             var dataPoints = new List<ScatterErrorPoint>();
             double GetNextDataPoint() {
@@ -603,7 +604,7 @@ namespace NINA.ViewModel.FlatWizard {
                     case HistogramMath.ExposureAduState.ExposureWithinBounds:
                         CalculatedHistogramMean = imageStatistics.Mean;
                         result = brightness;
-                        if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
+                        if (flatDeviceInfo?.Connected == true) {
                             var actualGain = Gain == -1 ? profileService.ActiveProfile.CameraSettings.Gain ?? -1 : Gain;
                             profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(
                                 new FlatDeviceFilterSettingsKey(filter.Filter?.Position, BinningMode, actualGain),
@@ -729,12 +730,12 @@ namespace NINA.ViewModel.FlatWizard {
                 flatSequenceCts?.Dispose();
                 flatSequenceCts = new CancellationTokenSource();
                 var filterCount = 0;
-                if (flatDeviceInfo != null && flatDeviceInfo.Connected && flatDeviceInfo.SupportsOpenClose) {
+                if ((flatDeviceInfo?.Connected & flatDeviceInfo?.SupportsOpenClose) == true) {
                     await flatDeviceMediator.CloseCover(flatSequenceCts.Token);
                 }
 
-                if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
-                    await flatDeviceMediator.ToggleLight((object)true, flatSequenceCts.Token);
+                if (flatDeviceInfo?.Connected == true) {
+                    await flatDeviceMediator.ToggleLight(true, flatSequenceCts.Token);
                 }
 
                 var regularTimes = new Dictionary<FlatWizardFilterSettingsWrapper, (double time, double brightness)>();
@@ -773,9 +774,6 @@ namespace NINA.ViewModel.FlatWizard {
                                 break;
 
                             case FlatWizardMode.DYNAMICBRIGHTNESS:
-                                if (FlatDeviceInfo?.Connected != true) {
-                                    throw new Exception(Locale.Loc.Instance["LblFlatDeviceNotConnected"]);
-                                }
                                 time = filter.Settings.MaxFlatExposureTime;
                                 brightness = await FindFlatDeviceBrightness(pt, filter);
                                 await TakeRegularFlats(regularTimes, time, brightness, filter, pt);
@@ -788,6 +786,7 @@ namespace NINA.ViewModel.FlatWizard {
                                 break;
 
                             default:
+                                Logger.Error($"Invalid flat wizard mode {FlatWizardMode}.");
                                 throw new ArgumentOutOfRangeException();
                         }
                     } catch (OperationCanceledException) {
@@ -804,7 +803,7 @@ namespace NINA.ViewModel.FlatWizard {
                 Notification.ShowError(ex.Message);
                 return false;
             } finally {
-                if (flatDeviceInfo != null && flatDeviceInfo.Connected) { await flatDeviceMediator.ToggleLight(false, flatSequenceCts.Token); }
+                if (flatDeviceInfo?.Connected == true) { await flatDeviceMediator.ToggleLight(false, flatSequenceCts.Token); }
                 imagingVM.DestroyImage();
                 Image = null;
                 GC.Collect();
@@ -820,7 +819,7 @@ namespace NINA.ViewModel.FlatWizard {
             CalculatedExposureTime = time;
             exposureTimes.Add(filter, (time, brightness));
 
-            if (flatDeviceInfo != null && flatDeviceInfo.Connected) {
+            if (flatDeviceInfo?.Connected == true) {
                 await flatDeviceMediator.SetBrightness(brightness, flatSequenceCts.Token);
             }
             var flatSequence = new CaptureSequence(time, CaptureSequence.ImageTypes.FLAT, filter.Filter, BinningMode, FlatCount) { Gain = Gain };
@@ -907,7 +906,7 @@ namespace NINA.ViewModel.FlatWizard {
                 time = tiPlus1 - (ti + trot).TotalMilliseconds / 1000d;
 
                 //TODO: Move this to Trace, once confirmed working well
-                Logger.Debug($"ti:{ti}, trot:{trot}, tiPlus1:{tiPlus1}, eiPlus1:{time}");
+                Logger.Error($"ti:{ti}, trot:{trot}, tiPlus1:{tiPlus1}, eiPlus1:{time}");
             }
             skyFlatTimes.Add(filter, exposureTimes);
         }
@@ -916,8 +915,8 @@ namespace NINA.ViewModel.FlatWizard {
             Dictionary<FlatWizardFilterSettingsWrapper, List<double>> skyFlatTimes, PauseToken pt) {
             if ((exposureTimes.Count > 0 || skyFlatTimes.Count > 0) && DarkFlatCount > 0) {
                 progress.Report(new ApplicationStatus { Status = Loc.Instance["LblPreparingDarkFlatSequence"], Source = Title });
-                if (flatDeviceInfo != null && flatDeviceInfo.Connected) { await flatDeviceMediator.ToggleLight(false, flatSequenceCts.Token); }
-                if (flatDeviceInfo != null && flatDeviceInfo.Connected && flatDeviceInfo.SupportsOpenClose && profileService.ActiveProfile.FlatDeviceSettings.OpenForDarkFlats) { await flatDeviceMediator.OpenCover(flatSequenceCts.Token); }
+                if (flatDeviceInfo?.Connected == true) { await flatDeviceMediator.ToggleLight(false, flatSequenceCts.Token); }
+                if ((flatDeviceInfo?.Connected & flatDeviceInfo?.SupportsOpenClose) == true && profileService.ActiveProfile.FlatDeviceSettings.OpenForDarkFlats) { await flatDeviceMediator.OpenCover(flatSequenceCts.Token); }
                 var dialogResult = messageBox.Show(Loc.Instance["LblCoverScopeMsgBox"],
                     Loc.Instance["LblCoverScopeMsgBoxTitle"], MessageBoxButton.OKCancel, MessageBoxResult.OK);
                 if (dialogResult == MessageBoxResult.OK) {

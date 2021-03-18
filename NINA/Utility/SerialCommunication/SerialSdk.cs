@@ -72,16 +72,15 @@ namespace NINA.Utility.SerialCommunication {
                     return response;
                 }
 
-                WriteAndLog(command);
-
-                if (!command.HasResponse) {
-                    ssSerial.Release();
-                    return null;
-                }
-
-                var result = string.Empty;
-                var retries = 2;
                 try {
+                    WriteAndLog(command);
+
+                    if (!command.HasResponse) {
+                        return null;
+                    }
+
+                    var result = string.Empty;
+                    var retries = 2;
                     while (string.IsNullOrEmpty(result) && retries >= 0) {
                         result = ReadAndLog(command, ref retries);
                     }
