@@ -134,26 +134,38 @@
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblGain}" />
                             <Grid Margin="5,0,0,0">
-                                <TextBox IsEnabled="{Binding Source={StaticResource CameraInfo}, Path=Data.CanSetGain}" Visibility="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
-                                    <TextBox.Text>
-                                        <MultiBinding Converter="{StaticResource MinusOneToBaseValueConverter}" UpdateSourceTrigger="LostFocus">
-                                            <Binding Mode="TwoWay" Path="Gain">
-                                                <Binding.ValidationRules>
-                                                    <rules:IntRangeRuleWithDefault>
-                                                        <rules:IntRangeRuleWithDefault.ValidRange>
-                                                            <rules:IntRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
-                                                        </rules:IntRangeRuleWithDefault.ValidRange>
-                                                    </rules:IntRangeRuleWithDefault>
-                                                </Binding.ValidationRules>
-                                            </Binding>
-                                            <Binding
-                                                Mode="OneWay"
-                                                Path="Data.DefaultGain"
-                                                Source="{StaticResource CameraInfo}"
-                                                UpdateSourceTrigger="PropertyChanged" />
-                                        </MultiBinding>
-                                    </TextBox.Text>
-                                </TextBox>
+                                <ninactrl:HintTextBox
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Right"
+                                    VerticalContentAlignment="Center"
+                                    Foreground="{StaticResource PrimaryBrush}"
+                                    IsEnabled="{Binding Source={StaticResource CameraInfo}, Path=Data.CanSetGain}"
+                                    TextAlignment="Right"
+                                    Visibility="{Binding Source={StaticResource CameraInfo}, Path=Data.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
+                                    <ninactrl:HintTextBox.HintText>
+                                        <Binding
+                                            Converter="{StaticResource CameraDefaultValueConverter}"
+                                            Mode="OneWay"
+                                            Path="Data.DefaultGain"
+                                            Source="{StaticResource CameraInfo}"
+                                            UpdateSourceTrigger="PropertyChanged" />
+                                    </ninactrl:HintTextBox.HintText>
+                                    <ninactrl:HintTextBox.Text>
+                                        <Binding
+                                            Converter="{StaticResource MinusOneToEmptyStringConverter}"
+                                            Mode="TwoWay"
+                                            Path="Gain"
+                                            UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <rules:IntRangeRuleWithDefault>
+                                                    <rules:IntRangeRuleWithDefault.ValidRange>
+                                                        <rules:IntRangeChecker Maximum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMax}" Minimum="{Binding Source={StaticResource CameraInfo}, Path=Data.GainMin}" />
+                                                    </rules:IntRangeRuleWithDefault.ValidRange>
+                                                </rules:IntRangeRuleWithDefault>
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </ninactrl:HintTextBox.Text>
+                                </ninactrl:HintTextBox>
                                 <ComboBox
                                     DisplayMemberPath="Text"
                                     IsSynchronizedWithCurrentItem="True"
