@@ -702,7 +702,7 @@ namespace NINA.ViewModel {
                 if (!completed) {
                     Logger.Warning($"AutoFocus did not complete successfully, so restoring the focuser position to {initialFocusPosition}");
                     try {
-                        await focuserMediator.MoveFocuser(initialFocusPosition, token);
+                        await focuserMediator.MoveFocuser(initialFocusPosition, default);
                     } catch (Exception e) {
                         Logger.Error("Failed to restore focuser position after AutoFocus failure", e);
                     }
@@ -735,7 +735,7 @@ namespace NINA.ViewModel {
 
                 brightestStarPositions.Clear();
                 if (guidingStopped) {
-                    var startGuidingTask = this.guiderMediator.StartGuiding(false, progress, token);
+                    var startGuidingTask = this.guiderMediator.StartGuiding(false, progress, default);
                     var completedTask = await Task.WhenAny(Task.Delay(60000), startGuidingTask);
                     if (startGuidingTask != completedTask) {
                         Notification.ShowWarning(Locale.Loc.Instance["LblStartGuidingFailed"]);
