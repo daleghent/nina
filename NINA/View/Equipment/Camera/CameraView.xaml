@@ -341,10 +341,22 @@
                 IsEnabled="{Binding CameraInfo.Connected}">
                 <StackPanel Visibility="{Binding Cam, Converter={StaticResource NullToVisibilityConverter}}">
                     <DockPanel Margin="0,0,0,6" Visibility="{Binding Cam.CanGetGain, Converter={StaticResource VisibilityConverter}}">
-                        <TextBlock
-                            MinWidth="100"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDefaultGain}" />
+                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDefaultGain}" />
+                            <StackPanel
+                                Opacity="0.4"
+                                Orientation="Horizontal"
+                                Visibility="{Binding Cam.Gains, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="(" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.GainMin}" />
+                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.GainMax}" />
+                                <TextBlock VerticalAlignment="Center" Text=")" />
+                            </StackPanel>
+                        </StackPanel>
                         <Grid>
                             <ninactrl:IntStepperControl
                                 Width="200"
@@ -367,10 +379,20 @@
                         </DockPanel.ToolTip>
                     </DockPanel>
                     <DockPanel Margin="0,0,0,6" Visibility="{Binding Cam.CanSetOffset, Converter={StaticResource VisibilityConverter}}">
-                        <TextBlock
-                            MinWidth="100"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblDefaultOffset}" />
+
+                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDefaultOffset}" />
+                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="(" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.OffsetMin}" />
+                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.OffsetMax}" />
+                                <TextBlock VerticalAlignment="Center" Text=")" />
+                            </StackPanel>
+                        </StackPanel>
                         <ninactrl:IntStepperControl
                             Width="200"
                             HorizontalAlignment="Right"
