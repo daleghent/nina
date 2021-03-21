@@ -119,6 +119,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Profile chooser on startup can now be re-activated in options again once it is disabled
 - Guiding gets stopped before any telescope-moving sequencer command gets executed 
 - Gain/Offset fields will now show the default values as a hint text, rather than being populated inside the textbox itself. Having this approach, a user can directly enter specific values without having to clear the default value first.
+- The imaging tab layout is now saved per profile, instead of one layout for all profiles
 
 ### Local Horizon Display
 - It is now possible to define a custom horizon to be used and displayed in the altitude charts
