@@ -48,6 +48,9 @@ namespace NINA.Model.MyPlanetarium {
                 case PlanetariumEnum.C2A:
                     return new C2A(profileService);
 
+                case PlanetariumEnum.SKYTECHX:
+                    return new SkytechX(profileService);
+
                 default:
                     return null;
             }

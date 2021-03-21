@@ -502,6 +502,7 @@
     <Compile Include="Model\MyFlatDevice\AscomCoverCalibrator.cs" />
     <Compile Include="Model\MyFocuser\UltimatePowerboxV2.cs" />
     <Compile Include="Model\MyFlatDevice\ArteskyFlatBox.cs" />
+    <Compile Include="Model\MyPlanetarium\SkytechX.cs" />
     <Compile Include="Model\MySafetyMonitor\SafetyMonitorSimulator.cs" />
     <Compile Include="Model\MySafetyMonitor\SafetyMonitorSimulatorSetup.xaml.cs">
       <DependentUpon>SafetyMonitorSimulatorSetup.xaml</DependentUpon>

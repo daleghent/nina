@@ -777,6 +777,13 @@
                                                     </Setter.Value>
                                                 </Setter>
                                             </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=PART_PlanetariumList, Path=SelectedIndex}" Value="5">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <Binding Mode="TwoWay" Path="SkytechXHost" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBox.Style>
@@ -843,6 +850,17 @@
                                                 <Setter Property="Text">
                                                     <Setter.Value>
                                                         <Binding Mode="TwoWay" Path="C2APort">
+                                                            <Binding.ValidationRules>
+                                                                <rules:GreaterZeroRule />
+                                                            </Binding.ValidationRules>
+                                                        </Binding>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding ElementName=PART_PlanetariumList, Path=SelectedIndex}" Value="5">
+                                                <Setter Property="Text">
+                                                    <Setter.Value>
+                                                        <Binding Mode="TwoWay" Path="SkytechXPort">
                                                             <Binding.ValidationRules>
                                                                 <rules:GreaterZeroRule />
                                                             </Binding.ValidationRules>

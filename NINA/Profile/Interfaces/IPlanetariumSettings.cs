@@ -28,6 +28,8 @@ namespace NINA.Profile {
         int HNSKYPort { get; set; }
         string C2AHost { get; set; }
         int C2APort { get; set; }
+        string SkytechXHost { get; set; }
+        int SkytechXPort { get; set; }
         PlanetariumEnum PreferredPlanetarium { get; set; }
     }
 }

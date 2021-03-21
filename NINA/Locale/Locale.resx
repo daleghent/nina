@@ -5365,4 +5365,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblAstronomicalDusk" xml:space="preserve">
     <value>Astronomical Dusk</value>
   </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
 </root>

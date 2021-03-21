@@ -39,6 +39,8 @@ namespace NINA.Profile {
             hnskyHost = "localhost";
             c2aPort = 5876;
             c2aHost = "localhost";
+            skytechxPort = 2055;
+            skytechxHost = "localhost";
             preferredPlanetarium = PlanetariumEnum.CDC;
         }
 
@@ -202,6 +204,36 @@ namespace NINA.Profile {
             set {
                 if (c2aPort != value) {
                     c2aPort = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string skytechxHost;
+
+        [DataMember]
+        public string SkytechXHost {
+            get {
+                return skytechxHost;
+            }
+            set {
+                if (skytechxHost != value) {
+                    skytechxHost = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int skytechxPort;
+
+        [DataMember]
+        public int SkytechXPort {
+            get {
+                return skytechxPort;
+            }
+            set {
+                if (skytechxPort != value) {
+                    skytechxPort = value;
                     RaisePropertyChanged();
                 }
             }

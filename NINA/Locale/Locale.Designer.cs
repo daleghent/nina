@@ -12924,6 +12924,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SkytechX.
+        /// </summary>
+        internal static string LblSkytechX {
+            get {
+                return ResourceManager.GetString("LblSkytechX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sky Temperature.
         /// </summary>
         internal static string LblSkyTemperature {

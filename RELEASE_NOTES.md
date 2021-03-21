@@ -136,7 +136,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ### Sequencer
 - Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter
-- Added support for fetching sky view and location coordinates from the [C2A](http://www.astrosurf.com/c2a/) planetarium program
+- Added support for fetching sky view and location coordinates from the [C2A](http://www.astrosurf.com/c2a/) and [SkytechX](http://www.skytechx.eu/) planetarium programs
 
 ### Device-related Improvements
 - Canon CR3 image format is now supported

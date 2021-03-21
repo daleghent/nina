@@ -32,6 +32,9 @@ namespace NINA.Utility.Enum {
         HNSKY,
 
         [Description("LblC2A")]
-        C2A
+        C2A,
+
+        [Description("LblSkytechX")]
+        SKYTECHX
     }
 }
