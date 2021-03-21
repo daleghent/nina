@@ -12,14 +12,13 @@
 
 #endregion "copyright"
 
+using AvalonDock.Layout;
 using System.IO;
 using System.Linq;
-using Xceed.Wpf.AvalonDock.Layout;
 
 namespace NINA.Utility.AvalonDock {
 
     internal class LayoutInitializer : ILayoutUpdateStrategy {
-        public static string LAYOUTFILEPATH = Path.Combine(Utility.APPLICATIONTEMPPATH, "avalondock.config");
 
         public bool BeforeInsertAnchorable(LayoutRoot layout, LayoutAnchorable anchorableToShow, ILayoutContainer destinationContainer) {
             //AD wants to add the anchorable into destinationContainer

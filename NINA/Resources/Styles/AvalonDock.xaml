@@ -9,7 +9,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:dock="http://schemas.xceed.com/wpf/xaml/avalondock">
+    xmlns:dock="https://github.com/Dirkster99/AvalonDock">
 
     <dock:ActivateCommandLayoutItemFromLayoutModelConverter x:Key="ActivateCommandLayoutItemFromLayoutModelConverter" />
 

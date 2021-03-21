@@ -435,18 +435,6 @@
       <Component Win64="$(var.Win64)" Id="ToastNotifications.Messages.dll" Guid="74b98fb4-f2a9-44d8-8c8b-988b83bf09d4">
         <File Id="ToastNotifications.Messages.dll" Name="ToastNotifications.Messages.dll" Source="$(var.NINA_TargetDir)ToastNotifications.Messages.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="Xceed.Wpf.AvalonDock.dll" Guid="c38bd7a3-e97a-48c6-a51b-fca2b76d5d2a">
-        <File Id="Xceed.Wpf.AvalonDock.dll" Name="Xceed.Wpf.AvalonDock.dll" Source="$(var.NINA_TargetDir)Xceed.Wpf.AvalonDock.dll" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Guid="cbfe40b3-e9cf-4a2f-9556-3adbf62da0fc">
-        <File Id="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Name="Xceed.Wpf.AvalonDock.Themes.Aero.dll" Source="$(var.NINA_TargetDir)Xceed.Wpf.AvalonDock.Themes.Aero.dll" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Guid="391de18b-a586-4c09-a397-e2f01e13683c">
-        <File Id="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Name="Xceed.Wpf.AvalonDock.Themes.Metro.dll" Source="$(var.NINA_TargetDir)Xceed.Wpf.AvalonDock.Themes.Metro.dll" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Guid="aba4cd95-7ee0-40db-9514-aaebdc6fcdec">
-        <File Id="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Name="Xceed.Wpf.AvalonDock.Themes.VS2010.dll" Source="$(var.NINA_TargetDir)Xceed.Wpf.AvalonDock.Themes.VS2010.dll" />
-      </Component>
       <Component Win64="$(var.Win64)" Id="FreeImageNET.dll" Guid="65499493-d525-4075-b136-c37e5713dd5b">
         <File Id="FreeImageNET.dll" Name="FreeImageNET.dll" Source="$(var.NINA_TargetDir)FreeImageNET.dll" />
       </Component>
@@ -455,9 +443,6 @@
       </Component>
       <Component Win64="$(var.Win64)" Id="NINACustomControlLibrary.dll" Guid="f6c5c2f4-cd1b-4243-a976-2b3b886263b2">
         <File Id="NINACustomControlLibrary.dll" Name="NINACustomControlLibrary.dll" Source="$(var.NINACustomControlLibrary_TargetDir)NINACustomControlLibrary.dll" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Xceed.Wpf.Toolkit.dll" Guid="d7a57155-3e94-4748-9cae-84bf4184952f">
-        <File Id="Xceed.Wpf.Toolkit.dll" Name="Xceed.Wpf.Toolkit.dll" Source="$(var.NINA_TargetDir)Xceed.Wpf.Toolkit.dll" />
       </Component>
       <Component Win64="$(var.Win64)" Id="AsyncEnumerable.dll" Guid="8dd0fdbc-bacd-4fdf-a83d-0e0e4b7dc56f">
         <File Id="AsyncEnumerable.dll" Name="AsyncEnumerable.dll" Source="$(var.NINA_TargetDir)AsyncEnumerable.dll" />
@@ -554,6 +539,12 @@
       </Component>
       <Component Win64="$(var.Win64)" Id="System.Runtime.CompilerServices.Unsafe.dll" Guid="ebce0cd8-13a0-4e6b-b02e-343675da79b2">
         <File Id="System.Runtime.CompilerServices.Unsafe.dll" Name="System.Runtime.CompilerServices.Unsafe.dll" Source="$(var.NINA_TargetDir)System.Runtime.CompilerServices.Unsafe.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="DotNetProjects.Wpf.Extended.Toolkit.dll" Guid="8b21c463-4e12-4cd4-9c37-d9dcda86c79e">
+        <File Id="DotNetProjects.Wpf.Extended.Toolkit.dll" Name="DotNetProjects.Wpf.Extended.Toolkit.dll" Source="$(var.NINA_TargetDir)DotNetProjects.Wpf.Extended.Toolkit.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="AvalonDock.dll" Guid="59aa7c90-8b21-4475-aaf3-3e269094a407">
+        <File Id="AvalonDock.dll" Name="AvalonDock.dll" Source="$(var.NINA_TargetDir)AvalonDock.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

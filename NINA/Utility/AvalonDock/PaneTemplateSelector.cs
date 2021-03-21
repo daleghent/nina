@@ -29,7 +29,6 @@ using NINA.ViewModel.Imaging;
 using NINA.ViewModel.Sequencer;
 using System.Windows;
 using System.Windows.Controls;
-using Xceed.Wpf.AvalonDock.Layout;
 
 namespace NINA.Utility.AvalonDock {
 

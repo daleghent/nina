@@ -36,6 +36,7 @@ using NINA.ViewModel.Equipment.SafetyMonitor;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using System.Collections.Generic;
 
 namespace NINA.ViewModel {
 
@@ -47,7 +48,7 @@ namespace NINA.ViewModel {
             IPolarAlignmentVM polarAlignmentVM, IAnchorablePlateSolverVM plateSolverVM, ITelescopeVM telescopeVM, IGuiderVM guiderVM,
             IFocusTargetsVM focusTargetsVM, IAutoFocusVM autoFocusVM, IExposureCalculatorVM exposureCalculatorVM, IImageHistoryVM imageHistoryVM,
             IImageControlVM imageControlVM, IImageStatisticsVM imageStatisticsVM, IFlatDeviceVM flatDeviceVM, ISafetyMonitorVM safetyMonitorVM) : base(profileService) {
-            LoadAvalonDockLayoutCommand = new AsyncCommand<bool>((object o) => Task.Run(() => LoadAvalonDockLayout(o)));
+            LoadAvalonDockLayoutCommand = new AsyncCommand<bool>((object o) => Task.Run(() => InitializeAvalonDockLayout(o)));
             ResetDockLayoutCommand = new RelayCommand(ResetDockLayout, (object o) => _dockmanager != null);
 
             Anchorables.Add(imageControlVM);
@@ -100,6 +101,14 @@ namespace NINA.ViewModel {
             AnchorableTools.Add(exposureCalculatorVM);
 
             ClosingCommand = new RelayCommand(ClosingApplication);
+
+            profileService.ProfileChanged += ProfileService_ProfileChanged;
+        }
+
+        private void ProfileService_ProfileChanged(object sender, EventArgs e) {
+            lock (lockObj) {
+                _dockloaded = false;
+            }
         }
 
         private void ResetDockLayout(object arg) {
@@ -107,7 +116,11 @@ namespace NINA.ViewModel {
                 lock (lockObj) {
                     _dockloaded = false;
 
-                    var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
+                    foreach (var item in Anchorables) {
+                        item.IsVisible = false;
+                    }
+
+                    var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
                     serializer.LayoutSerializationCallback += (s, args) => {
                         var d = (DockableVM)args.Content;
                         d.IsVisible = true;
@@ -119,12 +132,12 @@ namespace NINA.ViewModel {
             }
         }
 
-        private ObservableCollection<IDockableVM> _anchorables;
+        private List<IDockableVM> _anchorables;
 
-        public ObservableCollection<IDockableVM> Anchorables {
+        public List<IDockableVM> Anchorables {
             get {
                 if (_anchorables == null) {
-                    _anchorables = new ObservableCollection<IDockableVM>();
+                    _anchorables = new List<IDockableVM>();
                 }
                 return _anchorables;
             }
@@ -134,12 +147,12 @@ namespace NINA.ViewModel {
             }
         }
 
-        private ObservableCollection<IDockableVM> _anchorableTools;
+        private List<IDockableVM> _anchorableTools;
 
-        public ObservableCollection<IDockableVM> AnchorableTools {
+        public List<IDockableVM> AnchorableTools {
             get {
                 if (_anchorableTools == null) {
-                    _anchorableTools = new ObservableCollection<IDockableVM>();
+                    _anchorableTools = new List<IDockableVM>();
                 }
                 return _anchorableTools;
             }
@@ -149,12 +162,12 @@ namespace NINA.ViewModel {
             }
         }
 
-        private ObservableCollection<IDockableVM> _anchorableInfoPanels;
+        private List<IDockableVM> _anchorableInfoPanels;
 
-        public ObservableCollection<IDockableVM> AnchorableInfoPanels {
+        public List<IDockableVM> AnchorableInfoPanels {
             get {
                 if (_anchorableInfoPanels == null) {
-                    _anchorableInfoPanels = new ObservableCollection<IDockableVM>();
+                    _anchorableInfoPanels = new List<IDockableVM>();
                 }
                 return _anchorableInfoPanels;
             }
@@ -164,32 +177,44 @@ namespace NINA.ViewModel {
             }
         }
 
-        private Xceed.Wpf.AvalonDock.DockingManager _dockmanager;
+        private AvalonDock.DockingManager _dockmanager;
         private bool _dockloaded = false;
         private object lockObj = new object();
         private Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
 
-        public bool LoadAvalonDockLayout(object o) {
+        public bool InitializeAvalonDockLayout(object o) {
             lock (lockObj) {
                 if (!_dockloaded) {
                     _dispatcher.Invoke(new Action(() => {
-                        _dockmanager = (Xceed.Wpf.AvalonDock.DockingManager)o;
+                        _dockmanager = (AvalonDock.DockingManager)o;
 
-                        var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
+                        foreach (var item in Anchorables) {
+                            item.IsVisible = false;
+                        }
+
+                        var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
                         serializer.LayoutSerializationCallback += (s, args) => {
                             args.Content = args.Content;
                         };
 
-                        if (System.IO.File.Exists(Utility.AvalonDock.LayoutInitializer.LAYOUTFILEPATH)) {
+                        var profileId = profileService.ActiveProfile.Id;
+                        var profilePath = Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
+                        if (System.IO.File.Exists(profilePath)) {
                             try {
-                                serializer.Deserialize(Utility.AvalonDock.LayoutInitializer.LAYOUTFILEPATH);
+                                serializer.Deserialize(profilePath);
                                 _dockloaded = true;
                             } catch (Exception ex) {
                                 Logger.Error("Failed to load AvalonDock Layout. Loading default Layout!", ex);
-                                using (var stream = new StringReader(Properties.Resources.avalondock)) {
-                                    serializer.Deserialize(stream);
-                                    _dockloaded = true;
-                                }
+                                LoadDefaultLayout(serializer);
+                            }
+                        } else if (File.Exists(Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "avalondock.config"))) {
+                            try {
+                                Logger.Info("Migrating AvalonDock layout from old path");
+                                serializer.Deserialize(Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "avalondock.config"));
+                                _dockloaded = true;
+                            } catch (Exception ex) {
+                                Logger.Error("Failed to load AvalonDock Layout. Loading default Layout!", ex);
+                                LoadDefaultLayout(serializer);
                             }
                         } else {
                             LoadDefaultLayout(serializer);
@@ -200,7 +225,7 @@ namespace NINA.ViewModel {
             }
         }
 
-        private void LoadDefaultLayout(Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer serializer) {
+        private void LoadDefaultLayout(AvalonDock.Layout.Serialization.XmlLayoutSerializer serializer) {
             using (var stream = new StringReader(Properties.Resources.avalondock)) {
                 serializer.Deserialize(stream);
                 _dockloaded = true;
@@ -210,8 +235,11 @@ namespace NINA.ViewModel {
         public void SaveAvalonDockLayout() {
             lock (lockObj) {
                 if (_dockloaded) {
-                    var serializer = new Xceed.Wpf.AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
-                    serializer.Serialize(Utility.AvalonDock.LayoutInitializer.LAYOUTFILEPATH);
+                    var serializer = new AvalonDock.Layout.Serialization.XmlLayoutSerializer(_dockmanager);
+
+                    var profileId = profileService.ActiveProfile.Id;
+                    var profilePath = Path.Combine(ProfileService.PROFILEFOLDER, $"{profileId}.dock.config");
+                    serializer.Serialize(profilePath);
                 }
             }
         }
