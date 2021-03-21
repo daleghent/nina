@@ -401,9 +401,16 @@ namespace NINA.MGEN3 {
                 case MG3SDK.ERR_GUIDESTAR_NOT_AVAILABLE:
                     throw new NoStarSeenException();
 
+                case MG3SDK.ERR_CALIBRATION_MISSING:
+                    throw new Exception("Calibration is missing to start autoguiding");
+
+                case MG3SDK.ERR_AG_ACTIVE:
+                    throw new AutoGuidingActiveException();
+
                 case MG3SDK.ERR_FUNCTION_TIMED_OUT:
                     throw new Exception("Function timed out");
                 case MG3SDK.ERR_CANCELED:
+                    logger.Info("Function was cancelled");
                     return;
 
                 case MG3SDK.MG3_OK:
@@ -429,9 +436,14 @@ namespace NINA.MGEN3 {
 
                 await Task.Delay(5000, ct);
 
-                ValidateReturnCode(this.sdk.StartAutoGuiding(1));
-
-                await WaitForFunction(ct);
+                ValidateReturnCode(this.sdk.StartAutoGuiding(0));
+                try {
+                    await WaitForFunction(ct);
+                } catch (MGEN.Exceptions.CalibrationIsMissingException) {
+                    logger.Info("Calibration is missing to start guiding. Starting calibration");
+                    await StartCalibration(ct);
+                    return await StartGuiding(ct);
+                }
 
                 return true;
             });

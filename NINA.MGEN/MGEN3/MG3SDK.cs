@@ -575,6 +575,7 @@ namespace NINA.MGEN3 {
         public const int ERR_CAMERA_NOT_ACTIVE = 100;  //Camera is not active but would be required
         public const int ERR_GUIDESTAR_NOT_AVAILABLE = 110;  //no guiding star is available currently
         public const int ERR_MOVEMENT_TOO_SMALL = 111;  //the movement of the star is too small (for a function that needs it)
+        public const int ERR_AG_ACTIVE = 120;  //the movement of the star is too small (for a function that needs it)
 
         public const int ERR_FILESYS_NOT_AVAILABLE = 200;  //FileSystem is not available (no SD card, mounting error etc.)
         public const int ERR_FILE_CANT_FIND = 201;  //a file can't be opened (found)
