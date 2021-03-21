@@ -2495,7 +2495,7 @@ Calculado HFR: {2}
     <value>Posición</value>
   </data>
   <data name="LblRelativePosition" xml:space="preserve">
-    <value>Relative Position</value>
+    <value>Posición relativa</value>
   </data>
   <data name="LblClearGuidingCalibration" xml:space="preserve">
     <value>Limpiar Calibración</value>
@@ -3882,7 +3882,7 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Brillo mínimo del panel de flats</value>
   </data>
   <data name="LblWizardOperationMode" xml:space="preserve">
-    <value>Wizard Mode</value>
+    <value>Modo asistente</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
     <value>Tolerancia en acimut (grados)</value>
@@ -4053,7 +4053,7 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Error al reanudar el guiado tras recuperar intensidad la estrella</value>
   </data>
   <data name="LblSkyFlat" xml:space="preserve">
-    <value>Sky Flats</value>
+    <value>Flats de cielo</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Error de sincronización de la cúpula. Ya no sigue al telescopio. {0}</value>
@@ -4323,13 +4323,13 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Mueve el enfocador a la posición absoluta dada</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description" xml:space="preserve">
-    <value>Moves the focuser to the given relative position</value>
+    <value>Mueve el enfocador a la posición relativa dada</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
     <value>Mover Enfocador</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name" xml:space="preserve">
-    <value>Move Focuser Relative</value>
+    <value>Movimiento relativo del enfocado</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
     <value>Envía una señal de dither al guiad</value>
@@ -5332,7 +5332,7 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
     <value>Tiempo de asentamiento</value>
   </data>
   <data name="LblInitializingSequencer" xml:space="preserve">
-    <value>Initializing Sequencer...</value>
+    <value>Inicializando secuenciador</value>
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
     <value>Initializing Layout</value>
