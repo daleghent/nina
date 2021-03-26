@@ -10001,6 +10001,15 @@ namespace NINA.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No Plugins found.
+        /// </summary>
+        internal static string LblNoPluginsFound {
+            get {
+                return ResourceManager.GetString("LblNoPluginsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Normal.
         /// </summary>
         internal static string LblNormal {
@@ -11272,6 +11281,15 @@ namespace NINA.Locale {
         internal static string LblPlugin {
             get {
                 return ResourceManager.GetString("LblPlugin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugins.
+        /// </summary>
+        internal static string LblPlugins {
+            get {
+                return ResourceManager.GetString("LblPlugins", resourceCulture);
             }
         }
         

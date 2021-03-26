@@ -22,7 +22,7 @@ using System.Windows.Media.Imaging;
 
 namespace NINA.Utility.Http {
 
-    internal class HttpDownloadImageRequest : HttpRequest<BitmapSource> {
+    public class HttpDownloadImageRequest : HttpRequest<BitmapSource> {
 
         public HttpDownloadImageRequest(string url, params object[] parameters) : base(url) {
             this.Parameters = parameters;

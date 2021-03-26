@@ -19,7 +19,7 @@ using System.Web;
 
 namespace NINA.Utility.Http {
 
-    internal abstract class HttpRequest {
+    public abstract class HttpRequest {
 
         public HttpRequest(string url) {
             this.Url = url;
@@ -34,7 +34,7 @@ namespace NINA.Utility.Http {
         }
     }
 
-    internal abstract class HttpRequest<T> {
+    public abstract class HttpRequest<T> {
 
         public HttpRequest(string url) {
             this.Url = url;

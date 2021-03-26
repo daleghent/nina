@@ -93,15 +93,28 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Options.xaml.cs">
+      <DependentUpon>Options.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Sequencer\SequenceItem\PluginTestItem.cs" />
     <Compile Include="Sequencer\SequenceItem\PluginTestItemTemplate.xaml.cs">
       <DependentUpon>PluginTestItemTemplate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TestPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NINA\NINA.csproj">
@@ -110,10 +123,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Options.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Sequencer\SequenceItem\PluginTestItemTemplate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if exist "$(SolutionDir)NINA\bin\x64\$(ConfigurationName)\Plugins" (
+    echo "Copy x64 DLL"
+    xcopy "$(TargetDir)$(TargetFileName)" "$(SolutionDir)NINA\bin\x64\$(ConfigurationName)\Plugins" /h/i/c/k/e/r/y
+)
+if exist "$(SolutionDir)NINA\bin\x86\$(ConfigurationName)\Plugins" (
+    echo "Copy x86 DLL"
+    xcopy "$(TargetDir)$(TargetFileName)" "$(SolutionDir)NINA\bin\x86\$(ConfigurationName)\Plugins" /h/i/c/k/e/r/y
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

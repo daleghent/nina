@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Model.MyPlanetarium;
+using NINA.Plugin;
 using NINA.Profile;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
@@ -39,129 +40,24 @@ using System.Windows;
 using System.Windows.Data;
 
 namespace NINA.Sequencer {
-
     public class SequencerFactory : ISequencerFactory {
-        private CompositionContainer container;
-
-        public IList<IDateTimeProvider> DateTimeProviders { get; private set; }
-
         public IList<ISequenceItem> Items { get; private set; }
-
         public IList<ISequenceCondition> Conditions { get; private set; }
         public IList<ISequenceTrigger> Triggers { get; private set; }
         public IList<ISequenceContainer> Container { get; private set; }
-
-        [ImportMany(typeof(ISequenceItem))]
-        public IEnumerable<Lazy<ISequenceItem, Dictionary<string, object>>> ItemImports { get; private set; }
-
-        [ImportMany(typeof(ISequenceCondition))]
-        public IEnumerable<Lazy<ISequenceCondition, Dictionary<string, object>>> ConditionImports { get; private set; }
-
-        [ImportMany(typeof(ISequenceTrigger))]
-        public IEnumerable<Lazy<ISequenceTrigger, Dictionary<string, object>>> TriggerImports { get; private set; }
-
-        [ImportMany(typeof(ISequenceContainer))]
-        public IEnumerable<Lazy<ISequenceContainer, Dictionary<string, object>>> ContainerImports { get; private set; }
-
-        [ImportMany(typeof(ResourceDictionary))]
-        public IEnumerable<ResourceDictionary> DataTemplateImports { get; private set; }
-
-        private List<Assembly> assemblies = new List<Assembly>();
+        public IList<IDateTimeProvider> DateTimeProviders { get; private set; }
 
         public SequencerFactory(
-                IProfileService profileService,
-                ICameraMediator cameraMediator,
-                ITelescopeMediator telescopeMediator,
-                IFocuserMediator focuserMediator,
-                IFilterWheelMediator filterWheelMediator,
-                IGuiderMediator guiderMediator,
-                IRotatorMediator rotatorMediator,
-                IFlatDeviceMediator flatDeviceMediator,
-                IWeatherDataMediator weatherDataMediator,
-                IImagingMediator imagingMediator,
-                IApplicationStatusMediator applicationStatusMediator,
-                INighttimeCalculator nighttimeCalculator,
-                IPlanetariumFactory planetariumFactory,
-                IImageHistoryVM imageHistoryVM,
-                IDeepSkyObjectSearchVM deepSkyObjectSearchVM,
-                IDomeMediator domeMediator,
-                IImageSaveMediator imageSaveMediator,
-                ISwitchMediator switchMediator,
-                ISafetyMonitorMediator safetyMonitorMediator,
-                IApplicationResourceDictionary resourceDictionary,
-                IApplicationMediator applicationMediator,
-                IFramingAssistantVM framingAssistantVM
+                IPluginProvider pluginProvider
         ) {
-            this.DateTimeProviders = new ObservableCollection<IDateTimeProvider>() {
-                new TimeProvider(),
-                new SunsetProvider(nighttimeCalculator),
-                new NauticalDuskProvider(nighttimeCalculator),
-                new DuskProvider(nighttimeCalculator),
-                new DawnProvider(nighttimeCalculator),
-                new NauticalDawnProvider(nighttimeCalculator),
-                new SunriseProvider(nighttimeCalculator),
-                new MeridianProvider(profileService)
-            };
+            Task.Run(async () => {
+                await pluginProvider.Load();
 
-            Task.Run(() => {
-                var catalog = new AggregateCatalog();
-
-                var types = GetCoreSequencerTypes();
-                var coreCatalog = new TypeCatalog(types);
-                catalog.Catalogs.Add(coreCatalog);
-
-                var extensionsFolder = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Plugins");
-                if (Directory.Exists(extensionsFolder)) {
-                    foreach (var file in Directory.GetFiles(extensionsFolder, "*.dll")) {
-                        try {
-                            var plugin = new AssemblyCatalog(file);
-                            plugin.Parts.ToArray();
-
-                            catalog.Catalogs.Add(plugin);
-                            assemblies.Add(plugin.Assembly);
-                        } catch (Exception ex) {
-                            Logger.Error($"Failed to load plugin {file}", ex);
-                        }
-                    }
-                }
-
-                AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-
-                container = new CompositionContainer(catalog);
-                container.ComposeExportedValue(profileService);
-                container.ComposeExportedValue(cameraMediator);
-                container.ComposeExportedValue(telescopeMediator);
-                container.ComposeExportedValue(focuserMediator);
-                container.ComposeExportedValue(filterWheelMediator);
-                container.ComposeExportedValue(guiderMediator);
-                container.ComposeExportedValue(rotatorMediator);
-                container.ComposeExportedValue(flatDeviceMediator);
-                container.ComposeExportedValue(weatherDataMediator);
-                container.ComposeExportedValue(imagingMediator);
-                container.ComposeExportedValue(applicationStatusMediator);
-                container.ComposeExportedValue(nighttimeCalculator);
-                container.ComposeExportedValue(planetariumFactory);
-                container.ComposeExportedValue(imageHistoryVM);
-                container.ComposeExportedValue(deepSkyObjectSearchVM);
-                container.ComposeExportedValue(domeMediator);
-                container.ComposeExportedValue(imageSaveMediator);
-                container.ComposeExportedValue(switchMediator);
-                container.ComposeExportedValue(resourceDictionary);
-                container.ComposeExportedValue(DateTimeProviders);
-                container.ComposeExportedValue(safetyMonitorMediator);
-                container.ComposeExportedValue(applicationMediator);
-                container.ComposeExportedValue(framingAssistantVM);
-
-                container.ComposeParts(this);
-
-                foreach (var template in DataTemplateImports) {
-                    Application.Current?.Resources.MergedDictionaries.Add(template);
-                }
-
-                Items = new ObservableCollection<ISequenceItem>(Assign(ItemImports, resourceDictionary));
-                Conditions = new ObservableCollection<ISequenceCondition>(Assign(ConditionImports, resourceDictionary));
-                Triggers = new ObservableCollection<ISequenceTrigger>(Assign(TriggerImports, resourceDictionary));
-                Container = new ObservableCollection<ISequenceContainer>(Assign(ContainerImports, resourceDictionary));
+                DateTimeProviders = new List<IDateTimeProvider>(pluginProvider.DateTimeProviders);
+                Items = new ObservableCollection<ISequenceItem>(pluginProvider.Items);
+                Conditions = new ObservableCollection<ISequenceCondition>(pluginProvider.Conditions);
+                Triggers = new ObservableCollection<ISequenceTrigger>(pluginProvider.Triggers);
+                Container = new ObservableCollection<ISequenceContainer>(pluginProvider.Container);
 
                 var instructions = new List<ISequenceEntity>();
                 foreach (var item in Items) {
@@ -201,35 +97,6 @@ namespace NINA.Sequencer {
             }
         }
 
-        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
-            return this.assemblies.FirstOrDefault(x => x.GetName().Name == args.Name);
-        }
-
-        /// <summary>
-        /// This returns a list of types in the NINA.Sequencer namespace to load the core plugins
-        /// Furthermore this safeguards against the ASCOM assembly that is not required to load when the platform is not installed
-        /// </summary>
-        /// <returns></returns>
-        public static IEnumerable<Type> GetCoreSequencerTypes() {
-            IEnumerable<Type> loadableTypes;
-            try {
-                loadableTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
-            } catch (ReflectionTypeLoadException e) {
-                loadableTypes = e.Types.Where(t => t != null);
-            }
-
-            List<Type> sequencerTypes = new List<Type>();
-            foreach (Type t in loadableTypes) {
-                try {
-                    if (t.IsClass && t.Namespace?.StartsWith("NINA.Sequencer") == true) {
-                        sequencerTypes.Add(t);
-                    }
-                } catch (Exception) {
-                }
-            }
-            return sequencerTypes;
-        }
-
         private bool ApplyViewFilter(object obj) {
             return (obj as ISequenceEntity).Name.IndexOf(ViewFilter, StringComparison.OrdinalIgnoreCase) >= 0;
         }
@@ -245,39 +112,6 @@ namespace NINA.Sequencer {
         }
 
         public ICollectionView ItemsView { get; set; }
-
-        private string GrabLabel(string label) {
-            if (label.StartsWith("Lbl_")) {
-                return Locale.Loc.Instance[label];
-            } else {
-                return label;
-            }
-        }
-
-        private IOrderedEnumerable<T> Assign<T>(IEnumerable<Lazy<T, Dictionary<string, object>>> imports, IApplicationResourceDictionary resourceDictionary) where T : ISequenceEntity {
-            var items = new List<T>();
-            foreach (var importItem in imports) {
-                var item = importItem.Value;
-                if (importItem.Metadata.TryGetValue("Name", out var nameObj)) {
-                    string name = nameObj.ToString();
-                    item.Name = GrabLabel(name);
-                }
-                if (importItem.Metadata.TryGetValue("Description", out var descriptionObj)) {
-                    string description = descriptionObj.ToString();
-                    item.Description = GrabLabel(description);
-                }
-                if (importItem.Metadata.TryGetValue("Icon", out var iconObj)) {
-                    string icon = iconObj.ToString();
-                    item.Icon = (System.Windows.Media.GeometryGroup)resourceDictionary[icon];
-                }
-                if (importItem.Metadata.TryGetValue("Category", out var categoryObj)) {
-                    string category = categoryObj.ToString();
-                    item.Category = GrabLabel(category);
-                }
-                items.Add(item);
-            }
-            return items.OrderBy(item => item.Category + item.Name);
-        }
 
         public T GetContainer<T>() where T : ISequenceContainer {
             return (T)Container.FirstOrDefault(x => x.GetType() == typeof(T)).Clone();

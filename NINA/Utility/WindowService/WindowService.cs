@@ -23,10 +23,11 @@ using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace NINA.Utility.WindowService {
+
     /// <summary>
     /// A window should be associated to a viewmodel by the DataTemplates.xaml
     /// </summary>
-    internal class WindowService : IWindowService {
+    public class WindowService : IWindowService {
         protected Dispatcher dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
         protected CustomWindow window;
 
@@ -106,6 +107,7 @@ namespace NINA.Utility.WindowService {
     }
 
     public interface IWindowService {
+
         void Show(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None);
 
         IDispatcherOperationWrapper ShowDialog(object content, string title = "", ResizeMode resizeMode = ResizeMode.NoResize, WindowStyle windowStyle = WindowStyle.None, ICommand closeCommand = null);
@@ -189,6 +191,7 @@ namespace NINA.Utility.WindowService {
     }
 
     public class DialogResultEventArgs : EventArgs {
+
         public DialogResultEventArgs(bool? dialogResult) {
             DialogResult = dialogResult;
         }

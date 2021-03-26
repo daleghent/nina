@@ -31,7 +31,7 @@ using ToastNotifications.Utilities;
 
 namespace NINA.Utility.Notification {
 
-    internal static class Notification {
+    public static class Notification {
 
         static Notification() {
             lock (_lock) {

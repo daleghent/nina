@@ -5368,4 +5368,10 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblSkytechX" xml:space="preserve">
     <value>SkytechX</value>
   </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>No Plugins found</value>
+  </data>
 </root>

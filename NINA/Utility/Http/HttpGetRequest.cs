@@ -22,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Utility.Http {
 
-    internal class HttpGetRequest : HttpRequest<string> {
+    public class HttpGetRequest : HttpRequest<string> {
 
         public HttpGetRequest(string url, params object[] parameters) : base(url) {
             this.Parameters = parameters;

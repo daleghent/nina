@@ -20,7 +20,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Utility.Http {
 
-    internal class HttpPostRequest : HttpRequest<string> {
+    public class HttpPostRequest : HttpRequest<string> {
 
         public HttpPostRequest(string url, string body, string contentType) : base(url) {
             this.Body = body;

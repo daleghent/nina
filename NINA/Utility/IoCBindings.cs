@@ -45,6 +45,7 @@ using Ninject.Modules;
 using System;
 using System.Windows;
 using NINA.MyMessageBox;
+using NINA.Plugin;
 
 namespace NINA.Utility {
 
@@ -157,6 +158,8 @@ namespace NINA.Utility {
                     Bind<ISequenceNavigationVM>().To<SequenceNavigationVM>().InSingletonScope();
                     Bind<ISequencerFactory>().To<SequencerFactory>().InSingletonScope();
                     Bind<IMyMessageBoxVM>().To<MyMessageBoxVM>();
+
+                    Bind<IPluginProvider>().To<PluginProvider>().InSingletonScope();
                 } catch (Exception e) {
                     Logger.Error(e);
                     throw e;

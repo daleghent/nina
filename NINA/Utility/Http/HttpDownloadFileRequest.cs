@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Utility.Http {
 
-    internal class HttpDownloadFileRequest : HttpRequest {
+    public class HttpDownloadFileRequest : HttpRequest {
 
         public HttpDownloadFileRequest(string url, string targetLocation) : base(url) {
             this.TargetLocation = targetLocation;

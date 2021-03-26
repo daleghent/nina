@@ -17,29 +17,21 @@ using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Utility.DateTimeProvider;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows;
+using System.Reflection;
+using System.Threading.Tasks;
 
-namespace NINA.Sequencer {
+namespace NINA.Plugin {
 
-    public interface ISequencerFactory {
-        bool Initialized { get; }
+    public interface IPluginProvider {
+        IList<Assembly> Assemblies { get; }
+        IList<IPlugin> Plugins { get; }
         IList<ISequenceCondition> Conditions { get; }
         IList<ISequenceContainer> Container { get; }
         IList<ISequenceItem> Items { get; }
-        ICollectionView ItemsView { get; set; }
         IList<ISequenceTrigger> Triggers { get; }
         IList<IDateTimeProvider> DateTimeProviders { get; }
-        string ViewFilter { get; set; }
 
-        T GetCondition<T>() where T : ISequenceCondition;
-
-        T GetContainer<T>() where T : ISequenceContainer;
-
-        T GetItem<T>() where T : ISequenceItem;
-
-        T GetTrigger<T>() where T : ISequenceTrigger;
+        Task Load();
     }
 }

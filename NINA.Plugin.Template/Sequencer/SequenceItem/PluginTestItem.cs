@@ -39,7 +39,7 @@ namespace NINA.Plugin.Template.Sequencer.SequenceItem {
     /// If the item has some preconditions that should be validated, it shall also extend the IValidatable interface and add the validation logic accordingly.
     /// </summary>
     [ExportMetadata("Name", "Plugin Template Item")]
-    [ExportMetadata("Description", "This item will not do anything and is just there to show how the plugin system works")]
+    [ExportMetadata("Description", "This item will just show a notification and is just there to show how the plugin system works")]
     [ExportMetadata("Icon", "Plugin_Test_SVG")]
     [ExportMetadata("Category", "Plugin")]
     [Export(typeof(ISequenceItem))]
@@ -74,6 +74,7 @@ namespace NINA.Plugin.Template.Sequencer.SequenceItem {
         /// </remarks>
         [ImportingConstructor]
         public PluginTestItem() {
+            Text = Properties.Settings.Default.DefaultNotificationMessage;
         }
 
         /// <summary>
@@ -93,6 +94,7 @@ namespace NINA.Plugin.Template.Sequencer.SequenceItem {
         /// <param name="token">When a cancel signal is triggered from outside, this token can be used to register to it or check if it is cancelled</param>
         /// <returns></returns>
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            Utility.Notification.Notification.ShowSuccess(Text);
             // Add logic to run the item here
             return Task.CompletedTask;
         }
@@ -107,7 +109,7 @@ namespace NINA.Plugin.Template.Sequencer.SequenceItem {
                 Text = Text,
                 Name = Name,
                 Category = Category,
-                Description = Description,
+                Description = Description
             };
         }
 

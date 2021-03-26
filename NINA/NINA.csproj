@@ -537,6 +537,9 @@
     <Compile Include="PlateSolving\ImageSolver.cs" />
     <Compile Include="PlateSolving\CaptureSolver.cs" />
     <Compile Include="PlateSolving\PlateSolveProgress.cs" />
+    <Compile Include="Plugin\IPlugin.cs" />
+    <Compile Include="Plugin\IPluginProvider.cs" />
+    <Compile Include="Plugin\PluginProvider.cs" />
     <Compile Include="Profile\DomeSettings.cs" />
     <Compile Include="Profile\ExposureCalculatorSettings.cs" />
     <Compile Include="Profile\Interfaces\IDomeSettings.cs" />
@@ -685,6 +688,8 @@
     <Compile Include="Utility\ValidationRules\FloatRangeRule.cs" />
     <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
     <Compile Include="Utility\MeridianFlip.cs" />
+    <Compile Include="ViewModel\Plugins\PluginOptionsDataTemplateSelector.cs" />
+    <Compile Include="ViewModel\Plugins\PluginOptionsVM.cs" />
     <Compile Include="ViewModel\Sequencer\ISequenceNavigationVM.cs" />
     <Compile Include="ViewModel\Sequencer\SequenceNavigationVM.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleDSOContainer.cs" />
@@ -780,6 +785,9 @@
     </Compile>
     <Compile Include="View\Imaging\AnchorableSequenceNavigationView.xaml.cs">
       <DependentUpon>AnchorableSequenceNavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Options\PluginsView.xaml.cs">
+      <DependentUpon>PluginsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sequencer\Sequence2\Converter\SequenceEntityStatusToVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\ShutterStatusToVisibilityConverter.cs" />
@@ -2255,6 +2263,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Equipment\Guider\GuiderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Options\PluginsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

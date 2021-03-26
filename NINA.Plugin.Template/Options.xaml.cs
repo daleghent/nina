@@ -1,4 +1,4 @@
-#region "copyright"
+﻿#region "copyright"
 
 /*
     Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
@@ -12,17 +12,21 @@
 
 #endregion "copyright"
 
-namespace NINA.Utility.WindowService {
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
 
-    public class WindowServiceFactory : IWindowServiceFactory {
+namespace NINA.Plugin.Template {
 
-        public IWindowService Create() {
-            return new WindowService();
+    [Export(typeof(ResourceDictionary))]
+    partial class Options : ResourceDictionary {
+
+        public Options() {
+            InitializeComponent();
         }
-    }
-
-    public interface IWindowServiceFactory {
-
-        IWindowService Create();
     }
 }

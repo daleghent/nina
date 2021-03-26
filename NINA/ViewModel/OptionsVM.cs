@@ -17,6 +17,7 @@ using NINA.Model;
 using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFocuser;
 using NINA.Model.MyPlanetarium;
+using NINA.Plugin;
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Enum;
@@ -25,6 +26,7 @@ using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.ViewModel.Imaging;
 using NINA.ViewModel.Interfaces;
+using NINA.ViewModel.Plugins;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -40,12 +42,21 @@ namespace NINA.ViewModel {
 
     internal class OptionsVM : DockableVM, IOptionsVM {
 
-        public OptionsVM(IProfileService profileService, IFilterWheelMediator filterWheelMediator, IExposureCalculatorVM exposureCalculatorVM, IAllDeviceConsumer deviceConsumer,
-            IVersionCheckVM versionCheckVM, ProjectVersion projectVersion, IPlanetariumFactory planetariumFactory, IDockManagerVM dockManagerVM,
-            ISGPServiceHost sgpServiceHost) : base(profileService) {
+        public OptionsVM(IProfileService profileService,
+                         IFilterWheelMediator filterWheelMediator,
+                         IExposureCalculatorVM exposureCalculatorVM,
+                         IAllDeviceConsumer deviceConsumer,
+                         IVersionCheckVM versionCheckVM,
+                         ProjectVersion projectVersion,
+                         IPlanetariumFactory planetariumFactory,
+                         IDockManagerVM dockManagerVM,
+                         ISGPServiceHost sgpServiceHost,
+                         IPluginProvider pluginProvider) : base(profileService) {
             Title = "LblOptions";
             CanClose = false;
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
+
+            this.PluginOptions = new PluginOptionsVM(pluginProvider, profileService);
 
             this.exposureCalculatorVM = exposureCalculatorVM;
             DeviceConsumer = deviceConsumer;
@@ -106,6 +117,8 @@ namespace NINA.ViewModel {
             };
             ToggleSGPService();
         }
+
+        public PluginOptionsVM PluginOptions { get; }
 
         private void OpenHorizonFilePathDiag(object obj) {
             var dialog = GetFilteredFileDialog(string.Empty, string.Empty, "Horizon File|*.hrz");

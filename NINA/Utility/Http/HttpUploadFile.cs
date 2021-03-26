@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Utility.Http {
 
-    internal class HttpUploadFile : HttpRequest<string> {
+    public class HttpUploadFile : HttpRequest<string> {
         public string ContentType { get; }
         public NameValueCollection NameValueCollection { get; }
         public Stream File { get; }
