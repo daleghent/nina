@@ -21,6 +21,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using NINA.Utility;
 using System.Linq;
+using System.Globalization;
 
 namespace NINA.Model.MyPlanetarium {
 
@@ -48,27 +49,59 @@ namespace NINA.Model.MyPlanetarium {
                 var query = new BasicQuery(address, port, command);
                 string response = await query.SendQuery();
 
-                if (!response.StartsWith("OK!")) { throw new PlanetariumObjectNotSelectedException(); }
+                if (!response.StartsWith("OK!")) {
+                    return await GetView();
+                }
 
                 var columns = response.Split('\t');
 
                 // An "OK!" response with fewer than 2 columns means that CdC is listening ok but the user has not selected an object.
-                if (columns.Count() < 2) { throw new PlanetariumObjectNotSelectedException(); }
+                if (columns.Count() < 2) {
+                    return await GetView();
+                }
 
-                if (!Match(columns[0].Replace("OK!", ""), @"(([0-9]{1,2})([h|:]|[?]{2})([0-9]{1,2})([m|:]|[?]{2})?([0-9]{1,2}(?:\.[0-9]+){0,1})?([s|:]|[?]{2}))", out var raString)) { throw new PlanetariumObjectNotSelectedException(); }
+                if (!Match(columns[0].Replace("OK!", string.Empty), @"(([0-9]{1,2})([h|:]|[?]{2})([0-9]{1,2})([m|:]|[?]{2})?([0-9]{1,2}(?:\.[0-9]+){0,1})?([s|:]|[?]{2}))", out var raString)) { throw new PlanetariumObjectNotSelectedException(); }
                 var ra = Astrometry.HMSToDegrees(raString);
 
                 if (!Match(columns[1], @"([\+|-]([0-9]{1,2})([d|°|:]|[?]{2})([0-9]{1,2})([m|'|:]|[?]{2})?([0-9]{1,2}(?:\.[0-9]+){0,1})?([s|""|:]|[?]{2}))", out var decString)) { throw new PlanetariumObjectNotSelectedException(); }
                 var dec = Astrometry.DMSToDegrees(decString);
 
                 if (!Match(columns.Last(), @"(?<=Equinox:).*", out var equinox)) { throw new PlanetariumObjectNotSelectedException(); }
-                equinox = equinox.Replace("\r", "").Replace("\n", "");
+                equinox = equinox.Replace("\r", string.Empty).Replace("\n", string.Empty);
 
                 var coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), equinox.ToLower() == "now" ? Epoch.JNOW : Epoch.J2000);
 
                 var dso = new DeepSkyObject(columns[3].Trim(), coordinates.Transform(Epoch.J2000), string.Empty, null);
 
                 return dso;
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                throw ex;
+            }
+        }
+
+        private async Task<DeepSkyObject> GetView() {
+            try {
+                string commandRa = "GETRA F\r\n";
+                string commandDec = "GETDEC F\r\n";
+                string commandEq = "GETCHARTEQSYS F\r\n";
+
+                var queryRa = new BasicQuery(address, port, commandRa);
+                string responseRa = await queryRa.SendQuery();
+                var queryDec = new BasicQuery(address, port, commandDec);
+                string responseDec = await queryDec.SendQuery();
+                var queryEq = new BasicQuery(address, port, commandEq);
+                string responseEq = await queryEq.SendQuery();
+
+                if (!responseRa.StartsWith("OK!") && !responseDec.StartsWith("OK!") && !responseEq.StartsWith("OK!")) { throw new PlanetariumObjectNotSelectedException(); }
+
+                var ra = double.Parse(responseRa.Replace("OK!", string.Empty).Replace("\r", string.Empty).Replace("\n", string.Empty), CultureInfo.InvariantCulture);
+                var dec = double.Parse(responseDec.Replace("OK!", string.Empty).Replace("\r", string.Empty).Replace("\n", string.Empty), CultureInfo.InvariantCulture);
+                var equinox = responseEq.Replace("OK!", string.Empty).Replace("\r", string.Empty).Replace("\n", string.Empty);
+
+                var coordinates = new Coordinates(Angle.ByHours(ra), Angle.ByDegree(dec), equinox.ToLower() == "J2000" ? Epoch.J2000 : Epoch.JNOW);
+
+                return new DeepSkyObject(string.Empty, coordinates.Transform(Epoch.J2000), string.Empty, null);
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw ex;
