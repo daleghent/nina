@@ -106,7 +106,7 @@ namespace StarDataImport {
             var db = new DatabaseInteraction(connectionString);
 
             double availableDataTimeStamp = double.MinValue;
-            using (var context = new NINA.Database.NINADbContext(connectionString)) {
+            using (var context = new NINA.Core.Database.NINADbContext(connectionString)) {
                 availableDataTimeStamp = (await context.EarthRotationParameterSet.Where(x => x.lod > 0).OrderByDescending(x => x.date).FirstAsync()).date;
             }
 

@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Exceptions;
 using NINA.Utility.TcpRaw;
 using NINA.Profile;

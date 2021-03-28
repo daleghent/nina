@@ -21,7 +21,7 @@ using NINA.Sequencer;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Exceptions;
 using NINA.Sequencer.SequenceItem.Telescope;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NUnit.Framework;
 using System;

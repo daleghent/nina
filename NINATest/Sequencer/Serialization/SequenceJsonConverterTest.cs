@@ -24,7 +24,7 @@ using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Serialization;
 using NINA.Sequencer.Trigger;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel;
 using NINA.ViewModel.FramingAssistant;

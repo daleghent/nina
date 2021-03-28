@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System.Globalization;
 using System.IO;
 
@@ -35,10 +35,10 @@ namespace NINA.PlateSolving.Solvers {
             PlateSolveParameter parameter,
             PlateSolveImageProperties imageProperties) {
             var args = new string[] {
-                    Astrometry.ToRadians(parameter.Coordinates.RADegrees).ToString(CultureInfo.InvariantCulture),
-                    Astrometry.ToRadians(parameter.Coordinates.Dec).ToString(CultureInfo.InvariantCulture),
-                    Astrometry.ToRadians(imageProperties.FoVW).ToString(CultureInfo.InvariantCulture),
-                    Astrometry.ToRadians(imageProperties.FoVH).ToString(CultureInfo.InvariantCulture),
+                    AstroUtil.ToRadians(parameter.Coordinates.RADegrees).ToString(CultureInfo.InvariantCulture),
+                    AstroUtil.ToRadians(parameter.Coordinates.Dec).ToString(CultureInfo.InvariantCulture),
+                    AstroUtil.ToRadians(imageProperties.FoVW).ToString(CultureInfo.InvariantCulture),
+                    AstroUtil.ToRadians(imageProperties.FoVH).ToString(CultureInfo.InvariantCulture),
                     parameter.Regions.ToString(),
                     imageFilePath,
                     "0"
@@ -93,7 +93,7 @@ namespace NINA.PlateSolving.Solvers {
 
                                 /* success */
                                 result.Success = true;
-                                result.Coordinates = new Coordinates(Astrometry.ToDegree(ra), Astrometry.ToDegree(dec), Epoch.J2000, Coordinates.RAType.Degrees);
+                                result.Coordinates = new Coordinates(AstroUtil.ToDegree(ra), AstroUtil.ToDegree(dec), Epoch.J2000, Coordinates.RAType.Degrees);
                             }
                         }
                         if (linenr == 1) {

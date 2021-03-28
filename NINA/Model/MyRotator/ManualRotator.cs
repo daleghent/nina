@@ -18,7 +18,7 @@ using NINA.Utility.WindowService;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 
 namespace NINA.Model.MyRotator {
 
@@ -174,7 +174,7 @@ namespace NINA.Model.MyRotator {
             var task = WindowService.ShowDialog(this, Locale.Loc.Instance["LblRotationRequired"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
             task.Wait();
 
-            Position = Astrometry.EuclidianModulus(TargetPosition, 360);
+            Position = AstroUtil.EuclidianModulus(TargetPosition, 360);
 
             IsMoving = false;
         }

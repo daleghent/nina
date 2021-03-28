@@ -1,17 +1,18 @@
-﻿using OxyPlot;
+﻿using NINA.Utility;
+using OxyPlot;
 using OxyPlot.Axes;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public class NighttimeData {
 
         public NighttimeData(
             DateTime date,
             DateTime referenceDate,
-            Astrometry.MoonPhase moonPhase,
+            AstroUtil.MoonPhase moonPhase,
             double? moonIllumination,
             RiseAndSetEvent twilightRiseAndSet,
             RiseAndSetEvent nauticalTwilightRiseAndSet,
@@ -106,7 +107,7 @@ namespace NINA.Utility.Astrometry {
 
         public DateTime Date { get; set; }
         public DateTime ReferenceDate { get; set; }
-        public Astrometry.MoonPhase MoonPhase { get; set; }
+        public AstroUtil.MoonPhase MoonPhase { get; set; }
         public double? Illumination { get; set; }
         public RiseAndSetEvent TwilightRiseAndSet { get; set; }
         public RiseAndSetEvent NauticalTwilightRiseAndSet { get; set; }

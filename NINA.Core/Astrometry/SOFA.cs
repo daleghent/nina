@@ -12,10 +12,11 @@
 
 #endregion "copyright"
 
+using NINA.Utility;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace NINA.Utility {
+namespace NINA.Astrometry {
 
     /// <summary>
     /// http://www.iausofa.org/current_C.html#Downloads

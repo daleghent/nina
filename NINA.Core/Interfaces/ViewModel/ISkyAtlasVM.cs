@@ -4,7 +4,7 @@ using System.Windows.Input;
 using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 
 namespace NINA.ViewModel.Interfaces {
 

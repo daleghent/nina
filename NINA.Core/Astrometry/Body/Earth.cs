@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public class Earth {
 

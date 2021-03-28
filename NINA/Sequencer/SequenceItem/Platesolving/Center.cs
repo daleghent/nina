@@ -20,7 +20,7 @@ using NINA.Profile;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.WindowService;
 using NINA.ViewModel;

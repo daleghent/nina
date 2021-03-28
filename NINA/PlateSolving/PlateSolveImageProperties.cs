@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Model.ImageData;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 
 namespace NINA.PlateSolving {
 
@@ -25,19 +25,19 @@ namespace NINA.PlateSolving {
 
         public double ArcSecPerPixel {
             get {
-                return Astrometry.ArcsecPerPixel(PixelSize, FocalLength);
+                return AstroUtil.ArcsecPerPixel(PixelSize, FocalLength);
             }
         }
 
         public double FoVH {
             get {
-                return Astrometry.ArcminToDegree(Astrometry.FieldOfView(ArcSecPerPixel, ImageHeight));
+                return AstroUtil.ArcminToDegree(AstroUtil.FieldOfView(ArcSecPerPixel, ImageHeight));
             }
         }
 
         public double FoVW {
             get {
-                return Astrometry.ArcminToDegree(Astrometry.FieldOfView(ArcSecPerPixel, ImageWidth));
+                return AstroUtil.ArcminToDegree(AstroUtil.FieldOfView(ArcSecPerPixel, ImageWidth));
             }
         }
 

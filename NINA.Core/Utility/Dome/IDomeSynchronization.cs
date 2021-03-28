@@ -1,8 +1,10 @@
 ﻿using NINA.Core.Enum;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 
 namespace NINA.Utility {
+
     public interface IDomeSynchronization {
+
         Angle TargetDomeAzimuth(
             Coordinates scopeCoordinates,
             double localSiderealTime,

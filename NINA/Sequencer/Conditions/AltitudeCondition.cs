@@ -18,7 +18,7 @@ using NINA.Profile;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Utility;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
@@ -47,18 +47,17 @@ namespace NINA.Sequencer.Conditions {
             Coordinates = new InputCoordinates();
             Altitude = 30;
 
-
             //todo: find a better home for this
             Task.Run(async () => {
-               await Task.Delay(15000);
-               while (true) {
-                   try {
-                       CalculateCurrentAltitude();
-                   } catch (Exception ee) {
-                       Logger.Error(ee);
-                   }
-                   await Task.Delay(5000);
-               }
+                await Task.Delay(15000);
+                while (true) {
+                    try {
+                        CalculateCurrentAltitude();
+                    } catch (Exception ee) {
+                        Logger.Error(ee);
+                    }
+                    await Task.Delay(5000);
+                }
             });
         }
 
@@ -107,6 +106,7 @@ namespace NINA.Sequencer.Conditions {
                 RaisePropertyChanged();
             }
         }
+
         public bool IsEastOfMeridian {
             get => isEastOfMeridian;
             private set {
@@ -114,6 +114,7 @@ namespace NINA.Sequencer.Conditions {
                 RaisePropertyChanged();
             }
         }
+
         public string RisingSettingDisplay {
             get => risingSettingDisplay;
             private set {
@@ -167,12 +168,12 @@ namespace NINA.Sequencer.Conditions {
             var altaz = Coordinates
                 .Coordinates
                 .Transform(
-                    Angle.ByDegree(location.Latitude), 
+                    Angle.ByDegree(location.Latitude),
                     Angle.ByDegree(location.Longitude));
             IsEastOfMeridian = altaz.AltitudeSite == AltitudeSite.EAST;
             var currentAlt = Math.Round(altaz.Altitude.Degree, 2);
             CurrentAltitude = currentAlt;
-            RisingSettingDisplay=
+            RisingSettingDisplay =
                 IsEastOfMeridian ? "^" : "v";
         }
     }

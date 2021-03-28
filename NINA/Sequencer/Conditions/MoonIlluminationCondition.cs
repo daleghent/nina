@@ -17,7 +17,7 @@ using NINA.Core.Enum;
 using NINA.Profile;
 using NINA.Sequencer.SequenceItem;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -146,7 +146,7 @@ namespace NINA.Sequencer.Conditions {
         private void CalculateCurrentMoonState() {
             var now = DateTime.UtcNow;
 
-            CurrentMoonIllumination = Astrometry.GetMoonIllumination(now) * 100;
+            CurrentMoonIllumination = AstroUtil.GetMoonIllumination(now) * 100;
         }
     }
 }

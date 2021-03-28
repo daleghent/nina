@@ -16,7 +16,7 @@ using FluentAssertions;
 using NINA.Model.ImageData;
 using NINA.Model.MyCamera;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Globalization;
@@ -336,10 +336,10 @@ namespace NINATest {
         }
 
         [Test]
-        [TestCase(NINA.Utility.Enum.FileTypeEnum.XISF, ".xisf")]
-        [TestCase(NINA.Utility.Enum.FileTypeEnum.FITS, ".fits")]
-        [TestCase(NINA.Utility.Enum.FileTypeEnum.TIFF, ".tif")]
-        public async Task SaveToDiskSimpleTest(NINA.Utility.Enum.FileTypeEnum fileType, string extension) {
+        [TestCase(NINA.Core.Enum.FileTypeEnum.XISF, ".xisf")]
+        [TestCase(NINA.Core.Enum.FileTypeEnum.FITS, ".fits")]
+        [TestCase(NINA.Core.Enum.FileTypeEnum.TIFF, ".tif")]
+        public async Task SaveToDiskSimpleTest(NINA.Core.Enum.FileTypeEnum fileType, string extension) {
             var data = new ushort[] {
                 3,1,1,
                 3,4,5,
@@ -362,10 +362,10 @@ namespace NINATest {
         }
 
         [Test]
-        [TestCase(NINA.Utility.Enum.FileTypeEnum.XISF)]
-        [TestCase(NINA.Utility.Enum.FileTypeEnum.FITS)]
-        [TestCase(NINA.Utility.Enum.FileTypeEnum.TIFF)]
-        public async Task SaveToDiskForceExtensionTest(NINA.Utility.Enum.FileTypeEnum fileType) {
+        [TestCase(NINA.Core.Enum.FileTypeEnum.XISF)]
+        [TestCase(NINA.Core.Enum.FileTypeEnum.FITS)]
+        [TestCase(NINA.Core.Enum.FileTypeEnum.TIFF)]
+        public async Task SaveToDiskForceExtensionTest(NINA.Core.Enum.FileTypeEnum fileType) {
             var data = new ushort[] {
                 3,1,1,
                 3,4,5,
@@ -418,7 +418,7 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = TestContext.CurrentContext.TestDirectory,
                 FilePattern = pattern,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
             var sut = new ImageData(data, 3, 3, 16, false, MetaData);
@@ -475,8 +475,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = TestContext.CurrentContext.TestDirectory,
                 FilePattern = pattern,
-                FileType = NINA.Utility.Enum.FileTypeEnum.TIFF,
-                TIFFCompressionType = NINA.Utility.Enum.TIFFCompressionTypeEnum.LZW
+                FileType = NINA.Core.Enum.FileTypeEnum.TIFF,
+                TIFFCompressionType = NINA.Core.Enum.TIFFCompressionTypeEnum.LZW
             };
 
             var sut = new ImageData(data, 3, 3, 16, false, new ImageMetaData());
@@ -517,7 +517,7 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = TestContext.CurrentContext.TestDirectory,
                 FilePattern = pattern,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
             var sut = new ImageData(data, 3, 3, 16, false, MetaData);
@@ -575,7 +575,7 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = TestContext.CurrentContext.TestDirectory,
                 FilePattern = pattern,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
             var invalidChars = Path.GetInvalidPathChars();
@@ -610,7 +610,7 @@ namespace NINATest {
         //[Test]
         //public async Task SaveToDiskXISFDeepMetaDataTest() {
         //    Uncomment once xisf loading knows to extract meta data
-        //    var fileType = NINA.Utility.Enum.FileTypeEnum.XISF;
+        //    var fileType = NINA.Core.Enum.FileTypeEnum.XISF;
         //    var data = new ushort[] {
         //        3,1,1,
         //        3,4,5,

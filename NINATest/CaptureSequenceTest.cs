@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry;
 using NINA.Model;
 using NINA.Model.MyCamera;
 using NINA.Model.MyFilterWheel;
@@ -607,9 +608,9 @@ namespace NINATest {
         [Test]
         public void CoordinatesTest_SetCoordinates_RaDecPartialsEqualCoordinates() {
             var l = new CaptureSequenceList();
-            var coordinates = new NINA.Utility.Astrometry.Coordinates(10, 10, NINA.Utility.Astrometry.Epoch.J2000, NINA.Utility.Astrometry.Coordinates.RAType.Hours);
+            var coordinates = new Coordinates(10, 10, Epoch.J2000, Coordinates.RAType.Hours);
 
-            l.Coordinates = coordinates.Transform(NINA.Utility.Astrometry.Epoch.J2000);
+            l.Coordinates = coordinates.Transform(Epoch.J2000);
 
             Assert.AreEqual(coordinates.RA, l.RAHours + l.RAMinutes + l.RASeconds);
             Assert.AreEqual(coordinates.Dec, l.DecDegrees + l.DecMinutes + l.DecSeconds);
@@ -625,7 +626,7 @@ namespace NINATest {
         //[TestCase(0, 0, -1, 0)] //Overflow
         public void CoordinatesTest_ManualInput_RACheck(int raHours, int raMinutes, int raSeconds, double expected) {
             var l = new CaptureSequenceList();
-            var coordinates = new NINA.Utility.Astrometry.Coordinates(0, 0, NINA.Utility.Astrometry.Epoch.J2000, NINA.Utility.Astrometry.Coordinates.RAType.Hours);
+            var coordinates = new Coordinates(0, 0, Epoch.J2000, Coordinates.RAType.Hours);
 
             l.RAHours = raHours;
             l.RAMinutes = raMinutes;
@@ -651,7 +652,7 @@ namespace NINATest {
         //[TestCase(-90, 0, 1, 90)] //overflow
         public void CoordinatesTest_ManualInput_DecCheck(int decDegrees, int decMinutes, int decSeconds, double expected) {
             var l = new CaptureSequenceList();
-            var coordinates = new NINA.Utility.Astrometry.Coordinates(0, 0, NINA.Utility.Astrometry.Epoch.J2000, NINA.Utility.Astrometry.Coordinates.RAType.Hours);
+            var coordinates = new Coordinates(0, 0, Epoch.J2000, Coordinates.RAType.Hours);
 
             l.DecDegrees = decDegrees;
             l.DecMinutes = decMinutes;

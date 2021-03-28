@@ -31,7 +31,7 @@ namespace NINATest.FlatDevice {
         [TestCase("LightOn", "*L99OOO")]
         [TestCase("LightOff", "*D99OOO")]
         public void TestIsValidResponse(string responseName, string response) {
-            var sut = (AlnitakResponse)Activator.CreateInstance("NINA",
+            var sut = (AlnitakResponse)Activator.CreateInstance("NINA.Core",
                 $"NINA.Utility.FlatDeviceSDKs.AlnitakSDK.{responseName}Response").Unwrap();
             Action act = () => sut.DeviceResponse = response;
             act.Should().NotThrow();
@@ -57,7 +57,7 @@ namespace NINATest.FlatDevice {
         [TestCase("LightOff", null)]
         [TestCase("LightOff", "")]
         public void TestIsInvalidResponse(string responseName, string response) {
-            var sut = (AlnitakResponse)Activator.CreateInstance("NINA",
+            var sut = (AlnitakResponse)Activator.CreateInstance("NINA.Core",
                 $"NINA.Utility.FlatDeviceSDKs.AlnitakSDK.{responseName}Response").Unwrap();
             Action act = () => sut.DeviceResponse = response;
             act.Should().Throw<InvalidDeviceResponseException>();

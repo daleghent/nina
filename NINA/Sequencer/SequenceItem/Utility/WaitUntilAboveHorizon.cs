@@ -17,7 +17,7 @@ using NINA.Model;
 using NINA.Profile;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -119,7 +119,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         public bool Validate() {
             var issues = new List<string>();
 
-            var maxAlt = Astrometry.GetAltitude(0, profileService.ActiveProfile.AstrometrySettings.Latitude, Coordinates.DecDegrees);
+            var maxAlt = AstroUtil.GetAltitude(0, profileService.ActiveProfile.AstrometrySettings.Latitude, Coordinates.DecDegrees);
 
             var horizon = profileService.ActiveProfile.AstrometrySettings.Horizon;
             var minHorizonAlt = horizon?.GetMinAltitude() ?? 0;

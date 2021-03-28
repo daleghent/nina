@@ -15,7 +15,7 @@
 using Newtonsoft.Json;
 using NINA.Model;
 using NINA.Sequencer.Utility.DateTimeProvider;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

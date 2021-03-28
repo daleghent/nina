@@ -17,7 +17,7 @@ using Moq;
 using NINA.Model;
 using NINA.Model.MyFocuser;
 using NINA.Profile;
-using NINA.Utility.Enum;
+using NINA.Core.Enum;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel;
 using NINA.ViewModel.Equipment;

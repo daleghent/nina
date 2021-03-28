@@ -18,7 +18,7 @@ using NINA.Profile;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Exceptions;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.Collections.Generic;

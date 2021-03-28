@@ -1,6 +1,6 @@
 ﻿using NINA.Core.Enum;
 using NINA.Profile;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 
 namespace NINA.Utility {
@@ -39,7 +39,7 @@ namespace NINA.Utility {
             PierSide currentSideOfPier) {
             // Shift the sidereal time by the time after the meridian to retrieve the time to the flip instead of the time to the meridian
             // This is critical to do instead of just adding to the meridian time, when the scope is already past the meridian but not past the flip
-            var projectedSiderealTime = Angle.ByHours(Astrometry.Astrometry.EuclidianModulus(localSiderealTime.Hours - settings.MaxMinutesAfterMeridian / 60d, 24));
+            var projectedSiderealTime = Angle.ByHours(AstroUtil.EuclidianModulus(localSiderealTime.Hours - settings.MaxMinutesAfterMeridian / 60d, 24));
             var timeToMeridianFlip = TimeToMeridian(coordinates, localSiderealTime: projectedSiderealTime);
 
             if (settings.UseSideOfPier) {

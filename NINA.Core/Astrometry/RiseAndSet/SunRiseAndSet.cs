@@ -14,22 +14,22 @@
 
 using System;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
-    public class AstronomicalTwilightRiseAndSet : RiseAndSetEvent {
+    public class SunRiseAndSet : RiseAndSetEvent {
 
-        public AstronomicalTwilightRiseAndSet(DateTime date, double latitude, double longitude) : base(date, latitude, longitude) {
+        public SunRiseAndSet(DateTime date, double latitude, double longitude) : base(date, latitude, longitude) {
         }
 
-        private double AstronomicalTwilightDegree {
+        private double SunRiseDegree {
             get {
-                //http://aa.usno.navy.mil/faq/docs/RST_defs.php #Paragraph Astronomical twilight
-                return -18;
+                //http://aa.usno.navy.mil/faq/docs/RST_defs.php #Paragraph Sunrise and sunset
+                return AstroUtil.ArcminToDegree(-50);
             }
         }
 
         protected override double AdjustAltitude(Body body) {
-            return body.Altitude - AstronomicalTwilightDegree;
+            return body.Altitude - SunRiseDegree;
         }
 
         protected override Body GetBody(DateTime date) {

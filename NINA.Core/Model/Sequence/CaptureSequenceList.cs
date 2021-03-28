@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Notification;
 using System;
 using System.Collections.Generic;
@@ -169,7 +169,7 @@ namespace NINA.Model {
             if (l.ActiveSequence == null && l.Count > 0) {
                 l.ActiveSequence = l.Items.SkipWhile(x => x.TotalExposureCount - x.ProgressExposureCount == 0).FirstOrDefault();
             }
-            l.DSO?.SetDateAndPosition(Utility.Astrometry.NighttimeCalculator.GetReferenceDate(DateTime.Now), latitude, longitude);
+            l.DSO?.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), latitude, longitude);
         }
 
         public static void SaveSequenceSet(Collection<CaptureSequenceList> sequenceSet, string path) {

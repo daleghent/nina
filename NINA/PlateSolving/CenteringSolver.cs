@@ -14,7 +14,7 @@
 
 using NINA.Model;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using System;
@@ -69,8 +69,8 @@ namespace NINA.PlateSolving {
                     } else {
                         var positionAfterSync = telescopeMediator.GetCurrentPosition().Transform(result.Coordinates.Epoch);
 
-                        if (Astrometry.DegreeToArcsec(Math.Abs(positionAfterSync.RADegrees - result.Coordinates.RADegrees)) > 1
-                            || Astrometry.DegreeToArcsec(Math.Abs(positionAfterSync.Dec - result.Coordinates.Dec)) > 1) {
+                        if (AstroUtil.DegreeToArcsec(Math.Abs(positionAfterSync.RADegrees - result.Coordinates.RADegrees)) > 1
+                            || AstroUtil.DegreeToArcsec(Math.Abs(positionAfterSync.Dec - result.Coordinates.Dec)) > 1) {
                             offset = result.DetermineSeparation(positionAfterSync);
                             Logger.Debug($"Sync failed silently - calculating offset instead to compensate.  Original: {positionAfterSync}; Solved: {result.Coordinates}; Offset: {offset}");
                         } else {

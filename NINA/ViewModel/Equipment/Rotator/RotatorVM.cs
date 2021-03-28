@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.Astrometry;
 
 namespace NINA.ViewModel.Equipment.Rotator {
 
@@ -87,7 +88,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
                 try {
                     RotatorInfo.IsMoving = true;
                     // Focuser position should be in [0, 360)
-                    targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
+                    targetPosition = AstroUtil.EuclidianModulus(targetPosition, 360);
 
                     applicationStatusMediator.StatusUpdate(
                         new ApplicationStatus() {
@@ -128,7 +129,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
                 try {
                     RotatorInfo.IsMoving = true;
                     // Focuser position should be in [0, 360)
-                    targetPosition = NINA.Utility.Astrometry.Astrometry.EuclidianModulus(targetPosition, 360);
+                    targetPosition = AstroUtil.EuclidianModulus(targetPosition, 360);
 
                     applicationStatusMediator.StatusUpdate(
                         new ApplicationStatus() {

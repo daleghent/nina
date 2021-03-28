@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry;
 using System;
 
 namespace NINA.Utility {
@@ -84,9 +85,9 @@ namespace NINA.Utility {
                 return _rotation;
             }
             set {
-                _rotation = Astrometry.Astrometry.MathMod(value, 360);
+                _rotation = AstroUtil.MathMod(value, 360);
                 if (_rotation < 0) { _rotation += 360; }
-                
+
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(TotalRotation));
             }
@@ -97,7 +98,7 @@ namespace NINA.Utility {
         public double TotalRotation {
             get {
                 var rotation = _rotationOffset + Rotation;
-                rotation = Astrometry.Astrometry.MathMod(rotation, 360);
+                rotation = AstroUtil.MathMod(rotation, 360);
                 return Math.Round(rotation, 2);
             }
             set {

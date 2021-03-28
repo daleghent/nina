@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Notification;
 using System;
 using System.Collections.Generic;
@@ -91,7 +91,7 @@ namespace NINA.PlateSolving.Solvers {
                 double.TryParse(dict["CD1_2"], NumberStyles.Any, CultureInfo.InvariantCulture, out double cr1y);
                 double.TryParse(dict["CD2_2"], NumberStyles.Any, CultureInfo.InvariantCulture, out double cr2y);
 
-                result.Pixscale = Astrometry.DegreeToArcsec(Math.Sqrt(Math.Pow(cr1y, 2) + Math.Pow(cr2y, 2)));
+                result.Pixscale = AstroUtil.DegreeToArcsec(Math.Sqrt(Math.Pow(cr1y, 2) + Math.Pow(cr2y, 2)));
             }
 
             /* Due to the way N.I.N.A. writes FITS files, the orientation is mirrored on the x-axis */

@@ -12,13 +12,14 @@
 
 #endregion "copyright"
 
+using NINA.Utility;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public class CustomHorizon {
         private double[] azimuths;
@@ -31,7 +32,7 @@ namespace NINA.Utility.Astrometry {
         }
 
         public double GetAltitude(double azimuth) {
-            if (azimuth < 0 || azimuth > 359) { azimuth = Astrometry.EuclidianModulus(azimuth, 360); }
+            if (azimuth < 0 || azimuth > 359) { azimuth = AstroUtil.EuclidianModulus(azimuth, 360); }
             return Accord.Math.Tools.Interpolate1D(azimuth, azimuths, altitudes, 0, 0);
         }
 

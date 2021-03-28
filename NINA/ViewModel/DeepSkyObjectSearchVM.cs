@@ -14,7 +14,7 @@
 
 using NINA.Core.Database;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINACustomControlLibrary;
 using Nito.AsyncEx;
 using Nito.Mvvm;
@@ -109,8 +109,8 @@ namespace NINA.ViewModel {
                 if (selectedTargetSearchResult != null) {
                     this.SetTargetNameWithoutSearch(selectedTargetSearchResult.Column1);
                     Coordinates = new Coordinates(
-                        Astrometry.HMSToDegrees(value.Column2),
-                        Astrometry.DMSToDegrees(value.Column3),
+                        AstroUtil.HMSToDegrees(value.Column2),
+                        AstroUtil.DMSToDegrees(value.Column3),
                         Epoch.J2000,
                         Coordinates.RAType.Degrees);
                 }

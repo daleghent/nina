@@ -7,7 +7,7 @@ using NINA.Sequencer.DragDrop;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Serialization;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Notification;
 using System;
 using System.Collections.Generic;
@@ -161,7 +161,7 @@ namespace NINA.Sequencer {
                 if (sequenceContainer is IDeepSkyObjectContainer) {
                     var dso = (sequenceContainer as IDeepSkyObjectContainer);
                     dso.Target.TargetName = string.Empty;
-                    dso.Target.InputCoordinates.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
+                    dso.Target.InputCoordinates.Coordinates = new Coordinates(Angle.Zero, Angle.Zero, Epoch.J2000);
                     dso.Target.Rotation = 0;
                     dso.Target = dso.Target;
                 }

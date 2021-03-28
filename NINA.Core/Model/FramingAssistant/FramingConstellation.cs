@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Model;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

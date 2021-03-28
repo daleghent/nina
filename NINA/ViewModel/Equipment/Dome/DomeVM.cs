@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using NINA.Model.MyDome;
 using NINA.Model.MyTelescope;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System.ComponentModel;
 using NINA.Model.MySafetyMonitor;
 
@@ -439,7 +439,7 @@ namespace NINA.ViewModel.Equipment.Dome {
         private async Task<bool> RotateRelative(double degrees) {
             if (Dome.CanSetAzimuth) {
                 this.FollowEnabled = false;
-                var targetAzimuth = Astrometry.EuclidianModulus(this.Dome.Azimuth + degrees, 360.0);
+                var targetAzimuth = AstroUtil.EuclidianModulus(this.Dome.Azimuth + degrees, 360.0);
                 return await SlewToAzimuth(targetAzimuth, CancellationToken.None);
             } else {
                 return false;

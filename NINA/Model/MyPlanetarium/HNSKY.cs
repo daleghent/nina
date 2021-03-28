@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Exceptions;
 using NINA.Utility.TcpRaw;
 using NINA.Profile;
@@ -58,8 +58,8 @@ namespace NINA.Model.MyPlanetarium {
                 string[] info = response.Split(' ');
 
                 if (!(info[0].Equals("?") || string.IsNullOrEmpty(info[2]))) {
-                    Coordinates newCoordinates = new Coordinates(Astrometry.RadianToHour(double.Parse(info[0].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)),
-                                                         Astrometry.ToDegree(double.Parse(info[1].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)),
+                    Coordinates newCoordinates = new Coordinates(AstroUtil.RadianToHour(double.Parse(info[0].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)),
+                                                         AstroUtil.ToDegree(double.Parse(info[1].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)),
                                                          Epoch.J2000, Coordinates.RAType.Hours);
 
                     DeepSkyObject dso = new DeepSkyObject(info[2], newCoordinates, string.Empty, null);
@@ -101,8 +101,8 @@ namespace NINA.Model.MyPlanetarium {
                      * We must flip longitude's sign here.
                      */
                     var loc = new Coords {
-                        Latitude = Astrometry.ToDegree(double.Parse(info[1].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)),
-                        Longitude = Astrometry.ToDegree(double.Parse(info[0].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)) * -1,
+                        Latitude = AstroUtil.ToDegree(double.Parse(info[1].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)),
+                        Longitude = AstroUtil.ToDegree(double.Parse(info[0].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)) * -1,
                         Elevation = 0
                     };
 

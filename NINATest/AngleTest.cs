@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -34,10 +34,10 @@ namespace NINATest {
         public void CreateByHoursTest(double inputHours) {
             var angle = Angle.ByHours(inputHours);
 
-            var expectedDegree = Astrometry.HoursToDegrees(inputHours);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedRadian = Astrometry.ToRadians(expectedDegree);
+            var expectedDegree = AstroUtil.HoursToDegrees(inputHours);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedRadian = AstroUtil.ToRadians(expectedDegree);
 
             Assert.AreEqual(inputHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(expectedRadian, angle.Radians, TOLERANCE);
@@ -56,10 +56,10 @@ namespace NINATest {
         public void CreateByDegreeTest(double inputDegrees) {
             var angle = Angle.ByDegree(inputDegrees);
 
-            var expectedHours = Astrometry.DegreesToHours(inputDegrees);
-            var expectedArcmin = Astrometry.DegreeToArcmin(inputDegrees);
-            var expectedArcsec = Astrometry.DegreeToArcsec(inputDegrees);
-            var expectedRadian = Astrometry.ToRadians(inputDegrees);
+            var expectedHours = AstroUtil.DegreesToHours(inputDegrees);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(inputDegrees);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(inputDegrees);
+            var expectedRadian = AstroUtil.ToRadians(inputDegrees);
 
             Assert.AreEqual(expectedHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(expectedRadian, angle.Radians, TOLERANCE);
@@ -76,10 +76,10 @@ namespace NINATest {
         public void CreateByRadiansTest(double inputRadians) {
             var angle = Angle.ByRadians(inputRadians);
 
-            var expectedDegree = Astrometry.ToDegree(inputRadians);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedDegree = AstroUtil.ToDegree(inputRadians);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(inputRadians, angle.Radians, TOLERANCE);
@@ -97,10 +97,10 @@ namespace NINATest {
             var angle = Angle.ByRadians(inputRadians).Sin();
 
             var rad = Math.Sin(inputRadians);
-            var expectedDegree = Astrometry.ToDegree(rad);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedDegree = AstroUtil.ToDegree(rad);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(rad, angle.Radians, TOLERANCE);
@@ -121,10 +121,10 @@ namespace NINATest {
             var angle = Angle.ByRadians(inputRadians).Abs();
 
             var rad = Math.Abs(inputRadians);
-            var expectedDegree = Astrometry.ToDegree(rad);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedDegree = AstroUtil.ToDegree(rad);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(rad, angle.Radians, TOLERANCE);
@@ -142,10 +142,10 @@ namespace NINATest {
             var angle = Angle.ByRadians(inputRadians).Asin();
 
             var rad = Math.Asin(inputRadians);
-            var expectedDegree = Astrometry.ToDegree(rad);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedDegree = AstroUtil.ToDegree(rad);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(rad, angle.Radians, TOLERANCE);
@@ -163,10 +163,10 @@ namespace NINATest {
             var angle = Angle.ByRadians(inputRadians).Cos();
 
             var rad = Math.Cos(inputRadians);
-            var expectedDegree = Astrometry.ToDegree(rad);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedDegree = AstroUtil.ToDegree(rad);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(rad, angle.Radians, TOLERANCE);
@@ -184,10 +184,10 @@ namespace NINATest {
             var angle = Angle.ByRadians(inputRadians).Acos();
 
             var rad = Math.Acos(inputRadians);
-            var expectedDegree = Astrometry.ToDegree(rad);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedDegree = AstroUtil.ToDegree(rad);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(rad, angle.Radians, TOLERANCE);
@@ -205,10 +205,10 @@ namespace NINATest {
             var angle = Angle.ByRadians(inputRadians).Atan();
 
             var rad = Math.Atan(inputRadians);
-            var expectedDegree = Astrometry.ToDegree(rad);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedDegree = AstroUtil.ToDegree(rad);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(rad, angle.Radians, TOLERANCE);
@@ -228,10 +228,10 @@ namespace NINATest {
             var angle = xAngle.Atan2(yAngle);
 
             var rad = Math.Atan2(yRadians, xRadians);
-            var expectedDegree = Astrometry.ToDegree(rad);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedDegree = AstroUtil.ToDegree(rad);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(rad, angle.Radians, TOLERANCE);
@@ -251,10 +251,10 @@ namespace NINATest {
             var angle = Angle.Atan2(yAngle, xAngle);
 
             var rad = Math.Atan2(yRadians, xRadians);
-            var expectedDegree = Astrometry.ToDegree(rad);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedDegree = AstroUtil.ToDegree(rad);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedHours, angle.Hours, TOLERANCE);
             Assert.AreEqual(rad, angle.Radians, TOLERANCE);
@@ -275,11 +275,11 @@ namespace NINATest {
 
             var angle = firstAngle + secondAngle;
 
-            var expectedRadian = Astrometry.ToRadians(firstDegree) + Astrometry.ToRadians(secondDegree);
-            var expectedDegree = Astrometry.ToDegree(expectedRadian);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedRadian = AstroUtil.ToRadians(firstDegree) + AstroUtil.ToRadians(secondDegree);
+            var expectedDegree = AstroUtil.ToDegree(expectedRadian);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedDegree, angle.Degree, TOLERANCE);
             Assert.AreEqual(expectedArcmin, angle.ArcMinutes, TOLERANCE);
@@ -297,13 +297,13 @@ namespace NINATest {
         public void OperatorPlusDoubleTest(double firstDegree, double secondDegree) {
             var secondAngle = Angle.ByDegree(secondDegree);
 
-            var angle = Astrometry.ToRadians(firstDegree) + secondAngle;
+            var angle = AstroUtil.ToRadians(firstDegree) + secondAngle;
 
-            var expectedRadian = Astrometry.ToRadians(firstDegree) + Astrometry.ToRadians(secondDegree);
-            var expectedDegree = Astrometry.ToDegree(expectedRadian);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedRadian = AstroUtil.ToRadians(firstDegree) + AstroUtil.ToRadians(secondDegree);
+            var expectedDegree = AstroUtil.ToDegree(expectedRadian);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedDegree, angle.Degree, TOLERANCE);
             Assert.AreEqual(expectedArcmin, angle.ArcMinutes, TOLERANCE);
@@ -324,11 +324,11 @@ namespace NINATest {
 
             var angle = firstAngle - secondAngle;
 
-            var expectedRadian = Astrometry.ToRadians(firstDegree) - Astrometry.ToRadians(secondDegree);
-            var expectedDegree = Astrometry.ToDegree(expectedRadian);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedRadian = AstroUtil.ToRadians(firstDegree) - AstroUtil.ToRadians(secondDegree);
+            var expectedDegree = AstroUtil.ToDegree(expectedRadian);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedDegree, angle.Degree, TOLERANCE);
             Assert.AreEqual(expectedArcmin, angle.ArcMinutes, TOLERANCE);
@@ -346,13 +346,13 @@ namespace NINATest {
         public void OperatorMinusDoubleTest(double firstDegree, double secondDegree) {
             var secondAngle = Angle.ByDegree(secondDegree);
 
-            var angle = Astrometry.ToRadians(firstDegree) - secondAngle;
+            var angle = AstroUtil.ToRadians(firstDegree) - secondAngle;
 
-            var expectedRadian = Astrometry.ToRadians(firstDegree) - Astrometry.ToRadians(secondDegree);
-            var expectedDegree = Astrometry.ToDegree(expectedRadian);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedRadian = AstroUtil.ToRadians(firstDegree) - AstroUtil.ToRadians(secondDegree);
+            var expectedDegree = AstroUtil.ToDegree(expectedRadian);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedDegree, angle.Degree, TOLERANCE);
             Assert.AreEqual(expectedArcmin, angle.ArcMinutes, TOLERANCE);
@@ -373,11 +373,11 @@ namespace NINATest {
 
             var angle = firstAngle * secondAngle;
 
-            var expectedRadian = Astrometry.ToRadians(firstDegree) * Astrometry.ToRadians(secondDegree);
-            var expectedDegree = Astrometry.ToDegree(expectedRadian);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedRadian = AstroUtil.ToRadians(firstDegree) * AstroUtil.ToRadians(secondDegree);
+            var expectedDegree = AstroUtil.ToDegree(expectedRadian);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedDegree, angle.Degree, TOLERANCE);
             Assert.AreEqual(expectedArcmin, angle.ArcMinutes, TOLERANCE);
@@ -395,13 +395,13 @@ namespace NINATest {
         public void OperatorMultiplyDoubleTest(double firstDegree, double secondDegree) {
             var secondAngle = Angle.ByDegree(secondDegree);
 
-            var angle = Astrometry.ToRadians(firstDegree) * secondAngle;
+            var angle = AstroUtil.ToRadians(firstDegree) * secondAngle;
 
-            var expectedRadian = Astrometry.ToRadians(firstDegree) * Astrometry.ToRadians(secondDegree);
-            var expectedDegree = Astrometry.ToDegree(expectedRadian);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedRadian = AstroUtil.ToRadians(firstDegree) * AstroUtil.ToRadians(secondDegree);
+            var expectedDegree = AstroUtil.ToDegree(expectedRadian);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedDegree, angle.Degree, TOLERANCE);
             Assert.AreEqual(expectedArcmin, angle.ArcMinutes, TOLERANCE);
@@ -422,11 +422,11 @@ namespace NINATest {
 
             var angle = firstAngle / secondAngle;
 
-            var expectedRadian = Astrometry.ToRadians(firstDegree) / Astrometry.ToRadians(secondDegree);
-            var expectedDegree = Astrometry.ToDegree(expectedRadian);
-            var expectedArcmin = Astrometry.DegreeToArcmin(expectedDegree);
-            var expectedArcsec = Astrometry.DegreeToArcsec(expectedDegree);
-            var expectedHours = Astrometry.DegreesToHours(expectedDegree);
+            var expectedRadian = AstroUtil.ToRadians(firstDegree) / AstroUtil.ToRadians(secondDegree);
+            var expectedDegree = AstroUtil.ToDegree(expectedRadian);
+            var expectedArcmin = AstroUtil.DegreeToArcmin(expectedDegree);
+            var expectedArcsec = AstroUtil.DegreeToArcsec(expectedDegree);
+            var expectedHours = AstroUtil.DegreesToHours(expectedDegree);
 
             Assert.AreEqual(expectedDegree, angle.Degree, TOLERANCE);
             Assert.AreEqual(expectedArcmin, angle.ArcMinutes, TOLERANCE);

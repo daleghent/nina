@@ -17,7 +17,7 @@ using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Profile;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.ComponentModel.Composition;
 using System.Linq;
@@ -137,7 +137,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             var latlong = profileService.ActiveProfile.AstrometrySettings;
             var now = DateTime.UtcNow;
 
-            CurrentMoonAltitude = Astrometry.GetMoonAltitude(now, latlong.Latitude, latlong.Longitude);
+            CurrentMoonAltitude = AstroUtil.GetMoonAltitude(now, latlong.Latitude, latlong.Longitude);
         }
     }
 }

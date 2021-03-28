@@ -14,7 +14,7 @@
 
 using NINA.Core.Enum;
 using NINA.Model.ImageData;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -192,14 +192,14 @@ namespace NINA.Utility.FileFormat.FITS {
                 double ra;
                 double dec;
 
-                if (Astrometry.Astrometry.IsHMS(raHdrVal)) {
-                    ra = Astrometry.Astrometry.HMSToDegrees(raHdrVal);
+                if (AstroUtil.IsHMS(raHdrVal)) {
+                    ra = AstroUtil.HMSToDegrees(raHdrVal);
                 } else {
                     ra = ParseDouble(raHdrVal);
                 }
 
-                if (Astrometry.Astrometry.IsDMS(decHdrVal)) {
-                    dec = Astrometry.Astrometry.DMSToDegrees(decHdrVal);
+                if (AstroUtil.IsDMS(decHdrVal)) {
+                    dec = AstroUtil.DMSToDegrees(decHdrVal);
                 } else {
                     dec = ParseDouble(decHdrVal);
                 }
@@ -224,8 +224,8 @@ namespace NINA.Utility.FileFormat.FITS {
                 string hdrVal = card.OriginalValue;
                 double value;
 
-                if (Astrometry.Astrometry.IsDMS(hdrVal)) {
-                    value = Astrometry.Astrometry.DMSToDegrees(hdrVal);
+                if (AstroUtil.IsDMS(hdrVal)) {
+                    value = AstroUtil.DMSToDegrees(hdrVal);
                 } else {
                     value = ParseDouble(hdrVal);
                 }
@@ -237,8 +237,8 @@ namespace NINA.Utility.FileFormat.FITS {
                 string hdrVal = card.OriginalValue;
                 double value;
 
-                if (Astrometry.Astrometry.IsDMS(hdrVal)) {
-                    value = Astrometry.Astrometry.DMSToDegrees(hdrVal);
+                if (AstroUtil.IsDMS(hdrVal)) {
+                    value = AstroUtil.DMSToDegrees(hdrVal);
                 } else {
                     value = ParseDouble(hdrVal);
                 }
@@ -266,14 +266,14 @@ namespace NINA.Utility.FileFormat.FITS {
                 double ra;
                 double dec;
 
-                if (Astrometry.Astrometry.IsHMS(raHdrVal)) {
-                    ra = Astrometry.Astrometry.HMSToDegrees(raHdrVal);
+                if (AstroUtil.IsHMS(raHdrVal)) {
+                    ra = AstroUtil.HMSToDegrees(raHdrVal);
                 } else {
                     ra = ParseDouble(raHdrVal);
                 }
 
-                if (Astrometry.Astrometry.IsDMS(decHdrVal)) {
-                    dec = Astrometry.Astrometry.DMSToDegrees(decHdrVal);
+                if (AstroUtil.IsDMS(decHdrVal)) {
+                    dec = AstroUtil.DMSToDegrees(decHdrVal);
                 } else {
                     dec = ParseDouble(decHdrVal);
                 }
@@ -573,8 +573,8 @@ namespace NINA.Utility.FileFormat.FITS {
             }
 
             if (metaData.Target.Coordinates != null) {
-                Add("OBJCTRA", Astrometry.Astrometry.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object");
-                Add("OBJCTDEC", Astrometry.Astrometry.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object");
+                Add("OBJCTRA", AstroUtil.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object");
+                Add("OBJCTDEC", AstroUtil.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object");
             }
 
             if (!double.IsNaN(metaData.Target.Rotation)) {

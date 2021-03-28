@@ -21,11 +21,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Model.MyCamera;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using Accord.Statistics.Distributions.Univariate;
 using NINA.Core.Enum;
 
 namespace NINA.Model.MyGuider {
+
     public class DirectGuider : BaseINPC, IGuider, ITelescopeConsumer {
         private readonly IProfileService profileService;
         private readonly ITelescopeMediator telescopeMediator;
@@ -50,7 +51,7 @@ namespace NINA.Model.MyGuider {
                 Disconnect();
             } else {
                 // arcseconds per pixel
-                PixelScale = Astrometry.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
+                PixelScale = AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
                 WestEastGuideRate = ToNormalizedGuideRate(telescopeInfo.GuideRateRightAscensionArcsecPerSec);
                 NorthSouthGuideRate = ToNormalizedGuideRate(telescopeInfo.GuideRateDeclinationArcsecPerSec);
 
@@ -65,7 +66,7 @@ namespace NINA.Model.MyGuider {
         private static double ToNormalizedGuideRate(double arcsecPerSecond) {
             if (double.IsNaN(arcsecPerSecond) || arcsecPerSecond <= 0) {
                 // Default guiding rate is 0.5x sidereal
-                return Astrometry.SIDEREAL_RATE_ARCSECONDS_PER_SECOND / 2.0;
+                return AstroUtil.SIDEREAL_RATE_ARCSECONDS_PER_SECOND / 2.0;
             }
             return arcsecPerSecond;
         }
@@ -85,10 +86,12 @@ namespace NINA.Model.MyGuider {
         }
 
         private double _pixelScale = -1.0;
+
         public double PixelScale {
             get {
                 return _pixelScale;
-            } set {
+            }
+            set {
                 if (_pixelScale != value) {
                     _pixelScale = value;
                     RaisePropertyChanged();
@@ -97,6 +100,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private double _directGuideDuration = 0.0;
+
         public double DirectGuideDuration {
             get {
                 return _directGuideDuration;
@@ -110,6 +114,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private double _westEastGuideRate = 0.0;
+
         public double WestEastGuideRate {
             get {
                 return _westEastGuideRate;
@@ -123,6 +128,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private double _northSouthGuideRate = 0.0;
+
         public double NorthSouthGuideRate {
             get {
                 return _northSouthGuideRate;

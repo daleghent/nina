@@ -20,7 +20,7 @@ using NINA.Model.MyRotator;
 using NINA.Model.MyTelescope;
 using NINA.Model.MyWeatherData;
 using NINA.Profile;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Linq;
 
@@ -96,7 +96,7 @@ namespace NINA.Model.ImageData {
                 Telescope.Coordinates = info.Coordinates;
                 Telescope.Altitude = info.Altitude;
                 Telescope.Azimuth = info.Azimuth;
-                Telescope.Airmass = Astrometry.Airmass(info.Altitude);
+                Telescope.Airmass = AstroUtil.Airmass(info.Altitude);
             }
         }
 

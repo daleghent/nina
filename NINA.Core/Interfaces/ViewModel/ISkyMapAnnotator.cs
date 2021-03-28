@@ -1,6 +1,6 @@
 ﻿using NINA.Model;
 using NINA.Model.MyTelescope;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media.Imaging;
 
 namespace NINA.ViewModel.FramingAssistant {
+
     public interface ISkyMapAnnotator {
         bool AnnotateConstellationBoundaries { get; set; }
         bool AnnotateConstellations { get; set; }
@@ -25,14 +26,23 @@ namespace NINA.ViewModel.FramingAssistant {
         ViewportFoV ViewportFoV { get; }
 
         void CalculateConstellationBoundaries();
+
         void CalculateFrameLineMatrix();
+
         ViewportFoV ChangeFoV(double vFoVDegrees);
+
         void ClearFrameLineMatrix();
+
         void Dispose();
+
         Dictionary<string, DeepSkyObject> GetDeepSkyObjectsForViewport();
+
         Task Initialize(Coordinates centerCoordinates, double vFoVDegrees, double imageWidth, double imageHeight, double imageRotation, CancellationToken ct);
+
         Coordinates ShiftViewport(Vector delta);
+
         void UpdateDeviceInfo(TelescopeInfo deviceInfo);
+
         void UpdateSkyMap();
     }
 }

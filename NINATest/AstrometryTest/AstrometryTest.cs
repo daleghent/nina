@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 
@@ -29,7 +29,7 @@ namespace NINATest.AstrometryTest {
             var degree = 180;
             var expectedRad = Math.PI;
 
-            var rad = Astrometry.ToRadians(degree);
+            var rad = AstroUtil.ToRadians(degree);
 
             Assert.AreEqual(expectedRad, rad);
         }
@@ -39,7 +39,7 @@ namespace NINATest.AstrometryTest {
             var rad = Math.PI;
             var expectedDeg = 180;
 
-            var deg = Astrometry.ToDegree(rad);
+            var deg = AstroUtil.ToDegree(rad);
 
             Assert.AreEqual(expectedDeg, deg);
         }
@@ -49,7 +49,7 @@ namespace NINATest.AstrometryTest {
             var degree = 180;
             var expectedarcmin = 10800;
 
-            var arcmin = Astrometry.DegreeToArcmin(degree);
+            var arcmin = AstroUtil.DegreeToArcmin(degree);
 
             Assert.AreEqual(expectedarcmin, arcmin);
         }
@@ -59,7 +59,7 @@ namespace NINATest.AstrometryTest {
             var degree = 180;
             var expectedarcsec = 648000;
 
-            var arcsec = Astrometry.DegreeToArcsec(degree);
+            var arcsec = AstroUtil.DegreeToArcsec(degree);
 
             Assert.AreEqual(expectedarcsec, arcsec);
         }
@@ -69,7 +69,7 @@ namespace NINATest.AstrometryTest {
             var arcmin = 20.4;
             var expectedarcsec = 1224;
 
-            var arcsec = Astrometry.ArcminToArcsec(arcmin);
+            var arcsec = AstroUtil.ArcminToArcsec(arcmin);
 
             Assert.AreEqual(expectedarcsec, arcsec);
         }
@@ -79,7 +79,7 @@ namespace NINATest.AstrometryTest {
             var arcmin = 150;
             var expecteddeg = 2.5;
 
-            var deg = Astrometry.ArcminToDegree(arcmin);
+            var deg = AstroUtil.ArcminToDegree(arcmin);
 
             Assert.AreEqual(expecteddeg, deg);
         }
@@ -89,7 +89,7 @@ namespace NINATest.AstrometryTest {
             var arcsec = 150;
             var expectedarcmin = 2.5;
 
-            var arcmin = Astrometry.ArcsecToArcmin(arcsec);
+            var arcmin = AstroUtil.ArcsecToArcmin(arcsec);
 
             Assert.AreEqual(expectedarcmin, arcmin);
         }
@@ -99,7 +99,7 @@ namespace NINATest.AstrometryTest {
             var arcsec = 9000;
             var expecteddeg = 2.5;
 
-            var deg = Astrometry.ArcsecToDegree(arcsec);
+            var deg = AstroUtil.ArcsecToDegree(arcsec);
 
             Assert.AreEqual(expecteddeg, deg);
         }
@@ -109,7 +109,7 @@ namespace NINATest.AstrometryTest {
             var hours = 5.2;
             var expecteddeg = 78;
 
-            var deg = Astrometry.HoursToDegrees(hours);
+            var deg = AstroUtil.HoursToDegrees(hours);
 
             Assert.AreEqual(expecteddeg, deg);
         }
@@ -119,7 +119,7 @@ namespace NINATest.AstrometryTest {
             var deg = 78;
             var expectedhours = 5.2;
 
-            var hours = Astrometry.DegreesToHours(deg);
+            var hours = AstroUtil.DegreesToHours(deg);
 
             Assert.AreEqual(expectedhours, hours);
         }
@@ -131,7 +131,7 @@ namespace NINATest.AstrometryTest {
         [TestCase(90, 0, 0, 0)]
         [TestCase(270, 0, 0, 0)]
         public void GetAltitudeTest(double angle, double latitude, double longitude, double expectedAltitude) {
-            var alt = Astrometry.GetAltitude(angle, latitude, longitude);
+            var alt = AstroUtil.GetAltitude(angle, latitude, longitude);
 
             Assert.AreEqual(expectedAltitude, alt, ANGLE_TOLERANCE);
         }
@@ -148,7 +148,7 @@ namespace NINATest.AstrometryTest {
         [TestCase(90, 40, 20, -80, 180)]
         [TestCase(270, 50, 20, -10, 136.15769484583683)]
         public void GetAzimuthTest(double angle, double altitude, double latitude, double declination, double expectedAzimuth) {
-            var az = Astrometry.GetAzimuth(angle, altitude, latitude, declination);
+            var az = AstroUtil.GetAzimuth(angle, altitude, latitude, declination);
 
             Assert.AreEqual(expectedAzimuth, az, ANGLE_TOLERANCE);
         }
@@ -164,7 +164,7 @@ namespace NINATest.AstrometryTest {
         [TestCase(33.9999999, "34° 00' 00\"")] //Arcsec rounded = 60 and arcmin will be 60
         [TestCase(-33.9999999, "-34° 00' 00\"")] //Arcsec rounded = 60 and arcmin will be 60
         public void DegreesToDMS(double degree, string expected) {
-            var value = Astrometry.DegreesToDMS(degree);
+            var value = AstroUtil.DegreesToDMS(degree);
 
             Assert.AreEqual(expected, value);
         }
@@ -186,7 +186,7 @@ namespace NINATest.AstrometryTest {
         [TestCase(14.999, "01:00:00")]
         [TestCase(-14.999, "-01:00:00")]
         public void DegreesToHMS(double degree, string expected) {
-            var value = Astrometry.DegreesToHMS(degree);
+            var value = AstroUtil.DegreesToHMS(degree);
 
             Assert.AreEqual(expected, value);
         }
@@ -202,7 +202,7 @@ namespace NINATest.AstrometryTest {
         [TestCase(33.9999999, "34:00:00")]
         [TestCase(-33.9999999, "-34:00:00")]
         public void HoursToHMS(double hours, string expected) {
-            var value = Astrometry.HoursToHMS(hours);
+            var value = AstroUtil.HoursToHMS(hours);
 
             Assert.AreEqual(expected, value);
         }
@@ -218,7 +218,7 @@ namespace NINATest.AstrometryTest {
         [TestCase("34°00'00\"", 34)]
         [TestCase("-34°00'00\"", -34)]
         public void DMSToDegrees(string hms, double expected) {
-            var value = Astrometry.DMSToDegrees(hms);
+            var value = AstroUtil.DMSToDegrees(hms);
 
             Assert.AreEqual(expected, value, ANGLE_TOLERANCE);
         }
@@ -237,7 +237,7 @@ namespace NINATest.AstrometryTest {
         [TestCase("-153 30 05.95", true)]
         [TestCase("+46d 46m 04s", false)]
         public void IsDmsTest(string coordinate, bool expected) {
-            var value = Astrometry.IsDMS(coordinate);
+            var value = AstroUtil.IsDMS(coordinate);
 
             Assert.AreEqual(expected, value);
         }
@@ -249,7 +249,7 @@ namespace NINATest.AstrometryTest {
         [TestCase("-02 00 00", false)]
         [TestCase("34°00'00\"", false)]
         public void IsHmsTest(string coordinate, bool expected) {
-            var value = Astrometry.IsHMS(coordinate);
+            var value = AstroUtil.IsHMS(coordinate);
 
             Assert.AreEqual(expected, value);
         }
@@ -581,7 +581,7 @@ namespace NINATest.AstrometryTest {
         [TestCase(48, 20, 19.2)]
         [TestCase(50, 20, 20.8)]
         public void ApproximateDewPointTest(double temp, double humidity, double expected) {
-            var dp = Astrometry.ApproximateDewPoint(temp, humidity);
+            var dp = AstroUtil.ApproximateDewPoint(temp, humidity);
 
             Assert.AreEqual(expected, dp, DEWPOINT_TOLERANCE);
         }
@@ -595,7 +595,7 @@ namespace NINATest.AstrometryTest {
         [TestCase("5:30:0", 82.5)]
         [TestCase("-5:30:0", -82.5)]
         public void HMSToDegrees(string hms, double expected) {
-            var value = Astrometry.HMSToDegrees(hms);
+            var value = AstroUtil.HMSToDegrees(hms);
 
             Assert.AreEqual(expected, value, ANGLE_TOLERANCE);
         }
@@ -607,7 +607,7 @@ namespace NINATest.AstrometryTest {
         [TestCase(1.657982, 21.657498, 4.0004840000000002)]
         [TestCase(22.68498, 15.135684, 7.549296)]
         public void GetHourAngleTest(double siderealTime, double rightAscension, double expectedHourAngle) {
-            var hourAngle = Astrometry.GetHourAngle(siderealTime, rightAscension);
+            var hourAngle = AstroUtil.GetHourAngle(siderealTime, rightAscension);
 
             Assert.AreEqual(expectedHourAngle, hourAngle, ANGLE_TOLERANCE);
         }
@@ -636,7 +636,7 @@ namespace NINATest.AstrometryTest {
         [TestCase(12.55f, 10.32f, 2.23f)]
         [TestCase(122.55f, 10.32f, 9.03f)]
         public void GetEuclidianModulus(float x, float y, float expected) {
-            var modulus = Astrometry.EuclidianModulus(x, y);
+            var modulus = AstroUtil.EuclidianModulus(x, y);
 
             Assert.AreEqual(expected, modulus, MODULUS_TOLERANCE);
         }
@@ -665,14 +665,14 @@ namespace NINATest.AstrometryTest {
         [TestCase(12.55f, 10.32f, 2.23f)]
         [TestCase(122.55f, 10.32f, 9.03f)]
         public void GetEuclidianModulus(double x, double y, double expected) {
-            var modulus = Astrometry.EuclidianModulus(x, y);
+            var modulus = AstroUtil.EuclidianModulus(x, y);
 
             Assert.AreEqual(expected, modulus, MODULUS_TOLERANCE);
         }
 
         [TestCase(35d, 2.5, 20.5, ExpectedResult = 9.56)]
         public double DeterminePolarAlignmentError(double startDeclination, double driftRate, double declinationError) {
-            return Math.Round(Astrometry.DegreeToArcmin(Astrometry.DetermineDriftAlignError(startDeclination, driftRate, Astrometry.ArcsecToDegree(declinationError))), 2);
+            return Math.Round(AstroUtil.DegreeToArcmin(AstroUtil.DetermineDriftAlignError(startDeclination, driftRate, AstroUtil.ArcsecToDegree(declinationError))), 2);
         }
     }
 }

@@ -17,7 +17,7 @@ using NINA.Model.MyCamera;
 using NINA.Model.MyPlanetarium;
 using NINA.PlateSolving;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Behaviors;
 using NINA.Utility.Exceptions;
 using NINA.Utility.Mediator.Interfaces;
@@ -433,7 +433,7 @@ namespace NINA.ViewModel.FramingAssistant {
             }
             set {
                 _dSO = value;
-                _dSO?.SetDateAndPosition(Utility.Astrometry.NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
+                _dSO?.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
                 RaisePropertyChanged();
             }
         }
@@ -696,8 +696,8 @@ namespace NINA.ViewModel.FramingAssistant {
             }
 
             var center = new Point(Rectangle.X + Rectangle.Width / 2d, Rectangle.Y + Rectangle.Height / 2d);
-            var imageArcsecWidth = Astrometry.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
-            var imageArcsecHeight = Astrometry.ArcminToArcsec(ImageParameter.FoVHeight) / ImageParameter.Image.Height;
+            var imageArcsecWidth = AstroUtil.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
+            var imageArcsecHeight = AstroUtil.ArcminToArcsec(ImageParameter.FoVHeight) / ImageParameter.Image.Height;
 
             foreach (var rect in CameraRectangles) {
                 var rectCenter = new Point(rect.X + Rectangle.X + rect.Width / 2d,
@@ -765,7 +765,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
                     if (Cache != null && DSO != null) {
                         try {
-                            skySurveyImage = await Cache.GetImage(FramingAssistantSource.GetCacheSourceString(), DSO.Coordinates.RA, DSO.Coordinates.Dec, DSO.Rotation, Astrometry.DegreeToArcmin(FieldOfView));
+                            skySurveyImage = await Cache.GetImage(FramingAssistantSource.GetCacheSourceString(), DSO.Coordinates.RA, DSO.Coordinates.Dec, DSO.Rotation, AstroUtil.DegreeToArcmin(FieldOfView));
                         } catch (Exception ex) {
                             Logger.Error(ex);
                         }
@@ -783,7 +783,7 @@ namespace NINA.ViewModel.FramingAssistant {
                             var skySurvey = SkySurveyFactory.Create(FramingAssistantSource);
 
                             skySurveyImage = await skySurvey.GetImage(DSO?.Name, DSO?.Coordinates,
-                                Astrometry.DegreeToArcmin(FieldOfView), boundWidth, boundHeight, _loadImageSource.Token, _progress);
+                                AstroUtil.DegreeToArcmin(FieldOfView), boundWidth, boundHeight, _loadImageSource.Token, _progress);
                         }
                     }
 
@@ -818,7 +818,7 @@ namespace NINA.ViewModel.FramingAssistant {
                             RaisePropertyChanged(nameof(ImageCacheInfo));
                         }
 
-                        await SkyMapAnnotator.Initialize(skySurveyImage.Coordinates, Astrometry.ArcminToDegree(skySurveyImage.FoVHeight), ImageParameter.Image.PixelWidth, ImageParameter.Image.PixelHeight, ImageParameter.Rotation, _loadImageSource.Token);
+                        await SkyMapAnnotator.Initialize(skySurveyImage.Coordinates, AstroUtil.ArcminToDegree(skySurveyImage.FoVHeight), ImageParameter.Image.PixelWidth, ImageParameter.Image.PixelHeight, ImageParameter.Rotation, _loadImageSource.Token);
                         SkyMapAnnotator.DynamicFoV = FramingAssistantSource == SkySurveySource.SKYATLAS;
 
                         CalculateRectangle(SkyMapAnnotator.ViewportFoV);
@@ -868,8 +868,8 @@ namespace NINA.ViewModel.FramingAssistant {
                     rotation -= 360;
                 }
                 skySurveyImage.Coordinates = psResult.Coordinates;
-                skySurveyImage.FoVWidth = Astrometry.ArcsecToArcmin(psResult.Pixscale * skySurveyImage.Image.PixelWidth);
-                skySurveyImage.FoVHeight = Astrometry.ArcsecToArcmin(psResult.Pixscale * skySurveyImage.Image.PixelHeight);
+                skySurveyImage.FoVWidth = AstroUtil.ArcsecToArcmin(psResult.Pixscale * skySurveyImage.Image.PixelWidth);
+                skySurveyImage.FoVHeight = AstroUtil.ArcsecToArcmin(psResult.Pixscale * skySurveyImage.Image.PixelHeight);
                 skySurveyImage.Rotation = rotation;
 
                 if (psResult.Flipped) {
@@ -908,7 +908,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     var dec = double.Parse(_selectedImageCacheInfo.Attribute("Dec").Value, CultureInfo.InvariantCulture);
                     var name = _selectedImageCacheInfo.Attribute("Name").Value;
                     var coordinates = new Coordinates(ra, dec, Epoch.J2000, Coordinates.RAType.Hours);
-                    FieldOfView = Astrometry.ArcminToDegree(double.Parse(_selectedImageCacheInfo.Attribute("FoVW").Value, CultureInfo.InvariantCulture));
+                    FieldOfView = AstroUtil.ArcminToDegree(double.Parse(_selectedImageCacheInfo.Attribute("FoVW").Value, CultureInfo.InvariantCulture));
                     DSO = new DeepSkyObject(name, coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
                     RaiseCoordinatesChanged();
                 }
@@ -924,10 +924,10 @@ namespace NINA.ViewModel.FramingAssistant {
 
                 var centerCoordinates = parameter.CenterCoordinates;
 
-                var imageArcsecWidth = Astrometry.DegreeToArcsec(parameter.OriginalHFoV) / parameter.OriginalWidth;
-                var imageArcsecHeight = Astrometry.DegreeToArcsec(parameter.OriginalVFoV) / parameter.OriginalHeight;
+                var imageArcsecWidth = AstroUtil.DegreeToArcsec(parameter.OriginalHFoV) / parameter.OriginalWidth;
+                var imageArcsecHeight = AstroUtil.DegreeToArcsec(parameter.OriginalVFoV) / parameter.OriginalHeight;
 
-                var arcsecPerPix = Astrometry.ArcsecPerPixel(CameraPixelSize, FocalLength);
+                var arcsecPerPix = AstroUtil.ArcsecPerPixel(CameraPixelSize, FocalLength);
                 var conversion = arcsecPerPix / imageArcsecWidth;
 
                 var width = CameraWidth * conversion;
@@ -1022,8 +1022,8 @@ namespace NINA.ViewModel.FramingAssistant {
                 SkyMapAnnotator.UpdateSkyMap();
             } else {
                 var imageArcsecWidth =
-                    Astrometry.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
-                var imageArcsecHeight = Astrometry.ArcminToArcsec(ImageParameter.FoVHeight) /
+                    AstroUtil.ArcminToArcsec(ImageParameter.FoVWidth) / ImageParameter.Image.Width;
+                var imageArcsecHeight = AstroUtil.ArcminToArcsec(ImageParameter.FoVHeight) /
                                         ImageParameter.Image.Height;
                 this.Rectangle.X += delta.X;
                 this.Rectangle.Y += delta.Y;

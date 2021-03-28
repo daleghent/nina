@@ -16,7 +16,7 @@ using FluentAssertions;
 using Moq;
 using NINA.Model;
 using NINA.PlateSolving;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NUnit.Framework;
 using System;

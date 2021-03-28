@@ -1,8 +1,9 @@
 ﻿using NINA.Profile;
+using NINA.Utility;
 using System;
 using System.Collections.Generic;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public class NighttimeCalculator : BaseINPC, INighttimeCalculator {
         private readonly IProfileService profileService;
@@ -28,12 +29,12 @@ namespace NINA.Utility.Astrometry {
                 if (Cache.TryGetValue(key, out var nighttimeData)) {
                     return nighttimeData;
                 } else {
-                    var twilightRiseAndSet = Astrometry.GetNightTimes(referenceDate, latitude, longitude);
-                    var nauticalTwilightRiseAndSet = Astrometry.GetNauticalNightTimes(referenceDate, latitude, longitude);
-                    var moonRiseAndSet = Astrometry.GetMoonRiseAndSet(referenceDate, latitude, longitude);
-                    var sunRiseAndSet = Astrometry.GetSunRiseAndSet(referenceDate, latitude, longitude);
-                    var moonPhase = Astrometry.GetMoonPhase(referenceDate);
-                    var illumination = Astrometry.GetMoonIllumination(referenceDate);
+                    var twilightRiseAndSet = AstroUtil.GetNightTimes(referenceDate, latitude, longitude);
+                    var nauticalTwilightRiseAndSet = AstroUtil.GetNauticalNightTimes(referenceDate, latitude, longitude);
+                    var moonRiseAndSet = AstroUtil.GetMoonRiseAndSet(referenceDate, latitude, longitude);
+                    var sunRiseAndSet = AstroUtil.GetSunRiseAndSet(referenceDate, latitude, longitude);
+                    var moonPhase = AstroUtil.GetMoonPhase(referenceDate);
+                    var illumination = AstroUtil.GetMoonIllumination(referenceDate);
 
                     var data = new NighttimeData(date: selectedDate, referenceDate: referenceDate, moonPhase: moonPhase, moonIllumination: illumination, twilightRiseAndSet: twilightRiseAndSet, nauticalTwilightRiseAndSet: nauticalTwilightRiseAndSet,
                         sunRiseAndSet: sunRiseAndSet, moonRiseAndSet: moonRiseAndSet);

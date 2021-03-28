@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Exceptions;
 using NINA.Utility.TcpRaw;
 using NINA.Profile;
@@ -61,10 +61,10 @@ namespace NINA.Model.MyPlanetarium {
                 }
 
                 if (!Match(columns[0].Replace("OK!", string.Empty), @"(([0-9]{1,2})([h|:]|[?]{2})([0-9]{1,2})([m|:]|[?]{2})?([0-9]{1,2}(?:\.[0-9]+){0,1})?([s|:]|[?]{2}))", out var raString)) { throw new PlanetariumObjectNotSelectedException(); }
-                var ra = Astrometry.HMSToDegrees(raString);
+                var ra = AstroUtil.HMSToDegrees(raString);
 
                 if (!Match(columns[1], @"([\+|-]([0-9]{1,2})([d|°|:]|[?]{2})([0-9]{1,2})([m|'|:]|[?]{2})?([0-9]{1,2}(?:\.[0-9]+){0,1})?([s|""|:]|[?]{2}))", out var decString)) { throw new PlanetariumObjectNotSelectedException(); }
-                var dec = Astrometry.DMSToDegrees(decString);
+                var dec = AstroUtil.DMSToDegrees(decString);
 
                 if (!Match(columns.Last(), @"(?<=Equinox:).*", out var equinox)) { throw new PlanetariumObjectNotSelectedException(); }
                 equinox = equinox.Replace("\r", string.Empty).Replace("\n", string.Empty);
@@ -124,9 +124,9 @@ namespace NINA.Model.MyPlanetarium {
                 if (!Match(response, @"(?<=ALT:)([0-9]{0,5})[m]", out var altitudeString)) { throw new PlanetariumFailedToGetCoordinates(); }
 
                 var coords = new Coords {
-                    Latitude = Astrometry.DMSToDegrees(latutideString),
-                    Longitude = -Astrometry.DMSToDegrees(longitudeString),
-                    Elevation = Astrometry.DMSToDegrees(altitudeString)
+                    Latitude = AstroUtil.DMSToDegrees(latutideString),
+                    Longitude = -AstroUtil.DMSToDegrees(longitudeString),
+                    Elevation = AstroUtil.DMSToDegrees(altitudeString)
                 };
 
                 return coords;

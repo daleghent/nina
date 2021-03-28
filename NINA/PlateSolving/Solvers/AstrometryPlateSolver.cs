@@ -219,7 +219,7 @@ namespace NINA.PlateSolving.Solvers {
                 result.Orientation = 180 - result.Orientation + 360;
 
                 result.Pixscale = jobinfo.calibration.pixscale;
-                result.Coordinates = new Utility.Astrometry.Coordinates(jobinfo.calibration.ra, jobinfo.calibration.dec, Utility.Astrometry.Epoch.J2000, Utility.Astrometry.Coordinates.RAType.Degrees);
+                result.Coordinates = new Astrometry.Coordinates(jobinfo.calibration.ra, jobinfo.calibration.dec, Astrometry.Epoch.J2000, Astrometry.Coordinates.RAType.Degrees);
                 result.Radius = jobinfo.calibration.radius;
             } catch (OperationCanceledException) {
                 result.Success = false;

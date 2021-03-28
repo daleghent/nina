@@ -31,7 +31,7 @@ using NINA.Utility;
 using NINA.Profile;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Model.MyPlanetarium;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel;
 using NINA.ViewModel.FramingAssistant;

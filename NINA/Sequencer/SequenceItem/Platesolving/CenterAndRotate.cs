@@ -20,7 +20,7 @@ using NINA.Sequencer.Container;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.WindowService;
@@ -82,7 +82,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
                     rotationDistance = (float)((float)Rotation - orientation);
 
-                    var movement = Astrometry.EuclidianModulus(rotationDistance, 180);
+                    var movement = AstroUtil.EuclidianModulus(rotationDistance, 180);
                     var movement2 = movement - 180;
 
                     if (movement < Math.Abs(movement2)) {

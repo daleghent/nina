@@ -102,6 +102,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
+      <Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
+      <Name>NINA.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NINA\NINA.csproj">
       <Project>{7dec1b46-9701-4e49-90c1-f4427845669e}</Project>
       <Name>NINA</Name>

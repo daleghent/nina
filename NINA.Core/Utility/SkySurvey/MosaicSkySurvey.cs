@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,7 +28,7 @@ namespace NINA.Utility.SkySurvey {
             int height, CancellationToken ct, IProgress<int> progress) {
             return await Task.Run(async () => {
                 if (fieldOfView > MaxFoVPerImage * 3) {
-                    throw new Exception(string.Format("Sky Survey only supports up to {0} degree", Astrometry.Astrometry.ArcminToDegree(MaxFoVPerImage * 3)));
+                    throw new Exception(string.Format("Sky Survey only supports up to {0} degree", AstroUtil.ArcminToDegree(MaxFoVPerImage * 3)));
                 } else {
                     BitmapSource image;
                     if (fieldOfView <= MaxFoVPerImage) {
@@ -56,7 +56,7 @@ namespace NINA.Utility.SkySurvey {
             var centerTask = GetSingleImage(coordinates, MaxFoVPerImage, MaxFoVPerImage, ct, width, height);
 
             var borderFoV = (fieldOfView - MaxFoVPerImage) / 2.0;
-            var shiftedDegree = Astrometry.Astrometry.ArcminToDegree(MaxFoVPerImage) / 2.0 + Astrometry.Astrometry.ArcminToDegree(borderFoV) / 2.0;
+            var shiftedDegree = AstroUtil.ArcminToDegree(MaxFoVPerImage) / 2.0 + AstroUtil.ArcminToDegree(borderFoV) / 2.0;
 
             var newCoordinates = coordinates.Shift(-shiftedDegree, -shiftedDegree, 0);
             var topLeftTask = GetSingleImage(

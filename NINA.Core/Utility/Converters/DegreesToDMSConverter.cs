@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -23,7 +24,7 @@ namespace NINA.Utility.Converters {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             double deg;
             if (double.TryParse(value.ToString(), out deg)) {
-                return Astrometry.Astrometry.DegreesToDMS(deg);
+                return AstroUtil.DegreesToDMS(deg);
             } else {
                 return string.Empty;
             }

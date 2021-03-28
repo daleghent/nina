@@ -13,19 +13,19 @@
 #endregion "copyright"
 
 using FluentAssertions;
-using NINA.Database;
+using NINA.Core.Database;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static NINA.Database.DatabaseInteraction;
+using static NINA.Core.Database.DatabaseInteraction;
 
 namespace NINATest.Database {
 
     [TestFixture]
-    class DatabaseInteractionTest {
+    internal class DatabaseInteractionTest {
 
         [Test]
         [TestCase("SHEADHEIGHT", null, "SHEADHEIGHT", "ZHADHEIGHT")]    // Returns longest on searches without a search token related to name

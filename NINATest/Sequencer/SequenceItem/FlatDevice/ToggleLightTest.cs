@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Moq;
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.MyFlatDevice;
 using NINA.Sequencer;

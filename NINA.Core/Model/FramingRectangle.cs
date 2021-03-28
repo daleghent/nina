@@ -13,10 +13,12 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 
 namespace NINA.ViewModel.FramingAssistant {
+
     public class FramingRectangle : ObservableRectangle {
+
         public FramingRectangle(double rotationOffset) : base(rotationOffset) {
         }
 

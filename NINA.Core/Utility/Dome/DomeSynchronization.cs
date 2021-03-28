@@ -1,15 +1,17 @@
 ﻿using NINA.Profile;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using Accord.Math;
 using NINA.Core.Enum;
 
 namespace NINA.Utility {
+
     public class DomeSynchronization : IDomeSynchronization {
         private static double TWO_PI = 2.0 * Math.PI;
         private static double HALF_PI = Math.PI / 2.0;
 
         private readonly IProfileService profileService;
+
         public DomeSynchronization(IProfileService profileService) {
             this.profileService = profileService;
         }
@@ -22,12 +24,12 @@ namespace NINA.Utility {
         ///     Alt-Az mounts set this value to 0
         ///  3) Lateral axis length, in mm - starting from the saddle plate. This is used in side by side setups where the scope is not centered on the saddle
         ///      It points in the same direction as the y-axis (to the East)
-        ///  4) Mount offset as a 3D vector relative to the center of the dome sphere. 
+        ///  4) Mount offset as a 3D vector relative to the center of the dome sphere.
         ///     a) The x-axis in the positive direction points North
         ///     b) The y-axis in the positive direction points East
         ///     c) The z-axis points up
         ///  5) The latitude and longitude of the scope site
-        /// 
+        ///
         /// This method uses an algorithm that solves equations that are derived in the Wikipedia article
         /// entitled Line-sphere intersection (https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection)
         /// </summary>
@@ -89,7 +91,7 @@ namespace NINA.Utility {
             // The OTA points along the positive X-axis before any transformations take place. Transforming the point (1, 0, 0) provides a unit
             // direction vector from (0, 0, 0) which is the scope aperture origin
             var scopeDirection = scopeOriginTranslation * Matrix4x4.CreateTranslation(new Vector3(1.0f, 0.0f, 0.0f)) * origin - scopeApertureOrigin;
-            
+
             // Calculate the distance along the unit vector, originating from the scope aperture origin, to where the line
             // intersects the sphere
             var dotProduct = Vector4.Dot(scopeDirection, scopeApertureOrigin);
@@ -99,7 +101,7 @@ namespace NINA.Utility {
 
             // Calculate the intersection point with the sphere
             var intersection = scopeApertureOrigin + scopeDirection * (float)distance;
-            
+
             // Finally, calculate the azimuth of that intersection point, and ensure it is within [0, 2PI)
             // Similar trigonometry can get the altitude, but we don't need it at this time
             var domeAzimuthRadians = (-Math.Atan2(intersection.Y, intersection.X) + TWO_PI) % TWO_PI;

@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Exceptions;
 using NINA.Profile;
 using System;
@@ -112,7 +112,7 @@ namespace NINA.Model.MyPlanetarium {
                 var jobj = JObject.Parse(response);
                 var status = jobj.ToObject<StellariumObject>();
 
-                var ra = Astrometry.EuclidianModulus(status.RightAscension, 360d);
+                var ra = AstroUtil.EuclidianModulus(status.RightAscension, 360d);
                 var dec = status.Declination;
 
                 var coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);

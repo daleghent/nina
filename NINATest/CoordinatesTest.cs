@@ -14,7 +14,7 @@
 
 using FluentAssertions;
 using NINA.Model;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System.IO;
 using System.Text;
@@ -37,7 +37,7 @@ namespace NINATest {
             var epoch = Epoch.J2000;
             var coordinates = new Coordinates(ra, dec, epoch, Coordinates.RAType.Degrees);
 
-            Assert.AreEqual(Astrometry.DegreesToHours(ra), coordinates.RA, 0.0001);
+            Assert.AreEqual(AstroUtil.DegreesToHours(ra), coordinates.RA, 0.0001);
             Assert.AreEqual(ra, coordinates.RADegrees, 0.0001);
             Assert.AreEqual(dec, coordinates.Dec, 0.0001);
             Assert.AreEqual(epoch, coordinates.Epoch);
@@ -54,7 +54,7 @@ namespace NINATest {
             var coordinates = new Coordinates(ra, dec, epoch, Coordinates.RAType.Hours);
 
             Assert.AreEqual(ra, coordinates.RA, 0.0001);
-            Assert.AreEqual(Astrometry.HoursToDegrees(ra), coordinates.RADegrees, 0.0001);
+            Assert.AreEqual(AstroUtil.HoursToDegrees(ra), coordinates.RADegrees, 0.0001);
             Assert.AreEqual(dec, coordinates.Dec, 0.0001);
             Assert.AreEqual(epoch, coordinates.Epoch);
         }

@@ -12,10 +12,11 @@
 
 #endregion "copyright"
 
+using NINA.Utility;
 using System.IO;
 using System.Runtime.InteropServices;
 
-namespace NINA.Utility {
+namespace NINA.Astrometry {
     /* https://aa.usno.navy.mil/software/novas/novas_c/novasc_info.php
      * https://aa.usno.navy.mil/software/novas/novas_c/NOVAS_C3.1_Guide.pdf
      */

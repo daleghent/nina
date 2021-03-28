@@ -15,7 +15,7 @@
 using Newtonsoft.Json;
 using NINA.Profile;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +38,7 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
         public DateTime GetDateTime(ISequenceEntity context) {
             var contextCoordinates = Utility.ItemUtility.RetrieveContextCoordinates(context?.Parent);
             if (contextCoordinates.Item1 != null) {
-                var siderealTime = Angle.ByHours(Astrometry.GetLocalSiderealTime(DateTime.Now, profileService.ActiveProfile.AstrometrySettings.Longitude));
+                var siderealTime = Angle.ByHours(AstroUtil.GetLocalSiderealTime(DateTime.Now, profileService.ActiveProfile.AstrometrySettings.Longitude));
                 var timeToMeridian = MeridianFlip.TimeToMeridian(contextCoordinates.Item1, siderealTime);
                 return DateTime.Now + timeToMeridian;
             }

@@ -16,7 +16,7 @@ using NINA.API.SGP;
 using NINA.Model.MyPlanetarium;
 using NINA.Profile;
 using NINA.Sequencer;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.ImageAnalysis;
 using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;

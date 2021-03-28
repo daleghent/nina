@@ -12,12 +12,13 @@
 
 #endregion "copyright"
 
+using NINA.Utility;
 using NINA.ViewModel.FramingAssistant;
 using System;
 using System.Windows;
 using System.Xml.Serialization;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     [Serializable()]
     [XmlRoot(nameof(Coordinates))]
@@ -50,7 +51,7 @@ namespace NINA.Utility.Astrometry {
         [XmlIgnore]
         public string RAString {
             get {
-                return Astrometry.DegreesToHMS(RADegrees);
+                return AstroUtil.DegreesToHMS(RADegrees);
             }
         }
 
@@ -77,7 +78,7 @@ namespace NINA.Utility.Astrometry {
         [XmlIgnore]
         public string DecString {
             get {
-                return Astrometry.DegreesToDMS(Dec);
+                return AstroUtil.DegreesToDMS(Dec);
             }
         }
 
@@ -203,7 +204,7 @@ namespace NINA.Utility.Astrometry {
         private double GetJdTT(DateTime date) {
             var utcDate = date.ToUniversalTime();
             double tai1 = 0, tai2 = 0, tt1 = 0, tt2 = 0;
-            var utc = Astrometry.GetJulianDate(utcDate);
+            var utc = AstroUtil.GetJulianDate(utcDate);
 
             SOFA.UtcTai(utc, 0.0, ref tai1, ref tai2);
             SOFA.TaiTt(tai1, tai2, ref tt1, ref tt2);
@@ -217,7 +218,7 @@ namespace NINA.Utility.Astrometry {
         /// <returns></returns>
         private Coordinates TransformToJ2000() {
             var jdTT = GetJdTT(this.creationDate);
-            var jdUTC = Astrometry.GetJulianDate(this.creationDate);
+            var jdUTC = AstroUtil.GetJulianDate(this.creationDate);
             double rc = 0, dc = 0, eo = 0;
             SOFA.IntermediateToCelestial(SOFA.Anp(raAngle.Radians + SOFA.Eo06a(jdUTC, 0.0)), decAngle.Radians, jdTT, 0.0, ref rc, ref dc, ref eo);
 
@@ -235,9 +236,9 @@ namespace NINA.Utility.Astrometry {
             var transform = this.Transform(Epoch.J2000);
 
             var now = DateTime.Now;
-            var jdUTC = Astrometry.GetJulianDate(now);
+            var jdUTC = AstroUtil.GetJulianDate(now);
 
-            var deltaUT = Astrometry.DeltaUT(now);
+            var deltaUT = AstroUtil.DeltaUT(now);
             double aob = 0d, zob = 0d, hob = 0d, dob = 0d, rob = 0d, eo = 0d;
             SOFA.CelestialToTopocentric(transform.raAngle.Radians, transform.decAngle.Radians, 0d, 0d, 0d, 0d, jdUTC, 0d, deltaUT, longitude.Radians, latitude.Radians, elevation, 0d, 0d, 0d, 0d, 0d, 0d, ref aob, ref zob, ref hob, ref dob, ref rob, ref eo);
 
@@ -359,8 +360,8 @@ namespace NINA.Utility.Astrometry {
             double scaleY,
             ProjectionType type = ProjectionType.Stereographic
         ) {
-            var deltaXDeg = deltaX * Astrometry.ArcsecToDegree(scaleX);
-            var deltaYDeg = deltaY * Astrometry.ArcsecToDegree(scaleY);
+            var deltaXDeg = deltaX * AstroUtil.ArcsecToDegree(scaleX);
+            var deltaYDeg = deltaY * AstroUtil.ArcsecToDegree(scaleY);
             return this.Shift(deltaXDeg, deltaYDeg, rotation, type);
         }
 
@@ -531,12 +532,12 @@ namespace NINA.Utility.Astrometry {
         }
 
         public static Coordinates operator +(Coordinates a, Separation b) {
-            var ra = Astrometry.EuclidianModulus((Angle.ByDegree(a.RADegrees) + b.RA).Degree, 360);
+            var ra = AstroUtil.EuclidianModulus((Angle.ByDegree(a.RADegrees) + b.RA).Degree, 360);
             return new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(a.Dec) + b.Dec, a.Epoch, a.creationDate, a.DateTime);
         }
 
         public static Coordinates operator -(Coordinates a, Separation b) {
-            var ra = Astrometry.EuclidianModulus((Angle.ByDegree(a.RADegrees) - b.RA).Degree, 360);
+            var ra = AstroUtil.EuclidianModulus((Angle.ByDegree(a.RADegrees) - b.RA).Degree, 360);
             return new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(a.Dec) - b.Dec, a.Epoch, a.creationDate, a.DateTime);
         }
 
@@ -563,7 +564,7 @@ namespace NINA.Utility.Astrometry {
         public Angle Bearing { get; set; } = Angle.ByDegree(0);
 
         public override string ToString() {
-            return $"RA: {Astrometry.HoursToHMS(RA.Hours)}; Dec: {Astrometry.DegreesToDMS(Dec.Degree)}; Distance: {Distance.Degree}; Bearing: {Bearing.Degree}";
+            return $"RA: {AstroUtil.HoursToHMS(RA.Hours)}; Dec: {AstroUtil.DegreesToDMS(Dec.Degree)}; Distance: {Distance.Degree}; Bearing: {Bearing.Degree}";
         }
     }
 }

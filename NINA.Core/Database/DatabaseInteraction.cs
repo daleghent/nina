@@ -14,7 +14,7 @@
 
 using NINA.Model;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Notification;
 using System;
 using System.Collections.Generic;

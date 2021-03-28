@@ -14,7 +14,7 @@
 
 using NINA.Core.Enum;
 using NINA.Model.ImageData;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.IO;
 using System.Threading;
@@ -57,8 +57,8 @@ namespace NINA.Utility.SkySurvey {
                     return new FileSkySurveyImage() {
                         Name = targetName,
                         Coordinates = arr.MetaData.WorldCoordinateSystem.GetCoordinates(renderedImage.Image.PixelWidth / 2, renderedImage.Image.PixelHeight / 2),
-                        FoVHeight = Astrometry.Astrometry.ArcsecToArcmin(arr.MetaData.WorldCoordinateSystem.PixelScaleY * renderedImage.Image.PixelHeight),
-                        FoVWidth = Astrometry.Astrometry.ArcsecToArcmin(arr.MetaData.WorldCoordinateSystem.PixelScaleX * renderedImage.Image.PixelWidth),
+                        FoVHeight = AstroUtil.ArcsecToArcmin(arr.MetaData.WorldCoordinateSystem.PixelScaleY * renderedImage.Image.PixelHeight),
+                        FoVWidth = AstroUtil.ArcsecToArcmin(arr.MetaData.WorldCoordinateSystem.PixelScaleX * renderedImage.Image.PixelWidth),
                         Image = img,
                         Rotation = arr.MetaData.WorldCoordinateSystem.Rotation,
                         Source = nameof(FileSkySurvey),
@@ -67,7 +67,7 @@ namespace NINA.Utility.SkySurvey {
                 } else {
                     var pixelSize = arr.MetaData.Camera.PixelSize;
                     var focalLength = arr.MetaData.Telescope.FocalLength;
-                    var arcSecPerPixel = Astrometry.Astrometry.ArcsecPerPixel(pixelSize, focalLength);
+                    var arcSecPerPixel = AstroUtil.ArcsecPerPixel(pixelSize, focalLength);
 
                     var referenceCoordinates = arr.MetaData.Telescope.Coordinates;
                     if (referenceCoordinates == null) {

@@ -21,7 +21,7 @@ using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Utility.DateTimeProvider;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel;
 using NINA.ViewModel.FramingAssistant;
@@ -40,6 +40,7 @@ using System.Windows;
 using System.Windows.Data;
 
 namespace NINA.Sequencer {
+
     public class SequencerFactory : ISequencerFactory {
         public IList<ISequenceItem> Items { get; private set; }
         public IList<ISequenceCondition> Conditions { get; private set; }

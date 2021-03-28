@@ -1,8 +1,9 @@
 ﻿using System;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public interface INighttimeCalculator {
+
         NighttimeData Calculate(DateTime? selectedDate = null);
     }
 }

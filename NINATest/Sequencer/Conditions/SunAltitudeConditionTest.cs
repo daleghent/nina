@@ -16,7 +16,7 @@ using FluentAssertions;
 using Moq;
 using NINA.Profile;
 using NINA.Sequencer.Conditions;
-using NINA.Utility.Enum;
+using NINA.Core.Enum;
 using NUnit.Framework;
 
 namespace NINATest.Sequencer.Conditions {

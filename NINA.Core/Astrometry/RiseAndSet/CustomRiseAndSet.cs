@@ -15,7 +15,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public class CustomRiseAndSet : RiseAndSetEvent {
         private DateTime? rise;

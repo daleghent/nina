@@ -15,7 +15,7 @@
 using NINA.Model;
 using NINA.Model.MyTelescope;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Profile;
@@ -187,7 +187,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
         /// <param name="currentCoordinates"></param>
         /// <returns></returns>
         private Coordinates GetHomeCoordinates(Coordinates currentCoordinates) {
-            double siderealTime = Astrometry.GetLocalSiderealTimeNow(profileService.ActiveProfile.AstrometrySettings.Longitude);
+            double siderealTime = AstroUtil.GetLocalSiderealTimeNow(profileService.ActiveProfile.AstrometrySettings.Longitude);
             if (siderealTime > 24) {
                 siderealTime -= 24;
             }
@@ -844,8 +844,8 @@ namespace NINA.ViewModel.Equipment.Telescope {
         }
 
         private Task<bool> SlewToCoordinatesInternal(object obj) {
-            var targetRightAscencion = TargetRightAscencionHours + Astrometry.ArcminToDegree(TargetRightAscencionMinutes) + Astrometry.ArcsecToDegree(TargetRightAscencionSeconds);
-            var targetDeclination = TargetDeclinationDegrees + Math.Sign(TargetDeclinationDegrees) * Astrometry.ArcminToDegree(TargetDeclinationMinutes) + Math.Sign(TargetDeclinationDegrees) * Astrometry.ArcsecToDegree(TargetDeclinationSeconds);
+            var targetRightAscencion = TargetRightAscencionHours + AstroUtil.ArcminToDegree(TargetRightAscencionMinutes) + AstroUtil.ArcsecToDegree(TargetRightAscencionSeconds);
+            var targetDeclination = TargetDeclinationDegrees + Math.Sign(TargetDeclinationDegrees) * AstroUtil.ArcminToDegree(TargetDeclinationMinutes) + Math.Sign(TargetDeclinationDegrees) * AstroUtil.ArcsecToDegree(TargetDeclinationSeconds);
 
             var coords = new Coordinates(targetRightAscencion, targetDeclination, Epoch.J2000, Coordinates.RAType.Hours);
             coords = coords.Transform(TelescopeInfo.EquatorialSystem);

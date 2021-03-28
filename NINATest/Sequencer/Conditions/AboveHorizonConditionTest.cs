@@ -18,7 +18,7 @@ using NINA.Profile;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.IO;

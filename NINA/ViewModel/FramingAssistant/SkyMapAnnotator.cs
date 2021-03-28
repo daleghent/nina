@@ -16,7 +16,7 @@ using NINA.Core.Database;
 using NINA.Model;
 using NINA.Model.MyTelescope;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.ImageAnalysis;
 using NINA.Utility.Mediator.Interfaces;
 using System;
@@ -176,7 +176,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 // Stuff has to be at least 3 pixel wide
                 minSize = 3 * Math.Min(ViewportFoV.ArcSecWidth, ViewportFoV.ArcSecHeight);
             }
-            var maxSize = Astrometry.DegreeToArcsec(2 * Math.Max(ViewportFoV.OriginalHFoV, ViewportFoV.OriginalVFoV));
+            var maxSize = AstroUtil.DegreeToArcsec(2 * Math.Max(ViewportFoV.OriginalHFoV, ViewportFoV.OriginalVFoV));
 
             var filteredDbDSO = dbDSOs.Where(d => (d.Value.Size != null && d.Value.Size > minSize && d.Value.Size < maxSize) || ViewportFoV.VFoVDeg <= 10).ToList();
 

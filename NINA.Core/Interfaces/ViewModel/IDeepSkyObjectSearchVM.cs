@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINACustomControlLibrary;
 using Nito.Mvvm;
 

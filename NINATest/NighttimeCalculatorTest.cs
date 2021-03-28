@@ -1,4 +1,4 @@
-﻿using NINA.Utility.Astrometry;
+﻿using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

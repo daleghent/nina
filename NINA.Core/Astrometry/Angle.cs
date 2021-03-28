@@ -14,23 +14,23 @@
 
 using System;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     [Serializable]
     public class Angle {
 
         public static Angle ByHours(double hours) {
-            var degree = Astrometry.HoursToDegrees(hours);
-            return new Angle(degree, Astrometry.ToRadians(degree), hours);
+            var degree = AstroUtil.HoursToDegrees(hours);
+            return new Angle(degree, AstroUtil.ToRadians(degree), hours);
         }
 
         public static Angle ByDegree(double degree) {
-            return new Angle(degree, Astrometry.ToRadians(degree), Astrometry.DegreesToHours(degree));
+            return new Angle(degree, AstroUtil.ToRadians(degree), AstroUtil.DegreesToHours(degree));
         }
 
         public static Angle ByRadians(double radians) {
-            var degree = Astrometry.ToDegree(radians);
-            return new Angle(Astrometry.ToDegree(radians), radians, Astrometry.DegreesToHours(degree));
+            var degree = AstroUtil.ToDegree(radians);
+            return new Angle(AstroUtil.ToDegree(radians), radians, AstroUtil.DegreesToHours(degree));
         }
 
         public static Angle Zero { get; } = Angle.ByDegree(0);
@@ -49,7 +49,7 @@ namespace NINA.Utility.Astrometry {
         public double Hours { get; }
 
         public override string ToString() {
-            return Astrometry.DegreesToDMS(Degree);
+            return AstroUtil.DegreesToDMS(Degree);
         }
 
         public Angle Sin() {
@@ -87,10 +87,10 @@ namespace NINA.Utility.Astrometry {
         private static double EQUALS_EPSILON = 1E-13;
 
         public bool Equals(Angle that, Angle tolerance) {
-            var thisDegrees = Astrometry.EuclidianModulus(this.Degree, 360.0);
-            var thatDegrees = Astrometry.EuclidianModulus(that.Degree, 360.0);
+            var thisDegrees = AstroUtil.EuclidianModulus(this.Degree, 360.0);
+            var thatDegrees = AstroUtil.EuclidianModulus(that.Degree, 360.0);
             var diffDegrees = Math.Abs(thisDegrees - thatDegrees);
-            var toleranceDegrees = Astrometry.EuclidianModulus(tolerance.Degree, 360.0);
+            var toleranceDegrees = AstroUtil.EuclidianModulus(tolerance.Degree, 360.0);
             return (diffDegrees - toleranceDegrees) <= EQUALS_EPSILON
                 || ((360.0 - diffDegrees) - toleranceDegrees) <= EQUALS_EPSILON;
         }

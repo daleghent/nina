@@ -20,7 +20,7 @@ using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel;
 using NINA.ViewModel.ImageHistory;
@@ -188,7 +188,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 if (settings.UseSideOfPier && telescopeInfo.SideOfPier != PierSide.pierUnknown) {
                     if (noRemainingTime) {
                         // There is no more time remaining. Project the side of pier to that at the time after the flip and check if this flip is required
-                        var projectedSiderealTime = Angle.ByHours(Astrometry.EuclidianModulus(telescopeInfo.SiderealTime + originalMaximumTimeRemaining.TotalHours, 24));
+                        var projectedSiderealTime = Angle.ByHours(AstroUtil.EuclidianModulus(telescopeInfo.SiderealTime + originalMaximumTimeRemaining.TotalHours, 24));
                         var targetSideOfPier = NINA.Utility.MeridianFlip.ExpectedPierSide(
                             coordinates: telescopeInfo.Coordinates,
                             localSiderealTime: projectedSiderealTime);

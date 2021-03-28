@@ -14,12 +14,12 @@
 
 using System;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public class TwilightCalculator : ITwilightCalculator {
 
         public TimeSpan GetTwilightDuration(DateTime date, double latitude, double longitude) {
-            return Astrometry.GetSunRiseAndSet(date, latitude, longitude).Rise - Astrometry.GetNightTimes(date, latitude, longitude).Rise ?? TimeSpan.Zero;
+            return AstroUtil.GetSunRiseAndSet(date, latitude, longitude).Rise - AstroUtil.GetNightTimes(date, latitude, longitude).Rise ?? TimeSpan.Zero;
         }
     }
 }

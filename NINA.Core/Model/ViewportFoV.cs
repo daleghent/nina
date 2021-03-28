@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System.Windows;
 using Math = System.Math;
 using Point = System.Windows.Point;
@@ -63,8 +63,8 @@ namespace NINA.ViewModel.FramingAssistant {
             OriginalVFoV = vFoVDegrees;
             OriginalHFoV = (vFoVDegrees / height) * width;
 
-            ArcSecWidth = Astrometry.DegreeToArcsec(OriginalHFoV) / OriginalWidth;
-            ArcSecHeight = Astrometry.DegreeToArcsec(OriginalVFoV) / OriginalHeight;
+            ArcSecWidth = AstroUtil.DegreeToArcsec(OriginalHFoV) / OriginalWidth;
+            ArcSecHeight = AstroUtil.DegreeToArcsec(OriginalVFoV) / OriginalHeight;
 
             CenterCoordinates = centerCoordinates;
 
@@ -80,7 +80,7 @@ namespace NINA.ViewModel.FramingAssistant {
             if (rotation == 0) {
                 return (width, height);
             }
-            var rot = Astrometry.ToRadians(rotation);
+            var rot = AstroUtil.ToRadians(rotation);
 
             return (Math.Abs(width * Math.Sin(rot) + height * Math.Cos(rot)), Math.Abs(height * Math.Sin(rot) + width * Math.Cos(rot)));
         }

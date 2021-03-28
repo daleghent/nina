@@ -14,7 +14,7 @@
 
 using Newtonsoft.Json.Linq;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Http;
 using NINA.Utility.Notification;
 using NINA.Profile;
@@ -122,7 +122,7 @@ namespace NINA.Model.MyWeatherData {
 
         public double DewPoint {
             get {
-                return Astrometry.ApproximateDewPoint(Temperature, Humidity);
+                return AstroUtil.ApproximateDewPoint(Temperature, Humidity);
             }
         }
 

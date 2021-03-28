@@ -17,7 +17,7 @@ using NINA.Model.ImageData;
 using NINA.Model.MyTelescope;
 using NINA.Profile;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.RawConverter;
 using NINA.Utility.SkySurvey;
@@ -527,17 +527,17 @@ namespace NINA.Model.MyCamera.Simulator {
                     }
 
                     var survey = new ESOSkySurvey();
-                    var initial = telescopeInfo.Coordinates.Transform(Utility.Astrometry.Epoch.J2000);
+                    var initial = telescopeInfo.Coordinates.Transform(Astrometry.Epoch.J2000);
 
-                    var coordinates = new Coordinates(Angle.ByDegree(initial.RADegrees + Astrometry.ArcsecToDegree(Settings.SkySurveySettings.RAError)), Angle.ByDegree(initial.Dec + Astrometry.ArcsecToDegree(Settings.SkySurveySettings.DecError)), Epoch.J2000);
+                    var coordinates = new Coordinates(Angle.ByDegree(initial.RADegrees + AstroUtil.ArcsecToDegree(Settings.SkySurveySettings.RAError)), Angle.ByDegree(initial.Dec + AstroUtil.ArcsecToDegree(Settings.SkySurveySettings.DecError)), Epoch.J2000);
 
-                    var image = await survey.GetImage(string.Empty, coordinates, Astrometry.DegreeToArcmin(1), Settings.SkySurveySettings.WidthAndHeight, Settings.SkySurveySettings.WidthAndHeight, token, default);
+                    var image = await survey.GetImage(string.Empty, coordinates, AstroUtil.DegreeToArcmin(1), Settings.SkySurveySettings.WidthAndHeight, Settings.SkySurveySettings.WidthAndHeight, token, default);
                     var data = await ImageArrayExposureData.FromBitmapSource(image.Image);
 
-                    var arcsecPerPix = image.Image.PixelWidth / Astrometry.ArcminToArcsec(image.FoVWidth);
+                    var arcsecPerPix = image.Image.PixelWidth / AstroUtil.ArcminToArcsec(image.FoVWidth);
                     // Assume a fixed pixel Size of 3
                     var pixelSize = 3;
-                    var factor = Astrometry.DegreeToArcsec(Astrometry.ToDegree(1)) / 1000d;
+                    var factor = AstroUtil.DegreeToArcsec(AstroUtil.ToDegree(1)) / 1000d;
                     // Calculate focal length based on assumed pixel size and result image
                     var focalLength = (factor * pixelSize) / arcsecPerPix;
 

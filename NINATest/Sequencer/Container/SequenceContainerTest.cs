@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Moq;
+using NINA.Core.Enum;
 using NINA.Profile;
 using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
@@ -752,7 +753,7 @@ namespace NINATest.Sequencer.Container {
             var cloneMock = new Mock<ISequenceItem>();
             sourceMock.Setup(x => x.Clone()).Returns(cloneMock.Object);
 
-            var param = new DropIntoParameters(sourceMock.Object, null, NINA.Utility.Enum.DropTargetEnum.Center);
+            var param = new DropIntoParameters(sourceMock.Object, null, NINA.Core.Enum.DropTargetEnum.Center);
             Sut.DropIntoCommand.Execute(param);
 
             sourceMock.Verify(x => x.Clone(), Times.Once);
@@ -769,7 +770,7 @@ namespace NINATest.Sequencer.Container {
             sourceMock.Setup(x => x.Clone()).Returns(cloneMock.Object);
             sourceMock.SetupGet(p => p.Parent).Returns(parentMock.Object);
 
-            var param = new DropIntoParameters(sourceMock.Object, null, NINA.Utility.Enum.DropTargetEnum.Center);
+            var param = new DropIntoParameters(sourceMock.Object, null, NINA.Core.Enum.DropTargetEnum.Center);
             Sut.DropIntoCommand.Execute(param);
 
             sourceMock.Verify(x => x.Clone(), Times.Never);
@@ -788,7 +789,7 @@ namespace NINATest.Sequencer.Container {
             Sut.Items.Add(new Mock<ISequenceItem>().Object);
             Sut.Items.Add(new Mock<ISequenceItem>().Object);
 
-            var param = new DropIntoParameters(sourceMock.Object, null, NINA.Utility.Enum.DropTargetEnum.Center);
+            var param = new DropIntoParameters(sourceMock.Object, null, NINA.Core.Enum.DropTargetEnum.Center);
             Sut.DropIntoCommand.Execute(param);
 
             sourceMock.Verify(x => x.Clone(), Times.Once);

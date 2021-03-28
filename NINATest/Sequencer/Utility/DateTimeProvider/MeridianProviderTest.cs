@@ -19,7 +19,7 @@ using NINA.Sequencer;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Utility.DateTimeProvider;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -43,8 +43,9 @@ namespace NINATest.Sequencer.Utility.DateTimeProvider {
         public void GetDateTime_EntityHasParentWithCoordinates_CalculatesTimeToMeridian(double ra, double dec, int expectedHour, int expectedMinute) {
             //Shift RA/Dec depending on the time zone to have consistent tests, as this is location dependent
             var offset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
-            ra = Astrometry.EuclidianModulus(ra - offset.TotalHours, 24);
-            dec = Astrometry.EuclidianModulus(dec - offset.TotalHours * 15, 360);
+            if (TimeZone.CurrentTimeZone.IsDaylightSavingTime(DateTime.Now)) { offset -= TimeSpan.FromHours(1); }
+            ra = AstroUtil.EuclidianModulus(ra - offset.TotalHours, 24);
+            dec = AstroUtil.EuclidianModulus(dec - offset.TotalHours * 15, 360);
 
             var profileServiceMock = new Mock<IProfileService>();
             profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Latitude).Returns(10);

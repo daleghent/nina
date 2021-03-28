@@ -20,7 +20,7 @@ using NINA.Model.MyFlatDevice;
 using NINA.Model.MyTelescope;
 using NINA.Profile;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.ImageAnalysis;
 using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;

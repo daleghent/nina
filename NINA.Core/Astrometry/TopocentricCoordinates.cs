@@ -16,7 +16,7 @@ using NINA.Core.Database;
 using NINA.Core.Enum;
 using System;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public class TopocentricCoordinates {
         public Angle Azimuth { get; set; }
@@ -38,10 +38,10 @@ namespace NINA.Utility.Astrometry {
 
         public Coordinates Transform(Epoch epoch, DatabaseInteraction db = null) {
             var now = DateTime.Now;
-            var jdUTC = Astrometry.GetJulianDate(now);
+            var jdUTC = AstroUtil.GetJulianDate(now);
 
-            var zenithDistance = Astrometry.ToRadians(90d - Altitude.Degree);
-            var deltaUT = Astrometry.DeltaUT(now, db);
+            var zenithDistance = AstroUtil.ToRadians(90d - Altitude.Degree);
+            var deltaUT = AstroUtil.DeltaUT(now, db);
 
             var raRad = 0d;
             var decRad = 0d;

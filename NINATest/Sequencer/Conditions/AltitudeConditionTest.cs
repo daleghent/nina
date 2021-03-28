@@ -16,7 +16,7 @@ using FluentAssertions;
 using Moq;
 using NINA.Profile;
 using NINA.Sequencer.Conditions;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NUnit.Framework;
 
 namespace NINATest.Sequencer.Conditions {
@@ -59,7 +59,6 @@ namespace NINATest.Sequencer.Conditions {
                 sut.Check(null));
         }
 
-
         [Test]
         [TestCase(30, 30)]
         [TestCase(40, 35)]
@@ -78,7 +77,6 @@ namespace NINATest.Sequencer.Conditions {
             Assert.IsTrue(
                 sut.Check(null));
         }
-
 
         [Test]
         [TestCase(29, 30)]

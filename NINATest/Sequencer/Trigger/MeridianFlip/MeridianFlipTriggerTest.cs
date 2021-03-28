@@ -18,7 +18,7 @@ using NINA.Model.MyTelescope;
 using NINA.Profile;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger.MeridianFlip;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.ImageHistory;
 using NUnit.Framework;
@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Core.Enum;
 
 namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
@@ -211,10 +212,10 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
         [TestCase(5, 10, 10, PierSide.pierWest, PierSide.pierWest, false)]
         [TestCase(5, 10, 11, PierSide.pierWest, PierSide.pierWest, false)]
         public void ShouldFlip_BetweenMinimumAndMaximumTime_NoPause_UsePierSide_FlipWhenExpected(
-            double minTimeToFlip, 
-            double maxTimeToFlip, 
-            double remainingTimeToFlip, 
-            PierSide pierSide, 
+            double minTimeToFlip,
+            double maxTimeToFlip,
+            double remainingTimeToFlip,
+            PierSide pierSide,
             PierSide targetPierSide,
             bool expectToFlip) {
             var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
@@ -267,10 +268,10 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
         [TestCase(9, 5, 10, 8, PierSide.pierEast, PierSide.pierEast, false)]
         [TestCase(9, 5, 10, 8, PierSide.pierWest, PierSide.pierWest, false)]
         public void ShouldFlip_BeforeMinimumTime_NoPause_PierSideIsUsed_EvaluateIfFlipIsNecessary(
-            double nextItemExpectedTime, 
-            double minTimeToFlip, 
-            double maxTimeToFlip, 
-            double remainingTimeToFlip, 
+            double nextItemExpectedTime,
+            double minTimeToFlip,
+            double maxTimeToFlip,
+            double remainingTimeToFlip,
             PierSide pierSide,
             PierSide targetPierSide,
             bool expectToFlip) {

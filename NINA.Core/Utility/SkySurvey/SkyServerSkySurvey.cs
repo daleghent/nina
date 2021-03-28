@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,7 +25,7 @@ namespace NINA.Utility.SkySurvey {
         public async Task<SkySurveyImage> GetImage(string name, Coordinates coordinates, double fieldOfView, int width,
             int height, CancellationToken ct, IProgress<int> progress) {
             var arcSecPerPixel = 0.4;
-            var targetFoVInArcSec = Astrometry.Astrometry.ArcminToArcsec(fieldOfView);
+            var targetFoVInArcSec = AstroUtil.ArcminToArcsec(fieldOfView);
             var pixels = Math.Min(targetFoVInArcSec / arcSecPerPixel, 2048);
             if (pixels == 2048) {
                 arcSecPerPixel = targetFoVInArcSec / 2048;

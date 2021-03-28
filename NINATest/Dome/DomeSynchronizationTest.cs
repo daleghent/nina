@@ -2,13 +2,14 @@
 using System;
 using NINA.Utility;
 using System.Windows.Media.Media3D;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Model.MyTelescope;
-using NINA.Database;
+using NINA.Core.Database;
 using System.IO;
 using Moq;
 using NINA.Profile;
 using ASCOM.Astrometry.NOVASCOM;
+using NINA.Core.Enum;
 
 namespace NINATest.Dome {
 
@@ -44,7 +45,7 @@ namespace NINATest.Dome {
             mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.ScopePositionUpDown_mm).Returns(mountOffsetZ);
             this.siteLatitude = siteLatitude;
             this.siteLongitude = siteLongitude;
-            this.localSiderealTime = Astrometry.GetLocalSiderealTime(DateTime.Now, this.siteLongitude, this.db);
+            this.localSiderealTime = AstroUtil.GetLocalSiderealTime(DateTime.Now, this.siteLongitude, this.db);
             var mountOffset = new Vector3D(mountOffsetX, mountOffsetY, mountOffsetZ);
             return new DomeSynchronization(mockProfileService.Object);
         }

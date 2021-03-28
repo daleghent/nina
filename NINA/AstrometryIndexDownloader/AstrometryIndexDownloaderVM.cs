@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.WindowService;
 using System;
 using System.Collections.Generic;
@@ -277,13 +277,13 @@ namespace NINA.AstrometryIndexDownloader {
 
         public double ArcsecPerPixel {
             get {
-                return Astrometry.ArcsecPerPixel(PixelSize, FocalLength);
+                return AstroUtil.ArcsecPerPixel(PixelSize, FocalLength);
             }
         }
 
         public double FieldOfView {
             get {
-                return Astrometry.MaxFieldOfView(ArcsecPerPixel, CamWidth, CamHeight);
+                return AstroUtil.MaxFieldOfView(ArcsecPerPixel, CamWidth, CamHeight);
             }
         }
 

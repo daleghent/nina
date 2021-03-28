@@ -14,7 +14,7 @@
 
 using Newtonsoft.Json;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 
 namespace NINA.Model {

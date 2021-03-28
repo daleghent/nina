@@ -14,7 +14,7 @@
 
 using NINA.Core.Enum;
 using NINA.Model.ImageData;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Globalization;
 using System.IO;
@@ -462,9 +462,9 @@ namespace NINA.Utility.FileFormat.XISF {
 
             if (metaData.Target.Coordinates != null) {
                 AddImageProperty(XISFImageProperty.Observation.Object.RA, metaData.Target.Coordinates.RADegrees, "[deg] RA of imaged object", false);
-                AddImageFITSKeyword(XISFImageProperty.Observation.Object.RA[2], Astrometry.Astrometry.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object");
+                AddImageFITSKeyword(XISFImageProperty.Observation.Object.RA[2], AstroUtil.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object");
                 AddImageProperty(XISFImageProperty.Observation.Object.Dec, metaData.Target.Coordinates.Dec, "[deg] Declination of imaged object", false);
-                AddImageFITSKeyword(XISFImageProperty.Observation.Object.Dec[2], Astrometry.Astrometry.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object");
+                AddImageFITSKeyword(XISFImageProperty.Observation.Object.Dec[2], AstroUtil.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object");
             }
 
             if (!double.IsNaN(metaData.Target.Rotation)) {

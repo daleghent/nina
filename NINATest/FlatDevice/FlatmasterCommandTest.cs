@@ -26,7 +26,7 @@ namespace NINATest.FlatDevice {
         [TestCase("Status", "#")]
         [TestCase("FirmwareVersion", "V")]
         public void TestCommand(string commandName, string commandString) {
-            var sut = (ICommand)Activator.CreateInstance("NINA",
+            var sut = (ICommand)Activator.CreateInstance("NINA.Core",
                 $"NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK.{commandName}Command").Unwrap();
             Assert.That(sut.CommandString, Is.EqualTo($"{commandString}\n"));
             Assert.That(sut.HasResponse, Is.True);

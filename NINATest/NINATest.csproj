@@ -390,6 +390,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
+      <Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
+      <Name>NINA.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NINA.MGEN\NINA.MGEN.csproj">
       <Project>{d897bffd-7777-44f5-9100-1ff0db3b032f}</Project>
       <Name>NINA.MGEN</Name>

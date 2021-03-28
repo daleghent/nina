@@ -4,7 +4,7 @@ using NINA.Model.MyDome;
 using NINA.Model.MyTelescope;
 using NINA.Profile;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Equipment;
 using NINA.ViewModel.Equipment.Dome;

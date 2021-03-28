@@ -1,4 +1,4 @@
-﻿using NINA.Utility.Astrometry;
+﻿using NINA.Astrometry;
 using NUnit.Framework;
 using OxyPlot.Axes;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static NINA.Utility.Astrometry.Astrometry;
+using static NINA.Astrometry.AstroUtil;
 
 namespace NINATest {
 
@@ -30,10 +30,10 @@ namespace NINATest {
             referenceDate = NighttimeCalculator.GetReferenceDate(date);
             latitude = 41.0;
             longitude = 70.3;
-            nauticalTwilightRiseAndSet = Astrometry.GetNauticalNightTimes(referenceDate, latitude, longitude);
-            twilightRiseAndSet = Astrometry.GetNightTimes(referenceDate, latitude, longitude);
-            moonRiseAndSet = Astrometry.GetMoonRiseAndSet(referenceDate, latitude, longitude);
-            sunRiseAndSet = Astrometry.GetSunRiseAndSet(referenceDate, latitude, longitude);
+            nauticalTwilightRiseAndSet = AstroUtil.GetNauticalNightTimes(referenceDate, latitude, longitude);
+            twilightRiseAndSet = AstroUtil.GetNightTimes(referenceDate, latitude, longitude);
+            moonRiseAndSet = AstroUtil.GetMoonRiseAndSet(referenceDate, latitude, longitude);
+            sunRiseAndSet = AstroUtil.GetSunRiseAndSet(referenceDate, latitude, longitude);
             moonPhase = MoonPhase.FullMoon;
             illumination = 100.0;
         }

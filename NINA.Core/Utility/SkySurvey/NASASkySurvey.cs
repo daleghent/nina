@@ -14,7 +14,7 @@
 
 using Accord.Imaging;
 using Accord.Statistics.Visualizations;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -28,13 +28,13 @@ namespace NINA.Utility.SkySurvey {
             int height, CancellationToken ct, IProgress<int> progress) {
             var arcSecPerPixel = 2;
             fieldOfView = Math.Round(fieldOfView, 2);
-            var pixels = Math.Ceiling(Math.Min(Astrometry.Astrometry.ArcminToArcsec(fieldOfView) / arcSecPerPixel, 5000));
+            var pixels = Math.Ceiling(Math.Min(AstroUtil.ArcminToArcsec(fieldOfView) / arcSecPerPixel, 5000));
 
             var request = new Http.HttpDownloadImageRequest(
                Url,
                coordinates.RADegrees,
                coordinates.Dec,
-               Astrometry.Astrometry.ArcminToDegree(fieldOfView),
+               AstroUtil.ArcminToDegree(fieldOfView),
                pixels
            );
             var image = await request.Request(ct, progress);

@@ -18,7 +18,7 @@ using NINA.Profile;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Core.Enum;
 using NINA.Utility.Mediator.Interfaces;
 using System;
@@ -139,8 +139,8 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         public bool Validate() {
             var issues = new List<string>();
 
-            var maxAlt = Astrometry.GetAltitude(0, profileService.ActiveProfile.AstrometrySettings.Latitude, Coordinates.DecDegrees);
-            var minAlt = Astrometry.GetAltitude(180, profileService.ActiveProfile.AstrometrySettings.Latitude, Coordinates.DecDegrees);
+            var maxAlt = AstroUtil.GetAltitude(0, profileService.ActiveProfile.AstrometrySettings.Latitude, Coordinates.DecDegrees);
+            var minAlt = AstroUtil.GetAltitude(180, profileService.ActiveProfile.AstrometrySettings.Latitude, Coordinates.DecDegrees);
 
             if (aboveOrBelow == ">=") {
                 if (maxAlt < Altitude) {

@@ -14,7 +14,7 @@
 
 using NUnit.Framework;
 using FluentAssertions;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;

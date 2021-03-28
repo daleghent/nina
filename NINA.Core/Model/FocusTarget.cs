@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 
 namespace NINA.Model {
@@ -67,7 +67,7 @@ namespace NINA.Model {
 
         public string AzimuthString {
             get {
-                return Astrometry.DegreesToDMS(Azimuth);
+                return AstroUtil.DegreesToDMS(Azimuth);
             }
         }
 
@@ -75,12 +75,12 @@ namespace NINA.Model {
 
         public void CalculateAltAz(double latitude, double longitude) {
             var start = DateTime.UtcNow;
-            var siderealTime = Astrometry.GetLocalSiderealTime(start, longitude);
-            var hourAngle = Astrometry.GetHourAngle(siderealTime, Coordinates.RA);
+            var siderealTime = AstroUtil.GetLocalSiderealTime(start, longitude);
+            var hourAngle = AstroUtil.GetHourAngle(siderealTime, Coordinates.RA);
 
-            var degAngle = Astrometry.HoursToDegrees(hourAngle);
-            Altitude = Astrometry.GetAltitude(degAngle, latitude, Coordinates.Dec);
-            Azimuth = Astrometry.GetAzimuth(degAngle, Altitude, latitude, Coordinates.Dec);
+            var degAngle = AstroUtil.HoursToDegrees(hourAngle);
+            Altitude = AstroUtil.GetAltitude(degAngle, latitude, Coordinates.Dec);
+            Azimuth = AstroUtil.GetAzimuth(degAngle, Altitude, latitude, Coordinates.Dec);
             RaisePropertyChanged(nameof(Information));
         }
 
@@ -97,7 +97,7 @@ namespace NINA.Model {
 
         public string AltitudeString {
             get {
-                return Astrometry.DegreesToDMS(Altitude);
+                return AstroUtil.DegreesToDMS(Altitude);
             }
         }
 

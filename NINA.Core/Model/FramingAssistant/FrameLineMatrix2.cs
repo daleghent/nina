@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -249,7 +249,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 PointF? position = frameLine.Collection.FirstOrDefault(x => x.X > 0 && x.Y > 0 && x.X < currentViewport.Width && x.Y < currentViewport.Height && Math.Abs(x.X - southPole.X) > 5 && Math.Abs(x.Y - southPole.Y) > 5);
 
                 if (position != null) {
-                    var hms = Astrometry.HoursToHMS(frameLine.Angle.Hours);
+                    var hms = AstroUtil.HoursToHMS(frameLine.Angle.Hours);
                     var text = $"{hms.Substring(0, hms.Length - 3)}h";
                     var size = g.MeasureString(text, gridAnnotationFont);
                     g.DrawString(text, gridAnnotationFont, gridAnnotationBrush, (position.Value.X), Math.Max(0, (position.Value.Y - size.Height)));

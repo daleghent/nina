@@ -15,7 +15,7 @@
 using FluentAssertions;
 using NINA.Model.ImageData;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.FileFormat.FITS;
 using NINA.Utility.FileFormat.XISF;
 using NUnit.Framework;
@@ -53,7 +53,7 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = "TestFile",
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
             Action act = () => sut.AddAttachedImage(new ushort[] { }, fileSaveInfo);
@@ -74,7 +74,7 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = "TestFile",
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
             var header = new XISFHeader();
@@ -104,7 +104,7 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = "TestFile",
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
             var header = new XISFHeader();
@@ -141,8 +141,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.LZ4
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.LZ4
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -169,8 +169,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.LZ4,
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.LZ4,
                 XISFByteShuffling = true
             };
 
@@ -198,8 +198,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.LZ4HC
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.LZ4HC
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -226,8 +226,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.LZ4HC,
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.LZ4HC,
                 XISFByteShuffling = true
             };
 
@@ -255,8 +255,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.ZLIB
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.ZLIB
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -283,8 +283,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFCompressionType = NINA.Utility.Enum.XISFCompressionTypeEnum.ZLIB,
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFCompressionType = NINA.Core.Enum.XISFCompressionTypeEnum.ZLIB,
                 XISFByteShuffling = true
             };
 
@@ -312,8 +312,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Utility.Enum.XISFChecksumTypeEnum.SHA1
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA1
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -339,8 +339,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Utility.Enum.XISFChecksumTypeEnum.SHA256
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA256
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -366,8 +366,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Utility.Enum.XISFChecksumTypeEnum.SHA512
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA512
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -393,8 +393,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Utility.Enum.XISFChecksumTypeEnum.SHA3_256
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA3_256
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -420,8 +420,8 @@ namespace NINATest {
             var fileSaveInfo = new FileSaveInfo {
                 FilePath = string.Empty,
                 FilePattern = string.Empty,
-                FileType = NINA.Utility.Enum.FileTypeEnum.XISF,
-                XISFChecksumType = NINA.Utility.Enum.XISFChecksumTypeEnum.SHA3_512
+                FileType = NINA.Core.Enum.FileTypeEnum.XISF,
+                XISFChecksumType = NINA.Core.Enum.XISFChecksumTypeEnum.SHA3_512
             };
 
             for (ushort i = 0; i < data.Length; i++) {
@@ -924,7 +924,7 @@ namespace NINATest {
             metaData.Telescope.Name = "TEST";
             metaData.Telescope.FocalLength = 200;
             metaData.Telescope.FocalRatio = 5;
-            metaData.Telescope.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
+            metaData.Telescope.Coordinates = new Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
 
             var expectedFITSKeywords = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("TELESCOP", metaData.Telescope.Name, "Name of telescope"),
@@ -1025,12 +1025,12 @@ namespace NINATest {
             //Arrange
             var metaData = new ImageMetaData();
             metaData.Target.Name = "TEST";
-            metaData.Target.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
+            metaData.Target.Coordinates = new Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
 
             var expectedFITSKeywords = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("OBJECT", metaData.Target.Name, "Name of the object of interest"),
-                new FITSHeaderCard("OBJCTRA", Astrometry.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object"),
-                new FITSHeaderCard("OBJCTDEC", Astrometry.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object"),
+                new FITSHeaderCard("OBJCTRA", AstroUtil.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object"),
+                new FITSHeaderCard("OBJCTDEC", AstroUtil.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object"),
             };
 
             var expectedProperties = new[] {

@@ -138,7 +138,7 @@ namespace NINA.Model {
         /// </summary>
         /// <param name="patterns">KeyValue Collection of Makro -&gt; Makrovalue</param>
         /// <returns></returns>
-        internal string GetImageFileString(string filePatternMacro) {
+        public string GetImageFileString(string filePatternMacro) {
             string s = filePatternMacro;
             foreach (ImagePattern p in patterns.Values) {
                 s = s.Replace(p.Key, p.Value);

@@ -14,7 +14,7 @@
 
 using NINA.Model;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Profile;
 using OxyPlot;
@@ -333,10 +333,10 @@ namespace NINA.ViewModel {
             DecThrough.Add(new KeyValuePair<double?, string>(null, string.Empty));
 
             for (int i = 0; i < 25; i++) {
-                Astrometry.HoursToDegrees(i);
+                AstroUtil.HoursToDegrees(i);
 
-                RAFrom.Add(new KeyValuePair<double?, string>(Astrometry.HoursToDegrees(i), i.ToString()));
-                RAThrough.Add(new KeyValuePair<double?, string>(Astrometry.HoursToDegrees(i), i.ToString()));
+                RAFrom.Add(new KeyValuePair<double?, string>(AstroUtil.HoursToDegrees(i), i.ToString()));
+                RAThrough.Add(new KeyValuePair<double?, string>(AstroUtil.HoursToDegrees(i), i.ToString()));
             }
             for (int i = -90; i < 91; i = i + 5) {
                 DecFrom.Add(new KeyValuePair<double?, string>(i, i.ToString()));

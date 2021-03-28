@@ -48,7 +48,7 @@ using NINA.Sequencer.Trigger.Autofocus;
 using NINA.Sequencer.Trigger.Guider;
 using NINA.Sequencer.Trigger.MeridianFlip;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Exceptions;
 using NINA.Utility.ExternalCommand;
 using NINA.Utility.Mediator;
@@ -127,7 +127,7 @@ namespace NINA.ViewModel {
                 foreach (var item in this.Targets.Items) {
                     var target = item as SimpleDSOContainer;
                     var dso = new DeepSkyObject(target.Target.DeepSkyObject.Name, target.Target.DeepSkyObject.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
-                    dso.SetDateAndPosition(Utility.Astrometry.NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
+                    dso.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
                     target.Target.DeepSkyObject = dso;
                 }
             };
@@ -358,11 +358,11 @@ namespace NINA.ViewModel {
                             while (csv.Read()) {
                                 string name = string.Empty;
                                 if (csv.TryGetField("pane", out name)) {
-                                    var ra = Astrometry.HMSToDegrees(csv.GetField("ra"));
-                                    var dec = Astrometry.DMSToDegrees(csv.GetField("dec"));
+                                    var ra = AstroUtil.HMSToDegrees(csv.GetField("ra"));
+                                    var dec = AstroUtil.DMSToDegrees(csv.GetField("dec"));
 
                                     //Nina orientation is not east of north, but flipped
-                                    var angle = 360 - Astrometry.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
+                                    var angle = 360 - AstroUtil.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
 
                                     var template = GetTemplate();
                                     template.Name = name;
@@ -372,8 +372,8 @@ namespace NINA.ViewModel {
                                     this.Targets.Add(template);
                                 } else if (csv.TryGetField<string>("familiar name", out name)) {
                                     var catalogue = csv.GetField("catalogue entry");
-                                    var ra = Astrometry.HMSToDegrees(csv.GetField("right ascension"));
-                                    var dec = Astrometry.DMSToDegrees(csv.GetField("declination"));
+                                    var ra = AstroUtil.HMSToDegrees(csv.GetField("right ascension"));
+                                    var dec = AstroUtil.DMSToDegrees(csv.GetField("declination"));
 
                                     var template = GetTemplate();
                                     template.Name = string.IsNullOrWhiteSpace(name) ? catalogue : name; ;
@@ -381,7 +381,7 @@ namespace NINA.ViewModel {
                                     template.Target.InputCoordinates.Coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), Epoch.J2000);
                                     if (csv.TryGetField<string>("position angle (east)", out var stringAngle) && !string.IsNullOrWhiteSpace(stringAngle)) {
                                         //Nina orientation is not east of north, but flipped
-                                        var angle = 360 - Astrometry.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
+                                        var angle = 360 - AstroUtil.EuclidianModulus(csv.GetField<double>("position angle (east)"), 360);
                                         template.Target.Rotation = angle;
                                     } else {
                                         template.Target.Rotation = 0;
@@ -674,7 +674,7 @@ namespace NINA.ViewModel {
                 var seq = new CaptureSequence();
                 csl = new CaptureSequenceList(seq) { TargetName = "Target" };
                 csl.DSO?.SetDateAndPosition(
-                    Utility.Astrometry.NighttimeCalculator.GetReferenceDate(DateTime.Now),
+                    NighttimeCalculator.GetReferenceDate(DateTime.Now),
                     profileService.ActiveProfile.AstrometrySettings.Latitude,
                     profileService.ActiveProfile.AstrometrySettings.Longitude
                 );

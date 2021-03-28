@@ -15,7 +15,7 @@
 using FluentAssertions;
 using NINA.Model.ImageData;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.FileFormat.FITS;
 using NINA.Utility.FileFormat.FITS.DataConverter;
 using NUnit.Framework;
@@ -182,7 +182,7 @@ namespace NINATest {
             metaData.Telescope.Name = "TEST";
             metaData.Telescope.FocalLength = 200;
             metaData.Telescope.FocalRatio = 5;
-            metaData.Telescope.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
+            metaData.Telescope.Coordinates = new Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
 
             var expectedHeaderCards = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("TELESCOP", metaData.Telescope.Name, "Name of telescope"),
@@ -247,12 +247,12 @@ namespace NINATest {
             var now = DateTime.Now;
             var metaData = new ImageMetaData();
             metaData.Target.Name = "TEST";
-            metaData.Target.Coordinates = new NINA.Utility.Astrometry.Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
+            metaData.Target.Coordinates = new Coordinates(Angle.ByHours(2.125), Angle.ByDegree(10.154), Epoch.J2000);
 
             var expectedHeaderCards = new List<FITSHeaderCard>() {
                 new FITSHeaderCard("OBJECT", metaData.Target.Name, "Name of the object of interest"),
-                new FITSHeaderCard("OBJCTRA", Astrometry.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object"),
-                new FITSHeaderCard("OBJCTDEC", Astrometry.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object"),
+                new FITSHeaderCard("OBJCTRA", AstroUtil.HoursToFitsHMS(metaData.Target.Coordinates.RA), "[H M S] RA of imaged object"),
+                new FITSHeaderCard("OBJCTDEC", AstroUtil.DegreesToFitsDMS(metaData.Target.Coordinates.Dec), "[D M S] Declination of imaged object"),
             };
 
             var sut = new FITS(new ushort[] { 1, 2 }, 1, 1);

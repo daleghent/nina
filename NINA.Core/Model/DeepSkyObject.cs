@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using OxyPlot;
 using OxyPlot.Axes;
 using System;
@@ -229,14 +229,14 @@ namespace NINA.Model {
             var start = this._referenceDate;
             Altitudes.Clear();
             Horizon.Clear();
-            var siderealTime = Astrometry.GetLocalSiderealTime(start, _longitude);
-            var hourAngle = Astrometry.GetHourAngle(siderealTime, this.Coordinates.RA);
+            var siderealTime = AstroUtil.GetLocalSiderealTime(start, _longitude);
+            var hourAngle = AstroUtil.GetHourAngle(siderealTime, this.Coordinates.RA);
 
             for (double angle = hourAngle; angle < hourAngle + 24; angle += 0.1) {
-                var degAngle = Astrometry.HoursToDegrees(angle);
-                var altitude = Astrometry.GetAltitude(degAngle, _latitude, this.Coordinates.Dec);
+                var degAngle = AstroUtil.HoursToDegrees(angle);
+                var altitude = AstroUtil.GetAltitude(degAngle, _latitude, this.Coordinates.Dec);
 
-                var azimuth = Astrometry.GetAzimuth(degAngle, altitude, _latitude, this.Coordinates.Dec);
+                var azimuth = AstroUtil.GetAzimuth(degAngle, altitude, _latitude, this.Coordinates.Dec);
 
                 Altitudes.Add(new DataPoint(DateTimeAxis.ToDouble(start), altitude));
 
@@ -254,13 +254,13 @@ namespace NINA.Model {
         }
 
         private void CalculateTransit(double latitude) {
-            var alt0 = Astrometry.GetAltitude(0, latitude, this.Coordinates.Dec);
-            var alt180 = Astrometry.GetAltitude(180, latitude, this.Coordinates.Dec);
+            var alt0 = AstroUtil.GetAltitude(0, latitude, this.Coordinates.Dec);
+            var alt180 = AstroUtil.GetAltitude(180, latitude, this.Coordinates.Dec);
             double transit;
             if (alt0 > alt180) {
-                transit = Astrometry.GetAzimuth(0, alt0, latitude, this.Coordinates.Dec);
+                transit = AstroUtil.GetAzimuth(0, alt0, latitude, this.Coordinates.Dec);
             } else {
-                transit = Astrometry.GetAzimuth(180, alt180, latitude, this.Coordinates.Dec);
+                transit = AstroUtil.GetAzimuth(180, alt180, latitude, this.Coordinates.Dec);
             }
             DoesTransitSouth = Convert.ToInt32(transit) == 180;
         }

@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using NINA.Core.Enum;

@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -23,7 +24,7 @@ namespace NINA.Utility.Converters {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             double hours;
             if (double.TryParse(value.ToString(), out hours)) {
-                return Astrometry.Astrometry.HoursToHMS(hours);
+                return AstroUtil.HoursToHMS(hours);
             } else {
                 return string.Empty;
             }

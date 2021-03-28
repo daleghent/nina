@@ -15,7 +15,7 @@
 using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.MyTelescope;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Equipment.Telescope;
 using System;

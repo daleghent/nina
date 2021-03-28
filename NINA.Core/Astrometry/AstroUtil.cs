@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Database;
+using NINA.Utility;
 using Nito.AsyncEx;
 using System;
 using System.ComponentModel;
@@ -21,11 +22,11 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Media.Media3D;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
-    public class Astrometry {
+    public class AstroUtil {
 
-        static Astrometry() {
+        static AstroUtil() {
             _ = new EarthRotationParameterUpdater().Update();
         }
 
@@ -625,11 +626,11 @@ namespace NINA.Utility.Astrometry {
         }
 
         public static double MaxFieldOfView(double arcsecPerPixel, double width, double height) {
-            return Astrometry.ArcsecToArcmin(arcsecPerPixel * Math.Max(width, height));
+            return AstroUtil.ArcsecToArcmin(arcsecPerPixel * Math.Max(width, height));
         }
 
         public static double FieldOfView(double arcsecPerPixel, double width) {
-            return Astrometry.ArcsecToArcmin(arcsecPerPixel * width);
+            return AstroUtil.ArcsecToArcmin(arcsecPerPixel * width);
         }
 
         public enum MoonPhase {

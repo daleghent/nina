@@ -14,7 +14,7 @@
 
 using System;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public class MoonRiseAndSet : RiseAndSetEvent {
 
@@ -29,7 +29,7 @@ namespace NINA.Utility.Astrometry {
                 Longitude = Longitude
             };
             var refraction = NOVAS.Refract(ref location, NOVAS.RefractionOption.StandardRefraction, horizon); ;
-            var altitude = body.Altitude - Astrometry.ToDegree(Earth.Radius) / body.Distance + Astrometry.ToDegree(body.Radius) / body.Distance + refraction;
+            var altitude = body.Altitude - AstroUtil.ToDegree(Earth.Radius) / body.Distance + AstroUtil.ToDegree(body.Radius) / body.Distance + refraction;
             return altitude;
         }
 

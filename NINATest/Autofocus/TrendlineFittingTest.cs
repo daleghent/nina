@@ -21,7 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NINA.Utility.Enum;
+using NINA.Core.Enum;
 
 namespace NINATest.Autofocus {
 

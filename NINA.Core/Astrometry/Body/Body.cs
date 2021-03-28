@@ -15,7 +15,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public abstract class Body {
 
@@ -37,8 +37,8 @@ namespace NINA.Utility.Astrometry {
 
         public Task Calculate() {
             return Task.Run(() => {
-                var jd = Astrometry.GetJulianDate(Date);
-                var deltaT = Astrometry.DeltaT(Date);
+                var jd = AstroUtil.GetJulianDate(Date);
+                var deltaT = AstroUtil.DeltaT(Date);
 
                 var location = new NOVAS.OnSurface() {
                     Latitude = Latitude,
@@ -59,12 +59,12 @@ namespace NINA.Utility.Astrometry {
 
                 var objPosition = new NOVAS.SkyPosition();
 
-                NOVAS.Place(jd + Astrometry.SecondsToDays(deltaT), obj, observer, deltaT, NOVAS.CoordinateSystem.EquinoxOfDate, NOVAS.Accuracy.Full, ref objPosition);
-                this.Distance = Astrometry.AUToKilometer(objPosition.Dis);
+                NOVAS.Place(jd + AstroUtil.SecondsToDays(deltaT), obj, observer, deltaT, NOVAS.CoordinateSystem.EquinoxOfDate, NOVAS.Accuracy.Full, ref objPosition);
+                this.Distance = AstroUtil.AUToKilometer(objPosition.Dis);
 
-                var siderealTime = Astrometry.GetLocalSiderealTime(Date, Longitude);
-                var hourAngle = Astrometry.HoursToDegrees(Astrometry.GetHourAngle(siderealTime, objPosition.RA));
-                this.Altitude = Astrometry.GetAltitude(hourAngle, Latitude, objPosition.Dec);
+                var siderealTime = AstroUtil.GetLocalSiderealTime(Date, Longitude);
+                var hourAngle = AstroUtil.HoursToDegrees(AstroUtil.GetHourAngle(siderealTime, objPosition.RA));
+                this.Altitude = AstroUtil.GetAltitude(hourAngle, Latitude, objPosition.Dec);
             });
         }
     }

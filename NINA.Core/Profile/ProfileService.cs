@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Notification;
 using System;
 using System.Globalization;
@@ -242,7 +242,7 @@ namespace NINA.Profile {
             ActiveProfile.AstrometrySettings.HorizonFilePath = horizonFilePath;
 
             try {
-                ActiveProfile.AstrometrySettings.Horizon = Utility.Astrometry.CustomHorizon.FromFile(horizonFilePath);
+                ActiveProfile.AstrometrySettings.Horizon = Astrometry.CustomHorizon.FromFile(horizonFilePath);
             } catch (Exception ex) {
                 ActiveProfile.AstrometrySettings.HorizonFilePath = string.Empty;
                 Logger.Error(ex);

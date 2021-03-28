@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 
 namespace NINA.PlateSolving {
@@ -31,7 +31,7 @@ namespace NINA.PlateSolving {
         public double Orientation {
             get => _orientation;
             set {
-                _orientation = Astrometry.EuclidianModulus(value, 360);
+                _orientation = AstroUtil.EuclidianModulus(value, 360);
             }
         }
 
@@ -56,7 +56,7 @@ namespace NINA.PlateSolving {
 
         public string RaErrorString {
             get {
-                return Astrometry.DegreesToHMS(Separation?.RA.Degree ?? 0);
+                return AstroUtil.DegreesToHMS(Separation?.RA.Degree ?? 0);
             }
         }
 
@@ -74,7 +74,7 @@ namespace NINA.PlateSolving {
 
         public string DecErrorString {
             get {
-                return Astrometry.DegreesToDMS(Separation?.Dec.Degree ?? 0);
+                return AstroUtil.DegreesToDMS(Separation?.Dec.Degree ?? 0);
             }
         }
 

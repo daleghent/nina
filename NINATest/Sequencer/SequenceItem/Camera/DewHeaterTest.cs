@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Moq;
+using NINA.Core.Enum;
 using NINA.Model.MyCamera;
 using NINA.Sequencer;
 using NINA.Sequencer.SequenceItem.Camera;

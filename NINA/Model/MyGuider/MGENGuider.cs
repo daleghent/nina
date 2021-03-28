@@ -16,7 +16,7 @@ using NINA.MGEN;
 using NINA.Exceptions;
 using NINA.Profile;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.ImageAnalysis;
 using NINA.Utility.Notification;
 using System;
@@ -33,6 +33,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace NINA.Model.MyGuider {
+
     internal class MGENGuider : BaseINPC, IGuider {
         public readonly IMGEN MGen;
         private IProfileService profileService;
@@ -99,7 +100,7 @@ namespace NINA.Model.MyGuider {
 
         public double PixelScale {
             get {
-                return Astrometry.ArcsecPerPixel(this.MGen.PixelSize, FocalLength);
+                return AstroUtil.ArcsecPerPixel(this.MGen.PixelSize, FocalLength);
             }
 
             set {
@@ -397,6 +398,7 @@ namespace NINA.Model.MyGuider {
     }
 
     internal class MGenLogger : NINA.MGEN.ILogger {
+
         public void Debug(string message, [CallerMemberName] string memberName = "", [CallerFilePath] string sourceFilePath = "") {
             Logger.Debug(message, memberName, sourceFilePath);
         }

@@ -15,7 +15,7 @@
 using System;
 using System.Windows;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     /// <summary>
     /// Class to handle world coordinate systems based on tangential projection
@@ -71,14 +71,14 @@ namespace NINA.Utility.Astrometry {
 
             var rot1_cd = Math.Atan2(sign * cd1_2, cd2_2);
             var rot2_cd = Math.Atan2(sign * cd1_1, cd2_1) - Math.PI / 2d;
-            var rotation = Astrometry.ToDegree(Flipped ? -rot2_cd : rot2_cd);
-            var skew = Astrometry.ToDegree(Math.Abs(rot1_cd - rot2_cd));
+            var rotation = AstroUtil.ToDegree(Flipped ? -rot2_cd : rot2_cd);
+            var skew = AstroUtil.ToDegree(Math.Abs(rot1_cd - rot2_cd));
 
             //Approximation as the matrix can account for skewed axes
-            Rotation = Astrometry.EuclidianModulus(rotation, 360);
+            Rotation = AstroUtil.EuclidianModulus(rotation, 360);
 
-            PixelScaleX = Astrometry.DegreeToArcsec(Math.Abs(cdelta1));
-            PixelScaleY = Astrometry.DegreeToArcsec(Math.Abs(cdelta2));
+            PixelScaleX = AstroUtil.DegreeToArcsec(Math.Abs(cdelta1));
+            PixelScaleY = AstroUtil.DegreeToArcsec(Math.Abs(cdelta2));
         }
 
         /// <summary>
@@ -109,13 +109,13 @@ namespace NINA.Utility.Astrometry {
             }
 
             if (!Flipped) {
-                Rotation = Astrometry.EuclidianModulus(crota2, 360);
+                Rotation = AstroUtil.EuclidianModulus(crota2, 360);
             } else {
-                Rotation = Astrometry.EuclidianModulus(-crota2, 360);
+                Rotation = AstroUtil.EuclidianModulus(-crota2, 360);
             }
 
-            PixelScaleX = Astrometry.DegreeToArcsec(Math.Abs(cdelta1));
-            PixelScaleY = Astrometry.DegreeToArcsec(Math.Abs(cdelta2));
+            PixelScaleX = AstroUtil.DegreeToArcsec(Math.Abs(cdelta1));
+            PixelScaleY = AstroUtil.DegreeToArcsec(Math.Abs(cdelta2));
         }
 
         public Coordinates Coordinates { get; }

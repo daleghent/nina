@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -60,7 +60,7 @@ namespace NINA.Utility.SkySurvey {
                    url,
                    2000,
                    2000,
-                   Astrometry.Astrometry.ArcminToDegree(fieldOfView),
+                   AstroUtil.ArcminToDegree(fieldOfView),
                    coordinates.RADegrees,
                    coordinates.Dec
                 );

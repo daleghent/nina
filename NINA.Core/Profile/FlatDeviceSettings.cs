@@ -22,7 +22,7 @@ namespace NINA.Profile {
 
     [Serializable]
     [DataContract]
-    internal class FlatDeviceSettings : Settings, IFlatDeviceSettings {
+    public class FlatDeviceSettings : Settings, IFlatDeviceSettings {
 
         public FlatDeviceSettings() {
             FilterSettings = new Dictionary<FlatDeviceFilterSettingsKey, FlatDeviceFilterSettingsValue>();

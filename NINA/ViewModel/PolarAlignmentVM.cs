@@ -16,7 +16,7 @@ using NINA.Model;
 using NINA.Model.MyCamera;
 using NINA.Model.MyTelescope;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Profile;
@@ -361,11 +361,11 @@ namespace NINA.ViewModel {
             if (Math.Abs(deg) > 1) {
                 return deg.ToString("N" + precision) + "° (degree)";
             }
-            var amin = Astrometry.DegreeToArcmin(deg);
+            var amin = AstroUtil.DegreeToArcmin(deg);
             if (Math.Abs(amin) > 1) {
                 return amin.ToString("N" + precision) + "' (arcmin)";
             }
-            var asec = Astrometry.DegreeToArcsec(deg);
+            var asec = AstroUtil.DegreeToArcsec(deg);
             return asec.ToString("N" + precision) + "'' (arcsec)";
         }
 
@@ -484,12 +484,12 @@ namespace NINA.ViewModel {
                 cancelMeasureErrorToken = new CancellationTokenSource();
                 Task moveBackTask = Task.CompletedTask;
                 try {
-                    var siderealTime = Astrometry.GetLocalSiderealTimeNow(profileService.ActiveProfile.AstrometrySettings.Longitude);
+                    var siderealTime = AstroUtil.GetLocalSiderealTimeNow(profileService.ActiveProfile.AstrometrySettings.Longitude);
                     var latitude = Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude);
                     var dec = Angle.ByDegree(TelescopeInfo.Declination);
-                    var hourAngle = Astrometry.GetHourAngle(Angle.ByHours(siderealTime), Angle.ByHours(TelescopeInfo.Coordinates.RA));
-                    var altitude = Astrometry.GetAltitude(hourAngle, latitude, dec);
-                    var azimuth = Astrometry.GetAzimuth(hourAngle, altitude, latitude, dec);
+                    var hourAngle = AstroUtil.GetHourAngle(Angle.ByHours(siderealTime), Angle.ByHours(TelescopeInfo.Coordinates.RA));
+                    var altitude = AstroUtil.GetAltitude(hourAngle, latitude, dec);
+                    var azimuth = AstroUtil.GetAzimuth(hourAngle, altitude, latitude, dec);
                     var altitudeSide = azimuth.Degree < 180 ? AltitudeSite.EAST : AltitudeSite.WEST;
 
                     Coordinates startPosition = telescopeMediator.GetCurrentPosition();
@@ -644,7 +644,7 @@ namespace NINA.ViewModel {
 
                 var decError = startSolve.Dec - targetSolve.Dec;
 
-                poleError = Astrometry.DetermineDriftAlignError(startSolve.Dec, driftAmount, decError);
+                poleError = AstroUtil.DetermineDriftAlignError(startSolve.Dec, driftAmount, decError);
             } catch (OperationCanceledException) {
             }
 
@@ -652,9 +652,9 @@ namespace NINA.ViewModel {
         }
 
         public async Task<bool> SlewToMeridianOffset(double meridianOffset, double declination, CancellationToken token) {
-            var lst = Astrometry.GetLocalSiderealTimeNow(profileService.ActiveProfile.AstrometrySettings.Longitude);
+            var lst = AstroUtil.GetLocalSiderealTimeNow(profileService.ActiveProfile.AstrometrySettings.Longitude);
 
-            double slew_ra = lst + (Astrometry.DegreesToHours(meridianOffset));
+            double slew_ra = lst + (AstroUtil.DegreesToHours(meridianOffset));
             if (slew_ra >= 24.0) {
                 slew_ra -= 24.0;
             } else if (slew_ra < 0.0) {
@@ -673,11 +673,11 @@ namespace NINA.ViewModel {
                 var polaris = new Coordinates(polarisRA, polarisDec, Epoch.J2000, Coordinates.RAType.Hours);
                 polaris = polaris.Transform(Epoch.JNOW);
 
-                var lst = Astrometry.GetLocalSiderealTimeNow(profileService.ActiveProfile.AstrometrySettings.Longitude);
-                var hour_angle = Astrometry.GetHourAngle(lst, polaris.RA);
+                var lst = AstroUtil.GetLocalSiderealTimeNow(profileService.ActiveProfile.AstrometrySettings.Longitude);
+                var hour_angle = AstroUtil.GetHourAngle(lst, polaris.RA);
 
-                Rotation = -Astrometry.HoursToDegrees(hour_angle);
-                HourAngleTime = Astrometry.HoursToHMS(hour_angle);
+                Rotation = -AstroUtil.HoursToDegrees(hour_angle);
+                HourAngleTime = AstroUtil.HoursToHMS(hour_angle);
             } catch (Exception ex) {
                 Logger.Error(ex);
             }

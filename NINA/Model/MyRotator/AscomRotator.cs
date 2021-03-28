@@ -14,7 +14,7 @@
 
 using ASCOM.DriverAccess;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.Utility.Notification;
 using System;
 using System.Threading;
@@ -76,7 +76,7 @@ namespace NINA.Model.MyRotator {
         private float offset = 0;
 
         public float Position {
-            get => Astrometry.EuclidianModulus(MechanicalPosition + offset, 360);
+            get => AstroUtil.EuclidianModulus(MechanicalPosition + offset, 360);
         }
 
         public float MechanicalPosition {
@@ -117,10 +117,10 @@ namespace NINA.Model.MyRotator {
         public void Move(float angle) {
             if (Connected) {
                 if (angle >= 360) {
-                    angle = Astrometry.EuclidianModulus(angle, 360);
+                    angle = AstroUtil.EuclidianModulus(angle, 360);
                 }
                 if (angle <= -360) {
-                    angle = Astrometry.EuclidianModulus(angle, -360);
+                    angle = AstroUtil.EuclidianModulus(angle, -360);
                 }
 
                 Logger.Debug($"ASCOM - Move relative by {angle}° - Mechanical Position reported by rotator {MechanicalPosition}° and offset {offset}");

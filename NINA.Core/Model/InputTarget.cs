@@ -14,7 +14,7 @@
 
 using Newtonsoft.Json;
 using NINA.Utility;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System;
 
 namespace NINA.Model {
@@ -105,7 +105,7 @@ namespace NINA.Model {
             this.latitude = latitude;
             this.longitude = longitude;
             if (this.DeepSkyObject != null) {
-                this.DeepSkyObject.SetDateAndPosition(Utility.Astrometry.NighttimeCalculator.GetReferenceDate(DateTime.Now), latitude.Degree, longitude.Degree);
+                this.DeepSkyObject.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), latitude.Degree, longitude.Degree);
                 RaiseCoordinatesChanged();
             }
         }

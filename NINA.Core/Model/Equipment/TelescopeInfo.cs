@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using System.Collections.Generic;
 
 namespace NINA.Model.MyTelescope {

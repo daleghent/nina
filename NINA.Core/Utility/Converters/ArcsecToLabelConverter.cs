@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry;
 using System;
 using System.Globalization;
 using System.Windows.Data;
@@ -26,9 +27,9 @@ namespace NINA.Utility.Converters {
             }
             var arcsecs = (double)value;
             if (arcsecs > 3600) {
-                return Astrometry.Astrometry.ArcsecToDegree(arcsecs).ToString("0.00", CultureInfo.InvariantCulture) + "°";
+                return AstroUtil.ArcsecToDegree(arcsecs).ToString("0.00", CultureInfo.InvariantCulture) + "°";
             } else if (arcsecs > 60) {
-                return Astrometry.Astrometry.ArcsecToArcmin(arcsecs).ToString("0.00", CultureInfo.InvariantCulture) + "'";
+                return AstroUtil.ArcsecToArcmin(arcsecs).ToString("0.00", CultureInfo.InvariantCulture) + "'";
             } else {
                 return arcsecs.ToString("0.00", CultureInfo.InvariantCulture) + "''";
             }

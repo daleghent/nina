@@ -1,6 +1,6 @@
 ﻿using NINA.Model;
 using NINA.Model.MyCamera;
-using NINA.Utility.Astrometry;
+using NINA.Astrometry;
 using NINA.ViewModel.Sequencer.SimpleSequence;
 using System;
 using System.Threading;

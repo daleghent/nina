@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Moq;
+using NINA.Core.Enum;
 using NINA.Model.MyFocuser;
 using NINA.Profile;
 using NINA.ViewModel.Equipment.Focuser;
@@ -33,7 +34,7 @@ namespace NINATest.Focuser {
             public TestableOvershootBacklashCompensationDecorator(IProfileService profileService, IFocuser focuser) : base(profileService, focuser) {
             }
 
-            public Direction LastDirection { get => base.lastDirection; }
+            public OvershootDirection LastDirection { get => base.lastDirection; }
         }
 
         [SetUp]
@@ -49,13 +50,13 @@ namespace NINATest.Focuser {
         }
 
         [Test]
-        [TestCase(1000, 50000, 500, 0, 1200, 1400, 1400, FocuserDecorator.Direction.OUT)]
-        [TestCase(1000, 50000, 0, 500, 800, 400, 400, FocuserDecorator.Direction.IN)]
-        [TestCase(1000, 50000, 200, 0, 1500, 400, 400, FocuserDecorator.Direction.OUT)]
-        [TestCase(1000, 50000, 0, 500, 500, 1500, 1500, FocuserDecorator.Direction.IN)]
-        [TestCase(1000, 50000, 500, 0, 1500, 0, 0, FocuserDecorator.Direction.IN)]
-        [TestCase(1000, 50000, 0, 500, 1500, 50000, 50000, FocuserDecorator.Direction.OUT)]
-        public async Task Move_TwoTimes(int initialPosition, int maxStep, int backlashIn, int backlashOut, int firstMove, int secondMove, int expectedPosition, FocuserDecorator.Direction expectedLastDirection) {
+        [TestCase(1000, 50000, 500, 0, 1200, 1400, 1400, OvershootDirection.OUT)]
+        [TestCase(1000, 50000, 0, 500, 800, 400, 400, OvershootDirection.IN)]
+        [TestCase(1000, 50000, 200, 0, 1500, 400, 400, OvershootDirection.OUT)]
+        [TestCase(1000, 50000, 0, 500, 500, 1500, 1500, OvershootDirection.IN)]
+        [TestCase(1000, 50000, 500, 0, 1500, 0, 0, OvershootDirection.IN)]
+        [TestCase(1000, 50000, 0, 500, 1500, 50000, 50000, OvershootDirection.OUT)]
+        public async Task Move_TwoTimes(int initialPosition, int maxStep, int backlashIn, int backlashOut, int firstMove, int secondMove, int expectedPosition, OvershootDirection expectedLastDirection) {
             focuserMock.SetupGet(x => x.Position).Returns(initialPosition);
             focuserMock.SetupGet(x => x.MaxStep).Returns(maxStep);
 

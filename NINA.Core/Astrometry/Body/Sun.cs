@@ -14,7 +14,7 @@
 
 using System;
 
-namespace NINA.Utility.Astrometry {
+namespace NINA.Astrometry {
 
     public class Sun : Body {
 

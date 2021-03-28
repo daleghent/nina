@@ -15,7 +15,7 @@
 using FluentAssertions;
 using Moq;
 using NINA.Sequencer.DragDrop;
-using NINA.Utility.Enum;
+using NINA.Core.Enum;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

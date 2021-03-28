@@ -29,7 +29,7 @@ using System.Xml.Linq;
 
 namespace NINA.Utility.FileFormat.XISF {
 
-    internal class XISF {
+    public class XISF {
         public XISFHeader Header { get; private set; }
 
         public XISFData Data { get; private set; }
