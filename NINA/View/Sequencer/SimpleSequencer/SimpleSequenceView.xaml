@@ -26,9 +26,6 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <ResourceDictionary Source="../Sequence2/ProgressStyle.xaml" />
-    </UserControl.Resources>
     <Grid>
         <Grid.Resources>
             <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeData}" />

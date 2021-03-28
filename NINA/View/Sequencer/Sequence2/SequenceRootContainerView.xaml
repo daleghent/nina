@@ -96,10 +96,6 @@
         Margin="0,5,0,0"
         Background="{StaticResource BackgroundBrush}"
         IsHitTestVisible="True">
-        <Grid.Resources>
-
-            <ResourceDictionary Source="ProgressStyle.xaml" />
-        </Grid.Resources>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition />

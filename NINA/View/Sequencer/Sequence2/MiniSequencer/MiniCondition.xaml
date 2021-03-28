@@ -17,9 +17,6 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <ResourceDictionary Source="../ProgressStyle.xaml" />
-    </UserControl.Resources>
     <Grid DataContext="{Binding}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20" />

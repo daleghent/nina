@@ -241,9 +241,6 @@
         </Style>
     </UserControl.Resources>
     <ContentPresenter x:Name="Content" Content="{Binding}">
-        <ContentPresenter.Resources>
-            <ResourceDictionary Source="ProgressStyle.xaml" />
-        </ContentPresenter.Resources>
         <ContentPresenter.ContentTemplate>
             <DataTemplate DataType="{x:Type cont:SequenceContainer}">
                 <ninactrl:DetachingExpander

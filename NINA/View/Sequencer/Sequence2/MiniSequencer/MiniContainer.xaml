@@ -29,7 +29,6 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../ProgressStyle.xaml" />
                 <ResourceDictionary>
                     <converter:SequenceEntityStatusRunningToVisibilityConverter x:Key="SequenceEntityStatusRunningToVisibilityConverter" />
                     <DataTemplate x:Key="TriggerTemplate" DataType="{x:Type trigger:SequenceTrigger}">
