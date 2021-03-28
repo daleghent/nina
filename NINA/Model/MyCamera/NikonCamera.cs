@@ -14,7 +14,6 @@
 
 using Nikon;
 using NINA.Utility;
-using NINA.Utility.Enum;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Profile;
@@ -28,6 +27,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using NINA.Model.ImageData;
+using NINA.Core.Enum;
 
 namespace NINA.Model.MyCamera {
 

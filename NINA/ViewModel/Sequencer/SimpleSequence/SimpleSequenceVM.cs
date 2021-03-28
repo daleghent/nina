@@ -14,6 +14,7 @@
 
 using Accord.Statistics.Models.Regression.Linear;
 using CsvHelper;
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.ImageData;
 using NINA.Model.MyCamera;
@@ -290,9 +291,9 @@ namespace NINA.ViewModel {
             }
         }
 
-        private SimpleDSOContainer selectedTarget;
+        private ISimpleDSOContainer selectedTarget;
 
-        public SimpleDSOContainer SelectedTarget {
+        public ISimpleDSOContainer SelectedTarget {
             get => selectedTarget;
             set {
                 selectedTarget = value;
@@ -401,7 +402,7 @@ namespace NINA.ViewModel {
                     SelectedTarget = (SimpleDSOContainer)Targets.Items.FirstOrDefault();
                 }
             }
-            SelectedTarget?.ResetProgressCascaded();
+            (SelectedTarget as SimpleDSOContainer)?.ResetProgressCascaded();
             return Targets?.Items.Count > 0;
         }
 
@@ -413,7 +414,7 @@ namespace NINA.ViewModel {
         private void AddDefaultTarget(object obj) {
             this.Targets.Add(GetTemplate());
             SelectedTarget = Targets.Items.Last() as SimpleDSOContainer;
-            SelectedTarget?.ResetProgressCascaded();
+            (SelectedTarget as SimpleDSOContainer)?.ResetProgressCascaded();
         }
 
         public void AddTarget(DeepSkyObject deepSkyObject) {
@@ -423,7 +424,7 @@ namespace NINA.ViewModel {
             target.Target.Rotation = deepSkyObject.Rotation;
             this.Targets.Add(target);
             SelectedTarget = Targets.Items.Last() as SimpleDSOContainer;
-            SelectedTarget?.ResetProgressCascaded();
+            (SelectedTarget as SimpleDSOContainer)?.ResetProgressCascaded();
         }
 
         private void SaveTargetSet(object obj) {
@@ -471,7 +472,7 @@ namespace NINA.ViewModel {
                     SelectedTarget = Targets.Items.FirstOrDefault() as SimpleDSOContainer;
                 }
             }
-            SelectedTarget?.ResetProgressCascaded();
+            (SelectedTarget as SimpleDSOContainer)?.ResetProgressCascaded();
             return Targets?.Items.Count > 0;
         }
 
@@ -502,7 +503,7 @@ namespace NINA.ViewModel {
                     }
                 }
             }
-            SelectedTarget?.ResetProgressCascaded();
+            (SelectedTarget as SimpleDSOContainer)?.ResetProgressCascaded();
             return Targets?.Items.Count > 0;
         }
 
@@ -682,36 +683,38 @@ namespace NINA.ViewModel {
             return MigrateFromCaptureSequenceList(csl);
         }
 
-        public CaptureSequenceList MigrateToCaptureSequenceList(SimpleDSOContainer container) {
+        public CaptureSequenceList MigrateToCaptureSequenceList(ISimpleDSOContainer container) {
             var csl = new CaptureSequenceList();
 
-            csl.Mode = container.Mode;
-            csl.Delay = container.Delay;
-            csl.StartGuiding = container.StartGuiding;
-            csl.SlewToTarget = container.SlewToTarget;
-            csl.CenterTarget = container.CenterTarget;
-            csl.RotateTarget = container.RotateTarget;
-            csl.AutoFocusOnStart = container.AutoFocusOnStart;
-            csl.AutoFocusOnFilterChange = container.AutoFocusOnFilterChange;
-            csl.AutoFocusAfterSetTime = container.AutoFocusAfterSetTime;
-            csl.AutoFocusSetTime = container.AutoFocusSetTime;
-            csl.AutoFocusAfterSetExposures = container.AutoFocusAfterSetExposures;
-            csl.AutoFocusSetExposures = container.AutoFocusSetExposures;
-            csl.AutoFocusAfterTemperatureChange = container.AutoFocusAfterTemperatureChange;
-            csl.AutoFocusAfterTemperatureChangeAmount = container.AutoFocusAfterTemperatureChangeAmount;
-            csl.AutoFocusAfterHFRChange = container.AutoFocusAfterHFRChange;
-            csl.AutoFocusAfterHFRChangeAmount = container.AutoFocusAfterHFRChangeAmount;
+            var definedContainer = (SimpleDSOContainer)container;
 
-            csl.TargetName = container.Target.TargetName;
-            csl.Coordinates = container.Target.InputCoordinates.Coordinates.Clone();
-            csl.Rotation = container.Target.Rotation;
+            csl.Mode = definedContainer.Mode;
+            csl.Delay = definedContainer.Delay;
+            csl.StartGuiding = definedContainer.StartGuiding;
+            csl.SlewToTarget = definedContainer.SlewToTarget;
+            csl.CenterTarget = definedContainer.CenterTarget;
+            csl.RotateTarget = definedContainer.RotateTarget;
+            csl.AutoFocusOnStart = definedContainer.AutoFocusOnStart;
+            csl.AutoFocusOnFilterChange = definedContainer.AutoFocusOnFilterChange;
+            csl.AutoFocusAfterSetTime = definedContainer.AutoFocusAfterSetTime;
+            csl.AutoFocusSetTime = definedContainer.AutoFocusSetTime;
+            csl.AutoFocusAfterSetExposures = definedContainer.AutoFocusAfterSetExposures;
+            csl.AutoFocusSetExposures = definedContainer.AutoFocusSetExposures;
+            csl.AutoFocusAfterTemperatureChange = definedContainer.AutoFocusAfterTemperatureChange;
+            csl.AutoFocusAfterTemperatureChangeAmount = definedContainer.AutoFocusAfterTemperatureChangeAmount;
+            csl.AutoFocusAfterHFRChange = definedContainer.AutoFocusAfterHFRChange;
+            csl.AutoFocusAfterHFRChangeAmount = definedContainer.AutoFocusAfterHFRChangeAmount;
 
-            foreach (var item in container.Items) {
+            csl.TargetName = definedContainer.Target.TargetName;
+            csl.Coordinates = definedContainer.Target.InputCoordinates.Coordinates.Clone();
+            csl.Rotation = definedContainer.Target.Rotation;
+
+            foreach (var item in definedContainer.Items) {
                 var simpleExposure = item as SimpleExposure;
                 var capture = MigrateSimpleExposureToCaptureSequence(simpleExposure);
-                if (container.Mode == SequenceMode.ROTATE) {
-                    capture.ProgressExposureCount = (container.Conditions[0] as LoopCondition).CompletedIterations;
-                    capture.TotalExposureCount = (container.Conditions[0] as LoopCondition).Iterations;
+                if (definedContainer.Mode == SequenceMode.ROTATE) {
+                    capture.ProgressExposureCount = (definedContainer.Conditions[0] as LoopCondition).CompletedIterations;
+                    capture.TotalExposureCount = (definedContainer.Conditions[0] as LoopCondition).Iterations;
                 }
                 csl.Add(capture);
             }
@@ -724,15 +727,15 @@ namespace NINA.ViewModel {
             cs.Enabled = simpleExposure.Enabled;
 
             cs.Dither = simpleExposure.Dither;
-            cs.DitherAmount = simpleExposure.GetDitherAfterExposures().AfterExposures;
+            cs.DitherAmount = (simpleExposure.GetDitherAfterExposures() as DitherAfterExposures).AfterExposures;
 
-            var loop = simpleExposure.GetLoopCondition();
+            var loop = simpleExposure.GetLoopCondition() as LoopCondition;
             cs.ProgressExposureCount = loop.CompletedIterations;
             cs.TotalExposureCount = loop.Iterations;
 
-            cs.FilterType = simpleExposure.GetSwitchFilter().Filter;
+            cs.FilterType = (simpleExposure.GetSwitchFilter() as SwitchFilter).Filter;
 
-            var exposure = simpleExposure.GetTakeExposure();
+            var exposure = simpleExposure.GetTakeExposure() as TakeExposure;
             cs.ExposureTime = exposure.ExposureTime;
             cs.ImageType = exposure.ImageType;
             cs.Binning = exposure.Binning;
@@ -770,10 +773,10 @@ namespace NINA.ViewModel {
                 simpleExposure.Enabled = item.Enabled;
 
                 simpleExposure.Dither = item.Dither;
-                var dither = simpleExposure.GetDitherAfterExposures();
+                var dither = simpleExposure.GetDitherAfterExposures() as DitherAfterExposures;
                 dither.AfterExposures = item.DitherAmount;
 
-                var iterations = simpleExposure.GetLoopCondition();
+                var iterations = simpleExposure.GetLoopCondition() as LoopCondition;
                 iterations.CompletedIterations = item.ProgressExposureCount;
                 iterations.Iterations = item.TotalExposureCount;
 
@@ -781,10 +784,10 @@ namespace NINA.ViewModel {
                     completed = false;
                 }
 
-                var filter = simpleExposure.GetSwitchFilter();
+                var filter = simpleExposure.GetSwitchFilter() as SwitchFilter;
                 filter.Filter = item.FilterType;
 
-                var exposure = simpleExposure.GetTakeExposure();
+                var exposure = simpleExposure.GetTakeExposure() as TakeExposure;
                 exposure.ExposureTime = item.ExposureTime;
                 exposure.ImageType = item.ImageType;
                 exposure.Binning = item.Binning;

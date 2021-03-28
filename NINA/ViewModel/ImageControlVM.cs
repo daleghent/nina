@@ -16,7 +16,6 @@ using NINA.Model;
 using NINA.Model.MyCamera;
 using NINA.Utility;
 using NINA.Utility.Behaviors;
-using NINA.Utility.Enum;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Profile;
@@ -32,6 +31,7 @@ using NINA.Model.ImageData;
 using NINA.Utility.Mediator;
 using NINA.PlateSolving;
 using NINA.ViewModel.Interfaces;
+using NINA.Core.Enum;
 
 namespace NINA.ViewModel {
 

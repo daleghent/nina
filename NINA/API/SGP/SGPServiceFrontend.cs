@@ -1,12 +1,15 @@
-﻿using System;
+﻿using NINA.Core.API.SGP;
+using System;
 using System.ServiceModel;
 
 namespace NINA.API.SGP {
+
     [ServiceBehavior(
         ConcurrencyMode = ConcurrencyMode.Multiple,
         InstanceContextMode = InstanceContextMode.Single)]
     public class SGPServiceFrontend : ISGPService {
         private readonly ISGPServiceBackend serviceBackend;
+
         public SGPServiceFrontend(ISGPServiceBackend serviceBackend) {
             this.serviceBackend = serviceBackend;
         }
@@ -60,6 +63,7 @@ namespace NINA.API.SGP {
         }
 
         #region Adapter Methods
+
         public SgConnectDeviceResponse SgConnectDevice_Post(string device, string deviceName) {
             var input = new SgConnectDevice() {
                 Device = (DeviceType)Enum.Parse(typeof(DeviceType), device),
@@ -153,6 +157,7 @@ namespace NINA.API.SGP {
         public SgCameraCoolerResponse SgCameraCooler_Get() {
             return SgCameraCooler_Post();
         }
-        #endregion
+
+        #endregion Adapter Methods
     }
 }

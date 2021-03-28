@@ -14,8 +14,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:equip="clr-namespace:NINA.View.Equipment"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-    xmlns:rules="clr-namespace:NINA.Utility.ValidationRules"
-    xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:rules="clr-namespace:NINA.Utility.ValidationRules;assembly=NINA.Core"
+    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">

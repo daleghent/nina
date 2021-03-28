@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Model.MyFocuser;
 using NINA.Profile;
 using NINA.Utility;
@@ -70,10 +71,10 @@ namespace NINA.ViewModel.Equipment.Focuser {
         private int CalculateBacklashCompensation(int lastPosition, int newPosition) {
             var direction = DetermineMovingDirection(lastPosition, newPosition);
 
-            if (direction == Direction.IN && base.lastDirection == Direction.OUT) {
+            if (direction == OvershootDirection.IN && base.lastDirection == OvershootDirection.OUT) {
                 Logger.Debug("Focuser is reversing direction from outwards to inwards");
                 return profileService.ActiveProfile.FocuserSettings.BacklashIn * -1;
-            } else if (direction == Direction.OUT && base.lastDirection == Direction.IN) {
+            } else if (direction == OvershootDirection.OUT && base.lastDirection == OvershootDirection.IN) {
                 Logger.Debug("Focuser is reversing direction from inwards to outwards");
                 return profileService.ActiveProfile.FocuserSettings.BacklashOut;
             } else {

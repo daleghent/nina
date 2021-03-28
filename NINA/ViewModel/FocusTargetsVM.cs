@@ -23,7 +23,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
-using NINA.Database;
+using NINA.Core.Database;
 using Nito.AsyncEx;
 using NINA.ViewModel.Interfaces;
 using System.Threading;

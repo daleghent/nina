@@ -16,11 +16,11 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
     xmlns:sequenceItem="clr-namespace:NINA.Sequencer.SequenceItem"
     xmlns:sequencer="clr-namespace:NINA.View.Sequencer.MiniSequencer"
     xmlns:trigger="clr-namespace:NINA.Sequencer.Trigger"
-    xmlns:util="clr-namespace:NINA.Utility"
+    xmlns:util="clr-namespace:NINA.Utility;assembly=NINA.Core"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">

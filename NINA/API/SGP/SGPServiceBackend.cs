@@ -1,4 +1,6 @@
-﻿using NINA.Model;
+﻿using NINA.Core.API.SGP;
+using NINA.Core.Enum;
+using NINA.Model;
 using NINA.Model.MyCamera;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
@@ -11,7 +13,9 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.API.SGP {
+
     public class SGPServiceBackend : ISGPServiceBackend {
+
         private struct ImageCaptureReceipt {
             public Guid Receipt;
             public string Path;
@@ -71,12 +75,15 @@ namespace NINA.API.SGP {
                     case ImageType.Light:
                         imageType = CaptureSequence.ImageTypes.LIGHT;
                         break;
+
                     case ImageType.Bias:
                         imageType = CaptureSequence.ImageTypes.BIAS;
                         break;
+
                     case ImageType.Dark:
                         imageType = CaptureSequence.ImageTypes.DARK;
                         break;
+
                     case ImageType.Flat:
                         imageType = CaptureSequence.ImageTypes.FLAT;
                         break;
@@ -117,7 +124,7 @@ namespace NINA.API.SGP {
                 var exposureData = await imagingMediator.CaptureImage(captureSequence, CancellationToken.None, null);
                 var imageData = await exposureData.ToImageData();
                 var fileSaveInfo = new FileSaveInfo() {
-                    FileType = Utility.Enum.FileTypeEnum.FITS,
+                    FileType = FileTypeEnum.FITS,
                     ForceExtension = inputExtension,
                     FilePath = inputDirectory,
                     FilePattern = inputFilenameWithoutExtension

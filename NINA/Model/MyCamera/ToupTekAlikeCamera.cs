@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Altair;
+using NINA.Core.Enum;
 using NINA.Model.ImageData;
 using NINA.Model.MyCamera.ToupTekAlike;
 using NINA.Profile;

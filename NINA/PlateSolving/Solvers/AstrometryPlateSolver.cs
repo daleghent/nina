@@ -13,10 +13,10 @@
 #endregion "copyright"
 
 using Newtonsoft.Json.Linq;
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.ImageData;
 using NINA.Utility;
-using NINA.Utility.Enum;
 using NINA.Utility.Http;
 using NINA.Utility.Notification;
 using System;

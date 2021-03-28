@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Profile;
 using NINA.Utility;
-using NINA.Utility.Enum;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.WindowService;
 using System;

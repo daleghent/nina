@@ -12,10 +12,10 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Enum;
 using NINA.Profile;
 using System;
 using NINA.PlateSolving.Solvers;
+using NINA.Core.Enum;
 
 namespace NINA.PlateSolving {
 

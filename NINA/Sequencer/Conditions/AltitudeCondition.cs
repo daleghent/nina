@@ -22,7 +22,7 @@ using NINA.Utility.Astrometry;
 using System;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
-using NINA.Utility.Enum;
+using NINA.Core.Enum;
 
 namespace NINA.Sequencer.Conditions {
 

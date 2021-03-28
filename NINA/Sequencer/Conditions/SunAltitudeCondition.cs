@@ -13,11 +13,11 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
+using NINA.Core.Enum;
 using NINA.Profile;
 using NINA.Sequencer.SequenceItem;
 using NINA.Utility;
 using NINA.Utility.Astrometry;
-using NINA.Utility.Enum;
 using System;
 using System.ComponentModel.Composition;
 using System.Linq;

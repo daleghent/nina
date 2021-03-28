@@ -20,12 +20,6 @@ using System.Windows.Media;
 
 namespace NINACustomControlLibrary {
 
-    public interface IAutoCompleteItem {
-        string Column1 { get; }
-        string Column2 { get; }
-        string Column3 { get; }
-    }
-
     public class AutoCompleteBox : HintTextBox {
 
         static AutoCompleteBox() {

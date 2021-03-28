@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Sequencer.DragDrop;
 using System;
 using System.Collections.Generic;
@@ -27,7 +28,7 @@ namespace NINA.View.Sequencer.Converter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             var p = new DropIntoParameters(value as IDroppable);
-            p.Position = Utility.Enum.DropTargetEnum.Center;
+            p.Position = DropTargetEnum.Center;
             return p;
         }
 

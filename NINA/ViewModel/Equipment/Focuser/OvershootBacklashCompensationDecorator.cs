@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Model.MyFocuser;
 using NINA.Profile;
 using NINA.Utility;
@@ -53,9 +54,9 @@ namespace NINA.ViewModel.Equipment.Focuser {
         private int CalculateBacklashCompensation(int lastPosition, int newPosition) {
             var direction = DetermineMovingDirection(lastPosition, newPosition);
 
-            if (direction == Direction.IN && profileService.ActiveProfile.FocuserSettings.BacklashIn != 0) {
+            if (direction == OvershootDirection.IN && profileService.ActiveProfile.FocuserSettings.BacklashIn != 0) {
                 return profileService.ActiveProfile.FocuserSettings.BacklashIn * -1;
-            } else if (direction == Direction.OUT && profileService.ActiveProfile.FocuserSettings.BacklashOut != 0) {
+            } else if (direction == OvershootDirection.OUT && profileService.ActiveProfile.FocuserSettings.BacklashOut != 0) {
                 return profileService.ActiveProfile.FocuserSettings.BacklashOut;
             } else {
                 return 0;

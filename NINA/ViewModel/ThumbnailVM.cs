@@ -13,18 +13,14 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Enum;
 using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
 using NINA.Profile;
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using NINA.Model.ImageData;
 using NINA.Utility.Mediator;
 using NINA.Model.MyCamera;
 using NINA.ViewModel.Interfaces;
@@ -141,44 +137,5 @@ namespace NINA.ViewModel {
                 RaisePropertyChanged();
             }
         }
-    }
-
-    public class Thumbnail : BaseINPC {
-
-        public Thumbnail() {
-        }
-
-        public async Task<IImageData> LoadOriginalImage(IProfileService profileService) {
-            try {
-                if (File.Exists(ImagePath.LocalPath)) {
-                    return await ImageData.FromFile(ImagePath.LocalPath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
-                } else {
-                    Notification.ShowError($"File ${ImagePath.LocalPath} does not exist");
-                }
-            } catch (Exception ex) {
-                Logger.Error(ex);
-                Notification.ShowError(ex.Message);
-            }
-
-            return null;
-        }
-
-        public BitmapSource ThumbnailImage { get; set; }
-
-        public double Mean { get; set; }
-
-        public double HFR { get; set; }
-
-        public bool IsBayered { get; set; }
-
-        public Uri ImagePath { get; set; }
-
-        public FileTypeEnum FileType { get; set; }
-
-        public DateTime Date { get; set; } = DateTime.Now;
-
-        public string Filter { get; set; }
-
-        public double Duration { get; set; }
     }
 }

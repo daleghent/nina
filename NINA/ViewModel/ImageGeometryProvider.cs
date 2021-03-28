@@ -16,11 +16,6 @@ using System.Windows.Media;
 
 namespace NINA.ViewModel {
 
-    public interface IImageGeometryProvider {
-
-        GeometryGroup GetImageGeometry(string imageName);
-    }
-
     internal class ImageGeometryProvider : IImageGeometryProvider {
 
         public GeometryGroup GetImageGeometry(string imageName) {

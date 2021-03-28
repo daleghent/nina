@@ -21,7 +21,6 @@ using NINA.Model.MyTelescope;
 using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Astrometry;
-using NINA.Utility.Enum;
 using NINA.Utility.ImageAnalysis;
 using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;
@@ -42,6 +41,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using NINA.MyMessageBox;
+using NINA.Core.Enum;
 
 namespace NINA.ViewModel.FlatWizard {
 

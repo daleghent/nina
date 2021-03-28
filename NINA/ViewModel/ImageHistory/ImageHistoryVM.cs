@@ -23,13 +23,13 @@ using System.Linq;
 using NINA.ViewModel.Interfaces;
 using NINA.Utility.Mediator.Interfaces;
 using System;
-using NINA.Utility.Enum;
 using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.IO;
 using CsvHelper;
 using System.Globalization;
+using NINA.Core.Enum;
 
 namespace NINA.ViewModel.ImageHistory {
 

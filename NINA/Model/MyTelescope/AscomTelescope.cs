@@ -25,6 +25,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Immutable;
+using PierSide = NINA.Core.Enum.PierSide;
+using TelescopeAxes = NINA.Core.Enum.TelescopeAxes;
+using GuideDirections = NINA.Core.Enum.GuideDirections;
 
 namespace NINA.Model.MyTelescope {
 

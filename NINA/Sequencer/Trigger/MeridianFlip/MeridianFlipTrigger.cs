@@ -30,6 +30,7 @@ using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Enum;
 
 namespace NINA.Sequencer.Trigger.MeridianFlip {
 
@@ -180,11 +181,11 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 //The minimum time to flip has not been reached yet. Check if a flip is required based on the estimation of the next instruction
                 var noRemainingTime = maximumTimeRemaining <= TimeSpan.FromSeconds(nextInstructionTime);
 
-                if (settings.UseSideOfPier && telescopeInfo.SideOfPier == Model.MyTelescope.PierSide.pierUnknown) {
+                if (settings.UseSideOfPier && telescopeInfo.SideOfPier == PierSide.pierUnknown) {
                     Logger.Error("Side of Pier usage is enabled, however the side of pier reported by the driver is unknown. Ignoring side of pier to calculate the flip time");
                 }
 
-                if (settings.UseSideOfPier && telescopeInfo.SideOfPier != Model.MyTelescope.PierSide.pierUnknown) {
+                if (settings.UseSideOfPier && telescopeInfo.SideOfPier != PierSide.pierUnknown) {
                     if (noRemainingTime) {
                         // There is no more time remaining. Project the side of pier to that at the time after the flip and check if this flip is required
                         var projectedSiderealTime = Angle.ByHours(Astrometry.EuclidianModulus(telescopeInfo.SiderealTime + originalMaximumTimeRemaining.TotalHours, 24));

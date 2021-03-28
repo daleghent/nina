@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Model.MyFocuser;
 using NINA.Profile;
 using NINA.Utility;
@@ -21,7 +22,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Equipment.Focuser {
 
-    public abstract class FocuserDecorator : BaseINPC, IFocuser {
+    public abstract partial class FocuserDecorator : BaseINPC, IFocuser {
 
         public FocuserDecorator(IProfileService profileService, IFocuser focuser) {
             this.profileService = profileService;
@@ -35,7 +36,7 @@ namespace NINA.ViewModel.Equipment.Focuser {
 
         protected IProfileService profileService;
         protected IFocuser focuser;
-        protected Direction lastDirection = Direction.NONE;
+        protected OvershootDirection lastDirection = OvershootDirection.NONE;
 
         public bool IsMoving => this.focuser.IsMoving;
 
@@ -86,11 +87,11 @@ namespace NINA.ViewModel.Equipment.Focuser {
             return this.focuser.Move(targetPosition, ct);
         }
 
-        protected Direction DetermineMovingDirection(int oldPosition, int newPosition) {
+        protected OvershootDirection DetermineMovingDirection(int oldPosition, int newPosition) {
             if (newPosition > oldPosition) {
-                return Direction.OUT;
+                return OvershootDirection.OUT;
             } else if (newPosition < oldPosition) {
-                return Direction.IN;
+                return OvershootDirection.IN;
             } else {
                 return lastDirection;
             }
@@ -98,12 +99,6 @@ namespace NINA.ViewModel.Equipment.Focuser {
 
         public void SetupDialog() {
             this.focuser.SetupDialog();
-        }
-
-        public enum Direction {
-            IN,
-            OUT,
-            NONE
         }
     }
 }

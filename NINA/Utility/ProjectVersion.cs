@@ -16,7 +16,7 @@ using System;
 
 namespace NINA.Utility {
 
-    internal class ProjectVersion {
+    public class ProjectVersion {
         private Version version;
 
         public ProjectVersion(string version) {

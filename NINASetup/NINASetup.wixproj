@@ -55,6 +55,14 @@
       <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
+    <ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
+      <Name>NINA.Core</Name>
+      <Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\NINA.MGEN\NINA.MGEN.csproj">
       <Name>NINA.MGEN</Name>
       <Project>{d897bffd-7777-44f5-9100-1ff0db3b032f}</Project>

@@ -27,8 +27,8 @@ namespace NINA.Sequencer {
         private readonly string defaultTemplatePath;
         private FileSystemWatcher sequenceTemplateFolderWatcher;
         private string userTemplatePath;
-        public const string DefaultTemplatesGroup = nameof(Locale.Locale.LblTemplate_DefaultTemplates);
-        private const string UserTemplatesGroup = nameof(Locale.Locale.LblTemplate_UserTemplates);
+        public const string DefaultTemplatesGroup = "LblTemplate_DefaultTemplates";
+        private const string UserTemplatesGroup = "LblTemplate_UserTemplates";
         public const string TemplateFileExtension = ".template.json";
 
         public IList<TemplatedSequenceContainer> UserTemplates => Templates.Where(t => t.Group == UserTemplatesGroup).ToList();

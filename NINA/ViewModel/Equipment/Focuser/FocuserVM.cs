@@ -24,6 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using NINA.Locale;
+using NINA.Core.Enum;
 
 namespace NINA.ViewModel.Equipment.Focuser {
 
@@ -187,10 +188,10 @@ namespace NINA.ViewModel.Equipment.Focuser {
 
         private static IFocuser GetBacklashCompensationFocuser(IProfileService profileService, IFocuser focuser) {
             switch (profileService.ActiveProfile.FocuserSettings.BacklashCompensationModel) {
-                case Utility.Enum.BacklashCompensationModel.ABSOLUTE:
+                case BacklashCompensationModel.ABSOLUTE:
                     return new AbsoluteBacklashCompensationDecorator(profileService, focuser);
 
-                case Utility.Enum.BacklashCompensationModel.OVERSHOOT:
+                case BacklashCompensationModel.OVERSHOOT:
                     return new OvershootBacklashCompensationDecorator(profileService, focuser);
 
                 default:

@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.MyPlanetarium;
 using NINA.Profile;
@@ -25,7 +26,6 @@ using NINA.Utility.Astrometry;
 using NINA.Utility.Exceptions;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
-using NINA.ViewModel;
 using NINA.ViewModel.FramingAssistant;
 using System;
 using System.Collections.ObjectModel;

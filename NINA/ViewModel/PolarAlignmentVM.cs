@@ -17,7 +17,6 @@ using NINA.Model.MyCamera;
 using NINA.Model.MyTelescope;
 using NINA.Utility;
 using NINA.Utility.Astrometry;
-using NINA.Utility.Enum;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Profile;
@@ -30,10 +29,11 @@ using NINA.Utility.Mediator;
 using NINA.PlateSolving;
 using NINA.ViewModel.Equipment.Camera;
 using NINA.ViewModel.Interfaces;
+using NINA.Core.Enum;
 
 namespace NINA.ViewModel {
 
-    internal class PolarAlignmentVM : DockableVM, ICameraConsumer, ITelescopeConsumer, IPolarAlignmentVM {
+    public class PolarAlignmentVM : DockableVM, ICameraConsumer, ITelescopeConsumer, IPolarAlignmentVM {
 
         public PolarAlignmentVM(
                 IProfileService profileService,

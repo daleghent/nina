@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Model.MyGuider;
 using NINA.Utility;
-using NINA.Utility.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -42,7 +42,7 @@ using NINA.Sequencer.Validations;
 
 namespace NINA.Sequencer {
 
-    public class Sequencer : BaseINPC {
+    public class Sequencer : BaseINPC, ISequencer {
 
         public Sequencer(
             ISequenceRootContainer sequenceRootContainer

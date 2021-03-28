@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Utility;
 
 namespace NINA.Model.MyCamera.Simulator {

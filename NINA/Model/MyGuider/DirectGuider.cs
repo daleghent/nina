@@ -23,6 +23,7 @@ using System.Threading.Tasks;
 using NINA.Model.MyCamera;
 using NINA.Utility.Astrometry;
 using Accord.Statistics.Distributions.Univariate;
+using NINA.Core.Enum;
 
 namespace NINA.Model.MyGuider {
     public class DirectGuider : BaseINPC, IGuider, ITelescopeConsumer {

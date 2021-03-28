@@ -15,6 +15,7 @@
 using ASCOM;
 using ASCOM.DeviceInterface;
 using ASCOM.DriverAccess;
+using NINA.Core.Enum;
 using NINA.Model.ImageData;
 using NINA.Profile;
 using NINA.Utility;
@@ -27,6 +28,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using SensorType = NINA.Core.Enum.SensorType;
 
 namespace NINA.Model.MyCamera {
 

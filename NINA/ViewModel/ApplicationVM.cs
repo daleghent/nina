@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.MyCamera;
 using NINA.Profile;
@@ -168,15 +169,5 @@ namespace NINA.ViewModel {
         public ICommand ExitCommand { get; private set; }
         public ICommand ClosingCommand { get; private set; }
         public ICommand CheckASCOMPlatformVersionCommand { get; private set; }
-    }
-
-    public enum ApplicationTab {
-        EQUIPMENT,
-        SKYATLAS,
-        FRAMINGASSISTANT,
-        FLATWIZARD,
-        SEQUENCE,
-        IMAGING,
-        OPTIONS
     }
 }

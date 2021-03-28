@@ -14,7 +14,7 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">

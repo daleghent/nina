@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.MyCamera;
 using NINA.Model.MyPlanetarium;
@@ -36,7 +37,6 @@ using NINA.Utility.Astrometry;
 using NINA.Utility.Exceptions;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
-using NINA.ViewModel;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Sequencer.SimpleSequence;
@@ -53,7 +53,7 @@ using System.Windows.Input;
 namespace NINA.Sequencer.Container {
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class SimpleDSOContainer : SequenceContainer, IDeepSkyObjectContainer, IImmutableContainer {
+    public class SimpleDSOContainer : SequenceContainer, IDeepSkyObjectContainer, IImmutableContainer, ISimpleDSOContainer {
         private readonly IProfileService profileService;
         private readonly ISequencerFactory factory;
         private readonly IFramingAssistantVM framingAssistantVM;
@@ -82,11 +82,11 @@ namespace NINA.Sequencer.Container {
         private bool autoFocusAfterHFRChange;
         private bool meridianFlipEnabled;
         private ICameraMediator cameraMediator;
-        private SimpleExposure selectedSimpleExposure;
+        private ISimpleExposure selectedSimpleExposure;
         private DateTime estimatedStartTime;
         private DateTime estimatedEndTime;
         private TimeSpan estimatedDuration;
-        private SimpleExposure activeExposure;
+        private ISimpleExposure activeExposure;
         private SequenceMode mode;
 
         [ImportingConstructor]
@@ -129,7 +129,7 @@ namespace NINA.Sequencer.Container {
             this.rotateLoopCondition.Iterations = 1;
         }
 
-        public SimpleExposure ActiveExposure {
+        public ISimpleExposure ActiveExposure {
             get => activeExposure;
             set {
                 activeExposure = value;
@@ -155,7 +155,7 @@ namespace NINA.Sequencer.Container {
             foreach (var item in Items) {
                 var se = item as SimpleExposure;
                 if (se.Enabled) {
-                    duration += TimeSpan.FromSeconds((se.GetTakeExposure().GetEstimatedDuration().TotalSeconds + profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime.TotalSeconds) * (se.GetLoopCondition().Iterations - se.GetLoopCondition().CompletedIterations));
+                    duration += TimeSpan.FromSeconds((se.GetTakeExposure().GetEstimatedDuration().TotalSeconds + profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime.TotalSeconds) * ((se.GetLoopCondition() as LoopCondition).Iterations - (se.GetLoopCondition() as LoopCondition).CompletedIterations));
                 }
             }
             if (Mode == SequenceMode.ROTATE) {
@@ -188,7 +188,7 @@ namespace NINA.Sequencer.Container {
             }
         }
 
-        public SimpleExposure AddSimpleExposure() {
+        public ISimpleExposure AddSimpleExposure() {
             SimpleExposure item;
             if (SelectedSimpleExposure != null) {
                 item = (SimpleExposure)SelectedSimpleExposure.Clone();
@@ -218,7 +218,7 @@ namespace NINA.Sequencer.Container {
         private void RemoveSimpleExposure(object obj) {
             if (SelectedSimpleExposure != null) {
                 var idx = this.Items.IndexOf(SelectedSimpleExposure);
-                SelectedSimpleExposure.PropertyChanged -= Item_PropertyChanged;
+                (SelectedSimpleExposure as SimpleExposure).PropertyChanged -= Item_PropertyChanged;
                 this.Remove(SelectedSimpleExposure);
 
                 if (idx >= this.Items.Count) {
@@ -273,7 +273,7 @@ namespace NINA.Sequencer.Container {
                         this.Conditions.Add(rotateLoopCondition);
                         foreach (var item in Items) {
                             var se = item as SimpleExposure;
-                            var loop = se.GetLoopCondition();
+                            var loop = se.GetLoopCondition() as LoopCondition;
                             maxIteration = Math.Max(maxIteration, loop.Iterations);
                             loop.Iterations = 1;
                             loop.ResetProgress();
@@ -283,7 +283,7 @@ namespace NINA.Sequencer.Container {
                         this.Conditions.Remove(rotateLoopCondition);
                         foreach (var item in Items) {
                             var se = item as SimpleExposure;
-                            var loop = se.GetLoopCondition();
+                            var loop = se.GetLoopCondition() as LoopCondition;
                             loop.Iterations = RotateIterations;
                             loop.ResetProgress();
                         }
@@ -293,7 +293,7 @@ namespace NINA.Sequencer.Container {
             }
         }
 
-        public SimpleExposure SelectedSimpleExposure {
+        public ISimpleExposure SelectedSimpleExposure {
             get => selectedSimpleExposure;
             set {
                 selectedSimpleExposure = value;
@@ -614,7 +614,7 @@ namespace NINA.Sequencer.Container {
             return clone;
         }
 
-        public DeepSkyObjectContainer TransformToDSOContainer() {
+        public IDeepSkyObjectContainer TransformToDSOContainer() {
             var c = factory.GetContainer<DeepSkyObjectContainer>();
             var t = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon);
             t.TargetName = this.Target.TargetName;
@@ -639,7 +639,7 @@ namespace NINA.Sequencer.Container {
             foreach (var item in Items) {
                 var simple = item as SimpleExposure;
                 if (simple.Enabled) {
-                    imaging.Add(simple.TransformToSmartExposure());
+                    imaging.Add(simple.TransformToSmartExposure() as SmartExposure);
                 }
             }
             imaging.Name = Locale.Loc.Instance["Lbl_OldSequencer_TargetImaging"];

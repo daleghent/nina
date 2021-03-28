@@ -14,10 +14,13 @@
     xmlns:cont="clr-namespace:NINA.Sequencer.Container"
     xmlns:converter="clr-namespace:NINA.View.Sequencer.Converter"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:local="clr-namespace:NINA.View.Sequencer.MiniSequencer"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:sequenceItem="clr-namespace:NINA.Sequencer.SequenceItem"
+    xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer;assembly=NINA.Core"
+    xmlns:sequenceItem="clr-namespace:NINA.Sequencer.SequenceItem;assembly=NINA.Core"
     xmlns:sequencer="clr-namespace:NINA.Sequencer"
+    xmlns:sequencercore="clr-namespace:NINA.Sequencer;assembly=NINA.Core"
     xmlns:sequencerview="clr-namespace:NINA.View.Sequencer"
     xmlns:trigger="clr-namespace:NINA.Sequencer.Trigger"
     d:DesignHeight="450"
@@ -36,7 +39,7 @@
                         <local:MiniCondition />
                     </DataTemplate>
                     <DataTemplate x:Key="SequenceItemTemplate" DataType="{x:Type sequenceItem:SequenceItem}">
-                        <local:MiniSequenceItem />
+                        <mini:MiniSequenceItem />
                     </DataTemplate>
 
                     <DataTemplate x:Key="SequenceContainerTemplate" DataType="{x:Type cont:SequenceContainer}">
@@ -88,7 +91,7 @@
             <TextBlock.Style>
                 <Style BasedOn="{StaticResource StandardTextBlock}" TargetType="{x:Type TextBlock}">
                     <Style.Triggers>
-                        <DataTrigger Binding="{Binding Status}" Value="{x:Static sequencer:SequenceEntityStatus.RUNNING}">
+                        <DataTrigger Binding="{Binding Status}" Value="{x:Static enum:SequenceEntityStatus.RUNNING}">
                             <Setter Property="FontWeight" Value="Bold" />
                         </DataTrigger>
                     </Style.Triggers>

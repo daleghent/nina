@@ -16,8 +16,9 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Utility.AvalonDock"
+    xmlns:utilcore="clr-namespace:NINA.Utility.AvalonDock;assembly=NINA.Core"
     xmlns:view="clr-namespace:NINA.View"
     xmlns:vm="clr-namespace:NINA.ViewModel"
     d:DesignHeight="300"
@@ -423,8 +424,8 @@
                 </dock:DockingManager.LayoutItemTemplateSelector>
 
                 <dock:DockingManager.LayoutItemContainerStyleSelector>
-                    <util:PaneStyleSelector>
-                        <util:PaneStyleSelector.AnchorableStyle>
+                    <utilcore:PaneStyleSelector>
+                        <utilcore:PaneStyleSelector.AnchorableStyle>
                             <Style TargetType="{x:Type dock:LayoutAnchorableItem}">
                                 <Setter Property="Title" Value="{Binding Model.Title}" />
                                 <Setter Property="HideCommand" Value="{Binding Model.HideCommand}" />
@@ -432,7 +433,7 @@
                                 <Setter Property="CanClose" Value="{Binding Model.CanClose}" />
                                 <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
                             </Style>
-                        </util:PaneStyleSelector.AnchorableStyle>
+                        </utilcore:PaneStyleSelector.AnchorableStyle>
                         <!--<util:PaneStyleSelector.DocumentStyle>
                         <Style TargetType="{x:Type dock:LayoutItem}">
                             <Setter Property="Title" Value="{Binding Model.Title}" />
@@ -440,7 +441,7 @@
                             <Setter Property="ContentId" Value="{Binding Model.ContentId}" />
                         </Style>
                     </util:PaneStyleSelector.DocumentStyle>-->
-                    </util:PaneStyleSelector>
+                    </utilcore:PaneStyleSelector>
                 </dock:DockingManager.LayoutItemContainerStyleSelector>
 
                 <!--<dock:DockingManager.DocumentHeaderTemplate>
@@ -456,7 +457,7 @@
                             </dock:DockingManager.DocumentHeaderTemplate>-->
 
                 <dock:DockingManager.LayoutUpdateStrategy>
-                    <util:LayoutInitializer />
+                    <utilcore:LayoutInitializer />
                 </dock:DockingManager.LayoutUpdateStrategy>
 
                 <dock:LayoutRoot>

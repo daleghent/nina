@@ -384,6 +384,9 @@
       <Component Win64="$(var.Win64)" Id="NINA.exe.config" Guid="0057b8fb-16be-40f1-b598-b1ad0efbee4f">
         <File Id="NINA.exe.config" Name="NINA.exe.config" Source="$(var.NINA_TargetDir)NINA.exe.config" />
       </Component>
+      <Component Win64="$(var.Win64)" Id="NINA.Core.dll" Guid="899847bc-65d8-4042-83ce-9d83003bbcfd">
+        <File Id="NINA.Core.dll" Name="NINA.Core.dll" Source="$(var.NINA_TargetDir)NINA.Core.dll" />
+      </Component>
       <Component Win64="$(var.Win64)" Id="CSharpFITS_v1.1.dll" Guid="f4a90435-8f39-400d-b009-e9ed6d4489ad">
         <File Id="CSharpFITS_v1.1.dll" Name="CSharpFITS_v1.1.dll" Source="$(var.NINA_TargetDir)CSharpFITS_v1.1.dll" />
       </Component>

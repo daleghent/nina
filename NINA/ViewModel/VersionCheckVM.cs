@@ -14,8 +14,8 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NINA.Core.Enum;
 using NINA.Utility;
-using NINA.Utility.Enum;
 using NINA.Utility.Http;
 using NINA.Utility.WindowService;
 using System;

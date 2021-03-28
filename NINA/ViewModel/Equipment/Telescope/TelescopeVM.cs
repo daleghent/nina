@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Linq;
 using System.Collections.Immutable;
+using NINA.Core.Enum;
 
 namespace NINA.ViewModel.Equipment.Telescope {
 
@@ -370,10 +371,10 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 );
                                 await WindowService.ShowDialog(syncVM, Locale.Loc.Instance["LblSyncLatLong"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
 
-                                if (syncVM.Mode == TelescopeLatLongSyncVM.LatLongSyncMode.NINA) {
+                                if (syncVM.Mode == LatLongSyncMode.NINA) {
                                     profileService.ChangeLatitude(Telescope.SiteLatitude);
                                     profileService.ChangeLongitude(Telescope.SiteLongitude);
-                                } else if (syncVM.Mode == TelescopeLatLongSyncVM.LatLongSyncMode.TELESCOPE) {
+                                } else if (syncVM.Mode == LatLongSyncMode.TELESCOPE) {
                                     Telescope.SiteLatitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
                                     Telescope.SiteLongitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
                                 }

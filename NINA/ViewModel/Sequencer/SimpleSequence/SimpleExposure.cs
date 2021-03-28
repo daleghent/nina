@@ -38,7 +38,7 @@ using System.Threading.Tasks;
 namespace NINA.ViewModel.Sequencer.SimpleSequence {
 
     [JsonObject(MemberSerialization.OptIn)]
-    public class SimpleExposure : SequentialContainer, IImmutableContainer {
+    public class SimpleExposure : SequentialContainer, ISimpleExposure {
         private bool enabled;
         private bool dither;
         private ISequencerFactory factory;
@@ -93,41 +93,41 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
             }
         }
 
-        public SwitchFilter GetSwitchFilter() {
+        public ISequenceItem GetSwitchFilter() {
             return Items[0] as SwitchFilter;
         }
 
-        public TakeExposure GetTakeExposure() {
+        public ISequenceItem GetTakeExposure() {
             return Items[1] as TakeExposure;
         }
 
-        public DitherAfterExposures GetDitherAfterExposures() {
+        public ISequenceTrigger GetDitherAfterExposures() {
             return ditherAfterExposures;
         }
 
-        public LoopCondition GetLoopCondition() {
+        public ISequenceCondition GetLoopCondition() {
             return Conditions[0] as LoopCondition;
         }
 
-        public SmartExposure TransformToSmartExposure() {
+        public IImmutableContainer TransformToSmartExposure() {
             var smart = factory.GetItem<SmartExposure>();
 
-            var filter = smart.GetSwitchFilter();
-            filter.Filter = this.GetSwitchFilter().Filter;
+            var filter = smart.GetSwitchFilter() as SwitchFilter;
+            filter.Filter = (this.GetSwitchFilter() as SwitchFilter).Filter;
 
             var exposure = smart.GetTakeExposure();
-            exposure.Binning = this.GetTakeExposure().Binning;
-            exposure.ImageType = this.GetTakeExposure().ImageType;
-            exposure.ExposureTime = this.GetTakeExposure().ExposureTime;
-            exposure.Gain = this.GetTakeExposure().Gain;
-            exposure.Offset = this.GetTakeExposure().Offset;
+            exposure.Binning = (this.GetTakeExposure() as TakeExposure).Binning;
+            exposure.ImageType = (this.GetTakeExposure() as TakeExposure).ImageType;
+            exposure.ExposureTime = (this.GetTakeExposure() as TakeExposure).ExposureTime;
+            exposure.Gain = (this.GetTakeExposure() as TakeExposure).Gain;
+            exposure.Offset = (this.GetTakeExposure() as TakeExposure).Offset;
 
             var dither = smart.GetDitherAfterExposures();
-            dither.AfterExposures = this.Dither ? this.GetDitherAfterExposures().AfterExposures : 0;
+            dither.AfterExposures = this.Dither ? (this.GetDitherAfterExposures() as DitherAfterExposures).AfterExposures : 0;
 
             var loop = smart.GetLoopCondition();
-            loop.CompletedIterations = this.GetLoopCondition().CompletedIterations;
-            loop.Iterations = this.GetLoopCondition().Iterations;
+            loop.CompletedIterations = (this.GetLoopCondition() as LoopCondition).CompletedIterations;
+            loop.Iterations = (this.GetLoopCondition() as LoopCondition).Iterations;
 
             return smart;
         }
@@ -142,8 +142,8 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
 
         public override bool Validate() {
             var issues = new List<string>();
-            var sw = GetSwitchFilter();
-            var te = GetTakeExposure();
+            var sw = GetSwitchFilter() as SwitchFilter;
+            var te = GetTakeExposure() as TakeExposure;
 
             bool valid = false;
 
@@ -157,8 +157,8 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
 
             if (Dither) {
                 var ditherAfterExposures = GetDitherAfterExposures();
-                valid = ditherAfterExposures.Validate() && valid;
-                issues.AddRange(ditherAfterExposures.Issues);
+                valid = (ditherAfterExposures as DitherAfterExposures).Validate() && valid;
+                issues.AddRange((ditherAfterExposures as DitherAfterExposures).Issues);
             }
 
             Issues = issues;
@@ -194,7 +194,7 @@ namespace NINA.ViewModel.Sequencer.SimpleSequence {
                 trigger.AttachNewParent(clone);
             }
 
-            clone.GetLoopCondition().PropertyChanged += LoopCondition_PropertyChanged;
+            (clone.GetLoopCondition() as LoopCondition).PropertyChanged += LoopCondition_PropertyChanged;
 
             return clone;
         }

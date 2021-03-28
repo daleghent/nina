@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Model.ImageData;
 using Nito.AsyncEx;
+using NINA.Core.Enum;
 
 namespace NINA.Model.MyCamera {
     public class QHYCamera : BaseINPC, ICamera {

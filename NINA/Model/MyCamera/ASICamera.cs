@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Model.ImageData;
 using NINA.Profile;
 using NINA.Utility;

@@ -17,6 +17,8 @@ using NINA.Profile;
 using System;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Collections.Generic;
+using NINA.Sequencer.Conditions;
 
 namespace NINA.ViewModel {
 

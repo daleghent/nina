@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Enum;
 
 namespace NINA.Model.MyCamera {
 

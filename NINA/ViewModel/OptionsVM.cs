@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.API.SGP;
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFocuser;
@@ -20,7 +21,6 @@ using NINA.Model.MyPlanetarium;
 using NINA.Plugin;
 using NINA.Profile;
 using NINA.Utility;
-using NINA.Utility.Enum;
 using NINA.Utility.Exceptions;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;

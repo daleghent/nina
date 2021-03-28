@@ -12,10 +12,10 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Model.MyCamera;
 using NINA.Model.MyFlatDevice;
 using NINA.Utility;
-using NINA.Utility.Enum;
 
 namespace NINA.ViewModel.FlatWizard {
 

@@ -48,8 +48,8 @@
                             <ContentPresenter
                                 Grid.Column="1"
                                 Margin="4,0,0,0"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 RecognizesAccessKey="True"
                                 SnapsToDevicePixels="True" />
                         </Grid>
@@ -147,6 +147,7 @@
                     Padding="{TemplateBinding Padding}"
                     HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                     VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                    Background="{TemplateBinding Background}"
                     Content="{TemplateBinding Header}"
                     ContentTemplate="{TemplateBinding HeaderTemplate}"
                     ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
@@ -158,7 +159,6 @@
                     FontStyle="{TemplateBinding FontStyle}"
                     FontWeight="{TemplateBinding FontWeight}"
                     Foreground="{TemplateBinding Foreground}"
-                    Background="{TemplateBinding Background}"
                     IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                     Style="{StaticResource ExpanderDownHeaderStyle}" />
                 <ContentPresenter

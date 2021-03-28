@@ -12,8 +12,8 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Profile;
-using NINA.Utility.Enum;
 
 namespace NINA.Model.MyPlanetarium {
 

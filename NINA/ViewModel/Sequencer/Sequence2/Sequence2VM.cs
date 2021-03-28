@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Accord.IO;
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.MyPlanetarium;
 using NINA.Profile;
@@ -265,7 +266,7 @@ namespace NINA.ViewModel.Sequencer {
             }
         }
 
-        public NINA.Sequencer.Sequencer Sequencer { get; private set; }
+        public NINA.Sequencer.ISequencer Sequencer { get; private set; }
 
         public ISequencerFactory SequencerFactory { get; }
 
@@ -342,7 +343,7 @@ namespace NINA.ViewModel.Sequencer {
 
         public void AddTargetToTargetList(IDeepSkyObjectContainer container) {
             var d = new DropIntoParameters(container);
-            d.Position = Utility.Enum.DropTargetEnum.Center;
+            d.Position = DropTargetEnum.Center;
             AddTargetToController(d);
         }
 

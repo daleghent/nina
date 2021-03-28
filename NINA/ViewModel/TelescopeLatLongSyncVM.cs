@@ -12,12 +12,13 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Utility;
 using System.Windows.Input;
 
 namespace NINA.ViewModel {
 
-    internal class TelescopeLatLongSyncVM {
+    internal partial class TelescopeLatLongSyncVM {
 
         public TelescopeLatLongSyncVM(
                 bool canTelescopeSync,
@@ -38,12 +39,6 @@ namespace NINA.ViewModel {
         public double NINALongitude { get; private set; }
         public double TelescopeLatitude { get; private set; }
         public double TelescopeLongitude { get; private set; }
-
-        public enum LatLongSyncMode {
-            NONE,
-            TELESCOPE,
-            NINA
-        }
 
         public LatLongSyncMode Mode { get; set; }
 

@@ -9,8 +9,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:vm="clr-namespace:NINA.ViewModel"
-    xmlns:profile="clr-namespace:NINA.Profile">
+    xmlns:profile="clr-namespace:NINA.Profile;assembly=NINA.Core"
+    xmlns:vm="clr-namespace:NINA.ViewModel">
 
     <profile:ProfileService x:Key="ProfileService" />
 </ResourceDictionary>

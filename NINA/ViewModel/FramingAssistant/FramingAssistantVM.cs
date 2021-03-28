@@ -41,6 +41,7 @@ using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem.Platesolving;
 using System.Linq;
 using System.Diagnostics;
+using NINA.Core.Enum;
 
 namespace NINA.ViewModel.FramingAssistant {
 
@@ -1037,7 +1038,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private bool prevCameraConnected = false;
-        private SkyMapAnnotator skyMapAnnotator;
+        private ISkyMapAnnotator skyMapAnnotator;
 
         public void UpdateDeviceInfo(CameraInfo cameraInfo) {
             if (cameraInfo != null) {
@@ -1112,7 +1113,7 @@ namespace NINA.ViewModel.FramingAssistant {
         public ICommand RefreshSkyMapAnnotationCommand { get; private set; }
         public ICommand MouseWheelCommand { get; private set; }
 
-        public SkyMapAnnotator SkyMapAnnotator {
+        public ISkyMapAnnotator SkyMapAnnotator {
             get => skyMapAnnotator;
             set {
                 skyMapAnnotator = value;

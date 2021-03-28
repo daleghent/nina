@@ -15,7 +15,6 @@
 using NINA.Model;
 using NINA.Model.MyGuider;
 using NINA.Utility;
-using NINA.Utility.Enum;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Profile;
 using NINA.ViewModel.Interfaces;
@@ -28,6 +27,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using NINA.Model.MyGuider.PHD2;
 using NINA.Utility.Notification;
+using NINA.Core.Enum;
 
 namespace NINA.ViewModel.Equipment.Guider {
 

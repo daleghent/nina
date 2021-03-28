@@ -14,9 +14,10 @@
     xmlns:flatdevice="clr-namespace:NINA.Model.MyFlatDevice"
     xmlns:focuser="clr-namespace:NINA.Model.MyFocuser"
     xmlns:fw="clr-namespace:NINA.ViewModel.FlatWizard"
+    xmlns:fwcore="clr-namespace:NINA.ViewModel.FlatWizard;assembly=NINA.Core"
     xmlns:guider="clr-namespace:NINA.Model.MyGuider"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale"
+    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
     xmlns:phd2="clr-namespace:NINA.Model.MyGuider.PHD2"
     xmlns:rotator="clr-namespace:NINA.Model.MyRotator"
     xmlns:safety="clr-namespace:NINA.Model.MySafetyMonitor"
@@ -59,7 +60,7 @@
         <view:FlatWizardUserPrompt />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type fw:FlatWizardFilterSettingsWrapper}">
+    <DataTemplate DataType="{x:Type fwcore:FlatWizardFilterSettingsWrapper}">
         <view:FlatWizardFilterSettingsWrapperView />
     </DataTemplate>
 

@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Database;
+using NINA.Core.Database;
 using NINA.Model;
 using NINA.Model.MyTelescope;
 using NINA.Utility;
@@ -36,7 +36,7 @@ using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
 namespace NINA.ViewModel.FramingAssistant {
 
-    public class SkyMapAnnotator : BaseINPC, ITelescopeConsumer {
+    public class SkyMapAnnotator : BaseINPC, ITelescopeConsumer, ISkyMapAnnotator {
         private readonly DatabaseInteraction dbInstance;
         public ViewportFoV ViewportFoV { get; private set; }
         private List<Model.Constellation> dbConstellations;

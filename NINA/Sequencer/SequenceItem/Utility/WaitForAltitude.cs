@@ -19,7 +19,7 @@ using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
 using NINA.Utility;
 using NINA.Utility.Astrometry;
-using NINA.Utility.Enum;
+using NINA.Core.Enum;
 using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.Collections.Generic;

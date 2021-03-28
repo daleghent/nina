@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.ImageData;
 using NINA.Model.MyCamera;
@@ -20,7 +21,6 @@ using NINA.Model.MyFilterWheel;
 using NINA.Model.MyFocuser;
 using NINA.Profile;
 using NINA.Utility;
-using NINA.Utility.Enum;
 using NINA.Utility.ImageAnalysis;
 using NINA.Utility.Mediator;
 using NINA.Utility.Mediator.Interfaces;
@@ -760,23 +760,23 @@ namespace NINA.ViewModel {
 
                 if (method == AFMethodEnum.STARHFR) {
                     var fitting = profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting;
-                    if (fitting == Utility.Enum.AFCurveFittingEnum.TRENDLINES) {
+                    if (fitting == AFCurveFittingEnum.TRENDLINES) {
                         return TrendlineFitting.Intersection;
                     }
 
-                    if (fitting == Utility.Enum.AFCurveFittingEnum.HYPERBOLIC) {
+                    if (fitting == AFCurveFittingEnum.HYPERBOLIC) {
                         return HyperbolicFitting.Minimum;
                     }
 
-                    if (fitting == Utility.Enum.AFCurveFittingEnum.PARABOLIC) {
+                    if (fitting == AFCurveFittingEnum.PARABOLIC) {
                         return QuadraticFitting.Minimum;
                     }
 
-                    if (fitting == Utility.Enum.AFCurveFittingEnum.TRENDPARABOLIC) {
+                    if (fitting == AFCurveFittingEnum.TRENDPARABOLIC) {
                         return new DataPoint(Math.Round((TrendlineFitting.Intersection.X + QuadraticFitting.Minimum.X) / 2), (TrendlineFitting.Intersection.Y + QuadraticFitting.Minimum.Y) / 2);
                     }
 
-                    if (fitting == Utility.Enum.AFCurveFittingEnum.TRENDHYPERBOLIC) {
+                    if (fitting == AFCurveFittingEnum.TRENDHYPERBOLIC) {
                         return new DataPoint(Math.Round((TrendlineFitting.Intersection.X + HyperbolicFitting.Minimum.X) / 2), (TrendlineFitting.Intersection.Y + HyperbolicFitting.Minimum.Y) / 2);
                     }
 

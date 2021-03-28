@@ -27,55 +27,6 @@ using System.Threading.Tasks;
 namespace NINA.Model.MyGuider.PHD2 {
 
     /// <summary>
-    /// This class is used to send over guide data from the service to the guider client.
-    /// </summary>
-    [DataContract]
-    internal class GuideInfo {
-
-        [DataMember]
-        public PHD2Guider.PhdEventGuideStep GuideStep { get; set; }
-
-        [DataMember]
-        public string State { get; set; }
-    }
-
-    /// <summary>
-    /// This class is used to send over camera data from the guider client to this service.
-    /// </summary>
-    [DataContract]
-    internal class ProfileCameraState {
-
-        [DataMember]
-        public DateTime ExposureEndTime { get; set; }
-
-        [DataMember]
-        public Guid InstanceId { get; set; }
-
-        [DataMember]
-        public bool IsExposing { get; set; }
-
-        [DataMember]
-        public double LastDownloadTime { get; set; }
-
-        [DataMember]
-        public double NextExposureTime { get; set; }
-    }
-
-    /// <summary>
-    /// This class holds information in the service about the connected client
-    /// </summary>
-    internal class SynchronizedClientInfo {
-        public DateTime ExposureEndTime { get; set; }
-        public Guid InstanceID { get; set; }
-        public bool IsAlive => DateTime.Now.Subtract(LastPing).TotalSeconds < 5;
-        public bool IsExposing { get; set; }
-        public bool IsWaitingForDither { get; set; }
-        public double LastDownloadTime { get; set; }
-        public DateTime LastPing { get; set; }
-        public double NextExposureTime { get; set; }
-    }
-
-    /// <summary>
     /// The basic flow of this class is as follows
     /// 1. It is instanced by a ChannelFactory
     /// 2. Initialize is called which passes an IGuider object of type PHD2Guider, replacing the standard constructor

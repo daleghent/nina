@@ -1,4 +1,4 @@
-﻿using NINA.Utility.Enum;
+﻿using NINA.Core.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;

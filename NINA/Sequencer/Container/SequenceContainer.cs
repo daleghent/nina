@@ -15,6 +15,7 @@
 using Accord.IO;
 using Dasync.Collections;
 using Newtonsoft.Json;
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container.ExecutionStrategy;
@@ -23,7 +24,6 @@ using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Validations;
 using NINA.Utility;
-using NINA.Utility.Enum;
 using NINA.ViewModel.Sequencer;
 using System;
 using System.Collections.Generic;

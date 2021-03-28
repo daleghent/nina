@@ -24,6 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Model.ImageData;
 using NINA.Utility.WindowService;
+using NINA.Core.Enum;
 
 namespace NINA.Model.MyCamera {
 

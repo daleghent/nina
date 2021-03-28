@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Sequencer;
+using NINA.Core.Enum;
 using System;
 using System.Globalization;
 using System.Windows;

@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Model.ImageData;
 using NINA.Model.MyTelescope;
 using NINA.Profile;
