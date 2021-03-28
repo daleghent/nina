@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Utility.SkySurvey {
+namespace NINA.Astrometry.SkySurvey {
 
     public abstract class MosaicSkySurvey : ISkySurvey {
         protected double MaxFoVPerImage = 60;

@@ -13,12 +13,13 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using NINA.Utility.Http;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Utility.SkySurvey {
+namespace NINA.Astrometry.SkySurvey {
 
     /// <summary>
     /// Sky Survey using the Hips2Fits service
@@ -56,7 +57,7 @@ namespace NINA.Utility.SkySurvey {
         }
 
         private async Task<BitmapSource> QueryImage(string url, Coordinates coordinates, double fieldOfView, CancellationToken ct, IProgress<int> progress) {
-            var request = new Http.HttpDownloadImageRequest(
+            var request = new HttpDownloadImageRequest(
                    url,
                    2000,
                    2000,

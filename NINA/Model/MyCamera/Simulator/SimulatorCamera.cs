@@ -20,7 +20,7 @@ using NINA.Utility;
 using NINA.Astrometry;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.RawConverter;
-using NINA.Utility.SkySurvey;
+using NINA.Astrometry.SkySurvey;
 using NINA.Utility.WindowService;
 using System;
 using System.Collections.Generic;

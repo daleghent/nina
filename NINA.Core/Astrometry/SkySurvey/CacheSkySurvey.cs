@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Astrometry;
+using NINA.Utility;
 using System;
 using System.Globalization;
 using System.IO;
@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 
-namespace NINA.Utility.SkySurvey {
+namespace NINA.Astrometry.SkySurvey {
 
     public class CacheSkySurvey {
         private string framingAssistantCachePath;
@@ -99,10 +99,10 @@ namespace NINA.Utility.SkySurvey {
                             Directory.CreateDirectory(framingAssistantCachePath);
                         }
 
-                        var sanitizedName = Utility.ReplaceAllInvalidFilenameChars(skySurveyImage.Name);
+                        var sanitizedName = Utility.Utility.ReplaceAllInvalidFilenameChars(skySurveyImage.Name);
                         var imgFilePath = Path.Combine(framingAssistantCachePath, sanitizedName + ".jpg");
 
-                        imgFilePath = Utility.GetUniqueFilePath(imgFilePath);
+                        imgFilePath = Utility.Utility.GetUniqueFilePath(imgFilePath);
                         var name = Path.GetFileNameWithoutExtension(imgFilePath);
 
                         using (var fileStream = new FileStream(imgFilePath, FileMode.Create)) {

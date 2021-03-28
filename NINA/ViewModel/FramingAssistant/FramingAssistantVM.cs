@@ -23,7 +23,7 @@ using NINA.Utility.Exceptions;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Profile;
-using NINA.Utility.SkySurvey;
+using NINA.Astrometry.SkySurvey;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

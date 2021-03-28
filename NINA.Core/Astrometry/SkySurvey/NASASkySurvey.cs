@@ -14,12 +14,12 @@
 
 using Accord.Imaging;
 using Accord.Statistics.Visualizations;
-using NINA.Astrometry;
+using NINA.Utility.Http;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Utility.SkySurvey {
+namespace NINA.Astrometry.SkySurvey {
 
     internal class NASASkySurvey : ISkySurvey {
         private const string Url = "https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl?Survey=dss2r&Position={0},{1}&Size={2}&Pixels={3}&Return=JPG";
@@ -30,7 +30,7 @@ namespace NINA.Utility.SkySurvey {
             fieldOfView = Math.Round(fieldOfView, 2);
             var pixels = Math.Ceiling(Math.Min(AstroUtil.ArcminToArcsec(fieldOfView) / arcSecPerPixel, 5000));
 
-            var request = new Http.HttpDownloadImageRequest(
+            var request = new HttpDownloadImageRequest(
                Url,
                coordinates.RADegrees,
                coordinates.Dec,
@@ -41,12 +41,12 @@ namespace NINA.Utility.SkySurvey {
             image.Freeze();
 
             using (var bmp = NINA.Utility.ImageAnalysis.ImageUtility.BitmapFromSource(image, System.Drawing.Imaging.PixelFormat.Format8bppIndexed)) {
-                bmp.Palette = ImageAnalysis.ImageUtility.GetGrayScalePalette();
+                bmp.Palette = Utility.ImageAnalysis.ImageUtility.GetGrayScalePalette();
                 ImageStatistics stats = new ImageStatistics(bmp);
                 Histogram gray = stats.GrayWithoutBlack;
                 new Accord.Imaging.Filters.BrightnessCorrection(Math.Min(115 - gray.Median, 0)).ApplyInPlace(bmp);
                 new Accord.Imaging.Filters.ContrastCorrection((int)Math.Round(115 - gray.StdDev * 2)).ApplyInPlace(bmp);
-                image = ImageAnalysis.ImageUtility.ConvertBitmap(bmp, System.Windows.Media.PixelFormats.Gray8);
+                image = Utility.ImageAnalysis.ImageUtility.ConvertBitmap(bmp, System.Windows.Media.PixelFormats.Gray8);
                 image.Freeze();
             }
 

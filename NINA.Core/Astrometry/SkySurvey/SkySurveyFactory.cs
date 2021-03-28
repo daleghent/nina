@@ -12,9 +12,10 @@
 
 #endregion "copyright"
 
+using NINA.Utility;
 using System.ComponentModel;
 
-namespace NINA.Utility.SkySurvey {
+namespace NINA.Astrometry.SkySurvey {
 
     public class SkySurveyFactory : ISkySurveyFactory {
 

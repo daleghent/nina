@@ -13,28 +13,18 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using NINA.Utility.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Utility.SkySurvey {
+namespace NINA.Astrometry.SkySurvey {
 
-    public class ESOSkySurvey : MosaicSkySurvey, ISkySurvey {
-
-        public ESOSkySurvey() {
-            MaxFoVPerImage = 120;
-        }
-
-        private const string Url = "http://archive.eso.org/dss/dss/image?ra={0}&dec={1}&x={2}&y={3}&mime-type=download-gif&Sky-Survey=DSS2&equinox=J2000&statsmode=VO";
+    internal class StsciSkySurvey : MosaicSkySurvey, ISkySurvey {
+        private const string Url = "https://archive.stsci.edu/cgi-bin/dss_search?format=GIF&r={0}&d={1}&e=J2000&w={2}&h={3}&v=1";
 
         protected override Task<BitmapSource> GetSingleImage(Coordinates coordinates, double fovW, double fovH, CancellationToken ct, int width, int height) {
-            var request = new Http.HttpDownloadImageRequest(
-                Url,
-                coordinates.RADegrees,
-                coordinates.Dec,
-                fovW,
-                fovH
-            );
+            var request = new HttpDownloadImageRequest(Url, coordinates.RADegrees, coordinates.Dec, fovW, fovH);
             return request.Request(ct);
         }
     }

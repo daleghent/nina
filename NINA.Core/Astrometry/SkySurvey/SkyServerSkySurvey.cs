@@ -12,12 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Astrometry;
+using NINA.Utility.Http;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Utility.SkySurvey {
+namespace NINA.Astrometry.SkySurvey {
 
     internal class SkyServerSkySurvey : ISkySurvey {
         private const string Url = "http://skyserver.sdss.org/dr14/SkyserverWS/ImgCutout/getjpeg?ra={0}&dec={1}&width={2}&height={3}&scale={4}";
@@ -31,7 +31,7 @@ namespace NINA.Utility.SkySurvey {
                 arcSecPerPixel = targetFoVInArcSec / 2048;
             }
 
-            var request = new Http.HttpDownloadImageRequest(
+            var request = new HttpDownloadImageRequest(
                 Url,
                 coordinates.RADegrees,
                 coordinates.Dec,

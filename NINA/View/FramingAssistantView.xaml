@@ -19,7 +19,7 @@
     xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
-    xmlns:survey="clr-namespace:NINA.Utility.SkySurvey;assembly=NINA.Core"
+    xmlns:survey="clr-namespace:NINA.Astrometry.SkySurvey;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Utility;assembly=NINA.Core"
     xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Name="UC"

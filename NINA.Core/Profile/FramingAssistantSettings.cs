@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.SkySurvey;
+using NINA.Astrometry.SkySurvey;
 using System;
 using System.Runtime.Serialization;
 

@@ -4,7 +4,7 @@ using System.Xml.Linq;
 using NINA.Model;
 using NINA.Model.MyCamera;
 using NINA.Utility;
-using NINA.Utility.SkySurvey;
+using NINA.Astrometry.SkySurvey;
 
 namespace NINA.ViewModel.FramingAssistant {
 
