@@ -1,3 +1,3 @@
 files:
-  - source: /NINA/Locale/Locale.resx
-    translation: /NINA/Locale/Locale.%locale%.resx
+  - source: /NINA.Core/Locale/Locale.resx
+    translation: /NINA.Core/Locale/Locale.%locale%.resx
