@@ -6,7 +6,9 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 # Version 1.10 HF3
 
 ## Improvements
+- The camera temperature setpoint is now displayed *only* when the cooler is active
 - A secondary HIPS2 server will be attempted if the main HIPS2 image server is not available
+- Canon cameras will now be kept awake to avoid camera auto-shutdown
 
 ### QHYCCD native driver improvements
 - <span style="color:red">**IMPORTANT:**</span> NINA 1.10 HF3 (and later) require *at least* [QHY System Pack](https://www.qhyccd.com/download.html) version 21.02.20.19 to be installed
@@ -20,6 +22,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The version of the QHY USB driver will be checked and a warning will be presented if it is not the minimum recommended version
 
 ## Bug fixes
+- Nikon: Cancelled or aborted exposures are now properly handled
 - FLI: Stop background flush prior to reading out the sensor
 - ASCOM camera: SensorType is no longer considered to be a mandadory property
 
