@@ -1100,19 +1100,19 @@
     <value>ダイレクトガイド時間</value>
   </data>
   <data name="LblDirectGuideDurationTooltip" xml:space="preserve">
-    <value>Typical pulse guide duration in seconds</value>
+    <value>一般的なパルスガイド時間（秒）</value>
   </data>
   <data name="LblRightAscensionGuideRate" xml:space="preserve">
-    <value>Right Ascension Guide Rate</value>
+    <value>RAガイドレート</value>
   </data>
   <data name="LblRightAscensionGuideRateTooltip" xml:space="preserve">
-    <value>Right Ascension guide rate in arcseconds per second</value>
+    <value>Raガイドレート(秒角/秒)</value>
   </data>
   <data name="LblDeclinationGuideRate" xml:space="preserve">
-    <value>Declination Guide Rate</value>
+    <value>DECガイドレート</value>
   </data>
   <data name="LblDeclinationGuideRateTooltip" xml:space="preserve">
-    <value>Declination guide rate in arcseconds per second</value>
+    <value>Decガイドレート(秒角/秒)</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
     <value>ダイレクトガイドが赤道儀に繋がりません。</value>
@@ -1157,7 +1157,7 @@
     <value>デザリングピクセル</value>
   </data>
   <data name="LblDitherPixelsDirectGuiderTooltip" xml:space="preserve">
-    <value>Typical number of pixels to dither by. Dithering follows a normal distribution centered at the target, which this value as the standard deviation. 67% of dithers will be within this distance</value>
+    <value>ディザリングする一般的なピクセル数。ディザリングは、ターゲットを中心とした正規分布に従い、この値を標準偏差とします。67% のディザリングはこの距離内に収まります。</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
     <value>赤経のみデザリグ</value>
@@ -1715,7 +1715,7 @@
     <value>HFR履歴</value>
   </data>
   <data name="LblHFRHistoryAllFilters" xml:space="preserve">
-    <value>All</value>
+    <value>すべて</value>
   </data>
   <data name="LblHFRPatternDescription" xml:space="preserve">
     <value>演算された画像のHFR(HFR検出がオンになっている必要があります）</value>
@@ -2370,7 +2370,7 @@
     <value>ピクセルスケール</value>
   </data>
   <data name="LblPixelScaleTooltip" xml:space="preserve">
-    <value>Pixel scale in arcseconds per pixel</value>
+    <value>秒角/ピクセル表示のピクセルスケール</value>
   </data>
   <data name="LblPixelSize" xml:space="preserve">
     <value>ピクセルサイズ</value>
@@ -2487,7 +2487,7 @@
     <value>位置</value>
   </data>
   <data name="LblRelativePosition" xml:space="preserve">
-    <value>Relative Position</value>
+    <value>相対位置</value>
   </data>
   <data name="LblClearGuidingCalibration" xml:space="preserve">
     <value>キャリブレーションをクリアする</value>
@@ -2902,7 +2902,7 @@
     <value>導入</value>
   </data>
   <data name="LblSlewCenter" xml:space="preserve">
-    <value>Slew and Center</value>
+    <value>導入と中心合わせ</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>導入時間</value>
@@ -3140,10 +3140,10 @@
     <value>望遠鏡からNINAへ</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
-    <value>RA Guide Rate</value>
+    <value>RAガイドレート</value>
   </data>
   <data name="LblTelescopeGuideRateDec" xml:space="preserve">
-    <value>Dec Guide Rate</value>
+    <value>Decガイドレート</value>
   </data>
   <data name="LblTempComp" xml:space="preserve">
     <value>温度補正</value>
@@ -3870,7 +3870,7 @@
     <value>フラットパネルの最小の明るさ</value>
   </data>
   <data name="LblWizardOperationMode" xml:space="preserve">
-    <value>Wizard Mode</value>
+    <value>ウィザード モード</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
     <value>方位角の許容値(度)</value>
@@ -4002,7 +4002,7 @@
     <value>望遠鏡の接続を解除しますか？</value>
   </data>
   <data name="LblTelescopeParkedWarning" xml:space="preserve">
-    <value>Telescope is parked. You may need to unpark your scope before slewing.</value>
+    <value>望遠鏡はパークされています。導入する前に、望遠鏡のパークを解除する必要があるかもしれません。</value>
   </data>
   <data name="LblSideOfPier" xml:space="preserve">
     <value>ピアサイド</value>
@@ -4041,7 +4041,7 @@
     <value>星の明るさが回復した後、ガイド再開に失敗しました</value>
   </data>
   <data name="LblSkyFlat" xml:space="preserve">
-    <value>Sky Flats</value>
+    <value>スカイフラット</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>ドーム同期エラー. 望遠鏡に追従できません,{0}</value>
@@ -4311,13 +4311,13 @@
     <value>フォーカサーを指定された絶対位置に移動します</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description" xml:space="preserve">
-    <value>Moves the focuser to the given relative position</value>
+    <value>フォーカサーを指定された相対位置に移動します</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
     <value>フォーカサーを移動</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name" xml:space="preserve">
-    <value>Move Focuser Relative</value>
+    <value>フォーカサーの相対位置への移動</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
     <value>ディザー信号をガイダーに送信します。</value>
@@ -4784,10 +4784,10 @@
     <value>ユーティリティ</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
-    <value>A condition that loops until the target sets below the given altitude and then stops the current instruction set</value>
+    <value>目標が指定された高度の下に来るまでに、命令セットをループさせてから停止させる条件</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Loop Until Altitude Sets Below</value>
+    <value>高度の下に来るまでループ</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>ドーム</value>
@@ -5110,7 +5110,7 @@
     <value>月の高度が指定したパラメータに一致したら待機します。</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Name" xml:space="preserve">
-    <value>Wait if Moon Altitude</value>
+    <value>月の高度が一致したら待機</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress" xml:space="preserve">
     <value>月の高度 ({0}° {1} {2}°) で待機中</value>
@@ -5119,7 +5119,7 @@
     <value>太陽の高度が指定したパラメータに一致したら待機します。</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Name" xml:space="preserve">
-    <value>Wait if Sun Altitude</value>
+    <value>太陽の高度が一致したら待機</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForSunAltitude_Progress" xml:space="preserve">
     <value>太陽の高度 ({0}° {1} {2}°) で待機中</value>
@@ -5155,183 +5155,198 @@
     <value>PHD2がロックしたガイド星を見失ったため、ディザリングは省略されました</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_DewHeater_Description" xml:space="preserve">
-    <value>Turns the camera's dew heater on or off</value>
+    <value>カメラの防露ヒーターをオンまたはオフにします</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_DewHeater_Name" xml:space="preserve">
-    <value>Dew Heater</value>
+    <value>結露防止ヒーター</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
-    <value>The connected camera lacks a dew heater that can be controlled</value>
+    <value>接続されたカメラに制御可能な防露ヒーターがありません</value>
   </data>
   <data name="LblAddTargetToTargetList" xml:space="preserve">
-    <value>Add Target To Target List</value>
+    <value>目標リストに目標を追加</value>
   </data>
   <data name="LblAddTargetToTargetListTooltip" xml:space="preserve">
-    <value>Adds the framed target to the target list section in the advanced sequencer sidebar for later use</value>
+    <value>設定された目標を、高度なシーケンサーサイドバーの目標リストセクションに追加します。これは後で使用することになります。</value>
   </data>
   <data name="Lbl_SequenceTargetController_SavedTarget" xml:space="preserve">
-    <value>Target {0} saved to target list</value>
+    <value>目標 {0} を目標 リストに保存しました</value>
   </data>
   <data name="LblCustomHorizon" xml:space="preserve">
-    <value>Custom Horizon</value>
+    <value>カスタム地平線</value>
   </data>
   <data name="LblCustomHorizonTooltip" xml:space="preserve">
-    <value>Load a custom horizon file to be used to determine local horizon limits and display the limit in the altitude charts.</value>
+    <value>カスタム地平線ファイルを読み込みます。このファイルは、観測地の地平線の限界を決定し、それを高度図に表示するために使われます。</value>
   </data>
   <data name="LblFailedToLoadCustomHorizon" xml:space="preserve">
-    <value>Failed to load custom horizon</value>
+    <value>カスタム地平線の読み込みに失敗しました</value>
   </data>
   <data name="LblPlanetariumLocationTooltip" xml:space="preserve">
-    <value>Get location from the Planetarium Software</value>
+    <value>プラネタリウムソフトから位置情報を取得</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description" xml:space="preserve">
-    <value>Waits until the target altitude is above the horizon. If a custom horizon is used, that altitude is used instead of 0</value>
+    <value>目標の高度が地平線の上になるまで待機します。カスタム地平線が使用される場合、その高度は 0 の代わりとして使用されます。</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Name" xml:space="preserve">
-    <value>Wait until above horizon</value>
+    <value>地平線の上に来るまで待機</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
-    <value>Waiting until target is above horizon. Target Altitude {0}° / Horizon Altitude {1}°</value>
+    <value>目標が地平線の上に来るまで待機中です。目標の高度 {0}° / 地平線の高度 {1}°</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
-    <value>A condition that loops while the target is above the horizon and then stops the current instruction set</value>
+    <value>目標が地平線の上にある間ループし、その後で現在の命令セットを停止する条件</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Name" xml:space="preserve">
-    <value>Loop While Altitude Above Horizon</value>
+    <value>高度が地平線の上にある間ループ</value>
   </data>
   <data name="LblUnreachableAltitudeForHorizon" xml:space="preserve">
-    <value>Target will never be above the horizon</value>
+    <value>目標は決して地平線の上に来ることはありません</value>
   </data>
   <data name="LblMovingRotatorToMechanicalPosition" xml:space="preserve">
-    <value>Moving rotator to mechanical position {0}</value>
+    <value>回転装置を機械的位置{0}に移動しています</value>
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
-    <value>Moving rotator to position {0}</value>
+    <value>回転装置を位置{0}に移動しています</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
-    <value>Looks up the trained exposure value for the specified parameters and takes dark flat exposures</value>
+    <value>指定されたパラメータで、算出された露出時間を調べ、ダークフラットを撮影します</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
-    <value>Trained Dark Flat Exposure</value>
+    <value>算出されたダークフラットの露出時間</value>
   </data>
   <data name="LblLeftside" xml:space="preserve">
-    <value>Left side</value>
+    <value>左側</value>
   </data>
   <data name="LblRightside" xml:space="preserve">
-    <value>Right side</value>
+    <value>右側</value>
   </data>
   <data name="LblStars" xml:space="preserve">
-    <value>Stars</value>
+    <value>星</value>
   </data>
   <data name="LblShowSnapshots" xml:space="preserve">
-    <value>Snapshots</value>
+    <value>スナップショット</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
-    <value>Slew, Center and Rotate</value>
+    <value>導入、中心合わせ、回転</value>
   </data>
   <data name="LblFindHomeToolTip" xml:space="preserve">
-    <value>Instructs the telescope to locate the home postion</value>
+    <value>望遠鏡にホームポジションを特定するよう指示します</value>
   </data>
   <data name="LblHome" xml:space="preserve">
-    <value>Home</value>
+    <value>ホーム</value>
   </data>
   <data name="LblTelescopeAtHomeParkedWarn" xml:space="preserve">
-    <value>Telescope is parked. Cannot locate the home position while parked.</value>
+    <value>望遠鏡はパークしています。パーク中はホームポジションを特定できません。</value>
   </data>
   <data name="LblTelescopeAtHomeWarn" xml:space="preserve">
-    <value>Telescope is already at the home position.</value>
+    <value>望遠鏡はすでにホームポジションにあります。</value>
   </data>
   <data name="LblTelescopeCannotFindHome" xml:space="preserve">
-    <value>The telescope does not have a home location capabiltiy.</value>
+    <value>望遠鏡にはホームポジションを特定する機能がありません。</value>
   </data>
   <data name="LblWaitingForTelescopeToFindHome" xml:space="preserve">
-    <value>Waiting for telescope to locate the home position</value>
+    <value>望遠鏡がホームポジションを特定するのを待っています</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_FindHome_Description" xml:space="preserve">
-    <value>Instructs the telescope to locate the home postion. This cannot be done if the telescope is parked</value>
+    <value>ホームポジションを特定するよう望遠鏡に指示します。望遠鏡がパークしている場合には行えません。</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_FindHome_Name" xml:space="preserve">
-    <value>Find Home</value>
+    <value>ホームポジションを見つける</value>
   </data>
   <data name="LblTelescopeNoFindHomeError" xml:space="preserve">
-    <value>The telescope has no home location capability</value>
+    <value>望遠鏡にはホームポジションを特定する機能がありません。</value>
   </data>
   <data name="LblTelescopeFindHomeCancelled" xml:space="preserve">
-    <value>Home locate operation cancelled</value>
+    <value>ホームポジションを特定する操作が中止されました</value>
   </data>
   <data name="LblTelescopeParkCancelled" xml:space="preserve">
-    <value>Park operation cancelled</value>
+    <value>パークの操作が中止されました</value>
   </data>
   <data name="LblEstimatedFlatPanelBrightness" xml:space="preserve">
-    <value>Estimated Flat Panel Brightness</value>
+    <value>フラットパネルの推定明るさ</value>
   </data>
   <data name="LblFlatExposureCalcContinueBrightness" xml:space="preserve">
-    <value>Mean ADU was {0}, starting Exposure Brightness calculation at {1}</value>
+    <value>算術平均ADUは{0} でした。露出時間演算を{1} でスタートしています</value>
   </data>
   <data name="LblFlatExposureCalcFinishedBrightness" xml:space="preserve">
-    <value>Mean ADU is {0} target Exposure Brightness is {1}</value>
+    <value>算術平均ADUは{0}　ターゲット露出時間は{1} です。</value>
   </data>
   <data name="LblFlatExposureCalcStartBrightness" xml:space="preserve">
-    <value>Starting Exposure Brightness calculation at {0}</value>
+    <value>{0} で露出時間演算を開始しています。</value>
   </data>
   <data name="LblFast" xml:space="preserve">
-    <value>Fast</value>
+    <value>速い</value>
   </data>
   <data name="LblSetButtonMoveRateToolTip" xml:space="preserve">
-    <value>Set the button slew rate in degrees per second</value>
+    <value>ボタンの導入速度を度/秒に設定する</value>
   </data>
   <data name="LblFirmwareVersion" xml:space="preserve">
-    <value>Firmware Version</value>
+    <value>ファームウェアのバージョン</value>
   </data>
   <data name="LblFPGAVersion" xml:space="preserve">
-    <value>FPGA Version</value>
+    <value>FPGAのバージョン</value>
   </data>
   <data name="LblSensorAirPressure" xml:space="preserve">
-    <value>Sensor air pressure</value>
+    <value>センサーの空気圧</value>
   </data>
   <data name="LblSensorHumidity" xml:space="preserve">
-    <value>Sensor humidity</value>
+    <value>センサーの湿度</value>
   </data>
   <data name="LblUnknownInstruction" xml:space="preserve">
-    <value>Unknown Instruction</value>
+    <value>未知の命令</value>
   </data>
   <data name="LblQhyccdDriverVersionWarning" xml:space="preserve">
-    <value>The installed QHYCCD USB driver's version of {0} is below the minimum recommeneded version of {1}. Driver updates are available on the QHYCCD website and are recommended for optimal camera function</value>
+    <value>インストールされたQHYCCDのUSBドライバーバージョン {0} は、 最小推奨バージョン{1} を下回っています。更新されたドライバーはQHYCCDウェブサイトから入手可能で、最適なカメラ機能実現のために必要なものです。</value>
   </data>
   <data name="LblSDKVersion" xml:space="preserve">
-    <value>SDK Version</value>
+    <value>SDK バージョン</value>
   </data>
   <data name="LblUsbDriverVersion" xml:space="preserve">
-    <value>USB Driver Version</value>
+    <value>USBドライバのバージョン</value>
   </data>
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
-    <value>Failed to change connection state of device.</value>
+    <value>デバイスの接続状態を変更できませんでした</value>
   </data>
   <data name="LblRms" xml:space="preserve">
-    <value>Rms</value>
+    <value>RMS</value>
   </data>
   <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
-    <value>The wizard did not find the right brightness level after 5 tries. Please try changing the step size or the tolerance.</value>
+    <value>ウィザードは5回の試行で正確な明るさレベルを見つけられませんでした。ステップサイズまたは許容誤差を変更してみてください。</value>
   </data>
   <data name="LblFlatDeviceSettleTime" xml:space="preserve">
-    <value>Settle Time</value>
+    <value>安定化時間</value>
   </data>
   <data name="LblInitializingSequencer" xml:space="preserve">
-    <value>Initializing Sequencer...</value>
+    <value>シーケンサーを初期化しています...</value>
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
-    <value>Initializing Layout</value>
+    <value>レイアウトの初期化</value>
   </data>
   <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
-    <value>Rotator</value>
+    <value>回転装置</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
-    <value>Moves the rotator to the mechanical angle</value>
+    <value>回転装置を機械的回転角度に移動します</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
-    <value>Move Rotator Mechanical</value>
+    <value>回転装置の機械的回転角度への移動</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
-    <value>Meridian</value>
+    <value>子午線</value>
+  </data>
+  <data name="LblAstronomicalDawn" xml:space="preserve">
+    <value>天文夜明け</value>
+  </data>
+  <data name="LblAstronomicalDusk" xml:space="preserve">
+    <value>天文夕暮れ</value>
+  </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>プラグイン</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>プラグインが見つかりません</value>
   </data>
 </root>

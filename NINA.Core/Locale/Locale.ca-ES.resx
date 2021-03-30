@@ -5350,4 +5350,19 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   <data name="LblMeridian" xml:space="preserve">
     <value>Meridià</value>
   </data>
+  <data name="LblAstronomicalDawn" xml:space="preserve">
+    <value>Alba Astronòmica</value>
+  </data>
+  <data name="LblAstronomicalDusk" xml:space="preserve">
+    <value>Capvespre Astronòmic</value>
+  </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>No s'han trobat Plugins</value>
+  </data>
 </root>

@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="LblAbbrEast" xml:space="preserve">
-    <value>E</value>
+    <value>Ö</value>
   </data>
   <data name="LblAbbrNorth" xml:space="preserve">
     <value>N</value>
@@ -127,16 +127,16 @@
     <value>S</value>
   </data>
   <data name="LblAbbrWest" xml:space="preserve">
-    <value>W</value>
+    <value>V</value>
   </data>
   <data name="LblAberrationInspector" xml:space="preserve">
     <value>Aberration Inspector</value>
   </data>
   <data name="LblActive" xml:space="preserve">
-    <value>Active</value>
+    <value>Aktiv</value>
   </data>
   <data name="LblActiveFilter" xml:space="preserve">
-    <value>Active filter</value>
+    <value>Valt filter</value>
   </data>
   <data name="LblActiveSequenceDetails" xml:space="preserve">
     <value>Active Sequence Details</value>
@@ -145,13 +145,13 @@
     <value>Add as Sequence Target</value>
   </data>
   <data name="LblAdvancedSettings" xml:space="preserve">
-    <value>Advanced Settings</value>
+    <value>Avancerade inställningar</value>
   </data>
   <data name="LblAFContrastDetection" xml:space="preserve">
     <value>Contrast Detection (Experimental)</value>
   </data>
   <data name="LblAFOnButFocuserNotConnected" xml:space="preserve">
-    <value>Auto-Focus is enabled, yet focuser is not connected</value>
+    <value>Autofokus är vald, men fokuserare är inte ansluten</value>
   </data>
   <data name="LblAFStarHFR" xml:space="preserve">
     <value>Star HFR</value>
@@ -160,7 +160,7 @@
     <value>After</value>
   </data>
   <data name="LblAFUseBrightestStars" xml:space="preserve">
-    <value>Use brightest n stars</value>
+    <value>Använd n ljusstarkaste stjärnorna</value>
   </data>
   <data name="LblAFUseBrightestStarsTooltip" xml:space="preserve">
     <value>Limit AF to brightest stars. 0 means no limit.</value>
@@ -178,13 +178,13 @@
     <value>Alternative UI Color Schema</value>
   </data>
   <data name="LblAltitude" xml:space="preserve">
-    <value>Altitude</value>
+    <value>Höjd</value>
   </data>
   <data name="LblAltitudeErrorMeasurement" xml:space="preserve">
-    <value>Measure Altitude Error</value>
+    <value>Mät höjdfel</value>
   </data>
   <data name="LblAltitudeMeasurement" xml:space="preserve">
-    <value>Altitude Measurement</value>
+    <value>Höjdmätning</value>
   </data>
   <data name="LblAltitudeMeasurementButtonTooltip" xml:space="preserve">
     <value>Measures Altitude Error by three steps.
@@ -194,25 +194,25 @@
 Using those two points the actual altitude error will be calculated and displayed</value>
   </data>
   <data name="LblAltitudeMeasurementDescription" xml:space="preserve">
-    <value>Point telescope east or west near declination 0 and near horizon.</value>
+    <value>Rikta teleskopet åt öst eller väst, nära nolldeklination och nära horisonten.</value>
   </data>
   <data name="LblAltitudeMeasurementSide" xml:space="preserve">
     <value>Altitude Measurement side</value>
   </data>
   <data name="LblAnnotateConstellationBoundaries" xml:space="preserve">
-    <value>Display Constellation Boundaries</value>
+    <value>Visa gränser för stjärnbilder</value>
   </data>
   <data name="LblAnnotateConstellations" xml:space="preserve">
-    <value>Display and annotate Constellations</value>
+    <value>Visa och beskriv stjärnbilder</value>
   </data>
   <data name="LblAnnotateDSO" xml:space="preserve">
-    <value>Annotate Deep Sky Objects</value>
+    <value>Beskriv Deep Sky Objects</value>
   </data>
   <data name="LblAnnotateGrid" xml:space="preserve">
-    <value>Display Grid</value>
+    <value>Visa rutnät</value>
   </data>
   <data name="LblAnnotateImage" xml:space="preserve">
-    <value>Annotate Image</value>
+    <value>Beskriv bild</value>
   </data>
   <data name="LblAnnotateImageTooltip" xml:space="preserve">
     <value>If checked and a star detection for an image is applied, the image will be annotated with the found stars and their respective HFR value</value>
@@ -221,10 +221,10 @@ Using those two points the actual altitude error will be calculated and displaye
     <value>API Key</value>
   </data>
   <data name="LblApparentMagnitude" xml:space="preserve">
-    <value>Apparent Magnitude</value>
+    <value>Skenbar magnitud</value>
   </data>
   <data name="LblApparentSize" xml:space="preserve">
-    <value>Apparent Size</value>
+    <value>Skenbar storlek</value>
   </data>
   <data name="LblApplicationInBreakMode" xml:space="preserve">
     <value>The Application ran into an unhandled exception and most likely has to shut down.
@@ -235,13 +235,13 @@ Should the Application try to recover from the error? (Can lead to unexpected be
     <value>Application start date with format YYYY-MM-DD</value>
   </data>
   <data name="LblArcmin" xml:space="preserve">
-    <value>arcmin</value>
+    <value>bågminut</value>
   </data>
   <data name="LblArcsec" xml:space="preserve">
-    <value>arcsec</value>
+    <value>bågsekund</value>
   </data>
   <data name="LblAscending" xml:space="preserve">
-    <value>Ascending</value>
+    <value>Stigande</value>
   </data>
   <data name="LblAscomInterOpDriverException" xml:space="preserve">
     <value>An ASCOM driver interop exception occurred. This is most likely caused by a mismatch between the driver being installed as {0} and N.I.N.A. being {1}. Please install the driver as {1}</value>
@@ -250,7 +250,7 @@ Should the Application try to recover from the error? (Can lead to unexpected be
     <value>Error retrieving image data from camera!</value>
   </data>
   <data name="LblASIOnly16BitMono" xml:space="preserve">
-    <value>Only 16 bit Monochrome sensors currently supported</value>
+    <value>Endast 16-bitars monokroma sensorer stöds för närvarande</value>
   </data>
   <data name="LblASPS" xml:space="preserve">
     <value>All Sky Plate Solver</value>
@@ -277,13 +277,13 @@ Should the Application try to recover from the error? (Can lead to unexpected be
     <value>ASTAP</value>
   </data>
   <data name="LblAstrometry" xml:space="preserve">
-    <value>Astrometry</value>
+    <value>Astrometri</value>
   </data>
   <data name="LblAstrometryNet" xml:space="preserve">
     <value>Astrometry.Net</value>
   </data>
   <data name="LblAutoFocus" xml:space="preserve">
-    <value>Auto Focus</value>
+    <value>Autofokus</value>
   </data>
   <data name="LblAutoFocusAfterHFRChange" xml:space="preserve">
     <value>After HFR increase</value>
@@ -298,7 +298,7 @@ Should the Application try to recover from the error? (Can lead to unexpected be
     <value>After elapsed Time</value>
   </data>
   <data name="LblAutoFocusAfterTemperatureChange" xml:space="preserve">
-    <value>After temperature change</value>
+    <value>Efter temperaturförändring</value>
   </data>
   <data name="LblAutoFocusAfterTemperatureChangeAmount" xml:space="preserve">
     <value>Temperature amount</value>
@@ -372,7 +372,7 @@ terrestrial objects or solar system objects as well, but can be sensitive to noi
     <value>Restoring original focus position</value>
   </data>
   <data name="LblAutoFocusSetTime" xml:space="preserve">
-    <value>Time</value>
+    <value>Tid</value>
   </data>
   <data name="LblAutoFocusSwitchingBackToFilter" xml:space="preserve">
     <value>Switching back to original filter</value>
@@ -412,7 +412,7 @@ Using those two points the actual azimuth error will be calculated and displayed
     <value>Point Telescope South near declination 0 and near meridian</value>
   </data>
   <data name="LblBackground" xml:space="preserve">
-    <value>Background</value>
+    <value>Bakgrund</value>
   </data>
   <data name="LblBacklashMeasurementException" xml:space="preserve">
     <value>An exception occurred while measuring backlash. Backlash values may be wrong.</value>
@@ -436,7 +436,7 @@ Using those two points the actual azimuth error will be calculated and displayed
     <value>Camera binning</value>
   </data>
   <data name="LblBitDepth" xml:space="preserve">
-    <value>Bit Depth</value>
+    <value>Bitdjup</value>
   </data>
   <data name="LblBitDepthADU" xml:space="preserve">
     <value>Bit Depth in ADU</value>
@@ -454,7 +454,7 @@ Dec: {1}</value>
     <value>Blind Solver</value>
   </data>
   <data name="LblBorder" xml:space="preserve">
-    <value>Border</value>
+    <value>Gräns</value>
   </data>
   <data name="LblBulbMode" xml:space="preserve">
     <value>Bulb Mode</value>
@@ -490,16 +490,16 @@ Dec: {1}</value>
     <value>Cam</value>
   </data>
   <data name="LblCamera" xml:space="preserve">
-    <value>Camera</value>
+    <value>Kamera</value>
   </data>
   <data name="LblCameraBattery" xml:space="preserve">
-    <value>Camera Battery</value>
+    <value>Kamerabatteri</value>
   </data>
   <data name="LblCameraBusy" xml:space="preserve">
     <value>Camera is busy</value>
   </data>
   <data name="LblCameraConnected" xml:space="preserve">
-    <value>Camera connected</value>
+    <value>Kamera ansluten</value>
   </data>
   <data name="LblCameraConnectionLost" xml:space="preserve">
     <value>Camera connection lost! Please reconnect camera!</value>
@@ -522,7 +522,7 @@ able to compensate for ambient temperature variations</value>
     <value>Camera is at {0}°C yet target temperature is {1}°C</value>
   </data>
   <data name="LblCameraOptions" xml:space="preserve">
-    <value>Camera Options</value>
+    <value>Kameraalternativ</value>
   </data>
   <data name="LblCameraParameter" xml:space="preserve">
     <value>Camera Parameter</value>
@@ -3190,7 +3190,7 @@ Should the values be synced?</value>
     <value>TIFF</value>
   </data>
   <data name="LblTime" xml:space="preserve">
-    <value>Time</value>
+    <value>Tid</value>
   </data>
   <data name="LblTimeFormatDescription" xml:space="preserve">
     <value>Time with format HH-mm-ss</value>
@@ -4773,7 +4773,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Sequencer</value>
   </data>
   <data name="Lbl_SequenceCategory_Camera" xml:space="preserve">
-    <value>Camera</value>
+    <value>Kamera</value>
   </data>
   <data name="Lbl_SequenceCategory_Condition" xml:space="preserve">
     <value>Loop Condition</value>
@@ -5358,5 +5358,20 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>Meridian</value>
+  </data>
+  <data name="LblAstronomicalDawn" xml:space="preserve">
+    <value>Astronomical Dawn</value>
+  </data>
+  <data name="LblAstronomicalDusk" xml:space="preserve">
+    <value>Astronomical Dusk</value>
+  </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>No Plugins found</value>
   </data>
 </root>

@@ -5349,4 +5349,19 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   <data name="LblMeridian" xml:space="preserve">
     <value>Poledník</value>
   </data>
+  <data name="LblAstronomicalDawn" xml:space="preserve">
+    <value>Astronomický Úsvit</value>
+  </data>
+  <data name="LblAstronomicalDusk" xml:space="preserve">
+    <value>Astronomický Soumrak</value>
+  </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>Pluginy</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>Žádné Pluginy nenalezeny</value>
+  </data>
 </root>

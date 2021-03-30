@@ -1496,7 +1496,7 @@ Quando il trigger è disattivato, l'applicazione si limita ad ignorare l'inizio 
     <value>Sconosciuto</value>
   </data>
   <data name="LblFlatDeviceUseWizardTrainedValues" xml:space="preserve">
-    <value>Use trained exposure times</value>
+    <value>Usa tempi di esposizione addestrati con la procedura guidata per flat</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
     <value>ADU media era {0}, inizio calcolo tempo esposizione a {1}</value>
@@ -2581,7 +2581,7 @@ HFR Calcolato: {2}
     <value>Lettura rumore in e</value>
   </data>
   <data name="LblReadoutMode" xml:space="preserve">
-    <value>Mode</value>
+    <value>Modo</value>
   </data>
   <data name="LblReadoutModeTooltip" xml:space="preserve">
     <value>A numeric value corresponding to your camera's readout mode</value>
@@ -3860,7 +3860,7 @@ Se è necessaria una durata più lunga, è possibile specificare una durata e l'
     <value>Sincronizzazione</value>
   </data>
   <data name="LblDomeSyncAzimuth" xml:space="preserve">
-    <value>Sync</value>
+    <value>Sincronizza</value>
   </data>
   <data name="LblDomeSyncAzimuthTooltip" xml:space="preserve">
     <value>Syncs the dome azimuth to the value calculated from the telescope direction and dome measurements</value>
@@ -4756,13 +4756,13 @@ Se la posizione sopra è un set di istruzioni che non è attualmente espanso, ve
     <value>Open Target Set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequence</value>
+    <value>Sequence Builder</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Simple Sequence Template</value>
+    <value>Sequence Builder Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Import Target</value>
@@ -5181,7 +5181,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Turns the camera's dew heater on or off</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_DewHeater_Name" xml:space="preserve">
-    <value>Dew Heater</value>
+    <value>Riscaldatore Umidita'</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
     <value>The connected camera lacks a dew heater that can be controlled</value>
@@ -5274,7 +5274,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Instructs the telescope to locate the home postion. This cannot be done if the telescope is parked</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_FindHome_Name" xml:space="preserve">
-    <value>Find Home</value>
+    <value>Trova la posizione Home</value>
   </data>
   <data name="LblTelescopeNoFindHomeError" xml:space="preserve">
     <value>The telescope has no home location capability</value>
@@ -5346,7 +5346,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Initializing Layout</value>
   </data>
   <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
-    <value>Rotator</value>
+    <value>Rotatore</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
     <value>Moves the rotator to the mechanical angle</value>
@@ -5356,5 +5356,20 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>Meridian</value>
+  </data>
+  <data name="LblAstronomicalDawn" xml:space="preserve">
+    <value>Astronomical Dawn</value>
+  </data>
+  <data name="LblAstronomicalDusk" xml:space="preserve">
+    <value>Astronomical Dusk</value>
+  </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>No Plugins found</value>
   </data>
 </root>

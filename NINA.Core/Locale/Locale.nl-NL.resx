@@ -1486,7 +1486,7 @@ Wanneer deze instelling is gedeactiveerd zal de applicatie de Start Belichting o
     <value>Onbekend</value>
   </data>
   <data name="LblFlatDeviceUseWizardTrainedValues" xml:space="preserve">
-    <value>Use trained exposure times</value>
+    <value>Gebruik de belichtingstijden die uit de flat wizard zijn voortgekomen</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
     <value>ADU gemiddelde was {0}, start de belichtingstijdberekening op {1}</value>
@@ -2571,7 +2571,7 @@ Verbonden cliënten: {0}
     <value>Read noise in e</value>
   </data>
   <data name="LblReadoutMode" xml:space="preserve">
-    <value>Mode</value>
+    <value>Modus</value>
   </data>
   <data name="LblReadoutModeTooltip" xml:space="preserve">
     <value>A numeric value corresponding to your camera's readout mode</value>
@@ -3400,7 +3400,7 @@ Sleep de rechthoek over het deel van de opname dat u fotograferen wilt en active
     <value>Power Port 4</value>
   </data>
   <data name="LblUPBV2PowerPorts" xml:space="preserve">
-    <value>Power</value>
+    <value>Vermogen</value>
   </data>
   <data name="LblUPBV2RelativeHumidity" xml:space="preserve">
     <value>Relative Humidity</value>
@@ -3835,10 +3835,10 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Shutter</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Close</value>
+    <value>Sluiten</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>Openen</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Rotate clockwise</value>
@@ -4150,7 +4150,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Delay</value>
   </data>
   <data name="LblTargetJ2000" xml:space="preserve">
-    <value>Target (J2000)</value>
+    <value>Doel (J2000)</value>
   </data>
   <data name="LblExecutingItemsInParallel" xml:space="preserve">
     <value>Executing items in parallel</value>
@@ -4294,7 +4294,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Warms the camera for the given duration</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
-    <value>Warm Camera</value>
+    <value>Camera opwarmen</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Description" xml:space="preserve">
     <value>Sets the readout mode for the camera</value>
@@ -4345,7 +4345,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Stops autoguiding</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StopGuiding_Name" xml:space="preserve">
-    <value>Stop Guiding</value>
+    <value>Stop guiding</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Description" xml:space="preserve">
     <value>Takes an exposure for the given duration, gain and offset</value>
@@ -4643,7 +4643,7 @@ Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assis
     <value>Start</value>
   </data>
   <data name="Lbl_SequenceContainer_TargetAreaContainer_Name" xml:space="preserve">
-    <value>Targets</value>
+    <value>Doelen</value>
   </data>
   <data name="LblStartupSequenceTemplate" xml:space="preserve">
     <value>Startup Sequence Template</value>
@@ -4725,7 +4725,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Target Imaging Instructions</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_Name" xml:space="preserve">
-    <value>Sequence</value>
+    <value>Volgorde</value>
   </data>
   <data name="Lbl_SequenceContainer_Duplicate_Tooltip" xml:space="preserve">
     <value>Creates a duplicate of current set and all its items and append it to the parent instruction set</value>
@@ -4746,13 +4746,13 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Open Target Set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequence</value>
+    <value>Sequence Builder</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Simple Sequence Template</value>
+    <value>Sequence Builder Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Import Target</value>
@@ -4782,10 +4782,10 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Guider</value>
   </data>
   <data name="Lbl_SequenceCategory_Switch" xml:space="preserve">
-    <value>Switch</value>
+    <value>Schakelaar</value>
   </data>
   <data name="Lbl_SequenceCategory_Telescope" xml:space="preserve">
-    <value>Telescope</value>
+    <value>Telescoop</value>
   </data>
   <data name="Lbl_SequenceCategory_Trigger" xml:space="preserve">
     <value>Trigger</value>
@@ -5171,7 +5171,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Turns the camera's dew heater on or off</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_DewHeater_Name" xml:space="preserve">
-    <value>Dew Heater</value>
+    <value>Verwarmingslint</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
     <value>The connected camera lacks a dew heater that can be controlled</value>
@@ -5346,5 +5346,20 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>Meridian</value>
+  </data>
+  <data name="LblAstronomicalDawn" xml:space="preserve">
+    <value>Astronomical Dawn</value>
+  </data>
+  <data name="LblAstronomicalDusk" xml:space="preserve">
+    <value>Astronomical Dusk</value>
+  </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>No Plugins found</value>
   </data>
 </root>
