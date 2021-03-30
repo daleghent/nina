@@ -19,7 +19,7 @@ using NINA.Utility;
 
 namespace NINA.ViewModel.FlatWizard {
 
-    internal class FlatWizardUserPromptVM : BaseINPC, IFlatWizardUserPromptVM {
+    public class FlatWizardUserPromptVM : BaseINPC, IFlatWizardUserPromptVM {
         public RelayCommand ResetAndContinueCommand { get; }
         public RelayCommand ContinueCommand { get; }
         public RelayCommand CancelCommand { get; }

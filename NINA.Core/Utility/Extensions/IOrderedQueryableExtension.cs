@@ -18,7 +18,7 @@ using System.Reflection;
 
 namespace NINA.Utility.Extensions {
 
-    internal static class IOrderedQueryableExtension {
+    public static class IOrderedQueryableExtension {
 
         public static IOrderedQueryable<TSource> OrderBy<TSource>(
             this IQueryable<TSource> query, string propertyName) {

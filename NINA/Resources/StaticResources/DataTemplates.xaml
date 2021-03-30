@@ -9,25 +9,26 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:camera="clr-namespace:NINA.Model.MyCamera"
+    xmlns:camera="clr-namespace:NINA.Model.MyCamera;assembly=NINA.Equipment"
     xmlns:equip="clr-namespace:NINA.View.Equipment"
-    xmlns:flatdevice="clr-namespace:NINA.Model.MyFlatDevice"
-    xmlns:focuser="clr-namespace:NINA.Model.MyFocuser"
+    xmlns:flatdevice="clr-namespace:NINA.Model.MyFlatDevice;assembly=NINA.Equipment"
+    xmlns:focuser="clr-namespace:NINA.Model.MyFocuser;assembly=NINA.Equipment"
     xmlns:fw="clr-namespace:NINA.ViewModel.FlatWizard"
-    xmlns:fwcore="clr-namespace:NINA.ViewModel.FlatWizard;assembly=NINA.Core"
-    xmlns:guider="clr-namespace:NINA.Model.MyGuider"
+    xmlns:fwcore="clr-namespace:NINA.ViewModel.FlatWizard;assembly=NINA.WPF.Base"
+    xmlns:guider="clr-namespace:NINA.Model.MyGuider;assembly=NINA.Equipment"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
-    xmlns:phd2="clr-namespace:NINA.Model.MyGuider.PHD2"
-    xmlns:rotator="clr-namespace:NINA.Model.MyRotator"
-    xmlns:safety="clr-namespace:NINA.Model.MySafetyMonitor"
-    xmlns:simulator="clr-namespace:NINA.Model.MyCamera.Simulator"
-    xmlns:switch="clr-namespace:NINA.Model.MySwitch"
+    xmlns:phd2="clr-namespace:NINA.Model.MyGuider.PHD2;assembly=NINA.Equipment"
+    xmlns:rotator="clr-namespace:NINA.Model.MyRotator;assembly=NINA.Equipment"
+    xmlns:safety="clr-namespace:NINA.Model.MySafetyMonitor;assembly=NINA.WPF.Base"
+    xmlns:simulator="clr-namespace:NINA.Model.MyCamera.Simulator;assembly=NINA.WPF.Base"
+    xmlns:switch="clr-namespace:NINA.Model.MySwitch;assembly=NINA.Equipment"
     xmlns:switchview="clr-namespace:NINA.View.Equipment.Switch"
     xmlns:view="clr-namespace:NINA.View"
-    xmlns:vm="clr-namespace:NINA.ViewModel">
+    xmlns:vm="clr-namespace:NINA.ViewModel"
+    xmlns:vm2="clr-namespace:NINA.ViewModel;assembly=NINA.WPF.Base">
 
-    <DataTemplate DataType="{x:Type vm:MeridianFlipVM}">
+    <DataTemplate DataType="{x:Type vm2:MeridianFlipVM}">
         <view:MeridianFlipView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type vm:VersionCheckVM}">
@@ -36,11 +37,11 @@
     <DataTemplate DataType="{x:Type vm:ProfileSelectVM}">
         <view:ProfileSelectView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type vm:AutoFocusVM}">
+    <DataTemplate DataType="{x:Type vm2:AutoFocusVM}">
         <view:AutoFocusChart />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:PlateSolvingStatusVM}">
+    <DataTemplate DataType="{x:Type vm2:PlateSolvingStatusVM}">
         <view:PlateSolveView />
     </DataTemplate>
 
@@ -52,7 +53,7 @@
         <view:AberrationInspectorView />
     </DataTemplate>
 
-    <DataTemplate DataType="{x:Type vm:TelescopeLatLongSyncVM}">
+    <DataTemplate DataType="{x:Type vm2:TelescopeLatLongSyncVM}">
         <equip:TelescopeLatLongSyncView />
     </DataTemplate>
 

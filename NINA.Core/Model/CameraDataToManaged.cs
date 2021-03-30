@@ -16,7 +16,7 @@ using System;
 
 namespace NINA.Model.MyCamera {
 
-    internal class CameraDataToManaged {
+    public class CameraDataToManaged {
         private int bitDepth;
         private IntPtr dataPtr;
         private int width;

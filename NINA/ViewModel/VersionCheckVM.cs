@@ -31,7 +31,7 @@ using System.Windows.Input;
 
 namespace NINA.ViewModel {
 
-    internal class VersionCheckVM : BaseINPC, IVersionCheckVM {
+    public class VersionCheckVM : BaseINPC, IVersionCheckVM {
         private const string BASEURL = "https://nighttime-imaging.eu/";
         private const string VERSIONSURL = BASEURL + "index.php/wp-json/nina/v1/versioninfo/{0}";
 

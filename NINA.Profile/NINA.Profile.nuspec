@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>$ID$</id>
+		<version>$Version$</version>
+		<title>$Title$</title>
+		<authors>$Author$</authors>
+		<owners>Stefan Berg</owners>
+		<projectUrl>https://nighttime-imaging.eu/</projectUrl>
+		<icon>images\ninasplash.png</icon>
+		<repository type="git" url="https://www.bitbucket.org/Isbeorn/nina.git" />
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>$Description$</description>
+		<releaseNotes/>
+		<copyright>$Copyright$</copyright>
+		<tags/>
+		<license type="expression">MPL-2.0</license>
+		<dependencies>
+			<group targetFramework=".NETFramework4.8" />
+		</dependencies>
+	</metadata>
+	<files>
+		<file src="../NINA/Resources/ninasplash.png" target="images\" />
+	</files>
+</package>

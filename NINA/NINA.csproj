@@ -357,215 +357,16 @@
       <DependentUpon>AstrometryIndexDownloader.xaml</DependentUpon>
     </Compile>
     <Compile Include="AstrometryIndexDownloader\AstrometryIndexDownloaderVM.cs" />
-    <Compile Include="Model\AscomDevice.cs" />
-    <Compile Include="Model\MyCamera\ASICameras.cs" />
-    <Compile Include="Model\MyCamera\FileCamera.cs" />
-    <Compile Include="Model\MyCamera\FLICamera.cs" />
-    <Compile Include="Model\MyCamera\PersistSettingsCameraDecorator.cs" />
-    <Compile Include="Model\MyCamera\Simulator\ImageSettings.cs" />
-    <Compile Include="Model\MyCamera\Simulator\RandomSettings.cs" />
-    <Compile Include="Model\MyCamera\Simulator\Settings.cs" />
-    <Compile Include="Model\MyCamera\Simulator\SkySurveySettings.cs" />
-    <Compile Include="Model\MyCamera\ToupTekAlike\AltairSDKWrapper.cs" />
-    <Compile Include="Model\MyCamera\ToupTekAlike\OmegonSDKWrapper.cs" />
-    <Compile Include="Model\MyCamera\ToupTekAlike\RisingcamSDKWrapper.cs" />
-    <Compile Include="Model\MyCamera\ToupTekAlike\ToupTekSDKWrapper.cs" />
-    <Compile Include="Model\MyFilterWheel\AtikFilterWheel.cs" />
-    <Compile Include="Model\MyFilterWheel\AtikFilterWheelBase.cs" />
-    <Compile Include="Model\MyFilterWheel\AtikInternalFilterWheel.cs" />
-    <Compile Include="Model\MyDome\AscomDome.cs" />
-    <Compile Include="Model\MyFilterWheel\QHYFilterWheel.cs" />
-    <Compile Include="Model\MyFilterWheel\FLIFilterWheel.cs" />
-    <Compile Include="Model\MyFilterWheel\ASIFilterWheel.cs" />
-    <Compile Include="Model\MyFlatDevice\AllProSpikeAFlat.cs" />
-    <Compile Include="Model\MyFlatDevice\AscomCoverCalibrator.cs" />
-    <Compile Include="Model\MyFocuser\UltimatePowerboxV2.cs" />
-    <Compile Include="Model\MyFlatDevice\ArteskyFlatBox.cs" />
-    <Compile Include="Model\MyPlanetarium\SkytechX.cs" />
-    <Compile Include="Model\MySafetyMonitor\SafetyMonitorSimulator.cs" />
-    <Compile Include="Model\MySafetyMonitor\SafetyMonitorSimulatorSetup.xaml.cs">
-      <DependentUpon>SafetyMonitorSimulatorSetup.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Model\MySwitch\DummySwitch.cs" />
-    <Compile Include="Model\MyWeatherData\TheWeatherCompany.cs" />
-    <Compile Include="Model\MyPlanetarium\C2A.cs" />
-    <Compile Include="Model\MyGuider\MetaGuideGuider.cs" />
-    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideListener.cs" />
-    <Compile Include="Model\MyGuider\MetaGuide\CalibrationState.cs" />
-    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideBaseMsg.cs" />
-    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideCalibrationInfoMsg.cs" />
-    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideCameraMsg.cs" />
-    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideGuideMsg.cs" />
-    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideGuideParamsMsg.cs" />
-    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideMountMsg.cs" />
-    <Compile Include="Model\MyGuider\MetaGuide\MetaGuideStatusMsg.cs" />
-    <Compile Include="Model\MySafetyMonitor\AscomSafetyMonitor.cs" />
-    <Compile Include="Model\MyWeatherData\UltimatePowerboxV2.cs" />
-    <Compile Include="Model\MyFlatDevice\PegasusAstroFlatMaster.cs" />
-    <Compile Include="Model\MyWeatherData\WeatherUnderground.cs" />
-    <Compile Include="MyMessageBox\MyMessageBoxVM.cs" />
-    <Compile Include="PlateSolving\CenteringSolver.cs" />
-    <Compile Include="PlateSolving\ImageSolver.cs" />
-    <Compile Include="PlateSolving\CaptureSolver.cs" />
-    <Compile Include="Plugin\PluginProvider.cs" />
-    <Compile Include="Sequencer\Conditions\AboveHorizonCondition.cs" />
-    <Compile Include="Sequencer\Conditions\MoonIlluminationCondition.cs" />
-    <Compile Include="Sequencer\Conditions\SunAltitudeCondition.cs" />
-    <Compile Include="Sequencer\Conditions\MoonAltitudeCondition.cs" />
-    <Compile Include="Sequencer\Conditions\AltitudeCondition.cs" />
-    <Compile Include="Sequencer\Conditions\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\Conditions\LoopCondition.cs" />
-    <Compile Include="Sequencer\Conditions\SafetyMonitorCondition.cs" />
-    <Compile Include="Sequencer\Conditions\SequenceCondition.cs" />
-    <Compile Include="Sequencer\Conditions\TimeCondition.cs" />
-    <Compile Include="Sequencer\Conditions\TimeSpanCondition.cs" />
-    <Compile Include="Sequencer\Container\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\Container\ExecutionStrategy\ParallelStrategy.cs" />
-    <Compile Include="Sequencer\Container\ExecutionStrategy\SequentialStrategy.cs" />
-    <Compile Include="Sequencer\Container\DeepSkyObjectContainer.cs" />
-    <Compile Include="Sequencer\Container\ParallelContainer.cs" />
-    <Compile Include="Sequencer\Container\StartAreaContainer.cs" />
-    <Compile Include="Sequencer\Container\TargetAreaContainer.cs" />
-    <Compile Include="Sequencer\Container\SequentialContainer.cs" />
-    <Compile Include="Sequencer\Container\EndAreaContainer.cs" />
-    <Compile Include="Sequencer\SequenceItem\Autofocus\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\Camera\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\Camera\SetReadoutMode.cs" />
-    <Compile Include="Sequencer\SequenceItem\Camera\DewHeater.cs" />
-    <Compile Include="Sequencer\SequenceItem\Dome\CloseDomeShutter.cs" />
-    <Compile Include="Sequencer\SequenceItem\Dome\EnableDomeSynchronization.cs" />
-    <Compile Include="Sequencer\SequenceItem\Dome\OpenDomeShutter.cs" />
-    <Compile Include="Sequencer\SequenceItem\Dome\ParkDome.cs" />
-    <Compile Include="Sequencer\SequenceItem\FilterWheel\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\FlatDevice\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\FlatDevice\OpenCover.cs" />
-    <Compile Include="Sequencer\SequenceItem\FlatDevice\SetBrightness.cs" />
-    <Compile Include="Sequencer\SequenceItem\FlatDevice\ToggleLight.cs" />
-    <Compile Include="Sequencer\SequenceItem\FlatDevice\TrainedDarkFlatExposure.cs" />
-    <Compile Include="Sequencer\SequenceItem\FlatDevice\TrainedFlatExposure.cs" />
-    <Compile Include="Sequencer\SequenceItem\Focuser\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\Focuser\MoveFocuserRelative.cs" />
-    <Compile Include="Sequencer\SequenceItem\Focuser\MoveFocuserByTemperature.cs" />
-    <Compile Include="Sequencer\SequenceItem\Guider\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\Imaging\SmartExposure.cs" />
-    <Compile Include="Sequencer\SequenceItem\Imaging\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\Imaging\TakeManyExposures.cs" />
-    <Compile Include="Sequencer\SequenceItem\Platesolving\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\Platesolving\SolveAndSync.cs" />
-    <Compile Include="Sequencer\SequenceItem\Rotator\DataTemplates.xaml.cs">
-      <DependentUpon>DataTemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\Rotator\MoveRotatorMechanical.cs" />
-    <Compile Include="Sequencer\SequenceItem\Switch\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\Switch\SetSwitchValue.cs" />
-    <Compile Include="Sequencer\SequenceItem\Telescope\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\Telescope\FindHome.cs" />
-    <Compile Include="Sequencer\SequenceItem\Telescope\SetTracking.cs" />
-    <Compile Include="Sequencer\SequenceItem\UnknownSequenceItem.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\SequenceItem\Utility\WaitForSunAltitude.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\WaitForMoonAltitude.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\WaitUntilAboveHorizon.cs" />
-    <Compile Include="Sequencer\Serialization\JsonCreationConverter.cs" />
-    <Compile Include="Sequencer\Serialization\SequenceConditionCreationConverter.cs" />
-    <Compile Include="Sequencer\Serialization\SequenceContainerCreationConverter.cs" />
-    <Compile Include="Sequencer\Serialization\SequenceDateTimeProviderCreationConverter.cs" />
-    <Compile Include="Sequencer\Serialization\SequenceItemCreationConverter.cs" />
-    <Compile Include="Sequencer\SequenceItem\Autofocus\RunAutofocus.cs" />
-    <Compile Include="Sequencer\SequenceItem\Camera\CoolCamera.cs" />
-    <Compile Include="Sequencer\SequenceItem\Camera\WarmCamera.cs" />
-    <Compile Include="Sequencer\Container\SequenceRootContainer.cs" />
-    <Compile Include="Sequencer\SequenceItem\FilterWheel\SwitchFilter.cs" />
-    <Compile Include="Sequencer\SequenceItem\FlatDevice\CloseCover.cs" />
-    <Compile Include="Sequencer\SequenceItem\Focuser\MoveFocuserAbsolute.cs" />
-    <Compile Include="Sequencer\SequenceItem\Guider\Dither.cs" />
-    <Compile Include="Sequencer\SequenceItem\Guider\StartGuiding.cs" />
-    <Compile Include="Sequencer\SequenceItem\Guider\StopGuiding.cs" />
-    <Compile Include="Sequencer\SequenceItem\Imaging\TakeExposure.cs" />
-    <Compile Include="Sequencer\Container\SequenceContainer.cs" />
-    <Compile Include="Sequencer\SequenceItem\Platesolving\CenterAndRotate.cs" />
-    <Compile Include="Sequencer\SequenceItem\Telescope\ParkScope.cs" />
-    <Compile Include="Sequencer\SequenceItem\Telescope\UnparkScope.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\ExternalScript.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\MessageBox.cs" />
-    <Compile Include="Sequencer\SequencerFactory.cs" />
-    <Compile Include="Sequencer\Serialization\SequenceJsonConverter.cs" />
-    <Compile Include="Sequencer\Serialization\SequenceRootContainerCreationConverter.cs" />
-    <Compile Include="Sequencer\Serialization\SequenceTriggerCreationConverter.cs" />
-    <Compile Include="Sequencer\Utility\DateTimeProvider\MeridianProvider.cs" />
-    <Compile Include="Sequencer\Utility\DateTimeProvider\NauticalDawnProvider.cs" />
-    <Compile Include="Sequencer\Utility\DateTimeProvider\NauticalDuskProvider.cs" />
-    <Compile Include="Sequencer\Utility\QHYCameras.cs" />
-    <Compile Include="Utility\ASCOMInteraction.cs" />
+    <Compile Include="Interfaces\IMainWindowVM.cs" />
     <Compile Include="Utility\IoCBindings.cs" />
     <Compile Include="Utility\PaneTemplateSelector.cs" />
     <Compile Include="Utility\ProjectVersion.cs" />
-    <Compile Include="ViewModel\AutoFocusVMFactory.cs" />
     <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
     <Compile Include="ViewModel\ImageControlVM.cs" />
     <Compile Include="ViewModel\Plugins\PluginOptionsDataTemplateSelector.cs" />
     <Compile Include="ViewModel\Plugins\PluginOptionsVM.cs" />
     <Compile Include="ViewModel\Sequencer\SequenceNavigationVM.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleDSOContainer.cs" />
-    <Compile Include="Sequencer\TargetController.cs" />
-    <Compile Include="Sequencer\TemplateController.cs" />
-    <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterExposures.cs" />
-    <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterFilterChange.cs" />
-    <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterHFRIncreaseTrigger.cs" />
-    <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterTemperatureChangeTrigger.cs" />
-    <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterTimeTrigger.cs" />
-    <Compile Include="Sequencer\Trigger\Datatemplates.xaml.cs">
-      <DependentUpon>Datatemplates.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Sequencer\Trigger\Guider\DitherAfterExposures.cs" />
-    <Compile Include="Sequencer\Sequencer.cs" />
-    <Compile Include="Sequencer\SequenceItem\Platesolving\Center.cs" />
-    <Compile Include="Sequencer\SequenceItem\Telescope\SlewScopeToAltAz.cs" />
-    <Compile Include="Sequencer\SequenceItem\Telescope\SlewScopeToRaDec.cs" />
-    <Compile Include="Sequencer\Trigger\MeridianFlip\MeridianFlipTrigger.cs" />
-    <Compile Include="Sequencer\Trigger\SequenceTrigger.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\Annotation.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\WaitForAltitude.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\WaitForTime.cs" />
-    <Compile Include="Sequencer\SequenceItem\Utility\WaitForTimeSpan.cs" />
-    <Compile Include="Sequencer\Utility\DateTimeProvider\DawnProvider.cs" />
-    <Compile Include="Sequencer\Utility\DateTimeProvider\DuskProvider.cs" />
-    <Compile Include="Sequencer\Utility\DateTimeProvider\SunriseProvider.cs" />
-    <Compile Include="Sequencer\Utility\DateTimeProvider\SunsetProvider.cs" />
-    <Compile Include="Sequencer\Utility\DateTimeProvider\TimeProvider.cs" />
-    <Compile Include="Sequencer\Utility\ItemUtility.cs" />
-    <Compile Include="Model\MySwitch\PegasusAstro\DataProviderSwitch.cs" />
-    <Compile Include="Model\MySwitch\PegasusAstro\PegasusAstroSwitch.cs" />
-    <Compile Include="Model\MySwitch\PegasusAstro\BinarySwitches.cs" />
-    <Compile Include="Model\MySwitch\PegasusAstro\ContinuousSwitches.cs" />
-    <Compile Include="Model\MySwitch\PegasusAstro\UltimatePowerBoxV2.cs" />
-    <Compile Include="ViewModel\Equipment\Dome\DomeFollower.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleEndContainer.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleExposure.cs" />
@@ -583,68 +384,13 @@
     <Compile Include="View\Options\PluginsView.xaml.cs">
       <DependentUpon>PluginsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\Sequence2\Converter\SequenceEntityStatusToVisibilityConverter.cs" />
-    <Compile Include="Model\MyFlatDevice\AlnitakFlatDevice.cs" />
-    <Compile Include="Model\MyGuider\DirectGuider.cs" />
-    <Compile Include="Model\MyGuider\MGENGuider.cs" />
-    <Compile Include="Model\MyGuider\PHD2\SynchronizedPHD2Guider.cs" />
-    <Compile Include="Model\MyGuider\PHD2\SynchronizedPHD2GuiderService.cs" />
-    <Compile Include="Model\MyPlanetarium\CartesDuCiel.cs" />
-    <Compile Include="Model\MyPlanetarium\PlanetariumFactory.cs" />
-    <Compile Include="Model\MyPlanetarium\HNSKY.cs" />
-    <Compile Include="Model\MyPlanetarium\TheSkyX.cs" />
-    <Compile Include="Model\MySwitch\Ascom\AscomV1Switch.cs" />
-    <Compile Include="Model\MySwitch\Ascom\AscomWritableV1Switch.cs" />
-    <Compile Include="Model\MyWeatherData\AscomObservingConditions.cs" />
-    <Compile Include="Model\MyWeatherData\OpenWeatherMap.cs" />
-    <Compile Include="PlateSolving\Solvers\BaseSolver.cs" />
-    <Compile Include="PlateSolving\PlateSolveImageProperties.cs" />
-    <Compile Include="Model\MyPlanetarium\Stellarium.cs" />
-    <Compile Include="Model\MySwitch\Ascom\AscomSwitch.cs" />
-    <Compile Include="Model\MySwitch\Ascom\AscomSwitchHub.cs" />
-    <Compile Include="Model\MySwitch\Ascom\AscomWritableSwitch.cs" />
-    <Compile Include="Model\MySwitch\Eagle\Eagle.cs" />
-    <Compile Include="Model\MySwitch\Eagle\Eagle12VPower.cs" />
-    <Compile Include="Model\MySwitch\Eagle\EagleInputPower.cs" />
-    <Compile Include="Model\MySwitch\Eagle\EagleSwitch.cs" />
-    <Compile Include="Model\MySwitch\Eagle\EagleUSBSwitch.cs" />
-    <Compile Include="Model\MySwitch\Eagle\EagleVariablePower.cs" />
-    <Compile Include="Model\MySwitch\Eagle\EagleWritableSwitch.cs" />
-    <Compile Include="Model\MyGPS\NMEAGps.cs" />
-    <Compile Include="PlateSolving\Solvers\ASTAPSolver.cs" />
-    <Compile Include="PlateSolving\Solvers\CLISolver.cs" />
-    <Compile Include="Model\MyFlatDevice\AlnitakFlipFlatSimulator.cs" />
     <Compile Include="ViewModel\ApplicationDeviceConnectionVM.cs" />
-    <Compile Include="ViewModel\AutoFocus\FocusPointComparer.cs" />
-    <Compile Include="ViewModel\AutoFocus\MeasureAndError.cs" />
-    <Compile Include="ViewModel\AutoFocus\PlotPointComparer.cs" />
     <Compile Include="ViewModel\EquipmentVM.cs" />
-    <Compile Include="ViewModel\Equipment\Camera\CameraChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\Dome\DomeChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\Dome\DomeVM.cs" />
-    <Compile Include="ViewModel\Equipment\FilterWheel\FilterWheelChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceFactory.cs" />
-    <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceVM.cs" />
-    <Compile Include="ViewModel\Equipment\FlatDevice\FlatWizardValues.cs" />
-    <Compile Include="ViewModel\Equipment\Focuser\AbsoluteBacklashCompensationDecorator.cs" />
-    <Compile Include="ViewModel\Equipment\Focuser\FocuserChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\Focuser\FocuserDecorator.cs" />
-    <Compile Include="ViewModel\Equipment\Focuser\FocuserFactory.cs" />
-    <Compile Include="ViewModel\Equipment\Focuser\OvershootBacklashCompensationDecorator.cs" />
-    <Compile Include="ViewModel\Equipment\Rotator\RotatorChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\SafetyMonitor\SafetyMonitorChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\SafetyMonitor\SafetyMonitorVM.cs" />
-    <Compile Include="ViewModel\Equipment\Telescope\TelescopeChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\Guider\GuiderChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataVM.cs" />
     <Compile Include="ViewModel\ImageGeometryProvider.cs" />
     <Compile Include="ViewModel\ImageSaveController.cs" />
     <Compile Include="ViewModel\Imaging\AnchorableSnapshotVM.cs" />
     <Compile Include="ViewModel\Imaging\ExposureTimeRecommendationVM.cs" />
     <Compile Include="ViewModel\Imaging\AnchorablePlateSolverVM.cs" />
-    <Compile Include="ViewModel\PlateSolvingStatusVM.cs" />
     <Compile Include="ViewModel\Sequencer\Sequence2\Sequence2VM.cs" />
     <Compile Include="CompositionRoot.cs" />
     <Compile Include="View\AboutView.xaml.cs">
@@ -728,76 +474,32 @@
       <DependentUpon>EagleSetupView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Equipment\Switch\SwitchHubTemplateSelector.cs" />
-    <Compile Include="ViewModel\Equipment\Switch\SwitchChooserVM.cs" />
-    <Compile Include="ViewModel\Equipment\Switch\SwitchVM.cs" />
-    <Compile Include="Model\DummyDevice.cs" />
-    <Compile Include="Model\GuideStepsHistory.cs" />
-    <Compile Include="Model\MyCamera\ToupTekAlikeCamera.cs" />
-    <Compile Include="Model\MyCamera\AtikCamera.cs" />
-    <Compile Include="Model\MyCamera\EDCamera.cs" />
-    <Compile Include="Model\MyCamera\NikonCamera.cs" />
-    <Compile Include="Model\MyCamera\Simulator\SimulatorCamera.cs" />
-    <Compile Include="Model\MyCamera\QHYCamera.cs" />
-    <Compile Include="Model\MyGuider\DummyGuider.cs" />
     <Compile Include="ViewModel\DeepSkyObjectSearchVM.cs" />
     <Compile Include="ViewModel\FocusTargetsVM.cs" />
-    <Compile Include="Model\MyFilterWheel\ManualFilterWheel.cs" />
-    <Compile Include="Model\MyFocuser\AscomFocuser.cs" />
-    <Compile Include="Model\MyGuider\PHD2\PHD2Guider.cs" />
-    <Compile Include="Model\MyRotator\AscomRotator.cs" />
-    <Compile Include="Model\MyRotator\ManualRotator.cs" />
-    <Compile Include="Model\MyCamera\AscomCamera.cs" />
-    <Compile Include="Model\MyCamera\ASICamera.cs" />
-    <Compile Include="MyMessageBox\MyMessageBox.cs" />
-    <Compile Include="MyMessageBox\MyMessageBoxView.xaml.cs">
-      <DependentUpon>MyMessageBoxView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="PlateSolving\Solvers\AllSkyPlateSolver.cs" />
-    <Compile Include="PlateSolving\Solvers\Platesolve2Solver.cs" />
-    <Compile Include="PlateSolving\PlateSolverFactory.cs" />
-    <Compile Include="Model\MyFilterWheel\AscomFilterWheel.cs" />
-    <Compile Include="Model\MyTelescope\AscomTelescope.cs" />
     <Compile Include="ViewModel\AberrationInspectorVM.cs" />
     <Compile Include="ViewModel\ApplicationStatusVM.cs" />
-    <Compile Include="ViewModel\AutoFocus\AutoFocusVM.cs" />
-    <Compile Include="ViewModel\DockableVM.cs" />
     <Compile Include="ViewModel\DockManagerVM.cs" />
-    <Compile Include="ViewModel\Equipment\DeviceChooserVM.cs" />
     <Compile Include="ViewModel\FlatWizard\FlatWizardUserPromptVM.cs" />
     <Compile Include="ViewModel\FlatWizard\FlatWizardVM.cs" />
-    <Compile Include="ViewModel\Equipment\Focuser\FocuserVM.cs" />
     <Compile Include="ViewModel\FramingAssistant\SkyMapAnnotator.cs" />
     <Compile Include="ViewModel\FramingAssistant\FramingAssistantVM.cs" />
-    <Compile Include="PlateSolving\Solvers\LocalPlateSolver.cs" />
-    <Compile Include="PlateSolving\Solvers\AstrometryPlateSolver.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Model\MyGuider\PHD2\PHD2Methods.cs" />
-    <Compile Include="ViewModel\BaseVM.cs" />
-    <Compile Include="ViewModel\Equipment\FilterWheel\FilterWheelVM.cs" />
     <Compile Include="ViewModel\ImageHistory\ImageHistoryVM.cs" />
     <Compile Include="ViewModel\ImageStatisticsVM.cs" />
     <Compile Include="ViewModel\ImagingVM.cs" />
-    <Compile Include="ViewModel\MeridianFlipVM.cs" />
     <Compile Include="ViewModel\OptionsVM.cs" />
-    <Compile Include="ViewModel\Equipment\Guider\GuiderVM.cs" />
     <Compile Include="ViewModel\PolarAlignmentVM.cs" />
     <Compile Include="ViewModel\ProfileSelectVM.cs" />
-    <Compile Include="ViewModel\Equipment\Rotator\RotatorVM.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleSequenceVM.cs" />
     <Compile Include="ViewModel\SkyAtlasVM.cs" />
-    <Compile Include="ViewModel\TelescopeLatLongSyncVM.cs" />
-    <Compile Include="ViewModel\Equipment\Telescope\TelescopeVM.cs" />
     <Compile Include="ViewModel\ThumbnailVM.cs" />
     <Compile Include="ViewModel\VersionCheckVM.cs" />
     <Compile Include="View\AberrationInspectorView.xaml.cs">
       <DependentUpon>AberrationInspectorView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\AltitudeChart.xaml.cs">
-      <DependentUpon>AltitudeChart.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Equipment\Camera\FileCameraSetupView.xaml.cs">
       <DependentUpon>FileCameraSetupView.xaml</DependentUpon>
@@ -974,41 +676,8 @@
     <Compile Include="View\Equipment\Rotator\RotatorView.xaml.cs">
       <DependentUpon>RotatorView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Sequencer\Sequence2\GroupMenuBehavior.cs" />
-    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniCondition.xaml.cs">
-      <DependentUpon>MiniCondition.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniContainer.xaml.cs">
-      <DependentUpon>MiniContainer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniSequencerDataTemplateSelector.cs" />
-    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniTrigger.xaml.cs">
-      <DependentUpon>MiniTrigger.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\Sequence2\SequenceContainerView.xaml.cs">
-      <DependentUpon>SequenceContainerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\Sequence2\Converter\DroppableToDropIntoParametersConverter.cs" />
-    <Compile Include="View\Sequencer\Sequence2\MiniSequencer\MiniSequencer.xaml.cs">
-      <DependentUpon>MiniSequencer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\Sequence2\SequenceDataTemplateSelector.cs" />
-    <Compile Include="View\Sequencer\Sequence2\SequenceRootContainerView.xaml.cs">
-      <DependentUpon>SequenceRootContainerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\Sequence2\SequenceSidebar.xaml.cs">
-      <DependentUpon>SequenceSidebar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\Sequence2\Converter\StrategyEvaluatesConditionsAndTriggersToVisibilityConverter.cs" />
-    <Compile Include="View\Sequencer\Sequence2\Converter\TargetAreaMinHeightConverter.cs" />
     <Compile Include="View\Sequencer\SequencerVMTemplateSelector.cs" />
     <Compile Include="View\Sequencer\SequenceView.xaml.cs">
-      <DependentUpon>SequenceView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Model\MyCamera\Simulator\SetupView.xaml.cs">
-      <DependentUpon>SetupView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Sequencer\Sequence2\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sequencer\SimpleSequencer\SequenceModeIsRotateToVisibilityConverter.cs" />
@@ -1052,19 +721,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\ApplicationVM.cs" />
-    <Compile Include="ViewModel\Equipment\Camera\CameraVM.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Model\MySafetyMonitor\SafetyMonitorSimulatorSetup.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MyMessageBox\MyMessageBoxView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Resources\StaticResources\DataTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1200,66 +860,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Sequencer\Conditions\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\Container\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\Autofocus\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\Camera\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\FilterWheel\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\FlatDevice\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\Focuser\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\Guider\Datatemplates.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\Imaging\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\Platesolving\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\Rotator\DataTemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\Switch\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\Telescope\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\SequenceItem\Utility\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Sequencer\Trigger\Datatemplates.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\AberrationInspectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1285,10 +885,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\About\ThirdPartyLicensesView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\AltitudeChart.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1616,47 +1212,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Sequencer\Sequence2\MiniSequencer\MiniCondition.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\Sequence2\MiniSequencer\MiniContainer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\Sequence2\MiniSequencer\MiniTrigger.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\Sequence2\ProgressStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\Sequence2\SequenceContainerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\Sequence2\MiniSequencer\MiniSequencer.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\Sequence2\SequenceRootContainerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\Sequence2\SequenceSidebar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Sequencer\SequenceView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Model\MyCamera\Simulator\SetupView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\Sequencer\Sequence2\SequenceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1716,15 +1272,6 @@
       <Link>NINA.sln.licenseheader</Link>
     </None>
     <None Include="BootstrapAscomProfileStore.ps1" />
-    <Content Include="Sequencer\Examples\Basic Sequence End.template.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sequencer\Examples\Basic Sequence Startup.template.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Sequencer\Examples\Basic Sequence Target.template.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Resources\avalondock.config" />
     <Resource Include="Resources\astrometry.net.png" />
     <Content Include="3rd-party-licenses.txt">
@@ -1932,13 +1479,41 @@
       <Project>{aade1df5-4c46-4760-b72b-474d90336f5b}</Project>
       <Name>nikoncswrapper</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NINA.Astrometry\NINA.Astrometry.csproj">
+      <Project>{57b7cc6e-a410-4866-9bf9-278b94118e3d}</Project>
+      <Name>NINA.Astrometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Core.WPF\NINA.WPF.Base.csproj">
+      <Project>{a407425a-4bf0-429e-8867-045c4cd10d3f}</Project>
+      <Name>NINA.WPF.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
       <Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
       <Name>NINA.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NINA.Equipment\NINA.Equipment.csproj">
+      <Project>{20b7c98e-f7f8-497e-b5e5-02fa99d4b98b}</Project>
+      <Name>NINA.Equipment</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Image\NINA.Image.csproj">
+      <Project>{2e7b7c6f-fb8e-49f2-9579-6d16cd263e64}</Project>
+      <Name>NINA.Image</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NINA.MGEN\NINA.MGEN.csproj">
       <Project>{d897bffd-7777-44f5-9100-1ff0db3b032f}</Project>
       <Name>NINA.MGEN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Platesolving\NINA.Platesolving.csproj">
+      <Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
+      <Name>NINA.Platesolving</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
+      <Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>
+      <Name>NINA.Profile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Sequencer\NINA.Sequencer.csproj">
+      <Project>{537a7a82-8c12-45e9-abad-b6b3729d6cb1}</Project>
+      <Name>NINA.Sequencer</Name>
     </ProjectReference>
     <ProjectReference Include="..\NINACustomControlLibrary\NINACustomControlLibrary.csproj">
       <Project>{39fefc1e-7a69-440d-b38a-5b9469353491}</Project>
@@ -2008,10 +1583,13 @@
     <Folder Include="External\x86\Nikon\Type0027\" />
     <Folder Include="External\x86\Nikon\Type0028\" />
     <Folder Include="External\x86\Nikon\Type0029\" />
+    <Folder Include="Model\" />
+    <Folder Include="Plugin\" />
     <Folder Include="Sequencer\Exceptions\" />
-    <Folder Include="Sequencer\SequenceItem\WeatherData\" />
     <Folder Include="Sequencer\Validations\" />
     <Folder Include="Utility\ColorSchema\" />
+    <Folder Include="ViewModel\Equipment\" />
+    <Folder Include="View\Sequencer\Sequence2\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("NINA.MGEN")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Interfaces to communicate with Lacerta MGEN2 and MGEN3 Autoguider Units")]
 [assembly: AssemblyConfiguration("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

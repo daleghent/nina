@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using NINA.Core.Enum;
 using NINA.Model;
 using NINA.Model.MyCamera;
 using NINA.Model.MyFilterWheel;

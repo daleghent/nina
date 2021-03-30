@@ -170,5 +170,35 @@ namespace NINA.Utility {
 
             return str;
         }
+
+        public static float EuclidianModulus(float x, float y) {
+            return (float)EuclidianModulus((double)x, (double)y);
+        }
+
+        public static double EuclidianModulus(double x, double y) {
+            if (y > 0) {
+                double r = x % y;
+                if (r < 0) {
+                    return r + y;
+                } else {
+                    return r;
+                }
+            } else if (y < 0) {
+                return -1 * EuclidianModulus(-1 * x, -1 * y);
+            } else {
+                return double.NaN;
+            }
+        }
+
+        public static Microsoft.Win32.OpenFileDialog GetFilteredFileDialog(string path, string filename, string filter) {
+            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
+
+            if (File.Exists(path)) {
+                dialog.InitialDirectory = Path.GetDirectoryName(path);
+            }
+            dialog.FileName = filename;
+            dialog.Filter = filter;
+            return dialog;
+        }
     }
 }

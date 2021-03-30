@@ -24,7 +24,7 @@ using System.Linq;
 
 namespace NINA.ViewModel {
 
-    internal class ProfileSelectVM : BaseINPC {
+    public class ProfileSelectVM : BaseINPC {
         private CancellationTokenSource _cancelTokenSource;
         private IProfile _defaultProfile;
         private IProfile _tempProfile;

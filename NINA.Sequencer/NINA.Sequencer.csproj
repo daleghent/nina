@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{537A7A82-8C12-45E9-ABAD-B6B3729D6CB1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NINA.Sequencer</RootNamespace>
+    <AssemblyName>NINA.Sequencer</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.3.8.0\lib\net462\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Statistics.3.8.0\lib\net462\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="AsyncEnumerable, Version=4.0.2.0, Culture=neutral, PublicKeyToken=0426b068161bd1d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncEnumerator.4.0.2\lib\net461\AsyncEnumerable.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Context, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Context.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Context.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Coordination, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Coordination.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Coordination.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Interop.WaitHandles, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Interop.WaitHandles.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Interop.WaitHandles.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Oop, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Oop.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Oop.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Tasks, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Tasks.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.Cancellation, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.Cancellation.1.0.5\lib\netstandard2.0\Nito.Cancellation.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.Collections.Deque, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.Collections.Deque.1.0.4\lib\netstandard2.0\Nito.Collections.Deque.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.Disposables, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.Disposables.2.0.0\lib\netstandard2.0\Nito.Disposables.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.7.1\lib\net461\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Behaviors\DragDropAdorner.cs" />
+    <Compile Include="Behaviors\DragDropBehavior.cs" />
+    <Compile Include="Behaviors\DragOverAdorner.cs" />
+    <Compile Include="Behaviors\DragOverBehavior.cs" />
+    <Compile Include="Behaviors\DropIntoBehavior.cs" />
+    <Compile Include="Conditions\AboveHorizonCondition.cs" />
+    <Compile Include="Conditions\AltitudeCondition.cs" />
+    <Compile Include="Conditions\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Conditions\LoopCondition.cs" />
+    <Compile Include="Conditions\MoonAltitudeCondition.cs" />
+    <Compile Include="Conditions\MoonIlluminationCondition.cs" />
+    <Compile Include="Conditions\SafetyMonitorCondition.cs" />
+    <Compile Include="Conditions\SequenceCondition.cs" />
+    <Compile Include="Conditions\SunAltitudeCondition.cs" />
+    <Compile Include="Conditions\TimeCondition.cs" />
+    <Compile Include="Conditions\TimeSpanCondition.cs" />
+    <Compile Include="Container\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Container\DeepSkyObjectContainer.cs" />
+    <Compile Include="Container\EndAreaContainer.cs" />
+    <Compile Include="Container\ExecutionStrategy\ParallelStrategy.cs" />
+    <Compile Include="Container\ExecutionStrategy\SequentialStrategy.cs" />
+    <Compile Include="Container\ParallelContainer.cs" />
+    <Compile Include="Container\SequenceContainer.cs" />
+    <Compile Include="Container\SequenceRootContainer.cs" />
+    <Compile Include="Container\SequentialContainer.cs" />
+    <Compile Include="Container\StartAreaContainer.cs" />
+    <Compile Include="Container\TargetAreaContainer.cs" />
+    <Compile Include="Converters\IsLightImageTypeToVisibilityConverter.cs" />
+    <Compile Include="DropInParameters.cs" />
+    <Compile Include="Interfaces\DragDrop\IDropContainer.cs" />
+    <Compile Include="Interfaces\DragDrop\IDroppable.cs" />
+    <Compile Include="Interfaces\IConditionable.cs" />
+    <Compile Include="Interfaces\IDateTimeProvider.cs" />
+    <Compile Include="Interfaces\IDeepSkyObjectContainer.cs" />
+    <Compile Include="Interfaces\IExecutionStrategy.cs" />
+    <Compile Include="Interfaces\IImmutableContainer.cs" />
+    <Compile Include="Interfaces\IPlugin.cs" />
+    <Compile Include="Interfaces\IPluginProvider.cs" />
+    <Compile Include="Interfaces\ViewModel\ISequence2VM.cs" />
+    <Compile Include="Interfaces\ISequenceCondition.cs" />
+    <Compile Include="Interfaces\ISequenceContainer.cs" />
+    <Compile Include="Interfaces\ISequenceEntity.cs" />
+    <Compile Include="Interfaces\ISequenceItem.cs" />
+    <Compile Include="Interfaces\ISequencer.cs" />
+    <Compile Include="Interfaces\ISequencerFactory.cs" />
+    <Compile Include="Interfaces\ISequenceRootContainer.cs" />
+    <Compile Include="Interfaces\ISequenceTrigger.cs" />
+    <Compile Include="Interfaces\ISimpleDSOContainer.cs" />
+    <Compile Include="Interfaces\ISimpleExposure.cs" />
+    <Compile Include="Interfaces\ITriggerable.cs" />
+    <Compile Include="Interfaces\IValidatable.cs" />
+    <Compile Include="Interfaces\Mediator\ISequenceMediator.cs" />
+    <Compile Include="Interfaces\ViewModel\ISequenceNavigationVM.cs" />
+    <Compile Include="Interfaces\ViewModel\ISimpleSequenceVM.cs" />
+    <Compile Include="Mediator\SequenceMediator.cs" />
+    <Compile Include="PluginProvider.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SequenceItem\Autofocus\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\Autofocus\RunAutofocus.cs" />
+    <Compile Include="SequenceItem\Camera\CoolCamera.cs" />
+    <Compile Include="SequenceItem\Camera\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\Camera\DewHeater.cs" />
+    <Compile Include="SequenceItem\Camera\SetReadoutMode.cs" />
+    <Compile Include="SequenceItem\Camera\WarmCamera.cs" />
+    <Compile Include="SequenceItem\Dome\CloseDomeShutter.cs" />
+    <Compile Include="SequenceItem\Dome\EnableDomeSynchronization.cs" />
+    <Compile Include="SequenceItem\Dome\OpenDomeShutter.cs" />
+    <Compile Include="SequenceItem\Dome\ParkDome.cs" />
+    <Compile Include="SequenceItem\FilterWheel\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\FilterWheel\SwitchFilter.cs" />
+    <Compile Include="SequenceItem\FlatDevice\CloseCover.cs" />
+    <Compile Include="SequenceItem\FlatDevice\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\FlatDevice\OpenCover.cs" />
+    <Compile Include="SequenceItem\FlatDevice\SetBrightness.cs" />
+    <Compile Include="SequenceItem\FlatDevice\ToggleLight.cs" />
+    <Compile Include="SequenceItem\FlatDevice\TrainedDarkFlatExposure.cs" />
+    <Compile Include="SequenceItem\FlatDevice\TrainedFlatExposure.cs" />
+    <Compile Include="SequenceItem\Focuser\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\Focuser\MoveFocuserAbsolute.cs" />
+    <Compile Include="SequenceItem\Focuser\MoveFocuserByTemperature.cs" />
+    <Compile Include="SequenceItem\Focuser\MoveFocuserRelative.cs" />
+    <Compile Include="SequenceItem\Guider\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\Guider\Dither.cs" />
+    <Compile Include="SequenceItem\Guider\StartGuiding.cs" />
+    <Compile Include="SequenceItem\Guider\StopGuiding.cs" />
+    <Compile Include="SequenceItem\Imaging\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\Imaging\SmartExposure.cs" />
+    <Compile Include="SequenceItem\Imaging\TakeExposure.cs" />
+    <Compile Include="SequenceItem\Imaging\TakeManyExposures.cs" />
+    <Compile Include="SequenceItem\Platesolving\Center.cs" />
+    <Compile Include="SequenceItem\Platesolving\CenterAndRotate.cs" />
+    <Compile Include="SequenceItem\Platesolving\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\Platesolving\SolveAndSync.cs" />
+    <Compile Include="SequenceItem\Rotator\DataTemplates.xaml.cs">
+      <DependentUpon>DataTemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\Rotator\MoveRotatorMechanical.cs" />
+    <Compile Include="SequenceItem\SequenceItem.cs" />
+    <Compile Include="SequenceItem\Switch\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\Switch\SetSwitchValue.cs" />
+    <Compile Include="SequenceItem\Telescope\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\Telescope\FindHome.cs" />
+    <Compile Include="SequenceItem\Telescope\ParkScope.cs" />
+    <Compile Include="SequenceItem\Telescope\SetTracking.cs" />
+    <Compile Include="SequenceItem\Telescope\SlewScopeToAltAz.cs" />
+    <Compile Include="SequenceItem\Telescope\SlewScopeToRaDec.cs" />
+    <Compile Include="SequenceItem\Telescope\UnparkScope.cs" />
+    <Compile Include="SequenceItem\UnknownSequenceItem.cs" />
+    <Compile Include="SequenceItem\Utility\Annotation.cs" />
+    <Compile Include="SequenceItem\Utility\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SequenceItem\Utility\ExternalScript.cs" />
+    <Compile Include="SequenceItem\Utility\MessageBox.cs" />
+    <Compile Include="SequenceItem\Utility\WaitForAltitude.cs" />
+    <Compile Include="SequenceItem\Utility\WaitForMoonAltitude.cs" />
+    <Compile Include="SequenceItem\Utility\WaitForSunAltitude.cs" />
+    <Compile Include="SequenceItem\Utility\WaitForTime.cs" />
+    <Compile Include="SequenceItem\Utility\WaitForTimeSpan.cs" />
+    <Compile Include="SequenceItem\Utility\WaitUntilAboveHorizon.cs" />
+    <Compile Include="Sequencer.cs" />
+    <Compile Include="SequencerFactory.cs" />
+    <Compile Include="Serialization\JsonCreationConverter.cs" />
+    <Compile Include="Serialization\SequenceConditionCreationConverter.cs" />
+    <Compile Include="Serialization\SequenceContainerCreationConverter.cs" />
+    <Compile Include="Serialization\SequenceDateTimeProviderCreationConverter.cs" />
+    <Compile Include="Serialization\SequenceItemCreationConverter.cs" />
+    <Compile Include="Serialization\SequenceJsonConverter.cs" />
+    <Compile Include="Serialization\SequenceRootContainerCreationConverter.cs" />
+    <Compile Include="Serialization\SequenceTriggerCreationConverter.cs" />
+    <Compile Include="TargetController.cs" />
+    <Compile Include="TemplateController.cs" />
+    <Compile Include="Trigger\Autofocus\AutofocusAfterExposures.cs" />
+    <Compile Include="Trigger\Autofocus\AutofocusAfterFilterChange.cs" />
+    <Compile Include="Trigger\Autofocus\AutofocusAfterHFRIncreaseTrigger.cs" />
+    <Compile Include="Trigger\Autofocus\AutofocusAfterTemperatureChangeTrigger.cs" />
+    <Compile Include="Trigger\Autofocus\AutofocusAfterTimeTrigger.cs" />
+    <Compile Include="Trigger\Datatemplates.xaml.cs">
+      <DependentUpon>Datatemplates.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Trigger\Guider\DitherAfterExposures.cs" />
+    <Compile Include="Trigger\MeridianFlip\MeridianFlipTrigger.cs" />
+    <Compile Include="Trigger\SequenceTrigger.cs" />
+    <Compile Include="Utility\DateTimeProvider\DawnProvider.cs" />
+    <Compile Include="Utility\DateTimeProvider\DuskProvider.cs" />
+    <Compile Include="Utility\DateTimeProvider\MeridianProvider.cs" />
+    <Compile Include="Utility\DateTimeProvider\NauticalDawnProvider.cs" />
+    <Compile Include="Utility\DateTimeProvider\NauticalDuskProvider.cs" />
+    <Compile Include="Utility\DateTimeProvider\SunriseProvider.cs" />
+    <Compile Include="Utility\DateTimeProvider\SunsetProvider.cs" />
+    <Compile Include="Utility\DateTimeProvider\TimeProvider.cs" />
+    <Compile Include="Utility\ItemUtility.cs" />
+    <Compile Include="View\Converter\DroppableToDropIntoParametersConverter.cs" />
+    <Compile Include="View\Converter\SequenceEntityStatusToVisibilityConverter.cs" />
+    <Compile Include="View\Converter\StrategyEvaluatesConditionsAndTriggersToVisibilityConverter.cs" />
+    <Compile Include="View\Converter\TargetAreaMinHeightConverter.cs" />
+    <Compile Include="View\GroupMenuBehavior.cs" />
+    <Compile Include="View\MiniSequenceItem.xaml.cs">
+      <DependentUpon>MiniSequenceItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MiniSequencer\MiniCondition.xaml.cs">
+      <DependentUpon>MiniCondition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MiniSequencer\MiniContainer.xaml.cs">
+      <DependentUpon>MiniContainer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MiniSequencer\MiniSequencer.xaml.cs">
+      <DependentUpon>MiniSequencer.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MiniSequencer\MiniSequencerDataTemplateSelector.cs" />
+    <Compile Include="View\MiniSequencer\MiniTrigger.xaml.cs">
+      <DependentUpon>MiniTrigger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SequenceBlockView.xaml.cs">
+      <DependentUpon>SequenceBlockView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SequenceContainerView.xaml.cs">
+      <DependentUpon>SequenceContainerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SequenceDataTemplateSelector.cs" />
+    <Compile Include="View\SequenceRootContainerView.xaml.cs">
+      <DependentUpon>SequenceRootContainerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SequenceSidebar.xaml.cs">
+      <DependentUpon>SequenceSidebar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SequenceView.xaml.cs">
+      <DependentUpon>SequenceView.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Conditions\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Container\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Autofocus\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Camera\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\FilterWheel\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\FlatDevice\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Focuser\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Guider\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Imaging\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Platesolving\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Rotator\DataTemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Switch\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Telescope\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SequenceItem\Utility\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Trigger\Datatemplates.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MiniSequenceItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MiniSequencer\MiniCondition.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MiniSequencer\MiniContainer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MiniSequencer\MiniSequencer.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\MiniSequencer\MiniTrigger.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ProgressStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SequenceBlockView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SequenceContainerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SequenceRootContainerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SequenceSidebar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\SequenceView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NINA.Astrometry\NINA.Astrometry.csproj">
+      <Project>{57b7cc6e-a410-4866-9bf9-278b94118e3d}</Project>
+      <Name>NINA.Astrometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Core.WPF\NINA.WPF.Base.csproj">
+      <Project>{a407425a-4bf0-429e-8867-045c4cd10d3f}</Project>
+      <Name>NINA.WPF.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
+      <Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
+      <Name>NINA.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Equipment\NINA.Equipment.csproj">
+      <Project>{20b7c98e-f7f8-497e-b5e5-02fa99d4b98b}</Project>
+      <Name>NINA.Equipment</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Image\NINA.Image.csproj">
+      <Project>{2e7b7c6f-fb8e-49f2-9579-6d16cd263e64}</Project>
+      <Name>NINA.Image</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Platesolving\NINA.Platesolving.csproj">
+      <Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
+      <Name>NINA.Platesolving</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
+      <Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>
+      <Name>NINA.Profile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINACustomControlLibrary\NINACustomControlLibrary.csproj">
+      <Project>{39fefc1e-7a69-440d-b38a-5b9469353491}</Project>
+      <Name>NINACustomControlLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sequencer\Examples\Basic Sequence End.template.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sequencer\Examples\Basic Sequence Startup.template.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Sequencer\Examples\Basic Sequence Target.template.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
+  </Target>
+</Project>

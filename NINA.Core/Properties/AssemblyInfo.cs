@@ -6,7 +6,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("N.I.N.A. Core Library")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("This assembly contains the core components of N.I.N.A.")]
 [assembly: AssemblyConfiguration("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible

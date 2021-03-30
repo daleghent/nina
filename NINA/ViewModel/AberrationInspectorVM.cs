@@ -21,7 +21,7 @@ using System.Windows.Media.Imaging;
 
 namespace NINA.ViewModel {
 
-    internal class AberrationInspectorVM : BaseVM {
+    public class AberrationInspectorVM : BaseVM {
 
         public AberrationInspectorVM(IProfileService profileService) : base(profileService) {
             Columns = 3;

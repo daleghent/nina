@@ -390,13 +390,41 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NINA.Astrometry\NINA.Astrometry.csproj">
+      <Project>{57b7cc6e-a410-4866-9bf9-278b94118e3d}</Project>
+      <Name>NINA.Astrometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Core.WPF\NINA.WPF.Base.csproj">
+      <Project>{a407425a-4bf0-429e-8867-045c4cd10d3f}</Project>
+      <Name>NINA.WPF.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
       <Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
       <Name>NINA.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NINA.Equipment\NINA.Equipment.csproj">
+      <Project>{20b7c98e-f7f8-497e-b5e5-02fa99d4b98b}</Project>
+      <Name>NINA.Equipment</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Image\NINA.Image.csproj">
+      <Project>{2e7b7c6f-fb8e-49f2-9579-6d16cd263e64}</Project>
+      <Name>NINA.Image</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NINA.MGEN\NINA.MGEN.csproj">
       <Project>{d897bffd-7777-44f5-9100-1ff0db3b032f}</Project>
       <Name>NINA.MGEN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Platesolving\NINA.Platesolving.csproj">
+      <Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
+      <Name>NINA.Platesolving</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
+      <Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>
+      <Name>NINA.Profile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Sequencer\NINA.Sequencer.csproj">
+      <Project>{537a7a82-8c12-45e9-abad-b6b3729d6cb1}</Project>
+      <Name>NINA.Sequencer</Name>
     </ProjectReference>
     <ProjectReference Include="..\NINA\NINA.csproj">
       <Project>{7dec1b46-9701-4e49-90c1-f4427845669e}</Project>

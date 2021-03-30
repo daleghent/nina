@@ -32,7 +32,7 @@ namespace NINATest.FlatDevice {
         [TestCase("State", "SOOO")]
         [TestCase("FirmwareVersion", "VOOO")]
         public void TestCommand(string commandName, string commandString) {
-            var sut = (ICommand)Activator.CreateInstance("NINA.Core",
+            var sut = (ICommand)Activator.CreateInstance("NINA.Equipment",
                 $"NINA.Utility.FlatDeviceSDKs.AlnitakSDK.{commandName}Command").Unwrap();
             Assert.That(sut.CommandString, Is.EqualTo($">{commandString}\r"));
             Assert.That(sut.HasResponse, Is.True);

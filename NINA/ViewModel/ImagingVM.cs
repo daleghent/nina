@@ -32,6 +32,7 @@ using NINA.Model.MyRotator;
 using NINA.Model.MyWeatherData;
 using NINA.Utility.Mediator;
 using Dasync.Collections;
+using NINA.Equipment.Utility;
 
 namespace NINA.ViewModel {
 

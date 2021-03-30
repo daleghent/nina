@@ -19,7 +19,7 @@ using System.Windows;
 // General Information about an assembly is controlled through the following set of attributes.
 // Change these attribute values to modify the information associated with an assembly.
 [assembly: AssemblyTitle("N.I.N.A. Custom Control Library")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Custom WPF Controls to use for N.I.N.A.")]
 [assembly: AssemblyConfiguration("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible to COM components. If you

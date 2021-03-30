@@ -10,7 +10,8 @@
     x:Class="NINA.View.FramingAssistantView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:behaviors="clr-namespace:NINA.Utility.Behaviors;assembly=NINA.Core"
+    xmlns:alt="clr-namespace:NINA.View;assembly=NINA.WPF.Base"
+    xmlns:behaviors="clr-namespace:NINA.Utility.Behaviors;assembly=NINA.WPF.Base"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:NINA.View"
@@ -19,7 +20,7 @@
     xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
-    xmlns:survey="clr-namespace:NINA.Astrometry.SkySurvey;assembly=NINA.Core"
+    xmlns:survey="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Utility;assembly=NINA.Core"
     xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
     x:Name="UC"
@@ -609,7 +610,7 @@
                     Grid.Row="1"
                     Margin="5"
                     VerticalAlignment="Bottom">
-                    <local:AltitudeChart DataContext="{Binding DSO}" NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
+                    <alt:AltitudeChart DataContext="{Binding DSO}" NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                 </Grid>
             </Grid>
         </ScrollViewer>

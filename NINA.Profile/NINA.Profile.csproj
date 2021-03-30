@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8540150E-7FF0-4F7B-A714-0F6ABDB1AC60}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NINA.Profile</RootNamespace>
+    <AssemblyName>NINA.Profile</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="ApplicationSettings.cs" />
+    <Compile Include="AstrometrySettings.cs" />
+    <Compile Include="CameraSettings.cs" />
+    <Compile Include="ColorSchemaSettings.cs" />
+    <Compile Include="DomeSettings.cs" />
+    <Compile Include="ExposureCalculatorSettings.cs" />
+    <Compile Include="FilterWheelSettings.cs" />
+    <Compile Include="FlatDeviceSettings.cs" />
+    <Compile Include="FlatWizardSettings.cs" />
+    <Compile Include="FocuserSettings.cs" />
+    <Compile Include="FramingAssistantSettings.cs" />
+    <Compile Include="GuiderSettings.cs" />
+    <Compile Include="ImageFileSettings.cs" />
+    <Compile Include="ImageSettings.cs" />
+    <Compile Include="Interfaces\IApplicationSettings.cs" />
+    <Compile Include="Interfaces\IAstrometrySettings.cs" />
+    <Compile Include="Interfaces\ICameraSettings.cs" />
+    <Compile Include="Interfaces\IColorSchemaSettings.cs" />
+    <Compile Include="Interfaces\IDomeSettings.cs" />
+    <Compile Include="Interfaces\IExposureCalculatorSettings.cs" />
+    <Compile Include="Interfaces\IFilterWheelSettings.cs" />
+    <Compile Include="Interfaces\IFlatDeviceSettings.cs" />
+    <Compile Include="Interfaces\IFlatWizardSettings.cs" />
+    <Compile Include="Interfaces\IFocuserSettings.cs" />
+    <Compile Include="Interfaces\IFramingAssistantSettings.cs" />
+    <Compile Include="Interfaces\IGuiderSettings.cs" />
+    <Compile Include="Interfaces\IImageFileSettings.cs" />
+    <Compile Include="Interfaces\IImageSettings.cs" />
+    <Compile Include="Interfaces\IMeridianFlipSettings.cs" />
+    <Compile Include="Interfaces\IPlanetariumSettings.cs" />
+    <Compile Include="Interfaces\IPlateSolveSettings.cs" />
+    <Compile Include="Interfaces\IPolarAlignmentSettings.cs" />
+    <Compile Include="Interfaces\IProfile.cs" />
+    <Compile Include="Interfaces\IProfileService.cs" />
+    <Compile Include="Interfaces\IRotatorSettings.cs" />
+    <Compile Include="Interfaces\ISafetyMonitorSettings.cs" />
+    <Compile Include="Interfaces\ISequenceSettings.cs" />
+    <Compile Include="Interfaces\ISettings.cs" />
+    <Compile Include="Interfaces\ISnapShotControlSettings.cs" />
+    <Compile Include="Interfaces\ISwitchSettings.cs" />
+    <Compile Include="Interfaces\ITelescopeSettings.cs" />
+    <Compile Include="Interfaces\IWeatherDataSettings.cs" />
+    <Compile Include="MeridianFlipSettings.cs" />
+    <Compile Include="PlanetariumSettings.cs" />
+    <Compile Include="PlateSolveSettings.cs" />
+    <Compile Include="PolarAlignmentSettings.cs" />
+    <Compile Include="Profile.cs" />
+    <Compile Include="ProfileInfo.cs" />
+    <Compile Include="Profiles.cs" />
+    <Compile Include="ProfileService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RotatorSettings.cs" />
+    <Compile Include="SafetyMonitorSettings.cs" />
+    <Compile Include="SequenceSettings.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SnapShotControlSettings.cs" />
+    <Compile Include="SwitchSettings.cs" />
+    <Compile Include="TelescopeSettings.cs" />
+    <Compile Include="WeatherDataSettings.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
+      <Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
+      <Name>NINA.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

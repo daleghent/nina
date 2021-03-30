@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A407425A-4BF0-429E-8867-045C4CD10D3F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NINA.WPF.Base</RootNamespace>
+    <AssemblyName>NINA.WPF.Base</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accord, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.3.8.0\lib\net462\Accord.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Imaging, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Imaging.3.8.0\lib\net462\Accord.Imaging.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Math.Core, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Math.3.8.0\lib\net462\Accord.Math.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Accord.Statistics, Version=3.8.0.0, Culture=neutral, PublicKeyToken=fa1a88e29555ccf7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Accord.Statistics.3.8.0\lib\net462\Accord.Statistics.dll</HintPath>
+    </Reference>
+    <Reference Include="AsyncEnumerable, Version=4.0.2.0, Culture=neutral, PublicKeyToken=0426b068161bd1d1, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncEnumerator.4.0.2\lib\net461\AsyncEnumerable.dll</HintPath>
+    </Reference>
+    <Reference Include="CsvHelper, Version=19.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.19.0.0\lib\net47\CsvHelper.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.HashCode, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.HashCode.1.1.0\lib\net461\Microsoft.Bcl.HashCode.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Context, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Context.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Context.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Coordination, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Coordination.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Coordination.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Interop.WaitHandles, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Interop.WaitHandles.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Interop.WaitHandles.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Oop, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Oop.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Oop.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.AsyncEx.Tasks, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.AsyncEx.Tasks.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Tasks.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.Cancellation, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.Cancellation.1.0.5\lib\netstandard2.0\Nito.Cancellation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.Collections.Deque, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.Collections.Deque.1.0.4\lib\netstandard2.0\Nito.Collections.Deque.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.Disposables, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.Disposables.2.0.0\lib\netstandard2.0\Nito.Disposables.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nito.Mvvm.Async, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.Mvvm.Async.1.0.0-pre-03\lib\netstandard2.0\Nito.Mvvm.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="Nito.Mvvm.Core, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Nito.Mvvm.Core.1.2.2\lib\netstandard2.0\Nito.Mvvm.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot, Version=2.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.2.0.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=2.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Wpf.2.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="ReachFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Collections.Immutable.1.7.1\lib\net461\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Behaviors\BrowserBehavior.cs" />
+    <Compile Include="Behaviors\DragCommandBehavior.cs" />
+    <Compile Include="Behaviors\MouseCommandBehavior.cs" />
+    <Compile Include="Behaviors\MouseFollowBehavior.cs" />
+    <Compile Include="Behaviors\MouseWheelCommandBehavior.cs" />
+    <Compile Include="Interfaces\IAutoFocusVMFactory.cs" />
+    <Compile Include="Interfaces\Mediator\IApplicationMediator.cs" />
+    <Compile Include="Interfaces\Mediator\IApplicationStatusMediator.cs" />
+    <Compile Include="Interfaces\Mediator\IImageSaveMediator.cs" />
+    <Compile Include="Interfaces\Utility\IAllDeviceConsumer.cs" />
+    <Compile Include="Interfaces\ViewModel\IAnchorablePlateSolverVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IAnchorableSnapshotVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IApplicationDeviceConnectionVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IApplicationStatusVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IApplicationVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IAutoFocusVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IDeepSkyObjectSearchVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IDockManagerVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IEquipmentVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IExposureCalculatorVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IFlatWizardUserPromptVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IFlatWizardVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IFocusTargetsVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IFramingAssistantVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IImageHistoryVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IImageSaveController.cs" />
+    <Compile Include="Interfaces\ViewModel\IImageStatisticsVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IOptionsVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IPolarAlignmentVM.cs" />
+    <Compile Include="Interfaces\ViewModel\ISkyAtlasVM.cs" />
+    <Compile Include="Interfaces\ViewModel\ISkyMapAnnotator.cs" />
+    <Compile Include="Interfaces\ViewModel\IThumbnailVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IVersionCheckVM.cs" />
+    <Compile Include="Mediator\ApplicationMediator.cs" />
+    <Compile Include="Mediator\ApplicationStatusMediator.cs" />
+    <Compile Include="Mediator\CameraMediator.cs" />
+    <Compile Include="Mediator\DeviceMediator.cs" />
+    <Compile Include="Mediator\DomeMediator.cs" />
+    <Compile Include="Mediator\FilterWheelMediator.cs" />
+    <Compile Include="Mediator\FlatDeviceMediator.cs" />
+    <Compile Include="Mediator\FocuserMediator.cs" />
+    <Compile Include="Mediator\GuiderMediator.cs" />
+    <Compile Include="Mediator\ImageSaveMediator.cs" />
+    <Compile Include="Mediator\ImagingMediator.cs" />
+    <Compile Include="Mediator\RotatorMediator.cs" />
+    <Compile Include="Mediator\SafetyMonitorMediator.cs" />
+    <Compile Include="Mediator\SwitchMediator.cs" />
+    <Compile Include="Mediator\TelescopeMediator.cs" />
+    <Compile Include="Mediator\WeatherDataMediator.cs" />
+    <Compile Include="Model\Equipment\MyCamera\Simulator\ImageSettings.cs" />
+    <Compile Include="Model\Equipment\MyCamera\Simulator\RandomSettings.cs" />
+    <Compile Include="Model\Equipment\MyCamera\Simulator\Settings.cs" />
+    <Compile Include="Model\Equipment\MyCamera\Simulator\SetupView.xaml.cs">
+      <DependentUpon>SetupView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Equipment\MyCamera\Simulator\SimulatorCamera.cs" />
+    <Compile Include="Model\Equipment\MyCamera\Simulator\SkySurveySettings.cs" />
+    <Compile Include="Model\Equipment\MySafetyMonitor\Simulator\SafetyMonitorSimulator.cs" />
+    <Compile Include="Model\Equipment\MySafetyMonitor\Simulator\SafetyMonitorSimulatorSetup.xaml.cs">
+      <DependentUpon>SafetyMonitorSimulatorSetup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\FlatWizardFilterSettingsWrapper.cs" />
+    <Compile Include="Model\FramingAssistant\FrameLine.cs" />
+    <Compile Include="Model\FramingAssistant\FrameLineMatrix.cs" />
+    <Compile Include="Model\FramingAssistant\FrameLineMatrix2.cs" />
+    <Compile Include="Model\FramingAssistant\FramingConstellation.cs" />
+    <Compile Include="Model\FramingAssistant\FramingConstellationBoundary.cs" />
+    <Compile Include="Model\FramingAssistant\FramingDSO.cs" />
+    <Compile Include="Model\ImageHistoryPoint.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SkySurvey\CacheSkySurvey.cs" />
+    <Compile Include="SkySurvey\ESOSkySurvey.cs" />
+    <Compile Include="SkySurvey\FileSkySurvey.cs" />
+    <Compile Include="SkySurvey\Hips2FitsSurvey.cs" />
+    <Compile Include="SkySurvey\ISkySurvey.cs" />
+    <Compile Include="SkySurvey\MosaicSkySurvey.cs" />
+    <Compile Include="SkySurvey\NASASkySurvey.cs" />
+    <Compile Include="SkySurvey\SkyAtlasSkySurvey.cs" />
+    <Compile Include="SkySurvey\SkyServerSkySurvey.cs" />
+    <Compile Include="SkySurvey\SkySurveyFactory.cs" />
+    <Compile Include="SkySurvey\StsciSkySurvey.cs" />
+    <Compile Include="Utility\AllDeviceConsumer.cs" />
+    <Compile Include="Utility\AutoFocus\AutoFocusPoint.cs" />
+    <Compile Include="Utility\AutoFocus\AutoFocusReport.cs" />
+    <Compile Include="Utility\AutoFocus\GaussianFitting.cs" />
+    <Compile Include="Utility\AutoFocus\HyperbolicFitting.cs" />
+    <Compile Include="Utility\AutoFocus\QuadraticFitting.cs" />
+    <Compile Include="Utility\AutoFocus\Trendline.cs" />
+    <Compile Include="Utility\AutoFocus\TrendlineFitting.cs" />
+    <Compile Include="ViewModel\AutoFocusVMFactory.cs" />
+    <Compile Include="ViewModel\AutoFocus\AutoFocusVM.cs" />
+    <Compile Include="ViewModel\AutoFocus\FocusPointComparer.cs" />
+    <Compile Include="ViewModel\AutoFocus\MeasureAndError.cs" />
+    <Compile Include="ViewModel\AutoFocus\PlotPointComparer.cs" />
+    <Compile Include="ViewModel\BaseVM.cs" />
+    <Compile Include="ViewModel\DockableVM.cs" />
+    <Compile Include="ViewModel\Equipment\Camera\CameraChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Camera\CameraVM.cs" />
+    <Compile Include="ViewModel\Equipment\DeviceChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Dome\DomeChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Dome\DomeFollower.cs" />
+    <Compile Include="ViewModel\Equipment\Dome\DomeVM.cs" />
+    <Compile Include="ViewModel\Equipment\FilterWheel\FilterWheelChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\FilterWheel\FilterWheelVM.cs" />
+    <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceFactory.cs" />
+    <Compile Include="ViewModel\Equipment\FlatDevice\FlatDeviceVM.cs" />
+    <Compile Include="ViewModel\Equipment\FlatDevice\FlatWizardValues.cs" />
+    <Compile Include="ViewModel\Equipment\Focuser\AbsoluteBacklashCompensationDecorator.cs" />
+    <Compile Include="ViewModel\Equipment\Focuser\FocuserChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Focuser\FocuserDecorator.cs" />
+    <Compile Include="ViewModel\Equipment\Focuser\FocuserFactory.cs" />
+    <Compile Include="ViewModel\Equipment\Focuser\FocuserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Focuser\OvershootBacklashCompensationDecorator.cs" />
+    <Compile Include="ViewModel\Equipment\Guider\GuiderChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Guider\GuiderVM.cs" />
+    <Compile Include="ViewModel\Equipment\Rotator\RotatorChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Rotator\RotatorVM.cs" />
+    <Compile Include="ViewModel\Equipment\SafetyMonitor\SafetyMonitorChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\SafetyMonitor\SafetyMonitorVM.cs" />
+    <Compile Include="ViewModel\Equipment\Switch\SwitchChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Switch\SwitchVM.cs" />
+    <Compile Include="ViewModel\Equipment\Telescope\TelescopeChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\Telescope\TelescopeLatLongSyncVM.cs" />
+    <Compile Include="ViewModel\Equipment\Telescope\TelescopeVM.cs" />
+    <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataChooserVM.cs" />
+    <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataVM.cs" />
+    <Compile Include="ViewModel\MeridianFlipVM.cs" />
+    <Compile Include="ViewModel\PlateSolvingStatusVM.cs" />
+    <Compile Include="View\AltitudeChart.xaml.cs">
+      <DependentUpon>AltitudeChart.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NINA.Astrometry\NINA.Astrometry.csproj">
+      <Project>{57b7cc6e-a410-4866-9bf9-278b94118e3d}</Project>
+      <Name>NINA.Astrometry</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
+      <Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
+      <Name>NINA.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Equipment\NINA.Equipment.csproj">
+      <Project>{20b7c98e-f7f8-497e-b5e5-02fa99d4b98b}</Project>
+      <Name>NINA.Equipment</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Image\NINA.Image.csproj">
+      <Project>{2e7b7c6f-fb8e-49f2-9579-6d16cd263e64}</Project>
+      <Name>NINA.Image</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.MGEN\NINA.MGEN.csproj">
+      <Project>{d897bffd-7777-44f5-9100-1ff0db3b032f}</Project>
+      <Name>NINA.MGEN</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Platesolving\NINA.Platesolving.csproj">
+      <Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
+      <Name>NINA.Platesolving</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
+      <Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>
+      <Name>NINA.Profile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINACustomControlLibrary\NINACustomControlLibrary.csproj">
+      <Project>{39fefc1e-7a69-440d-b38a-5b9469353491}</Project>
+      <Name>NINACustomControlLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Model\Equipment\MyCamera\Simulator\SetupView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Model\Equipment\MySafetyMonitor\Simulator\SafetyMonitorSimulatorSetup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\AltitudeChart.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
+  </Target>
+</Project>

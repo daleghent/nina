@@ -9,7 +9,10 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:NINA.Utility.Converters;assembly=NINA.Core">
+    xmlns:astroConverters="clr-namespace:NINA.Utility.Converters;assembly=NINA.Astrometry"
+    xmlns:converters="clr-namespace:NINA.Utility.Converters;assembly=NINA.Core"
+    xmlns:equipmentConverters="clr-namespace:NINA.Utility.Converters;assembly=NINA.Equipment"
+    xmlns:seqConverters="clr-namespace:NINA.Utility.Converters;assembly=NINA.Sequencer">
 
     <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
     <converters:AutoFocusContrastDetectionToCollapsedVisibilityConverter x:Key="AutoFocusContrastDetectionToCollapsedVisibilityConverter" />
@@ -29,13 +32,13 @@
     <converters:CollectionContainsItemsToVisibilityConverter x:Key="CollectionContainsItemsToVisibilityConverter" />
     <converters:InverseCollectionContainsItemsToVisibilityConverter x:Key="InverseCollectionContainsItemsToVisibilityConverter" />
     <converters:MinusOneToEmptyStringConverter x:Key="MinusOneToEmptyStringConverter" />
-    <converters:ArcsecToLabelConverter x:Key="ArcsecToLabelConverter" />
+    <astroConverters:ArcsecToLabelConverter x:Key="ArcsecToLabelConverter" />
     <converters:BoolToLabelConverter x:Key="BoolToLabelConverter" />
-    <converters:MoonPhaseToGeometryConverter x:Key="MoonPhaseToGeometryConverter" />
+    <astroConverters:MoonPhaseToGeometryConverter x:Key="MoonPhaseToGeometryConverter" />
     <converters:MultiMarginConverter x:Key="MultiMarginConverter" />
     <converters:ValueToLocaleConverter x:Key="ValueToLocaleConverter" />
-    <converters:HoursToHMSConverter x:Key="HoursToHMSConverter" />
-    <converters:DegreesToDMSConverter x:Key="DegreesToDMSConverter" />
+    <astroConverters:HoursToHMSConverter x:Key="HoursToHMSConverter" />
+    <astroConverters:DegreesToDMSConverter x:Key="DegreesToDMSConverter" />
     <converters:SideOfPierConverter x:Key="SideOfPierConverter" />
     <converters:InverseMultiBooleanANDConverter x:Key="InverseMultiBooleanANDConverter" />
     <converters:BooleanAndConverter x:Key="BooleanAndConverter" />
@@ -46,12 +49,12 @@
     <converters:OneValueGreaterThanAnotherToVisiblityConverter x:Key="GreaterThanToVisiblityConverter" />
     <converters:CollectionContainsMoreThanOneItemToVisibilityConverter x:Key="CollectionContainsMoreThanOneItemToVisibilityConverter" />
     <converters:MultiToListConverter x:Key="MultiToListConverter" />
-    <converters:TrackingRateConverter x:Key="TrackingRateConverter" />
-    <converters:TrackingModeConverter x:Key="TrackingModeConverter" />
+    <equipmentConverters:TrackingRateConverter x:Key="TrackingRateConverter" />
+    <equipmentConverters:TrackingModeConverter x:Key="TrackingModeConverter" />
     <converters:SubtractHalfConverter x:Key="SubtractHalfConverter" />
     <converters:DoubleToBooleanConverter x:Key="DoubleToBooleanConverter" />
     <converters:InverseBooleanToVisibilityCollapsedConverter x:Key="InverseBooleanToVisibilityCollapsedConverter" />
-    <converters:ShutterStatusToVisibilityConverter x:Key="ShutterStatusToVisibilityConverter" />
+    <equipmentConverters:ShutterStatusToVisibilityConverter x:Key="ShutterStatusToVisibilityConverter" />
     <converters:NaNToVisibilityConverter x:Key="NaNToVisibilityConverter" />
     <converters:NaNToVisibilityCollapsedConverter x:Key="NaNToVisibilityCollapsedConverter" />
     <converters:NaNToEmptyTextConverter x:Key="NaNToEmptyTextConverter" />
@@ -63,7 +66,7 @@
     <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
     <converters:InverseZeroToVisibilityConverter x:Key="InverseZeroToVisibilityConverter" />
     <converters:AFFittingToVisibilityConverter x:Key="AFFittingToVisibilityConverter" />
-    <converters:IsLightImageTypeToVisibilityConverter x:Key="IsLightImageTypeToVisibilityConverter" />
+    <seqConverters:IsLightImageTypeToVisibilityConverter x:Key="IsLightImageTypeToVisibilityConverter" />
     <converters:FilterWheelFilterConverter x:Key="FilterWheelFilterConverter" />
     <converters:DecDegreeConverter x:Key="DecDegreeConverter" />
     <converters:ImagePatternToTextConverter x:Key="ImagePatternToTextConverter" />
