@@ -35,7 +35,8 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
             });
 
             var tasks = new List<Task>();
-            foreach (var item in context.Items) {
+            var items = context.GetItemsSnapshot();
+            foreach (var item in items) {
                 var itemProgress = new Progress<ApplicationStatus>((p) => {
                     p.Source = item.Name;
                     progress?.Report(p);

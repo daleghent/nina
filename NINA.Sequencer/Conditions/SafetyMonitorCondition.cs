@@ -14,12 +14,14 @@
 
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Validations;
+using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Sequencer.Conditions {
@@ -90,10 +92,27 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void SequenceBlockFinished() {
+            watchdogCTS?.Cancel();
         }
 
         public override void SequenceBlockStarted() {
+            watchdog = Task.Run(async () => {
+                using (watchdogCTS = new CancellationTokenSource()) {
+                    while (true) {
+                        if (!Check(null)) {
+                            if (this.Parent != null) {
+                                Logger.Info("Unsafe conditions detected - Interrupting current Instruction Set");
+                                await this.Parent.Interrupt();
+                            }
+                        }
+                        await Task.Delay(5000, watchdogCTS.Token);
+                    }
+                }
+            });
         }
+
+        private CancellationTokenSource watchdogCTS;
+        private Task watchdog;
 
         public override string ToString() {
             return $"Condition: {nameof(SafetyMonitorCondition)}";

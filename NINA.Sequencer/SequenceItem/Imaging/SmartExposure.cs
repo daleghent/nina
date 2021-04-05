@@ -139,5 +139,9 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             };
             return clone;
         }
+
+        public override TimeSpan GetEstimatedDuration() {
+            return GetTakeExposure().GetEstimatedDuration();
+        }
     }
 }

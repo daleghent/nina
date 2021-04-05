@@ -26,6 +26,8 @@ namespace NINA.Sequencer.Trigger {
 
         void Add(ISequenceTrigger trigger);
 
+        ICollection<ISequenceTrigger> GetTriggersSnapshot();
+
         bool Remove(ISequenceTrigger trigger);
 
         Task RunTriggers(ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token);

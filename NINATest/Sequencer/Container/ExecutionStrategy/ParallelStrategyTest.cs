@@ -36,7 +36,7 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
             var item1Mock = new Mock<ISequenceItem>();
             var item2Mock = new Mock<ISequenceItem>();
             var items = new List<ISequenceItem>() { item1Mock.Object, item2Mock.Object };
-            containerMock.SetupGet(x => x.Items).Returns(items);
+            containerMock.Setup(x => x.GetItemsSnapshot()).Returns(items);
 
             var sut = new ParallelStrategy();
 
@@ -60,7 +60,7 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
                 .Setup(x => x.Run(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
                 .Callback<IProgress<ApplicationStatus>, CancellationToken>((progress, ct) => progress.Report(new ApplicationStatus()));
             var items = new List<ISequenceItem>() { item1Mock.Object, item2Mock.Object };
-            containerMock.SetupGet(x => x.Items).Returns(items);
+            containerMock.Setup(x => x.GetItemsSnapshot()).Returns(items);
 
             var progressMock = new Mock<IProgress<ApplicationStatus>>();
 
