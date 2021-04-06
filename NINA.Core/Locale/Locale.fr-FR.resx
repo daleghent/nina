@@ -1112,19 +1112,19 @@ si les traces d'étoiles ne sont pas alignées, c'est qu'il y a une erreur d'ali
     <value>Délai Direct Guide</value>
   </data>
   <data name="LblDirectGuideDurationTooltip" xml:space="preserve">
-    <value>Typical pulse guide duration in seconds</value>
+    <value>Durée typique des impulsions de guidage en secondes</value>
   </data>
   <data name="LblRightAscensionGuideRate" xml:space="preserve">
-    <value>Right Ascension Guide Rate</value>
+    <value>Taux de guidage en Ascension Droite</value>
   </data>
   <data name="LblRightAscensionGuideRateTooltip" xml:space="preserve">
-    <value>Right Ascension guide rate in arcseconds per second</value>
+    <value>Taux de guidage en ascension droite en arcsecondes par seconde</value>
   </data>
   <data name="LblDeclinationGuideRate" xml:space="preserve">
-    <value>Declination Guide Rate</value>
+    <value>Taux de Guidage en Déclinaison</value>
   </data>
   <data name="LblDeclinationGuideRateTooltip" xml:space="preserve">
-    <value>Declination guide rate in arcseconds per second</value>
+    <value>Taux de guidage en déclinaison en arcsecondes par seconde</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
     <value>Direct Guider n'a pas pu se connecter au Télescope</value>
@@ -1169,7 +1169,7 @@ si les traces d'étoiles ne sont pas alignées, c'est qu'il y a une erreur d'ali
     <value>Décaler les pixels</value>
   </data>
   <data name="LblDitherPixelsDirectGuiderTooltip" xml:space="preserve">
-    <value>Typical number of pixels to dither by. Dithering follows a normal distribution centered at the target, which this value as the standard deviation. 67% of dithers will be within this distance</value>
+    <value>Nombre typique de pixels à utiliser. Le dither suit une distribution normale centrée sur la cible, dont cette valeur est l'écart-type. 67% des dithers se trouveront à cette distance</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
     <value>Dither AD Seulement</value>
@@ -1730,7 +1730,7 @@ HFR calculé: {2}</value>
     <value>Historique HFR</value>
   </data>
   <data name="LblHFRHistoryAllFilters" xml:space="preserve">
-    <value>All</value>
+    <value>Tous</value>
   </data>
   <data name="LblHFRPatternDescription" xml:space="preserve">
     <value>HFR calculé de l'image (la détection HFR doit être activée)</value>
@@ -2386,7 +2386,7 @@ HFR calculé: {2}</value>
     <value>Échelle Pixel</value>
   </data>
   <data name="LblPixelScaleTooltip" xml:space="preserve">
-    <value>Pixel scale in arcseconds per pixel</value>
+    <value>Échelle de pixels en arcsecondes par pixel</value>
   </data>
   <data name="LblPixelSize" xml:space="preserve">
     <value>Taille pixel</value>
@@ -2503,7 +2503,7 @@ HFR calculé: {2}</value>
     <value>Position</value>
   </data>
   <data name="LblRelativePosition" xml:space="preserve">
-    <value>Relative Position</value>
+    <value>Position relative</value>
   </data>
   <data name="LblClearGuidingCalibration" xml:space="preserve">
     <value>Effacer l'étalonnage</value>
@@ -2918,7 +2918,7 @@ Ce modèle sera utilisé au démarrage pour initialiser la séquence au lieu de 
     <value>Pointer</value>
   </data>
   <data name="LblSlewCenter" xml:space="preserve">
-    <value>Slew and Center</value>
+    <value>Déplacer et centrer</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Temps Pointage</value>
@@ -3156,10 +3156,10 @@ Les valeurs doivent-elles être synchronisées?</value>
     <value>Télescope vers NINA</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
-    <value>RA Guide Rate</value>
+    <value>Taux de guidage en RA</value>
   </data>
   <data name="LblTelescopeGuideRateDec" xml:space="preserve">
-    <value>Dec Guide Rate</value>
+    <value>Taux de guidage en Dec</value>
   </data>
   <data name="LblTempComp" xml:space="preserve">
     <value>Comp T°</value>
@@ -3889,7 +3889,7 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Luminosité min du panneau à flats</value>
   </data>
   <data name="LblWizardOperationMode" xml:space="preserve">
-    <value>Wizard Mode</value>
+    <value>Mode Assistant</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
     <value>Tolérance d'azimuth (degrés)</value>
@@ -4060,7 +4060,7 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Impossible de reprendre le guidage après la récupération de l'intensité de l'étoile</value>
   </data>
   <data name="LblSkyFlat" xml:space="preserve">
-    <value>Sky Flats</value>
+    <value>Flats sur le ciel</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Erreur de synchronisation du dôme. Ne suit plus le télescope. {0}</value>
@@ -4330,13 +4330,13 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Déplace le focuser à la position absolue donnée</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description" xml:space="preserve">
-    <value>Moves the focuser to the given relative position</value>
+    <value>Déplace le focuser vers la position relative donnée</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
     <value>Déplacer le focuser</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name" xml:space="preserve">
-    <value>Move Focuser Relative</value>
+    <value>Déplacement relatif du focuser</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
     <value>Envoie un signal dither au guidage</value>
@@ -4803,10 +4803,10 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
     <value>Utilitaire</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
-    <value>A condition that loops until the target sets below the given altitude and then stops the current instruction set</value>
+    <value>Une condition qui boucle jusqu'à ce que la cible se situe en dessous de l'altitude donnée, puis arrête la série d'instructions en cours</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
-    <value>Loop Until Altitude Sets Below</value>
+    <value>Boucle jusqu'à ce que l'altitude descende en dessous</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
     <value>Dôme</value>
@@ -5225,135 +5225,150 @@ Un nombre plus restreint aidera à répondre plus rapidement à un changement de
     <value>La cible ne sera jamais au-dessus de l'horizon</value>
   </data>
   <data name="LblMovingRotatorToMechanicalPosition" xml:space="preserve">
-    <value>Moving rotator to mechanical position {0}</value>
+    <value>Déplacement du rotateur en position mécanique {0}</value>
   </data>
   <data name="LblMovingRotatorToPosition" xml:space="preserve">
-    <value>Moving rotator to position {0}</value>
+    <value>Déplacement du rotateur vers la position {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Description" xml:space="preserve">
-    <value>Looks up the trained exposure value for the specified parameters and takes dark flat exposures</value>
+    <value>Recherche la valeur d'exposition formée pour les paramètres spécifiés et prend des expositions de dark flat</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedDarkFlatExposure_Name" xml:space="preserve">
-    <value>Trained Dark Flat Exposure</value>
+    <value>Valeur d'exposition de dark flat</value>
   </data>
   <data name="LblLeftside" xml:space="preserve">
-    <value>Left side</value>
+    <value>Côté gauche</value>
   </data>
   <data name="LblRightside" xml:space="preserve">
-    <value>Right side</value>
+    <value>Côté droit</value>
   </data>
   <data name="LblStars" xml:space="preserve">
-    <value>Stars</value>
+    <value>Étoiles</value>
   </data>
   <data name="LblShowSnapshots" xml:space="preserve">
-    <value>Snapshots</value>
+    <value>Captures instantanées</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
-    <value>Slew, Center and Rotate</value>
+    <value>Déplacer, centrer et pivoter</value>
   </data>
   <data name="LblFindHomeToolTip" xml:space="preserve">
-    <value>Instructs the telescope to locate the home postion</value>
+    <value>Donne des instructions au télescope pour localiser la position de repos</value>
   </data>
   <data name="LblHome" xml:space="preserve">
-    <value>Home</value>
+    <value>Position de repos</value>
   </data>
   <data name="LblTelescopeAtHomeParkedWarn" xml:space="preserve">
-    <value>Telescope is parked. Cannot locate the home position while parked.</value>
+    <value>Le télescope est parqué. Impossible de localiser la position de départ lorsqu'il est parqué.</value>
   </data>
   <data name="LblTelescopeAtHomeWarn" xml:space="preserve">
-    <value>Telescope is already at the home position.</value>
+    <value>Le télescope est déjà à la position de repos.</value>
   </data>
   <data name="LblTelescopeCannotFindHome" xml:space="preserve">
-    <value>The telescope does not have a home location capabiltiy.</value>
+    <value>Le télescope n'a pas la possibilité de localiser la position de repos.</value>
   </data>
   <data name="LblWaitingForTelescopeToFindHome" xml:space="preserve">
-    <value>Waiting for telescope to locate the home position</value>
+    <value>Attendre que le télescope localise la position de repos</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_FindHome_Description" xml:space="preserve">
-    <value>Instructs the telescope to locate the home postion. This cannot be done if the telescope is parked</value>
+    <value>Le télescope permet de localiser la position de repos. Cela ne peut pas être fait si le télescope est parqué</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_FindHome_Name" xml:space="preserve">
-    <value>Find Home</value>
+    <value>Trouver le repos</value>
   </data>
   <data name="LblTelescopeNoFindHomeError" xml:space="preserve">
-    <value>The telescope has no home location capability</value>
+    <value>Le télescope n'a pas de posibilité de localiser la position de repos</value>
   </data>
   <data name="LblTelescopeFindHomeCancelled" xml:space="preserve">
-    <value>Home locate operation cancelled</value>
+    <value>Annulation de l'opération de localisation de la position de repos</value>
   </data>
   <data name="LblTelescopeParkCancelled" xml:space="preserve">
-    <value>Park operation cancelled</value>
+    <value>Annulation du parquage</value>
   </data>
   <data name="LblEstimatedFlatPanelBrightness" xml:space="preserve">
-    <value>Estimated Flat Panel Brightness</value>
+    <value>Estimation de la luminosité de l'écran à flats</value>
   </data>
   <data name="LblFlatExposureCalcContinueBrightness" xml:space="preserve">
-    <value>Mean ADU was {0}, starting Exposure Brightness calculation at {1}</value>
+    <value>L'ADU moyenne était de {0}, le calcul de la luminosité de l'exposition commençant à {1}</value>
   </data>
   <data name="LblFlatExposureCalcFinishedBrightness" xml:space="preserve">
-    <value>Mean ADU is {0} target Exposure Brightness is {1}</value>
+    <value>L'ADU moyen est de {0} et la luminosité d'exposition cible est de {1}</value>
   </data>
   <data name="LblFlatExposureCalcStartBrightness" xml:space="preserve">
-    <value>Starting Exposure Brightness calculation at {0}</value>
+    <value>Début du calcul de la luminosité de l'exposition à {0}</value>
   </data>
   <data name="LblFast" xml:space="preserve">
-    <value>Fast</value>
+    <value>Rapide</value>
   </data>
   <data name="LblSetButtonMoveRateToolTip" xml:space="preserve">
-    <value>Set the button slew rate in degrees per second</value>
+    <value>Régler le bouton de vitesse de déplacement en degrés par seconde</value>
   </data>
   <data name="LblFirmwareVersion" xml:space="preserve">
-    <value>Firmware Version</value>
+    <value>Version du firmware</value>
   </data>
   <data name="LblFPGAVersion" xml:space="preserve">
-    <value>FPGA Version</value>
+    <value>Version FPGA</value>
   </data>
   <data name="LblSensorAirPressure" xml:space="preserve">
-    <value>Sensor air pressure</value>
+    <value>Capteur de pression d'air</value>
   </data>
   <data name="LblSensorHumidity" xml:space="preserve">
-    <value>Sensor humidity</value>
+    <value>Capteur d'humidité</value>
   </data>
   <data name="LblUnknownInstruction" xml:space="preserve">
-    <value>Unknown Instruction</value>
+    <value>Instruction inconnue</value>
   </data>
   <data name="LblQhyccdDriverVersionWarning" xml:space="preserve">
-    <value>The installed QHYCCD USB driver's version of {0} is below the minimum recommeneded version of {1}. Driver updates are available on the QHYCCD website and are recommended for optimal camera function</value>
+    <value>La version du pilote USB QHYCCD installée, {0}, est inférieure à la version minimale recommandée de {1}. Les mises à jour du pilote sont disponibles sur le site web du QHYCCD et sont recommandées pour un fonctionnement optimal de la caméra</value>
   </data>
   <data name="LblSDKVersion" xml:space="preserve">
-    <value>SDK Version</value>
+    <value>Version du SDK</value>
   </data>
   <data name="LblUsbDriverVersion" xml:space="preserve">
-    <value>USB Driver Version</value>
+    <value>Version du Pilote USB</value>
   </data>
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
-    <value>Failed to change connection state of device.</value>
+    <value>Echec à changer l'état de connexion de l'appareil.</value>
   </data>
   <data name="LblRms" xml:space="preserve">
     <value>Rms</value>
   </data>
   <data name="LblFLatUserPromptAdjustStepSize" xml:space="preserve">
-    <value>The wizard did not find the right brightness level after 5 tries. Please try changing the step size or the tolerance.</value>
+    <value>L'assistant n'a pas trouvé le bon niveau de luminosité après 5 essais. Veuillez essayer de modifier la taille des pas ou la tolérance.</value>
   </data>
   <data name="LblFlatDeviceSettleTime" xml:space="preserve">
-    <value>Settle Time</value>
+    <value>Délai d'attente</value>
   </data>
   <data name="LblInitializingSequencer" xml:space="preserve">
-    <value>Initializing Sequencer...</value>
+    <value>Initialisation du séquenceur...</value>
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
-    <value>Initializing Layout</value>
+    <value>Initialisation de la mise en page</value>
   </data>
   <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
-    <value>Rotator</value>
+    <value>Rotateur</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
-    <value>Moves the rotator to the mechanical angle</value>
+    <value>Déplace le rotateur à l'angle mécanique</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
-    <value>Move Rotator Mechanical</value>
+    <value>Déplacement du rotateur mécanique</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
-    <value>Meridian</value>
+    <value>Méridien</value>
+  </data>
+  <data name="LblAstronomicalDawn" xml:space="preserve">
+    <value>Aube astronomique</value>
+  </data>
+  <data name="LblAstronomicalDusk" xml:space="preserve">
+    <value>Crépuscule astronomique</value>
+  </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>Extension</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>Aucune extension trouvée</value>
   </data>
 </root>

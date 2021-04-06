@@ -18,12 +18,14 @@ using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Validations;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace NINA.Sequencer.Container {
 
     public interface ISequenceContainer : ISequenceItem, IValidatable {
         IList<ISequenceItem> Items { get; }
         bool IsExpanded { get; set; }
+
         int Iterations { get; set; }
         IExecutionStrategy Strategy { get; }
 
@@ -40,5 +42,9 @@ namespace NINA.Sequencer.Container {
         bool Remove(ISequenceTrigger item);
 
         void ResetAll();
+
+        Task Interrupt();
+
+        ICollection<ISequenceItem> GetItemsSnapshot();
     }
 }

@@ -1583,11 +1583,6 @@
     <Folder Include="External\x86\Nikon\Type0027\" />
     <Folder Include="External\x86\Nikon\Type0028\" />
     <Folder Include="External\x86\Nikon\Type0029\" />
-    <Folder Include="Model\" />
-    <Folder Include="Plugin\" />
-    <Folder Include="Sequencer\Exceptions\" />
-    <Folder Include="Sequencer\Validations\" />
-    <Folder Include="Utility\ColorSchema\" />
     <Folder Include="ViewModel\Equipment\" />
     <Folder Include="View\Sequencer\Sequence2\" />
   </ItemGroup>

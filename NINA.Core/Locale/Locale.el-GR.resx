@@ -1475,7 +1475,7 @@
     <value>Άνοιγμα</value>
   </data>
   <data name="LblFlatDeviceOpenForDarkFlats" xml:space="preserve">
-    <value>Open cover for dark flats in flat wizard</value>
+    <value>Ανοίξτε το κάλυμμα για τα dark flats στον οδηγό flat</value>
   </data>
   <data name="LblFlatDeviceSetBrightness" xml:space="preserve">
     <value>Ρύθμιση</value>
@@ -1487,7 +1487,7 @@
     <value>Άγνωστο</value>
   </data>
   <data name="LblFlatDeviceUseWizardTrainedValues" xml:space="preserve">
-    <value>Use trained exposure times</value>
+    <value>Χρήση χρόνων έκθεσης από τον οδηγό flat</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
     <value>Η μέση τιμή των ADU ήταν {0}, γίνεται εκκίνηση υπολογισμού του Χρόνου έκθεσης στο {1}</value>
@@ -2496,7 +2496,7 @@
     <value>Relative Position</value>
   </data>
   <data name="LblClearGuidingCalibration" xml:space="preserve">
-    <value>Clear calibration</value>
+    <value>Καθαρισμός Βαθμονόμησης</value>
   </data>
   <data name="LblPreferredPlanetarium" xml:space="preserve">
     <value>Προτιμώμενο λογισμικό Πλανηταρίου</value>
@@ -2514,7 +2514,7 @@
     <value>Flats για το φίλτρο: {0}</value>
   </data>
   <data name="LblPreSequenceChecklist" xml:space="preserve">
-    <value>The following potential issues have been found with the sequence:</value>
+    <value>Τα ακόλουθα πιθανά θέματα έχουν βρεθεί σχετικά με την αλληλουχία:</value>
   </data>
   <data name="LblPreSequenceChecklistHeader" xml:space="preserve">
     <value>Λίστα Ελέγχου Προ-Αλληλουχίας</value>
@@ -2571,7 +2571,7 @@
     <value>Θόρυβος Ανάγνωσης σε e</value>
   </data>
   <data name="LblReadoutMode" xml:space="preserve">
-    <value>Mode</value>
+    <value>Λειτουργία</value>
   </data>
   <data name="LblReadoutModeTooltip" xml:space="preserve">
     <value>A numeric value corresponding to your camera's readout mode</value>
@@ -3072,7 +3072,7 @@
 Θέλετε να γίνει συγχρονισμός των τιμών;</value>
   </data>
   <data name="LblTarget" xml:space="preserve">
-    <value>Target</value>
+    <value>Στόχος</value>
   </data>
   <data name="LblTargetDec" xml:space="preserve">
     <value>Απόκλιση Στόχου</value>
@@ -3275,19 +3275,19 @@
     <value>Ακολούθηση</value>
   </data>
   <data name="LblTrackingRate" xml:space="preserve">
-    <value>Tracking Rate</value>
+    <value>Ρυθμός Ακολούθησης</value>
   </data>
   <data name="LblTrackingStopped" xml:space="preserve">
     <value>Stopped</value>
   </data>
   <data name="LblTrackingSidereal" xml:space="preserve">
-    <value>Sidereal</value>
+    <value>Αστρική</value>
   </data>
   <data name="LblTrackingSolar" xml:space="preserve">
-    <value>Solar</value>
+    <value>Ηλιακή</value>
   </data>
   <data name="LblTrackingLunar" xml:space="preserve">
-    <value>Lunar</value>
+    <value>Σεληνιακή</value>
   </data>
   <data name="LblTrackingKing" xml:space="preserve">
     <value>King</value>
@@ -3852,7 +3852,7 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Συγχρονισμός</value>
   </data>
   <data name="LblDomeSyncAzimuth" xml:space="preserve">
-    <value>Sync</value>
+    <value>Συγχρονισμός</value>
   </data>
   <data name="LblDomeSyncAzimuthTooltip" xml:space="preserve">
     <value>Syncs the dome azimuth to the value calculated from the telescope direction and dome measurements</value>
@@ -3975,7 +3975,7 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Αλλαγή Μεσημβρινού σε</value>
   </data>
   <data name="LblMeridianFlipCenterFailed" xml:space="preserve">
-    <value>Center after Meridian Flip Failed</value>
+    <value>Κεντράρισμα μετά την Αποτυχία Αλλαγής Μεσημβρινού</value>
   </data>
   <data name="LblDefaultGain" xml:space="preserve">
     <value>Προεπιλεγμένη Ενίσχυση</value>
@@ -4125,55 +4125,55 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Αριθμός Αστεριών</value>
   </data>
   <data name="LblCameraNotConnected" xml:space="preserve">
-    <value>Camera not connected</value>
+    <value>Η Κάμερα δεν είναι συνδεδεμένη</value>
   </data>
   <data name="LblFilterWheelNotConnected" xml:space="preserve">
-    <value>Filterwheel not connected</value>
+    <value>Ο Τροχός Φίλτρων δεν είναι συνδεδεμένος</value>
   </data>
   <data name="LblFocuserNotConnected" xml:space="preserve">
-    <value>Focuser not connected</value>
+    <value>Ο Εστιαστής δεν είναι συνδεδεμένος</value>
   </data>
   <data name="LblGuiderNotConnected" xml:space="preserve">
-    <value>Guider not connected</value>
+    <value>Ο Οδηγητής δεν είναι συνδεδεμένος</value>
   </data>
   <data name="LblGuiderCannotClearCalibration" xml:space="preserve">
-    <value>Guider does not support calibration</value>
+    <value>Ο οδηγητής δεν υποστηρίζει βαθμονόμηση</value>
   </data>
   <data name="LblIterations" xml:space="preserve">
-    <value>Iterations</value>
+    <value>Επαναλήψεις</value>
   </data>
   <data name="LblRotatorNotConnected" xml:space="preserve">
-    <value>Rotator not connected</value>
+    <value>Ο Περιστροφέας Πεδίου δεν είναι συνδεδεμένος</value>
   </data>
   <data name="LblScript" xml:space="preserve">
     <value>Script</value>
   </data>
   <data name="LblDelay" xml:space="preserve">
-    <value>Delay</value>
+    <value>Καθηστέρηση</value>
   </data>
   <data name="LblTargetJ2000" xml:space="preserve">
-    <value>Target (J2000)</value>
+    <value>Στόχος (J2000)</value>
   </data>
   <data name="LblExecutingItemsInParallel" xml:space="preserve">
-    <value>Executing items in parallel</value>
+    <value>Εκτέλεση αντικειμένων παράλληλα</value>
   </data>
   <data name="LblEnterAnnotation" xml:space="preserve">
     <value>Enter Annotation</value>
   </data>
   <data name="LblAfterIterations" xml:space="preserve">
-    <value>After Iterations</value>
+    <value>Μετά από Επαναλήψεις</value>
   </data>
   <data name="LblFlatDeviceNotConnected" xml:space="preserve">
-    <value>Flat Device not connected</value>
+    <value>Η Συσκευή Flat δεν είναι συνδεδεμένη</value>
   </data>
   <data name="LblEnterMessage" xml:space="preserve">
-    <value>Enter Message</value>
+    <value>Εισάγετε Μήνυμα</value>
   </data>
   <data name="LblMessage" xml:space="preserve">
-    <value>Message</value>
+    <value>Μήνυμα</value>
   </data>
   <data name="LblLoopUntil" xml:space="preserve">
-    <value>Loop until</value>
+    <value>Επανάληψη μέχρι</value>
   </data>
   <data name="LblTriggers" xml:space="preserve">
     <value>Triggers</value>
@@ -4239,10 +4239,10 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Flip Time</value>
   </data>
   <data name="LblAmount" xml:space="preserve">
-    <value>Amount</value>
+    <value>Ποσότητα</value>
   </data>
   <data name="LblDelta" xml:space="preserve">
-    <value>Delta</value>
+    <value>Δέλτα</value>
   </data>
   <data name="LblElapsed" xml:space="preserve">
     <value>Elapsed</value>
@@ -4266,7 +4266,7 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Works like a sequential instruction set, but a deep sky object can be specified inside, which will auto populate all instructions inside it with the coordinates and rotation when necessary.</value>
   </data>
   <data name="Lbl_SequenceContainer_DeepSkyObjectContainer_Name" xml:space="preserve">
-    <value>Deep Sky Object Sequence</value>
+    <value>Αλληλουχία Αντικειμένου Βαθύ Ουρανού</value>
   </data>
   <data name="Lbl_SequenceContainer_ParallelContainer_Description" xml:space="preserve">
     <value>All instructions in this instruction set are run in parallel. This instruction set will not evaluate any conditions or triggers until all instructions are finished.</value>
@@ -4281,22 +4281,22 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Sequential Instruction Set</value>
   </data>
   <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Description" xml:space="preserve">
-    <value>Executes an autofocus run</value>
+    <value>Εκτελεί μια αυτόματη εστίαση</value>
   </data>
   <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Name" xml:space="preserve">
-    <value>Run Autofocus</value>
+    <value>Εκτέλεση Αυτόματης Εστίασης</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_CoolCamera_Description" xml:space="preserve">
-    <value>Cools down the camera for the given temperature and duration</value>
+    <value>Ψύχει την κάμερα για την δεδομένη θερμοκρασία και διάρκεια</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_CoolCamera_Name" xml:space="preserve">
-    <value>Cool Camera</value>
+    <value>Ψήξη Κάμερας</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Description" xml:space="preserve">
-    <value>Warms the camera for the given duration</value>
+    <value>Θερμαίνει την κάμερα για την δεδομένη διάρκεια</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
-    <value>Warm Camera</value>
+    <value>Θέρμανση Κάμερας</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Description" xml:space="preserve">
     <value>Sets the readout mode for the camera</value>
@@ -4308,64 +4308,64 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Readout mode not supported by camera. Must be a value between 0 and {0}</value>
   </data>
   <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Description" xml:space="preserve">
-    <value>Moves the filter wheel to the specified filter</value>
+    <value>Μετακινεί τον τροχό φίλτρων στο ορισμένο φίλτρο</value>
   </data>
   <data name="Lbl_SequenceItem_FilterWheel_SwitchFilter_Name" xml:space="preserve">
-    <value>Switch Filter</value>
+    <value>Αλλαγή Φίλτρου</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Description" xml:space="preserve">
-    <value>Closes the cover of the flat panel</value>
+    <value>Κλείνει το κάλυμμα του flat panel</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_CloseCover_Name" xml:space="preserve">
-    <value>Close Flat Panel Cover</value>
+    <value>Κλείσιμο καλύμματος Flat Panel</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Description" xml:space="preserve">
-    <value>Moves the focuser to the given absolute position</value>
+    <value>Μετακινεί τον εστιαστή στην δεδομένη απόλυτη θέση</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Description" xml:space="preserve">
     <value>Moves the focuser to the given relative position</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserAbsolute_Name" xml:space="preserve">
-    <value>Move Focuser</value>
+    <value>Μετακίνηση Εστιαστή</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserRelative_Name" xml:space="preserve">
     <value>Move Focuser Relative</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Description" xml:space="preserve">
-    <value>Sends a dither signal to the guider</value>
+    <value>Στέλνει ένα σήμα dither στον οδηγητή</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Name" xml:space="preserve">
     <value>Dither</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StartGuiding_Description" xml:space="preserve">
-    <value>Starts autoguiding</value>
+    <value>Ξεκινάει την αυτόματη οδήγηση</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StartGuiding_Name" xml:space="preserve">
-    <value>Start Guiding</value>
+    <value>Έναρξη Οδήγησης</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StopGuiding_Description" xml:space="preserve">
-    <value>Stops autoguiding</value>
+    <value>Σταματάει την αυτόματη οδήγηση</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StopGuiding_Name" xml:space="preserve">
-    <value>Stop Guiding</value>
+    <value>Σταμάτημα Οδήγησης</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Description" xml:space="preserve">
-    <value>Takes an exposure for the given duration, gain and offset</value>
+    <value>Παίρνει μια έκθεση για την δεδομένη διάρκεια, ενίσχυση και offset</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Name" xml:space="preserve">
-    <value>Take Exposure</value>
+    <value>Λήψη Έκθεσης</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Centers and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
+    <value>Κεντράρει το τηλεσκόπιο μέσω plate solving και ενός περιστροφέα πεδίου στις δεδομένες συντεταγμένες και περιστροφή</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Center and Rotate</value>
+    <value>Κεντράρισμα και Περιστροφή</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Centers the telescope via plate solving for the given coordinates</value>
+    <value>Κεντράρει το τηλεσκόπιο μέσω plate solving για τις δεδομένες συντεταγμένες</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Center</value>
+    <value>Κεντράρισμα</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Parks the telescope to the park position</value>
@@ -4392,13 +4392,13 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Unpark Scope</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SetTracking_Name" xml:space="preserve">
-    <value>Set Tracking</value>
+    <value>Ορισμός Ακολούθησης</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_SetTracking_Description" xml:space="preserve">
-    <value>Sets the tracking mode on the mount</value>
+    <value>Ορίζει την λειτουργία ακολούθησης της στήριξης</value>
   </data>
   <data name="LblTrackingModeNotSupported" xml:space="preserve">
-    <value>Tracking mode not supported by the mount</value>
+    <value>Η λειτουργία Ακολούθησης δεν υποστηρίζεται από την στήριξη</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_Annotation_Description" xml:space="preserve">
     <value>A utility item to add annotations to a sequence</value>
@@ -4422,7 +4422,7 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Waits until the altitude has been reached for the given coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForAltitude_Name" xml:space="preserve">
-    <value>Wait for Altitude</value>
+    <value>Αναμονή για Υψόμετρο</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitForTimeSpan_Description" xml:space="preserve">
     <value>Waits for a given duration in seconds</value>
@@ -4440,13 +4440,13 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>A trigger to initiate an autofocus run after the HFR has increased by the given amount in percent since the last autofocus run or start of sequence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Name" xml:space="preserve">
-    <value>AF After HFR Increase</value>
+    <value>Αυτόματη Εστίαση Μετά την Αύξηση του HFR</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Description" xml:space="preserve">
     <value>A trigger to initiate an autofocus run after the temperature has changed by the given amount in degrees since the last autofocus run or start of sequence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTemperatureChangeTrigger_Name" xml:space="preserve">
-    <value>AF After Temperature Change</value>
+    <value>Αυτόματη Εστίαση Μετά την Θερμοκρασιακή Αλλαγή</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterTimeTrigger_Description" xml:space="preserve">
     <value>A trigger to initiate an autofocus run after the time has passed by the given amount in minutes since the last autofocus run or start of sequence</value>
@@ -4458,28 +4458,28 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>A trigger to initiate a meridian flip when conditions are met</value>
   </data>
   <data name="Lbl_SequenceTrigger_MeridianFlipTrigger_Name" xml:space="preserve">
-    <value>Meridian Flip</value>
+    <value>Αλλαγή Μεσημβρινού</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_CameraCannotSetTemperature" xml:space="preserve">
-    <value>Camera does not have a cooler and is unable to set a temperature</value>
+    <value>Η Κάμερα δεν έχει ψύξη και δεν μπορεί να ορίσει θερμοκρασία</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose" xml:space="preserve">
-    <value>The flat device does not support opening or closing the cover</value>
+    <value>Η συσκευή flat δεν υποστηρίζει άνοιγμα ή κλείσιμο του καλύμματος</value>
   </data>
   <data name="Lbl_Sequencer_LoadSequence_Tooltip" xml:space="preserve">
-    <value>Load complete sequence from JSON file</value>
+    <value>Φόρτωμα πλήρους αλληλουχίας από αρχείο JSON</value>
   </data>
   <data name="Lbl_Sequencer_RootElementMustBeRootContainer" xml:space="preserve">
     <value>Unable to load sequence - Sequencer root element must be sequence root container!</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_Tooltip" xml:space="preserve">
-    <value>Save complete sequence to JSON file</value>
+    <value>Αποθήκευση πλήρους αλληλουχίας σε αρχείο JSON</value>
   </data>
   <data name="Lbl_Sequencer_UnableToDeserializeJSON" xml:space="preserve">
     <value>Unable to deserialize JSON</value>
   </data>
   <data name="LblValue" xml:space="preserve">
-    <value>Value</value>
+    <value>Τιμή</value>
   </data>
   <data name="Lbl_SequenceItem_Switch_SetSwitchValue_Name" xml:space="preserve">
     <value>Set Switch Value</value>
@@ -4503,10 +4503,10 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Sends a dither command to the guider after the specified number of exposures</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
-    <value>Dither after Exposures</value>
+    <value>Dither μετά από Εκθέσεις</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
-    <value>After Exposures</value>
+    <value>Μετά από Εκθέσεις</value>
   </data>
   <data name="LblDragOver_BottomText" xml:space="preserve">
     <value>INSERT INSTRUCTION BELOW</value>
@@ -4527,7 +4527,7 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>ADD TRIGGER</value>
   </data>
   <data name="LblInstructions" xml:space="preserve">
-    <value>Instructions</value>
+    <value>Οδηγίες</value>
   </data>
   <data name="LblTemplates" xml:space="preserve">
     <value>Templates</value>
@@ -4554,25 +4554,25 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Template '{0}' will be deleted. Do you want to delete the existing Template? This action is irreversible.</value>
   </data>
   <data name="Lbl_Sequencer_DeleteItem" xml:space="preserve">
-    <value>DELETE ITEM</value>
+    <value>ΔΙΑΓΡΑΦΗ ΑΝΤΙΚΕΙΜΈΝΟΥ</value>
   </data>
   <data name="LblAddTargetToSequence" xml:space="preserve">
-    <value>Add Target to Sequence</value>
+    <value>Προσθήκη Στόχου στην Αλληλουχία</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description" xml:space="preserve">
     <value>Starts AutoFocus after a detected filter change</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name" xml:space="preserve">
-    <value>AF After Filter Change</value>
+    <value>Αυτόματη Εστίαση μετά την Αλλαγή Φίλτρου</value>
   </data>
   <data name="LblLastFilter" xml:space="preserve">
-    <value>Last Filter</value>
+    <value>Τελευταίο Φίλτρο</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Description" xml:space="preserve">
-    <value>Triggers an autofocus run after the set amount of exposures have been captured</value>
+    <value>Προτρέπει την εκτέλεση μιας αυτόματης εστίασης μετά την ορισμένη ποσότητα εκθέσεων που έχουν ληφθεί</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Name" xml:space="preserve">
-    <value>AF After # Exposures</value>
+    <value>Αυτόματη Εστίαση μετά από # Εκθέσεων</value>
   </data>
   <data name="LblUnreachableAltitude" xml:space="preserve">
     <value>Altitude will never be reached</value>
@@ -4593,7 +4593,7 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Takes exposures for the given amount, filter, duration, gain and offset and initiates a dither after the amount of exposures. Triggers and conditions are evaluated in between the exposures.</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_SmartExposure_Name" xml:space="preserve">
-    <value>Smart Exposure</value>
+    <value>Έξυπνη Έκθεση</value>
   </data>
   <data name="Lbl_Sequencer_SaveAsSequence_Tooltip" xml:space="preserve">
     <value>Save complete sequence to a new JSON file</value>
@@ -4602,13 +4602,13 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Opens the cover of the flat panel</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_OpenCover_Name" xml:space="preserve">
-    <value>Open Flat Panel Cover</value>
+    <value>Άνοιγμα καλύμματος Flat Panel</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Description" xml:space="preserve">
     <value>Sets the brightness of the flat device to the specified value</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_SetBrightness_Name" xml:space="preserve">
-    <value>Set Brightness</value>
+    <value>Ρύθμιση Φωτεινότητας</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_ToggleLight_Description" xml:space="preserve">
     <value>Toggles the flat device light on or off</value>
@@ -4626,10 +4626,10 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>No trained exposure value was found for the combination of filter {0}, gain {1}, binning {2}</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_EndArea" xml:space="preserve">
-    <value>Sequence End Area</value>
+    <value>Περιοχή Τέλους Αλληλουχίας</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_StartArea" xml:space="preserve">
-    <value>Sequence Start Area</value>
+    <value>Περιοχή Έναρξης Αλληλουχίας</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_TargetArea" xml:space="preserve">
     <value>Sequence Target Area
@@ -4639,13 +4639,13 @@ Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assis
     <value>Loop Conditions</value>
   </data>
   <data name="Lbl_SequenceContainer_EndAreaContainer_Name" xml:space="preserve">
-    <value>End</value>
+    <value>Τέλος</value>
   </data>
   <data name="Lbl_SequenceContainer_StartAreaContainer_Name" xml:space="preserve">
-    <value>Start</value>
+    <value>Εκκίνηση</value>
   </data>
   <data name="Lbl_SequenceContainer_TargetAreaContainer_Name" xml:space="preserve">
-    <value>Targets</value>
+    <value>Στόχοι</value>
   </data>
   <data name="LblStartupSequenceTemplate" xml:space="preserve">
     <value>Startup Sequence Template</value>
@@ -4727,7 +4727,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Target Imaging Instructions</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_Name" xml:space="preserve">
-    <value>Sequence</value>
+    <value>Αλληλουχία</value>
   </data>
   <data name="Lbl_SequenceContainer_Duplicate_Tooltip" xml:space="preserve">
     <value>Creates a duplicate of current set and all its items and append it to the parent instruction set</value>
@@ -4739,31 +4739,31 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Add a new Sequence Target via the + Button, open an existing Target or add Targets via Framing Assistant</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Add new Target</value>
+    <value>Προσθήκη νέου Στόχου</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
-    <value>Load Target</value>
+    <value>Φόρτωμα Στόχου</value>
   </data>
   <data name="Lbl_OldSequencer_OpenTargetSet" xml:space="preserve">
     <value>Open Target Set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequence</value>
+    <value>Sequence Builder</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Simple Sequence Template</value>
+    <value>Sequence Builder Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
-    <value>Import Target</value>
+    <value>Εισαγωγή Στόχου</value>
   </data>
   <data name="Lbl_Sequencer_Title" xml:space="preserve">
     <value>Sequencer</value>
   </data>
   <data name="Lbl_SequenceCategory_Camera" xml:space="preserve">
-    <value>Camera</value>
+    <value>Κάμερα</value>
   </data>
   <data name="Lbl_SequenceCategory_Condition" xml:space="preserve">
     <value>Loop Condition</value>
@@ -4772,22 +4772,22 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>* Instruction Set *</value>
   </data>
   <data name="Lbl_SequenceCategory_FilterWheel" xml:space="preserve">
-    <value>Filter Wheel</value>
+    <value>Τροχός Φίλτρων</value>
   </data>
   <data name="Lbl_SequenceCategory_FlatDevice" xml:space="preserve">
-    <value>Flat Device</value>
+    <value>Συσκευή Flat</value>
   </data>
   <data name="Lbl_SequenceCategory_Focuser" xml:space="preserve">
-    <value>Focuser</value>
+    <value>Εστιαστής</value>
   </data>
   <data name="Lbl_SequenceCategory_Guider" xml:space="preserve">
-    <value>Guider</value>
+    <value>Οδηγητής</value>
   </data>
   <data name="Lbl_SequenceCategory_Switch" xml:space="preserve">
-    <value>Switch</value>
+    <value>Τροφοδοτικό</value>
   </data>
   <data name="Lbl_SequenceCategory_Telescope" xml:space="preserve">
-    <value>Telescope</value>
+    <value>Τηλεσκόπιο</value>
   </data>
   <data name="Lbl_SequenceCategory_Trigger" xml:space="preserve">
     <value>Trigger</value>
@@ -4802,13 +4802,13 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Loop Until Altitude Sets Below</value>
   </data>
   <data name="Lbl_SequenceCategory_Dome" xml:space="preserve">
-    <value>Dome</value>
+    <value>Θόλος</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Description" xml:space="preserve">
-    <value>Closes the shutter of the dome</value>
+    <value>Κλείνει το κλείστρο του θόλου</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_CloseDomeShutter_Name" xml:space="preserve">
-    <value>Close Dome Shutter</value>
+    <value>Κλείσιμο Κλείστρου Θόλου</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_ParkDome_Description" xml:space="preserve">
     <value>Parks the dome to the park position</value>
@@ -4823,13 +4823,13 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Start of First Target Options</value>
   </data>
   <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Cool camera when sequence starts</value>
+    <value>Ψύξη κάμερας όταν ξεκινήσει η αλληλουχία</value>
   </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
-    <value>Open cover when sequence starts</value>
+    <value>Άνοιγμα καλύμματος όταν ξεκινήσει η αλληλουχία</value>
   </data>
   <data name="LblOpenDomeShutterAtSequenceStart" xml:space="preserve">
-    <value>Open dome shutter at sequence start</value>
+    <value>Κλείσιμο του κλείστρου του θόλου όταν ξεκινήσει η αλληλουχία</value>
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Unpark dome at sequence start</value>
@@ -4838,22 +4838,22 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Unpark mount when sequence starts</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
-    <value>Opens the shutter of the dome</value>
+    <value>Ανοίγει το κλείστρο του θόλου</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Name" xml:space="preserve">
-    <value>Open Dome Shutter</value>
+    <value>Άνοιγμα Κλείστρου Θόλου</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Description" xml:space="preserve">
     <value>Ensures the dome remains synchronized with the telescope</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Enable Dome Synchronization</value>
+    <value>Ενεργοποίηση Συγχρονισμού Θόλου</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>The Sequence contains rows which are either disabled or where the progress exposure count is equals to the total exposure count. These items are skipped and no items for these rows are generated for the sequencer.</value>
   </data>
   <data name="LblRotateTarget" xml:space="preserve">
-    <value>Rotate Target</value>
+    <value>Περιστροφή Στόχου</value>
   </data>
   <data name="LblSafetyMonitorConnectionLost" xml:space="preserve">
     <value>Safety Monitor connection has been lost!</value>
@@ -4884,10 +4884,10 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Safety Monitor is not connected</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_Notification" xml:space="preserve">
-    <value>Sequence "{0}" saved successfully at {1}</value>
+    <value>Η αλληλουχία "{0}" αποθηκεύτηκε με επιτυχία στο {1}</value>
   </data>
   <data name="LblSetTrackingRate" xml:space="preserve">
-    <value>Set Tracking Rate</value>
+    <value>Ορισμός Ρυθμού Ακολούθησης</value>
   </data>
   <data name="LblTimeSpan" xml:space="preserve">
     <value>Time Span</value>
@@ -4899,7 +4899,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Loop for Time Span</value>
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
-    <value>Flat Device connection lost!</value>
+    <value>Η σύνδεση με την Συσκευή Flat χάθηκε!</value>
   </data>
   <data name="LblNoSafetyMonitor" xml:space="preserve">
     <value>No Safety Monitor</value>
@@ -5173,7 +5173,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Turns the camera's dew heater on or off</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_DewHeater_Name" xml:space="preserve">
-    <value>Dew Heater</value>
+    <value>Θερμαντικό Στοιχείο</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
     <value>The connected camera lacks a dew heater that can be controlled</value>
@@ -5266,7 +5266,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Instructs the telescope to locate the home postion. This cannot be done if the telescope is parked</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_FindHome_Name" xml:space="preserve">
-    <value>Find Home</value>
+    <value>Εύρεση Αρχικής Θέσης</value>
   </data>
   <data name="LblTelescopeNoFindHomeError" xml:space="preserve">
     <value>The telescope has no home location capability</value>
@@ -5338,7 +5338,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Initializing Layout</value>
   </data>
   <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
-    <value>Rotator</value>
+    <value>Περιστροφέας Πεδίου</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
     <value>Moves the rotator to the mechanical angle</value>
@@ -5348,5 +5348,20 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>Meridian</value>
+  </data>
+  <data name="LblAstronomicalDawn" xml:space="preserve">
+    <value>Astronomical Dawn</value>
+  </data>
+  <data name="LblAstronomicalDusk" xml:space="preserve">
+    <value>Astronomical Dusk</value>
+  </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>No Plugins found</value>
   </data>
 </root>

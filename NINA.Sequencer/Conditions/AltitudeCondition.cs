@@ -23,6 +23,8 @@ using System;
 using System.Threading.Tasks;
 using System.ComponentModel.Composition;
 using NINA.Core.Enum;
+using System.Threading;
+using System.Runtime.Serialization;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -46,19 +48,11 @@ namespace NINA.Sequencer.Conditions {
             this.profileService = profileService;
             Coordinates = new InputCoordinates();
             Altitude = 30;
+        }
 
-            //todo: find a better home for this
-            Task.Run(async () => {
-                await Task.Delay(15000);
-                while (true) {
-                    try {
-                        CalculateCurrentAltitude();
-                    } catch (Exception ee) {
-                        Logger.Error(ee);
-                    }
-                    await Task.Delay(5000);
-                }
-            });
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context) {
+            StartWatchdogIfRequired();
         }
 
         [JsonProperty]
@@ -142,6 +136,7 @@ namespace NINA.Sequencer.Conditions {
             } else {
                 HasDsoParent = false;
             }
+            StartWatchdogIfRequired();
         }
 
         public override string ToString() {
@@ -151,10 +146,38 @@ namespace NINA.Sequencer.Conditions {
         public override void ResetProgress() {
         }
 
+        private CancellationTokenSource watchdogCTS;
+        private Task watchdogTask;
+        private object lockObj = new object();
+
         public override void SequenceBlockFinished() {
         }
 
         public override void SequenceBlockStarted() {
+        }
+
+        private void StartWatchdogIfRequired() {
+            lock (lockObj) {
+                if (ItemUtility.IsInRootContainer(Parent)) {
+                    if (watchdogTask == null) {
+                        watchdogTask = Task.Run(async () => {
+                            using (watchdogCTS = new CancellationTokenSource()) {
+                                while (true) {
+                                    try {
+                                        CalculateCurrentAltitude();
+                                    } catch (Exception ex) {
+                                        Logger.Error(ex);
+                                    }
+                                    await Task.Delay(5000, watchdogCTS.Token);
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    watchdogCTS?.Cancel();
+                    watchdogTask = null;
+                }
+            }
         }
 
         public override bool Check(ISequenceItem nextItem) {

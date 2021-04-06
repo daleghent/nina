@@ -37,10 +37,10 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
             ISequenceItem next = null;
             context.Iterations = 0;
 
-            while ((next = context.Items.FirstOrDefault(x => x.Status == SequenceEntityStatus.CREATED)) != null && CanContinue(context, next)) {
+            while ((next = GetNextItem(context)) != null && CanContinue(context, next)) {
                 StartBlock(context);
 
-                while ((next = context.Items.FirstOrDefault(x => x.Status == SequenceEntityStatus.CREATED)) != null && CanContinue(context, next)) {
+                while ((next = GetNextItem(context)) != null && CanContinue(context, next)) {
                     token.ThrowIfCancellationRequested();
                     await RunTriggers(context, next, progress, token);
                     await next.Run(progress, token);
@@ -49,7 +49,7 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
                 FinishBlock(context);
 
                 if (CanContinue(context, next)) {
-                    foreach (var item in context.Items) {
+                    foreach (var item in context.GetItemsSnapshot()) {
                         if (item is ISequenceContainer) {
                             (item as ISequenceContainer).ResetAll();
                         } else {
@@ -61,9 +61,14 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
 
             context.Skip();
             //Mark rest of items as skipped
-            foreach (var item in context.Items.Where(x => x.Status == SequenceEntityStatus.CREATED)) {
+            foreach (var item in context.GetItemsSnapshot().Where(x => x.Status == SequenceEntityStatus.CREATED)) {
                 item.Skip();
             }
+        }
+
+        private ISequenceItem GetNextItem(ISequenceContainer context) {
+            var items = context.GetItemsSnapshot();
+            return items.FirstOrDefault(x => x.Status == SequenceEntityStatus.CREATED);
         }
 
         private async Task RunTriggers(ISequenceContainer container, ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token) {
@@ -80,13 +85,13 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
         private void StartBlock(ISequenceContainer container) {
             var conditionable = container as IConditionable;
             if (conditionable != null) {
-                foreach (var condition in conditionable.Conditions) {
+                foreach (var condition in conditionable.GetConditionsSnapshot()) {
                     condition.SequenceBlockStarted();
                 }
             }
             var triggerable = container as ITriggerable;
             if (triggerable != null) {
-                foreach (var trigger in triggerable.Triggers) {
+                foreach (var trigger in triggerable.GetTriggersSnapshot()) {
                     trigger.Initialize();
                 }
             }
@@ -97,7 +102,7 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
 
             var conditionable = container as IConditionable;
             if (conditionable != null) {
-                foreach (var condition in conditionable.Conditions) {
+                foreach (var condition in conditionable.GetConditionsSnapshot()) {
                     condition.SequenceBlockFinished();
                 }
             }
@@ -106,10 +111,9 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
         private bool CanContinue(ISequenceContainer container, ISequenceItem nextItem) {
             var conditionable = container as IConditionable;
             var canContinue = false;
-            if (conditionable?.Conditions?.Count > 0) {
-                if (conditionable.Conditions.Count > 0) {
-                    canContinue = conditionable.CheckConditions(nextItem);
-                }
+            var conditions = conditionable?.GetConditionsSnapshot();
+            if (conditions.Count > 0) {
+                canContinue = conditionable.CheckConditions(nextItem);
             } else {
                 canContinue = container.Iterations < 1;
             }

@@ -37,7 +37,7 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
 
         [Test]
         public async Task Execute_WithoutConditions_ExecutedOnce() {
-            var containerMock = new Mock<ISequenceContainer>();
+            var containerMock = new Mock<SequenceContainer>(new Mock<IExecutionStrategy>().Object);
             var item1Mock = new Mock<ISequenceItem>();
 
             item1Mock
@@ -48,8 +48,8 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
             item2Mock
                 .Setup(x => x.Run(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
                 .Callback(() => item2Mock.SetupGet(x => x.Status).Returns(SequenceEntityStatus.FINISHED));
-            var items = new List<ISequenceItem>() { item1Mock.Object, item2Mock.Object };
-            containerMock.SetupGet(x => x.Items).Returns(items);
+            containerMock.Object.Add(item1Mock.Object);
+            containerMock.Object.Add(item2Mock.Object);
 
             var sut = new SequentialStrategy();
             await sut.Execute(containerMock.Object, default, default);

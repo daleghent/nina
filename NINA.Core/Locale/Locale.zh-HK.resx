@@ -1217,7 +1217,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Slewing</value>
   </data>
   <data name="LblDomeAzimuth" xml:space="preserve">
-    <value>Azimuth</value>
+    <value>方位角</value>
   </data>
   <data name="LblDomeNoSource" xml:space="preserve">
     <value>No Dome Source</value>
@@ -1496,7 +1496,7 @@ You can also calculate the bias by clicking the Snapshot button next to Bias Mea
     <value>未知</value>
   </data>
   <data name="LblFlatDeviceUseWizardTrainedValues" xml:space="preserve">
-    <value>Use trained exposure times</value>
+    <value>Use exposure times trained with flat wizard</value>
   </data>
   <data name="LblFlatExposureCalcContinue" xml:space="preserve">
     <value>平均 adu 係 {0}, 開始曝光時間計算 {1}</value>
@@ -2581,7 +2581,7 @@ You can also calculate the bias by clicking the Snapshot button next to Bias Mea
     <value>讀出譟聲 (e)</value>
   </data>
   <data name="LblReadoutMode" xml:space="preserve">
-    <value>Mode</value>
+    <value>模式</value>
   </data>
   <data name="LblReadoutModeTooltip" xml:space="preserve">
     <value>A numeric value corresponding to your camera's readout mode</value>
@@ -3418,7 +3418,7 @@ You can also calculate the bias by clicking the Snapshot button next to Bias Mea
     <value>Relative Humidity</value>
   </data>
   <data name="LblUPBV2Temperature" xml:space="preserve">
-    <value>Temperature</value>
+    <value>溫度</value>
   </data>
   <data name="LblUPBV2UpTime" xml:space="preserve">
     <value>Up-Time</value>
@@ -3847,10 +3847,10 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Shutter</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Close</value>
+    <value>關閉</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Open</value>
+    <value>打開</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Rotate clockwise</value>
@@ -3862,7 +3862,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Synchronization</value>
   </data>
   <data name="LblDomeSyncAzimuth" xml:space="preserve">
-    <value>Sync</value>
+    <value>同步</value>
   </data>
   <data name="LblDomeSyncAzimuthTooltip" xml:space="preserve">
     <value>Syncs the dome azimuth to the value calculated from the telescope direction and dome measurements</value>
@@ -4162,7 +4162,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Delay</value>
   </data>
   <data name="LblTargetJ2000" xml:space="preserve">
-    <value>Target (J2000)</value>
+    <value>目標坐標 (J2000)</value>
   </data>
   <data name="LblExecutingItemsInParallel" xml:space="preserve">
     <value>Executing items in parallel</value>
@@ -4306,7 +4306,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Warms the camera for the given duration</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_WarmCamera_Name" xml:space="preserve">
-    <value>Warm Camera</value>
+    <value>相機回溫</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_SetReadoutMode_Description" xml:space="preserve">
     <value>Sets the readout mode for the camera</value>
@@ -4345,7 +4345,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Sends a dither signal to the guider</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_Dither_Name" xml:space="preserve">
-    <value>Dither</value>
+    <value>抖動</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StartGuiding_Description" xml:space="preserve">
     <value>Starts autoguiding</value>
@@ -4357,7 +4357,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Stops autoguiding</value>
   </data>
   <data name="Lbl_SequenceItem_Guider_StopGuiding_Name" xml:space="preserve">
-    <value>Stop Guiding</value>
+    <value>停止導星</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Description" xml:space="preserve">
     <value>Takes an exposure for the given duration, gain and offset</value>
@@ -4655,7 +4655,7 @@ Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assis
     <value>Start</value>
   </data>
   <data name="Lbl_SequenceContainer_TargetAreaContainer_Name" xml:space="preserve">
-    <value>Targets</value>
+    <value>目標</value>
   </data>
   <data name="LblStartupSequenceTemplate" xml:space="preserve">
     <value>Startup Sequence Template</value>
@@ -4737,7 +4737,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Target Imaging Instructions</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_Name" xml:space="preserve">
-    <value>Sequence</value>
+    <value>序列</value>
   </data>
   <data name="Lbl_SequenceContainer_Duplicate_Tooltip" xml:space="preserve">
     <value>Creates a duplicate of current set and all its items and append it to the parent instruction set</value>
@@ -4758,13 +4758,13 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Open Target Set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequence</value>
+    <value>Sequence Builder</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>End of Last Target Options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
-    <value>Simple Sequence Template</value>
+    <value>Sequence Builder Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
     <value>Import Target</value>
@@ -4773,7 +4773,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Sequencer</value>
   </data>
   <data name="Lbl_SequenceCategory_Camera" xml:space="preserve">
-    <value>Camera</value>
+    <value>相機</value>
   </data>
   <data name="Lbl_SequenceCategory_Condition" xml:space="preserve">
     <value>Loop Condition</value>
@@ -4788,16 +4788,16 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Flat Device</value>
   </data>
   <data name="Lbl_SequenceCategory_Focuser" xml:space="preserve">
-    <value>Focuser</value>
+    <value>電調</value>
   </data>
   <data name="Lbl_SequenceCategory_Guider" xml:space="preserve">
-    <value>Guider</value>
+    <value>導星</value>
   </data>
   <data name="Lbl_SequenceCategory_Switch" xml:space="preserve">
-    <value>Switch</value>
+    <value>開關</value>
   </data>
   <data name="Lbl_SequenceCategory_Telescope" xml:space="preserve">
-    <value>Telescope</value>
+    <value>赤道儀</value>
   </data>
   <data name="Lbl_SequenceCategory_Trigger" xml:space="preserve">
     <value>Trigger</value>
@@ -5183,7 +5183,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Turns the camera's dew heater on or off</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_DewHeater_Name" xml:space="preserve">
-    <value>Dew Heater</value>
+    <value>防結露加熱</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_Camera_DewHeater_NotPresent" xml:space="preserve">
     <value>The connected camera lacks a dew heater that can be controlled</value>
@@ -5348,7 +5348,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Initializing Layout</value>
   </data>
   <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
-    <value>Rotator</value>
+    <value>旋轉器</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
     <value>Moves the rotator to the mechanical angle</value>
@@ -5358,5 +5358,20 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>Meridian</value>
+  </data>
+  <data name="LblAstronomicalDawn" xml:space="preserve">
+    <value>Astronomical Dawn</value>
+  </data>
+  <data name="LblAstronomicalDusk" xml:space="preserve">
+    <value>Astronomical Dusk</value>
+  </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>Plugins</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>No Plugins found</value>
   </data>
 </root>

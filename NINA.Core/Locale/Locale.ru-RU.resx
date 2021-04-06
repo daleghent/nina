@@ -5352,4 +5352,19 @@ Dec: {1}</value>
   <data name="LblMeridian" xml:space="preserve">
     <value>Меридиан</value>
   </data>
+  <data name="LblAstronomicalDawn" xml:space="preserve">
+    <value>Астрономические сумерки</value>
+  </data>
+  <data name="LblAstronomicalDusk" xml:space="preserve">
+    <value>Астрономические сумерки</value>
+  </data>
+  <data name="LblSkytechX" xml:space="preserve">
+    <value>SkytechX</value>
+  </data>
+  <data name="LblPlugins" xml:space="preserve">
+    <value>Плагины</value>
+  </data>
+  <data name="LblNoPluginsFound" xml:space="preserve">
+    <value>Плагины не найдены</value>
+  </data>
 </root>

@@ -27,5 +27,7 @@ namespace NINA.Sequencer.Conditions {
         bool CheckConditions(ISequenceItem nextItem);
 
         void ResetConditions();
+
+        ICollection<ISequenceCondition> GetConditionsSnapshot();
     }
 }

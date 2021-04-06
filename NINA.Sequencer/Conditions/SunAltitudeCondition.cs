@@ -21,7 +21,10 @@ using NINA.Astrometry;
 using System;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using NINA.Sequencer.Utility;
+using System.Runtime.Serialization;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -44,19 +47,11 @@ namespace NINA.Sequencer.Conditions {
             Comparator = ComparisonOperatorEnum.GREATER_THAN;
 
             CalculateCurrentSunState();
+        }
 
-            //todo: find a better home for this
-            Task.Run(async () => {
-                await Task.Delay(15000);
-                while (true) {
-                    try {
-                        CalculateCurrentSunState();
-                    } catch (Exception ee) {
-                        Logger.Error(ee);
-                    }
-                    await Task.Delay(5000);
-                }
-            });
+        [OnDeserialized]
+        public void OnDeserialized(StreamingContext context) {
+            StartWatchdogIfRequired();
         }
 
         [JsonProperty]
@@ -104,6 +99,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void AfterParentChanged() {
+            StartWatchdogIfRequired();
         }
 
         public override string ToString() {
@@ -114,10 +110,38 @@ namespace NINA.Sequencer.Conditions {
         public override void ResetProgress() {
         }
 
+        private CancellationTokenSource watchdogCTS;
+        private Task watchdogTask;
+        private object lockObj = new object();
+
         public override void SequenceBlockFinished() {
         }
 
         public override void SequenceBlockStarted() {
+        }
+
+        private void StartWatchdogIfRequired() {
+            lock (lockObj) {
+                if (ItemUtility.IsInRootContainer(Parent)) {
+                    if (watchdogTask == null) {
+                        watchdogTask = Task.Run(async () => {
+                            using (watchdogCTS = new CancellationTokenSource()) {
+                                while (true) {
+                                    try {
+                                        CalculateCurrentSunState();
+                                    } catch (Exception ex) {
+                                        Logger.Error(ex);
+                                    }
+                                    await Task.Delay(5000, watchdogCTS.Token);
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    watchdogCTS?.Cancel();
+                    watchdogTask = null;
+                }
+            }
         }
 
         public override bool Check(ISequenceItem nextItem) {

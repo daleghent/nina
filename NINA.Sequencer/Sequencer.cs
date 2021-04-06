@@ -104,7 +104,7 @@ namespace NINA.Sequencer {
 
         private IList<string> Validate(ISequenceContainer container) {
             List<string> issues = new List<string>();
-            foreach (var item in container.Items) {
+            foreach (var item in container.GetItemsSnapshot()) {
                 if (item is IValidatable) {
                     var v = item as IValidatable;
                     v.Validate();
@@ -113,7 +113,7 @@ namespace NINA.Sequencer {
 
                 if (item is ISequenceContainer) {
                     if (item is IConditionable) {
-                        foreach (var condition in (item as IConditionable).Conditions) {
+                        foreach (var condition in (item as IConditionable).GetConditionsSnapshot()) {
                             if (condition is IValidatable) {
                                 var v = condition as IValidatable;
                                 v.Validate();
@@ -123,7 +123,7 @@ namespace NINA.Sequencer {
                     }
 
                     if (item is ITriggerable) {
-                        foreach (var trigger in (item as ITriggerable).Triggers) {
+                        foreach (var trigger in (item as ITriggerable).GetTriggersSnapshot()) {
                             if (trigger is IValidatable) {
                                 var v = trigger as IValidatable;
                                 v.Validate();
