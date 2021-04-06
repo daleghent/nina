@@ -5374,4 +5374,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblNoPluginsFound" xml:space="preserve">
     <value>No Plugins found</value>
   </data>
+  <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
+    <value>Show Menu</value>
+  </data>
 </root>

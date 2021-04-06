@@ -1383,6 +1383,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Menu.
+        /// </summary>
+        internal static string Lbl_SequenceItem_Show_Menu {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_Show_Menu", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sets a value for a given switch from the switch hub.
         /// </summary>
         internal static string Lbl_SequenceItem_Switch_SetSwitchValue_Description {

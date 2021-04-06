@@ -279,49 +279,8 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                            <Grid.Triggers>
-                                <EventTrigger RoutedEvent="MouseEnter">
-                                    <EventTrigger.Actions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames
-                                                    Storyboard.TargetName="ButtonCommands"
-                                                    Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                    Duration="0">
-                                                    <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" />
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <DoubleAnimation
-                                                    Storyboard.TargetName="ButtonCommands"
-                                                    Storyboard.TargetProperty="Opacity"
-                                                    To="1"
-                                                    Duration="0" />
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger.Actions>
-                                </EventTrigger>
-                                <EventTrigger RoutedEvent="MouseLeave">
-                                    <EventTrigger.Actions>
-                                        <BeginStoryboard>
-                                            <Storyboard>
-                                                <ObjectAnimationUsingKeyFrames
-                                                    Storyboard.TargetName="ButtonCommands"
-                                                    Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                    Duration="0">
-                                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}" />
-                                                </ObjectAnimationUsingKeyFrames>
-                                                <DoubleAnimation
-                                                    Storyboard.TargetName="ButtonCommands"
-                                                    Storyboard.TargetProperty="Opacity"
-                                                    To="0"
-                                                    Duration="0" />
-                                            </Storyboard>
-                                        </BeginStoryboard>
-                                    </EventTrigger.Actions>
-                                </EventTrigger>
-                            </Grid.Triggers>
                             <TextBox
-                                Grid.Row="0"
-                                Grid.Column="1"
+                                Grid.Column="0"
                                 MinWidth="200"
                                 Padding="5"
                                 HorizontalAlignment="Left"
@@ -331,192 +290,195 @@
                                 FontSize="10pt"
                                 Foreground="{StaticResource ButtonForegroundBrush}"
                                 Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-                            <StackPanel
-                                x:Name="ButtonCommands"
-                                Grid.Column="2"
-                                Orientation="Horizontal"
-                                Visibility="Collapsed">
-                                <Button
-                                    x:Name="ResetProgressButton"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="5"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding ResetProgressCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}">
-                                    <Grid>
-                                        <Path
-                                            Margin="5"
-                                            Data="{StaticResource RefreshSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
-                                    </Grid>
-                                    <Button.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_Reset_Tooltip}" />
-                                        </ToolTip>
-                                    </Button.ToolTip>
-                                </Button>
-                                <Button
-                                    x:Name="MoveUpButton"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="5"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding MoveUpCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}">
-                                    <Grid>
-                                        <Path
-                                            Margin="5"
-                                            Data="{StaticResource ArrowUpSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
-                                    </Grid>
-                                    <Button.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_MoveUp_Tooltip}" />
-                                        </ToolTip>
-                                    </Button.ToolTip>
-                                </Button>
-
-                                <Button
-                                    x:Name="MoveDownButton"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="5"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding MoveDownCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}"
-                                    Visibility="{Binding MoveDownCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
-                                    <Grid>
-                                        <Path
-                                            Margin="5"
-                                            Data="{StaticResource ArrowDownSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
-                                    </Grid>
-                                    <Button.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_MoveDown_Tooltip}" />
-                                        </ToolTip>
-                                    </Button.ToolTip>
-                                </Button>
-
-                                <Button
-                                    x:Name="TargetContainerButton"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="5"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding Path=Data.AddTargetToControllerCommand, Source={StaticResource ViewModel}}"
-                                    CommandParameter="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}">
-                                    <Grid>
-                                        <Path
-                                            Margin="5"
-                                            Data="{StaticResource PictureSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
-                                    </Grid>
-                                    <Button.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_SaveAsTarget_Tooltip}" />
-                                        </ToolTip>
-                                    </Button.ToolTip>
-                                    <Button.Style>
-                                        <Style BasedOn="{StaticResource SecondaryBackgroundButton}" TargetType="Button">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type cont:DeepSkyObjectContainer}">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Button.Style>
-                                </Button>
-
-                                <Button
-                                    x:Name="TemplateContainerButton"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="5"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding Path=Data.AddTemplateCommand, Source={StaticResource ViewModel}}"
-                                    CommandParameter="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}"
-                                    Style="{StaticResource SecondaryBackgroundButton}">
-                                    <Grid>
-                                        <Path
-                                            Margin="5"
-                                            Data="{StaticResource SaveAsSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
-                                    </Grid>
-                                    <Button.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_SaveAsTemplate_Tooltip}" />
-                                        </ToolTip>
-                                    </Button.ToolTip>
-                                </Button>
-
-                                <Button
-                                    x:Name="CloneContainerButton"
-                                    Width="25"
-                                    Height="25"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding AddCloneToParentCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}"
-                                    Visibility="{Binding AddCloneToParentCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
-                                    <Grid>
-                                        <Path
-                                            Margin="5"
-                                            Data="{StaticResource CopySVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
-                                    </Grid>
-                                    <Button.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_Duplicate_Tooltip}" />
-                                        </ToolTip>
-                                    </Button.ToolTip>
-                                </Button>
-
-                                <Button
-                                    x:Name="CloseButton"
-                                    Width="25"
-                                    Height="25"
-                                    Margin="5"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Command="{Binding DetachCommand}"
-                                    Style="{StaticResource SecondaryBackgroundButton}"
-                                    Visibility="{Binding DetachCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
-                                    <Grid>
-                                        <Path
-                                            Margin="5"
-                                            Data="{StaticResource TrashCanSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
-                                    </Grid>
-                                    <Button.ToolTip>
-                                        <ToolTip>
-                                            <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_Delete_Tooltip}" />
-                                        </ToolTip>
-                                    </Button.ToolTip>
-                                </Button>
-                            </StackPanel>
-
-                            <Border Grid.Column="3" Background="{StaticResource SecondaryBackgroundBrush}">
+                            <Border Grid.Column="1" Background="{StaticResource SecondaryBackgroundBrush}">
                                 <ContentPresenter
                                     Margin="2,0,10,0"
                                     HorizontalAlignment="Right"
                                     Content="{Binding}"
                                     DockPanel.Dock="Right"
                                     Style="{StaticResource ProgressPresenter}" />
+                            </Border>
+                            <Border
+                                x:Name="ButtonCommands"
+                                Grid.Column="2"
+                                HorizontalAlignment="Stretch"
+                                Background="{StaticResource SecondaryBackgroundBrush}">
+                                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                                    <Button
+                                        x:Name="TargetContainerButton"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="25,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding Path=Data.AddTargetToControllerCommand, Source={StaticResource ViewModel}}"
+                                        CommandParameter="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}">
+                                        <Grid>
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource PictureSVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                Stretch="Uniform" />
+                                        </Grid>
+                                        <Button.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_SaveAsTarget_Tooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                        <Button.Style>
+                                            <Style BasedOn="{StaticResource SecondaryBackgroundButton}" TargetType="Button">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Path=., Converter={StaticResource DataTypeToStringConverter}}" Value="{x:Type cont:DeepSkyObjectContainer}">
+                                                        <Setter Property="Visibility" Value="Visible" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Button.Style>
+                                    </Button>
+
+                                    <Button
+                                        x:Name="TemplateContainerButton"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="25,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding Path=Data.AddTemplateCommand, Source={StaticResource ViewModel}}"
+                                        CommandParameter="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}"
+                                        Style="{StaticResource SecondaryBackgroundButton}">
+                                        <Grid>
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource SaveAsSVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                Stretch="Uniform" />
+                                        </Grid>
+                                        <Button.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_SaveAsTemplate_Tooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
+
+                                    <Button
+                                        x:Name="CloseButton"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="25,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding DetachCommand}"
+                                        Style="{StaticResource SecondaryBackgroundButton}"
+                                        Visibility="{Binding DetachCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                                        <Grid>
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource TrashCanSVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                Stretch="Uniform" />
+                                        </Grid>
+                                        <Button.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_Delete_Tooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
+
+                                    <Button
+                                        x:Name="ResetProgressButton"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="25,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding ResetProgressCommand}"
+                                        Style="{StaticResource SecondaryBackgroundButton}">
+                                        <Grid>
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource RefreshSVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                Stretch="Uniform" />
+                                        </Grid>
+                                        <Button.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_Reset_Tooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
+
+                                    <Button
+                                        x:Name="CloneContainerButton"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="25,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding AddCloneToParentCommand}"
+                                        Style="{StaticResource SecondaryBackgroundButton}"
+                                        Visibility="{Binding AddCloneToParentCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                                        <Grid>
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource CopySVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                Stretch="Uniform" />
+                                        </Grid>
+                                        <Button.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_Duplicate_Tooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
+
+                                    <Button
+                                        x:Name="MoveUpButton"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="25,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding MoveUpCommand}"
+                                        Style="{StaticResource SecondaryBackgroundButton}">
+                                        <Grid>
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource ArrowUpSVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                Stretch="Uniform" />
+                                        </Grid>
+                                        <Button.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_MoveUp_Tooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
+
+                                    <Button
+                                        x:Name="MoveDownButton"
+                                        Width="25"
+                                        Height="25"
+                                        Margin="10,0,5,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Command="{Binding MoveDownCommand}"
+                                        Style="{StaticResource SecondaryBackgroundButton}"
+                                        Visibility="{Binding MoveDownCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                                        <Grid>
+                                            <Path
+                                                Margin="5"
+                                                Data="{StaticResource ArrowDownSVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                Stretch="Uniform" />
+                                        </Grid>
+                                        <Button.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock Foreground="{StaticResource PrimaryBrush}" Text="{ns:Loc Lbl_SequenceContainer_MoveDown_Tooltip}" />
+                                            </ToolTip>
+                                        </Button.ToolTip>
+                                    </Button>
+                                </StackPanel>
                             </Border>
                         </Grid>
                     </ninactrl:DetachingExpander.Header>
@@ -826,7 +788,7 @@
                                             </Button>
                                         </Grid>
                                     </GroupBox.Header>
-                                    <ItemsControl Margin="20,10,-10,10" ItemsSource="{Binding Items}">
+                                    <ItemsControl Margin="20,10,-5,10" ItemsSource="{Binding Items}">
                                         <ItemsControl.Resources>
                                             <ResourceDictionary>
                                                 <DataTemplate DataType="{x:Type seqItem:SequenceItem}">

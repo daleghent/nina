@@ -29,16 +29,16 @@ namespace NINA.Sequencer.SequenceItem {
 
     [JsonObject(MemberSerialization.OptIn)]
     public abstract class SequenceItem : BaseINPC, ISequenceItem {
+        private string name;
+        private bool showMenu;
         private SequenceEntityStatus status = SequenceEntityStatus.CREATED;
+        public ICommand AddCloneToParentCommand => new RelayCommand((o) => { AddCloneToParent(); ShowMenu = false; });
         public string Category { get; set; }
         public string Description { get; set; }
         public ICommand DetachCommand => new RelayCommand((o) => Detach());
         public GeometryGroup Icon { get; set; }
         public ICommand MoveDownCommand => new RelayCommand((o) => MoveDown());
         public ICommand MoveUpCommand => new RelayCommand((o) => MoveUp());
-        public ICommand AddCloneToParentCommand => new RelayCommand((o) => AddCloneToParent());
-
-        private string name;
 
         [JsonProperty]
         public string Name {
@@ -52,7 +52,17 @@ namespace NINA.Sequencer.SequenceItem {
         [JsonProperty]
         public ISequenceContainer Parent { get; private set; }
 
-        public virtual ICommand ResetProgressCommand => new RelayCommand((o) => ResetProgressCascaded());
+        public virtual ICommand ResetProgressCommand => new RelayCommand((o) => { ResetProgressCascaded(); ShowMenu = false; });
+
+        public bool ShowMenu {
+            get => showMenu;
+            set {
+                showMenu = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public ICommand ShowMenuCommand => new RelayCommand((o) => ShowMenu = !ShowMenu);
 
         public SequenceEntityStatus Status {
             get => status;
@@ -60,6 +70,10 @@ namespace NINA.Sequencer.SequenceItem {
                 status = value;
                 RaisePropertyChanged();
             }
+        }
+
+        public void AddCloneToParent() {
+            Parent?.Add((ISequenceItem)this.Clone());
         }
 
         public virtual void AfterParentChanged() {
@@ -90,10 +104,6 @@ namespace NINA.Sequencer.SequenceItem {
 
         public virtual void MoveUp() {
             Parent?.MoveUp(this);
-        }
-
-        public void AddCloneToParent() {
-            Parent?.Add((ISequenceItem)this.Clone());
         }
 
         public virtual void ResetProgress() {

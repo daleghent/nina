@@ -93,7 +93,7 @@ namespace NINA.Sequencer.Container {
         public override ICommand ResetProgressCommand => new RelayCommand(
             (o) => {
                 ResetAll();
-                ResetProgressCascaded();
+                base.ResetProgressCommand.Execute(o);
             }
         );
 
