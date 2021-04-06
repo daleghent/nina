@@ -144,7 +144,7 @@ namespace NINA.Model.MyGuider {
                         starDetail.PositionX < MGen.SensorSizeX - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
                         starDetail.PositionY > Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
                         starDetail.PositionY < MGen.SensorSizeY - Math.Ceiling(Math.Max(PixelMargin, ditherAmplitude.Amplitude)) &&
-                        starDetail.Pixels < 90) {
+                        starDetail.Pixels < 60) {
                         Logger.Debug($"MGEN - Got Star Detail and setting new guiding position - PosX: {starDetail.PositionX} PosY: {starDetail.PositionY} Brightness: {starDetail.Brightness} Pixels: {starDetail.Pixels}");
                         starSearchSuccess = await MGen.SetNewGuidingPosition(starDetail);
                         Logger.Debug($"MGEN - Set New Guiding Position: {starSearchSuccess}");
@@ -278,7 +278,11 @@ namespace NINA.Model.MyGuider {
             try {
                 if (await MGen.IsGuidingActive(ct)) {
                     Logger.Debug("MGEN - Dithering");
-                    return await MGen.Dither(ct);
+                    var task = await Task.Run<bool>(async () => {
+                        bool dithered = await MGen.Dither(ct);
+                        if (dithered) await WaitForSettling(2000, ct);
+                        return dithered;
+                    });
                 } else {
                     Logger.Error("Guiding is not active. Unable to dither");
                     Notification.ShowError("Guiding is not active. Unable to dither");
@@ -299,12 +303,12 @@ namespace NINA.Model.MyGuider {
                 await StartCalibrationIfRequired(forceCalibration, ct);
                 Logger.Debug("MGEN - Starting Guiding");
                 await MGen.StartGuiding(ct);
+                await WaitForSettling(5000, ct);
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
                 return false;
             }
-
             return true;
         }
 
@@ -350,6 +354,10 @@ namespace NINA.Model.MyGuider {
                 await MGen.StopGuiding(ct);
             }
             return true;
+        }
+
+        private async Task WaitForSettling(int millisDelay, CancellationToken ct) {
+            await Utility.Utility.Delay(millisDelay, ct);
         }
 
         public async Task<bool> Connect(CancellationToken token) {

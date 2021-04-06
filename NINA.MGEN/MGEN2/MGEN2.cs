@@ -313,7 +313,7 @@ namespace NINA.MGEN2 {
                     stateCommand = new GetDitherStateCommand();
                     state = await this.Send(stateCommand, ct);
                 } while (state.Dithering);
-                await Task.Delay(TimeSpan.FromSeconds(1), ct);
+                //await Task.Delay(TimeSpan.FromSeconds(1), ct);
             }
             return true;
         }
