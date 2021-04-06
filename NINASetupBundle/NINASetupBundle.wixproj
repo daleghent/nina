@@ -91,11 +91,35 @@
 echo "Copy NINA.pdb to setup output"
 copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.pdb" "$(TargetDir)NINA.pdb" /Y
 
-echo "Copy NINACustomControlLibrary.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINACustomControlLibrary.pdb" "$(TargetDir)NINACustomControlLibrary.pdb" /Y
+echo "Copy NINA.Astrometry.pdb to setup output"
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Astrometry.pdb" "$(TargetDir)NINA.Astrometry.pdb" /Y
+
+echo "Copy NINA.Core.pdb to setup output"
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Core.pdb" "$(TargetDir)NINA.Core.pdb" /Y
+
+echo "Copy NINA.Equipment.pdb to setup output"
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Equipment.pdb" "$(TargetDir)NINA.Equipment.pdb" /Y
+
+echo "Copy NINA.Image.pdb to setup output"
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Image.pdb" "$(TargetDir)NINA.Image.pdb" /Y
 
 echo "Copy NINA.MGEN.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.MGEN.pdb" "$(TargetDir)NINA.MGEN.pdb" /Y</PostBuildEvent>
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.MGEN.pdb" "$(TargetDir)NINA.MGEN.pdb" /Y
+
+echo "Copy NINA.Platesolving.pdb to setup output"
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Platesolving.pdb" "$(TargetDir)NINA.Platesolving.pdb" /Y
+
+echo "Copy NINA.Profile.pdb to setup output"
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Profile.pdb" "$(TargetDir)NINA.Profile.pdb" /Y
+
+echo "Copy NINA.Sequencer.pdb to setup output"
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Sequencer.pdb" "$(TargetDir)NINA.Sequencer.pdb" /Y
+
+echo "Copy NINA.WPF.Base.pdb to setup output"
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.WPF.Base.pdb" "$(TargetDir)NINA.WPF.Base.pdb" /Y
+
+echo "Copy NINACustomControlLibrary.pdb to setup output"
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINACustomControlLibrary.pdb" "$(TargetDir)NINACustomControlLibrary.pdb" /Y</PostBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
