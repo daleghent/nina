@@ -113,46 +113,6 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Grid.Triggers>
-                <EventTrigger RoutedEvent="MouseEnter">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ObjectAnimationUsingKeyFrames
-                                    Storyboard.TargetName="ButtonCommands"
-                                    Storyboard.TargetProperty="(UIElement.Visibility)"
-                                    Duration="0">
-                                    <DiscreteObjectKeyFrame Value="{x:Static Visibility.Visible}" />
-                                </ObjectAnimationUsingKeyFrames>
-                                <DoubleAnimation
-                                    Storyboard.TargetName="ButtonCommands"
-                                    Storyboard.TargetProperty="Opacity"
-                                    To="1"
-                                    Duration="0" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-                <EventTrigger RoutedEvent="MouseLeave">
-                    <EventTrigger.Actions>
-                        <BeginStoryboard>
-                            <Storyboard>
-                                <ObjectAnimationUsingKeyFrames
-                                    Storyboard.TargetName="ButtonCommands"
-                                    Storyboard.TargetProperty="(UIElement.Visibility)"
-                                    Duration="0">
-                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}" />
-                                </ObjectAnimationUsingKeyFrames>
-                                <DoubleAnimation
-                                    Storyboard.TargetName="ButtonCommands"
-                                    Storyboard.TargetProperty="Opacity"
-                                    To="0"
-                                    Duration="0" />
-                            </Storyboard>
-                        </BeginStoryboard>
-                    </EventTrigger.Actions>
-                </EventTrigger>
-            </Grid.Triggers>
             <TextBox
                 Grid.Row="0"
                 Grid.Column="1"
@@ -167,8 +127,7 @@
             <StackPanel
                 x:Name="ButtonCommands"
                 Grid.Column="2"
-                Orientation="Horizontal"
-                Visibility="Collapsed">
+                Orientation="Horizontal">
                 <Button
                     x:Name="ResetProgressButton"
                     Width="25"
