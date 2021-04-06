@@ -41,14 +41,17 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
     [Export(typeof(ISequenceTrigger))]
     [JsonObject(MemberSerialization.OptIn)]
     public class MeridianFlipTrigger : SequenceTrigger, IValidatable {
-        private IProfileService profileService;
-        private ITelescopeMediator telescopeMediator;
-        private IGuiderMediator guiderMediator;
-        private IImagingMediator imagingMediator;
-        private IFilterWheelMediator filterWheelMediator;
-        private IApplicationStatusMediator applicationStatusMediator;
-        private ICameraMediator cameraMediator;
-        private DateTime lastFlipTime = DateTime.MinValue;
+        protected IProfileService profileService;
+        protected ITelescopeMediator telescopeMediator;
+        protected IGuiderMediator guiderMediator;
+        protected IImagingMediator imagingMediator;
+        protected IFilterWheelMediator filterWheelMediator;
+        protected IApplicationStatusMediator applicationStatusMediator;
+        protected ICameraMediator cameraMediator;
+        protected IFocuserMediator focuserMediator;
+        protected IImageHistoryVM history;
+
+        protected DateTime lastFlipTime = DateTime.MinValue;
 
         [ImportingConstructor]
         public MeridianFlipTrigger(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IGuiderMediator guiderMediator, IFocuserMediator focuserMediator, IImagingMediator imagingMediator, IApplicationStatusMediator applicationStatusMediator, IFilterWheelMediator filterWheelMediator, IImageHistoryVM historyVM) : base() {
@@ -82,12 +85,37 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             };
         }
 
-        private DateTime latestFlipTime;
-        private DateTime earliestFlipTime;
-        private IFocuserMediator focuserMediator;
-        private IImageHistoryVM history;
+        protected DateTime latestFlipTime;
+        protected DateTime earliestFlipTime;
 
-        public DateTime LatestFlipTime {
+        public virtual double MinutesAfterMeridian {
+            get {
+                return profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian;
+            }
+            set { }
+        }
+        public virtual double PauseTimeBeforeMeridian {
+            get {
+                return profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian;
+            }
+            set { }
+        }
+
+        public virtual double MaxMinutesAfterMeridian {
+            get {
+                return profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian;
+            }
+            set { }
+        }
+
+        public virtual Boolean UseSideOfPier {
+            get {
+                return profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier;
+            }
+            set { }
+        }
+
+        public virtual DateTime LatestFlipTime {
             get => latestFlipTime;
             private set {
                 latestFlipTime = value;
@@ -95,7 +123,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             }
         }
 
-        public DateTime EarliestFlipTime {
+        public virtual DateTime EarliestFlipTime {
             get => earliestFlipTime;
             private set {
                 earliestFlipTime = value;
@@ -103,6 +131,12 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             }
         }
 
+        public virtual double TimeToMeridianFlip {
+            get {
+                return telescopeMediator.GetInfo().TimeToMeridianFlip;
+            }
+            set { }
+        }
         public override Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             var target = ItemUtility.RetrieveContextCoordinates(context).Item1 ?? telescopeMediator.GetCurrentPosition();
 
@@ -124,10 +158,9 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         public override void Initialize() {
         }
 
-        private TimeSpan CalculateMinimumTimeRemaining() {
-            var settings = profileService.ActiveProfile.MeridianFlipSettings;
+        protected virtual TimeSpan CalculateMinimumTimeRemaining() {
             //Substract delta from maximum to get minimum time
-            var delta = settings.MaxMinutesAfterMeridian - settings.MinutesAfterMeridian;
+            var delta = MaxMinutesAfterMeridian - MinutesAfterMeridian;
             var time = CalculateMaximumTimeRemainaing() - TimeSpan.FromMinutes(delta);
             if (time < TimeSpan.Zero) {
                 time = TimeSpan.Zero;
@@ -135,15 +168,13 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             return time;
         }
 
-        private TimeSpan CalculateMaximumTimeRemainaing() {
-            var telescopeInfo = telescopeMediator.GetInfo();
-
-            return TimeSpan.FromHours(telescopeInfo.TimeToMeridianFlip);
+        protected virtual TimeSpan CalculateMaximumTimeRemainaing() {
+            return TimeSpan.FromHours(TimeToMeridianFlip);
         }
 
         public override bool ShouldTrigger(ISequenceItem nextItem) {
             var telescopeInfo = telescopeMediator.GetInfo();
-            var settings = profileService.ActiveProfile.MeridianFlipSettings;
+            //var settings = profileService.ActiveProfile.MeridianFlipSettings;
 
             if (!telescopeInfo.Connected || double.IsNaN(telescopeInfo.TimeToMeridianFlip)) {
                 Logger.Error("Meridian Flip - Telescope is not connected to evaluate if a flip should happen!");
@@ -166,13 +197,13 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             var minimumTimeRemaining = CalculateMinimumTimeRemaining();
             var maximumTimeRemaining = CalculateMaximumTimeRemainaing();
             var originalMaximumTimeRemaining = maximumTimeRemaining;
-            if (settings.PauseTimeBeforeMeridian != 0) {
+            if (PauseTimeBeforeMeridian != 0) {
                 //A pause prior to a meridian flip is a hard limit due to equipment obstruction. There is no possibility for a timerange as we have to pause early and wait for meridian to pass
-                minimumTimeRemaining = minimumTimeRemaining - TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.MinutesAfterMeridian) - TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian);
+                minimumTimeRemaining = minimumTimeRemaining - TimeSpan.FromMinutes(MinutesAfterMeridian) - TimeSpan.FromMinutes(PauseTimeBeforeMeridian);
                 maximumTimeRemaining = minimumTimeRemaining;
             }
 
-            UpdateMeridianFlipTimeTriggerValues(minimumTimeRemaining, originalMaximumTimeRemaining, TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian), TimeSpan.FromMinutes(profileService.ActiveProfile.MeridianFlipSettings.MaxMinutesAfterMeridian));
+            UpdateMeridianFlipTimeTriggerValues(minimumTimeRemaining, originalMaximumTimeRemaining, TimeSpan.FromMinutes(PauseTimeBeforeMeridian), TimeSpan.FromMinutes(MaxMinutesAfterMeridian));
 
             if (minimumTimeRemaining <= TimeSpan.Zero && maximumTimeRemaining > TimeSpan.Zero) {
                 Logger.Info($"Meridian Flip - Remaining Time is between minimum and maximum flip time. Minimum time remaining {minimumTimeRemaining}, maximum time remaining {maximumTimeRemaining}. Flip should happen now");
@@ -181,11 +212,11 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 //The minimum time to flip has not been reached yet. Check if a flip is required based on the estimation of the next instruction
                 var noRemainingTime = maximumTimeRemaining <= TimeSpan.FromSeconds(nextInstructionTime);
 
-                if (settings.UseSideOfPier && telescopeInfo.SideOfPier == PierSide.pierUnknown) {
+                if (UseSideOfPier && telescopeInfo.SideOfPier == PierSide.pierUnknown) {
                     Logger.Error("Side of Pier usage is enabled, however the side of pier reported by the driver is unknown. Ignoring side of pier to calculate the flip time");
                 }
 
-                if (settings.UseSideOfPier && telescopeInfo.SideOfPier != PierSide.pierUnknown) {
+                if (UseSideOfPier && telescopeInfo.SideOfPier != PierSide.pierUnknown) {
                     if (noRemainingTime) {
                         // There is no more time remaining. Project the side of pier to that at the time after the flip and check if this flip is required
                         var projectedSiderealTime = Angle.ByHours(AstroUtil.EuclidianModulus(telescopeInfo.SiderealTime + originalMaximumTimeRemaining.TotalHours, 24));
@@ -212,8 +243,8 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                             // Only allow delayed flip behavior for the first hour after a flip should've happened
                             var delayedFlip = maximumTimeRemaining
                                 >= (TimeSpan.FromHours(11)
-                                    - TimeSpan.FromMinutes(settings.MaxMinutesAfterMeridian)
-                                    - TimeSpan.FromMinutes(settings.PauseTimeBeforeMeridian)
+                                    - TimeSpan.FromMinutes(MaxMinutesAfterMeridian)
+                                    - TimeSpan.FromMinutes(PauseTimeBeforeMeridian)
                                   );
 
                             if (delayedFlip) {
@@ -233,7 +264,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             }
         }
 
-        private void UpdateMeridianFlipTimeTriggerValues(TimeSpan minimumTimeRemaining, TimeSpan maximumTimeRemaining, TimeSpan pauseBeforeMeridian, TimeSpan maximumTimeAfterMeridian) {
+        protected virtual void UpdateMeridianFlipTimeTriggerValues(TimeSpan minimumTimeRemaining, TimeSpan maximumTimeRemaining, TimeSpan pauseBeforeMeridian, TimeSpan maximumTimeAfterMeridian) {
             //Update the FlipTimes
             if (pauseBeforeMeridian == TimeSpan.Zero) {
                 EarliestFlipTime = DateTime.Now + minimumTimeRemaining;
@@ -248,7 +279,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             return $"Trigger: {nameof(MeridianFlipTrigger)}";
         }
 
-        public bool Validate() {
+        public virtual bool Validate() {
             var i = new List<string>();
             var cameraInfo = telescopeMediator.GetInfo();
 
