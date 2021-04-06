@@ -878,7 +878,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enable Dome Synchronization.
+        ///   Looks up a localized string similar to Enable Dome Sync.
         /// </summary>
         internal static string Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name {
             get {
@@ -1090,7 +1090,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move Focuser by Temperature.
+        ///   Looks up a localized string similar to Move Focuser by Temp..
         /// </summary>
         internal static string Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name {
             get {

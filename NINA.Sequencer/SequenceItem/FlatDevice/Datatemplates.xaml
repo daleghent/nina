@@ -10,7 +10,7 @@
     x:Class="NINA.Sequencer.SequenceItem.FlatDevice.Datatemplates"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:filter="clr-namespace:NINA.Model.MyFilterWheel;assembly=NINA.Equipment"
+    xmlns:filter="clr-namespace:NINA.Model.MyFilterWheel;assembly=NINA.Core"
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.FlatDevice"
     xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
@@ -101,7 +101,7 @@
                         Text="{Binding Conditions[0].Iterations}"
                         TextAlignment="Right" />
                     <TextBlock
-                        Margin="10,0,10,0"
+                        Margin="7.5,0,7.5,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Text="|" />
@@ -125,7 +125,7 @@
                     </ComboBox>
 
                     <TextBlock
-                        Margin="10,0,10,0"
+                        Margin="7.5,0,7.5,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Text="|" />
@@ -136,7 +136,7 @@
                         </StackPanel.Resources>
 
                         <TextBlock
-                            Margin="10,0,10,0"
+                            Margin="7.5,0,7.5,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Text="|" />
@@ -164,7 +164,7 @@
                                 </PriorityBinding>
                             </WrapPanel.Visibility>
                             <TextBlock
-                                Margin="10,0,10,0"
+                                Margin="7.5,0,7.5,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Text="|" />
@@ -210,7 +210,7 @@
                                 </PriorityBinding>
                             </WrapPanel.Visibility>
                             <TextBlock
-                                Margin="10,0,10,0"
+                                Margin="7.5,0,7.5,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Text="|" />
@@ -260,7 +260,7 @@
                             </PriorityBinding>
                         </StackPanel.Visibility>
                         <TextBlock
-                            Margin="10,0,10,0"
+                            Margin="7.5,0,7.5,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Text="|" />
