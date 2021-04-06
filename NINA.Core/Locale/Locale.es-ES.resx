@@ -1152,7 +1152,7 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
     <value>Dither</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither cada # captura(s)</value>
+    <value>Dither Every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>Dither está habilitado pero el guiado no está conectado</value>
@@ -4847,7 +4847,7 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
     <value>Asegura que la cúpula permanece sincronizada con el telescopio</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Habilitar sincronización de la cúpula</value>
+    <value>Enable Dome Sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>La secuencia contiene filas desactivadas o en los que el recuento de exposición de progreso es igual al recuento total de exposiciones. Estos elementos se omiten y no se generan elementos para estas filas para el secuenciador.</value>
@@ -4955,7 +4955,7 @@ Ejemplo:
     =&gt; Posición = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Mueve el enfocador en función de la temperatura</value>
+    <value>Move Focuser by Temp.</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>El enfocador no muestra ninguna temperatura válida</value>
@@ -5363,5 +5363,8 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
     <value>No se han encontrado plugins</value>
+  </data>
+  <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
+    <value>Show Menu</value>
   </data>
 </root>

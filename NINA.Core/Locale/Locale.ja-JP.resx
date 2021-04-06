@@ -1148,7 +1148,7 @@
     <value>デザリング</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>#枚毎にデザリングする</value>
+    <value>Dither Every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>デザリングがオンになっていますが、ガイドカメラが未接続です。</value>
@@ -4835,7 +4835,7 @@
     <value>ドームが望遠鏡と同期したままになるようにします</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>ドーム同期を有効にする</value>
+    <value>Enable Dome Sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>シーケンスには、無効な行または進行した撮影枚数が合計撮影枚数と等しい行が含まれています。 これらの項目はスキップされ、行内のどの項目も、シーケンサーに生成されません。</value>
@@ -4942,7 +4942,7 @@
     =&gt; 位置 = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>温度によってフォーカサーを移動</value>
+    <value>Move Focuser by Temp.</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>フォーカサーの周囲は、有効な温度になっていません</value>
@@ -5348,5 +5348,8 @@
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
     <value>プラグインが見つかりません</value>
+  </data>
+  <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
+    <value>Show Menu</value>
   </data>
 </root>

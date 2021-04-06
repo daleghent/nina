@@ -1161,7 +1161,7 @@ cara atrás; cando as liñas non están aliñadas hai algún erro de aliñación
     <value>Dither</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither cada # tomas</value>
+    <value>Dither Every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>Dithering está activado, pero o guiado non está conectado</value>
@@ -4858,7 +4858,7 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
     <value>Asegura que a cúpula permanece sincronizada co telescopio</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Activar Sincronización Cúpula</value>
+    <value>Enable Dome Sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>A Secuencia contén filas desactivadas ou nas que a suma do progreso de exposición é igual á suma da exposición total. Estes elementos omítense e non se xeran ítems destas filas para o secuenciador.</value>
@@ -4966,7 +4966,7 @@ Exemplo:
     =&gt; Posición = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Mover o enfocador por temperatura</value>
+    <value>Move Focuser by Temp.</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>O foco non mostra ningunha temperatura válida</value>
@@ -5374,5 +5374,8 @@ Para condicións de cambio rápido, un tamaño de mostra máis pequeno axudará 
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
     <value>Non se atoparon plugins</value>
+  </data>
+  <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
+    <value>Show Menu</value>
   </data>
 </root>

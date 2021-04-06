@@ -1156,7 +1156,7 @@ Quan les marques no estan alineades, significa que hi ha un error d'Alineació P
     <value>Dither</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither cada # captura(s)</value>
+    <value>Dither Every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>Dither esta activat però el guiatge no està connectat</value>
@@ -4848,7 +4848,7 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Assegura que la cúpula roman sincronitzada amb el telescopi</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Habilitar la sincronizació de la cúpula</value>
+    <value>Enable Dome Sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>La seqüència conté files desactivades o en les que en el recompte d'exposició de progres és igual al recompte total d'exposicions. Aquests elements es saltaran i no es generaran elements per a aquestes files per al seqüènciador.</value>
@@ -4956,7 +4956,7 @@ Exemple:
     = &gt; Posició = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Moure l'enfocador en funció de la temperatura</value>
+    <value>Move Focuser by Temp.</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>L’enfocador no mostra cap temperatura vàlida</value>
@@ -5364,5 +5364,8 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
     <value>No s'han trobat Plugins</value>
+  </data>
+  <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
+    <value>Show Menu</value>
   </data>
 </root>

@@ -1160,7 +1160,7 @@
     <value>抖动</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>抖动间隔帧数</value>
+    <value>Dither Every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>抖动已启用，但未连接导星工具</value>
@@ -4857,7 +4857,7 @@
     <value>确保圆顶保持与望远镜同步</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>启用圆顶同步</value>
+    <value>Enable Dome Sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>序列包含已禁用或进度曝光次数等于总曝光次数的条目。 这些项目被跳过，序列中没有任何新的项目。</value>
@@ -4965,7 +4965,7 @@
     =&gt; 位置 = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>根据温度移动调焦器</value>
+    <value>Move Focuser by Temp.</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>调焦器没有显示任何有效温度</value>
@@ -5373,5 +5373,8 @@
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
     <value>No Plugins found</value>
+  </data>
+  <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
+    <value>Show Menu</value>
   </data>
 </root>

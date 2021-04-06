@@ -1155,7 +1155,7 @@ No caso de ser necessário efectuar a refrigeração de forma mais prolongada, a
     <value>Dither</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither a cada # exposição</value>
+    <value>Dither Every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>O dithering esta activo, contudo o guia não está conectado</value>
@@ -4850,7 +4850,7 @@ Se a posição acima não for um conjunto de instruções expandido, será movid
     <value>Assegura que o observatório permanece sincronizado com o telescópio</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Activa a sincronização do observatório</value>
+    <value>Enable Dome Sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>A Sequência contém linhas que ou estão desactivadas ou onde a contagem de exposição do progresso é igual à contagem total de exposição. Estes itens são ignorados e nenhum item destas linhas é gerado para o sequenciador.</value>
@@ -4958,7 +4958,7 @@ Exemplo:
     =&gt; Posição = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Move o focador em função da Temperatura</value>
+    <value>Move Focuser by Temp.</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>O focador não devolveu nenhuma temperatura válida</value>
@@ -5366,5 +5366,8 @@ Para mudar rapidamente as condições, uma amostra menor ajudará a responder ma
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
     <value>No Plugins found</value>
+  </data>
+  <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
+    <value>Show Menu</value>
   </data>
 </root>

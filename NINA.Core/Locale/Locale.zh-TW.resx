@@ -1160,7 +1160,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>抖動</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>抖動間隔幀數</value>
+    <value>Dither Every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>抖動已啟用，但未連接導星工具</value>
@@ -4857,7 +4857,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Ensures the dome remains synchronized with the telescope</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Enable Dome Synchronization</value>
+    <value>Enable Dome Sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>The Sequence contains rows which are either disabled or where the progress exposure count is equals to the total exposure count. These items are skipped and no items for these rows are generated for the sequencer.</value>
@@ -4965,7 +4965,7 @@ Example:
     =&gt; Position = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Move Focuser by Temperature</value>
+    <value>Move Focuser by Temp.</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>Focuser does not expose any valid temperature</value>
@@ -5373,5 +5373,8 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
     <value>No Plugins found</value>
+  </data>
+  <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
+    <value>Show Menu</value>
   </data>
 </root>

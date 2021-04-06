@@ -1152,7 +1152,7 @@ Daha uzun bir süre gerektiğinde, bir süre belirtilebilir ve uygulama, verilen
     <value>Dither</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Her # kareye dither uygula</value>
+    <value>Dither Every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>Dithering etkin, takipçi henüz bağlanmadı</value>
@@ -4844,7 +4844,7 @@ Yukarıdaki pozisyon, şu anda genişletilmemiş bir yönerge setiyse, o yönerg
     <value>Kubbenin teleskopla senkronize olmasını sağlar</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Kubbe senkronizasyonunu etkinleştir</value>
+    <value>Enable Dome Sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>Sekans, devre dışı bırakılan veya devam eden pozlama sayısının toplam poz sayısına eşit olduğu satırlar içerir. Bu öğeler atlanır ve sıralayıcı için bu satırlar için hiçbir öğe oluşturulmaz.</value>
@@ -4952,7 +4952,7 @@ Kadrajı başarıyla çözdükten sonra, teleskop çözülen konuma senkronize e
     = &gt; Konum = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Odaklayıcıyı sıcaklığa göre hareket ettir</value>
+    <value>Move Focuser by Temp.</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>Odaklayıcı geçerli bir sıcaklık algılamadı</value>
@@ -5360,5 +5360,8 @@ Hızla değişen koşullar için, daha küçük bir örnek boyutu, örneğin hı
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
     <value>Hiç eklenti bulunmadı</value>
+  </data>
+  <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
+    <value>Show Menu</value>
   </data>
 </root>

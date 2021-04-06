@@ -1160,7 +1160,7 @@ si les traces d'étoiles ne sont pas alignées, c'est qu'il y a une erreur d'ali
     <value>Dither</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither Chaque # Images</value>
+    <value>Dither Every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>Le dither est activé, mais l'autoguidage n'est pas connecté</value>
@@ -4854,7 +4854,7 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
     <value>Veille à ce que le dôme reste synchronisé avec le télescope</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Activer la synchronisation du Dôme</value>
+    <value>Enable Dome Sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>La séquence contient des lignes qui sont soit désactivées, ou dans lesquelles le nombre d'expositions atteint le nombre total d'expositions. Ces éléments sont ignorés et aucun élément pour ces lignes n'est généré pour le séquenceur.</value>
@@ -4962,7 +4962,7 @@ Exemple :
     =&amp;gt ; Position = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Déplacer le Focuseur par en fonction de la Température</value>
+    <value>Move Focuser by Temp.</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>Le Focuseur n'expose aucune température valable</value>
@@ -5370,5 +5370,8 @@ Un nombre plus restreint aidera à répondre plus rapidement à un changement de
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
     <value>Aucune extension trouvée</value>
+  </data>
+  <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
+    <value>Show Menu</value>
   </data>
 </root>
