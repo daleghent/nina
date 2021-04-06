@@ -370,8 +370,8 @@
                         DataFieldX="Index"
                         DataFieldY="{Binding ImageHistoryRightSelected}"
                         ItemsSource="{Binding ObservableImageHistoryView}"
-                        MarkerFill="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
-                        MarkerType="Circle"
+                        MarkerFill="{Binding Path=Color, Source={StaticResource SecondaryBrush}}"
+                        MarkerType="Square"
                         TrackerKey="ImageProperties"
                         YAxisKey="Right" />
                 </oxy:Plot.Series>
