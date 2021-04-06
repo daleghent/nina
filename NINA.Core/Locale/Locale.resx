@@ -1160,7 +1160,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Dither</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither Every # Frame</value>
+    <value>Dither Every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>Dithering is enabled, yet guider is not connected</value>

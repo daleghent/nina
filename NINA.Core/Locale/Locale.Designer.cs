@@ -5881,7 +5881,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dither Every # Frame.
+        ///   Looks up a localized string similar to Dither Every #.
         /// </summary>
         internal static string LblDitherEveryNoFrame {
             get {
