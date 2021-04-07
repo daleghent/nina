@@ -126,7 +126,9 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         public override void AfterParentChanged() {
-            UpdateTime();
+            if (!(selectedProvider is TimeProvider)) {
+                UpdateTime();
+            }
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {

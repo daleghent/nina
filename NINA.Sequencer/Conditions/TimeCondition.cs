@@ -155,7 +155,9 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void AfterParentChanged() {
-            UpdateTime();
+            if (!(selectedProvider is TimeProvider)) {
+                UpdateTime();
+            }
         }
 
         public override void ResetProgress() {
