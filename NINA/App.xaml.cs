@@ -32,6 +32,13 @@ namespace NINA {
 
         protected override void OnStartup(StartupEventArgs e) {
             Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
+
+            if (NINA.Properties.Settings.Default.UpdateSettings) {
+                NINA.Properties.Settings.Default.Upgrade();
+                NINA.Properties.Settings.Default.UpdateSettings = false;
+                NINA.Properties.Settings.Default.Save();
+            }
+
             _profileService =
                 //TODO: Eliminate Smell by reversing direction of this dependency
                 (ProfileService)Current.Resources["ProfileService"];
@@ -53,6 +60,9 @@ namespace NINA {
             this.RefreshJumpList(_profileService);
 
             _profileService.CreateWatcher();
+
+            Logger.SetLogLevel(_profileService.ActiveProfile.ApplicationSettings.LogLevel);
+
             _mainWindowViewModel = CompositionRoot.Compose(_profileService);
             EventManager.RegisterClassHandler(typeof(TextBox),
                 TextBox.GotFocusEvent,

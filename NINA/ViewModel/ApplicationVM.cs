@@ -21,7 +21,6 @@ using NINA.Utility.Mediator.Interfaces;
 using NINA.Utility.Notification;
 using NINA.Utility.WindowService;
 using NINA.View.About;
-using NINA.ViewModel.Equipment.Camera;
 using NINA.ViewModel.Interfaces;
 using System;
 using System.Windows;
@@ -32,19 +31,11 @@ namespace NINA.ViewModel {
     internal class ApplicationVM : BaseVM, IApplicationVM, ICameraConsumer {
 
         public ApplicationVM(IProfileService profileService, ProjectVersion projectVersion, ICameraMediator cameraMediator, IApplicationMediator applicationMediator, IImageSaveMediator imageSaveMediator) : base(profileService) {
-            if (Properties.Settings.Default.UpdateSettings) {
-                Properties.Settings.Default.Upgrade();
-                Properties.Settings.Default.UpdateSettings = false;
-                Properties.Settings.Default.Save();
-            }
-
             applicationMediator.RegisterHandler(this);
             this.projectVersion = projectVersion;
             this.cameraMediator = cameraMediator;
             this.imageSaveMediator = imageSaveMediator;
             cameraMediator.RegisterConsumer(this);
-
-            Logger.SetLogLevel(profileService.ActiveProfile.ApplicationSettings.LogLevel);
 
             ExitCommand = new RelayCommand(ExitApplication);
             ClosingCommand = new RelayCommand(ClosingApplication);
