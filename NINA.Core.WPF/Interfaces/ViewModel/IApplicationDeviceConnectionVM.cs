@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace NINA.ViewModel.Interfaces {
@@ -21,6 +22,6 @@ namespace NINA.ViewModel.Interfaces {
         ICommand ConnectAllDevicesCommand { get; }
         ICommand DisconnectAllDevicesCommand { get; }
 
-        void DisconnectEquipment();
+        Task DisconnectEquipment();
     }
 }

@@ -17,7 +17,7 @@ using System.IO.Ports;
 
 namespace NINA.Utility {
 
-    public class SerialPortInteraction {
+    public class SerialPortInteraction : IDisposable {
 
         public SerialPortInteraction(string portName) {
             port = new SerialPort(portName);
@@ -72,6 +72,10 @@ namespace NINA.Utility {
                 Logger.Debug(ex.Message + "\t" + ex.StackTrace);
             }
             return success;
+        }
+
+        public void Dispose() {
+            port?.Dispose();
         }
     }
 }

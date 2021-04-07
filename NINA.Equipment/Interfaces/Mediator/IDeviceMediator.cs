@@ -25,7 +25,7 @@ namespace NINA.Utility.Mediator.Interfaces {
 
         Task<bool> Connect();
 
-        void Disconnect();
+        Task Disconnect();
 
         void Broadcast(TInfo deviceInfo);
 

@@ -17,7 +17,7 @@ using System.IO.Ports;
 
 namespace NINA.Utility {
 
-    public class SerialRelayInteraction {
+    public class SerialRelayInteraction : IDisposable {
 
         public SerialRelayInteraction(string portName) {
             port = new SerialPort(portName);
@@ -48,6 +48,10 @@ namespace NINA.Utility {
 
         public void Send(byte[] bytesToSend) {
             port.Write(bytesToSend, 0, bytesToSend.Length);
+        }
+
+        public void Dispose() {
+            port?.Dispose();
         }
     }
 }

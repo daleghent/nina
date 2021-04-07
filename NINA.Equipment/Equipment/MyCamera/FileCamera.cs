@@ -494,6 +494,10 @@ namespace NINA.Model.MyCamera {
 
         public void Disconnect() {
             folderWatcher?.Dispose();
+            serialPortInteraction?.Dispose();
+            serialRelayInteraction?.Dispose();
+            serialPortInteraction = null;
+            serialRelayInteraction = null;
             Connected = false;
         }
 

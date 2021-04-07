@@ -15,6 +15,7 @@
 using NINA.Profile;
 using NINA.Utility;
 using NINA.ViewModel.Interfaces;
+using Nito.AsyncEx;
 using System;
 using System.Linq;
 using System.Windows;
@@ -89,7 +90,11 @@ namespace NINA {
                     e.Handled = true;
                 } else {
                     try {
-                        _mainWindowViewModel?.ApplicationDeviceConnectionVM?.DisconnectEquipment();
+                        if (_mainWindowViewModel != null) {
+                            if (_mainWindowViewModel.ApplicationDeviceConnectionVM != null) {
+                                AsyncContext.Run(_mainWindowViewModel.ApplicationDeviceConnectionVM.DisconnectEquipment);
+                            }
+                        }
                     } catch (Exception ex) {
                         Logger.Error(ex);
                     }

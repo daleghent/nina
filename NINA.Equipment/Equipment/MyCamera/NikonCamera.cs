@@ -688,9 +688,13 @@ namespace NINA.Model.MyCamera {
             Connected = false;
             _camera = null;
             _activeNikonManager?.Shutdown();
-            _nikonManagers?.Clear();
+            _activeNikonManager = null;
+            CleanupUnusedManagers(null);
             serialPortInteraction?.Close();
+            serialPortInteraction?.Dispose();
             serialPortInteraction = null;
+            serialRelayInteraction?.Dispose();
+            serialRelayInteraction = null;
         }
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {

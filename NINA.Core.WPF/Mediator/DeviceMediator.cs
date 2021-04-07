@@ -63,8 +63,8 @@ namespace NINA.Utility.Mediator {
         /// <summary>
         /// Disconnect the device
         /// </summary>
-        public void Disconnect() {
-            handler?.Disconnect();
+        public Task Disconnect() {
+            return handler?.Disconnect();
         }
 
         /// <summary>

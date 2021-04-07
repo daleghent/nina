@@ -139,10 +139,6 @@ namespace NINA.ViewModel {
 
             imageSaveMediator.Shutdown();
 
-            try {
-                Utility.AtikSDK.AtikCameraDll.Shutdown();
-            } catch (Exception) { }
-
             Application.Current.Shutdown();
         }
 

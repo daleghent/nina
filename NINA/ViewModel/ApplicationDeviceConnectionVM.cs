@@ -16,6 +16,7 @@ using NINA.Profile;
 using NINA.Utility;
 using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Interfaces;
+using Nito.AsyncEx;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -131,12 +132,14 @@ namespace NINA.ViewModel {
                 }
             });
 
-            DisconnectAllDevicesCommand = new RelayCommand((object o) => {
+            DisconnectAllDevicesCommand = new AsyncCommand<bool>(async () => {
                 var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
                 if (diag == MessageBoxResult.OK) {
-                    DisconnectEquipment();
+                    await DisconnectEquipment();
                     AllConnected = false;
+                    return true;
                 }
+                return false;
             });
 
             ClosingCommand = new RelayCommand(ClosingApplication);
@@ -153,72 +156,75 @@ namespace NINA.ViewModel {
         }
 
         private void ClosingApplication(object o) {
-            DisconnectEquipment();
+            AsyncContext.Run(DisconnectEquipment);
+            try {
+                Utility.AtikSDK.AtikCameraDll.Shutdown();
+            } catch (Exception) { }
         }
 
-        public void DisconnectEquipment() {
+        public async Task DisconnectEquipment() {
             try {
-                cameraMediator.Disconnect();
+                await cameraMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                telescopeMediator.Disconnect();
+                await telescopeMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                domeMediator.Disconnect();
+                await domeMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                filterWheelMediator.Disconnect();
+                await filterWheelMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                focuserMediator.Disconnect();
+                await focuserMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                rotatorMediator.Disconnect();
+                await rotatorMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                flatDeviceMediator.Disconnect();
+                await flatDeviceMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                guiderMediator.Disconnect();
+                await guiderMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                switchMediator.Disconnect();
+                await switchMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                weatherDataMediator.Disconnect();
+                await weatherDataMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
 
             try {
-                safetyMonitorMediator.Disconnect();
+                await safetyMonitorMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
