@@ -55,7 +55,7 @@ namespace NINA.PlateSolving {
                 var position = (telescopeMediator.GetCurrentPosition() - offset).Transform(result.Coordinates.Epoch);
                 result.Separation = result.DetermineSeparation(position);
 
-                Logger.Debug($"Centering Solver - Scope Position: {position}; Centering Coordinates: {parameter.Coordinates}; Solve Result: {result.Coordinates}; Separation {result.Separation}");
+                Logger.Info($"Centering Solver - Scope Position: {position}; Centering Coordinates: {parameter.Coordinates}; Solve Result: {result.Coordinates}; Separation {result.Separation}");
 
                 solveProgress?.Report(new PlateSolveProgress() { PlateSolveResult = result });
 
@@ -64,7 +64,7 @@ namespace NINA.PlateSolving {
                     if (parameter.NoSync || !await telescopeMediator.Sync(result.Coordinates)) {
                         offset = result.DetermineSeparation(position + offset);
 
-                        Logger.Debug($"Sync failed - calculating offset instead to compensate.  Original: {position.Transform(result.Coordinates.Epoch)}; Solved: {result.Coordinates}; Offset: {offset}");
+                        Logger.Warning($"Sync failed - calculating offset instead to compensate.  Original: {position.Transform(result.Coordinates.Epoch)}; Solved: {result.Coordinates}; Offset: {offset}");
                         progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPlateSolveSyncViaTargetOffset"] });
                     } else {
                         var positionAfterSync = telescopeMediator.GetCurrentPosition().Transform(result.Coordinates.Epoch);
@@ -72,7 +72,7 @@ namespace NINA.PlateSolving {
                         if (AstroUtil.DegreeToArcsec(Math.Abs(positionAfterSync.RADegrees - result.Coordinates.RADegrees)) > 1
                             || AstroUtil.DegreeToArcsec(Math.Abs(positionAfterSync.Dec - result.Coordinates.Dec)) > 1) {
                             offset = result.DetermineSeparation(positionAfterSync);
-                            Logger.Debug($"Sync failed silently - calculating offset instead to compensate.  Original: {positionAfterSync}; Solved: {result.Coordinates}; Offset: {offset}");
+                            Logger.Warning($"Sync failed silently - calculating offset instead to compensate.  Original: {positionAfterSync}; Solved: {result.Coordinates}; Offset: {offset}");
                         } else {
                             // Sync worked - reset offset
                             Logger.Debug("Synced sucessfully");
@@ -80,7 +80,7 @@ namespace NINA.PlateSolving {
                         }
                     }
 
-                    Logger.Trace($"Slewing to target after sync. Target coordinates RA: {parameter.Coordinates.RAString} Dec: {parameter.Coordinates.DecString} Epoch: {parameter.Coordinates.Epoch}");
+                    Logger.Info($"Slewing to target after sync. Target coordinates RA: {parameter.Coordinates.RAString} Dec: {parameter.Coordinates.DecString} Epoch: {parameter.Coordinates.Epoch}");
                     progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPlateSolveNotInsideToleranceReslew"] });
 
                     await telescopeMediator.SlewToCoordinatesAsync(parameter.Coordinates + offset, ct);
