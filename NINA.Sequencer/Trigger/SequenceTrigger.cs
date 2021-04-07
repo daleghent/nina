@@ -49,6 +49,18 @@ namespace NINA.Sequencer.Trigger {
         public GeometryGroup Icon { get; set; }
         public string Category { get; set; }
 
+        private bool showMenu;
+
+        public bool ShowMenu {
+            get => showMenu;
+            set {
+                showMenu = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public ICommand ShowMenuCommand => new RelayCommand((o) => ShowMenu = !ShowMenu);
+
         [JsonProperty]
         public ISequenceContainer Parent { get; set; }
 

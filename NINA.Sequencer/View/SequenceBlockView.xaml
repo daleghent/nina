@@ -251,9 +251,20 @@
                     Margin="25,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Command="{Binding AddCloneToParentCommand}"
-                    Style="{StaticResource TertiaryBackgroundButton}"
-                    Visibility="{Binding AddCloneToParentCommand, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                    Style="{StaticResource TertiaryBackgroundButton}">
+                    <Button.Command>
+                        <PriorityBinding>
+                            <Binding Path="AddCloneToParentCommand" />
+                        </PriorityBinding>
+                    </Button.Command>
+                    <Button.Visibility>
+                        <PriorityBinding>
+                            <Binding
+                                Converter="{StaticResource NullToVisibilityCollapsedConverter}"
+                                FallbackValue="Collapsed"
+                                Path="AddCloneToParentCommand" />
+                        </PriorityBinding>
+                    </Button.Visibility>
                     <Grid>
                         <Path
                             Margin="5"

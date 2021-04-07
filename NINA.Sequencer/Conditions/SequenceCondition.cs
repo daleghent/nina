@@ -40,6 +40,18 @@ namespace NINA.Sequencer.Conditions {
 
         public ICommand ResetProgressCommand => new RelayCommand((o) => ResetProgress());
 
+        private bool showMenu;
+
+        public bool ShowMenu {
+            get => showMenu;
+            set {
+                showMenu = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public ICommand ShowMenuCommand => new RelayCommand((o) => ShowMenu = !ShowMenu);
+
         public virtual void AfterParentChanged() {
         }
 
