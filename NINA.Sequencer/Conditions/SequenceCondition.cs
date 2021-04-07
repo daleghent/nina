@@ -38,7 +38,7 @@ namespace NINA.Sequencer.Conditions {
         [JsonProperty]
         public ISequenceContainer Parent { get; set; }
 
-        public ICommand ResetProgressCommand => new RelayCommand((o) => ResetProgress());
+        public ICommand ResetProgressCommand => new RelayCommand((o) => { ResetProgress(); ShowMenu = false; });
 
         private bool showMenu;
 
