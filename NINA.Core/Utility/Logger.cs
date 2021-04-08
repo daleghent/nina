@@ -44,15 +44,6 @@ namespace NINA.Utility {
                 Append(PadBoth("NINA - Nighttime Imaging 'N' Astronomy", 70, '-'));
                 Append(PadBoth(string.Format("Running NINA Version {0}", Utility.Version), 70, '-'));
                 Append(PadBoth(DateTime.Now.ToString("s"), 70, '-'));
-                try {
-                    var version = "";
-                    using (var util = new ASCOM.Utilities.Util()) {
-                        version = $"Version {util.PlatformVersion}";
-                    }
-                    Append(PadBoth("ASCOM Platform {0}", 70, '-', version));
-                } catch (Exception) {
-                    Append(PadBoth("ASCOM Platform {0}", 70, '-', "Not Installed"));
-                }
                 Append(PadBoth(".NET Version {0}", 70, '-', Environment.Version.ToString()));
                 Append(PadBoth("Oparating System Information", 70, '-'));
                 Append(PadBoth("Is 64bit OS {0}", 70, '-', Environment.Is64BitOperatingSystem.ToString()));

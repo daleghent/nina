@@ -52,10 +52,12 @@ namespace NINA.ViewModel {
         private void CheckASCOMPlatformVersion(object obj) {
             try {
                 var version = ASCOMInteraction.GetPlatformVersion();
+                Logger.Info($"ASCOM Platform {version} installed");
                 if ((version.Major < 6) || (version.Major == 6 && version.Minor < 5)) {
                     Notification.ShowWarning(Locale.Loc.Instance["LblASCOMPlatformOutdated"]);
                 }
             } catch (Exception) {
+                Logger.Info($"No ASCOM Platform installed");
             }
         }
 
