@@ -4755,7 +4755,7 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
     <value>Ouvrir le jeu de cibles</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Séquence simple</value>
+    <value>Simple Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Options de fin de la dernière cible</value>

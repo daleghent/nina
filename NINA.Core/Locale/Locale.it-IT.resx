@@ -4756,7 +4756,7 @@ Se la posizione sopra è un set di istruzioni che non è attualmente espanso, ve
     <value>Open Target Set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Sequence Builder</value>
+    <value>Simple Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>End of Last Target Options</value>
