@@ -351,9 +351,10 @@ namespace NINA.Model.MyGuider {
         public async Task<bool> StopGuiding(CancellationToken ct) {
             if (await MGen.IsGuidingActive(ct)) {
                 Logger.Debug("MGEN - Stopping Guiding");
-                await MGen.StopGuiding(ct);
+                return await MGen.StopGuiding(ct);
+            } else {
+                return false;
             }
-            return true;
         }
 
         private async Task WaitForSettling(int millisDelay, CancellationToken ct) {
