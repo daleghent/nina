@@ -234,7 +234,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Simple Sequence.
+        ///   Looks up a localized string similar to Simple Sequencer.
         /// </summary>
         internal static string Lbl_OldSequencer_Title {
             get {
