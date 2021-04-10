@@ -106,7 +106,8 @@
                         Margin="5,0,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        HorizontalContentAlignment="Right">
+                        HorizontalContentAlignment="Right"
+                        IsEnabled="{Binding HasFixedTimeProvider, Converter={StaticResource InverseBooleanConverter}}">
                         <TextBox.Text>
                             <Binding Path="Hours">
                                 <Binding.ValidationRules>
@@ -125,7 +126,8 @@
                         Margin="5,0,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        HorizontalContentAlignment="Right">
+                        HorizontalContentAlignment="Right"
+                        IsEnabled="{Binding HasFixedTimeProvider, Converter={StaticResource InverseBooleanConverter}}">
                         <TextBox.Text>
                             <Binding Path="Minutes">
                                 <Binding.ValidationRules>
@@ -144,7 +146,8 @@
                         Margin="5,0,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        HorizontalContentAlignment="Right">
+                        HorizontalContentAlignment="Right"
+                        IsEnabled="{Binding HasFixedTimeProvider, Converter={StaticResource InverseBooleanConverter}}">
                         <TextBox.Text>
                             <Binding Path="Seconds">
                                 <Binding.ValidationRules>
@@ -157,6 +160,21 @@
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Visibility="{Binding HasFixedTimeProvider, Converter={StaticResource VisibilityConverter}}"
+                        Text="{ns:Loc LblTimeOffset}"
+                        ToolTip="{ns:Loc LblTimeOffsetTooltip}"/>
+                    <TextBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Right"
+                        Visibility="{Binding HasFixedTimeProvider, Converter={StaticResource VisibilityConverter}}"
+                        Text="{Binding MinutesOffset}" />
+                    <TextBlock VerticalAlignment="Center">m</TextBlock>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>

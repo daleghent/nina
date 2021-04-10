@@ -14090,6 +14090,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Offset.
+        /// </summary>
+        internal static string LblTimeOffset {
+            get {
+                return ResourceManager.GetString("LblTimeOffset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Offset in minutes from the fixed time of day.
+        /// </summary>
+        internal static string LblTimeOffsetTooltip {
+            get {
+                return ResourceManager.GetString("LblTimeOffsetTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Timeout.
         /// </summary>
         internal static string LblTimeout {

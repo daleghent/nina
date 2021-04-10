@@ -79,12 +79,24 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             }
         }
 
+        private int minutesOffset;
+
+        [JsonProperty]
+        public int MinutesOffset {
+            get => minutesOffset;
+            set {
+                minutesOffset = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public override object Clone() {
             return new WaitForTime(DateTimeProviders, SelectedProvider) {
                 Icon = Icon,
                 Hours = Hours,
                 Minutes = Minutes,
                 Seconds = Seconds,
+                MinutesOffset = MinutesOffset,
                 Name = Name,
                 Category = Category,
                 Description = Description,
@@ -105,6 +117,8 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                     Seconds = t.Second;
                     RaisePropertyChanged();
                 }
+
+                HasFixedTimeProvider = selectedProvider != null && !(selectedProvider is TimeProvider);
             }
         }
 
@@ -139,6 +153,10 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             var now = DateTime.Now;
             var then = new DateTime(now.Year, now.Month, now.Day, Hours, Minutes, Seconds);
 
+            if (HasFixedTimeProvider) {
+                then = then.AddMinutes(MinutesOffset);
+            }
+
             if (now.Hour <= 12 && then.Hour > 12) {
                 then = then.AddDays(-1);
             }
@@ -153,6 +171,17 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
         public override string ToString() {
             return $"Category: {Category}, Item: {nameof(WaitForTime)}, Time: {Hours}:{Minutes}:{Seconds}h";
+        }
+
+        private bool hasFixedTimeProvider = false;
+        public bool HasFixedTimeProvider {
+            get => hasFixedTimeProvider;
+            set {
+                if (value != hasFixedTimeProvider) {
+                    hasFixedTimeProvider = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
     }
 }
