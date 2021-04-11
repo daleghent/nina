@@ -37,8 +37,6 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 
-using NINA.Core.Model;
-
 namespace NINA.Sequencer.Container {
 
     [JsonObject(MemberSerialization.OptIn)]

@@ -85,7 +85,6 @@ namespace NINA.Equipment.Equipment.MySwitch.Eagle {
 
         protected string setRoute;
         protected string setValueAttribute;
-        protected string setNameRoute;
 
         public async Task SetValue() {
             try {

@@ -14,9 +14,6 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Model;
-
-using NINA.Core.Model;
-
 using NINA.Core.MyMessageBox;
 using System;
 using System.Collections.Generic;

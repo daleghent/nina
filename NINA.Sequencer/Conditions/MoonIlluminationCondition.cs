@@ -35,7 +35,6 @@ namespace NINA.Sequencer.Conditions {
     [Export(typeof(ISequenceCondition))]
     [JsonObject(MemberSerialization.OptIn)]
     public class MoonIlluminationCondition : SequenceCondition {
-        private readonly IProfileService profileService;
         private double userMoonIllumination;
         private double currentMoonIllumination;
         private ComparisonOperatorEnum comparator;

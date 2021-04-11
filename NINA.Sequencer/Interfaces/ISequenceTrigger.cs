@@ -13,9 +13,6 @@
 #endregion "copyright"
 
 using NINA.Core.Model;
-
-using NINA.Core.Model;
-
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using System;

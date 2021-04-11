@@ -25,9 +25,6 @@ using NINA.Core.Utility.WindowService;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Core.Interfaces;
 using NINA.Core.Model;
-
-using NINA.Equipment.Equipment.MyCamera;
-
 using NINA.Equipment.Interfaces;
 
 #pragma warning disable 4014

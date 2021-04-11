@@ -24,8 +24,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 
-using NINA.Core.Model;
-
 namespace NINA.Sequencer.SequenceItem {
 
     [JsonObject(MemberSerialization.OptIn)]

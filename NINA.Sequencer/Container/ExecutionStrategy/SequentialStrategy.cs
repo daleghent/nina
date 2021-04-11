@@ -14,9 +14,6 @@
 
 using NINA.Core.Enum;
 using NINA.Core.Model;
-
-using NINA.Core.Model;
-
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;

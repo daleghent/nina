@@ -19,9 +19,6 @@ using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.SequenceItem.Guider;
 using NINA.Sequencer.Validations;
-
-using NINA.Equipment.Interfaces.Mediator;
-
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.ViewModel.Interfaces;
 using System;

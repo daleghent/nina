@@ -48,9 +48,6 @@ using NINA.Core.MyMessageBox;
 using NINA.Profile;
 using NINA.Astrometry.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
-
-using NINA.Equipment.Equipment.MyPlanetarium;
-
 using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel.Equipment.Switch;
