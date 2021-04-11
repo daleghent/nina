@@ -3187,6 +3187,12 @@
   <data name="LblTimeZone" xml:space="preserve">
     <value>タイムゾーン</value>
   </data>
+  <data name="LblTimeOffset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="LblTimeOffsetTooltip" xml:space="preserve">
+    <value>Offset in minutes from the fixed time of day</value>
+  </data>
   <data name="LblTo" xml:space="preserve">
     <value>終了</value>
   </data>

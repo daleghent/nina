@@ -3195,6 +3195,12 @@ Synchronizovat hodnoty?</value>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Časová Zóna</value>
   </data>
+  <data name="LblTimeOffset" xml:space="preserve">
+    <value>Offset</value>
+  </data>
+  <data name="LblTimeOffsetTooltip" xml:space="preserve">
+    <value>Offset v minutách od zadané denní doby</value>
+  </data>
   <data name="LblTo" xml:space="preserve">
     <value>Do</value>
   </data>
@@ -4749,7 +4755,7 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Otevřít Sadu Cílů</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequencer</value>
+    <value>Jednoduchá Sekvence</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Možnosti Ukončení Posledního Cíle</value>
