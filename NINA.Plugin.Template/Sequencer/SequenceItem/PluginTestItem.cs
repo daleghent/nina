@@ -13,7 +13,8 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
+using NINA.Core.Model;
+using NINA.Core.Utility.Notification;
 using NINA.Sequencer;
 using NINA.Sequencer.SequenceItem;
 using System;
@@ -94,7 +95,7 @@ namespace NINA.Plugin.Template.Sequencer.SequenceItem {
         /// <param name="token">When a cancel signal is triggered from outside, this token can be used to register to it or check if it is cancelled</param>
         /// <returns></returns>
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            Utility.Notification.Notification.ShowSuccess(Text);
+            Notification.ShowSuccess(Text);
             // Add logic to run the item here
             return Task.CompletedTask;
         }

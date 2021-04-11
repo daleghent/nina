@@ -101,11 +101,11 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NINA.Core, Version=1.11.0.1065, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NINA.Core.1.11.0.1065-pre3\lib\net48\NINA.Core.dll</HintPath>
+    <Reference Include="NINA.Core, Version=1.11.0.1068, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NINA.Core.1.11.0.1068-nightly2\lib\net48\NINA.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NINA.Sequencer, Version=1.11.0.1065, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\NINA.Sequencer.1.11.0.1065-pre3\lib\net48\NINA.Sequencer.dll</HintPath>
+    <Reference Include="NINA.Sequencer, Version=1.11.0.1068, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NINA.Sequencer.1.11.0.1068-nightly2\lib\net48\NINA.Sequencer.dll</HintPath>
     </Reference>
     <Reference Include="Nito.AsyncEx.Context, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.AsyncEx.Context.5.0.0\lib\netstandard2.0\Nito.AsyncEx.Context.dll</HintPath>
@@ -187,12 +187,16 @@
     <Compile Include="TestPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Accord.dll.config" />
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="Sequencer\Examples\Basic Sequence End.template.json" />
+    <None Include="Sequencer\Examples\Basic Sequence Startup.template.json" />
+    <None Include="Sequencer\Examples\Basic Sequence Target.template.json" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Options.xaml">
@@ -205,6 +209,12 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\Initial\initial_data.sql" />
+    <Content Include="Database\Initial\initial_schema.sql" />
+    <Content Include="Database\Migration\1.sql" />
+    <Content Include="Database\Migration\2.sql" />
+    <Content Include="Database\Migration\3.sql" />
+    <Content Include="Database\Migration\5.sql" />
     <Content Include="Utility\DCRaw\dcraw.exe" />
     <Content Include="Utility\ExifTool\exiftool.exe" />
   </ItemGroup>
