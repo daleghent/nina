@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,13 +14,15 @@
 
 using FreeImageAPI;
 using FreeImageAPI.Metadata;
-using NINA.Model.ImageData;
+using NINA.Core.Utility;
+using NINA.Image.ImageData;
+using NINA.Image.Interfaces;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Utility.RawConverter {
+namespace NINA.Image.RawConverter {
 
     internal class FreeImageConverter : IRawConverter {
 
@@ -63,7 +65,7 @@ namespace NINA.Utility.RawConverter {
                         FreeImage.UnloadEx(ref img);
 
                         var imageArray = new ImageArray(flatArray: outArray, rawData: s.ToArray(), rawType: rawType);
-                        var data = new ImageData(
+                        var data = new BaseImageData(
                             imageArray: imageArray,
                             width: cropped.PixelWidth,
                             height: cropped.PixelHeight,

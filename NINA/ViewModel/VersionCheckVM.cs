@@ -15,9 +15,13 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NINA.Core.Enum;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Http;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.WindowService;
 using NINA.Utility;
-using NINA.Utility.Http;
-using NINA.Utility.WindowService;
+using NINA.WPF.Base.Interfaces.ViewModel;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -81,7 +85,7 @@ namespace NINA.ViewModel {
                 if (versionInfo?.IsNewer() == true) {
                     UpdateAvailable = true;
                     var projectVersion = new ProjectVersion(versionInfo.Version);
-                    UpdateAvailableText = string.Format(Locale.Loc.Instance["LblNewUpdateAvailable"], projectVersion);
+                    UpdateAvailableText = string.Format(Loc.Instance["LblNewUpdateAvailable"], projectVersion);
                     Changelog = await GetChangelog(versionInfo, checkCts.Token);
                 } else {
                     return false;
@@ -130,7 +134,7 @@ namespace NINA.ViewModel {
                         UpdateReady = true;
                     }
                 } else {
-                    Utility.Notification.Notification.ShowError(Locale.Loc.Instance["LblChecksumError"]);
+                    Notification.ShowError(Loc.Instance["LblChecksumError"]);
                     UpdateReady = false;
                 }
                 return UpdateReady;
@@ -250,7 +254,7 @@ namespace NINA.ViewModel {
                         break;
                 }
 
-                var request = new Utility.Http.HttpGetRequest(url);
+                var request = new HttpGetRequest(url);
                 var response = await request.Request(ct);
 
                 //Validate the returned json against the schema
@@ -383,7 +387,7 @@ namespace NINA.ViewModel {
             }
 
             private Version GetApplicationVersion() {
-                return new Version(Utility.Utility.Version);
+                return new Version(NINA.Core.Utility.CoreUtil.Version);
             }
         }
     }

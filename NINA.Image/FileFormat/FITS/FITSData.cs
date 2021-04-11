@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,7 +14,7 @@
 
 using System.IO;
 
-namespace NINA.Utility.FileFormat.FITS {
+namespace NINA.Image.FileFormat.FITS {
 
     public class FITSData {
         public ushort[] Data { get; }

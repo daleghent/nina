@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-namespace NINA.Model.MySafetyMonitor {
+namespace NINA.Equipment.Equipment.MySafetyMonitor {
 
     public class SafetyMonitorInfo : DeviceInfo {
         private bool isSafe;

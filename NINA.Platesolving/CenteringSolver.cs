@@ -12,14 +12,17 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Model;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Locale;
+using NINA.Equipment.Model;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINA.PlateSolving {
 
@@ -60,12 +63,12 @@ namespace NINA.PlateSolving {
                 solveProgress?.Report(new PlateSolveProgress() { PlateSolveResult = result });
 
                 if (Math.Abs(result.Separation.Distance.ArcMinutes) > parameter.Threshold) {
-                    progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPlateSolveNotInsideToleranceSyncing"] });
+                    progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceSyncing"] });
                     if (parameter.NoSync || !await telescopeMediator.Sync(result.Coordinates)) {
                         offset = result.DetermineSeparation(position + offset);
 
                         Logger.Warning($"Sync failed - calculating offset instead to compensate.  Original: {position.Transform(result.Coordinates.Epoch)}; Solved: {result.Coordinates}; Offset: {offset}");
-                        progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPlateSolveSyncViaTargetOffset"] });
+                        progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveSyncViaTargetOffset"] });
                     } else {
                         var positionAfterSync = telescopeMediator.GetCurrentPosition().Transform(result.Coordinates.Epoch);
 
@@ -81,11 +84,11 @@ namespace NINA.PlateSolving {
                     }
 
                     Logger.Info($"Slewing to target after sync. Target coordinates RA: {parameter.Coordinates.RAString} Dec: {parameter.Coordinates.DecString} Epoch: {parameter.Coordinates.Epoch}");
-                    progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPlateSolveNotInsideToleranceReslew"] });
+                    progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceReslew"] });
 
                     await telescopeMediator.SlewToCoordinatesAsync(parameter.Coordinates + offset, ct);
 
-                    progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPlateSolveNotInsideToleranceRepeating"] });
+                    progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceRepeating"] });
                 } else {
                     centered = true;
                 }

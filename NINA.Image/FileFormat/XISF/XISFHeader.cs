@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
 using NINA.Astrometry;
 using System;
 using System.Globalization;
@@ -22,8 +22,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
+using NINA.Core.Utility;
 
-namespace NINA.Utility.FileFormat.XISF {
+namespace NINA.Image.FileFormat.XISF {
     /*
      * Specifications: http://pixinsight.com/doc/docs/XISF-1.0-spec/XISF-1.0-spec.html#xisf_header
      */
@@ -52,7 +53,7 @@ namespace NINA.Utility.FileFormat.XISF {
             MetaData = new XElement(xmlns + "Metadata");
 
             AddMetaDataProperty(XISFMetaDataProperty.XISF.CreationTime, DateTime.UtcNow.ToString("o"));
-            AddMetaDataProperty(XISFMetaDataProperty.XISF.CreatorApplication, Utility.Title);
+            AddMetaDataProperty(XISFMetaDataProperty.XISF.CreatorApplication, CoreUtil.Title);
 
             Xisf.Add(MetaData);
 
@@ -591,7 +592,7 @@ namespace NINA.Utility.FileFormat.XISF {
             }
 
             AddImageProperty(XISFImageProperty.Observation.Equinox, 2000d, "Equinox of celestial coordinate system");
-            AddImageFITSKeyword("SWCREATE", string.Format("N.I.N.A. {0} ({1})", Utility.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file");
+            AddImageFITSKeyword("SWCREATE", string.Format("N.I.N.A. {0} ({1})", CoreUtil.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file");
         }
 
         /// <summary>
@@ -728,7 +729,7 @@ namespace NINA.Utility.FileFormat.XISF {
         /// </summary>
         public static string RemoveInvalidXMLChars(string text) {
             if (string.IsNullOrEmpty(text)) return "";
-            return _invalidXMLChars.Replace(text, "ï¿½");
+            return _invalidXMLChars.Replace(text, "???");
         }
 
         /// <summary>

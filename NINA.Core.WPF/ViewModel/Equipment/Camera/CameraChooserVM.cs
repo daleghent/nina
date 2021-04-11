@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,18 +14,23 @@
 
 using EDSDKLib;
 using FLI;
-using NINA.Model.MyCamera;
-using NINA.Model.MyCamera.ToupTekAlike;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.AtikSDK;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyCamera.ToupTekAlike;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
 using QHYCCD;
 using System;
 using System.Collections.Generic;
 using ZWOptical.ASISDK;
+using NINA.Equipment.SDK.CameraSDKs.AtikSDK;
+using NINA.Equipment.Utility;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment;
+using NINA.Equipment.Interfaces;
+using NINA.WPF.Base.Model.Equipment.MyCamera.Simulator;
 
-namespace NINA.ViewModel.Equipment.Camera {
+namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
     public class CameraChooserVM : DeviceChooserVM {
         private ITelescopeMediator telescopeMediator;
@@ -36,9 +41,9 @@ namespace NINA.ViewModel.Equipment.Camera {
 
         public override void GetEquipment() {
             lock (lockObj) {
-                var devices = new List<Model.IDevice>();
+                var devices = new List<IDevice>();
 
-                devices.Add(new Model.DummyDevice(Locale.Loc.Instance["LblNoCamera"]));
+                devices.Add(new DummyDevice(Loc.Instance["LblNoCamera"]));
 
                 /* ASI */
                 try {
@@ -190,8 +195,8 @@ namespace NINA.ViewModel.Equipment.Camera {
                     Logger.Error(ex);
                 }
 
-                devices.Add(new Model.MyCamera.FileCamera(profileService, telescopeMediator));
-                devices.Add(new Model.MyCamera.Simulator.SimulatorCamera(profileService, telescopeMediator));
+                devices.Add(new FileCamera(profileService, telescopeMediator));
+                devices.Add(new SimulatorCamera(profileService, telescopeMediator));
 
                 Devices = devices;
                 DetermineSelectedDevice(profileService.ActiveProfile.CameraSettings.Id);

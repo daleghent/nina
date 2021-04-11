@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,10 +12,11 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry.Body;
 using System;
 using System.Threading.Tasks;
 
-namespace NINA.Astrometry {
+namespace NINA.Astrometry.RiseAndSet {
 
     public abstract class RiseAndSetEvent {
 
@@ -31,9 +32,9 @@ namespace NINA.Astrometry {
         public virtual DateTime? Rise { get; private set; }
         public virtual DateTime? Set { get; private set; }
 
-        protected abstract double AdjustAltitude(Body body);
+        protected abstract double AdjustAltitude(BasicBody body);
 
-        protected abstract Body GetBody(DateTime date);
+        protected abstract BasicBody GetBody(DateTime date);
 
         /// <summary>
         /// Calculates rise and set time
@@ -72,18 +73,18 @@ namespace NINA.Astrometry {
                     //P2 (offsetDate + 1 | altitude1) => (1 | altitude1)
                     //P3 (offsetDate + 2 | altitude2) => (2 | altitude2)
 
-                    // ax² + bx + c
+                    // ax?? + bx + c
 
                     // Solve for c
-                    // => altitude0 = 0 * x² + 0 * x + c => altitude0 = c
+                    // => altitude0 = 0 * x?? + 0 * x + c => altitude0 = c
 
                     // Solve for b using c
-                    // altitude1 = a * 1² + b * 1 + altitude0
+                    // altitude1 = a * 1?? + b * 1 + altitude0
                     //    => altitude1 = a + b + altitude0
                     //    => b = altitude1 - a - altitude0
 
                     // Solve for a using b and c
-                    // altitude2 = a * 2² + b * 2 + altitude0
+                    // altitude2 = a * 2?? + b * 2 + altitude0
                     //   => altitude2 = 4a + 2(altitude1 - a - altitude0) + altitude0
                     //   => altitude2 = 4a + 2*altitude1 - 2a - 2*altitude0 + altitude0
                     //   => altitude2 = 2a + 2*altitude1 - altitude0
@@ -101,9 +102,9 @@ namespace NINA.Astrometry {
                     var c = altitude0;
 
                     // a-b-c formula
-                    // x = -b +- Sqrt(b² - 4ac) / 2a
+                    // x = -b +- Sqrt(b?? - 4ac) / 2a
 
-                    // Discriminant definition: b² - 4ac
+                    // Discriminant definition: b?? - 4ac
                     var discriminant = (Math.Pow(b, 2)) - (4.0 * a * c);
 
                     var zeroPoint1 = double.NaN;

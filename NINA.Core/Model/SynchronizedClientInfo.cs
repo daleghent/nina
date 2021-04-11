@@ -16,7 +16,7 @@ using System;
 
 #pragma warning disable 1998
 
-namespace NINA.Model.MyGuider.PHD2 {
+namespace NINA.Core.Model {
     /// <summary>
     /// This class holds information in the service about the connected client
     /// </summary>

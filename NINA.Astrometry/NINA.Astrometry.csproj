@@ -110,7 +110,7 @@
     </Compile>
     <Compile Include="Angle.cs" />
     <Compile Include="AstroUtil.cs" />
-    <Compile Include="Body\Body.cs" />
+    <Compile Include="Body\BasicBody.cs" />
     <Compile Include="Body\Earth.cs" />
     <Compile Include="Body\Moon.cs" />
     <Compile Include="Body\Sun.cs" />
@@ -122,18 +122,18 @@
     <Compile Include="Converters\MoonPhaseToGeometryConverter.cs" />
     <Compile Include="ObservableRectangle.cs" />
     <Compile Include="Coordinates.cs" />
-    <Compile Include="Coords.cs" />
+    <Compile Include="Location.cs" />
     <Compile Include="DatabaseInteraction.cs" />
     <Compile Include="DeepSkyObject.cs" />
     <Compile Include="DSOObjectType.cs" />
     <Compile Include="EarthRotationParameterUpdater.cs" />
     <Compile Include="FocusTarget.cs" />
     <Compile Include="FramingRectangle.cs" />
-    <Compile Include="INighttimeCalculator.cs" />
+    <Compile Include="Interfaces\INighttimeCalculator.cs" />
     <Compile Include="InputCoordinates.cs" />
     <Compile Include="InputTarget.cs" />
     <Compile Include="InputTopocentricCoordinates.cs" />
-    <Compile Include="ITwilightCalculator.cs" />
+    <Compile Include="Interfaces\ITwilightCalculator.cs" />
     <Compile Include="MeridianFlip.cs" />
     <Compile Include="NighttimeCalculator.cs" />
     <Compile Include="NighttimeData.cs" />

@@ -12,7 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
+using NINA.Profile.Interfaces;
+using NINA.WPF.Base.ViewModel;
 using System;
 using System.Threading.Tasks;
 using System.Windows;

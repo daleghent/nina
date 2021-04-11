@@ -13,22 +13,23 @@
 #endregion "copyright"
 
 using NINA.ViewModel;
-using NINA.ViewModel.Equipment.Camera;
-using NINA.ViewModel.Equipment.Dome;
-using NINA.ViewModel.Equipment.FilterWheel;
-using NINA.ViewModel.Equipment.FlatDevice;
-using NINA.ViewModel.Equipment.Focuser;
-using NINA.ViewModel.Equipment.Guider;
-using NINA.ViewModel.Equipment.Rotator;
-using NINA.ViewModel.Equipment.SafetyMonitor;
-using NINA.ViewModel.Equipment.Switch;
-using NINA.ViewModel.Equipment.Telescope;
-using NINA.ViewModel.Equipment.WeatherData;
+using NINA.WPF.Base.ViewModel.Equipment.Camera;
+using NINA.WPF.Base.ViewModel.Equipment.Dome;
+using NINA.WPF.Base.ViewModel.Equipment.FilterWheel;
+using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
+using NINA.WPF.Base.ViewModel.Equipment.Focuser;
+using NINA.WPF.Base.ViewModel.Equipment.Guider;
+using NINA.WPF.Base.ViewModel.Equipment.Rotator;
+using NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor;
+using NINA.WPF.Base.ViewModel.Equipment.Switch;
+using NINA.WPF.Base.ViewModel.Equipment.Telescope;
+using NINA.WPF.Base.ViewModel.Equipment.WeatherData;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Imaging;
 using NINA.ViewModel.Sequencer;
 using System.Windows;
 using System.Windows.Controls;
+using NINA.WPF.Base.ViewModel.AutoFocus;
 
 namespace NINA.Utility.AvalonDock {
 

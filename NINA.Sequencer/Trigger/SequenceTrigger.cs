@@ -14,10 +14,10 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,15 +12,19 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Profile;
+using NINA.Core.Locale;
+using NINA.Core.Model.Equipment;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyFilterWheel {
+namespace NINA.Equipment.Equipment.MyFilterWheel {
 
     public class ManualFilterWheel : BaseINPC, IFilterWheel {
 
@@ -51,7 +55,7 @@ namespace NINA.Model.MyFilterWheel {
 
         public string Description {
             get {
-                return Locale.Loc.Instance["LblManualFilterWheelDescription"];
+                return Loc.Instance["LblManualFilterWheelDescription"];
             }
         }
 
@@ -93,9 +97,9 @@ namespace NINA.Model.MyFilterWheel {
             }
 
             set {
-                MyMessageBox.MyMessageBox.Show(
-                    string.Format(Locale.Loc.Instance["LblPleaseChangeToFilter"], this.Filters[value].Name),
-                    Locale.Loc.Instance["LblFilterChangeRequired"],
+                MyMessageBox.Show(
+                    string.Format(Loc.Instance["LblPleaseChangeToFilter"], this.Filters[value].Name),
+                    Loc.Instance["LblFilterChangeRequired"],
                     System.Windows.MessageBoxButton.OK,
                     System.Windows.MessageBoxResult.OK);
                 position = value;
@@ -129,14 +133,14 @@ namespace NINA.Model.MyFilterWheel {
 
         public string Name {
             get {
-                return Locale.Loc.Instance["LblManualFilterWheel"];
+                return Loc.Instance["LblManualFilterWheel"];
             }
         }
 
         public Task<bool> Connect(CancellationToken token) {
             Connected = true;
             if (Filters.Count == 0) {
-                var filter = new FilterInfo(Locale.Loc.Instance["LblFilter"] + 1, 0, 0, -1, new Model.MyCamera.BinningMode(1, 1), -1, -1);
+                var filter = new FilterInfo(Loc.Instance["LblFilter"] + 1, 0, 0, -1, new BinningMode(1, 1), -1, -1);
                 profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters.Add(filter);
                 RaisePropertyChanged(nameof(Filters));
             }

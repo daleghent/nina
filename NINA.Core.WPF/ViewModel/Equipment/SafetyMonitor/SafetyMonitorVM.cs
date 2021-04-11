@@ -12,12 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MySafetyMonitor;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
+using NINA.Equipment.Equipment.MySafetyMonitor;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +24,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Core.MyMessageBox;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.ViewModel.Equipment.SafetyMonitor {
+namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
 
     public class SafetyMonitorVM : DockableVM, ISafetyMonitorVM {
         private ISafetyMonitorMediator safetyMonitorMediator;
@@ -118,7 +124,7 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
                 applicationStatusMediator.StatusUpdate(
                     new ApplicationStatus() {
                         Source = Title,
-                        Status = Locale.Loc.Instance["LblConnecting"]
+                        Status = Loc.Instance["LblConnecting"]
                     }
                 );
 
@@ -141,7 +147,7 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
                                 DriverVersion = sm.DriverVersion
                             };
 
-                            Notification.ShowSuccess(Locale.Loc.Instance["LblSafetyMonitorConnected"]);
+                            Notification.ShowSuccess(Loc.Instance["LblSafetyMonitorConnected"]);
 
                             updateTimer.Interval = profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval;
                             updateTimer.Start();
@@ -192,7 +198,7 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
         }
 
         private async Task<bool> DisconnectDiag() {
-            var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectSafetyMonitor"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+            var diag = MyMessageBox.Show(Loc.Instance["LblDisconnectSafetyMonitor"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
             if (diag == System.Windows.MessageBoxResult.OK) {
                 await Disconnect();
             }

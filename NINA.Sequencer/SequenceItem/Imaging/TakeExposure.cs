@@ -13,16 +13,12 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
-using NINA.Sequencer.Exceptions;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.ImageHistory;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.ViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -34,6 +30,13 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Locale;
+using NINA.Equipment.Model;
+using NINA.Astrometry;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.Sequencer.SequenceItem.Imaging {
 
@@ -54,7 +57,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         public TakeExposure(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM) {
             Gain = -1;
             Offset = -1;
-            ImageType = Model.CaptureSequence.ImageTypes.LIGHT;
+            ImageType = CaptureSequence.ImageTypes.LIGHT;
             this.cameraMediator = cameraMediator;
             this.imagingMediator = imagingMediator;
             this.imageSaveMediator = imageSaveMediator;
@@ -126,7 +129,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 if (_imageTypes == null) {
                     _imageTypes = new ObservableCollection<string>();
 
-                    Type type = typeof(Model.CaptureSequence.ImageTypes);
+                    Type type = typeof(CaptureSequence.ImageTypes);
                     foreach (var p in type.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)) {
                         var v = p.GetValue(null);
                         _imageTypes.Add(v.ToString());
@@ -229,22 +232,22 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             var i = new List<string>();
             CameraInfo = this.cameraMediator.GetInfo();
             if (!CameraInfo.Connected) {
-                i.Add(Locale.Loc.Instance["LblCameraNotConnected"]);
+                i.Add(Loc.Instance["LblCameraNotConnected"]);
             } else {
                 if (CameraInfo.CanSetGain && Gain > -1 && (Gain < CameraInfo.GainMin || Gain > CameraInfo.GainMax)) {
-                    i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain"], CameraInfo.GainMin, CameraInfo.GainMax, Gain));
+                    i.Add(string.Format(Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain"], CameraInfo.GainMin, CameraInfo.GainMax, Gain));
                 }
                 if (CameraInfo.CanSetOffset && Offset > -1 && (Offset < CameraInfo.OffsetMin || Offset > CameraInfo.OffsetMax)) {
-                    i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset"], CameraInfo.OffsetMin, CameraInfo.OffsetMax, Offset));
+                    i.Add(string.Format(Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_Offset"], CameraInfo.OffsetMin, CameraInfo.OffsetMax, Offset));
                 }
             }
 
             var fileSettings = profileService.ActiveProfile.ImageFileSettings;
 
             if (string.IsNullOrWhiteSpace(fileSettings.FilePath)) {
-                i.Add(Locale.Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty"]);
+                i.Add(Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty"]);
             } else if (!Directory.Exists(fileSettings.FilePath)) {
-                i.Add(Locale.Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid"]);
+                i.Add(Loc.Instance["Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathInvalid"]);
             }
 
             Issues = i;

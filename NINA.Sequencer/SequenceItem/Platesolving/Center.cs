@@ -13,16 +13,15 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Model.ImageData;
+using NINA.Core.Model;
 using NINA.PlateSolving;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.WindowService;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.WindowService;
 using NINA.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -32,6 +31,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Locale;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.Sequencer.SequenceItem.Platesolving {
 
@@ -110,7 +113,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 profileService.ActiveProfile.PlateSolveSettings.ExposureTime,
                 CaptureSequence.ImageTypes.SNAPSHOT,
                 profileService.ActiveProfile.PlateSolveSettings.Filter,
-                new Model.MyCamera.BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
+                new BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
                 1
             );
             return await solver.Center(seq, parameter, plateSolveStatusVM.Progress, progress, token);
@@ -126,7 +129,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     await guiderMediator.StartGuiding(false, progress, token);
                 }
                 if (result.Success == false) {
-                    throw new Exception(Locale.Loc.Instance["LblPlatesolveFailed"]);
+                    throw new Exception(Loc.Instance["LblPlatesolveFailed"]);
                 }
             } finally {
                 service.DelayedClose(TimeSpan.FromSeconds(10));
@@ -157,7 +160,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         public virtual bool Validate() {
             var i = new List<string>();
             if (!telescopeMediator.GetInfo().Connected) {
-                i.Add(Locale.Loc.Instance["LblTelescopeNotConnected"]);
+                i.Add(Loc.Instance["LblTelescopeNotConnected"]);
             }
             Issues = i;
             return i.Count == 0;

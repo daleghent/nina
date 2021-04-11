@@ -13,17 +13,21 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using NINA.Utility.Mediator;
-using NINA.Model.MyCamera;
+using NINA.Equipment.Equipment.MyCamera;
 using NINA.ViewModel.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Image;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.ViewModel {
 

@@ -13,7 +13,8 @@
 #endregion "copyright"
 
 using NINA.Plugin;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
+using NINA.WPF.Base.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

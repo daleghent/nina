@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,21 +12,21 @@
 
 #endregion "copyright"
 
-using NINA.Locale;
-using NINA.Model.MySwitch.PegasusAstro;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Notification;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
-using NINA.Utility.WindowService;
+using NINA.Core.Locale;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MySwitch {
+namespace NINA.Equipment.Equipment.MySwitch.PegasusAstro {
 
     public class UltimatePowerBoxV2 : BaseINPC, ISwitchHub, IDisposable {
         private readonly IProfileService _profileService;

@@ -13,6 +13,8 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using System;
 using System.Globalization;
 using System.IO;
@@ -35,7 +37,7 @@ namespace NINA.Profile {
                 Culture = "es-ES";
             }
             if (!Directory.Exists(SkySurveyCacheDirectory)) {
-                SkySurveyCacheDirectory = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "FramingAssistantCache");
+                SkySurveyCacheDirectory = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "FramingAssistantCache");
             }
             if (!Directory.Exists(SkyAtlasImageRepository)) {
                 SkyAtlasImageRepository = string.Empty;
@@ -47,7 +49,7 @@ namespace NINA.Profile {
             logLevel = LogLevelEnum.INFO;
             devicePollingInterval = 2;
             skyAtlasImageRepository = string.Empty;
-            skySurveyCacheDirectory = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "FramingAssistantCache");
+            skySurveyCacheDirectory = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "FramingAssistantCache");
         }
 
         [DataMember]

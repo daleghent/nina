@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,17 +12,18 @@
 
 #endregion "copyright"
 
-using NINA.Locale;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Notification;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
+using NINA.Core.Locale;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyWeatherData {
+namespace NINA.Equipment.Equipment.MyWeatherData {
 
     public class UltimatePowerboxV2 : BaseINPC, IWeatherData {
         private readonly IProfileService _profileService;

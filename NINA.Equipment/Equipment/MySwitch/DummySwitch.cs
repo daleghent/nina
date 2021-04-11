@@ -12,19 +12,21 @@
 
 #endregion "copyright"
 
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MySwitch {
+namespace NINA.Equipment.Equipment.MySwitch {
 
     public class DummySwitch : IWritableSwitch {
 
         public DummySwitch(short index) {
             Id = index;
-            Name = $"{Locale.Loc.Instance["LblSwitch"]} {index}";
+            Name = $"{Loc.Instance["LblSwitch"]} {index}";
         }
 
         public double Maximum => double.MaxValue;

@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Equipment.Interfaces;
 using Omegon;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyCamera.ToupTekAlike {
+namespace NINA.Equipment.Equipment.MyCamera.ToupTekAlike {
 
     public static class OmegonEnumExtensions {
 

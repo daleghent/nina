@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,11 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using System.IO;
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
+using NINA.Image.Interfaces;
 
-namespace NINA.Model.MyCamera.Simulator {
+namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
     public class ImageSettings : BaseINPC {
         private object lockObj = new object();

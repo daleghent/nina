@@ -12,10 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Core.Locale;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Profile.Interfaces;
 using NINA.ViewModel.Interfaces;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
 using Nito.AsyncEx;
 using System;
 using System.Threading.Tasks;
@@ -54,7 +58,7 @@ namespace NINA.ViewModel {
             this.safetyMonitorMediator = safetyMonitorMediator;
 
             ConnectAllDevicesCommand = new AsyncCommand<bool>(async () => {
-                var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblConnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
+                var diag = MyMessageBox.Show(Loc.Instance["LblConnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
                 if (diag == MessageBoxResult.OK) {
                     return await Task<bool>.Run(async () => {
                         try {
@@ -133,7 +137,7 @@ namespace NINA.ViewModel {
             });
 
             DisconnectAllDevicesCommand = new AsyncCommand<bool>(async () => {
-                var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
+                var diag = MyMessageBox.Show(Loc.Instance["LblDisconnectAll"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
                 if (diag == MessageBoxResult.OK) {
                     await DisconnectEquipment();
                     AllConnected = false;
@@ -158,7 +162,7 @@ namespace NINA.ViewModel {
         private void ClosingApplication(object o) {
             AsyncContext.Run(DisconnectEquipment);
             try {
-                Utility.AtikSDK.AtikCameraDll.Shutdown();
+                NINA.Equipment.SDK.CameraSDKs.AtikSDK.AtikCameraDll.Shutdown();
             } catch (Exception) { }
         }
 

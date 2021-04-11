@@ -12,27 +12,34 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Utility.Exceptions;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Profile.Interfaces;
 using NINA.ViewModel.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using NINA.Model.ImageData;
-using NINA.Model.MyTelescope;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFocuser;
-using NINA.Model.MyRotator;
-using NINA.Model.MyWeatherData;
-using NINA.Utility.Mediator;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Equipment.MyRotator;
+using NINA.Equipment.Equipment.MyWeatherData;
 using Dasync.Collections;
 using NINA.Equipment.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Image.Interfaces;
+using NINA.Image.ImageData;
+using NINA.Equipment.Model;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Equipment.Exceptions;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel {
 
@@ -146,7 +153,7 @@ namespace NINA.ViewModel {
             }
             set {
                 _status = value;
-                _status.Source = Locale.Loc.Instance["LblImaging"]; ;
+                _status.Source = Loc.Instance["LblImaging"]; ;
                 RaisePropertyChanged();
 
                 applicationStatusMediator.StatusUpdate(_status);
@@ -190,12 +197,12 @@ namespace NINA.ViewModel {
                 try {
                     IExposureData data = null;
                     //Asynchronously wait to enter the Semaphore. If no-one has been granted access to the Semaphore, code execution will proceed, otherwise this thread waits here until the semaphore is released
-                    progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblWaitingForCamera"] });
+                    progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblWaitingForCamera"] });
                     await semaphoreSlim.WaitAsync(token);
 
                     try {
                         if (CameraInfo.Connected != true) {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblNoCameraConnected"]);
+                            Notification.ShowWarning(Loc.Instance["LblNoCameraConnected"]);
                             throw new CameraConnectionLostException();
                         }
 
@@ -219,7 +226,7 @@ namespace NINA.ViewModel {
 
                         if (data == null) {
                             Logger.Error(new CameraDownloadFailedException(sequence));
-                            Notification.ShowError(string.Format(Locale.Loc.Instance["LblCameraDownloadFailed"], sequence.ExposureTime, sequence.ImageType, sequence.Gain, sequence.FilterType?.Name ?? string.Empty));
+                            Notification.ShowError(string.Format(Loc.Instance["LblCameraDownloadFailed"], sequence.ExposureTime, sequence.ImageType, sequence.Gain, sequence.FilterType?.Name ?? string.Empty));
                             return null;
                         }
 
@@ -228,7 +235,7 @@ namespace NINA.ViewModel {
                         if (!skipProcessing) {
                             //Wait for previous prepare image task to complete
                             if (_imageProcessingTask != null && !_imageProcessingTask.IsCompleted) {
-                                progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblWaitForImageProcessing"] });
+                                progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblWaitForImageProcessing"] });
                                 await _imageProcessingTask;
                             }
 
@@ -239,10 +246,10 @@ namespace NINA.ViewModel {
                         throw ex;
                     } catch (CameraConnectionLostException ex) {
                         Logger.Error(ex);
-                        Notification.ShowError(Locale.Loc.Instance["LblCameraConnectionLost"]);
+                        Notification.ShowError(Loc.Instance["LblCameraConnectionLost"]);
                         throw ex;
                     } catch (Exception ex) {
-                        Notification.ShowError(Locale.Loc.Instance["LblUnexpectedError"] + Environment.NewLine + ex.Message);
+                        Notification.ShowError(Loc.Instance["LblUnexpectedError"] + Environment.NewLine + ex.Message);
                         Logger.Error(ex);
                         cameraMediator.AbortExposure();
                         throw ex;
@@ -264,7 +271,7 @@ namespace NINA.ViewModel {
         }
 
         private Task<IExposureData> Download(CancellationToken token, IProgress<ApplicationStatus> progress) {
-            progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblDownloading"] });
+            progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDownloading"] });
             return cameraMediator.Download(token);
         }
 

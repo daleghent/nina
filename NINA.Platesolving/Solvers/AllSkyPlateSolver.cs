@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using NINA.Core.Locale;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
@@ -26,7 +27,7 @@ namespace NINA.PlateSolving.Solvers {
         }
 
         protected override string GetLocalizedPlateSolverName() {
-            return Locale.Loc.Instance["LblASPSNotFound"];
+            return Loc.Instance["LblASPSNotFound"];
         }
 
         protected override PlateSolveResult ReadResult(

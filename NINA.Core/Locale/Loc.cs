@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,13 +12,13 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Globalization;
 using System.Resources;
 using System.Windows.Data;
 
-namespace NINA.Locale {
+namespace NINA.Core.Locale {
 
     public class Loc : BaseINPC, ILoc {
         private ResourceManager _locale;

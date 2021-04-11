@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,17 +13,18 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
-using NINA.Utility.Exceptions;
-using NINA.Utility.TcpRaw;
-using NINA.Profile;
+using NINA.Core.Utility.TcpRaw;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System.Linq;
 using System.Globalization;
+using NINA.Equipment.Exceptions;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyPlanetarium {
+namespace NINA.Equipment.Equipment.MyPlanetarium {
 
     internal class CartesDuCiel : IPlanetarium {
         private string address;
@@ -63,7 +64,7 @@ namespace NINA.Model.MyPlanetarium {
                 if (!Match(columns[0].Replace("OK!", string.Empty), @"(([0-9]{1,2})([h|:]|[?]{2})([0-9]{1,2})([m|:]|[?]{2})?([0-9]{1,2}(?:\.[0-9]+){0,1})?([s|:]|[?]{2}))", out var raString)) { throw new PlanetariumObjectNotSelectedException(); }
                 var ra = AstroUtil.HMSToDegrees(raString);
 
-                if (!Match(columns[1], @"([\+|-]([0-9]{1,2})([d|°|:]|[?]{2})([0-9]{1,2})([m|'|:]|[?]{2})?([0-9]{1,2}(?:\.[0-9]+){0,1})?([s|""|:]|[?]{2}))", out var decString)) { throw new PlanetariumObjectNotSelectedException(); }
+                if (!Match(columns[1], @"([\+|-]([0-9]{1,2})([d|??|:]|[?]{2})([0-9]{1,2})([m|'|:]|[?]{2})?([0-9]{1,2}(?:\.[0-9]+){0,1})?([s|""|:]|[?]{2}))", out var decString)) { throw new PlanetariumObjectNotSelectedException(); }
                 var dec = AstroUtil.DMSToDegrees(decString);
 
                 if (!Match(columns.Last(), @"(?<=Equinox:).*", out var equinox)) { throw new PlanetariumObjectNotSelectedException(); }
@@ -108,7 +109,7 @@ namespace NINA.Model.MyPlanetarium {
             }
         }
 
-        public async Task<Coords> GetSite() {
+        public async Task<Location> GetSite() {
             try {
                 string command = "GETOBS\r\n";
 
@@ -123,7 +124,7 @@ namespace NINA.Model.MyPlanetarium {
 
                 if (!Match(response, @"(?<=ALT:)([0-9]{0,5})[m]", out var altitudeString)) { throw new PlanetariumFailedToGetCoordinates(); }
 
-                var coords = new Coords {
+                var coords = new Location {
                     Latitude = AstroUtil.DMSToDegrees(latutideString),
                     Longitude = -AstroUtil.DMSToDegrees(longitudeString),
                     Elevation = AstroUtil.DMSToDegrees(altitudeString)

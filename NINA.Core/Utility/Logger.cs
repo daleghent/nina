@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -17,20 +17,20 @@ using System;
 using System.IO;
 using System.Runtime.CompilerServices;
 
-namespace NINA.Utility {
+namespace NINA.Core.Utility {
 
     public static class Logger {
 
         static Logger() {
             LOGDATE = DateTime.Now.ToString("yyyyMMdd-HHmmss");
-            var logDir = Path.Combine(Utility.APPLICATIONTEMPPATH, "Logs");
+            var logDir = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Logs");
             var processId = System.Diagnostics.Process.GetCurrentProcess().Id;
-            LOGFILEPATH = Path.Combine(logDir, $"{LOGDATE}-{Utility.Version}.{processId}.log");
+            LOGFILEPATH = Path.Combine(logDir, $"{LOGDATE}-{CoreUtil.Version}.{processId}.log");
 
             if (!Directory.Exists(logDir)) {
                 Directory.CreateDirectory(logDir);
             } else {
-                Utility.DirectoryCleanup(logDir, TimeSpan.FromDays(-90));
+                CoreUtil.DirectoryCleanup(logDir, TimeSpan.FromDays(-90));
             }
 
             InitiateLog();
@@ -42,7 +42,7 @@ namespace NINA.Utility {
                 var os = Environment.OSVersion;
                 Append(PadBoth("", 70, '-'));
                 Append(PadBoth("NINA - Nighttime Imaging 'N' Astronomy", 70, '-'));
-                Append(PadBoth(string.Format("Running NINA Version {0}", Utility.Version), 70, '-'));
+                Append(PadBoth(string.Format("Running NINA Version {0}", CoreUtil.Version), 70, '-'));
                 Append(PadBoth(DateTime.Now.ToString("s"), 70, '-'));
                 Append(PadBoth(".NET Version {0}", 70, '-', Environment.Version.ToString()));
                 Append(PadBoth("Oparating System Information", 70, '-'));

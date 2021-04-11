@@ -15,7 +15,8 @@
 using System;
 using System.Linq;
 using System.Runtime.Serialization;
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 
 namespace NINA.Profile {
 

@@ -12,7 +12,11 @@
 
 #endregion "copyright"
 
+using NINA.Core.Locale;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Utility;
 using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Utility;
 using NINA.ViewModel.Interfaces;
 using Nito.AsyncEx;
@@ -91,9 +95,9 @@ namespace NINA {
             }
 
             if (Current != null) {
-                var result = MyMessageBox.MyMessageBox.Show(
-                    Locale.Loc.Instance["LblApplicationInBreakMode"],
-                    Locale.Loc.Instance["LblUnhandledException"],
+                var result = MyMessageBox.Show(
+                    Loc.Instance["LblApplicationInBreakMode"],
+                    Loc.Instance["LblUnhandledException"],
                     MessageBoxButton.YesNo,
                     MessageBoxResult.No);
                 if (result == MessageBoxResult.Yes) {

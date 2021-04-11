@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-namespace NINA.Model.MyGuider {
+namespace NINA.Core.Interfaces {
 
     public interface IGuideStep : IGuideEvent {
         double Frame { get; }

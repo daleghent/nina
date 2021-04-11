@@ -14,7 +14,7 @@
 
 using System;
 
-namespace NINA.Utility.ImageAnalysis {
+namespace NINA.Image.ImageAnalysis {
 
     public class HistogramMath {
 

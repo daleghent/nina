@@ -15,13 +15,14 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Linq;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Astrometry.SkySurvey;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Core.Utility;
 using NINA.Core.Enum;
+using NINA.Core.Model;
+using NINA.Astrometry;
+using NINA.WPF.Base.SkySurvey;
 
-namespace NINA.ViewModel.FramingAssistant {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IFramingAssistantVM {
         double BoundHeight { get; set; }

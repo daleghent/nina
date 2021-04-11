@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,17 +13,19 @@
 #endregion "copyright"
 
 using System.Collections.Generic;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Core.Utility;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using NINA.Utility.WindowService;
+using NINA.Core.Utility.WindowService;
 using Nito.AsyncEx;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Model.Equipment;
+using NINA.WPF.Base.Model;
 
-namespace NINA.ViewModel.FlatWizard {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IFlatWizardVM : ICameraConsumer, IFilterWheelConsumer, ITelescopeConsumer, IFlatDeviceConsumer {
         BinningMode BinningMode { get; set; }

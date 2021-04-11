@@ -13,15 +13,15 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
@@ -71,9 +71,9 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             var i = new List<string>();
             var info = flatDeviceMediator.GetInfo();
             if (!info.Connected) {
-                i.Add(Locale.Loc.Instance["LblFlatDeviceNotConnected"]);
+                i.Add(Loc.Instance["LblFlatDeviceNotConnected"]);
             } else if (!info.SupportsOpenClose) {
-                i.Add(Locale.Loc.Instance["Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose"]);
+                i.Add(Loc.Instance["Lbl_SequenceItem_Validation_FlatDeviceCannotOpenClose"]);
             }
             Issues = i;
             return i.Count == 0;

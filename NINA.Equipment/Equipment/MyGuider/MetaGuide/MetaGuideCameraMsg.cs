@@ -12,10 +12,10 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 
-namespace NINA.Model.MyGuider.MetaGuide {
+namespace NINA.Equipment.Equipment.MyGuider.MetaGuide {
 
     public class MetaGuideCameraMsg : MetaGuideBaseMsg {
 

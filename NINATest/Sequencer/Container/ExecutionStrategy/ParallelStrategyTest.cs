@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using Moq;
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Container.ExecutionStrategy;
 using NINA.Sequencer.SequenceItem;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.WindowService;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -22,8 +22,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MySwitch {
+namespace NINA.Equipment.Equipment.MySwitch.Eagle {
 
     public class Eagle : BaseINPC, ISwitchHub {
 

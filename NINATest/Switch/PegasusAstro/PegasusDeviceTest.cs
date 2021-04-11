@@ -14,13 +14,13 @@
 
 using System;
 using Moq;
-using NINA.Utility.SerialCommunication;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO.Ports;
 using System.Threading.Tasks;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
 
 namespace NINATest.Switch.PegasusAstro {
 

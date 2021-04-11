@@ -12,16 +12,18 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.AtikSDK;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using System;
 using System.Collections;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.SDK.CameraSDKs.AtikSDK;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyFilterWheel {
+namespace NINA.Equipment.Equipment.MyFilterWheel {
 
     public abstract class AtikFilterWheelBase : BaseINPC, IFilterWheel {
         protected readonly IProfileService profileService;

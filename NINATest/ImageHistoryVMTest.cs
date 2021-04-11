@@ -14,9 +14,9 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model.ImageData;
-using NINA.Profile;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Image.ImageData;
+using NINA.Profile.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.ViewModel;
 using NINA.ViewModel.ImageHistory;
 using NUnit.Framework;
@@ -26,6 +26,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Utility.AutoFocus;
 
 namespace NINATest {
 
@@ -73,7 +75,7 @@ namespace NINATest {
             for (int i = 0; i < 300; i++) {
                 sut.Add(i + 1, null, "LIGHT");
                 sut.AppendImageProperties(new ImageSavedEventArgs() { StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = 1, HFR = 1 }, MetaData = new ImageMetaData { Image = new ImageParameter { Id = i + 1 } } });
-                sut.AppendAutoFocusPoint(new NINA.ViewModel.AutoFocus.AutoFocusReport());
+                sut.AppendAutoFocusPoint(new AutoFocusReport());
             }
 
             sut.AutoFocusPoints.Select(x => x.Id).Distinct().ToList().Count.Should().BeLessOrEqualTo(300);
@@ -88,7 +90,7 @@ namespace NINATest {
             for (int i = 0; i < 100; i++) {
                 sut.Add(i + 1, null, "LIGHT");
                 sut.AppendImageProperties(new ImageSavedEventArgs() { StarDetectionAnalysis = new StarDetectionAnalysis() { DetectedStars = 1, HFR = 1 }, MetaData = new ImageMetaData { Image = new ImageParameter { Id = i + 1 } } });
-                sut.AppendAutoFocusPoint(new NINA.ViewModel.AutoFocus.AutoFocusReport());
+                sut.AppendAutoFocusPoint(new AutoFocusReport());
             }
 
             sut.PlotClear();

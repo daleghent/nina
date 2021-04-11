@@ -12,16 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyCamera;
+using NINA.Equipment.Equipment.MyCamera;
 using NINA.Utility;
-using NINA.Profile;
-using NINA.Model.ImageData;
+using NINA.Profile.Interfaces;
 using System.Windows.Input;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using NINA.ViewModel.Interfaces;
-using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.ComponentModel;
 using System.Windows.Data;
@@ -30,6 +28,14 @@ using System.IO;
 using CsvHelper;
 using System.Globalization;
 using NINA.Core.Enum;
+using NINA.Image.Interfaces;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Core.Locale;
+using NINA.WPF.Base.Model;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Utility.AutoFocus;
 
 namespace NINA.ViewModel.ImageHistory {
 
@@ -54,7 +60,7 @@ namespace NINA.ViewModel.ImageHistory {
             ImageHistoryRightSelected = ImageHistoryEnum.Stars;
 
             FilterList = new AsyncObservableCollection<string>();
-            AllFilters = Locale.Loc.Instance["LblHFRHistoryAllFilters"];
+            AllFilters = Loc.Instance["LblHFRHistoryAllFilters"];
             FilterList.Add(AllFilters);
             SelectedFilter = AllFilters;
 
@@ -238,7 +244,7 @@ namespace NINA.ViewModel.ImageHistory {
             }
         }
 
-        public void AppendAutoFocusPoint(AutoFocus.AutoFocusReport report) {
+        public void AppendAutoFocusPoint(AutoFocusReport report) {
             if (report != null) {
                 lock (lockObj) {
                     var last = ImageHistory.LastOrDefault();
@@ -263,7 +269,7 @@ namespace NINA.ViewModel.ImageHistory {
         public void PlotSave() {
             if (this.ObservableImageHistory.Count != 0) {
                 SaveFileDialog sfd = new SaveFileDialog();
-                sfd.FileName = Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd") + "_history.csv";
+                sfd.FileName = NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd") + "_history.csv";
                 sfd.InitialDirectory = Path.GetDirectoryName(ActiveProfile.SequenceSettings.DefaultSequenceFolder);
                 if (sfd.ShowDialog() == DialogResult.OK) {
                     if (!sfd.FileName.ToLower().EndsWith(".csv")) sfd.FileName += ".csv";
@@ -278,5 +284,7 @@ namespace NINA.ViewModel.ImageHistory {
 
         public ICommand PlotClearCommand { get; private set; }
         public ICommand PlotSaveCommand { get; private set; }
+        AsyncObservableCollection<ImageHistoryPoint> IImageHistoryVM.AutoFocusPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        AsyncObservableCollection<ImageHistoryPoint> IImageHistoryVM.ObservableImageHistory { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }

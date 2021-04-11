@@ -13,14 +13,17 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Profile;
-using NINA.Utility.WindowService;
+using NINA.Profile.Interfaces;
 using System;
 using System.Globalization;
 using System.Threading;
 using System.Collections.Generic;
-using NINA.Utility.Notification;
 using System.Linq;
+using NINA.Core.Utility.WindowService;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Profile;
 
 namespace NINA.ViewModel {
 
@@ -55,7 +58,7 @@ namespace NINA.ViewModel {
                     RaisePropertyChanged(nameof(FocalLength));
                     RaisePropertyChanged(nameof(Focuser));
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblSelectProfileInUseWarning"]);
+                    Notification.ShowWarning(Loc.Instance["LblSelectProfileInUseWarning"]);
                 }
                 RaisePropertyChanged();
             }
@@ -131,7 +134,7 @@ namespace NINA.ViewModel {
                             }
                         }
                     };
-                    ws.ShowDialog(this, Locale.Loc.Instance["LblChooseProfile"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.SingleBorderWindow);
+                    ws.ShowDialog(this, Loc.Instance["LblChooseProfile"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.SingleBorderWindow);
                 }
             } catch (OperationCanceledException) {
             } catch (Exception ex) {

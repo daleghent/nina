@@ -13,7 +13,6 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

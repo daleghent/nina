@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,14 +13,16 @@
 #endregion "copyright"
 
 using Newtonsoft.Json.Linq;
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Http;
+using NINA.Equipment.Interfaces;
 using Nito.AsyncEx;
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MySwitch {
+namespace NINA.Equipment.Equipment.MySwitch.Eagle {
 
     internal abstract class EagleWritableSwitch : EagleSwitch, IWritableSwitch {
 
@@ -53,7 +55,7 @@ namespace NINA.Model.MySwitch {
                 RaisePropertyChanged(nameof(Name));
 
                 Logger.Trace($"Try setting name {targetName} via {url}");
-                var request = new Utility.Http.HttpGetRequest(url, Id, targetName);
+                var request = new HttpGetRequest(url, Id, targetName);
                 var response = await request.Request(new CancellationToken());
                 var jobj = JObject.Parse(response);
                 var regoutResponse = jobj.ToObject<EagleResponse>();
@@ -91,7 +93,7 @@ namespace NINA.Model.MySwitch {
 
                 Logger.Trace($"Try setting value {TargetValue} via {url}");
 
-                var request = new Utility.Http.HttpGetRequest(url, Id, TargetValue);
+                var request = new HttpGetRequest(url, Id, TargetValue);
                 var response = await request.Request(new CancellationToken());
 
                 var jobj = JObject.Parse(response);

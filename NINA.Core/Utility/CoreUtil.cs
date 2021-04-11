@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Core.Model;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -20,9 +20,9 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Utility {
+namespace NINA.Core.Utility {
 
-    public static class Utility {
+    public static class CoreUtil {
         public static char[] PATHSEPARATORS = new char[] { Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar };
         public static string APPLICATIONDIRECTORY = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
         public static string APPLICATIONTEMPPATH = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "NINA");
@@ -102,7 +102,7 @@ namespace NINA.Utility {
             while (elapsed < t && !token.IsCancellationRequested) {
                 var delta = await Delay(100, token);
                 elapsed += delta;
-                progress?.Report(new ApplicationStatus { MaxProgress = (int)t.TotalSeconds, Progress = (int)elapsed.TotalSeconds, Status = string.IsNullOrWhiteSpace(status) ? NINA.Locale.Loc.Instance["LblWaiting"] : status, ProgressType = ApplicationStatus.StatusProgressType.ValueOfMaxValue });
+                progress?.Report(new ApplicationStatus { MaxProgress = (int)t.TotalSeconds, Progress = (int)elapsed.TotalSeconds, Status = string.IsNullOrWhiteSpace(status) ? NINA.Core.Locale.Loc.Instance["LblWaiting"] : status, ProgressType = ApplicationStatus.StatusProgressType.ValueOfMaxValue });
             }
             return elapsed;
         }

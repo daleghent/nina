@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,15 +12,17 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.FlatDeviceSDKs.AllPro;
-using NINA.Utility.Notification;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.SDK.FlatDeviceSDKs.AllPro;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyFlatDevice {
+namespace NINA.Equipment.Equipment.MyFlatDevice {
 
     public class AllProSpikeAFlat : BaseINPC, IFlatDevice {
         private readonly IProfileService _profileService;
@@ -55,7 +57,7 @@ namespace NINA.Model.MyFlatDevice {
                     if (Connected) {
                         if (USBD.USBD_LightOn(this._usbdHandle, value) != 0) {
                             Logger.Error($"Failed to turn LightOn status to {value}");
-                            Notification.ShowError(Locale.Loc.Instance["LblFlatDeviceInvalidResponse"]);
+                            Notification.ShowError(Loc.Instance["LblFlatDeviceInvalidResponse"]);
                         }
                     }
                 }
@@ -83,7 +85,7 @@ namespace NINA.Model.MyFlatDevice {
                         uint brightness = (uint)Math.Round(value * MaxBrightness);
                         if (USBD.USBD_SetBrightness(this._usbdHandle, brightness) != 0) {
                             Logger.Error($"Failed to set brightness to {value}");
-                            Notification.ShowError(Locale.Loc.Instance["LblFlatDeviceInvalidResponse"]);
+                            Notification.ShowError(Loc.Instance["LblFlatDeviceInvalidResponse"]);
                         }
                     }
                 }
@@ -105,7 +107,7 @@ namespace NINA.Model.MyFlatDevice {
         }
 
         public string Name {
-            get => $"{Locale.Loc.Instance["LblAllProSpikeAFlatPanel"]}";
+            get => $"{Loc.Instance["LblAllProSpikeAFlatPanel"]}";
         }
 
         public string Category {
@@ -148,12 +150,12 @@ namespace NINA.Model.MyFlatDevice {
                     }
                     if (this._usbdHandle == (IntPtr)0) {
                         Logger.Error("Unable to open AllPro Spike-a-Flat device");
-                        Notification.ShowError(Locale.Loc.Instance["LblFlatDeviceInvalidResponse"]);
+                        Notification.ShowError(Loc.Instance["LblFlatDeviceInvalidResponse"]);
                         return false;
                     }
                     if (USBD.USBD_Connect(this._usbdHandle) != 0) {
                         Logger.Error("Unable to connect AllPro Spike-a-Flat device");
-                        Notification.ShowError(Locale.Loc.Instance["LblFlatDeviceInvalidResponse"]);
+                        Notification.ShowError(Loc.Instance["LblFlatDeviceInvalidResponse"]);
                         return false;
                     }
                     this.Connected = true;

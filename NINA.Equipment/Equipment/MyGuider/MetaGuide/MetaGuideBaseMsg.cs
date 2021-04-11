@@ -16,7 +16,7 @@ using System;
 using System.Reflection;
 using System.Text;
 
-namespace NINA.Model.MyGuider.MetaGuide {
+namespace NINA.Equipment.Equipment.MyGuider.MetaGuide {
 
     public class MetaGuideBaseMsg {
 

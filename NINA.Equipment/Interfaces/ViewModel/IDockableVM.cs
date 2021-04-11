@@ -15,7 +15,7 @@
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace NINA.ViewModel {
+namespace NINA.Equipment.Interfaces.ViewModel {
 
     public interface IDockableVM {
         bool CanClose { get; set; }

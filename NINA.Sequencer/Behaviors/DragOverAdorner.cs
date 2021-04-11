@@ -19,7 +19,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace NINA.Utility.Behaviors {
+namespace NINA.Sequencer.Behaviors {
 
     internal class DragOverAdorner : Adorner {
         private readonly DropTargetEnum dropTargetEnum;

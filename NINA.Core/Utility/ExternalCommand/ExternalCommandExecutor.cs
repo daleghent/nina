@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,16 +12,16 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Utility.Extensions;
+using NINA.Core.Utility.Extensions;
 
-namespace NINA.Utility.ExternalCommand {
+namespace NINA.Core.Utility.ExternalCommand {
 
     public class ExternalCommandExecutor {
         private IProgress<ApplicationStatus> progress;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,15 +12,18 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Interfaces;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 
 #pragma warning disable 1998
 
-namespace NINA.Model.MyGuider {
+namespace NINA.Equipment.Equipment.MyGuider {
 
     public class DummyGuider : BaseINPC, IGuider {
         private IProfileService profileService;
@@ -29,7 +32,7 @@ namespace NINA.Model.MyGuider {
             this.profileService = profileService;
         }
 
-        public string Name => Locale.Loc.Instance["LblNoGuider"];
+        public string Name => Loc.Instance["LblNoGuider"];
 
         public string Id => "No_Guider";
 

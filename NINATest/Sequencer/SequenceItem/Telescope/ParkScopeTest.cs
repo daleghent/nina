@@ -14,12 +14,11 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.MyTelescope;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Sequencer;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem.Telescope;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -98,7 +97,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             Func<Task> act = () => { return sut.Execute(default, default); };
 
             telescopeMediatorMock.Verify(x => x.ParkTelescope(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Never);
-            guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Never); 
+            guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Never);
             return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
         }
 

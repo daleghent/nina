@@ -12,7 +12,9 @@
 
 #endregion "copyright"
 
-namespace NINA.Model.MyDome {
+using NINA.Equipment.Interfaces;
+
+namespace NINA.Equipment.Equipment.MyDome {
 
     public class DomeInfo : DeviceInfo {
         private ShutterState shutterStatus;

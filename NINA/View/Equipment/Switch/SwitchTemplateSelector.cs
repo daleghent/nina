@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +29,8 @@ namespace NINA.View.Equipment.Switch {
         public DataTemplate ReadOnly { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
-            if (item is Model.MySwitch.IWritableSwitch) {
-                var s = (Model.MySwitch.IWritableSwitch)item;
+            if (item is IWritableSwitch) {
+                var s = (IWritableSwitch)item;
                 if (s.Minimum == 0 && s.Maximum == 1) {
                     return WritableBoolean;
                 } else {

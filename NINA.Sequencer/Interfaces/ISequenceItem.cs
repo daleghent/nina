@@ -12,7 +12,10 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Core.Model;
+
+using NINA.Core.Model;
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;

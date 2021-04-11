@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,11 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyCamera;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using System;
+using ZWOptical.ASISDK;
 
-namespace ZWOptical.ASISDK {
+namespace NINA.Equipment.Equipment.MyCamera {
 
     public static class ASICameras {
 

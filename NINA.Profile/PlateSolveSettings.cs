@@ -13,7 +13,8 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.MyFilterWheel;
+using NINA.Core.Model.Equipment;
+using NINA.Profile.Interfaces;
 using System;
 using System.IO;
 using System.Runtime.Serialization;

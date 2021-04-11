@@ -14,12 +14,10 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Model.MyFilterWheel;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyFilterWheel;
 using NINA.PlateSolving;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -27,6 +25,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Utility;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Model;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINATest.PlateSolving {
 
@@ -76,8 +80,8 @@ namespace NINATest.PlateSolving {
             var imageDataMock = new Mock<IImageData>();
             var renderedImageMock = new Mock<IRenderedImage>();
             renderedImageMock.SetupGet(x => x.RawImageData).Returns(imageDataMock.Object);
-            var initialFilter = new NINA.Model.MyFilterWheel.FilterInfo() { Name = "L", Position = 1 };
-            filterMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyFilterWheel.FilterWheelInfo() { SelectedFilter = initialFilter });
+            var initialFilter = new FilterInfo() { Name = "L", Position = 1 };
+            filterMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = initialFilter });
             var failedResult = new PlateSolveResult() {
                 Success = false
             };

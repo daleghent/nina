@@ -15,7 +15,7 @@
 using System;
 using NINA.Sequencer.SequenceItem;
 using Newtonsoft.Json.Linq;
-using NINA.Utility;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.Serialization {
 

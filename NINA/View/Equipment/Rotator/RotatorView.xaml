@@ -15,7 +15,7 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">

@@ -12,14 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using OxyPlot;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NINA.ViewModel.AutoFocus {
+namespace NINA.WPF.Base.Utility.AutoFocus {
 
     public class HyperbolicFitting : BaseINPC {
 

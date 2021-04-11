@@ -13,7 +13,8 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Utility;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
 
     [JsonObject(MemberSerialization.OptIn)]
     public class TimeProvider : IDateTimeProvider {
-        public string Name { get; } = Locale.Loc.Instance["LblTime"];
+        public string Name { get; } = Loc.Instance["LblTime"];
         public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
 
         public DateTime GetDateTime(ISequenceEntity context) {

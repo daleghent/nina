@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.WindowService;
+using NINA.Core.Utility.WindowService;
 using System.Windows;
 
 namespace NINA.AstrometryIndexDownloader {

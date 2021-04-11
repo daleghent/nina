@@ -12,11 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Model.MySafetyMonitor;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.Equipment.SafetyMonitor;
+using NINA.Equipment.Equipment.MySafetyMonitor;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Interfaces.ViewModel;
 
-namespace NINA.Utility.Mediator {
+namespace NINA.WPF.Base.Mediator {
 
     public class SafetyMonitorMediator : DeviceMediator<ISafetyMonitorVM, ISafetyMonitorConsumer, SafetyMonitorInfo>, ISafetyMonitorMediator {
     }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,16 +13,18 @@
 #endregion "copyright"
 
 using Newtonsoft.Json.Linq;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Http;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Core.Utility.Http;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyWeatherData {
+namespace NINA.Equipment.Equipment.MyWeatherData {
 
     public class TheWeatherCompany : BaseINPC, IWeatherData {
         private const string _category = "N.I.N.A.";
@@ -52,11 +54,11 @@ namespace NINA.Model.MyWeatherData {
 
         public string Name => _driverName;
 
-        public string DriverInfo => Locale.Loc.Instance["LblTheWeatherCompanyClientInfo"];
+        public string DriverInfo => Loc.Instance["LblTheWeatherCompanyClientInfo"];
 
         public string DriverVersion => _driverVersion;
 
-        public string Description => Locale.Loc.Instance["LblTheWeatherCompanyClientDescription"];
+        public string Description => Loc.Instance["LblTheWeatherCompanyClientDescription"];
 
         public bool HasSetupDialog => false;
 

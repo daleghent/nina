@@ -12,12 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Model.MyTelescope;
-using NINA.Profile;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +20,11 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.Utility;
+using NINA.Equipment.Model;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINA.PlateSolving {
 
@@ -82,7 +82,7 @@ namespace NINA.PlateSolving {
                     await filterChangeTask;
 
                     if (!plateSolveResult.Success && remainingAttempts > 0) {
-                        await Utility.Utility.Wait(parameter.ReattemptDelay, ct, progress);
+                        await CoreUtil.Wait(parameter.ReattemptDelay, ct, progress);
                     }
                 }
             } while (!plateSolveResult.Success && remainingAttempts > 0);

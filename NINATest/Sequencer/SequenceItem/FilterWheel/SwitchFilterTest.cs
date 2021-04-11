@@ -14,13 +14,12 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.MyFilterWheel;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem.FilterWheel;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -28,6 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Model.Equipment;
 
 namespace NINATest.Sequencer.SequenceItem.FilterWheel {
 

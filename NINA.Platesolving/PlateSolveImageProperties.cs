@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model.ImageData;
+using NINA.Image.Interfaces;
 using NINA.Astrometry;
 
 namespace NINA.PlateSolving {

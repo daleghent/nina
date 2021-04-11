@@ -12,13 +12,13 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.ImageData;
+using NINA.Core.Model;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Image.Interfaces;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IImageSaveController {
 

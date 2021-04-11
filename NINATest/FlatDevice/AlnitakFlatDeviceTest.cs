@@ -13,14 +13,15 @@
 #endregion "copyright"
 
 using Moq;
-using NINA.Model.MyFlatDevice;
-using NINA.Profile;
-using NINA.Utility.FlatDeviceSDKs.AlnitakSDK;
-using NINA.Utility.SerialCommunication;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Profile.Interfaces;
+using NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.Interfaces;
 
 namespace NINATest.FlatDevice {
 

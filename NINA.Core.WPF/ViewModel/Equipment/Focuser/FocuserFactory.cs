@@ -13,13 +13,17 @@
 #endregion "copyright"
 
 using System;
-using NINA.Model;
-using NINA.Model.MyFocuser;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using System.Collections.Generic;
+using NINA.Core.Locale;
+using NINA.Equipment.Utility;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.Focuser {
+namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
     public class FocuserFactory : IDeviceFactory {
         private readonly IProfileService profileService;
@@ -30,7 +34,7 @@ namespace NINA.ViewModel.Equipment.Focuser {
 
         public IList<IDevice> GetDevices() {
             var result = new List<IDevice> {
-                new DummyDevice(Locale.Loc.Instance["LblNoFocuser"]),
+                new DummyDevice(Loc.Instance["LblNoFocuser"]),
                 new UltimatePowerboxV2(profileService)
             };
             try {

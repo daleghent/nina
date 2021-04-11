@@ -25,7 +25,7 @@ using System.Runtime.ConstrainedExecution;
 
 using System.Collections.Generic;
 using System.Threading;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System.IO;
 
 /*

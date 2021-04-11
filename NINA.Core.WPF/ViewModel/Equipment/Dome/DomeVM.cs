@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,23 +12,29 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NINA.Model.MyDome;
-using NINA.Model.MyTelescope;
+using NINA.Equipment.Equipment.MyDome;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Astrometry;
 using System.ComponentModel;
-using NINA.Model.MySafetyMonitor;
+using NINA.Equipment.Equipment.MySafetyMonitor;
+using NINA.Core.Locale;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.MyMessageBox;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.Dome {
+namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
     public class DomeVM : DockableVM, IDomeVM, ITelescopeConsumer, ISafetyMonitorConsumer {
 
@@ -111,7 +117,7 @@ namespace NINA.ViewModel.Equipment.Dome {
                 applicationStatusMediator.StatusUpdate(
                     new ApplicationStatus() {
                         Source = Title,
-                        Status = Locale.Loc.Instance["LblConnecting"]
+                        Status = Loc.Instance["LblConnecting"]
                     }
                 );
 
@@ -145,7 +151,7 @@ namespace NINA.ViewModel.Equipment.Dome {
                             RaiseAllPropertiesChanged();
                             BroadcastDomeInfo();
 
-                            Notification.ShowSuccess(Locale.Loc.Instance["LblDomeConnected"]);
+                            Notification.ShowSuccess(Loc.Instance["LblDomeConnected"]);
 
                             updateTimer.Start();
 
@@ -282,7 +288,7 @@ namespace NINA.ViewModel.Equipment.Dome {
         }
 
         private async Task<bool> DisconnectDiag() {
-            var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDomeDisconnect"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+            var diag = MyMessageBox.Show(Loc.Instance["LblDomeDisconnect"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
             if (diag == System.Windows.MessageBoxResult.OK) {
                 await Disconnect();
             }
@@ -323,7 +329,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             if (Dome.CanSetShutter) {
                 if (SafetyMonitorInfo.Connected && !SafetyMonitorInfo.IsSafe) {
                     Logger.Error("Cannot open dome shutter due to unsafe conditions");
-                    Notification.ShowError(Locale.Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
+                    Notification.ShowError(Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
                     return false;
                 }
 
@@ -552,7 +558,7 @@ namespace NINA.ViewModel.Equipment.Dome {
                 //Close dome when state switches from safe to unsafe
                 if (deviceInfo.Connected && previousIsSafe && !deviceInfo.IsSafe && Dome?.ShutterStatus == ShutterState.ShutterOpen) {
                     Logger.Warning("Closing dome shutter due to unsafe conditions");
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
+                    Notification.ShowWarning(Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
                     Task.Run(async () => {
                         StopAll(null);
                         await CloseShutter(CancellationToken.None);

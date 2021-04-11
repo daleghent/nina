@@ -13,7 +13,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
     d:DesignHeight="450"

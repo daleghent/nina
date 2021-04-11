@@ -12,8 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Astrometry;
 using NINA.Core.Enum;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using System;
 using System.Runtime.Serialization;
 

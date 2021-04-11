@@ -13,12 +13,10 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Profile;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
-using NINA.Utility.ExternalCommand;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +25,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Utility.ExternalCommand;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
@@ -42,7 +42,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         public ExternalScript() {
             OpenDialogCommand = new RelayCommand((object o) => {
                 Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
-                dialog.Title = Locale.Loc.Instance["Lbl_SequenceItem_Utility_ExternalScript_Name"];
+                dialog.Title = Loc.Instance["Lbl_SequenceItem_Utility_ExternalScript_Name"];
                 dialog.FileName = "";
                 dialog.DefaultExt = ".*";
                 dialog.Filter = "Any executable command |*.*";
@@ -98,7 +98,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             var i = new List<string>();
             var sequenceCompleteCommand = Script;
             if (!string.IsNullOrWhiteSpace(sequenceCompleteCommand) && !ExternalCommandExecutor.CommandExists(sequenceCompleteCommand)) {
-                i.Add(string.Format(Locale.Loc.Instance["LblSequenceCommandAtCompletionNotFound"], ExternalCommandExecutor.GetComandFromString(sequenceCompleteCommand)));
+                i.Add(string.Format(Loc.Instance["LblSequenceCommandAtCompletionNotFound"], ExternalCommandExecutor.GetComandFromString(sequenceCompleteCommand)));
             }
             Issues = i;
             return i.Count == 0;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,14 +12,17 @@
 
 #endregion "copyright"
 
-using NINA.Model.ImageData;
-using NINA.Utility;
-using NINA.Utility.RawConverter;
+using NINA.Image.ImageData;
+using NINA.Core.Utility;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Model;
+using NINA.Image.RawConverter;
+using NINA.Core.Locale;
+using NINA.Image.Interfaces;
 
-namespace NINA.Model.MyCamera {
+namespace NINA.Image.ImageData {
 
     public abstract class BaseExposureData : IExposureData {
         public int BitDepth { get; private set; }
@@ -63,9 +66,9 @@ namespace NINA.Model.MyCamera {
 
         public override async Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default) {
             try {
-                progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblPrepareExposure"] });
+                progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblPrepareExposure"] });
                 var flatArray = await Task.Run(() => FlipAndConvert2d(this.flipped2DArray), cancelToken);
-                return new ImageData.ImageData(
+                return new BaseImageData(
                     imageArray: new ImageArray(flatArray),
                     width: this.flipped2DArray.GetLength(0),
                     height: this.flipped2DArray.GetLength(1),
@@ -125,7 +128,7 @@ namespace NINA.Model.MyCamera {
 
         public override async Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default) {
             try {
-                progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblPrepareExposure"] });
+                progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblPrepareExposure"] });
                 using (var memoryStream = new System.IO.MemoryStream(this.rawBytes)) {
                     var data = await this.rawConverter.Convert(
                         s: memoryStream,

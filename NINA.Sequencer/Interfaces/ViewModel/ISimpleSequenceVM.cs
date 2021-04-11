@@ -15,9 +15,10 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using NINA.Model;
+using NINA.Astrometry;
+using NINA.Core.Model;
+using NINA.Core.Utility.WindowService;
 using NINA.Sequencer.Container;
-using NINA.Utility.WindowService;
 
 namespace NINA.ViewModel.Interfaces {
 

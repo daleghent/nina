@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,11 +15,9 @@
 using ASCOM;
 using ASCOM.DeviceInterface;
 using ASCOM.DriverAccess;
-using NINA.Core.Enum;
-using NINA.Model.ImageData;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,8 +27,15 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using SensorType = NINA.Core.Enum.SensorType;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.Utility;
+using NINA.Core.Locale;
+using NINA.Equipment.Model;
+using NINA.Image.Interfaces;
+using NINA.Image.ImageData;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyCamera {
+namespace NINA.Equipment.Equipment.MyCamera {
 
     internal class AscomCamera : AscomDevice<Camera>, ICamera, IDisposable {
 
@@ -551,8 +556,8 @@ namespace NINA.Model.MyCamera {
                         readoutModes.Add(mode);
                     }
                 } else if (CanFastReadout) {
-                    readoutModes.Add(Locale.Loc.Instance["LblNormal"]);
-                    readoutModes.Add(Locale.Loc.Instance["LblFast"]);
+                    readoutModes.Add(Loc.Instance["LblNormal"]);
+                    readoutModes.Add(Loc.Instance["LblFast"]);
                 } else {
                     readoutModes.Add("Default");
                 }
@@ -1016,7 +1021,7 @@ namespace NINA.Model.MyCamera {
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
             using (token.Register(() => AbortExposure())) {
                 while (!ImageReady) {
-                    await Utility.Utility.Wait(TimeSpan.FromMilliseconds(100), token);
+                    await CoreUtil.Wait(TimeSpan.FromMilliseconds(100), token);
                 }
             }
         }
@@ -1026,7 +1031,7 @@ namespace NINA.Model.MyCamera {
                 return await Task.Run(async () => {
                     try {
                         while (!ImageReady) {
-                            await Utility.Utility.Wait(TimeSpan.FromMilliseconds(100), token);
+                            await CoreUtil.Wait(TimeSpan.FromMilliseconds(100), token);
                         }
 
                         return new Flipped2DExposureData(
@@ -1243,6 +1248,6 @@ namespace NINA.Model.MyCamera {
             }
         }
 
-        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblCameraConnectionLost"];
+        protected override string ConnectionLostMessage => Loc.Instance["LblCameraConnectionLost"];
     }
 }

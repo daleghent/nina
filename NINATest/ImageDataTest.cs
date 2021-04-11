@@ -13,15 +13,18 @@
 #endregion "copyright"
 
 using FluentAssertions;
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
-using NINA.Utility;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Core.Utility;
 using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
+using NINA.Image.Interfaces;
+using NINA.Image.FileFormat;
+using NINA.Core.Model;
 
 namespace NINATest {
 
@@ -38,7 +41,7 @@ namespace NINATest {
                     ImageType  = "LIGHT",
                     Binning  = "1x1",
                     ExposureTime  = 300,
-                    RecordedRMS  = new NINA.Model.RMS() {
+                    RecordedRMS  = new RMS() {
                         Total = 10,
                     }
                 },
@@ -122,7 +125,7 @@ namespace NINATest {
             ushort[] expFlatArr = { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 };
 
             //Act
-            ImageData result = new ImageData(arr, width, height, 16, false, new ImageMetaData());
+            BaseImageData result = new BaseImageData(arr, width, height, 16, false, new ImageMetaData());
 
             //Assert
             Assert.AreEqual(expX, result.Properties.Width);
@@ -352,7 +355,7 @@ namespace NINATest {
                 FileType = fileType
             };
 
-            var sut = new ImageData(data, 3, 3, 16, false, MetaData);
+            var sut = new BaseImageData(data, 3, 3, 16, false, MetaData);
 
             var file = await sut.SaveToDisk(fileSaveInfo, default);
 
@@ -380,7 +383,7 @@ namespace NINATest {
                 FileType = fileType
             };
 
-            var sut = new ImageData(data, 3, 3, 16, false, MetaData);
+            var sut = new BaseImageData(data, 3, 3, 16, false, MetaData);
 
             var file = await sut.SaveToDisk(fileSaveInfo, default);
 
@@ -421,7 +424,7 @@ namespace NINATest {
                 FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
-            var sut = new ImageData(data, 3, 3, 16, false, MetaData);
+            var sut = new BaseImageData(data, 3, 3, 16, false, MetaData);
             var file = await sut.SaveToDisk(fileSaveInfo, default);
             File.Delete(file);
 
@@ -441,7 +444,7 @@ namespace NINATest {
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total * MetaData.Image.RecordedRMS.Scale)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0}", MetaData.Focuser.Position)}" +
-                $"#{NINA.Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}";
+                $"#{NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd")}";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}.{fileSaveInfo.FileType.ToString().ToLower()}");
         }
@@ -479,11 +482,11 @@ namespace NINATest {
                 TIFFCompressionType = NINA.Core.Enum.TIFFCompressionTypeEnum.LZW
             };
 
-            var sut = new ImageData(data, 3, 3, 16, false, new ImageMetaData());
+            var sut = new BaseImageData(data, 3, 3, 16, false, new ImageMetaData());
             var file = await sut.SaveToDisk(fileSaveInfo, default);
             File.Delete(file);
 
-            var expectedPattern = $"#0001-01-01##0001-01-01_00-00-00#00-00-00#-0001##1x1#########{NINA.Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}.tif";
+            var expectedPattern = $"#0001-01-01##0001-01-01_00-00-00#00-00-00#-0001##1x1#########{NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd")}.tif";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}");
         }
@@ -520,7 +523,7 @@ namespace NINATest {
                 FileType = NINA.Core.Enum.FileTypeEnum.XISF
             };
 
-            var sut = new ImageData(data, 3, 3, 16, false, MetaData);
+            var sut = new BaseImageData(data, 3, 3, 16, false, MetaData);
             var file = await sut.PrepareSave(fileSaveInfo, default);
             file = sut.FinalizeSave(file, pattern);
             File.Delete(file);
@@ -541,7 +544,7 @@ namespace NINATest {
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total * MetaData.Image.RecordedRMS.Scale)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0}", MetaData.Focuser.Position)}" +
-                $"#{NINA.Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}";
+                $"#{NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd")}";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}.{fileSaveInfo.FileType.ToString().ToLower()}");
         }
@@ -581,7 +584,7 @@ namespace NINATest {
             var invalidChars = Path.GetInvalidPathChars();
             MetaData.Target.Name = string.Join("", invalidChars);
 
-            var sut = new ImageData(data, 3, 3, 16, false, MetaData);
+            var sut = new BaseImageData(data, 3, 3, 16, false, MetaData);
             var file = await sut.PrepareSave(fileSaveInfo, default);
             file = sut.FinalizeSave(file, pattern);
             File.Delete(file);
@@ -602,7 +605,7 @@ namespace NINATest {
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0.00}", MetaData.Image.RecordedRMS.Total * MetaData.Image.RecordedRMS.Scale)}" +
                 $"#{string.Format(CultureInfo.InvariantCulture, "{0:0}", MetaData.Focuser.Position)}" +
-                $"#{NINA.Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd")}";
+                $"#{NINA.Core.Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd")}";
 
             Path.GetFileName(file).Should().Be($"{expectedPattern}.{fileSaveInfo.FileType.ToString().ToLower()}");
         }

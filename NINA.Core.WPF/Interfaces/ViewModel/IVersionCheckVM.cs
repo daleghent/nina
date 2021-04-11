@@ -12,12 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Utility.WindowService;
+using NINA.Core.Utility;
+using NINA.Core.Utility.WindowService;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace NINA.ViewModel {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IVersionCheckVM {
         ICommand CancelDownloadCommand { get; set; }

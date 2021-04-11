@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyDome;
+using NINA.Equipment.Equipment.MyDome;
 
-namespace NINA.Utility.Mediator.Interfaces {
+namespace NINA.Equipment.Interfaces.Mediator {
 
     public interface IDomeConsumer : IDeviceConsumer<DomeInfo> {
     }

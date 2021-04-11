@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,10 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Profile.Interfaces;
 using System.Collections.Generic;
 
-namespace NINA.ViewModel.Equipment.FlatDevice {
+namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
     public class FlatDeviceChooserVM : DeviceChooserVM {
         private readonly IDeviceFactory deviceFactory;
@@ -26,7 +28,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
 
         public override void GetEquipment() {
             lock (lockObj) {
-                var devices = new List<Model.IDevice>();
+                var devices = new List<IDevice>();
 
                 foreach (var device in deviceFactory.GetDevices()) {
                     devices.Add(device);

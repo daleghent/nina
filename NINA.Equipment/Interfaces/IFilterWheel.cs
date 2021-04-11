@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,10 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Utility;
 using System.Collections;
 
-namespace NINA.Model.MyFilterWheel {
+namespace NINA.Equipment.Interfaces {
 
     public interface IFilterWheel : IDevice {
         short InterfaceVersion { get; }

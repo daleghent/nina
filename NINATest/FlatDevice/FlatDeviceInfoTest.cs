@@ -17,8 +17,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
-using NINA.Locale;
-using NINA.Model.MyFlatDevice;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Equipment.Interfaces;
 using NUnit.Framework;
 
 namespace NINATest.FlatDevice {

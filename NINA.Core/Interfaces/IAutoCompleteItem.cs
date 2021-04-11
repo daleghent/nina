@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 
-namespace NINACustomControlLibrary {
+namespace NINA.Core.Interfaces {
     public interface IAutoCompleteItem {
         string Column1 { get; }
         string Column2 { get; }

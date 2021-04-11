@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,10 +15,10 @@
 using ASCOM;
 using ASCOM.DeviceInterface;
 using ASCOM.DriverAccess;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,8 +28,10 @@ using System.Collections.Immutable;
 using PierSide = NINA.Core.Enum.PierSide;
 using TelescopeAxes = NINA.Core.Enum.TelescopeAxes;
 using GuideDirections = NINA.Core.Enum.GuideDirections;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyTelescope {
+namespace NINA.Equipment.Equipment.MyTelescope {
 
     internal class AscomTelescope : AscomDevice<Telescope>, ITelescope, IDisposable {
         private static readonly TimeSpan MERIDIAN_FLIP_SLEW_RETRY_WAIT = TimeSpan.FromMinutes(1);
@@ -526,7 +528,7 @@ namespace NINA.Model.MyTelescope {
                     _canGetSlewing = false;
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblTelescope"] + Environment.NewLine + ex.Message);
+                    Notification.ShowError(Loc.Instance["LblTelescope"] + Environment.NewLine + ex.Message);
                 }
                 return val;
             }
@@ -857,9 +859,9 @@ namespace NINA.Model.MyTelescope {
                 SideOfPier = targetPierSide;
 
                 //Check if setting the pier side will result already in a flip
-                await Utility.Utility.Wait(TimeSpan.FromSeconds(2));
+                await CoreUtil.Wait(TimeSpan.FromSeconds(2));
                 while (Slewing) {
-                    await Utility.Utility.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval));
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval));
                 }
                 return true;
             } catch (Exception ex) {
@@ -875,7 +877,7 @@ namespace NINA.Model.MyTelescope {
                     TrackingEnabled = true;
                 }
 
-                var targetSideOfPier = Utility.MeridianFlip.ExpectedPierSide(
+                var targetSideOfPier = NINA.Astrometry.MeridianFlip.ExpectedPierSide(
                     coordinates: targetCoordinates,
                     localSiderealTime: Angle.ByHours(SiderealTime));
                 if (profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier) {
@@ -917,11 +919,11 @@ namespace NINA.Model.MyTelescope {
 
                 if (success && retries > 0) {
                     Logger.Info("Successfully slewed for Meridian Flip after retrying");
-                    Notification.ShowWarning(String.Format(Locale.Loc.Instance["LblMeridianFlipWaitLonger"], retries));
+                    Notification.ShowWarning(String.Format(Loc.Instance["LblMeridianFlipWaitLonger"], retries));
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["LblMeridianFlipFailed"]);
+                Notification.ShowError(Loc.Instance["LblMeridianFlipFailed"]);
             } finally {
                 TargetCoordinates = null;
                 TargetSideOfPier = null;
@@ -958,13 +960,13 @@ namespace NINA.Model.MyTelescope {
                             Notification.ShowError(e.Message);
                         }
                     } else {
-                        Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeParkedWarn"]);
+                        Notification.ShowWarning(Loc.Instance["LblTelescopeParkedWarn"]);
                     }
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeCannotSlew"]);
+                    Notification.ShowWarning(Loc.Instance["LblTelescopeCannotSlew"]);
                 }
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblTelescopeNotConnected"]);
             }
         }
 
@@ -979,13 +981,13 @@ namespace NINA.Model.MyTelescope {
                             Notification.ShowError(e.Message);
                         }
                     } else {
-                        Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeParkedWarn"]);
+                        Notification.ShowWarning(Loc.Instance["LblTelescopeParkedWarn"]);
                     }
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeCannotPulseGuide"]);
+                    Notification.ShowWarning(Loc.Instance["LblTelescopeCannotPulseGuide"]);
                 }
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblTelescopeNotConnected"]);
             }
         }
 
@@ -1069,7 +1071,7 @@ namespace NINA.Model.MyTelescope {
                         Notification.ShowError(ex.Message);
                     }
                 } else {
-                    Notification.ShowError(Locale.Loc.Instance["LblTelescopeNotTrackingForSync"]);
+                    Notification.ShowError(Loc.Instance["LblTelescopeNotTrackingForSync"]);
                 }
             }
             return success;
@@ -1100,7 +1102,7 @@ namespace NINA.Model.MyTelescope {
         public double HoursToMeridian {
             get {
                 if (TrackingEnabled) {
-                    return Utility.MeridianFlip.TimeToMeridian(
+                    return NINA.Astrometry.MeridianFlip.TimeToMeridian(
                     coordinates: Coordinates,
                     localSiderealTime: Angle.ByHours(SiderealTime)).TotalHours;
                 }
@@ -1114,7 +1116,7 @@ namespace NINA.Model.MyTelescope {
             get {
                 try {
                     if (TrackingEnabled) {
-                        return Utility.MeridianFlip.TimeToMeridianFlip(
+                        return NINA.Astrometry.MeridianFlip.TimeToMeridianFlip(
                             settings: profileService.ActiveProfile.MeridianFlipSettings,
                             coordinates: Coordinates,
                             localSiderealTime: Angle.ByHours(SiderealTime),
@@ -1184,7 +1186,7 @@ namespace NINA.Model.MyTelescope {
             if (Connected) {
                 device.CommandString(command, true);
             } else {
-                Notification.ShowError(Locale.Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
+                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"] + ": " + command);
             }
         }
 
@@ -1328,7 +1330,7 @@ namespace NINA.Model.MyTelescope {
             }
         }
 
-        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblTelescopeConnectionLost"];
+        protected override string ConnectionLostMessage => Loc.Instance["LblTelescopeConnectionLost"];
 
         public void SetCustomTrackingRate(double rightAscensionRate, double declinationRate) {
             if (!this.TrackingModes.Contains(TrackingMode.Custom) || !this.CanSetTrackingRate) {

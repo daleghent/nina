@@ -12,7 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Astrometry.RiseAndSet;
+using NINA.Core.Utility;
 using OxyPlot;
 using OxyPlot.Axes;
 using System;

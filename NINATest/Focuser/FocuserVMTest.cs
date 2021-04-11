@@ -14,18 +14,20 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.MyFocuser;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Profile.Interfaces;
 using NINA.Core.Enum;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.ViewModel;
-using NINA.ViewModel.Equipment;
-using NINA.ViewModel.Equipment.Focuser;
 using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Interfaces;
+using NINA.WPF.Base.ViewModel.Equipment.Focuser;
 
 namespace NINATest.Focuser {
 

@@ -13,17 +13,17 @@
 #endregion "copyright"
 
 using FluentAssertions;
-using NINA.Model.ImageData;
-using NINA.Utility;
+using NINA.Image.ImageData;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.FileFormat.FITS;
-using NINA.Utility.FileFormat.FITS.DataConverter;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using NINA.Image.FileFormat.FITS;
+using NINA.Image.FileFormat.FITS.DataConverter;
 
 namespace NINATest {
 
@@ -74,7 +74,7 @@ namespace NINATest {
                 new FITSHeaderCard("YBINNING",1, "Y axis binning factor"),
                 new FITSHeaderCard("ROWORDER","TOP-DOWN", "FITS Image Orientation"),
                 new FITSHeaderCard("EQUINOX", 2000d, "Equinox of celestial coordinate system"),
-                new FITSHeaderCard("SWCREATE",string.Format("N.I.N.A. {0} ({1})", NINA.Utility.Utility.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file"),
+                new FITSHeaderCard("SWCREATE",string.Format("N.I.N.A. {0} ({1})", NINA.Core.Utility.CoreUtil.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file"),
             };
 
             //Act

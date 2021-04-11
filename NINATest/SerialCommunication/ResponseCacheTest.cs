@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using Moq;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
 
 namespace NINATest.SerialCommunication {

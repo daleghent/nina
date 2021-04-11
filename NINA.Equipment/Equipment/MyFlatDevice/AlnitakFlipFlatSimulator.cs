@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,12 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyFlatDevice {
+namespace NINA.Equipment.Equipment.MyFlatDevice {
 
     public class AlnitakFlipFlatSimulator : BaseINPC, IFlatDevice {
         private readonly IProfileService _profileService;
@@ -63,7 +65,7 @@ namespace NINA.Model.MyFlatDevice {
             }
         }
 
-        public string LocalizedCoverState => Locale.Loc.Instance[$"LblFlatDevice{_coverState}"];
+        public string LocalizedCoverState => Loc.Instance[$"LblFlatDevice{_coverState}"];
 
         public int MaxBrightness => 255;
         public int MinBrightness => 0;

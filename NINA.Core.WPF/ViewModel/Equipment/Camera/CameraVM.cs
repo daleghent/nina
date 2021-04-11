@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,12 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -28,8 +27,17 @@ using System.Windows.Input;
 using Accord.Statistics.Models.Regression.Linear;
 using Dasync.Collections;
 using NINA.Equipment.Utility;
+using NINA.Core.Model;
+using NINA.Core.Locale;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.MyMessageBox;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Model;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.Camera {
+namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
     public class CameraVM : DockableVM, ICameraVM {
 
@@ -123,7 +131,7 @@ namespace NINA.ViewModel.Equipment.Camera {
                 Logger.Info($"Cooling Camera. Target: {temperature} Duration: {duration}");
                 var progressRouter = new Progress<double>((p) => {
                     progress.Report(new ApplicationStatus() {
-                        Status = Locale.Loc.Instance["LblCooling"],
+                        Status = Loc.Instance["LblCooling"],
                         Progress = p
                     });
                 });
@@ -132,7 +140,7 @@ namespace NINA.ViewModel.Equipment.Camera {
                 return await RegulateTemperature(temperature, duration, progressRouter, ct);
             } catch (CannotReachTargetTemperatureException) {
                 Logger.Error($"Could not reach target temperature. Target Temp: {temperature}, Current Temp: {Cam.Temperature}");
-                Notification.ShowError(Locale.Loc.Instance["LblCouldNotReachTargetTemperature"]);
+                Notification.ShowError(Loc.Instance["LblCouldNotReachTargetTemperature"]);
                 return false;
             } finally {
                 progress.Report(new ApplicationStatus() { Status = string.Empty });
@@ -146,7 +154,7 @@ namespace NINA.ViewModel.Equipment.Camera {
                 Logger.Info($"Warming Camera. Duration: {duration}");
                 var progressRouter = new Progress<double>((p) => {
                     progress.Report(new ApplicationStatus() {
-                        Status = Locale.Loc.Instance["LblWarming"],
+                        Status = Loc.Instance["LblWarming"],
                         Progress = p
                     });
                 });
@@ -160,7 +168,7 @@ namespace NINA.ViewModel.Equipment.Camera {
                 }
 
                 Logger.Debug("Waiting to turn cooler off");
-                await Utility.Utility.Wait(TimeSpan.FromSeconds(20), ct, progress, Locale.Loc.Instance["LblWaitingToTurnCoolerOff"]);
+                await CoreUtil.Wait(TimeSpan.FromSeconds(20), ct, progress, Loc.Instance["LblWaitingToTurnCoolerOff"]);
                 Logger.Debug("Turning cooler off");
                 Cam.CoolerOn = false;
                 return true;
@@ -194,7 +202,7 @@ namespace NINA.ViewModel.Equipment.Camera {
                         var progressTemp = Math.Abs(currentTemp - temperature);
                         progress.Report((totalDeltaTemp - progressTemp) / totalDeltaTemp);
 
-                        await Utility.Utility.Wait(interval, ct);
+                        await CoreUtil.Wait(interval, ct);
                         currentTemp = Cam.Temperature;
                     }
                 } else {
@@ -208,7 +216,7 @@ namespace NINA.ViewModel.Equipment.Camera {
                     var progressTemp = Math.Abs(currentTemp - temperature);
                     progress.Report((totalDeltaTemp - progressTemp) / totalDeltaTemp);
 
-                    var t = await Utility.Utility.Wait(TimeSpan.FromSeconds(5), ct);
+                    var t = await CoreUtil.Wait(TimeSpan.FromSeconds(5), ct);
                     currentTemp = Cam.Temperature;
 
                     var coolerPower = Cam.CoolerPower;
@@ -287,9 +295,9 @@ namespace NINA.ViewModel.Equipment.Camera {
             }
         }
 
-        private Model.MyCamera.ICamera _cam;
+        private ICamera _cam;
 
-        public Model.MyCamera.ICamera Cam {
+        public ICamera Cam {
             get {
                 return _cam;
             }
@@ -317,7 +325,7 @@ namespace NINA.ViewModel.Equipment.Camera {
                 applicationStatusMediator.StatusUpdate(
                     new ApplicationStatus() {
                         Source = Title,
-                        Status = Locale.Loc.Instance["LblConnecting"]
+                        Status = Loc.Instance["LblConnecting"]
                     }
                 );
 
@@ -395,7 +403,7 @@ namespace NINA.ViewModel.Equipment.Camera {
                                 USBLimit = Cam.USBLimit
                             };
 
-                            Notification.ShowSuccess(Locale.Loc.Instance["LblCameraConnected"]);
+                            Notification.ShowSuccess(Loc.Instance["LblCameraConnected"]);
 
                             updateTimer.Interval = profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval;
                             updateTimer.Start();
@@ -590,7 +598,7 @@ namespace NINA.ViewModel.Equipment.Camera {
         private CancellationTokenSource _cancelConnectCameraSource;
 
         private async Task<bool> DisconnectDiag() {
-            var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectCamera"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+            var diag = MyMessageBox.Show(Loc.Instance["LblDisconnectCamera"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
             if (diag == System.Windows.MessageBoxResult.OK) {
                 await Disconnect();
             }
@@ -696,16 +704,16 @@ namespace NINA.ViewModel.Equipment.Camera {
                     using (var progressCountCts = CancellationTokenSource.CreateLinkedTokenSource(exposureReadyCts.Token)) {
                         if (exposureTime >= 1) {
                             progress.Report(new ApplicationStatus() {
-                                Status = Locale.Loc.Instance["LblExposing"],
+                                Status = Loc.Instance["LblExposing"],
                                 Progress = 0,
                                 MaxProgress = (int)exposureTime,
                                 ProgressType = ApplicationStatus.StatusProgressType.ValueOfMaxValue
                             });
                             /* Report progress of exposure in parallel to waiting for exposure ready event.*/
-                            _ = Utility.Utility.Wait(TimeSpan.FromSeconds(exposureTime), progressCountCts.Token, progress, Locale.Loc.Instance["LblExposing"]);
+                            _ = CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), progressCountCts.Token, progress, Loc.Instance["LblExposing"]);
                         } else {
                             progress.Report(new ApplicationStatus() {
-                                Status = Locale.Loc.Instance["LblExposing"]
+                                Status = Loc.Instance["LblExposing"]
                             });
                         }
 
@@ -717,12 +725,12 @@ namespace NINA.ViewModel.Equipment.Camera {
                             Console.WriteLine("Child token cancelled: " + exposureReadyCts.Token.IsCancellationRequested);
                             if (!token.IsCancellationRequested) {
                                 Logger.Error($"Camera Timeout - Camera did not set image as ready after exposuretime + {profileService.ActiveProfile.CameraSettings.Timeout} seconds");
-                                Notification.ShowError(string.Format(Locale.Loc.Instance["LblCameraTimeout"], profileService.ActiveProfile.CameraSettings.Timeout));
+                                Notification.ShowError(string.Format(Loc.Instance["LblCameraTimeout"], profileService.ActiveProfile.CameraSettings.Timeout));
                             }
                         } finally {
                             progressCountCts.Cancel();
                             progress.Report(new ApplicationStatus() {
-                                Status = Locale.Loc.Instance["LblExposureFinished"]
+                                Status = Loc.Instance["LblExposureFinished"]
                             });
                         }
                     }

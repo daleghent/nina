@@ -13,14 +13,16 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Utility;
-using NINA.Utility.Extensions;
+using NINA.Image.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Extensions;
 using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Image.FileFormat;
+using NINA.Core.Model;
+using NINA.Core.Locale;
 
 namespace NINA.PlateSolving.Solvers {
 
@@ -56,7 +58,7 @@ namespace NINA.PlateSolving.Solvers {
                 //Copy Image to local app data
                 imagePath = await PrepareAndSaveImage(source, cancelToken);
 
-                progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSolving"] });
+                progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSolving"] });
 
                 outputPath = GetOutputPath(imagePath);
 

@@ -13,8 +13,8 @@
 #endregion "copyright"
 
 using System;
-using NINA.Utility.SerialCommunication;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
 using NUnit.Framework;
 
 namespace NINATest.Switch.PegasusAstro {

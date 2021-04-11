@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,21 +12,27 @@
 
 #endregion "copyright"
 
-using NINA.Locale;
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Utility.WindowService;
+using NINA.Core.Utility.WindowService;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Interfaces;
+using NINA.Core.Model;
+
+using NINA.Equipment.Equipment.MyCamera;
+
+using NINA.Equipment.Interfaces;
 
 #pragma warning disable 4014
 
-namespace NINA.Model.MyGuider.PHD2 {
+namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
     public class SynchronizedPHD2Guider : BaseINPC, IGuider, ICameraConsumer {
         private const string LocalHostUri = "net.pipe://localhost";

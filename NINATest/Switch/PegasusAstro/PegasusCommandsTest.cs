@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility.SwitchSDKs.PegasusAstro;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
 using NUnit.Framework;
 
 namespace NINATest.Switch.PegasusAstro {

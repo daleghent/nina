@@ -14,9 +14,8 @@
 
 using Accord.IO;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.MyPlanetarium;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyPlanetarium;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
@@ -27,8 +26,6 @@ using NINA.Sequencer.Serialization;
 using NINA.Sequencer.Trigger;
 using NINA.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Interfaces;
@@ -43,6 +40,18 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
 using System.Windows.Threading;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Sequencer.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Locale;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Model;
+using NINA.Astrometry.Interfaces;
+using NINA.Equipment.Interfaces;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel.Sequencer {
 
@@ -98,15 +107,15 @@ namespace NINA.ViewModel.Sequencer {
                 source?.Detach();
                 if (source != null) {
                     if (source is TemplatedSequenceContainer) {
-                        var result = MyMessageBox.MyMessageBox.Show(string.Format(Locale.Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Text"], (source as TemplatedSequenceContainer).Container.Name),
-                            Locale.Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Caption"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+                        var result = MyMessageBox.Show(string.Format(Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Text"], (source as TemplatedSequenceContainer).Container.Name),
+                            Loc.Instance["LblTemplate_DeleteTemplateMessageBox_Caption"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
                         if (result == System.Windows.MessageBoxResult.OK) {
                             TemplateController.DeleteUserTemplate(source as TemplatedSequenceContainer);
                         }
                     }
                     if (source is TargetSequenceContainer) {
-                        var result = MyMessageBox.MyMessageBox.Show(string.Format(Locale.Loc.Instance["Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text"], (source as TargetSequenceContainer).Name),
-                            Locale.Loc.Instance["Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No);
+                        var result = MyMessageBox.Show(string.Format(Loc.Instance["Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text"], (source as TargetSequenceContainer).Name),
+                            Loc.Instance["Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No);
                         if (result == System.Windows.MessageBoxResult.Yes) {
                             TargetController.DeleteTarget(source as TargetSequenceContainer);
                         }
@@ -158,9 +167,9 @@ namespace NINA.ViewModel.Sequencer {
             if (clonedContainer == null) { return; }
 
             if (TargetController.Targets.Any(t => t.Name == clonedContainer.Name)) {
-                if (MyMessageBox.MyMessageBox.Show(
-                    string.Format(Locale.Loc.Instance["Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text"], clonedContainer.Name),
-                    Locale.Loc.Instance["Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Caption"], System.Windows.MessageBoxButton.YesNo,
+                if (MyMessageBox.Show(
+                    string.Format(Loc.Instance["Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text"], clonedContainer.Name),
+                    Loc.Instance["Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Caption"], System.Windows.MessageBoxButton.YesNo,
                     System.Windows.MessageBoxResult.No
                   ) == System.Windows.MessageBoxResult.Yes) {
                     TargetController.AddTarget(clonedContainer);
@@ -178,8 +187,8 @@ namespace NINA.ViewModel.Sequencer {
 
             bool addTemplate = true;
             if (TemplateController.UserTemplates.Any(t => t.Container.Name == clonedContainer.Name && t.SubGroups.Count() == 0)) {
-                var result = MyMessageBox.MyMessageBox.Show(string.Format(Locale.Loc.Instance["LblTemplate_OverwriteTemplateMessageBox_Text"], clonedContainer.Name),
-                    Locale.Loc.Instance["LblTemplate_OverwriteTemplateMessageBox_Caption"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+                var result = MyMessageBox.Show(string.Format(Loc.Instance["LblTemplate_OverwriteTemplateMessageBox_Text"], clonedContainer.Name),
+                    Loc.Instance["LblTemplate_OverwriteTemplateMessageBox_Caption"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
                 addTemplate = result == System.Windows.MessageBoxResult.OK;
             }
 
@@ -195,7 +204,7 @@ namespace NINA.ViewModel.Sequencer {
             }
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = false;
-            dialog.Title = Locale.Loc.Instance["LblLoad"];
+            dialog.Title = Loc.Instance["LblLoad"];
             dialog.InitialDirectory = initialDirectory;
             dialog.FileName = "";
             dialog.DefaultExt = "json";
@@ -216,11 +225,11 @@ namespace NINA.ViewModel.Sequencer {
                     Sequencer.MainContainer.Validate();
                 } else {
                     Logger.Error("Unable to load sequence - Sequencer root element must be sequence root container!");
-                    Notification.ShowError(Locale.Loc.Instance["Lbl_Sequencer_RootElementMustBeRootContainer"]);
+                    Notification.ShowError(Loc.Instance["Lbl_Sequencer_RootElementMustBeRootContainer"]);
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["Lbl_Sequencer_UnableToDeserializeJSON"]);
+                Notification.ShowError(Loc.Instance["Lbl_Sequencer_UnableToDeserializeJSON"]);
             }
         }
 
@@ -241,7 +250,7 @@ namespace NINA.ViewModel.Sequencer {
             }
             Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.InitialDirectory = initialDirectory;
-            dialog.Title = Locale.Loc.Instance["LblSave"];
+            dialog.Title = Loc.Instance["LblSave"];
             dialog.FileName = Sequencer.MainContainer.Name;
             dialog.DefaultExt = "json";
             dialog.Filter = "N.I.N.A. sequence JSON|*." + dialog.DefaultExt;
@@ -262,7 +271,7 @@ namespace NINA.ViewModel.Sequencer {
                 File.WriteAllText(SavePath, json);
             }
             if (!string.IsNullOrEmpty(SavePath)) {
-                Notification.ShowSuccess(string.Format(Locale.Loc.Instance["Lbl_Sequencer_SaveSequence_Notification"], Sequencer.MainContainer.Name, SavePath));
+                Notification.ShowSuccess(string.Format(Loc.Instance["Lbl_Sequencer_SaveSequence_Notification"], Sequencer.MainContainer.Name, SavePath));
             }
         }
 
@@ -304,7 +313,7 @@ namespace NINA.ViewModel.Sequencer {
             set {
                 _status = value;
                 if (string.IsNullOrWhiteSpace(_status.Source)) {
-                    _status.Source = Locale.Loc.Instance["LblSequence"];
+                    _status.Source = Loc.Instance["LblSequence"];
                 }
 
                 RaisePropertyChanged();

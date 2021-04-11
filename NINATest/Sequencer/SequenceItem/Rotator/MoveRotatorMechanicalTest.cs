@@ -14,10 +14,10 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model.MyRotator;
-using NINA.Sequencer.Exceptions;
+using NINA.Equipment.Equipment.MyRotator;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem.Rotator;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

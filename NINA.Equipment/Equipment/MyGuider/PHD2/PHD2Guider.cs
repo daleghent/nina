@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,11 +14,10 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Notification;
-using NINA.Utility.WindowService;
-using NINA.ViewModel;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -32,8 +31,11 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Threading;
+using NINA.Core.Interfaces;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyGuider.PHD2 {
+namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
     public class PHD2Guider : BaseINPC, IGuider {
 
@@ -204,9 +206,9 @@ namespace NINA.Model.MyGuider.PHD2 {
                 var state = await GetAppState();
                 if (state != PhdAppState.GUIDING) {
                     if (state == PhdAppState.LOSTLOCK) {
-                        Notification.ShowWarning(Locale.Loc.Instance["LblDitherSkippedBecauseNotLostLock"]);
+                        Notification.ShowWarning(Loc.Instance["LblDitherSkippedBecauseNotLostLock"]);
                     } else {
-                        Notification.ShowWarning(Locale.Loc.Instance["LblDitherSkippedBecauseNotGuiding"]);
+                        Notification.ShowWarning(Loc.Instance["LblDitherSkippedBecauseNotGuiding"]);
                     }
 
                     return false;
@@ -242,11 +244,11 @@ namespace NINA.Model.MyGuider.PHD2 {
                 await Task.Run<bool>(async () => {
                     var elapsed = new TimeSpan();
                     while (Settling == true) {
-                        elapsed += await Utility.Utility.Delay(500, ct);
+                        elapsed += await CoreUtil.Delay(500, ct);
 
                         if (elapsed.TotalSeconds > (profileService.ActiveProfile.GuiderSettings.SettleTimeout + 10)) {
                             //Failsafe when phd is not sending settlingdone message
-                            Notification.ShowWarning(Locale.Loc.Instance["LblGuiderNoSettleDone"]);
+                            Notification.ShowWarning(Loc.Instance["LblGuiderNoSettleDone"]);
                             Settling = false;
                         }
                     }
@@ -265,15 +267,15 @@ namespace NINA.Model.MyGuider.PHD2 {
                 if (pause) {
                     var elapsed = new TimeSpan();
                     while (!(AppState.State == PhdAppState.PAUSED)) {
-                        elapsed += await Utility.Utility.Delay(500, ct);
+                        elapsed += await CoreUtil.Delay(500, ct);
                     }
                 } else {
                     var elapsed = new TimeSpan();
                     while ((AppState.State == PhdAppState.PAUSED)) {
-                        elapsed += await Utility.Utility.Delay(500, ct);
+                        elapsed += await CoreUtil.Delay(500, ct);
                         if (elapsed.TotalSeconds > 60) {
                             //Failsafe when phd is not sending resume message
-                            Notification.ShowWarning(Locale.Loc.Instance["LblGuiderNoResume"]/*, ToastNotifications.NotificationsSource.NeverEndingNotification*/);
+                            Notification.ShowWarning(Loc.Instance["LblGuiderNoResume"]/*, ToastNotifications.NotificationsSource.NeverEndingNotification*/);
                             break;
                         }
                     }
@@ -614,7 +616,7 @@ namespace NINA.Model.MyGuider.PHD2 {
             };
             var connectMsg = await SendMessage(msg);
             if (connectMsg.error != null) {
-                Notification.ShowWarning(Locale.Loc.Instance["LblPhd2FailedEquipmentConnection"]);
+                Notification.ShowWarning(Loc.Instance["LblPhd2FailedEquipmentConnection"]);
             }
         }
 
@@ -645,11 +647,11 @@ namespace NINA.Model.MyGuider.PHD2 {
                     return !string.IsNullOrEmpty(appState);
                 }
             } catch (FileNotFoundException ex) {
-                Logger.Error(Locale.Loc.Instance["LblPhd2PathNotFound"], ex);
-                Notification.ShowError(Locale.Loc.Instance["LblPhd2PathNotFound"]);
+                Logger.Error(Loc.Instance["LblPhd2PathNotFound"], ex);
+                Notification.ShowError(Loc.Instance["LblPhd2PathNotFound"]);
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["LblPhd2StartProcessError"]);
+                Notification.ShowError(Loc.Instance["LblPhd2StartProcessError"]);
             }
 
             return false;
@@ -670,7 +672,7 @@ namespace NINA.Model.MyGuider.PHD2 {
                         while (true) {
                             var state = GetState(client);
                             if (state == TcpState.CloseWait) {
-                                throw new Exception(Locale.Loc.Instance["LblPhd2ServerConnectionLost"]);
+                                throw new Exception(Loc.Instance["LblPhd2ServerConnectionLost"]);
                             }
 
                             var message = string.Empty;
@@ -714,13 +716,13 @@ namespace NINA.Model.MyGuider.PHD2 {
 
         public void SetupDialog() {
             var windowService = windowServiceFactory.Create();
-            windowService.ShowDialog(this, Locale.Loc.Instance["LblPHD2Setup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
+            windowService.ShowDialog(this, Loc.Instance["LblPHD2Setup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
         }
 
         public RelayCommand OpenPHD2DiagCommand { get; set; }
 
         private void OpenPHD2FileDiag(object o) {
-            var dialog = Utility.Utility.GetFilteredFileDialog(profileService.ActiveProfile.GuiderSettings.PHD2Path, "phd2.exe", "PHD2|phd2.exe");
+            var dialog = CoreUtil.GetFilteredFileDialog(profileService.ActiveProfile.GuiderSettings.PHD2Path, "phd2.exe", "PHD2|phd2.exe");
             if (dialog.ShowDialog() == true) {
                 this.profileService.ActiveProfile.GuiderSettings.PHD2Path = dialog.FileName;
             }

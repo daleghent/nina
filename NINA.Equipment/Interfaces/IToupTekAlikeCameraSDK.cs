@@ -15,7 +15,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace NINA.Model.MyCamera.ToupTekAlike {
+namespace NINA.Equipment.Interfaces {
 
     public delegate void ToupTekAlikeCallback(ToupTekAlikeEvent tEvent);
 

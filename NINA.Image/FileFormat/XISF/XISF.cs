@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,8 +15,12 @@
 using Ionic.Zlib;
 using K4os.Compression.LZ4;
 using NINA.Core.Enum;
-using NINA.Model.ImageData;
-using NINA.Utility.FileFormat.XISF.DataConverter;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Image.FileFormat.XISF.DataConverter;
+using NINA.Image.ImageData;
+using NINA.Image.Interfaces;
 using SHA3;
 using System;
 using System.IO;
@@ -27,7 +31,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace NINA.Utility.FileFormat.XISF {
+namespace NINA.Image.FileFormat.XISF {
 
     public class XISF {
         public XISFHeader Header { get; private set; }
@@ -46,7 +50,7 @@ namespace NINA.Utility.FileFormat.XISF {
         /// </summary>
         public int PaddedBlockSize => 1024;
 
-        public static async Task<ImageData> Load(Uri filePath, bool isBayered, CancellationToken ct) {
+        public static async Task<IImageData> Load(Uri filePath, bool isBayered, CancellationToken ct) {
             return await Task.Run(() => {
                 using (FileStream fs = new FileStream(filePath.LocalPath, FileMode.Open)) {
                     // First make sure we are opening a XISF file by looking for the XISF signature at bytes 1-8
@@ -55,7 +59,7 @@ namespace NINA.Utility.FileFormat.XISF {
 
                     if (!fileSig.SequenceEqual(xisfSignature)) {
                         Logger.Error($"XISF: Opened file \"{filePath.LocalPath}\" is not a valid XISF file");
-                        throw new InvalidDataException(Locale.Loc.Instance["LblXisfInvalidFile"]);
+                        throw new InvalidDataException(Loc.Instance["LblXisfInvalidFile"]);
                     }
 
                     Logger.Debug($"XISF: Opening file \"{filePath.LocalPath}\"");
@@ -98,7 +102,7 @@ namespace NINA.Utility.FileFormat.XISF {
                         height = int.Parse(geometry[1]);
                     } catch (Exception ex) {
                         Logger.Error($"XISF: Could not find image geometry: {ex}");
-                        throw new InvalidDataException(Locale.Loc.Instance["LblXisfInvalidGeometry"]);
+                        throw new InvalidDataException(Loc.Instance["LblXisfInvalidGeometry"]);
                     }
 
                     Logger.Debug($"XISF: File geometry: width={width}, height={height}");
@@ -136,7 +140,7 @@ namespace NINA.Utility.FileFormat.XISF {
                         }
                     } catch (InvalidDataException) {
                         Logger.Error($"XISF: Unknown compression codec encountered: {compression[0]}");
-                        throw new InvalidDataException(string.Format(Locale.Loc.Instance["LblXisfUnsupportedCompression"], compression[0]));
+                        throw new InvalidDataException(string.Format(Loc.Instance["LblXisfUnsupportedCompression"], compression[0]));
                     }
 
                     if (compressionInfo.CompressionType != XISFCompressionTypeEnum.NONE) {
@@ -169,7 +173,7 @@ namespace NINA.Utility.FileFormat.XISF {
                         }
                     } catch (InvalidDataException) {
                         Logger.Error($"XISF: Unknown checksum type: {cksum[0]}");
-                        throw new InvalidDataException(string.Format(Locale.Loc.Instance["LblXisfUnsupportedChecksum"], cksum[0]));
+                        throw new InvalidDataException(string.Format(Loc.Instance["LblXisfUnsupportedChecksum"], cksum[0]));
                     }
 
                     if (cksumType != XISFChecksumTypeEnum.NONE) {
@@ -181,7 +185,7 @@ namespace NINA.Utility.FileFormat.XISF {
                      * If the attachment attribute does not exist, we assume that the image data is
                      * inside a <Data> element and is base64-encoded.
                      */
-                    ImageData imageData;
+                    BaseImageData imageData;
 
                     if (header.Image.Attribute("location").Value.StartsWith("attachment")) {
                         string[] location = header.Image.Attribute("location").Value.Split(':');
@@ -199,7 +203,7 @@ namespace NINA.Utility.FileFormat.XISF {
                         if (cksumType != XISFChecksumTypeEnum.NONE) {
                             if (!VerifyChecksum(raw, cksumType, cksumHash)) {
                                 // Only emit a warning to the user about a bad checksum for now
-                                Notification.Notification.ShowWarning(Locale.Loc.Instance["LblXisfBadChecksum"]);
+                                Notification.ShowWarning(Loc.Instance["LblXisfBadChecksum"]);
                             }
                         }
 
@@ -215,7 +219,7 @@ namespace NINA.Utility.FileFormat.XISF {
                         var converter = GetConverter(sampleFormat);
                         var img = converter.Convert(raw);
 
-                        imageData = new ImageData(img, width, height, 16, isBayered, metaData);
+                        imageData = new BaseImageData(img, width, height, 16, isBayered, metaData);
                     } else {
                         string base64Img = header.Image.Element("Data").Value;
                         byte[] encodedImg = Convert.FromBase64String(base64Img);
@@ -223,7 +227,7 @@ namespace NINA.Utility.FileFormat.XISF {
                         var converter = GetConverter(sampleFormat);
                         var img = converter.Convert(encodedImg);
 
-                        imageData = new ImageData(img, width, height, 16, isBayered, metaData);
+                        imageData = new BaseImageData(img, width, height, 16, isBayered, metaData);
                     }
 
                     return imageData;
@@ -251,7 +255,7 @@ namespace NINA.Utility.FileFormat.XISF {
                 case "Float64":
                     return new Float64Converter();
 
-                default: throw new InvalidDataException(string.Format(Locale.Loc.Instance["LblXisfUnsupportedFormat"], sampleFormat));
+                default: throw new InvalidDataException(string.Format(Loc.Instance["LblXisfUnsupportedFormat"], sampleFormat));
             }
         }
 
@@ -277,7 +281,7 @@ namespace NINA.Utility.FileFormat.XISF {
                     var l = (((long)rawData[(offset * 8) + 7] << 56) | ((long)rawData[(offset * 8) + 6] << 48) | ((long)rawData[(offset * 8) + 5] << 40) | ((long)rawData[(offset * 8) + 4] << 32) | ((long)rawData[(offset * 8) + 3] << 24) | ((long)rawData[(offset * 8) + 2] << 16) | ((long)rawData[(offset * 8) + 1] << 8) | ((long)rawData[offset * 8]));
                     return (ushort)((*(double*)&l) * ushort.MaxValue);
 
-                default: throw new InvalidDataException(string.Format(Locale.Loc.Instance["LblXisfUnsupportedFormat"], sampleFormat));
+                default: throw new InvalidDataException(string.Format(Loc.Instance["LblXisfUnsupportedFormat"], sampleFormat));
             }
         }
 

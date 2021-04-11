@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,13 +14,15 @@
 
 using ASCOM;
 using ASCOM.DriverAccess;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyWeatherData {
+namespace NINA.Equipment.Equipment.MyWeatherData {
 
     internal class AscomObservingConditions : AscomDevice<ObservingConditions>, IWeatherData, IDisposable {
 
@@ -261,7 +263,7 @@ namespace NINA.Model.MyWeatherData {
             }
         }
 
-        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblWeatherConnectionLost"];
+        protected override string ConnectionLostMessage => Loc.Instance["LblWeatherConnectionLost"];
 
         private void Init() {
             _hasAveragePeriod = true;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,20 +12,22 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
-using NINA.Model.MyTelescope;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Model.MyCamera;
 using NINA.Astrometry;
 using Accord.Statistics.Distributions.Univariate;
 using NINA.Core.Enum;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Locale;
+using NINA.Core.Interfaces;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment.MyTelescope;
 
-namespace NINA.Model.MyGuider {
+namespace NINA.Equipment.Equipment.MyGuider {
 
     public class DirectGuider : BaseINPC, IGuider, ITelescopeConsumer {
         private readonly IProfileService profileService;
@@ -46,7 +48,7 @@ namespace NINA.Model.MyGuider {
         public void UpdateDeviceInfo(TelescopeInfo telescopeInfo) {
             this.telescopeInfo = telescopeInfo;
             if (Connected && !this.telescopeInfo.Connected) {
-                Notification.ShowWarning(Locale.Loc.Instance["LblDirectGuiderTelescopeDisconnect"]);
+                Notification.ShowWarning(Loc.Instance["LblDirectGuiderTelescopeDisconnect"]);
                 Logger.Warning("Telescope is disconnected. Direct Guide will disconnect. Dither will not occur.");
                 Disconnect();
             } else {
@@ -172,7 +174,7 @@ namespace NINA.Model.MyGuider {
                 if (telescopeConnect) {
                     Connected = true;
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDirectGuiderConnectionFail"]);
+                    Notification.ShowWarning(Loc.Instance["LblDirectGuiderConnectionFail"]);
                     Connected = false;
                 }
             }
@@ -235,10 +237,10 @@ namespace NINA.Model.MyGuider {
                     telescopeMediator.PulseGuide(pulseInstructions.directionNorthSouth, (int)Math.Round(pulseInstructions.durationNorthSouth.TotalMilliseconds));
                     pulseGuideDelayMilliseconds = Math.Max(pulseGuideDelayMilliseconds, pulseInstructions.durationNorthSouth.TotalMilliseconds);
                 }
-                await Utility.Utility.Delay(TimeSpan.FromMilliseconds(pulseGuideDelayMilliseconds), ct);
+                await CoreUtil.Delay(TimeSpan.FromMilliseconds(pulseGuideDelayMilliseconds), ct);
 
                 State = "Dither settling...";
-                await Utility.Utility.Delay(settleTime, ct);
+                await CoreUtil.Delay(settleTime, ct);
             }
             State = "Idle";
             return true;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,11 +13,11 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Xml.Serialization;
 
-namespace NINA.Model.MyCamera {
+namespace NINA.Core.Model.Equipment {
 
     [JsonObject(MemberSerialization.OptIn)]
     [Serializable()]

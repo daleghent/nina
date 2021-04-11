@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Equipment.Equipment.MyGuider;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -26,7 +27,7 @@ namespace NINA.View.Equipment.Guider {
     public class IsMGEN2ToVisibilityConverter : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            if ((value as Model.MyGuider.MGENGuider)?.MGen is MGEN2.MGEN) {
+            if ((value as MGENGuider)?.MGen is MGEN2.MGEN) {
                 return Visibility.Visible;
             }
             return Visibility.Collapsed;

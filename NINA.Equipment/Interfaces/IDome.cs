@@ -15,7 +15,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyDome {
+namespace NINA.Equipment.Interfaces {
 
     public enum ShutterState {
         ShutterNone = -1,

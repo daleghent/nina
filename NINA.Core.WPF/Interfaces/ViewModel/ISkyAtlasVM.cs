@@ -16,11 +16,11 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
+using NINA.Core.Model;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface ISkyAtlasVM {
         AsyncObservableCollection<DateTime> AltitudeTimesFrom { get; set; }

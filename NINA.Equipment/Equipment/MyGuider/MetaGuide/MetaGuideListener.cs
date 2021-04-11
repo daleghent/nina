@@ -12,9 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyGuider.MetaGuide;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
 using Nito.AsyncEx;
 using Nito.AsyncEx.Synchronous;
 using System;
@@ -24,7 +23,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyGuider {
+namespace NINA.Equipment.Equipment.MyGuider.MetaGuide {
 
     public delegate void OnCameraDelegate(MetaGuideCameraMsg msg);
 

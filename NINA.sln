@@ -39,7 +39,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.Profile", "NINA.Profil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.Astrometry", "NINA.Astrometry\NINA.Astrometry.csproj", "{57B7CC6E-A410-4866-9BF9-278B94118E3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.Platesolving", "NINA.Platesolving\NINA.Platesolving.csproj", "{A721D420-3C8E-4E96-9558-37B50801FF6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.PlateSolving", "NINA.Platesolving\NINA.PlateSolving.csproj", "{A721D420-3C8E-4E96-9558-37B50801FF6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.Sequencer", "NINA.Sequencer\NINA.Sequencer.csproj", "{537A7A82-8C12-45E9-ABAD-B6B3729D6CB1}"
 EndProject

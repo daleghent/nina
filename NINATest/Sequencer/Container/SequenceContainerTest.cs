@@ -15,7 +15,7 @@
 using FluentAssertions;
 using Moq;
 using NINA.Core.Enum;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;

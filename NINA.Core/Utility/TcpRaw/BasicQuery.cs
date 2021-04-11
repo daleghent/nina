@@ -3,7 +3,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NINA.Utility.TcpRaw {
+namespace NINA.Core.Utility.TcpRaw {
 
     public class BasicQuery {
         public string Address { get; set; }

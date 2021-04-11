@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -18,14 +18,17 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Utility {
+namespace NINA.Core.Utility {
 
     public interface IDeviceUpdateTimerFactory {
+
         IDeviceUpdateTimer Create(Func<Dictionary<string, object>> getValuesFunc, Action<Dictionary<string, object>> updateValuesFunc, double interval);
     }
 
     public class DefaultDeviceUpateTimerFactory : IDeviceUpdateTimerFactory {
-        public DefaultDeviceUpateTimerFactory() { }
+
+        public DefaultDeviceUpateTimerFactory() {
+        }
 
         public IDeviceUpdateTimer Create(Func<Dictionary<string, object>> getValuesFunc, Action<Dictionary<string, object>> updateValuesFunc, double interval) {
             return new DeviceUpdateTimer(getValuesFunc, updateValuesFunc, interval);
@@ -36,7 +39,9 @@ namespace NINA.Utility {
         Func<Dictionary<string, object>> GetValuesFunc { get; }
         IProgress<Dictionary<string, object>> Progress { get; }
         double Interval { get; set; }
+
         Task Stop();
+
         void Start();
     }
 
@@ -75,7 +80,7 @@ namespace NINA.Utility {
 
                         Progress.Report(values);
 
-                        await Utility.Delay(
+                        await CoreUtil.Delay(
                             TimeSpan.FromSeconds(
                                 Math.Max(1, Interval - sw.Elapsed.TotalSeconds)
                             ), cts.Token

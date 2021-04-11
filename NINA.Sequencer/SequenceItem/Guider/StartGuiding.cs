@@ -13,10 +13,9 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.SequenceItem.Guider {
 
@@ -77,11 +77,11 @@ namespace NINA.Sequencer.SequenceItem.Guider {
             bool validated = true;
             var i = new List<string>();
             if (!guiderMediator.GetInfo().Connected) {
-                i.Add(Locale.Loc.Instance["LblGuiderNotConnected"]);
+                i.Add(Loc.Instance["LblGuiderNotConnected"]);
                 validated = false;
             }
             if (ForceCalibration && !guiderMediator.GetInfo().CanClearCalibration) {
-                i.Add(Locale.Loc.Instance["LblGuiderCannotClearCalibration"]);
+                i.Add(Loc.Instance["LblGuiderCannotClearCalibration"]);
             }
             Issues = i;
 

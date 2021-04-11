@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,14 +13,15 @@
 #endregion "copyright"
 
 using ASCOM.DriverAccess;
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MySwitch {
+namespace NINA.Equipment.Equipment.MySwitch.Ascom {
 
     internal class AscomV1Switch : BaseINPC, ISwitch {
 

@@ -12,12 +12,13 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyFlatDevice;
-using NINA.Utility.FlatDeviceSDKs.AlnitakSDK;
-using NINA.Utility.SerialCommunication;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
 using System;
 using FluentAssertions;
+using NINA.Equipment.Interfaces;
 
 namespace NINATest.FlatDevice {
 
@@ -32,7 +33,7 @@ namespace NINATest.FlatDevice {
         [TestCase("LightOff", "*D99OOO")]
         public void TestIsValidResponse(string responseName, string response) {
             var sut = (AlnitakResponse)Activator.CreateInstance("NINA.Equipment",
-                $"NINA.Utility.FlatDeviceSDKs.AlnitakSDK.{responseName}Response").Unwrap();
+                $"NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK.{responseName}Response").Unwrap();
             Action act = () => sut.DeviceResponse = response;
             act.Should().NotThrow();
         }
@@ -58,7 +59,7 @@ namespace NINATest.FlatDevice {
         [TestCase("LightOff", "")]
         public void TestIsInvalidResponse(string responseName, string response) {
             var sut = (AlnitakResponse)Activator.CreateInstance("NINA.Equipment",
-                $"NINA.Utility.FlatDeviceSDKs.AlnitakSDK.{responseName}Response").Unwrap();
+                $"NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK.{responseName}Response").Unwrap();
             Action act = () => sut.DeviceResponse = response;
             act.Should().Throw<InvalidDeviceResponseException>();
         }

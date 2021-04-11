@@ -15,18 +15,16 @@
 using Accord.Math;
 using Accord.Statistics.Models.Regression.Linear;
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.SequenceItem.Autofocus;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.WindowService;
-using NINA.ViewModel;
-using NINA.ViewModel.AutoFocus;
-using NINA.ViewModel.ImageHistory;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.WindowService;
+using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.ViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -36,6 +34,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.Trigger.Autofocus {
 
@@ -238,10 +238,10 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             var focuserInfo = focuserMediator.GetInfo();
 
             if (!cameraInfo.Connected) {
-                i.Add(Locale.Loc.Instance["LblCameraNotConnected"]);
+                i.Add(Loc.Instance["LblCameraNotConnected"]);
             }
             if (!focuserInfo.Connected) {
-                i.Add(Locale.Loc.Instance["LblFocuserNotConnected"]);
+                i.Add(Loc.Instance["LblFocuserNotConnected"]);
             }
 
             Issues = i;

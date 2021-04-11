@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,11 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Core.Locale;
 using NINA.Astrometry;
 using System;
 
-namespace NINA.Model {
+namespace NINA.Astrometry {
 
     public class FocusTarget : BaseINPC {
 
@@ -71,7 +72,7 @@ namespace NINA.Model {
             }
         }
 
-        public string SkyDirection => (Azimuth <= 90 || Azimuth >= 270 ? Locale.Loc.Instance["LblNorthern"] : Locale.Loc.Instance["LblSouthern"]) + " " + (Azimuth >= 0 && Azimuth < 180 ? Locale.Loc.Instance["LblEast"] : Locale.Loc.Instance["LblWest"]);
+        public string SkyDirection => (Azimuth <= 90 || Azimuth >= 270 ? Loc.Instance["LblNorthern"] : Loc.Instance["LblSouthern"]) + " " + (Azimuth >= 0 && Azimuth < 180 ? Loc.Instance["LblEast"] : Loc.Instance["LblWest"]);
 
         public void CalculateAltAz(double latitude, double longitude) {
             var start = DateTime.UtcNow;
@@ -102,7 +103,7 @@ namespace NINA.Model {
         }
 
         public string Information {
-            get => $"{Name} ({SkyDirection}, Alt: {Altitude:0.00}°, Az: {Azimuth:0.00}°)";
+            get => $"{Name} ({SkyDirection}, Alt: {Altitude:0.00}??, Az: {Azimuth:0.00}??)";
         }
 
         public override string ToString() {

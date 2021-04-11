@@ -15,12 +15,13 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Interfaces.ViewModel;
 
-namespace NINA.ViewModel.Imaging {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IAnchorableSnapshotVM : IDockableVM {
         CameraInfo CameraInfo { get; set; }

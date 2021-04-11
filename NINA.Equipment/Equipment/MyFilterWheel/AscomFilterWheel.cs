@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,15 +13,18 @@
 #endregion "copyright"
 
 using ASCOM.DriverAccess;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace NINA.Model.MyFilterWheel {
+namespace NINA.Equipment.Equipment.MyFilterWheel {
 
     internal class AscomFilterWheel : AscomDevice<FilterWheel>, IFilterWheel, IDisposable {
 
@@ -86,7 +89,7 @@ namespace NINA.Model.MyFilterWheel {
             }
         }
 
-        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblFilterwheelConnectionLost"];
+        protected override string ConnectionLostMessage => Loc.Instance["LblFilterwheelConnectionLost"];
 
         protected override Task PostConnect() {
             var l = new AsyncObservableCollection<FilterInfo>();

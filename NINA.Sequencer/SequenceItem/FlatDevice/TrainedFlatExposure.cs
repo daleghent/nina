@@ -13,16 +13,15 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Container.ExecutionStrategy;
 using NINA.Sequencer.SequenceItem.FilterWheel;
 using NINA.Sequencer.SequenceItem.Imaging;
 using NINA.Sequencer.Trigger;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.ImageHistory;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,6 +31,11 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Locale;
+using NINA.Equipment.Model;
+using NINA.Profile;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
@@ -182,7 +186,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 var binning = takeExposure.Binning;
                 var gain = takeExposure.Gain == -1 ? profileService.ActiveProfile.CameraSettings.Gain ?? -1 : takeExposure.Gain;
                 if (profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(new FlatDeviceFilterSettingsKey(filter?.Position, binning, gain)) == null) {
-                    issues.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound"], filter?.Name, gain, binning?.Name));
+                    issues.Add(string.Format(Loc.Instance["Lbl_SequenceItem_Validation_FlatDeviceTrainedExposureNotFound"], filter?.Name, gain, binning?.Name));
                     valid = false;
                 }
             }

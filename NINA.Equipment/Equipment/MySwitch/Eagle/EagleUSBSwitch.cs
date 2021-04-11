@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,11 +14,12 @@
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MySwitch {
+namespace NINA.Equipment.Equipment.MySwitch.Eagle {
 
     internal class EagleUSBSwitch : EagleWritableSwitch {
 
@@ -69,7 +70,7 @@ namespace NINA.Model.MySwitch {
 
             Logger.Trace($"Try getting value via {url}");
 
-            var request = new Utility.Http.HttpGetRequest(url, Id);
+            var request = new HttpGetRequest(url, Id);
             var response = await request.Request(new CancellationToken());
 
             var jobj = JObject.Parse(response);

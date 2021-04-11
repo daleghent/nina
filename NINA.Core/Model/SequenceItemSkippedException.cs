@@ -14,7 +14,7 @@
 
 using System;
 
-namespace NINA.Sequencer.Exceptions {
+namespace NINA.Core.Model {
 
     public class SequenceItemSkippedException : Exception {
 

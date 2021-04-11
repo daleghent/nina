@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.Sequencer.Utility.DateTimeProvider;
 using NINA.Astrometry;
 using System;
@@ -146,7 +146,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            return NINA.Utility.Utility.Wait(GetEstimatedDuration(), token, progress);
+            return NINA.Core.Utility.CoreUtil.Wait(GetEstimatedDuration(), token, progress);
         }
 
         public override TimeSpan GetEstimatedDuration() {
@@ -174,6 +174,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         private bool hasFixedTimeProvider = false;
+
         public bool HasFixedTimeProvider {
             get => hasFixedTimeProvider;
             set {

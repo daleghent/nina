@@ -12,8 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyTelescope;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Astrometry;
 using System.Collections.Generic;
 using System.Threading;
@@ -21,8 +20,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using NINA.WPF.Base.Model.FramingAssistant;
 
-namespace NINA.ViewModel.FramingAssistant {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface ISkyMapAnnotator {
         bool AnnotateConstellationBoundaries { get; set; }

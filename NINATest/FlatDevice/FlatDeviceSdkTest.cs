@@ -13,8 +13,8 @@
 #endregion "copyright"
 
 using Moq;
-using NINA.Utility.FlatDeviceSDKs.AlnitakSDK;
-using NINA.Utility.SerialCommunication;
+using NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

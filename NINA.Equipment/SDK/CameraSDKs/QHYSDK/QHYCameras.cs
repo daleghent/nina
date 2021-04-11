@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using System;
 
 namespace QHYCCD {

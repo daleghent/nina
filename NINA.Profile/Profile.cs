@@ -12,14 +12,15 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyFilterWheel;
 using NINA.Profile.Interfaces;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using NINA.Core.Model.Equipment;
+using System.Text;
 
 namespace NINA.Profile {
 
@@ -203,7 +204,7 @@ namespace NINA.Profile {
         [IgnoreDataMember]
         public string Location {
             get {
-                return Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "Profiles", $"{Id}.profile");
+                return Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Profiles", $"{Id}.profile");
             }
             protected set { }
         }
@@ -312,6 +313,7 @@ namespace NINA.Profile {
                 var fs = new FileStream(path, FileMode.Open, FileAccess.ReadWrite, FileShare.Read);
                 var serializer = new DataContractSerializer(typeof(Profile));
                 var obj = serializer.ReadObject(fs);
+
                 var p = (Profile)obj;
                 p.MatchFilterSettingsWithFilterList();
                 p.fs = fs;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,12 +12,13 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Utility;
 using System;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace NINA.Model {
+namespace NINA.Equipment.Model {
 
     [Serializable()]
     [XmlRoot(ElementName = "CaptureSequence")]
@@ -46,7 +47,7 @@ namespace NINA.Model {
             return TotalExposureCount.ToString() + "x" + ExposureTime.ToString() + " " + ImageType;
         }
 
-        public CaptureSequence(double exposureTime, string imageType, MyFilterWheel.FilterInfo filterType, MyCamera.BinningMode binning, int exposureCount) {
+        public CaptureSequence(double exposureTime, string imageType, FilterInfo filterType, BinningMode binning, int exposureCount) {
             ExposureTime = exposureTime;
             ImageType = imageType;
             FilterType = filterType;
@@ -81,8 +82,8 @@ namespace NINA.Model {
 
         private double _exposureTime;
         private string _imageType;
-        private MyFilterWheel.FilterInfo _filterType;
-        private MyCamera.BinningMode _binning;
+        private FilterInfo _filterType;
+        private BinningMode _binning;
         private int _progressExposureCount;
 
         [XmlElement(nameof(Enabled))]
@@ -121,7 +122,7 @@ namespace NINA.Model {
         }
 
         [XmlElement(nameof(FilterType))]
-        public Model.MyFilterWheel.FilterInfo FilterType {
+        public FilterInfo FilterType {
             get {
                 return _filterType;
             }
@@ -133,10 +134,10 @@ namespace NINA.Model {
         }
 
         [XmlElement(nameof(Binning))]
-        public MyCamera.BinningMode Binning {
+        public BinningMode Binning {
             get {
                 if (_binning == null) {
-                    _binning = new MyCamera.BinningMode(1, 1);
+                    _binning = new BinningMode(1, 1);
                 }
                 return _binning;
             }

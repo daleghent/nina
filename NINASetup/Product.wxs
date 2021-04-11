@@ -23,7 +23,7 @@
   <?define NINA.MGEN_TargetDir=$(var.NINA.MGEN.TargetDir)?>
   <?define NINA.Core_TargetDir=$(var.NINA.Core.TargetDir)?>
   <?define NINA.Equipment_TargetDir=$(var.NINA.Equipment.TargetDir)?>
-  <?define NINA.Platesolving_TargetDir=$(var.NINA.Platesolving.TargetDir)?>
+  <?define NINA.PlateSolving_TargetDir=$(var.NINA.PlateSolving.TargetDir)?>
   <?define NINA.Profile_TargetDir=$(var.NINA.Profile.TargetDir)?>
   <?define NINA.Sequencer_TargetDir=$(var.NINA.Sequencer.TargetDir)?>
   <?define NINA.Astrometry_TargetDir=$(var.NINA.Astrometry.TargetDir)?>
@@ -561,8 +561,8 @@
       <Component Win64="$(var.Win64)" Id="NINA.Equipment.dll" Guid="cf75097e-4f3d-4c89-a21b-984f6662e0d1">
         <File Id="NINA.Equipment.dll" Name="NINA.Equipment.dll" Source="$(var.NINA.Equipment_TargetDir)NINA.Equipment.dll" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="NINA.Platesolving.dll" Guid="a3af2a74-1df7-4af2-a735-e587c18c1119">
-        <File Id="NINA.Platesolving.dll" Name="NINA.Platesolving.dll" Source="$(var.NINA.Platesolving_TargetDir)NINA.Platesolving.dll" />
+      <Component Win64="$(var.Win64)" Id="NINA.PlateSolving.dll" Guid="a3af2a74-1df7-4af2-a735-e587c18c1119">
+        <File Id="NINA.PlateSolving.dll" Name="NINA.PlateSolving.dll" Source="$(var.NINA.PlateSolving_TargetDir)NINA.PlateSolving.dll" />
       </Component>
       <Component Win64="$(var.Win64)" Id="NINA.Profile.dll" Guid="e8b31cf9-917f-406f-929a-68a4a28360ca">
         <File Id="NINA.Profile.dll" Name="NINA.Profile.dll" Source="$(var.NINA.Profile_TargetDir)NINA.Profile.dll" />

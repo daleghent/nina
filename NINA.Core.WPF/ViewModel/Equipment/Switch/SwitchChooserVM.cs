@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,17 +12,22 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MySwitch;
-using NINA.Utility;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MySwitch;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
+using NINA.Equipment.Utility;
+using NINA.Equipment.Equipment.MySwitch.Eagle;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment.MySwitch.PegasusAstro;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.Switch {
+namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
     public class SwitchChooserVM : DeviceChooserVM {
 
@@ -32,9 +37,9 @@ namespace NINA.ViewModel.Equipment.Switch {
         public override void GetEquipment() {
             lock (lockObj) {
                 {
-                    var devices = new List<Model.IDevice>();
+                    var devices = new List<IDevice>();
 
-                    devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoSwitch"]));
+                    devices.Add(new DummyDevice(Loc.Instance["LblNoSwitch"]));
 
                     /* ASCOM */
                     try {

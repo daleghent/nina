@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-namespace NINA.Model.MyWeatherData {
+namespace NINA.Equipment.Interfaces {
 
     public interface IWeatherData : IDevice {
 
@@ -27,7 +27,7 @@ namespace NINA.Model.MyWeatherData {
         double CloudCover { get; }
 
         /// <summary>
-        /// Atmospheric dew point reported in °C
+        /// Atmospheric dew point reported in ??C
         /// </summary>
         double DewPoint { get; }
 
@@ -57,7 +57,7 @@ namespace NINA.Model.MyWeatherData {
         double SkyQuality { get; }
 
         /// <summary>
-        /// Sky temperature in °C
+        /// Sky temperature in ??C
         /// </summary>
         double SkyTemperature { get; }
 
@@ -67,7 +67,7 @@ namespace NINA.Model.MyWeatherData {
         double StarFWHM { get; }
 
         /// <summary>
-        /// Ambient air temperature in °C
+        /// Ambient air temperature in ??C
         /// </summary>
         double Temperature { get; }
 

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -18,9 +18,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ASCOM.DriverAccess;
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MySwitch {
+namespace NINA.Equipment.Equipment.MySwitch.Ascom {
 
     internal class AscomWritableV1Switch : AscomV1Switch, IWritableSwitch {
 
@@ -35,7 +36,7 @@ namespace NINA.Model.MySwitch {
             Logger.Trace($"Try setting value {TargetValue} for switch id {Id}");
             var val = TargetValue == 1 ? true : false;
             ascomSwitchHub.SetSwitch(Id, val);
-            return Utility.Utility.Wait(TimeSpan.FromMilliseconds(50));
+            return CoreUtil.Wait(TimeSpan.FromMilliseconds(50));
         }
 
         public double Maximum { get; }

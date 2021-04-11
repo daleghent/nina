@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyCamera;
+using NINA.Equipment.Equipment.MyCamera;
 using System.Windows;
 using System.Windows.Controls;
 

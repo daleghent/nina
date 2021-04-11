@@ -15,8 +15,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
-using NINA.Model.MyFlatDevice;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Profile.Interfaces;
 using NUnit.Framework;
 
 namespace NINATest.FlatDevice {

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ?? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,13 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Core.Model;
+using NINA.Equipment.Model;
 using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace NINA.Utility.Converters {
+namespace NINA.Sequencer.Converters {
 
     public class IsLightImageTypeToVisibilityConverter : IValueConverter {
 

@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Database.Schema;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;

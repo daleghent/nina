@@ -14,17 +14,18 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model.MyTelescope;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Sequencer;
-using NINA.Sequencer.Exceptions;
 using NINA.Sequencer.SequenceItem.Telescope;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Core.Model;
+using NINA.Equipment.Interfaces;
 
 namespace NINATest.Sequencer.SequenceItem.Telescope {
 

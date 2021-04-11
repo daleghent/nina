@@ -13,13 +13,15 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
+using NINA.Astrometry.Interfaces;
 
 namespace NINA.Sequencer.Utility.DateTimeProvider {
 
@@ -31,7 +33,7 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
             this.nighttimeCalculator = nighttimeCalculator;
         }
 
-        public string Name { get; } = Locale.Loc.Instance["LblAstronomicalDawn"];
+        public string Name { get; } = Loc.Instance["LblAstronomicalDawn"];
         public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
 
         public DateTime GetDateTime(ISequenceEntity context) {

@@ -13,13 +13,13 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
-using NINA.Utility.Http;
+using NINA.Core.Utility.Http;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Astrometry.SkySurvey {
+namespace NINA.WPF.Base.SkySurvey {
 
     /// <summary>
     /// Sky Survey using the Hips2Fits service

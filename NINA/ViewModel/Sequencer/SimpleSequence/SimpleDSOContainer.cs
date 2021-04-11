@@ -14,10 +14,9 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyPlanetarium;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyPlanetarium;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Container.ExecutionStrategy;
@@ -34,9 +33,6 @@ using NINA.Sequencer.Trigger.Guider;
 using NINA.Sequencer.Trigger.MeridianFlip;
 using NINA.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Exceptions;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Sequencer.SimpleSequence;
@@ -49,6 +45,16 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.Locale;
+using NINA.Equipment.Exceptions;
+using NINA.Core.Utility.Notification;
+using NINA.Astrometry.Interfaces;
+using NINA.Equipment.Interfaces;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.Sequencer.Container {
 
@@ -624,7 +630,7 @@ namespace NINA.Sequencer.Container {
             c.Name = t.TargetName;
 
             var startup = CreateStartupContainer();
-            startup.Name = Locale.Loc.Instance["Lbl_OldSequencer_TargetPreparation"];
+            startup.Name = Loc.Instance["Lbl_OldSequencer_TargetPreparation"];
             if (startup.Items.Count > 0) {
                 c.Add(startup);
             }
@@ -642,11 +648,11 @@ namespace NINA.Sequencer.Container {
                     imaging.Add(simple.TransformToSmartExposure() as SmartExposure);
                 }
             }
-            imaging.Name = Locale.Loc.Instance["Lbl_OldSequencer_TargetImaging"];
+            imaging.Name = Loc.Instance["Lbl_OldSequencer_TargetImaging"];
             c.Add(imaging);
 
             var closure = CreateClosureContainer();
-            closure.Name = Locale.Loc.Instance["Lbl_OldSequencer_TargetClosure"];
+            closure.Name = Loc.Instance["Lbl_OldSequencer_TargetClosure"];
             if (closure.Items.Count > 0) {
                 c.Add(closure);
             }
@@ -695,17 +701,17 @@ namespace NINA.Sequencer.Container {
                             Target.Rotation = rotationAngle;
                         }
                     }
-                    Notification.ShowSuccess(string.Format(Locale.Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
+                    Notification.ShowSuccess(string.Format(Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
                 }
             } catch (PlanetariumObjectNotSelectedException) {
                 Logger.Error($"Attempted to get coordinates from {s.Name} when no object was selected");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumObjectNotSelected"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumObjectNotSelected"], s.Name));
             } catch (PlanetariumFailedToConnect ex) {
                 Logger.Error($"Unable to connect to {s.Name}: {ex}");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumFailedToConnect"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumFailedToConnect"], s.Name));
             } catch (Exception ex) {
                 Logger.Error($"Failed to get coordinates from {s.Name}: {ex}");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumCoordsError"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumCoordsError"], s.Name));
             }
 
             return (resp != null);

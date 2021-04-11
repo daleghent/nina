@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry.Interfaces;
 using System;
 
 namespace NINA.Astrometry {

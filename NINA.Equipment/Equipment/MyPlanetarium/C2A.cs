@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,15 +12,16 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Exceptions;
-using NINA.Utility.TcpRaw;
-using NINA.Profile;
+using NINA.Core.Utility.TcpRaw;
+using NINA.Profile.Interfaces;
 using System.Threading.Tasks;
 using System;
+using NINA.Equipment.Exceptions;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyPlanetarium {
+namespace NINA.Equipment.Equipment.MyPlanetarium {
 
     internal class C2A : IPlanetarium {
         private string address;
@@ -68,7 +69,7 @@ namespace NINA.Model.MyPlanetarium {
         /// Return the configured user location from C2A
         /// </summary>
         /// <returns></returns>
-        public async Task<Coords> GetSite() {
+        public async Task<Location> GetSite() {
             try {
                 string command = "GetLatitude;GetLongitude;\r\n";
 
@@ -80,7 +81,7 @@ namespace NINA.Model.MyPlanetarium {
                 if (!string.IsNullOrEmpty(response)) {
                     var info = response.Split(';');
 
-                    return new Coords {
+                    return new Location {
                         Latitude = double.Parse(info[0].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture),
                         Longitude = double.Parse(info[1].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture),
                         Elevation = 0

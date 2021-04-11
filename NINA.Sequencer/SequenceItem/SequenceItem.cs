@@ -14,16 +14,17 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.Sequencer.Container;
-using NINA.Sequencer.Exceptions;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+
+using NINA.Core.Model;
 
 namespace NINA.Sequencer.SequenceItem {
 

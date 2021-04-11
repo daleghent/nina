@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,12 +13,12 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
-using NINA.Utility.Http;
+using NINA.Core.Utility.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Astrometry.SkySurvey {
+namespace NINA.WPF.Base.SkySurvey {
 
     internal class StsciSkySurvey : MosaicSkySurvey, ISkySurvey {
         private const string Url = "https://archive.stsci.edu/cgi-bin/dss_search?format=GIF&r={0}&d={1}&e=J2000&w={2}&h={3}&v=1";

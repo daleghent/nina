@@ -13,8 +13,10 @@
 #endregion "copyright"
 
 using ASCOM.DriverAccess;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,7 +25,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model {
+namespace NINA.Equipment.Equipment {
 
     /// <summary>
     /// The unified class that handles the shared properties of all ASCOM devices like Connection, Generic Info and Setup
@@ -121,7 +123,7 @@ namespace NINA.Model {
                     }
                 } catch (Exception ex) {
                     Logger.Error($"{Name} - Connected SET failed", ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblFailedChangingConnectionState"] + Environment.NewLine + ex.Message);
+                    Notification.ShowError(Loc.Instance["LblFailedChangingConnectionState"] + Environment.NewLine + ex.Message);
                     connected = false;
                 }
             }
@@ -168,9 +170,9 @@ namespace NINA.Model {
                         RaiseAllPropertiesChanged();
                     }
                 } catch (ASCOM.DriverAccessCOMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
+                    CoreUtil.HandleAscomCOMException(ex);
                 } catch (System.Runtime.InteropServices.COMException ex) {
-                    Utility.Utility.HandleAscomCOMException(ex);
+                    CoreUtil.HandleAscomCOMException(ex);
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError($"Unable to connect to {Id} - {Name} " + ex.Message);

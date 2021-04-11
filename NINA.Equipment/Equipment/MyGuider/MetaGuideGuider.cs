@@ -12,19 +12,22 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyGuider.MetaGuide;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Notification;
-using NINA.Utility.WindowService;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.WindowService;
 using Nito.AsyncEx;
 using System;
 using System.Net;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Interfaces;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment.MyGuider.MetaGuide;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyGuider {
+namespace NINA.Equipment.Equipment.MyGuider {
 
     public class MetaGuideGuider : BaseINPC, IGuider {
 
@@ -276,10 +279,10 @@ namespace NINA.Model.MyGuider {
                 lock (this.lockobj) {
                     if (!connectionSuccess) {
                         Logger.Error("Failed to connect to MetaGuide. Check to make sure it is running, that broadcast is enabled in Setup -> Extra, and that the broadcast address and port match up with NINA settings.");
-                        Notification.ShowError(Locale.Loc.Instance["LblMetaGuideConnectionFailed"]);
+                        Notification.ShowError(Loc.Instance["LblMetaGuideConnectionFailed"]);
                     } else if (this.latestStatus != null && this.latestStatus.MetaGuideVersion < MINIMUM_MG_VERSION) {
                         Logger.Error($"MetaGuide is version {this.latestStatus.MetaGuideVersion} but must be at least {MINIMUM_MG_VERSION}");
-                        Notification.ShowError(String.Format(Locale.Loc.Instance["LblMetaGuideVersionCheckFailed"], MINIMUM_MG_VERSION));
+                        Notification.ShowError(String.Format(Loc.Instance["LblMetaGuideVersionCheckFailed"], MINIMUM_MG_VERSION));
                         connectionSuccess = false;
                     }
                     this.Connected = connectionSuccess;
@@ -288,7 +291,7 @@ namespace NINA.Model.MyGuider {
                 return connectionSuccess;
             } catch (Exception ex) {
                 Logger.Error("Failed to connect to MetaGuide. Check to make sure it is running, that broadcast is enabled in Setup -> Extra, and that the broadcast address and port match up with NINA settings.", ex);
-                Notification.ShowError(Locale.Loc.Instance["LblMetaGuideConnectionFailed"]);
+                Notification.ShowError(Loc.Instance["LblMetaGuideConnectionFailed"]);
                 return false;
             } finally {
                 if (!connectionSuccess) {
@@ -444,7 +447,7 @@ namespace NINA.Model.MyGuider {
                     // Stop guiding due to low star intensity
                     if (lowIntensityChangeGuidingTask.Status > TaskStatus.Running) {
                         Logger.Warning($"Star intensity {currentIntensity} lower than {minIntensity} for longer than {LOW_INTENSITY_THRESHOLD}. Stopping guiding until intensity comes back.");
-                        Notification.ShowWarning(Locale.Loc.Instance["LblMetaGuideLowIntensityStopGuiding"]);
+                        Notification.ShowWarning(Loc.Instance["LblMetaGuideLowIntensityStopGuiding"]);
                         lowIntensityChangeGuidingTask = Task.Run(async () => {
                             if (await StopGuiding(new CancellationTokenSource(LOW_INTENSITY_GUIDING_TIMEOUT).Token)) {
                                 guidingHaltedDueToLowIntensity = true;
@@ -464,7 +467,7 @@ namespace NINA.Model.MyGuider {
                 if (lowIntensityChangeGuidingTask.Status > TaskStatus.Running) {
                     if (lowIntensityGuidingAttemptCount == 0) {
                         Logger.Info($"Star intensity {currentIntensity} now above {minIntensity}. Resuming guiding.");
-                        Notification.ShowInformation(Locale.Loc.Instance["LblMetaGuideLowIntensityRestoreGuiding"]);
+                        Notification.ShowInformation(Loc.Instance["LblMetaGuideLowIntensityRestoreGuiding"]);
                     }
 
                     ++lowIntensityGuidingAttemptCount;
@@ -474,7 +477,7 @@ namespace NINA.Model.MyGuider {
                             lowIntensityGuidingAttemptCount = 0;
                         } else if (lowIntensityGuidingAttemptCount >= MAX_LOW_INTENSITY_GUIDING_RETRIES) {
                             Logger.Error("Failed to resume guiding after star intensity recovered");
-                            Notification.ShowError(Locale.Loc.Instance["LblMetaGuideLowIntensityRestoreGuidingFailed"]);
+                            Notification.ShowError(Loc.Instance["LblMetaGuideLowIntensityRestoreGuidingFailed"]);
                             guidingHaltedDueToLowIntensity = false;
                             lowIntensityGuidingAttemptCount = 0;
                         }
@@ -547,7 +550,7 @@ namespace NINA.Model.MyGuider {
 
         public void SetupDialog() {
             var windowService = windowServiceFactory.Create();
-            windowService.ShowDialog(this, Locale.Loc.Instance["LblMetaGuideSetup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
+            windowService.ShowDialog(this, Loc.Instance["LblMetaGuideSetup"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.SingleBorderWindow);
         }
     }
 

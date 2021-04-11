@@ -12,17 +12,21 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MySafetyMonitor;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Equipment.Equipment.MySafetyMonitor;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
+using NINA.Equipment.Utility;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.Model.Equipment.MySafetyMonitor.Simulator;
 
-namespace NINA.ViewModel.Equipment.SafetyMonitor {
+namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
 
     public class SafetyMonitorChooserVM : DeviceChooserVM {
 
@@ -31,9 +35,9 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
 
         public override void GetEquipment() {
             lock (lockObj) {
-                var devices = new List<Model.IDevice>();
+                var devices = new List<IDevice>();
 
-                devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoSafetyMonitor"]));
+                devices.Add(new DummyDevice(Loc.Instance["LblNoSafetyMonitor"]));
 
                 try {
                     foreach (ISafetyMonitor safetyMonitor in ASCOMInteraction.GetSafetyMonitors(profileService)) {
@@ -43,7 +47,7 @@ namespace NINA.ViewModel.Equipment.SafetyMonitor {
                     Logger.Error(ex);
                 }
 
-                devices.Add(new NINA.Model.MySafetyMonitor.SafetyMonitorSimulator());
+                devices.Add(new SafetyMonitorSimulator());
                 Devices = devices;
                 DetermineSelectedDevice(profileService.ActiveProfile.SafetyMonitorSettings.Id);
             }

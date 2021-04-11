@@ -12,7 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility.ColorSchema;
+using NINA.Profile.Interfaces;
 using System;
 using System.Linq;
 using System.Runtime.Serialization;

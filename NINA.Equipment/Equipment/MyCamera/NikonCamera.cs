@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,11 +13,9 @@
 #endregion "copyright"
 
 using Nikon;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
-using NINA.Utility.RawConverter;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -26,10 +24,16 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
 using NINA.Core.Enum;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Model.Equipment;
+using NINA.Image.RawConverter;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Model;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyCamera {
+namespace NINA.Equipment.Equipment.MyCamera {
 
     public class NikonCamera : BaseINPC, ICamera {
 
@@ -711,7 +715,7 @@ namespace NINA.Model.MyCamera {
 
             try {
                 var rawImageData = _memoryStream.ToArray();
-                var rawConverter = RawConverter.CreateInstance(profileService.ActiveProfile.CameraSettings.RawConverter);
+                var rawConverter = RawConverterFactory.CreateInstance(profileService.ActiveProfile.CameraSettings.RawConverter);
                 return new RAWExposureData(
                     rawConverter: rawConverter,
                     rawBytes: rawImageData,
@@ -858,7 +862,7 @@ namespace NINA.Model.MyCamera {
             bulbCompletionCTS?.Cancel();
             bulbCompletionCTS = new CancellationTokenSource();
             bulbCompletionTask = Task.Run(async () => {
-                await Utility.Utility.Wait(TimeSpan.FromSeconds(exposureTime), bulbCompletionCTS.Token);
+                await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), bulbCompletionCTS.Token);
                 if (!bulbCompletionCTS.IsCancellationRequested) {
                     stopCapture();
                     Logger.Debug("Restore previous shutter speed");

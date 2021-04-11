@@ -14,7 +14,6 @@
 
 using NINA.Utility;
 using NINA.Astrometry;
-using NINA.Utility.WindowService;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,6 +21,8 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Utility;
+using NINA.Core.Utility.WindowService;
 
 namespace NINA.AstrometryIndexDownloader {
 

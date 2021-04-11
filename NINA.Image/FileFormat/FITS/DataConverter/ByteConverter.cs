@@ -14,7 +14,7 @@
 
 using System;
 
-namespace NINA.Utility.FileFormat.FITS.DataConverter {
+namespace NINA.Image.FileFormat.FITS.DataConverter {
 
     public class ByteConverter : IDataConverter {
 

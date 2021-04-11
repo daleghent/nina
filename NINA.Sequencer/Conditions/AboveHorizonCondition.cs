@@ -14,11 +14,11 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Utility;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
 using System.Collections.Generic;

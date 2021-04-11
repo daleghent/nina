@@ -13,15 +13,18 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Threading;
 using System.Threading.Tasks;
+
+using NINA.Core.Model;
+
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.SequenceItem.Telescope {
 
@@ -74,11 +77,11 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             var telescopeInfo = telescopeMediator.GetInfo();
 
             if (!telescopeInfo.Connected) {
-                i.Add(Locale.Loc.Instance["LblTelescopeNotConnected"]);
+                i.Add(Loc.Instance["LblTelescopeNotConnected"]);
             }
 
             if (telescopeInfo.Connected && !telescopeInfo.CanFindHome) {
-                i.Add(Locale.Loc.Instance["LblTelescopeCannotFindHome"]);
+                i.Add(Loc.Instance["LblTelescopeCannotFindHome"]);
             }
 
             Issues = i;

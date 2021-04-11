@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,15 +12,13 @@
 
 #endregion "copyright"
 
-using NINA.Locale;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFlatDevice;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,8 +27,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Locale;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Model;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Profile;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.FlatDevice {
+namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
     public class FlatDeviceVM : DockableVM, IFlatDeviceVM, ICameraConsumer {
         private IFlatDevice flatDevice;
@@ -130,7 +137,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             if (!double.TryParse(o.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)) return Task.FromResult(false);
             return Task.Run(async () => {
                 flatDevice.Brightness = result / 100d;
-                await Utility.Utility.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return true;
             }, token);
         }
@@ -239,7 +246,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
         }
 
         private async Task<bool> DisconnectFlatDeviceDialog() {
-            var dialog = MyMessageBox.MyMessageBox.Show(Loc.Instance["LblFlatDeviceDisconnectQuestion"],
+            var dialog = MyMessageBox.Show(Loc.Instance["LblFlatDeviceDisconnectQuestion"],
                 "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
             if (dialog == System.Windows.MessageBoxResult.OK) {
                 await Disconnect();
@@ -280,7 +287,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
         private void DeleteGainDialog(object gain) {
             if (!(gain is int)) return;
 
-            var dialog = MyMessageBox.MyMessageBox.Show($"{Loc.Instance["LblFlatDeviceAreYouSureGain"]} {gain}?",
+            var dialog = MyMessageBox.Show($"{Loc.Instance["LblFlatDeviceAreYouSureGain"]} {gain}?",
                 "", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No);
             if (dialog != System.Windows.MessageBoxResult.Yes) return;
 
@@ -299,7 +306,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
                 if (!BinningMode.TryParse((string)o, out binningMode)) return;
             }
 
-            var dialog = MyMessageBox.MyMessageBox.Show($"{Loc.Instance["LblFlatDeviceAreYouSureBinning"]} {binningMode}?",
+            var dialog = MyMessageBox.Show($"{Loc.Instance["LblFlatDeviceAreYouSureBinning"]} {binningMode}?",
                 "", System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No);
             if (dialog != System.Windows.MessageBoxResult.Yes) return;
 
@@ -319,7 +326,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
                 if (flatD.Connected == false) return false;
                 if (!flatD.SupportsOpenClose) return false;
                 var result = await flatD.Open(token);
-                await Utility.Utility.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return result;
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -340,7 +347,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
                 if (flatD.Connected == false) return false;
                 if (!flatD.SupportsOpenClose) return false;
                 var result = await flatD.Close(token);
-                await Utility.Utility.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return result;
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -404,7 +411,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
             if (flatDevice == null || flatDevice.Connected == false) return Task.FromResult(false);
             return Task.Run(async () => {
                 flatDevice.LightOn = o is bool b && b;
-                await Utility.Utility.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
+                await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return true;
             }, token);
         }

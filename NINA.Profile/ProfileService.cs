@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Core.Enum;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
 using System;
 using System.Globalization;
 using System.IO;
@@ -22,13 +22,16 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Windows;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 
 namespace NINA.Profile {
 
     public partial class ProfileService : BaseINPC, IProfileService {
         private static object lockobj = new object();
 
-        public static string PROFILEFOLDER = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "Profiles");
+        public static string PROFILEFOLDER = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Profiles");
 
         public ProfileService() {
             saveTimer = new System.Timers.Timer();
@@ -111,6 +114,9 @@ namespace NINA.Profile {
                     if (!Directory.Exists(PROFILEFOLDER)) {
                         Directory.CreateDirectory(PROFILEFOLDER);
                     }
+
+                    //This will migrate the namespaces of existing profiles when NINA was not split into multiple smaller projects
+                    MigrateModularizedSolutionNamespaceChange();
 
                     var loadSpecificProfile = !string.IsNullOrWhiteSpace(startWithProfileId);
                     ProfileWasSpecifiedFromCommandLineArgs = loadSpecificProfile;
@@ -215,7 +221,7 @@ namespace NINA.Profile {
             System.Threading.Thread.CurrentThread.CurrentUICulture = language;
             System.Threading.Thread.CurrentThread.CurrentCulture = language;
 
-            Locale.Loc.Instance.ReloadLocale(ActiveProfile.ApplicationSettings.Culture);
+            Loc.Instance.ReloadLocale(ActiveProfile.ApplicationSettings.Culture);
             LocaleChanged?.Invoke(this, null);
         }
 
@@ -242,11 +248,11 @@ namespace NINA.Profile {
             ActiveProfile.AstrometrySettings.HorizonFilePath = horizonFilePath;
 
             try {
-                ActiveProfile.AstrometrySettings.Horizon = Astrometry.CustomHorizon.FromFile(horizonFilePath);
+                ActiveProfile.AstrometrySettings.Horizon = CustomHorizon.FromFile(horizonFilePath);
             } catch (Exception ex) {
                 ActiveProfile.AstrometrySettings.HorizonFilePath = string.Empty;
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["LblFailedToLoadCustomHorizon"] + ex.Message);
+                Notification.ShowError(Loc.Instance["LblFailedToLoadCustomHorizon"] + ex.Message);
             }
 
             HorizonChanged?.Invoke(this, null);
@@ -329,7 +335,7 @@ namespace NINA.Profile {
 
                         System.Threading.Thread.CurrentThread.CurrentUICulture = ActiveProfile.ApplicationSettings.Language;
                         System.Threading.Thread.CurrentThread.CurrentCulture = ActiveProfile.ApplicationSettings.Language;
-                        Locale.Loc.Instance.ReloadLocale(ActiveProfile.ApplicationSettings.Culture);
+                        Loc.Instance.ReloadLocale(ActiveProfile.ApplicationSettings.Culture);
 
                         LocaleChanged?.Invoke(this, null);
                         ProfileChanged?.Invoke(this, null);
@@ -378,7 +384,7 @@ namespace NINA.Profile {
 
         #region Migration
 
-        public static string OLDPROFILEFILEPATH = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "profiles.settings");
+        public static string OLDPROFILEFILEPATH = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "profiles.settings");
 
         /// <summary>
         /// Migrate old profile.settings into new separted profile files
@@ -387,7 +393,7 @@ namespace NINA.Profile {
         private void MigrateOldProfile() {
             var s = File.ReadAllText(OLDPROFILEFILEPATH);
             s = s.Replace("NINA.Utility.Profile", "NINA.Profile");
-            var tmp = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "migration.profiles");
+            var tmp = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "migration.profiles");
             File.WriteAllText(tmp, s);
 
             using (var fs = new FileStream(tmp, FileMode.Open, FileAccess.Read)) {
@@ -401,6 +407,32 @@ namespace NINA.Profile {
                     var info = new ProfileMeta() { Id = p.Id, Name = p.Name, Location = p.Location, LastUsed = p.LastUsed };
                     p.Dispose();
                     Profiles.Add(info);
+                }
+            }
+        }
+
+        private void MigrateModularizedSolutionNamespaceChange() {
+            foreach (var profileFile in Directory.GetFiles(PROFILEFOLDER)) {
+                try {
+                    var profile = File.ReadAllText(profileFile);
+                    if (profile.Contains("http://schemas.datacontract.org/2004/07/NINA.Utility")) {
+                        Logger.Info($"Migrating profile {profileFile}");
+                        profile = profile.Replace("http://schemas.datacontract.org/2004/07/NINA.Model.MyFilterWheel", "http://schemas.datacontract.org/2004/07/NINA.Core.Model.Equipment")
+                             .Replace("http://schemas.datacontract.org/2004/07/NINA.Model.MyCamera", "http://schemas.datacontract.org/2004/07/NINA.Core.Model.Equipment")
+                             .Replace("http://schemas.datacontract.org/2004/07/NINA.Utility", "http://schemas.datacontract.org/2004/07/NINA.Core.Utility.ColorSchema");
+
+                        var backupfolder = PROFILEFOLDER + "_old";
+                        if (!Directory.Exists(backupfolder)) {
+                            Directory.CreateDirectory(backupfolder);
+                        }
+
+                        // Backup old profile
+                        File.Move(profileFile, Path.Combine(backupfolder, Path.GetFileName(profileFile)));
+                        // Save adjusted profile
+                        File.WriteAllText(profileFile, profile);
+                    }
+                } catch (Exception ex) {
+                    Logger.Error($"Failed to migrate profile {profileFile} due to ", ex);
                 }
             }
         }

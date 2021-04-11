@@ -12,10 +12,11 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry.Body;
 using System;
 using System.Threading.Tasks;
 
-namespace NINA.Astrometry {
+namespace NINA.Astrometry.RiseAndSet {
 
     public class CustomRiseAndSet : RiseAndSetEvent {
         private DateTime? rise;
@@ -36,11 +37,11 @@ namespace NINA.Astrometry {
         public override DateTime? Rise => rise;
         public override DateTime? Set => set;
 
-        protected override double AdjustAltitude(Body body) {
+        protected override double AdjustAltitude(BasicBody body) {
             return 0;
         }
 
-        protected override Body GetBody(DateTime date) {
+        protected override BasicBody GetBody(DateTime date) {
             return null;
         }
     }

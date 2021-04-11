@@ -13,20 +13,28 @@
 #endregion "copyright"
 
 using NINA.API.SGP;
+using NINA.Astrometry;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFocuser;
-using NINA.Model.MyPlanetarium;
+using NINA.Core.Interfaces.API.SGP;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Exceptions;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Equipment.MyPlanetarium;
 using NINA.Plugin;
 using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Utility;
-using NINA.Utility.Exceptions;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
 using NINA.ViewModel.Imaging;
 using NINA.ViewModel.Interfaces;
 using NINA.ViewModel.Plugins;
+using NINA.WPF.Base.Interfaces.Utility;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -37,6 +45,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment.MyGPS;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel {
 
@@ -129,7 +141,7 @@ namespace NINA.ViewModel {
 
         private void OpenStartupSequenceTemplateDiag(object obj) {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.Title = Locale.Loc.Instance["LblSequenceTemplate"];
+            dialog.Title = Loc.Instance["LblSequenceTemplate"];
             dialog.FileName = "Sequence";
             dialog.DefaultExt = ".json";
             dialog.Filter = "N.I.N.A. sequence JSON|*." + dialog.DefaultExt;
@@ -154,7 +166,7 @@ namespace NINA.ViewModel {
 
         private async Task<bool> SiteFromGPS() {
             bool loc = false; // if location was acquired
-            using (var gps = new Model.MyGPS.NMEAGps(0, profileService)) {
+            using (var gps = new NMEAGps(0, profileService)) {
                 gps.Initialize();
                 if (gps.AutoDiscover()) {
                     loc = await gps.Connect(new System.Threading.CancellationToken());
@@ -169,7 +181,7 @@ namespace NINA.ViewModel {
 
         private async Task<bool> SiteFromPlanetarium() {
             IPlanetarium s = planetariumFactory.GetPlanetarium();
-            Coords loc = null;
+            Location loc = null;
 
             try {
                 loc = await s.GetSite();
@@ -177,14 +189,14 @@ namespace NINA.ViewModel {
                 if (loc != null) {
                     Latitude = loc.Latitude;
                     Longitude = loc.Longitude;
-                    Notification.ShowSuccess(String.Format(Locale.Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
+                    Notification.ShowSuccess(String.Format(Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
                 }
             } catch (PlanetariumFailedToConnect ex) {
                 Logger.Error($"Unable to connect to {s.Name}: {ex}");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumFailedToConnect"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumFailedToConnect"], s.Name));
             } catch (Exception ex) {
                 Logger.Error($"Failed to get coordinates from {s.Name}: {ex}");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumCoordsError"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumCoordsError"], s.Name));
             }
 
             return (loc != null);
@@ -202,14 +214,14 @@ namespace NINA.ViewModel {
 
         private void CloneProfile(object obj) {
             if (!profileService.Clone(SelectedProfile)) {
-                Notification.ShowWarning(Locale.Loc.Instance["LblLoadProfileInUseWarning"]);
+                Notification.ShowWarning(Loc.Instance["LblLoadProfileInUseWarning"]);
             }
         }
 
         private void RemoveProfile(object obj) {
-            if (MyMessageBox.MyMessageBox.Show(string.Format(Locale.Loc.Instance["LblRemoveProfileText"], SelectedProfile?.Name, SelectedProfile?.Id), Locale.Loc.Instance["LblRemoveProfileCaption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No) == System.Windows.MessageBoxResult.Yes) {
+            if (MyMessageBox.Show(string.Format(Loc.Instance["LblRemoveProfileText"], SelectedProfile?.Name, SelectedProfile?.Id), Loc.Instance["LblRemoveProfileCaption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No) == System.Windows.MessageBoxResult.Yes) {
                 if (!profileService.RemoveProfile(SelectedProfile)) {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDeleteProfileInUseWarning"]);
+                    Notification.ShowWarning(Loc.Instance["LblDeleteProfileInUseWarning"]);
                 }
             }
         }
@@ -235,7 +247,7 @@ namespace NINA.ViewModel {
 
         private void SelectProfile(object obj) {
             if (!profileService.SelectProfile(SelectedProfile)) {
-                Notification.ShowWarning(Locale.Loc.Instance["LblLoadProfileInUseWarning"]);
+                Notification.ShowWarning(Loc.Instance["LblLoadProfileInUseWarning"]);
                 ProfileService.ActivateInstanceOfNinaReferencingProfile(SelectedProfile.Id.ToString());
             }
         }
@@ -256,7 +268,7 @@ namespace NINA.ViewModel {
 
         private void AddFilter(object obj) {
             var pos = ActiveProfile.FilterWheelSettings.FilterWheelFilters.Count;
-            var filter = new FilterInfo(Locale.Loc.Instance["LblFilter"] + (pos + 1), 0, (short)pos, -1, new Model.MyCamera.BinningMode(1, 1), -1, -1);
+            var filter = new FilterInfo(Loc.Instance["LblFilter"] + (pos + 1), 0, (short)pos, -1, new BinningMode(1, 1), -1, -1);
             ActiveProfile.FilterWheelSettings.FilterWheelFilters.Add(filter);
             SelectedFilter = filter;
         }
@@ -327,7 +339,7 @@ namespace NINA.ViewModel {
                     ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder = diag.SelectedPath + "\\";
                     //var vm = (ApplicationVM)Application.Current.Resources["AppVM"];
                     var sensorAnalysisData = exposureCalculatorVM.LoadSensorAnalysisData(ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder);
-                    Notification.ShowInformation(String.Format(Locale.Loc.Instance["LblSharpCapSensorAnalysisLoadedFormat"], sensorAnalysisData.Count));
+                    Notification.ShowInformation(String.Format(Loc.Instance["LblSharpCapSensorAnalysisLoadedFormat"], sensorAnalysisData.Count));
                 }
             }
         }
@@ -336,7 +348,7 @@ namespace NINA.ViewModel {
 
         private void OpenSequenceTemplateDiag(object o) {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
-            dialog.Title = Locale.Loc.Instance["LblSequenceTemplate"];
+            dialog.Title = Loc.Instance["LblSequenceTemplate"];
             dialog.FileName = "Sequence";
             dialog.DefaultExt = ".xml";
             dialog.Filter = "XML documents|*.xml";

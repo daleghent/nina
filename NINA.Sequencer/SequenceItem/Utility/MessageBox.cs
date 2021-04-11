@@ -13,7 +13,11 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
+using NINA.Core.Model;
+
+using NINA.Core.Model;
+
+using NINA.Core.MyMessageBox;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -36,7 +40,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         public string Text { get; set; }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            MyMessageBox.MyMessageBox.Show(Text);
+            MyMessageBox.Show(Text);
             return Task.CompletedTask;
         }
 

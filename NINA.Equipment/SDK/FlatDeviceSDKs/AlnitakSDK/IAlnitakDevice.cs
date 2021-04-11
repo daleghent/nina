@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,11 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Utility.SerialCommunication;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
-namespace NINA.Utility.FlatDeviceSDKs.AlnitakSDK {
+namespace NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK {
 
     public interface IAlnitakDevice : ISerialSdk {
         ReadOnlyCollection<string> PortNames { get; }

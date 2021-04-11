@@ -13,11 +13,11 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
 
-namespace NINA.Model {
+namespace NINA.Astrometry {
 
     [JsonObject(MemberSerialization.OptIn)]
     public class InputCoordinates : BaseINPC {

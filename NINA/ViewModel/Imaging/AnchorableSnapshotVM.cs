@@ -13,21 +13,27 @@
 #endregion "copyright"
 
 using Accord;
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Model;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Profile.Interfaces;
 using NINA.ViewModel.ImageHistory;
+using NINA.WPF.Base.Interfaces.Mediator;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using static NINA.Model.CaptureSequence;
+using static NINA.Equipment.Model.CaptureSequence;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.ViewModel.Imaging {
 
@@ -166,9 +172,9 @@ namespace NINA.ViewModel.Imaging {
             }
         }
 
-        private Model.MyFilterWheel.FilterInfo snapFilter;
+        private FilterInfo snapFilter;
 
-        public Model.MyFilterWheel.FilterInfo SnapFilter {
+        public FilterInfo SnapFilter {
             get {
                 return snapFilter;
             }
@@ -278,7 +284,7 @@ namespace NINA.ViewModel.Imaging {
                     }
                     prepareTask = imagingMediator.PrepareImage(imageData, new PrepareImageParameters(), _captureImageToken.Token);
                     if (SnapSave) {
-                        progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSavingImage"] });
+                        progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSavingImage"] });
                         await imageSaveMediator.Enqueue(imageData, prepareTask, progress, _captureImageToken.Token);
                         imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageTypes.SNAPSHOT);
                     }

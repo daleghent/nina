@@ -12,17 +12,18 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
 using NINA.Core.Enum;
+using NINA.Image.Interfaces;
 
-namespace NINA.ViewModel {
+namespace NINA.Image {
 
     public class Thumbnail : BaseINPC {
 
@@ -32,7 +33,7 @@ namespace NINA.ViewModel {
         public async Task<IImageData> LoadOriginalImage(IProfileService profileService) {
             try {
                 if (File.Exists(ImagePath.LocalPath)) {
-                    return await ImageData.FromFile(ImagePath.LocalPath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
+                    return await BaseImageData.FromFile(ImagePath.LocalPath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
                 } else {
                     Notification.ShowError($"File ${ImagePath.LocalPath} does not exist");
                 }

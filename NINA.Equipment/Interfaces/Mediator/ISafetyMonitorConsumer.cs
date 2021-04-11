@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Model.MySafetyMonitor;
+using NINA.Equipment.Equipment.MySafetyMonitor;
 
-namespace NINA.Utility.Mediator.Interfaces {
+namespace NINA.Equipment.Interfaces.Mediator {
 
     public interface ISafetyMonitorConsumer : IDeviceConsumer<SafetyMonitorInfo> {
     }

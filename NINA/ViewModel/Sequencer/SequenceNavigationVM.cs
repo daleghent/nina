@@ -12,13 +12,15 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Profile;
+using NINA.Astrometry;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Container;
+using NINA.Sequencer.Interfaces.Mediator;
 using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.Interfaces;
+using NINA.WPF.Base.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;

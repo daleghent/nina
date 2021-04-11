@@ -12,13 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.DragDrop;
 using NINA.Sequencer.Serialization;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,6 +28,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer {
 
@@ -77,7 +78,7 @@ namespace NINA.Sequencer {
         public void AddTarget(IDeepSkyObjectContainer deepSkyObjectContainer) {
             try {
                 var jsonContainer = sequenceJsonConverter.Serialize(deepSkyObjectContainer);
-                File.WriteAllText(Path.Combine(targetPath, NINA.Utility.Utility.ReplaceAllInvalidFilenameChars(deepSkyObjectContainer.Name) + ".json"), jsonContainer);
+                File.WriteAllText(Path.Combine(targetPath, NINA.Core.Utility.CoreUtil.ReplaceAllInvalidFilenameChars(deepSkyObjectContainer.Name) + ".json"), jsonContainer);
 
                 var existingTarget = Targets.FirstOrDefault(x => x.Name == deepSkyObjectContainer.Name);
                 if (existingTarget != null) {
@@ -88,10 +89,10 @@ namespace NINA.Sequencer {
                 }
 
                 RefreshFilters();
-                Notification.ShowSuccess(string.Format(Locale.Loc.Instance["Lbl_SequenceTargetController_SavedTarget"], deepSkyObjectContainer.Target?.TargetName ?? deepSkyObjectContainer.Name));
+                Notification.ShowSuccess(string.Format(Loc.Instance["Lbl_SequenceTargetController_SavedTarget"], deepSkyObjectContainer.Target?.TargetName ?? deepSkyObjectContainer.Name));
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTargetController_AddNewTargetFailed"]);
+                Notification.ShowError(Loc.Instance["Lbl_SequenceTargetController_AddNewTargetFailed"]);
             }
         }
 
@@ -122,7 +123,7 @@ namespace NINA.Sequencer {
                 RefreshFilters();
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTargetController_LoadUserTargetFailed"]);
+                Notification.ShowError(Loc.Instance["Lbl_SequenceTargetController_LoadUserTargetFailed"]);
             }
         }
 
@@ -138,7 +139,7 @@ namespace NINA.Sequencer {
 
         public void DeleteTarget(TargetSequenceContainer targetSequenceContainer) {
             try {
-                var file = Path.Combine(targetPath, NINA.Utility.Utility.ReplaceAllInvalidFilenameChars(targetSequenceContainer.Name) + ".json");
+                var file = Path.Combine(targetPath, NINA.Core.Utility.CoreUtil.ReplaceAllInvalidFilenameChars(targetSequenceContainer.Name) + ".json");
                 if (File.Exists(file)) {
                     File.Delete(file);
                 }
@@ -148,7 +149,7 @@ namespace NINA.Sequencer {
                 RefreshFilters();
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTargetController_DeleteTargetFailed"]);
+                Notification.ShowError(Loc.Instance["Lbl_SequenceTargetController_DeleteTargetFailed"]);
             }
         }
     }

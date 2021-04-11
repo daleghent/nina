@@ -14,7 +14,7 @@
     xmlns:guider="clr-namespace:NINA.View.Equipment.Guider"
     xmlns:local="clr-namespace:NINA.View.Equipment"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">

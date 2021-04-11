@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,11 +13,10 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.ImageData;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Exceptions;
-using NINA.Utility.Notification;
+using NINA.Image.ImageData;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -25,8 +24,14 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ZWOptical.ASISDK;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.Exceptions;
+using NINA.Core.Locale;
+using NINA.Equipment.Model;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyCamera {
+namespace NINA.Equipment.Equipment.MyCamera {
 
     public class ASICamera : BaseINPC, ICamera {
 
@@ -402,7 +407,7 @@ namespace NINA.Model.MyCamera {
                     var status = ExposureStatus;
                     if (status != ASICameraDll.ASI_EXPOSURE_STATUS.ASI_EXP_SUCCESS) {
                         Logger.Error($"ASI: Camera reported unsuccessful exposure: {status}");
-                        throw new CameraDownloadFailedException(Locale.Loc.Instance["LblASIImageDownloadError"]);
+                        throw new CameraDownloadFailedException(Loc.Instance["LblASIImageDownloadError"]);
                     }
 
                     var width = CaptureAreaInfo.Size.Width;
@@ -413,7 +418,7 @@ namespace NINA.Model.MyCamera {
                     int buffersize = width * height * 2;
                     if (!GetExposureData(arr, buffersize)) {
                         Logger.Error("ASI: Download of exposure data failed");
-                        throw new CameraDownloadFailedException(Locale.Loc.Instance["LblASIImageDownloadError"]);
+                        throw new CameraDownloadFailedException(Loc.Instance["LblASIImageDownloadError"]);
                     }
 
                     return new ImageArrayExposureData(

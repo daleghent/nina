@@ -14,7 +14,7 @@
 
 using System.Windows.Media;
 
-namespace NINA.ViewModel {
+namespace NINA.Core.Model {
     public interface IImageGeometryProvider {
 
         GeometryGroup GetImageGeometry(string imageName);

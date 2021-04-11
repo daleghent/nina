@@ -13,10 +13,9 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,6 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.SequenceItem.Focuser {
 
@@ -86,7 +86,7 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
         public bool Validate() {
             var i = new List<string>();
             if (!focuserMediator.GetInfo().Connected) {
-                i.Add(Locale.Loc.Instance["LblFocuserNotConnected"]);
+                i.Add(Loc.Instance["LblFocuserNotConnected"]);
             }
             Issues = i;
             return i.Count == 0;

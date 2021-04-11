@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,14 +12,16 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Utility;
-using NINA.Profile;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using System;
-using NINA.Model.MyDome;
 using System.Collections.Generic;
+using NINA.Core.Locale;
+using NINA.Equipment.Utility;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.Dome {
+namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
     public class DomeChooserVM : DeviceChooserVM {
 
@@ -28,9 +30,9 @@ namespace NINA.ViewModel.Equipment.Dome {
 
         public override void GetEquipment() {
             lock (lockObj) {
-                var devices = new List<Model.IDevice>();
+                var devices = new List<IDevice>();
 
-                devices.Add(new DummyDevice(Locale.Loc.Instance["LblDomeNoSource"]));
+                devices.Add(new DummyDevice(Loc.Instance["LblDomeNoSource"]));
 
                 try {
                     foreach (IDome dome in ASCOMInteraction.GetDomes(profileService)) {

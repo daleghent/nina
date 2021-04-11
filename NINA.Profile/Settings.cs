@@ -12,7 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using System;
 using System.Runtime.Serialization;
 

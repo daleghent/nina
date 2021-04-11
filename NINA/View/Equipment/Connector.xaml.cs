@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using QHYCCD;
 using System;
 using System.Collections.Generic;
@@ -23,11 +23,16 @@ using System.Management;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
 using Nito.AsyncEx;
 using NINA.Core.Enum;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Locale;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Model;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyCamera {
+namespace NINA.Equipment.Equipment.MyCamera {
 
     public class QHYCamera : BaseINPC, ICamera {
         private static readonly TimeSpan COOLING_TIMEOUT = TimeSpan.FromSeconds(2);
@@ -734,8 +739,8 @@ namespace NINA.Model.MyCamera {
                     Info.ReadoutSpeedStep = (uint)step;
                     Logger.Debug($"QHYCCD: ReadoutSpeedMin={Info.ReadoutSpeedMin}, ReadoutSpeedMax={Info.ReadoutSpeedMax}, ReadoutSpeedStep={Info.ReadoutSpeedStep}");
 
-                    modeList.Add(Locale.Loc.Instance["LblNormal"]);
-                    modeList.Add(Locale.Loc.Instance["LblFast"]);
+                    modeList.Add(Loc.Instance["LblNormal"]);
+                    modeList.Add(Loc.Instance["LblFast"]);
                 } else {
                     /*
                      * See if this camera has any readout modes and build a list of their names if so
@@ -981,7 +986,7 @@ namespace NINA.Model.MyCamera {
                 }
                 if (rv != QhySdk.QHYCCD_SUCCESS) {
                     Logger.Warning($"QHYCCD: Failed to download image from camera! rv = {rv }");
-                    throw new Exception(Locale.Loc.Instance["LblASIImageDownloadError"]);
+                    throw new Exception(Loc.Instance["LblASIImageDownloadError"]);
                 }
 
                 Logger.Debug($"QHYCCD: Downloaded image: {width}x{height}, {bpp} bpp, {channels} channels");
@@ -1361,7 +1366,7 @@ namespace NINA.Model.MyCamera {
 
                             if (compare > 0) {
                                 Logger.Warning($"QHYCCD: Installed USB driver version {QhyUsbDriverVersion} is older than recommended version {minimumVersion}. Operation of the camera may not be reliable and updating is HIGHLY suggested.");
-                                Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblQhyccdDriverVersionWarning"], QhyUsbDriverVersion, minimumVersion));
+                                Notification.ShowWarning(string.Format(Loc.Instance["LblQhyccdDriverVersionWarning"], QhyUsbDriverVersion, minimumVersion));
                             }
                         }
 

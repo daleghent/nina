@@ -14,13 +14,15 @@
 
 using ASCOM;
 using ASCOM.DriverAccess;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyDome {
+namespace NINA.Equipment.Equipment.MyDome {
 
     public static class ShutterStateExtensions {
 
@@ -146,7 +148,7 @@ namespace NINA.Model.MyDome {
 
         public bool CanSyncAzimuth => Connected && device.CanSyncAzimuth;
 
-        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblDomeConnectionLost"];
+        protected override string ConnectionLostMessage => Loc.Instance["LblDomeConnectionLost"];
 
         private void Init() {
         }
@@ -162,10 +164,10 @@ namespace NINA.Model.MyDome {
                         }
                     }, ct);
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSlew"]);
+                    Notification.ShowWarning(Loc.Instance["LblDomeCannotSlew"]);
                 }
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
 
@@ -183,7 +185,7 @@ namespace NINA.Model.MyDome {
                     }
                 });
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
 
@@ -198,7 +200,7 @@ namespace NINA.Model.MyDome {
                 // Fire and forget
                 Task.Run(() => device?.AbortSlew());
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
 
@@ -215,10 +217,10 @@ namespace NINA.Model.MyDome {
                         await Task.Delay(1000, ct);
                     };
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSetShutter"]);
+                    Notification.ShowWarning(Loc.Instance["LblDomeCannotSetShutter"]);
                 }
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
 
@@ -231,10 +233,10 @@ namespace NINA.Model.MyDome {
                         await Task.Delay(1000, ct);
                     };
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSetShutter"]);
+                    Notification.ShowWarning(Loc.Instance["LblDomeCannotSetShutter"]);
                 }
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
 
@@ -256,10 +258,10 @@ namespace NINA.Model.MyDome {
                     // Introduce a final delay, in case the Dome driver settles after finding the home position by backtracking
                     await Task.Delay(2000, ct);
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotFindHome"]);
+                    Notification.ShowWarning(Loc.Instance["LblDomeCannotFindHome"]);
                 }
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
 
@@ -279,10 +281,10 @@ namespace NINA.Model.MyDome {
                         await Task.Delay(1000, ct);
                     }
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotPark"]);
+                    Notification.ShowWarning(Loc.Instance["LblDomeCannotPark"]);
                 }
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
 
@@ -291,10 +293,10 @@ namespace NINA.Model.MyDome {
                 if (CanSetPark) {
                     device.SetPark();
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSetPark"]);
+                    Notification.ShowWarning(Loc.Instance["LblDomeCannotSetPark"]);
                 }
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
 
@@ -303,10 +305,10 @@ namespace NINA.Model.MyDome {
                 if (CanSyncAzimuth) {
                     device.SyncToAzimuth(azimuth);
                 } else {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDomeCannotSyncAzimuth"]);
+                    Notification.ShowWarning(Loc.Instance["LblDomeCannotSyncAzimuth"]);
                 }
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblDomeNotConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
 

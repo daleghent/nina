@@ -12,8 +12,9 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry.RiseAndSet;
 using NINA.Core.Database;
-using NINA.Utility;
+using NINA.Core.Utility;
 using Nito.AsyncEx;
 using System;
 using System.ComponentModel;

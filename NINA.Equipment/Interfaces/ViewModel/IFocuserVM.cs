@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,11 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyFocuser;
+using NINA.Equipment.Equipment.MyFocuser;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.ViewModel.Equipment.Focuser {
+namespace NINA.Equipment.Interfaces.ViewModel {
 
     public interface IFocuserVM : IDeviceVM<FocuserInfo>, IDockableVM {
 

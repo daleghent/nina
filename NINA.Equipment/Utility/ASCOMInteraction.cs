@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,22 +12,25 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyCamera;
-using NINA.Model.MyDome;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFlatDevice;
-using NINA.Model.MyFocuser;
-using NINA.Model.MyRotator;
-using NINA.Model.MySafetyMonitor;
-using NINA.Model.MySwitch;
-using NINA.Model.MyTelescope;
-using NINA.Model.MyWeatherData;
-using NINA.Profile;
+using NINA.Core.Utility;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyDome;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Equipment.MyRotator;
+using NINA.Equipment.Equipment.MySafetyMonitor;
+using NINA.Equipment.Equipment.MySwitch;
+using NINA.Equipment.Equipment.MySwitch.Ascom;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Equipment.MyWeatherData;
+using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace NINA.Utility {
+namespace NINA.Equipment.Utility {
 
     public class ASCOMInteraction {
 

@@ -12,11 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyFilterWheel;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Linq;
 using System.Runtime.Serialization;
+using NINA.Core.Model.Equipment;
+using NINA.Profile.Interfaces;
 
 namespace NINA.Profile {
 

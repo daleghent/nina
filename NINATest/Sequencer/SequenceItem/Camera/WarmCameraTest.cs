@@ -14,12 +14,11 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.MyCamera;
+using NINA.Equipment.Equipment.MyCamera;
 using NINA.Sequencer;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem.Camera;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

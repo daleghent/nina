@@ -13,10 +13,9 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -24,6 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.SequenceItem.Dome {
 
@@ -72,7 +72,7 @@ namespace NINA.Sequencer.SequenceItem.Dome {
         public bool Validate() {
             var i = new List<string>();
             if (!domeMediator.GetInfo().Connected) {
-                i.Add(Locale.Loc.Instance["LblDomeNotConnected"]);
+                i.Add(Loc.Instance["LblDomeNotConnected"]);
             }
             Issues = i;
             return i.Count == 0;

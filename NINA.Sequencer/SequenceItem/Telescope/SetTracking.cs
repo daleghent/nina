@@ -13,17 +13,17 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Model.MyTelescope;
-using NINA.Sequencer.Exceptions;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Model;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.ComponentModel.Composition;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 
 namespace NINA.Sequencer.SequenceItem.Telescope {
 
@@ -101,9 +101,9 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
         public bool Validate() {
             var i = new List<string>();
             if (!telescopeMediator.GetInfo().Connected) {
-                i.Add(Locale.Loc.Instance["LblTelescopeNotConnected"]);
+                i.Add(Loc.Instance["LblTelescopeNotConnected"]);
             } else if (!(telescopeMediator.GetInfo().TrackingModes?.Contains(TrackingMode) == true)) {
-                i.Add(Locale.Loc.Instance["LblTrackingModeNotSupported"]);
+                i.Add(Loc.Instance["LblTrackingModeNotSupported"]);
             }
             Issues = i;
             return i.Count == 0;

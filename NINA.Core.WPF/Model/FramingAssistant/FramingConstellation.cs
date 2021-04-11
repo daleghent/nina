@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,14 +12,13 @@
 
 #endregion "copyright"
 
-using NINA.Model;
 using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace NINA.ViewModel.FramingAssistant {
+namespace NINA.WPF.Base.Model.FramingAssistant {
 
     public class FramingConstellation {
         private Constellation constellation;

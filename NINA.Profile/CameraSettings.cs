@@ -13,7 +13,8 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.MyCamera;
+using NINA.Core.Model.Equipment;
+using NINA.Profile.Interfaces;
 using System;
 using System.Runtime.Serialization;
 

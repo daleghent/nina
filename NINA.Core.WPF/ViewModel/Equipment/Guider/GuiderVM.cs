@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,12 +12,10 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyGuider;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Profile;
-using NINA.ViewModel.Interfaces;
+using NINA.Equipment.Equipment.MyGuider;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,11 +23,18 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
-using NINA.Model.MyGuider.PHD2;
-using NINA.Utility.Notification;
+using NINA.Equipment.Equipment.MyGuider.PHD2;
+using NINA.Core.Utility.Notification;
 using NINA.Core.Enum;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.Locale;
+using NINA.Core.Interfaces;
+using NINA.Equipment.Equipment;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
 
-namespace NINA.ViewModel.Equipment.Guider {
+namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
     public class GuiderVM : DockableVM, IGuiderVM {
 
@@ -144,7 +149,7 @@ namespace NINA.ViewModel.Equipment.Guider {
                         CanClearCalibration = Guider.CanClearCalibration
                     };
                     BroadcastGuiderInfo();
-                    Notification.ShowSuccess(Locale.Loc.Instance["LblGuiderConnected"]);
+                    Notification.ShowSuccess(Loc.Instance["LblGuiderConnected"]);
                     RaisePropertyChanged(nameof(Guider));
                     profileService.ActiveProfile.GuiderSettings.GuiderName = Guider.Id;
                 }
@@ -241,7 +246,7 @@ namespace NINA.ViewModel.Equipment.Guider {
         public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Guider?.Connected == true) {
                 try {
-                    progress.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblStartGuiding"] });
+                    progress.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"] });
                     var guiding = await Guider.StartGuiding(forceCalibration, token);
                     return guiding;
                 } catch (Exception ex) {
@@ -275,12 +280,12 @@ namespace NINA.ViewModel.Equipment.Guider {
             if (Guider?.Connected == true) {
                 try {
                     Guider.GuideEvent -= Guider_GuideEvent;
-                    applicationStatusMediator.StatusUpdate(new Model.ApplicationStatus() { Status = Locale.Loc.Instance["LblDither"], Source = Title });
+                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Status = Loc.Instance["LblDither"], Source = Title });
                     GuideStepsHistory.AddDitherIndicator();
                     await Guider.Dither(token);
                 } finally {
                     Guider.GuideEvent += Guider_GuideEvent;
-                    applicationStatusMediator.StatusUpdate(new Model.ApplicationStatus() { Status = string.Empty, Source = Title });
+                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Status = string.Empty, Source = Title });
                 }
 
                 return true;

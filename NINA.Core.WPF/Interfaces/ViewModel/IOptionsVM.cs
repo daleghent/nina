@@ -16,12 +16,14 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Input;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Model;
 using NINA.Profile;
-using NINA.Utility;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IOptionsVM {
         IProfile ActiveProfile { get; }

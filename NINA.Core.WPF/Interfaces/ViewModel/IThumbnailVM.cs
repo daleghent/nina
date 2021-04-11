@@ -13,9 +13,11 @@
 #endregion "copyright"
 
 using System.Windows.Input;
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Image;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IThumbnailVM : IDockableVM {
         ICommand SelectCommand { get; set; }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,13 +15,15 @@
 using ASCOM;
 using ASCOM.DeviceInterface;
 using ASCOM.DriverAccess;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyFocuser {
+namespace NINA.Equipment.Equipment.MyFocuser {
 
     internal class AscomFocuser : AscomDevice<Focuser>, IFocuser, IDisposable {
 
@@ -177,7 +179,7 @@ namespace NINA.Model.MyFocuser {
                 while (position != device.Position) {
                     device.Move(position);
                     while (IsMoving) {
-                        await Utility.Utility.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
+                        await CoreUtil.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
                     }
                 }
 
@@ -202,7 +204,7 @@ namespace NINA.Model.MyFocuser {
                     }
                     device.Move(moveAmount);
                     while (IsMoving) {
-                        await Utility.Utility.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
+                        await CoreUtil.Wait(TimeSpan.FromMilliseconds(waitInMs), ct);
                     }
                     relativeOffsetRemaining -= moveAmount;
                     internalPosition += moveAmount;
@@ -228,7 +230,7 @@ namespace NINA.Model.MyFocuser {
             }
         }
 
-        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblFocuserConnectionLost"];
+        protected override string ConnectionLostMessage => Loc.Instance["LblFocuserConnectionLost"];
 
         private void Initialize() {
             internalPosition = device.MaxStep / 2;

@@ -1,19 +1,21 @@
 ﻿using Moq;
-using NINA.Model;
-using NINA.Model.MyDome;
-using NINA.Model.MyTelescope;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Equipment.Equipment.MyDome;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Profile.Interfaces;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.Equipment;
-using NINA.ViewModel.Equipment.Dome;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Core.Model;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel.Equipment.Dome;
 
 namespace NINATest.Dome {
 

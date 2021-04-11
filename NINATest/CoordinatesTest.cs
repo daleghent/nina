@@ -13,7 +13,6 @@
 #endregion "copyright"
 
 using FluentAssertions;
-using NINA.Model;
 using NINA.Astrometry;
 using NUnit.Framework;
 using System.IO;

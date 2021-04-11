@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
+using NINA.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -49,7 +49,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            return NINA.Utility.Utility.Wait(GetEstimatedDuration(), token, progress);
+            return NINA.Core.Utility.CoreUtil.Wait(GetEstimatedDuration(), token, progress);
         }
 
         public override TimeSpan GetEstimatedDuration() {

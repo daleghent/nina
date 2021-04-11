@@ -14,12 +14,10 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.MySwitch;
+using NINA.Equipment.Equipment.MySwitch;
 using NINA.Sequencer;
-using NINA.Sequencer.Exceptions;
 using NINA.Sequencer.SequenceItem.Switch;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -27,6 +25,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Model;
+using NINA.Equipment.Interfaces;
 
 namespace NINATest.Sequencer.SequenceItem.Switch {
 

@@ -14,7 +14,7 @@
 
 using NINA.Core.Enum;
 
-namespace NINA.Model.MyPlanetarium {
+namespace NINA.Equipment.Interfaces {
 
     public interface IPlanetariumFactory {
 

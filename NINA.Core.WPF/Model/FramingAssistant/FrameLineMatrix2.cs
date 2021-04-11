@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace NINA.ViewModel.FramingAssistant {
+namespace NINA.WPF.Base.Model.FramingAssistant {
 
     public class FrameLineMatrix2 {
         private List<double> STEPSIZES = new List<double>() { 1, 2, 4, 12, 20 };
@@ -263,7 +263,7 @@ namespace NINA.ViewModel.FramingAssistant {
             if (frameLine.Collection.Count > 1) {
                 var position = frameLine.Collection.FirstOrDefault(x => x.X > 0 && x.Y > 0);
                 if (position != null) {
-                    var text = $"{string.Format("{0:N2}", frameLine.Angle.Degree)}°";
+                    var text = $"{string.Format("{0:N2}", frameLine.Angle.Degree)}??";
                     var size = g.MeasureString(text, gridAnnotationFont);
                     g.DrawString(text, gridAnnotationFont, gridAnnotationBrush, (position.X), (position.Y));
                 }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -16,8 +16,9 @@ using Accord.Imaging;
 using Accord.Imaging.Filters;
 using Accord.Math.Geometry;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.ImageData;
+using NINA.Core.Model;
+using NINA.Core.Utility;
+using NINA.Image.ImageData;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -27,8 +28,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using NINA.Image.Interfaces;
 
-namespace NINA.Utility.ImageAnalysis {
+namespace NINA.Image.ImageAnalysis {
 
     public class StarDetection {
         private static System.Drawing.Pen ELLIPSEPEN = new System.Drawing.Pen(System.Drawing.Brushes.LightYellow, 1);
@@ -241,7 +243,7 @@ namespace NINA.Utility.ImageAnalysis {
                         var m = (from star in _starlist select star.HFR).Average();
                         var s = Math.Sqrt(((from star in _starlist select star.HFR * star.HFR).Sum() - _starlist.Count() * m * m) / _starlist.Count());
 
-                        Logger.Info($"Average HFR: {m}, HFR σ: {s}, Detected Stars {_starlist.Count}");
+                        Logger.Info($"Average HFR: {m}, HFR ??: {s}, Detected Stars {_starlist.Count}");
 
                         //todo change
                         AverageHFR = m;

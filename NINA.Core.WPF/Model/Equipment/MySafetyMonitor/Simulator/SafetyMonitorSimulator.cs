@@ -12,8 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Utility.WindowService;
+using NINA.Core.Utility;
+using NINA.Core.Utility.WindowService;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MySafetyMonitor {
+namespace NINA.WPF.Base.Model.Equipment.MySafetyMonitor.Simulator {
 
     public class SafetyMonitorSimulator : BaseINPC, ISafetyMonitor {
         public bool IsSafe { get; set; }

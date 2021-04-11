@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Model;
 using System.Windows.Media;
 
 namespace NINA.ViewModel {

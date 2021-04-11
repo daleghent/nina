@@ -18,7 +18,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 
-namespace NINA.Utility.Converters {
+namespace NINA.Core.Utility.Converters {
 
     public class BooleanToVisibilityHiddenMultiConverter : IMultiValueConverter {
 

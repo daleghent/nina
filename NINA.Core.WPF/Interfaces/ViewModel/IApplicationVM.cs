@@ -15,7 +15,7 @@
 using NINA.Core.Enum;
 using System.Windows.Input;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IApplicationVM {
         ICommand CheckASCOMPlatformVersionCommand { get; }

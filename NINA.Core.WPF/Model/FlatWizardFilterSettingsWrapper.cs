@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,13 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFlatDevice;
-using NINA.Utility;
-using NINA.Utility.ImageAnalysis;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Core.Utility;
+using NINA.Core.Model.Equipment;
+using NINA.Image.ImageAnalysis;
 
-namespace NINA.ViewModel.FlatWizard {
+namespace NINA.WPF.Base.Model {
 
     public class FlatWizardFilterSettingsWrapper : BaseINPC {
         private FilterInfo filterInfo;

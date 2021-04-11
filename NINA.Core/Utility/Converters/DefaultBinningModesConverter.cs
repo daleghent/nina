@@ -12,18 +12,18 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyCamera;
+using NINA.Core.Model.Equipment;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace NINA.Utility.Converters {
+namespace NINA.Core.Utility.Converters {
 
     public class DefaultBinningModesConverter : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
-            var list = value as IList<NINA.Model.MyCamera.BinningMode>;
+            var list = value as IList<BinningMode>;
             if (list == null || list.Count == 0) {
                 return new List<BinningMode> {
                     new BinningMode(1,1),

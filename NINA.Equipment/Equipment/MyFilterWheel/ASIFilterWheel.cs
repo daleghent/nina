@@ -12,8 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,8 +23,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using ZWOptical.EFWSDK;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyFilterWheel {
+namespace NINA.Equipment.Equipment.MyFilterWheel {
 
     public class ASIFilterWheel : BaseINPC, IFilterWheel {
         private int id;

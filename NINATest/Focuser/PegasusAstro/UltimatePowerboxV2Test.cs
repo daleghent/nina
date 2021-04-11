@@ -17,12 +17,12 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
-using NINA.Locale;
-using NINA.Model.MyFocuser;
-using NINA.Profile;
-using NINA.Utility.SerialCommunication;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
 
 namespace NINATest.Focuser.PegasusAstro {
 

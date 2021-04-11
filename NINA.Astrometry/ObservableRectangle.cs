@@ -12,10 +12,10 @@
 
 #endregion "copyright"
 
-using NINA.Astrometry;
+using NINA.Core.Utility;
 using System;
 
-namespace NINA.Utility {
+namespace NINA.Astrometry {
 
     public class ObservableRectangle : BaseINPC {
 

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,8 +13,6 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.MyCamera;
-using NINA.Utility.ImageAnalysis;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,8 +20,11 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
+using NINA.Core.Model;
+using NINA.Image.ImageAnalysis;
+using NINA.Image.Interfaces;
 
-namespace NINA.Model.ImageData {
+namespace NINA.Image.ImageData {
 
     public class RenderedImage : IRenderedImage {
         public IImageData RawImageData { get; private set; }

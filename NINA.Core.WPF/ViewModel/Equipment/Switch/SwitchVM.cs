@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,13 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MySwitch;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
-using NINA.ViewModel.Interfaces;
+using NINA.Equipment.Equipment.MySwitch;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
@@ -29,8 +27,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
+using NINA.Core.Model;
+using NINA.Core.Locale;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
+using NINA.Equipment.Interfaces.ViewModel;
 
-namespace NINA.ViewModel.Equipment.Switch {
+namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
     public class SwitchVM : DockableVM, ISwitchVM {
 
@@ -68,7 +72,7 @@ namespace NINA.ViewModel.Equipment.Switch {
             var timeOut = TimeSpan.FromSeconds(profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval * 4);
             bool success = true;
             while (aSwitch.Value != aSwitch.TargetValue) {
-                var elapsed = await Utility.Utility.Wait(TimeSpan.FromMilliseconds(500));
+                var elapsed = await CoreUtil.Wait(TimeSpan.FromMilliseconds(500));
                 timeOut = timeOut - elapsed;
                 if (timeOut.TotalMilliseconds <= 0) {
                     success = false;
@@ -77,7 +81,7 @@ namespace NINA.ViewModel.Equipment.Switch {
             }
 
             if (!success) {
-                var notification = string.Format(Locale.Loc.Instance["LblTimeoutToSetSwitchValue"], aSwitch.TargetValue, aSwitch.Id, aSwitch.Name, aSwitch.Value);
+                var notification = string.Format(Loc.Instance["LblTimeoutToSetSwitchValue"], aSwitch.TargetValue, aSwitch.Id, aSwitch.Name, aSwitch.Value);
                 Notification.ShowError(notification);
                 Logger.Error(notification);
             }
@@ -191,7 +195,7 @@ namespace NINA.ViewModel.Equipment.Switch {
                 applicationStatusMediator.StatusUpdate(
                     new ApplicationStatus() {
                         Source = Title,
-                        Status = Locale.Loc.Instance["LblConnecting"]
+                        Status = Loc.Instance["LblConnecting"]
                     }
                 );
 
@@ -205,7 +209,7 @@ namespace NINA.ViewModel.Equipment.Switch {
                         if (connected) {
                             this.SwitchHub = switchHub;
 
-                            Notification.ShowSuccess(Locale.Loc.Instance["LblSwitchConnected"]);
+                            Notification.ShowSuccess(Loc.Instance["LblSwitchConnected"]);
 
                             updateTimer.Interval = profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval;
                             updateTimer.Start();

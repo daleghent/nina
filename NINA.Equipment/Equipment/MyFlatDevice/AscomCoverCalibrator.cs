@@ -14,8 +14,10 @@
 
 using ASCOM;
 using ASCOM.DriverAccess;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +25,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyFlatDevice {
+namespace NINA.Equipment.Equipment.MyFlatDevice {
 
     public class AscomCoverCalibrator : AscomDevice<CoverCalibrator>, IFlatDevice, IDisposable {
 
@@ -100,7 +102,7 @@ namespace NINA.Model.MyFlatDevice {
 
         public bool SupportsOpenClose => device.CoverState != ASCOM.DeviceInterface.CoverStatus.NotPresent;
 
-        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblFlatDeviceConnectionLost"];
+        protected override string ConnectionLostMessage => Loc.Instance["LblFlatDeviceConnectionLost"];
 
         private void Initialize() {
             if (device.CalibratorState == ASCOM.DeviceInterface.CalibratorStatus.NotPresent) {

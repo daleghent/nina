@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,11 +13,11 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Runtime.Serialization;
 
-namespace NINA.Model.MyFilterWheel {
+namespace NINA.Core.Model.Equipment {
 
     [JsonObject(MemberSerialization.OptIn)]
     [Serializable()]
@@ -27,7 +27,7 @@ namespace NINA.Model.MyFilterWheel {
         public FilterInfo() {
             AutoFocusGain = -1;
             AutoFocusOffset = -1;
-            AutoFocusBinning = new MyCamera.BinningMode(1, 1);
+            AutoFocusBinning = new BinningMode(1, 1);
             AutoFocusExposureTime = -1;
         }
 
@@ -36,7 +36,7 @@ namespace NINA.Model.MyFilterWheel {
         private short _position;
         private double _autoFocusExposureTime;
         private bool _autoFocusFilter;
-        private MyCamera.BinningMode _autoFocusBinning;
+        private BinningMode _autoFocusBinning;
         private int _autoFocusGain;
         private int _autoFocusOffset;
         private FlatWizardFilterSettings _flatWizardFilterSettings;
@@ -45,14 +45,14 @@ namespace NINA.Model.MyFilterWheel {
         private void OnDeserializing(System.Runtime.Serialization.StreamingContext c) {
             AutoFocusGain = -1;
             AutoFocusOffset = -1;
-            AutoFocusBinning = new MyCamera.BinningMode(1, 1);
+            AutoFocusBinning = new BinningMode(1, 1);
             AutoFocusExposureTime = -1;
         }
 
         [OnDeserialized]
         private void OnDeserialized(StreamingContext c) {
             if (AutoFocusExposureTime == 0) AutoFocusExposureTime = -1;
-            if (AutoFocusBinning == null) AutoFocusBinning = new MyCamera.BinningMode(1, 1);
+            if (AutoFocusBinning == null) AutoFocusBinning = new BinningMode(1, 1);
         }
 
         [DataMember(Name = nameof(_name))]
@@ -134,7 +134,7 @@ namespace NINA.Model.MyFilterWheel {
 
         [DataMember(Name = nameof(_autoFocusBinning), IsRequired = false)]
         [JsonProperty(PropertyName = nameof(_autoFocusBinning))]
-        public MyCamera.BinningMode AutoFocusBinning {
+        public BinningMode AutoFocusBinning {
             get {
                 return _autoFocusBinning;
             }
@@ -172,14 +172,14 @@ namespace NINA.Model.MyFilterWheel {
             Name = n;
             FocusOffset = offset;
             Position = position;
-            AutoFocusBinning = new MyCamera.BinningMode(1, 1);
+            AutoFocusBinning = new BinningMode(1, 1);
             AutoFocusGain = -1;
             AutoFocusOffset = -1;
             AutoFocusExposureTime = -1;
             FlatWizardFilterSettings = new FlatWizardFilterSettings();
         }
 
-        public FilterInfo(string n, int offset, short position, double autoFocusExposureTime, MyCamera.BinningMode binning, int gain, int cameraOffset) : this(n, offset, position) {
+        public FilterInfo(string n, int offset, short position, double autoFocusExposureTime, BinningMode binning, int gain, int cameraOffset) : this(n, offset, position) {
             AutoFocusBinning = binning;
             AutoFocusGain = gain;
             AutoFocusOffset = cameraOffset;

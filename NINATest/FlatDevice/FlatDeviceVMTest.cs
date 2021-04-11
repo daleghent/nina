@@ -14,22 +14,27 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Locale;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFlatDevice;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.ViewModel;
-using NINA.ViewModel.Equipment;
-using NINA.ViewModel.Equipment.FlatDevice;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Profile;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
 
 namespace NINATest.FlatDevice {
 

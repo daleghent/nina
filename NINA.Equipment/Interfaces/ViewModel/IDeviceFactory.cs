@@ -12,10 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Model;
 using System.Collections.Generic;
 
-namespace NINA.ViewModel.Equipment {
+namespace NINA.Equipment.Interfaces.ViewModel {
 
     public interface IDeviceFactory {
 

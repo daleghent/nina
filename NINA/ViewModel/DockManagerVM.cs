@@ -13,30 +13,37 @@
 #endregion "copyright"
 
 using NINA.Utility;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
-using NINA.ViewModel.Equipment.FilterWheel;
-using NINA.ViewModel.Equipment.Rotator;
-using NINA.ViewModel.Equipment.Guider;
+using NINA.WPF.Base.ViewModel.Equipment.FilterWheel;
+using NINA.WPF.Base.ViewModel.Equipment.Rotator;
+using NINA.WPF.Base.ViewModel.Equipment.Guider;
 using NINA.ViewModel.Interfaces;
-using NINA.ViewModel.Equipment.Camera;
-using NINA.ViewModel.Equipment.Focuser;
+using NINA.WPF.Base.ViewModel.Equipment.Camera;
+using NINA.WPF.Base.ViewModel.Equipment.Focuser;
 using NINA.ViewModel.Imaging;
-using NINA.ViewModel.Equipment.Dome;
-using NINA.ViewModel.Equipment.Switch;
-using NINA.ViewModel.Equipment.Telescope;
-using NINA.ViewModel.Equipment.WeatherData;
-using NINA.ViewModel.Equipment.FlatDevice;
+using NINA.WPF.Base.ViewModel.Equipment.Dome;
+using NINA.WPF.Base.ViewModel.Equipment.Switch;
+using NINA.WPF.Base.ViewModel.Equipment.Telescope;
+using NINA.WPF.Base.ViewModel.Equipment.WeatherData;
+using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
 using NINA.ViewModel.Sequencer;
 using NINA.ViewModel.ImageHistory;
-using NINA.ViewModel.Equipment.SafetyMonitor;
+using NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using System.Collections.Generic;
+using NINA.Core.Utility;
+using NINA.Core.Locale;
+using NINA.Core.MyMessageBox;
+using NINA.Profile;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.ViewModel {
 
@@ -112,7 +119,7 @@ namespace NINA.ViewModel {
         }
 
         private void ResetDockLayout(object arg) {
-            if (MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblResetDockLayoutConfirmation"], Locale.Loc.Instance["LblResetDockLayout"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No) == System.Windows.MessageBoxResult.Yes) {
+            if (MyMessageBox.Show(Loc.Instance["LblResetDockLayoutConfirmation"], Loc.Instance["LblResetDockLayout"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No) == System.Windows.MessageBoxResult.Yes) {
                 lock (lockObj) {
                     _dockloaded = false;
 
@@ -207,10 +214,10 @@ namespace NINA.ViewModel {
                                 Logger.Error("Failed to load AvalonDock Layout. Loading default Layout!", ex);
                                 LoadDefaultLayout(serializer);
                             }
-                        } else if (File.Exists(Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "avalondock.config"))) {
+                        } else if (File.Exists(Path.Combine(NINA.Core.Utility.CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"))) {
                             try {
                                 Logger.Info("Migrating AvalonDock layout from old path");
-                                serializer.Deserialize(Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "avalondock.config"));
+                                serializer.Deserialize(Path.Combine(NINA.Core.Utility.CoreUtil.APPLICATIONTEMPPATH, "avalondock.config"));
                                 _dockloaded = true;
                             } catch (Exception ex) {
                                 Logger.Error("Failed to load AvalonDock Layout. Loading default Layout!", ex);

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,34 +12,35 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyTelescope;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace NINA.Utility.Converters {
+namespace NINA.Equipment.Converter {
 
     public class TrackingModeConverter : IValueConverter {
 
         public static string TrackingModeToLocalizedString(TrackingMode trackingMode) {
             switch (trackingMode) {
                 case TrackingMode.Stopped:
-                    return Locale.Loc.Instance["LblTrackingStopped"];
+                    return Loc.Instance["LblTrackingStopped"];
 
                 case TrackingMode.Sidereal:
-                    return Locale.Loc.Instance["LblTrackingSidereal"];
+                    return Loc.Instance["LblTrackingSidereal"];
 
                 case TrackingMode.Lunar:
-                    return Locale.Loc.Instance["LblTrackingLunar"];
+                    return Loc.Instance["LblTrackingLunar"];
 
                 case TrackingMode.Solar:
-                    return Locale.Loc.Instance["LblTrackingSolar"];
+                    return Loc.Instance["LblTrackingSolar"];
 
                 case TrackingMode.King:
-                    return Locale.Loc.Instance["LblTrackingKing"];
+                    return Loc.Instance["LblTrackingKing"];
 
                 case TrackingMode.Custom:
-                    return Locale.Loc.Instance["LblTrackingCustom"];
+                    return Loc.Instance["LblTrackingCustom"];
             }
             throw new NotSupportedException($"{trackingMode} cannot be converted to a localized string");
         }

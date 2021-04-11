@@ -13,11 +13,11 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.Sequencer.Container.ExecutionStrategy;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;

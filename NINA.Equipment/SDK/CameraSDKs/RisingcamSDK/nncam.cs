@@ -26,7 +26,7 @@ using System.Runtime.ConstrainedExecution;
 using System.Collections.Generic;
 using System.Threading;
 using System.IO;
-using NINA.Utility;
+using NINA.Core.Utility;
 
 /*
     Versin: 48.18332.20210120

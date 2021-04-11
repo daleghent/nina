@@ -14,14 +14,15 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.IO;
+using NINA.Core.Model;
 
 namespace NINATest.Sequencer.Conditions {
 
@@ -40,7 +41,7 @@ namespace NINATest.Sequencer.Conditions {
         public void AboveHorizonConditionTest_Clone_GoodClone() {
             var sut = new AboveHorizonCondition(profileServiceMock.Object);
             sut.Icon = new System.Windows.Media.GeometryGroup();
-            sut.Coordinates = new NINA.Model.InputCoordinates(new Coordinates(20, 20, Epoch.J2000, Coordinates.RAType.Degrees));
+            sut.Coordinates = new InputCoordinates(new Coordinates(20, 20, Epoch.J2000, Coordinates.RAType.Degrees));
             var item2 = (AboveHorizonCondition)sut.Clone();
 
             item2.Should().NotBeSameAs(sut);
@@ -117,8 +118,8 @@ namespace NINATest.Sequencer.Conditions {
             parentMock
                 .SetupGet(x => x.Target)
                 .Returns(
-                new NINA.Model.InputTarget(Angle.ByDegree(1), Angle.ByDegree(2), null) {
-                    InputCoordinates = new NINA.Model.InputCoordinates() {
+                new InputTarget(Angle.ByDegree(1), Angle.ByDegree(2), null) {
+                    InputCoordinates = new InputCoordinates() {
                         Coordinates = coordinates
                     }
                 }

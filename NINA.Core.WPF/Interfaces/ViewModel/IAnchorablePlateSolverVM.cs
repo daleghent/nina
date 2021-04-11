@@ -14,15 +14,16 @@
 
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyTelescope;
+using NINA.Equipment.Equipment.MyCamera;
 using NINA.PlateSolving;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Model;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Interfaces.ViewModel;
 
-namespace NINA.ViewModel.Imaging {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IAnchorablePlateSolverVM : IDockableVM {
         IProfile ActiveProfile { get; }

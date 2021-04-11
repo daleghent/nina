@@ -1,21 +1,13 @@
-﻿using NINA.Profile;
-using NINA.ViewModel.Equipment.Camera;
-using NINA.ViewModel.Equipment.Dome;
-using NINA.ViewModel.Equipment.FilterWheel;
-using NINA.ViewModel.Equipment.FlatDevice;
-using NINA.ViewModel.Equipment.Focuser;
-using NINA.ViewModel.Equipment.Guider;
-using NINA.ViewModel.Equipment.Rotator;
-using NINA.ViewModel.Equipment.SafetyMonitor;
-using NINA.ViewModel.Equipment.Switch;
-using NINA.ViewModel.Equipment.Telescope;
-using NINA.ViewModel.Equipment.WeatherData;
+﻿using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Profile.Interfaces;
 using NINA.ViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel {
 

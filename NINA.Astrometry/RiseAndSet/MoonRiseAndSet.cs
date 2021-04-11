@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,16 +12,17 @@
 
 #endregion "copyright"
 
+using NINA.Astrometry.Body;
 using System;
 
-namespace NINA.Astrometry {
+namespace NINA.Astrometry.RiseAndSet {
 
     public class MoonRiseAndSet : RiseAndSetEvent {
 
         public MoonRiseAndSet(DateTime date, double latitude, double longitude) : base(date, latitude, longitude) {
         }
 
-        protected override double AdjustAltitude(Body body) {
+        protected override double AdjustAltitude(BasicBody body) {
             /* Readjust moon altitude based on earth radius and refraction */
             var horizon = 90.0;
             var location = new NOVAS.OnSurface() {
@@ -33,7 +34,7 @@ namespace NINA.Astrometry {
             return altitude;
         }
 
-        protected override Body GetBody(DateTime date) {
+        protected override BasicBody GetBody(DateTime date) {
             return new Moon(date, Latitude, Longitude);
         }
     }

@@ -13,12 +13,9 @@
 #endregion "copyright"
 
 using NINA.Core.Database;
-using NINA.Model;
-using NINA.Model.MyTelescope;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Utility;
 using NINA.Astrometry;
-using NINA.Utility.ImageAnalysis;
-using NINA.Utility.Mediator.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -33,13 +30,18 @@ using System.Windows.Media.Imaging;
 using Color = System.Drawing.Color;
 using Pen = System.Drawing.Pen;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Image.ImageAnalysis;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.Model.FramingAssistant;
 
 namespace NINA.ViewModel.FramingAssistant {
 
     public class SkyMapAnnotator : BaseINPC, ITelescopeConsumer, ISkyMapAnnotator {
         private readonly DatabaseInteraction dbInstance;
         public ViewportFoV ViewportFoV { get; private set; }
-        private List<Model.Constellation> dbConstellations;
+        private List<Constellation> dbConstellations;
         private Dictionary<string, DeepSkyObject> dbDSOs;
         private Bitmap img;
         private Graphics g;

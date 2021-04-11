@@ -13,12 +13,12 @@
 #endregion "copyright"
 
 using Moq;
-using NINA.Model.MySwitch.PegasusAstro;
-using NINA.Utility.SerialCommunication;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
+using NINA.Equipment.Equipment.MySwitch.PegasusAstro;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
 
 namespace NINATest.Switch.PegasusAstro {
 

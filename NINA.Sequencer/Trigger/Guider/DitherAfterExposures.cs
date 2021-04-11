@@ -13,13 +13,16 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Model;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.SequenceItem.Guider;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.ImageHistory;
+
+using NINA.Equipment.Interfaces.Mediator;
+
+using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.ViewModel.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -29,6 +32,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.Trigger.Guider {
 
@@ -113,7 +117,7 @@ namespace NINA.Sequencer.Trigger.Guider {
             var info = guiderMediator.GetInfo();
 
             if (!info.Connected) {
-                i.Add(Locale.Loc.Instance["LblGuiderNotConnected"]);
+                i.Add(Loc.Instance["LblGuiderNotConnected"]);
             }
 
             Issues = i;

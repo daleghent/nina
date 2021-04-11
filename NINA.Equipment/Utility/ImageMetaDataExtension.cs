@@ -18,12 +18,19 @@ using System.Linq;
 using NINA.Core.Enum;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Equipment.MyRotator;
+using NINA.Equipment.Equipment.MyWeatherData;
 
 namespace NINA.Equipment.Utility {
 
     public static class ImageMetaDataExtension {
 
-        public static void FromCameraInfo(this Model.ImageData.ImageMetaData data, Model.MyCamera.CameraInfo info) {
+        public static void FromCameraInfo(this ImageMetaData data, CameraInfo info) {
             if (info.Connected) {
                 data.Camera.Name = info.Name;
                 data.Camera.Temperature = info.Temperature;
@@ -56,7 +63,7 @@ namespace NINA.Equipment.Utility {
             }
         }
 
-        public static void FromTelescopeInfo(this Model.ImageData.ImageMetaData data, Model.MyTelescope.TelescopeInfo info) {
+        public static void FromTelescopeInfo(this ImageMetaData data, TelescopeInfo info) {
             if (info.Connected) {
                 if (string.IsNullOrWhiteSpace(data.Telescope.Name)) {
                     data.Telescope.Name = info.Name;
@@ -69,7 +76,7 @@ namespace NINA.Equipment.Utility {
             }
         }
 
-        public static void FromFilterWheelInfo(this Model.ImageData.ImageMetaData data, Model.MyFilterWheel.FilterWheelInfo info) {
+        public static void FromFilterWheelInfo(this ImageMetaData data, FilterWheelInfo info) {
             if (info.Connected) {
                 if (string.IsNullOrWhiteSpace(data.FilterWheel.Name)) {
                     data.FilterWheel.Name = info.Name;
@@ -78,7 +85,7 @@ namespace NINA.Equipment.Utility {
             }
         }
 
-        public static void FromFocuserInfo(this Model.ImageData.ImageMetaData data, Model.MyFocuser.FocuserInfo info) {
+        public static void FromFocuserInfo(this ImageMetaData data, FocuserInfo info) {
             if (info.Connected) {
                 if (string.IsNullOrWhiteSpace(data.Focuser.Name)) {
                     data.Focuser.Name = info.Name;
@@ -89,7 +96,7 @@ namespace NINA.Equipment.Utility {
             }
         }
 
-        public static void FromRotatorInfo(this Model.ImageData.ImageMetaData data, Model.MyRotator.RotatorInfo info) {
+        public static void FromRotatorInfo(this ImageMetaData data, RotatorInfo info) {
             if (info.Connected) {
                 if (string.IsNullOrWhiteSpace(data.Rotator.Name)) {
                     data.Rotator.Name = info.Name;
@@ -100,7 +107,7 @@ namespace NINA.Equipment.Utility {
             }
         }
 
-        public static void FromWeatherDataInfo(this Model.ImageData.ImageMetaData data, Model.MyWeatherData.WeatherDataInfo info) {
+        public static void FromWeatherDataInfo(this ImageMetaData data, WeatherDataInfo info) {
             if (info.Connected) {
                 data.WeatherData.CloudCover = info.CloudCover;
                 data.WeatherData.DewPoint = info.DewPoint;

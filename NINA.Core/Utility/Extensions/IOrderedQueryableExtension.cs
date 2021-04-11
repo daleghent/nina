@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -16,7 +16,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace NINA.Utility.Extensions {
+namespace NINA.Core.Utility.Extensions {
 
     public static class IOrderedQueryableExtension {
 

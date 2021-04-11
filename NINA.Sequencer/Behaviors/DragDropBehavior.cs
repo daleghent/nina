@@ -26,7 +26,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Utility.Behaviors {
+namespace NINA.Sequencer.Behaviors {
 
     public class DragDropBehavior : Behavior<FrameworkElement> {
         private MouseEventArgs mouseOverEventArgs = new MouseEventArgs(Mouse.PrimaryDevice, 0);

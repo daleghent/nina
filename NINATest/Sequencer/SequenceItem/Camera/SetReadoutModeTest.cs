@@ -14,14 +14,14 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model.MyCamera;
-using NINA.Sequencer.Exceptions;
+using NINA.Equipment.Equipment.MyCamera;
 using NINA.Sequencer.SequenceItem.Camera;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using NINA.Core.Model;
 
 namespace NINATest.Sequencer.SequenceItem.Camera {
 

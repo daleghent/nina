@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,27 +12,29 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Profile;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using System.Linq;
 using System.Windows.Input;
 using System.Collections.Generic;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
 
-namespace NINA.ViewModel.Equipment {
+namespace NINA.WPF.Base.ViewModel.Equipment {
 
     public abstract class DeviceChooserVM : BaseVM, IDeviceChooserVM {
 
         public DeviceChooserVM(IProfileService profileService) : base(profileService) {
             this.profileService = profileService;
-            this.Devices = new List<Model.IDevice>();
+            this.Devices = new List<IDevice>();
             SetupDialogCommand = new RelayCommand(OpenSetupDialog);
         }
 
         protected object lockObj = new object();
 
-        private IList<Model.IDevice> devices;
+        private IList<IDevice> devices;
 
-        public IList<Model.IDevice> Devices {
+        public IList<IDevice> Devices {
             get => devices;
             protected set {
                 devices = value;
@@ -42,9 +44,9 @@ namespace NINA.ViewModel.Equipment {
 
         public abstract void GetEquipment();
 
-        private Model.IDevice _selectedDevice;
+        private IDevice _selectedDevice;
 
-        public Model.IDevice SelectedDevice {
+        public IDevice SelectedDevice {
             get {
                 lock (lockObj) {
                     return _selectedDevice;

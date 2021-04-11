@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Astrometry;
+using NINA.Core.Utility;
 using System;
 using System.Globalization;
 using System.IO;
@@ -21,7 +22,7 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 
-namespace NINA.Astrometry.SkySurvey {
+namespace NINA.WPF.Base.SkySurvey {
 
     public class CacheSkySurvey {
         private string framingAssistantCachePath;
@@ -99,10 +100,10 @@ namespace NINA.Astrometry.SkySurvey {
                             Directory.CreateDirectory(framingAssistantCachePath);
                         }
 
-                        var sanitizedName = Utility.Utility.ReplaceAllInvalidFilenameChars(skySurveyImage.Name);
+                        var sanitizedName = CoreUtil.ReplaceAllInvalidFilenameChars(skySurveyImage.Name);
                         var imgFilePath = Path.Combine(framingAssistantCachePath, sanitizedName + ".jpg");
 
-                        imgFilePath = Utility.Utility.GetUniqueFilePath(imgFilePath);
+                        imgFilePath = CoreUtil.GetUniqueFilePath(imgFilePath);
                         var name = Path.GetFileNameWithoutExtension(imgFilePath);
 
                         using (var fileStream = new FileStream(imgFilePath, FileMode.Create)) {

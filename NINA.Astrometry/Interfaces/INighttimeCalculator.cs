@@ -14,7 +14,7 @@
 
 using System;
 
-namespace NINA.Astrometry {
+namespace NINA.Astrometry.Interfaces {
 
     public interface INighttimeCalculator {
 

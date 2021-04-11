@@ -12,14 +12,16 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using System.Collections.ObjectModel;
 using System.Linq;
-using NINA.Model.MyCamera;
-using NINA.Utility;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Core.Utility;
 using System.Collections.Generic;
+using NINA.Core.Model.Equipment;
+using NINA.Profile;
 
-namespace NINA.ViewModel.Equipment.FlatDevice {
+namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
     public class WizardGrid : BaseINPC {
         public AsyncObservableCollection<WizardValueBlock> Blocks { get; set; } = new AsyncObservableCollection<WizardValueBlock>();

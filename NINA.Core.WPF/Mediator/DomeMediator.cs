@@ -12,13 +12,13 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyDome;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.Equipment.Dome;
+using NINA.Equipment.Equipment.MyDome;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Interfaces.ViewModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Utility.Mediator {
+namespace NINA.WPF.Base.Mediator {
 
     public class DomeMediator : DeviceMediator<IDomeVM, IDomeConsumer, DomeInfo>, IDomeMediator {
 

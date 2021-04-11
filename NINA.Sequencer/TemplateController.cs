@@ -13,15 +13,14 @@
 #endregion "copyright"
 
 using Accord.Math;
-using NINA.Model;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.DragDrop;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Serialization;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,6 +30,8 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer {
 
@@ -66,7 +67,7 @@ namespace NINA.Sequencer {
         public TemplateController(SequenceJsonConverter sequenceJsonConverter, IProfileService profileService) {
             this.sequenceJsonConverter = sequenceJsonConverter;
             this.profileService = profileService;
-            defaultTemplatePath = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Sequencer", "Examples");
+            defaultTemplatePath = Path.Combine(NINA.Core.Utility.CoreUtil.APPLICATIONDIRECTORY, "Sequencer", "Examples");
 
             Templates = new List<TemplatedSequenceContainer>();
             try {
@@ -165,7 +166,7 @@ namespace NINA.Sequencer {
                 });
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTemplateController_LoadUserTemplatesFailed"]);
+                Notification.ShowError(Loc.Instance["Lbl_SequenceTemplateController_LoadUserTemplatesFailed"]);
             }
         }
 
@@ -183,7 +184,7 @@ namespace NINA.Sequencer {
                 File.WriteAllText(Path.Combine(userTemplatePath, GetTemplateFileName(sequenceContainer)), jsonContainer);
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTemplateController_AddNewTemplateFailed"]);
+                Notification.ShowError(Loc.Instance["Lbl_SequenceTemplateController_AddNewTemplateFailed"]);
             }
         }
 
@@ -193,12 +194,12 @@ namespace NINA.Sequencer {
                 File.Delete(Path.Combine(userTemplatePath, Path.Combine(sequenceContainer.SubGroups), GetTemplateFileName(sequenceContainer.Container)));
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["Lbl_SequenceTemplateController_DeleteTemplateFailed"]);
+                Notification.ShowError(Loc.Instance["Lbl_SequenceTemplateController_DeleteTemplateFailed"]);
             }
         }
 
         private string GetTemplateFileName(ISequenceContainer container) {
-            return NINA.Utility.Utility.ReplaceAllInvalidFilenameChars(container.Name) + TemplateFileExtension;
+            return NINA.Core.Utility.CoreUtil.ReplaceAllInvalidFilenameChars(container.Name) + TemplateFileExtension;
         }
     }
 
@@ -211,7 +212,7 @@ namespace NINA.Sequencer {
             this.profileService = profileService;
         }
 
-        public string GroupTranslated => Locale.Loc.Instance[Group] + " › " + (SubGroups.Count() > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
+        public string GroupTranslated => Loc.Instance[Group] + " › " + (SubGroups.Count() > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
 
         public string Group { get; }
         public string[] SubGroups { get; set; }

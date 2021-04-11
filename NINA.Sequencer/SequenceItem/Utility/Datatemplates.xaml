@@ -13,8 +13,8 @@
     xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.Utility"
     xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
-    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
-    xmlns:rules="clr-namespace:NINA.Utility.ValidationRules;assembly=NINA.Core"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
     <DataTemplate DataType="{x:Type local:Annotation}">
@@ -163,17 +163,17 @@
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Visibility="{Binding HasFixedTimeProvider, Converter={StaticResource VisibilityConverter}}"
                         Text="{ns:Loc LblTimeOffset}"
-                        ToolTip="{ns:Loc LblTimeOffsetTooltip}"/>
+                        ToolTip="{ns:Loc LblTimeOffsetTooltip}"
+                        Visibility="{Binding HasFixedTimeProvider, Converter={StaticResource VisibilityConverter}}" />
                     <TextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         HorizontalContentAlignment="Right"
-                        Visibility="{Binding HasFixedTimeProvider, Converter={StaticResource VisibilityConverter}}"
-                        Text="{Binding MinutesOffset}" />
+                        Text="{Binding MinutesOffset}"
+                        Visibility="{Binding HasFixedTimeProvider, Converter={StaticResource VisibilityConverter}}" />
                     <TextBlock VerticalAlignment="Center">m</TextBlock>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>

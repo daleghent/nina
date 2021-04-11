@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -22,7 +22,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 
-namespace NINA.Utility.WindowService {
+namespace NINA.Core.Utility.WindowService {
 
     /// <summary>
     /// A window should be associated to a viewmodel by the DataTemplates.xaml
@@ -54,7 +54,7 @@ namespace NINA.Utility.WindowService {
 
         public void DelayedClose(TimeSpan t) {
             Task.Run(async () => {
-                await Utility.Wait(t);
+                await CoreUtil.Wait(t);
                 await this.Close();
             });
         }

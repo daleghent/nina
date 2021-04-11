@@ -13,11 +13,11 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Profile;
-using NINA.Astrometry;
+using NINA.Profile.Interfaces;
 using System;
+using NINA.Core.Utility;
 
-namespace NINA.Utility {
+namespace NINA.Astrometry {
 
     public static class MeridianFlip {
 

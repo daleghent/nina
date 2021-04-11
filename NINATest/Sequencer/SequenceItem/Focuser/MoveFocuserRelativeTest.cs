@@ -14,10 +14,10 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model.MyFocuser;
-using NINA.Sequencer.Exceptions;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem.Focuser;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Threading;

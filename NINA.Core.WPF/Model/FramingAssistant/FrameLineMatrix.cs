@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -18,7 +18,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace NINA.ViewModel.FramingAssistant {
+namespace NINA.WPF.Base.Model.FramingAssistant {
 
     public class FrameLineMatrix {
         private readonly double[] RASTEPS = { 0.46875, 0.9375, 1.875, 3.75, 7.5, 15 };

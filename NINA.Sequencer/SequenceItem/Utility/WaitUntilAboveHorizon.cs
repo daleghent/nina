@@ -13,8 +13,8 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
 using NINA.Astrometry;
@@ -25,6 +25,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
@@ -80,13 +81,13 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 }
 
                 progress?.Report(new ApplicationStatus() {
-                    Status = string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress"], Math.Round(altaz.Altitude.Degree, 2), Math.Round(horizonAltitude, 2))
+                    Status = string.Format(Loc.Instance["Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress"], Math.Round(altaz.Altitude.Degree, 2), Math.Round(horizonAltitude, 2))
                 });
 
                 if (altaz.Altitude.Degree > horizonAltitude) {
                     break;
                 } else {
-                    await NINA.Utility.Utility.Delay(TimeSpan.FromSeconds(UpdateInterval), token);
+                    await NINA.Core.Utility.CoreUtil.Delay(TimeSpan.FromSeconds(UpdateInterval), token);
                 }
             } while (true);
         }
@@ -125,7 +126,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             var minHorizonAlt = horizon?.GetMinAltitude() ?? 0;
 
             if (maxAlt < minHorizonAlt) {
-                issues.Add(Locale.Loc.Instance["LblUnreachableAltitudeForHorizon"]);
+                issues.Add(Loc.Instance["LblUnreachableAltitudeForHorizon"]);
             }
 
             Issues = issues;

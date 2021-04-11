@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,14 +12,17 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyWeatherData;
-using NINA.Utility;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyWeatherData;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
+using NINA.Core.Locale;
+using NINA.Equipment.Utility;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.WeatherData {
+namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
 
     public class WeatherDataChooserVM : DeviceChooserVM {
 
@@ -28,9 +31,9 @@ namespace NINA.ViewModel.Equipment.WeatherData {
 
         public override void GetEquipment() {
             lock (lockObj) {
-                var devices = new List<Model.IDevice>();
+                var devices = new List<IDevice>();
 
-                devices.Add(new DummyDevice(Locale.Loc.Instance["LblWeatherNoSource"]));
+                devices.Add(new DummyDevice(Loc.Instance["LblWeatherNoSource"]));
 
                 try {
                     foreach (IWeatherData obsdev in ASCOMInteraction.GetWeatherDataSources(profileService)) {

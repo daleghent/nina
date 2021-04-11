@@ -14,12 +14,16 @@
 
 using System;
 using System.Collections.Generic;
-using NINA.Model;
-using NINA.Model.MyFlatDevice;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Locale;
+using NINA.Equipment.Utility;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.FlatDevice {
+namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
     public class FlatDeviceFactory : IDeviceFactory {
         private readonly IProfileService profileService;
@@ -30,7 +34,7 @@ namespace NINA.ViewModel.Equipment.FlatDevice {
 
         public IList<IDevice> GetDevices() {
             var devices = new List<IDevice>();
-            devices.Add(new DummyDevice(Locale.Loc.Instance["LblFlatDeviceNoDevice"]));
+            devices.Add(new DummyDevice(Loc.Instance["LblFlatDeviceNoDevice"]));
 
             try {
                 foreach (IFlatDevice flatDevice in ASCOMInteraction.GetCoverCalibrators(profileService)) {

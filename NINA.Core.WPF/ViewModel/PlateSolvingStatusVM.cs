@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.PlateSolving;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,8 +21,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using NINA.Core.Locale;
 
-namespace NINA.ViewModel {
+namespace NINA.WPF.Base.ViewModel {
 
     public class PlateSolvingStatusVM : BaseINPC {
 
@@ -37,7 +38,7 @@ namespace NINA.ViewModel {
             });
         }
 
-        public string Title { get => Locale.Loc.Instance["LblPlateSolving"]; }
+        public string Title { get => Loc.Instance["LblPlateSolving"]; }
 
         private PlateSolveResult plateSolveResult;
 

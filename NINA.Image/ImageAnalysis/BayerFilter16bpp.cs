@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,10 +14,10 @@
 
 using Accord.Imaging;
 using Accord.Imaging.Filters;
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
 using System;
 
-namespace NINA.Utility.ImageAnalysis {
+namespace NINA.Image.ImageAnalysis {
 
     public class BayerFilter16bpp : BayerFilter {
 

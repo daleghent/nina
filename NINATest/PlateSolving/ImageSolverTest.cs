@@ -14,8 +14,7 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
 using NINA.PlateSolving;
 using NINA.Astrometry;
 using NUnit.Framework;
@@ -25,6 +24,10 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
+using NINA.Image.Interfaces;
+using NINA.Core.Model;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINATest.PlateSolving {
 
@@ -55,7 +58,7 @@ namespace NINATest.PlateSolving {
             var parameter = new PlateSolveParameter() { };
             Func<Task> f = () => sut.Solve(default, parameter, default, default);
 
-            return f.Should().ThrowAsync<Exception>(NINA.Locale.Loc.Instance["LblPlateSolveNoFocalLength"]);
+            return f.Should().ThrowAsync<Exception>(Loc.Instance["LblPlateSolveNoFocalLength"]);
         }
 
         [Test]

@@ -15,7 +15,7 @@
 using Newtonsoft.Json;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Utility.DateTimeProvider;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;

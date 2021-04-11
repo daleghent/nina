@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Profile.Interfaces;
 using System.Runtime.Serialization;
 
 namespace NINA.Profile {

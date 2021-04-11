@@ -15,6 +15,7 @@
 using System;
 using System.Runtime.Serialization;
 using NINA.Core.Enum;
+using NINA.Profile.Interfaces;
 
 namespace NINA.Profile {
 

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,23 +13,27 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.ImageData;
-using NINA.Model.MyTelescope;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.RawConverter;
-using NINA.Astrometry.SkySurvey;
-using NINA.Utility.WindowService;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.Core.Model.Equipment;
+using NINA.Image.RawConverter;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Model;
+using NINA.Equipment.Interfaces;
+using NINA.WPF.Base.SkySurvey;
 
-namespace NINA.Model.MyCamera.Simulator {
+namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
     public class SimulatorCamera : BaseINPC, ICamera, ITelescopeConsumer {
 
@@ -110,7 +114,7 @@ namespace NINA.Model.MyCamera.Simulator {
 
         public string DriverVersion {
             get {
-                return Utility.Utility.Version;
+                return CoreUtil.Version;
             }
         }
 
@@ -511,7 +515,7 @@ namespace NINA.Model.MyCamera.Simulator {
                     if (Settings.ImageSettings.RAWImageStream != null) {
                         byte[] rawBytes = Settings.ImageSettings.RAWImageStream.ToArray();
                         Settings.ImageSettings.RAWImageStream.Position = 0;
-                        var rawConverter = RawConverter.CreateInstance(profileService.ActiveProfile.CameraSettings.RawConverter);
+                        var rawConverter = RawConverterFactory.CreateInstance(profileService.ActiveProfile.CameraSettings.RawConverter);
                         return new RAWExposureData(
                             rawConverter: rawConverter,
                             rawBytes: rawBytes,
@@ -601,7 +605,7 @@ namespace NINA.Model.MyCamera.Simulator {
             dialog.DefaultExt = ".tiff";
 
             if (dialog.ShowDialog() == true) {
-                var rawData = await ImageData.ImageData.FromFile(dialog.FileName, BitDepth, Settings.ImageSettings.IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
+                var rawData = await BaseImageData.FromFile(dialog.FileName, BitDepth, Settings.ImageSettings.IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
                 Settings.ImageSettings.Image = rawData.RenderImage();
                 Settings.ImageSettings.MetaData = rawData.MetaData;
 

@@ -14,15 +14,13 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
-using NINA.Profile;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem.Imaging;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.ViewModel.ImageHistory;
 using Nito.AsyncEx;
 using NUnit.Framework;
@@ -33,6 +31,12 @@ using System.ServiceModel.Security.Tokens;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Model;
+using NINA.Core.Utility;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model.Equipment;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINATest.Sequencer.SequenceItem.Imaging {
 

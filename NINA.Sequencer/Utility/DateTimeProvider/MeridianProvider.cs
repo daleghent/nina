@@ -13,14 +13,15 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.Utility.DateTimeProvider {
 
@@ -32,7 +33,7 @@ namespace NINA.Sequencer.Utility.DateTimeProvider {
             this.profileService = profileService;
         }
 
-        public string Name { get; } = Locale.Loc.Instance["LblMeridian"];
+        public string Name { get; } = Loc.Instance["LblMeridian"];
         public ICustomDateTime DateTime { get; set; } = new SystemDateTime();
 
         public DateTime GetDateTime(ISequenceEntity context) {

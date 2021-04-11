@@ -1,8 +1,9 @@
 ﻿using FluentAssertions;
 using Moq;
 using Newtonsoft.Json.Linq;
-using NINA.Model.MyPlanetarium;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyPlanetarium;
+using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
 using NUnit.Framework;
 
 namespace NINATest.Planetarium {

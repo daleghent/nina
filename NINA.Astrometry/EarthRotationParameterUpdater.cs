@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Database;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -30,7 +30,7 @@ namespace NINA.Astrometry {
         private async Task<DateTime> UpdateEarthRotationParameters(DateTime startDate) {
             var maxUnix = 0L;
             using (MyStopWatch.Measure()) {
-                var startDateUnix = Utility.Utility.DateTimeToUnixTimeStamp(startDate);
+                var startDateUnix = CoreUtil.DateTimeToUnixTimeStamp(startDate);
                 var data = QueryOnlineData();
 
                 List<string> rows = new List<string>();
@@ -61,7 +61,7 @@ namespace NINA.Astrometry {
                                 int day = int.Parse(columns[idxDay]);
 
                                 var date = new DateTime(year, month, day, 0, 0, 0, DateTimeKind.Utc);
-                                var unixTimestamp = Utility.Utility.DateTimeToUnixTimeStamp(date);
+                                var unixTimestamp = CoreUtil.DateTimeToUnixTimeStamp(date);
 
                                 if (unixTimestamp >= startDateUnix) {
                                     double mjd = double.Parse(columns[idxMJD], CultureInfo.InvariantCulture);
@@ -96,7 +96,7 @@ namespace NINA.Astrometry {
                     await context.Database.ExecuteSqlCommandAsync(query);
                 }
             }
-            return Utility.Utility.UnixTimeStampToDateTime(maxUnix);
+            return CoreUtil.UnixTimeStampToDateTime(maxUnix);
         }
 
         private string QueryOnlineData() {
@@ -135,7 +135,7 @@ namespace NINA.Astrometry {
             using (var context = new DatabaseInteraction().GetContext()) {
                 availableDataTimeStamp = (await context.EarthRotationParameterSet.Where(x => x.lod != 0).OrderByDescending(x => x.date).FirstAsync()).date;
             }
-            return Utility.Utility.UnixTimeStampToDateTime(availableDataTimeStamp);
+            return CoreUtil.UnixTimeStampToDateTime(availableDataTimeStamp);
         }
     }
 }

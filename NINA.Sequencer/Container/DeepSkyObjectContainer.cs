@@ -14,25 +14,26 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.MyPlanetarium;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container.ExecutionStrategy;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Exceptions;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.ViewModel.FramingAssistant;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Equipment.Exceptions;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Astrometry.Interfaces;
+using NINA.Equipment.Interfaces;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.Sequencer.Container {
 
@@ -187,17 +188,17 @@ namespace NINA.Sequencer.Container {
                         }
                     }
 
-                    Notification.ShowSuccess(string.Format(Locale.Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
+                    Notification.ShowSuccess(string.Format(Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
                 }
             } catch (PlanetariumObjectNotSelectedException) {
                 Logger.Error($"Attempted to get coordinates from {s.Name} when no object was selected");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumObjectNotSelected"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumObjectNotSelected"], s.Name));
             } catch (PlanetariumFailedToConnect ex) {
                 Logger.Error($"Unable to connect to {s.Name}: {ex}");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumFailedToConnect"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumFailedToConnect"], s.Name));
             } catch (Exception ex) {
                 Logger.Error($"Failed to get coordinates from {s.Name}: {ex}");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumCoordsError"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumCoordsError"], s.Name));
             }
 
             return (resp != null);

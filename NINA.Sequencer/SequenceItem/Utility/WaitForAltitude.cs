@@ -13,14 +13,14 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
 using NINA.Core.Enum;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -28,6 +28,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
@@ -96,7 +97,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 var coordinates = Coordinates.Coordinates;
                 var altaz = coordinates.Transform(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
                 progress?.Report(new ApplicationStatus() {
-                    Status = string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Utility_WaitForAltitude_Progress"], Math.Round(altaz.Altitude.Degree, 2), Altitude)
+                    Status = string.Format(Loc.Instance["Lbl_SequenceItem_Utility_WaitForAltitude_Progress"], Math.Round(altaz.Altitude.Degree, 2), Altitude)
                 });
 
                 if (aboveOrBelow == ">=" && altaz.Altitude.Degree >= Altitude) {
@@ -105,7 +106,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                     break;
                 }
 
-                await NINA.Utility.Utility.Delay(TimeSpan.FromSeconds(1), token);
+                await NINA.Core.Utility.CoreUtil.Delay(TimeSpan.FromSeconds(1), token);
             } while (true);
         }
 
@@ -144,11 +145,11 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
             if (aboveOrBelow == ">=") {
                 if (maxAlt < Altitude) {
-                    issues.Add(Locale.Loc.Instance["LblUnreachableAltitude"]);
+                    issues.Add(Loc.Instance["LblUnreachableAltitude"]);
                 }
             } else {
                 if (minAlt > Altitude) {
-                    issues.Add(Locale.Loc.Instance["LblUnreachableAltitude"]);
+                    issues.Add(Loc.Instance["LblUnreachableAltitude"]);
                 }
             }
 

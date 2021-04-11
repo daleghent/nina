@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,11 +13,14 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Utility;
-using NINA.Utility.FileFormat.FITS;
-using NINA.Utility.FileFormat.XISF;
-using NINA.Utility.ImageAnalysis;
-using NINA.Utility.RawConverter;
+using NINA.Core.Model;
+using NINA.Core.Utility;
+using NINA.Image.FileFormat;
+using NINA.Image.FileFormat.FITS;
+using NINA.Image.FileFormat.XISF;
+using NINA.Image.ImageAnalysis;
+using NINA.Image.Interfaces;
+using NINA.Image.RawConverter;
 using System;
 using System.IO;
 using System.Text;
@@ -27,11 +30,11 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Model.ImageData {
+namespace NINA.Image.ImageData {
 
-    public class ImageData : IImageData {
+    public class BaseImageData : IImageData {
 
-        public ImageData(ushort[] input, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData)
+        public BaseImageData(ushort[] input, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData)
             : this(
                   imageArray: new ImageArray(flatArray: input),
                   width: width,
@@ -41,7 +44,7 @@ namespace NINA.Model.ImageData {
                   metaData: metaData) {
         }
 
-        public ImageData(IImageArray imageArray, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) {
+        public BaseImageData(IImageArray imageArray, int width, int height, int bitDepth, bool isBayered, ImageMetaData metaData) {
             this.Data = imageArray;
             this.MetaData = metaData;
             isBayered = metaData.Camera.SensorType != SensorType.Monochrome ? true : isBayered;
@@ -111,7 +114,7 @@ namespace NINA.Model.ImageData {
                 var fileName = imagePatterns.GetImageFileString(pattern);
                 var extension = Path.GetExtension(file);
                 var targetPath = Path.GetDirectoryName(file);
-                var newFileName = Utility.Utility.GetUniqueFilePath(Path.Combine(targetPath, $"{fileName}{extension}"));
+                var newFileName = CoreUtil.GetUniqueFilePath(Path.Combine(targetPath, $"{fileName}{extension}"));
 
                 var fi = new FileInfo(newFileName);
                 if (!fi.Directory.Exists) {
@@ -133,7 +136,7 @@ namespace NINA.Model.ImageData {
         private string getSensorTempFromExifTool(string file) {
             string tempString = string.Empty;
             try {
-                string EXIFTOOLLOCATION = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Utility", "ExifTool", "exiftool.exe");
+                string EXIFTOOLLOCATION = Path.Combine(CoreUtil.APPLICATIONDIRECTORY, "Utility", "ExifTool", "exiftool.exe");
                 var sb = new StringBuilder();
 
                 System.Diagnostics.Process process = new System.Diagnostics.Process();
@@ -185,7 +188,7 @@ namespace NINA.Model.ImageData {
             var metadata = this.MetaData;
             p.Set(ImagePatternKeys.Filter, metadata.FilterWheel.Filter);
             p.Set(ImagePatternKeys.ExposureTime, metadata.Image.ExposureTime);
-            p.Set(ImagePatternKeys.ApplicationStartDate, Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd"));
+            p.Set(ImagePatternKeys.ApplicationStartDate, CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd"));
             p.Set(ImagePatternKeys.Date, metadata.Image.ExposureStart.ToString("yyyy-MM-dd"));
 
             // ExposureStart is initialized to DateTime.MinValue, and we cannot subtract time from that. Only evaluate
@@ -315,14 +318,14 @@ namespace NINA.Model.ImageData {
         private string SaveRAW(string path) {
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             IImageArray data = Data;
-            string uniquePath = Utility.Utility.GetUniqueFilePath(path + "." + data.RAWType);
+            string uniquePath = CoreUtil.GetUniqueFilePath(path + "." + data.RAWType);
             File.WriteAllBytes(uniquePath, data.RAWData);
             return uniquePath;
         }
 
         private string SaveTiff(FileSaveInfo fileSaveInfo) {
             Directory.CreateDirectory(Path.GetDirectoryName(fileSaveInfo.FilePath));
-            string uniquePath = Utility.Utility.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(".tif"));
+            string uniquePath = CoreUtil.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(".tif"));
 
             using (FileStream fs = new FileStream(uniquePath, FileMode.Create)) {
                 TiffBitmapEncoder encoder = new TiffBitmapEncoder();
@@ -354,7 +357,7 @@ namespace NINA.Model.ImageData {
             f.PopulateHeaderCards(MetaData);
 
             Directory.CreateDirectory(Path.GetDirectoryName(fileSaveInfo.FilePath));
-            string uniquePath = Utility.Utility.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(".fits"));
+            string uniquePath = CoreUtil.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(".fits"));
 
             using (FileStream fs = new FileStream(uniquePath, FileMode.Create)) {
                 f.Write(fs);
@@ -375,7 +378,7 @@ namespace NINA.Model.ImageData {
             img.AddAttachedImage(Data.FlatArray, fileSaveInfo);
 
             Directory.CreateDirectory(Path.GetDirectoryName(fileSaveInfo.FilePath));
-            string uniquePath = Utility.Utility.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(".xisf"));
+            string uniquePath = CoreUtil.GetUniqueFilePath(fileSaveInfo.FilePath + fileSaveInfo.GetExtension(".xisf"));
 
             using (FileStream fs = new FileStream(uniquePath, FileMode.Create)) {
                 img.Save(fs);
@@ -450,7 +453,7 @@ namespace NINA.Model.ImageData {
             using (var fs = new FileStream(path, FileMode.Open)) {
                 using (var ms = new System.IO.MemoryStream()) {
                     await fs.CopyToAsync(ms);
-                    var converter = RawConverter.CreateInstance(rawConverter);
+                    var converter = RawConverterFactory.CreateInstance(rawConverter);
                     var rawType = Path.GetExtension(path).ToLower().Substring(1);
                     var data = await converter.Convert(s: ms, bitDepth: bitDepth, rawType: rawType, metaData: new ImageMetaData(), token: ct);
                     return data;
@@ -468,7 +471,7 @@ namespace NINA.Model.ImageData {
             var stride = (bmp.PixelWidth * bmp.Format.BitsPerPixel + 7) / 8;
             var pixels = new ushort[bmp.PixelWidth * bmp.PixelHeight];
             bmp.CopyPixels(pixels, stride, 0);
-            return new ImageData(pixels, bmp.PixelWidth, bmp.PixelHeight, 16, isBayered, new ImageMetaData());
+            return new BaseImageData(pixels, bmp.PixelWidth, bmp.PixelHeight, 16, isBayered, new ImageMetaData());
         }
 
         #endregion "Load"

@@ -13,9 +13,12 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFlatDevice;
+using NINA.Core.Utility;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFlatDevice;
 using NINA.Utility;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.Model;
 
 namespace NINA.ViewModel.FlatWizard {
 

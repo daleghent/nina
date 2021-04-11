@@ -414,9 +414,9 @@
       <Project>{d897bffd-7777-44f5-9100-1ff0db3b032f}</Project>
       <Name>NINA.MGEN</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NINA.Platesolving\NINA.Platesolving.csproj">
+    <ProjectReference Include="..\NINA.Platesolving\NINA.PlateSolving.csproj">
       <Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
-      <Name>NINA.Platesolving</Name>
+      <Name>NINA.PlateSolving</Name>
     </ProjectReference>
     <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
       <Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>

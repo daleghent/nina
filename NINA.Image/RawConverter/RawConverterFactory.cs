@@ -1,4 +1,4 @@
-#region "copyright"
+﻿#region "copyright"
 
 /*
     Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
@@ -13,14 +13,11 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.ImageData;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
+using NINA.Image.Interfaces;
 
-namespace NINA.Utility.RawConverter {
+namespace NINA.Image.RawConverter {
 
-    public class RawConverter {
+    public class RawConverterFactory {
 
         public static IRawConverter CreateInstance(RawConverterEnum converter) {
             switch (converter) {
@@ -34,15 +31,5 @@ namespace NINA.Utility.RawConverter {
                     return new FreeImageConverter();
             }
         }
-    }
-
-    public interface IRawConverter {
-
-        Task<IImageData> Convert(
-            MemoryStream s,
-            int bitDepth,
-            string rawType,
-            ImageMetaData metaData,
-            CancellationToken token = default);
     }
 }

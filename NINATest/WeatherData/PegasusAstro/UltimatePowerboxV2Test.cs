@@ -12,17 +12,17 @@
 
 #endregion "copyright"
 
+using Moq;
+using NINA.Core.Locale;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
+using NINA.Equipment.Equipment.MyWeatherData;
+using NINA.Profile.Interfaces;
+using NUnit.Framework;
 using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Moq;
-using NINA.Locale;
-using NINA.Model.MyWeatherData;
-using NINA.Profile;
-using NINA.Utility.SerialCommunication;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
-using NUnit.Framework;
 
 namespace NINATest.WeatherData.PegasusAstro {
 

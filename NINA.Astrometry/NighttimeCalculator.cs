@@ -12,10 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
+using NINA.Astrometry.Interfaces;
 
 namespace NINA.Astrometry {
 

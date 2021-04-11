@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using FluentAssertions;
+using NINA.Astrometry;
 using NINA.Core.Database;
 using NUnit.Framework;
 using System;
@@ -20,7 +21,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static NINA.Core.Database.DatabaseInteraction;
 
 namespace NINATest.Database {
 

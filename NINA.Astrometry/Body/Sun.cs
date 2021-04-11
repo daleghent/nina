@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,9 +14,9 @@
 
 using System;
 
-namespace NINA.Astrometry {
+namespace NINA.Astrometry.Body {
 
-    public class Sun : Body {
+    public class Sun : BasicBody {
 
         public Sun(DateTime date, double latitude, double longitude) : base(date, latitude, longitude) {
         }

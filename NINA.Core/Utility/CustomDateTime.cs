@@ -14,7 +14,7 @@
 
 using System;
 
-namespace NINA.Utility {
+namespace NINA.Core.Utility {
 
     public interface ICustomDateTime {
         DateTime Now { get; }

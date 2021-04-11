@@ -12,18 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyPlanetarium;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyPlanetarium;
 using NINA.PlateSolving;
 using NINA.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Behaviors;
-using NINA.Utility.Exceptions;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
-using NINA.Astrometry.SkySurvey;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,6 +36,21 @@ using NINA.Sequencer.SequenceItem.Platesolving;
 using System.Linq;
 using System.Diagnostics;
 using NINA.Core.Enum;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Sequencer.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.Utility;
+using NINA.Core.Locale;
+using NINA.Core.Utility.Notification;
+using NINA.Core.MyMessageBox;
+using NINA.WPF.Base.Behaviors;
+using NINA.Equipment.Exceptions;
+using NINA.Astrometry.Interfaces;
+using NINA.Equipment.Interfaces;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.SkySurvey;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.ViewModel.FramingAssistant {
 
@@ -145,7 +154,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
                 var deepSkyObjects = new List<DeepSkyObject>();
                 foreach (var rect in CameraRectangles) {
-                    var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Locale.Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
+                    var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
                     var dso = new DeepSkyObject(name, rect.Coordinates, profileService.ActiveProfile.ApplicationSettings.SkyAtlasImageRepository, profileService.ActiveProfile.AstrometrySettings.Horizon);
                     dso.Rotation = Rectangle.TotalRotation;
                     dso.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), profileService.ActiveProfile.AstrometrySettings.Latitude, profileService.ActiveProfile.AstrometrySettings.Longitude);
@@ -242,7 +251,7 @@ namespace NINA.ViewModel.FramingAssistant {
             var first = true;
             foreach (var rect in CameraRectangles) {
                 var container = (IDeepSkyObjectContainer)template.Clone();
-                var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Locale.Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
+                var name = rect.Id > 0 ? DSO?.Name + string.Format(" {0} ", Loc.Instance["LblPanel"]) + rect.Id : DSO?.Name;
                 container.Name = name;
                 container.Target = new InputTarget(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude), profileService.ActiveProfile.AstrometrySettings.Horizon) {
                     TargetName = name,
@@ -361,7 +370,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
         private void ClearCache(object obj) {
             if (Cache != null) {
-                var diagResult = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblClearCache"] + "?", "", MessageBoxButton.YesNo, MessageBoxResult.No);
+                var diagResult = MyMessageBox.Show(Loc.Instance["LblClearCache"] + "?", "", MessageBoxButton.YesNo, MessageBoxResult.No);
                 if (diagResult == MessageBoxResult.Yes) {
                     Cache.Clear();
                     ImageCacheInfo = Cache.Cache;
@@ -370,7 +379,7 @@ namespace NINA.ViewModel.FramingAssistant {
             }
         }
 
-        public static string FRAMINGASSISTANTCACHEPATH = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "FramingAssistantCache");
+        public static string FRAMINGASSISTANTCACHEPATH = Path.Combine(NINA.Core.Utility.CoreUtil.APPLICATIONTEMPPATH, "FramingAssistantCache");
         public static string FRAMINGASSISTANTCACHEINFOPATH = Path.Combine(FRAMINGASSISTANTCACHEPATH, "CacheInfo.xml");
 
         private ApplicationStatus _status;
@@ -381,7 +390,7 @@ namespace NINA.ViewModel.FramingAssistant {
             }
             set {
                 _status = value;
-                _status.Source = Locale.Loc.Instance["LblFramingAssistant"];
+                _status.Source = Loc.Instance["LblFramingAssistant"];
                 RaisePropertyChanged();
 
                 applicationStatusMediator.StatusUpdate(_status);
@@ -835,7 +844,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private async Task<FileSkySurveyImage> PlateSolveSkySurvey(FileSkySurveyImage skySurveyImage) {
             var referenceCoordinates = skySurveyImage.Coordinates != null ? skySurveyImage.Coordinates : DSO.Coordinates;
 
-            var diagResult = MyMessageBox.MyMessageBox.Show(string.Format(Locale.Loc.Instance["LblBlindSolveAttemptForFraming"], referenceCoordinates.RAString, referenceCoordinates.DecString), Locale.Loc.Instance["LblNoCoordinates"], MessageBoxButton.YesNo, MessageBoxResult.Yes);
+            var diagResult = MyMessageBox.Show(string.Format(Loc.Instance["LblBlindSolveAttemptForFraming"], referenceCoordinates.RAString, referenceCoordinates.DecString), Loc.Instance["LblNoCoordinates"], MessageBoxButton.YesNo, MessageBoxResult.Yes);
 
             if (diagResult == MessageBoxResult.No) {
                 referenceCoordinates = null;
@@ -1066,7 +1075,7 @@ namespace NINA.ViewModel.FramingAssistant {
 
                 if (resp != null) {
                     await SetCoordinates(resp);
-                    Notification.ShowSuccess(string.Format(Locale.Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
+                    Notification.ShowSuccess(string.Format(Loc.Instance["LblPlanetariumCoordsOk"], s.Name));
 
                     if (s.CanGetRotationAngle) {
                         double rotationAngle = await s.GetRotationAngle();
@@ -1078,13 +1087,13 @@ namespace NINA.ViewModel.FramingAssistant {
                 }
             } catch (PlanetariumObjectNotSelectedException) {
                 Logger.Error($"Attempted to get coordinates from {s.Name} when no object was selected");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumObjectNotSelected"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumObjectNotSelected"], s.Name));
             } catch (PlanetariumFailedToConnect ex) {
                 Logger.Error($"Unable to connect to {s.Name}: {ex}");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumFailedToConnect"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumFailedToConnect"], s.Name));
             } catch (Exception ex) {
                 Logger.Error($"Failed to get coordinates from {s.Name}: {ex}");
-                Notification.ShowError(string.Format(Locale.Loc.Instance["LblPlanetariumCoordsError"], s.Name));
+                Notification.ShowError(string.Format(Loc.Instance["LblPlanetariumCoordsError"], s.Name));
             }
 
             return (resp != null);

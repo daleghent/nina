@@ -14,9 +14,10 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model.MyFocuser;
-using NINA.Profile;
-using NINA.ViewModel.Equipment.Focuser;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Interfaces;
+using NINA.Profile.Interfaces;
+using NINA.WPF.Base.ViewModel.Equipment.Focuser;
 using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;

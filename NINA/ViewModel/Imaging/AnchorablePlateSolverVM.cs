@@ -12,21 +12,27 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyTelescope;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Model;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.PlateSolving;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.ViewModel.Equipment.Camera;
+using NINA.Profile.Interfaces;
+using NINA.WPF.Base.Interfaces.Mediator;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel.Imaging {
 
@@ -41,7 +47,7 @@ namespace NINA.ViewModel.Imaging {
 
         private double _snapExposureDuration;
 
-        private Model.MyFilterWheel.FilterInfo _snapFilter;
+        private FilterInfo _snapFilter;
 
         private int _snapGain = -1;
 
@@ -214,7 +220,7 @@ namespace NINA.ViewModel.Imaging {
             }
         }
 
-        public Model.MyFilterWheel.FilterInfo SnapFilter {
+        public FilterInfo SnapFilter {
             get {
                 return _snapFilter;
             }
@@ -283,7 +289,7 @@ namespace NINA.ViewModel.Imaging {
             _solveCancelToken = new CancellationTokenSource();
             try {
                 if ((this.Sync || this.SlewToTarget) && !telescopeInfo.Connected) {
-                    throw new Exception(Locale.Loc.Instance["LblTelescopeNotConnected"]);
+                    throw new Exception(Loc.Instance["LblTelescopeNotConnected"]);
                 }
 
                 await telescopeMediator.WaitForSlew(_solveCancelToken.Token);

@@ -16,14 +16,14 @@ using Accord.IO;
 using Dasync.Collections;
 using Newtonsoft.Json;
 using NINA.Core.Enum;
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container.ExecutionStrategy;
 using NINA.Sequencer.DragDrop;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.ViewModel.Sequencer;
 using System;
 using System.Collections.Generic;
@@ -36,6 +36,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+
+using NINA.Core.Model;
 
 namespace NINA.Sequencer.Container {
 

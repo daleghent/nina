@@ -3,7 +3,7 @@ using System;
 using System.Globalization;
 using System.Windows.Data;
 
-namespace NINA.Utility.Converters {
+namespace NINA.Core.Utility.Converters {
 
     public class SideOfPierConverter : IValueConverter {
 

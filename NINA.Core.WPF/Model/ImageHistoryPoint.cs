@@ -13,14 +13,17 @@
 #endregion "copyright"
 
 using CsvHelper.Configuration;
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Image.ImageData;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.IO;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Image.Interfaces;
+using NINA.WPF.Base.Utility.AutoFocus;
 
-namespace NINA.ViewModel.ImageHistory {
+namespace NINA.WPF.Base.Model {
 
     public class ImageHistoryPoint : BaseINPC {
 
@@ -36,8 +39,8 @@ namespace NINA.ViewModel.ImageHistory {
             Type = imageType;
         }
 
-        public void PopulateAFPoint(AutoFocus.AutoFocusReport report) {
-            AutoFocusPoint = new AutoFocusPoint();
+        public void PopulateAFPoint(AutoFocusReport report) {
+            AutoFocusPoint = new NINA.Core.Model.AutoFocusPoint();
             AutoFocusPoint.OldPosition = report.InitialFocusPoint.Position;
             AutoFocusPoint.NewPosition = report.CalculatedFocusPoint.Position;
             AutoFocusPoint.Temperature = report.Temperature;
@@ -90,7 +93,7 @@ namespace NINA.ViewModel.ImageHistory {
 
         public IImageStatistics Statistics { get; private set; }
 
-        public AutoFocusPoint AutoFocusPoint { get; private set; }
+        public NINA.Core.Model.AutoFocusPoint AutoFocusPoint { get; private set; }
 
         public double HFR { get; private set; }
 

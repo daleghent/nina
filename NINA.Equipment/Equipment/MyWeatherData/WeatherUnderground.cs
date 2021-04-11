@@ -12,18 +12,20 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Utility.Http;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Http;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Globalization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyWeatherData {
+namespace NINA.Equipment.Equipment.MyWeatherData {
 
     public class WeatherUnderground : BaseINPC, IWeatherData {
         private const string _category = "N.I.N.A.";
@@ -50,9 +52,9 @@ namespace NINA.Model.MyWeatherData {
         public string Category => _category;
         public string Id => _driverId;
         public string Name => _driverName;
-        public string DriverInfo => Locale.Loc.Instance["LblWeatherUndergroundClientInfo"];
+        public string DriverInfo => Loc.Instance["LblWeatherUndergroundClientInfo"];
         public string DriverVersion => _driverVersion;
-        public string Description => Locale.Loc.Instance["LblWeatherUndergroundClientDescription"];
+        public string Description => Loc.Instance["LblWeatherUndergroundClientDescription"];
         public bool HasSetupDialog => false;
 
         private double _temperature;

@@ -13,8 +13,8 @@
 #endregion "copyright"
 
 using Moq;
-using NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK;
 using NUnit.Framework;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

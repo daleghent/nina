@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using System.IO;
-using NINA.Utility.ImageAnalysis;
+using NINA.Image.ImageAnalysis;
 using NUnit.Framework;
 
 namespace NINATest.ImageAnalysis {

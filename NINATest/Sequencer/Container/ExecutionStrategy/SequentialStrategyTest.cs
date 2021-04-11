@@ -14,7 +14,7 @@
 
 using Moq;
 using NINA.Core.Enum;
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;

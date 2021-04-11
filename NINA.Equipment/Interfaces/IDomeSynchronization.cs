@@ -15,7 +15,7 @@
 using NINA.Core.Enum;
 using NINA.Astrometry;
 
-namespace NINA.Utility {
+namespace NINA.Equipment.Interfaces {
 
     public interface IDomeSynchronization {
 

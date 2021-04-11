@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,23 +12,26 @@
 
 #endregion "copyright"
 
-using NINA.Model.ImageData;
-using NINA.Utility.Extensions;
+using NINA.Image.ImageData;
+using NINA.Core.Utility.Extensions;
 using System;
 using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Image.Interfaces;
 
-namespace NINA.Utility.RawConverter {
+namespace NINA.Image.RawConverter {
 
     internal class DCRaw : IRawConverter {
 
         public DCRaw() {
         }
 
-        private static string DCRAWLOCATION = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Utility", "DCRaw", "dcraw.exe");
+        private static string DCRAWLOCATION = Path.Combine(CoreUtil.APPLICATIONDIRECTORY, "Utility", "DCRaw", "dcraw.exe");
 
         public async Task<IImageData> Convert(
             MemoryStream s,
@@ -40,14 +43,14 @@ namespace NINA.Utility.RawConverter {
                 using (MyStopWatch.Measure()) {
                     var fileextension = ".raw";
                     var filename = Path.GetRandomFileName();
-                    var rawfile = Path.Combine(Utility.APPLICATIONTEMPPATH, filename + fileextension);
+                    var rawfile = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, filename + fileextension);
 
                     using (var filestream = new System.IO.FileStream(rawfile, System.IO.FileMode.Create)) {
                         s.WriteTo(filestream);
                     }
 
-                    ImageData data = null;
-                    var outputFile = Path.Combine(Utility.APPLICATIONTEMPPATH, filename + ".tiff");
+                    BaseImageData data = null;
+                    var outputFile = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, filename + ".tiff");
                     try {
                         System.Diagnostics.Process process;
                         System.Diagnostics.ProcessStartInfo startInfo;
@@ -94,7 +97,7 @@ namespace NINA.Utility.RawConverter {
                                 bitDepth = 16;
 
                                 var imageArray = new ImageArray(flatArray: pixels, rawData: s.ToArray(), rawType: rawType);
-                                data = new ImageData(
+                                data = new BaseImageData(
                                     imageArray: imageArray,
                                     width: (int)bmp.PixelWidth,
                                     height: (int)bmp.PixelHeight,
@@ -107,7 +110,7 @@ namespace NINA.Utility.RawConverter {
                             }
                         }
                     } catch (Exception ex) {
-                        Notification.Notification.ShowError(ex.Message);
+                        Notification.ShowError(ex.Message);
                         Logger.Error(ex);
                     } finally {
                         if (File.Exists(rawfile)) {

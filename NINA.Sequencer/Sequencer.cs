@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem.Autofocus;
 using NINA.Sequencer.SequenceItem.Camera;
 using NINA.Sequencer.Container;
@@ -32,12 +32,14 @@ using System.Threading.Tasks;
 using NINA.Sequencer.SequenceItem.Guider;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Trigger;
-using NINA.Utility;
+using NINA.Core.Utility;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using NINA.Sequencer.Container.ExecutionStrategy;
 using NINA.Sequencer.Serialization;
 using NINA.Sequencer.Validations;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer {
 
@@ -79,7 +81,7 @@ namespace NINA.Sequencer {
 
             if (issues.Count() > 0) {
                 var builder = new StringBuilder();
-                builder.AppendLine(Locale.Loc.Instance["LblPreSequenceChecklist"]).AppendLine();
+                builder.AppendLine(Loc.Instance["LblPreSequenceChecklist"]).AppendLine();
 
                 foreach (var issue in issues) {
                     builder.Append("  - ");
@@ -87,11 +89,11 @@ namespace NINA.Sequencer {
                 }
 
                 builder.AppendLine();
-                builder.Append(Locale.Loc.Instance["LblStartSequenceAnyway"]);
+                builder.Append(Loc.Instance["LblStartSequenceAnyway"]);
 
-                var diag = MyMessageBox.MyMessageBox.Show(
+                var diag = MyMessageBox.Show(
                     builder.ToString(),
-                    Locale.Loc.Instance["LblPreSequenceChecklistHeader"],
+                    Loc.Instance["LblPreSequenceChecklistHeader"],
                     System.Windows.MessageBoxButton.OKCancel,
                     System.Windows.MessageBoxResult.Cancel
                 );

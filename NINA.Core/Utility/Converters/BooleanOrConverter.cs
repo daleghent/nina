@@ -17,7 +17,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Data;
 
-namespace NINA.Utility.Converters {
+namespace NINA.Core.Utility.Converters {
     public class BooleanOrConverter : IMultiValueConverter {
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {

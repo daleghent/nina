@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,21 +12,27 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyFilterWheel;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
-using NINA.ViewModel.Interfaces;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Model;
+using NINA.Core.Locale;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.MyMessageBox;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.FilterWheel {
+namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
     public class FilterWheelVM : DockableVM, IFilterWheelVM {
 
@@ -74,7 +80,7 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
 
                     var filter = FW.Filters.Where((x) => x.Position == inputFilter.Position).FirstOrDefault();
                     if (filter == null) {
-                        Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblFilterNotFoundForPosition"], (inputFilter.Position + 1)));
+                        Notification.ShowWarning(string.Format(Loc.Instance["LblFilterNotFoundForPosition"], (inputFilter.Position + 1)));
                         return null;
                     }
 
@@ -101,7 +107,7 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
                             }
                         });
 
-                        progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSwitchingFilter"] });
+                        progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblSwitchingFilter"] });
 
                         if (changeFocus != null) {
                             await changeFocus;
@@ -167,7 +173,7 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
                 applicationStatusMediator.StatusUpdate(
                     new ApplicationStatus() {
                         Source = Title,
-                        Status = Locale.Loc.Instance["LblConnecting"]
+                        Status = Loc.Instance["LblConnecting"]
                     }
                 );
 
@@ -187,7 +193,7 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
                                 Name = FW.Name
                             };
 
-                            Notification.ShowSuccess(Locale.Loc.Instance["LblFilterwheelConnected"]);
+                            Notification.ShowSuccess(Loc.Instance["LblFilterwheelConnected"]);
                             profileService.ActiveProfile.FilterWheelSettings.Id = FW.Id;
                             if (FW.Position > -1) {
                                 FilterWheelInfo.SelectedFilter = FW.Filters[FW.Position];
@@ -241,7 +247,7 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
         private CancellationTokenSource _cancelChooseFilterWheelSource;
 
         private async Task<bool> DisconnectFW() {
-            var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectFilterWheel"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+            var diag = MyMessageBox.Show(Loc.Instance["LblDisconnectFilterWheel"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
             if (diag == System.Windows.MessageBoxResult.OK) {
                 await Disconnect();
             }

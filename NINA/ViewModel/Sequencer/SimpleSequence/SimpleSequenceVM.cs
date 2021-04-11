@@ -12,50 +12,22 @@
 
 #endregion "copyright"
 
-using Accord.Statistics.Models.Regression.Linear;
 using CsvHelper;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
-using NINA.Model.MyDome;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFlatDevice;
-using NINA.Model.MyFocuser;
-using NINA.Model.MyGuider;
-using NINA.Model.MyPlanetarium;
-using NINA.Model.MyRotator;
-using NINA.Model.MyTelescope;
-using NINA.Model.MyWeatherData;
+using NINA.Equipment.Equipment.MyCamera;
 using NINA.PlateSolving;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
-using NINA.Sequencer.Container.ExecutionStrategy;
 using NINA.Sequencer.SequenceItem;
-using NINA.Sequencer.SequenceItem.Autofocus;
-using NINA.Sequencer.SequenceItem.Camera;
-using NINA.Sequencer.SequenceItem.Dome;
 using NINA.Sequencer.SequenceItem.FilterWheel;
-using NINA.Sequencer.SequenceItem.FlatDevice;
-using NINA.Sequencer.SequenceItem.Guider;
 using NINA.Sequencer.SequenceItem.Imaging;
-using NINA.Sequencer.SequenceItem.Platesolving;
-using NINA.Sequencer.SequenceItem.Telescope;
-using NINA.Sequencer.SequenceItem.Utility;
-using NINA.Sequencer.Trigger.Autofocus;
 using NINA.Sequencer.Trigger.Guider;
 using NINA.Sequencer.Trigger.MeridianFlip;
 using NINA.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Exceptions;
-using NINA.Utility.ExternalCommand;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Utility.WindowService;
-using NINA.ViewModel.Equipment.Camera;
+using NINA.WPF.Base.ViewModel.Equipment.Camera;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Interfaces;
@@ -77,6 +49,21 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
 using System.Windows.Threading;
+using NINA.Sequencer.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Core.Locale;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Model;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Model;
+using NINA.Core.Utility.WindowService;
+using NINA.Astrometry.Interfaces;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel {
 
@@ -109,7 +96,7 @@ namespace NINA.ViewModel {
 
             AddTargetCommand = new RelayCommand(AddDefaultTarget);
             BuildSequenceCommand = new RelayCommand((object o) => {
-                if (MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["Lbl_OldSequencer_BuildAdvanced_Text"], Locale.Loc.Instance["Lbl_OldSequencer_BuildAdvanced_Caption"], MessageBoxButton.YesNo, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
+                if (MyMessageBox.Show(Loc.Instance["Lbl_OldSequencer_BuildAdvanced_Text"], Loc.Instance["Lbl_OldSequencer_BuildAdvanced_Caption"], MessageBoxButton.YesNo, MessageBoxResult.Yes) == MessageBoxResult.Yes) {
                     BuildSequence();
                 }
             });
@@ -217,7 +204,7 @@ namespace NINA.ViewModel {
             set {
                 _status = value;
                 if (string.IsNullOrWhiteSpace(_status.Source)) {
-                    _status.Source = Locale.Loc.Instance["LblSequence"];
+                    _status.Source = Loc.Instance["LblSequence"];
                 }
 
                 RaisePropertyChanged();
@@ -337,7 +324,7 @@ namespace NINA.ViewModel {
         public bool ImportTargets() {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = false;
-            dialog.Title = Locale.Loc.Instance["LblImportTargets"];
+            dialog.Title = Loc.Instance["LblImportTargets"];
             dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
             dialog.FileName = "";
             dialog.DefaultExt = "csv";
@@ -391,13 +378,13 @@ namespace NINA.ViewModel {
                                 }
                             }
                             if (!(this.Targets?.Items?.Count > 0)) {
-                                Notification.ShowError(Locale.Loc.Instance["LblUnknownImportFormat"]);
+                                Notification.ShowError(Loc.Instance["LblUnknownImportFormat"]);
                             }
                         }
                     }
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblUnknownImportFormat"]);
+                    Notification.ShowError(Loc.Instance["LblUnknownImportFormat"]);
                 } finally {
                     SelectedTarget = (SimpleDSOContainer)Targets.Items.FirstOrDefault();
                 }
@@ -430,7 +417,7 @@ namespace NINA.ViewModel {
         private void SaveTargetSet(object obj) {
             Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
-            dialog.Title = Locale.Loc.Instance["LblSaveTargetSet"];
+            dialog.Title = Loc.Instance["LblSaveTargetSet"];
             dialog.FileName = "";
             dialog.DefaultExt = "ninaTargetSet";
             dialog.Filter = "N.I.N.A target set files|*." + dialog.DefaultExt;
@@ -451,7 +438,7 @@ namespace NINA.ViewModel {
         public bool LoadTargetSet() {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = false;
-            dialog.Title = Locale.Loc.Instance["LblLoadTargetSet"];
+            dialog.Title = Loc.Instance["LblLoadTargetSet"];
             dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
             dialog.FileName = "";
             dialog.DefaultExt = "ninaTargetSet";
@@ -480,7 +467,7 @@ namespace NINA.ViewModel {
             // LoadSequence loads .xml files indivually - user may select any number of files from same folder
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = true;
-            dialog.Title = Locale.Loc.Instance["LblLoadSequence"];
+            dialog.Title = Loc.Instance["LblLoadSequence"];
             dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
             dialog.FileName = "Target";
             dialog.DefaultExt = ".xml";
@@ -520,7 +507,7 @@ namespace NINA.ViewModel {
             try {
                 Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
                 dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
-                dialog.Title = Locale.Loc.Instance["LblSaveAsSequence"];
+                dialog.Title = Loc.Instance["LblSaveAsSequence"];
                 dialog.DefaultExt = ".xml";
                 dialog.Filter = "XML documents|*.xml";
                 dialog.OverwritePrompt = true;
@@ -837,7 +824,7 @@ namespace NINA.ViewModel {
                 if (_imageTypes == null) {
                     _imageTypes = new ObservableCollection<string>();
 
-                    Type type = typeof(Model.CaptureSequence.ImageTypes);
+                    Type type = typeof(CaptureSequence.ImageTypes);
                     foreach (var p in type.GetFields(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static)) {
                         var v = p.GetValue(null);
                         _imageTypes.Add(v.ToString());

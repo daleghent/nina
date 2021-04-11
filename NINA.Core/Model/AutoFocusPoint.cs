@@ -14,7 +14,7 @@
 
 using System;
 
-namespace NINA.ViewModel.ImageHistory {
+namespace NINA.Core.Model {
 
     public class AutoFocusPoint {
         public double NewPosition { get; set; }

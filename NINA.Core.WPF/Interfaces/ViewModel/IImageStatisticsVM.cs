@@ -12,10 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Model.ImageData;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Image.ImageData;
+using NINA.Image.Interfaces;
 using System.Threading.Tasks;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IImageStatisticsVM : IDockableVM {
         AllImageStatistics Statistics { get; set; }

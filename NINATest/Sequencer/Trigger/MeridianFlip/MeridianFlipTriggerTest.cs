@@ -14,12 +14,12 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model.MyTelescope;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger.MeridianFlip;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.ViewModel.ImageHistory;
 using NUnit.Framework;
 using System;
@@ -28,6 +28,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NINA.Core.Enum;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
@@ -71,7 +73,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
         public void ShouldTrigger_TimeToMeridianZero_True() {
             var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
 
-            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyTelescope.TelescopeInfo() {
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() {
                 Connected = true,
                 TimeToMeridianFlip = 0
             });
@@ -90,7 +92,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
         public void ShouldTrigger_TimeToMeridianLarge_ButSequenceItemDurationLarger_True() {
             var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
 
-            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyTelescope.TelescopeInfo() {
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() {
                 Connected = true,
                 TimeToMeridianFlip = 5
             });

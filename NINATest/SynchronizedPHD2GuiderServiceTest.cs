@@ -14,8 +14,10 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model.MyGuider;
-using NINA.Model.MyGuider.PHD2;
+using NINA.Core.Model;
+using NINA.Equipment.Equipment.MyGuider;
+using NINA.Equipment.Equipment.MyGuider.PHD2;
+using NINA.Equipment.Interfaces;
 using NUnit.Framework;
 using System;
 using System.ServiceModel;

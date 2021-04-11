@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,27 +12,29 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyTelescope;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
 using NINA.PlateSolving;
-using NINA.Profile;
-using NINA.Utility.WindowService;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NINA.ViewModel.AutoFocus;
-using NINA.Model.MyFilterWheel;
 using System.Linq;
-using NINA.ViewModel.ImageHistory;
+using NINA.Core.Model;
+using NINA.Core.Locale;
+using NINA.Core.Model.Equipment;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Equipment.Model;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.Interfaces;
 
-namespace NINA.ViewModel {
+namespace NINA.WPF.Base.ViewModel {
 
     public class MeridianFlipVM : BaseVM {
 
@@ -123,7 +125,7 @@ namespace NINA.ViewModel {
         }
 
         private async Task<bool> DoFlip(CancellationToken token, IProgress<ApplicationStatus> progress) {
-            progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblFlippingScope"] });
+            progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblFlippingScope"] });
             Logger.Info($"Meridian Flip - Scope will flip to coordinates RA: {_targetCoordinates.RAString} Dec: {_targetCoordinates.DecString} Epoch: {_targetCoordinates.Epoch}");
             var flipsuccess = await telescopeMediator.MeridianFlip(_targetCoordinates);
             Logger.Trace($"Meridian Flip - Successful flip: {flipsuccess}");
@@ -144,35 +146,35 @@ namespace NINA.ViewModel {
 
                 Steps = new AutomatedWorkflow();
 
-                Steps.Add(new WorkflowStep("StopAutoguider", Locale.Loc.Instance["LblStopAutoguider"], () => StopAutoguider(cancellationToken, _progress)));
+                Steps.Add(new WorkflowStep("StopAutoguider", Loc.Instance["LblStopAutoguider"], () => StopAutoguider(cancellationToken, _progress)));
 
-                Steps.Add(new WorkflowStep("PassMeridian", Locale.Loc.Instance["LblPassMeridian"], () => PassMeridian(cancellationToken, _progress)));
-                Steps.Add(new WorkflowStep("Flip", Locale.Loc.Instance["LblFlip"], () => DoFlip(cancellationToken, _progress)));
+                Steps.Add(new WorkflowStep("PassMeridian", Loc.Instance["LblPassMeridian"], () => PassMeridian(cancellationToken, _progress)));
+                Steps.Add(new WorkflowStep("Flip", Loc.Instance["LblFlip"], () => DoFlip(cancellationToken, _progress)));
                 if (profileService.ActiveProfile.MeridianFlipSettings.AutoFocusAfterFlip) {
-                    Steps.Add(new WorkflowStep("Autofocus", Locale.Loc.Instance["LblAutoFocus"], () => AutoFocus(cancellationToken, _progress)));
+                    Steps.Add(new WorkflowStep("Autofocus", Loc.Instance["LblAutoFocus"], () => AutoFocus(cancellationToken, _progress)));
                 }
                 if (profileService.ActiveProfile.MeridianFlipSettings.Recenter) {
-                    Steps.Add(new WorkflowStep("Recenter", Locale.Loc.Instance["LblRecenter"], () => Recenter(cancellationToken, _progress)));
+                    Steps.Add(new WorkflowStep("Recenter", Loc.Instance["LblRecenter"], () => Recenter(cancellationToken, _progress)));
                 }
 
-                Steps.Add(new WorkflowStep("SelectNewGuideStar", Locale.Loc.Instance["LblSelectNewGuideStar"], () => SelectNewGuideStar(cancellationToken, _progress)));
-                Steps.Add(new WorkflowStep("ResumeAutoguider", Locale.Loc.Instance["LblResumeAutoguider"], () => ResumeAutoguider(cancellationToken, _progress)));
+                Steps.Add(new WorkflowStep("SelectNewGuideStar", Loc.Instance["LblSelectNewGuideStar"], () => SelectNewGuideStar(cancellationToken, _progress)));
+                Steps.Add(new WorkflowStep("ResumeAutoguider", Loc.Instance["LblResumeAutoguider"], () => ResumeAutoguider(cancellationToken, _progress)));
 
-                Steps.Add(new WorkflowStep("Settle", Locale.Loc.Instance["LblSettle"], () => Settle(cancellationToken, _progress)));
+                Steps.Add(new WorkflowStep("Settle", Loc.Instance["LblSettle"], () => Settle(cancellationToken, _progress)));
 
                 await Steps.Process();
             } catch (OperationCanceledException) {
                 Logger.Trace("Meridian Flip - Cancelled by user");
             } catch (Exception ex) {
                 Logger.Error("Meridian Flip failed", ex);
-                Notification.ShowError(Locale.Loc.Instance["LblMeridianFlipFailed"] + Environment.NewLine + ex.Message);
+                Notification.ShowError(Loc.Instance["LblMeridianFlipFailed"] + Environment.NewLine + ex.Message);
 
                 try {
                     Logger.Trace("Meridian Flip - Resuming Autoguider after meridian flip error");
                     await ResumeAutoguider(cancellationToken, _progress);
                 } catch (Exception ex2) {
                     Logger.Error(ex2);
-                    Notification.ShowError(Locale.Loc.Instance["GuiderResumeFailed"]);
+                    Notification.ShowError(Loc.Instance["GuiderResumeFailed"]);
                 }
 
                 Logger.Trace("Meridian Flip - Re-enable Tracking after meridian flip error");
@@ -189,7 +191,7 @@ namespace NINA.ViewModel {
 
         private async Task<bool> AutoFocus(CancellationToken token, IProgress<ApplicationStatus> progress) {
             using (var autoFocus = AutoFocusVMFactory.Create()) {
-                progress.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblAutoFocus"] });
+                progress.Report(new ApplicationStatus { Status = Loc.Instance["LblAutoFocus"] });
                 var service = WindowServiceFactory.Create();
                 service.Show(autoFocus, autoFocus.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
                 try {
@@ -211,7 +213,7 @@ namespace NINA.ViewModel {
         private async Task<bool> PassMeridian(CancellationToken token, IProgress<ApplicationStatus> progress) {
             Logger.Trace("Meridian Flip - Passing meridian");
 
-            progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblStopTracking"] });
+            progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblStopTracking"] });
 
             Logger.Info("Meridian Flip - Stopping tracking to pass meridian");
             telescopeMediator.SetTrackingEnabled(false);
@@ -219,11 +221,11 @@ namespace NINA.ViewModel {
                 progress.Report(new ApplicationStatus() { Status = RemainingTime.ToString(@"hh\:mm\:ss") });
 
                 //progress.Report(string.Format("Next exposure paused until passing meridian. Remaining time: {0} seconds", RemainingTime));
-                var delta = await Utility.Utility.Delay(1000, token);
+                var delta = await CoreUtil.Delay(1000, token);
 
                 RemainingTime -= delta;
             } while (RemainingTime.TotalSeconds >= 1);
-            progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblResumeTracking"] });
+            progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblResumeTracking"] });
 
             Logger.Info("Meridian Flip - Resuming tracking after passing meridian");
             telescopeMediator.SetTrackingEnabled(true);
@@ -236,7 +238,7 @@ namespace NINA.ViewModel {
             if (profileService.ActiveProfile.MeridianFlipSettings.Recenter) {
                 Logger.Info("Meridian Flip - Recenter after meridian flip");
 
-                progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblInitiatePlatesolve"] });
+                progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblInitiatePlatesolve"] });
 
                 var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
                 var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
@@ -244,7 +246,7 @@ namespace NINA.ViewModel {
                     profileService.ActiveProfile.PlateSolveSettings.ExposureTime,
                     CaptureSequence.ImageTypes.SNAPSHOT,
                     profileService.ActiveProfile.PlateSolveSettings.Filter,
-                    new Model.MyCamera.BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
+                    new BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
                     1
                 );
                 seq.Gain = profileService.ActiveProfile.PlateSolveSettings.Gain;
@@ -267,7 +269,7 @@ namespace NINA.ViewModel {
                 var result = await solver.Center(seq, parameter, default, progress, token);
                 if (!result.Success) {
                     Logger.Error("Center after meridian flip failed. Continuing without it");
-                    Notification.ShowError(Locale.Loc.Instance["LblMeridianFlipCenterFailed"]);
+                    Notification.ShowError(Loc.Instance["LblMeridianFlipCenterFailed"]);
                     // Recenter is best effort, so always return true
                 }
             }
@@ -275,7 +277,7 @@ namespace NINA.ViewModel {
         }
 
         private async Task<bool> ResumeAutoguider(CancellationToken token, IProgress<ApplicationStatus> progress) {
-            progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblResumeGuiding"] });
+            progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblResumeGuiding"] });
             Logger.Info("Meridian Flip - Resuming Autoguider");
             var result = await this.guiderMediator.StartGuiding(false, progress, token);
 
@@ -283,7 +285,7 @@ namespace NINA.ViewModel {
         }
 
         private async Task<bool> SelectNewGuideStar(CancellationToken token, IProgress<ApplicationStatus> progress) {
-            progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSelectGuidestar"] });
+            progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSelectGuidestar"] });
             Logger.Info("Meridian Flip - Selecting new guide star");
             return await this.guiderMediator.AutoSelectGuideStar(token);
         }
@@ -292,9 +294,9 @@ namespace NINA.ViewModel {
             RemainingTime = TimeSpan.FromSeconds(profileService.ActiveProfile.MeridianFlipSettings.SettleTime);
             Logger.Info($"Meridian Flip - Settling scope for {profileService.ActiveProfile.MeridianFlipSettings.SettleTime}");
             do {
-                progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSettle"] + " " + RemainingTime.ToString(@"hh\:mm\:ss") });
+                progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSettle"] + " " + RemainingTime.ToString(@"hh\:mm\:ss") });
 
-                var delta = await Utility.Utility.Delay(1000, token);
+                var delta = await CoreUtil.Delay(1000, token);
 
                 RemainingTime = TimeSpan.FromSeconds(RemainingTime.TotalSeconds - delta.TotalSeconds);
             } while (RemainingTime.TotalSeconds >= 1);
@@ -302,7 +304,7 @@ namespace NINA.ViewModel {
         }
 
         private async Task<bool> StopAutoguider(CancellationToken token, IProgress<ApplicationStatus> progress) {
-            progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblStopGuiding"] });
+            progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblStopGuiding"] });
             Logger.Info("Meridian Flip - Stopping Autoguider");
             var result = await this.guiderMediator.StopGuiding(token);
             return result;
@@ -342,7 +344,7 @@ namespace NINA.ViewModel {
             this._progress = new Progress<ApplicationStatus>(p => Status = p);
             var flip = DoMeridianFlip(targetCoordinates, timeToFlip, cancellationToken);
 
-            var serviceTask = service.ShowDialog(this, Locale.Loc.Instance["LblAutoMeridianFlip"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.None, CancelCommand);
+            var serviceTask = service.ShowDialog(this, Loc.Instance["LblAutoMeridianFlip"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.None, CancelCommand);
             var flipResult = await flip;
 
             await service.Close();

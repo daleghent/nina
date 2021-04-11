@@ -12,12 +12,15 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Astrometry;
+using NINA.Core.Utility;
 using NUnit.Framework;
 
 namespace NINATest.Utility {
+
     [TestFixture]
     public class ObservableRectangleTest {
+
         [Test]
         public void Rotation_NoInitialOffset() {
             //Arrange
@@ -146,7 +149,7 @@ namespace NINATest.Utility {
             //Assert
             Assert.AreEqual(rotation - initialOffset, rectangle.Rotation, "Invalid rotation value");
         }
-        
+
         [Test]
         public void TotalRotation_InitialOffsetSetRotationSet() {
             //Arrange
@@ -166,7 +169,7 @@ namespace NINATest.Utility {
         public void Rotation_PropertyChangedFired() {
             //Arrange
             ObservableRectangle rectangle = new ObservableRectangle(0);
-           
+
             var propertyChangedFired = false;
             rectangle.PropertyChanged += (obj, events) => {
                 propertyChangedFired = true;
@@ -174,16 +177,16 @@ namespace NINATest.Utility {
 
             //Act
             rectangle.Rotation = 15;
-            
+
             //Assert
             Assert.AreEqual(true, propertyChangedFired, "PropertyChangedEventNotFired");
         }
-        
+
         [Test]
         public void TotalRotation_PropertyChangedFired() {
             //Arrange
             ObservableRectangle rectangle = new ObservableRectangle(0);
-           
+
             var propertyChangedFired = false;
             rectangle.PropertyChanged += (obj, events) => {
                 propertyChangedFired = true;
@@ -191,7 +194,7 @@ namespace NINATest.Utility {
 
             //Act
             rectangle.TotalRotation = 15;
-            
+
             //Assert
             Assert.AreEqual(true, propertyChangedFired, "PropertyChangedEventNotFired");
         }

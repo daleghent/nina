@@ -27,16 +27,16 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using NINA.Utility;
-using NINA.Profile;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Model.MyPlanetarium;
-using NINA.Astrometry;
-using NINA.ViewModel.ImageHistory;
-using NINA.ViewModel;
-using NINA.ViewModel.FramingAssistant;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.Sequencer.Utility.DateTimeProvider;
 using System.ComponentModel.Composition.Primitives;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Locale;
+using NINA.Astrometry.Interfaces;
+using NINA.Equipment.Interfaces;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.Plugin {
 
@@ -119,8 +119,8 @@ namespace NINA.Plugin {
 
                         /* Compose the plugin catalog */
                         var pluginCatalog = new AggregateCatalog();
-                        var coreExtensionsFolder = Path.Combine(NINA.Utility.Utility.APPLICATIONDIRECTORY, "Plugins");
-                        var userExtensionsFolder = Path.Combine(NINA.Utility.Utility.APPLICATIONTEMPPATH, "Plugins");
+                        var coreExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONDIRECTORY, "Plugins");
+                        var userExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Plugins");
 
                         var files = new List<string>();
 
@@ -308,7 +308,7 @@ namespace NINA.Plugin {
 
         private string GrabLabel(string label) {
             if (label.StartsWith("Lbl_")) {
-                return Locale.Loc.Instance[label];
+                return Loc.Instance[label];
             } else {
                 return label;
             }

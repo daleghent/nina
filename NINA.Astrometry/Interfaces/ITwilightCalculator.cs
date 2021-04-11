@@ -1,4 +1,4 @@
-#region "copyright"
+﻿#region "copyright"
 
 /*
     Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
@@ -12,15 +12,12 @@
 
 #endregion "copyright"
 
-namespace NINA.Model.MyPlanetarium {
+using System;
 
-    /// <summary>
-    /// This class is a glorified double[3]
-    /// the name is NOT Coordinates to avoid confusion with Astrometry.Coordinates
-    /// </summary>
-    public class Coords {
-        public double Latitude { get; set; }
-        public double Longitude { get; set; }
-        public double Elevation { get; set; }
+namespace NINA.Astrometry.Interfaces {
+
+    public interface ITwilightCalculator {
+
+        TimeSpan GetTwilightDuration(DateTime date, double latitude, double longitude);
     }
 }

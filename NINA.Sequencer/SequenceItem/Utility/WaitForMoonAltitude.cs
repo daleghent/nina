@@ -14,15 +14,16 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using NINA.Astrometry;
 using System;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
@@ -106,13 +107,13 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
                 if (mustWait) {
                     progress.Report(new ApplicationStatus() {
-                        Status = string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress"],
+                        Status = string.Format(Loc.Instance["Lbl_SequenceItem_Utility_WaitForMoonAltitude_Progress"],
                         Math.Round(CurrentMoonAltitude, 2),
                         AttributeHelper.GetDescription(Comparator),
                         Math.Round(UserMoonAltitude, 2))
                     });
 
-                    await NINA.Utility.Utility.Delay(TimeSpan.FromSeconds(1), token);
+                    await NINA.Core.Utility.CoreUtil.Delay(TimeSpan.FromSeconds(1), token);
                 } else {
                     break;
                 }

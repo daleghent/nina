@@ -1,4 +1,5 @@
 ﻿using NINA.Core.API.SGP;
+using NINA.Core.Interfaces.API.SGP;
 using System;
 using System.ServiceModel;
 

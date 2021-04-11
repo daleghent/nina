@@ -13,7 +13,6 @@
 #endregion "copyright"
 
 using FluentAssertions;
-using NINA.ViewModel.AutoFocus;
 using NUnit.Framework;
 using OxyPlot.Series;
 using System;
@@ -22,6 +21,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NINA.Core.Enum;
+using NINA.WPF.Base.Utility.AutoFocus;
 
 namespace NINATest.Autofocus {
 

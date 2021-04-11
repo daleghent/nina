@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,15 +12,16 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Exceptions;
-using NINA.Utility.TcpRaw;
-using NINA.Profile;
+using NINA.Core.Utility.TcpRaw;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading.Tasks;
+using NINA.Equipment.Exceptions;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyPlanetarium {
+namespace NINA.Equipment.Equipment.MyPlanetarium {
 
     internal class HNSKY : IPlanetarium {
         private string address;
@@ -77,7 +78,7 @@ namespace NINA.Model.MyPlanetarium {
         /// Return the configured user location from HNSKY
         /// </summary>
         /// <returns></returns>
-        public async Task<Coords> GetSite() {
+        public async Task<Location> GetSite() {
             try {
                 string command = "GET_LOCATION\r\n";
 
@@ -100,7 +101,7 @@ namespace NINA.Model.MyPlanetarium {
                      * East is negative and West is positive in HNSKY.
                      * We must flip longitude's sign here.
                      */
-                    var loc = new Coords {
+                    var loc = new Location {
                         Latitude = AstroUtil.ToDegree(double.Parse(info[1].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)),
                         Longitude = AstroUtil.ToDegree(double.Parse(info[0].Replace(',', '.'), System.Globalization.CultureInfo.InvariantCulture)) * -1,
                         Elevation = 0

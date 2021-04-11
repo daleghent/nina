@@ -12,20 +12,19 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Image.FileFormat;
+using NINA.Image.Interfaces;
+using NINA.Profile.Interfaces;
 using NINA.ViewModel.Interfaces;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
 using Nito.AsyncEx;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -59,7 +58,7 @@ namespace NINA.ViewModel {
                 try {
                     var item = await queue.DequeueAsync(workerCTS.Token);
 
-                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Locale.Loc.Instance["LblSave"], Status = Locale.Loc.Instance["LblSavingImage"] });
+                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Loc.Instance["LblSave"], Status = Loc.Instance["LblSavingImage"] });
                     var path = await item.Data.PrepareSave(new FileSaveInfo(profileService), default);
 
                     var preparedData = await item.PrepareTask;
@@ -85,7 +84,7 @@ namespace NINA.ViewModel {
                     Logger.Error(ex);
                     Notification.ShowError(ex.Message);
                 } finally {
-                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Locale.Loc.Instance["LblSave"], Status = string.Empty });
+                    applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Source = Loc.Instance["LblSave"], Status = string.Empty });
                 }
             }
         }

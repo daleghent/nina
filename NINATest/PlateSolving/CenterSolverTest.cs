@@ -14,10 +14,9 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
 using NINA.PlateSolving;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -25,6 +24,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.Model;
+using NINA.Core.Model;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINATest.PlateSolving {
 
@@ -33,7 +35,6 @@ namespace NINATest.PlateSolving {
         private Mock<IPlateSolver> plateSolverMock;
         private Mock<IPlateSolver> blindSolverMock;
         private Mock<ITelescopeMediator> telescopeMediatorMock;
-        private Mock<IImagingMediator> imagingMediatorMock;
         private Mock<ICaptureSolver> captureSolverMock;
         private Mock<IFilterWheelMediator> filterMediatorMock;
 

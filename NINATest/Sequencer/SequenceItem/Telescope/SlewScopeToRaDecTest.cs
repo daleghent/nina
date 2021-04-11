@@ -14,14 +14,13 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.MyTelescope;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Sequencer;
 using NINA.Sequencer.Container;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem.Telescope;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -146,8 +145,8 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             parentMock
                 .SetupGet(x => x.Target)
                 .Returns(
-                new NINA.Model.InputTarget(Angle.ByDegree(1), Angle.ByDegree(2), null) {
-                    InputCoordinates = new NINA.Model.InputCoordinates() {
+                new InputTarget(Angle.ByDegree(1), Angle.ByDegree(2), null) {
+                    InputCoordinates = new InputCoordinates() {
                         Coordinates = coordinates
                     }
                 }

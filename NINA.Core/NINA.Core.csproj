@@ -363,7 +363,7 @@
     <Compile Include="Utility\TabControlEx.cs" />
     <Compile Include="Utility\TcpRaw\BasicQuery.cs" />
     <Compile Include="Utility\Ticker.cs" />
-    <Compile Include="Utility\Utility.cs" />
+    <Compile Include="Utility\CoreUtil.cs" />
     <Compile Include="Utility\ValidationRules.cs" />
     <Compile Include="Utility\ValidationRules\DegreesRule.cs" />
     <Compile Include="Utility\ValidationRules\DirectoryExistsRule.cs" />
@@ -591,11 +591,7 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Astrometry\" />
     <Folder Include="Model\Sequence\" />
-    <Folder Include="Profile\" />
-    <Folder Include="Utility\Dome\" />
-    <Folder Include="Utility\Mediator\Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

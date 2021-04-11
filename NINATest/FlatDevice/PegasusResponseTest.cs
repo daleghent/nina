@@ -12,8 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK;
 using NUnit.Framework;
 using System;
 
@@ -28,7 +28,7 @@ namespace NINATest.FlatDevice {
         [TestCase("SetBrightness", "L:20")]
         public void TestValidResponse(string responseName, string response) {
             var sut = (Response)Activator.CreateInstance("NINA.Equipment",
-                $"NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK.{responseName}Response").Unwrap();
+                $"NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK.{responseName}Response").Unwrap();
             sut.DeviceResponse = response;
         }
 
@@ -44,7 +44,7 @@ namespace NINATest.FlatDevice {
         [TestCase("SetBrightness", "")]
         public void TestInvalidResponse(string responseName, string response) {
             var sut = (Response)Activator.CreateInstance("NINA.Equipment",
-                $"NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK.{responseName}Response").Unwrap();
+                $"NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK.{responseName}Response").Unwrap();
             Assert.That(() => sut.DeviceResponse = response, Throws.TypeOf<InvalidDeviceResponseException>());
         }
 

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,12 +12,13 @@
 
 #endregion "copyright"
 
-using NINA.Utility.Http;
+using NINA.Astrometry;
+using NINA.Core.Utility.Http;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Astrometry.SkySurvey {
+namespace NINA.WPF.Base.SkySurvey {
 
     internal class SkyServerSkySurvey : ISkySurvey {
         private const string Url = "http://skyserver.sdss.org/dr14/SkyserverWS/ImgCutout/getjpeg?ra={0}&dec={1}&width={2}&height={3}&scale={4}";

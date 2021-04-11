@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,10 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Image.Interfaces;
 using System.Threading.Tasks;
 
-namespace NINA.Model.ImageData {
+namespace NINA.Image.ImageData {
 
     public class AllImageStatistics : BaseINPC {
         public ImageProperties ImageProperties { get; private set; }

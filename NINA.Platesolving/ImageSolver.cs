@@ -12,16 +12,18 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Image.Interfaces;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Model;
+using NINA.Core.Locale;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINA.PlateSolving {
 
@@ -37,7 +39,7 @@ namespace NINA.PlateSolving {
             var solver = GetSolver(parameter);
 
             Logger.Trace($"Solving with parameters: {Environment.NewLine + parameter.ToString()}");
-            progress?.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPlateSolving"] });
+            progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolving"] });
 
             var result = await solver.SolveAsync(source, parameter, progress, ct);
             if (result.Success == false && parameter.Coordinates != null) {
@@ -76,7 +78,7 @@ namespace NINA.PlateSolving {
 
             // Check to make sure user has supplied the telescope's effective focal length (in mm)
             if (double.IsNaN(focalLength) || focalLength <= 0) {
-                throw new Exception(Locale.Loc.Instance["LblPlateSolveNoFocalLength"]);
+                throw new Exception(Loc.Instance["LblPlateSolveNoFocalLength"]);
             }
         }
     }

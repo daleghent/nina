@@ -1,5 +1,8 @@
-﻿using NINA.Utility;
-using NINA.Utility.Notification;
+﻿using NINA.Core.Interfaces.API.SGP;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Utility;
 using Nito.AsyncEx;
 using System;
 using System.ServiceModel;
@@ -56,11 +59,11 @@ namespace NINA.API.SGP {
                     stp.IncludeExceptionDetailInFaults = true;
                     hostWeb.Open();
 
-                    Notification.ShowInformation(Locale.Loc.Instance["LblServerStarted"]);
+                    Notification.ShowInformation(Loc.Instance["LblServerStarted"]);
                     await stopServiceEvent.WaitAsync();
                 } catch (Exception ex) {
                     Logger.Error("Failed to start SGP Server", ex);
-                    Notification.ShowError(String.Format(Locale.Loc.Instance["LblServerFailed"], ex.Message));
+                    Notification.ShowError(String.Format(Loc.Instance["LblServerFailed"], ex.Message));
                     throw;
                 } finally {
                     hostWeb?.Close();
@@ -74,7 +77,7 @@ namespace NINA.API.SGP {
                 stopServiceEvent.Set();
                 try {
                     serviceTask.Wait(new CancellationTokenSource(2000).Token);
-                    Notification.ShowInformation(Locale.Loc.Instance["LblServerStopped"]);
+                    Notification.ShowInformation(Loc.Instance["LblServerStopped"]);
                 } catch (Exception ex) {
                     Logger.Error("Failed to stop SGP Server", ex.Message);
                 } finally {

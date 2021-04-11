@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,14 +12,17 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyRotator;
-using NINA.Utility;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyRotator;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
+using NINA.Core.Locale;
+using NINA.Equipment.Utility;
+using NINA.Equipment.Equipment;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.ViewModel.Equipment.Rotator {
+namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
     public class RotatorChooserVM : DeviceChooserVM {
 
@@ -28,9 +31,9 @@ namespace NINA.ViewModel.Equipment.Rotator {
 
         public override void GetEquipment() {
             lock (lockObj) {
-                var devices = new List<Model.IDevice>();
+                var devices = new List<IDevice>();
 
-                devices.Add(new DummyDevice(Locale.Loc.Instance["LblNoRotator"]));
+                devices.Add(new DummyDevice(Loc.Instance["LblNoRotator"]));
 
                 try {
                     foreach (IRotator rotator in ASCOMInteraction.GetRotators(profileService)) {

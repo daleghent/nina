@@ -1,0 +1,4 @@
+namespace NINA.Core.Locale
+{
+
+}

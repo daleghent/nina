@@ -193,9 +193,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="Sequencer\Examples\Basic Sequence End.template.json" />
-    <None Include="Sequencer\Examples\Basic Sequence Startup.template.json" />
-    <None Include="Sequencer\Examples\Basic Sequence Target.template.json" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Options.xaml">

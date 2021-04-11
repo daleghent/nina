@@ -12,14 +12,16 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.Sequencer.Container;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.ViewModel.Sequencer;
 using System;
 using System.Collections.Generic;
+using NINA.Sequencer.Interfaces.Mediator;
+using NINA.Astrometry;
 
-namespace NINA.Utility.Mediator {
+namespace NINA.Sequencer.Mediator {
 
     public class SequenceMediator : ISequenceMediator {
         private ISequenceNavigationVM sequenceNavigation;

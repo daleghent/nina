@@ -14,10 +14,12 @@
 
 using Moq;
 using NINA.Profile;
-using NINA.ViewModel.Equipment.FlatDevice;
+using NINA.Profile.Interfaces;
+using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
 using NUnit.Framework;
 
 namespace NINATest.FlatDevice {
+
     [TestFixture]
     public class FilterTimingTest {
         private Mock<IProfileService> _mockProfileService;

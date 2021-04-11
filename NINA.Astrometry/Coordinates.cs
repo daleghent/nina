@@ -12,8 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.ViewModel.FramingAssistant;
+using NINA.Core.Utility;
 using System;
 using System.Windows;
 using System.Xml.Serialization;

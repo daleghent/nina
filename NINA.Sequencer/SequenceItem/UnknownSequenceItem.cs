@@ -12,8 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Locale;
+using NINA.Core.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +26,7 @@ namespace NINA.Sequencer.SequenceItem {
     internal class UnknownSequenceItem : SequenceItem {
 
         public new string Name {
-            get => $"<{Locale.Loc.Instance["LblUnknownInstruction"]} - {base.Name}> ";
+            get => $"<{Loc.Instance["LblUnknownInstruction"]} - {base.Name}> ";
             private set {
                 base.Name = value;
             }

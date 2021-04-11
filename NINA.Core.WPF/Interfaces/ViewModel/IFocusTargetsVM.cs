@@ -13,11 +13,12 @@
 #endregion "copyright"
 
 using System.Collections.ObjectModel;
-using NINA.Model;
-using NINA.Model.MyTelescope;
-using NINA.Utility;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Core.Utility;
+using NINA.Astrometry;
+using NINA.Equipment.Interfaces.ViewModel;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IFocusTargetsVM : IDockableVM {
         ObservableCollection<FocusTarget> FocusTargets { get; set; }

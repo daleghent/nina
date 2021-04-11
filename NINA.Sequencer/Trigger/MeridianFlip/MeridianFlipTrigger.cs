@@ -13,17 +13,17 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Utility;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.ViewModel;
-using NINA.ViewModel.ImageHistory;
+using NINA.WPF.Base.Interfaces.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -31,6 +31,9 @@ using System.ComponentModel.Composition;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Enum;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Locale;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.Sequencer.Trigger.MeridianFlip {
 
@@ -94,6 +97,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             }
             set { }
         }
+
         public virtual double PauseTimeBeforeMeridian {
             get {
                 return profileService.ActiveProfile.MeridianFlipSettings.PauseTimeBeforeMeridian;
@@ -137,6 +141,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             }
             set { }
         }
+
         public override Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             var target = ItemUtility.RetrieveContextCoordinates(context).Item1 ?? telescopeMediator.GetCurrentPosition();
 
@@ -220,7 +225,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                     if (noRemainingTime) {
                         // There is no more time remaining. Project the side of pier to that at the time after the flip and check if this flip is required
                         var projectedSiderealTime = Angle.ByHours(AstroUtil.EuclidianModulus(telescopeInfo.SiderealTime + originalMaximumTimeRemaining.TotalHours, 24));
-                        var targetSideOfPier = NINA.Utility.MeridianFlip.ExpectedPierSide(
+                        var targetSideOfPier = NINA.Astrometry.MeridianFlip.ExpectedPierSide(
                             coordinates: telescopeInfo.Coordinates,
                             localSiderealTime: projectedSiderealTime);
                         if (telescopeInfo.SideOfPier == targetSideOfPier) {
@@ -232,7 +237,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                         }
                     } else {
                         // There is still time remaining. A flip is likely not required. Double check by checking the current expected side of pier with the actual side of pier
-                        var targetSideOfPier = NINA.Utility.MeridianFlip.ExpectedPierSide(
+                        var targetSideOfPier = NINA.Astrometry.MeridianFlip.ExpectedPierSide(
                             coordinates: telescopeInfo.Coordinates,
                             localSiderealTime: Angle.ByHours(telescopeInfo.SiderealTime));
                         if (telescopeInfo.SideOfPier == targetSideOfPier) {
@@ -284,15 +289,15 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             var cameraInfo = telescopeMediator.GetInfo();
 
             if (!cameraMediator.GetInfo().Connected) {
-                i.Add(Locale.Loc.Instance["LblCameraNotConnected"]);
+                i.Add(Loc.Instance["LblCameraNotConnected"]);
             }
             if (!cameraInfo.Connected) {
-                i.Add(Locale.Loc.Instance["LblTelescopeNotConnected"]);
+                i.Add(Loc.Instance["LblTelescopeNotConnected"]);
             }
 
             if (profileService.ActiveProfile.MeridianFlipSettings.AutoFocusAfterFlip) {
                 if (!focuserMediator.GetInfo().Connected) {
-                    i.Add(Locale.Loc.Instance["LblFocuserNotConnected"]);
+                    i.Add(Loc.Instance["LblFocuserNotConnected"]);
                 }
             }
 

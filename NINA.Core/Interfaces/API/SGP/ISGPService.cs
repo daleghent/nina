@@ -3,7 +3,7 @@ using System;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 
-namespace NINA.API.SGP {
+namespace NINA.Core.Interfaces.API.SGP {
 
     [ServiceContract]
     public interface ISGPService {

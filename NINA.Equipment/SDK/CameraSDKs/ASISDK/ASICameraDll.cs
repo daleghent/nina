@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Drawing;
 using System.IO;

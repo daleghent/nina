@@ -17,7 +17,7 @@ using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
-namespace NINA.Utility.Behaviors {
+namespace NINA.WPF.Base.Behaviors {
 
     public class MouseFollowBehavior {
 

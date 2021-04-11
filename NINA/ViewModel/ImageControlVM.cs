@@ -12,26 +12,31 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Utility.Behaviors;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
-using NINA.Utility.WindowService;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using NINA.Utility.ImageAnalysis;
-using NINA.Model.ImageData;
-using NINA.Utility.Mediator;
 using NINA.PlateSolving;
 using NINA.ViewModel.Interfaces;
 using NINA.Core.Enum;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.Utility;
+using NINA.Astrometry;
+using NINA.WPF.Base.Behaviors;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Image.ImageAnalysis;
+using NINA.Core.Utility.WindowService;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.ViewModel {
 
@@ -184,7 +189,7 @@ namespace NINA.ViewModel {
                 var vm = new AberrationInspectorVM(profileService);
                 await vm.Initialize(Image);
                 var service = WindowServiceFactory.Create();
-                service.Show(vm, Locale.Loc.Instance["LblAberrationInspector"], ResizeMode.CanResize, WindowStyle.ToolWindow);
+                service.Show(vm, Loc.Instance["LblAberrationInspector"], ResizeMode.CanResize, WindowStyle.ToolWindow);
                 return true;
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -634,11 +639,11 @@ namespace NINA.ViewModel {
                     return null;
                 }
 
-                _progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblPrepareImage"] });
+                _progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblPrepareImage"] });
 
                 var renderedImage = data.RenderImage();
                 if (data.Properties.IsBayered && profileService.ActiveProfile.ImageSettings.DebayerImage) {
-                    _progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblDebayeringImage"] });
+                    _progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDebayeringImage"] });
                     var unlinkedStretch = profileService.ActiveProfile.ImageSettings.UnlinkedStretch;
                     var starDetection = profileService.ActiveProfile.ImageSettings.DebayeredHFR && DetectStars;
 
@@ -681,7 +686,7 @@ namespace NINA.ViewModel {
             var autoStretch = detectStars || (parameters.AutoStretch.HasValue ? parameters.AutoStretch.Value : AutoStretch);
             var processedImage = renderedImage;
             if (autoStretch) {
-                _progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblStretchImage"] });
+                _progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblStretchImage"] });
                 var unlinkedStretch = renderedImage.RawImageData.Properties.IsBayered && profileService.ActiveProfile.ImageSettings.DebayerImage && profileService.ActiveProfile.ImageSettings.UnlinkedStretch;
                 processedImage = await processedImage.Stretch(
                     factor: profileService.ActiveProfile.ImageSettings.AutoStretchFactor,

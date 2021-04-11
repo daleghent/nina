@@ -1,15 +1,17 @@
 ﻿using NUnit.Framework;
 using System;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System.Windows.Media.Media3D;
 using NINA.Astrometry;
-using NINA.Model.MyTelescope;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Core.Database;
 using System.IO;
 using Moq;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using ASCOM.Astrometry.NOVASCOM;
 using NINA.Core.Enum;
+using NINA.Equipment.Equipment.MyDome;
+using NINA.Equipment.Interfaces;
 
 namespace NINATest.Dome {
 

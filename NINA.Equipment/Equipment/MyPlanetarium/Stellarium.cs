@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,18 +12,19 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Exceptions;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading.Tasks;
-using NINA.Utility.Http;
+using NINA.Core.Utility.Http;
 using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using NINA.Equipment.Exceptions;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyPlanetarium {
+namespace NINA.Equipment.Equipment.MyPlanetarium {
 
     public class Stellarium : IPlanetarium {
         private string baseUrl;
@@ -38,7 +39,7 @@ namespace NINA.Model.MyPlanetarium {
 
         public bool CanGetRotationAngle => true;
 
-        public async Task<Coords> GetSite() {
+        public async Task<Location> GetSite() {
             string route = "/api/main/status";
 
             var request = new HttpGetRequest(this.baseUrl + route);
@@ -49,7 +50,7 @@ namespace NINA.Model.MyPlanetarium {
                 var jobj = JObject.Parse(response);
                 var status = jobj.ToObject<StellariumStatus>();
 
-                Coords loc = new Coords {
+                Location loc = new Location {
                     Latitude = status.Location.Latitude,
                     Longitude = status.Location.Longitude,
                     Elevation = status.Location.Altitude

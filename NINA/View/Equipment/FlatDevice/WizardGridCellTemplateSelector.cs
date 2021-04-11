@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.ViewModel.Equipment.FlatDevice;
+using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
 using System.Windows;
 using System.Windows.Controls;
 

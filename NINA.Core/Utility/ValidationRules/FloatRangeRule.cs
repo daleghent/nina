@@ -17,7 +17,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace NINA.Utility.ValidationRules {
+namespace NINA.Core.Utility.ValidationRules {
 
     public class FloatRangeRule : ValidationRule {
         public FloatRangeChecker ValidRange { get; set; }

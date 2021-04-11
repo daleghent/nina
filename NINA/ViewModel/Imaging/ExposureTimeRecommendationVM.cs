@@ -12,15 +12,17 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.ImageAnalysis;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Model.Equipment;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Model;
+using NINA.Image.ImageAnalysis;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
@@ -30,12 +32,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.ViewModel.Imaging {
 
     internal class ExposureCalculatorVM : DockableVM, IExposureCalculatorVM, ICameraConsumer {
         private double _recommendedExposureTime;
-        private Model.MyFilterWheel.FilterInfo _snapFilter;
+        private FilterInfo _snapFilter;
         private ISharpCapSensorAnalysisReader _sharpCapSensorAnalysisReader;
         private readonly ICameraMediator cameraMediator;
         private CancellationTokenSource _cts;
@@ -77,7 +81,7 @@ namespace NINA.ViewModel.Imaging {
             ReloadSensorAnalysisCommand = new AsyncCommand<bool>(ReloadSensorAnalysis);
             CancelDetermineBiasCommand = new RelayCommand(TriggerCancelToken);
 
-            this._sharpCapSensorAnalysisDisabledValue = "(" + Locale.Loc.Instance["LblDisabled"] + ")";
+            this._sharpCapSensorAnalysisDisabledValue = "(" + Loc.Instance["LblDisabled"] + ")";
             this._sharpCapSensorNames = new ObservableCollection<string>();
             var configuredPath = this.profileService.ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder;
             if (String.IsNullOrEmpty(configuredPath)) {
@@ -120,7 +124,7 @@ namespace NINA.ViewModel.Imaging {
             _cts?.Dispose();
             _cts = new CancellationTokenSource();
 
-            var seq = new CaptureSequence(exposureDuration, CaptureSequence.ImageTypes.SNAPSHOT, SnapFilter, new Model.MyCamera.BinningMode(1, 1), 1);
+            var seq = new CaptureSequence(exposureDuration, CaptureSequence.ImageTypes.SNAPSHOT, SnapFilter, new BinningMode(1, 1), 1);
             seq.Gain = SnapGain;
             var prepareParameters = new PrepareImageParameters(autoStretch: true, detectStars: false);
             var capture = await _imagingMediator.CaptureAndPrepareImage(seq, prepareParameters, _cts.Token, null); //todo progress
@@ -135,7 +139,7 @@ namespace NINA.ViewModel.Imaging {
         }
 
         private async Task<bool> DetermineBias(object arg) {
-            MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblCoverScopeMsgBoxTitle"]);
+            MyMessageBox.Show(Loc.Instance["LblCoverScopeMsgBoxTitle"]);
             var imageStatistics = await TakeExposure(0);
             this.BiasMedian = (await imageStatistics.ImageStatistics).Median;
             return true;
@@ -146,7 +150,7 @@ namespace NINA.ViewModel.Imaging {
                 ? SharpCapSensorAnalysisConstants.DEFAULT_SHARPCAP_SENSOR_ANALYSIS_PATH
                 : this.profileService.ActiveProfile.ImageSettings.SharpCapSensorAnalysisFolder;
             var sensorAnalysisData = LoadSensorAnalysisData(path);
-            Notification.ShowInformation(String.Format(Locale.Loc.Instance["LblSharpCapSensorAnalysisLoadedFormat"], sensorAnalysisData.Count));
+            Notification.ShowInformation(String.Format(Loc.Instance["LblSharpCapSensorAnalysisLoadedFormat"], sensorAnalysisData.Count));
             return Task.FromResult(true);
         }
 
@@ -227,7 +231,7 @@ namespace NINA.ViewModel.Imaging {
             }
         }
 
-        public Model.MyFilterWheel.FilterInfo SnapFilter {
+        public FilterInfo SnapFilter {
             get => _snapFilter;
 
             set {
@@ -295,7 +299,7 @@ namespace NINA.ViewModel.Imaging {
         private void CalculateRecommendedExposureTime() {
             if (Statistics.ImageStatistics.Result.Median - BiasMedian < 0) {
                 this.Statistics = null;
-                Notification.ShowError(Locale.Loc.Instance["LblExposureCalculatorMeanLessThanOffset"]);
+                Notification.ShowError(Loc.Instance["LblExposureCalculatorMeanLessThanOffset"]);
             } else {
                 // Optimal exposure time is: 10 * ReadNoiseSquared / LightPollutionRate
                 // Read noise units is electrons per ADU

@@ -1,4 +1,6 @@
-﻿using NINA.Profile;
+﻿using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Profile.Interfaces;
 using NINA.Utility;
 using NINA.ViewModel;
 using NINA.ViewModel.FlatWizard;
@@ -6,6 +8,7 @@ using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Interfaces;
 using NINA.ViewModel.Sequencer;
+using NINA.WPF.Base.Interfaces.ViewModel;
 using Ninject;
 using System;
 using System.Diagnostics;

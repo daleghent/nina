@@ -12,20 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Locale;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFlatDevice;
-using NINA.Model.MyTelescope;
-using NINA.Profile;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Profile.Interfaces;
 using NINA.Utility;
 using NINA.Astrometry;
-using NINA.Utility.ImageAnalysis;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Utility.WindowService;
 using NINA.ViewModel.Interfaces;
 using Nito.AsyncEx;
 using OxyPlot.Series;
@@ -40,8 +34,26 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
-using NINA.MyMessageBox;
 using NINA.Core.Enum;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Core.Interfaces;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.Model;
+using NINA.Image.ImageAnalysis;
+using NINA.Core.Utility.Notification;
+using NINA.Image.FileFormat;
+using NINA.Core.Utility.WindowService;
+using NINA.Profile;
+using NINA.Astrometry.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Model;
+using NINA.WPF.Base.Utility.AutoFocus;
 
 namespace NINA.ViewModel.FlatWizard {
 

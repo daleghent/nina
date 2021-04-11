@@ -15,7 +15,7 @@
 using FluentAssertions;
 using Moq;
 using NINA.Sequencer.Utility.DateTimeProvider;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,8 +13,10 @@
 #endregion "copyright"
 
 using ASCOM.DriverAccess;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,7 +25,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MySwitch {
+namespace NINA.Equipment.Equipment.MySwitch.Ascom {
 
     internal class AscomSwitchHub : AscomDevice<Switch>, ISwitchHub, IDisposable {
 
@@ -32,7 +34,7 @@ namespace NINA.Model.MySwitch {
 
         public ICollection<ISwitch> Switches { get; private set; } = new AsyncObservableCollection<ISwitch>();
 
-        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblSwitchConnectionLost"];
+        protected override string ConnectionLostMessage => Loc.Instance["LblSwitchConnectionLost"];
 
         private async Task ScanForSwitches() {
             Logger.Trace("Scanning for Ascom Switches");

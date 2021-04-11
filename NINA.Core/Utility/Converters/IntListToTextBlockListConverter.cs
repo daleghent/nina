@@ -19,7 +19,7 @@ using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Data;
 
-namespace NINA.Utility.Converters {
+namespace NINA.Core.Utility.Converters {
 
     public class IntListToTextBlockListConverter : IValueConverter {
 

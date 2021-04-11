@@ -16,7 +16,7 @@ using System;
 using System.Windows;
 using System.Windows.Data;
 
-namespace NINA.Utility.Converters {
+namespace NINA.Core.Utility.Converters {
 
     public class DateTimeZeroToVisibilityCollapsedConverter : IValueConverter {
 

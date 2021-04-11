@@ -14,9 +14,9 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
 using NINA.Sequencer.Trigger.Guider;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Interfaces;
 using NUnit.Framework;
@@ -26,6 +26,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.Equipment.MyGuider;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.Model;
 
 namespace NINATest.Sequencer.Trigger.Guider {
 
@@ -38,7 +41,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
         public void Setup() {
             historyMock = new Mock<IImageHistoryVM>();
             guiderMediatorMock = new Mock<IGuiderMediator>();
-            guiderMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyGuider.GuiderInfo() { Connected = true });
+            guiderMediatorMock.Setup(x => x.GetInfo()).Returns(new GuiderInfo() { Connected = true });
         }
 
         [Test]

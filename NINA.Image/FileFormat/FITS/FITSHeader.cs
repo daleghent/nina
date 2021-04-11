@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,15 +13,16 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.ImageData;
 using NINA.Astrometry;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
+using NINA.Core.Utility;
+using NINA.Image.ImageData;
 
-namespace NINA.Utility.FileFormat.FITS {
+namespace NINA.Image.FileFormat.FITS {
 
     public class FITSHeader {
 
@@ -682,7 +683,7 @@ namespace NINA.Utility.FileFormat.FITS {
             Add("ROWORDER", "TOP-DOWN", "FITS Image Orientation");
 
             Add("EQUINOX", 2000.0d, "Equinox of celestial coordinate system");
-            Add("SWCREATE", string.Format("N.I.N.A. {0} ({1})", Utility.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file");
+            Add("SWCREATE", string.Format("N.I.N.A. {0} ({1})", CoreUtil.Version, DllLoader.IsX86() ? "x86" : "x64"), "Software that created this file");
         }
     }
 }

@@ -22,7 +22,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interactivity;
 
-namespace NINA.Utility.Behaviors {
+namespace NINA.Sequencer.Behaviors {
 
     public class DropIntoBehavior : Behavior<UIElement> {
         public static readonly DependencyProperty OnDropCommandProperty = DependencyProperty.Register(nameof(OnDropCommand), typeof(ICommand), typeof(DropIntoBehavior));

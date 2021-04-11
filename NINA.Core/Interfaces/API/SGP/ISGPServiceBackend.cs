@@ -1,7 +1,7 @@
 ﻿using NINA.Core.API.SGP;
 using System.Threading.Tasks;
 
-namespace NINA.API.SGP {
+namespace NINA.Core.Interfaces.API.SGP {
     public interface ISGPServiceBackend {
         SgEnumerateDevicesResponse EnumerateDevices(SgEnumerateDevices input);
         SgGetDeviceStatusResponse GetDeviceStatus(SgGetDeviceStatus input);

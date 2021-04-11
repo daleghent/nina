@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,17 +12,18 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyGuider;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Profile;
-using NINA.Utility.WindowService;
-using NINA.Model.MyGuider.PHD2;
-using NINA.Utility;
+using NINA.Equipment.Equipment.MyGuider;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility.WindowService;
+using NINA.Equipment.Equipment.MyGuider.PHD2;
+using NINA.Core.Utility;
 using System;
 using System.IO;
 using System.Collections.Generic;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.ViewModel.Equipment.Guider {
+namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
     public class GuiderChooserVM : DeviceChooserVM {
         private readonly ICameraMediator cameraMediator;
@@ -38,7 +39,7 @@ namespace NINA.ViewModel.Equipment.Guider {
 
         public override void GetEquipment() {
             lock (lockObj) {
-                var devices = new List<Model.IDevice>();
+                var devices = new List<IDevice>();
                 devices.Add(new DummyGuider(profileService));
                 devices.Add(new PHD2Guider(profileService, windowServiceFactory));
                 //devices.Add(new SynchronizedPHD2Guider(profileService, cameraMediator, windowServiceFactory)); Non-Functional with current sequencer

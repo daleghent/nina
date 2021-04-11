@@ -1,10 +1,12 @@
 ﻿using NINA.Core.API.SGP;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.Equipment.Camera;
+using NINA.Core.Interfaces.API.SGP;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Model;
+using NINA.Image.FileFormat;
 using System;
 using System.IO;
 using System.Linq;

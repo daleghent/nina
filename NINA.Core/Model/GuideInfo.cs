@@ -12,11 +12,12 @@
 
 #endregion "copyright"
 
+using NINA.Core.Interfaces;
 using System.Runtime.Serialization;
 
 #pragma warning disable 1998
 
-namespace NINA.Model.MyGuider.PHD2 {
+namespace NINA.Core.Model {
 
     /// <summary>
     /// This class is used to send over guide data from the service to the guider client.

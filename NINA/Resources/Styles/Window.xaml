@@ -9,7 +9,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:win="clr-namespace:NINA.Utility.WindowService;assembly=NINA.Core">
+    xmlns:win="clr-namespace:NINA.Core.Utility.WindowService;assembly=NINA.Core">
 
     <Style x:Key="MainWindow" TargetType="{x:Type Window}">
         <Setter Property="WindowChrome.WindowChrome">

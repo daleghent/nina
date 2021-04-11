@@ -13,8 +13,10 @@
 #endregion "copyright"
 
 using ASCOM.DriverAccess;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,7 +25,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MySafetyMonitor {
+namespace NINA.Equipment.Equipment.MySafetyMonitor {
 
     internal class AscomSafetyMonitor : AscomDevice<SafetyMonitor>, ISafetyMonitor {
 
@@ -40,7 +42,7 @@ namespace NINA.Model.MySafetyMonitor {
             }
         }
 
-        protected override string ConnectionLostMessage => Locale.Loc.Instance["LblSafetyMonitorConnectionLost"];
+        protected override string ConnectionLostMessage => Loc.Instance["LblSafetyMonitorConnectionLost"];
 
         protected override SafetyMonitor GetInstance(string id) {
             return new SafetyMonitor(id);

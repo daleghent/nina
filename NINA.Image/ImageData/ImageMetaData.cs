@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,12 +13,13 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Astrometry;
 using System;
 using System.Linq;
+using NINA.Core.Model;
 
-namespace NINA.Model.ImageData {
+namespace NINA.Image.ImageData {
 
     public class ImageMetaData {
         public ImageParameter Image { get; set; } = new ImageParameter();

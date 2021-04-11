@@ -12,14 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace NINA.ViewModel {
+namespace NINA.Core.Model {
 
     public class PagedList<T> : BaseINPC {
 

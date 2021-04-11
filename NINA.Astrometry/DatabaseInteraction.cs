@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,10 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Notification;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -23,10 +22,12 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Utility.Extensions;
+using NINA.Core.Utility.Extensions;
 using System.Text.RegularExpressions;
+using NINA.Core.Model;
+using NINA.Core.Database;
 
-namespace NINA.Core.Database {
+namespace NINA.Astrometry {
 
     public class DatabaseInteraction {
 
@@ -79,7 +80,7 @@ namespace NINA.Core.Database {
         }
 
         public async Task<double> GetUT1_UTC(DateTime date, CancellationToken token) {
-            var unixTimestamp = Utility.Utility.DateTimeToUnixTimeStamp(date);
+            var unixTimestamp = CoreUtil.DateTimeToUnixTimeStamp(date);
             try {
                 using (var context = new NINADbContext(connectionString)) {
                     var rows = await context.EarthRotationParameterSet.OrderBy(x => Math.Abs(x.date - unixTimestamp)).Take(1).ToListAsync(token);

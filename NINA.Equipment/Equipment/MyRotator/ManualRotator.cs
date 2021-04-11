@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,15 +12,17 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Profile;
-using NINA.Utility.WindowService;
+using NINA.Core.Utility;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Astrometry;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyRotator {
+namespace NINA.Equipment.Equipment.MyRotator {
 
     public class ManualRotator : BaseINPC, IRotator {
         private IProfileService profileService;
@@ -81,13 +83,13 @@ namespace NINA.Model.MyRotator {
 
         public string Name {
             get {
-                return Locale.Loc.Instance["LblManualRotator"];
+                return Loc.Instance["LblManualRotator"];
             }
         }
 
         public string Description {
             get {
-                return Locale.Loc.Instance["LblManualRotatorDescription"];
+                return Loc.Instance["LblManualRotatorDescription"];
             }
         }
 
@@ -145,9 +147,9 @@ namespace NINA.Model.MyRotator {
         public string Direction {
             get {
                 if ((TargetPosition - Position < 0 && !Reverse) || (TargetPosition - Position >= 0 && Reverse)) {
-                    return Locale.Loc.Instance["LblCounterclockwise"];
+                    return Loc.Instance["LblCounterclockwise"];
                 } else {
-                    return Locale.Loc.Instance["LblClockwise"];
+                    return Loc.Instance["LblClockwise"];
                 }
             }
         }
@@ -171,7 +173,7 @@ namespace NINA.Model.MyRotator {
                 TargetPosition = TargetPosition + 360;
             }
 
-            var task = WindowService.ShowDialog(this, Locale.Loc.Instance["LblRotationRequired"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
+            var task = WindowService.ShowDialog(this, Loc.Instance["LblRotationRequired"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
             task.Wait();
 
             Position = AstroUtil.EuclidianModulus(TargetPosition, 360);

@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.DragDrop;

@@ -15,10 +15,11 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using NINA.Astrometry;
+using NINA.Core.Interfaces;
 using NINACustomControlLibrary;
 using Nito.Mvvm;
 
-namespace NINA.ViewModel {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IDeepSkyObjectSearchVM : INotifyPropertyChanged {
         Coordinates Coordinates { get; set; }

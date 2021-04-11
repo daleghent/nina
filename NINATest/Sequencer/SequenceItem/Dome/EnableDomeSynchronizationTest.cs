@@ -14,11 +14,11 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model.MyDome;
-using NINA.Model.MyTelescope;
-using NINA.Sequencer.Exceptions;
+using NINA.Equipment.Equipment.MyDome;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem.Dome;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

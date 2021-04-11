@@ -12,13 +12,13 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyTelescope;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Astrometry;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.ViewModel.Equipment.Dome {
+namespace NINA.Equipment.Interfaces {
 
     public interface IDomeFollower : INotifyPropertyChanged {
         bool IsSynchronized { get; }

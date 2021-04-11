@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Core.Model;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,16 +12,17 @@
 
 #endregion "copyright"
 
+using NINA.Core.Locale;
 using System;
 using System.Collections.Generic;
 
-namespace NINA.Model {
+namespace NINA.Astrometry {
 
     public class Constellation {
 
         public Constellation(string id) {
             Id = id;
-            Name = Locale.Loc.Instance["LblConstellation_" + id];
+            Name = Loc.Instance["LblConstellation_" + id];
             StarConnections = new List<Tuple<Star, Star>>();
         }
 

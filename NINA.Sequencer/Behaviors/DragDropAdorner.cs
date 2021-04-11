@@ -17,7 +17,7 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Utility.Behaviors {
+namespace NINA.Sequencer.Behaviors {
 
     internal class DragDropAdorner : Adorner {
         private readonly RenderTargetBitmap thisImg;

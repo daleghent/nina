@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,14 +12,13 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyTelescope;
-using NINA.Utility;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
-using NINA.Utility.WindowService;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -28,8 +27,15 @@ using System.Windows.Input;
 using System.Linq;
 using System.Collections.Immutable;
 using NINA.Core.Enum;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.Locale;
+using NINA.Core.MyMessageBox;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.Telescope {
+namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
     public class TelescopeVM : DockableVM, ITelescopeVM {
         private static double LAT_LONG_TOLERANCE = 0.001;
@@ -98,7 +104,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                 _telescope?.SendCommandString(command);
                 return true;
             } else {
-                Notification.ShowError(Locale.Loc.Instance["LblTelescopeNotConnectedForCommand"]);
+                Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"]);
                 return false;
             }
         }
@@ -117,7 +123,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                 try {
                     if (Telescope.CanPark) {
                         if (!Telescope.AtPark) {
-                            progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblWaitingForTelescopeToPark"] });
+                            progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblWaitingForTelescopeToPark"] });
                             Telescope.Park();
 
                             // Detect if the parking process was cancelled by an external force, such as the user hitting the stop button
@@ -134,7 +140,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                         throw new OperationCanceledException();
                                     }
 
-                                    await Utility.Utility.Delay(TimeSpan.FromSeconds(2), token);
+                                    await CoreUtil.Delay(TimeSpan.FromSeconds(2), token);
                                 }
                             }
                         } else {
@@ -149,7 +155,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                         result = SetTrackingEnabled(false);
                     }
                 } catch (OperationCanceledException) {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeParkCancelled"]);
+                    Notification.ShowWarning(Loc.Instance["LblTelescopeParkCancelled"]);
                     result = false;
                 } catch (Exception e) {
                     Logger.Error($"An error occured while attmepting to park: {e}");
@@ -230,7 +236,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                         if (!Telescope.AtHome) {
                             if (!Telescope.AtPark) {
                                 try {
-                                    progress?.Report(new ApplicationStatus { Status = Locale.Loc.Instance["LblWaitingForTelescopeToFindHome"] });
+                                    progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblWaitingForTelescopeToFindHome"] });
                                     Telescope.FindHome();
 
                                     // Detect if the homing process was cancelled by an external force, such as the user hitting the stop button
@@ -247,13 +253,13 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                                 throw new OperationCanceledException();
                                             }
 
-                                            await Utility.Utility.Delay(TimeSpan.FromSeconds(2), token);
+                                            await CoreUtil.Delay(TimeSpan.FromSeconds(2), token);
                                         }
                                     }
                                     // We are home
                                     success = true;
                                 } catch (OperationCanceledException) {
-                                    Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeFindHomeCancelled"]);
+                                    Notification.ShowWarning(Loc.Instance["LblTelescopeFindHomeCancelled"]);
                                 } catch (Exception e) {
                                     reason = e.Message;
                                     Notification.ShowError(e.Message);
@@ -263,17 +269,17 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                 }
                             } else {
                                 // AtPark == true
-                                Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeAtHomeParkedWarn"]);
+                                Notification.ShowWarning(Loc.Instance["LblTelescopeAtHomeParkedWarn"]);
                                 reason = "it is parked";
                             }
                         } else {
                             // AtHome == true
-                            Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeAtHomeWarn"]);
+                            Notification.ShowWarning(Loc.Instance["LblTelescopeAtHomeWarn"]);
                             reason = "it is already at the home position";
                         }
                     } else {
                         // CanFindHome == false
-                        Notification.ShowError(Locale.Loc.Instance["LblTelescopeNoFindHomeError"]);
+                        Notification.ShowError(Loc.Instance["LblTelescopeNoFindHomeError"]);
                         reason = "it is not capable of doing so";
                     }
                 }
@@ -336,7 +342,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                 this.applicationStatusMediator.StatusUpdate(
                     new ApplicationStatus() {
                         Source = Title,
-                        Status = Locale.Loc.Instance["LblConnecting"]
+                        Status = Loc.Instance["LblConnecting"]
                     }
                 );
 
@@ -352,12 +358,12 @@ namespace NINA.ViewModel.Equipment.Telescope {
 
                             if (Telescope.EquatorialSystem == Epoch.B1950 || Telescope.EquatorialSystem == Epoch.J2050) {
                                 Logger.Error($"Mount uses an unsupported equatorial system: {Telescope.EquatorialSystem}");
-                                throw new OperationCanceledException(string.Format(Locale.Loc.Instance["LblUnsupportedEpoch"], Telescope.EquatorialSystem));
+                                throw new OperationCanceledException(string.Format(Loc.Instance["LblUnsupportedEpoch"], Telescope.EquatorialSystem));
                             }
 
                             if (Telescope.HasUnknownEpoch) {
                                 Logger.Warning($"Mount reported an Unknown or Other equatorial system. Defaulting to {Telescope.EquatorialSystem}");
-                                Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblUnknownEpochWarning"], Telescope.EquatorialSystem));
+                                Notification.ShowWarning(string.Format(Loc.Instance["LblUnknownEpochWarning"], Telescope.EquatorialSystem));
                             }
 
                             if (Math.Abs(Telescope.SiteLatitude - profileService.ActiveProfile.AstrometrySettings.Latitude) > LAT_LONG_TOLERANCE
@@ -369,7 +375,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                                     Telescope.SiteLatitude,
                                     Telescope.SiteLongitude
                                 );
-                                await WindowService.ShowDialog(syncVM, Locale.Loc.Instance["LblSyncLatLong"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
+                                await WindowService.ShowDialog(syncVM, Loc.Instance["LblSyncLatLong"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
 
                                 if (syncVM.Mode == LatLongSyncMode.NINA) {
                                     profileService.ChangeLatitude(Telescope.SiteLatitude);
@@ -427,7 +433,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                             updateTimer.Interval = profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval;
                             updateTimer.Start();
 
-                            Notification.ShowSuccess(Locale.Loc.Instance["LblTelescopeConnected"]);
+                            Notification.ShowSuccess(Loc.Instance["LblTelescopeConnected"]);
                             profileService.ActiveProfile.TelescopeSettings.Id = Telescope.Id;
 
                             Logger.Info($"Successfully connected Telescope. Id: {telescope.Id} Name: {telescope.Name} Driver Version: {telescope.DriverVersion}");
@@ -628,7 +634,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
         }
 
         private async Task<bool> DisconnectTelescope() {
-            var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectTelescope"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+            var diag = MyMessageBox.Show(Loc.Instance["LblDisconnectTelescope"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
             if (diag == System.Windows.MessageBoxResult.OK) {
                 await Disconnect();
             }
@@ -662,7 +668,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
             try {
                 var transform = coordinates.Transform(TelescopeInfo.EquatorialSystem);
                 if (!profileService.ActiveProfile.TelescopeSettings.NoSync && TelescopeInfo.Connected) {
-                    progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblSync"] });
+                    progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSync"] });
                     bool result = Telescope.Sync(transform);
                     await Task.Delay(TimeSpan.FromSeconds(Math.Max(2, profileService.ActiveProfile.TelescopeSettings.SettleTime)));
                     return result;
@@ -819,12 +825,12 @@ namespace NINA.ViewModel.Equipment.Telescope {
                 if (Telescope?.Connected == true) {
                     progress.Report(
                         new ApplicationStatus() {
-                            Status = Locale.Loc.Instance["LblSlew"]
+                            Status = Loc.Instance["LblSlew"]
                         }
                     );
 
                     if (Telescope?.CanPark == true && Telescope?.AtPark == true) {
-                        Notification.ShowWarning(Locale.Loc.Instance["LblTelescopeParkedWarning"]);
+                        Notification.ShowWarning(Loc.Instance["LblTelescopeParkedWarning"]);
                     }
 
                     await Task.Run(() => {
@@ -832,7 +838,7 @@ namespace NINA.ViewModel.Equipment.Telescope {
                     }, token);
                     BroadcastTelescopeInfo();
                     await Task.WhenAll(
-                        Utility.Utility.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), token, progress, Locale.Loc.Instance["LblSettle"]),
+                        CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), token, progress, Loc.Instance["LblSettle"]),
                         this.domeMediator.WaitForDomeSynchronization(token));
                     return true;
                 } else {

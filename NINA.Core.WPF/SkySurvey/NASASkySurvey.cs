@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,13 +14,15 @@
 
 using Accord.Imaging;
 using Accord.Statistics.Visualizations;
-using NINA.Model.ImageData;
-using NINA.Utility.Http;
+using NINA.Image.ImageData;
+using NINA.Core.Utility.Http;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Utility;
+using NINA.Astrometry;
 
-namespace NINA.Astrometry.SkySurvey {
+namespace NINA.WPF.Base.SkySurvey {
 
     internal class NASASkySurvey : ISkySurvey {
         private const string Url = "https://skyview.gsfc.nasa.gov/current/cgi/runquery.pl?Survey=dss2r&Position={0},{1}&Size={2}&Pixels={3}&Return=JPG";
@@ -41,13 +43,13 @@ namespace NINA.Astrometry.SkySurvey {
             var image = await request.Request(ct, progress);
             image.Freeze();
 
-            using (var bmp = NINA.Utility.ImageAnalysis.ImageUtility.BitmapFromSource(image, System.Drawing.Imaging.PixelFormat.Format8bppIndexed)) {
-                bmp.Palette = Utility.ImageAnalysis.ImageUtility.GetGrayScalePalette();
+            using (var bmp = Image.ImageAnalysis.ImageUtility.BitmapFromSource(image, System.Drawing.Imaging.PixelFormat.Format8bppIndexed)) {
+                bmp.Palette = Image.ImageAnalysis.ImageUtility.GetGrayScalePalette();
                 Accord.Imaging.ImageStatistics stats = new Accord.Imaging.ImageStatistics(bmp);
                 Histogram gray = stats.GrayWithoutBlack;
                 new Accord.Imaging.Filters.BrightnessCorrection(Math.Min(115 - gray.Median, 0)).ApplyInPlace(bmp);
                 new Accord.Imaging.Filters.ContrastCorrection((int)Math.Round(115 - gray.StdDev * 2)).ApplyInPlace(bmp);
-                image = Utility.ImageAnalysis.ImageUtility.ConvertBitmap(bmp, System.Windows.Media.PixelFormats.Gray8);
+                image = Image.ImageAnalysis.ImageUtility.ConvertBitmap(bmp, System.Windows.Media.PixelFormats.Gray8);
                 image.Freeze();
             }
 

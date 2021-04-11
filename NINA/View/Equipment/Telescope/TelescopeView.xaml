@@ -16,9 +16,9 @@
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
-    xmlns:rules="clr-namespace:NINA.Utility.ValidationRules;assembly=NINA.Core"
-    xmlns:util="clr-namespace:NINA.Utility;assembly=NINA.Core"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
+    xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -608,8 +608,8 @@
                                 Width="80"
                                 Height="40"
                                 Margin="0,0,0,0"
-                                VerticalAlignment="Top"
                                 HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
                                 Command="{Binding SetParkPositionCommand}"
                                 Visibility="{Binding TelescopeInfo.CanSetPark, Converter={StaticResource VisibilityConverter}}">
                                 <Button.IsEnabled>
@@ -632,8 +632,8 @@
                                 Width="80"
                                 Height="40"
                                 Margin="0,0,0,10"
-                                VerticalAlignment="Bottom"
                                 HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
                                 Command="{Binding FindHomeCommand}"
                                 Visibility="{Binding TelescopeInfo.CanFindHome, Converter={StaticResource VisibilityConverter}}">
                                 <Button.IsEnabled>

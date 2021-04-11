@@ -12,13 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Astrometry;
 using System;
 using Accord.Math;
 using NINA.Core.Enum;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Utility {
+namespace NINA.Equipment.Equipment.MyDome {
 
     public class DomeSynchronization : IDomeSynchronization {
         private static double TWO_PI = 2.0 * Math.PI;

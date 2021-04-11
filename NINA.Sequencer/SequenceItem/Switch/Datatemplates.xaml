@@ -1,4 +1,4 @@
-﻿<!--
+﻿<!--xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
@@ -12,7 +12,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.Switch"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
-    xmlns:ns="clr-namespace:NINA.Locale;assembly=NINA.Core"
+    xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
     <DataTemplate DataType="{x:Type local:SetSwitchValue}">
         <view:SequenceBlockView DataContext="{Binding}">

@@ -15,7 +15,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IApplicationDeviceConnectionVM {
         ICommand ClosingCommand { get; }

@@ -13,13 +13,12 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.ImageHistory;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -28,6 +27,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.Sequencer.SequenceItem.Imaging {
 

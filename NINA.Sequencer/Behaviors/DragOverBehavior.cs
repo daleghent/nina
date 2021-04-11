@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
+using NINA.Core.Locale;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,7 +21,7 @@ using System.Windows.Input;
 using System.Windows.Interactivity;
 using System.Windows.Media;
 
-namespace NINA.Utility.Behaviors {
+namespace NINA.Sequencer.Behaviors {
 
     public class DragOverBehavior : Behavior<FrameworkElement> {
         public static readonly DependencyProperty DragBelowSizeProperty = DependencyProperty.Register(nameof(DragBelowSize), typeof(double), typeof(DragOverBehavior), new PropertyMetadata(0d));
@@ -28,9 +29,9 @@ namespace NINA.Utility.Behaviors {
         public static readonly DependencyProperty DragAboveSizeProperty = DependencyProperty.Register(nameof(DragAboveSize), typeof(double), typeof(DragOverBehavior), new PropertyMetadata(0d));
         public static readonly DependencyProperty EnabledProperty = DependencyProperty.Register(nameof(Enabled), typeof(bool), typeof(DragOverBehavior), new PropertyMetadata(true));
         public static readonly DependencyProperty DragOverDisplayAnchorProperty = DependencyProperty.Register(nameof(DragOverDisplayAnchor), typeof(DragOverDisplayAnchor), typeof(DragOverBehavior), new PropertyMetadata(DragOverDisplayAnchor.Right));
-        public static readonly DependencyProperty DragOverTopTextProperty = DependencyProperty.Register(nameof(DragOverTopText), typeof(string), typeof(DragOverBehavior), new PropertyMetadata(Locale.Loc.Instance["LblDragOver_TopText"]));
-        public static readonly DependencyProperty DragOverBottomTextProperty = DependencyProperty.Register(nameof(DragOverBottomText), typeof(string), typeof(DragOverBehavior), new PropertyMetadata(Locale.Loc.Instance["LblDragOver_BottomText"]));
-        public static readonly DependencyProperty DragOverCenterTextProperty = DependencyProperty.Register(nameof(DragOverCenterText), typeof(string), typeof(DragOverBehavior), new PropertyMetadata(Locale.Loc.Instance["LblDragOver_CenterText"]));
+        public static readonly DependencyProperty DragOverTopTextProperty = DependencyProperty.Register(nameof(DragOverTopText), typeof(string), typeof(DragOverBehavior), new PropertyMetadata(Loc.Instance["LblDragOver_TopText"]));
+        public static readonly DependencyProperty DragOverBottomTextProperty = DependencyProperty.Register(nameof(DragOverBottomText), typeof(string), typeof(DragOverBehavior), new PropertyMetadata(Loc.Instance["LblDragOver_BottomText"]));
+        public static readonly DependencyProperty DragOverCenterTextProperty = DependencyProperty.Register(nameof(DragOverCenterText), typeof(string), typeof(DragOverBehavior), new PropertyMetadata(Loc.Instance["LblDragOver_CenterText"]));
 
         private readonly Grid layoutParent = (Application.Current.MainWindow.FindName("RootGrid") as Grid);
         private DragOverAdorner dragOverAdorner;

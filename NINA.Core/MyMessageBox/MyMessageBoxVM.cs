@@ -12,9 +12,10 @@
 
 #endregion "copyright"
 
+using NINA.Core.Interfaces;
 using System.Windows;
 
-namespace NINA.MyMessageBox {
+namespace NINA.Core.MyMessageBox {
 
     public class MyMessageBoxVM : IMyMessageBoxVM {
 

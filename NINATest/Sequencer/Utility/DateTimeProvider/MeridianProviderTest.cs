@@ -14,11 +14,11 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Utility.DateTimeProvider;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
 using NUnit.Framework;
 using System;
@@ -58,8 +58,8 @@ namespace NINATest.Sequencer.Utility.DateTimeProvider {
             var entityMock = new Mock<ISequenceEntity>();
             var containerMock = new Mock<IDeepSkyObjectContainer>();
             var coordinates = new Coordinates(Angle.ByHours(ra), Angle.ByDegree(dec), Epoch.J2000, customDateTimeMock.Object);
-            var target = new NINA.Model.InputTarget(Angle.ByDegree(10), Angle.ByDegree(10), null);
-            target.InputCoordinates = new NINA.Model.InputCoordinates(coordinates);
+            var target = new InputTarget(Angle.ByDegree(10), Angle.ByDegree(10), null);
+            target.InputCoordinates = new InputCoordinates(coordinates);
             containerMock.SetupGet(x => x.Target).Returns(target);
             entityMock.SetupGet(x => x.Parent).Returns(containerMock.Object);
 

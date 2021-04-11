@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,19 +12,20 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Locale;
-using NINA.Utility.Notification;
-using NINA.Utility.WindowService;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Locale;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.WindowService;
+using NINA.Core.Utility.SerialCommunication;
 using ICommand = System.Windows.Input.ICommand;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyFocuser {
+namespace NINA.Equipment.Equipment.MyFocuser {
 
     public class UltimatePowerboxV2 : BaseINPC, IFocuser, IDisposable {
         private readonly IProfileService _profileService;
@@ -45,13 +46,13 @@ namespace NINA.Model.MyFocuser {
             SetBacklashStepsCommand = new RelayCommand(SetBacklashSteps);
         }
 
-        private void LogAndNotify(Utility.SerialCommunication.ICommand command, InvalidDeviceResponseException ex) {
+        private void LogAndNotify(Core.Utility.SerialCommunication.ICommand command, InvalidDeviceResponseException ex) {
             Logger.Error($"Invalid response from Ultimate Powerbox V2 on port {PortName}. " +
                          $"Command was: {command} Response was: {ex.Message}.");
             Notification.ShowError(Loc.Instance["LblUPBV2InvalidResponse"]);
         }
 
-        private void HandlePortClosed(Utility.SerialCommunication.ICommand command, SerialPortClosedException ex) {
+        private void HandlePortClosed(Core.Utility.SerialCommunication.ICommand command, SerialPortClosedException ex) {
             Logger.Error($"Serial port was closed. Command was: {command} Exception: {ex.InnerException}.");
             Notification.ShowError(Loc.Instance["LblUPBV2InvalidResponse"]);
             Disconnect();

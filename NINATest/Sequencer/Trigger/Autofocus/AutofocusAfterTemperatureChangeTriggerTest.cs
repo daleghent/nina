@@ -14,15 +14,13 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Model.MyFilterWheel;
-using NINA.Profile;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Trigger.Autofocus;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.WindowService;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.WindowService;
 using NINA.ViewModel;
-using NINA.ViewModel.AutoFocus;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Interfaces;
 using NUnit.Framework;
@@ -33,6 +31,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using NINA.Core.Utility;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.Model;
+using NINA.WPF.Base.Utility.AutoFocus;
 
 namespace NINATest.Sequencer.Trigger.Autofocus {
 
@@ -57,8 +63,8 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             guiderMediatorMock = new Mock<IGuiderMediator>();
             imagingMediatorMock = new Mock<IImagingMediator>();
             applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
-            cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyCamera.CameraInfo { Connected = true });
-            focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyFocuser.FocuserInfo { Connected = true });
+            cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo { Connected = true });
+            focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new FocuserInfo { Connected = true });
         }
 
         [Test]
@@ -80,7 +86,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         [TestCase(50, 5, 52, false)]
         [TestCase(50, 5, 48, false)]
         public void ShouldTrigger_LastAFExists(double initialTemp, double tempAmount, double changedTemp, bool shouldTrigger) {
-            var afHistory = new NINA.Utility.AsyncObservableCollection<ImageHistoryPoint>();
+            var afHistory = new AsyncObservableCollection<ImageHistoryPoint>();
             var report = new AutoFocusReport() { Temperature = initialTemp };
             var point = new ImageHistoryPoint(0, null, "LIGHT");
             point.PopulateAFPoint(report);
@@ -88,7 +94,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             historyMock.SetupGet(x => x.ImageHistory).Returns(afHistory.ToList());
             historyMock.SetupGet(x => x.AutoFocusPoints).Returns(afHistory);
 
-            focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyFocuser.FocuserInfo() { Temperature = changedTemp });
+            focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new FocuserInfo() { Temperature = changedTemp });
 
             var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
             sut.Amount = tempAmount;
@@ -107,12 +113,12 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         [TestCase(50, 5, 48, false)]
         public void ShouldTrigger_LastAFDoesNotExists_NoHistoryExists_NeverFocus(double initialTemp, double tempAmount, double changedTemp, bool shouldTrigger) {
             historyMock.SetupGet(x => x.ImageHistory).Returns(new List<ImageHistoryPoint>());
-            historyMock.SetupGet(x => x.AutoFocusPoints).Returns(new NINA.Utility.AsyncObservableCollection<ImageHistoryPoint>());
+            historyMock.SetupGet(x => x.AutoFocusPoints).Returns(new AsyncObservableCollection<ImageHistoryPoint>());
 
             focuserMediatorMock.SetupSequence(x => x.GetInfo())
-                .Returns(new NINA.Model.MyFocuser.FocuserInfo() { Connected = true, Temperature = initialTemp })
-                .Returns(new NINA.Model.MyFocuser.FocuserInfo() { Temperature = initialTemp })
-                .Returns(new NINA.Model.MyFocuser.FocuserInfo() { Temperature = changedTemp });
+                .Returns(new FocuserInfo() { Connected = true, Temperature = initialTemp })
+                .Returns(new FocuserInfo() { Temperature = initialTemp })
+                .Returns(new FocuserInfo() { Temperature = changedTemp });
 
             var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
             sut.Initialize();
@@ -132,12 +138,12 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         [TestCase(50, 5, 48, false)]
         public void ShouldTrigger_LastAFDoesNotExists_ButHistoryExists_(double initialTemp, double tempAmount, double changedTemp, bool shouldTrigger) {
             historyMock.SetupGet(x => x.ImageHistory).Returns(new List<ImageHistoryPoint>() { new ImageHistoryPoint(1, null, "LIGHT") });
-            historyMock.SetupGet(x => x.AutoFocusPoints).Returns(new NINA.Utility.AsyncObservableCollection<ImageHistoryPoint>());
+            historyMock.SetupGet(x => x.AutoFocusPoints).Returns(new AsyncObservableCollection<ImageHistoryPoint>());
 
             focuserMediatorMock.SetupSequence(x => x.GetInfo())
-                .Returns(new NINA.Model.MyFocuser.FocuserInfo() { Connected = true, Temperature = initialTemp })
-                .Returns(new NINA.Model.MyFocuser.FocuserInfo() { Temperature = initialTemp })
-                .Returns(new NINA.Model.MyFocuser.FocuserInfo() { Temperature = changedTemp });
+                .Returns(new FocuserInfo() { Connected = true, Temperature = initialTemp })
+                .Returns(new FocuserInfo() { Temperature = initialTemp })
+                .Returns(new FocuserInfo() { Temperature = changedTemp });
 
             var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
             sut.Initialize();

@@ -12,10 +12,12 @@
 
 #endregion "copyright"
 
+using NINA.Equipment.Interfaces.ViewModel;
 using NINA.ViewModel.FlatWizard;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
 using NINA.ViewModel.Sequencer;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel.Interfaces {
 

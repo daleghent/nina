@@ -104,7 +104,7 @@
       <RefTargetDir>INSTALLFOLDER</RefTargetDir>
     </ProjectReference>
     <ProjectReference Include="..\NINA.Platesolving\NINA.Platesolving.csproj">
-      <Name>NINA.Platesolving</Name>
+      <Name>NINA.PlateSolving</Name>
       <Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
       <Private>True</Private>
       <DoNotHarvest>True</DoNotHarvest>

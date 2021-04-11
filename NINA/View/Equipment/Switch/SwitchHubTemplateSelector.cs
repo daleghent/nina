@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Equipment.Equipment.MySwitch.PegasusAstro;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -24,10 +25,10 @@ namespace NINA.View.Equipment.Switch {
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
             switch (item) {
-                case Model.MySwitch.Eagle _:
+                case Eagle _:
                     return Eagle;
 
-                case Model.MySwitch.UltimatePowerBoxV2 _:
+                case UltimatePowerBoxV2 _:
                     return UltimatePowerBoxV2;
 
                 default:

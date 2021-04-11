@@ -12,19 +12,20 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
-using NINA.Utility;
-using NINA.Utility.ImageAnalysis;
-using NINA.Utility.Mediator;
-using NINA.Utility.WindowService;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Core.Utility;
+using NINA.Core.Utility.WindowService;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using NINA.Image.ImageAnalysis;
+using NINA.Astrometry;
+using NINA.Core.Model;
+using NINA.Image.Interfaces;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.Equipment.Interfaces.ViewModel {
 
     public interface IImageControlVM : IDockableVM {
         bool AutoStretch { get; set; }

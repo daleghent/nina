@@ -13,11 +13,14 @@
 #endregion "copyright"
 
 using System.Linq;
-using NINA.Model.MyCamera;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.Equipment.MyCamera;
 using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NUnit.Framework;
 
 namespace NINATest.FlatDevice {
+
     [TestFixture]
     public class FlatDeviceSettingsTest {
         private FlatDeviceSettings _sut;

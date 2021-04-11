@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,13 +12,14 @@
 
 #endregion "copyright"
 
+using NINA.Core.Model;
 using System;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyGuider.PHD2 {
+namespace NINA.Equipment.Interfaces {
 
     [ServiceContract]
     public interface ISynchronizedPHD2GuiderService {

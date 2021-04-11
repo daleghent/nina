@@ -13,17 +13,16 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
+using NINA.Core.Model;
 using NINA.PlateSolving;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Utility;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.WindowService;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.WindowService;
 using NINA.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -33,6 +32,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
+using NINA.Equipment.Model;
+using NINA.Core.Model.Equipment;
 
 namespace NINA.Sequencer.SequenceItem.Platesolving {
 
@@ -75,7 +77,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 while (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
                     var solveResult = await Solve(progress, token);
                     if (!solveResult.Success) {
-                        throw new Exception(Locale.Loc.Instance["LblPlatesolveFailed"]);
+                        throw new Exception(Loc.Instance["LblPlatesolveFailed"]);
                     }
 
                     orientation = (float)solveResult.Orientation;
@@ -107,7 +109,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 }
 
                 if (!centerResult.Success) {
-                    throw new Exception(Locale.Loc.Instance["LblPlatesolveFailed"]);
+                    throw new Exception(Loc.Instance["LblPlatesolveFailed"]);
                 }
             } finally {
                 service.DelayedClose(TimeSpan.FromSeconds(10));
@@ -136,7 +138,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 profileService.ActiveProfile.PlateSolveSettings.ExposureTime,
                 CaptureSequence.ImageTypes.SNAPSHOT,
                 profileService.ActiveProfile.PlateSolveSettings.Filter,
-                new Model.MyCamera.BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
+                new BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
                 1
             );
             return await solver.Solve(seq, parameter, plateSolveStatusVM.Progress, progress, token);
@@ -168,10 +170,10 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         public override bool Validate() {
             var i = new List<string>();
             if (!telescopeMediator.GetInfo().Connected) {
-                i.Add(Locale.Loc.Instance["LblTelescopeNotConnected"]);
+                i.Add(Loc.Instance["LblTelescopeNotConnected"]);
             }
             if (!rotatorMediator.GetInfo().Connected) {
-                i.Add(Locale.Loc.Instance["LblRotatorNotConnected"]);
+                i.Add(Loc.Instance["LblRotatorNotConnected"]);
             }
             Issues = i;
             return Issues.Count == 0;

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,19 +12,20 @@
 
 #endregion "copyright"
 
-using NINA.Locale;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.FlatDeviceSDKs.AlnitakSDK;
-using NINA.Utility.Notification;
-using NINA.Utility.SerialCommunication;
-using NINA.Utility.WindowService;
+using NINA.Core.Locale;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyFlatDevice {
+namespace NINA.Equipment.Equipment.MyFlatDevice {
 
     public class AlnitakFlatDevice : BaseINPC, IFlatDevice {
         private readonly IProfileService _profileService;
@@ -218,7 +219,7 @@ namespace NINA.Model.MyFlatDevice {
                     return false;
                 }
                 while (await IsMotorRunning()) {
-                    await Utility.Utility.Delay(delay, ct);
+                    await CoreUtil.Delay(delay, ct);
                 }
                 return CoverState == CoverState.Closed;
             }, ct);
@@ -279,7 +280,7 @@ namespace NINA.Model.MyFlatDevice {
                 }
 
                 while (await IsMotorRunning()) {
-                    await Utility.Utility.Delay(delay, ct);
+                    await CoreUtil.Delay(delay, ct);
                 }
                 return CoverState == CoverState.Open;
             }, ct);

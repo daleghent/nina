@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,8 +12,10 @@
 
 #endregion "copyright"
 
-using NINA.Model.ImageData;
-using NINA.Utility.FileFormat.FITS.DataConverter;
+using NINA.Core.Utility;
+using NINA.Image.FileFormat.FITS.DataConverter;
+using NINA.Image.Interfaces;
+using NINA.Image.ImageData;
 using nom.tam.fits;
 using System;
 using System.Collections;
@@ -22,7 +24,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Utility.FileFormat.FITS {
+namespace NINA.Image.FileFormat.FITS {
 
     /// <summary>
     /// Specification:
@@ -89,7 +91,7 @@ namespace NINA.Utility.FileFormat.FITS {
                 } catch (Exception ex) {
                     Logger.Error(ex.Message);
                 }
-                return new Model.ImageData.ImageData(pixels, width, height, 16, isBayered, metaData);
+                return new BaseImageData(pixels, width, height, 16, isBayered, metaData);
             }, ct);
         }
 

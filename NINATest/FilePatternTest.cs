@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model.ImageData;
+using NINA.Image.ImageData;
 using NUnit.Framework;
 
 namespace NINATest {
@@ -32,7 +32,7 @@ namespace NINATest {
             string expectedResult = "C-2020 F3 NEOWISE _--_---A Comet";
 
             //Act
-            ImageData result = new ImageData(arr, width, height, 16, false, metaData);
+            BaseImageData result = new BaseImageData(arr, width, height, 16, false, metaData);
             string parsedPattern = result.GetImagePatterns().GetImageFileString(filePattern);
 
             //Assert
@@ -47,7 +47,7 @@ namespace NINATest {
             string expectedResult = "20.00";
 
             //Act
-            ImageData result = new ImageData(arr, width, height, 16, false, metaData);
+            BaseImageData result = new BaseImageData(arr, width, height, 16, false, metaData);
             string parsedPattern = result.GetImagePatterns().GetImageFileString(filePattern);
 
             //Assert
@@ -62,7 +62,7 @@ namespace NINATest {
             string expectedResult = "139";
 
             //Act
-            ImageData result = new ImageData(arr, width, height, 16, false, metaData);
+            BaseImageData result = new BaseImageData(arr, width, height, 16, false, metaData);
             string parsedPattern = result.GetImagePatterns().GetImageFileString(filePattern);
 
             //Assert

@@ -27,7 +27,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NINA.Model.MySafetyMonitor {
+namespace NINA.WPF.Base.Model.Equipment.MySafetyMonitor.Simulator {
 
     /// <summary>
     /// Interaction logic for SafetyMonitorSimulatorSetup.xaml

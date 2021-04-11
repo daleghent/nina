@@ -12,11 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyTelescope;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +24,11 @@ using NINA.Core.Database;
 using Nito.AsyncEx;
 using NINA.ViewModel.Interfaces;
 using System.Threading;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Astrometry;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel {
 

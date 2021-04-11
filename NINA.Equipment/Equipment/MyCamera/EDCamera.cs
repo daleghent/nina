@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,11 +14,10 @@
 
 using EDSDKLib;
 using NINA.Core.Enum;
-using NINA.Model.ImageData;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Notification;
-using NINA.Utility.RawConverter;
+using NINA.Image.ImageData;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +26,15 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using NINA.Core.Locale;
+using NINA.Core.Model.Equipment;
+using NINA.Core.MyMessageBox;
+using NINA.Image.RawConverter;
+using NINA.Equipment.Model;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyCamera {
+namespace NINA.Equipment.Equipment.MyCamera {
 
     public class EDCamera : BaseINPC, ICamera {
 
@@ -200,7 +206,7 @@ namespace NINA.Model.MyCamera {
                 ValidateMode();
                 int iso = ISOSpeeds.Where((x) => x.Key == value).FirstOrDefault().Value;
                 if (CheckError(SetProperty(EDSDK.PropID_ISOSpeed, iso))) {
-                    Notification.ShowError(Locale.Loc.Instance["LblUnableToSetISO"]);
+                    Notification.ShowError(Loc.Instance["LblUnableToSetISO"]);
                 }
                 RaisePropertyChanged();
             }
@@ -483,7 +489,7 @@ namespace NINA.Model.MyCamera {
 
                         token.ThrowIfCancellationRequested();
 
-                        var rawConverter = RawConverter.CreateInstance(profileService.ActiveProfile.CameraSettings.RawConverter);
+                        var rawConverter = RawConverterFactory.CreateInstance(profileService.ActiveProfile.CameraSettings.RawConverter);
                         return new RAWExposureData(
                             rawConverter: rawConverter,
                             rawBytes: rawImageData,
@@ -533,9 +539,9 @@ namespace NINA.Model.MyCamera {
 
         private void ValidateMode() {
             if (!IsManualMode() && !IsBulbMode()) {
-                var result = MyMessageBox.MyMessageBox.Show(
-                    Locale.Loc.Instance["LblEDCameraNotInManualMode"],
-                    Locale.Loc.Instance["LblInvalidMode"],
+                var result = MyMessageBox.Show(
+                    Loc.Instance["LblEDCameraNotInManualMode"],
+                    Loc.Instance["LblInvalidMode"],
                     System.Windows.MessageBoxButton.OKCancel,
                     System.Windows.MessageBoxResult.OK);
                 if (result == System.Windows.MessageBoxResult.OK) {
@@ -548,9 +554,9 @@ namespace NINA.Model.MyCamera {
 
         private void ValidateModeForExposure(double exposureTime) {
             if (!IsManualMode() && !IsBulbMode()) {
-                var result = MyMessageBox.MyMessageBox.Show(
-                    Locale.Loc.Instance["LblEDCameraNotInManualMode"],
-                    Locale.Loc.Instance["LblInvalidMode"],
+                var result = MyMessageBox.Show(
+                    Loc.Instance["LblEDCameraNotInManualMode"],
+                    Loc.Instance["LblInvalidMode"],
                     System.Windows.MessageBoxButton.OKCancel,
                     System.Windows.MessageBoxResult.OK);
                 if (result == System.Windows.MessageBoxResult.OK) {
@@ -567,9 +573,9 @@ namespace NINA.Model.MyCamera {
                 } else {
                     var success = SetExposureTime(double.MaxValue);
                     if (!success) {
-                        var result = MyMessageBox.MyMessageBox.Show(
-                            Locale.Loc.Instance["LblChangeToBulbMode"],
-                            Locale.Loc.Instance["LblInvalidModeManual"],
+                        var result = MyMessageBox.Show(
+                            Loc.Instance["LblChangeToBulbMode"],
+                            Loc.Instance["LblInvalidModeManual"],
                             System.Windows.MessageBoxButton.OKCancel,
                             System.Windows.MessageBoxResult.OK);
                         if (result == System.Windows.MessageBoxResult.OK) {
@@ -582,9 +588,9 @@ namespace NINA.Model.MyCamera {
             }
 
             if (IsBulbMode() && exposureTime < 1.0) {
-                var result = MyMessageBox.MyMessageBox.Show(
-                    Locale.Loc.Instance["LblChangeToManualMode"],
-                    Locale.Loc.Instance["LblInvalidModeBulb"],
+                var result = MyMessageBox.Show(
+                    Loc.Instance["LblChangeToManualMode"],
+                    Loc.Instance["LblInvalidModeBulb"],
                     System.Windows.MessageBoxButton.OKCancel,
                     System.Windows.MessageBoxResult.OK);
                 if (result == System.Windows.MessageBoxResult.OK) {
@@ -617,7 +623,7 @@ namespace NINA.Model.MyCamera {
                 bulbCompletionCTS?.Cancel();
                 bulbCompletionCTS = new CancellationTokenSource();
                 bulbCompletionTask = Task.Run(async () => {
-                    await Utility.Utility.Wait(TimeSpan.FromSeconds(exposureTime), bulbCompletionCTS.Token);
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), bulbCompletionCTS.Token);
                     if (!bulbCompletionCTS.IsCancellationRequested) {
                         SendStopExposureCmd(true);
                     }
@@ -785,14 +791,14 @@ namespace NINA.Model.MyCamera {
             if (err == EDSDK.EDS_ERR_OK) {
                 return false;
             } else {
-                Logger.Error(new Exception(string.Format(Locale.Loc.Instance["LblCanonErrorOccurred"], ErrorCodeToString(err))), memberName);
+                Logger.Error(new Exception(string.Format(Loc.Instance["LblCanonErrorOccurred"], ErrorCodeToString(err))), memberName);
                 return true;
             }
         }
 
         private void CheckAndThrowError(uint err, [CallerMemberName] string memberName = "") {
             if (err != EDSDK.EDS_ERR_OK) {
-                var ex = new Exception(string.Format(Locale.Loc.Instance["LblCanonErrorOccurred"], ErrorCodeToString(err)));
+                var ex = new Exception(string.Format(Loc.Instance["LblCanonErrorOccurred"], ErrorCodeToString(err)));
                 Logger.Error(ex, memberName);
                 throw ex;
             }
@@ -883,7 +889,7 @@ namespace NINA.Model.MyCamera {
                     do {
                         err = EDSDK.EdsDownloadEvfImage(_cam, imageRef);
                         if (err == EDSDK.EDS_ERR_OBJECT_NOTREADY) {
-                            await Utility.Utility.Wait(TimeSpan.FromMilliseconds(100), token);
+                            await CoreUtil.Wait(TimeSpan.FromMilliseconds(100), token);
                         }
                     } while (err == EDSDK.EDS_ERR_OBJECT_NOTREADY);
 

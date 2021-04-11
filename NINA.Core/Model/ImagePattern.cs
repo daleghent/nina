@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -19,7 +19,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 
-namespace NINA.Model {
+namespace NINA.Core.Model {
 
     public class ImagePatterns {
 
@@ -114,7 +114,7 @@ namespace NINA.Model {
 
         public bool Set(string key, string value) {
             if (patterns.ContainsKey(key) && value != null) {
-                patterns[key].Value = Utility.Utility.ReplaceAllInvalidFilenameChars(value.Trim());
+                patterns[key].Value = Utility.CoreUtil.ReplaceAllInvalidFilenameChars(value.Trim());
                 return true;
             }
 
@@ -143,11 +143,11 @@ namespace NINA.Model {
             foreach (ImagePattern p in patterns.Values) {
                 s = s.Replace(p.Key, p.Value);
             }
-            var path = s.Split(Utility.Utility.PATHSEPARATORS, StringSplitOptions.RemoveEmptyEntries);
+            var path = s.Split(Utility.CoreUtil.PATHSEPARATORS, StringSplitOptions.RemoveEmptyEntries);
 
             var imageFileString = string.Empty;
             for (int i = 0; i < path.Length; i++) {
-                imageFileString = Path.Combine(imageFileString, Utility.Utility.ReplaceInvalidFilenameChars(path[i]));
+                imageFileString = Path.Combine(imageFileString, Utility.CoreUtil.ReplaceInvalidFilenameChars(path[i]));
             }
 
             return imageFileString;
@@ -175,7 +175,7 @@ namespace NINA.Model {
             p.Set(ImagePatternKeys.RMSArcSec, 0.65);
             p.Set(ImagePatternKeys.FocuserPosition, 12542);
             p.Set(ImagePatternKeys.FocuserTemp, "3.94");
-            p.Set(ImagePatternKeys.ApplicationStartDate, Utility.Utility.ApplicationStartDate.ToString("yyyy-MM-dd"));
+            p.Set(ImagePatternKeys.ApplicationStartDate, Utility.CoreUtil.ApplicationStartDate.ToString("yyyy-MM-dd"));
             p.Set(ImagePatternKeys.HFR, 3.25);
             p.Set(ImagePatternKeys.SQM, 21.83);
             p.Set(ImagePatternKeys.ReadoutMode, "42 MHz");

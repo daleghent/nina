@@ -12,11 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Model;
 using NINA.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using OxyPlot;
 using OxyPlot.Axes;
 using System;
@@ -33,6 +31,15 @@ using NINA.ViewModel.Sequencer;
 using NINA.Sequencer.Container;
 using NINA.Core.Database;
 using NINA.Core.Enum;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Sequencer.Interfaces.Mediator;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Astrometry.Interfaces;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel {
 
@@ -265,17 +272,17 @@ namespace NINA.ViewModel {
             SizesFrom.Add(new KeyValuePair<string, string>(string.Empty, string.Empty));
             SizesThrough.Add(new KeyValuePair<string, string>(string.Empty, string.Empty));
 
-            SizesFrom.Add(new KeyValuePair<string, string>("1", "1 " + Locale.Loc.Instance["LblArcsec"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("5", "5 " + Locale.Loc.Instance["LblArcsec"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("10", "10 " + Locale.Loc.Instance["LblArcsec"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("30", "30 " + Locale.Loc.Instance["LblArcsec"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("60", "1 " + Locale.Loc.Instance["LblArcmin"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("300", "5 " + Locale.Loc.Instance["LblArcmin"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("600", "10 " + Locale.Loc.Instance["LblArcmin"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("1800", "30 " + Locale.Loc.Instance["LblArcmin"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("3600", "1 " + Locale.Loc.Instance["LblDegree"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("18000", "5 " + Locale.Loc.Instance["LblDegree"]));
-            SizesFrom.Add(new KeyValuePair<string, string>("36000", "10 " + Locale.Loc.Instance["LblDegree"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("1", "1 " + Loc.Instance["LblArcsec"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("5", "5 " + Loc.Instance["LblArcsec"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("10", "10 " + Loc.Instance["LblArcsec"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("30", "30 " + Loc.Instance["LblArcsec"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("60", "1 " + Loc.Instance["LblArcmin"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("300", "5 " + Loc.Instance["LblArcmin"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("600", "10 " + Loc.Instance["LblArcmin"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("1800", "30 " + Loc.Instance["LblArcmin"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("3600", "1 " + Loc.Instance["LblDegree"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("18000", "5 " + Loc.Instance["LblDegree"]));
+            SizesFrom.Add(new KeyValuePair<string, string>("36000", "10 " + Loc.Instance["LblDegree"]));
 
             SizesThrough = new AsyncObservableCollection<KeyValuePair<string, string>>(SizesFrom);
         }

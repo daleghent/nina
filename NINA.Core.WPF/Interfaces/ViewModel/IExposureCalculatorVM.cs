@@ -15,12 +15,13 @@
 using System.Collections.Immutable;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
-using NINA.Model.ImageData;
-using NINA.Model.MyFilterWheel;
-using NINA.Utility;
-using NINA.Utility.ImageAnalysis;
+using NINA.Core.Utility;
+using NINA.Core.Model.Equipment;
+using NINA.Image.ImageAnalysis;
+using NINA.Image.ImageData;
+using NINA.Equipment.Interfaces.ViewModel;
 
-namespace NINA.ViewModel.Imaging {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IExposureCalculatorVM : IDockableVM {
         double BiasMedian { get; set; }

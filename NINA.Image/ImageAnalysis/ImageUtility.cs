@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,7 +14,10 @@
 
 using Accord.Imaging;
 using NINA.Core.Enum;
-using NINA.Model.ImageData;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Image.ImageData;
+using NINA.Image.Interfaces;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -23,7 +26,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Utility.ImageAnalysis {
+namespace NINA.Image.ImageAnalysis {
 
     public class ImageUtility {
 
@@ -266,7 +269,7 @@ namespace NINA.Utility.ImageAnalysis {
                         break;
 
                     default:
-                        throw new InvalidImagePropertiesException(string.Format(Locale.Loc.Instance["LblUnsupportedCfaPattern"], bayerPattern));
+                        throw new InvalidImagePropertiesException(string.Format(Loc.Instance["LblUnsupportedCfaPattern"], bayerPattern));
                 }
 
                 DebayeredImageData debayered = new DebayeredImageData();
@@ -313,9 +316,9 @@ namespace NINA.Utility.ImageAnalysis {
                 if (data.Image.Format != PixelFormats.Rgb48) {
                     throw new NotSupportedException();
                 } else {
-                    var asyncR = Task.Run(() => Model.ImageData.ImageStatistics.Create(data.RawImageData.Properties, data.DebayeredData.Red));
-                    var asyncG = Task.Run(() => Model.ImageData.ImageStatistics.Create(data.RawImageData.Properties, data.DebayeredData.Green));
-                    var asyncB = Task.Run(() => Model.ImageData.ImageStatistics.Create(data.RawImageData.Properties, data.DebayeredData.Blue));
+                    var asyncR = Task.Run(() => ImageData.ImageStatistics.Create(data.RawImageData.Properties, data.DebayeredData.Red));
+                    var asyncG = Task.Run(() => ImageData.ImageStatistics.Create(data.RawImageData.Properties, data.DebayeredData.Green));
+                    var asyncB = Task.Run(() => ImageData.ImageStatistics.Create(data.RawImageData.Properties, data.DebayeredData.Blue));
                     await Task.WhenAll(asyncR, asyncG, asyncB);
                     using (var img = ImageUtility.BitmapFromSource(data.Image, System.Drawing.Imaging.PixelFormat.Format48bppRgb)) {
                         return StretchUnlinked(asyncR.Result, asyncG.Result, asyncB.Result, img, data.Image.Format, factor, blackClipping);

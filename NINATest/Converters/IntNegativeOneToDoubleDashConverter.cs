@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using NINA.Utility.Converters;
+using NINA.Core.Utility.Converters;
 using NUnit.Framework;
 using System.Globalization;
 

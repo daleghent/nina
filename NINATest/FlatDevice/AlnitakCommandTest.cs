@@ -12,10 +12,10 @@
 
 #endregion "copyright"
 
-using NINA.Utility.FlatDeviceSDKs.AlnitakSDK;
 using NUnit.Framework;
 using System;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK;
 
 namespace NINATest.FlatDevice {
 
@@ -33,7 +33,7 @@ namespace NINATest.FlatDevice {
         [TestCase("FirmwareVersion", "VOOO")]
         public void TestCommand(string commandName, string commandString) {
             var sut = (ICommand)Activator.CreateInstance("NINA.Equipment",
-                $"NINA.Utility.FlatDeviceSDKs.AlnitakSDK.{commandName}Command").Unwrap();
+                $"NINA.Equipment.SDK.FlatDeviceSDKs.AlnitakSDK.{commandName}Command").Unwrap();
             Assert.That(sut.CommandString, Is.EqualTo($">{commandString}\r"));
             Assert.That(sut.HasResponse, Is.True);
         }

@@ -14,19 +14,14 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFocuser;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.SequenceItem.Autofocus;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.WindowService;
-using NINA.ViewModel;
-using NINA.ViewModel.AutoFocus;
-using NINA.ViewModel.ImageHistory;
-using NINA.ViewModel.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.WindowService;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -35,6 +30,13 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Model;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.Interfaces;
+using NINA.WPF.Base.Utility.AutoFocus;
 
 namespace NINATest.Sequencer.SequenceItem.Autofocus {
 
@@ -109,8 +111,8 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
         [TestCase(10, 5, 3, 0, 320)]
         [TestCase(10, 5, 3, 5, 480)]
         public void GetEstimatedDuration_WithFilterTime_ReturnsCorrectEstimate(double filterTime, int initialSteps, int framesPerPoint, int settleTime, double expectedDuration) {
-            filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyFilterWheel.FilterWheelInfo() { SelectedFilter = new NINA.Model.MyFilterWheel.FilterInfo() { Position = 0 } });
-            profileServiceMock.SetupGet(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new NINA.Utility.ObserveAllCollection<NINA.Model.MyFilterWheel.FilterInfo>() { new NINA.Model.MyFilterWheel.FilterInfo() { Position = 0, AutoFocusExposureTime = filterTime } });
+            filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = new FilterInfo() { Position = 0 } });
+            profileServiceMock.SetupGet(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>() { new FilterInfo() { Position = 0, AutoFocusExposureTime = filterTime } });
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusExposureTime).Returns(0);
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps).Returns(initialSteps);
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint).Returns(framesPerPoint);
@@ -127,7 +129,7 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
         [TestCase(10, 5, 3, 0, 320)]
         [TestCase(10, 5, 3, 5, 480)]
         public void GetEstimatedDuration_WithDefaultTime_ReturnsCorrectEstimate(double defaultTime, int initialSteps, int framesPerPoint, int settleTime, double expectedDuration) {
-            filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyFilterWheel.FilterWheelInfo() { SelectedFilter = null });
+            filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = null });
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusExposureTime).Returns(defaultTime);
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps).Returns(initialSteps);
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint).Returns(framesPerPoint);
@@ -144,8 +146,8 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
         [TestCase(10, 5, 3, 0, 320)]
         [TestCase(10, 5, 3, 5, 480)]
         public void GetEstimatedDuration_WithFilterTimeZeroFallback_ReturnsCorrectEstimate(double defaultTime, int initialSteps, int framesPerPoint, int settleTime, double expectedDuration) {
-            filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MyFilterWheel.FilterWheelInfo() { SelectedFilter = new NINA.Model.MyFilterWheel.FilterInfo() { Position = 0 } });
-            profileServiceMock.SetupGet(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new NINA.Utility.ObserveAllCollection<NINA.Model.MyFilterWheel.FilterInfo>() { new NINA.Model.MyFilterWheel.FilterInfo() { Position = 0, AutoFocusExposureTime = 0 } });
+            filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = new FilterInfo() { Position = 0 } });
+            profileServiceMock.SetupGet(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>() { new FilterInfo() { Position = 0, AutoFocusExposureTime = 0 } });
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusExposureTime).Returns(defaultTime);
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps).Returns(initialSteps);
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint).Returns(framesPerPoint);
@@ -172,7 +174,7 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
             var filter = new FilterInfo() { Position = 0 };
             filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = filter });
             var profileFilter = new FilterInfo() { Position = 0 };
-            profileServiceMock.Setup(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new NINA.Utility.ObserveAllCollection<FilterInfo>() { profileFilter });
+            profileServiceMock.Setup(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>() { profileFilter });
 
             sut.AutoFocusVMFactory = autofocusVMFactoryMock.Object;
             sut.WindowServiceFactory = windowFactoryMock.Object;

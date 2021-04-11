@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors 
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.WPF.Base.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -36,7 +37,7 @@ namespace NINA.View {
 
         public override DataTemplate SelectTemplate(object item,
                    DependencyObject container) {
-            ViewModel.WorkflowStep step = item as ViewModel.WorkflowStep;
+            WorkflowStep step = item as WorkflowStep;
             if (step.Id == "PassMeridian") {
                 return PassMeridianTemplate;
             }

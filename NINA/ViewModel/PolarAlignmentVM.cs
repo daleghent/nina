@@ -12,24 +12,32 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyTelescope;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
-using NINA.Utility.Mediator;
 using NINA.PlateSolving;
-using NINA.ViewModel.Equipment.Camera;
+using NINA.WPF.Base.ViewModel.Equipment.Camera;
 using NINA.ViewModel.Interfaces;
 using NINA.Core.Enum;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Utility;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.Model;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.ViewModel {
 
@@ -278,7 +286,7 @@ namespace NINA.ViewModel {
         private DispatcherTimer updateValues;
 
         private BinningMode snapBin = new BinningMode(1, 1);
-        private Model.MyFilterWheel.FilterInfo snapFilter;
+        private FilterInfo snapFilter;
         private double snapExposureDuration;
 
         public BinningMode SnapBin {
@@ -305,7 +313,7 @@ namespace NINA.ViewModel {
             }
         }
 
-        public Model.MyFilterWheel.FilterInfo SnapFilter {
+        public FilterInfo SnapFilter {
             get {
                 return snapFilter;
             }
@@ -437,7 +445,7 @@ namespace NINA.ViewModel {
                 } catch (OperationCanceledException) {
                 }
             } else {
-                Notification.ShowError(Locale.Loc.Instance["LblNoCameraConnected"]);
+                Notification.ShowError(Loc.Instance["LblNoCameraConnected"]);
             }
             cameraprogress.Report(new ApplicationStatus() { Status = string.Empty });
             return true;
@@ -571,7 +579,7 @@ namespace NINA.ViewModel {
                  *              poleError > 0 -> too west
                  */
             } else {
-                Notification.ShowWarning(Locale.Loc.Instance["LblNoCameraConnected"]);
+                Notification.ShowWarning(Loc.Instance["LblNoCameraConnected"]);
             }
 
             return true;

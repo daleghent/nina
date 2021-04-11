@@ -12,20 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyPlanetarium;
 using NINA.Plugin;
-using NINA.Profile;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Utility.DateTimeProvider;
-using NINA.Utility;
-using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel;
-using NINA.ViewModel.FramingAssistant;
-using NINA.ViewModel.ImageHistory;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

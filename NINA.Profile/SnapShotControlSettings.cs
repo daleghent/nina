@@ -12,7 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Model.MyFilterWheel;
+using NINA.Core.Model.Equipment;
+using NINA.Profile.Interfaces;
 using System.Runtime.Serialization;
 
 namespace NINA.Profile {

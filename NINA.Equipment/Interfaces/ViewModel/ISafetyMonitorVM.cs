@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Model.MySafetyMonitor;
+using NINA.Equipment.Equipment.MySafetyMonitor;
 
-namespace NINA.ViewModel.Equipment.SafetyMonitor {
+namespace NINA.Equipment.Interfaces.ViewModel {
 
     public interface ISafetyMonitorVM : IDeviceVM<SafetyMonitorInfo>, IDockableVM {
     }

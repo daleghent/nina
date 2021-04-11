@@ -14,17 +14,17 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem.Utility;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
 using NINA.Core.Enum;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
+using NINA.Profile;
 
 namespace NINATest.Sequencer.SequenceItem.Utility {
 
@@ -46,7 +46,7 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
         [Test]
         public void WaitForAltitude_Clone_GoodClone() {
             sut.Icon = new System.Windows.Media.GeometryGroup();
-            sut.Coordinates = new NINA.Model.InputCoordinates(new Coordinates(20, 20, Epoch.J2000, Coordinates.RAType.Degrees));
+            sut.Coordinates = new InputCoordinates(new Coordinates(20, 20, Epoch.J2000, Coordinates.RAType.Degrees));
 
             var item2 = (WaitForAltitude)sut.Clone();
 
@@ -75,8 +75,8 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             parentMock
                 .SetupGet(x => x.Target)
                 .Returns(
-                new NINA.Model.InputTarget(Angle.ByDegree(1), Angle.ByDegree(2), null) {
-                    InputCoordinates = new NINA.Model.InputCoordinates() {
+                new InputTarget(Angle.ByDegree(1), Angle.ByDegree(2), null) {
+                    InputCoordinates = new InputCoordinates() {
                         Coordinates = coordinates
                     }
                 }

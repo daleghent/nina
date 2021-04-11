@@ -12,8 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyCamera;
+using NINA.Core.Model;
 using NINA.Astrometry;
 using NINA.ViewModel.Sequencer.SimpleSequence;
 using System;
@@ -21,6 +20,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using NINA.Core.Enum;
+using NINA.Equipment.Equipment.MyCamera;
 
 namespace NINA.Sequencer.Container {
 

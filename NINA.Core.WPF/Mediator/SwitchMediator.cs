@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,15 +12,15 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MySwitch;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.Equipment.Switch;
+using NINA.Equipment.Equipment.MySwitch;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Model;
+using NINA.Equipment.Interfaces.ViewModel;
 
-namespace NINA.Utility.Mediator {
+namespace NINA.WPF.Base.Mediator {
 
     public class SwitchMediator : DeviceMediator<ISwitchVM, ISwitchConsumer, SwitchInfo>, ISwitchMediator {
 

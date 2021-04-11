@@ -12,7 +12,9 @@
 
 #endregion "copyright"
 
-namespace NINA.ViewModel.AutoFocus {
+using NINA.WPF.Base.Interfaces.ViewModel;
+
+namespace NINA.WPF.Base.Interfaces {
 
     public interface IAutoFocusVMFactory {
 

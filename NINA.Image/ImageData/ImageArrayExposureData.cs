@@ -12,14 +12,16 @@
 
 #endregion "copyright"
 
-using NINA.Model.ImageData;
+using NINA.Core.Model;
+using NINA.Image.ImageData;
+using NINA.Image.Interfaces;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace NINA.Model.MyCamera {
+namespace NINA.Image.ImageData {
 
     public class ImageArrayExposureData : BaseExposureData {
         private readonly IImageArray imageArray;
@@ -43,7 +45,7 @@ namespace NINA.Model.MyCamera {
 
         public override Task<IImageData> ToImageData(IProgress<ApplicationStatus> progress = default, CancellationToken cancelToken = default) {
             return Task.FromResult<IImageData>(
-                new ImageData.ImageData(
+                new BaseImageData(
                     imageArray: this.imageArray,
                     width: this.Width,
                     height: this.Height,

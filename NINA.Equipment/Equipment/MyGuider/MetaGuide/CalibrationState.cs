@@ -14,7 +14,7 @@
 
 using System;
 
-namespace NINA.Model.MyGuider.MetaGuide {
+namespace NINA.Equipment.Equipment.MyGuider.MetaGuide {
 
     [Flags]
     public enum CalibrationState {

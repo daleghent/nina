@@ -1,4 +1,5 @@
 ﻿using NINA.Astrometry;
+using NINA.Astrometry.RiseAndSet;
 using NUnit.Framework;
 using OxyPlot.Axes;
 using System;

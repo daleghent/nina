@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,14 +12,14 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyGuider;
-using NINA.ViewModel.Equipment.Guider;
+using NINA.Core.Model;
+using NINA.Equipment.Equipment.MyGuider;
+using NINA.Equipment.Interfaces.ViewModel;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace NINA.Utility.Mediator.Interfaces {
+namespace NINA.Equipment.Interfaces.Mediator {
 
     public interface IGuiderMediator : IDeviceMediator<IGuiderVM, IGuiderConsumer, GuiderInfo> {
         bool IsUsingSynchronizedGuider { get; }

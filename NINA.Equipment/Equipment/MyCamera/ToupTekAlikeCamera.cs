@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,18 +14,21 @@
 
 using Altair;
 using NINA.Core.Enum;
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera.ToupTekAlike;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Image.ImageData;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Model.Equipment;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Model;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyCamera {
+namespace NINA.Equipment.Equipment.MyCamera {
 
     public class ToupTekAlikeCamera : BaseINPC, ICamera {
         private ToupTekAlikeFlag flags;
@@ -828,8 +831,8 @@ namespace NINA.Model.MyCamera {
                 time = ExposureMax;
             }
 
-            var ÂµsTime = (uint)(time * 1000000);
-            if (!sdk.put_ExpoTime(ÂµsTime)) {
+            var µsTime = (uint)(time * 1000000);
+            if (!sdk.put_ExpoTime(µsTime)) {
                 throw new Exception($"{Category} - Could not set exposure time");
             }
         }

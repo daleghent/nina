@@ -13,18 +13,24 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Profile;
+using NINA.Core.Locale;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.WindowService;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Utility;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Profile.Interfaces;
 using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Utility.WindowService;
 using NINA.View.About;
-using NINA.ViewModel.Interfaces;
+using NINA.WPF.Base.Interfaces.Mediator;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel {
 
@@ -54,7 +60,7 @@ namespace NINA.ViewModel {
                 var version = ASCOMInteraction.GetPlatformVersion();
                 Logger.Info($"ASCOM Platform {version} installed");
                 if ((version.Major < 6) || (version.Major == 6 && version.Minor < 5)) {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblASCOMPlatformOutdated"]);
+                    Notification.ShowWarning(Loc.Instance["LblASCOMPlatformOutdated"]);
                 }
             } catch (Exception) {
                 Logger.Info($"No ASCOM Platform installed");
@@ -80,7 +86,7 @@ namespace NINA.ViewModel {
             window.Width = 1280;
             window.Height = 720;
             var service = new WindowServiceFactory().Create();
-            service.Show(window, Title + " - " + Locale.Loc.Instance["LblAbout"], ResizeMode.NoResize, WindowStyle.ToolWindow);
+            service.Show(window, Title + " - " + Loc.Instance["LblAbout"], ResizeMode.NoResize, WindowStyle.ToolWindow);
         }
 
         public void ChangeTab(ApplicationTab tab) {
@@ -91,7 +97,7 @@ namespace NINA.ViewModel {
 
         public string Title {
             get {
-                return Utility.Utility.Title;
+                return NINA.Core.Utility.CoreUtil.Title;
             }
         }
 
@@ -124,7 +130,7 @@ namespace NINA.ViewModel {
 
         private void ExitApplication(object obj) {
             if (cameraInfo.Connected) {
-                var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblCameraConnectedOnExit"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
+                var diag = MyMessageBox.Show(Loc.Instance["LblCameraConnectedOnExit"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
                 if (diag != MessageBoxResult.OK) {
                     return;
                 }

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,14 +14,14 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using OxyPlot;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace NINA.ViewModel.AutoFocus {
+namespace NINA.WPF.Base.Utility.AutoFocus {
 
     public class AutoFocusReport {
 
@@ -75,7 +75,7 @@ namespace NINA.ViewModel.AutoFocus {
             double initialFocusPosition,
             double initialHFR,
             DataPoint focusPoint,
-            AutoFocusPoint lastFocusPoint,
+            ReportAutoFocusPoint lastFocusPoint,
             TrendlineFitting trendlineFitting,
             QuadraticFitting quadraticFitting,
             HyperbolicFitting hyperbolicFitting,

@@ -464,9 +464,9 @@
       <Project>{2e7b7c6f-fb8e-49f2-9579-6d16cd263e64}</Project>
       <Name>NINA.Image</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NINA.Platesolving\NINA.Platesolving.csproj">
+    <ProjectReference Include="..\NINA.Platesolving\NINA.PlateSolving.csproj">
       <Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
-      <Name>NINA.Platesolving</Name>
+      <Name>NINA.PlateSolving</Name>
     </ProjectReference>
     <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
       <Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>

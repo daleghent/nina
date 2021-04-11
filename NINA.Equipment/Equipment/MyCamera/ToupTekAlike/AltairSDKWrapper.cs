@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using Altair;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyCamera.ToupTekAlike {
+namespace NINA.Equipment.Equipment.MyCamera.ToupTekAlike {
 
     public static class AltairEnumExtensions {
 

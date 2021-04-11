@@ -15,7 +15,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace NINA.Utility {
+namespace NINA.Core.Utility {
 
     public static class AttributeHelper {
 

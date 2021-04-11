@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,10 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Utility.Notification;
-using NINA.Profile;
-using NINA.Model;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System.Linq;
 using System.Windows.Threading;
 using System.Threading;
@@ -23,8 +22,10 @@ using System.Threading.Tasks;
 using System;
 using NmeaParser;
 using System.Collections.Generic;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyGPS {
+namespace NINA.Equipment.Equipment.MyGPS {
 
     /// <summary>
     /// NMEA GPS Class detects comport based NMEA GPS Devices
@@ -96,7 +97,7 @@ namespace NINA.Model.MyGPS {
 
         private void OnFixTimedEvent(Object source, System.Timers.ElapsedEventArgs e) {
             // give up with a connected GPS that has no Fix
-            Notification.ShowWarning(Locale.Loc.Instance["LblGPSNoFix"]);
+            Notification.ShowWarning(Loc.Instance["LblGPSNoFix"]);
             Disconnect();
             gotGPSFix.TrySetResult(false);
         }
@@ -136,7 +137,7 @@ namespace NINA.Model.MyGPS {
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
-            Notification.ShowSuccess(Locale.Loc.Instance["LblGPSLocationSet"]);
+            Notification.ShowSuccess(Loc.Instance["LblGPSLocationSet"]);
             gotGPSFix.TrySetResult(true);
         }
 
@@ -153,11 +154,11 @@ namespace NINA.Model.MyGPS {
                 gotGPSFix = new TaskCompletionSource<bool>();
                 connected = true;
                 await device.OpenAsync();
-                Notification.ShowSuccess(Locale.Loc.Instance["LblGPSConnected"] + " " + portName);
+                Notification.ShowSuccess(Loc.Instance["LblGPSConnected"] + " " + portName);
                 return await gotGPSFix.Task;
             } catch (System.Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["LblGPSConnectFail"] + " " + portName);
+                Notification.ShowError(Loc.Instance["LblGPSConnectFail"] + " " + portName);
                 return false;
             }
         }
@@ -252,7 +253,7 @@ namespace NINA.Model.MyGPS {
                   {
                     portName = "";
                     baudRate = 0;
-                    Notification.ShowError(Locale.Loc.Instance["LblGPSNotFound"]);
+                    Notification.ShowError(Loc.Instance["LblGPSNotFound"]);
                     return false;
                 }
             }

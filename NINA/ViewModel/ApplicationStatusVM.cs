@@ -12,15 +12,17 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Profile;
+using NINA.Profile.Interfaces;
 using NINA.ViewModel.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Threading;
+using NINA.Core.Model;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
 
 namespace NINA.ViewModel {
 

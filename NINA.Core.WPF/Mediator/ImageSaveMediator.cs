@@ -12,15 +12,17 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.Interfaces;
+using NINA.Image.ImageData;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Image.Interfaces;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
-namespace NINA.Utility.Mediator {
+namespace NINA.WPF.Base.Mediator {
 
     public class ImageSaveMediator : IImageSaveMediator {
         protected IImageSaveController handler;

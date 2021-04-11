@@ -15,13 +15,14 @@
 using FluentAssertions;
 using Moq;
 using NINA.Sequencer.Conditions;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Equipment.Equipment.MySafetyMonitor;
 
 namespace NINATest.Sequencer.Conditions {
 
@@ -47,7 +48,7 @@ namespace NINATest.Sequencer.Conditions {
         [Test]
         public void Check_True_WhenConnectedAndSafe() {
             var sut = new SafetyMonitorCondition(monitorMock.Object);
-            monitorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MySafetyMonitor.SafetyMonitorInfo() { Connected = true, IsSafe = true });
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = true });
 
             sut.Check(null).Should().BeTrue();
             sut.IsSafe.Should().BeTrue();
@@ -56,7 +57,7 @@ namespace NINATest.Sequencer.Conditions {
         [Test]
         public void Check_False_WhenNotConnected() {
             var sut = new SafetyMonitorCondition(monitorMock.Object);
-            monitorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MySafetyMonitor.SafetyMonitorInfo() { Connected = false });
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = false });
 
             sut.Check(null).Should().BeFalse();
             sut.IsSafe.Should().BeFalse();
@@ -65,7 +66,7 @@ namespace NINATest.Sequencer.Conditions {
         [Test]
         public void Check_False_WhenConnectedAndNotSafe() {
             var sut = new SafetyMonitorCondition(monitorMock.Object);
-            monitorMock.Setup(x => x.GetInfo()).Returns(new NINA.Model.MySafetyMonitor.SafetyMonitorInfo() { Connected = true, IsSafe = false });
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = false });
 
             sut.Check(null).Should().BeFalse();
             sut.IsSafe.Should().BeFalse();

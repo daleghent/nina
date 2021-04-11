@@ -13,12 +13,10 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Model.MySwitch;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,6 +25,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment.MySwitch;
 
 namespace NINA.Sequencer.SequenceItem.Switch {
 
@@ -143,7 +144,7 @@ namespace NINA.Sequencer.SequenceItem.Switch {
                 if (switchIndex >= 0 && WritableSwitches.Count > switchIndex) {
                     SelectedSwitch = WritableSwitches[switchIndex];
                 }
-                i.Add(Locale.Loc.Instance["LblSwitchNotConnected"]);
+                i.Add(Loc.Instance["LblSwitchNotConnected"]);
             } else {
                 if (WritableSwitches.Count > 0) {
                     //When switch gets connected the dummy list will be changed to the real list
@@ -158,16 +159,16 @@ namespace NINA.Sequencer.SequenceItem.Switch {
                     }
                 } else {
                     SelectedSwitch = null;
-                    i.Add(Locale.Loc.Instance["Lbl_SequenceItem_Validation_NoWritableSwitch"]);
+                    i.Add(Loc.Instance["Lbl_SequenceItem_Validation_NoWritableSwitch"]);
                 }
             }
             var s = SelectedSwitch;
 
             if (s == null) {
-                i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Validation_NoSwitchSelected"]));
+                i.Add(string.Format(Loc.Instance["Lbl_SequenceItem_Validation_NoSwitchSelected"]));
             } else {
                 if (Value < s.Minimum || Value > s.Maximum)
-                    i.Add(string.Format(Locale.Loc.Instance["Lbl_SequenceItem_Validation_InvalidSwitchValue"], s.Minimum, s.Maximum, s.StepSize));
+                    i.Add(string.Format(Loc.Instance["Lbl_SequenceItem_Validation_InvalidSwitchValue"], s.Minimum, s.Maximum, s.StepSize));
             }
 
             Issues = i;

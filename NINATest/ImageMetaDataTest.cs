@@ -12,19 +12,21 @@
 
 #endregion "copyright"
 
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFocuser;
-using NINA.Model.MyRotator;
-using NINA.Model.MyTelescope;
-using NINA.Model.MyWeatherData;
-using NINA.Profile;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Equipment.MyRotator;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Equipment.MyWeatherData;
+using NINA.Profile.Interfaces;
 using NINA.Astrometry;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using NINA.Equipment.Utility;
+using NINA.Core.Model.Equipment;
+using NINA.Profile;
 
 namespace NINATest {
 

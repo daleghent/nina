@@ -13,27 +13,11 @@
 #endregion "copyright"
 
 using NINA.API.SGP;
-using NINA.Model.MyPlanetarium;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyPlanetarium;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Astrometry;
-using NINA.Utility.ImageAnalysis;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.WindowService;
 using NINA.ViewModel;
-using NINA.ViewModel.Equipment;
-using NINA.ViewModel.Equipment.Camera;
-using NINA.ViewModel.Equipment.Dome;
-using NINA.ViewModel.Equipment.FilterWheel;
-using NINA.ViewModel.Equipment.FlatDevice;
-using NINA.ViewModel.Equipment.Focuser;
-using NINA.ViewModel.Equipment.Guider;
-using NINA.ViewModel.Equipment.Rotator;
-using NINA.ViewModel.Equipment.SafetyMonitor;
-using NINA.ViewModel.Equipment.Switch;
-using NINA.ViewModel.Equipment.Telescope;
-using NINA.ViewModel.Equipment.WeatherData;
 using NINA.ViewModel.FlatWizard;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
@@ -44,8 +28,42 @@ using Ninject;
 using Ninject.Modules;
 using System;
 using System.Windows;
-using NINA.MyMessageBox;
 using NINA.Plugin;
+using NINA.Core.Utility;
+using NINA.Core.Model;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Interfaces;
+using NINA.WPF.Base.Mediator;
+using NINA.Sequencer.Interfaces.Mediator;
+using NINA.Core.Utility.WindowService;
+using NINA.Image.ImageAnalysis;
+using NINA.WPF.Base.Interfaces.Utility;
+using NINA.Equipment.Interfaces;
+using NINA.WPF.Base.Utility;
+using NINA.Sequencer.Mediator;
+using NINA.Equipment.Equipment.MyDome;
+using NINA.Core.Interfaces.API.SGP;
+using NINA.Core.MyMessageBox;
+using NINA.Profile;
+using NINA.Astrometry.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+
+using NINA.Equipment.Equipment.MyPlanetarium;
+
+using NINA.WPF.Base.ViewModel.Equipment.FlatDevice;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel.Equipment.Switch;
+using NINA.WPF.Base.ViewModel.Equipment.Camera;
+using NINA.WPF.Base.ViewModel.AutoFocus;
+using NINA.WPF.Base.ViewModel.Equipment.WeatherData;
+using NINA.WPF.Base.ViewModel.Equipment.Telescope;
+using NINA.WPF.Base.ViewModel.Equipment.Dome;
+using NINA.WPF.Base.ViewModel.Equipment.FilterWheel;
+using NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor;
+using NINA.WPF.Base.ViewModel.Equipment.Focuser;
+using NINA.WPF.Base.ViewModel.Equipment.Guider;
+using NINA.WPF.Base.ViewModel.Equipment.Rotator;
 
 namespace NINA.Utility {
 
@@ -100,7 +118,7 @@ namespace NINA.Utility {
                     Bind<IFlatWizardUserPromptVM>().To<FlatWizardUserPromptVM>().InSingletonScope();
                     Bind<ITwilightCalculator>().To<TwilightCalculator>().InSingletonScope();
 
-                    Bind<ProjectVersion>().ToMethod(f => new ProjectVersion(Utility.Version)).InSingletonScope();
+                    Bind<ProjectVersion>().ToMethod(f => new ProjectVersion(NINA.Core.Utility.CoreUtil.Version)).InSingletonScope();
 
                     Bind<IFlatWizardVM>().ToMethod(f => new FlatWizardVM(f.Kernel.Get<IProfileService>(),
                         new ImagingVM(

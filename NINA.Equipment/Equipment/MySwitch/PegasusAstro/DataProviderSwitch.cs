@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,15 +12,15 @@
 
 #endregion "copyright"
 
-using NINA.Locale;
-using NINA.Utility;
-using NINA.Utility.SwitchSDKs.PegasusAstro;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Equipment.SDK.SwitchSDKs.PegasusAstro;
 
-namespace NINA.Model.MySwitch.PegasusAstro {
+namespace NINA.Equipment.Equipment.MySwitch.PegasusAstro {
 
     public class DataProviderSwitch : PegasusAstroSwitch {
         private double _voltage;

@@ -1,4 +1,4 @@
-﻿using NINA.Utility;
+﻿using NINA.Core.Utility;
 using System.ComponentModel;
 
 namespace NINA.Core.Enum {

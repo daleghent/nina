@@ -1,10 +1,12 @@
-﻿using NINA.Profile;
+﻿using NINA.Profile.Interfaces;
 using System.Linq;
 using System.Windows.Shell;
 using static System.Windows.Shell.JumpList;
 
 namespace NINA {
+
     internal static class AppJumpListExtensions {
+
         internal static void RefreshJumpList(
             this App app,
             IProfileService profileService) =>

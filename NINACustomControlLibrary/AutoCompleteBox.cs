@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Interfaces;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;

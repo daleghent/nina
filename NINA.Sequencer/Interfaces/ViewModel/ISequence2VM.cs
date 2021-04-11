@@ -13,7 +13,7 @@
 #endregion "copyright"
 
 using NINA.Sequencer.Container;
-using NINA.Utility;
+using NINA.Core.Utility;
 using System.Collections.Generic;
 using System.Windows.Input;
 

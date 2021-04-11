@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 
-namespace NINA.ViewModel {
+namespace NINA.Astrometry {
 
     public class DSOObjectType : BaseINPC {
 

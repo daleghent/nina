@@ -12,18 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.ViewModel.Equipment.Camera;
-using NINA.ViewModel.Equipment.Dome;
-using NINA.ViewModel.Equipment.FilterWheel;
-using NINA.ViewModel.Equipment.FlatDevice;
-using NINA.ViewModel.Equipment.Focuser;
-using NINA.ViewModel.Equipment.Guider;
-using NINA.ViewModel.Equipment.Rotator;
-using NINA.ViewModel.Equipment.Switch;
-using NINA.ViewModel.Equipment.Telescope;
-using NINA.ViewModel.Equipment.WeatherData;
+using NINA.Equipment.Interfaces.ViewModel;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IEquipmentVM {
         ICameraVM CameraVM { get; }

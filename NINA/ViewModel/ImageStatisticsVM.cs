@@ -12,9 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Model.ImageData;
-using NINA.Profile;
+using NINA.Image.ImageData;
+using NINA.Image.Interfaces;
+using NINA.Profile.Interfaces;
 using NINA.ViewModel.Interfaces;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
 using System;
 using System.Threading.Tasks;
 

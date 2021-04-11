@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,18 +14,14 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.ImageData;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFocuser;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.ImageAnalysis;
-using NINA.Utility.Mediator;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.ViewModel.AutoFocus;
+using NINA.Image.ImageData;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
 using OxyPlot;
 using OxyPlot.Series;
 using System;
@@ -36,17 +32,27 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Navigation;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.Model.Equipment;
+using NINA.Image.ImageAnalysis;
+using NINA.Core.Locale;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Model;
+using NINA.Equipment.Equipment;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.Utility.AutoFocus;
 
-namespace NINA.ViewModel {
+namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
     public class AutoFocusVM : DockableVM, ICameraConsumer, IFocuserConsumer, IFilterWheelConsumer, IAutoFocusVM {
-        private static readonly string ReportDirectory = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "AutoFocus");
+        private static readonly string ReportDirectory = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "AutoFocus");
 
         static AutoFocusVM() {
             if (!Directory.Exists(ReportDirectory)) {
                 Directory.CreateDirectory(ReportDirectory);
             } else {
-                Utility.Utility.DirectoryCleanup(ReportDirectory, TimeSpan.FromDays(-180));
+                CoreUtil.DirectoryCleanup(ReportDirectory, TimeSpan.FromDays(-180));
             }
         }
 
@@ -223,7 +229,7 @@ namespace NINA.ViewModel {
                 var report = JsonConvert.DeserializeObject<AutoFocusReport>(File.ReadAllText(SelectedChart.FilePath));
 
                 FinalFocusPoint = new DataPoint(report.CalculatedFocusPoint.Position, report.CalculatedFocusPoint.Value);
-                LastAutoFocusPoint = new AutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = report.Temperature, Timestamp = report.Timestamp, Filter = report.Filter };
+                LastAutoFocusPoint = new ReportAutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = report.Temperature, Timestamp = report.Timestamp, Filter = report.Filter };
 
                 foreach (FocusPoint fp in report.MeasurePoints) {
                     FocusPoints.AddSorted(new ScatterErrorPoint(Convert.ToInt32(fp.Position), fp.Value, 0, fp.Error), comparer);
@@ -507,13 +513,13 @@ namespace NINA.ViewModel {
                 double hfr = (await GetAverageMeasurement(filter, profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint, token, progress)).Measure;
 
                 if (hfr > (focusPoint.Y * 1.25)) {
-                    Logger.Warning(string.Format(Locale.Loc.Instance["LblFocusPointValidationFailed"], focusPoint.X, hfr, focusPoint.Y));
-                    Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblFocusPointValidationFailed"], focusPoint.X, hfr, focusPoint.Y));
+                    Logger.Warning(string.Format(Loc.Instance["LblFocusPointValidationFailed"], focusPoint.X, hfr, focusPoint.Y));
+                    Notification.ShowWarning(string.Format(Loc.Instance["LblFocusPointValidationFailed"], focusPoint.X, hfr, focusPoint.Y));
                 }
 
                 if (initialHFR != 0 && hfr > (initialHFR * 1.15)) {
                     Logger.Warning(string.Format("New focus point HFR {0} is significantly worse than original HFR {1}", hfr, initialHFR));
-                    Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblAutoFocusNewWorseThanOriginal"], hfr, initialHFR));
+                    Notification.ShowWarning(string.Format(Loc.Instance["LblAutoFocusNewWorseThanOriginal"], hfr, initialHFR));
                     return false;
                 }
             }
@@ -624,8 +630,8 @@ namespace NINA.ViewModel {
                     //When datapoints are not sufficient analyze and take more
                     do {
                         if (leftcount == 0 && rightcount == 0) {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblAutoFocusNotEnoughtSpreadedPoints"]);
-                            progress.Report(new ApplicationStatus() { Status = Locale.Loc.Instance["LblAutoFocusNotEnoughtSpreadedPoints"] });
+                            Notification.ShowWarning(Loc.Instance["LblAutoFocusNotEnoughtSpreadedPoints"]);
+                            progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblAutoFocusNotEnoughtSpreadedPoints"] });
                             //Reattempting in this situation is very likely meaningless - just move back to initial focus position and call it a day
                             await focuserMediator.MoveFocuser(initialFocusPosition, token);
                             return null;
@@ -661,7 +667,7 @@ namespace NINA.ViewModel {
 
                     report = GenerateReport(initialFocusPosition, initialHFR, filter?.Name ?? string.Empty);
 
-                    LastAutoFocusPoint = new AutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = focuserInfo.Temperature, Timestamp = DateTime.Now, Filter = filter?.Name };
+                    LastAutoFocusPoint = new ReportAutoFocusPoint { Focuspoint = FinalFocusPoint, Temperature = focuserInfo.Temperature, Timestamp = DateTime.Now, Filter = filter?.Name };
 
                     //Set the filter to the autofocus filter if necessary, but do not move to it yet (otherwise filter offset will be ignored in final validation). This will be done as part of the capture in ValidateCalculatedFocusPosition
                     if (defaultFocusFilter != null && profileService.ActiveProfile.FocuserSettings.UseFilterWheelOffsets) {
@@ -672,7 +678,7 @@ namespace NINA.ViewModel {
 
                     if (!goodAutoFocus) {
                         if (numberOfAttempts < profileService.ActiveProfile.FocuserSettings.AutoFocusTotalNumberOfAttempts) {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblAutoFocusReattempting"]);
+                            Notification.ShowWarning(Loc.Instance["LblAutoFocusReattempting"]);
                             await focuserMediator.MoveFocuser(initialFocusPosition, token);
                             Logger.Warning("Potentially bad auto-focus. Reattempting.");
                             FocusPoints.Clear();
@@ -684,7 +690,7 @@ namespace NINA.ViewModel {
                             FinalFocusPoint = new DataPoint(0, 0);
                             reattempt = true;
                         } else {
-                            Notification.ShowWarning(Locale.Loc.Instance["LblAutoFocusRestoringOriginalPosition"]);
+                            Notification.ShowWarning(Loc.Instance["LblAutoFocusRestoringOriginalPosition"]);
                             Logger.Warning("Potentially bad auto-focus. Restoring original focus position.");
                             reattempt = false;
                             await focuserMediator.MoveFocuser(initialFocusPosition, token);
@@ -738,7 +744,7 @@ namespace NINA.ViewModel {
                     var startGuidingTask = this.guiderMediator.StartGuiding(false, progress, default);
                     var completedTask = await Task.WhenAny(Task.Delay(60000), startGuidingTask);
                     if (startGuidingTask != completedTask) {
-                        Notification.ShowWarning(Locale.Loc.Instance["LblStartGuidingFailed"]);
+                        Notification.ShowWarning(Loc.Instance["LblStartGuidingFailed"]);
                     }
                 }
                 progress.Report(new ApplicationStatus() { Status = string.Empty });
@@ -820,7 +826,7 @@ namespace NINA.ViewModel {
             }
         }
 
-        private AutoFocusPoint _lastAutoFocusPoint;
+        private ReportAutoFocusPoint _lastAutoFocusPoint;
         private CameraInfo cameraInfo = DeviceInfo.CreateDefaultInstance<CameraInfo>();
         private FocuserInfo focuserInfo = DeviceInfo.CreateDefaultInstance<FocuserInfo>();
         private IFocuserMediator focuserMediator;
@@ -828,7 +834,7 @@ namespace NINA.ViewModel {
         private FilterWheelInfo filterInfo;
         private bool _setSubSample = false;
 
-        public AutoFocusPoint LastAutoFocusPoint {
+        public ReportAutoFocusPoint LastAutoFocusPoint {
             get {
                 return _lastAutoFocusPoint;
             }

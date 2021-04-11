@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,10 +13,9 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.WindowService;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -26,8 +25,15 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Locale;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Model;
+using NINA.Image.ImageData;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyCamera {
+namespace NINA.Equipment.Equipment.MyCamera {
 
     public class FileCamera : BaseINPC, ICamera {
 
@@ -105,7 +111,7 @@ namespace NINA.Model.MyCamera {
 
         public string Description {
             get {
-                return Locale.Loc.Instance["LblFileCameraDescription"];
+                return Loc.Instance["LblFileCameraDescription"];
             }
         }
 
@@ -117,7 +123,7 @@ namespace NINA.Model.MyCamera {
 
         public string DriverVersion {
             get {
-                return Utility.Utility.Version;
+                return CoreUtil.Version;
             }
         }
 
@@ -513,7 +519,7 @@ namespace NINA.Model.MyCamera {
                 string path;
                 while ((path = folderWatcher.GetNextItem()) == null) {
                     CameraState = "Waiting for file";
-                    await Utility.Utility.Wait(TimeSpan.FromSeconds(1), token);
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(1), token);
                 }
 
                 folderWatcher.Suspend();
@@ -523,13 +529,13 @@ namespace NINA.Model.MyCamera {
                 while (true) {
                     tries++;
                     try {
-                        var image = await ImageData.ImageData.FromFile(path, BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter, token);
+                        var image = await BaseImageData.FromFile(path, BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter, token);
                         return new CachedExposureData(image);
                     } catch (Exception ex) {
                         if (tries > 3) {
                             throw ex;
                         }
-                        await Utility.Utility.Wait(TimeSpan.FromSeconds(1), token);
+                        await CoreUtil.Wait(TimeSpan.FromSeconds(1), token);
                     }
                 }
             } finally {
@@ -620,7 +626,7 @@ namespace NINA.Model.MyCamera {
 
             /*Stop Exposure after exposure time */
             Task.Run(async () => {
-                await Utility.Utility.Wait(TimeSpan.FromSeconds(exposureTime));
+                await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime));
 
                 stopCapture();
 

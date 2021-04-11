@@ -14,18 +14,17 @@
 
 using FluentAssertions;
 using Moq;
-using NINA.Model;
-using NINA.Model.MyPlanetarium;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyPlanetarium;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Serialization;
 using NINA.Sequencer.Trigger;
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NINA.ViewModel;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;

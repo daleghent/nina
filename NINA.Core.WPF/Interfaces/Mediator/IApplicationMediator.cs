@@ -13,9 +13,10 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.ViewModel.Interfaces;
+using NINA.Core.Interfaces;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
-namespace NINA.Utility.Mediator.Interfaces {
+namespace NINA.WPF.Base.Interfaces.Mediator {
 
     public interface IApplicationMediator : IMediator<IApplicationVM> {
 

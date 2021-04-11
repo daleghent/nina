@@ -2,7 +2,7 @@
 using System.Net;
 using System.Windows.Controls;
 
-namespace NINA.Utility.ValidationRules {
+namespace NINA.Core.Utility.ValidationRules {
 
     public class IsValidIPAddressRule : ValidationRule {
 

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -13,9 +13,9 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.MyCamera;
+using NINA.Core.Model.Equipment;
 
-namespace NINA.Profile {
+namespace NINA.Profile.Interfaces {
 
     public interface ICameraSettings : ISettings {
         double BitDepth { get; set; }

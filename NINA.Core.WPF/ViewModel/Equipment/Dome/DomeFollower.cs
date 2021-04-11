@@ -13,19 +13,21 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.MyDome;
-using NINA.Model.MyTelescope;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Equipment.Equipment.MyDome;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.Interfaces;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.Dome {
+namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
     public class DomeFollower : BaseINPC, IDomeFollower, ITelescopeConsumer, IDomeConsumer {
         private static readonly double RA_DEC_WARN_THRESHOLD = 2.0;
@@ -80,7 +82,7 @@ namespace NINA.ViewModel.Equipment.Dome {
                 } catch (OperationCanceledException) {
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError(Locale.Loc.Instance["LblDomeFollowError"]);
+                    Notification.ShowError(Loc.Instance["LblDomeFollowError"]);
                 } finally {
                     IsFollowing = false;
                 }
@@ -123,7 +125,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             if (error > RA_DEC_WARN_THRESHOLD) {
                 Logger.Warning($"Mount reported RA ({telescopeInfo.RightAscensionString}) and Dec ({telescopeInfo.DeclinationString}) differs substantially from the calculated RA ({eqCoordinates.RAString}) " +
                     $"and Dec ({eqCoordinates.DecString}). Confirm your mount epoch is configured properly and do a plate solve sync.");
-                Notification.ShowWarning(Locale.Loc.Instance["LblDomeFollowPointingError"]);
+                Notification.ShowWarning(Loc.Instance["LblDomeFollowPointingError"]);
             }
         }
 
@@ -132,7 +134,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             var timeoutOrClientCancellationToken = CancellationTokenSource.CreateLinkedTokenSource(timeoutCTS.Token, cancellationToken).Token;
             while (IsFollowing && !IsSynchronized) {
                 if (timeoutOrClientCancellationToken.IsCancellationRequested) {
-                    Notification.ShowWarning(Locale.Loc.Instance["LblDomeSyncError_SyncTimeout"]);
+                    Notification.ShowWarning(Loc.Instance["LblDomeSyncError_SyncTimeout"]);
                     Logger.Warning("Waiting for Dome synchronization cancelled or timed out");
                     return;
                 }
@@ -159,7 +161,7 @@ namespace NINA.ViewModel.Equipment.Dome {
                 this.IsSynchronized = calculatedTargetAzimuth.Equals(currentAzimuth, tolerance);
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["LblDomeFollowError"]);
+                Notification.ShowError(Loc.Instance["LblDomeFollowError"]);
                 IsFollowing = false;
             }
         }
@@ -171,7 +173,7 @@ namespace NINA.ViewModel.Equipment.Dome {
             }
 
             if (this.domeInfo.DriverCanFollow && this.domeInfo.DriverFollowing) {
-                Notification.ShowError(Locale.Loc.Instance["LblDomeFollowError_DriverFollowing"]);
+                Notification.ShowError(Loc.Instance["LblDomeFollowError_DriverFollowing"]);
                 IsFollowing = false;
                 return;
             }

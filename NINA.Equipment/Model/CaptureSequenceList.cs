@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,9 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.Notification;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,8 +23,10 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using NINA.Core.Enum;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Locale;
 
-namespace NINA.Model {
+namespace NINA.Equipment.Model {
 
     [Serializable()]
     [XmlRoot(nameof(CaptureSequenceList))]
@@ -127,7 +129,7 @@ namespace NINA.Model {
             }
         }
 
-        public static CaptureSequenceList Load(string fileName, ICollection<MyFilterWheel.FilterInfo> filters, double latitude, double longitude) {
+        public static CaptureSequenceList Load(string fileName, ICollection<FilterInfo> filters, double latitude, double longitude) {
             try {
                 using (var s = new FileStream(fileName, FileMode.Open)) {
                     return Load(s, fileName, filters, latitude, longitude);
@@ -139,7 +141,7 @@ namespace NINA.Model {
             }
         }
 
-        public static CaptureSequenceList Load(Stream stream, string fileName, ICollection<MyFilterWheel.FilterInfo> filters, double latitude, double longitude) {
+        public static CaptureSequenceList Load(Stream stream, string fileName, ICollection<FilterInfo> filters, double latitude, double longitude) {
             CaptureSequenceList l = null;
             try {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(CaptureSequenceList));
@@ -148,12 +150,12 @@ namespace NINA.Model {
                 AdjustSequenceToMatchCurrentProfile(filters, latitude, longitude, l);
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["LblLoadSequenceFailed"] + Environment.NewLine + ex.Message);
+                Notification.ShowError(Loc.Instance["LblLoadSequenceFailed"] + Environment.NewLine + ex.Message);
             }
             return l;
         }
 
-        private static void AdjustSequenceToMatchCurrentProfile(ICollection<MyFilterWheel.FilterInfo> filters, double latitude, double longitude, CaptureSequenceList l) {
+        private static void AdjustSequenceToMatchCurrentProfile(ICollection<FilterInfo> filters, double latitude, double longitude, CaptureSequenceList l) {
             foreach (CaptureSequence s in l) {
                 if (s.FilterType != null) {
                     //first try to match by name; otherwise match by position.
@@ -161,7 +163,7 @@ namespace NINA.Model {
                     if (filter == null) {
                         filter = filters.Where((f) => f.Position == s.FilterType.Position).FirstOrDefault();
                         if (filter == null) {
-                            Notification.ShowWarning(string.Format(Locale.Loc.Instance["LblFilterNotFoundForPosition"], (s.FilterType.Position + 1)));
+                            Notification.ShowWarning(string.Format(Loc.Instance["LblFilterNotFoundForPosition"], (s.FilterType.Position + 1)));
                         }
                     }
                     s.FilterType = filter;
@@ -186,7 +188,7 @@ namespace NINA.Model {
             }
         }
 
-        public static List<CaptureSequenceList> LoadSequenceSet(Stream stream, ICollection<MyFilterWheel.FilterInfo> filters, double latitude, double longitude) {
+        public static List<CaptureSequenceList> LoadSequenceSet(Stream stream, ICollection<FilterInfo> filters, double latitude, double longitude) {
             List<CaptureSequenceList> c = null;
             try {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<CaptureSequenceList>));
@@ -198,7 +200,7 @@ namespace NINA.Model {
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
-                Notification.ShowError(Locale.Loc.Instance["LblLoadSequenceSetFailed"] + Environment.NewLine + ex.Message);
+                Notification.ShowError(Loc.Instance["LblLoadSequenceSetFailed"] + Environment.NewLine + ex.Message);
             }
             return c;
         }

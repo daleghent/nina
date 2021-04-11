@@ -252,7 +252,6 @@
     <Compile Include="Interfaces\IFilterWheel.cs" />
     <Compile Include="Interfaces\IFlatDevice.cs" />
     <Compile Include="Interfaces\IFocuser.cs" />
-    <Compile Include="Interfaces\IGuideEvent.cs" />
     <Compile Include="Interfaces\IGuider.cs" />
     <Compile Include="Interfaces\IPlanetarium.cs" />
     <Compile Include="Interfaces\IPlanetariumFactory.cs" />

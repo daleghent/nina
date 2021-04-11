@@ -14,9 +14,10 @@
 
 using NINA.Astrometry;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFilterWheel;
+using NINA.Core.Model.Equipment;
+using NINA.Equipment.Model;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.Equipment.MyFilterWheel;
 using NUnit.Framework;
 using System;
 using System.Linq;

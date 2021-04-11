@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,19 +12,25 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyWeatherData;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
+using NINA.Equipment.Equipment.MyWeatherData;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Core.MyMessageBox;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.WeatherData {
+namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
 
     public class WeatherDataVM : DockableVM, IWeatherDataVM {
 
@@ -73,7 +79,7 @@ namespace NINA.ViewModel.Equipment.WeatherData {
                 applicationStatusMediator.StatusUpdate(
                     new ApplicationStatus() {
                         Source = Title,
-                        Status = Locale.Loc.Instance["LblConnecting"]
+                        Status = Loc.Instance["LblConnecting"]
                     }
                 );
 
@@ -106,7 +112,7 @@ namespace NINA.ViewModel.Equipment.WeatherData {
                                 WindSpeed = WeatherData.WindSpeed
                             };
 
-                            Notification.ShowSuccess(Locale.Loc.Instance["LblWeatherConnected"]);
+                            Notification.ShowSuccess(Loc.Instance["LblWeatherConnected"]);
 
                             updateTimer.Start();
 
@@ -247,7 +253,7 @@ namespace NINA.ViewModel.Equipment.WeatherData {
         }
 
         private async Task<bool> DisconnectDiag() {
-            var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblWeatherDisconnect"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+            var diag = MyMessageBox.Show(Loc.Instance["LblWeatherDisconnect"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
             if (diag == System.Windows.MessageBoxResult.OK) {
                 await Disconnect();
             }

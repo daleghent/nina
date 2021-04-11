@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,21 +12,26 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyRotator;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
-using NINA.Profile;
-using NINA.ViewModel.Interfaces;
+using NINA.Equipment.Equipment.MyRotator;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
+using NINA.Profile.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using NINA.Astrometry;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.Locale;
+using NINA.Core.MyMessageBox;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.ViewModel.Equipment.Rotator {
+namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
     public class RotatorVM : DockableVM, IRotatorVM {
 
@@ -72,7 +77,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
 
         public void Sync(float skyAngle) {
             if (RotatorInfo.Connected) {
-                Logger.Info($"Syncing Rotator to Sky Angle {skyAngle}°");
+                Logger.Info($"Syncing Rotator to Sky Angle {skyAngle}??");
                 rotator.Sync(skyAngle);
                 RotatorInfo.Position = rotator.Position;
                 RotatorInfo.Synced = true;
@@ -93,11 +98,11 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     applicationStatusMediator.StatusUpdate(
                         new ApplicationStatus() {
                             Source = Title,
-                            Status = string.Format(Locale.Loc.Instance["LblMovingRotatorToPosition"], Math.Round(targetPosition, 2))
+                            Status = string.Format(Loc.Instance["LblMovingRotatorToPosition"], Math.Round(targetPosition, 2))
                         }
                     );
 
-                    Logger.Debug($"Move rotator to {targetPosition}°");
+                    Logger.Debug($"Move rotator to {targetPosition}??");
 
                     rotator.MoveAbsolute(targetPosition);
                     while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.Position - targetPosition) > 1) && (Math.Abs(RotatorInfo.Position - targetPosition) < 359))) {
@@ -134,11 +139,11 @@ namespace NINA.ViewModel.Equipment.Rotator {
                     applicationStatusMediator.StatusUpdate(
                         new ApplicationStatus() {
                             Source = Title,
-                            Status = string.Format(Locale.Loc.Instance["LblMovingRotatorToMechanicalPosition"], Math.Round(targetPosition, 2))
+                            Status = string.Format(Loc.Instance["LblMovingRotatorToMechanicalPosition"], Math.Round(targetPosition, 2))
                         }
                     );
 
-                    Logger.Debug($"Move rotator mechanical to {targetPosition}°");
+                    Logger.Debug($"Move rotator mechanical to {targetPosition}??");
 
                     rotator.MoveAbsoluteMechanical(targetPosition);
                     while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) > 1) && (Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) < 359))) {
@@ -288,7 +293,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
                 applicationStatusMediator.StatusUpdate(
                     new ApplicationStatus() {
                         Source = Title,
-                        Status = Locale.Loc.Instance["LblConnecting"]
+                        Status = Loc.Instance["LblConnecting"]
                     }
                 );
 
@@ -319,7 +324,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
                                 Reverse = rotator.Reverse
                             };
 
-                            Notification.ShowSuccess(Locale.Loc.Instance["LblRotatorConnected"]);
+                            Notification.ShowSuccess(Loc.Instance["LblRotatorConnected"]);
 
                             updateTimer.Interval = profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval;
                             updateTimer.Start();
@@ -372,7 +377,7 @@ namespace NINA.ViewModel.Equipment.Rotator {
         }
 
         private async Task<bool> DisconnectDiag() {
-            var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectRotator"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+            var diag = MyMessageBox.Show(Loc.Instance["LblDisconnectRotator"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
             if (diag == System.Windows.MessageBoxResult.OK) {
                 await Disconnect();
             }

@@ -12,7 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Core.Locale;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
 
         public Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             progress?.Report(new ApplicationStatus() {
-                Status = Locale.Loc.Instance["LblExecutingItemsInParallel"]
+                Status = Loc.Instance["LblExecutingItemsInParallel"]
             });
 
             var tasks = new List<Task>();

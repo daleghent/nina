@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using NINA.ViewModel;
+using NINA.WPF.Base.Utility.AutoFocus;
 using NUnit.Framework;
 using OxyPlot.Series;
 using System;

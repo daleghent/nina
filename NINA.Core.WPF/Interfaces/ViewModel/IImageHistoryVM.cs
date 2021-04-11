@@ -12,14 +12,16 @@
 
 #endregion "copyright"
 
-using NINA.Model.ImageData;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.ViewModel.AutoFocus;
+using NINA.Core.Utility;
 using System.Collections.Generic;
 using System.Windows.Input;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Image.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.WPF.Base.Model;
+using NINA.WPF.Base.Utility.AutoFocus;
 
-namespace NINA.ViewModel.ImageHistory {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IImageHistoryVM : IDockableVM {
         AsyncObservableCollection<ImageHistoryPoint> AutoFocusPoints { get; set; }

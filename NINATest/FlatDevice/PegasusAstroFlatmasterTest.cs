@@ -16,12 +16,12 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
-using NINA.Locale;
-using NINA.Model.MyFlatDevice;
-using NINA.Profile;
-using NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK;
-using NINA.Utility.SerialCommunication;
+using NINA.Core.Locale;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility.SerialCommunication;
 using NUnit.Framework;
+using NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK;
 
 namespace NINATest.FlatDevice {
 

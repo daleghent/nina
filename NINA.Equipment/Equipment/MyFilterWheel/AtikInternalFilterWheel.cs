@@ -12,16 +12,16 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.AtikSDK;
-using NINA.Utility.Notification;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.SDK.CameraSDKs.AtikSDK;
 
-namespace NINA.Model.MyFilterWheel {
+namespace NINA.Equipment.Equipment.MyFilterWheel {
 
     public class AtikInternalFilterWheel : AtikFilterWheelBase {
         private readonly int filterWheelDeviceId;

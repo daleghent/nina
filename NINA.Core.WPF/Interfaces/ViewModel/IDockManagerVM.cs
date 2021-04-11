@@ -12,11 +12,12 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.ViewModel;
 using System.Collections.Generic;
 using System.Windows.Input;
 
-namespace NINA.ViewModel.Interfaces {
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
     public interface IDockManagerVM {
         List<IDockableVM> AnchorableInfoPanels { get; }

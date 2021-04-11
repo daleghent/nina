@@ -13,8 +13,8 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
@@ -23,7 +23,6 @@ using NINA.Sequencer.SequenceItem.FilterWheel;
 using NINA.Sequencer.SequenceItem.Imaging;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Trigger.Guider;
-using NINA.Utility.Mediator.Interfaces;
 using NINA.ViewModel.ImageHistory;
 using System;
 using System.Collections.Generic;

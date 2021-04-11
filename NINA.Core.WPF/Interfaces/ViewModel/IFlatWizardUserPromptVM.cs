@@ -13,29 +13,32 @@
 #endregion "copyright"
 
 using NINA.Core.Enum;
-using NINA.Model.MyCamera;
-using NINA.Model.MyFlatDevice;
-using NINA.Utility;
-using NINA.ViewModel.FlatWizard;
+using NINA.Core.Utility;
+using NINA.Equipment.Equipment.MyFlatDevice;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.WPF.Base.Model;
 
-public interface IFlatWizardUserPromptVM {
-    RelayCommand ResetAndContinueCommand { get; }
-    RelayCommand ContinueCommand { get; }
-    RelayCommand CancelCommand { get; }
-    FlatWizardFilterSettingsWrapper Settings { get; set; }
-    string Message { get; set; }
-    double CurrentMean { get; set; }
-    double CameraBitDepth { get; set; }
-    double ExpectedExposureTime { get; set; }
-    double ExpectedBrightness { get; set; }
-    FlatWizardMode FlatWizardMode { get; set; }
-    CameraInfo CameraInfo { get; set; }
-    FlatDeviceInfo FlatDeviceInfo { get; set; }
-    FlatWizardUserPromptResult Result { get; set; }
-}
+namespace NINA.WPF.Base.Interfaces.ViewModel {
 
-public enum FlatWizardUserPromptResult {
-    Continue,
-    ResetAndContinue,
-    Cancel
+    public interface IFlatWizardUserPromptVM {
+        RelayCommand ResetAndContinueCommand { get; }
+        RelayCommand ContinueCommand { get; }
+        RelayCommand CancelCommand { get; }
+        FlatWizardFilterSettingsWrapper Settings { get; set; }
+        string Message { get; set; }
+        double CurrentMean { get; set; }
+        double CameraBitDepth { get; set; }
+        double ExpectedExposureTime { get; set; }
+        double ExpectedBrightness { get; set; }
+        FlatWizardMode FlatWizardMode { get; set; }
+        CameraInfo CameraInfo { get; set; }
+        FlatDeviceInfo FlatDeviceInfo { get; set; }
+        FlatWizardUserPromptResult Result { get; set; }
+    }
+
+    public enum FlatWizardUserPromptResult {
+        Continue,
+        ResetAndContinue,
+        Cancel
+    }
 }

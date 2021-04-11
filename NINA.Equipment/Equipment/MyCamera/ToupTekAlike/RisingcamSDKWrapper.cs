@@ -12,13 +12,14 @@
 
 #endregion "copyright"
 
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NINA.Model.MyCamera.ToupTekAlike {
+namespace NINA.Equipment.Equipment.MyCamera.ToupTekAlike {
 
     public static class RisingcamEnumExtensions {
 
@@ -26,7 +27,8 @@ namespace NINA.Model.MyCamera.ToupTekAlike {
             return (Nncam.eOPTION)Enum.Parse(typeof(ToupTekAlikeOption), option.ToString());
         }
 
-        public static ToupTekAlikeEvent ToEvent(this Nncam.eEVENT info) {
+        public static
+            ToupTekAlikeEvent ToEvent(this Nncam.eEVENT info) {
             return (ToupTekAlikeEvent)Enum.Parse(typeof(Nncam.eEVENT), info.ToString());
         }
 

@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,20 +12,21 @@
 
 #endregion "copyright"
 
-using NINA.Locale;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.FlatDeviceSDKs.PegasusAstroSDK;
-using NINA.Utility.Notification;
-using NINA.Utility.SerialCommunication;
-using NINA.Utility.WindowService;
+using NINA.Core.Locale;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Core.Utility.Notification;
+using NINA.Core.Utility.SerialCommunication;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Equipment.SDK.FlatDeviceSDKs.PegasusAstroSDK;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyFlatDevice {
+namespace NINA.Equipment.Equipment.MyFlatDevice {
 
     public class PegasusAstroFlatMaster : BaseINPC, IFlatDevice {
         private readonly IProfileService _profileService;
@@ -44,12 +45,12 @@ namespace NINA.Model.MyFlatDevice {
         private static void LogAndNotify(ICommand command, InvalidDeviceResponseException ex) {
             Logger.Error("Invalid response from flat device. " +
                          $"Command was: {command} Response was: {ex.Message}.");
-            Notification.ShowError(Locale.Loc.Instance["LblFlatDeviceInvalidResponse"]);
+            Notification.ShowError(Loc.Instance["LblFlatDeviceInvalidResponse"]);
         }
 
         private void HandlePortClosed(ICommand command, SerialPortClosedException ex) {
             Logger.Error($"Serial port was closed. Command was: {command} Exception: {ex.InnerException}.");
-            Notification.ShowError(Locale.Loc.Instance["LblFlatDeviceInvalidResponse"]);
+            Notification.ShowError(Loc.Instance["LblFlatDeviceInvalidResponse"]);
             Disconnect();
             RaiseAllPropertiesChanged();
         }

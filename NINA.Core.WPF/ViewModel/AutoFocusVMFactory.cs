@@ -12,15 +12,19 @@
 
 #endregion "copyright"
 
-using NINA.Profile;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Profile.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces;
+using NINA.WPF.Base.ViewModel.AutoFocus;
+using NINA.WPF.Base.Interfaces.ViewModel;
 
-namespace NINA.ViewModel.AutoFocus {
+namespace NINA.WPF.Base.ViewModel {
 
     public class AutoFocusVMFactory : IAutoFocusVMFactory {
         private IApplicationStatusMediator applicationStatusMediator;

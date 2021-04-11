@@ -13,16 +13,11 @@
 #endregion "copyright"
 
 using Newtonsoft.Json;
-using NINA.Model;
-using NINA.Model.MyFilterWheel;
-using NINA.Profile;
+using NINA.Core.Model;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Validations;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.WindowService;
-using NINA.ViewModel;
-using NINA.ViewModel.AutoFocus;
-using NINA.ViewModel.ImageHistory;
-using NINA.ViewModel.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.WindowService;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,6 +26,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model.Equipment;
+using NINA.Core.Locale;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.Interfaces;
 
 namespace NINA.Sequencer.SequenceItem.Autofocus {
 
@@ -107,10 +108,10 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
         public bool Validate() {
             var i = new List<string>();
             if (!cameraMediator.GetInfo().Connected) {
-                i.Add(Locale.Loc.Instance["LblCameraNotConnected"]);
+                i.Add(Loc.Instance["LblCameraNotConnected"]);
             }
             if (!focuserMediator.GetInfo().Connected) {
-                i.Add(Locale.Loc.Instance["LblFocuserNotConnected"]);
+                i.Add(Loc.Instance["LblFocuserNotConnected"]);
             }
 
             Issues = i;

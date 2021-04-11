@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,21 +12,26 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyFocuser;
-using NINA.Profile;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Utility.Notification;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using NINA.Locale;
+using NINA.Core.Locale;
 using NINA.Core.Enum;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Model;
+using NINA.Core.MyMessageBox;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Equipment.Equipment;
 
-namespace NINA.ViewModel.Equipment.Focuser {
+namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
     public class FocuserVM : DockableVM, IFocuserVM {
         private readonly DeviceUpdateTimer updateTimer;
@@ -165,7 +170,7 @@ namespace NINA.ViewModel.Equipment.Focuser {
                         //Wait for focuser to settle
                         if (profileService.ActiveProfile.FocuserSettings.FocuserSettleTime > 0) {
                             FocuserInfo.IsSettling = true;
-                            await Utility.Utility.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.FocuserSettleTime), ct, progress, Loc.Instance["LblSettle"]);
+                            await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.FocuserSettleTime), ct, progress, Loc.Instance["LblSettle"]);
                         }
                     }
                 } catch (OperationCanceledException) {
@@ -321,7 +326,7 @@ namespace NINA.ViewModel.Equipment.Focuser {
         public int Position => Focuser?.Position ?? 0;
 
         private async Task<bool> DisconnectDiag() {
-            var diag = MyMessageBox.MyMessageBox.Show(Locale.Loc.Instance["LblDisconnectFocuser"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
+            var diag = MyMessageBox.Show(Loc.Instance["LblDisconnectFocuser"], "", System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
             if (diag == System.Windows.MessageBoxResult.OK) {
                 await Disconnect();
             }

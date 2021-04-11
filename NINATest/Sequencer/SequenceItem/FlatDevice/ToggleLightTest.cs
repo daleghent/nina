@@ -15,12 +15,11 @@
 using FluentAssertions;
 using Moq;
 using NINA.Core.Enum;
-using NINA.Model;
-using NINA.Model.MyFlatDevice;
+using NINA.Equipment.Equipment.MyFlatDevice;
 using NINA.Sequencer;
-using NINA.Sequencer.Exceptions;
+using NINA.Core.Model;
 using NINA.Sequencer.SequenceItem.FlatDevice;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

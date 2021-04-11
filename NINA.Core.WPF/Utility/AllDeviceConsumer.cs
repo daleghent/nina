@@ -12,17 +12,19 @@
 
 #endregion "copyright"
 
-using NINA.Model.MySwitch;
-using NINA.Model.MyDome;
-using NINA.Model.MyFilterWheel;
-using NINA.Model.MyFocuser;
-using NINA.Model.MyGuider;
-using NINA.Model.MyRotator;
-using NINA.Model.MyTelescope;
-using NINA.Utility.Mediator.Interfaces;
-using NINA.Model.MyCamera;
+using NINA.Equipment.Equipment.MySwitch;
+using NINA.Equipment.Equipment.MyDome;
+using NINA.Equipment.Equipment.MyFilterWheel;
+using NINA.Equipment.Equipment.MyFocuser;
+using NINA.Equipment.Equipment.MyGuider;
+using NINA.Equipment.Equipment.MyRotator;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.WPF.Base.Interfaces.Utility;
+using NINA.Core.Utility;
 
-namespace NINA.Utility {
+namespace NINA.WPF.Base.Utility {
 
     public class AllDeviceConsumer : BaseINPC, IAllDeviceConsumer {
         private readonly ICameraMediator cameraMediator;

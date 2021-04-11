@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,7 +12,10 @@
 
 #endregion "copyright"
 
-namespace NINA.Model.MyFlatDevice {
+using NINA.Core.Locale;
+using NINA.Equipment.Interfaces;
+
+namespace NINA.Equipment.Equipment.MyFlatDevice {
 
     public class FlatDeviceInfo : DeviceInfo {
         private CoverState _coverState;
@@ -26,8 +29,8 @@ namespace NINA.Model.MyFlatDevice {
             }
         }
 
-        public string LocalizedCoverState => Locale.Loc.Instance[$"LblFlatDevice{_coverState}"];
-        public string LocalizedLightOnState => LightOn ? Locale.Loc.Instance["LblOn"] : Locale.Loc.Instance["LblOff"];
+        public string LocalizedCoverState => Loc.Instance[$"LblFlatDevice{_coverState}"];
+        public string LocalizedLightOnState => LightOn ? Loc.Instance["LblOn"] : Loc.Instance["LblOff"];
 
         private bool _lightOn;
 

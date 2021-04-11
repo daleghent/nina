@@ -12,9 +12,8 @@
 
 #endregion "copyright"
 
-using NINA.Model;
-using NINA.Model.MyGuider;
-using NINA.Model.MyGuider.PHD2;
+using NINA.Equipment.Equipment.MyGuider;
+using NINA.Equipment.Equipment.MyGuider.PHD2;
 using NINA.Core.Enum;
 using NUnit.Framework;
 using System;
@@ -22,6 +21,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Core.Interfaces;
+using NINA.Equipment.Equipment;
 
 namespace NINATest {
 

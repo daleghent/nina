@@ -12,7 +12,9 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Astrometry;
+using NINA.Core.Model;
+using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Sequencer.Container;
 using NINA.ViewModel.Interfaces;
 using System.Collections.Generic;

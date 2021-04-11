@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -15,9 +15,9 @@
 using OxyPlot;
 using System;
 
-namespace NINA.ViewModel {
+namespace NINA.WPF.Base.Utility.AutoFocus {
 
-    public class AutoFocusPoint {
+    public class ReportAutoFocusPoint {
         public DataPoint Focuspoint { get; set; }
         public DateTime Timestamp { get; set; }
         public double Temperature { get; set; }

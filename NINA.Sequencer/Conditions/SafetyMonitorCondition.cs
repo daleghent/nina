@@ -14,8 +14,8 @@
 
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Validations;
-using NINA.Utility;
-using NINA.Utility.Mediator.Interfaces;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces.Mediator;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -64,7 +65,7 @@ namespace NINA.Sequencer.Conditions {
             var info = safetyMonitorMediator.GetInfo();
 
             if (!info.Connected) {
-                i.Add(Locale.Loc.Instance["LblSafetyMonitorNotConnected"]);
+                i.Add(Loc.Instance["LblSafetyMonitorNotConnected"]);
             } else {
                 IsSafe = info.IsSafe;
             }

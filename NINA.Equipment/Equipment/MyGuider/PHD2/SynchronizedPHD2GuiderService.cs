@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright Â© 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -12,8 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Locale;
-using NINA.Utility.Notification;
+using NINA.Core.Interfaces;
+using NINA.Core.Locale;
+using NINA.Core.Model;
+using NINA.Core.Utility.Notification;
+using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +27,7 @@ using System.Threading.Tasks;
 
 #pragma warning disable 1998
 
-namespace NINA.Model.MyGuider.PHD2 {
+namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
     /// <summary>
     /// The basic flow of this class is as follows

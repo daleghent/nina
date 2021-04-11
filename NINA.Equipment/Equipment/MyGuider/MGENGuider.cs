@@ -1,7 +1,7 @@
 #region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright ? 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,11 +14,10 @@
 
 using NINA.MGEN;
 using NINA.Exceptions;
-using NINA.Profile;
-using NINA.Utility;
+using NINA.Profile.Interfaces;
+using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Utility.ImageAnalysis;
-using NINA.Utility.Notification;
+using NINA.Core.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,8 +30,11 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using NINA.Core.Interfaces;
+using NINA.Image.ImageAnalysis;
+using NINA.Equipment.Interfaces;
 
-namespace NINA.Model.MyGuider {
+namespace NINA.Equipment.Equipment.MyGuider {
 
     public class MGENGuider : BaseINPC, IGuider {
         public readonly IMGEN MGen;
@@ -176,7 +178,7 @@ namespace NINA.Model.MyGuider {
                     await RefreshDisplay();
                     await RefreshLEDs();
                     await RefreshGuideState();
-                    await Utility.Utility.Delay(TimeSpan.FromSeconds(1), refreshCts.Token);
+                    await CoreUtil.Delay(TimeSpan.FromSeconds(1), refreshCts.Token);
                 } catch (OperationCanceledException) {
                     break;
                 } catch (Exception) {
@@ -358,7 +360,7 @@ namespace NINA.Model.MyGuider {
         }
 
         private async Task WaitForSettling(int millisDelay, CancellationToken ct) {
-            await Utility.Utility.Delay(millisDelay, ct);
+            await CoreUtil.Delay(millisDelay, ct);
         }
 
         public async Task<bool> Connect(CancellationToken token) {

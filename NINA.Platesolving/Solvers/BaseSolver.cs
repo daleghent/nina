@@ -16,13 +16,15 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using NINA.Model;
-using NINA.Model.ImageData;
+using NINA.Core.Model;
+using NINA.Core.Utility;
+using NINA.Image.Interfaces;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINA.PlateSolving.Solvers {
 
     internal abstract class BaseSolver : IPlateSolver {
-        protected static string WORKING_DIRECTORY = Path.Combine(Utility.Utility.APPLICATIONTEMPPATH, "PlateSolver");
+        protected static string WORKING_DIRECTORY = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "PlateSolver");
 
         public async Task<PlateSolveResult> SolveAsync(IImageData source, PlateSolveParameter parameter, IProgress<ApplicationStatus> progress, CancellationToken canceltoken) {
             EnsureSolverValid(parameter);

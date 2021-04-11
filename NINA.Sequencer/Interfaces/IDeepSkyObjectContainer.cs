@@ -12,7 +12,7 @@
 
 #endregion "copyright"
 
-using NINA.Model;
+using NINA.Astrometry;
 
 namespace NINA.Sequencer.Container {
 
