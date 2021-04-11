@@ -75,9 +75,6 @@ namespace NINATest.Focuser {
         public void TestConstructor() {
             mockProfileService.SetupAdd(m => m.ProfileChanged += It.IsAny<EventHandler>());
 
-            sut = new FocuserVM(mockProfileService.Object, mockFocuserMediator.Object,
-                mockApplicationStatusMediator.Object, mockFocuserChooserVm.Object, mockImageGeometryProvider.Object);
-
             sut.Should().NotBeNull();
             sut.FocuserChooserVM.Should().Be(mockFocuserChooserVm.Object);
             sut.RefreshFocuserListCommand.Should().NotBeNull();
