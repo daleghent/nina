@@ -27,7 +27,7 @@ namespace NINA.Equipment.Interfaces {
         double CloudCover { get; }
 
         /// <summary>
-        /// Atmospheric dew point reported in ??C
+        /// Atmospheric dew point reported in °C
         /// </summary>
         double DewPoint { get; }
 
@@ -57,7 +57,7 @@ namespace NINA.Equipment.Interfaces {
         double SkyQuality { get; }
 
         /// <summary>
-        /// Sky temperature in ??C
+        /// Sky temperature in °C
         /// </summary>
         double SkyTemperature { get; }
 
@@ -67,7 +67,7 @@ namespace NINA.Equipment.Interfaces {
         double StarFWHM { get; }
 
         /// <summary>
-        /// Ambient air temperature in ??C
+        /// Ambient air temperature in °C
         /// </summary>
         double Temperature { get; }
 

@@ -24,9 +24,9 @@ namespace NINA.Core.Utility.Converters {
             string output;
 
             if ((bool)values[1]) {
-                output = string.Format("{0:0.00} ??F", (double)values[0] * 1.8 + 32);
+                output = string.Format("{0:0.00} °F", (double)values[0] * 1.8 + 32);
             } else {
-                output = string.Format("{0:0.00} ??C", values[0]);
+                output = string.Format("{0:0.00} °C", values[0]);
             }
 
             return output;

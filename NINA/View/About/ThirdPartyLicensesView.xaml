@@ -303,7 +303,7 @@
             <TextBlock
                 Grid.Row="22"
                 Grid.Column="0"
-                Text="Avalondock (v4.50.2)" />
+                Text="Avalondock" />
             <TextBlock Grid.Row="22" Grid.Column="1">
                 <Hyperlink NavigateUri="https://github.com/Dirkster99/AvalonDock" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/Dirkster99/AvalonDock</Hyperlink>
             </TextBlock>

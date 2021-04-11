@@ -64,6 +64,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using CsvHelper.Configuration;
 
 namespace NINA.ViewModel {
 
@@ -333,11 +334,12 @@ namespace NINA.ViewModel {
             if (dialog.ShowDialog() == true) {
                 try {
                     using (var reader = new StreamReader(dialog.FileName)) {
-                        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture)) {
+                        var config = new CsvConfiguration(CultureInfo.InvariantCulture) {
+                            BadDataFound = null,
+                            PrepareHeaderForMatch = args => args.Header.ToLower().Trim()
+                        };
+                        using (var csv = new CsvReader(reader, config)) {
                             this.Targets.Items.Clear();
-                            csv.Configuration.PrepareHeaderForMatch = (string header, int index) => header.ToLower().Trim();
-                            csv.Configuration.CultureInfo = CultureInfo.InvariantCulture;
-                            csv.Configuration.BadDataFound = null;
 
                             csv.Read();
                             csv.ReadHeader();

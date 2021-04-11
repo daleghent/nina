@@ -275,7 +275,7 @@ namespace NINA.ViewModel.ImageHistory {
                     if (!sfd.FileName.ToLower().EndsWith(".csv")) sfd.FileName += ".csv";
                     using (var writer = new StreamWriter(sfd.FileName))
                     using (var csv = new CsvWriter(writer, CultureInfo.InvariantCulture)) {
-                        csv.Configuration.RegisterClassMap<ImageHistoryPointMap>();
+                        csv.Context.RegisterClassMap<ImageHistoryPointMap>();
                         csv.WriteRecords(ObservableImageHistory);
                     }
                 }

@@ -38,7 +38,7 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         private double dewPoint = double.NaN;
 
         /// <summary>
-        /// Atmospheric dew point reported in ??C
+        /// Atmospheric dew point reported in °C
         /// </summary>
         public double DewPoint {
             get => dewPoint;
@@ -98,7 +98,7 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         private double skyTemperature = double.NaN;
 
         /// <summary>
-        /// Sky temperature in ??C
+        /// Sky temperature in °C
         /// </summary>
         public double SkyTemperature {
             get => skyTemperature;
@@ -118,7 +118,7 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         private double temperature = double.NaN;
 
         /// <summary>
-        /// Ambient air temperature in ??C
+        /// Ambient air temperature in °C
         /// </summary>
         public double Temperature {
             get => temperature;

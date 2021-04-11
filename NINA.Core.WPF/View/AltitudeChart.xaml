@@ -85,14 +85,14 @@
                     DataFieldX="Key"
                     DataFieldY="Value"
                     ItemsSource="{Binding Altitudes}"
-                    TrackerFormatString="X: {2:HH:mm}h&#x0a;Y: {4:0.00}??"
+                    TrackerFormatString="X: {2:HH:mm}h&#x0a;Y: {4:0.00}&#176;"
                     Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
 
                 <oxy:AreaSeries
                     DataFieldX="Key"
                     DataFieldY="Value"
                     ItemsSource="{Binding Horizon}"
-                    TrackerFormatString="X: {2:HH:mm}h&#x0a;Y: {4:0.00}??"
+                    TrackerFormatString="X: {2:HH:mm}h&#x0a;Y: {4:0.00}&#176;"
                     Color="{Binding Path=Color, Source={StaticResource ButtonBackgroundBrush}}" />
             </oxy:Plot.Series>
             <oxy:Plot.Annotations>
@@ -106,7 +106,7 @@
                 <oxy:PointAnnotation
                     Fill="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                     Shape="Circle"
-                    Text="{Binding MaxAltitude.Y, StringFormat=\{0:0\}??}"
+                    Text="{Binding MaxAltitude.Y, StringFormat=\{0:0\}&#176;}"
                     TextColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                     X="{Binding MaxAltitude.X}"
                     Y="{Binding MaxAltitude.Y}" />

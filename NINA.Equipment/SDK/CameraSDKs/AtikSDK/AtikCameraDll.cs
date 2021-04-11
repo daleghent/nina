@@ -364,7 +364,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         /// <summary>
         /// Returns the version of the DLL. This number is set in the DLL. It is important to check
         /// that the DLL and API version match. If not, there is a strong possibility that things
-        /// won???t work properly.
+        /// won't work properly.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisDLLVersion", CallingConvention = CallingConvention.Cdecl)]
         private static extern int ArtemisDLLVersion();
@@ -388,23 +388,23 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         private static extern bool ArtemisDeviceInUse(int iDevice);
 
         /// <summary>
-        /// Sets the supplied ???pName??? variable to the name of the given device. Return true if
+        /// Sets the supplied 'pName' variable to the name of the given device. Return true if
         /// iDevice is found, false otherwise.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisDeviceName", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern bool ArtemisDeviceName(int iDevice, [MarshalAs(UnmanagedType.LPStr)] StringBuilder pName);
 
         /// <summary>
-        /// Sets the supplied ???pSerial??? variable to the serial number of the given device. Returns
+        /// Sets the supplied 'pSerial' variable to the serial number of the given device. Returns
         /// true if iDevice is found, false otherwise.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisDeviceSerial", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern bool ArtemisDeviceSerial(int iDevice, [MarshalAs(UnmanagedType.LPStr)] string pName);
 
         /// <summary>
-        /// Connects to the given camera. The ArtemisHandle is actually a ???void *??? and will be needed
+        /// Connects to the given camera. The ArtemisHandle is actually a 'void *' and will be needed
         /// for all camera specific methods. It will return 0 if this method fails. You can call this
-        /// method with ???-1???, in which case, you will received the first camera that is not currently
+        /// method with '-1', in which case, you will received the first camera that is not currently
         /// in use (by any application).
         /// Note: It is possible for different applications to connect to the same camera.
         /// </summary>
@@ -456,7 +456,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         /// The refresh devices count tells you how many times the camera list has changed on the
         /// service. The camera list changes every time a USB device is connected or removed.
         /// Therefore, the purpose of this method is to tell the user that the cameras have changed
-        /// and that it???s worth checking to make sure their camera(s) are still connected.
+        /// and that it's worth checking to make sure their camera(s) are still connected.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisRefreshDevicesCount", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern int ArtemisRefreshDevicesCount();
@@ -465,7 +465,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         /// The refresh devices count tells you how many times the camera list has changed on the
         /// service. The camera list changes every time a USB device is connected or removed.
         /// Therefore, the purpose of this method is to tell the user that the cameras have changed
-        /// and that it???s worth checking to make sure their camera(s) are still connected.
+        /// and that it's worth checking to make sure their camera(s) are still connected.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisDeviceCount", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern int ArtemisDeviceCount();
@@ -492,7 +492,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         private static extern ArtemisErrorCode ArtemisProperties(IntPtr camera, ref ArtemisPropertiesStruct prop);
 
         /// <summary>
-        /// Gives the colour properties of the given camera. The offsets(Normal / Preview ??? X / Y)
+        /// Gives the colour properties of the given camera. The offsets(Normal / Preview - X / Y)
         /// give you information about the Bayer matrix used.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisColourProperties", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -531,7 +531,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         private static extern ArtemisErrorCode ArtemisAbortExposure(IntPtr camera);
 
         /// <summary>
-        /// Let???s you know when the image is ready. The value is set to ???false??? when ???Start Exposure???
+        /// Let's you know when the image is ready. The value is set to 'false' when 'Start Exposure'
         /// is called and only returns true once the exposure has finished.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisImageReady", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -610,15 +610,15 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         /// <summary>
         /// Preview mode will produce images at a faster rate, but at a cost of quality. This method
         /// is used to set the camera into normal / preview mode. Passing bPrev = true will set the
-        /// camera into preview mode, ???bPrev = false??? sets the camera into normal mode.
+        /// camera into preview mode, 'bPrev = false' sets the camera into normal mode.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisSetPreview", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
         private static extern ArtemisErrorCode ArtemisSetPreview(IntPtr camera, bool prev);
 
         /// <summary>
-        /// This function has two purposes. Firstly, if you call this function with ???sensor = 0???,
+        /// This function has two purposes. Firstly, if you call this function with 'sensor = 0',
         /// then temperature will actually be set to the number of sensors. Once you know how many
-        /// sensors there are, you can call this method with a ???1-based??? sensor index, and
+        /// sensors there are, you can call this method with a '1-based' sensor index, and
         /// temperature will be set to the temperature reading of that sensor. The temperature is in
         /// 1/100 of a degree (Celcius), so a value of -1000 is actually -10C
         /// </summary>
@@ -642,7 +642,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
         /// <summary>
         /// Tells the camera to start warming up.
         /// Note: It is very important that this function is called at the end of operation. Letting
-        /// the sensor warm up naturally can cause damage to the sensor. It???s not unusual for the
+        /// the sensor warm up naturally can cause damage to the sensor. It's not unusual for the
         /// temperature to go further down before going up.
         /// </summary>
         [DllImport(DLLNAME, EntryPoint = "ArtemisCoolerWarmUp", CallingConvention = CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
@@ -836,19 +836,19 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
             ARTEMIS_NO_RESPONSE,
 
             /// <summary>
-            /// Returned when trying to call a camera specific function on a camera which doesn???t
+            /// Returned when trying to call a camera specific function on a camera which doesn't
             /// have that feature. (Such as the cooling functions on cameras without cooling).
             /// </summary>
             ARTEMIS_INVALID_FUNCTION,
 
             /// <summary>
-            /// Returned if trying to call a function on something that hasn???t been initialised. The
+            /// Returned if trying to call a function on something that hasn't been initialised. The
             /// only current example is the lens control
             /// </summary>
             ARTEMIS_NOT_INITIALISED,
 
             /// <summary>
-            /// Returned if a function couldn???t complete for any other reason
+            /// Returned if a function couldn't complete for any other reason
             /// </summary>
             ARTEMIS_OPERATION_FAILED
         }
@@ -890,7 +890,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.AtikSDK {
             public int ccdflags;
 
             /// <summary>
-            /// The value is ???1??? if the sensor is interlaced. 0 otherwise
+            /// The value is '1' if the sensor is interlaced. 0 otherwise
             /// </summary>
             public int cameraflags;
 

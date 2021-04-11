@@ -32,7 +32,7 @@ namespace NINA.Core.Utility.Converters {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             var text = (string)value;
 
-            return ImagePattern.GetImageFileString(text).Replace("\\", " ??? ");
+            return ImagePattern.GetImageFileString(text).Replace("\\", " › ");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) {

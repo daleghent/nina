@@ -1,7 +1,7 @@
-#region "copyright"
+﻿#region "copyright"
 
 /*
-    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -243,7 +243,7 @@ namespace NINA.Image.ImageAnalysis {
                         var m = (from star in _starlist select star.HFR).Average();
                         var s = Math.Sqrt(((from star in _starlist select star.HFR * star.HFR).Sum() - _starlist.Count() * m * m) / _starlist.Count());
 
-                        Logger.Info($"Average HFR: {m}, HFR ??: {s}, Detected Stars {_starlist.Count}");
+                        Logger.Info($"Average HFR: {m}, HFR σ: {s}, Detected Stars {_starlist.Count}");
 
                         //todo change
                         AverageHFR = m;

@@ -263,7 +263,7 @@ namespace NINA.WPF.Base.Model.FramingAssistant {
             if (frameLine.Collection.Count > 1) {
                 var position = frameLine.Collection.FirstOrDefault(x => x.X > 0 && x.Y > 0);
                 if (position != null) {
-                    var text = $"{string.Format("{0:N2}", frameLine.Angle.Degree)}??";
+                    var text = $"{string.Format("{0:N2}", frameLine.Angle.Degree)}°";
                     var size = g.MeasureString(text, gridAnnotationFont);
                     g.DrawString(text, gridAnnotationFont, gridAnnotationBrush, (position.X), (position.Y));
                 }

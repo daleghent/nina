@@ -77,7 +77,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
         public void Sync(float skyAngle) {
             if (RotatorInfo.Connected) {
-                Logger.Info($"Syncing Rotator to Sky Angle {skyAngle}??");
+                Logger.Info($"Syncing Rotator to Sky Angle {skyAngle}°");
                 rotator.Sync(skyAngle);
                 RotatorInfo.Position = rotator.Position;
                 RotatorInfo.Synced = true;
@@ -102,7 +102,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                         }
                     );
 
-                    Logger.Debug($"Move rotator to {targetPosition}??");
+                    Logger.Debug($"Move rotator to {targetPosition}°");
 
                     rotator.MoveAbsolute(targetPosition);
                     while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.Position - targetPosition) > 1) && (Math.Abs(RotatorInfo.Position - targetPosition) < 359))) {
@@ -143,7 +143,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                         }
                     );
 
-                    Logger.Debug($"Move rotator mechanical to {targetPosition}??");
+                    Logger.Debug($"Move rotator mechanical to {targetPosition}°");
 
                     rotator.MoveAbsoluteMechanical(targetPosition);
                     while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) > 1) && (Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) < 359))) {
