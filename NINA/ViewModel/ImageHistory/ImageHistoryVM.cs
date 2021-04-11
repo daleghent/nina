@@ -284,7 +284,5 @@ namespace NINA.ViewModel.ImageHistory {
 
         public ICommand PlotClearCommand { get; private set; }
         public ICommand PlotSaveCommand { get; private set; }
-        AsyncObservableCollection<ImageHistoryPoint> IImageHistoryVM.AutoFocusPoints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        AsyncObservableCollection<ImageHistoryPoint> IImageHistoryVM.ObservableImageHistory { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }
 }
