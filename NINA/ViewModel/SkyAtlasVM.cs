@@ -86,6 +86,7 @@ namespace NINA.ViewModel {
             PageSize = 50;
 
             profileService.LocationChanged += (object sender, EventArgs e) => {
+                NighttimeData = this.nighttimeCalculator.Calculate();
                 InitializeElevationFilters();
             };
 
