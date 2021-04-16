@@ -101,8 +101,8 @@ namespace NINA.Equipment.Equipment.MyCamera.ToupTekAlike {
             sdk.get_ExpTimeRange(out min, out max, out def);
         }
 
-        public void get_Option(ToupTekAlikeOption oPTION_TECTARGET, out int target) {
-            sdk.get_Option(oPTION_TECTARGET.ToRisingcam(), out target);
+        public void get_Option(ToupTekAlikeOption option, out int target) {
+            sdk.get_Option(option.ToRisingcam(), out target);
         }
 
         public bool get_RawFormat(out uint fourCC, out uint bitDepth) {
@@ -128,24 +128,24 @@ namespace NINA.Equipment.Equipment.MyCamera.ToupTekAlike {
             return result;
         }
 
-        public void put_AutoExpoEnable(bool v) {
-            sdk.put_AutoExpoEnable(v);
+        public bool put_AutoExpoEnable(bool v) {
+            return sdk.put_AutoExpoEnable(v);
         }
 
-        public void put_ExpoAGain(ushort value) {
-            sdk.put_ExpoAGain(value);
+        public bool put_ExpoAGain(ushort value) {
+            return sdk.put_ExpoAGain(value);
         }
 
         public bool put_ExpoTime(uint µsTime) {
             return sdk.put_ExpoTime(µsTime);
         }
 
-        public bool put_Option(ToupTekAlikeOption oPTION_TECTARGET, int v) {
-            return sdk.put_Option(oPTION_TECTARGET.ToRisingcam(), v);
+        public bool put_Option(ToupTekAlikeOption option, int v) {
+            return sdk.put_Option(option.ToRisingcam(), v);
         }
 
-        public void put_Speed(ushort value) {
-            sdk.put_Speed(value);
+        public bool put_Speed(ushort value) {
+            return sdk.put_Speed(value);
         }
 
         private ToupTekAlikeCallback toupTekAlikeCallback;

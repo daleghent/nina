@@ -76,7 +76,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
             set {
                 if (CanSetTemperature) {
-                    if (sdk.put_Option(ToupTekAlikeOption.OPTION_TECTARGET, (int)(value * 10))) {
+                    if (!sdk.put_Option(ToupTekAlikeOption.OPTION_TECTARGET, (int)(value * 10))) {
+                        Logger.Error($"{Category} - Could not set TemperatureSetPoint to {value * 10}");
+                    } else {
                         RaisePropertyChanged();
                     }
                 }
@@ -184,6 +186,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     //Toggle fan, if supported
                     sdk.put_Option(ToupTekAlikeOption.OPTION_FAN, value ? 1 : 0);
                     RaisePropertyChanged();
+                } else {
+                    Logger.Error($"{Category} - Could not set Cooler to {value}");
                 }
             }
         }
@@ -303,6 +307,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
             set {
                 if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BLACKLEVEL, value)) {
+                    Logger.Error($"{Category} - Could not set Offset to {value}");
                 } else {
                     RaisePropertyChanged();
                 }
@@ -328,8 +333,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
             set {
                 if (value >= USBLimitMin && value <= USBLimitMax) {
-                    sdk.put_Speed((ushort)value);
-                    RaisePropertyChanged();
+                    if (!sdk.put_Speed((ushort)value)) {
+                        Logger.Error($"{Category} - Could not set USBLimit to {value}");
+                    } else {
+                        RaisePropertyChanged();
+                    }
                 }
             }
         }
@@ -398,8 +406,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             set {
                 if (value >= GainMin && value <= GainMax) {
-                    sdk.put_ExpoAGain((ushort)value);
-                    RaisePropertyChanged();
+                    if (!sdk.put_ExpoAGain((ushort)value)) {
+                        Logger.Error($"{Category} - Could not set Gain to {value}");
+                    } else {
+                        RaisePropertyChanged();
+                    }
                 }
             }
         }
@@ -555,7 +566,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         throw new Exception($"{Category} - Could not set RAW mode");
                     }
 
-                    sdk.put_AutoExpoEnable(false);
+                    if (!sdk.put_AutoExpoEnable(false)) {
+                        Logger.Error($"{Category} - Could not disable Auto Exposure mode");
+                    }
 
                     ReadOutBinning();
 
@@ -673,8 +686,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set {
                 if (HasLowNoiseMode) {
                     Logger.Debug($"{Category} - Setting Low Noise Mode to {value}");
-                    sdk.put_Option(ToupTekAlikeOption.OPTION_LOW_NOISE, value ? 1 : 0);
-                    RaisePropertyChanged();
+                    if (!sdk.put_Option(ToupTekAlikeOption.OPTION_LOW_NOISE, value ? 1 : 0)) {
+                        Logger.Error($"{Category} - Could not set LowNoiseMode to {value}");
+                    } else {
+                        RaisePropertyChanged();
+                    }
                 }
             }
         }
@@ -702,8 +718,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
             set {
                 if (HasHighGain) {
                     Logger.Trace($"{Category} - Setting Conversion Gain to {value}");
-                    sdk.put_Option(ToupTekAlikeOption.OPTION_CG, value ? 1 : 0);
-                    RaisePropertyChanged();
+                    if (!sdk.put_Option(ToupTekAlikeOption.OPTION_CG, value ? 1 : 0)) {
+                        Logger.Error($"{Category} - Could not set HighGainMode to {value}");
+                    } else {
+                        RaisePropertyChanged();
+                    }
                 }
             }
         }
@@ -760,7 +779,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             if (!sdk.put_Option(ToupTekAlikeOption.OPTION_FLUSH, 3)) {
-                Logger.Debug($"{Category} - Unable to flush camera");
+                Logger.Error($"{Category} - Unable to flush camera");
             }
 
             var bitScaling = this.profileService.ActiveProfile.CameraSettings.BitScaling;
@@ -812,7 +831,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public void SetBinning(short x, short y) {
             if (x <= MaxBinX) {
-                sdk.put_Option(ToupTekAlikeOption.OPTION_BINNING, x);
+                if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BINNING, x)) {
+                    Logger.Error($"{Category} - Failed to set Binning to {x}");
+                }
             }
         }
 

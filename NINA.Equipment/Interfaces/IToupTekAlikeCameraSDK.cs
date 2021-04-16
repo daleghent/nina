@@ -26,25 +26,25 @@ namespace NINA.Equipment.Interfaces {
 
         void get_Temperature(out short temp);
 
-        void get_Option(ToupTekAlikeOption oPTION_TECTARGET, out int target);
+        void get_Option(ToupTekAlikeOption option, out int target);
 
-        bool put_Option(ToupTekAlikeOption oPTION_TECTARGET, int v);
+        bool put_Option(ToupTekAlikeOption option, int v);
 
         void get_ExpTimeRange(out uint min, out uint max, out uint def);
 
         void get_Speed(out ushort speed);
 
-        void put_Speed(ushort value);
+        bool put_Speed(ushort value);
 
         bool get_ExpoAGain(out ushort gain);
 
-        void put_AutoExpoEnable(bool v);
+        bool put_AutoExpoEnable(bool v);
 
         void get_Size(out int width, out int height);
 
         void get_ExpoAGainRange(out ushort min, out ushort max, out ushort def);
 
-        void put_ExpoAGain(ushort value);
+        bool put_ExpoAGain(ushort value);
 
         bool StartPullModeWithCallback(ToupTekAlikeCallback toupTekAlikeCallback);
 
