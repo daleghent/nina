@@ -56,6 +56,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         private IProfileService profileService;
+        private bool keepPanelClosed;
 
         [ImportingConstructor]
         public TrainedDarkFlatExposure(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM, IFilterWheelMediator filterWheelMediator, IFlatDeviceMediator flatDeviceMediator) :
@@ -96,6 +97,16 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             this.Add(openCover);
 
             IsExpanded = false;
+        }
+
+        [JsonProperty]
+        public bool KeepPanelClosed {
+            get => keepPanelClosed;
+            set {
+                keepPanelClosed = value;
+
+                RaisePropertyChanged();
+            }
         }
 
         public CloseCover GetCloseCoverItem() {
@@ -145,6 +156,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 Name = Name,
                 Category = Category,
                 Description = Description,
+                KeepPanelClosed = KeepPanelClosed,
             };
             return clone;
         }
@@ -159,6 +171,12 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
             (Items[3] as SetBrightness).Brightness = 0;
             takeExposure.ExposureTime = info.Time;
+
+            if (KeepPanelClosed) {
+                GetOpenCoverItem().Skip();
+            } else {
+                GetOpenCoverItem().ResetProgress();
+            }
 
             return base.Execute(progress, token);
         }

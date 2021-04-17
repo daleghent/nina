@@ -1049,6 +1049,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Keep Closed.
+        /// </summary>
+        internal static string Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trained Flat Exposure.
         /// </summary>
         internal static string Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_Name {

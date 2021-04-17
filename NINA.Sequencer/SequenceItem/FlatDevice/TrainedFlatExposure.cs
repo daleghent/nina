@@ -56,6 +56,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         private IProfileService profileService;
+        private bool keepPanelClosed;
 
         [ImportingConstructor]
         public TrainedFlatExposure(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM, IFilterWheelMediator filterWheelMediator, IFlatDeviceMediator flatDeviceMediator) :
@@ -100,6 +101,16 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             this.Add(openCover);
 
             IsExpanded = false;
+        }
+
+        [JsonProperty]
+        public bool KeepPanelClosed {
+            get => keepPanelClosed;
+            set {
+                keepPanelClosed = value;
+
+                RaisePropertyChanged();
+            }
         }
 
         public CloseCover GetCloseCoverItem() {
@@ -154,6 +165,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 Name = Name,
                 Category = Category,
                 Description = Description,
+                KeepPanelClosed = KeepPanelClosed,
             };
             return clone;
         }
@@ -166,8 +178,14 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             var gain = takeExposure.Gain == -1 ? profileService.ActiveProfile.CameraSettings.Gain ?? -1 : takeExposure.Gain;
             var info = profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(new FlatDeviceFilterSettingsKey(filter?.Position, binning, gain));
 
-            (Items[3] as SetBrightness).Brightness = info.Brightness * 100;
+            GetSetBrightnessItem().Brightness = info.Brightness * 100;
             takeExposure.ExposureTime = info.Time;
+
+            if (KeepPanelClosed) {
+                GetOpenCoverItem().Skip();
+            } else {
+                GetOpenCoverItem().ResetProgress();
+            }
 
             return base.Execute(progress, token);
         }
