@@ -33,13 +33,17 @@ namespace NINA.Sequencer.Serialization {
                 return sequenceContainerCreationConverter.Create(objectType, jObject);
             }
 
-            try {
-                var t = GetType(jObject.GetValue("$type").ToString());
-                var method = factory.GetType().GetMethod(nameof(factory.GetItem)).MakeGenericMethod(new Type[] { t });
-                var obj = method.Invoke(factory, null);
-                return (ISequenceItem)obj;
-            } catch (Exception e) {
-                Logger.Error("Encountered unknown sequence item:", e);
+            if (jObject.TryGetValue("$type", out var token)) {
+                var t = GetType(token.ToString());
+                try {
+                    var method = factory.GetType().GetMethod(nameof(factory.GetItem)).MakeGenericMethod(new Type[] { t });
+                    var obj = method.Invoke(factory, null);
+                    return (ISequenceItem)obj;
+                } catch (Exception e) {
+                    Logger.Error($"Encountered unknown sequence item: {token?.ToString()}");
+                    return new UnknownSequenceItem();
+                }
+            } else {
                 return new UnknownSequenceItem();
             }
         }
