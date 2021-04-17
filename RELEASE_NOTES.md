@@ -166,6 +166,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ## BugFixes
 - Weather information in equipment tab now shows correct wind direction.
 - FLI: Background flush is now disabled prior to readout to prevent a hung readout
+- Binning info for Altair cameras are now properly inserted into Metadata
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 49.18598.20210310
