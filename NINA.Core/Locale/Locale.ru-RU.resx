@@ -3198,10 +3198,10 @@ Dec: {1}</value>
     <value>Часовой пояс</value>
   </data>
   <data name="LblTimeOffset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Оффсет</value>
   </data>
   <data name="LblTimeOffsetTooltip" xml:space="preserve">
-    <value>Offset in minutes from the fixed time of day</value>
+    <value>Смещение в минутах от заданного времени суток</value>
   </data>
   <data name="LblTo" xml:space="preserve">
     <value>В</value>
@@ -4757,7 +4757,7 @@ Dec: {1}</value>
     <value>Открыть набор цели</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequencer</value>
+    <value>Простой планировщик</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Опции окончания последней цели</value>
