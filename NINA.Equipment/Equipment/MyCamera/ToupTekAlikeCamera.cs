@@ -85,29 +85,31 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
-        private short binX;
-
         public short BinX {
             get {
-                return binX;
+                sdk.get_Option(ToupTekAlikeOption.OPTION_BINNING, out var bin);
+                return (short)bin;
             }
-
             set {
-                binX = value;
-                RaisePropertyChanged();
+                if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BINNING, value)) {
+                    Logger.Error($"{Category} - Could not set Binning to {value }");
+                } else {
+                    RaisePropertyChanged();
+                }
             }
         }
 
-        private short binY;
-
         public short BinY {
             get {
-                return binY;
+                sdk.get_Option(ToupTekAlikeOption.OPTION_BINNING, out var bin);
+                return (short)bin;
             }
-
             set {
-                binY = value;
-                RaisePropertyChanged();
+                if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BINNING, value)) {
+                    Logger.Error($"{Category} - Could not set Binning to {value }");
+                } else {
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -542,8 +544,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
             for (short i = 1; i <= MaxBinX; i++) {
                 BinningModes.Add(new BinningMode(i, i));
             }
-            BinX = 1;
-            BinY = 1;
         }
 
         public Task<bool> Connect(CancellationToken ct) {
@@ -766,7 +766,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         private IExposureData PullImage() {
             /* peek the width and height */
-            sdk.get_Option(ToupTekAlikeOption.OPTION_BINNING, out var binning);
+            var binning = BinX;
             var width = CameraXSize / binning;
             var height = CameraYSize / binning;
 
@@ -831,9 +831,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public void SetBinning(short x, short y) {
             if (x <= MaxBinX) {
-                if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BINNING, x)) {
-                    Logger.Error($"{Category} - Failed to set Binning to {x}");
-                }
+                BinX = x;
+                RaisePropertyChanged(nameof(BinY));
             }
         }
 
