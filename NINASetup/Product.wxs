@@ -519,9 +519,6 @@
       <Component Win64="$(var.Win64)" Id="Zlib.Portable.xml" Guid="5bb512d3-1eed-4214-907a-5e07bc8ae739">
         <File Id="Zlib.Portable.xml" Name="Zlib.Portable.xml" Source="$(var.NINA_TargetDir)Zlib.Portable.xml" />
       </Component>
-      <Component Win64="$(var.Win64)" Id="SHA3.dll" Guid="029f3b52-4cfc-4008-a413-0dc6cf32bdad">
-        <File Id="SHA3.dll" Name="SHA3.dll" Source="$(var.NINA_TargetDir)SHA3.dll" />
-      </Component>
       <Component Win64="$(var.Win64)" Id="SHA3Managed.dll" Guid="35435550-119d-4bf5-a30e-7f51612d1380">
         <File Id="SHA3Managed.dll" Name="SHA3Managed.dll" Source="$(var.NINA_TargetDir)SHA3Managed.dll" />
       </Component>
