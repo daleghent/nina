@@ -5374,4 +5374,7 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
     <value>Mostra el Menú</value>
   </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
+    <value>Keep Closed</value>
+  </data>
 </root>

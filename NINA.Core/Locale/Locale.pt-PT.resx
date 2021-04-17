@@ -5376,4 +5376,7 @@ Para mudar rapidamente as condições, uma amostra menor ajudará a responder ma
   <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
     <value>Show Menu</value>
   </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
+    <value>Keep Closed</value>
+  </data>
 </root>
