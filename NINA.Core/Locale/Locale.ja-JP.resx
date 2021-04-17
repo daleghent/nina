@@ -5358,4 +5358,7 @@
   <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
     <value>Show Menu</value>
   </data>
+  <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
+    <value>Keep Closed</value>
+  </data>
 </root>
