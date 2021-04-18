@@ -37,11 +37,10 @@ using NINA.Core.Locale;
 using NINA.Astrometry.Interfaces;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using Trinet.Core.IO.Ntfs;
 
 namespace NINA.Plugin {
-
     public class PluginProvider : IPluginProvider {
-
         public PluginProvider(IProfileService profileService,
                               ICameraMediator cameraMediator,
                               ITelescopeMediator telescopeMediator,
@@ -134,6 +133,11 @@ namespace NINA.Plugin {
 
                         foreach (var file in files) {
                             try {
+                                FileInfo fileInfo = new FileInfo(file);
+                                if (fileInfo.AlternateDataStreamExists("Zone.Identifier")) {
+                                    fileInfo.DeleteAlternateDataStream("Zone.Identifier");
+                                }
+
                                 var plugin = new AssemblyCatalog(file);
                                 plugin.Parts.ToArray();
 
