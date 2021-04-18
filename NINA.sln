@@ -20,16 +20,17 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ACF75CFA-5ED0-4E99-AEDF-60B47F25599F}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
 		AUTHORS = AUTHORS
 		CommonAssemblyInfo.cs = CommonAssemblyInfo.cs
 		CONTRIBUTING.md = CONTRIBUTING.md
 		LICENSE.txt = LICENSE.txt
+		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.MGEN", "NINA.MGEN\NINA.MGEN.csproj", "{D897BFFD-7777-44F5-9100-1FF0DB3B032F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.Plugin.Template", "NINA.Plugin.Template\NINA.Plugin.Template.csproj", "{6D0E07F2-8773-4229-BF2C-F451E53F677A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.Core", "NINA.Core\NINA.Core.csproj", "{F906E54B-9CE8-4A66-856B-E876DD305F2B}"
 EndProject
@@ -140,18 +141,6 @@ Global
 		{D897BFFD-7777-44F5-9100-1FF0DB3B032F}.Release|x64.Build.0 = Release|Any CPU
 		{D897BFFD-7777-44F5-9100-1FF0DB3B032F}.Release|x86.ActiveCfg = Release|Any CPU
 		{D897BFFD-7777-44F5-9100-1FF0DB3B032F}.Release|x86.Build.0 = Release|Any CPU
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Debug|x64.ActiveCfg = Debug|x64
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Debug|x64.Build.0 = Debug|x64
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Debug|x86.ActiveCfg = Debug|x86
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Debug|x86.Build.0 = Debug|x86
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Release|x64.ActiveCfg = Release|Any CPU
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Release|x64.Build.0 = Release|Any CPU
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Release|x86.ActiveCfg = Release|Any CPU
-		{6D0E07F2-8773-4229-BF2C-F451E53F677A}.Release|x86.Build.0 = Release|Any CPU
 		{F906E54B-9CE8-4A66-856B-E876DD305F2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F906E54B-9CE8-4A66-856B-E876DD305F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F906E54B-9CE8-4A66-856B-E876DD305F2B}.Debug|x64.ActiveCfg = Debug|Any CPU
