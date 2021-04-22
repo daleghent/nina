@@ -5374,6 +5374,6 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
     <value>Zobrazit Menu</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
-    <value>Keep Closed</value>
+    <value>Ponechat Zavřené</value>
   </data>
 </root>
