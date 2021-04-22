@@ -340,6 +340,7 @@
     <Compile Include="Sequencer\Utility\DateTimeProvider\SunriseProviderTest.cs" />
     <Compile Include="Sequencer\Utility\DateTimeProvider\SunsetProviderTest.cs" />
     <Compile Include="Sequencer\Utility\DateTimeProvider\TimeProviderTest.cs" />
+    <Compile Include="Sequencer\Utility\ItemUtilityTest.cs" />
     <Compile Include="SerialCommunication\ResponseTests.cs" />
     <Compile Include="SerialCommunication\SerialSdkTest.cs" />
     <Compile Include="SerialCommunication\ResponseCacheTest.cs" />

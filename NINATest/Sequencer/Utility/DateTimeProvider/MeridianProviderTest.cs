@@ -72,6 +72,7 @@ namespace NINATest.Sequencer.Utility.DateTimeProvider {
             date.Minute.Should().BeCloseTo(expectedMinute, 1);
         }
 
+        [Test]
         public void GetDateTime_ConextIsNull_ReturnNow() {
             var profileServiceMock = new Mock<IProfileService>();
 
@@ -87,6 +88,7 @@ namespace NINATest.Sequencer.Utility.DateTimeProvider {
             date.Should().Be(referenceDate);
         }
 
+        [Test]
         public void GetDateTime_ConextHasParentWithoutCoordinates_ReturnNow() {
             var profileServiceMock = new Mock<IProfileService>();
 
