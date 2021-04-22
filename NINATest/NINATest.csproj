@@ -325,6 +325,7 @@
     <Compile Include="Sequencer\SequenceItem\Utility\WaitForTimeSpanTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\WaitForTimeTest.cs" />
     <Compile Include="Sequencer\SequenceItem\Utility\WaitUntilAboveHorizonTest.cs" />
+    <Compile Include="Sequencer\SequencerTest.cs" />
     <Compile Include="Sequencer\Serialization\SequenceJsonConverterTest.cs" />
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterHFRIncreaseTriggerTest.cs" />
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterTemperatureChangeTriggerTest.cs" />
