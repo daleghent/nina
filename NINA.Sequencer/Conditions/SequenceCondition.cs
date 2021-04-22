@@ -67,9 +67,23 @@ namespace NINA.Sequencer.Conditions {
 
         public abstract void ResetProgress();
 
-        public abstract void SequenceBlockFinished();
+        public virtual void Initialize() {
+        }
 
-        public abstract void SequenceBlockStarted();
+        public virtual void SequenceBlockInitialize() {
+        }
+
+        public virtual void SequenceBlockStarted() {
+        }
+
+        public virtual void SequenceBlockFinished() {
+        }
+
+        public virtual void SequenceBlockTeardown() {
+        }
+
+        public virtual void Teardown() {
+        }
 
         public ICommand DetachCommand => new RelayCommand((o) => Detach());
 

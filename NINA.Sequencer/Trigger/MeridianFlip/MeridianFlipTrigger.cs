@@ -160,9 +160,6 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             lastFlipTime = DateTime.MinValue;
         }
 
-        public override void Initialize() {
-        }
-
         protected virtual TimeSpan CalculateMinimumTimeRemaining() {
             //Substract delta from maximum to get minimum time
             var delta = MaxMinutesAfterMeridian - MinutesAfterMeridian;

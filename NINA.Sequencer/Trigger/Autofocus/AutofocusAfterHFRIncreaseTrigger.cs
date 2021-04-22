@@ -225,9 +225,6 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             return false;
         }
 
-        public override void Initialize() {
-        }
-
         public override string ToString() {
             return $"Trigger: {nameof(AutofocusAfterHFRIncreaseTrigger)}, Amount: {Amount}";
         }

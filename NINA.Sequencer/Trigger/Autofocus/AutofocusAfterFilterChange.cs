@@ -44,7 +44,6 @@ namespace NINA.Sequencer.Trigger.Autofocus {
     [Export(typeof(ISequenceTrigger))]
     public class AutofocusAfterFilterChange : SequenceTrigger, IValidatable {
         private IProfileService profileService;
-
         private IImageHistoryVM history;
         private ICameraMediator cameraMediator;
         private IFilterWheelMediator filterWheelMediator;

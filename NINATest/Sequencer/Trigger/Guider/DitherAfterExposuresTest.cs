@@ -68,7 +68,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
         [Test]
         public void InitializeTest() {
             var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object);
-            sut.Initialize();
+            sut.SequenceBlockStarted();
 
             Assert.Pass();
         }

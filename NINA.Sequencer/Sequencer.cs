@@ -67,10 +67,13 @@ namespace NINA.Sequencer {
                     return false;
                 }
                 try {
+                    Initialize(MainContainer);
                     await MainContainer.Run(progress, token);
                 } catch (OperationCanceledException) {
                     Logger.Info("Sequence run was cancelled");
                 }
+
+                Teardown(MainContainer);
 
                 return true;
             });
@@ -102,6 +105,54 @@ namespace NINA.Sequencer {
                 }
             }
             return true;
+        }
+
+        private void Initialize(ISequenceContainer context) {
+            if (context != null) {
+                var conditionable = context as IConditionable;
+                if (conditionable != null) {
+                    foreach (var condition in conditionable.GetConditionsSnapshot()) {
+                        condition.Initialize();
+                    }
+                }
+                var triggerable = context as ITriggerable;
+                if (triggerable != null) {
+                    foreach (var trigger in triggerable.GetTriggersSnapshot()) {
+                        trigger.Initialize();
+                    }
+                }
+
+                foreach (var item in context.GetItemsSnapshot()) {
+                    if (item is ISequenceContainer) {
+                        var container = item as ISequenceContainer;
+                        Initialize(container);
+                    }
+                }
+            }
+        }
+
+        private void Teardown(ISequenceContainer context) {
+            if (context != null) {
+                var conditionable = context as IConditionable;
+                if (conditionable != null) {
+                    foreach (var condition in conditionable.GetConditionsSnapshot()) {
+                        condition.Teardown();
+                    }
+                }
+                var triggerable = context as ITriggerable;
+                if (triggerable != null) {
+                    foreach (var trigger in triggerable.GetTriggersSnapshot()) {
+                        trigger.Teardown();
+                    }
+                }
+
+                foreach (var item in context.GetItemsSnapshot()) {
+                    if (item is ISequenceContainer) {
+                        var container = item as ISequenceContainer;
+                        Teardown(container);
+                    }
+                }
+            }
         }
 
         private IList<string> Validate(ISequenceContainer container) {

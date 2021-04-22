@@ -107,9 +107,6 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             await TriggerRunner.Run(progress, token);
         }
 
-        public override void Initialize() {
-        }
-
         public override bool ShouldTrigger(ISequenceItem nextItem) {
             RaisePropertyChanged(nameof(ProgressExposures));
             var shouldTrigger =

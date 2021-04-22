@@ -78,7 +78,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             filterWheelMediatorMock.Setup(m => m.GetInfo())
                 .Returns(filterWheelInfo);
 
-            sut.Initialize();
+            sut.SequenceBlockStarted();
 
             var result = sut.ShouldTrigger(null);
 
@@ -112,7 +112,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
         [Test]
         public void Test_ShouldTrigger_WhenAlwaysNullThenNoTrigger() {
-            sut.Initialize();
+            sut.SequenceBlockStarted();
 
             var result = sut.ShouldTrigger(null);
 

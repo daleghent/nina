@@ -92,11 +92,11 @@ namespace NINA.Sequencer.Conditions {
         public override void ResetProgress() {
         }
 
-        public override void SequenceBlockFinished() {
+        public override void SequenceBlockTeardown() {
             watchdogCTS?.Cancel();
         }
 
-        public override void SequenceBlockStarted() {
+        public override void SequenceBlockInitialize() {
             watchdog = Task.Run(async () => {
                 using (watchdogCTS = new CancellationTokenSource()) {
                     while (true) {

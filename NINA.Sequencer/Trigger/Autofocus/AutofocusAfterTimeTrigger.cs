@@ -112,7 +112,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             await TriggerRunner.Run(progress, token);
         }
 
-        public override void Initialize() {
+        public override void SequenceBlockInitialize() {
             if (!initialized) {
                 initialTime = DateTime.Now;
                 initialized = true;

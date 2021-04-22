@@ -110,7 +110,23 @@ namespace NINA.Sequencer.Trigger {
 
         public abstract object Clone();
 
-        public abstract void Initialize();
+        public virtual void Initialize() {
+        }
+
+        public virtual void SequenceBlockInitialize() {
+        }
+
+        public virtual void SequenceBlockStarted() {
+        }
+
+        public virtual void SequenceBlockFinished() {
+        }
+
+        public virtual void SequenceBlockTeardown() {
+        }
+
+        public virtual void Teardown() {
+        }
 
         public ICommand DetachCommand => new RelayCommand((o) => Detach());
 

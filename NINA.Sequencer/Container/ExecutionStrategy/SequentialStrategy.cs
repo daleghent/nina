@@ -37,6 +37,8 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
             ISequenceItem next = null;
             context.Iterations = 0;
 
+            InitializeBlock(context);
+
             while ((next = GetNextItem(context)) != null && CanContinue(context, next)) {
                 StartBlock(context);
 
@@ -63,6 +65,38 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
             //Mark rest of items as skipped
             foreach (var item in context.GetItemsSnapshot().Where(x => x.Status == SequenceEntityStatus.CREATED)) {
                 item.Skip();
+            }
+
+            TeardownBlock(context);
+        }
+
+        private void TeardownBlock(ISequenceContainer context) {
+            var conditionable = context as IConditionable;
+            if (conditionable != null) {
+                foreach (var condition in conditionable.GetConditionsSnapshot()) {
+                    condition.SequenceBlockTeardown();
+                }
+            }
+            var triggerable = context as ITriggerable;
+            if (triggerable != null) {
+                foreach (var trigger in triggerable.GetTriggersSnapshot()) {
+                    trigger.SequenceBlockTeardown();
+                }
+            }
+        }
+
+        private void InitializeBlock(ISequenceContainer context) {
+            var conditionable = context as IConditionable;
+            if (conditionable != null) {
+                foreach (var condition in conditionable.GetConditionsSnapshot()) {
+                    condition.SequenceBlockInitialize();
+                }
+            }
+            var triggerable = context as ITriggerable;
+            if (triggerable != null) {
+                foreach (var trigger in triggerable.GetTriggersSnapshot()) {
+                    trigger.SequenceBlockInitialize();
+                }
             }
         }
 
@@ -92,7 +126,7 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
             var triggerable = container as ITriggerable;
             if (triggerable != null) {
                 foreach (var trigger in triggerable.GetTriggersSnapshot()) {
-                    trigger.Initialize();
+                    trigger.SequenceBlockStarted();
                 }
             }
         }
@@ -104,6 +138,13 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
             if (conditionable != null) {
                 foreach (var condition in conditionable.GetConditionsSnapshot()) {
                     condition.SequenceBlockFinished();
+                }
+            }
+
+            var triggerable = container as ITriggerable;
+            if (triggerable != null) {
+                foreach (var trigger in triggerable.GetTriggersSnapshot()) {
+                    trigger.SequenceBlockFinished();
                 }
             }
         }

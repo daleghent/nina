@@ -31,9 +31,34 @@ namespace NINA.Sequencer.Trigger {
         bool ShouldTrigger(ISequenceItem nextItem);
 
         /// <summary>
-        /// Will be called on sequence start for the trigger to set some initial parameters if requried
+        /// When the sequencer is started this method is called
         /// </summary>
         void Initialize();
+
+        /// <summary>
+        /// When the sequencer is stopped or canceled this method is called
+        /// </summary>
+        void Teardown();
+
+        /// <summary>
+        /// When a sequence container is entered this method is called
+        /// </summary>
+        void SequenceBlockInitialize();
+
+        /// <summary>
+        /// When a sequence container is finished this method is called
+        /// </summary>
+        void SequenceBlockTeardown();
+
+        /// <summary>
+        /// Each time the sequence container starts a loop this is called
+        /// </summary>
+        void SequenceBlockStarted();
+
+        /// <summary>
+        /// Each time the sequence container finishes a loop this is called
+        /// </summary>
+        void SequenceBlockFinished();
 
         /// <summary>
         /// Runs the actual trigger logic

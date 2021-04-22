@@ -110,7 +110,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var afTrigger = new AutofocusAfterTimeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
             afTrigger.Amount = TimeSpan.FromMilliseconds(milliseconds).TotalMinutes;
 
-            afTrigger.Initialize();
+            afTrigger.SequenceBlockInitialize();
 
             await Task.Delay(TimeSpan.FromMilliseconds(initDelay));
 

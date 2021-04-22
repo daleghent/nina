@@ -51,7 +51,6 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         private IImagingMediator imagingMediator;
         private IApplicationStatusMediator applicationStatusMediator;
         private double initialTemperature;
-        private bool initialized = false;
 
         [ImportingConstructor]
         public AutofocusAfterTemperatureChangeTrigger(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator, IApplicationStatusMediator applicationStatusMediator) : base() {
@@ -114,10 +113,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         }
 
         public override void Initialize() {
-            if (!initialized) {
-                initialTemperature = focuserMediator.GetInfo()?.Temperature ?? double.NaN;
-                initialized = true;
-            }
+            initialTemperature = focuserMediator.GetInfo()?.Temperature ?? double.NaN;
         }
 
         public override bool ShouldTrigger(ISequenceItem nextItem) {
