@@ -131,8 +131,8 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
         }
 
         public CoverState CoverState => CoverState.Unknown;
-        public int MaxBrightness => 20;
-        public int MinBrightness => 220;
+        public int MaxBrightness => 220;
+        public int MinBrightness => 20;
 
         public Task<bool> Open(CancellationToken ct, int delay = 300) {
             throw new NotImplementedException();
@@ -161,17 +161,17 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        private double _brightness;
+        private int _brightness;
 
-        public double Brightness {
+        public int Brightness {
             get => _brightness;
             set {
                 if (!Connected) return;
                 _brightness = value;
-                if (value < 0d) _brightness = 0d;
-                if (value > 1d) _brightness = 1d;
+                if (value < MinBrightness) _brightness = MinBrightness;
+                if (value > MaxBrightness) _brightness = MaxBrightness;
 
-                var command = new SetBrightnessCommand { Brightness = (1d - _brightness) * (MinBrightness - MaxBrightness) + MaxBrightness };
+                var command = new SetBrightnessCommand { Brightness = _brightness };
                 try {
                     _ = Sdk.SendCommand<SetBrightnessResponse>(command).Result;
                 } catch (InvalidDeviceResponseException ex) {

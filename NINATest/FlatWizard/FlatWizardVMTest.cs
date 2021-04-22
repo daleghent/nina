@@ -147,7 +147,7 @@ namespace NINATest.FlatWizard {
                 .Returns(Task.FromResult(exposureMock.Object));
 
             flatDeviceInfo = new FlatDeviceInfo {
-                Brightness = 1.0,
+                Brightness = 1,
                 Connected = true,
                 CoverState = CoverState.Open,
                 Description = "Some description",
@@ -312,7 +312,7 @@ namespace NINATest.FlatWizard {
             var settings = new FlatWizardFilterSettings {
                 FlatWizardMode = FlatWizardMode.DYNAMICEXPOSURE,
                 MinFlatExposureTime = 1d,
-                MaxFlatDeviceBrightness = 100d
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
             var filterInfo = new FilterInfo {
                 AutoFocusExposureTime = 1d,
@@ -327,7 +327,7 @@ namespace NINATest.FlatWizard {
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(1d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Once);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -346,13 +346,13 @@ namespace NINATest.FlatWizard {
                 FlatWizardMode = FlatWizardMode.DYNAMICEXPOSURE,
                 MinFlatExposureTime = 1d,
                 StepSize = 1d,
-                MaxFlatDeviceBrightness = 100d
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
             var result = await sut.FindFlatExposureTime(new PauseToken(), new FlatWizardFilterSettingsWrapper(new FilterInfo(), wrapper, 16,
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(2d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
         [Test]
@@ -379,7 +379,7 @@ namespace NINATest.FlatWizard {
                 FlatWizardMode = FlatWizardMode.DYNAMICEXPOSURE,
                 MinFlatExposureTime = 1d,
                 StepSize = 1d,
-                MaxFlatDeviceBrightness = 100d
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
 
             Func<Task> act = async () => {
@@ -418,7 +418,7 @@ namespace NINATest.FlatWizard {
                 FlatWizardMode = FlatWizardMode.DYNAMICEXPOSURE,
                 MinFlatExposureTime = 1d,
                 StepSize = 1d,
-                MaxFlatDeviceBrightness = 100d
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
 
             Func<Task> act = async () => {
@@ -454,7 +454,7 @@ namespace NINATest.FlatWizard {
                 FlatWizardMode = FlatWizardMode.DYNAMICEXPOSURE,
                 MinFlatExposureTime = 1d,
                 StepSize = 1d,
-                MaxFlatDeviceBrightness = 100d
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
 
             var result = await sut.FindFlatExposureTime(new PauseToken(), new FlatWizardFilterSettingsWrapper(new FilterInfo(),
@@ -462,7 +462,7 @@ namespace NINATest.FlatWizard {
                     new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(1d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(3));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Exactly(3));
         }
 
         [Test]
@@ -493,7 +493,7 @@ namespace NINATest.FlatWizard {
                 FlatWizardMode = FlatWizardMode.DYNAMICEXPOSURE,
                 MinFlatExposureTime = 1d,
                 StepSize = 1d,
-                MaxFlatDeviceBrightness = 100d
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
 
             var result = await sut.FindFlatExposureTime(new PauseToken(), new FlatWizardFilterSettingsWrapper(new FilterInfo(),
@@ -501,7 +501,7 @@ namespace NINATest.FlatWizard {
                 new CameraInfo(), flatDeviceInfo));
 
             result.Should().Be(1d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(7));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Exactly(7));
         }
 
         [Test]
@@ -518,8 +518,8 @@ namespace NINATest.FlatWizard {
             var settings = new FlatWizardFilterSettings {
                 FlatWizardMode = FlatWizardMode.DYNAMICBRIGHTNESS,
                 MinFlatExposureTime = 1d,
-                MinFlatDeviceBrightness = 10d,
-                MaxFlatDeviceBrightness = 100d
+                MinAbsoluteFlatDeviceBrightness = 10,
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
             var filterInfo = new FilterInfo {
                 AutoFocusExposureTime = 1d,
@@ -533,8 +533,8 @@ namespace NINATest.FlatWizard {
             var result = await sut.FindFlatDeviceBrightness(new PauseToken(), new FlatWizardFilterSettingsWrapper(filterInfo, settings, 16,
                 new CameraInfo(), flatDeviceInfo));
 
-            result.Should().Be(10d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Once);
+            result.Should().Be(10);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -552,15 +552,15 @@ namespace NINATest.FlatWizard {
             var wrapper = new FlatWizardFilterSettings {
                 FlatWizardMode = FlatWizardMode.DYNAMICBRIGHTNESS,
                 MinFlatExposureTime = 1d,
-                FlatDeviceStepSize = 10d,
-                MinFlatDeviceBrightness = 10d,
-                MaxFlatDeviceBrightness = 100d
+                FlatDeviceAbsoluteStepSize = 10,
+                MinAbsoluteFlatDeviceBrightness = 10,
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
             var result = await sut.FindFlatDeviceBrightness(new PauseToken(), new FlatWizardFilterSettingsWrapper(new FilterInfo(), wrapper, 16,
                 new CameraInfo(), flatDeviceInfo));
 
-            result.Should().Be(20d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+            result.Should().Be(20);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
         [Test]
@@ -584,9 +584,9 @@ namespace NINATest.FlatWizard {
             var wrapper = new FlatWizardFilterSettings {
                 FlatWizardMode = FlatWizardMode.DYNAMICBRIGHTNESS,
                 MinFlatExposureTime = 1d,
-                FlatDeviceStepSize = 10d,
-                MinFlatDeviceBrightness = 10d,
-                MaxFlatDeviceBrightness = 100d
+                FlatDeviceAbsoluteStepSize = 10,
+                MinAbsoluteFlatDeviceBrightness = 10,
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
 
             Func<Task> act = async () => {
@@ -620,17 +620,17 @@ namespace NINATest.FlatWizard {
             var wrapper = new FlatWizardFilterSettings {
                 FlatWizardMode = FlatWizardMode.DYNAMICBRIGHTNESS,
                 MinFlatExposureTime = 1d,
-                FlatDeviceStepSize = 10d,
-                MinFlatDeviceBrightness = 10d,
-                MaxFlatDeviceBrightness = 100d
+                FlatDeviceAbsoluteStepSize = 10,
+                MinAbsoluteFlatDeviceBrightness = 10,
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
 
             var result = await sut.FindFlatDeviceBrightness(new PauseToken(), new FlatWizardFilterSettingsWrapper(new FilterInfo(),
                     wrapper, 16,
                     new CameraInfo(), flatDeviceInfo));
 
-            result.Should().Be(10d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+            result.Should().Be(10);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
         }
 
         [Test]
@@ -660,17 +660,17 @@ namespace NINATest.FlatWizard {
             var wrapper = new FlatWizardFilterSettings {
                 FlatWizardMode = FlatWizardMode.DYNAMICBRIGHTNESS,
                 MinFlatExposureTime = 1d,
-                FlatDeviceStepSize = 10d,
-                MinFlatDeviceBrightness = 10d,
-                MaxFlatDeviceBrightness = 100d
+                FlatDeviceAbsoluteStepSize = 10,
+                MinAbsoluteFlatDeviceBrightness = 10,
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
 
             var result = await sut.FindFlatDeviceBrightness(new PauseToken(), new FlatWizardFilterSettingsWrapper(new FilterInfo(),
                 wrapper, 16,
                 new CameraInfo(), flatDeviceInfo));
 
-            result.Should().Be(10d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(7));
+            result.Should().Be(10);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Exactly(7));
         }
 
         [Test]
@@ -700,17 +700,17 @@ namespace NINATest.FlatWizard {
             var wrapper = new FlatWizardFilterSettings {
                 FlatWizardMode = FlatWizardMode.DYNAMICBRIGHTNESS,
                 MinFlatExposureTime = 1d,
-                FlatDeviceStepSize = 10d,
-                MinFlatDeviceBrightness = 10d,
-                MaxFlatDeviceBrightness = 100d
+                FlatDeviceAbsoluteStepSize = 10,
+                MinAbsoluteFlatDeviceBrightness = 10,
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
 
             var result = await sut.FindFlatDeviceBrightness(new PauseToken(), new FlatWizardFilterSettingsWrapper(new FilterInfo(),
                 wrapper, 16,
                 new CameraInfo(), flatDeviceInfo));
 
-            result.Should().Be(10d);
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(7));
+            result.Should().Be(10);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Exactly(7));
         }
 
         [Test]
@@ -725,9 +725,9 @@ namespace NINATest.FlatWizard {
             var wrapper = new FlatWizardFilterSettings {
                 FlatWizardMode = FlatWizardMode.DYNAMICBRIGHTNESS,
                 MinFlatExposureTime = 1d,
-                FlatDeviceStepSize = 10d,
-                MinFlatDeviceBrightness = 10d,
-                MaxFlatDeviceBrightness = 100d
+                FlatDeviceAbsoluteStepSize = 10,
+                MinAbsoluteFlatDeviceBrightness = 10,
+                MaxAbsoluteFlatDeviceBrightness = 100
             };
 
             Func<Task> act = async () => {
@@ -737,7 +737,7 @@ namespace NINATest.FlatWizard {
             };
             await act.Should().ThrowAsync<Exception>();
 
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Never);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]
@@ -751,7 +751,7 @@ namespace NINATest.FlatWizard {
                     HistogramMeanTarget = 32768,
                     HistogramTolerance = 2000,
                     StepSize = 1d,
-                    MaxFlatDeviceBrightness = 100d
+                    MaxAbsoluteFlatDeviceBrightness = 100
                 }, 16,
                 new CameraInfo(), flatDeviceInfo);
 
@@ -775,7 +775,7 @@ namespace NINATest.FlatWizard {
             var result = await sut.StartFlatMagic(new List<FlatWizardFilterSettingsWrapper> { settings }, new PauseToken());
 
             result.Should().BeTrue();
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
             profileMock.Verify(m => m.FlatDeviceSettings.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Once);
             imagingVMMock.Verify(m => m.CaptureImage(It.IsAny<CaptureSequence>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<String>()),
                 Times.Exactly(3));
@@ -792,10 +792,10 @@ namespace NINATest.FlatWizard {
                     HistogramMeanTarget = 32768,
                     HistogramTolerance = 2000,
                     StepSize = 1d,
-                    MaxFlatDeviceBrightness = 100d
+                    MaxAbsoluteFlatDeviceBrightness = 100
                 }, 16,
                 new CameraInfo(), flatDeviceInfo);
-            flatDeviceMediatorMock.Setup(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()))
+            flatDeviceMediatorMock.Setup(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()))
                 .Throws<InvalidDeviceResponseException>();
 
             sut = new FlatWizardVM(profileServiceMock.Object, imagingVMMock.Object, errorDialogMock.Object,
@@ -811,7 +811,7 @@ namespace NINATest.FlatWizard {
             var result = await sut.StartFlatMagic(new List<FlatWizardFilterSettingsWrapper> { settings }, new PauseToken());
 
             result.Should().BeFalse();
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Once);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Once);
             profileMock.Verify(m => m.FlatDeviceSettings.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Never);
             imagingVMMock.Verify(m => m.CaptureImage(It.IsAny<CaptureSequence>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<String>()),
                 Times.Never);
@@ -826,7 +826,7 @@ namespace NINATest.FlatWizard {
                     HistogramMeanTarget = 32768,
                     HistogramTolerance = 2000,
                     StepSize = 1d,
-                    MaxFlatDeviceBrightness = 100d
+                    MaxAbsoluteFlatDeviceBrightness = 100
                 }, 16,
                 new CameraInfo(), null);
 
@@ -850,11 +850,11 @@ namespace NINATest.FlatWizard {
                 .Returns(GetMeanImage(32768))
                 .Returns(GetMeanImage(32768))
                 .Returns(GetMeanImage(32768));
-
+            sut.FlatWizardMode = FlatWizardMode.SKYFLAT;
             var result = await sut.StartFlatMagic(new List<FlatWizardFilterSettingsWrapper> { settings }, new PauseToken());
 
             result.Should().BeTrue();
-            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Never);
+            flatDeviceMediatorMock.Verify(m => m.SetBrightness(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Never);
             profileMock.Verify(m => m.FlatDeviceSettings.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Never);
             imagingVMMock.Verify(m => m.CaptureImage(It.IsAny<CaptureSequence>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<String>()),
                 Times.Exactly(3));

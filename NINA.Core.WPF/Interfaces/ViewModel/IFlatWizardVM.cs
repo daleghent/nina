@@ -24,6 +24,7 @@ using Nito.AsyncEx;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Core.Model.Equipment;
 using NINA.WPF.Base.Model;
+using NINA.Core.Enum;
 
 namespace NINA.WPF.Base.Interfaces.ViewModel {
 
@@ -46,12 +47,12 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         FlatWizardFilterSettingsWrapper SingleFlatWizardFilterSettings { get; set; }
         IAsyncCommand StartFlatSequenceCommand { get; }
         bool PauseBetweenFilters { get; set; }
-
+        FlatWizardMode FlatWizardMode { get; set; }
         IWindowService WindowService { get; set; }
 
         Task<double> FindFlatExposureTime(PauseToken pt, FlatWizardFilterSettingsWrapper filter);
 
-        Task<double> FindFlatDeviceBrightness(PauseToken pt, FlatWizardFilterSettingsWrapper filter);
+        Task<int> FindFlatDeviceBrightness(PauseToken pt, FlatWizardFilterSettingsWrapper filter);
 
         Task<bool> StartFlatMagic(IEnumerable<FlatWizardFilterSettingsWrapper> filterWrappers, PauseToken pt);
     }

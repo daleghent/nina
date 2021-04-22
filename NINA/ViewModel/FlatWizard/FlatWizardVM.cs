@@ -71,7 +71,6 @@ namespace NINA.ViewModel.FlatWizard {
         private ObserveAllCollection<FilterInfo> watchedFilterList;
         private const int MAX_TRIES = 6;
         private const int EXPOSURE_TIME_PRECISION = 5;
-        private const int BRIGHTNESS_PRECISION = 2;
 
         public FlatWizardVM(IProfileService profileService,
                             IImagingVM imagingVM,
@@ -438,7 +437,7 @@ namespace NINA.ViewModel.FlatWizard {
             do {
                 // Set flat panel brightness to static brightness
                 if (flatDeviceInfo?.Connected == true) {
-                    await flatDeviceMediator.SetBrightness(Math.Round(filter.Settings.MaxFlatDeviceBrightness / 100d, BRIGHTNESS_PRECISION), flatSequenceCts.Token);
+                    await flatDeviceMediator.SetBrightness(filter.Settings.MaxAbsoluteFlatDeviceBrightness, flatSequenceCts.Token);
                 }
 
                 var sequence = new CaptureSequence(exposureTime, CaptureSequence.ImageTypes.FLAT, filter.Filter, BinningMode, 1) { Gain = Gain };
@@ -470,9 +469,9 @@ namespace NINA.ViewModel.FlatWizard {
                             var actualGain = Gain == -1 ? profileService.ActiveProfile.CameraSettings.Gain ?? -1 : Gain;
                             profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(
                                 new FlatDeviceFilterSettingsKey(filter.Filter?.Position, BinningMode, actualGain),
-                                new FlatDeviceFilterSettingsValue(Math.Round(filter.Settings.MaxFlatDeviceBrightness / 100d, BRIGHTNESS_PRECISION), exposureTime));
+                                new FlatDeviceFilterSettingsValue(filter.Settings.MaxAbsoluteFlatDeviceBrightness, exposureTime));
                             Logger.Debug($"Recording flat settings as filter position {filter.Filter?.Position} ({filter.Filter?.Name}), binning: {BinningMode}, " +
-                                         $"gain: {actualGain}, panel brightness {Math.Round(filter.Settings.MaxFlatDeviceBrightness / 100d, BRIGHTNESS_PRECISION)} and exposure time: {exposureTime}.");
+                                         $"gain: {actualGain}, panel brightness {filter.Settings.MaxAbsoluteFlatDeviceBrightness} and exposure time: {exposureTime}.");
                         }
 
                         progress.Report(new ApplicationStatus {
@@ -531,7 +530,7 @@ namespace NINA.ViewModel.FlatWizard {
                     errorDialog.CameraBitDepth = HistogramMath.CameraBitDepthToAdu(filter.BitDepth);
                     errorDialog.Settings = filter;
                     errorDialog.ExpectedExposureTime = time;
-                    errorDialog.ExpectedBrightness = filter.Settings.MaxFlatDeviceBrightness;
+                    errorDialog.ExpectedBrightness = filter.Settings.MaxAbsoluteFlatDeviceBrightness;
                     errorDialog.FlatWizardMode = FlatWizardMode;
                     errorDialog.CameraInfo = cameraInfo;
                     errorDialog.FlatDeviceInfo = flatDeviceInfo;
@@ -573,23 +572,23 @@ namespace NINA.ViewModel.FlatWizard {
             return result;
         }
 
-        public async Task<double> FindFlatDeviceBrightness(PauseToken pt, FlatWizardFilterSettingsWrapper filter) {
+        public async Task<int> FindFlatDeviceBrightness(PauseToken pt, FlatWizardFilterSettingsWrapper filter) {
             if (flatDeviceInfo?.Connected != true) throw new Exception(Loc.Instance["LblFlatDeviceNotConnected"]); ;
-            var result = 0d;
+            var result = 0;
             var dataPoints = new List<ScatterErrorPoint>();
-            double GetNextDataPoint() {
+            int GetNextDataPoint() {
                 var trendLine = new ParabolicTrendline(dataPoints);
                 var solution = trendLine.Solve(filter.Settings.HistogramMeanTarget * HistogramMath.CameraBitDepthToAdu(filter.BitDepth));
-                return solution[0] > 0 ? Math.Round(solution[0], 2) : Math.Round(solution[1], 2);
+                return solution[0] > 0 ? (int)Math.Round(solution[0]) : (int)Math.Round(solution[1]);
             }
 
-            progress.Report(new ApplicationStatus { Status = string.Format(Loc.Instance["LblFlatExposureCalcStartBrightness"], $"{filter.Settings.MinFlatDeviceBrightness}%"), Source = Title });
+            progress.Report(new ApplicationStatus { Status = string.Format(Loc.Instance["LblFlatExposureCalcStartBrightness"], $"{filter.Settings.MinAbsoluteFlatDeviceBrightness}"), Source = Title });
 
             Task showImageTask = null;
-            var brightness = filter.Settings.MinFlatDeviceBrightness;
+            var brightness = filter.Settings.MinAbsoluteFlatDeviceBrightness;
             HistogramMath.ExposureAduState exposureAduState;
             do {
-                await flatDeviceMediator.SetBrightness(Math.Round(brightness / 100d, BRIGHTNESS_PRECISION), flatSequenceCts.Token);
+                await flatDeviceMediator.SetBrightness(brightness, flatSequenceCts.Token);
 
                 var sequence = new CaptureSequence(filter.Settings.MaxFlatExposureTime, CaptureSequence.ImageTypes.FLAT, filter.Filter, BinningMode, 1) { Gain = Gain };
 
@@ -620,14 +619,14 @@ namespace NINA.ViewModel.FlatWizard {
                             var actualGain = Gain == -1 ? profileService.ActiveProfile.CameraSettings.Gain ?? -1 : Gain;
                             profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(
                                 new FlatDeviceFilterSettingsKey(filter.Filter?.Position, BinningMode, actualGain),
-                                new FlatDeviceFilterSettingsValue(Math.Round(result / 100d, 2), filter.Settings.MaxFlatExposureTime));
+                                new FlatDeviceFilterSettingsValue(result, filter.Settings.MaxFlatExposureTime));
                             Logger.Debug($"Recording flat settings as filter position {filter.Filter?.Position} ({filter.Filter?.Name}), binning: {BinningMode}, " +
-                                         $"gain: {actualGain}, panel brightness {Math.Round(result / 100d, BRIGHTNESS_PRECISION)} and exposure time: {filter.Settings.MaxFlatExposureTime}.");
+                                         $"gain: {actualGain}, panel brightness {result} and exposure time: {filter.Settings.MaxFlatExposureTime}.");
                         }
 
                         progress.Report(new ApplicationStatus {
                             Status = string.Format(Loc.Instance["LblFlatExposureCalcFinishedBrightness"],
-                                Math.Round(CalculatedHistogramMean), $"{Math.Round(result, BRIGHTNESS_PRECISION)}%"),
+                                Math.Round(CalculatedHistogramMean), $"{result}"),
                             Source = Title
                         });
                         break;
@@ -635,12 +634,12 @@ namespace NINA.ViewModel.FlatWizard {
                     case HistogramMath.ExposureAduState.ExposureBelowLowerBound:
                         switch (dataPoints.Count) {
                             case int n when n < 2:
-                                brightness += filter.Settings.FlatDeviceStepSize;
+                                brightness += filter.Settings.FlatDeviceAbsoluteStepSize;
                                 break;
 
                             case int n when n >= 2 && n < MAX_TRIES:
                                 brightness = GetNextDataPoint();
-                                if (brightness > filter.Settings.MaxFlatDeviceBrightness) await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooDim"], brightness);
+                                if (brightness > filter.Settings.MaxAbsoluteFlatDeviceBrightness) await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooDim"], brightness);
                                 break;
 
                             default:
@@ -649,7 +648,7 @@ namespace NINA.ViewModel.FlatWizard {
                         }
                         progress.Report(new ApplicationStatus {
                             Status = string.Format(Loc.Instance["LblFlatExposureCalcContinueBrightness"],
-                                Math.Round(imageStatistics.Mean), $"{Math.Round(brightness, BRIGHTNESS_PRECISION)}%"),
+                                Math.Round(imageStatistics.Mean), $"{brightness}"),
                             Source = Title
                         });
                         break;
@@ -662,7 +661,7 @@ namespace NINA.ViewModel.FlatWizard {
 
                             case int n when n >= 2 && n < MAX_TRIES:
                                 brightness = GetNextDataPoint();
-                                if (brightness > filter.Settings.MaxFlatDeviceBrightness) await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooBright"], brightness);
+                                if (brightness > filter.Settings.MaxAbsoluteFlatDeviceBrightness) await ShowErrorAndHandleInput(Loc.Instance["LblFlatUserPromptFlatTooBright"], brightness);
                                 break;
 
                             default:
@@ -671,7 +670,7 @@ namespace NINA.ViewModel.FlatWizard {
                         }
                         progress.Report(new ApplicationStatus {
                             Status = string.Format(Loc.Instance["LblFlatExposureCalcContinueBrightness"],
-                                Math.Round(imageStatistics.Mean), $"{Math.Round(brightness, BRIGHTNESS_PRECISION)}%"),
+                                Math.Round(imageStatistics.Mean), $"{brightness}"),
                             Source = Title
                         });
                         break;
@@ -697,14 +696,14 @@ namespace NINA.ViewModel.FlatWizard {
                         case FlatWizardUserPromptResult.Continue:
                             progress.Report(new ApplicationStatus {
                                 Status = string.Format(Loc.Instance["LblFlatExposureCalcContinueBrightness"],
-                                    Math.Round(imageStatistics.Mean), $"{Math.Round(aBrightness, BRIGHTNESS_PRECISION)}%"),
+                                    Math.Round(imageStatistics.Mean), $"{aBrightness}"),
                                 Source = Title
                             });
                             break;
 
                         case FlatWizardUserPromptResult.ResetAndContinue:
                             dataPoints.Clear();
-                            brightness = filter.Settings.MinFlatDeviceBrightness;
+                            brightness = filter.Settings.MinAbsoluteFlatDeviceBrightness;
                             break;
 
                         case FlatWizardUserPromptResult.Cancel:
@@ -777,11 +776,11 @@ namespace NINA.ViewModel.FlatWizard {
 
                     try {
                         double time;
-                        double brightness;
+                        int brightness;
                         switch (FlatWizardMode) {
                             case FlatWizardMode.DYNAMICEXPOSURE:
                                 time = await FindFlatExposureTime(pt, filter);
-                                brightness = 1d;
+                                brightness = FlatDeviceInfo.MaxBrightness;
                                 await TakeRegularFlats(regularTimes, time, brightness, filter, pt);
                                 break;
 
@@ -827,7 +826,7 @@ namespace NINA.ViewModel.FlatWizard {
             return true;
         }
 
-        private async Task TakeRegularFlats(IDictionary<FlatWizardFilterSettingsWrapper, (double time, double brightness)> exposureTimes, double time, double brightness, FlatWizardFilterSettingsWrapper filter, PauseToken pt) {
+        private async Task TakeRegularFlats(IDictionary<FlatWizardFilterSettingsWrapper, (double time, double brightness)> exposureTimes, double time, int brightness, FlatWizardFilterSettingsWrapper filter, PauseToken pt) {
             CalculatedExposureTime = time;
             exposureTimes.Add(filter, (time, brightness));
 

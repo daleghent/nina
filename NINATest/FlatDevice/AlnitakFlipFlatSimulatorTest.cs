@@ -83,12 +83,12 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        [TestCase(-3.0, 0)]
-        [TestCase(0.0, 0)]
-        [TestCase(0.5, 0.5)]
-        [TestCase(1.0, 1.0)]
-        [TestCase(1000, 1.0)]
-        public async Task TestBrightness(double setValue, double expectedValue) {
+        [TestCase(-3, 0)]
+        [TestCase(0, 0)]
+        [TestCase(5, 5)]
+        [TestCase(255, 255)]
+        [TestCase(1000, 255)]
+        public async Task TestBrightness(int setValue, int expectedValue) {
             await _sut.Connect(new CancellationToken());
             _sut.Brightness = setValue;
             Assert.That(_sut.Brightness, Is.EqualTo(expectedValue));

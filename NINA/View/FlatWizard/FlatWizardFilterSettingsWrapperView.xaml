@@ -154,7 +154,6 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="15px" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -169,21 +168,16 @@
                             <TextBox
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="{Binding Settings.MaxFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
+                                Text="{Binding Settings.MaxAbsoluteFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
                             <Slider
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 IsSnapToTickEnabled="True"
-                                Maximum="100"
-                                Minimum="0"
+                                Maximum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.FlatDeviceInfo.MaxBrightness}"
+                                Minimum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.FlatDeviceInfo.MinBrightness}"
                                 TickFrequency="5"
-                                Value="{Binding Settings.MaxFlatDeviceBrightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="2"
-                                HorizontalAlignment="Right"
-                                Text="%" />
+                                Value="{Binding Settings.MaxAbsoluteFlatDeviceBrightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
                 </StackPanel>
@@ -200,7 +194,6 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="15px" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -215,21 +208,16 @@
                             <TextBox
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="{Binding Settings.MinFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
+                                Text="{Binding Settings.MinAbsoluteFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N0}" />
                             <Slider
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 IsSnapToTickEnabled="True"
-                                Maximum="100"
-                                Minimum="0"
+                                Maximum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.FlatDeviceInfo.MaxBrightness}"
+                                Minimum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.FlatDeviceInfo.MinBrightness}"
                                 TickFrequency="5"
-                                Value="{Binding Settings.MinFlatDeviceBrightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="2"
-                                HorizontalAlignment="Right"
-                                Text="%" />
+                                Value="{Binding Settings.MinAbsoluteFlatDeviceBrightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
                     <Border
@@ -240,7 +228,6 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="15px" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -255,21 +242,16 @@
                             <TextBox
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="{Binding Settings.MaxFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
+                                Text="{Binding Settings.MaxAbsoluteFlatDeviceBrightness, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
                             <Slider
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 IsSnapToTickEnabled="True"
-                                Maximum="100"
-                                Minimum="0"
+                                Maximum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.FlatDeviceInfo.MaxBrightness}"
+                                Minimum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.FlatDeviceInfo.MinBrightness}"
                                 TickFrequency="5"
-                                Value="{Binding Settings.MaxFlatDeviceBrightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="2"
-                                HorizontalAlignment="Right"
-                                Text="%" />
+                                Value="{Binding Settings.MaxAbsoluteFlatDeviceBrightness, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
                     <Border
@@ -280,7 +262,6 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*" />
                                 <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="15px" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition />
@@ -295,21 +276,16 @@
                             <TextBox
                                 Grid.Row="0"
                                 Grid.Column="1"
-                                Text="{Binding Settings.FlatDeviceStepSize, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
+                                Text="{Binding Settings.FlatDeviceAbsoluteStepSize, UpdateSourceTrigger=PropertyChanged, StringFormat=N2}" />
                             <Slider
                                 Grid.Row="1"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="3"
                                 IsSnapToTickEnabled="True"
-                                Maximum="100"
-                                Minimum="0"
+                                Maximum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.FlatDeviceInfo.MaxBrightness}"
+                                Minimum="{Binding ElementName=SettingsHost, FallbackValue=30, Path=DataContext.FlatDeviceInfo.MinBrightness}"
                                 TickFrequency="5"
-                                Value="{Binding Settings.FlatDeviceStepSize, UpdateSourceTrigger=PropertyChanged}" />
-                            <TextBlock
-                                Grid.Row="0"
-                                Grid.Column="2"
-                                HorizontalAlignment="Right"
-                                Text="%" />
+                                Value="{Binding Settings.FlatDeviceAbsoluteStepSize, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                     </Border>
 

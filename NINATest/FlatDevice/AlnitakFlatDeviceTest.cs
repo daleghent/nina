@@ -92,10 +92,10 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        [TestCase(0.0, "*J99000")]
-        [TestCase(1.0, "*J99255")]
-        [TestCase(0.502, "*J99128")]
-        public async Task TestGetBrightness(double brightness, string deviceResponse) {
+        [TestCase(0, "*J99000")]
+        [TestCase(255, "*J99255")]
+        [TestCase(128, "*J99128")]
+        public async Task TestGetBrightness(int brightness, string deviceResponse) {
             Assert.That(await _sut.Connect(new CancellationToken()), Is.True);
 
             _mockSdk.Setup(m => m.SendCommand<GetBrightnessResponse>(It.IsAny<GetBrightnessCommand>()))
@@ -123,12 +123,12 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        [TestCase(0.0, ">B000\r", "*B99000")]
-        [TestCase(1.0, ">B255\r", "*B99255")]
-        [TestCase(0.5, ">B128\r", "*B99128")]
-        [TestCase(-1.0, ">B000\r", "*B99000")]
-        [TestCase(2.0, ">B255\r", "*B99255")]
-        public async Task TestSetBrightness(double brightness, string command, string response) {
+        [TestCase(0, ">B000\r", "*B99000")]
+        [TestCase(255, ">B255\r", "*B99255")]
+        [TestCase(128, ">B128\r", "*B99128")]
+        [TestCase(-1, ">B000\r", "*B99000")]
+        [TestCase(300, ">B255\r", "*B99255")]
+        public async Task TestSetBrightness(int brightness, string command, string response) {
             Assert.That(await _sut.Connect(new CancellationToken()), Is.True);
             string actual = null;
 

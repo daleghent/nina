@@ -217,7 +217,7 @@ namespace NINATest.FlatDevice {
         public void TestWizardGridWithoutFilterWheel() {
             const int gain = 30;
             var binningMode = new BinningMode(1, 1);
-            var settingsValue = new FlatDeviceFilterSettingsValue(0.7, 0.5);
+            var settingsValue = new FlatDeviceFilterSettingsValue(7, 0.5);
             var settingsKey = new FlatDeviceFilterSettingsKey(null, binningMode, gain);
             mockProfileService
                         .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfoBinnings())
@@ -241,7 +241,7 @@ namespace NINATest.FlatDevice {
             result.Blocks[0].Columns[1].Header.Should().BeNull();
             result.Blocks[0].Columns[1].Settings[0].ShowFilterNameOnly.Should().BeFalse();
             result.Blocks[0].Columns[1].Settings[0].Key.Should().Be(settingsKey);
-            result.Blocks[0].Columns[1].Settings[0].Brightness.Should().Be(settingsValue.Brightness);
+            result.Blocks[0].Columns[1].Settings[0].Brightness.Should().Be(settingsValue.AbsoluteBrightness);
             result.Blocks[0].Columns[1].Settings[0].Time.Should().Be(settingsValue.Time);
         }
 
@@ -250,7 +250,7 @@ namespace NINATest.FlatDevice {
             const int gain = 30;
             const short position = 2;
             var binningMode = new BinningMode(1, 1);
-            var settingsValue = new FlatDeviceFilterSettingsValue(0.7, 0.5);
+            var settingsValue = new FlatDeviceFilterSettingsValue(7, 0.5);
             var settingsKey = new FlatDeviceFilterSettingsKey(position, binningMode, gain);
 
             mockProfileService
@@ -277,7 +277,7 @@ namespace NINATest.FlatDevice {
             result.Blocks[0].Columns[1].Header.Should().BeNull();
             result.Blocks[0].Columns[1].Settings[0].ShowFilterNameOnly.Should().BeFalse();
             result.Blocks[0].Columns[1].Settings[0].Key.Should().Be(settingsKey);
-            result.Blocks[0].Columns[1].Settings[0].Brightness.Should().Be(settingsValue.Brightness);
+            result.Blocks[0].Columns[1].Settings[0].Brightness.Should().Be(settingsValue.AbsoluteBrightness);
             result.Blocks[0].Columns[1].Settings[0].Time.Should().Be(settingsValue.Time);
         }
 
@@ -286,7 +286,7 @@ namespace NINATest.FlatDevice {
             const int gain = 30;
             const short position = 2;
             var binningMode = new BinningMode(1, 1);
-            var settingsValue = new FlatDeviceFilterSettingsValue(0.7, 0.5);
+            var settingsValue = new FlatDeviceFilterSettingsValue(7, 0.5);
 
             mockProfileService
                     .Setup(m => m.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(
@@ -322,7 +322,7 @@ namespace NINATest.FlatDevice {
         public void TestWizardGridForCamerasWithoutBinning() {
             const int gain = 30;
             const short position = 2;
-            var settingsValue = new FlatDeviceFilterSettingsValue(0.7, 0.5);
+            var settingsValue = new FlatDeviceFilterSettingsValue(7, 0.5);
             var settingsKey = new FlatDeviceFilterSettingsKey(position, null, gain);
 
             mockProfileService
@@ -351,7 +351,7 @@ namespace NINATest.FlatDevice {
             result.Blocks[0].Columns[1].Header.Should().BeNull();
             result.Blocks[0].Columns[1].Settings[0].ShowFilterNameOnly.Should().BeFalse();
             result.Blocks[0].Columns[1].Settings[0].Key.Should().Be(settingsKey);
-            result.Blocks[0].Columns[1].Settings[0].Brightness.Should().Be(settingsValue.Brightness);
+            result.Blocks[0].Columns[1].Settings[0].Brightness.Should().Be(settingsValue.AbsoluteBrightness);
             result.Blocks[0].Columns[1].Settings[0].Time.Should().Be(settingsValue.Time);
         }
 
@@ -359,7 +359,7 @@ namespace NINATest.FlatDevice {
         public async Task TestSetBrightnessNullFlatDevice() {
             mockFlatDeviceChooserVM.SetupProperty(m => m.SelectedDevice, null);
             (await sut.SetBrightness(1.0, CancellationToken.None)).Should().Be(false);
-            sut.Brightness.Should().Be(0d);
+            sut.Brightness.Should().Be(0);
             mockFlatDevice.Verify(m => m.Brightness, Times.Never);
         }
 
@@ -371,8 +371,8 @@ namespace NINATest.FlatDevice {
             mockFlatDevice.Setup(m => m.Connect(It.IsAny<CancellationToken>())).Returns(Task.FromResult(true));
             await sut.Connect();
             (await sut.SetBrightness(1.0, CancellationToken.None)).Should().Be(true);
-            sut.Brightness.Should().Be(0d);
-            mockFlatDevice.VerifySet(m => m.Brightness = 1d, Times.Once);
+            sut.Brightness.Should().Be(0);
+            mockFlatDevice.VerifySet(m => m.Brightness = 1, Times.Once);
         }
 
         [Test]

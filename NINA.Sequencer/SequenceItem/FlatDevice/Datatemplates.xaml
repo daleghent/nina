@@ -23,7 +23,6 @@
             <mini:MiniSequenceItem.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{Binding Brightness}" />
-                    <TextBlock VerticalAlignment="Center" Text="%" />
                 </StackPanel>
             </mini:MiniSequenceItem.SequenceItemContent>
         </mini:MiniSequenceItem>
@@ -35,11 +34,9 @@
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceBrightness}" />
                     <ninactrl:StepperControl
                         Margin="5,0,0,0"
-                        MaxValue="100"
                         MinValue="0"
                         StepSize="1"
                         Value="{Binding Brightness, Mode=TwoWay}" />
-                    <TextBlock VerticalAlignment="Center" Text="%" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>

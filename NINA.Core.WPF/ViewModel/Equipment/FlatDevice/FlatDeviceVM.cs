@@ -114,9 +114,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             flatDeviceMediator.Broadcast(GetDeviceInfo());
         }
 
-        private double brightness;
+        private int brightness;
 
-        public double Brightness {
+        public int Brightness {
             get => brightness;
             set { brightness = value; RaisePropertyChanged(); }
         }
@@ -128,15 +128,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             set { lightOn = value; RaisePropertyChanged(); }
         }
 
-        public Task<bool> SetBrightness(double value, CancellationToken token) {
-            return SetBrightness((object)(value * 100d), token);
+        public Task<bool> SetBrightness(int value, CancellationToken token) {
+            return SetBrightness((object)value, token);
         }
 
         public Task<bool> SetBrightness(object o, CancellationToken token) {
             if (flatDevice == null || !flatDevice.Connected) return Task.FromResult(false);
-            if (!double.TryParse(o.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)) return Task.FromResult(false);
+            if (!int.TryParse(o.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var result)) return Task.FromResult(false);
             return Task.Run(async () => {
-                flatDevice.Brightness = result / 100d;
+                flatDevice.Brightness = result;
                 await CoreUtil.Delay(profileService.ActiveProfile.FlatDeviceSettings.SettleTime, token);
                 return true;
             }, token);
@@ -188,6 +188,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                             SupportsOpenClose = newDevice.SupportsOpenClose
                         };
                         this.Brightness = newDevice.Brightness;
+
+                        // Migrate old trained flat device values
+                        if (profileService.ActiveProfile.FlatDeviceSettings.FilterSettings != null) {
+                            foreach (var setting in profileService.ActiveProfile.FlatDeviceSettings.FilterSettings.ToArray()) {
+                                var info = profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(setting.Key);
+                                if (!double.IsNaN(info.Brightness)) {
+                                    var migratedInfo = new FlatDeviceFilterSettingsValue((int)(setting.Value.Brightness * FlatDeviceInfo.MaxBrightness), info.Time);
+                                    profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(setting.Key, migratedInfo);
+                                }
+                            }
+                        }
 
                         Notification.ShowSuccess(Loc.Instance["LblFlatDeviceConnected"]);
 
@@ -264,7 +275,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             if (filters.Count == 0) filters = new ObserveAllCollection<FilterInfo> { new FilterInfo() };
 
             var key = new FlatDeviceFilterSettingsKey(filters.FirstOrDefault()?.Position, binning, gain);
-            var value = new FlatDeviceFilterSettingsValue(1d, 1d);
+            var value = new FlatDeviceFilterSettingsValue(0, 1d);
             profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(key, value);
             RaisePropertyChanged(nameof(Gains));
             UpdateWizardValueBlocks();
@@ -278,7 +289,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
             var key = new FlatDeviceFilterSettingsKey(filters.FirstOrDefault()?.Position,
                 (BinningMode)binning, gain);
-            var value = new FlatDeviceFilterSettingsValue(1d, 1d);
+            var value = new FlatDeviceFilterSettingsValue(0, 1d);
             profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(key, value);
             RaisePropertyChanged(nameof(BinningModes));
             UpdateWizardValueBlocks();
@@ -386,7 +397,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             flatDeviceValues.TryGetValue(nameof(FlatDeviceInfo.CoverState), out o);
             flatDeviceInfo.CoverState = (CoverState)(o ?? CoverState.Unknown);
             flatDeviceValues.TryGetValue(nameof(FlatDeviceInfo.Brightness), out o);
-            flatDeviceInfo.Brightness = (double)(o ?? 0.0);
+            flatDeviceInfo.Brightness = (int)(o ?? 0);
             flatDeviceValues.TryGetValue(nameof(FlatDeviceInfo.LightOn), out o);
             flatDeviceInfo.LightOn = (bool)(o ?? false);
 
@@ -398,7 +409,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             {
                 {nameof(FlatDeviceInfo.Connected), flatDevice?.Connected ?? false},
                 {nameof(FlatDeviceInfo.CoverState), flatDevice?.CoverState ?? CoverState.Unknown},
-                {nameof(FlatDeviceInfo.Brightness), flatDevice?.Brightness ?? 0.0},
+                {nameof(FlatDeviceInfo.Brightness), flatDevice?.Brightness ?? 0},
                 {nameof(FlatDeviceInfo.MinBrightness), flatDevice?.MinBrightness ?? 0},
                 {nameof(FlatDeviceInfo.MaxBrightness), flatDevice?.MaxBrightness ?? 0},
                 {nameof(FlatDeviceInfo.LightOn), flatDevice?.LightOn ?? false},

@@ -22,7 +22,7 @@ namespace NINA.WPF.Base.Mediator {
 
     public class FlatDeviceMediator : DeviceMediator<IFlatDeviceVM, IFlatDeviceConsumer, FlatDeviceInfo>, IFlatDeviceMediator {
 
-        public Task SetBrightness(double brightness, CancellationToken token) {
+        public Task SetBrightness(int brightness, CancellationToken token) {
             return handler.SetBrightness(brightness, token);
         }
 

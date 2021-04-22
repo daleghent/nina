@@ -143,70 +143,49 @@
                             VerticalAlignment="Center"
                             Columns="2"
                             IsEnabled="{Binding FlatDeviceInfo.Connected}">
-                            <TextBlock Text="{ns:Loc LblFlatDeviceBrightness}" />
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceBrightness}" />
+                                <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        Text="(" />
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding FlatDeviceInfo.MinBrightness}" />
+                                    <TextBlock VerticalAlignment="Center" Text="-" />
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding FlatDeviceInfo.MaxBrightness}" />
+                                    <TextBlock VerticalAlignment="Center" Text=")" />
+                                </StackPanel>
+                            </StackPanel>
                             <Grid VerticalAlignment="Center">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="4*" />
-                                    <ColumnDefinition Width="0.7*" />
-                                    <ColumnDefinition Width="15px" />
+                                    <ColumnDefinition Width="40" />
                                     <ColumnDefinition Width="1.2*" />
                                 </Grid.ColumnDefinitions>
-                                <Slider
+                                <ninactrl:IntStepperControl
                                     Grid.Row="0"
                                     Grid.Column="0"
                                     IsEnabled="{Binding FlatDeviceInfo.Connected}"
-                                    IsSnapToTickEnabled="True"
-                                    Maximum="1"
-                                    Minimum="0"
-                                    TickFrequency=".05"
-                                    TickPlacement="Both"
-                                    Value="{Binding Brightness, UpdateSourceTrigger=PropertyChanged}" />
-                                <TextBox
-                                    x:Name="BrightnessInput"
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    Height="25"
-                                    Margin="5,0,0,0"
-                                    VerticalAlignment="Center"
-                                    HorizontalContentAlignment="Center"
-                                    IsEnabled="{Binding FlatDeviceInfo.Connected}"
-                                    Text="{Binding Brightness, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource PercentageConverter}, ConverterParameter=2, StringFormat={}{0:F1}}" />
+                                    MaxValue="{Binding FlatDeviceInfo.MaxBrightness}"
+                                    MinValue="{Binding FlatDeviceInfo.MinBrightness}"
+                                    StepSize="1"
+                                    Value="{Binding Brightness, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
                                 <TextBlock
-                                    Grid.Row="0"
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Right"
+                                    Grid.Column="1"
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    Text="%" />
+                                    Text="{Binding FlatDeviceInfo.Brightness}" />
                                 <Button
-                                    Grid.Column="3"
-                                    Margin="5"
+                                    Grid.Column="2"
+                                    MinWidth="80"
+                                    Margin="5,0,0,0"
                                     Command="{Binding SetBrightnessCommand}"
-                                    CommandParameter="{Binding Text, ElementName=BrightnessInput}"
+                                    CommandParameter="{Binding Brightness}"
                                     IsEnabled="{Binding FlatDeviceInfo.Connected}">
                                     <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblFlatDeviceSetBrightness}" />
                                 </Button>
                             </Grid>
-                        </UniformGrid>
-                    </Border>
-                    <Border
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="0"
-                        Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                        <UniformGrid
-                            Margin="0,6,0,6"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceCoverCurrently}" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="5,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Text="{Binding FlatDeviceInfo.Brightness, Converter={StaticResource PercentageConverter}, ConverterParameter=2}" />
-                                <TextBlock
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    Text="%" />
-                            </StackPanel>
                         </UniformGrid>
                     </Border>
                     <Border
@@ -330,8 +309,7 @@
                         <TextBlock
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
-                            Text="{Binding Brightness, Converter={StaticResource PercentageConverter}}" />
-                        <TextBlock VerticalAlignment="Center" Text="%" />
+                            Text="{Binding Brightness}" />
                     </StackPanel>
                 </DataTemplate>
                 <DataTemplate x:Key="BrightnessEditTemplate">
@@ -340,7 +318,7 @@
                         <TextBox
                             VerticalAlignment="Center"
                             HorizontalContentAlignment="Right"
-                            Text="{Binding Brightness, Converter={StaticResource PercentageConverter}}" />
+                            Text="{Binding Brightness}" />
                     </StackPanel>
                 </DataTemplate>
                 <DataTemplate x:Key="FilterNameTemplate">

@@ -24,13 +24,13 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         Task<bool> CloseCover(CancellationToken token);
 
-        double Brightness { get; set; }
+        int Brightness { get; set; }
         bool LightOn { get; set; }
         FlatDeviceInfo FlatDeviceInfo { get; set; }
 
         Task<bool> ToggleLight(object o, CancellationToken token);
 
-        Task<bool> SetBrightness(double value, CancellationToken token);
+        Task<bool> SetBrightness(int value, CancellationToken token);
 
         Task<bool> SetBrightness(object o, CancellationToken token);
     }

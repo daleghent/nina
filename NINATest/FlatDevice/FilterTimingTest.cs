@@ -24,7 +24,7 @@ namespace NINATest.FlatDevice {
     public class FilterTimingTest {
         private Mock<IProfileService> _mockProfileService;
         private Mock<IFlatDeviceSettings> _mockSettings;
-        private const double BRIGHTNESS = 1d;
+        private const int BRIGHTNESS = 1;
         private const double TIME = 2d;
         private readonly FlatDeviceFilterSettingsKey _key = new FlatDeviceFilterSettingsKey(null, null, 0);
 
@@ -61,7 +61,7 @@ namespace NINATest.FlatDevice {
                 m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Once);
             Assert.That(keyUsed, Is.EqualTo(_key));
             Assert.That(valueUsed.Time, Is.EqualTo(TIME));
-            Assert.That(valueUsed.Brightness, Is.EqualTo(BRIGHTNESS));
+            Assert.That(valueUsed.AbsoluteBrightness, Is.EqualTo(BRIGHTNESS));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace NINATest.FlatDevice {
                 m.AddBrightnessInfo(It.IsAny<FlatDeviceFilterSettingsKey>(), It.IsAny<FlatDeviceFilterSettingsValue>()), Times.Once);
             Assert.That(keyUsed, Is.EqualTo(_key));
             Assert.That(valueUsed.Time, Is.EqualTo(TIME));
-            Assert.That(valueUsed.Brightness, Is.EqualTo(BRIGHTNESS));
+            Assert.That(valueUsed.AbsoluteBrightness, Is.EqualTo(BRIGHTNESS));
         }
     }
 }

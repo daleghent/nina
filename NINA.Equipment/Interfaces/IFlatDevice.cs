@@ -30,7 +30,7 @@ namespace NINA.Equipment.Interfaces {
 
         bool LightOn { get; set; }
 
-        double Brightness { get; set; }
+        int Brightness { get; set; }
 
         string PortName { get; set; }
 

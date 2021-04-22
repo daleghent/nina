@@ -256,14 +256,18 @@ namespace NINA.Profile {
     [DataContract]
     public class FlatDeviceFilterSettingsValue {
 
+        [Obsolete]
         [DataMember]
-        public double Brightness { get; set; }
+        public double Brightness { get; set; } = double.NaN;
+
+        [DataMember]
+        public int AbsoluteBrightness { get; set; }
 
         [DataMember]
         public double Time { get; set; }
 
-        public FlatDeviceFilterSettingsValue(double brightness, double time) {
-            Brightness = brightness;
+        public FlatDeviceFilterSettingsValue(int brightness, double time) {
+            AbsoluteBrightness = brightness;
             Time = time;
         }
     }

@@ -97,6 +97,8 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ### Device-related Improvements
 - Canon: Automatically send request to increase shutdown time, when camera is about to shutdown
 - Nikon: Fixed an issue where cancelling an exposure would lead to unexpected bulb exposure times
+- Flat Device Brightness is no longer expressed in percentage, but rather in the absolute values the flat panel supports
+- Flat Device trained brightness levels will be automatically migrated from percentage to absolute values after first flat panel device connection.
 
 ## Application Improvements
 ### General

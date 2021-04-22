@@ -65,25 +65,24 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        public double Brightness {
+        public int Brightness {
             get {
                 lock (this._handleLock) {
-                    if (!Connected) return 0.0;
+                    if (!Connected) return 0;
                     int brightness = USBD.USBD_GetBrightness(this._usbdHandle);
-                    return (double)brightness / (double)MaxBrightness;
+                    return brightness;
                 }
             }
             set {
                 lock (this._handleLock) {
                     if (Connected) {
-                        if (value < 0) {
-                            value = 0;
+                        if (value < MinBrightness) {
+                            value = MinBrightness;
                         }
-                        if (value > 1) {
-                            value = 1;
+                        if (value > MaxBrightness) {
+                            value = MaxBrightness;
                         }
-                        uint brightness = (uint)Math.Round(value * MaxBrightness);
-                        if (USBD.USBD_SetBrightness(this._usbdHandle, brightness) != 0) {
+                        if (USBD.USBD_SetBrightness(this._usbdHandle, (uint)value) != 0) {
                             Logger.Error($"Failed to set brightness to {value}");
                             Notification.ShowError(Loc.Instance["LblFlatDeviceInvalidResponse"]);
                         }

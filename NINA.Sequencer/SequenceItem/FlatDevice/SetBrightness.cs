@@ -49,10 +49,10 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             }
         }
 
-        private double brightness;
+        private int brightness;
 
         [JsonProperty]
-        public double Brightness {
+        public int Brightness {
             get => brightness;
             set {
                 brightness = value;
@@ -61,7 +61,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            return flatDeviceMediator.SetBrightness(Brightness / 100, token);
+            return flatDeviceMediator.SetBrightness(Brightness, token);
         }
 
         public override object Clone() {

@@ -92,22 +92,22 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        private double _brightness;
+        private int _brightness;
 
-        public double Brightness {
-            get => Connected ? _brightness : 0d;
+        public int Brightness {
+            get => Connected ? _brightness : 0;
             set {
                 if (!Connected) return;
-                if (value < 0) {
-                    value = 0;
+                if (value < MinBrightness) {
+                    value = MinBrightness;
                 }
 
-                if (value > 1) {
-                    value = 1;
+                if (value > MaxBrightness) {
+                    value = MaxBrightness;
                 }
 
                 var command = new SetBrightnessCommand {
-                    Brightness = Math.Round(value * (MaxBrightness - MinBrightness) + MinBrightness, 0)
+                    Brightness = value
                 };
 
                 try {
@@ -189,7 +189,7 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
                 var brightCommand = new GetBrightnessCommand();
                 try {
                     var brightResponse = await Sdk.SendCommand<GetBrightnessResponse>(brightCommand);
-                    _brightness = Math.Round((double)brightResponse.Brightness / (MaxBrightness - MinBrightness), 2);
+                    _brightness = brightResponse.Brightness;
                 } catch (InvalidDeviceResponseException ex) {
                     LogAndNotify(stateCommand, ex);
                     Sdk.Dispose(this);

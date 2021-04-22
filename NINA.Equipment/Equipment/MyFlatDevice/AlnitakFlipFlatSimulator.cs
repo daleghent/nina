@@ -105,17 +105,17 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        private double _brightness;
+        private int _brightness;
 
-        public double Brightness {
+        public int Brightness {
             get => !Connected ? 0 : _brightness;
             set {
                 if (Connected) {
-                    if (value < 0) {
-                        value = 0;
+                    if (value < MinBrightness) {
+                        value = MinBrightness;
                     }
-                    if (value > 1) {
-                        value = 1;
+                    if (value > MaxBrightness) {
+                        value = MaxBrightness;
                     }
                     _brightness = value;
                 }

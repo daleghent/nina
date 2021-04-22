@@ -135,8 +135,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             ShowFilterNameOnly = showFilterNameOnly;
         }
 
-        public double Brightness {
-            get => _profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(Key)?.Brightness ?? 0d;
+        public int Brightness {
+            get => _profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(Key)?.AbsoluteBrightness ?? 0;
             set {
                 var temp = new FlatDeviceFilterSettingsValue(value, Time);
                 _profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(Key, temp);

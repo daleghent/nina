@@ -84,14 +84,13 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        public double Brightness {
-            get => (double)device.Brightness / MaxBrightness;
+        public int Brightness {
+            get => device.Brightness;
             set {
                 try {
-                    var converted = (int)(value * MaxBrightness);
-                    Logger.Debug($"Setting cover calibrator brightness to {value}% = {converted}");
-                    device.CalibratorOn(converted);
-                    lastBrightness = converted; // save brightness for next time the user toggles the light on
+                    Logger.Debug($"Setting cover calibrator brightness to {value}");
+                    device.CalibratorOn(value);
+                    lastBrightness = value; // save brightness for next time the user toggles the light on
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }

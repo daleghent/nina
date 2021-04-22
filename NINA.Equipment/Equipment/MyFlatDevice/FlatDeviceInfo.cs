@@ -43,9 +43,9 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        private double _brightness;
+        private int _brightness;
 
-        public double Brightness {
+        public int Brightness {
             get => _brightness;
             set { _brightness = value; RaisePropertyChanged(); }
         }

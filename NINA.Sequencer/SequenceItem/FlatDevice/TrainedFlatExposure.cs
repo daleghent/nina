@@ -178,7 +178,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             var gain = takeExposure.Gain == -1 ? profileService.ActiveProfile.CameraSettings.Gain ?? -1 : takeExposure.Gain;
             var info = profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(new FlatDeviceFilterSettingsKey(filter?.Position, binning, gain));
 
-            GetSetBrightnessItem().Brightness = info.Brightness * 100;
+            GetSetBrightnessItem().Brightness = info.AbsoluteBrightness;
             takeExposure.ExposureTime = info.Time;
 
             if (KeepPanelClosed) {

@@ -35,11 +35,11 @@ namespace NINA.Core.Model.Equipment {
 
         private double stepSize;
 
-        private double maxFlatDeviceBrightness;
+        private int maxAbsoluteFlatDeviceBrightness;
 
-        private double minFlatDeviceBrightness;
+        private int minAbsoluteFlatDeviceBrightness;
 
-        private double flatDeviceStepSize;
+        private int flatDeviceAbsoluteStepSize;
 
         public FlatWizardFilterSettings() {
             flatWizardMode = FlatWizardMode.DYNAMICEXPOSURE;
@@ -48,9 +48,9 @@ namespace NINA.Core.Model.Equipment {
             StepSize = 0.1;
             MinFlatExposureTime = 0.01;
             MaxFlatExposureTime = 30;
-            MinFlatDeviceBrightness = 0;
-            MaxFlatDeviceBrightness = 100;
-            FlatDeviceStepSize = 10;
+            MinAbsoluteFlatDeviceBrightness = 0;
+            MaxAbsoluteFlatDeviceBrightness = 1;
+            FlatDeviceAbsoluteStepSize = 1;
         }
 
         [DataMember]
@@ -119,22 +119,22 @@ namespace NINA.Core.Model.Equipment {
 
         [DataMember]
         [JsonProperty]
-        public double MaxFlatDeviceBrightness {
-            get => maxFlatDeviceBrightness;
+        public int MaxAbsoluteFlatDeviceBrightness {
+            get => maxAbsoluteFlatDeviceBrightness;
             set {
-                maxFlatDeviceBrightness = value;
+                maxAbsoluteFlatDeviceBrightness = value;
                 RaisePropertyChanged();
             }
         }
 
         [DataMember]
         [JsonProperty]
-        public double MinFlatDeviceBrightness {
-            get => minFlatDeviceBrightness;
+        public int MinAbsoluteFlatDeviceBrightness {
+            get => minAbsoluteFlatDeviceBrightness;
             set {
-                minFlatDeviceBrightness = value;
-                if (MaxFlatDeviceBrightness < minFlatDeviceBrightness) {
-                    MaxFlatDeviceBrightness = minFlatDeviceBrightness;
+                minAbsoluteFlatDeviceBrightness = value;
+                if (MaxAbsoluteFlatDeviceBrightness < minAbsoluteFlatDeviceBrightness) {
+                    MaxAbsoluteFlatDeviceBrightness = minAbsoluteFlatDeviceBrightness;
                 }
 
                 RaisePropertyChanged();
@@ -143,10 +143,10 @@ namespace NINA.Core.Model.Equipment {
 
         [DataMember]
         [JsonProperty]
-        public double FlatDeviceStepSize {
-            get => flatDeviceStepSize;
+        public int FlatDeviceAbsoluteStepSize {
+            get => flatDeviceAbsoluteStepSize;
             set {
-                flatDeviceStepSize = value;
+                flatDeviceAbsoluteStepSize = value;
                 RaisePropertyChanged();
             }
         }

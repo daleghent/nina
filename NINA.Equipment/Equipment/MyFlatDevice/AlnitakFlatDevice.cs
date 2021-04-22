@@ -127,9 +127,9 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
             }
         }
 
-        public double Brightness {
+        public int Brightness {
             get {
-                var result = 0d;
+                var result = 0;
                 if (!Connected) return result;
 
                 var command = new GetBrightnessCommand();
@@ -141,15 +141,15 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
                 } catch (SerialPortClosedException ex) {
                     HandlePortClosed(command, ex);
                 }
-                return Math.Round(result / (MaxBrightness - MinBrightness), 3);
+                return result;
             }
             set {
                 if (!Connected) return;
-                if (value < 0) value = 0;
-                if (value > 1) value = 1;
+                if (value < MinBrightness) value = MinBrightness;
+                if (value > MaxBrightness) value = MaxBrightness;
 
                 var command = new SetBrightnessCommand {
-                    Brightness = value * (MaxBrightness - MinBrightness) + MinBrightness
+                    Brightness = value
                 };
                 try {
                     _ = Sdk.SendCommand<SetBrightnessResponse>(command).Result;

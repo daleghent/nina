@@ -21,7 +21,7 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
     public interface IFlatDeviceMediator : IDeviceMediator<IFlatDeviceVM, IFlatDeviceConsumer, FlatDeviceInfo> {
 
-        Task SetBrightness(double brightness, CancellationToken token);
+        Task SetBrightness(int brightness, CancellationToken token);
 
         Task CloseCover(CancellationToken token);
 
