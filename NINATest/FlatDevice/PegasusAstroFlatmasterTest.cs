@@ -132,12 +132,12 @@ namespace NINATest.FlatDevice {
         }
 
         [Test]
-        [TestCase(20, 0, "L:020", "L:020\n")]
-        [TestCase(220, 300, "L:220", "L:220\n")]
-        [TestCase(20, 20, "L:020", "L:020\n")]
-        [TestCase(220, 220, "L:220", "L:220\n")]
-        [TestCase(50, 50, "L:050", "L:050\n")]
-        [TestCase(100, 100, "L:100", "L:100\n")]
+        [TestCase(20, 0, "L:220", "L:220\n")]
+        [TestCase(220, 300, "L:020", "L:020\n")]
+        [TestCase(20, 20, "L:220", "L:220\n")]
+        [TestCase(220, 220, "L:020", "L:020\n")]
+        [TestCase(50, 50, "L:190", "L:190\n")]
+        [TestCase(100, 100, "L:140", "L:140\n")]
         public async Task TestBrightness(int expected, int brightness, string response = null, string expectedCommand = null) {
             string actual = null;
             _mockSdk.Setup(m => m.InitializeSerialPort(It.IsAny<string>(), It.IsAny<object>())).Returns(true);
@@ -176,7 +176,7 @@ namespace NINATest.FlatDevice {
             var result = _sut.Brightness;
 
             Assert.That(result, Is.EqualTo(20));
-            Assert.That(actual, Is.EqualTo("L:020\n"));
+            Assert.That(actual, Is.EqualTo("L:220\n"));
         }
     }
 }

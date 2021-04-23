@@ -171,7 +171,8 @@ namespace NINA.Equipment.Equipment.MyFlatDevice {
                 if (value < MinBrightness) _brightness = MinBrightness;
                 if (value > MaxBrightness) _brightness = MaxBrightness;
 
-                var command = new SetBrightnessCommand { Brightness = _brightness };
+                // The Pegagus AstroFlat Master has its max value at 20 and min value at 220 - therefore the command sent to the box is inverted to keep it user friendly with a range of min 20 and max 220 on the ui side
+                var command = new SetBrightnessCommand { Brightness = MaxBrightness - _brightness + MinBrightness };
                 try {
                     _ = Sdk.SendCommand<SetBrightnessResponse>(command).Result;
                 } catch (InvalidDeviceResponseException ex) {
