@@ -46,8 +46,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
 
     [ExportMetadata("Name", "Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name")]
     [ExportMetadata("Description", "Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description")]
-    // TODO: Isbeorn, can you create an icon?
-    [ExportMetadata("Icon", "PlatesolveSVG")]
+    [ExportMetadata("Icon", "TargetWithArrowSVG")]
     [ExportMetadata("Category", "Lbl_SequenceCategory_Telescope")]
     [Export(typeof(ISequenceTrigger))]
     [JsonObject(MemberSerialization.OptIn)]
@@ -66,7 +65,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
 
         [ImportingConstructor]
         public CenterAfterDriftTrigger(
-            IProfileService profileService, IImageHistoryVM history, ITelescopeMediator telescopeMediator, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator, 
+            IProfileService profileService, IImageHistoryVM history, ITelescopeMediator telescopeMediator, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator,
             IImagingMediator imagingMediator, ICameraMediator cameraMediator, IImageSaveMediator imageSaveMediator, IApplicationStatusMediator applicationStatusMediator) : base() {
             this.history = history;
             this.profileService = profileService;
@@ -101,7 +100,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 TriggerRunner = (SequentialContainer)TriggerRunner.Clone(),
                 DistanceArcMinutes = DistanceArcMinutes,
                 AfterExposures = AfterExposures,
-                Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates.Transform(Epoch.J2000) }
+                Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates?.Transform(Epoch.J2000) }
             };
         }
 
@@ -181,8 +180,10 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                     return;
                 }
 
-                var separation = lastCoordinates - Coordinates.Coordinates;
-                LastDistanceArcMinutes = separation.Distance.ArcMinutes;
+                if (Coordinates.Coordinates != null) {
+                    var separation = lastCoordinates - Coordinates.Coordinates;
+                    LastDistanceArcMinutes = separation.Distance.ArcMinutes;
+                }
             }
 
             if (e.PropertyName == nameof(follower.ProgressExposures)) {
@@ -209,7 +210,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             return false;
         }
 
-        public override void Initialize() {
+        public override void SequenceBlockInitialize() {
             EnsureFollowerClosed();
             platesolvingImageFollower = new PlatesolvingImageFollower(this.profileService, this.history, this.telescopeMediator, this.imageSaveMediator, this.applicationStatusMediator) {
                 AfterExposures = AfterExposures
@@ -217,7 +218,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             platesolvingImageFollower.PropertyChanged += PlatesolvingImageFollower_PropertyChanged;
         }
 
-        public override void Teardown() {
+        public override void SequenceBlockTeardown() {
             EnsureFollowerClosed();
         }
 
@@ -230,10 +231,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         }
 
         public override void AfterParentChanged() {
-            var coordinates = ItemUtility.RetrieveContextCoordinates(this.Parent).Item1;
-            if (coordinates != null) {
-                Coordinates.Coordinates = coordinates;
-            }
+            Coordinates.Coordinates = ItemUtility.RetrieveContextCoordinates(this.Parent).Item1;
             Validate();
         }
 

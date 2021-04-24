@@ -18,6 +18,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Sequencer.Trigger.Platesolving {
+
     public class PlatesolvingImageFollower : BaseINPC, IDisposable {
         private readonly IImageSaveMediator imageSaveMediator;
         private readonly IImageHistoryVM history;
@@ -25,6 +26,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         private readonly IProfileService profileService;
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private readonly IProgress<ApplicationStatus> progress;
+        private object lockObj = new object();
         private bool closed = false;
         private Task solverBackgroundTask;
         private CancellationTokenSource solverBackgroundTaskCancellationSource = new CancellationTokenSource();
@@ -44,40 +46,45 @@ namespace NINA.Sequencer.Trigger.Platesolving {
 
         private void ProgressStatusUpdate(ApplicationStatus status) {
             if (string.IsNullOrWhiteSpace(status.Source)) {
-                status.Source = Loc.Instance["LblSequence"];
+                status.Source = Loc.Instance["Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name"];
             }
             applicationStatusMediator.StatusUpdate(status);
         }
 
         private void ImageSaveMediator_ImageSaved(object sender, ImageSavedEventArgs e) {
-            if (ProgressExposures < AfterExposures) {
-                return;
-            }
+            lock (lockObj) {
+                if (ProgressExposures < AfterExposures) {
+                    return;
+                }
 
-            var recentLightHistory = history.ImageHistory.Where(x => x.Type == "LIGHT" && x.Id > LastPlatesolvedId).ToList();
-            var matchingHistoryItem = recentLightHistory.Where(x => new Uri(x.LocalPath) == e.PathToImage).FirstOrDefault();
-            if (matchingHistoryItem == null) {
-                return;
-            }
+                var recentLightHistory = history.ImageHistory.Where(x => x.Type == "LIGHT" && x.Id > LastPlatesolvedId).ToList();
+                var matchingHistoryItem = recentLightHistory.Where(x => new Uri(x.LocalPath) == e.PathToImage).FirstOrDefault();
+                if (matchingHistoryItem == null) {
+                    return;
+                }
 
-            if (solverBackgroundTask != null && !solverBackgroundTask.IsCompleted) {
-                Logger.Info($"Won't platesolve {e.PathToImage} because another operation is already in progress");
-                return;
-            }
+                if (solverBackgroundTask != null && !solverBackgroundTask.IsCompleted) {
+                    Logger.Info($"Won't platesolve {e.PathToImage} because another operation is already in progress");
+                    return;
+                }
 
-            LastPlatesolvedId = matchingHistoryItem.Id;
-            solverBackgroundTask = Task.Run(async () => await SolveLastImage(matchingHistoryItem, solverBackgroundTaskCancellationSource.Token));
+                LastPlatesolvedId = matchingHistoryItem.Id;
+                solverBackgroundTask = Task.Run(async () => await SolveLastImage(matchingHistoryItem, solverBackgroundTaskCancellationSource.Token));
+            }
         }
 
         public void Dispose() {
-            if (!closed) {
-                this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
-                solverBackgroundTaskCancellationSource.Cancel();
-                closed = true;
+            lock (lockObj) {
+                if (!closed) {
+                    this.imageSaveMediator.ImageSaved -= ImageSaveMediator_ImageSaved;
+                    solverBackgroundTaskCancellationSource.Cancel();
+                    closed = true;
+                }
             }
         }
 
         private int lastPlatesolvedId = -1;
+
         public int LastPlatesolvedId {
             get => lastPlatesolvedId;
             set {
@@ -88,6 +95,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         }
 
         private int afterExposures = 1;
+
         public int AfterExposures {
             get => afterExposures;
             set {
@@ -103,6 +111,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         }
 
         private Coordinates lastCoordinates;
+
         public Coordinates LastCoordinates {
             get => lastCoordinates;
             set {
