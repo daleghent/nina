@@ -81,11 +81,8 @@ namespace NINA.Sequencer.Conditions {
             CompletedIterations++;
         }
 
-        public override void SequenceBlockStarted() {
-        }
-
         public override string ToString() {
-            return $"Condition: {nameof(LoopCondition)}, Iterations: {Iterations}";
+            return $"Condition: {nameof(LoopCondition)}, Iterations: {CompletedIterations}/{Iterations}";
         }
     }
 }

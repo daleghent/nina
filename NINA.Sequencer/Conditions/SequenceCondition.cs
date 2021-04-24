@@ -24,6 +24,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using NINA.Sequencer.Interfaces;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -50,6 +52,18 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
+        public IConditionWatchdog ConditionWatchdog { get; set; }
+
+        protected void RunWatchdogIfInsideSequenceRoot() {
+            if (ConditionWatchdog != null) {
+                if (ItemUtility.IsInRootContainer(Parent)) {
+                    ConditionWatchdog.Start();
+                } else {
+                    ConditionWatchdog.Cancel();
+                }
+            }
+        }
+
         public ICommand ShowMenuCommand => new RelayCommand((o) => ShowMenu = !ShowMenu);
 
         public virtual void AfterParentChanged() {
@@ -65,7 +79,8 @@ namespace NINA.Sequencer.Conditions {
 
         public abstract object Clone();
 
-        public abstract void ResetProgress();
+        public virtual void ResetProgress() {
+        }
 
         public virtual void Initialize() {
         }

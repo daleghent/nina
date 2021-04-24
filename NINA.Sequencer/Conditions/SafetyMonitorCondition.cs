@@ -38,6 +38,7 @@ namespace NINA.Sequencer.Conditions {
         [ImportingConstructor]
         public SafetyMonitorCondition(ISafetyMonitorMediator safetyMonitorMediator) {
             this.safetyMonitorMediator = safetyMonitorMediator;
+            ConditionWatchdog = new ConditionWatchdog(InterruptWhenUnsafe, TimeSpan.FromSeconds(5));
         }
 
         private bool isSafe;
@@ -89,31 +90,22 @@ namespace NINA.Sequencer.Conditions {
             };
         }
 
-        public override void ResetProgress() {
-        }
-
         public override void SequenceBlockTeardown() {
-            watchdogCTS?.Cancel();
+            ConditionWatchdog?.Cancel();
         }
 
         public override void SequenceBlockInitialize() {
-            watchdog = Task.Run(async () => {
-                using (watchdogCTS = new CancellationTokenSource()) {
-                    while (true) {
-                        if (!Check(null)) {
-                            if (this.Parent != null) {
-                                Logger.Info("Unsafe conditions detected - Interrupting current Instruction Set");
-                                await this.Parent.Interrupt();
-                            }
-                        }
-                        await Task.Delay(5000, watchdogCTS.Token);
-                    }
-                }
-            });
+            ConditionWatchdog?.Start();
         }
 
-        private CancellationTokenSource watchdogCTS;
-        private Task watchdog;
+        private async Task InterruptWhenUnsafe() {
+            if (!Check(null)) {
+                if (this.Parent != null) {
+                    Logger.Info("Unsafe conditions detected - Interrupting current Instruction Set");
+                    await this.Parent.Interrupt();
+                }
+            }
+        }
 
         public override string ToString() {
             return $"Condition: {nameof(SafetyMonitorCondition)}";

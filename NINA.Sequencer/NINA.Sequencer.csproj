@@ -133,6 +133,7 @@
     <Compile Include="Behaviors\DropIntoBehavior.cs" />
     <Compile Include="Conditions\AboveHorizonCondition.cs" />
     <Compile Include="Conditions\AltitudeCondition.cs" />
+    <Compile Include="Conditions\ConditionWatchdog.cs" />
     <Compile Include="Conditions\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
@@ -162,6 +163,7 @@
     <Compile Include="Interfaces\DragDrop\IDropContainer.cs" />
     <Compile Include="Interfaces\DragDrop\IDroppable.cs" />
     <Compile Include="Interfaces\IConditionable.cs" />
+    <Compile Include="Interfaces\IConditionWatchdog.cs" />
     <Compile Include="Interfaces\IDateTimeProvider.cs" />
     <Compile Include="Interfaces\IDeepSkyObjectContainer.cs" />
     <Compile Include="Interfaces\IExecutionStrategy.cs" />

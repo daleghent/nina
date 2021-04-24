@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Moq;
+using NINA.Core.Enum;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
@@ -37,18 +38,6 @@ namespace NINATest.Sequencer.Conditions {
             }
 
             public override object Clone() {
-                throw new NotImplementedException();
-            }
-
-            public override void ResetProgress() {
-                throw new NotImplementedException();
-            }
-
-            public override void SequenceBlockFinished() {
-                throw new NotImplementedException();
-            }
-
-            public override void SequenceBlockStarted() {
                 throw new NotImplementedException();
             }
         }
@@ -101,6 +90,126 @@ namespace NINATest.Sequencer.Conditions {
             sut.AttachNewParent(parent.Object);
             Action act = () => sut.MoveDown();
             act.Should().Throw<NotImplementedException>();
+        }
+
+        [Test]
+        public void ShowMenu_Test() {
+            var sut = new SeuqenceConditionImpl();
+            sut.ShowMenu = true;
+
+            sut.ShowMenu.Should().BeTrue();
+        }
+
+        [Test]
+        public void ResetProgress_ShowMenuTest() {
+            var sut = new SeuqenceConditionImpl();
+            sut.ShowMenu = true;
+            sut.ResetProgressCommand.Execute(default);
+
+            sut.ShowMenu.Should().BeFalse();
+        }
+
+        [Test]
+        public virtual void ResetProgress_NoOp() {
+            var sut = new SeuqenceConditionImpl();
+            sut.ResetProgress();
+            sut.Status.Should().Be(SequenceEntityStatus.CREATED);
+        }
+
+        [Test]
+        public virtual void Initialize_NoOp() {
+            var sut = new SeuqenceConditionImpl();
+            sut.Initialize();
+            sut.Status.Should().Be(SequenceEntityStatus.CREATED);
+        }
+
+        [Test]
+        public virtual void SequenceBlockInitialize_NoOp() {
+            var sut = new SeuqenceConditionImpl();
+            sut.SequenceBlockInitialize();
+            sut.Status.Should().Be(SequenceEntityStatus.CREATED);
+        }
+
+        [Test]
+        public virtual void SequenceBlockStarted_NoOp() {
+            var sut = new SeuqenceConditionImpl();
+            sut.SequenceBlockStarted();
+            sut.Status.Should().Be(SequenceEntityStatus.CREATED);
+        }
+
+        [Test]
+        public virtual void SequenceBlockFinished_NoOp() {
+            var sut = new SeuqenceConditionImpl();
+            sut.SequenceBlockFinished();
+            sut.Status.Should().Be(SequenceEntityStatus.CREATED);
+        }
+
+        [Test]
+        public virtual void SequenceBlockTeardown_NoOp() {
+            var sut = new SeuqenceConditionImpl();
+            sut.SequenceBlockTeardown();
+            sut.Status.Should().Be(SequenceEntityStatus.CREATED);
+        }
+
+        [Test]
+        public virtual void Teardown_NoOp() {
+            var sut = new SeuqenceConditionImpl();
+            sut.Teardown();
+            sut.Status.Should().Be(SequenceEntityStatus.CREATED);
+        }
+
+        [Test]
+        public virtual void MoveUp_NoOp() {
+            var sut = new SeuqenceConditionImpl();
+            sut.Invoking(x => x.MoveUp()).Should().Throw<NotImplementedException>();
+        }
+
+        [Test]
+        public virtual void MoveDown_NoOp() {
+            var sut = new SeuqenceConditionImpl();
+            sut.Invoking(x => x.MoveDown()).Should().Throw<NotImplementedException>();
+        }
+
+        [Test]
+        public virtual void MoveUp_IsNull() {
+            var sut = new SeuqenceConditionImpl();
+            sut.MoveUpCommand.Should().BeNull();
+        }
+
+        [Test]
+        public virtual void MoveDown_IsNull() {
+            var sut = new SeuqenceConditionImpl();
+            sut.MoveDownCommand.Should().BeNull();
+        }
+
+        [Test]
+        public virtual void Detach_HasNoParent_NoOp() {
+            var sut = new SeuqenceConditionImpl();
+
+            sut.DetachCommand.Execute(default);
+            sut.Status.Should().Be(SequenceEntityStatus.CREATED);
+        }
+
+        [Test]
+        public virtual void Detach_HasParent_CallsRemove() {
+            var parentMock = new Mock<ISequenceContainer>();
+
+            var sut = new SeuqenceConditionImpl();
+            sut.Parent = parentMock.Object;
+
+            sut.DetachCommand.Execute(default);
+
+            parentMock.Verify(x => x.Remove(It.Is<ISequenceCondition>(y => y == sut)));
+        }
+
+        [Test]
+        public virtual void ShowMenuCommand_FlipsShowMenu() {
+            var sut = new SeuqenceConditionImpl();
+
+            sut.ShowMenu = true;
+            sut.ShowMenuCommand.Execute(default);
+
+            sut.ShowMenu.Should().BeFalse();
         }
     }
 }

@@ -20,6 +20,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -42,24 +43,24 @@ namespace NINA.Sequencer.Conditions {
 
         [ImportingConstructor]
         public TimeCondition(IList<IDateTimeProvider> dateTimeProviders) {
+            DateTime = new SystemDateTime();
             this.DateTimeProviders = dateTimeProviders;
             this.SelectedProvider = DateTimeProviders?.FirstOrDefault();
-            Ticker = new Ticker(TimeSpan.FromSeconds(1));
-            Ticker.PropertyChanged += Ticker_PropertyChanged;
+            ConditionWatchdog = new ConditionWatchdog(() => { Tick(); return Task.CompletedTask; }, TimeSpan.FromSeconds(1));
         }
 
-        public TimeCondition(IList<IDateTimeProvider> dateTimeProviders, IDateTimeProvider selectedProvider) {
-            this.DateTimeProviders = dateTimeProviders;
-            this.SelectedProvider = selectedProvider;
-            Ticker = new Ticker(TimeSpan.FromSeconds(1));
-            Ticker.PropertyChanged += Ticker_PropertyChanged;
-        }
-
-        private void Ticker_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+        private void Tick() {
             RaisePropertyChanged(nameof(RemainingTime));
         }
 
-        public Ticker Ticker { get; }
+        public TimeCondition(IList<IDateTimeProvider> dateTimeProviders, IDateTimeProvider selectedProvider) {
+            DateTime = new SystemDateTime();
+            this.DateTimeProviders = dateTimeProviders;
+            this.SelectedProvider = selectedProvider;
+            ConditionWatchdog = new ConditionWatchdog(() => { Tick(); return Task.CompletedTask; }, TimeSpan.FromSeconds(1));
+        }
+
+        public ICustomDateTime DateTime { get; set; }
 
         public IList<IDateTimeProvider> DateTimeProviders {
             get => dateTimeProviders;
@@ -158,15 +159,7 @@ namespace NINA.Sequencer.Conditions {
             if (!(selectedProvider is TimeProvider)) {
                 UpdateTime();
             }
-        }
-
-        public override void ResetProgress() {
-        }
-
-        public override void SequenceBlockFinished() {
-        }
-
-        public override void SequenceBlockStarted() {
+            RunWatchdogIfInsideSequenceRoot();
         }
 
         public override string ToString() {

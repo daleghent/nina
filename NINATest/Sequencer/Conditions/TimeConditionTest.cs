@@ -25,6 +25,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Core.Utility;
+using NINA.Sequencer.Container;
+using NINA.Sequencer.Interfaces;
 
 namespace NINATest.Sequencer.Conditions {
 
@@ -81,6 +84,134 @@ namespace NINATest.Sequencer.Conditions {
             sut.Hours.Should().Be(10);
             sut.Minutes.Should().Be(20);
             sut.Seconds.Should().Be(30);
+        }
+
+        [Test]
+        [TestCase(0, 10, 10)]
+        [TestCase(5, 10, 5)]
+        [TestCase(15, 10, 0)]
+        public void TimeCondition_RemainingTime_CalculatedCorrectly(int nowSeconds, int providerSeconds, int remainingSeconds) {
+            var dateMock = new Mock<ICustomDateTime>();
+            dateMock.SetupGet(x => x.Now).Returns(new DateTime(2000, 1, 1, 0, 0, nowSeconds));
+
+            var providerMock = new Mock<IDateTimeProvider>();
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 1, 1, 0, 0, providerSeconds));
+
+            var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object }, providerMock.Object);
+            sut.DateTime = dateMock.Object;
+
+            sut.RemainingTime.Should().Be(TimeSpan.FromSeconds(remainingSeconds));
+        }
+
+        [Test]
+        /* RemainingTime Without Next Item taking any time */
+        [TestCase(0, 10, 0, true)]
+        [TestCase(5, 10, 0, true)]
+        [TestCase(15, 10, 0, false)]
+        /* Next Item exceeds remaining time */
+        [TestCase(0, 10, 11, false)]
+        [TestCase(5, 10, 6, false)]
+        [TestCase(15, 10, 10, false)]
+        /* Next Item fits into remaining time */
+        [TestCase(0, 10, 10, true)]
+        [TestCase(5, 10, 5, true)]
+        [TestCase(50, 55, 2, true)]
+        public void TimeCondition_Check_ReturnsFalseOrTrueAccordingToRemainingTime(int nowSeconds, int providerSeconds, int nextItemSeconds, bool expected) {
+            var dateMock = new Mock<ICustomDateTime>();
+            dateMock.SetupGet(x => x.Now).Returns(new DateTime(2000, 1, 1, 0, 0, nowSeconds));
+
+            var providerMock = new Mock<IDateTimeProvider>();
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 1, 1, 0, 0, providerSeconds));
+
+            var nextItemMock = new Mock<ISequenceItem>();
+            nextItemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.FromSeconds(nextItemSeconds));
+
+            var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object }, providerMock.Object);
+            sut.DateTime = dateMock.Object;
+
+            sut.Check(nextItemMock.Object).Should().Be(expected);
+        }
+
+        [Test]
+        public void TimeCondition_AfterParentChanged_HasNoParent_WatchdogNotTouched() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+
+            var providerMock = new Mock<IDateTimeProvider>();
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 1, 1, 0, 0, 10));
+
+            var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object }, providerMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+
+            sut.AfterParentChanged();
+
+            watchdogMock.Verify(x => x.Start(), Times.Never);
+        }
+
+        [Test]
+        public void TimeCondition_AfterParentChanged_HasNoRootContainerParent_WatchdogNotTouched() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+
+            var providerMock = new Mock<IDateTimeProvider>();
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 1, 1, 0, 0, 10));
+
+            var parentMock = new Mock<ISequenceContainer>();
+
+            var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object }, providerMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+            sut.Parent = parentMock.Object;
+
+            sut.AfterParentChanged();
+
+            watchdogMock.Verify(x => x.Start(), Times.Never);
+        }
+
+        [Test]
+        public void TimeCondition_AfterParentChanged_IsInRootContainer_WatchdogStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+
+            var providerMock = new Mock<IDateTimeProvider>();
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 1, 1, 0, 0, 10));
+
+            var parentMock = new Mock<ISequenceRootContainer>();
+
+            var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object }, providerMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+            sut.Parent = parentMock.Object;
+
+            sut.AfterParentChanged();
+
+            watchdogMock.Verify(x => x.Start(), Times.Once);
+        }
+
+        [Test]
+        public void TimeCondition_AfterParentChanged_IsRemovedFromRootContainer_WatchdogStopped() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+
+            var providerMock = new Mock<IDateTimeProvider>();
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 1, 1, 0, 0, 10));
+
+            var parentMock = new Mock<ISequenceRootContainer>();
+
+            var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object }, providerMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+            sut.Parent = parentMock.Object;
+
+            sut.AfterParentChanged();
+            sut.Parent = null;
+            sut.AfterParentChanged();
+
+            watchdogMock.Verify(x => x.Start(), Times.Once);
+            watchdogMock.Verify(x => x.Cancel(), Times.Once);
+        }
+
+        [Test]
+        public void TimeCondition_ToString_IncludesTimeCorrectly() {
+            var providerMock = new Mock<IDateTimeProvider>();
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 1, 1, 10, 20, 30));
+
+            var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object }, providerMock.Object);
+
+            sut.ToString().Should().Be("Condition: TimeCondition, Time: 10:20:30h");
         }
     }
 }

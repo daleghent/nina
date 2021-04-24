@@ -23,6 +23,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NINA.Equipment.Equipment.MySafetyMonitor;
+using NINA.Sequencer.Interfaces;
+using NINA.Sequencer.Container;
 
 namespace NINATest.Sequencer.Conditions {
 
@@ -70,6 +72,81 @@ namespace NINATest.Sequencer.Conditions {
 
             sut.Check(null).Should().BeFalse();
             sut.IsSafe.Should().BeFalse();
+        }
+
+        [Test]
+        public void ToString_Test() {
+            var sut = new SafetyMonitorCondition(monitorMock.Object);
+            sut.ToString().Should().Be("Condition: SafetyMonitorCondition");
+        }
+
+        [Test]
+        public void SequenceBlockInitialize_NoParent_WatchdogNotStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+
+            var sut = new SafetyMonitorCondition(monitorMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+
+            sut.SequenceBlockInitialize();
+
+            watchdogMock.Verify(x => x.Start(), Times.Once);
+            watchdogMock.Verify(x => x.Cancel(), Times.Never);
+        }
+
+        [Test]
+        public void SequenceBlockTeardown_NoParent_WatchdogNotStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+
+            var sut = new SafetyMonitorCondition(monitorMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+
+            sut.SequenceBlockTeardown();
+
+            watchdogMock.Verify(x => x.Start(), Times.Never);
+            watchdogMock.Verify(x => x.Cancel(), Times.Once);
+        }
+
+        [Test]
+        public void Validate_MonitorNotConnected_OneIssue() {
+            var sut = new SafetyMonitorCondition(monitorMock.Object);
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = false, IsSafe = true });
+
+            var valid = sut.Validate();
+
+            valid.Should().BeFalse();
+            sut.Issues.Count.Should().Be(1);
+        }
+
+        [Test]
+        public void Validate_MonitorConnected_IsSafeAssigned() {
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = true });
+
+            var sut = new SafetyMonitorCondition(monitorMock.Object);
+
+            var valid = sut.Validate();
+
+            valid.Should().BeTrue();
+            sut.Issues.Count.Should().Be(0);
+            sut.IsSafe.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task MonitorIsUnsafe_InterruptParent() {
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = true });
+            var parentMock = new Mock<ISequenceContainer>();
+            parentMock.Setup(x => x.Interrupt()).Returns(Task.CompletedTask);
+
+            var sut = new SafetyMonitorCondition(monitorMock.Object);
+            sut.Parent = parentMock.Object;
+            sut.ConditionWatchdog.Delay = TimeSpan.FromMilliseconds(10);
+
+            sut.SequenceBlockInitialize();
+
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = false });
+
+            await Task.Delay(50);
+
+            parentMock.Verify(x => x.Interrupt(), Times.AtLeastOnce);
         }
     }
 }

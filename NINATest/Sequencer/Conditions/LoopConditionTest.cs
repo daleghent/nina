@@ -75,5 +75,35 @@ namespace NINATest.Sequencer.Conditions {
 
             sut.Check(null).Should().BeFalse();
         }
+
+        [Test]
+        public void ToString_Test() {
+            var sut = new LoopCondition();
+            sut.Iterations = 30;
+            sut.CompletedIterations = 20;
+            sut.ToString().Should().Be("Condition: LoopCondition, Iterations: 20/30");
+        }
+
+        [Test]
+        public void ResetProgress_IterationsReset() {
+            var sut = new LoopCondition();
+            sut.Iterations = 20;
+            sut.CompletedIterations = 30;
+
+            sut.ResetProgress();
+
+            sut.CompletedIterations.Should().Be(0);
+        }
+
+        [Test]
+        public void SequenceBlockFinished_IterationsIncremented() {
+            var sut = new LoopCondition();
+            sut.Iterations = 30;
+            sut.CompletedIterations = 20;
+
+            sut.SequenceBlockFinished();
+
+            sut.CompletedIterations.Should().Be(21);
+        }
     }
 }

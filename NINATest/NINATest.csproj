@@ -274,6 +274,7 @@
     <Compile Include="RMSTest.cs" />
     <Compile Include="Sequencer\Conditions\AboveHorizonConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\AltitudeConditionTest.cs" />
+    <Compile Include="Sequencer\Conditions\ConditionWatchdogTest.cs" />
     <Compile Include="Sequencer\Conditions\LoopConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\MoonIlluminationConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\SunAltitudeConditionTest.cs" />

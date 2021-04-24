@@ -47,11 +47,12 @@ namespace NINA.Sequencer.Conditions {
             Comparator = ComparisonOperatorEnum.GREATER_THAN;
 
             CalculateCurrentSunState();
+            ConditionWatchdog = new ConditionWatchdog(() => { CalculateCurrentSunState(); return Task.CompletedTask; }, TimeSpan.FromSeconds(5));
         }
 
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context) {
-            StartWatchdogIfRequired();
+            RunWatchdogIfInsideSequenceRoot();
         }
 
         [JsonProperty]
@@ -99,49 +100,12 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void AfterParentChanged() {
-            StartWatchdogIfRequired();
+            RunWatchdogIfInsideSequenceRoot();
         }
 
         public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(SunAltitudeCondition)}, " +
-                $"UserSunAltitude: {UserSunAltitude}, CurrentSunAltitude: {CurrentSunAltitude}, Comparator: {Comparator}";
-        }
-
-        public override void ResetProgress() {
-        }
-
-        private CancellationTokenSource watchdogCTS;
-        private Task watchdogTask;
-        private object lockObj = new object();
-
-        public override void SequenceBlockFinished() {
-        }
-
-        public override void SequenceBlockStarted() {
-        }
-
-        private void StartWatchdogIfRequired() {
-            lock (lockObj) {
-                if (ItemUtility.IsInRootContainer(Parent)) {
-                    if (watchdogTask == null) {
-                        watchdogTask = Task.Run(async () => {
-                            using (watchdogCTS = new CancellationTokenSource()) {
-                                while (true) {
-                                    try {
-                                        CalculateCurrentSunState();
-                                    } catch (Exception ex) {
-                                        Logger.Error(ex);
-                                    }
-                                    await Task.Delay(5000, watchdogCTS.Token);
-                                }
-                            }
-                        });
-                    }
-                } else {
-                    watchdogCTS?.Cancel();
-                    watchdogTask = null;
-                }
-            }
+            return $"Condition: {nameof(SunAltitudeCondition)}, " +
+                $"CurrentSunAltitude: {CurrentSunAltitude}, Comparator: {Comparator}, UserSunAltitude: {UserSunAltitude}";
         }
 
         public override bool Check(ISequenceItem nextItem) {

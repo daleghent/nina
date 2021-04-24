@@ -18,6 +18,8 @@ using NINA.Profile.Interfaces;
 using NINA.Sequencer.Conditions;
 using NINA.Astrometry;
 using NUnit.Framework;
+using NINA.Sequencer.Interfaces;
+using NINA.Sequencer.Container;
 
 namespace NINATest.Sequencer.Conditions {
 
@@ -91,6 +93,121 @@ namespace NINATest.Sequencer.Conditions {
             sut.Altitude = targetAltitude;
             Assert.IsFalse(
                 sut.Check(null));
+        }
+
+        [Test]
+        public void ToString_Test() {
+            var sut = new AltitudeCondition(profileServiceMock.Object);
+            sut.Altitude = 30;
+            sut.ToString().Should().Be("Condition: AltitudeCondition, Altitude >= 30");
+        }
+
+        [Test]
+        public void AttachNewParent_HasDSOContainerParent_RetrieveParentCoordinates() {
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
+            var parentMock = new Mock<IDeepSkyObjectContainer>();
+            parentMock
+                .SetupGet(x => x.Target)
+                .Returns(
+                new InputTarget(Angle.ByDegree(1), Angle.ByDegree(2), null) {
+                    InputCoordinates = new InputCoordinates() {
+                        Coordinates = coordinates
+                    }
+                }
+            );
+
+            var sut = new AltitudeCondition(profileServiceMock.Object);
+            sut.AttachNewParent(parentMock.Object);
+
+            sut.HasDsoParent.Should().BeTrue();
+            sut.Coordinates.Coordinates.RA.Should().Be(coordinates.RA);
+            sut.Coordinates.Coordinates.Dec.Should().Be(coordinates.Dec);
+        }
+
+        [Test]
+        public void AfterParentChanged_NoParent_WatchdogNotStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+
+            var sut = new AltitudeCondition(profileServiceMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+
+            sut.AfterParentChanged();
+
+            watchdogMock.Verify(x => x.Start(), Times.Never);
+            watchdogMock.Verify(x => x.Cancel(), Times.Once);
+        }
+
+        [Test]
+        public void AfterParentChanged_NotInRootContainer_WatchdogNotStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+            var parentMock = new Mock<ISequenceContainer>();
+
+            var sut = new AltitudeCondition(profileServiceMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+            sut.Parent = parentMock.Object;
+
+            sut.AfterParentChanged();
+
+            watchdogMock.Verify(x => x.Start(), Times.Never);
+            watchdogMock.Verify(x => x.Cancel(), Times.Once);
+        }
+
+        [Test]
+        public void AfterParentChanged_InRootContainer_WatchdogStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+            var parentMock = new Mock<ISequenceRootContainer>();
+
+            var sut = new AltitudeCondition(profileServiceMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+            sut.Parent = parentMock.Object;
+
+            sut.AfterParentChanged();
+
+            watchdogMock.Verify(x => x.Start(), Times.Once);
+            watchdogMock.Verify(x => x.Cancel(), Times.Never);
+        }
+
+        [Test]
+        public void OnDeserialized_NoParent_WatchdogNotStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+
+            var sut = new AltitudeCondition(profileServiceMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+
+            sut.OnDeserialized(default);
+
+            watchdogMock.Verify(x => x.Start(), Times.Never);
+            watchdogMock.Verify(x => x.Cancel(), Times.Once);
+        }
+
+        [Test]
+        public void OnDeserialized_NotInRootContainer_WatchdogNotStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+            var parentMock = new Mock<ISequenceContainer>();
+
+            var sut = new AltitudeCondition(profileServiceMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+            sut.Parent = parentMock.Object;
+
+            sut.OnDeserialized(default);
+
+            watchdogMock.Verify(x => x.Start(), Times.Never);
+            watchdogMock.Verify(x => x.Cancel(), Times.Once);
+        }
+
+        [Test]
+        public void OnDeserialized_InRootContainer_WatchdogStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+            var parentMock = new Mock<ISequenceRootContainer>();
+
+            var sut = new AltitudeCondition(profileServiceMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+            sut.Parent = parentMock.Object;
+
+            sut.OnDeserialized(default);
+
+            watchdogMock.Verify(x => x.Start(), Times.Once);
+            watchdogMock.Verify(x => x.Cancel(), Times.Never);
         }
     }
 }

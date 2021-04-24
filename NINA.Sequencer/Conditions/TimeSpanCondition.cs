@@ -39,22 +39,23 @@ namespace NINA.Sequencer.Conditions {
 
         [ImportingConstructor]
         public TimeSpanCondition() {
+            DateTime = new SystemDateTime();
             Minutes = 1;
-            Ticker = new Ticker(TimeSpan.FromSeconds(1));
-            Ticker.PropertyChanged += Ticker_PropertyChanged;
+            ConditionWatchdog = new ConditionWatchdog(() => { Tick(); return Task.CompletedTask; }, TimeSpan.FromSeconds(1));
         }
 
-        private void Ticker_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
+        private void Tick() {
             RaisePropertyChanged(nameof(RemainingTime));
         }
 
-        public Ticker Ticker { get; }
+        public ICustomDateTime DateTime { get; set; }
 
         [JsonProperty]
         public int Hours {
             get => hours;
             set {
                 hours = value;
+                previousRemainingTime = null;
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(RemainingTime));
             }
@@ -65,6 +66,7 @@ namespace NINA.Sequencer.Conditions {
             get => minutes;
             set {
                 minutes = value;
+                previousRemainingTime = null;
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(RemainingTime));
             }
@@ -75,6 +77,7 @@ namespace NINA.Sequencer.Conditions {
             get => seconds;
             set {
                 seconds = value;
+                previousRemainingTime = null;
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(RemainingTime));
             }
@@ -85,6 +88,10 @@ namespace NINA.Sequencer.Conditions {
                 var duration = TimeSpan.FromHours(Hours) + TimeSpan.FromMinutes(Minutes) + TimeSpan.FromSeconds(Seconds);
                 if (startTime.HasValue) {
                     var elapsed = DateTime.Now - startTime.Value;
+                    if (previousRemainingTime > TimeSpan.Zero) {
+                        elapsed = elapsed + duration - previousRemainingTime.Value;
+                    }
+
                     if (elapsed > duration) {
                         return TimeSpan.Zero;
                     } else {
@@ -97,6 +104,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         private DateTime? startTime;
+        private TimeSpan? previousRemainingTime;
 
         public override bool Check(ISequenceItem nextItem) {
             var nextItemDuration = nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero;
@@ -115,17 +123,22 @@ namespace NINA.Sequencer.Conditions {
             };
         }
 
-        public override void ResetProgress() {
-            startTime = null;
+        public override void SequenceBlockInitialize() {
+            startTime = DateTime.Now;
+
+            ConditionWatchdog?.Start();
         }
 
-        public override void SequenceBlockFinished() {
-        }
-
-        public override void SequenceBlockStarted() {
-            if (!startTime.HasValue) {
-                startTime = DateTime.Now;
+        public override void SequenceBlockTeardown() {
+            if (RemainingTime > TimeSpan.Zero) {
+                previousRemainingTime = RemainingTime;
             }
+            ConditionWatchdog?.Cancel();
+        }
+
+        public override void ResetProgress() {
+            previousRemainingTime = null;
+            startTime = DateTime.Now;
         }
 
         public override string ToString() {

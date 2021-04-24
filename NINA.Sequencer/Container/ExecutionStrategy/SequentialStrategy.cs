@@ -39,35 +39,37 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
 
             InitializeBlock(context);
 
-            while ((next = GetNextItem(context)) != null && CanContinue(context, next)) {
-                StartBlock(context);
-
+            try {
                 while ((next = GetNextItem(context)) != null && CanContinue(context, next)) {
-                    token.ThrowIfCancellationRequested();
-                    await RunTriggers(context, next, progress, token);
-                    await next.Run(progress, token);
-                }
+                    StartBlock(context);
 
-                FinishBlock(context);
+                    while ((next = GetNextItem(context)) != null && CanContinue(context, next)) {
+                        token.ThrowIfCancellationRequested();
+                        await RunTriggers(context, next, progress, token);
+                        await next.Run(progress, token);
+                    }
 
-                if (CanContinue(context, next)) {
-                    foreach (var item in context.GetItemsSnapshot()) {
-                        if (item is ISequenceContainer) {
-                            (item as ISequenceContainer).ResetAll();
-                        } else {
-                            item.ResetProgress();
+                    FinishBlock(context);
+
+                    if (CanContinue(context, next)) {
+                        foreach (var item in context.GetItemsSnapshot()) {
+                            if (item is ISequenceContainer) {
+                                (item as ISequenceContainer).ResetAll();
+                            } else {
+                                item.ResetProgress();
+                            }
                         }
                     }
                 }
-            }
 
-            context.Skip();
-            //Mark rest of items as skipped
-            foreach (var item in context.GetItemsSnapshot().Where(x => x.Status == SequenceEntityStatus.CREATED)) {
-                item.Skip();
+                context.Skip();
+                //Mark rest of items as skipped
+                foreach (var item in context.GetItemsSnapshot().Where(x => x.Status == SequenceEntityStatus.CREATED)) {
+                    item.Skip();
+                }
+            } finally {
+                TeardownBlock(context);
             }
-
-            TeardownBlock(context);
         }
 
         private void TeardownBlock(ISequenceContainer context) {
