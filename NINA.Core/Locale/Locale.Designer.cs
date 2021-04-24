@@ -9938,7 +9938,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NINA.
+        ///   Looks up a localized string similar to N.I.N.A..
         /// </summary>
         internal static string LblNINA {
             get {
@@ -9947,7 +9947,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NINA to Telescope.
+        ///   Looks up a localized string similar to From N.I.N.A. to Telescope.
         /// </summary>
         internal static string LblNINAToTelescope {
             get {
@@ -13946,7 +13946,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Telescope to NINA.
+        ///   Looks up a localized string similar to From Telescope to N.I.N.A..
         /// </summary>
         internal static string LblTelescopeToNINA {
             get {

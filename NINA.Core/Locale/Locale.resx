@@ -2064,10 +2064,10 @@ Calculated HFR: {2}
     <value>No Nikon camera could be found</value>
   </data>
   <data name="LblNINA" xml:space="preserve">
-    <value>NINA</value>
+    <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>NINA to Telescope</value>
+    <value>From N.I.N.A. to Telescope</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>No</value>
@@ -3166,7 +3166,7 @@ Should the values be synced?</value>
     <value>Telescope synced to coordinates</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>Telescope to NINA</value>
+    <value>From Telescope to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>RA Guide Rate</value>
