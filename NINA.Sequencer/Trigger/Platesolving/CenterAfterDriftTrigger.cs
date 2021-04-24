@@ -116,7 +116,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 if (value > 0 && value != distancePixels) {
                     var pixelScale = AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
                     distancePixels = value;
-                    distanceArcMinutes = value / pixelScale / 60.0;
+                    distanceArcMinutes = value * pixelScale / 60.0;
                     RaisePropertyChanged(nameof(DistancePixels));
                     RaisePropertyChanged(nameof(DistanceArcMinutes));
                 }
@@ -132,7 +132,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 if (value > 0.0 && value != distanceArcMinutes) {
                     var pixelScale = AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
                     distanceArcMinutes = value;
-                    distancePixels = (int)Math.Round(value * 60.0 * pixelScale);
+                    distancePixels = (int)Math.Round(value * 60.0 / pixelScale);
                     RaisePropertyChanged(nameof(DistancePixels));
                     RaisePropertyChanged(nameof(DistanceArcMinutes));
                 }
