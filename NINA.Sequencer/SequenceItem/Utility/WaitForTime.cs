@@ -86,6 +86,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             get => minutesOffset;
             set {
                 minutesOffset = value;
+                UpdateTimeBasedOnProvider();
                 RaisePropertyChanged();
             }
         }
@@ -111,14 +112,21 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             set {
                 selectedProvider = value;
                 if (selectedProvider != null) {
-                    var t = selectedProvider.GetDateTime(this);
-                    Hours = t.Hour;
-                    Minutes = t.Minute;
-                    Seconds = t.Second;
+                    UpdateTimeBasedOnProvider();
                     RaisePropertyChanged();
                 }
 
                 HasFixedTimeProvider = selectedProvider != null && !(selectedProvider is TimeProvider);
+            }
+        }
+
+        private void UpdateTimeBasedOnProvider() {
+            if (selectedProvider != null) {
+                var t = selectedProvider.GetDateTime(this);
+                t += TimeSpan.FromMinutes(MinutesOffset);
+                Hours = t.Hour;
+                Minutes = t.Minute;
+                Seconds = t.Second;
             }
         }
 
@@ -152,10 +160,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         public override TimeSpan GetEstimatedDuration() {
             var now = DateTime.Now;
             var then = new DateTime(now.Year, now.Month, now.Day, Hours, Minutes, Seconds);
-
-            if (HasFixedTimeProvider) {
-                then = then.AddMinutes(MinutesOffset);
-            }
 
             if (now.Hour <= 12 && then.Hour > 12) {
                 then = then.AddDays(-1);
