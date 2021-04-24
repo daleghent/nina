@@ -237,6 +237,9 @@ Má se aplikace pokusit chybu opravit? (Může vést k neočekávanému chován�
   <data name="LblArcmin" xml:space="preserve">
     <value>obl.min</value>
   </data>
+  <data name="LblMaxArcmin" xml:space="preserve">
+    <value>Max arcmin</value>
+  </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>arcsec</value>
   </data>
@@ -2052,10 +2055,10 @@ Vypočtené HFR: {2}
     <value>Nemohu najít fotoaparát Nikon</value>
   </data>
   <data name="LblNINA" xml:space="preserve">
-    <value>NINA</value>
+    <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>NINA do Dalekohledu</value>
+    <value>From N.I.N.A. to Telescope</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Ne</value>
@@ -2373,6 +2376,9 @@ Vypočtené HFR: {2}
   <data name="LblPixels" xml:space="preserve">
     <value>Pixely</value>
   </data>
+  <data name="LblMaxPixels" xml:space="preserve">
+    <value>Max Pixels</value>
+  </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Měřítko Pixelu</value>
   </data>
@@ -2477,6 +2483,12 @@ Vypočtené HFR: {2}
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
     <value>Plate Solving</value>
+  </data>
+  <data name="LblCenterAfterDrift" xml:space="preserve">
+    <value>Recentering after too much drift</value>
+  </data>
+  <data name="LblNoTarget" xml:space="preserve">
+    <value>No target set</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Změnit na filtr {0}</value>
@@ -3145,7 +3157,7 @@ Synchronizovat hodnoty?</value>
     <value>Dalekohled synchronizovaný se souřadnicemi</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>Dalekohled do NINA</value>
+    <value>From Telescope to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>Míra Pointace RA</value>
@@ -4443,6 +4455,12 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
     <value>Čekat na Čas</value>
   </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
+    <value>Center After Drift</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
+    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+  </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Spouštěč, který spouští auto-ostření po změně HFR o danou hodnotu v procentech od posledního automatického spuštění nebo spuštění sekvence</value>
   </data>
@@ -4511,6 +4529,9 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>Dithering po Expozicích</value>
+  </data>
+  <data name="LblEvaluteAfterExposures" xml:space="preserve">
+    <value>Evaluate After Exposures</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>Po Expozicích</value>

@@ -236,6 +236,9 @@
   <data name="LblArcmin" xml:space="preserve">
     <value>угл. мин</value>
   </data>
+  <data name="LblMaxArcmin" xml:space="preserve">
+    <value>Max arcmin</value>
+  </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>угл. сек</value>
   </data>
@@ -2057,7 +2060,7 @@ Dec: {1}</value>
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>NINA к телескопу</value>
+    <value>From N.I.N.A. to Telescope</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Нет</value>
@@ -2375,6 +2378,9 @@ Dec: {1}</value>
   <data name="LblPixels" xml:space="preserve">
     <value>Пиксели</value>
   </data>
+  <data name="LblMaxPixels" xml:space="preserve">
+    <value>Max Pixels</value>
+  </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Размер пикселя</value>
   </data>
@@ -2479,6 +2485,12 @@ Dec: {1}</value>
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
     <value>Плейтсолв</value>
+  </data>
+  <data name="LblCenterAfterDrift" xml:space="preserve">
+    <value>Recentering after too much drift</value>
+  </data>
+  <data name="LblNoTarget" xml:space="preserve">
+    <value>No target set</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Пожалуйста, измените на фильтр {0}</value>
@@ -3147,7 +3159,7 @@ Dec: {1}</value>
     <value>Телескоп синхронизирован на координаты</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>Телескоп в NINA</value>
+    <value>From Telescope to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>Скорость гидирования П.В.</value>
@@ -4445,6 +4457,12 @@ Dec: {1}</value>
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
     <value>Ожидание времени</value>
   </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
+    <value>Center After Drift</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
+    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+  </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Триггер для инициирования автофокуса после того, как HFR увеличился на заданное количество в процентах с момента последнего автофокуса или начала серии</value>
   </data>
@@ -4513,6 +4531,9 @@ Dec: {1}</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>Межкадровая подвижка после экспозиций</value>
+  </data>
+  <data name="LblEvaluteAfterExposures" xml:space="preserve">
+    <value>Evaluate After Exposures</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>После экспозиций</value>

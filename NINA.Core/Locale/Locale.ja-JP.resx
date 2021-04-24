@@ -236,6 +236,9 @@
   <data name="LblArcmin" xml:space="preserve">
     <value>角度分</value>
   </data>
+  <data name="LblMaxArcmin" xml:space="preserve">
+    <value>Max arcmin</value>
+  </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>角度秒</value>
   </data>
@@ -2046,10 +2049,10 @@
     <value>Nikonのカメラが見つかりません。</value>
   </data>
   <data name="LblNINA" xml:space="preserve">
-    <value>NINA</value>
+    <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>NINAから赤道儀へ</value>
+    <value>From N.I.N.A. to Telescope</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>いいえ</value>
@@ -2366,6 +2369,9 @@
   <data name="LblPixels" xml:space="preserve">
     <value>ピクセル</value>
   </data>
+  <data name="LblMaxPixels" xml:space="preserve">
+    <value>Max Pixels</value>
+  </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>ピクセルスケール</value>
   </data>
@@ -2470,6 +2476,12 @@
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
     <value>プレートソルブ</value>
+  </data>
+  <data name="LblCenterAfterDrift" xml:space="preserve">
+    <value>Recentering after too much drift</value>
+  </data>
+  <data name="LblNoTarget" xml:space="preserve">
+    <value>No target set</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>フィルター{0} へ変更して下さい。</value>
@@ -3137,7 +3149,7 @@
     <value>赤道儀が座標に同期済み</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>望遠鏡からNINAへ</value>
+    <value>From Telescope to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>RAガイドレート</value>
@@ -4430,6 +4442,12 @@
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
     <value>指定時間待機</value>
   </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
+    <value>Center After Drift</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
+    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+  </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>前回のオートフォーカス実行またはシーケンス開始後で、HFRが設定値（パーセント）だけ増えた後に、オートフォーカスを開始するトリガー</value>
   </data>
@@ -4498,6 +4516,9 @@
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>露出後のディザー</value>
+  </data>
+  <data name="LblEvaluteAfterExposures" xml:space="preserve">
+    <value>Evaluate After Exposures</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>露出後</value>

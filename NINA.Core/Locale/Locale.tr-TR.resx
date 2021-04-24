@@ -236,6 +236,9 @@ Uygulama, hatayı düzeltmeyi denesin mi? (Beklenmedik sonuçlar oluşabilir)</v
   <data name="LblArcmin" xml:space="preserve">
     <value>yay dakika</value>
   </data>
+  <data name="LblMaxArcmin" xml:space="preserve">
+    <value>Max arcmin</value>
+  </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>yay saniye</value>
   </data>
@@ -2053,10 +2056,10 @@ Hesaplanan HFR: {2}
     <value>Nikon kamera bulunamadı</value>
   </data>
   <data name="LblNINA" xml:space="preserve">
-    <value>NINA</value>
+    <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>Nina'dan Teleskopa</value>
+    <value>From N.I.N.A. to Telescope</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Yok</value>
@@ -2374,6 +2377,9 @@ Hesaplanan HFR: {2}
   <data name="LblPixels" xml:space="preserve">
     <value>Piksel</value>
   </data>
+  <data name="LblMaxPixels" xml:space="preserve">
+    <value>Max Pixels</value>
+  </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Piksel ölçüsü</value>
   </data>
@@ -2478,6 +2484,12 @@ Hesaplanan HFR: {2}
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
     <value>Plate solve Uygulama</value>
+  </data>
+  <data name="LblCenterAfterDrift" xml:space="preserve">
+    <value>Recentering after too much drift</value>
+  </data>
+  <data name="LblNoTarget" xml:space="preserve">
+    <value>No target set</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Lütfen {0} filtresine geçin</value>
@@ -3144,7 +3156,7 @@ Devam etmeden önce, lütfen sisteminizin şu anda iyi veya iyiye yakın odaklan
     <value>Teleskop koordinatlara senkronize edildi</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>Teleskoptan NINA'ya</value>
+    <value>From Telescope to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>RA Takip oranı</value>
@@ -4439,6 +4451,12 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
     <value>Zamanı bekle</value>
   </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
+    <value>Center After Drift</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
+    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+  </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Son otomatik netleme çalışmasından veya sekans başlangıcından bu yana HFR, yüzde olarak belirtilen miktarda arttıktan sonra bir otomatik netleme çalışmasını başlatmak için tetikleyici</value>
   </data>
@@ -4507,6 +4525,9 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>Pozlamalar sonrası dither</value>
+  </data>
+  <data name="LblEvaluteAfterExposures" xml:space="preserve">
+    <value>Evaluate After Exposures</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>Pozlamalar sonrası</value>

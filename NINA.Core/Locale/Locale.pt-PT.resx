@@ -237,6 +237,9 @@ A Aplicação deve tentar recuperar do erro? (Pode levar a um comportamento ines
   <data name="LblArcmin" xml:space="preserve">
     <value>arcmin</value>
   </data>
+  <data name="LblMaxArcmin" xml:space="preserve">
+    <value>Max arcmin</value>
+  </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>arcsec</value>
   </data>
@@ -2056,10 +2059,10 @@ HFR Calculado: {2}
     <value>Nenhuma câmera Nikon encontrada</value>
   </data>
   <data name="LblNINA" xml:space="preserve">
-    <value>NINA</value>
+    <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>NINA para o Telescópio</value>
+    <value>From N.I.N.A. to Telescope</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Não</value>
@@ -2377,6 +2380,9 @@ HFR Calculado: {2}
   <data name="LblPixels" xml:space="preserve">
     <value>Pixeis</value>
   </data>
+  <data name="LblMaxPixels" xml:space="preserve">
+    <value>Max Pixels</value>
+  </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Escala de Pixel</value>
   </data>
@@ -2481,6 +2487,12 @@ HFR Calculado: {2}
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
     <value>A efectuar o Plate Solve</value>
+  </data>
+  <data name="LblCenterAfterDrift" xml:space="preserve">
+    <value>Recentering after too much drift</value>
+  </data>
+  <data name="LblNoTarget" xml:space="preserve">
+    <value>No target set</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Por favor mude para o filtro {0}</value>
@@ -3149,7 +3161,7 @@ Sincronizar os valores?</value>
     <value>Telescópio sincronizado com as coordenadas</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>Telescópio para o NINA</value>
+    <value>From Telescope to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>Velocidade de guiagem em AR</value>
@@ -4447,6 +4459,12 @@ No caso de ser necessário efectuar o aquecimento de uma forma mais prolongada, 
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
     <value>Aguardar um período de tempo</value>
   </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
+    <value>Center After Drift</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
+    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+  </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Uma acção para iniciar a focagem automática após o HFR ter aumentado em percentagem o valor especificado desde a ultima focagem automática ou inicio da sequência</value>
   </data>
@@ -4515,6 +4533,9 @@ No caso de ser necessário efectuar o aquecimento de uma forma mais prolongada, 
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>Efetuar dither após as exposições</value>
+  </data>
+  <data name="LblEvaluteAfterExposures" xml:space="preserve">
+    <value>Evaluate After Exposures</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>Após as Exposições</value>

@@ -237,6 +237,9 @@ Czy aplikacja powinna samodzielnie uruchomić się po błędzie? (może prowadzi
   <data name="LblArcmin" xml:space="preserve">
     <value>Arcmin</value>
   </data>
+  <data name="LblMaxArcmin" xml:space="preserve">
+    <value>Max arcmin</value>
+  </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>Arcsec</value>
   </data>
@@ -2053,10 +2056,10 @@ Obliczone HFR: {2}</value>
     <value>Nie znaleziono aparatu Nikon</value>
   </data>
   <data name="LblNINA" xml:space="preserve">
-    <value>NINA</value>
+    <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>NINA to Telescope</value>
+    <value>From N.I.N.A. to Telescope</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Nie</value>
@@ -2374,6 +2377,9 @@ Obliczone HFR: {2}</value>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
   </data>
+  <data name="LblMaxPixels" xml:space="preserve">
+    <value>Max Pixels</value>
+  </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Rozmiar piksela</value>
   </data>
@@ -2478,6 +2484,12 @@ Obliczone HFR: {2}</value>
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
     <value>Plate Solving</value>
+  </data>
+  <data name="LblCenterAfterDrift" xml:space="preserve">
+    <value>Recentering after too much drift</value>
+  </data>
+  <data name="LblNoTarget" xml:space="preserve">
+    <value>No target set</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Ustaw filtr {0}</value>
@@ -3146,7 +3158,7 @@ Czy wartości powinny być zsynchronizowane?</value>
     <value>Telescope synced to coordinates</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>Z teleskopu do NINA</value>
+    <value>From Telescope to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>RA Guide Rate</value>
@@ -4444,6 +4456,12 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
     <value>Wait for Time</value>
   </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
+    <value>Center After Drift</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
+    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+  </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>A trigger to initiate an autofocus run after the HFR has increased by the given amount in percent since the last autofocus run or start of sequence</value>
   </data>
@@ -4512,6 +4530,9 @@ In case a longer duration is needed, a duration can be specified and the applica
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>Dither after Exposures</value>
+  </data>
+  <data name="LblEvaluteAfterExposures" xml:space="preserve">
+    <value>Evaluate After Exposures</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>After Exposures</value>

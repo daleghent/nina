@@ -237,6 +237,9 @@
   <data name="LblArcmin" xml:space="preserve">
     <value>arcmin</value>
   </data>
+  <data name="LblMaxArcmin" xml:space="preserve">
+    <value>Max arcmin</value>
+  </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>arcsec</value>
   </data>
@@ -2051,10 +2054,10 @@
     <value>Δεν βρέθηκε κάμερα Nikon</value>
   </data>
   <data name="LblNINA" xml:space="preserve">
-    <value>NINA</value>
+    <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>ΝΙΝΑ προς το Τηλεσκόπιο</value>
+    <value>From N.I.N.A. to Telescope</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Όχι</value>
@@ -2372,6 +2375,9 @@
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
   </data>
+  <data name="LblMaxPixels" xml:space="preserve">
+    <value>Max Pixels</value>
+  </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Κλίμακα Pixel</value>
   </data>
@@ -2476,6 +2482,12 @@
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
     <value>Plate Solving</value>
+  </data>
+  <data name="LblCenterAfterDrift" xml:space="preserve">
+    <value>Recentering after too much drift</value>
+  </data>
+  <data name="LblNoTarget" xml:space="preserve">
+    <value>No target set</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Παρακαλώ αλλάξτε στο φίλτρο {0}</value>
@@ -3144,7 +3156,7 @@
     <value>Το τηλεσκόπιο συγχρονίστηκε στις συντεταγμένες</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>Τηλεσκόπιο προς ΝΙΝΑ</value>
+    <value>From Telescope to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>RA Guide Rate</value>
@@ -4442,6 +4454,12 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
   <data name="Lbl_SequenceItem_Utility_WaitForTime_Name" xml:space="preserve">
     <value>Wait for Time</value>
   </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
+    <value>Center After Drift</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
+    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+  </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>A trigger to initiate an autofocus run after the HFR has increased by the given amount in percent since the last autofocus run or start of sequence</value>
   </data>
@@ -4510,6 +4528,9 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
   </data>
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>Dither μετά από Εκθέσεις</value>
+  </data>
+  <data name="LblEvaluteAfterExposures" xml:space="preserve">
+    <value>Evaluate After Exposures</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>Μετά από Εκθέσεις</value>
