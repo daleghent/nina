@@ -54,10 +54,13 @@ namespace NINA.WPF.Base.Model {
                 HFR = imageSavedEventArgs.StarDetectionAnalysis.HFR;
                 Stars = imageSavedEventArgs.StarDetectionAnalysis.DetectedStars;
             }
+            IsBayered = imageSavedEventArgs.IsBayered;
             Filter = imageSavedEventArgs.Filter;
             Duration = imageSavedEventArgs.Duration;
-            if (imageSavedEventArgs.PathToImage != null)
+            if (imageSavedEventArgs.PathToImage != null) {
                 Filename = Path.GetFileName(imageSavedEventArgs.PathToImage.LocalPath);
+                LocalPath = imageSavedEventArgs.PathToImage.LocalPath;
+            }
 
             if (imageSavedEventArgs.MetaData?.Target != null) {
                 Target = imageSavedEventArgs.MetaData.Target;
@@ -104,9 +107,11 @@ namespace NINA.WPF.Base.Model {
         public double StDev { get; private set; }
         public double MAD { get; private set; }
 
+        public bool IsBayered { get; private set; }
         public string Filter { get; private set; }
         public double Duration { get; private set; }
         public string Filename { get; private set; }
+        public string LocalPath { get; private set; }
 
         public DateTime dateTime { get; private set; } = DateTime.Now;
         public double Temperature { get; private set; }

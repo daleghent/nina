@@ -2105,6 +2105,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Center After Drift.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sends a dither command to the guider after the specified number of exposures.
         /// </summary>
         internal static string Lbl_SequenceTrigger_Guider_DitherAfterExposures_Description {
@@ -3811,6 +3829,15 @@ namespace NINA.Core.Locale {
         internal static string LblCdC {
             get {
                 return ResourceManager.GetString("LblCdC", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recentering after too much drift.
+        /// </summary>
+        internal static string LblCenterAfterDrift {
+            get {
+                return ResourceManager.GetString("LblCenterAfterDrift", resourceCulture);
             }
         }
         
@@ -6988,6 +7015,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Evaluate After Exposures.
+        /// </summary>
+        internal static string LblEvaluteAfterExposures {
+            get {
+                return ResourceManager.GetString("LblEvaluteAfterExposures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Executing items in parallel.
         /// </summary>
         internal static string LblExecutingItemsInParallel {
@@ -9335,6 +9371,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Max arcmin.
+        /// </summary>
+        internal static string LblMaxArcmin {
+            get {
+                return ResourceManager.GetString("LblMaxArcmin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Max Binning X.
         /// </summary>
         internal static string LblMaxBinX {
@@ -9385,6 +9430,15 @@ namespace NINA.Core.Locale {
         internal static string LblMaxObjects {
             get {
                 return ResourceManager.GetString("LblMaxObjects", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Max Pixels.
+        /// </summary>
+        internal static string LblMaxPixels {
+            get {
+                return ResourceManager.GetString("LblMaxPixels", resourceCulture);
             }
         }
         
@@ -10087,6 +10141,15 @@ namespace NINA.Core.Locale {
         internal static string LblNoSyncTooltip {
             get {
                 return ResourceManager.GetString("LblNoSyncTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No target set.
+        /// </summary>
+        internal static string LblNoTarget {
+            get {
+                return ResourceManager.GetString("LblNoTarget", resourceCulture);
             }
         }
         
