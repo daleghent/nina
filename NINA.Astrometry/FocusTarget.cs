@@ -103,7 +103,7 @@ namespace NINA.Astrometry {
         }
 
         public string Information {
-            get => $"{Name} ({SkyDirection}, Alt: {Altitude:0.00}??, Az: {Azimuth:0.00}??)";
+            get => $"{Name} ({SkyDirection}, Alt: {Altitude:0.00}°, Az: {Azimuth:0.00}°)";
         }
 
         public override string ToString() {
