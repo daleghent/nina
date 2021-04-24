@@ -4,13 +4,13 @@
 		<id>$ID$</id>
 		<version>$Version$</version>
 		<title>$Title$</title>
-		<authors>$Author$</authors>
+		<authors>Stefan Berg and the N.I.N.A. Contributors</authors>
 		<owners>Stefan Berg</owners>
 		<projectUrl>https://nighttime-imaging.eu/</projectUrl>
 		<icon>images\ninasplash.png</icon>
 		<repository type="git" url="https://www.bitbucket.org/Isbeorn/nina.git" />
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>$Description$</description>
+		<description>This assembly contains the astronomy components of N.I.N.A.</description>
 		<releaseNotes/>
 		<copyright>$Copyright$</copyright>
 		<tags/>

@@ -531,6 +531,11 @@ namespace NINA.Sequencer.Container {
                 startup.Add(wait);
             }
 
+            var firstInstruction = Items.FirstOrDefault(x => (x as SimpleExposure).Enabled);
+            if (firstInstruction != null) {
+                startup.Add((ISequenceItem)(firstInstruction as SimpleExposure).GetSwitchFilter().Clone());
+            }
+
             if (SlewToTarget) {
                 var slew = factory.GetItem<SlewScopeToRaDec>();
                 slew.Coordinates = Target.InputCoordinates;

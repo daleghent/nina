@@ -4,7 +4,7 @@
 		<id>$ID$</id>
 		<version>$Version$</version>
 		<title>$Title$</title>
-		<authors>$Author$</authors>
+		<authors>Stefan Berg and the N.I.N.A. Contributors</authors>
 		<owners>Stefan Berg</owners>
 		<projectUrl>https://nighttime-imaging.eu/</projectUrl>
 		<icon>images\ninasplash.png</icon>
