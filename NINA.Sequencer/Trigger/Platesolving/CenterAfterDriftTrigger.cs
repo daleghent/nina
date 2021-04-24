@@ -76,7 +76,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             this.cameraMediator = cameraMediator;
             this.imageSaveMediator = imageSaveMediator;
             this.applicationStatusMediator = applicationStatusMediator;
-            DistancePixels = 200;
+            DistanceArcMinutes = 4;
             AfterExposures = 1;
             Coordinates = new InputCoordinates();
         }
@@ -107,22 +107,6 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         [JsonProperty]
         public InputCoordinates Coordinates { get; set; }
 
-        private int distancePixels;
-
-        [JsonProperty]
-        public int DistancePixels {
-            get => distancePixels;
-            set {
-                if (value > 0 && value != distancePixels) {
-                    var pixelScale = AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
-                    distancePixels = value;
-                    distanceArcMinutes = value * pixelScale / 60.0;
-                    RaisePropertyChanged(nameof(DistancePixels));
-                    RaisePropertyChanged(nameof(DistanceArcMinutes));
-                }
-            }
-        }
-
         private double distanceArcMinutes;
 
         [JsonProperty]
@@ -132,8 +116,6 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 if (value > 0.0 && value != distanceArcMinutes) {
                     var pixelScale = AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
                     distanceArcMinutes = value;
-                    distancePixels = (int)Math.Round(value * 60.0 / pixelScale);
-                    RaisePropertyChanged(nameof(DistancePixels));
                     RaisePropertyChanged(nameof(DistanceArcMinutes));
                 }
             }
@@ -236,7 +218,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         }
 
         public override string ToString() {
-            return $"Trigger: {nameof(CenterAfterDriftTrigger)}, DistanceArcMinutes: {DistanceArcMinutes}, DistancePixels: {DistancePixels}";
+            return $"Trigger: {nameof(CenterAfterDriftTrigger)}, DistanceArcMinutes: {DistanceArcMinutes}";
         }
 
         public bool Validate() {
