@@ -52,7 +52,7 @@ namespace NINA.Image.FileFormat.XISF {
 
         public static async Task<IImageData> Load(Uri filePath, bool isBayered, CancellationToken ct) {
             return await Task.Run(() => {
-                using (FileStream fs = new FileStream(filePath.LocalPath, FileMode.Open)) {
+                using (FileStream fs = new FileStream(filePath.LocalPath, FileMode.Open, FileAccess.Read)) {
                     // First make sure we are opening a XISF file by looking for the XISF signature at bytes 1-8
                     byte[] fileSig = new byte[xisfSignature.Length];
                     fs.Read(fileSig, 0, fileSig.Length);
