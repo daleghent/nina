@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using Accord.Math;
 using Newtonsoft.Json;
 using NINA.Core.Model;
 using NINA.Profile.Interfaces;
@@ -33,12 +32,8 @@ using NINA.WPF.Base.ViewModel;
 using NINA.Astrometry;
 using NINA.Sequencer.SequenceItem.Platesolving;
 using NINA.Core.Utility;
-using NINA.PlateSolving;
-using NINA.WPF.Base.Model;
-using NINA.Image.ImageData;
 using System.IO;
 using NINA.Core.Utility.Notification;
-using NINA.Image.Interfaces;
 using NINA.Sequencer.Utility;
 using NINA.WPF.Base.Interfaces.Mediator;
 
@@ -114,7 +109,6 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             get => distanceArcMinutes;
             set {
                 if (value > 0.0 && value != distanceArcMinutes) {
-                    var pixelScale = AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
                     distanceArcMinutes = value;
                     RaisePropertyChanged(nameof(DistanceArcMinutes));
                 }
