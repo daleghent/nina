@@ -144,10 +144,16 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
 
             var solver = new ImageSolver(plateSolver, blindSolver);
-            Coordinates coordinates = telescopeMediator.GetInfo().Connected ? telescopeMediator.GetCurrentPosition() : null;
+
+            //Take coordinates from image header - if not available take them from the telescope
+            Coordinates coordinates = loadedImage.MetaData.Telescope.Coordinates;
+            if (coordinates == null && telescopeMediator.GetInfo().Connected) {
+                coordinates = telescopeMediator.GetCurrentPosition();
+            }
+
             var parameter = new PlateSolveParameter() {
                 Coordinates = coordinates,
-                Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,
+                Binning = loadedImage.MetaData.Camera.BinX,
                 DownSampleFactor = profileService.ActiveProfile.PlateSolveSettings.DownSampleFactor,
                 FocalLength = profileService.ActiveProfile.TelescopeSettings.FocalLength,
                 MaxObjects = profileService.ActiveProfile.PlateSolveSettings.MaxObjects,
