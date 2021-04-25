@@ -156,12 +156,6 @@ namespace NINA.Sequencer.Conditions {
         public override bool Check(ISequenceItem nextItem) {
             CalculateCurrentAltitude();
 
-            var horizon = profileService.ActiveProfile.AstrometrySettings.Horizon;
-            HorizonAltitude = 0d;
-            if (horizon != null) {
-                HorizonAltitude = Math.Round(horizon.GetAltitude(CurrentAzimuth), 2);
-            }
-
             return CurrentAltitude >= HorizonAltitude;
         }
 
@@ -177,8 +171,14 @@ namespace NINA.Sequencer.Conditions {
             var currentAz = Math.Round(altaz.Azimuth.Degree, 2);
             CurrentAltitude = currentAlt;
             CurrentAzimuth = currentAz;
-            RisingSettingDisplay =
-                IsEastOfMeridian ? "^" : "v";
+            RisingSettingDisplay = IsEastOfMeridian ? "^" : "v";
+
+            var horizon = profileService.ActiveProfile.AstrometrySettings.Horizon;
+            var horizonAltitude = 0d;
+            if (horizon != null) {
+                horizonAltitude = Math.Round(horizon.GetAltitude(CurrentAzimuth), 2);
+            }
+            HorizonAltitude = horizonAltitude;
         }
     }
 }
