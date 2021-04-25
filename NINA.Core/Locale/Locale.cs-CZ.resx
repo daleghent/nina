@@ -2058,7 +2058,7 @@ Vypočtené HFR: {2}
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>From N.I.N.A. to Telescope</value>
+    <value>Z N.I.N.A. do Dalekohledu</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Ne</value>
@@ -2377,7 +2377,7 @@ Vypočtené HFR: {2}
     <value>Pixely</value>
   </data>
   <data name="LblMaxPixels" xml:space="preserve">
-    <value>Max Pixels</value>
+    <value>Max Pixelů</value>
   </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Měřítko Pixelu</value>
@@ -2485,10 +2485,10 @@ Vypočtené HFR: {2}
     <value>Plate Solving</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
-    <value>Recentering after too much drift</value>
+    <value>Znovu vycentrovat po příliš velkém posunu</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
-    <value>No target set</value>
+    <value>Není nastaven žádný cíl</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Změnit na filtr {0}</value>
@@ -3157,7 +3157,7 @@ Synchronizovat hodnoty?</value>
     <value>Dalekohled synchronizovaný se souřadnicemi</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>From Telescope to N.I.N.A.</value>
+    <value>Z Dalekohledu do N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>Míra Pointace RA</value>
@@ -4456,10 +4456,10 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Čekat na Čas</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
-    <value>Center After Drift</value>
+    <value>Vycentrovat Po Posunu</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+    <value>Spouštěč, který určí pro znovu vycentrování a platesolvingu, zda se dalekohled vzdálil příliš daleko od cílových souřadnic</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Spouštěč, který spouští auto-ostření po změně HFR o danou hodnotu v procentech od posledního automatického spuštění nebo spuštění sekvence</value>
@@ -4531,7 +4531,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Dithering po Expozicích</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
-    <value>Evaluate After Exposures</value>
+    <value>Vyhodnotit Po Expozicích</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>Po Expozicích</value>
