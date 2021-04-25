@@ -207,6 +207,7 @@
     <Compile Include="AngleTest.cs" />
     <Compile Include="AstrometryTest\AstrometryTest.cs" />
     <Compile Include="AstrometryTest\CustomHorizonTest.cs" />
+    <Compile Include="Autofocus\AutoFocusReportTest.cs" />
     <Compile Include="Autofocus\GaussianFittingTest.cs" />
     <Compile Include="Autofocus\HyperbolicFittingTest.cs" />
     <Compile Include="Autofocus\QuadraticFittingTest.cs" />
