@@ -187,7 +187,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
 
         public override bool ShouldTrigger(ISequenceItem nextItem) {
             RaisePropertyChanged(nameof(ProgressExposures));
-            Logger.Info($"Drift: {LastDistanceArcMinutes} arc minutes");
+            Logger.Info($"Drift: {LastDistanceArcMinutes} / {DistanceArcMinutes} arc minutes");
             if (LastDistanceArcMinutes >= DistanceArcMinutes) {
                 Notification.ShowInformation(Loc.Instance["LblCenterAfterDrift"]);
                 return true;
