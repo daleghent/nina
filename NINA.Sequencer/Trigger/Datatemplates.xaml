@@ -428,7 +428,7 @@
                         <TextBlock
                             VerticalAlignment="Center"
                             Opacity="0.4"
-                            Text="{Binding DistancePixels, StringFormat={}{0:0.00}}" />
+                            Text="{Binding DistancePixels, StringFormat={}{0:0}}" />
                         <TextBlock
                             VerticalAlignment="Center"
                             Opacity="0.4"
