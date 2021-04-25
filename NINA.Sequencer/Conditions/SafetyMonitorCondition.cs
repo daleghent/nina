@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
+using NINA.Core.Enum;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -88,6 +89,16 @@ namespace NINA.Sequencer.Conditions {
                 Category = Category,
                 Description = Description,
             };
+        }
+
+        public override void AfterParentChanged() {
+            if (Parent == null) {
+                SequenceBlockTeardown();
+            } else {
+                if (Parent.Status == SequenceEntityStatus.RUNNING) {
+                    SequenceBlockInitialize();
+                }
+            }
         }
 
         public override void SequenceBlockTeardown() {
