@@ -420,6 +420,19 @@
                                 </Binding>
                             </TextBox.Text>
                         </TextBox>
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            Opacity="0.4"
+                            Text="(" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Opacity="0.4"
+                            Text="{Binding DistancePixels, StringFormat={}{0:0.00}}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            Opacity="0.4"
+                            Text="px @ 1x1)" />
                     </StackPanel>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>

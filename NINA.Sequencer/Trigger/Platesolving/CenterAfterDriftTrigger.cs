@@ -72,7 +72,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             this.cameraMediator = cameraMediator;
             this.imageSaveMediator = imageSaveMediator;
             this.applicationStatusMediator = applicationStatusMediator;
-            DistanceArcMinutes = 4;
+            DistanceArcMinutes = 10;
             AfterExposures = 1;
             Coordinates = new InputCoordinates();
         }
@@ -112,7 +112,15 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 if (value > 0.0 && value != distanceArcMinutes) {
                     distanceArcMinutes = value;
                     RaisePropertyChanged(nameof(DistanceArcMinutes));
+                    RaisePropertyChanged(nameof(DistancePixels));
                 }
+            }
+        }
+
+        public double DistancePixels {
+            get {
+                var arcsecPerPix = AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
+                return DistanceArcMinutes * 60d * arcsecPerPix;
             }
         }
 
