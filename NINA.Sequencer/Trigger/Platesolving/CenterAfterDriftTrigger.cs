@@ -36,6 +36,7 @@ using System.IO;
 using NINA.Core.Utility.Notification;
 using NINA.Sequencer.Utility;
 using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.Core.Enum;
 
 namespace NINA.Sequencer.Trigger.Platesolving {
 
@@ -207,8 +208,15 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         }
 
         public override void AfterParentChanged() {
-            Coordinates.Coordinates = ItemUtility.RetrieveContextCoordinates(this.Parent).Item1;
-            Validate();
+            if (Parent == null) {
+                SequenceBlockTeardown();
+            } else {
+                Coordinates.Coordinates = ItemUtility.RetrieveContextCoordinates(this.Parent).Item1;
+                Validate();
+                if (Parent.Status == SequenceEntityStatus.RUNNING) {
+                    SequenceBlockInitialize();
+                }
+            }
         }
 
         public override string ToString() {
