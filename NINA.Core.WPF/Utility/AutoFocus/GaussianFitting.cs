@@ -18,6 +18,7 @@ using OxyPlot;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace NINA.WPF.Base.Utility.AutoFocus {
@@ -90,7 +91,8 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
             };
 
             var regression = nls.Learn(inputs, outputs);
-            Expression = $"y = {regression.Coefficients[2]} * exp(-1 * (x - {regression.Coefficients[0]}) * (x - {regression.Coefficients[0]}) / (2 * {regression.Coefficients[1]} * {regression.Coefficients[1]})) + {regression.Coefficients[3]}";
+            FormattableString expression = $"y = {regression.Coefficients[2]} * exp(-1 * (x - {regression.Coefficients[0]}) * (x - {regression.Coefficients[0]}) / (2 * {regression.Coefficients[1]} * {regression.Coefficients[1]})) + {regression.Coefficients[3]}";
+            Expression = expression.ToString(CultureInfo.InvariantCulture);
             Fitting = (x) => regression.Coefficients[2] * Math.Exp(-1 * (x - regression.Coefficients[0]) * (x - regression.Coefficients[0]) / (2 * regression.Coefficients[1] * regression.Coefficients[1])) + regression.Coefficients[3];
             Maximum = new DataPoint((int)Math.Round(regression.Coefficients[0]), regression.Coefficients[2] + regression.Coefficients[3]);
             return this;

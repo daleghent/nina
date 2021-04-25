@@ -16,7 +16,9 @@ using NINA.Core.Enum;
 using NINA.Core.Utility;
 using OxyPlot;
 using OxyPlot.Series;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace NINA.WPF.Base.Utility.AutoFocus {
@@ -104,8 +106,10 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
                 RightTrend = new Trendline(rightTrendPoints);
                 Intersection = LeftTrend.Intersect(RightTrend);
 
-                LeftExpression = $"y = {LeftTrend.Slope} * x + {LeftTrend.Offset}";
-                RightExpression = $"y = {RightTrend.Slope} * x + {RightTrend.Offset}";
+                FormattableString leftExpression = $"y = {LeftTrend.Slope} * x + {LeftTrend.Offset}";
+                LeftExpression = leftExpression.ToString(CultureInfo.InvariantCulture);
+                FormattableString rightExpression = $"y = {RightTrend.Slope} * x + {RightTrend.Offset}";
+                RightExpression = rightExpression.ToString(CultureInfo.InvariantCulture);
             } else {
                 var max = points.Aggregate((l, r) => l.Y - l.ErrorY > r.Y - r.ErrorY ? l : r);
                 Minimum = max; // trendline minimum is actually Gaussian max

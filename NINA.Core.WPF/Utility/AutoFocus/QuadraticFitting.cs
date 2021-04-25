@@ -18,6 +18,7 @@ using OxyPlot;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace NINA.WPF.Base.Utility.AutoFocus {
@@ -64,7 +65,8 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
         public QuadraticFitting Calculate(ICollection<ScatterErrorPoint> points) {
             var fitting = new PolynomialLeastSquares() { Degree = 2 };
             PolynomialRegression poly = fitting.Learn(points.Select((dp) => dp.X).ToArray(), points.Select((dp) => dp.Y).ToArray(), points.Select((dp) => 1 / (dp.ErrorY * dp.ErrorY)).ToArray());
-            Expression = $"y = {poly.Weights[0]} * x^2 + {poly.Weights[1]} * x + {poly.Intercept}";
+            FormattableString expression = $"y = {poly.Weights[0]} * x^2 + {poly.Weights[1]} * x + {poly.Intercept}";
+            Expression = expression.ToString(CultureInfo.InvariantCulture);
             Fitting = (x) => (poly.Weights[0] * x * x + poly.Weights[1] * x + poly.Intercept);
             int minimumX = (int)Math.Round(poly.Weights[1] / (2 * poly.Weights[0]) * -1);
             double minimumY = Fitting(minimumX);

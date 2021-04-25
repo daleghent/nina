@@ -17,6 +17,7 @@ using OxyPlot;
 using OxyPlot.Series;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 
 namespace NINA.WPF.Base.Utility.AutoFocus {
@@ -138,8 +139,8 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
                 iterationCycles++;
             } while (oldError - lowestError >= 0.0001 && lowestError > 0.0001 && iterationCycles < 30);
 
-            Expression = $"y = {a} * cosh(asinh(({p} - x) / {b}))";
-
+            FormattableString expression = $"y = {a} * cosh(asinh(({p} - x) / {b}))";
+            Expression = expression.ToString(CultureInfo.InvariantCulture);
             Fitting = (x) => a * MathHelper.HCos(MathHelper.HArcsin((p - x) / b));
             Minimum = new DataPoint((int)Math.Round(p), a);
             return this;
