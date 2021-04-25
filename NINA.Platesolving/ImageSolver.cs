@@ -38,15 +38,22 @@ namespace NINA.PlateSolving {
             ValidatePrerequisites(parameter);
             var solver = GetSolver(parameter);
 
-            Logger.Trace($"Solving with parameters: {Environment.NewLine + parameter.ToString()}");
+            Logger.Info($"Platesolving with parameters: {parameter}");
             progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolving"] });
 
             var result = await solver.SolveAsync(source, parameter, progress, ct);
             if (result.Success == false && parameter.Coordinates != null) {
                 //Blind solve failover
+                Logger.Debug($"Initial solve failed. Falling back to blind solver");
                 var blindParameter = parameter.Clone();
                 blindParameter.Coordinates = null;
                 result = await Solve(source, blindParameter, progress, ct);
+            }
+
+            if (result.Success) {
+                Logger.Info($"Platesolve successful: Coordinates: {result.Coordinates}");
+            } else {
+                Logger.Info($"Platesolve failed");
             }
 
             progress?.Report(new ApplicationStatus() { Status = string.Empty });

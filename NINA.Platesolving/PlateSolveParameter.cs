@@ -44,12 +44,12 @@ namespace NINA.PlateSolving {
         public override string ToString() {
             var j2000 = Coordinates?.Transform(Epoch.J2000);
             var formatCoordinates = j2000 != null ? $"Reference Coordinates RA: {j2000.RAString} Dec: {j2000.DecString} Epoch: {j2000.Epoch}" : "";
-            return $"FocalLength: {FocalLength}" + Environment.NewLine +
-                $"PixelSize: {PixelSize}" + Environment.NewLine +
-                $"SearchRadius: {SearchRadius}" + Environment.NewLine +
-                $"Regions: {Regions}" + Environment.NewLine +
-                $"DownSampleFactor: {DownSampleFactor}" + Environment.NewLine +
-                $"MaxObjects: {MaxObjects}" + Environment.NewLine +
+            return $"FocalLength: {FocalLength} " +
+                $"PixelSize: {PixelSize} " +
+                $"SearchRadius: {SearchRadius} " +
+                $"Regions: {Regions} " +
+                $"DownSampleFactor: {DownSampleFactor} " +
+                $"MaxObjects: {MaxObjects} " +
                 $"{formatCoordinates}";
         }
 

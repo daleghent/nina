@@ -14,6 +14,7 @@
 
 using NINA.Astrometry;
 using NINA.Core.Locale;
+using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,7 @@ namespace NINA.PlateSolving.Solvers {
             PlateSolveImageProperties imageProperties) {
             var result = new PlateSolveResult() { Success = false };
             if (!File.Exists(outputFilePath)) {
+                Logger.Error("ASTAP - Plate solve failed. No output file found.");
                 Notification.ShowError("ASTAP - Plate solve failed. No output file found.");
                 return result;
             }
@@ -55,11 +57,13 @@ namespace NINA.PlateSolving.Solvers {
 
             if (!dict.ContainsKey("PLTSOLVD") || dict["PLTSOLVD"] != "T") {
                 dict.TryGetValue("ERROR", out var error);
+                Logger.Error($"ASTAP - Plate solve failed.{Environment.NewLine}{warning}{Environment.NewLine}{error}");
                 Notification.ShowError($"ASTAP - Plate solve failed.{Environment.NewLine}{warning}{Environment.NewLine}{error}");
                 return result;
             }
 
             if (!string.IsNullOrWhiteSpace(warning)) {
+                Logger.Warning($"ASTAP - {warning}");
                 Notification.ShowWarning($"ASTAP - {warning}");
             }
 
