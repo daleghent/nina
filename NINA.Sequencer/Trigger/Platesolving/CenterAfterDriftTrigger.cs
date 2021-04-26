@@ -168,6 +168,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 if (Coordinates.Coordinates != null) {
                     var separation = lastCoordinates - Coordinates.Coordinates;
                     LastDistanceArcMinutes = separation.Distance.ArcMinutes;
+                    Logger.Info($"Drift: {LastDistanceArcMinutes} / {DistanceArcMinutes} arc minutes");
                 }
             }
 
@@ -187,8 +188,8 @@ namespace NINA.Sequencer.Trigger.Platesolving {
 
         public override bool ShouldTrigger(ISequenceItem nextItem) {
             RaisePropertyChanged(nameof(ProgressExposures));
-            Logger.Info($"Drift: {LastDistanceArcMinutes} / {DistanceArcMinutes} arc minutes");
             if (LastDistanceArcMinutes >= DistanceArcMinutes) {
+                Logger.Info($"Drift exceeded threshold: {LastDistanceArcMinutes} / {DistanceArcMinutes} arc minutes");
                 Notification.ShowInformation(Loc.Instance["LblCenterAfterDrift"]);
                 return true;
             }
