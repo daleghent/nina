@@ -335,6 +335,7 @@
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterFilterChangeTest.cs" />
     <Compile Include="Sequencer\Trigger\Guider\DitherAfterExposuresTest.cs" />
     <Compile Include="Sequencer\Trigger\MeridianFlip\MeridianFlipTriggerTest.cs" />
+    <Compile Include="Sequencer\Trigger\Platesolving\CenterAfterDriftTriggerTest.cs" />
     <Compile Include="Sequencer\Utility\DateTimeProvider\DawnProviderTest.cs" />
     <Compile Include="Sequencer\Utility\DateTimeProvider\DuskProviderTest.cs" />
     <Compile Include="Sequencer\Utility\DateTimeProvider\MeridianProviderTest.cs" />

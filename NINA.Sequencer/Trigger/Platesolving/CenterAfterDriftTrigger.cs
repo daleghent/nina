@@ -120,7 +120,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         public double DistancePixels {
             get {
                 var arcsecPerPix = AstroUtil.ArcsecPerPixel(profileService.ActiveProfile.CameraSettings.PixelSize, profileService.ActiveProfile.TelescopeSettings.FocalLength);
-                return DistanceArcMinutes * 60d * arcsecPerPix;
+                return DistanceArcMinutes * 60d / arcsecPerPix;
             }
         }
 
