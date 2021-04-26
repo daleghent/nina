@@ -830,8 +830,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     );
 
                     if (Telescope?.CanPark == true && Telescope?.AtPark == true) {
+                        Logger.Warning("Telescope is parked");
                         Notification.ShowWarning(Loc.Instance["LblTelescopeParkedWarning"]);
                     }
+
+                    Logger.Info($"Slewing to Coordinates {coords}");
 
                     await Task.Run(() => {
                         Telescope.SlewToCoordinates(coords);
@@ -842,6 +845,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                         this.domeMediator.WaitForDomeSynchronization(token));
                     return true;
                 } else {
+                    Logger.Warning("Telescope is not connected to slew");
                     return false;
                 }
             } finally {
