@@ -54,7 +54,7 @@ namespace NINA.WPF.Base.ViewModel {
             this.applicationStatusMediator = applicationStatusMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.history = history;
-            AutoFocusVMFactory = new AutoFocusVMFactory(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator);
+            AutoFocusVMFactory = new AutoFocusVMFactory(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator);
             CancelCommand = new RelayCommand(Cancel);
         }
 
@@ -190,23 +190,23 @@ namespace NINA.WPF.Base.ViewModel {
         public IAutoFocusVMFactory AutoFocusVMFactory { get; set; }
 
         private async Task<bool> AutoFocus(CancellationToken token, IProgress<ApplicationStatus> progress) {
-            using (var autoFocus = AutoFocusVMFactory.Create()) {
-                progress.Report(new ApplicationStatus { Status = Loc.Instance["LblAutoFocus"] });
-                var service = WindowServiceFactory.Create();
-                service.Show(autoFocus, autoFocus.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
-                try {
-                    FilterInfo filter = null;
-                    var selectedFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
-                    if (selectedFilter != null) {
-                        filter = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters.Where(x => x.Position == selectedFilter.Position).FirstOrDefault();
-                    }
-
-                    var report = await autoFocus.StartAutoFocus(filter, token, progress);
-                    history.AppendAutoFocusPoint(report);
-                } finally {
-                    service.DelayedClose(TimeSpan.FromSeconds(10));
+            var autoFocus = AutoFocusVMFactory.Create();
+            progress.Report(new ApplicationStatus { Status = Loc.Instance["LblAutoFocus"] });
+            var service = WindowServiceFactory.Create();
+            service.Show(autoFocus, Loc.Instance["LblAutoFocus"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
+            try {
+                FilterInfo filter = null;
+                var selectedFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
+                if (selectedFilter != null) {
+                    filter = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters.Where(x => x.Position == selectedFilter.Position).FirstOrDefault();
                 }
+
+                var report = await autoFocus.StartAutoFocus(filter, token, progress);
+                history.AppendAutoFocusPoint(report);
+            } finally {
+                service.DelayedClose(TimeSpan.FromSeconds(10));
             }
+
             return true;
         }
 

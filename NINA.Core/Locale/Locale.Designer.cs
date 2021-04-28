@@ -3019,6 +3019,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect..
+        /// </summary>
+        internal static string LblAutoFocusPointOutsideOfBounds {
+            get {
+                return ResourceManager.GetString("LblAutoFocusPointOutsideOfBounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reattempting Autofocus.
         /// </summary>
         internal static string LblAutoFocusReattempting {

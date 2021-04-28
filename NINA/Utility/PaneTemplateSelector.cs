@@ -30,6 +30,7 @@ using NINA.ViewModel.Sequencer;
 using System.Windows;
 using System.Windows.Controls;
 using NINA.WPF.Base.ViewModel.AutoFocus;
+using NINA.WPF.Base.ViewModel.Imaging;
 
 namespace NINA.Utility.AvalonDock {
 
@@ -121,7 +122,7 @@ namespace NINA.Utility.AvalonDock {
                 case FocuserVM _:
                     return FocuserTemplate;
 
-                case AutoFocusVM _:
+                case AutoFocusToolVM _:
                     return AutoFocusTemplate;
 
                 case ThumbnailVM _:

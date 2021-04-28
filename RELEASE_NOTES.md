@@ -136,6 +136,8 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ### Auto-focus system
 - Auto-focus can now have different settings for gain, offset and binning per filter
+- When using an autofocus filter with offsets this filter will now also be used for the first and last measurement instead of the filter prior to starting the auto focus
+- During an auto-focus run while taking an image, if the download fails it will be automatically retried up to two times to try to recover
 
 ### Sequencer
 - Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter

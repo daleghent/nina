@@ -44,6 +44,7 @@ using NINA.Profile;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
+using NINA.WPF.Base.ViewModel.Imaging;
 
 namespace NINA.ViewModel {
 
@@ -53,7 +54,7 @@ namespace NINA.ViewModel {
             IThumbnailVM thumbnailVM, ISwitchVM switchVM, IFilterWheelVM filterWheelVM, IFocuserVM focuserVM, IRotatorVM rotatorVM,
             IWeatherDataVM weatherDataVM, IDomeVM domeVM, IAnchorableSnapshotVM snapshotVM,
             IPolarAlignmentVM polarAlignmentVM, IAnchorablePlateSolverVM plateSolverVM, ITelescopeVM telescopeVM, IGuiderVM guiderVM,
-            IFocusTargetsVM focusTargetsVM, IAutoFocusVM autoFocusVM, IExposureCalculatorVM exposureCalculatorVM, IImageHistoryVM imageHistoryVM,
+            IFocusTargetsVM focusTargetsVM, IAutoFocusToolVM autoFocusToolVM, IExposureCalculatorVM exposureCalculatorVM, IImageHistoryVM imageHistoryVM,
             IImageControlVM imageControlVM, IImageStatisticsVM imageStatisticsVM, IFlatDeviceVM flatDeviceVM, ISafetyMonitorVM safetyMonitorVM) : base(profileService) {
             LoadAvalonDockLayoutCommand = new AsyncCommand<bool>((object o) => Task.Run(() => InitializeAvalonDockLayout(o)));
             ResetDockLayoutCommand = new RelayCommand(ResetDockLayout, (object o) => _dockmanager != null);
@@ -77,7 +78,7 @@ namespace NINA.ViewModel {
             Anchorables.Add(thumbnailVM);
             Anchorables.Add(plateSolverVM);
             Anchorables.Add(polarAlignmentVM);
-            Anchorables.Add(autoFocusVM);
+            Anchorables.Add(autoFocusToolVM);
             Anchorables.Add(focusTargetsVM);
             Anchorables.Add(exposureCalculatorVM);
             Anchorables.Add(flatDeviceVM);
@@ -103,7 +104,7 @@ namespace NINA.ViewModel {
             AnchorableTools.Add(thumbnailVM);
             AnchorableTools.Add(plateSolverVM);
             AnchorableTools.Add(polarAlignmentVM);
-            AnchorableTools.Add(autoFocusVM);
+            AnchorableTools.Add(autoFocusToolVM);
             AnchorableTools.Add(focusTargetsVM);
             AnchorableTools.Add(exposureCalculatorVM);
 

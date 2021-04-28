@@ -51,7 +51,6 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         private Mock<IFocuserMediator> focuserMediatorMock;
         private Mock<IGuiderMediator> guiderMediatorMock;
         private Mock<IImagingMediator> imagingMediatorMock;
-        private Mock<IApplicationStatusMediator> applicationStatusMediatorMock;
 
         [SetUp]
         public void Setup() {
@@ -62,14 +61,13 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             focuserMediatorMock = new Mock<IFocuserMediator>();
             guiderMediatorMock = new Mock<IGuiderMediator>();
             imagingMediatorMock = new Mock<IImagingMediator>();
-            applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo { Connected = true });
             focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new FocuserInfo { Connected = true });
         }
 
         [Test]
         public void CloneTest() {
-            var initial = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            var initial = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             initial.Icon = new System.Windows.Media.GeometryGroup();
 
             var sut = (AutofocusAfterTemperatureChangeTrigger)initial.Clone();
@@ -96,7 +94,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
             focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new FocuserInfo() { Temperature = changedTemp });
 
-            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Amount = tempAmount;
 
             var trigger = sut.ShouldTrigger(null);
@@ -120,7 +118,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
                 .Returns(new FocuserInfo() { Temperature = initialTemp })
                 .Returns(new FocuserInfo() { Temperature = changedTemp });
 
-            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Initialize();
             sut.Amount = tempAmount;
 
@@ -145,7 +143,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
                 .Returns(new FocuserInfo() { Temperature = initialTemp })
                 .Returns(new FocuserInfo() { Temperature = changedTemp });
 
-            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Initialize();
             sut.Amount = tempAmount;
 
@@ -161,7 +159,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var filter = new FilterInfo() { Position = 0 };
             filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = filter });
 
-            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
 
             await sut.Execute(default, default, default);
 
@@ -171,7 +169,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
         [Test]
         public void ToString_FilledProperly() {
-            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             var tostring = sut.ToString();
             tostring.Should().Be("Trigger: AutofocusAfterTemperatureChangeTrigger, Amount: 5°");
         }
