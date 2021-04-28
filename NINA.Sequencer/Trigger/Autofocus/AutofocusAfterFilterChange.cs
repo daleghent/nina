@@ -50,10 +50,9 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         private IFocuserMediator focuserMediator;
         private IGuiderMediator guiderMediator;
         private IImagingMediator imagingMediator;
-        private IApplicationStatusMediator applicationStatusMediator;
 
         [ImportingConstructor]
-        public AutofocusAfterFilterChange(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator, IApplicationStatusMediator applicationStatusMediator) : base() {
+        public AutofocusAfterFilterChange(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator) : base() {
             this.history = history;
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
@@ -61,9 +60,8 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             this.focuserMediator = focuserMediator;
             this.guiderMediator = guiderMediator;
             this.imagingMediator = imagingMediator;
-            this.applicationStatusMediator = applicationStatusMediator;
             LastAutoFocusFilter = null;
-            TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator));
+            TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator));
         }
 
         private IList<string> issues = new List<string>();
@@ -79,7 +77,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         public FilterInfo LastAutoFocusFilter { get; private set; }
 
         public override object Clone() {
-            return new AutofocusAfterFilterChange(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator) {
+            return new AutofocusAfterFilterChange(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,

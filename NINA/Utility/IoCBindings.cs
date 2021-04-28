@@ -61,6 +61,7 @@ using NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor;
 using NINA.WPF.Base.ViewModel.Equipment.Focuser;
 using NINA.WPF.Base.ViewModel.Equipment.Guider;
 using NINA.WPF.Base.ViewModel.Equipment.Rotator;
+using NINA.WPF.Base.ViewModel.Imaging;
 
 namespace NINA.Utility {
 
@@ -92,7 +93,7 @@ namespace NINA.Utility {
                     Bind<ISkyAtlasVM>().To<SkyAtlasVM>().InSingletonScope();
                     Bind<IFramingAssistantVM>().To<FramingAssistantVM>().InSingletonScope();
                     Bind<IFocusTargetsVM>().To<FocusTargetsVM>().InSingletonScope();
-                    Bind<IAutoFocusVM>().To<AutoFocusVM>().InSingletonScope();
+                    Bind<IAutoFocusToolVM>().To<AutoFocusToolVM>().InSingletonScope();
                     Bind<ITelescopeVM>().To<TelescopeVM>().InSingletonScope();
                     Bind<IWeatherDataVM>().To<WeatherDataVM>().InSingletonScope();
                     Bind<IDomeVM>().To<DomeVM>().InSingletonScope();

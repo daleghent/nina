@@ -267,6 +267,8 @@
     <Compile Include="ViewModel\Equipment\Telescope\TelescopeVM.cs" />
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataChooserVM.cs" />
     <Compile Include="ViewModel\Equipment\WeatherData\WeatherDataVM.cs" />
+    <Compile Include="ViewModel\Imaging\AutoFocusToolVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IAutoFocusToolVM.cs" />
     <Compile Include="ViewModel\MeridianFlipVM.cs" />
     <Compile Include="ViewModel\PlateSolvingStatusVM.cs" />
     <Compile Include="View\AltitudeChart.xaml.cs">

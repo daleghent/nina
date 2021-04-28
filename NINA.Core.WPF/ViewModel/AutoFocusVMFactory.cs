@@ -27,7 +27,6 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 namespace NINA.WPF.Base.ViewModel {
 
     public class AutoFocusVMFactory : IAutoFocusVMFactory {
-        private IApplicationStatusMediator applicationStatusMediator;
         private IProfileService profileService;
         private ICameraMediator cameraMediator;
         private IFilterWheelMediator filterWheelMediator;
@@ -41,19 +40,17 @@ namespace NINA.WPF.Base.ViewModel {
                 IFilterWheelMediator filterWheelMediator,
                 IFocuserMediator focuserMediator,
                 IGuiderMediator guiderMediator,
-                IImagingMediator imagingMediator,
-                IApplicationStatusMediator applicationStatusMediator) {
+                IImagingMediator imagingMediator) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.focuserMediator = focuserMediator;
             this.guiderMediator = guiderMediator;
             this.imagingMediator = imagingMediator;
-            this.applicationStatusMediator = applicationStatusMediator;
         }
 
         public IAutoFocusVM Create() {
-            return new AutoFocusVM(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator);
+            return new AutoFocusVM(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator);
         }
     }
 }

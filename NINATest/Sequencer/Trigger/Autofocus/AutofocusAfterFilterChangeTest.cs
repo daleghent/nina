@@ -30,7 +30,6 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         private Mock<IFocuserMediator> focuserMediatorMock;
         private Mock<IGuiderMediator> guiderMediatorMock;
         private Mock<IImagingMediator> imagingMediatorMock;
-        private Mock<IApplicationStatusMediator> applicationStatusMediatorMock;
         private AutofocusAfterFilterChange sut;
 
         [SetUp]
@@ -42,10 +41,9 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             focuserMediatorMock = new Mock<IFocuserMediator>();
             guiderMediatorMock = new Mock<IGuiderMediator>();
             imagingMediatorMock = new Mock<IImagingMediator>();
-            applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo { Connected = true });
             focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new FocuserInfo { Connected = true });
-            sut = new AutofocusAfterFilterChange(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            sut = new AutofocusAfterFilterChange(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
         }
 
         [Test]

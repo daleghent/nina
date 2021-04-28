@@ -49,7 +49,6 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
         private Mock<IFocuserMediator> focuserMediatorMock;
         private Mock<IGuiderMediator> guiderMediatorMock;
         private Mock<IImagingMediator> imagingMediatorMock;
-        private Mock<IApplicationStatusMediator> applicationStatusMediatorMock;
         private RunAutofocus sut;
 
         [SetUp]
@@ -61,8 +60,7 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
             focuserMediatorMock = new Mock<IFocuserMediator>();
             guiderMediatorMock = new Mock<IGuiderMediator>();
             imagingMediatorMock = new Mock<IImagingMediator>();
-            applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
-            sut = new RunAutofocus(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object);
+            sut = new RunAutofocus(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
         }
 
         [Test]
@@ -166,7 +164,6 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
 
             var report = new AutoFocusReport();
             var autofocusMock = new Mock<IAutoFocusVM>();
-            autofocusMock.SetupGet(title => title.Title).Returns("Autofocus");
             autofocusMock.Setup(af => af.StartAutoFocus(It.IsAny<FilterInfo>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>())).Returns(Task.FromResult(report));
             var autofocusVMFactoryMock = new Mock<IAutoFocusVMFactory>();
             autofocusVMFactoryMock.Setup(x => x.Create()).Returns(autofocusMock.Object);
@@ -182,7 +179,7 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
             await sut.Execute(default, default);
 
             windowFactoryMock.Verify(x => x.Create(), Times.Once);
-            windowMock.Verify(x => x.Show(It.Is<IAutoFocusVM>(o => o == autofocusMock.Object), It.Is<string>(t => t == autofocusMock.Object.Title), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
+            windowMock.Verify(x => x.Show(It.Is<IAutoFocusVM>(o => o == autofocusMock.Object), It.Is<string>(t => t == NINA.Core.Locale.Loc.Instance["LblAutoFocus"]), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
             windowMock.Verify(x => x.DelayedClose(It.Is<TimeSpan>(t => t.TotalSeconds == 10)), Times.Once);
 
             autofocusMock.Verify(x => x.StartAutoFocus(It.Is<FilterInfo>(f => f == profileFilter), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>()), Times.Once);

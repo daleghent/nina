@@ -55,9 +55,9 @@ namespace NINA.PlateSolving {
                     break;
                 }
 
-                var position = (telescopeMediator.GetCurrentPosition() - offset).Transform(result.Coordinates.Epoch);
-                result.Separation = result.DetermineSeparation(position);
+                result.Separation = result.DetermineSeparation(parameter.Coordinates);
 
+                var position = (telescopeMediator.GetCurrentPosition() - offset).Transform(result.Coordinates.Epoch);
                 Logger.Info($"Centering Solver - Scope Position: {position}; Centering Coordinates: {parameter.Coordinates}; Solve Result: {result.Coordinates}; Separation {result.Separation}");
 
                 solveProgress?.Report(new PlateSolveProgress() { PlateSolveResult = result });
@@ -65,7 +65,7 @@ namespace NINA.PlateSolving {
                 if (Math.Abs(result.Separation.Distance.ArcMinutes) > parameter.Threshold) {
                     progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceSyncing"] });
                     if (parameter.NoSync || !await telescopeMediator.Sync(result.Coordinates)) {
-                        offset = result.DetermineSeparation(position + offset);
+                        offset = result.DetermineSeparation(parameter.Coordinates + offset);
 
                         Logger.Warning($"Sync failed - calculating offset instead to compensate.  Original: {position.Transform(result.Coordinates.Epoch)}; Solved: {result.Coordinates}; Offset: {offset}");
                         progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveSyncViaTargetOffset"] });
@@ -74,7 +74,7 @@ namespace NINA.PlateSolving {
 
                         if (AstroUtil.DegreeToArcsec(Math.Abs(positionAfterSync.RADegrees - result.Coordinates.RADegrees)) > 1
                             || AstroUtil.DegreeToArcsec(Math.Abs(positionAfterSync.Dec - result.Coordinates.Dec)) > 1) {
-                            offset = result.DetermineSeparation(positionAfterSync);
+                            offset = result.DetermineSeparation(parameter.Coordinates);
                             Logger.Warning($"Sync failed silently - calculating offset instead to compensate.  Original: {positionAfterSync}; Solved: {result.Coordinates}; Offset: {offset}");
                         } else {
                             // Sync worked - reset offset

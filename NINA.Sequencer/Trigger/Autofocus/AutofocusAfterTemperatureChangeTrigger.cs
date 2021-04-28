@@ -49,11 +49,10 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         private IFocuserMediator focuserMediator;
         private IGuiderMediator guiderMediator;
         private IImagingMediator imagingMediator;
-        private IApplicationStatusMediator applicationStatusMediator;
         private double initialTemperature;
 
         [ImportingConstructor]
-        public AutofocusAfterTemperatureChangeTrigger(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator, IApplicationStatusMediator applicationStatusMediator) : base() {
+        public AutofocusAfterTemperatureChangeTrigger(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator) : base() {
             this.history = history;
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
@@ -61,9 +60,8 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             this.focuserMediator = focuserMediator;
             this.guiderMediator = guiderMediator;
             this.imagingMediator = imagingMediator;
-            this.applicationStatusMediator = applicationStatusMediator;
             Amount = 5;
-            TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator));
+            TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator));
         }
 
         private IList<string> issues = new List<string>();
@@ -98,7 +96,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         }
 
         public override object Clone() {
-            return new AutofocusAfterTemperatureChangeTrigger(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator) {
+            return new AutofocusAfterTemperatureChangeTrigger(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator) {
                 Icon = Icon,
                 Amount = Amount,
                 Name = Name,

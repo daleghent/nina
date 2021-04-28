@@ -26,12 +26,12 @@ using NINA.Core.Model.Equipment;
 using NINA.Core.Model;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.WPF.Base.Utility.AutoFocus;
+using NINA.Core.Enum;
 
 namespace NINA.WPF.Base.Interfaces.ViewModel {
 
-    public interface IAutoFocusVM : IDockableVM, IDisposable {
+    public interface IAutoFocusVM {
         double AverageContrast { get; }
-        ICommand CancelAutoFocusCommand { get; }
         double ContrastStdev { get; }
         DataPoint FinalFocusPoint { get; set; }
         AsyncObservableCollection<ScatterErrorPoint> FocusPoints { get; set; }
@@ -40,18 +40,12 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         ReportAutoFocusPoint LastAutoFocusPoint { get; set; }
         AsyncObservableCollection<DataPoint> PlotFocusPoints { get; set; }
         QuadraticFitting QuadraticFitting { get; set; }
-        ICommand StartAutoFocusCommand { get; }
-        ApplicationStatus Status { get; set; }
         TrendlineFitting TrendlineFitting { get; set; }
-        Boolean ChartListSelectable { get; }
-        ICommand LoadChartCommand { get; }
+        AFMethodEnum AutoFocusChartMethod { get; set; }
+        AFCurveFittingEnum AutoFocusChartCurveFitting { get; set; }
 
         Task<AutoFocusReport> StartAutoFocus(FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress);
 
-        void UpdateDeviceInfo(CameraInfo cameraInfo);
-
-        void UpdateDeviceInfo(FilterWheelInfo deviceInfo);
-
-        void UpdateDeviceInfo(FocuserInfo focuserInfo);
+        void SetCurveFittings(string method, string fitting);
     }
 }

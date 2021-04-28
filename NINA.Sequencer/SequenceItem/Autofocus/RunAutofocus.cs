@@ -49,10 +49,9 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
         private IFocuserMediator focuserMediator;
         private IGuiderMediator guiderMediator;
         private IImagingMediator imagingMediator;
-        private IApplicationStatusMediator applicationStatusMediator;
 
         [ImportingConstructor]
-        public RunAutofocus(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator, IApplicationStatusMediator applicationStatusMediator) {
+        public RunAutofocus(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator) {
             this.profileService = profileService;
             this.history = history;
             this.cameraMediator = cameraMediator;
@@ -60,8 +59,7 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
             this.focuserMediator = focuserMediator;
             this.guiderMediator = guiderMediator;
             this.imagingMediator = imagingMediator;
-            this.applicationStatusMediator = applicationStatusMediator;
-            AutoFocusVMFactory = new AutoFocusVMFactory(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator);
+            AutoFocusVMFactory = new AutoFocusVMFactory(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator);
         }
 
         private IList<string> issues = new List<string>();
@@ -78,7 +76,7 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
         public IAutoFocusVMFactory AutoFocusVMFactory { get; set; }
 
         public override object Clone() {
-            return new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator, applicationStatusMediator) {
+            return new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator) {
                 Icon = Icon,
                 Name = Name,
                 Category = Category,
@@ -87,21 +85,20 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            using (var autoFocus = AutoFocusVMFactory.Create()) {
-                var service = WindowServiceFactory.Create();
-                service.Show(autoFocus, autoFocus.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
-                try {
-                    FilterInfo filter = null;
-                    var selectedFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
-                    if (selectedFilter != null) {
-                        filter = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters.Where(x => x.Position == selectedFilter.Position).FirstOrDefault();
-                    }
-
-                    var report = await autoFocus.StartAutoFocus(filter, token, progress);
-                    history.AppendAutoFocusPoint(report);
-                } finally {
-                    service.DelayedClose(TimeSpan.FromSeconds(10));
+            var autoFocus = AutoFocusVMFactory.Create();
+            var service = WindowServiceFactory.Create();
+            service.Show(autoFocus, Loc.Instance["LblAutoFocus"], System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
+            try {
+                FilterInfo filter = null;
+                var selectedFilter = filterWheelMediator.GetInfo()?.SelectedFilter;
+                if (selectedFilter != null) {
+                    filter = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters.Where(x => x.Position == selectedFilter.Position).FirstOrDefault();
                 }
+
+                var report = await autoFocus.StartAutoFocus(filter, token, progress);
+                history.AppendAutoFocusPoint(report);
+            } finally {
+                service.DelayedClose(TimeSpan.FromSeconds(10));
             }
         }
 

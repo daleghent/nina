@@ -187,6 +187,8 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <h3 id="auto-focus-system">Auto-focus system</h3>
 <ul>
 <li>Auto-focus can now have different settings for gain, offset and binning per filter</li>
+<li>When using an autofocus filter with offsets this filter will now also be used for the first and last measurement instead of the filter prior to starting the auto focus</li>
+<li>During an auto-focus run while taking an image, if the download fails it will be automatically retried up to two times to try to recover</li>
 </ul>
 <h3 id="sequencer">Sequencer</h3>
 <ul>
