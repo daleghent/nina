@@ -80,11 +80,13 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
                     var filter = FW.Filters.Where((x) => x.Position == inputFilter.Position).FirstOrDefault();
                     if (filter == null) {
-                        Notification.ShowWarning(string.Format(Loc.Instance["LblFilterNotFoundForPosition"], (inputFilter.Position + 1)));
+                        Logger.Warning($"Filter not found for position {inputFilter.Position}");
+                        Notification.ShowWarning(string.Format(Loc.Instance["LblFilterNotFoundForPosition"], inputFilter.Position));
                         return null;
                     }
 
                     if (FW?.Position != filter.Position) {
+                        Logger.Info($"Moving to Filter {filter.Name} at Position {filter.Position}");
                         FilterWheelInfo.IsMoving = true;
                         Task changeFocus = null;
                         if (profileService.ActiveProfile.FocuserSettings.UseFilterWheelOffsets) {
@@ -102,7 +104,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                         FW.Position = filter.Position;
                         var changeFilter = Task.Run(async () => {
                             while (FW.Position == -1) {
-                                await Task.Delay(1000);
+                                await Task.Delay(1000, token);
                                 token.ThrowIfCancellationRequested();
                             }
                         });
