@@ -5397,4 +5397,7 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
     <value>Ponechat Zavřené</value>
   </data>
+  <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
+    <value>Stanovená poloha bodu ostření křivky je mimo měřicí body. Příslušenství je nepřesné nebo nastavení auto-ostření je pravděpodobně špatně nastavené.</value>
+  </data>
 </root>

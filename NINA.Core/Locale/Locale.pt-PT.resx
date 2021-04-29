@@ -5400,4 +5400,7 @@ Para mudar rapidamente as condições, uma amostra menor ajudará a responder ma
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
     <value>Keep Closed</value>
   </data>
+  <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
+    <value>Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect.</value>
+  </data>
 </root>
