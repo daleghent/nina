@@ -87,6 +87,23 @@ namespace NINATest.Sequencer.Conditions {
         }
 
         [Test]
+        public void TimeCondition_SelectProvider_OffsetApplied() {
+            var providerMock = new Mock<IDateTimeProvider>();
+            providerMock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(1, 2, 3, 4, 5, 6));
+            var provider2Mock = new Mock<IDateTimeProvider>();
+            provider2Mock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 10, 30, 10, 20, 30));
+            provider2Mock.Setup(x => x.GetDateTime(It.IsAny<ISequenceEntity>())).Returns(new DateTime(2000, 10, 30, 10, 20, 30));
+
+            var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object, provider2Mock.Object });
+            sut.SelectedProvider = sut.DateTimeProviders.Last();
+            sut.MinutesOffset = -5;
+
+            sut.Hours.Should().Be(5);
+            sut.Minutes.Should().Be(15);
+            sut.Seconds.Should().Be(25);
+        }
+
+        [Test]
         [TestCase(0, 10, 10)]
         [TestCase(5, 10, 5)]
         [TestCase(15, 10, 0)]

@@ -39,6 +39,8 @@ namespace NINA.Sequencer.Conditions {
 
         private int seconds;
 
+        private int minutesOffset;
+
         private IDateTimeProvider selectedProvider;
 
         [ImportingConstructor]
@@ -108,7 +110,18 @@ namespace NINA.Sequencer.Conditions {
                 if (selectedProvider != null) {
                     UpdateTime();
                     RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(HasFixedTimeProvider));
                 }
+            }
+        }
+
+        [JsonProperty]
+        public int MinutesOffset {
+            get => minutesOffset;
+            set {
+                minutesOffset = value;
+                UpdateTime();
+                RaisePropertyChanged();
             }
         }
 
@@ -118,6 +131,13 @@ namespace NINA.Sequencer.Conditions {
                 if (remaining.TotalSeconds < 0) return new TimeSpan(0);
                 return remaining;
             }
+        }
+
+        public bool HasFixedTimeProvider {
+            get  {
+                return selectedProvider != null && !(selectedProvider is TimeProvider);
+            }
+            set => throw new InvalidOperationException();
         }
 
         public override bool Check(ISequenceItem nextItem) {
@@ -142,6 +162,7 @@ namespace NINA.Sequencer.Conditions {
                 Hours = Hours,
                 Minutes = Minutes,
                 Seconds = Seconds,
+                MinutesOffset = MinutesOffset,
                 Name = Name,
                 Category = Category,
                 Description = Description,
@@ -150,6 +171,9 @@ namespace NINA.Sequencer.Conditions {
 
         private void UpdateTime() {
             var t = selectedProvider.GetDateTime(this);
+            if (HasFixedTimeProvider) {
+                t += TimeSpan.FromMinutes(MinutesOffset);
+            }
             Hours = t.Hour;
             Minutes = t.Minute;
             Seconds = t.Second;

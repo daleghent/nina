@@ -321,15 +321,14 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     int width = size.result[0];
                     int height = size.result[1];
                     double pct = profileService.ActiveProfile.GuiderSettings.PHD2ROIPct / 100d;
-                    double invertPct = 1 - pct;
 
                     int halfWidth = width / 2;
                     int halfHeight = height / 2;
 
                     int roiX = (int)(halfWidth - halfWidth * pct);
                     int roiY = (int)(halfHeight - halfHeight * pct);
-                    int roiWidth = (int)(halfWidth + halfWidth * pct);
-                    int roiHeight = (int)(halfHeight + halfHeight * pct);
+                    int roiWidth = (int)(width * pct);
+                    int roiHeight = (int)(height * pct);
 
                     return new int[] { roiX, roiY, roiWidth, roiHeight };
                 }

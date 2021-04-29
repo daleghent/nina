@@ -238,7 +238,7 @@ L'aplicació ha de provar de recuperar-se de l'error? (Pot provocar un comportam
     <value>arcmin</value>
   </data>
   <data name="LblMaxArcmin" xml:space="preserve">
-    <value>Max arcmin</value>
+    <value>Max. arcmin</value>
   </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>arcseg</value>
@@ -2062,7 +2062,7 @@ HFR calculat: {2}    </value>
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>From N.I.N.A. to Telescope</value>
+    <value>Des de N.I.N.A. al Telescopi</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>No</value>
@@ -2489,10 +2489,10 @@ HFR calculat: {2}    </value>
     <value>Resolució de Plaques</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
-    <value>Recentering after too much drift</value>
+    <value>Centrar després d'una deriva excessiva</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
-    <value>No target set</value>
+    <value>Sense objectiu fixat</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Si us plau canviar al filtre {0}</value>
@@ -3160,7 +3160,7 @@ Els valors s'han de sincronitzar?</value>
     <value>Telescopi sincronitzat a les coordenades</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>From Telescope to N.I.N.A.</value>
+    <value>Des del Telescopi a N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>Velocitat de Guiatge en AR</value>
@@ -4456,10 +4456,10 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Esperar un Temps</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
-    <value>Center After Drift</value>
+    <value>Centrar després de la deriva</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+    <value>Un activador per iniciar un nou procés de centrat després de la resolució de plaques determina que el telescopi s'ha allunyat massa de les coordenades de l'objectiu</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Un activador per iniciar l'enfocament automàtic després que l’HFR hagi augmentat la quantitat donada en percentatge des de la darrera execució d’enfocament automàtic o inici de la seqüència</value>
@@ -4531,7 +4531,7 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Dither després de les exposicions</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
-    <value>Evaluate After Exposures</value>
+    <value>Avaluar després de les Exposicions</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>Després de les Exposicions</value>
@@ -5397,5 +5397,8 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
     <value>Mantenir tancat</value>
+  </data>
+  <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
+    <value>La posició determinada del punt d'enfocament està fora dels punts de mesurament generals de la corba. L'ajustament és incorrecte i la configuració de l'enfocament automàtic probablement sigui incorrecta.</value>
   </data>
 </root>
