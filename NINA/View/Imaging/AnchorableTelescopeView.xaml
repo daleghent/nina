@@ -92,15 +92,6 @@
                 BorderBrush="{StaticResource BorderBrush}"
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
-                    <TextBlock Text="{ns:Loc LblMeridianFlipIn}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding TelescopeInfo.TimeToMeridianFlipString}" />
-                </UniformGrid>
-            </Border>
-            <Border
-                Margin="0,5,0,0"
-                BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0">
-                <UniformGrid VerticalAlignment="Center" Columns="2">
 
                     <TextBlock Text="{ns:Loc LblRightAscension}" />
                     <TextBlock Margin="5,0,0,0" Text="{Binding TelescopeInfo.RightAscensionString}" />

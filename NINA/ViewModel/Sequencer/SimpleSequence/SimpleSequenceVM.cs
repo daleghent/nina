@@ -247,13 +247,12 @@ namespace NINA.ViewModel {
                 if (value) {
                     foreach (var item in Targets.Items) {
                         var target = item as SimpleDSOContainer;
-                        target.Add(factory.GetTrigger<MeridianFlipTrigger>());
+                        target.MeridianFlipTrigger = factory.GetTrigger<MeridianFlipTrigger>();
                     }
                 } else {
                     foreach (var item in Targets.Items) {
                         var target = item as SimpleDSOContainer;
-                        var t = target.Triggers.FirstOrDefault(x => x is MeridianFlipTrigger);
-                        target.Remove(t);
+                        target.MeridianFlipTrigger = null;
                     }
                 }
                 RaisePropertyChanged();

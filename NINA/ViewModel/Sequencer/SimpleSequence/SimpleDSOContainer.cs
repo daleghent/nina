@@ -194,6 +194,19 @@ namespace NINA.Sequencer.Container {
             }
         }
 
+        public MeridianFlipTrigger MeridianFlipTrigger {
+            get => Triggers.FirstOrDefault(x => x is MeridianFlipTrigger) as MeridianFlipTrigger;
+            set {
+                if (value != null) {
+                    Add(value);
+                } else {
+                    var t = Triggers.FirstOrDefault(x => x is MeridianFlipTrigger);
+                    Remove(t);
+                }
+                RaisePropertyChanged();
+            }
+        }
+
         public ISimpleExposure AddSimpleExposure() {
             SimpleExposure item;
             if (SelectedSimpleExposure != null) {
