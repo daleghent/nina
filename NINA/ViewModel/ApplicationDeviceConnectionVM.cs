@@ -168,6 +168,24 @@ namespace NINA.ViewModel {
 
         public async Task DisconnectEquipment() {
             try {
+                await guiderMediator.Disconnect();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
+            try {
+                await domeMediator.Disconnect();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
+            try {
+                await flatDeviceMediator.Disconnect();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+
+            try {
                 await cameraMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -175,12 +193,6 @@ namespace NINA.ViewModel {
 
             try {
                 await telescopeMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            try {
-                await domeMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }
@@ -199,18 +211,6 @@ namespace NINA.ViewModel {
 
             try {
                 await rotatorMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            try {
-                await flatDeviceMediator.Disconnect();
-            } catch (Exception ex) {
-                Logger.Error(ex);
-            }
-
-            try {
-                await guiderMediator.Disconnect();
             } catch (Exception ex) {
                 Logger.Error(ex);
             }

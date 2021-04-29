@@ -394,7 +394,7 @@ namespace NINA.ViewModel.FramingAssistant {
         private Coordinates telescopeCoordinates = new Coordinates(0, 0, Epoch.J2000, Coordinates.RAType.Degrees);
 
         public void UpdateDeviceInfo(TelescopeInfo deviceInfo) {
-            if (deviceInfo.Connected) {
+            if (deviceInfo.Connected && deviceInfo.Coordinates != null) {
                 telescopeConnected = true;
                 var coordinates = deviceInfo.Coordinates.Transform(Epoch.J2000);
                 if (Math.Abs(telescopeCoordinates.RADegrees - coordinates.RADegrees) > 0.01 || Math.Abs(telescopeCoordinates.Dec - coordinates.Dec) > 0.01) {
