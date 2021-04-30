@@ -57,33 +57,36 @@ namespace NINA.PlateSolving {
 
                 result.Separation = result.DetermineSeparation(parameter.Coordinates);
 
-                var position = (telescopeMediator.GetCurrentPosition() - offset).Transform(result.Coordinates.Epoch);
-                Logger.Info($"Centering Solver - Scope Position: {position}; Centering Coordinates: {parameter.Coordinates}; Solve Result: {result.Coordinates}; Separation {result.Separation}");
+                var position = (telescopeMediator.GetCurrentPosition()).Transform(result.Coordinates.Epoch);
+                var positionWithOffset = position - offset;
+                Logger.Info($"Centering Solver - Scope Position: {position}; Offset: {offset}; Centering Coordinates: {parameter.Coordinates}; Solved: {result.Coordinates}; Separation {result.Separation}");
 
                 solveProgress?.Report(new PlateSolveProgress() { PlateSolveResult = result });
 
                 if (Math.Abs(result.Separation.Distance.ArcMinutes) > parameter.Threshold) {
                     progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceSyncing"] });
                     if (parameter.NoSync || !await telescopeMediator.Sync(result.Coordinates)) {
-                        offset = result.DetermineSeparation(parameter.Coordinates + offset);
+                        var oldOffset = offset;
+                        offset = result.DetermineSeparation(position);
 
-                        Logger.Warning($"Sync failed - calculating offset instead to compensate.  Original: {position.Transform(result.Coordinates.Epoch)}; Solved: {result.Coordinates}; Offset: {offset}");
+                        Logger.Info($"Sync {(parameter.NoSync ? "disabled" : "failed")} - calculating offset instead to compensate.  Original: {positionWithOffset}; Original Offset {oldOffset}; Solved: {result.Coordinates}; New Offset: {offset}");
                         progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveSyncViaTargetOffset"] });
                     } else {
                         var positionAfterSync = telescopeMediator.GetCurrentPosition().Transform(result.Coordinates.Epoch);
 
                         if (AstroUtil.DegreeToArcsec(Math.Abs(positionAfterSync.RADegrees - result.Coordinates.RADegrees)) > 1
                             || AstroUtil.DegreeToArcsec(Math.Abs(positionAfterSync.Dec - result.Coordinates.Dec)) > 1) {
-                            offset = result.DetermineSeparation(parameter.Coordinates);
-                            Logger.Warning($"Sync failed silently - calculating offset instead to compensate.  Original: {positionAfterSync}; Solved: {result.Coordinates}; Offset: {offset}");
+                            offset = result.DetermineSeparation(positionAfterSync);
+                            Logger.Warning($"Sync failed silently - calculating offset instead to compensate.  Original: {positionAfterSync}; Solved: {result.Coordinates}; New Offset: {offset}");
                         } else {
                             // Sync worked - reset offset
-                            Logger.Debug("Synced sucessfully");
+                            Logger.Debug($"Synced sucessfully. Telescope position {positionAfterSync}");
                             offset = new Separation();
                         }
                     }
 
-                    Logger.Info($"Slewing to target after sync. Target coordinates RA: {parameter.Coordinates.RAString} Dec: {parameter.Coordinates.DecString} Epoch: {parameter.Coordinates.Epoch}");
+                    var scopePosition = telescopeMediator.GetCurrentPosition().Transform(result.Coordinates.Epoch);
+                    Logger.Info($"Slewing to target after sync. Current Position: {scopePosition}; Target coordinates: {parameter.Coordinates}; Offset {offset}");
                     progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolveNotInsideToleranceReslew"] });
 
                     await telescopeMediator.SlewToCoordinatesAsync(parameter.Coordinates + offset, ct);

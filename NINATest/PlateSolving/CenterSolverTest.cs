@@ -132,7 +132,9 @@ namespace NINATest.PlateSolving {
                 .SetupSequence(x => x.GetCurrentPosition())
                 .Returns(coordinates3) // Telescope think it is on target
                 .Returns(coordinates1) // Coordinates after first solve after sync
+                .Returns(coordinates1) // Coordinates after first solve after sync
                 .Returns(coordinates3) // Telescope think it is on target
+                .Returns(coordinates2) // Coordinates after second solve after sync
                 .Returns(coordinates2) // Coordinates after second solve after sync
                 .Returns(coordinates3) // Telescope think it is on target
                 .Returns(coordinates3);// Telescope really is on target
@@ -172,6 +174,7 @@ namespace NINATest.PlateSolving {
             telescopeMediatorMock
                 .SetupSequence(x => x.GetCurrentPosition())
                 .Returns(coordinates3) // Telescope think it is on target
+                .Returns(coordinates3) // Telescope doesn't accept syncs and is still reporting old coordinates
                 .Returns(coordinates3);// Telescope doesn't accept syncs and is still reporting old coordinates
             telescopeMediatorMock
                 .SetupSequence(x => x.Sync(It.IsAny<Coordinates>()))
@@ -215,6 +218,7 @@ namespace NINATest.PlateSolving {
             telescopeMediatorMock
                 .SetupSequence(x => x.GetCurrentPosition())
                 .Returns(coordinates3) // Telescope think it is on target
+                .Returns(coordinates3) // Telescope doesn't accept syncs and is still reporting old coordinates
                 .Returns(coordinates3);// Telescope doesn't accept syncs and is still reporting old coordinates
             telescopeMediatorMock
                 .SetupSequence(x => x.Sync(It.IsAny<Coordinates>()))
@@ -256,6 +260,7 @@ namespace NINATest.PlateSolving {
             telescopeMediatorMock
                 .SetupSequence(x => x.GetCurrentPosition())
                 .Returns(coordinates3) // Telescope think it is on target
+                .Returns(coordinates3) // Telescope doesn't accept syncs and is still reporting old coordinates
                 .Returns(coordinates3) // Telescope doesn't accept syncs and is still reporting old coordinates
                 .Returns(coordinates3);// Telescope think it is on target
             telescopeMediatorMock
