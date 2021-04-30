@@ -23,11 +23,11 @@ namespace NINA.Core.Enum {
         [Description("LblError")]
         ERROR,
 
-        [Description("LblInfo")]
-        INFO,
-
         [Description("LblWarning")]
         WARNING,
+
+        [Description("LblInfo")]
+        INFO,
 
         [Description("LblDebug")]
         DEBUG,

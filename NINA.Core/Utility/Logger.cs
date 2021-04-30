@@ -122,21 +122,21 @@ namespace NINA.Core.Utility {
             }
         }
 
-        public static void Info(string message,
-                [CallerMemberName] string memberName = "",
-                [CallerFilePath] string sourceFilePath = "",
-                [CallerLineNumber] int lineNumber = 0) {
-            if ((int)LogLevel >= 1) {
-                Append(EnrichLogMessage(LogLevelEnum.INFO, message, memberName, sourceFilePath, lineNumber));
-            }
-        }
-
         public static void Warning(string message,
                 [CallerMemberName] string memberName = "",
                 [CallerFilePath] string sourceFilePath = "",
                 [CallerLineNumber] int lineNumber = 0) {
-            if ((int)LogLevel >= 2) {
+            if ((int)LogLevel >= 1) {
                 Append(EnrichLogMessage(LogLevelEnum.WARNING, message, memberName, sourceFilePath, lineNumber));
+            }
+        }
+
+        public static void Info(string message,
+                [CallerMemberName] string memberName = "",
+                [CallerFilePath] string sourceFilePath = "",
+                [CallerLineNumber] int lineNumber = 0) {
+            if ((int)LogLevel >= 2) {
+                Append(EnrichLogMessage(LogLevelEnum.INFO, message, memberName, sourceFilePath, lineNumber));
             }
         }
 
