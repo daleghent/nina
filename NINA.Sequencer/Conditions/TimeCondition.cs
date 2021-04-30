@@ -134,7 +134,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public bool HasFixedTimeProvider {
-            get  {
+            get {
                 return selectedProvider != null && !(selectedProvider is TimeProvider);
             }
             set => throw new InvalidOperationException();
@@ -170,17 +170,19 @@ namespace NINA.Sequencer.Conditions {
         }
 
         private void UpdateTime() {
-            var t = selectedProvider.GetDateTime(this);
-            if (HasFixedTimeProvider) {
-                t += TimeSpan.FromMinutes(MinutesOffset);
+            if (SelectedProvider != null) {
+                var t = SelectedProvider.GetDateTime(this);
+                if (HasFixedTimeProvider) {
+                    t += TimeSpan.FromMinutes(MinutesOffset);
+                }
+                Hours = t.Hour;
+                Minutes = t.Minute;
+                Seconds = t.Second;
             }
-            Hours = t.Hour;
-            Minutes = t.Minute;
-            Seconds = t.Second;
         }
 
         public override void AfterParentChanged() {
-            if (!(selectedProvider is TimeProvider)) {
+            if (!(SelectedProvider is TimeProvider)) {
                 UpdateTime();
             }
             RunWatchdogIfInsideSequenceRoot();
