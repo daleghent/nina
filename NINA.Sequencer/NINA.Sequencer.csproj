@@ -292,6 +292,7 @@
     <Compile Include="Trigger\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Trigger\Guider\RestoreGuiding.cs" />
     <Compile Include="Trigger\Guider\DitherAfterExposures.cs" />
     <Compile Include="Trigger\MeridianFlip\MeridianFlipTrigger.cs" />
     <Compile Include="Trigger\Platesolving\CenterAfterDriftTrigger.cs" />

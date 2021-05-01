@@ -2141,6 +2141,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Resumes guiding if it was previously interrupted.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_Guider_RestoreGuiding_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_Guider_RestoreGuiding_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restore Guiding.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_Guider_RestoreGuidings_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_Guider_RestoreGuidings_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to A trigger to initiate a meridian flip when conditions are met.
         /// </summary>
         internal static string Lbl_SequenceTrigger_MeridianFlipTrigger_Description {
