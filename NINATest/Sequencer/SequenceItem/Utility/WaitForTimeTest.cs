@@ -14,6 +14,7 @@
 
 using FluentAssertions;
 using Moq;
+using NINA.Astrometry;
 using NINA.Sequencer;
 using NINA.Sequencer.SequenceItem.Utility;
 using NINA.Sequencer.Utility.DateTimeProvider;
@@ -42,6 +43,28 @@ namespace NINATest.Sequencer.SequenceItem.Utility {
             item2.Hours.Should().Be(sut.Hours);
             item2.Minutes.Should().Be(sut.Minutes);
             item2.Seconds.Should().Be(sut.Seconds);
+        }
+
+        [Test]
+        public void WaitForTime_Clone_GoodClone_TimeProviderDoesntOverwrite() {
+            var hours = (int)AstroUtil.EuclidianModulus(DateTime.Now.Hour + 1, 24);
+
+            var l = new List<IDateTimeProvider>() { new TimeProvider() };
+            var sut = new WaitForTime(l);
+            sut.Icon = new System.Windows.Media.GeometryGroup();
+            sut.SelectedProvider = l.First();
+            sut.Hours = hours;
+            sut.Minutes = 20;
+            sut.Seconds = 30;
+            var item2 = (WaitForTime)sut.Clone();
+            item2.AfterParentChanged();
+
+            item2.Should().NotBeSameAs(sut);
+            item2.Icon.Should().BeSameAs(sut.Icon);
+            item2.DateTimeProviders.Should().BeSameAs(l);
+            item2.Hours.Should().Be(hours);
+            item2.Minutes.Should().Be(20);
+            item2.Seconds.Should().Be(30);
         }
 
         [Test]

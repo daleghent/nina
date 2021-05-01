@@ -34,6 +34,12 @@ namespace NINA.Sequencer.SequenceItem.Utility {
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
     public class WaitForTime : SequenceItem {
+        private IList<IDateTimeProvider> dateTimeProviders;
+        private int hours;
+        private int minutes;
+        private int minutesOffset;
+        private int seconds;
+        private IDateTimeProvider selectedProvider;
 
         [ImportingConstructor]
         public WaitForTime(IList<IDateTimeProvider> dateTimeProviders) {
@@ -46,7 +52,19 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             this.SelectedProvider = selectedProvider;
         }
 
-        private int hours;
+        public IList<IDateTimeProvider> DateTimeProviders {
+            get => dateTimeProviders;
+            set {
+                dateTimeProviders = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool HasFixedTimeProvider {
+            get {
+                return selectedProvider != null && !(selectedProvider is TimeProvider);
+            }
+        }
 
         [JsonProperty]
         public int Hours {
@@ -57,8 +75,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             }
         }
 
-        private int minutes;
-
         [JsonProperty]
         public int Minutes {
             get => minutes;
@@ -68,7 +84,15 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             }
         }
 
-        private int seconds;
+        [JsonProperty]
+        public int MinutesOffset {
+            get => minutesOffset;
+            set {
+                minutesOffset = value;
+                UpdateTime();
+                RaisePropertyChanged();
+            }
+        }
 
         [JsonProperty]
         public int Seconds {
@@ -79,16 +103,30 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             }
         }
 
-        private int minutesOffset;
-
         [JsonProperty]
-        public int MinutesOffset {
-            get => minutesOffset;
+        public IDateTimeProvider SelectedProvider {
+            get => selectedProvider;
             set {
-                minutesOffset = value;
-                UpdateTimeBasedOnProvider();
-                RaisePropertyChanged();
+                selectedProvider = value;
+                if (selectedProvider != null) {
+                    UpdateTime();
+                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(HasFixedTimeProvider));
+                }
             }
+        }
+
+        private void UpdateTime() {
+            if (HasFixedTimeProvider) {
+                var t = SelectedProvider.GetDateTime(this) + TimeSpan.FromMinutes(MinutesOffset);
+                Hours = t.Hour;
+                Minutes = t.Minute;
+                Seconds = t.Second;
+            }
+        }
+
+        public override void AfterParentChanged() {
+            UpdateTime();
         }
 
         public override object Clone() {
@@ -102,55 +140,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 Category = Category,
                 Description = Description,
             };
-        }
-
-        private IDateTimeProvider selectedProvider;
-
-        [JsonProperty]
-        public IDateTimeProvider SelectedProvider {
-            get => selectedProvider;
-            set {
-                selectedProvider = value;
-                if (selectedProvider != null) {
-                    UpdateTimeBasedOnProvider();
-                    RaisePropertyChanged();
-                }
-
-                HasFixedTimeProvider = selectedProvider != null && !(selectedProvider is TimeProvider);
-            }
-        }
-
-        private void UpdateTimeBasedOnProvider() {
-            if (selectedProvider != null) {
-                var t = selectedProvider.GetDateTime(this);
-                t += TimeSpan.FromMinutes(MinutesOffset);
-                Hours = t.Hour;
-                Minutes = t.Minute;
-                Seconds = t.Second;
-            }
-        }
-
-        private IList<IDateTimeProvider> dateTimeProviders;
-
-        public IList<IDateTimeProvider> DateTimeProviders {
-            get => dateTimeProviders;
-            set {
-                dateTimeProviders = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private void UpdateTime() {
-            var t = selectedProvider.GetDateTime(this);
-            Hours = t.Hour;
-            Minutes = t.Minute;
-            Seconds = t.Second;
-        }
-
-        public override void AfterParentChanged() {
-            if (!(selectedProvider is TimeProvider)) {
-                UpdateTime();
-            }
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
@@ -175,18 +164,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
         public override string ToString() {
             return $"Category: {Category}, Item: {nameof(WaitForTime)}, Time: {Hours}:{Minutes}:{Seconds}h";
-        }
-
-        private bool hasFixedTimeProvider = false;
-
-        public bool HasFixedTimeProvider {
-            get => hasFixedTimeProvider;
-            set {
-                if (value != hasFixedTimeProvider) {
-                    hasFixedTimeProvider = value;
-                    RaisePropertyChanged();
-                }
-            }
         }
     }
 }

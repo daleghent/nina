@@ -32,15 +32,10 @@ namespace NINA.Sequencer.Conditions {
     [JsonObject(MemberSerialization.OptIn)]
     public class TimeCondition : SequenceCondition {
         private IList<IDateTimeProvider> dateTimeProviders;
-
         private int hours;
-
         private int minutes;
-
-        private int seconds;
-
         private int minutesOffset;
-
+        private int seconds;
         private IDateTimeProvider selectedProvider;
 
         [ImportingConstructor]
@@ -49,10 +44,6 @@ namespace NINA.Sequencer.Conditions {
             this.DateTimeProviders = dateTimeProviders;
             this.SelectedProvider = DateTimeProviders?.FirstOrDefault();
             ConditionWatchdog = new ConditionWatchdog(() => { Tick(); return Task.CompletedTask; }, TimeSpan.FromSeconds(1));
-        }
-
-        private void Tick() {
-            RaisePropertyChanged(nameof(RemainingTime));
         }
 
         public TimeCondition(IList<IDateTimeProvider> dateTimeProviders, IDateTimeProvider selectedProvider) {
@@ -69,6 +60,12 @@ namespace NINA.Sequencer.Conditions {
             set {
                 dateTimeProviders = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        public bool HasFixedTimeProvider {
+            get {
+                return selectedProvider != null && !(selectedProvider is TimeProvider);
             }
         }
 
@@ -89,6 +86,24 @@ namespace NINA.Sequencer.Conditions {
                 minutes = value;
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(RemainingTime));
+            }
+        }
+
+        [JsonProperty]
+        public int MinutesOffset {
+            get => minutesOffset;
+            set {
+                minutesOffset = value;
+                UpdateTime();
+                RaisePropertyChanged();
+            }
+        }
+
+        public TimeSpan RemainingTime {
+            get {
+                TimeSpan remaining = (CalculateRemainingTime() - DateTime.Now);
+                if (remaining.TotalSeconds < 0) return new TimeSpan(0);
+                return remaining;
             }
         }
 
@@ -115,35 +130,6 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
-        [JsonProperty]
-        public int MinutesOffset {
-            get => minutesOffset;
-            set {
-                minutesOffset = value;
-                UpdateTime();
-                RaisePropertyChanged();
-            }
-        }
-
-        public TimeSpan RemainingTime {
-            get {
-                TimeSpan remaining = (CalculateRemainingTime() - DateTime.Now);
-                if (remaining.TotalSeconds < 0) return new TimeSpan(0);
-                return remaining;
-            }
-        }
-
-        public bool HasFixedTimeProvider {
-            get {
-                return selectedProvider != null && !(selectedProvider is TimeProvider);
-            }
-            set => throw new InvalidOperationException();
-        }
-
-        public override bool Check(ISequenceItem nextItem) {
-            return DateTime.Now + (nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero) <= CalculateRemainingTime();
-        }
-
         private DateTime CalculateRemainingTime() {
             var now = DateTime.Now;
             var then = new DateTime(now.Year, now.Month, now.Day, Hours, Minutes, Seconds);
@@ -156,17 +142,8 @@ namespace NINA.Sequencer.Conditions {
             return then;
         }
 
-        public override object Clone() {
-            return new TimeCondition(DateTimeProviders, SelectedProvider) {
-                Icon = Icon,
-                Hours = Hours,
-                Minutes = Minutes,
-                Seconds = Seconds,
-                MinutesOffset = MinutesOffset,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
+        private void Tick() {
+            RaisePropertyChanged(nameof(RemainingTime));
         }
 
         private void UpdateTime() {
@@ -181,6 +158,23 @@ namespace NINA.Sequencer.Conditions {
         public override void AfterParentChanged() {
             UpdateTime();
             RunWatchdogIfInsideSequenceRoot();
+        }
+
+        public override bool Check(ISequenceItem nextItem) {
+            return DateTime.Now + (nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero) <= CalculateRemainingTime();
+        }
+
+        public override object Clone() {
+            return new TimeCondition(DateTimeProviders, SelectedProvider) {
+                Icon = Icon,
+                Hours = Hours,
+                Minutes = Minutes,
+                Seconds = Seconds,
+                MinutesOffset = MinutesOffset,
+                Name = Name,
+                Category = Category,
+                Description = Description,
+            };
         }
 
         public override string ToString() {
