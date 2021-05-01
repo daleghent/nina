@@ -167,6 +167,7 @@
     <Compile Include="Interfaces\IDateTimeProvider.cs" />
     <Compile Include="Interfaces\IDeepSkyObjectContainer.cs" />
     <Compile Include="Interfaces\IExecutionStrategy.cs" />
+    <Compile Include="Interfaces\IExposureItem.cs" />
     <Compile Include="Interfaces\IImmutableContainer.cs" />
     <Compile Include="Interfaces\IPlugin.cs" />
     <Compile Include="Interfaces\IPluginProvider.cs" />

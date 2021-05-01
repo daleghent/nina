@@ -37,6 +37,7 @@ using NINA.Equipment.Model;
 using NINA.Astrometry;
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Sequencer.Interfaces;
 
 namespace NINA.Sequencer.SequenceItem.Imaging {
 
@@ -46,7 +47,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Camera")]
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class TakeExposure : SequenceItem, IValidatable {
+    public class TakeExposure : SequenceItem, IExposureItem, IValidatable {
         private ICameraMediator cameraMediator;
         private IImagingMediator imagingMediator;
         private IImageSaveMediator imageSaveMediator;
