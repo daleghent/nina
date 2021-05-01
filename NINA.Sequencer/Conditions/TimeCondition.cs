@@ -170,11 +170,8 @@ namespace NINA.Sequencer.Conditions {
         }
 
         private void UpdateTime() {
-            if (SelectedProvider != null) {
-                var t = SelectedProvider.GetDateTime(this);
-                if (HasFixedTimeProvider) {
-                    t += TimeSpan.FromMinutes(MinutesOffset);
-                }
+            if (HasFixedTimeProvider) {
+                var t = SelectedProvider.GetDateTime(this) + TimeSpan.FromMinutes(MinutesOffset);
                 Hours = t.Hour;
                 Minutes = t.Minute;
                 Seconds = t.Second;
@@ -182,9 +179,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         public override void AfterParentChanged() {
-            if (!(SelectedProvider is TimeProvider)) {
-                UpdateTime();
-            }
+            UpdateTime();
             RunWatchdogIfInsideSequenceRoot();
         }
 
