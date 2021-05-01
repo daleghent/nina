@@ -40,7 +40,9 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 using Trinet.Core.IO.Ntfs;
 
 namespace NINA.Plugin {
+
     public class PluginProvider : IPluginProvider {
+
         public PluginProvider(IProfileService profileService,
                               ICameraMediator cameraMediator,
                               ITelescopeMediator telescopeMediator,
@@ -288,24 +290,28 @@ namespace NINA.Plugin {
         private IOrderedEnumerable<T> Assign<T>(IEnumerable<Lazy<T, Dictionary<string, object>>> imports, IApplicationResourceDictionary resourceDictionary) where T : ISequenceEntity {
             var items = new List<T>();
             foreach (var importItem in imports) {
-                var item = importItem.Value;
-                if (importItem.Metadata.TryGetValue("Name", out var nameObj)) {
-                    string name = nameObj.ToString();
-                    item.Name = GrabLabel(name);
+                try {
+                    var item = importItem.Value;
+                    if (importItem.Metadata.TryGetValue("Name", out var nameObj)) {
+                        string name = nameObj.ToString();
+                        item.Name = GrabLabel(name);
+                    }
+                    if (importItem.Metadata.TryGetValue("Description", out var descriptionObj)) {
+                        string description = descriptionObj.ToString();
+                        item.Description = GrabLabel(description);
+                    }
+                    if (importItem.Metadata.TryGetValue("Icon", out var iconObj)) {
+                        string icon = iconObj.ToString();
+                        item.Icon = (System.Windows.Media.GeometryGroup)resourceDictionary[icon];
+                    }
+                    if (importItem.Metadata.TryGetValue("Category", out var categoryObj)) {
+                        string category = categoryObj.ToString();
+                        item.Category = GrabLabel(category);
+                    }
+                    items.Add(item);
+                } catch (Exception) {
+                    // Skip item if anything fails
                 }
-                if (importItem.Metadata.TryGetValue("Description", out var descriptionObj)) {
-                    string description = descriptionObj.ToString();
-                    item.Description = GrabLabel(description);
-                }
-                if (importItem.Metadata.TryGetValue("Icon", out var iconObj)) {
-                    string icon = iconObj.ToString();
-                    item.Icon = (System.Windows.Media.GeometryGroup)resourceDictionary[icon];
-                }
-                if (importItem.Metadata.TryGetValue("Category", out var categoryObj)) {
-                    string category = categoryObj.ToString();
-                    item.Category = GrabLabel(category);
-                }
-                items.Add(item);
             }
             return items.OrderBy(item => item.Category + item.Name);
         }
