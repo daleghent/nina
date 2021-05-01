@@ -29,6 +29,7 @@ using NINA.Core.Locale;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.Core.Utility.Notification;
 using NINA.Sequencer.SequenceItem.Imaging;
+using NINA.Sequencer.Interfaces;
 
 namespace NINA.Sequencer.Trigger.Guider {
 
@@ -72,8 +73,8 @@ namespace NINA.Sequencer.Trigger.Guider {
         }
 
         public override bool ShouldTrigger(ISequenceItem nextItem) {
-            if (nextItem is TakeExposure) {
-                var takeExposure = (TakeExposure)nextItem;
+            if (nextItem is IExposureItem) {
+                var takeExposure = (IExposureItem)nextItem;
                 return takeExposure.ImageType == "LIGHT";
             }
             return false;

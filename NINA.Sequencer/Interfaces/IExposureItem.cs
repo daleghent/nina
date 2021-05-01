@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Model.Equipment;
 using NINA.Sequencer.SequenceItem;
 using System;
 using System.Collections.Generic;
@@ -26,5 +27,6 @@ namespace NINA.Sequencer.Interfaces {
         int Gain { get; }
         int Offset { get; }
         string ImageType { get; }
+        BinningMode Binning { get; }
     }
 }
