@@ -309,8 +309,9 @@ namespace NINA.Plugin {
                         item.Category = GrabLabel(category);
                     }
                     items.Add(item);
-                } catch (Exception) {
+                } catch (Exception ex) {
                     // Skip item if anything fails
+                    Logger.Error("Plugin Item failed to load ", ex);
                 }
             }
             return items.OrderBy(item => item.Category + item.Name);
