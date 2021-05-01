@@ -369,6 +369,10 @@
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type g:RestoreGuiding}">
+        <view:SequenceBlockView DataContext="{Binding}" />
+    </DataTemplate>
+
     <DataTemplate x:Key="NINA.Sequencer.Trigger.Platesolving.CenterAfterDriftTrigger_Mini">
         <mini:MiniTrigger DataContext="{Binding}">
             <mini:MiniTrigger.TriggerProgressContent>
