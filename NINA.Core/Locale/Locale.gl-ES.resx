@@ -4540,6 +4540,12 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>Dither despois de Exposicións</value>
   </data>
+  <data name="Lbl_SequenceTrigger_Guider_RestoreGuiding_Description" xml:space="preserve">
+    <value>Resumes guiding if it was previously interrupted</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_RestoreGuidings_Name" xml:space="preserve">
+    <value>Restore Guiding</value>
+  </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
     <value>Evaluate After Exposures</value>
   </data>

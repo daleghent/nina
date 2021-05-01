@@ -4529,6 +4529,12 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>Dither μετά από Εκθέσεις</value>
   </data>
+  <data name="Lbl_SequenceTrigger_Guider_RestoreGuiding_Description" xml:space="preserve">
+    <value>Resumes guiding if it was previously interrupted</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_RestoreGuidings_Name" xml:space="preserve">
+    <value>Restore Guiding</value>
+  </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
     <value>Evaluate After Exposures</value>
   </data>

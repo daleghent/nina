@@ -4530,6 +4530,12 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
   <data name="Lbl_SequenceTrigger_Guider_DitherAfterExposures_Name" xml:space="preserve">
     <value>Dithering po Expozicích</value>
   </data>
+  <data name="Lbl_SequenceTrigger_Guider_RestoreGuiding_Description" xml:space="preserve">
+    <value>Obnoví pointaci, pokud byla dříve přerušena</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_Guider_RestoreGuidings_Name" xml:space="preserve">
+    <value>Obnovit Pointaci</value>
+  </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
     <value>Vyhodnotit Po Expozicích</value>
   </data>
