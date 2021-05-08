@@ -244,22 +244,27 @@ namespace NINA.ViewModel.Sequencer {
         }
 
         private void SaveAsSequence(object arg) {
-            var initialDirectory = string.Empty;
-            if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
-                initialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
-            }
-            Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.InitialDirectory = initialDirectory;
-            dialog.Title = Loc.Instance["LblSave"];
-            dialog.FileName = Sequencer.MainContainer.Name;
-            dialog.DefaultExt = "json";
-            dialog.Filter = "N.I.N.A. sequence JSON|*." + dialog.DefaultExt;
-            dialog.OverwritePrompt = true;
+            try {
+                var initialDirectory = string.Empty;
+                if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
+                    initialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+                }
+                Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
+                dialog.InitialDirectory = initialDirectory;
+                dialog.Title = Loc.Instance["LblSave"];
+                dialog.FileName = Sequencer.MainContainer.Name;
+                dialog.DefaultExt = "json";
+                dialog.Filter = "N.I.N.A. sequence JSON|*." + dialog.DefaultExt;
+                dialog.OverwritePrompt = true;
 
-            if (dialog.ShowDialog().Value) {
-                var json = SequenceJsonConverter.Serialize(Sequencer.MainContainer);
-                File.WriteAllText(dialog.FileName, json);
-                SavePath = dialog.FileName;
+                if (dialog.ShowDialog().Value) {
+                    var json = SequenceJsonConverter.Serialize(Sequencer.MainContainer);
+                    File.WriteAllText(dialog.FileName, json);
+                    SavePath = dialog.FileName;
+                }
+            } catch (Exception ex) {
+                Logger.Error(ex);
+                Notification.ShowError(string.Format(Loc.Instance["Lbl_Sequencer_SaveSequence_FailureNotification"], Sequencer.MainContainer.Name, ex.Message));
             }
         }
 
@@ -267,8 +272,13 @@ namespace NINA.ViewModel.Sequencer {
             if (string.IsNullOrEmpty(SavePath)) {
                 SaveAsSequence(arg);
             } else {
-                var json = SequenceJsonConverter.Serialize(Sequencer.MainContainer);
-                File.WriteAllText(SavePath, json);
+                try {
+                    var json = SequenceJsonConverter.Serialize(Sequencer.MainContainer);
+                    File.WriteAllText(SavePath, json);
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                    Notification.ShowError(string.Format(Loc.Instance["Lbl_Sequencer_SaveSequence_FailureNotification"], Sequencer.MainContainer.Name, ex.Message));
+                }
             }
             if (!string.IsNullOrEmpty(SavePath)) {
                 Notification.ShowSuccess(string.Format(Loc.Instance["Lbl_Sequencer_SaveSequence_Notification"], Sequencer.MainContainer.Name, SavePath));

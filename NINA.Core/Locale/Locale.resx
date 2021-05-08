@@ -5416,4 +5416,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
     <value>Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect.</value>
   </data>
+  <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
+    <value>Failed to save Sequence "{0}": {1}</value>
+  </data>
 </root>

@@ -1833,6 +1833,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to save Sequence &quot;{0}&quot;: {1}.
+        /// </summary>
+        internal static string Lbl_Sequencer_SaveSequence_FailureNotification {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_SaveSequence_FailureNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sequence &quot;{0}&quot; saved successfully at {1}.
         /// </summary>
         internal static string Lbl_Sequencer_SaveSequence_Notification {
