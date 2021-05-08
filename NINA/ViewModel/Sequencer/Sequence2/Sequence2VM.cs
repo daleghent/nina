@@ -278,6 +278,7 @@ namespace NINA.ViewModel.Sequencer {
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError(string.Format(Loc.Instance["Lbl_Sequencer_SaveSequence_FailureNotification"], Sequencer.MainContainer.Name, ex.Message));
+                    return;
                 }
             }
             if (!string.IsNullOrEmpty(SavePath)) {
