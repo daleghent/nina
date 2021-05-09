@@ -206,21 +206,22 @@
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
-                    <TextBlock
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Visibility="{Binding HasFixedTimeProvider, Converter={StaticResource VisibilityConverter}}"
-                        Text="{ns:Loc LblTimeOffset}"
-                        ToolTip="{ns:Loc LblTimeOffsetTooltip}"/>
-                    <TextBox
-                        MinWidth="40"
-                        Margin="5,0,0,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        HorizontalContentAlignment="Right"
-                        Visibility="{Binding HasFixedTimeProvider, Converter={StaticResource VisibilityConverter}}"
-                        Text="{Binding MinutesOffset}" />
-                    <TextBlock VerticalAlignment="Center">m</TextBlock>
+                    <StackPanel Orientation="Horizontal" Visibility="{Binding HasFixedTimeProvider, Converter={StaticResource VisibilityConverter}}">
+                        <TextBlock
+                            Margin="5,0,0,0"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblTimeOffset}"
+                            ToolTip="{ns:Loc LblTimeOffsetTooltip}" />
+                        <TextBox
+                            MinWidth="40"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            HorizontalContentAlignment="Right"
+                            Text="{Binding MinutesOffset}"
+                            Visibility="{Binding HasFixedTimeProvider, Converter={StaticResource VisibilityConverter}}" />
+                        <TextBlock VerticalAlignment="Center">m</TextBlock>
+                    </StackPanel>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
