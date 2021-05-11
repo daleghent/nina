@@ -27,7 +27,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - ASCOM camera: SensorType is no longer considered to be a mandadory property
 
 ## Included Camera SDK Versions:
-- **Altair Astro:** 48.18421.20210202
+- **Altair Astro:** 48.18830.20210423
 - **Atik:** 2020.08.3.642
 - **Canon:** 13.13.0.6408
 - **FLI:** 1.104.0.0
