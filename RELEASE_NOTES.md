@@ -173,7 +173,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Binning info for Altair cameras are now properly inserted into Metadata
 
 ## Included Camera SDK Versions:
-- **Altair Astro:** 49.18598.20210310
+- **Altair Astro:** 49.18830.20210423
 - **Atik:** 2020.08.3.642
 - **Canon:** 13.13.0.6408
 - **FLI:** 1.104.0.0
