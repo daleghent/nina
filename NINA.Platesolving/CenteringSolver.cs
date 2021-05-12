@@ -74,13 +74,13 @@ namespace NINA.PlateSolving {
                     } else {
                         var positionAfterSync = telescopeMediator.GetCurrentPosition().Transform(result.Coordinates.Epoch);
 
-                        if (AstroUtil.DegreeToArcsec(Math.Abs(positionAfterSync.RADegrees - result.Coordinates.RADegrees)) > 1
-                            || AstroUtil.DegreeToArcsec(Math.Abs(positionAfterSync.Dec - result.Coordinates.Dec)) > 1) {
-                            offset = result.DetermineSeparation(positionAfterSync);
-                            Logger.Warning($"Sync failed silently - calculating offset instead to compensate.  Original: {positionAfterSync}; Solved: {result.Coordinates}; New Offset: {offset}");
+                        var syncDistance = result.DetermineSeparation(positionAfterSync);
+                        if (Math.Abs(syncDistance.Distance.ArcMinutes) > parameter.Threshold) {
+                            offset = syncDistance;
+                            Logger.Warning($"Sync failed silently - calculating offset instead to compensate.  Position after sync: {positionAfterSync}; Solved: {result.Coordinates}; New Offset: {offset}");
                         } else {
                             // Sync worked - reset offset
-                            Logger.Debug($"Synced sucessfully. Telescope position {positionAfterSync}");
+                            Logger.Debug($"Synced sucessfully. Position after sync: {positionAfterSync}");
                             offset = new Separation();
                         }
                     }

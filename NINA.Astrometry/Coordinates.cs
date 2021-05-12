@@ -563,7 +563,7 @@ namespace NINA.Astrometry {
         public Angle Bearing { get; set; } = Angle.ByDegree(0);
 
         public override string ToString() {
-            return $"RA: {AstroUtil.HoursToHMS(RA.Hours)}; Dec: {AstroUtil.DegreesToDMS(Dec.Degree)}; Distance: {Distance.Degree}; Bearing: {Bearing.Degree}";
+            return $"RA: {AstroUtil.HoursToHMS(RA.Hours)}; Dec: {AstroUtil.DegreesToDMS(Dec.Degree)}; Distance: {AstroUtil.DegreesToDMS(Distance.Degree)}; Bearing: {AstroUtil.DegreesToDMS(Bearing.Degree)}";
         }
     }
 }
