@@ -2334,6 +2334,9 @@ Calculated HFR: {2}
   <data name="LblPhd2FailedEquipmentConnection" xml:space="preserve">
     <value>PHD2 wasn't able to connect to the equipment</value>
   </data>
+  <data name="LblPhd2FailedGetProfiles" xml:space="preserve">
+    <value>PHD2 wasn't able to provide profiles</value>
+  </data>
   <data name="LblPHD2HistorySize" xml:space="preserve">
     <value>PHD2 History Size</value>
   </data>
@@ -2381,6 +2384,18 @@ Calculated HFR: {2}
   </data>
   <data name="LblPHD2TotalRMS" xml:space="preserve">
     <value>Tot: {0}({1}")</value>
+  </data>
+  <data name="LblPhd2Profile" xml:space="preserve">
+    <value>PHD2 Profile</value>
+  </data>
+  <data name="LblPhd2ProfileChanged" xml:space="preserve">
+    <value>Changed PHD2 profile to {0}</value>
+  </data>
+  <data name="LblPhd2ProfileChangeFailed" xml:space="preserve">
+    <value>Failed to change PHD2 profile</value>
+  </data>
+  <data name="LblPhd2ProfileNotFound" xml:space="preserve">
+    <value>PHD2 profile id {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>

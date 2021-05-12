@@ -10874,6 +10874,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PHD2 wasn&apos;t able to provide profiles.
+        /// </summary>
+        internal static string LblPhd2FailedGetProfiles {
+            get {
+                return ResourceManager.GetString("LblPhd2FailedGetProfiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PHD2 History Size.
         /// </summary>
         internal static string LblPHD2HistorySize {
@@ -10906,6 +10915,42 @@ namespace NINA.Core.Locale {
         internal static string LblPhd2PathNotFound {
             get {
                 return ResourceManager.GetString("LblPhd2PathNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PHD2 Profile.
+        /// </summary>
+        internal static string LblPhd2Profile {
+            get {
+                return ResourceManager.GetString("LblPhd2Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changed PHD2 profile to {0}.
+        /// </summary>
+        internal static string LblPhd2ProfileChanged {
+            get {
+                return ResourceManager.GetString("LblPhd2ProfileChanged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to change PHD2 profile.
+        /// </summary>
+        internal static string LblPhd2ProfileChangeFailed {
+            get {
+                return ResourceManager.GetString("LblPhd2ProfileChangeFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PHD2 profile id {0} not found. Using {1}.
+        /// </summary>
+        internal static string LblPhd2ProfileNotFound {
+            get {
+                return ResourceManager.GetString("LblPhd2ProfileNotFound", resourceCulture);
             }
         }
         

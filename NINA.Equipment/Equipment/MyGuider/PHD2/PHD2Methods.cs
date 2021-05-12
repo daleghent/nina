@@ -129,6 +129,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public override string Method { get => "set_paused"; }
     }
 
+    public class Phd2GetConnected : Phd2Method {
+        public override string Id { get => PHD2EventId.GET_CONNECTED; }
+        public override string Method { get => "get_connected"; }
+    }
+
     public class Phd2SetConnected : Phd2Method<Array> {
         public override string Id { get => PHD2EventId.SET_CONNECTED; }
         public override string Method { get => "set_connected"; }
@@ -137,6 +142,21 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
     public class Phd2ClearCalibration : Phd2Method<Array> {
         public override string Id { get => PHD2EventId.CLEAR_CALIBRATION; }
         public override string Method { get => "clear_calibration"; }
+    }
+
+    public class Phd2GetProfile : Phd2Method {
+        public override string Id { get => PHD2EventId.GET_PROFILE; }
+        public override string Method { get => "get_profile"; }
+    }
+
+    public class Phd2GetProfiles : Phd2Method<Array> {
+        public override string Id { get => PHD2EventId.GET_PROFILES; }
+        public override string Method { get => "get_profiles"; }
+    }
+
+    public class Phd2SetProfile : Phd2Method<Array> {
+        public override string Id { get => PHD2EventId.SET_PROFILE; }
+        public override string Method { get => "set_profile"; }
     }
 
     internal class PHD2EventId {
@@ -148,12 +168,16 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public const string STOP_CAPTURE = "6";
         public const string PAUSE = "10";
         public const string SET_CONNECTED = "20";
+        public const string SET_PROFILE = "30";
 
         public const string GET_CAMERA_FRAME_SIZE = "95";
         public const string GET_PIXEL_SCALE = "96";
         public const string GET_STAR_IMAGE = "97";
         public const string GET_EXPOSURE = "98";
         public const string GET_APP_STATE = "99";
+        public const string GET_PROFILE = "100";
+        public const string GET_PROFILES = "101";
+        public const string GET_CONNECTED = "102";
     }
 
     public class PhdMethodResponse {
@@ -176,6 +200,19 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public int height;
         public double[] star_pos;
         public string pixels;
+    }
+
+    public class Phd2ProfileResponse {
+        public int id;
+        public string name { get; set; }
+    }
+
+    public class GetProfileResponse : PhdMethodResponse {
+        public Phd2ProfileResponse result;
+    }
+
+    public class GetProfilesResponse : PhdMethodResponse {
+        public Phd2ProfileResponse[] result;
     }
 
     public class PhdError {

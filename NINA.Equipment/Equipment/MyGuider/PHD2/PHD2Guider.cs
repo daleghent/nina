@@ -44,6 +44,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             this.windowServiceFactory = windowServiceFactory;
 
             OpenPHD2DiagCommand = new RelayCommand(OpenPHD2FileDiag);
+            ProfileSelectionChangedCommand = new AsyncCommand<bool>(ProfileSelectionChanged);
         }
 
         private readonly IProfileService profileService;
@@ -165,6 +166,28 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
         public string DriverVersion => "1.0";
 
+        public class Phd2Profile {
+            public int Id { get; set; }
+            public string Name { get; set; }
+        }
+
+        // _activeProfile represents whatever GetProfile last returned
+        private Phd2ProfileResponse _activeProfile;
+        private Phd2Profile _selectedProfile;
+        public Phd2Profile SelectedProfile {
+            get {
+                return _selectedProfile;
+            }
+            set {
+                if (value != _selectedProfile) {
+                    _selectedProfile = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        public AsyncObservableCollection<Phd2Profile> AvailableProfiles { get; private set; } = new AsyncObservableCollection<Phd2Profile>();
+
         /*private async Task<TcpClient> ConnectClient() {
             var client = new TcpClient();
             await client.ConnectAsync(Settings.PHD2ServerUrl, Settings.PHD2ServerPort);
@@ -181,11 +204,13 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             bool connected = await _tcs.Task;
 
             try {
-                if (startedPHD2 && connected) {
-                    await Task.Run(ConnectPHD2Equipment);
-                    await Task.Delay(TimeSpan.FromSeconds(1));
-                    var loopMsg = new Phd2Loop();
-                    await SendMessage(loopMsg);
+                if (connected) {
+                    await GetProfiles();
+                    if (profileService.ActiveProfile.GuiderSettings.PHD2ProfileId.HasValue 
+                        && SelectedProfile?.Id != profileService.ActiveProfile.GuiderSettings.PHD2ProfileId) {
+                        await ChangeProfile(profileService.ActiveProfile.GuiderSettings.PHD2ProfileId.Value);
+                    }
+                    await EnsurePHD2EquipmentConnected();
                 }
 
                 var msg = new Phd2GetPixelScale();
@@ -199,6 +224,48 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             }
 
             return connected;
+        }
+
+        private async Task<bool> ProfileSelectionChanged() {
+            if (SelectedProfile == null) {
+                Logger.Error("No SelectedProfile");
+                return false;
+            }
+
+            if (SelectedProfile.Id == _activeProfile?.id) {
+                return true;
+            }
+
+            return await ChangeProfile(SelectedProfile.Id);
+        }
+
+        private async Task<bool> ChangeProfile(int id) {
+            // Trigger a GetProfiles operation in the background after either a success or failure, which will refresh the profile list and 
+            // set both SelectedProfile and _activeProfile to their latest values
+            var targetProfile = AvailableProfiles.FirstOrDefault(x => x.Id == id);
+            if (targetProfile == null) {
+                Logger.Error($"PHD2 profile {id} could not be found");
+                await GetProfiles();
+                Notification.ShowWarning(String.Format(Loc.Instance["LblPhd2ProfileNotFound"], id, _activeProfile?.name));
+                // Clear the saved id so we don't try and restore the missing profile next time
+                profileService.ActiveProfile.GuiderSettings.PHD2ProfileId = null;
+                return false;
+            }
+
+            await DisconnectPHD2Equipment();
+            var setProfile = new Phd2SetProfile() { Parameters = new int[] { id } };
+            var setProfileResponse = await SendMessage(setProfile);
+            if (setProfileResponse.error != null) {
+                Logger.Error($"Failed SetProfile({id}): {setProfileResponse.error}");
+                Notification.ShowWarning(Loc.Instance["LblPhd2ProfileChangeFailed"]);
+                await GetProfiles();
+                return false;
+            }
+
+            profileService.ActiveProfile.GuiderSettings.PHD2ProfileId = id;
+            await EnsurePHD2EquipmentConnected();
+            await GetProfiles();
+            return true;
         }
 
         public async Task<bool> Dither(CancellationToken ct) {
@@ -454,25 +521,31 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     Logger.Info($"Phd2 - Stop Guiding skipped, as the app is already in state {state}");
                     return false;
                 }
-                var msg = new Phd2StopCapture();
-                var stopCapture = await SendMessage(
-                    msg,
-                    10000); // triage: reported deadlock hanging of phd2+nina - 10s timeout
-
-                if (stopCapture == null || stopCapture.error != null) {
-                    /*stop capture failed */
-                    return false;
-                }
-
-                return await WaitForAppState(
-                    PhdAppState.STOPPED,
-                    token,
-                    10000);  // triage: reported deadlock hanging of phd2+nina - 10s timeout
+                return await StopCapture(token);
             } catch (IOException ee) // communication error with phd2
               {
                 Logger.Error(ee);
                 return false;
             }
+        }
+
+        private async Task<bool> StopCapture(CancellationToken token) {
+            if (!Connected) {
+                return false;
+            }
+            var stopCapture = new Phd2StopCapture();
+            var stopCaptureResult = await SendMessage(
+                stopCapture,
+                10000); // triage: reported deadlock hanging of phd2+nina - 10s timeout
+
+            if (stopCaptureResult == null || stopCaptureResult.error != null) {
+                return false;
+            }
+
+            return await WaitForAppState(
+                PhdAppState.STOPPED,
+                token,
+                10000);  // triage: reported deadlock hanging of phd2+nina - 10s timeout
         }
 
         public bool CanClearCalibration {
@@ -532,6 +605,8 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
             return null;
         }
+
+        public IAsyncCommand ProfileSelectionChangedCommand { get; private set; }
 
         public void Disconnect() {
             _clientCTS?.Cancel();
@@ -609,13 +684,65 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             return foo != null ? foo.State : TcpState.Unknown;
         }
 
-        private async Task ConnectPHD2Equipment() {
-            var msg = new Phd2SetConnected() {
-                Parameters = new bool[] { true }
-            };
-            var connectMsg = await SendMessage(msg);
-            if (connectMsg.error != null) {
+        private async Task GetProfiles() {
+            var getProfile = new Phd2GetProfile();
+            var getProfileResponse = await SendMessage<GetProfileResponse>(getProfile);
+            if (getProfileResponse.error != null) {
+                Logger.Error($"Failed GetProfile: {getProfileResponse.error}");
+                throw new Exception(Loc.Instance["LblPhd2FailedGetProfiles"]);
+            }
+
+            var getProfiles = new Phd2GetProfiles();
+            var getProfilesResponse = await SendMessage<GetProfilesResponse>(getProfiles);
+            if (getProfileResponse.error != null) {
+                Logger.Error($"Failed GetProfiles: {getProfilesResponse.error}");
+                throw new Exception(Loc.Instance["LblPhd2FailedGetProfiles"]);
+            }
+
+            _activeProfile = getProfileResponse.result;
+            AvailableProfiles.Clear();
+            foreach (var profile in getProfilesResponse.result) {
+                AvailableProfiles.Add(new Phd2Profile { Name = profile.name, Id = profile.id });
+            }
+            SelectedProfile = AvailableProfiles.FirstOrDefault(x => x.Id == _activeProfile.id);
+        }
+
+        private async Task<bool> EnsurePHD2EquipmentConnected() {
+            var getConnected = new Phd2GetConnected();
+            var getConnectedResult = await SendMessage(getConnected);
+            if (getConnectedResult.error != null) {
                 Notification.ShowWarning(Loc.Instance["LblPhd2FailedEquipmentConnection"]);
+                return false;
+            }
+
+            if (!(bool)getConnectedResult.result) {
+                var setConnected = new Phd2SetConnected() {
+                    Parameters = new bool[] { true }
+                };
+                var setConnectedResult = await SendMessage(setConnected);
+                if (setConnectedResult.error != null) {
+                    Notification.ShowWarning(Loc.Instance["LblPhd2FailedEquipmentConnection"]);
+                    return false;
+                }
+            }
+
+            var appState = await GetAppState();
+            if (appState == PhdAppState.STOPPED) {
+                await Task.Delay(TimeSpan.FromSeconds(1));
+                var loopMsg = new Phd2Loop();
+                await SendMessage(loopMsg);
+            }
+            return true;
+        }
+
+        private async Task DisconnectPHD2Equipment() {
+            await StopCapture(default);
+            var setDisconnected = new Phd2SetConnected() {
+                Parameters = new bool[] { false }
+            };
+            var setDisconnectedResult = await SendMessage(setDisconnected);
+            if (setDisconnectedResult.error != null) {
+                Logger.Error($"Failed to disconnect PHD2equipment: {setDisconnectedResult.error}");
             }
         }
 

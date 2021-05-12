@@ -345,5 +345,18 @@ namespace NINA.Profile {
                 }
             }
         }
+
+        private int? phd2ProfileId;
+
+        [DataMember]
+        public int? PHD2ProfileId {
+            get => phd2ProfileId;
+            set {
+                if (phd2ProfileId != value) {
+                    phd2ProfileId = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
     }
 }

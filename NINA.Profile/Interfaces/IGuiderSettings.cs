@@ -39,5 +39,6 @@ namespace NINA.Profile.Interfaces {
         int MetaGuideDitherSettleSeconds { get; set; }
         bool MetaGuideLockWhenGuiding { get; set; }
         int PHD2ROIPct { get; }
+        int? PHD2ProfileId { get; set; }
     }
 }
