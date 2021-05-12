@@ -2324,6 +2324,9 @@ berekende HFR: {2}
   <data name="LblPhd2FailedEquipmentConnection" xml:space="preserve">
     <value>PHD2 kon geen verbinding maken met de uitrusting</value>
   </data>
+  <data name="LblPhd2FailedGetProfiles" xml:space="preserve">
+    <value>PHD2 wasn't able to provide profiles</value>
+  </data>
   <data name="LblPHD2HistorySize" xml:space="preserve">
     <value>PHD2 geschiedenisgrootte</value>
   </data>
@@ -2371,6 +2374,18 @@ Verbonden cliënten: {0}
   </data>
   <data name="LblPHD2TotalRMS" xml:space="preserve">
     <value>Tot: {0}({1}")</value>
+  </data>
+  <data name="LblPhd2Profile" xml:space="preserve">
+    <value>PHD2 Profile</value>
+  </data>
+  <data name="LblPhd2ProfileChanged" xml:space="preserve">
+    <value>Changed PHD2 profile to {0}</value>
+  </data>
+  <data name="LblPhd2ProfileChangeFailed" xml:space="preserve">
+    <value>Failed to change PHD2 profile</value>
+  </data>
+  <data name="LblPhd2ProfileNotFound" xml:space="preserve">
+    <value>PHD2 profile id {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
@@ -5403,5 +5418,8 @@ For quickly changing conditions a smaller sample size will help to respond more 
   </data>
   <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
     <value>Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect.</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
+    <value>Failed to save Sequence "{0}": {1}</value>
   </data>
 </root>

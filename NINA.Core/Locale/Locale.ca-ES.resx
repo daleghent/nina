@@ -2329,6 +2329,9 @@ HFR calculat: {2}    </value>
   <data name="LblPhd2FailedEquipmentConnection" xml:space="preserve">
     <value>PHD2 no s'ha pogut connectar a l'equip</value>
   </data>
+  <data name="LblPhd2FailedGetProfiles" xml:space="preserve">
+    <value>PHD2 wasn't able to provide profiles</value>
+  </data>
   <data name="LblPHD2HistorySize" xml:space="preserve">
     <value>PHD2 Tamany de l'Històric</value>
   </data>
@@ -2376,6 +2379,18 @@ HFR calculat: {2}    </value>
   </data>
   <data name="LblPHD2TotalRMS" xml:space="preserve">
     <value>Tot: {0}({1}")</value>
+  </data>
+  <data name="LblPhd2Profile" xml:space="preserve">
+    <value>PHD2 Profile</value>
+  </data>
+  <data name="LblPhd2ProfileChanged" xml:space="preserve">
+    <value>Changed PHD2 profile to {0}</value>
+  </data>
+  <data name="LblPhd2ProfileChangeFailed" xml:space="preserve">
+    <value>Failed to change PHD2 profile</value>
+  </data>
+  <data name="LblPhd2ProfileNotFound" xml:space="preserve">
+    <value>PHD2 profile id {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
@@ -4531,10 +4546,10 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Dither després de les exposicions</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuiding_Description" xml:space="preserve">
-    <value>Resumes guiding if it was previously interrupted</value>
+    <value>Es reprèn la guia si anteriorment s'ha interromput</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuidings_Name" xml:space="preserve">
-    <value>Restore Guiding</value>
+    <value>Restaurar el Guiatge</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
     <value>Avaluar després de les Exposicions</value>
@@ -5406,5 +5421,8 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
   </data>
   <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
     <value>La posició determinada del punt d'enfocament està fora dels punts de mesurament generals de la corba. L'ajustament és incorrecte i la configuració de l'enfocament automàtic probablement sigui incorrecta.</value>
+  </data>
+  <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
+    <value>No s'ha pogut desar la seqüència "{0}": {1}</value>
   </data>
 </root>
