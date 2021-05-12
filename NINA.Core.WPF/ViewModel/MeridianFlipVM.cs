@@ -127,7 +127,7 @@ namespace NINA.WPF.Base.ViewModel {
         private async Task<bool> DoFlip(CancellationToken token, IProgress<ApplicationStatus> progress) {
             progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblFlippingScope"] });
             Logger.Info($"Meridian Flip - Scope will flip to coordinates RA: {_targetCoordinates.RAString} Dec: {_targetCoordinates.DecString} Epoch: {_targetCoordinates.Epoch}");
-            var flipsuccess = await telescopeMediator.MeridianFlip(_targetCoordinates);
+            var flipsuccess = await telescopeMediator.MeridianFlip(_targetCoordinates, token);
             Logger.Trace($"Meridian Flip - Successful flip: {flipsuccess}");
 
             await Settle(token, progress);

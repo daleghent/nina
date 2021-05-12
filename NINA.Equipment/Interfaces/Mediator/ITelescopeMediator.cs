@@ -35,7 +35,7 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         Task<bool> SlewToCoordinatesAsync(TopocentricCoordinates coords, CancellationToken token);
 
-        Task<bool> MeridianFlip(Coordinates targetCoordinates);
+        Task<bool> MeridianFlip(Coordinates targetCoordinates, CancellationToken token);
 
         bool SetTrackingEnabled(bool trackingEnabled);
 

@@ -34,7 +34,7 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         Task<bool> Sync(Coordinates coordinates);
 
-        Task<bool> MeridianFlip(Coordinates targetCoordinates);
+        Task<bool> MeridianFlip(Coordinates targetCoordinates, CancellationToken token);
 
         bool SendToSnapPort(bool start);
 

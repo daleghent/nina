@@ -30,6 +30,7 @@ using TelescopeAxes = NINA.Core.Enum.TelescopeAxes;
 using GuideDirections = NINA.Core.Enum.GuideDirections;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.Utility;
 
 namespace NINA.Equipment.Equipment.MyTelescope {
 
@@ -300,10 +301,14 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public bool CanSlewAsync {
             get {
                 if (Connected) {
-                    return device.CanSlewAsync;
-                } else {
-                    return false;
+                    try {
+                        return device.CanSlewAsync;
+                    } catch (Exception ex) {
+                        Logger.Error(ex);
+                        ASCOMInteraction.LogComplianceIssue();
+                    }
                 }
+                return false;
             }
         }
 
@@ -870,7 +875,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public async Task<bool> MeridianFlip(Coordinates targetCoordinates) {
+        public async Task<bool> MeridianFlip(Coordinates targetCoordinates, CancellationToken token) {
             var success = false;
             try {
                 if (!TrackingEnabled) {
@@ -898,7 +903,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         pierSideSuccess = await SetPierSide(targetSideOfPier);
                     }
                     // Keep attempting slews as well, in case that's what it takes to flip to the other side of pier
-                    slewSuccess = SlewToCoordinates(targetCoordinates);
+                    slewSuccess = await SlewToCoordinates(targetCoordinates, token);
                     if (!pierSideSuccess) {
                         pierSideSuccess = SideOfPier == targetSideOfPier;
                     }
@@ -1030,12 +1035,21 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public bool SlewToCoordinates(Coordinates coordinates) {
-            if (Connected && CanSlew && !AtPark) {
+        public async Task<bool> SlewToCoordinates(Coordinates coordinates, CancellationToken token) {
+            if (Connected && !AtPark) {
                 try {
                     TrackingEnabled = true;
                     TargetCoordinates = coordinates.Transform(EquatorialSystem);
-                    device.SlewToCoordinates(TargetCoordinates.RA, TargetCoordinates.Dec);
+                    if (CanSlewAsync) {
+                        device.SlewToCoordinatesAsync(TargetCoordinates.RA, TargetCoordinates.Dec);
+                    } else {
+                        device.SlewToCoordinates(TargetCoordinates.RA, TargetCoordinates.Dec);
+                    }
+
+                    while (Slewing) {
+                        await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.ApplicationSettings.DevicePollingInterval), token);
+                    }
+
                     return true;
                 } catch (Exception e) {
                     Logger.Error(e);

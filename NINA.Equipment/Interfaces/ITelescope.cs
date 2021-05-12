@@ -16,6 +16,7 @@ using NINA.Astrometry;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using NINA.Core.Enum;
+using System.Threading;
 
 namespace NINA.Equipment.Interfaces {
 
@@ -76,7 +77,7 @@ namespace NINA.Equipment.Interfaces {
         double GuideRateRightAscensionArcsecPerSec { get; }
         double GuideRateDeclinationArcsecPerSec { get; }
 
-        Task<bool> MeridianFlip(Coordinates targetCoordinates);
+        Task<bool> MeridianFlip(Coordinates targetCoordinates, CancellationToken token);
 
         void MoveAxis(TelescopeAxes axis, double rate);
 
@@ -86,7 +87,7 @@ namespace NINA.Equipment.Interfaces {
 
         void Setpark();
 
-        bool SlewToCoordinates(Coordinates coordinates);
+        Task<bool> SlewToCoordinates(Coordinates coordinates, CancellationToken token);
 
         void StopSlew();
 

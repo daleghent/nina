@@ -836,9 +836,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
                     Logger.Info($"Slewing to Coordinates {coords}");
 
-                    await Task.Run(() => {
-                        Telescope.SlewToCoordinates(coords);
-                    }, token);
+                    await Telescope.SlewToCoordinates(coords, token);
                     BroadcastTelescopeInfo();
                     await Task.WhenAll(
                         CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.TelescopeSettings.SettleTime), token, progress, Loc.Instance["LblSettle"]),
@@ -862,10 +860,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             return SlewToCoordinatesAsync(coords, CancellationToken.None);
         }
 
-        public async Task<bool> MeridianFlip(Coordinates targetCoordinates) {
+        public async Task<bool> MeridianFlip(Coordinates targetCoordinates, CancellationToken token) {
             var coords = targetCoordinates.Transform(TelescopeInfo.EquatorialSystem);
             if (TelescopeInfo.Connected) {
-                var flipResult = await Telescope.MeridianFlip(coords);
+                var flipResult = await Telescope.MeridianFlip(coords, token);
                 await this.domeMediator.WaitForDomeSynchronization(CancellationToken.None);
                 return flipResult;
             } else {

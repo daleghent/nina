@@ -47,8 +47,8 @@ namespace NINA.WPF.Base.Mediator {
             return handler.SlewToCoordinatesAsync(coords, token);
         }
 
-        public Task<bool> MeridianFlip(Coordinates targetCoordinates) {
-            return handler.MeridianFlip(targetCoordinates);
+        public Task<bool> MeridianFlip(Coordinates targetCoordinates, CancellationToken token) {
+            return handler.MeridianFlip(targetCoordinates, token);
         }
 
         public bool SetTrackingEnabled(bool tracking) {
