@@ -28,14 +28,16 @@ namespace NINA.Image {
     public class Thumbnail : BaseINPC {
 
         public Thumbnail() {
+            Grade = "";
         }
 
         public async Task<IImageData> LoadOriginalImage(IProfileService profileService) {
             try {
-                if (File.Exists(ImagePath.LocalPath)) {
-                    return await BaseImageData.FromFile(ImagePath.LocalPath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
+                var filePath = GetFilePath();
+                if (File.Exists(filePath)) {
+                    return await BaseImageData.FromFile(filePath, (int)profileService.ActiveProfile.CameraSettings.BitDepth, IsBayered, profileService.ActiveProfile.CameraSettings.RawConverter);
                 } else {
-                    Notification.ShowError($"File ${ImagePath.LocalPath} does not exist");
+                    Notification.ShowError($"File ${filePath} does not exist");
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -43,6 +45,28 @@ namespace NINA.Image {
             }
 
             return null;
+        }
+
+        public void ChangeGrade(string grade) {
+            var oldFileName = GetFilePath();
+            if (File.Exists(oldFileName)) {
+                try {
+                    Grade = grade;
+                    File.Move(oldFileName, GetFilePath());
+                    RaisePropertyChanged(nameof(FilePath));
+                    RaisePropertyChanged(nameof(Grade));
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                    Notification.ShowError(ex.Message);
+                }
+            }
+        }
+
+        private string GetFilePath() {
+            var fileName = Path.GetFileNameWithoutExtension(ImagePath.LocalPath);
+            var extension = Path.GetExtension(ImagePath.LocalPath);
+
+            return ImagePath.LocalPath.Replace($"{fileName}{extension}", ($"{Grade}_{fileName}{extension}"));
         }
 
         public BitmapSource ThumbnailImage { get; set; }
@@ -53,6 +77,10 @@ namespace NINA.Image {
 
         public bool IsBayered { get; set; }
 
+        public string FilePath {
+            get => GetFilePath();
+        }
+
         public Uri ImagePath { get; set; }
 
         public FileTypeEnum FileType { get; set; }
@@ -62,5 +90,7 @@ namespace NINA.Image {
         public string Filter { get; set; }
 
         public double Duration { get; set; }
+
+        public string Grade { get; private set; }
     }
 }

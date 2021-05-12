@@ -634,12 +634,14 @@
     <Compile Include="View\Equipment\Telescope\TelescopeView.xaml.cs">
       <DependentUpon>TelescopeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ThumbnailListView.xaml.cs">
+    <Compile Include="View\Thumbnail\ThumbnailGradeToImageConverter.cs" />
+    <Compile Include="View\Thumbnail\ThumbnailListView.xaml.cs">
       <DependentUpon>ThumbnailListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ProfileSelectView.xaml.cs">
       <DependentUpon>ProfileSelectView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Thumbnail\ThumbnailGradeToButtonImageConverter.cs" />
     <Compile Include="View\VersionCheckView.xaml.cs">
       <DependentUpon>VersionCheckView.xaml</DependentUpon>
     </Compile>
@@ -1175,7 +1177,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ThumbnailListView.xaml">
+    <Page Include="View\Thumbnail\ThumbnailListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

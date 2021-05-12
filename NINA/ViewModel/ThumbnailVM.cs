@@ -46,6 +46,28 @@ namespace NINA.ViewModel {
             SelectCommand = new AsyncCommand<bool>((object o) => {
                 return SelectImage((Thumbnail)o);
             });
+            GradeImageCommand = new AsyncCommand<bool>(GradeImage);
+        }
+
+        private Task<bool> GradeImage(object arg) {
+            return Task.Run(() => {
+                if (arg is Thumbnail) {
+                    var selected = arg as Thumbnail;
+                    //Order is from "" -> "BAD" -> ""
+                    switch (selected.Grade) {
+                        case "": {
+                                selected.ChangeGrade("BAD");
+                                break;
+                            }
+                        case "BAD": {
+                                selected.ChangeGrade("");
+                                break;
+                            }
+                    }
+                    return true;
+                }
+                return false;
+            });
         }
 
         private void ImageSaveMediator_ImageSaved(object sender, ImageSavedEventArgs e) {
@@ -55,7 +77,7 @@ namespace NINA.ViewModel {
         private Dispatcher _dispatcher = Dispatcher.CurrentDispatcher;
 
         private Task<bool> AddThumbnail(ImageSavedEventArgs msg) {
-            return Task<bool>.Run(async () => {
+            return Task.Run(async () => {
                 var factor = 100 / msg.Image.Width;
 
                 var scaledBitmap = CreateResizedImage(msg.Image, (int)(msg.Image.Width * factor), (int)(msg.Image.Height * factor), 0);
@@ -118,6 +140,7 @@ namespace NINA.ViewModel {
         private IImageSaveMediator imageSaveMediator;
 
         public ICommand SelectCommand { get; set; }
+        public ICommand GradeImageCommand { get; set; }
 
         private async Task<bool> SelectImage(Thumbnail thumbnail) {
             var iarr = await thumbnail.LoadOriginalImage(profileService);
