@@ -177,7 +177,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
         public async Task<bool> SetParkPosition() {
             if (Telescope.CanSetPark && !Telescope.AtPark) {
-                Logger.Info($"Setting telescope park position to RA={Telescope.RightAscension}, Dec={Telescope.Declination}");
+                Logger.Info($"Setting telescope park position to {Telescope.Coordinates}");
                 await Task.Run(() => { Telescope.Setpark(); });
 
                 return true;
