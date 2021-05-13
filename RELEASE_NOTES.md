@@ -174,7 +174,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 49.18830.20210423
-- **Atik:** 2020.08.3.642
+- **Atik:** 2020.10.19.677
 - **Canon:** 13.13.0.6408
 - **FLI:** 1.104.0.0
 - **Nikon:** 1.3.2.3000
