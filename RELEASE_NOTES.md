@@ -181,7 +181,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - **Omegon:** 48.17739.2020.924
 - **QHY:** 21.3.13.17
 - **ToupTek:** 48.18081.2020.1205
-- **ZWO:** 1.16.3
+- **ZWO:** 1.18.0
 - **Risingcam** 48.18332.20210120
 
 # Version 1.10 HF2
