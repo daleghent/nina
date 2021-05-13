@@ -2330,7 +2330,7 @@ HFR calculat: {2}    </value>
     <value>PHD2 no s'ha pogut connectar a l'equip</value>
   </data>
   <data name="LblPhd2FailedGetProfiles" xml:space="preserve">
-    <value>PHD2 wasn't able to provide profiles</value>
+    <value>PHD2 no ha pogut proporcionar cap perfil</value>
   </data>
   <data name="LblPHD2HistorySize" xml:space="preserve">
     <value>PHD2 Tamany de l'Històric</value>
@@ -2381,16 +2381,16 @@ HFR calculat: {2}    </value>
     <value>Tot: {0}({1}")</value>
   </data>
   <data name="LblPhd2Profile" xml:space="preserve">
-    <value>PHD2 Profile</value>
+    <value>Perfil PHD2</value>
   </data>
   <data name="LblPhd2ProfileChanged" xml:space="preserve">
-    <value>Changed PHD2 profile to {0}</value>
+    <value>S'ha canviat el perfil PHD2 a {0}</value>
   </data>
   <data name="LblPhd2ProfileChangeFailed" xml:space="preserve">
-    <value>Failed to change PHD2 profile</value>
+    <value>No s'ha pogut canviar el perfil PHD2</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile id {0} not found. Using {1}</value>
+    <value>No s'ha trobat l'identificador del perfil de PHD2 {0}. Utilitzant {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
