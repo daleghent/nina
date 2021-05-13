@@ -117,7 +117,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             bool result = true;
 
             await Task.Run(async () => {
-                Logger.Trace("Telescope has been commanded to park");
+                Logger.Info("Telescope has been commanded to park");
                 IsParkingOrHoming = true;
 
                 try {
@@ -177,7 +177,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
         public async Task<bool> SetParkPosition() {
             if (Telescope.CanSetPark && !Telescope.AtPark) {
-                Logger.Trace($"Setting telescope park position to RA={Telescope.RightAscension}, Dec={Telescope.Declination}");
+                Logger.Info($"Setting telescope park position to RA={Telescope.RightAscension}, Dec={Telescope.Declination}");
                 await Task.Run(() => { Telescope.Setpark(); });
 
                 return true;
@@ -225,7 +225,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
         public async Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token) {
             bool success = false;
-            Logger.Trace("Telescope ordered to locate home position");
+            Logger.Info("Telescope ordered to locate home position");
 
             await Task.Run(async () => {
                 string reason = string.Empty;
@@ -669,7 +669,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 var transform = coordinates.Transform(TelescopeInfo.EquatorialSystem);
                 if (!profileService.ActiveProfile.TelescopeSettings.NoSync && TelescopeInfo.Connected) {
                     progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSync"] });
+
+                    var position = GetCurrentPosition();
                     bool result = Telescope.Sync(transform);
+                    Logger.Info($"{(result ? string.Empty : "FAILED - ")}Syncing scope from {position} to {transform}");
                     await Task.Delay(TimeSpan.FromSeconds(Math.Max(2, profileService.ActiveProfile.TelescopeSettings.SettleTime)));
                     return result;
                 } else {
@@ -834,7 +837,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                         Notification.ShowWarning(Loc.Instance["LblTelescopeParkedWarning"]);
                     }
 
-                    Logger.Info($"Slewing to Coordinates {coords}");
+                    var position = GetCurrentPosition();
+                    Logger.Info($"Slewing from {position} to {coords}");
 
                     await Telescope.SlewToCoordinates(coords, token);
                     BroadcastTelescopeInfo();
