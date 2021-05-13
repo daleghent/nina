@@ -66,7 +66,11 @@ namespace NINA.Image {
             var fileName = Path.GetFileNameWithoutExtension(ImagePath.LocalPath);
             var extension = Path.GetExtension(ImagePath.LocalPath);
 
-            return ImagePath.LocalPath.Replace($"{fileName}{extension}", ($"{Grade}_{fileName}{extension}"));
+            if (string.IsNullOrEmpty(Grade)) {
+                return ImagePath.LocalPath;
+            } else {
+                return ImagePath.LocalPath.Replace($"{fileName}{extension}", ($"{Grade}_{fileName}{extension}"));
+            }
         }
 
         public BitmapSource ThumbnailImage { get; set; }
