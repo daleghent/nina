@@ -62,10 +62,28 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
             }
         }
 
+        private double rSquared;
+
+        public double RSquared {
+            get => rSquared;
+            set {
+                rSquared = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public QuadraticFitting Calculate(ICollection<ScatterErrorPoint> points) {
             var fitting = new PolynomialLeastSquares() { Degree = 2 };
-            PolynomialRegression poly = fitting.Learn(points.Select((dp) => dp.X).ToArray(), points.Select((dp) => dp.Y).ToArray(), points.Select((dp) => 1 / (dp.ErrorY * dp.ErrorY)).ToArray());
+
+            double[] inputs = points.Select((dp) => dp.X).ToArray();
+            double[] outputs = points.Select((dp) => dp.Y).ToArray();
+            double[] weights = points.Select((dp) => 1 / (dp.ErrorY * dp.ErrorY)).ToArray();
+
+            PolynomialRegression poly = fitting.Learn(inputs, outputs, weights);
+            RSquared = poly.CoefficientOfDetermination(inputs, outputs, weights);
+
             FormattableString expression = $"y = {poly.Weights[0]} * x^2 + {poly.Weights[1]} * x + {poly.Intercept}";
+
             Expression = expression.ToString(CultureInfo.InvariantCulture);
             Fitting = (x) => (poly.Weights[0] * x * x + poly.Weights[1] * x + poly.Intercept);
             int minimumX = (int)Math.Round(poly.Weights[1] / (2 * poly.Weights[0]) * -1);

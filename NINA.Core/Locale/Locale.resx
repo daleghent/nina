@@ -5434,4 +5434,19 @@ For quickly changing conditions a smaller sample size will help to respond more 
   <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
     <value>Failed to save Sequence "{0}": {1}</value>
   </data>
+  <data name="LblAutoFocusCorrelationCoefficientThreshold" xml:space="preserve">
+    <value>R² Threshold</value>
+  </data>
+  <data name="LblAutoFocusCorrelationCoefficientThresholdTooltip" xml:space="preserve">
+    <value>The minimum R² (Coefficient of determination) value the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful. The value is in the range of 0-1. When set to 0, the threshold will not be considered.</value>
+    <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
+  </data>
+  <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
+    <value>R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
+    <comment>First parameter is actual R², second parameter is R² threshold</comment>
+  </data>
+  <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
+    <value>R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
+    <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
+  </data>
 </root>

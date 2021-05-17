@@ -2867,6 +2867,33 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to R² Threshold.
+        /// </summary>
+        internal static string LblAutoFocusCorrelationCoefficientThreshold {
+            get {
+                return ResourceManager.GetString("LblAutoFocusCorrelationCoefficientThreshold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The minimum R² (Coefficient of determination) value the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful. The value is in the range of 0-1. When set to 0, the threshold will not be considered..
+        /// </summary>
+        internal static string LblAutoFocusCorrelationCoefficientThresholdTooltip {
+            get {
+                return ResourceManager.GetString("LblAutoFocusCorrelationCoefficientThresholdTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}.
+        /// </summary>
+        internal static string LblAutoFocusCurveCorrelationCoefficientLow {
+            get {
+                return ResourceManager.GetString("LblAutoFocusCurveCorrelationCoefficientLow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Auto Focus Exposure Time.
         /// </summary>
         internal static string LblAutoFocusExposureTime {
@@ -3114,6 +3141,15 @@ namespace NINA.Core.Locale {
         internal static string LblAutoFocusTimeoutTooltip {
             get {
                 return ResourceManager.GetString("LblAutoFocusTimeoutTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}.
+        /// </summary>
+        internal static string LblAutoFocusTrendCorrelationCoefficientLow {
+            get {
+                return ResourceManager.GetString("LblAutoFocusTrendCorrelationCoefficientLow", resourceCulture);
             }
         }
         

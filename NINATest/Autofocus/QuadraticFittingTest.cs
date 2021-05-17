@@ -49,6 +49,7 @@ namespace NINATest.Autofocus {
             sut.Minimum.X.Should().BeApproximately(5, TOLERANCE);
             sut.Minimum.Y.Should().BeApproximately(2, TOLERANCE);
             sut.Fitting(sut.Minimum.X).Should().Be(sut.Minimum.Y);
+            sut.RSquared.Should().Be(1);
         }
     }
 }

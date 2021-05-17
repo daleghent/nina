@@ -49,6 +49,7 @@ namespace NINA.Profile {
             contrastDetectionMethod = ContrastDetectionMethodEnum.Statistics;
             backlashCompensationModel = BacklashCompensationModel.ABSOLUTE;
             autoFocusTimeoutSeconds = 600;
+            rSquaredThreshold = 0;
         }
 
         private string id;
@@ -352,6 +353,24 @@ namespace NINA.Profile {
             set {
                 if (autoFocusTimeoutSeconds != value) {
                     autoFocusTimeoutSeconds = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double rSquaredThreshold;
+
+        [DataMember]
+        public double RSquaredThreshold {
+            get {
+                return rSquaredThreshold;
+            }
+            set {
+                if (value < 0) { value = 0; }
+                if (value > 1) { value = 1; }
+
+                if (rSquaredThreshold != value) {
+                    rSquaredThreshold = value;
                     RaisePropertyChanged();
                 }
             }

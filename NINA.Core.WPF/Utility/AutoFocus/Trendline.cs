@@ -34,16 +34,19 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
 
                 OrdinaryLeastSquares ols = new OrdinaryLeastSquares();
                 SimpleLinearRegression regression = ols.Learn(inputs, outputs, weights);
+                RSquared = regression.CoefficientOfDetermination(inputs, outputs, weights);
 
                 Slope = regression.Slope;
                 Offset = regression.Intercept;
             }
         }
 
-        public double Slope { get; set; }
-        public double Offset { get; set; }
+        public double Slope { get; private set; }
+        public double Offset { get; private set; }
 
-        public IEnumerable<ScatterErrorPoint> DataPoints { get; set; }
+        public IEnumerable<ScatterErrorPoint> DataPoints { get; private set; }
+
+        public double RSquared { get; private set; }
 
         public double GetY(double x) {
             return Slope * x + Offset;

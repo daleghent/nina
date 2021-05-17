@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Accord.Math.Optimization.Losses;
 using NINA.Core.Utility;
 using OxyPlot;
 using OxyPlot.Series;
@@ -57,6 +58,16 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
             get => _expression;
             set {
                 _expression = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private double rSquared;
+
+        public double RSquared {
+            get => rSquared;
+            set {
+                rSquared = value;
                 RaisePropertyChanged();
             }
         }
@@ -143,6 +154,16 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
             Expression = expression.ToString(CultureInfo.InvariantCulture);
             Fitting = (x) => a * MathHelper.HCos(MathHelper.HArcsin((p - x) / b));
             Minimum = new DataPoint((int)Math.Round(p), a);
+
+            var inputs = points.Select((dp) => dp.X).ToArray();
+            var outputs = points.Select((dp) => dp.Y).ToArray();
+            var transformed = new double[inputs.Length];
+            var rSquared = new RSquaredLoss(n, outputs);
+            for (var i = 0; i < n; i++) {
+                transformed[i] = Fitting(inputs[i]);
+            }
+            RSquared = rSquared.Loss(transformed);
+
             return this;
         }
 

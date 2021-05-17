@@ -138,6 +138,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Auto-focus can now have different settings for gain, offset and binning per filter
 - When using an autofocus filter with offsets this filter will now also be used for the first and last measurement instead of the filter prior to starting the auto focus
 - During an auto-focus run while taking an image, if the download fails it will be automatically retried up to two times to try to recover
+- A new optional setting R² threshold can now be set. When this threshold is non-zero, the autofocus run has to fullfill a minimum required R² - [Coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination) - above this threshold to be considered as successful.
 
 ### Sequencer
 - Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter

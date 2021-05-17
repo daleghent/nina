@@ -37,5 +37,6 @@ namespace NINA.Profile.Interfaces {
         ContrastDetectionMethodEnum ContrastDetectionMethod { get; set; }
         BacklashCompensationModel BacklashCompensationModel { get; set; }
         int AutoFocusTimeoutSeconds { get; set; }
+        double RSquaredThreshold { get; set; }
     }
 }
