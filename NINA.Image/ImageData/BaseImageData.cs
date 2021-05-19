@@ -226,6 +226,10 @@ namespace NINA.Image.ImageData {
                 p.Set(ImagePatternKeys.SensorTemp, metadata.Camera.Temperature);
             }
 
+            if (!double.IsNaN(metadata.Camera.SetPoint)) {
+                p.Set(ImagePatternKeys.TemperatureSetPoint, metadata.Camera.SetPoint);
+            }
+
             if (metadata.Camera.Gain >= 0) {
                 p.Set(ImagePatternKeys.Gain, metadata.Camera.Gain);
             }

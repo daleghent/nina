@@ -14157,6 +14157,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Camera Temperature Set Point.
+        /// </summary>
+        internal static string LblTemperatureSetPointDescription {
+            get {
+                return ResourceManager.GetString("LblTemperatureSetPointDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default Templates.
         /// </summary>
         internal static string LblTemplate_DefaultTemplates {

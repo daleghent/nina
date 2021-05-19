@@ -63,6 +63,9 @@ namespace NINA.Core.Model {
             p = new ImagePattern(ImagePatternKeys.SensorTemp, Locale.Loc.Instance["LblTemperatureDescription"]);
             patterns.Add(p.Key, p);
 
+            p = new ImagePattern(ImagePatternKeys.TemperatureSetPoint, Locale.Loc.Instance["LblTemperatureSetPointDescription"]);
+            patterns.Add(p.Key, p);
+
             p = new ImagePattern(ImagePatternKeys.ExposureTime, Locale.Loc.Instance["LblExposureTimeDescription"]);
             patterns.Add(p.Key, p);
 
@@ -167,6 +170,7 @@ namespace NINA.Core.Model {
             p.Set(ImagePatternKeys.ImageType, "LIGHT");
             p.Set(ImagePatternKeys.Binning, "1x1");
             p.Set(ImagePatternKeys.SensorTemp, "-15");
+            p.Set(ImagePatternKeys.TemperatureSetPoint, -15.5);
             p.Set(ImagePatternKeys.ExposureTime, 10.21234);
             p.Set(ImagePatternKeys.TargetName, "M33");
             p.Set(ImagePatternKeys.Gain, "1600");
@@ -203,6 +207,7 @@ namespace NINA.Core.Model {
         public static readonly string ImageType = "$$IMAGETYPE$$";
         public static readonly string Binning = "$$BINNING$$";
         public static readonly string SensorTemp = "$$SENSORTEMP$$";
+        public static readonly string TemperatureSetPoint = "$$TEMPERATURESETPOINT$$";
         public static readonly string ExposureTime = "$$EXPOSURETIME$$";
         public static readonly string TargetName = "$$TARGETNAME$$";
         public static readonly string Gain = "$$GAIN$$";

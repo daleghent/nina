@@ -5465,4 +5465,7 @@ A good starting point for a threshold is a value of 0.8 - anything below that is
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
     <value>Waiting for safe conditions</value>
   </data>
+  <data name="LblTemperatureSetPointDescription" xml:space="preserve">
+    <value>Camera Temperature Set Point</value>
+  </data>
 </root>
