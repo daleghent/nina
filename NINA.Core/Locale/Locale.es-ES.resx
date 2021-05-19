@@ -238,7 +238,7 @@ El error ha sido registrado en "%localappdata%\NINA\Logs".
     <value>arcominuto</value>
   </data>
   <data name="LblMaxArcmin" xml:space="preserve">
-    <value>Max arcmin</value>
+    <value>Máx. arcmin</value>
   </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>arcosegundo</value>
@@ -1155,7 +1155,7 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
     <value>Dither</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither Every #</value>
+    <value>Dither cada #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>Dither está habilitado pero el guiado no está conectado</value>
@@ -2059,7 +2059,7 @@ Calculado HFR: {2}
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>From N.I.N.A. to Telescope</value>
+    <value>De N.I.N.A. a Telescopio</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>No</value>
@@ -2327,7 +2327,7 @@ Calculado HFR: {2}
     <value>PHD2 no se pudo conectar al equipamiento</value>
   </data>
   <data name="LblPhd2FailedGetProfiles" xml:space="preserve">
-    <value>PHD2 wasn't able to provide profiles</value>
+    <value>PHD2 no pudo proporcionar perfiles</value>
   </data>
   <data name="LblPHD2HistorySize" xml:space="preserve">
     <value>PHD2 Tamaño del histórico</value>
@@ -2378,22 +2378,22 @@ Calculado HFR: {2}
     <value>Tot: {0} ({1}")</value>
   </data>
   <data name="LblPhd2Profile" xml:space="preserve">
-    <value>PHD2 Profile</value>
+    <value>Perfil de PHD2</value>
   </data>
   <data name="LblPhd2ProfileChanged" xml:space="preserve">
-    <value>Changed PHD2 profile to {0}</value>
+    <value>Se cambió el perfil de PHD2 a {0}</value>
   </data>
   <data name="LblPhd2ProfileChangeFailed" xml:space="preserve">
-    <value>Failed to change PHD2 profile</value>
+    <value>Error al cambiar el perfil de PHD2</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile id {0} not found. Using {1}</value>
+    <value>PHD2 id de perfil {0} no encontrado. Usando {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Píxeles</value>
   </data>
   <data name="LblMaxPixels" xml:space="preserve">
-    <value>Max Pixels</value>
+    <value>Máx. Píxeles</value>
   </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Escala de Píxel</value>
@@ -2501,10 +2501,10 @@ Calculado HFR: {2}
     <value>Astrometría</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
-    <value>Recentering after too much drift</value>
+    <value>Recentrar tras demasiada deriva</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
-    <value>No target set</value>
+    <value>Sin objetivo fijado</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Cambiar a filtro {0}</value>
@@ -3224,10 +3224,10 @@ Antes de continuar, por favor, confirme que su sistema está actualmente en o ce
     <value>Zona Horaria</value>
   </data>
   <data name="LblTimeOffset" xml:space="preserve">
-    <value>Offset</value>
+    <value>Compensación</value>
   </data>
   <data name="LblTimeOffsetTooltip" xml:space="preserve">
-    <value>Offset in minutes from the fixed time of day</value>
+    <value>Compensación en minutos desde la hora fijada del día</value>
   </data>
   <data name="LblTo" xml:space="preserve">
     <value>A</value>
@@ -4470,10 +4470,10 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Esperar un tiempo</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
-    <value>Center After Drift</value>
+    <value>Centrar después de la deriva</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+    <value>Un activador para iniciar un recentrado después de que la astrometría determine que el telescopio se ha alejado demasiado de las coordenadas del objetivo</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Un activador para iniciar el autofocus después de que el HFR haya aumentado en un porcentaje dado desde el último autoenfoque o inicio de la secuencia</value>
@@ -4545,13 +4545,13 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Dither después de exposiciones</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuiding_Description" xml:space="preserve">
-    <value>Resumes guiding if it was previously interrupted</value>
+    <value>Reanuda el guiado si había sido interrumpido previamente</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuidings_Name" xml:space="preserve">
-    <value>Restore Guiding</value>
+    <value>Retomar Guiado</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
-    <value>Evaluate After Exposures</value>
+    <value>Evaluar tras las exposiciones</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>Tras exposiciones</value>
@@ -4796,7 +4796,7 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
     <value>Abrir conjunto de objetivos</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequencer</value>
+    <value>Secuenciador simple</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Fin de las opciones del último objetivo</value>
@@ -4895,7 +4895,7 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
     <value>Asegura que la cúpula permanece sincronizada con el telescopio</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Enable Dome Sync</value>
+    <value>Habilitar sincronización de la cúpula</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>La secuencia contiene filas desactivadas o en los que el recuento de exposición de progreso es igual al recuento total de exposiciones. Estos elementos se omiten y no se generan elementos para estas filas para el secuenciador.</value>
@@ -4919,11 +4919,11 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
     <value>Es seguro</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
-    <value>Una condición que comprueba si el dispositivo de seguridad es seguro y repite el conjunto de instrucciones siempre y cuando el monitor de seguridad reporte ser seguro. Si el dispositivo reporta que no es seguro se detiene el conjunto de instrucciones actual.
-El mejor utilizarlo junto con otra condición de bucle para no terminar en un bucle infinito cuando el monitor de seguridad permanece verdadero.</value>
+    <value>A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
+Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays safe.</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
-    <value>Monitor de seguridad</value>
+    <value>Loop while safe</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
     <value>Guardar el conjunto de instrucciones actual y todo su contenido como una plantilla para su reutilización</value>
@@ -5003,7 +5003,7 @@ Ejemplo:
     =&gt; Posición = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Move Focuser by Temp.</value>
+    <value>Mueve el enfocador en función de la temperatura.</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>El enfocador no muestra ninguna temperatura válida</value>
@@ -5413,15 +5413,49 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
     <value>No se han encontrado plugins</value>
   </data>
   <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
-    <value>Show Menu</value>
+    <value>Mostrar menú</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
-    <value>Keep Closed</value>
+    <value>Mantener cerrado</value>
   </data>
   <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
-    <value>Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect.</value>
+    <value>La posición del punto de enfoque está fuera de los puntos de medición globales de la curva; el ajuste es incorrecto y los ajustes del autoenfoque probablemente también lo sean.</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
-    <value>Failed to save Sequence "{0}": {1}</value>
+    <value>Error al guardar la secuencia "{0}": {1}</value>
+  </data>
+  <data name="LblAutoFocusCorrelationCoefficientThreshold" xml:space="preserve">
+    <value>Umbral R²</value>
+  </data>
+  <data name="LblAutoFocusCorrelationCoefficientThresholdTooltip" xml:space="preserve">
+    <value>The minimum R² (Coefficient of determination) value that the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful.
+The value is in the range between 0-1.
+When set to 0, the threshold will not be considered. 
+An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions. 
+A good starting point for a threshold is a value of 0.8 - anything below that is a questionable fit.</value>
+    <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
+  </data>
+  <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
+    <value>Auto Focus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
+    <comment>First parameter is actual R², second parameter is R² threshold</comment>
+  </data>
+  <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
+    <value>Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
+    <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
+  </data>
+  <data name="Lbl_SequenceCategory_SafetyMonitor" xml:space="preserve">
+    <value>Safety Monitor</value>
+  </data>
+  <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description" xml:space="preserve">
+    <value>Waits until the safety monitor device reports safe conditions again</value>
+  </data>
+  <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name" xml:space="preserve">
+    <value>Wait until safe</value>
+  </data>
+  <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
+    <value>Waiting for safe conditions</value>
+  </data>
+  <data name="LblTemperatureSetPointDescription" xml:space="preserve">
+    <value>Camera Temperature Set Point</value>
   </data>
 </root>

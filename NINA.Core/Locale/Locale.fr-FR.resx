@@ -4926,11 +4926,11 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
     <value>Est sûr</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
-    <value>Une condition qui vérifie que le moniteur de sécurité connecté est sûr et boucle les instructions définies tant qu'il déclare être sûr. Si le périphérique déclare ne plus être sûr, le jeu d'instructions en cours est arrêté.
-A utiliser en conjonction avec une autre condition de boucle pour ne pas se retrouver dans une boucle infinie lorsque le moniteur de sécurité reste vrai.</value>
+    <value>A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
+Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays safe.</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
-    <value>Moniteur de sécurité</value>
+    <value>Loop while safe</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
     <value>Enregistrer le jeu d'instructions actuel et tout son contenu comme un modèle pour le réutiliser</value>
@@ -5430,5 +5430,39 @@ Un nombre plus restreint aidera à répondre plus rapidement à un changement de
   </data>
   <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
     <value>Failed to save Sequence "{0}": {1}</value>
+  </data>
+  <data name="LblAutoFocusCorrelationCoefficientThreshold" xml:space="preserve">
+    <value>R² Threshold</value>
+  </data>
+  <data name="LblAutoFocusCorrelationCoefficientThresholdTooltip" xml:space="preserve">
+    <value>The minimum R² (Coefficient of determination) value that the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful.
+The value is in the range between 0-1.
+When set to 0, the threshold will not be considered. 
+An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions. 
+A good starting point for a threshold is a value of 0.8 - anything below that is a questionable fit.</value>
+    <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
+  </data>
+  <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
+    <value>Auto Focus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
+    <comment>First parameter is actual R², second parameter is R² threshold</comment>
+  </data>
+  <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
+    <value>Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
+    <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
+  </data>
+  <data name="Lbl_SequenceCategory_SafetyMonitor" xml:space="preserve">
+    <value>Safety Monitor</value>
+  </data>
+  <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description" xml:space="preserve">
+    <value>Waits until the safety monitor device reports safe conditions again</value>
+  </data>
+  <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name" xml:space="preserve">
+    <value>Wait until safe</value>
+  </data>
+  <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
+    <value>Waiting for safe conditions</value>
+  </data>
+  <data name="LblTemperatureSetPointDescription" xml:space="preserve">
+    <value>Camera Temperature Set Point</value>
   </data>
 </root>
