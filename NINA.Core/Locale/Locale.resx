@@ -4930,10 +4930,10 @@ If the position above it is an instruction set that is not currently expanded, i
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
     <value>A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays true.</value>
+Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays safe.</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
-    <value>Safety Monitor</value>
+    <value>Loop while safe</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
     <value>Save the current instruction set and all of its content as a template for re-usage</value>
@@ -5452,5 +5452,17 @@ A good starting point for a threshold is a value of 0.8 - anything below that is
   <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
     <value>Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
     <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
+  </data>
+  <data name="Lbl_SequenceCategory_SafetyMonitor" xml:space="preserve">
+    <value>Safety Monitor</value>
+  </data>
+  <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description" xml:space="preserve">
+    <value>Waits until the safety monitor device reports safe conditions again</value>
+  </data>
+  <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name" xml:space="preserve">
+    <value>Wait until safe</value>
+  </data>
+  <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
+    <value>Waiting for safe conditions</value>
   </data>
 </root>

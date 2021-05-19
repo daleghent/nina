@@ -324,6 +324,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Safety Monitor.
+        /// </summary>
+        internal static string Lbl_SequenceCategory_SafetyMonitor {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCategory_SafetyMonitor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Switch.
         /// </summary>
         internal static string Lbl_SequenceCategory_Switch {
@@ -451,7 +460,7 @@ namespace NINA.Core.Locale {
         
         /// <summary>
         ///   Looks up a localized string similar to A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
-        ///Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays true..
+        ///Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays safe..
         /// </summary>
         internal static string Lbl_SequenceCondition_SafetyMonitorCondition_Description {
             get {
@@ -460,7 +469,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Safety Monitor.
+        ///   Looks up a localized string similar to Loop while safe.
         /// </summary>
         internal static string Lbl_SequenceCondition_SafetyMonitorCondition_Name {
             get {
@@ -1388,6 +1397,33 @@ namespace NINA.Core.Locale {
         internal static string Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waits until the safety monitor device reports safe conditions again.
+        /// </summary>
+        internal static string Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Wait until safe.
+        /// </summary>
+        internal static string Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for safe conditions.
+        /// </summary>
+        internal static string Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting", resourceCulture);
             }
         }
         

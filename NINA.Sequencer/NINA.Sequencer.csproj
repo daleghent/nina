@@ -246,6 +246,7 @@
       <DependentUpon>DataTemplates.xaml</DependentUpon>
     </Compile>
     <Compile Include="SequenceItem\Rotator\MoveRotatorMechanical.cs" />
+    <Compile Include="SequenceItem\SafetyMonitor\WaitUntilSafe.cs" />
     <Compile Include="SequenceItem\SequenceItem.cs" />
     <Compile Include="SequenceItem\Switch\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
