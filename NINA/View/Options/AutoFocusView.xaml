@@ -370,7 +370,11 @@
                                 <TextBox.Text>
                                     <Binding Path="RSquaredThreshold" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
-                                            <rules:GreaterZeroRule />
+                                            <rules:DoubleRangeRule>
+                                                <rules:DoubleRangeRule.ValidRange>
+                                                    <rules:DoubleRangeChecker Maximum="0.99" Minimum="0" />
+                                                </rules:DoubleRangeRule.ValidRange>
+                                            </rules:DoubleRangeRule>
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>

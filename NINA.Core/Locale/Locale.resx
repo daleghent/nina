@@ -5438,15 +5438,19 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>R² Threshold</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThresholdTooltip" xml:space="preserve">
-    <value>The minimum R² (Coefficient of determination) value the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful. The value is in the range of 0-1. When set to 0, the threshold will not be considered.</value>
+    <value>The minimum R² (Coefficient of determination) value that the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful.
+The value is in the range between 0-1.
+When set to 0, the threshold will not be considered. 
+An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions. 
+A good starting point for a threshold is a value of 0.8 - anything below that is a questionable fit.</value>
     <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
   </data>
   <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
-    <value>R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
+    <value>Auto Focus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
     <comment>First parameter is actual R², second parameter is R² threshold</comment>
   </data>
   <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
-    <value>R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
+    <value>Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
     <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
   </data>
 </root>

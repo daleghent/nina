@@ -66,6 +66,7 @@
     <converters:WeatherBrightnessConverter x:Key="WeatherBrightnessConverter" />
     <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
     <converters:InverseZeroToVisibilityConverter x:Key="InverseZeroToVisibilityConverter" />
+    <converters:AFFittingToColorConverter x:Key="AFFittingToColorConverter" />
     <converters:AFFittingToVisibilityConverter x:Key="AFFittingToVisibilityConverter" />
     <seqConverters:IsLightImageTypeToVisibilityConverter x:Key="IsLightImageTypeToVisibilityConverter" />
     <converters:FilterWheelFilterConverter x:Key="FilterWheelFilterConverter" />

@@ -2876,7 +2876,11 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The minimum R² (Coefficient of determination) value the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful. The value is in the range of 0-1. When set to 0, the threshold will not be considered..
+        ///   Looks up a localized string similar to The minimum R² (Coefficient of determination) value that the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful.
+        ///The value is in the range between 0-1.
+        ///When set to 0, the threshold will not be considered. 
+        ///An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions. 
+        ///A good starting point for a threshold is a value of 0.8 - anything below that is a questionable fit..
         /// </summary>
         internal static string LblAutoFocusCorrelationCoefficientThresholdTooltip {
             get {
@@ -2885,7 +2889,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}.
+        ///   Looks up a localized string similar to Auto Focus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}.
         /// </summary>
         internal static string LblAutoFocusCurveCorrelationCoefficientLow {
             get {
@@ -3145,7 +3149,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}.
+        ///   Looks up a localized string similar to Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}.
         /// </summary>
         internal static string LblAutoFocusTrendCorrelationCoefficientLow {
             get {

@@ -1,7 +1,7 @@
-﻿#region "copyright"
+#region "copyright"
 
 /*
-    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+    Copyright � 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
 
@@ -14,17 +14,14 @@
 
 using NINA.Core.Enum;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
+using System.Windows.Media;
 
 namespace NINA.Core.Utility.Converters {
 
-    public class AFFittingToVisibilityConverter : IMultiValueConverter {
+    public class AFFittingToColorConverter : IMultiValueConverter {
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
             var source = (string)values[0];
@@ -33,21 +30,21 @@ namespace NINA.Core.Utility.Converters {
 
             if (method == AFMethodEnum.CONTRASTDETECTION) {
                 if (source == "GaussianFitting") {
-                    return Visibility.Visible;
+                    return (Application.Current.TryFindResource("ButtonBackgroundBrush") as SolidColorBrush).Color;
                 }
             } else {
                 if (source == "HyperbolicFitting" && (fitting == AFCurveFittingEnum.HYPERBOLIC || fitting == AFCurveFittingEnum.TRENDHYPERBOLIC)) {
-                    return Visibility.Visible;
+                    return (Application.Current.TryFindResource("ButtonBackgroundBrush") as SolidColorBrush).Color;
                 }
                 if (source == "QuadraticFitting" && (fitting == AFCurveFittingEnum.PARABOLIC || fitting == AFCurveFittingEnum.TRENDPARABOLIC)) {
-                    return Visibility.Visible;
+                    return (Application.Current.TryFindResource("ButtonBackgroundBrush") as SolidColorBrush).Color;
                 }
                 if (source == "Trendline" && (fitting == AFCurveFittingEnum.TRENDLINES || fitting == AFCurveFittingEnum.TRENDHYPERBOLIC || fitting == AFCurveFittingEnum.TRENDPARABOLIC)) {
-                    return Visibility.Visible;
+                    return (Application.Current.TryFindResource("NotificationWarningBrush") as SolidColorBrush).Color;
                 }
             }
 
-            return Visibility.Collapsed;
+            return Colors.Transparent;
         }
 
         object[] IMultiValueConverter.ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) {

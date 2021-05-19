@@ -23,6 +23,7 @@
         <Grid.RowDefinitions>
             <RowDefinition MinHeight="150" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <oxy:Plot
             Background="{StaticResource BackgroundBrush}"
@@ -77,7 +78,7 @@
             <oxy:Plot.Annotations>
                 <oxy:LineAnnotation Intercept="{Binding TrendlineFitting.LeftTrend.Offset}" Slope="{Binding TrendlineFitting.LeftTrend.Slope}">
                     <oxy:LineAnnotation.Color>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>Trendline</s:String>
@@ -90,7 +91,7 @@
                 </oxy:LineAnnotation>
                 <oxy:LineAnnotation Intercept="{Binding TrendlineFitting.RightTrend.Offset}" Slope="{Binding TrendlineFitting.RightTrend.Slope}">
                     <oxy:LineAnnotation.Color>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>Trendline</s:String>
@@ -103,7 +104,7 @@
                 </oxy:LineAnnotation>
                 <oxy:FunctionAnnotation Equation="{Binding QuadraticFitting.Fitting}">
                     <oxy:FunctionAnnotation.Color>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>QuadraticFitting</s:String>
@@ -116,7 +117,7 @@
                 </oxy:FunctionAnnotation>
                 <oxy:FunctionAnnotation Equation="{Binding HyperbolicFitting.Fitting}">
                     <oxy:FunctionAnnotation.Color>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>HyperbolicFitting</s:String>
@@ -129,7 +130,7 @@
                 </oxy:FunctionAnnotation>
                 <oxy:FunctionAnnotation Equation="{Binding GaussianFitting.Fitting}">
                     <oxy:FunctionAnnotation.Color>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>GaussianFitting</s:String>
@@ -151,7 +152,7 @@
                     X="{Binding QuadraticFitting.Minimum.X}"
                     Y="{Binding QuadraticFitting.Minimum.Y}">
                     <oxy:PointAnnotation.Fill>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>QuadraticFitting</s:String>
@@ -162,7 +163,7 @@
                         </MultiBinding>
                     </oxy:PointAnnotation.Fill>
                     <oxy:PointAnnotation.Stroke>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>QuadraticFitting</s:String>
@@ -178,7 +179,7 @@
                     X="{Binding HyperbolicFitting.Minimum.X}"
                     Y="{Binding HyperbolicFitting.Minimum.Y}">
                     <oxy:PointAnnotation.Fill>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>HyperbolicFitting</s:String>
@@ -189,7 +190,7 @@
                         </MultiBinding>
                     </oxy:PointAnnotation.Fill>
                     <oxy:PointAnnotation.Stroke>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>HyperbolicFitting</s:String>
@@ -205,7 +206,7 @@
                     X="{Binding GaussianFitting.Maximum.X}"
                     Y="{Binding GaussianFitting.Maximum.Y}">
                     <oxy:PointAnnotation.Fill>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>GaussianFitting</s:String>
@@ -216,7 +217,7 @@
                         </MultiBinding>
                     </oxy:PointAnnotation.Fill>
                     <oxy:PointAnnotation.Stroke>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>GaussianFitting</s:String>
@@ -232,7 +233,7 @@
                     X="{Binding TrendlineFitting.Intersection.X}"
                     Y="{Binding TrendlineFitting.Intersection.Y}">
                     <oxy:PointAnnotation.Fill>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>Trendline</s:String>
@@ -243,7 +244,7 @@
                         </MultiBinding>
                     </oxy:PointAnnotation.Fill>
                     <oxy:PointAnnotation.Stroke>
-                        <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <MultiBinding Converter="{StaticResource AFFittingToColorConverter}">
                             <Binding>
                                 <Binding.Source>
                                     <s:String>Trendline</s:String>
@@ -305,6 +306,70 @@
                     <TextBlock Margin="5,0,0,0" Text="{Binding Filter}" />
                 </UniformGrid>
             </Border>
+        </StackPanel>
+        <StackPanel
+            Grid.Row="2"
+            Margin="0,5,0,0"
+            Orientation="Vertical">
+
+            <UniformGrid VerticalAlignment="Center" Columns="2">
+                <UniformGrid.Visibility>
+                    <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <Binding>
+                            <Binding.Source>
+                                <s:String>QuadraticFitting</s:String>
+                            </Binding.Source>
+                        </Binding>
+                        <Binding Path="AutoFocusChartMethod" />
+                        <Binding Path="AutoFocusChartCurveFitting" />
+                    </MultiBinding>
+                </UniformGrid.Visibility>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{ns:Loc LblParabolic}" />
+                    <TextBlock Text=" R²" />
+                </StackPanel>
+                <TextBlock Margin="5,0,0,0" Text="{Binding QuadraticFitting.RSquared, StringFormat=\{0:0.00\}}" />
+            </UniformGrid>
+            <UniformGrid VerticalAlignment="Center" Columns="2">
+                <UniformGrid.Visibility>
+                    <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <Binding>
+                            <Binding.Source>
+                                <s:String>HyperbolicFitting</s:String>
+                            </Binding.Source>
+                        </Binding>
+                        <Binding Path="AutoFocusChartMethod" />
+                        <Binding Path="AutoFocusChartCurveFitting" />
+                    </MultiBinding>
+                </UniformGrid.Visibility>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{ns:Loc LblHyperbolic}" />
+                    <TextBlock Text=" R²" />
+                </StackPanel>
+                <TextBlock Margin="5,0,0,0" Text="{Binding HyperbolicFitting.RSquared, StringFormat=\{0:0.00\}}" />
+            </UniformGrid>
+            <UniformGrid VerticalAlignment="Center" Columns="2">
+                <UniformGrid.Visibility>
+                    <MultiBinding Converter="{StaticResource AFFittingToVisibilityConverter}">
+                        <Binding>
+                            <Binding.Source>
+                                <s:String>Trendline</s:String>
+                            </Binding.Source>
+                        </Binding>
+                        <Binding Path="AutoFocusChartMethod" />
+                        <Binding Path="AutoFocusChartCurveFitting" />
+                    </MultiBinding>
+                </UniformGrid.Visibility>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{ns:Loc LblTrendLines}" />
+                    <TextBlock Text=" R²" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="5,0,0,0" Text="{Binding TrendlineFitting.LeftTrend.RSquared, StringFormat=\{0:0.00\}}" />
+                    <TextBlock Margin="5,0,0,0" Text="|" />
+                    <TextBlock Margin="5,0,0,0" Text="{Binding TrendlineFitting.RightTrend.RSquared, StringFormat=\{0:0.00\}}" />
+                </StackPanel>
+            </UniformGrid>
         </StackPanel>
     </Grid>
 </UserControl>

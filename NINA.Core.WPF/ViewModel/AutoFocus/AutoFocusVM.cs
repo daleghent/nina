@@ -495,19 +495,19 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     var fitting = profileService.ActiveProfile.FocuserSettings.AutoFocusCurveFitting;
 
                     if ((fitting == AFCurveFittingEnum.HYPERBOLIC || fitting == AFCurveFittingEnum.TRENDHYPERBOLIC) && hyperbolicBad) {
-                        Logger.Error($"R² (Coefficient of determination) for Hyperbolic Fitting is below threshold. {Math.Round(HyperbolicFitting.RSquared, 2)} / {rSquaredThreshold}");
+                        Logger.Error($"Auto Focus Failed! R² (Coefficient of determination) for Hyperbolic Fitting is below threshold. {Math.Round(HyperbolicFitting.RSquared, 2)} / {rSquaredThreshold}");
                         Notification.ShowError(string.Format(Loc.Instance["LblAutoFocusCurveCorrelationCoefficientLow"], Math.Round(HyperbolicFitting.RSquared, 2), rSquaredThreshold));
                         return false;
                     }
 
                     if ((fitting == AFCurveFittingEnum.PARABOLIC || fitting == AFCurveFittingEnum.TRENDPARABOLIC) && quadraticBad) {
-                        Logger.Error($"R² (Coefficient of determination) for Parabolic Fitting is below threshold. {Math.Round(QuadraticFitting.RSquared, 2)} / {rSquaredThreshold}");
+                        Logger.Error($"Auto Focus Failed! R² (Coefficient of determination) for Parabolic Fitting is below threshold. {Math.Round(QuadraticFitting.RSquared, 2)} / {rSquaredThreshold}");
                         Notification.ShowError(string.Format(Loc.Instance["LblAutoFocusCurveCorrelationCoefficientLow"], Math.Round(QuadraticFitting.RSquared, 2), rSquaredThreshold));
                         return false;
                     }
 
                     if ((fitting == AFCurveFittingEnum.TRENDLINES || fitting == AFCurveFittingEnum.TRENDHYPERBOLIC || fitting == AFCurveFittingEnum.TRENDPARABOLIC) && trendlineBad) {
-                        Logger.Error($"R² (Coefficient of determination) for Trendline Fitting is below threshold. Left: {Math.Round(TrendlineFitting.LeftTrend.RSquared, 2)} / {rSquaredThreshold}; Right: {Math.Round(TrendlineFitting.RightTrend.RSquared, 2)} / {rSquaredThreshold}");
+                        Logger.Error($"Auto Focus Failed! R² (Coefficient of determination) for Trendline Fitting is below threshold. Left: {Math.Round(TrendlineFitting.LeftTrend.RSquared, 2)} / {rSquaredThreshold}; Right: {Math.Round(TrendlineFitting.RightTrend.RSquared, 2)} / {rSquaredThreshold}");
                         Notification.ShowError(string.Format(Loc.Instance["LblAutoFocusCurveCorrelationCoefficientLow"], Math.Round(TrendlineFitting.LeftTrend.RSquared, 2), Math.Round(TrendlineFitting.RightTrend.RSquared, 2), rSquaredThreshold));
                         return false;
                     }
