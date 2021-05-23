@@ -550,23 +550,26 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             return !FollowEnabled;
         }
 
-        private bool previousIsSafe = false;
+        private object lockObj = new object();
+        private Task closeShutterTask;
 
         public void UpdateDeviceInfo(SafetyMonitorInfo deviceInfo) {
             SafetyMonitorInfo = deviceInfo;
             if (Dome?.Connected == true && profileService.ActiveProfile.DomeSettings.CloseOnUnsafe) {
                 //Close dome when state switches from safe to unsafe
-                if (deviceInfo.Connected && previousIsSafe && !deviceInfo.IsSafe && Dome?.ShutterStatus == ShutterState.ShutterOpen) {
-                    Logger.Warning("Closing dome shutter due to unsafe conditions");
-                    Notification.ShowWarning(Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
-                    Task.Run(async () => {
-                        StopAll(null);
-                        await CloseShutter(CancellationToken.None);
-                    });
+                if (deviceInfo.Connected && !deviceInfo.IsSafe && Dome?.ShutterStatus == ShutterState.ShutterOpen) {
+                    lock (lockObj) {
+                        if (closeShutterTask == null || closeShutterTask.IsCompleted) {
+                            closeShutterTask = Task.Run(() => {
+                                Logger.Warning("Closing dome shutter due to unsafe conditions");
+                                Notification.ShowWarning(Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
+                                StopAll(null);
+                                return CloseShutter(CancellationToken.None);
+                            });
+                        }
+                    }
                 }
             }
-
-            previousIsSafe = deviceInfo.IsSafe;
         }
 
         private readonly IDeviceUpdateTimer updateTimer;
