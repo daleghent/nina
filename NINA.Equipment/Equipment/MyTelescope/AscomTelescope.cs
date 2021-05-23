@@ -76,6 +76,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         val = device.AlignmentMode;
                     }
                 } catch (PropertyNotImplementedException) {
+                    Logger.Debug("AlignmentMode GET is not implemented in this driver");
                     _canGetAlignmentMode = false;
                 }
                 return val;
@@ -99,6 +100,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         _altitude = device.Altitude;
                     }
                 } catch (PropertyNotImplementedException) {
+                    Logger.Debug("Altitude GET is not implemented in this driver");
                     _canGetAltitude = false;
                 }
                 return _altitude;
@@ -118,6 +120,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         _azimuth = device.Azimuth;
                     }
                 } catch (PropertyNotImplementedException) {
+                    Logger.Debug("Azimuth GET is not implemented in this driver");
                     _canGetAzimuth = false;
                 }
                 return _azimuth;
@@ -136,6 +139,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         val = device.Altitude;
                     }
                 } catch (PropertyNotImplementedException) {
+                    Logger.Debug("ApertureArea GET is not implemented in this driver");
                     _canGetApertureArea = false;
                 }
                 return val;
@@ -152,6 +156,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         val = device.ApertureDiameter;
                     }
                 } catch (PropertyNotImplementedException) {
+                    Logger.Debug("ApertureDiameter GET is not implemented in this driver");
                     _canGetApertureDiameter = false;
                 }
                 return val;
@@ -374,7 +379,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
             set {
                 try {
-                    if (Connected && CanSetDeclinationRate) {
+                    if (CanSetDeclinationRate) {
                         device.DeclinationRate = value;
                         RaisePropertyChanged();
                     }
@@ -396,7 +401,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
             set {
                 try {
-                    if (Connected && CanSetRightAscensionRate) {
+                    if (CanSetRightAscensionRate) {
                         device.RightAscensionRate = value;
                         RaisePropertyChanged();
                     }
@@ -418,13 +423,14 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         val = (PierSide)device.SideOfPier;
                     }
                 } catch (PropertyNotImplementedException) {
+                    Logger.Debug("SideOfPier GET is not implemented in this driver");
                     _canGetSideOfPier = false;
                 }
                 return val;
             }
             set {
                 try {
-                    if (Connected && CanSetPierSide) {
+                    if (CanSetPierSide) {
                         device.SideOfPier = (ASCOM.DeviceInterface.PierSide)value;
                         RaisePropertyChanged();
                     }
@@ -446,6 +452,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         val = device.DoesRefraction;
                     }
                 } catch (PropertyNotImplementedException) {
+                    Logger.Debug("DoesRefraction GET is not implemented in this driver");
                     _canDoRefraction = false;
                 }
                 return val;
@@ -472,6 +479,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                         val = device.FocalLength;
                     }
                 } catch (PropertyNotImplementedException) {
+                    Logger.Debug("FocalLength GET is not implemented in this driver");
                     _canGetFocalLength = false;
                 }
                 return val;
@@ -551,7 +559,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public bool IsPulseGuiding {
             get {
-                if (Connected && CanPulseGuide) {
+                if (CanPulseGuide) {
                     return device.IsPulseGuiding;
                 } else {
                     return false;
@@ -561,15 +569,18 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public double GuideRateDeclinationArcsecPerSec {
             get {
-                if (Connected) {
-                    return device.GuideRateDeclination * 3600.0;
-                } else {
-                    return -1;
+                if (CanSetGuideRates) {
+                    try {
+                        return device.GuideRateDeclination * 3600.0;
+                    } catch (PropertyNotImplementedException) {
+                        Logger.Warning("GuideRateDeclination GET is not implemented in this driver, although CanSetGuideRates is returning true");
+                    }
                 }
+                return double.NaN;
             }
             set {
                 try {
-                    if (Connected && CanSetGuideRates) {
+                    if (CanSetGuideRates) {
                         device.GuideRateDeclination = value;
                         RaisePropertyChanged();
                     }
@@ -583,15 +594,18 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public double GuideRateRightAscensionArcsecPerSec {
             get {
-                if (Connected) {
-                    return device.GuideRateRightAscension * 3600.0;
-                } else {
-                    return -1;
+                if (CanSetGuideRates) {
+                    try {
+                        return device.GuideRateRightAscension * 3600.0;
+                    } catch (PropertyNotImplementedException) {
+                        Logger.Warning("GuideRateRightAscension GET is not implemented in this driver, although CanSetGuideRates is returning true");
+                    }
                 }
+                return double.NaN;
             }
             set {
                 try {
-                    if (Connected && CanSetGuideRates) {
+                    if (CanSetGuideRates) {
                         device.GuideRateRightAscension = value;
                         RaisePropertyChanged();
                     }
@@ -636,6 +650,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     try {
                         val = device.SiteElevation;
                     } catch (PropertyNotImplementedException) {
+                        Logger.Debug("SiteElevation GET is not implemented in this driver");
                         _canGetSiteElevation = false;
                     }
                 }
@@ -668,6 +683,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     try {
                         val = device.SiteLatitude;
                     } catch (PropertyNotImplementedException) {
+                        Logger.Debug("SiteLatitude GET is not implemented in this driver");
                         _canGetSiteLatLong = false;
                     }
                 }
@@ -697,6 +713,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     try {
                         val = device.SiteLongitude;
                     } catch (PropertyNotImplementedException) {
+                        Logger.Debug("SiteLongitude GET is not implemented in this driver");
                         _canGetSiteLatLong = false;
                     }
                 }
@@ -728,6 +745,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     try {
                         val = device.SlewSettleTime;
                     } catch (PropertyNotImplementedException) {
+                        Logger.Debug("SlewSettleTime GET is not implemented in this driver");
                         _canSetSlewSettleTime = false;
                     }
                 }
@@ -758,6 +776,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     try {
                         val = device.TargetDeclination;
                     } catch (PropertyNotImplementedException) {
+                        Logger.Debug("TargetDeclination GET is not implemented in this driver");
                         _canGetTargetRaDec = false;
                     } catch (DriverAccessCOMException ex) {
                         Logger.Warning(ex.Message);
@@ -791,6 +810,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                     try {
                         val = device.TargetRightAscension;
                     } catch (PropertyNotImplementedException) {
+                        Logger.Debug("TargetRightAscension GET is not implemented in this driver");
                         _canGetTargetRaDec = false;
                     } catch (DriverAccessCOMException ex) {
                         Logger.Warning(ex.Message);
@@ -997,13 +1017,13 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         }
 
         public void Park() {
-            if (Connected && CanPark) {
+            if (CanPark) {
                 device.Park();
             }
         }
 
         public void Setpark() {
-            if (Connected && CanSetPark) {
+            if (CanSetPark) {
                 try {
                     device.SetPark();
                 } catch (Exception e) {
@@ -1024,7 +1044,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                 return Connected && device.Tracking;
             }
             set {
-                if (Connected && CanSetTrackingEnabled) {
+                if (CanSetTrackingEnabled) {
                     if (device.Tracking != value) {
                         device.Tracking = value;
                         RaisePropertyChanged();
@@ -1062,14 +1082,14 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         }
 
         public void StopSlew() {
-            if (Connected && CanSlew) {
+            if (CanSlew) {
                 device.AbortSlew();
             }
         }
 
         public bool Sync(Coordinates coordinates) {
             bool success = false;
-            if (Connected && CanSync) {
+            if (CanSync) {
                 if (TrackingEnabled) {
                     try {
                         coordinates = coordinates.Transform(EquatorialSystem);
@@ -1088,7 +1108,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         }
 
         public void FindHome() {
-            if (Connected && CanFindHome) {
+            if (CanFindHome) {
                 try {
                     device.FindHome();
                 } catch (Exception e) {
@@ -1099,7 +1119,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         }
 
         public void Unpark() {
-            if (Connected && CanUnpark) {
+            if (CanUnpark) {
                 try {
                     device.Unpark();
                 } catch (Exception e) {
