@@ -4920,11 +4920,11 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Es segur</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
-    <value>A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays safe.</value>
+    <value>Comprova que la condició amb el dispositiu del monitor de seguretat connectat sigui segur i repeteix el conjunt d’instruccions sempre que i quan el monitoratge de seguretat indiqui que és segur. Si el dispositiu torna a no ser segur, el conjunt d'instruccions actuals s'aturarà.
+S’utilitza millor juntament amb una altra condició de bucle per no acabar en un bucle infinit quan el monitor de seguretat es mantingui segur.</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
-    <value>Loop while safe</value>
+    <value>Bucle mentre sigui segur</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
     <value>Deseu el conjunt d’instruccions actual i tot el seu contingut com a plantilla per tornar-la a utilitzar</value>
@@ -5426,37 +5426,37 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
     <value>No s'ha pogut desar la seqüència "{0}": {1}</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThreshold" xml:space="preserve">
-    <value>R² Threshold</value>
+    <value>Llindar R²</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThresholdTooltip" xml:space="preserve">
-    <value>The minimum R² (Coefficient of determination) value that the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful.
-The value is in the range between 0-1.
-When set to 0, the threshold will not be considered. 
-An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions. 
-A good starting point for a threshold is a value of 0.8 - anything below that is a questionable fit.</value>
+    <value>El valor mínim de R² (coeficient de determinació) que ha de complir l'adaptació d'enfocament automàtic seleccionat perquè l'execució d'enfocament automàtic es consideri correcta.
+El valor està situat entre 0-1.
+Si es defineix a 0, el llindar no es considerarà.
+Una execució d’enfocament automàtic amb un valor R² superior a 0,9 es pot considerar ideal. No obstant això, un valor inferior encara pot assolir el focus en condicions casi ideals.
+Un punt de partida per a un bon llindar és un valor de 0,8: qualsevol cosa que sigui inferior a això serà qüestionable.</value>
     <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
   </data>
   <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
+    <value>Ha fallat l'enfocament automàtic. R² (coeficient de determinació) per a l'ajust de la corba està per sota del llindar. {0} / {1}</value>
     <comment>First parameter is actual R², second parameter is R² threshold</comment>
   </data>
   <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
+    <value>Ha fallat l'enfocament automàtic. El R² (coeficient de determinació) per a l'ajust de la línia de tendència és inferior al llindar. Esquerra: {0} / {2}; Dreta: {1} / {2}</value>
     <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
   </data>
   <data name="Lbl_SequenceCategory_SafetyMonitor" xml:space="preserve">
-    <value>Safety Monitor</value>
+    <value>Monitor de seguretat</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description" xml:space="preserve">
-    <value>Waits until the safety monitor device reports safe conditions again</value>
+    <value>Espera fins que el dispositiu de control de seguretat informi de nou de condicions de seguretat</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name" xml:space="preserve">
-    <value>Wait until safe</value>
+    <value>Espera fins que sigui segur</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
-    <value>Waiting for safe conditions</value>
+    <value>Esperant condicions de seguretat</value>
   </data>
   <data name="LblTemperatureSetPointDescription" xml:space="preserve">
-    <value>Camera Temperature Set Point</value>
+    <value>Punt de temperatura establert de la càmera</value>
   </data>
 </root>

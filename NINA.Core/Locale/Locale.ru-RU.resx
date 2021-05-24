@@ -237,7 +237,7 @@
     <value>угл. мин</value>
   </data>
   <data name="LblMaxArcmin" xml:space="preserve">
-    <value>Max arcmin</value>
+    <value>Макс. угловых минут</value>
   </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>угл. сек</value>
@@ -2060,7 +2060,7 @@ Dec: {1}</value>
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>From N.I.N.A. to Telescope</value>
+    <value>От N.I.N.A. до Телескопа</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Нет</value>
@@ -2328,7 +2328,7 @@ Dec: {1}</value>
     <value>PHD2 не смог подключиться к оборудованию</value>
   </data>
   <data name="LblPhd2FailedGetProfiles" xml:space="preserve">
-    <value>PHD2 wasn't able to provide profiles</value>
+    <value>PHD2 не смог предоставить профили</value>
   </data>
   <data name="LblPHD2HistorySize" xml:space="preserve">
     <value>Размер истории PHD2</value>
@@ -2379,22 +2379,22 @@ Dec: {1}</value>
     <value>Итого: {0}({1}")</value>
   </data>
   <data name="LblPhd2Profile" xml:space="preserve">
-    <value>PHD2 Profile</value>
+    <value>Профиль PHD2</value>
   </data>
   <data name="LblPhd2ProfileChanged" xml:space="preserve">
-    <value>Changed PHD2 profile to {0}</value>
+    <value>Профиль PHD2 изменен на {0}</value>
   </data>
   <data name="LblPhd2ProfileChangeFailed" xml:space="preserve">
-    <value>Failed to change PHD2 profile</value>
+    <value>Не удалось изменить PHD2 профиль</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile id {0} not found. Using {1}</value>
+    <value>PHD2 профиль id {0} не найден. Используется {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Пиксели</value>
   </data>
   <data name="LblMaxPixels" xml:space="preserve">
-    <value>Max Pixels</value>
+    <value>Макс. пикселей</value>
   </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Размер пикселя</value>
@@ -2502,10 +2502,10 @@ Dec: {1}</value>
     <value>Плейтсолв</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
-    <value>Recentering after too much drift</value>
+    <value>Повторять после слишком большого дрейфа</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
-    <value>No target set</value>
+    <value>Объект не задан</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Пожалуйста, измените на фильтр {0}</value>
@@ -3174,7 +3174,7 @@ Dec: {1}</value>
     <value>Телескоп синхронизирован на координаты</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>From Telescope to N.I.N.A.</value>
+    <value>От Телескопа до N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>Скорость гидирования П.В.</value>
@@ -4473,10 +4473,10 @@ Dec: {1}</value>
     <value>Ожидание времени</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
-    <value>Center After Drift</value>
+    <value>Центр после дрейфа</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+    <value>Триггер для инициации повторного центрирования после того, как плэйтсолв определяет, что телескоп слишком далеко ушел от координат цели</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Триггер для инициирования автофокуса после того, как HFR увеличился на заданное количество в процентах с момента последнего автофокуса или начала серии</value>
@@ -4548,13 +4548,13 @@ Dec: {1}</value>
     <value>Межкадровая подвижка после экспозиций</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuiding_Description" xml:space="preserve">
-    <value>Resumes guiding if it was previously interrupted</value>
+    <value>Возобновляет гидирование, если оно было прервано ранее</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuidings_Name" xml:space="preserve">
-    <value>Restore Guiding</value>
+    <value>Возобновить гидирование</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
-    <value>Evaluate After Exposures</value>
+    <value>Оценить после экспозиций</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>После экспозиций</value>
@@ -4922,11 +4922,11 @@ Dec: {1}</value>
     <value>Безопасно</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
-    <value>A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays safe.</value>
+    <value>Условие, которое проверяет подключенное устройство монитора безопасности, если оно безопасно, и зацикливает набор инструкций, пока монитор безопасности сообщает, что оно безопасно. Если устройство возвращается в небезопасное состояние, текущий набор команд останавливается.
+Лучше всего использовать в сочетании с другим условием цикла, чтобы не попасть в бесконечный цикл, когда монитор безопасности остается безопасным.</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
-    <value>Loop while safe</value>
+    <value>Цикл в безопасности</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
     <value>Сохранить текущий набор инструкций и все его содержимое в качестве шаблона для повторного использования</value>
@@ -5419,46 +5419,55 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Показать меню</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
-    <value>Keep Closed</value>
+    <value>Держать закрытым</value>
   </data>
   <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
-    <value>Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect.</value>
+    <value>Вычисленная позиция точки фокуса находится за пределами всех точек измерения кривой. Подгонка кривой не корректна, и, скорее всего, настройки автофокусировки неправильны.</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
-    <value>Failed to save Sequence "{0}": {1}</value>
+    <value>Не удалось сохранить последовательность "{0}": {1}</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThreshold" xml:space="preserve">
-    <value>R² Threshold</value>
+    <value>Порог R2</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThresholdTooltip" xml:space="preserve">
-    <value>The minimum R² (Coefficient of determination) value that the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful.
-The value is in the range between 0-1.
-When set to 0, the threshold will not be considered. 
-An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions. 
-A good starting point for a threshold is a value of 0.8 - anything below that is a questionable fit.</value>
+    <value>Минимальное значение R² (коэффициент определения), которому должна соответствовать выбранная настройка автофокуса, чтобы запуск автофокуса считался успешным.
+Значение находится в диапазоне от 0 до 1.
+При значении 0 порог учитываться не будет.
+Автофокусировку со значением R² выше 0,9 можно считать идеальной. Однако более низкое значение все же может обеспечить фокусировку в полуидеальных условиях.
+Хорошей отправной точкой для порога является значение 0,8 - все, что ниже этого значения, сомнительно.</value>
     <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
   </data>
   <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
+    <value>Автофокус вышел из строя! R² (коэффициент детерминации) для аппроксимации кривой ниже порогового значения. {0} / {1}</value>
     <comment>First parameter is actual R², second parameter is R² threshold</comment>
   </data>
   <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
+    <value>Автофокус вышел из строя! R² (коэффициент детерминации) для аппроксимации линии тренда ниже порогового значения. Слева: {0} / {2}; Справа: {1} / {2}</value>
     <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
   </data>
   <data name="Lbl_SequenceCategory_SafetyMonitor" xml:space="preserve">
-    <value>Safety Monitor</value>
+    <value>Монитор безопасности</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description" xml:space="preserve">
-    <value>Waits until the safety monitor device reports safe conditions again</value>
+    <value>Ожидает, пока устройство контроля безопасности снова сообщит о безопасных условиях</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name" xml:space="preserve">
-    <value>Wait until safe</value>
+    <value>Ожидает безопасные условия</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
-    <value>Waiting for safe conditions</value>
+    <value>Ожидание безопасных условий</value>
   </data>
   <data name="LblTemperatureSetPointDescription" xml:space="preserve">
-    <value>Camera Temperature Set Point</value>
+    <value>Точка установки температуры камеры</value>
+  </data>
+  <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
+    <value>ASCOM allow uneven pixel dimension</value>
+  </data>
+  <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
+    <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
+When enabled, the application will now allow for the full uneven pixel size on mono cameras. 
+This setting will have no effect on color sensors.
+Only relevant when using an ASCOM camera driver!</value>
   </data>
 </root>
