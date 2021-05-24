@@ -50,6 +50,7 @@ namespace NINA.Profile {
             fliEnableSnapshotFloodFlush = false;
 
             qhyIncludeOverscan = false;
+            ascomAllowUnevenPixelSize = false;
         }
 
         private string id;
@@ -480,6 +481,19 @@ namespace NINA.Profile {
             set {
                 if (dewHeaterOn != value) {
                     dewHeaterOn = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool ascomAllowUnevenPixelSize;
+
+        [DataMember]
+        public bool ASCOMAllowUnevenPixelDimension {
+            get => ascomAllowUnevenPixelSize;
+            set {
+                if (ascomAllowUnevenPixelSize != value) {
+                    ascomAllowUnevenPixelSize = value;
                     RaisePropertyChanged();
                 }
             }

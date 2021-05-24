@@ -2669,6 +2669,27 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ASCOM allow uneven pixel dimension.
+        /// </summary>
+        internal static string LblASCOMAllowUnevenPixelDimension {
+            get {
+                return ResourceManager.GetString("LblASCOMAllowUnevenPixelDimension", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
+        ///When enabled, the application will now allow for the full uneven pixel size on mono cameras. 
+        ///This setting will have no effect on color sensors.
+        ///Only relevant when using an ASCOM camera driver!.
+        /// </summary>
+        internal static string LblASCOMAllowUnevenPixelDimensionTooltip {
+            get {
+                return ResourceManager.GetString("LblASCOMAllowUnevenPixelDimensionTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to An ASCOM driver interop exception occurred. This is most likely caused by a mismatch between the driver being installed as {0} and N.I.N.A. being {1}. Please install the driver as {1}.
         /// </summary>
         internal static string LblAscomInterOpDriverException {

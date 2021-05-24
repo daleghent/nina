@@ -790,8 +790,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
             set {
                 if (Connected) {
-                    if (value % 2 > 0) {
-                        value--;
+                    if (!profileService.ActiveProfile.CameraSettings.ASCOMAllowUnevenPixelDimension || SensorType != SensorType.Monochrome) {
+                        if (value % 2 > 0) {
+                            value--;
+                        }
                     }
                     device.NumX = value;
                     RaisePropertyChanged();
@@ -809,8 +811,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
             set {
                 if (Connected) {
-                    if (value % 2 > 0) {
-                        value--;
+                    if (!profileService.ActiveProfile.CameraSettings.ASCOMAllowUnevenPixelDimension || SensorType != SensorType.Monochrome) {
+                        if (value % 2 > 0) {
+                            value--;
+                        }
                     }
                     device.NumY = value;
                     RaisePropertyChanged();

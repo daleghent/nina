@@ -146,6 +146,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ### Device-related Improvements
 - Canon CR3 image format is now supported
+- ASCOM Camera driver can now handle odd sensor width & height for mono sensors. A setting to enable this new behavior is available.
 
 ### QHYCCD native driver improvements
 - <span style="color:red">**IMPORTANT:**</span> NINA 1.11 #47 (and later) require *at least* [QHY System Pack](https://www.qhyccd.com/download.html) version 21.02.20.19 to be installed

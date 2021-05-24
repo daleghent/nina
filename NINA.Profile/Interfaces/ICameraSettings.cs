@@ -51,5 +51,6 @@ namespace NINA.Profile.Interfaces {
         bool QhyIncludeOverscan { get; set; }
         int Timeout { get; set; }
         bool? DewHeaterOn { get; set; }
+        bool ASCOMAllowUnevenPixelDimension { get; set; }
     }
 }
