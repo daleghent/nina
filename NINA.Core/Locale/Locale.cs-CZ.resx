@@ -5459,12 +5459,12 @@ Dobrým výchozím bodem pro prahovou hodnotu je hodnota 0,8 - vše, co je níž
     <value>Nastavená Teplota Kamery</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
-    <value>ASCOM allow uneven pixel dimension</value>
+    <value>ASCOM umožňuje lichý rozměr pixelu</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
-    <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
-When enabled, the application will now allow for the full uneven pixel size on mono cameras. 
-This setting will have no effect on color sensors.
-Only relevant when using an ASCOM camera driver!</value>
+    <value>V předchozích verzích N.I.N.A. šířka a výška ovladače ASCOM byla vždy omezena na sudá čísla, a to i pro mono kamery.
+Je-li tato funkce povolena, aplikace nyní umožní u mono kamer celou lichou dimenzi pixelu. 
+Toto nastavení nebude mít žádný vliv na barevné senzory.
+Význam pouze při použití ovladače kamery ASCOM!</value>
   </data>
 </root>

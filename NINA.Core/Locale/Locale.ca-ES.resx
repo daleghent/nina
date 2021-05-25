@@ -5460,11 +5460,11 @@ Un punt de partida per a un bon llindar és un valor de 0,8: qualsevol cosa que 
     <value>Punt de temperatura establert de la càmera</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
-    <value>ASCOM allow uneven pixel dimension</value>
+    <value>ASCOM allow odd pixel dimension</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
     <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
-When enabled, the application will now allow for the full uneven pixel size on mono cameras. 
+When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
 This setting will have no effect on color sensors.
 Only relevant when using an ASCOM camera driver!</value>
   </data>
