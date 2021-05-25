@@ -3,6 +3,9 @@ NINA/External/*/Altair
 NINA/External/*/Canon
 NINA/External/*/Nikon
 
+# Exclude nuget.exe
+/publish/nuget.exe
+
 # User-specific files
 *.rsuser
 *.user
