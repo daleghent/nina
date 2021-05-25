@@ -2669,7 +2669,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ASCOM allow uneven pixel dimension.
+        ///   Looks up a localized string similar to ASCOM allow odd pixel dimension.
         /// </summary>
         internal static string LblASCOMAllowUnevenPixelDimension {
             get {
@@ -2679,7 +2679,7 @@ namespace NINA.Core.Locale {
         
         /// <summary>
         ///   Looks up a localized string similar to In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
-        ///When enabled, the application will now allow for the full uneven pixel size on mono cameras. 
+        ///When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
         ///This setting will have no effect on color sensors.
         ///Only relevant when using an ASCOM camera driver!.
         /// </summary>
