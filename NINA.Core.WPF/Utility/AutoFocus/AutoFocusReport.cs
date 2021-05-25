@@ -62,6 +62,9 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
         public Fittings Fittings { get; set; }
 
         [JsonProperty]
+        public RSquares RSquares { get; set; }
+
+        [JsonProperty]
         public BacklashCompensation BacklashCompensation { get; set; }
 
         /// <summary>
@@ -114,6 +117,12 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
                     LeftTrend = trendlineFitting.LeftExpression,
                     RightTrend = trendlineFitting.RightExpression
                 },
+                RSquares = new RSquares() {
+                    Hyperbolic = hyperbolicFitting.RSquared,
+                    Quadratic = quadraticFitting.RSquared,
+                    LeftTrend = trendlineFitting.LeftTrend?.RSquared ?? double.NaN,
+                    RightTrend = trendlineFitting.RightTrend?.RSquared ?? double.NaN
+                },
                 BacklashCompensation = new BacklashCompensation() {
                     BacklashCompensationModel = profileService.ActiveProfile.FocuserSettings.BacklashCompensationModel.ToString(),
                     BacklashIN = profileService.ActiveProfile.FocuserSettings.BacklashIn,
@@ -156,6 +165,21 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
 
         [JsonProperty]
         public string RightTrend { get; set; }
+    }
+
+    public class RSquares {
+
+        [JsonProperty]
+        public double Quadratic { get; set; }
+
+        [JsonProperty]
+        public double Hyperbolic { get; set; }
+
+        [JsonProperty]
+        public double LeftTrend { get; set; }
+
+        [JsonProperty]
+        public double RightTrend { get; set; }
     }
 
     public class FocusPoint {
