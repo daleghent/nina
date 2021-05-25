@@ -171,6 +171,12 @@
                                                 <TextBlock Text=": " />
                                                 <TextBlock Text="{Binding Item.AutoFocusPoint.Time}" />
                                             </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="{ns:Loc LblFilter}" />
+                                                <TextBlock Text=": " />
+                                                <TextBlock Text="{Binding Item.AutoFocusPoint.Filter}" />
+                                            </StackPanel>
                                         </StackPanel>
                                     </oxy:TrackerControl.Content>
                                 </oxy:TrackerControl>

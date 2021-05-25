@@ -20,6 +20,7 @@ namespace NINA.Core.Model {
         public double NewPosition { get; set; }
         public double OldPosition { get; set; }
         public double Temperature { get; set; }
+        public string Filter { get; set; }
         public DateTime Time { get; set; }
     }
 }

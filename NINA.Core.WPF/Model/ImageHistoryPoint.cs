@@ -45,6 +45,7 @@ namespace NINA.WPF.Base.Model {
             AutoFocusPoint.NewPosition = report.CalculatedFocusPoint.Position;
             AutoFocusPoint.Temperature = report.Temperature;
             AutoFocusPoint.Time = report.Timestamp;
+            AutoFocusPoint.Filter = report.Filter;
         }
 
         public void PopulateProperties(ImageSavedEventArgs imageSavedEventArgs) {
@@ -158,6 +159,7 @@ namespace NINA.WPF.Base.Model {
             Map(m => m.AutoFocusPoint.OldPosition).Optional().Index(25).Name("AutoFocus Old Position");
             Map(m => m.AutoFocusPoint.NewPosition).Optional().Index(26).Name("AutoFocus New Position");
             Map(m => m.AutoFocusPoint.Time).Index(27).Optional().Name("AutoFocus Time");
+            Map(m => m.AutoFocusPoint.Filter).Optional().Index(28).Name("AutoFocus Filter");
         }
     }
 }
