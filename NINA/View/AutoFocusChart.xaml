@@ -295,11 +295,10 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblTemperature}" />
-                    <ninactrl:OverlayTextBox
+                    <TextBlock
                         Margin="5,0,0,0"
-                        VerticalContentAlignment="Center"
-                        OverlayText="{Binding Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2}"
-                        Text="{Binding Temperature}" />
+                        VerticalAlignment="Center"
+                        Text="{Binding Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2}" />
                 </UniformGrid>
             </Border>
             <Border
