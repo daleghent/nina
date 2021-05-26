@@ -19,6 +19,8 @@ using NINA.Core.Utility;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Equipment.Interfaces;
+using System;
+using NINA.Core.Locale;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
@@ -44,6 +46,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                     Logger.Debug($"Overshooting from {startPosition} to overshoot position {overshoot} using a compensation of {backlashCompensation}");
 
                     await base.Move(overshoot, ct);
+
+                    //Wait for focuser to settle
+                    if (profileService.ActiveProfile.FocuserSettings.FocuserSettleTime > 0) {
+                        Logger.Debug($"Settling Focuser for {profileService.ActiveProfile.FocuserSettings.FocuserSettleTime}s after overshooting");
+                        await CoreUtil.Wait(TimeSpan.FromSeconds(profileService.ActiveProfile.FocuserSettings.FocuserSettleTime), ct);
+                    }
 
                     Logger.Debug($"Moving back to position {targetPosition}");
                 }
