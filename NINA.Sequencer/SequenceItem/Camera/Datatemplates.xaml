@@ -12,6 +12,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.Camera"
     xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
 
@@ -30,9 +31,11 @@
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTemperature}" />
-                    <TextBox
+                    <ninactrl:OverlayTextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
+                        VerticalContentAlignment="Center"
+                        OverlayText="{Binding Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=°C}"
                         Text="{Binding Temperature}"
                         TextAlignment="Right" />
                     <TextBlock
@@ -41,15 +44,13 @@
                         VerticalAlignment="Center"
                         Text="|" />
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMinDuration}" />
-                    <TextBox
+                    <ninactrl:OverlayTextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
+                        VerticalContentAlignment="Center"
+                        OverlayText="{Binding Duration, Converter={StaticResource UnitConverter}, ConverterParameter=min}"
                         Text="{Binding Duration}"
                         TextAlignment="Right" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="m"
-                        TextAlignment="Left" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
@@ -60,15 +61,13 @@
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMinDuration}" />
-                    <TextBox
+                    <ninactrl:OverlayTextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
+                        VerticalContentAlignment="Center"
+                        OverlayText="{Binding Duration, Converter={StaticResource UnitConverter}, ConverterParameter=min}"
                         Text="{Binding Duration}"
                         TextAlignment="Right" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="m"
-                        TextAlignment="Left" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>

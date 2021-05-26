@@ -26,10 +26,12 @@
             <util:BindingProxy x:Key="CameraInfo" Data="{Binding CameraInfo}" />
         </WrapPanel.Resources>
         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTime}" />
-        <TextBox
+        <ninactrl:OverlayTextBox
             MinWidth="40"
             Margin="5,0,0,0"
             VerticalAlignment="Center"
+            VerticalContentAlignment="Center"
+            OverlayText="{Binding ExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=s}"
             Text="{Binding ExposureTime}"
             TextAlignment="Right" />
 

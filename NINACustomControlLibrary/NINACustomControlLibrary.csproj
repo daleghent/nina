@@ -57,6 +57,7 @@
     <Compile Include="GridHelpers.cs" />
     <Compile Include="HitTestGroupBox.cs" />
     <Compile Include="OutlinedTextBlock.cs" />
+    <Compile Include="OverlayTextBox.cs" />
     <Compile Include="TickSlider.cs" />
     <Page Include="Themes\Arc.Generic.xaml">
       <SubType>Designer</SubType>
@@ -95,6 +96,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\LoadingControl.Generic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\OverlayTextBox.Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

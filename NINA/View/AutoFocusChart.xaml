@@ -13,6 +13,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:NINA.View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:oxy="clr-namespace:OxyPlot.Wpf;assembly=OxyPlot.Wpf"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
@@ -294,7 +295,11 @@
                 BorderThickness="0">
                 <UniformGrid VerticalAlignment="Center" Columns="2">
                     <TextBlock Text="{ns:Loc LblTemperature}" />
-                    <TextBlock Margin="5,0,0,0" Text="{Binding Temperature, StringFormat=\{0:0.00\}}" />
+                    <ninactrl:OverlayTextBox
+                        Margin="5,0,0,0"
+                        VerticalContentAlignment="Center"
+                        OverlayText="{Binding Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2}"
+                        Text="{Binding Temperature}" />
                 </UniformGrid>
             </Border>
             <Border

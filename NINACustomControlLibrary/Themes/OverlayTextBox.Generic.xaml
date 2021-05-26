@@ -1,0 +1,81 @@
+﻿<!--
+    Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
+
+    This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
+
+    This Source Code Form is subject to the terms of the Mozilla Public
+    License, v. 2.0. If a copy of the MPL was not distributed with this
+    file, You can obtain one at http://mozilla.org/MPL/2.0/.-->
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:NINACustomControlLibrary"
+    xmlns:s="clr-namespace:System;assembly=mscorlib">
+
+    <Style TargetType="local:OverlayTextBox">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:OverlayTextBox}">
+                    <Grid>
+                        <Grid>
+                            <TextBox
+                                x:Name="PART_TextBox"
+                                Width="{TemplateBinding Width}"
+                                Height="{TemplateBinding Height}"
+                                MaxWidth="{TemplateBinding MaxWidth}"
+                                MaxHeight="{TemplateBinding MaxHeight}"
+                                Padding="{TemplateBinding Padding}"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment}"
+                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Background="{TemplateBinding Background}"
+                                Text="{Binding Text, RelativeSource={RelativeSource AncestorType={x:Type local:OverlayTextBox}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Grid>
+
+                        <TextBlock
+                            x:Name="PART_OverlayText"
+                            Margin="5,0,0,0"
+                            Padding="2"
+                            HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                            Background="Transparent"
+                            Foreground="{TemplateBinding Foreground}"
+                            IsHitTestVisible="False"
+                            Text="{TemplateBinding OverlayText}"
+                            TextAlignment="{TemplateBinding TextAlignment}" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError), RelativeSource={RelativeSource Self}}" Value="True" />
+                                <Condition Binding="{Binding IsFocused, ElementName=PART_TextBox}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter TargetName="PART_OverlayText" Property="Visibility" Value="Collapsed" />
+                                <Setter TargetName="PART_TextBox" Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding Path=(Validation.HasError), RelativeSource={RelativeSource Self}}" Value="False" />
+                                <Condition Binding="{Binding IsFocused, ElementName=PART_TextBox}" Value="False" />
+                            </MultiDataTrigger.Conditions>
+                            <MultiDataTrigger.Setters>
+                                <Setter TargetName="PART_OverlayText" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="PART_TextBox" Property="Foreground" Value="Transparent" />
+                            </MultiDataTrigger.Setters>
+                        </MultiDataTrigger>
+                        <DataTrigger Binding="{Binding IsFocused, ElementName=PART_TextBox}" Value="True">
+                            <Setter TargetName="PART_TextBox" Property="Foreground" Value="{Binding Foreground, RelativeSource={RelativeSource AncestorType={x:Type TextBox}}}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsFocused, ElementName=PART_TextBox}" Value="True">
+                            <Setter TargetName="PART_OverlayText" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

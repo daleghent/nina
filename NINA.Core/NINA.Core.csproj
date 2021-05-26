@@ -275,6 +275,7 @@
     <Compile Include="Utility\Converters\OneValueGreaterThanAnotherToVisiblityConverter.cs" />
     <Compile Include="Utility\Converters\OptimalExposureCalculatorAnswerConverter.cs" />
     <Compile Include="Utility\Converters\PercentageConverter.cs" />
+    <Compile Include="Utility\Converters\UnitConverter.cs" />
     <Compile Include="Utility\Converters\SetAlphaToColorConverter.cs" />
     <Compile Include="Utility\Converters\SideOfPierConverter.cs" />
     <Compile Include="Utility\Converters\SubstractConverter.cs" />

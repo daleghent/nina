@@ -15,6 +15,7 @@
     xmlns:local="clr-namespace:NINA.Sequencer.Trigger"
     xmlns:mf="clr-namespace:NINA.Sequencer.Trigger.MeridianFlip"
     xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:p="clr-namespace:NINA.Sequencer.Trigger.Platesolving"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
@@ -128,14 +129,14 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblAmount}" />
-                    <TextBox
+                    <ninactrl:OverlayTextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
-                        VerticalAlignment="Center"
+                        VerticalAlignment="Stretch"
                         VerticalContentAlignment="Center"
+                        OverlayText="{Binding Amount, Converter={StaticResource UnitConverter}, ConverterParameter=%}"
                         Text="{Binding Amount}"
                         TextAlignment="Right" />
-                    <TextBlock VerticalAlignment="Center" Text="%" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
@@ -198,9 +199,9 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Text="{Binding DeltaT}" />
-                    <TextBlock VerticalAlignment="Center" Text="° / " />
+                    <TextBlock VerticalAlignment="Center" Text="°C / " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
+                    <TextBlock VerticalAlignment="Center" Text="°C" />
                 </StackPanel>
             </mini:MiniTrigger.TriggerProgressContent>
         </mini:MiniTrigger>
@@ -211,14 +212,14 @@
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAmount}" />
-                    <TextBox
+                    <ninactrl:OverlayTextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
+                        OverlayText="{Binding Amount, Converter={StaticResource UnitConverter}, ConverterParameter=°C}"
                         Text="{Binding Amount}"
                         TextAlignment="Right" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>
@@ -228,9 +229,9 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Text="{Binding DeltaT}" />
-                    <TextBlock VerticalAlignment="Center" Text="° / " />
+                    <TextBlock VerticalAlignment="Center" Text="°C / " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
-                    <TextBlock VerticalAlignment="Center" Text="°" />
+                    <TextBlock VerticalAlignment="Center" Text="°C" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
@@ -258,14 +259,14 @@
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAmount}" />
-                    <TextBox
-                        MinWidth="40"
+                    <ninactrl:OverlayTextBox
+                        MinWidth="50"
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
+                        OverlayText="{Binding Amount, Converter={StaticResource UnitConverter}, ConverterParameter=min}"
                         Text="{Binding Amount}"
                         TextAlignment="Right" />
-                    <TextBlock VerticalAlignment="Center" Text="m" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
             <view:SequenceBlockView.SequenceItemProgressContent>

@@ -335,11 +335,19 @@
                             </UniformGrid>
                             <UniformGrid Margin="0,0,0,6" Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPixelSize}" />
-                                <TextBox Margin="5,0,0,0" Text="{Binding CameraPixelSize}" />
+                                <ninactrl:OverlayTextBox
+                                    Margin="5,0,0,0"
+                                    VerticalContentAlignment="Center"
+                                    OverlayText="{Binding CameraPixelSize, Converter={StaticResource UnitConverter}, ConverterParameter=' μm'}"
+                                    Text="{Binding CameraPixelSize}" />
                             </UniformGrid>
                             <UniformGrid Margin="0,0,0,6" Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFocalLength}" />
-                                <TextBox Margin="5,0,0,0" Text="{Binding FocalLength}" />
+                                <ninactrl:OverlayTextBox
+                                    Margin="5,0,0,0"
+                                    VerticalContentAlignment="Center"
+                                    OverlayText="{Binding FocalLength, Converter={StaticResource UnitConverter}, ConverterParameter=' mm'}"
+                                    Text="{Binding FocalLength}" />
                             </UniformGrid>
                         </StackPanel>
                     </GroupBox>
@@ -361,7 +369,10 @@
                             </UniformGrid>
                             <UniformGrid Margin="0,0,0,6" Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblOverlapPercentage}" />
-                                <TextBox Margin="5,0,0,0" Text="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}, StringFormat={}{0}%}" />
+                                <ninactrl:OverlayTextBox
+                                    Margin="5,0,0,0"
+                                    OverlayText="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}, StringFormat={}{0}%}"
+                                    Text="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}}" />
                             </UniformGrid>
                             <UniformGrid Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblRotation}" />
@@ -370,11 +381,13 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <TextBox
+                                    <ninactrl:OverlayTextBox
                                         MinWidth="35"
                                         Margin="5,0,0,0"
                                         VerticalAlignment="Center"
+                                        VerticalContentAlignment="Center"
                                         IsEnabled="{Binding RectangleCalculated}"
+                                        OverlayText="{Binding Rectangle.TotalRotation, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
                                         Text="{Binding Rectangle.TotalRotation}" />
                                     <Slider
                                         Grid.Column="1"

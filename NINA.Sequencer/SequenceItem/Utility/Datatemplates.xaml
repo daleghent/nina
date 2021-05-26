@@ -13,6 +13,7 @@
     xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.Utility"
     xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:s="clr-namespace:System;assembly=mscorlib"
@@ -64,20 +65,21 @@
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDelay}" />
-                    <TextBox
+                    <ninactrl:OverlayTextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        OverlayText="{Binding Time, Converter={StaticResource UnitConverter}, ConverterParameter=s}"
                         TextAlignment="Right">
-                        <TextBox.Text>
+                        <ninactrl:OverlayTextBox.Text>
                             <Binding Mode="TwoWay" Path="Time">
                                 <Binding.ValidationRules>
                                     <rules:GreaterThanZeroRule />
                                 </Binding.ValidationRules>
                             </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                    <TextBlock VerticalAlignment="Center" Text="s" />
+                        </ninactrl:OverlayTextBox.Text>
+                    </ninactrl:OverlayTextBox>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>
@@ -235,19 +237,20 @@
                                 <s:String>&lt;=</s:String>
                             </ComboBoxItem>
                         </ComboBox>
-                        <TextBox
+                        <ninactrl:OverlayTextBox
                             MinWidth="40"
                             Margin="5,0,0,0"
+                            VerticalContentAlignment="Center"
+                            OverlayText="{Binding Altitude, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
                             TextAlignment="Right">
-                            <TextBox.Text>
+                            <ninactrl:OverlayTextBox.Text>
                                 <Binding Path="Altitude" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:GreaterThanZeroRule />
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <TextBlock VerticalAlignment="Center">°</TextBlock>
+                            </ninactrl:OverlayTextBox.Text>
+                        </ninactrl:OverlayTextBox>
                     </StackPanel>
                     <StackPanel
                         DataContext="{Binding Coordinates}"
@@ -372,11 +375,13 @@
                             Margin="5,0,0,0"
                             ItemsSource="{Binding ComparisonOperators}"
                             SelectedValue="{Binding Comparator}" />
-                        <TextBox
+                        <ninactrl:OverlayTextBox
                             MinWidth="40"
                             Margin="5,0,0,0"
+                            VerticalContentAlignment="Center"
+                            OverlayText="{Binding UserMoonAltitude, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
                             TextAlignment="Right">
-                            <TextBox.Text>
+                            <ninactrl:OverlayTextBox.Text>
                                 <Binding Path="UserMoonAltitude" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:DoubleRangeRule>
@@ -386,9 +391,8 @@
                                         </rules:DoubleRangeRule>
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <TextBlock VerticalAlignment="Center">°</TextBlock>
+                            </ninactrl:OverlayTextBox.Text>
+                        </ninactrl:OverlayTextBox>
                     </StackPanel>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
@@ -419,11 +423,13 @@
                             Margin="5,0,0,0"
                             ItemsSource="{Binding ComparisonOperators}"
                             SelectedValue="{Binding Comparator}" />
-                        <TextBox
+                        <ninactrl:OverlayTextBox
                             MinWidth="40"
                             Margin="5,0,0,0"
+                            VerticalContentAlignment="Center"
+                            OverlayText="{Binding UserSunAltitude, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
                             TextAlignment="Right">
-                            <TextBox.Text>
+                            <ninactrl:OverlayTextBox.Text>
                                 <Binding Path="UserSunAltitude" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
                                         <rules:DoubleRangeRule>
@@ -433,9 +439,8 @@
                                         </rules:DoubleRangeRule>
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </TextBox.Text>
-                        </TextBox>
-                        <TextBlock VerticalAlignment="Center">°</TextBlock>
+                            </ninactrl:OverlayTextBox.Text>
+                        </ninactrl:OverlayTextBox>
                     </StackPanel>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>

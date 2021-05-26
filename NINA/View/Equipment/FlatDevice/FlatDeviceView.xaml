@@ -16,6 +16,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -263,19 +264,27 @@
                             VerticalAlignment="Top"
                             Columns="2">
                             <TextBlock Text="{ns:Loc LblFlatDeviceSettleTime}" />
-                            <StackPanel Orientation="Horizontal">
-                                <TextBox
-                                    Height="25"
-                                    MinWidth="65"
-                                    Margin="5,0,0,0"
-                                    HorizontalContentAlignment="Right"
-                                    IsEnabled="{Binding FlatDeviceInfo.Connected}"
-                                    Text="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.SettleTime, Mode=TwoWay}" />
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    IsEnabled="{Binding FlatDeviceInfo.Connected}"
-                                    Text=" ms" />
-                            </StackPanel>
+
+                            <ninactrl:OverlayTextBox
+                                Height="25"
+                                MinWidth="65"
+                                Margin="5,0,0,0"
+                        VerticalContentAlignment="Center"
+                                HorizontalContentAlignment="Left"
+                                IsEnabled="{Binding FlatDeviceInfo.Connected}"
+                                OverlayText="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=ms}">
+                                <TextBox.Text>
+                                    <Binding
+                                        Mode="TwoWay"
+                                        Path="ActiveProfile.FlatDeviceSettings.SettleTime"
+                                        Source="{StaticResource ProfileService}"
+                                        UpdateSourceTrigger="LostFocus">
+                                        <Binding.ValidationRules>
+                                            <rules:GreaterZeroRule />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </ninactrl:OverlayTextBox>
                         </UniformGrid>
                     </Border>
                 </StackPanel>
@@ -284,7 +293,8 @@
         <GroupBox
             Grid.Row="0"
             Grid.RowSpan="2"
-            Grid.Column="1">
+            Grid.Column="1"
+            IsEnabled="{Binding FlatDeviceInfo.Connected}">
             <GroupBox.Header>
                 <TextBlock
                     MinHeight="40"

@@ -232,6 +232,7 @@
     <Compile Include="Autofocus\TrendlineTest.cs" />
     <Compile Include="CaptureSequenceTest.cs" />
     <Compile Include="Converters\IntNegativeOneToDoubleDashConverter.cs" />
+    <Compile Include="Converters\UnitConverterTest.cs" />
     <Compile Include="CoordinatesTest.cs" />
     <Compile Include="Database\DatabaseInteractionTest.cs" />
     <Compile Include="Dome\DomeFollowerTest.cs" />

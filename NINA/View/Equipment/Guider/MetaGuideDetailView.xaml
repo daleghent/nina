@@ -158,22 +158,29 @@
                             <TextBlock Text="{ns:Loc LblMetaGuideDitherSettleTimeTooltip}" />
                         </TextBlock.ToolTip>
                     </TextBlock>
-                    <TextBox
-                        MinWidth="75"
-                        MinHeight="20"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center">
-                        <TextBox.Text>
-                            <Binding
-                                Path="ActiveProfile.GuiderSettings.MetaGuideDitherSettleSeconds"
-                                Source="{StaticResource ProfileService}"
-                                UpdateSourceTrigger="LostFocus">
-                                <Binding.ValidationRules>
-                                    <rules:GreaterZeroRule />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            MinWidth="75"
+                            MinHeight="20"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center">
+                            <TextBox.Text>
+                                <Binding
+                                    Path="ActiveProfile.GuiderSettings.MetaGuideDitherSettleSeconds"
+                                    Source="{StaticResource ProfileService}"
+                                    UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:GreaterZeroRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center">s</TextBlock>
+                    </Grid>
                 </UniformGrid>
             </StackPanel>
             <StackPanel Margin="0,5,0,0" Orientation="Horizontal">

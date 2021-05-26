@@ -335,10 +335,15 @@
         </Grid>
 
         <Grid Grid.Row="2" IsEnabled="{Binding Cam, Converter={StaticResource InverseNullToBooleanConverter}}">
-            <GroupBox
-                Grid.Column="1"
-                Header="{ns:Loc LblCamSettings}"
-                IsEnabled="{Binding CameraInfo.Connected}">
+            <GroupBox Grid.Column="1" IsEnabled="{Binding CameraInfo.Connected}">
+                <GroupBox.Header>
+                    <Grid Height="40" Margin="5">
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="20"
+                            Text="{ns:Loc LblCamSettings}" />
+                    </Grid>
+                </GroupBox.Header>
                 <StackPanel Visibility="{Binding Cam, Converter={StaticResource NullToVisibilityConverter}}">
                     <DockPanel Margin="0,0,0,6" Visibility="{Binding Cam.CanGetGain, Converter={StaticResource VisibilityConverter}}">
                         <StackPanel MinWidth="100" Orientation="Horizontal">
@@ -406,10 +411,19 @@
                         </DockPanel.ToolTip>
                     </DockPanel>
                     <DockPanel Margin="0,0,0,6" Visibility="{Binding Cam.CanSetUSBLimit, Converter={StaticResource VisibilityConverter}}">
-                        <TextBlock
-                            MinWidth="100"
-                            VerticalAlignment="Center"
-                            Text="{ns:Loc LblUSBLimit}" />
+                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblUSBLimit}" />
+                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="(" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.USBLimitMin}" />
+                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                <TextBlock VerticalAlignment="Center" Text="{Binding Cam.USBLimitMax}" />
+                                <TextBlock VerticalAlignment="Center" Text=")" />
+                            </StackPanel>
+                        </StackPanel>
                         <ninactrl:IntStepperControl
                             Width="200"
                             HorizontalAlignment="Right"
@@ -522,7 +536,15 @@
             Grid.Column="1"
             IsEnabled="{Binding Cam, Converter={StaticResource InverseNullToBooleanConverter}}">
             <Grid IsEnabled="{Binding CameraInfo.Connected}">
-                <GroupBox Header="{ns:Loc LblTempControl}">
+                <GroupBox>
+                    <GroupBox.Header>
+                        <Grid Height="40" Margin="5">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="20"
+                                Text="{ns:Loc LblTempControl}" />
+                        </Grid>
+                    </GroupBox.Header>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
@@ -601,11 +623,11 @@
                                         Columns="2">
                                         <TextBlock Text="{ns:Loc LblChipTemp}" />
                                         <StackPanel Orientation="Horizontal">
+
                                             <TextBlock
                                                 Margin="5,0,0,0"
-                                                Text="{Binding CameraInfo.Temperature, StringFormat=\{0:0.00\}, Converter={StaticResource NaNToDoubleDashConverter}}"
+                                                Text="{Binding CameraInfo.Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2}"
                                                 Visibility="{Binding CameraInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
-
                                             <TextBlock Text=" / ">
                                                 <TextBlock.Visibility>
                                                     <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
@@ -618,7 +640,7 @@
                                             <TextBlock
                                                 MinWidth="20"
                                                 Margin="5,0,0,0"
-                                                Text="{Binding Cam.TemperatureSetPoint, StringFormat=\{0:0.00\}}">
+                                                Text="{Binding Cam.TemperatureSetPoint, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2}">
                                                 <TextBlock.Visibility>
                                                     <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
                                                         <Binding Path="CameraInfo.Connected" />
@@ -662,12 +684,20 @@
                                             Text="{ns:Loc LblTargetTemp}" />
                                         <ninactrl:StepperControl
                                             Grid.Column="1"
-                                            MinWidth="100"
+                                            MinWidth="120"
                                             IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                             MaxValue="50"
                                             MinValue="-50"
                                             StepSize="1"
-                                            Value="{Binding TargetTemp, Mode=TwoWay}" />
+                                            Value="{Binding TargetTemp, Mode=TwoWay}">
+                                            <ninactrl:StepperControl.InnerContent>
+                                                <ninactrl:OverlayTextBox
+                        VerticalContentAlignment="Center"
+                                                    OverlayText="{Binding TargetTemp, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2, Mode=TwoWay}"
+                                                    Text="{Binding TargetTemp}"
+                                                    TextAlignment="Center" />
+                                            </ninactrl:StepperControl.InnerContent>
+                                        </ninactrl:StepperControl>
                                     </Grid>
 
                                     <Grid Grid.Row="1" Margin="0,2,0,0">
@@ -680,12 +710,20 @@
 
                                         <ninactrl:StepperControl
                                             Grid.Column="1"
-                                            MinWidth="100"
+                                            MinWidth="120"
                                             IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                             MaxValue="30"
                                             MinValue="0"
                                             StepSize="1"
-                                            Value="{Binding CoolingDuration, Mode=TwoWay}" />
+                                            Value="{Binding CoolingDuration, Mode=TwoWay}">
+                                            <ninactrl:StepperControl.InnerContent>
+                                                <ninactrl:OverlayTextBox
+                        VerticalContentAlignment="Center"
+                                                    OverlayText="{Binding CoolingDuration, Converter={StaticResource UnitConverter}, ConverterParameter=min|2, Mode=TwoWay}"
+                                                    Text="{Binding CoolingDuration}"
+                                                    TextAlignment="Center" />
+                                            </ninactrl:StepperControl.InnerContent>
+                                        </ninactrl:StepperControl>
                                     </Grid>
 
                                     <ninactrl:CancellableButton
@@ -725,12 +763,20 @@
                                         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMinDuration}" />
                                         <ninactrl:StepperControl
                                             Grid.Column="1"
-                                            MinWidth="100"
+                                            MinWidth="120"
                                             IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                             MaxValue="30"
                                             MinValue="0"
                                             StepSize="1"
-                                            Value="{Binding WarmingDuration, Mode=TwoWay}" />
+                                            Value="{Binding WarmingDuration, Mode=TwoWay}">
+                                            <ninactrl:StepperControl.InnerContent>
+                                                <ninactrl:OverlayTextBox
+                        VerticalContentAlignment="Center"
+                                                    OverlayText="{Binding WarmingDuration, Converter={StaticResource UnitConverter}, ConverterParameter=min|2, Mode=TwoWay}"
+                                                    Text="{Binding WarmingDuration}"
+                                                    TextAlignment="Center" />
+                                            </ninactrl:StepperControl.InnerContent>
+                                        </ninactrl:StepperControl>
                                     </Grid>
                                     <ninactrl:CancellableButton
                                         Grid.Column="1"

@@ -122,23 +122,33 @@
                 </StackPanel>
             </Grid>
         </GroupBox>
-        <ListView
-            Name="PART_FilterListView"
-            Grid.Column="1"
-            MinHeight="200"
-            Margin="0,10,0,0"
-            IsEnabled="{Binding FilterWheelInfo.IsMoving, Converter={StaticResource InverseBooleanConverter}}"
-            IsHitTestVisible="False"
-            ItemsSource="{Binding FW.Filters}"
-            SelectedItem="{Binding FilterWheelInfo.SelectedFilter}">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn
-                        Width="Auto"
-                        DisplayMemberBinding="{Binding Name}"
-                        Header="{ns:Loc LblFilterName}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <GroupBox Grid.Column="1" IsEnabled="{Binding FilterWheelInfo.Connected}">
+            <GroupBox.Header>
+                <Grid Height="40" Margin="5">
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        Text="{ns:Loc LblFilters}" />
+                </Grid>
+            </GroupBox.Header>
+            <ListView
+                Name="PART_FilterListView"
+                Grid.Column="1"
+                MinHeight="200"
+                Margin="0,10,0,0"
+                IsEnabled="{Binding FilterWheelInfo.IsMoving, Converter={StaticResource InverseBooleanConverter}}"
+                IsHitTestVisible="False"
+                ItemsSource="{Binding FW.Filters}"
+                SelectedItem="{Binding FilterWheelInfo.SelectedFilter}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn
+                            Width="Auto"
+                            DisplayMemberBinding="{Binding Name}"
+                            Header="{ns:Loc LblFilterName}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </GroupBox>
     </Grid>
 </UserControl>

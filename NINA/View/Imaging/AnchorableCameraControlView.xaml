@@ -36,7 +36,11 @@
                         BorderThickness="0">
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblExposureTime}" />
-                            <TextBox MinWidth="50" Margin="5,0,0,0">
+                            <ninactrl:OverlayTextBox
+                                MinWidth="50"
+                                Margin="5,0,0,0"
+                        VerticalContentAlignment="Center"
+                                OverlayText="{Binding SnapExposureDuration, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
                                 <TextBox.Text>
                                     <Binding Mode="TwoWay" Path="SnapExposureDuration">
                                         <Binding.ValidationRules>
@@ -44,7 +48,7 @@
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
-                            </TextBox>
+                            </ninactrl:OverlayTextBox>
                         </UniformGrid>
                     </Border>
                     <Border

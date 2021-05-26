@@ -226,7 +226,15 @@
             </Grid.RowDefinitions>
             <Grid IsEnabled="{Binding Telescope, Converter={StaticResource InverseNullToBooleanConverter}}">
                 <Grid IsEnabled="{Binding TelescopeInfo.Connected}">
-                    <GroupBox Header="{ns:Loc LblManualCoordinates}">
+                    <GroupBox>
+                        <GroupBox.Header>
+                            <Grid Height="40" Margin="5">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    Text="{ns:Loc LblManualCoordinates}" />
+                            </Grid>
+                        </GroupBox.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
@@ -358,7 +366,15 @@
                 VerticalAlignment="Bottom"
                 IsEnabled="{Binding Telescope, Converter={StaticResource InverseNullToBooleanConverter}}">
                 <Grid IsEnabled="{Binding TelescopeInfo.Connected}">
-                    <GroupBox Header="{ns:Loc LblManualControl}" IsEnabled="{Binding Telescope.CanSlew}">
+                    <GroupBox IsEnabled="{Binding Telescope.CanSlew}">
+                        <GroupBox.Header>
+                            <Grid Height="40" Margin="5">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="20"
+                                    Text="{ns:Loc LblManualControl}" />
+                            </Grid>
+                        </GroupBox.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />

@@ -131,7 +131,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock
                                     Margin="5,0,0,0"
-                                    Text="{Binding CameraInfo.Temperature, StringFormat=\{0:0.00\}, Converter={StaticResource NaNToDoubleDashConverter}}"
+                                    Text="{Binding CameraInfo.Temperature, Converter={StaticResource UnitConverter}, ConverterParameter='°C|2'}"
                                     Visibility="{Binding CameraInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                                 <TextBlock Text=" / ">
                                     <TextBlock.Visibility>
@@ -142,10 +142,7 @@
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                <TextBlock
-                                    MinWidth="20"
-                                    Margin="5,0,0,0"
-                                    Text="{Binding Cam.TemperatureSetPoint, StringFormat=\{0:0.00\}}">
+                                <TextBlock MinWidth="20" Text="{Binding Cam.TemperatureSetPoint, Converter={StaticResource UnitConverter}, ConverterParameter='°C|2'}">
                                     <TextBlock.Visibility>
                                         <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
                                             <Binding Path="CameraInfo.Connected" />
@@ -188,12 +185,21 @@
                                     Text="{ns:Loc LblTargetTemp}" />
                                 <ninactrl:StepperControl
                                     Grid.Column="1"
-                                    MinWidth="100"
+                                    MinWidth="120"
                                     IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                     MaxValue="50"
                                     MinValue="-50"
                                     StepSize="1"
-                                    Value="{Binding TargetTemp, Mode=TwoWay}" />
+                                    Value="{Binding TargetTemp, Mode=TwoWay}">
+
+                                    <ninactrl:StepperControl.InnerContent>
+                                        <ninactrl:OverlayTextBox
+                        VerticalContentAlignment="Center"
+                                            OverlayText="{Binding TargetTemp, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2}"
+                                            Text="{Binding TargetTemp, Mode=TwoWay}"
+                                            TextAlignment="Center" />
+                                    </ninactrl:StepperControl.InnerContent>
+                                </ninactrl:StepperControl>
                             </Grid>
 
                             <Grid Grid.Row="1" Margin="0,2,0,0">
@@ -206,12 +212,19 @@
 
                                 <ninactrl:StepperControl
                                     Grid.Column="1"
-                                    MinWidth="100"
+                                    MinWidth="120"
                                     IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                     MaxValue="30"
                                     MinValue="0"
                                     StepSize="1"
-                                    Value="{Binding CoolingDuration, Mode=TwoWay}" />
+                                    Value="{Binding CoolingDuration, Mode=TwoWay}">
+                                    <ninactrl:StepperControl.InnerContent>
+                                        <ninactrl:OverlayTextBox
+                                            OverlayText="{Binding CoolingDuration, Converter={StaticResource UnitConverter}, ConverterParameter=min|2}"
+                                            Text="{Binding CoolingDuration, Mode=TwoWay}"
+                                            TextAlignment="Center" />
+                                    </ninactrl:StepperControl.InnerContent>
+                                </ninactrl:StepperControl>
                             </Grid>
 
                             <ninactrl:CancellableButton
@@ -254,12 +267,19 @@
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMinDuration}" />
                                 <ninactrl:StepperControl
                                     Grid.Column="1"
-                                    MinWidth="100"
+                                    MinWidth="120"
                                     IsEnabled="{Binding TempChangeRunning, Converter={StaticResource InverseBooleanConverter}}"
                                     MaxValue="30"
                                     MinValue="0"
                                     StepSize="1"
-                                    Value="{Binding WarmingDuration, Mode=TwoWay}" />
+                                    Value="{Binding WarmingDuration, Mode=TwoWay}">
+                                    <ninactrl:StepperControl.InnerContent>
+                                        <ninactrl:OverlayTextBox
+                                            OverlayText="{Binding WarmingDuration, Converter={StaticResource UnitConverter}, ConverterParameter=min|2}"
+                                            Text="{Binding WarmingDuration, Mode=TwoWay}"
+                                            TextAlignment="Center" />
+                                    </ninactrl:StepperControl.InnerContent>
+                                </ninactrl:StepperControl>
                             </Grid>
                             <ninactrl:CancellableButton
                                 Grid.Row="1"

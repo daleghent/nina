@@ -3233,11 +3233,11 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Guiding Start Timeout (in seconds).
+        ///   Looks up a localized string similar to Guiding Start Timeout.
         /// </summary>
-        internal static string LblAutoRetryStartGuidingTimeoutSeconds {
+        internal static string LblAutoRetryStartGuidingTimeout {
             get {
-                return ResourceManager.GetString("LblAutoRetryStartGuidingTimeoutSeconds", resourceCulture);
+                return ResourceManager.GetString("LblAutoRetryStartGuidingTimeout", resourceCulture);
             }
         }
         
@@ -7378,6 +7378,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filters.
+        /// </summary>
+        internal static string LblFilters {
+            get {
+                return ResourceManager.GetString("LblFilters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to One or more sequence items have a filter set, but filter wheel is not connected.
         /// </summary>
         internal static string LblFilterSetButFilterWheelNotConnected {
@@ -10926,7 +10935,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pause before Meridian (minutes).
+        ///   Looks up a localized string similar to Pause before Meridian.
         /// </summary>
         internal static string LblPauseTimeBeforeMeridian {
             get {
@@ -12489,7 +12498,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scope settle time after flip (seconds).
+        ///   Looks up a localized string similar to Scope settle time after flip.
         /// </summary>
         internal static string LblScopeSettleTimeAfterFlip {
             get {

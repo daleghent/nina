@@ -136,6 +136,17 @@ namespace NINACustomControlLibrary {
             }
         }
 
+        /// <summary>
+        /// Customizing Hook to overwrite the default Textbox. "Value" still needs proper binding for the increment/decrement buttons to work properly
+        /// </summary>
+        public FrameworkElement InnerContent {
+            get { return (FrameworkElement)GetValue(InnerContentProperty); }
+            set { SetValue(InnerContentProperty, value); }
+        }
+
+        public static readonly DependencyProperty InnerContentProperty =
+            DependencyProperty.Register(nameof(InnerContent), typeof(FrameworkElement), typeof(StepperControl), new UIPropertyMetadata(null));
+
         public override void OnApplyTemplate() {
             base.OnApplyTemplate();
             var button = GetTemplateChild("PART_Increment") as Button;
@@ -152,17 +163,26 @@ namespace NINACustomControlLibrary {
             if (tb != null) {
                 tb.LostFocus += PART_TextBox_LostFocus;
             }
+
+            var cc = GetTemplateChild("PART_ContentControl") as ContentControl;
+            if (cc != null) {
+                cc.LostFocus += PART_TextBox_LostFocus;
+            }
         }
 
         private void Button_PART_Increment_Click(object sender, RoutedEventArgs e) {
             if (Value + StepSize <= MaxValue) {
                 Value += StepSize;
+            } else {
+                Value = MaxValue;
             }
         }
 
         private void Button_PART_Decrement_Click(object sender, RoutedEventArgs e) {
             if (Value - StepSize >= MinValue) {
                 Value -= StepSize;
+            } else {
+                Value = MinValue;
             }
         }
 

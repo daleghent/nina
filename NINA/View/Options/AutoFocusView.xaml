@@ -85,7 +85,11 @@
                                     <TextBlock Text="{ns:Loc LblAutoFocusExposureTimeTooltip}" />
                                 </TextBlock.ToolTip>
                             </TextBlock>
-                            <TextBox Height="25" HorizontalAlignment="Stretch">
+                            <ninactrl:OverlayTextBox
+                                Height="25"
+                        VerticalContentAlignment="Center"
+                                HorizontalAlignment="Stretch"
+                                OverlayText="{Binding AutoFocusExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
                                 <TextBox.Text>
                                     <Binding Path="AutoFocusExposureTime" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
@@ -93,7 +97,7 @@
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
-                            </TextBox>
+                            </ninactrl:OverlayTextBox>
                         </UniformGrid>
                     </UniformGrid>
                     <UniformGrid Columns="2">

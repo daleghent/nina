@@ -58,14 +58,14 @@
                     <UniformGrid VerticalAlignment="Center" Columns="2">
                         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeDriverCanFollow}" />
                         <CheckBox
-                        Width="20"
-                        Height="20"
-                        Margin="5,0,0,0"
-                        HorizontalAlignment="Left"
-                        BorderBrush="Transparent"
-                        IsChecked="{Binding DomeInfo.DriverCanFollow, FallbackValue=False, Mode=OneWay}"
-                        IsEnabled="False"
-                        Style="{StaticResource CheckmarkCheckbox}" />
+                            Width="20"
+                            Height="20"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Left"
+                            BorderBrush="Transparent"
+                            IsChecked="{Binding DomeInfo.DriverCanFollow, FallbackValue=False, Mode=OneWay}"
+                            IsEnabled="False"
+                            Style="{StaticResource CheckmarkCheckbox}" />
                     </UniformGrid>
                 </Border>
                 <Border
@@ -211,14 +211,14 @@
                     <UniformGrid VerticalAlignment="Center" Columns="2">
                         <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeDriverFollowing}" />
                         <CheckBox
-                        Width="20"
-                        Height="20"
-                        Margin="5,0,0,0"
-                        HorizontalAlignment="Left"
-                        BorderBrush="Transparent"
-                        IsChecked="{Binding DomeInfo.DriverFollowing, FallbackValue=False, Mode=OneWay}"
-                        IsEnabled="False"
-                        Style="{StaticResource CheckmarkCheckbox}" />
+                            Width="20"
+                            Height="20"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Left"
+                            BorderBrush="Transparent"
+                            IsChecked="{Binding DomeInfo.DriverFollowing, FallbackValue=False, Mode=OneWay}"
+                            IsEnabled="False"
+                            Style="{StaticResource CheckmarkCheckbox}" />
                     </UniformGrid>
                 </Border>
                 <Border
@@ -245,7 +245,7 @@
                     Visibility="{Binding DomeInfo.Azimuth, Converter={StaticResource NaNToVisibilityCollapsedConverter}}">
                     <UniformGrid VerticalAlignment="Center" Columns="2">
                         <TextBlock Text="{ns:Loc LblDomeAzimuth}" />
-                        <TextBlock Margin="5,0,0,0" Text="{Binding DomeInfo.Azimuth, StringFormat=\{0:0.00\}}" />
+                        <TextBlock Margin="5,0,0,0" Text="{Binding DomeInfo.Azimuth, Converter={StaticResource UnitConverter}, ConverterParameter=°}" />
                     </UniformGrid>
                 </Border>
             </StackPanel>

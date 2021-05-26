@@ -186,10 +186,12 @@
                                 Grid.ColumnSpan="3"
                                 HorizontalAlignment="Left"
                                 Orientation="Horizontal">
-                                <TextBox
+                                <ninactrl:OverlayTextBox
                                     Height="25"
                                     MinWidth="50"
                                     Margin="5,0,0,0"
+                        VerticalContentAlignment="Center"
+                                    OverlayText="{Binding TargetPosition, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
                                     Text="{Binding TargetPosition}" />
                                 <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
                                     <ninactrl:CancellableButton
@@ -226,10 +228,12 @@
                                 Grid.ColumnSpan="3"
                                 HorizontalAlignment="Left"
                                 Orientation="Horizontal">
-                                <TextBox
+                                <ninactrl:OverlayTextBox
                                     Height="25"
                                     MinWidth="50"
                                     Margin="5,0,0,0"
+                        VerticalContentAlignment="Center"
+                                    OverlayText="{Binding TargetPosition, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
                                     Text="{Binding TargetPosition}" />
                                 <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
                                     <ninactrl:CancellableButton
