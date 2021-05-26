@@ -87,8 +87,8 @@
                             </TextBlock>
                             <ninactrl:OverlayTextBox
                                 Height="25"
-                        VerticalContentAlignment="Center"
                                 HorizontalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
                                 OverlayText="{Binding AutoFocusExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
                                 <TextBox.Text>
                                     <Binding Path="AutoFocusExposureTime" UpdateSourceTrigger="LostFocus">
@@ -170,15 +170,20 @@
                                     <TextBlock Text="{ns:Loc LblFocuserSettleTimeTooltip}" />
                                 </TextBlock.ToolTip>
                             </TextBlock>
-                            <TextBox Height="25" HorizontalAlignment="Stretch">
-                                <TextBox.Text>
+                            <ninactrl:OverlayTextBox
+                                Height="25"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                OverlayText="{Binding FocuserSettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
+                                <ninactrl:OverlayTextBox.Text>
                                     <Binding Path="FocuserSettleTime" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
                                             <rules:GreaterZeroRule />
                                         </Binding.ValidationRules>
                                     </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                                </ninactrl:OverlayTextBox.Text>
+                            </ninactrl:OverlayTextBox>
                         </UniformGrid>
                         <UniformGrid
                             Margin="0,5,0,0"
