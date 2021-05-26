@@ -2312,7 +2312,7 @@ Calculado HFR: {2}
     <value>Pausado</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Pausa antes del Meridiano (minutos)</value>
+    <value>Pause before Meridian</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>MasterFlat</value>
@@ -2753,7 +2753,7 @@ Calculado HFR: {2}
     <value>Guardar conjunto del objetivo</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Espera tras el cambio de Meridiano (segundos)</value>
+    <value>Scope settle time after flip</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Buscar</value>
@@ -2872,9 +2872,6 @@ Esta plantilla se usará al inicio para iniciar la secuencia en vez de la usada 
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Reintentar guiado</value>
-  </data>
-  <data name="LblAutoRetryStartGuidingTimeoutSeconds" xml:space="preserve">
-    <value>Tiempo límite para empezar a guiar (en segundos)</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
     <value>Intentar recuperar el comando "Iniciar guiado" si el programa de guiado no informa que está guiando después del tiempo especificado.</value>
@@ -5459,12 +5456,18 @@ A good starting point for a threshold is a value of 0.8 - anything below that is
     <value>Camera Temperature Set Point</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
-    <value>ASCOM allow odd pixel dimension</value>
+    <value>ASCOM permite dimensiones de píxeles impares</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
-    <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
-When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
-This setting will have no effect on color sensors.
-Only relevant when using an ASCOM camera driver!</value>
+    <value>En versiones anteriores de N.I.N.A. el controlador ASCOM siempre estaba restringido a números pares, incluso para cámaras mono. 
+Cuando esté activado, la aplicación ahora permitirá dimensiones de píxeles impares en las cámaras mono. 
+Este ajuste no tendrá efecto en los sensores de color.
+¡Solo es relevante cuando se utiliza un controlador de cámara ASCOM!</value>
+  </data>
+  <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
+    <value>Guiding Start Timeout</value>
+  </data>
+  <data name="LblFilters" xml:space="preserve">
+    <value>Filters</value>
   </data>
 </root>

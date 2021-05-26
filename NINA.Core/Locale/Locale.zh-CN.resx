@@ -2320,7 +2320,7 @@
     <value>已暂停</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>中天前暂停(分钟)</value>
+    <value>Pause before Meridian</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>Pegasus平场板</value>
@@ -2761,7 +2761,7 @@
     <value>保存目标设置</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>翻转后稳定时间(秒)</value>
+    <value>Scope settle time after flip</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>搜索</value>
@@ -2880,9 +2880,6 @@
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>开始导星重试</value>
-  </data>
-  <data name="LblAutoRetryStartGuidingTimeoutSeconds" xml:space="preserve">
-    <value>开始导星的超时 (秒)</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
     <value>如果导星没有反馈其正在导星，在指定的时间之后尝试重启导星。</value>
@@ -5476,5 +5473,11 @@ A good starting point for a threshold is a value of 0.8 - anything below that is
 When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
 This setting will have no effect on color sensors.
 Only relevant when using an ASCOM camera driver!</value>
+  </data>
+  <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
+    <value>Guiding Start Timeout</value>
+  </data>
+  <data name="LblFilters" xml:space="preserve">
+    <value>Filters</value>
   </data>
 </root>

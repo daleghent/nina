@@ -2311,7 +2311,7 @@ Vypočtené HFR: {2}
     <value>Pauza</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Pauza před Poledníkem (minuty)</value>
+    <value>Pause before Meridian</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>FlatMaster</value>
@@ -2752,7 +2752,7 @@ Vypočtené HFR: {2}
     <value>Uložit nastavení cíle</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Stabilizace dalekohledu po překlopení poledníku (sekundy)</value>
+    <value>Scope settle time after flip</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Hledat</value>
@@ -2871,9 +2871,6 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Zahájit nový Pokus o Pointaci</value>
-  </data>
-  <data name="LblAutoRetryStartGuidingTimeoutSeconds" xml:space="preserve">
-    <value>Časový limit Zahájení Pointace (v sekundách)</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
     <value>Pokud pointace po uplynutí zadaného času nehlásí pointování, obnovit příkaz StartGuiding.</value>
@@ -5466,5 +5463,11 @@ Dobrým výchozím bodem pro prahovou hodnotu je hodnota 0,8 - vše, co je níž
 Je-li tato funkce povolena, aplikace nyní umožní u mono kamer celou lichou dimenzi pixelu. 
 Toto nastavení nebude mít žádný vliv na barevné senzory.
 Význam pouze při použití ovladače kamery ASCOM!</value>
+  </data>
+  <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
+    <value>Guiding Start Timeout</value>
+  </data>
+  <data name="LblFilters" xml:space="preserve">
+    <value>Filters</value>
   </data>
 </root>

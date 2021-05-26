@@ -2310,7 +2310,7 @@ berekende HFR: {2}
     <value>Gepauzeerd</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Voor meridiaan pauzeren (minuten)</value>
+    <value>Pause before Meridian</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>FlatMaster</value>
@@ -2751,7 +2751,7 @@ Verbonden cliënten: {0}
     <value>Save target set</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Telescoop in rusttijd na meridian flip (seconden)</value>
+    <value>Scope settle time after flip</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Zoeken</value>
@@ -2870,9 +2870,6 @@ Dit sjabloon zal worden gebruikt bij het opstarten om de sequentie te initialise
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Guidingstart opnieuw proberen</value>
-  </data>
-  <data name="LblAutoRetryStartGuidingTimeoutSeconds" xml:space="preserve">
-    <value>Starttime-out voor guiding (in seconden)</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
     <value>Attempt to recover StartGuiding command if the guider does not report it is guiding after the specified amount of time.</value>
@@ -5464,5 +5461,11 @@ A good starting point for a threshold is a value of 0.8 - anything below that is
 When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
 This setting will have no effect on color sensors.
 Only relevant when using an ASCOM camera driver!</value>
+  </data>
+  <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
+    <value>Guiding Start Timeout</value>
+  </data>
+  <data name="LblFilters" xml:space="preserve">
+    <value>Filters</value>
   </data>
 </root>

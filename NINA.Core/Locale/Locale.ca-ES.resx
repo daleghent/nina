@@ -2315,7 +2315,7 @@ HFR calculat: {2}    </value>
     <value>Pausat</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Pausa abans del Meridià (minuts)</value>
+    <value>Pause before Meridian</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>MasterFlat</value>
@@ -2756,7 +2756,7 @@ HFR calculat: {2}    </value>
     <value>Desar el conjunt de l'objectiu</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Espera fins el canvi de Meridià (segons)</value>
+    <value>Scope settle time after flip</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Cercar</value>
@@ -2875,9 +2875,6 @@ Aquesta plantilla s'utilitzarà al començament per inicialitzar la seqüència 
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Reintent d'inici de guiatge</value>
-  </data>
-  <data name="LblAutoRetryStartGuidingTimeoutSeconds" xml:space="preserve">
-    <value>Temps límit per iniciar el guiatge (en segons)</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
     <value>Intenteu recuperar l'ordre StartGuiding si el programa de guiatge no informa que està guiant després del temps especificat.</value>
@@ -5467,5 +5464,11 @@ Un punt de partida per a un bon llindar és un valor de 0,8: qualsevol cosa que 
 When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
 This setting will have no effect on color sensors.
 Only relevant when using an ASCOM camera driver!</value>
+  </data>
+  <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
+    <value>Guiding Start Timeout</value>
+  </data>
+  <data name="LblFilters" xml:space="preserve">
+    <value>Filters</value>
   </data>
 </root>

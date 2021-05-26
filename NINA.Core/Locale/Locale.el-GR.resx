@@ -2310,7 +2310,7 @@
     <value>Έχει Γίνει Παύση</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Παύση πριν τον Μεσημβρινό (λεπτά)</value>
+    <value>Pause before Meridian</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>FlatMaster</value>
@@ -2751,7 +2751,7 @@
     <value>Αποθήκευση ομάδας στόχων</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Χρόνος ηρεμίας Τηλεσκοπίου μετά την αλλαγή (δευτερόλεπτα)</value>
+    <value>Scope settle time after flip</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Αναζήτηση</value>
@@ -2870,9 +2870,6 @@
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Επανάληψη Έναρξης Οδήγησης</value>
-  </data>
-  <data name="LblAutoRetryStartGuidingTimeoutSeconds" xml:space="preserve">
-    <value>Χρονικό Όριο Έναρξης Οδήγησης (σε δευτερόλεπτα)</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
     <value>Προσπάθεια ανάκτησης της εντολής StartGuiding αν ο οδηγητής δεν αναφέρει ότι οδηγεί μετά από το ορισμένο ποσό χρόνου.</value>
@@ -5466,5 +5463,11 @@ A good starting point for a threshold is a value of 0.8 - anything below that is
 When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
 This setting will have no effect on color sensors.
 Only relevant when using an ASCOM camera driver!</value>
+  </data>
+  <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
+    <value>Guiding Start Timeout</value>
+  </data>
+  <data name="LblFilters" xml:space="preserve">
+    <value>Filters</value>
   </data>
 </root>

@@ -2312,7 +2312,7 @@ Hesaplanan HFR: {2}
     <value>Beklemede</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Meridyenden önce bekle (dakika)</value>
+    <value>Pause before Meridian</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>Ana düz kare</value>
@@ -2753,7 +2753,7 @@ Hesaplanan HFR: {2}
     <value>Hedef setini kaydet</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Geçiş sonrası teleskop yerleşme süresi (saniye)</value>
+    <value>Scope settle time after flip</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Ara</value>
@@ -2872,9 +2872,6 @@ Bu şablon, başlangıçta varsayılan şablon yerine sekansı başlatmak için 
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Takip yeniden başlatılıyor</value>
-  </data>
-  <data name="LblAutoRetryStartGuidingTimeoutSeconds" xml:space="preserve">
-    <value>Takip başlatma zaman aşımına uğradı (saniye)</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
     <value>Takipçi, belirtilen süre sonunda takip ettiğini bildirmezse StartGuiding komutunu kurtarmaya çalışın.</value>
@@ -5463,5 +5460,11 @@ A good starting point for a threshold is a value of 0.8 - anything below that is
 When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
 This setting will have no effect on color sensors.
 Only relevant when using an ASCOM camera driver!</value>
+  </data>
+  <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
+    <value>Guiding Start Timeout</value>
+  </data>
+  <data name="LblFilters" xml:space="preserve">
+    <value>Filters</value>
   </data>
 </root>

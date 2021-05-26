@@ -2313,7 +2313,7 @@ Dec: {1}</value>
     <value>Приостановлено</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Пауза перед меридианом (минут)</value>
+    <value>Pause before Meridian</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>ФлэтМастер</value>
@@ -2754,7 +2754,7 @@ Dec: {1}</value>
     <value>Сохранить набор целей</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Время успокоения телескопа после перекладки (секунд)</value>
+    <value>Scope settle time after flip</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Поиск</value>
@@ -2873,9 +2873,6 @@ Dec: {1}</value>
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
     <value>Повторная попытка начала гидирования</value>
-  </data>
-  <data name="LblAutoRetryStartGuidingTimeoutSeconds" xml:space="preserve">
-    <value>Таймаут начала гидирования (в секундах)</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
     <value>Попытка восстановить команду гидирования если гид не сообщит о ней через указанное время.</value>
@@ -5469,5 +5466,11 @@ Dec: {1}</value>
 When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
 This setting will have no effect on color sensors.
 Only relevant when using an ASCOM camera driver!</value>
+  </data>
+  <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
+    <value>Guiding Start Timeout</value>
+  </data>
+  <data name="LblFilters" xml:space="preserve">
+    <value>Filters</value>
   </data>
 </root>
