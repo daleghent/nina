@@ -18,10 +18,8 @@ using NINA.Core.Model.Equipment;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
 using NINA.Equipment.Interfaces;
-using NINA.Profile.Interfaces;
 using System;
 using System.Collections;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Threading;
@@ -30,8 +28,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
 
     internal class AscomFilterWheel : AscomDevice<FilterWheel>, IFilterWheel, IDisposable {
 
-        public AscomFilterWheel(string filterWheelId, string name, IProfileService profileService) : base(filterWheelId, name) {
-            this.profileService = profileService;
+        public AscomFilterWheel(string filterWheelId, string name) : base(filterWheelId, name) {
         }
 
         public short InterfaceVersion {
@@ -80,40 +77,35 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             }
         }
 
-        private IProfileService profileService;
+        private AsyncObservableCollection<FilterInfo> _filters;
 
         public AsyncObservableCollection<FilterInfo> Filters {
             get {
-                return profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
+                return _filters;
+            }
+            private set {
+                _filters = value;
+                RaisePropertyChanged();
             }
         }
 
         protected override string ConnectionLostMessage => Loc.Instance["LblFilterwheelConnectionLost"];
 
         protected override Task PostConnect() {
-            var filtersList = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
-            int profileFilters = filtersList.Count();
-
-            var deviceFilters = device.Names.Length;
-
-            if (profileFilters < deviceFilters) {
-                /* Not enough filters defined. Add missing to the list */
-                for (int i = profileFilters; i < deviceFilters; i++) {
-                    var filter = new FilterInfo(device.Names[i], device.FocusOffsets[i], (short)i);
-                    filtersList.Add(filter);
-                }
-            } else if (profileFilters > deviceFilters) {
-                /* Too many filters defined. Truncate the list */
-                for (int i = profileFilters - 1; i >= deviceFilters; i--) {
-                    filtersList.RemoveAt(i);
-                }
+            var l = new AsyncObservableCollection<FilterInfo>();
+            for (int i = 0; i < Names.Length; i++) {
+                l.Add(new FilterInfo(Names[i], FocusOffsets[i], (short)i));
             }
-            profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters = filtersList;
+            Filters = l;
             return Task.CompletedTask;
         }
 
         protected override FilterWheel GetInstance(string id) {
             return new FilterWheel(id);
+        }
+
+        protected override void PostDisconnect() {
+            Filters?.Clear();
         }
     }
 }
