@@ -145,19 +145,20 @@
                         <UniformGrid Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblErrorLT}" />
                             <UniformGrid Columns="2">
-                                <TextBox
+                                <ninactrl:OverlayTextBox
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Stretch"
-                                    VerticalAlignment="Center">
-                                    <TextBox.Text>
+                                    VerticalAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    OverlayText="{Binding RepeatThreshold, Converter={StaticResource UnitConverter}, ConverterParameter=' arcmin'}">
+                                    <ninactrl:OverlayTextBox.Text>
                                         <Binding Mode="TwoWay" Path="RepeatThreshold">
                                             <Binding.ValidationRules>
                                                 <rules:GreaterZeroRule />
                                             </Binding.ValidationRules>
                                         </Binding>
-                                    </TextBox.Text>
-                                </TextBox>
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblArcmin}" />
+                                    </ninactrl:OverlayTextBox.Text>
+                                </ninactrl:OverlayTextBox>
                             </UniformGrid>
                         </UniformGrid>
                     </Border>

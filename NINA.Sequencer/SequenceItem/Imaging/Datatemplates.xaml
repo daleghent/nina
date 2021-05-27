@@ -31,7 +31,7 @@
             Margin="5,0,0,0"
             VerticalAlignment="Center"
             VerticalContentAlignment="Center"
-            OverlayText="{Binding ExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=s}"
+            OverlayText="{Binding ExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}"
             Text="{Binding ExposureTime}"
             TextAlignment="Right" />
 

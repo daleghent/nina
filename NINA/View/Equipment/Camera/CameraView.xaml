@@ -212,14 +212,14 @@
                                     VerticalAlignment="Center"
                                     Columns="2">
                                     <TextBlock Text="{ns:Loc LblPixelSizeX}" />
-                                    <TextBlock Margin="5,0,0,0" Text="{Binding Cam.PixelSizeX, Converter={StaticResource NaNToDoubleDashConverter}}" />
+                                    <TextBlock Margin="5,0,0,0" Text="{Binding Cam.PixelSizeX, Converter={StaticResource UnitConverter}, ConverterParameter=' µm'}" />
                                 </UniformGrid>
                                 <UniformGrid
                                     Margin="0,6,0,6"
                                     VerticalAlignment="Center"
                                     Columns="2">
                                     <TextBlock Text="{ns:Loc LblPixelSizeY}" />
-                                    <TextBlock Margin="5,0,0,0" Text="{Binding Cam.PixelSizeY, Converter={StaticResource NaNToDoubleDashConverter}}" />
+                                    <TextBlock Margin="5,0,0,0" Text="{Binding Cam.PixelSizeY, Converter={StaticResource UnitConverter}, ConverterParameter=' µm'}" />
                                 </UniformGrid>
                             </UniformGrid>
                         </Border>
@@ -626,7 +626,7 @@
 
                                             <TextBlock
                                                 Margin="5,0,0,0"
-                                                Text="{Binding CameraInfo.Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2}"
+                                                Text="{Binding CameraInfo.Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2'}"
                                                 Visibility="{Binding CameraInfo.Connected, Converter={StaticResource VisibilityConverter}}" />
                                             <TextBlock Text=" / ">
                                                 <TextBlock.Visibility>
@@ -640,7 +640,7 @@
                                             <TextBlock
                                                 MinWidth="20"
                                                 Margin="5,0,0,0"
-                                                Text="{Binding Cam.TemperatureSetPoint, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2}">
+                                                Text="{Binding Cam.TemperatureSetPoint, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2'}">
                                                 <TextBlock.Visibility>
                                                     <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
                                                         <Binding Path="CameraInfo.Connected" />
@@ -692,8 +692,8 @@
                                             Value="{Binding TargetTemp, Mode=TwoWay}">
                                             <ninactrl:StepperControl.InnerContent>
                                                 <ninactrl:OverlayTextBox
-                        VerticalContentAlignment="Center"
-                                                    OverlayText="{Binding TargetTemp, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2, Mode=TwoWay}"
+                                                    VerticalContentAlignment="Center"
+                                                    OverlayText="{Binding TargetTemp, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2', Mode=TwoWay}"
                                                     Text="{Binding TargetTemp}"
                                                     TextAlignment="Center" />
                                             </ninactrl:StepperControl.InnerContent>
@@ -718,8 +718,8 @@
                                             Value="{Binding CoolingDuration, Mode=TwoWay}">
                                             <ninactrl:StepperControl.InnerContent>
                                                 <ninactrl:OverlayTextBox
-                        VerticalContentAlignment="Center"
-                                                    OverlayText="{Binding CoolingDuration, Converter={StaticResource UnitConverter}, ConverterParameter=min|2, Mode=TwoWay}"
+                                                    VerticalContentAlignment="Center"
+                                                    OverlayText="{Binding CoolingDuration, Converter={StaticResource UnitConverter}, ConverterParameter=' min|2', Mode=TwoWay}"
                                                     Text="{Binding CoolingDuration}"
                                                     TextAlignment="Center" />
                                             </ninactrl:StepperControl.InnerContent>
@@ -771,8 +771,8 @@
                                             Value="{Binding WarmingDuration, Mode=TwoWay}">
                                             <ninactrl:StepperControl.InnerContent>
                                                 <ninactrl:OverlayTextBox
-                        VerticalContentAlignment="Center"
-                                                    OverlayText="{Binding WarmingDuration, Converter={StaticResource UnitConverter}, ConverterParameter=min|2, Mode=TwoWay}"
+                                                    VerticalContentAlignment="Center"
+                                                    OverlayText="{Binding WarmingDuration, Converter={StaticResource UnitConverter}, ConverterParameter=' min|2', Mode=TwoWay}"
                                                     Text="{Binding WarmingDuration}"
                                                     TextAlignment="Center" />
                                             </ninactrl:StepperControl.InnerContent>

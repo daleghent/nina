@@ -298,7 +298,7 @@
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=°C|2}" />
+                        Text="{Binding Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2'}" />
                 </UniformGrid>
             </Border>
             <Border

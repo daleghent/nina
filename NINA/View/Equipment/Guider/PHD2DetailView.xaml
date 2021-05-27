@@ -45,7 +45,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding DitherPixels, Converter={StaticResource UnitConverter}, ConverterParameter=px}">
+                        OverlayText="{Binding DitherPixels, Converter={StaticResource UnitConverter}, ConverterParameter=' px'}">
                         <TextBox.Text>
                             <Binding Path="DitherPixels" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
@@ -82,7 +82,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding SettlePixels, Converter={StaticResource UnitConverter}, ConverterParameter=px}">
+                        OverlayText="{Binding SettlePixels, Converter={StaticResource UnitConverter}, ConverterParameter=' px'}">
 
                         <ninactrl:OverlayTextBox.Text>
                             <Binding Path="SettlePixels" UpdateSourceTrigger="LostFocus">
@@ -106,7 +106,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=px}">
+                        OverlayText="{Binding SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=' px'}">
                         <TextBox.Text>
                             <Binding Path="SettleTime" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
@@ -129,7 +129,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding SettleTimeout, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
+                        OverlayText="{Binding SettleTimeout, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
                         <TextBox.Text>
                             <Binding Path="SettleTimeout" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
@@ -168,7 +168,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding AutoRetryStartGuidingTimeoutSeconds, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
+                        OverlayText="{Binding AutoRetryStartGuidingTimeoutSeconds, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
                         <TextBox.Text>
                             <Binding Path="AutoRetryStartGuidingTimeoutSeconds" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>

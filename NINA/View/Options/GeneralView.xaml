@@ -14,6 +14,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
@@ -47,6 +48,7 @@
 
                     <ListView
                         MaxHeight="300"
+                        VerticalAlignment="Top"
                         ItemsSource="{Binding Profiles}"
                         SelectedItem="{Binding SelectedProfile}">
                         <ListView.ItemContainerStyle>
@@ -294,11 +296,13 @@
                             Width="150"
                             VerticalAlignment="Center"
                             Text="{ns:Loc LblDevicePollingInterval}" />
-                        <TextBox
+                        <ninactrl:OverlayTextBox
                             MinWidth="120"
                             Margin="10,0,0,0"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center">
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            OverlayText="{Binding ActiveProfile.ApplicationSettings.DevicePollingInterval, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
                             <TextBox.Text>
                                 <Binding Path="ActiveProfile.ApplicationSettings.DevicePollingInterval" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -306,7 +310,7 @@
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
-                        </TextBox>
+                        </ninactrl:OverlayTextBox>
                     </StackPanel>
 
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">

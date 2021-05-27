@@ -70,7 +70,7 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding Time, Converter={StaticResource UnitConverter}, ConverterParameter=s}"
+                        OverlayText="{Binding Time, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}"
                         TextAlignment="Right">
                         <ninactrl:OverlayTextBox.Text>
                             <Binding Mode="TwoWay" Path="Time">

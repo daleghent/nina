@@ -40,7 +40,7 @@
                                 MinWidth="50"
                                 Margin="5,0,0,0"
                         VerticalContentAlignment="Center"
-                                OverlayText="{Binding SnapExposureDuration, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
+                                OverlayText="{Binding SnapExposureDuration, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
                                 <TextBox.Text>
                                     <Binding Mode="TwoWay" Path="SnapExposureDuration">
                                         <Binding.ValidationRules>

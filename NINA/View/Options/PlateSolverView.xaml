@@ -75,7 +75,7 @@
                             Height="25"
                             HorizontalAlignment="Left"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding ExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
+                            OverlayText="{Binding ExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
                             <ninactrl:OverlayTextBox.Text>
                                 <Binding Mode="TwoWay" Path="ExposureTime">
                                     <Binding.ValidationRules>
@@ -220,7 +220,7 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding ReattemptDelay, Converter={StaticResource UnitConverter}, ConverterParameter=min}">
+                            OverlayText="{Binding ReattemptDelay, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}">
                             <ninactrl:OverlayTextBox.Text>
                                 <Binding Mode="TwoWay" Path="ReattemptDelay">
                                     <Binding.ValidationRules>

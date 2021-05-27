@@ -199,9 +199,9 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Text="{Binding DeltaT}" />
-                    <TextBlock VerticalAlignment="Center" Text="°C / " />
+                    <TextBlock VerticalAlignment="Center" Text=" °C / " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
-                    <TextBlock VerticalAlignment="Center" Text="°C" />
+                    <TextBlock VerticalAlignment="Center" Text=" °C" />
                 </StackPanel>
             </mini:MiniTrigger.TriggerProgressContent>
         </mini:MiniTrigger>
@@ -217,7 +217,7 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding Amount, Converter={StaticResource UnitConverter}, ConverterParameter=°C}"
+                        OverlayText="{Binding Amount, Converter={StaticResource UnitConverter}, ConverterParameter=' °C'}"
                         Text="{Binding Amount}"
                         TextAlignment="Right" />
                 </StackPanel>
@@ -229,9 +229,9 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Text="{Binding DeltaT}" />
-                    <TextBlock VerticalAlignment="Center" Text="°C / " />
+                    <TextBlock VerticalAlignment="Center" Text=" °C / " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
-                    <TextBlock VerticalAlignment="Center" Text="°C" />
+                    <TextBlock VerticalAlignment="Center" Text=" °C" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>
@@ -246,9 +246,9 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Text="{Binding Elapsed}" />
-                    <TextBlock VerticalAlignment="Center" Text="m / " />
+                    <TextBlock VerticalAlignment="Center" Text=" min / " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
-                    <TextBlock VerticalAlignment="Center" Text="m" />
+                    <TextBlock VerticalAlignment="Center" Text=" min" />
                 </StackPanel>
             </mini:MiniTrigger.TriggerProgressContent>
         </mini:MiniTrigger>
@@ -264,7 +264,7 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding Amount, Converter={StaticResource UnitConverter}, ConverterParameter=min}"
+                        OverlayText="{Binding Amount, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}"
                         Text="{Binding Amount}"
                         TextAlignment="Right" />
                 </StackPanel>
@@ -276,9 +276,9 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Text="{Binding Elapsed}" />
-                    <TextBlock VerticalAlignment="Center" Text="m / " />
+                    <TextBlock VerticalAlignment="Center" Text=" min / " />
                     <TextBlock VerticalAlignment="Center" Text="{Binding Amount}" />
-                    <TextBlock VerticalAlignment="Center" Text="m" />
+                    <TextBlock VerticalAlignment="Center" Text=" min" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>

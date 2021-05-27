@@ -36,7 +36,7 @@
                         <TextBlock
                             x:Name="PART_OverlayText"
                             Margin="5,0,0,0"
-                            Padding="2"
+                            Padding="0,0,2,0"
                             HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Background="Transparent"

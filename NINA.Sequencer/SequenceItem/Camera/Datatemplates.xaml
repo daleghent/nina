@@ -35,7 +35,7 @@
                         MinWidth="40"
                         Margin="5,0,0,0"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=°C}"
+                        OverlayText="{Binding Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=' °C'}"
                         Text="{Binding Temperature}"
                         TextAlignment="Right" />
                     <TextBlock
@@ -48,7 +48,7 @@
                         MinWidth="40"
                         Margin="5,0,0,0"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding Duration, Converter={StaticResource UnitConverter}, ConverterParameter=min}"
+                        OverlayText="{Binding Duration, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}"
                         Text="{Binding Duration}"
                         TextAlignment="Right" />
                 </StackPanel>
@@ -65,7 +65,7 @@
                         MinWidth="40"
                         Margin="5,0,0,0"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding Duration, Converter={StaticResource UnitConverter}, ConverterParameter=min}"
+                        OverlayText="{Binding Duration, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}"
                         Text="{Binding Duration}"
                         TextAlignment="Right" />
                 </StackPanel>

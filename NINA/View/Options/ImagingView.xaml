@@ -281,7 +281,7 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding MinutesAfterMeridian, Converter={StaticResource UnitConverter}, ConverterParameter=min}">
+                                OverlayText="{Binding MinutesAfterMeridian, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}">
                                 <ninactrl:OverlayTextBox.Text>
                                     <Binding Path="MinutesAfterMeridian" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
@@ -303,7 +303,7 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding MaxMinutesAfterMeridian, Converter={StaticResource UnitConverter}, ConverterParameter=min}">
+                                OverlayText="{Binding MaxMinutesAfterMeridian, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}">
                                 <ninactrl:OverlayTextBox.Text>
                                     <Binding Path="MaxMinutesAfterMeridian" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
@@ -347,7 +347,7 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
+                                OverlayText="{Binding SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
                                 <ninactrl:OverlayTextBox.Text>
                                     <Binding Path="SettleTime" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
@@ -369,7 +369,7 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding PauseTimeBeforeMeridian, Converter={StaticResource UnitConverter}, ConverterParameter=min}">
+                                OverlayText="{Binding PauseTimeBeforeMeridian, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}">
                                 <ninactrl:OverlayTextBox.Text>
                                     <Binding Path="PauseTimeBeforeMeridian" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>

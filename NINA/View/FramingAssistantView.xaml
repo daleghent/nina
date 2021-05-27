@@ -285,14 +285,19 @@
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFieldOfView}" />
                                 <StackPanel Orientation="Horizontal">
                                     <ninactrl:StepperControl
+                                        MinWidth="150"
                                         Margin="5,0,0,0"
                                         MaxValue="200"
                                         MinValue="0.1"
-                                        Value="{Binding FieldOfView, Mode=TwoWay}" />
-                                    <TextBlock
-                                        Margin="5,0,0,0"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblDegree}" />
+                                        Value="{Binding FieldOfView, Mode=TwoWay}">
+                                        <ninactrl:StepperControl.InnerContent>
+                                            <ninactrl:OverlayTextBox
+                                                VerticalContentAlignment="Center"
+                                                OverlayText="{Binding FieldOfView, Converter={StaticResource UnitConverter}, ConverterParameter='°|2', Mode=TwoWay}"
+                                                Text="{Binding FieldOfView}"
+                                                TextAlignment="Center" />
+                                        </ninactrl:StepperControl.InnerContent>
+                                    </ninactrl:StepperControl>
                                 </StackPanel>
                             </UniformGrid>
                         </StackPanel>
@@ -371,6 +376,7 @@
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblOverlapPercentage}" />
                                 <ninactrl:OverlayTextBox
                                     Margin="5,0,0,0"
+                                    VerticalContentAlignment="Center"
                                     OverlayText="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}, StringFormat={}{0}%}"
                                     Text="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}}" />
                             </UniformGrid>

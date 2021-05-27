@@ -6167,7 +6167,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Azimuth Tolerance (degrees).
+        ///   Looks up a localized string similar to Azimuth Tolerance.
         /// </summary>
         internal static string LblDomeAzimuthToleranceDegrees {
             get {
@@ -6455,7 +6455,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GEM Axis Length (mm).
+        ///   Looks up a localized string similar to GEM Axis Length.
         /// </summary>
         internal static string LblDomeGemAxisLength {
             get {
@@ -6473,7 +6473,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lateral Axis Length (mm).
+        ///   Looks up a localized string similar to Lateral Axis Length.
         /// </summary>
         internal static string LblDomeLateralAxisLength {
             get {
@@ -6527,7 +6527,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dome Radius (mm).
+        ///   Looks up a localized string similar to Dome Radius.
         /// </summary>
         internal static string LblDomeRadius {
             get {
@@ -6563,7 +6563,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scope Position E/W (mm).
+        ///   Looks up a localized string similar to Scope Position E/W.
         /// </summary>
         internal static string LblDomeScopeEW {
             get {
@@ -6581,7 +6581,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scope Position N/S (mm).
+        ///   Looks up a localized string similar to Scope Position N/S.
         /// </summary>
         internal static string LblDomeScopeNS {
             get {
@@ -6599,7 +6599,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Scope Position +Up/-Down (mm).
+        ///   Looks up a localized string similar to Scope Position +Up/-Down.
         /// </summary>
         internal static string LblDomeScopeUD {
             get {
@@ -12732,7 +12732,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Delay start (seconds).
+        ///   Looks up a localized string similar to Delay start.
         /// </summary>
         internal static string LblSequenceDelay {
             get {

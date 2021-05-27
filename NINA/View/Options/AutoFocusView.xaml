@@ -89,7 +89,7 @@
                                 Height="25"
                                 HorizontalAlignment="Stretch"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding AutoFocusExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
+                                OverlayText="{Binding AutoFocusExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
                                 <TextBox.Text>
                                     <Binding Path="AutoFocusExposureTime" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
@@ -175,7 +175,7 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding FocuserSettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
+                                OverlayText="{Binding FocuserSettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
                                 <ninactrl:OverlayTextBox.Text>
                                     <Binding Path="FocuserSettleTime" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>

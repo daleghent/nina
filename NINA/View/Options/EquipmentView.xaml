@@ -303,7 +303,7 @@
                                             HorizontalAlignment="Stretch"
                                             VerticalAlignment="Center"
                                             VerticalContentAlignment="Center"
-                                            OverlayText="{Binding Timeout, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
+                                            OverlayText="{Binding Timeout, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
                                             <ninactrl:OverlayTextBox.Text>
                                                 <Binding Path="Timeout" UpdateSourceTrigger="LostFocus">
                                                     <Binding.ValidationRules>
@@ -547,7 +547,7 @@
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=s}">
+                                OverlayText="{Binding SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
                                 <TextBox.Text>
                                     <Binding Path="SettleTime" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>

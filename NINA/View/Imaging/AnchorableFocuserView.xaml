@@ -95,7 +95,7 @@
                             <TextBlock Text="{ns:Loc LblTemperature}" />
                             <TextBlock
                                 Margin="5,0,0,0"
-                                Text="{Binding FocuserInfo.Temperature, Converter={StaticResource UnitConverter}, ConverterParameter='°C|2'}"
+                                Text="{Binding FocuserInfo.Temperature, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2'}"
                                 TextWrapping="WrapWithOverflow" />
                         </UniformGrid>
                     </Border>

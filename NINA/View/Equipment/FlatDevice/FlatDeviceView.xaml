@@ -272,7 +272,7 @@
                         VerticalContentAlignment="Center"
                                 HorizontalContentAlignment="Left"
                                 IsEnabled="{Binding FlatDeviceInfo.Connected}"
-                                OverlayText="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=ms}">
+                                OverlayText="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=' ms'}">
                                 <TextBox.Text>
                                     <Binding
                                         Mode="TwoWay"

@@ -48,15 +48,19 @@
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSequenceDelay}" />
-                            <TextBox Margin="5,0,0,0">
-                                <TextBox.Text>
+                            <ninactrl:OverlayTextBox
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                VerticalContentAlignment="Center"
+                                OverlayText="{Binding Delay, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
+                                <ninactrl:OverlayTextBox.Text>
                                     <Binding Path="Delay" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
                                             <rules:GreaterZeroRule />
                                         </Binding.ValidationRules>
                                     </Binding>
-                                </TextBox.Text>
-                            </TextBox>
+                                </ninactrl:OverlayTextBox.Text>
+                            </ninactrl:OverlayTextBox>
                         </UniformGrid>
                     </UniformGrid>
                 </Border>
@@ -418,26 +422,23 @@
                                             VerticalAlignment="Center"
                                             Columns="2">
                                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusSetTime}" />
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBox
-                                                    Width="120"
-                                                    Margin="5,0,0,0"
-                                                    HorizontalAlignment="Left">
-                                                    <TextBox.Text>
-                                                        <Binding Path="AutoFocusSetTime" UpdateSourceTrigger="LostFocus">
-                                                            <Binding.ValidationRules>
-                                                                <rules:GreaterZeroRule />
-                                                            </Binding.ValidationRules>
-                                                        </Binding>
-                                                    </TextBox.Text>
-                                                </TextBox>
-                                                <TextBlock
-                                                    Width="120"
-                                                    Margin="5,0,0,0"
-                                                    HorizontalAlignment="Left"
-                                                    VerticalAlignment="Center"
-                                                    Text="{ns:Loc LblMinutesShort}" />
-                                            </StackPanel>
+
+                                            <ninactrl:OverlayTextBox
+                                                Width="120"
+                                                Margin="5,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center"
+                                                VerticalContentAlignment="Center"
+                                                OverlayText="{Binding AutoFocusSetTime, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}">
+                                                <ninactrl:OverlayTextBox.Text>
+                                                    <Binding Path="AutoFocusSetTime" UpdateSourceTrigger="LostFocus">
+                                                        <Binding.ValidationRules>
+                                                            <rules:GreaterZeroRule />
+                                                        </Binding.ValidationRules>
+                                                    </Binding>
+                                                </ninactrl:OverlayTextBox.Text>
+                                            </ninactrl:OverlayTextBox>
+
                                         </UniformGrid>
                                     </UniformGrid>
                                 </Border>
@@ -491,24 +492,19 @@
                                             Columns="2">
                                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusAfterTemperatureChangeAmount}" />
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBox
+                                                <ninactrl:OverlayTextBox
                                                     Width="120"
                                                     Margin="5,0,0,0"
-                                                    HorizontalAlignment="Left">
-                                                    <TextBox.Text>
+                                                    HorizontalAlignment="Left"
+                                                    OverlayText="{Binding AutoFocusAfterTemperatureChangeAmount, Converter={StaticResource UnitConverter}, ConverterParameter=°}">
+                                                    <ninactrl:OverlayTextBox.Text>
                                                         <Binding Path="AutoFocusAfterTemperatureChangeAmount" UpdateSourceTrigger="LostFocus">
                                                             <Binding.ValidationRules>
                                                                 <rules:GreaterZeroRule />
                                                             </Binding.ValidationRules>
                                                         </Binding>
-                                                    </TextBox.Text>
-                                                </TextBox>
-                                                <TextBlock
-                                                    Width="75"
-                                                    Margin="5,0,0,0"
-                                                    HorizontalAlignment="Left"
-                                                    VerticalAlignment="Center"
-                                                    Text="{ns:Loc LblDegreeShort}" />
+                                                    </ninactrl:OverlayTextBox.Text>
+                                                </ninactrl:OverlayTextBox>
                                             </StackPanel>
                                         </UniformGrid>
                                     </UniformGrid>
@@ -531,24 +527,19 @@
                                             Columns="2">
                                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusAfterHFRChangeAmount}" />
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBox
+                                                <ninactrl:OverlayTextBox
                                                     Width="120"
                                                     Margin="5,0,0,0"
-                                                    HorizontalAlignment="Left">
-                                                    <TextBox.Text>
+                                                    HorizontalAlignment="Left"
+                                                    OverlayText="{Binding AutoFocusAfterHFRChangeAmount, Converter={StaticResource UnitConverter}, ConverterParameter=%}">
+                                                    <ninactrl:OverlayTextBox.Text>
                                                         <Binding Path="AutoFocusAfterHFRChangeAmount" UpdateSourceTrigger="LostFocus">
                                                             <Binding.ValidationRules>
                                                                 <rules:GreaterZeroRule />
                                                             </Binding.ValidationRules>
                                                         </Binding>
-                                                    </TextBox.Text>
-                                                </TextBox>
-                                                <TextBlock
-                                                    Width="75"
-                                                    Margin="5,0,0,0"
-                                                    HorizontalAlignment="Left"
-                                                    VerticalAlignment="Center"
-                                                    Text="{ns:Loc LblPercentShort}" />
+                                                    </ninactrl:OverlayTextBox.Text>
+                                                </ninactrl:OverlayTextBox>
                                             </StackPanel>
                                         </UniformGrid>
                                     </UniformGrid>
@@ -894,7 +885,7 @@
                             <TextBlock
                                 Margin="5,0,5,0"
                                 VerticalAlignment="Center"
-                                Text="{Binding Items[1].ExposureTime}"
+                                Text="{Binding Items[1].ExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}"
                                 TextAlignment="Center" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
