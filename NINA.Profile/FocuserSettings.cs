@@ -31,10 +31,10 @@ namespace NINA.Profile {
         protected override void SetDefaultValues() {
             id = "No_Device";
             useFilterWheelOffsets = false;
-            autoFocusStepSize = 10;
+            autoFocusStepSize = 50;
             autoFocusInitialOffsetSteps = 4;
             autoFocusExposureTime = 6;
-            autoFocusDisableGuiding = true;
+            autoFocusDisableGuiding = false;
             focuserSettleTime = 0;
             autoFocusMethod = AFMethodEnum.STARHFR;
             autoFocusTotalNumberOfAttempts = 1;
@@ -45,11 +45,11 @@ namespace NINA.Profile {
             backlashIn = 0;
             backlashOut = 0;
             autoFocusBinning = 1;
-            autoFocusCurveFitting = AFCurveFittingEnum.TRENDLINES;
+            autoFocusCurveFitting = AFCurveFittingEnum.HYPERBOLIC;
             contrastDetectionMethod = ContrastDetectionMethodEnum.Statistics;
-            backlashCompensationModel = BacklashCompensationModel.ABSOLUTE;
+            backlashCompensationModel = BacklashCompensationModel.OVERSHOOT;
             autoFocusTimeoutSeconds = 600;
-            rSquaredThreshold = 0;
+            rSquaredThreshold = 0.7;
         }
 
         private string id;

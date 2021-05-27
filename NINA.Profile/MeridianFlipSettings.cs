@@ -30,8 +30,8 @@ namespace NINA.Profile {
         protected override void SetDefaultValues() {
             recenter = true;
             minutesAfterMeridian = 5;
-            MaxMinutesAfterMeridian = 5;
-            useSideOfPier = false;
+            MaxMinutesAfterMeridian = 10;
+            useSideOfPier = true;
             settleTime = 30;
             pauseTimeBeforeMeridian = 0;
             autoFocusAfterFlip = false;

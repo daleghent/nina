@@ -40,7 +40,7 @@ namespace NINA.Profile {
             minFlatExposureTime = 0.2;
             maxFlatExposureTime = 20;
             fileCameraFolder = string.Empty;
-            bitScaling = false;
+            bitScaling = true;
             timeout = 60;
             dewHeaterOn = false;
 
@@ -50,7 +50,7 @@ namespace NINA.Profile {
             fliEnableSnapshotFloodFlush = false;
 
             qhyIncludeOverscan = false;
-            ascomAllowUnevenPixelSize = false;
+            ascomAllowUnevenPixelSize = true;
         }
 
         private string id;

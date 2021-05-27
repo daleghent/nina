@@ -685,6 +685,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_FLIP, (int)ASICameraDll.ASI_FLIP_STATUS.ASI_FLIP_NONE);
             }
 
+            USBLimit = 40;
+
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_WB_B, 50);
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_WB_R, 50);
             SetControlValue(ASICameraDll.ASI_CONTROL_TYPE.ASI_GAMMA, 50);

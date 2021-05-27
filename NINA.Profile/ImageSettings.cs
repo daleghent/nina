@@ -15,6 +15,7 @@
 using NINA.Core.Enum;
 using NINA.Profile.Interfaces;
 using System;
+using System.IO;
 using System.Runtime.Serialization;
 
 namespace NINA.Profile {
@@ -39,6 +40,10 @@ namespace NINA.Profile {
             noiseReduction = NoiseReductionEnum.None;
             detectStars = false;
             autoStretch = true;
+            var scFolder = Environment.ExpandEnvironmentVariables(@"%APPDATA%\SharpCap\SensorCharacteristics\");
+            if (Directory.Exists(scFolder)) {
+                sharpCapSensorAnalysisFolder = scFolder;
+            }
         }
 
         private double autoStretchFactor;

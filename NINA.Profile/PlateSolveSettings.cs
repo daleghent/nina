@@ -33,6 +33,7 @@ namespace NINA.Profile {
         }
 
         protected override void SetDefaultValues() {
+            plateSolverType = PlateSolverEnum.ASTAP;
             blindSolverType = BlindSolverEnum.ASTAP;
             astrometryURL = "http://nova.astrometry.net";
             astrometryAPIKey = string.Empty;
@@ -43,10 +44,10 @@ namespace NINA.Profile {
             exposureTime = 2.0d;
             threshold = 1.0d;
             rotationTolerance = 1.0d;
-            reattemptDelay = 10;
-            numberOfAttempts = 1;
+            reattemptDelay = 2;
+            numberOfAttempts = 10;
             filter = null;
-            downSampleFactor = 2;
+            downSampleFactor = 0;
             maxObjects = 500;
             gain = -1;
             binning = 1;

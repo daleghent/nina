@@ -15,6 +15,7 @@
 using NINA.Core.Enum;
 using NINA.Profile.Interfaces;
 using System;
+using System.IO;
 using System.Runtime.Serialization;
 
 namespace NINA.Profile {
@@ -29,12 +30,12 @@ namespace NINA.Profile {
         }
 
         protected override void SetDefaultValues() {
-            filePath = string.Empty;
-            filePattern = "$$IMAGETYPE$$\\$$DATETIME$$_$$FILTER$$_$$SENSORTEMP$$_$$EXPOSURETIME$$s_$$FRAMENR$$";
+            filePath = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "N.I.N.A");
+            filePattern = "$$DATEMINUS12$$\\$$IMAGETYPE$$\\$$DATETIME$$_$$FILTER$$_$$SENSORTEMP$$_$$EXPOSURETIME$$s_$$FRAMENR$$";
             fileType = FileTypeEnum.FITS;
             tiffCompressionType = TIFFCompressionTypeEnum.NONE;
             xisfCompressionType = XISFCompressionTypeEnum.NONE;
-            xisfChecksumType = XISFChecksumTypeEnum.NONE;
+            xisfChecksumType = XISFChecksumTypeEnum.SHA256;
             xisfByteShuffling = false;
         }
 
