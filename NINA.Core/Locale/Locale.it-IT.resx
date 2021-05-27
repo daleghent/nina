@@ -2815,7 +2815,7 @@ HFR Calcolato: {2}
     <value>Comando fine sequenza non trovato '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Partenza ritardata (secondi)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Sequenza in partenza in {0} secondi</value>
@@ -3923,7 +3923,7 @@ Se è necessaria una durata più lunga, è possibile specificare una durata e l'
     <value>Modalità Wizard</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Tolleranza Azimut (gradi)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>La cupola si muove se il valore impostato di azimuth è fuori da questo valore</value>
@@ -3935,31 +3935,31 @@ Se è necessaria una durata più lunga, è possibile specificare una durata e l'
     <value>Trova la posizione Home</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>Lunghezza Dell'Asse GEM (mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Se Alt/Az deve essere 0. Per una montatura EQ, puntare l'asse RA a +/- 90 gradi, e misurare la distanza laterale (in mm) dall'asse al centro dell'apertura del telescopio</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lunghezza dell'Asse Laterale (mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>In una configurazione affiancata, questa è la distanza (lateralmente, in mm) dalla sella al centro OTA. Il valore positivo è a destra guardando il polo celeste.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Raggio della Cupola (mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Misura dal centro al bordo della cupola, lungo la base</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Posizione del telescopio +E/-W (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Misurare lo scostamento Est o Ovest (in mm) del centro della montatura dal centro della cupola. Positivo è a destra guardando il polo celeste.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Posizione del telescopio +N/-S (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>L'inseguimento della cupola potrebbe essere impreciso. Controllare che l'epoca della montatura sia configurata correttamente e fare una sincronizzazione con una risoluzione astrometrica</value>
@@ -3977,7 +3977,7 @@ Se è necessaria una durata più lunga, è possibile specificare una durata e l'
     <value>Metti in Pausa la Sequenza</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Posizione del telescopio +Su/-Giù (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Misura la differenza di altezza (in mm) del centro dell'asse della montatura rispetto alla base della cupola. Per una montatura Alt/Az, questo è dal centro dell'asse Altitudine, e per una montatura EQ questo è dove gli assi RA e DEC si intersecano. Un numero positivo indica che il centro dell'asse è più alto della base della cupola e un numero negativo significa che è più basso.</value>

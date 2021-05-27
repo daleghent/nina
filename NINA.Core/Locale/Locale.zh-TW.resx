@@ -2815,7 +2815,7 @@ You can also calculate the bias by clicking the Snapshot button next to Bias Mea
     <value>Sequence end command not found '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>延時開始(秒)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>{0} 秒後開始序列</value>
@@ -3925,7 +3925,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Wizard Mode</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance (degrees)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>The dome slews if the target azimuth is off by more than this amount</value>
@@ -3937,31 +3937,31 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Find Home</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length (mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>If Alt/Az, this should be 0. For an EQ mount, slew RA to +/- 90 degrees, and measure the lateral distance (in mm) from the axis to center of the telescope aperture</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length (mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius (mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Measure from the center to the rim of the dome, along the base</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Dome following may be inaccurate. Check that your mount epoch is configured correctly and do a plate solve sync</value>
@@ -3979,7 +3979,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Pause Sequence</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Measure the height difference (in mm) of the center of the mount axis relative to the base of the dome. For an Alt/Az mount, this is from the center of the Altitude axis, and for an EQ mount this is where the RA and DEC axes intersect. A positive number indicates the center of axis is higher than the base of the dome, and a negative number means it is lower.</value>

@@ -2815,7 +2815,7 @@ Berechneter HFR: {2}
     <value>Sequenz Endkommando nicht gefunden '{0} ' '</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Start verzögern (Sekunden)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Sequenz startet in {0} Sekunden</value>
@@ -3924,7 +3924,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Wizard Mode</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimut-Toleranz (Grad)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>Kuppel schwenkt, wenn der Azimut des Ziels größer ist als der angegebene Betrag</value>
@@ -3936,31 +3936,31 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Home suchen</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Achsenlänge (mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Wenn Alt/AZ, sollte dies 0 sein. Für eine Equatoriale Montierung, Rektaszension +/-90 Grad schwenken und den seitlichen Abstand (in mm) von der Achse zur Mitte der Teleskopöffnung messen</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length (mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Kuppelradius (mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Von der Mitte bis zum Rand der Kuppel entlang der Basis messen</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Dome following may be inaccurate. Check that your mount epoch is configured correctly and do a plate solve sync</value>
@@ -3978,7 +3978,7 @@ Falls eine längere Dauer benötigt wird, kann eine Dauer angegeben werden und d
     <value>Sequenz pausieren</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Teleskopposition +oben/unten (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Measure the height difference (in mm) of the center of the mount axis relative to the base of the dome. For an Alt/Az mount, this is from the center of the Altitude axis, and for an EQ mount this is where the RA and DEC axes intersect. A positive number indicates the center of axis is higher than the base of the dome, and a negative number means it is lower.</value>

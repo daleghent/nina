@@ -2815,7 +2815,7 @@ HFR calculé: {2}</value>
     <value>Commande de fin de séquence introuvable '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Délai de Démarrage (sec)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>La Séquence démarre dans {0} sec</value>
@@ -3922,7 +3922,7 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Mode Assistant</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Tolérance d'azimuth (degrés)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>Le dôme pivote si l'azimut de la cible est décalé de plus de cette valeur</value>
@@ -3934,31 +3934,31 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Trouver le repos</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>Longueur de l'axe GEM (mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Si Alt/Az, ce devrait être 0. Pour une monture EQ, pivoter RA à +/- 90 degrés, et mesurer la distance latérale (en mm) de l'axe au centre de l'ouverture du télescope</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Longueur de l'axe latéral (mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>Dans une configuration côte à côte, c'est la distance (latéralement, en mm) de la selle au centre de l'OTA. Positif est à droite le long de l'axe OTA.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Rayon du dôme (mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Mesure du centre au bord du dôme, le long de la base</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Position du télescope E/O (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Mesurer le décalage Est ou Ouest (en mm) du centre de la monture à partir du centre du dôme. Positif est à à l'Est.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Position du télescope N/S (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Le suivi du dôme peut être imprécis. Vérifiez que l'époque de votre monture est correctement configurée et effectuez une synchronisation avec la résolution astronomique</value>
@@ -3976,7 +3976,7 @@ Dans le cas où une durée plus longue est requise, une durée peut être spéci
     <value>Suspendre la séquence</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Position du télescope +N/-S (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Mesurez la différence de hauteur (en mm) du centre de l'axe de la monture par rapport à la base du dôme. Pour une monture Alt/Az, c'est à partir du centre de l'axe d'altitude, et pour une monture EQ, c'est l'intersection des axes RA et DEC. Un nombre positif indique que le centre de l'axe est plus haut que la base du dôme, et un nombre négatif signifie qu'il est plus bas.</value>

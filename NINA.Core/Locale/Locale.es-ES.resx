@@ -2807,7 +2807,7 @@ Calculado HFR: {2}
     <value>Comando final de secuencia no encontrado '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Retraso de Inicio (segundos)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Secuencia comenzando en {0} segundos</value>
@@ -3915,7 +3915,7 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Modo asistente</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Tolerancia en acimut (grados)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>La cúpula gira, si el acimut del objetivo supera esta cantidad</value>
@@ -3927,31 +3927,31 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Encontrar posición inicial (Home)</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>Longitud del eje GEM (mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Si la montura es Alt/Az, debe ser 0. Para una montura EQ, desplaza el eje RA a +/- 90 grados, y mide la distancia lateral (en mm) desde el eje al centro de la apertura del telescopio</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Longitud del eje lateral (mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>En una configuración lado a lado, esta es la distancia (lateral en mm) desde la mordaza hasta el centro del tubo. Positivo es a la derecha a lo largo del eje del tubo.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Radio de la cúpula (mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Medida desde el centro hasta el borde de la cúpula, a lo largo de la base</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Posición del telescopio E/W (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Medir el descentrado este u oeste (en mm) del centro de la montura desde el centro de la cúpula. Positivo es hacia el este.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Posición del telescopio N/S (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>El seguimiento de la cúpula puede ser inexacto. Compruebe que el epoch de la montura está configurado correctamente y haga una sincronización por astrometría</value>
@@ -3969,7 +3969,7 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Pausar secuencia</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Posición del telescopio +Arriba/Abajo (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Medir la diferencia de altura (en mm) del centro del eje de montura relativa a la base de la cúpula. Para una montura Alt/Az, esta es desde el centro del eje Altitud, y para una montura EQ es en la intersección de los ejes RA y DEC. Un número positivo indica que el centro del eje es más alto que la base de la cúpula, y un número negativo significa que es más bajo.</value>

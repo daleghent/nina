@@ -2810,7 +2810,7 @@ HFR Calculado: {2}
     <value>Comando de fim de sequência não encontrado '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Atraso inicial (segundos)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Sequência a iniciar em {0} segundos</value>
@@ -3920,7 +3920,7 @@ No caso de ser necessário efectuar o aquecimento de uma forma mais prolongada, 
     <value>Modo de Assistente</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Tolerância em Azimute (graus)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>A cúpula move-se se a distância em azimute do objecto for maior que este valor</value>
@@ -3932,31 +3932,31 @@ No caso de ser necessário efectuar o aquecimento de uma forma mais prolongada, 
     <value>Encontrar a posição Home</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>Comprimento do eixo GEM (mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Caso Alt/Az, deve ser 0. Para uma montagem EQ, mova em AR para +/- 90 graus, e meça a distância lateral (em mm) do eixo ao centro da abertura do telescópio</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Comprimento do Eixo Lateral (mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>Numa configuração lado-a-lado, trata-se da distância (lateralmente, em mm) da base ao centro do telescópio. Positivo é a direita quando ao longo do eixo do tubo do telescópio.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Raio da cúpula (mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Medida do centro à borda da cúpula, ao longo da base</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Posição do Telescópio E/O (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Mede a diferença a Este ou Oeste (em mm) do centro da montagem ao centro do observatório. Positivo é para este.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Posição do Telescópio N/S (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>O seguimento do dome por ser impreciso. Verifique se a época se encontra corretamente configurada e efetue uma sincronização via platesolve</value>
@@ -3974,7 +3974,7 @@ No caso de ser necessário efectuar o aquecimento de uma forma mais prolongada, 
     <value>Pausar a Sequência</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Posição do Telescópio +N/-S (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Medida da diferença em altura (em mm) a parir do centro do eixo da montagem relativo à base da cúpula. Para uma montagem alt-azimutal, a medição é feita a partir do centro do eixo de Altitude, para uma montagem Equatorial é feita a partir de onde os eixos AR e DEC se interceptam. Um numero positivo indica que o centro do eixo é maior que a base da cúpula, e um numero negativo indica que é menor.</value>

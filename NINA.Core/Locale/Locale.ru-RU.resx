@@ -2808,7 +2808,7 @@ Dec: {1}</value>
     <value>Команда конца серии не найдена '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Задержка начала (секунд)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Серия начнется через {0} секунд</value>
@@ -3918,7 +3918,7 @@ Dec: {1}</value>
     <value>Режим мастера</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Допуск на Азимут (градусов)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>Купол движется если азимут цели отличается больше чем это значение</value>
@@ -3930,31 +3930,31 @@ Dec: {1}</value>
     <value>Найти дом</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>Длина оси GEM (мм)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Если Альт/Аз, это должно быть 0. Для экваториальной монтировки двигайте ось П.В. на +/- 90 градусов, и измерьте боковое расстояние (в мм) от оси до центра телескопа</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Длина боковой оси (мм)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>В конфигурации бок о бок это расстояние (в мм) от ластохвоста к центру трубы. Положительный это направо при направлении оси трубы.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Радиус купола (мм)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Измерьте от центра до обода купола, вдоль основания</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Положение телескопа В/З (мм)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Измерьте смещение востока или запада (в мм) центра монтировки от центра купола. Положительный поворот это направление к востоку.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Положение телескопа С/Ю (мм)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Слежение купола может быть неточным. Убедитесь, что эпоха монтировки сконфигурирована правильно и сделайте плейтсолв</value>
@@ -3972,7 +3972,7 @@ Dec: {1}</value>
     <value>Пауза серии</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Положение телескопа +вверх/-вниз (мм)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Измерьте разницу в высоте (в мм) центра оси монтировки относительно основания купола. Для крепления Альт/Аз это от центра оси Высоты, и для крепления ЭВ это место пересекаются оси П.В. и Скл. Положительное число указывает на центр оси выше, чем основание купола, а отрицательное число означает, что оно ниже.</value>

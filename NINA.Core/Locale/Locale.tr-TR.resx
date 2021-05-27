@@ -2807,7 +2807,7 @@ Hesaplanan HFR: {2}
     <value>Sekans bitiş komutu bulunamadı '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Başlamayı geciktir (saniye)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Sekans {0} saniyede başlıyor</value>
@@ -3912,7 +3912,7 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Sihirbaz modu</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimut toleransı (derece)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>Hedef azimut bu miktardan daha darsa kubbe döner</value>
@@ -3924,31 +3924,31 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Başlangıç pozisyonunu bul</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM eksen genişliği (mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Alt / Az kundaklar için 0 olmalıdır. EQ kundaklar için RA'yı +/- 90 dereceye kadar döndürün ve eksenden teleskop açıklığının merkezine yanal mesafeyi (mm cinsinden) ölçün</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Yanal eksen genişliği (mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>Yan yana konfigürasyonda kızaktan optik tüp merkezine olan mesafedir (yanlamasına, mm cinsinden). Pozitif, optik tüp ekseni boyunca sağdadır.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Kubbe çapı (mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Merkezden kubbenin kenarına kadar taban boyunu ölçün</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Teleskop pozisyonu D/B (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Kubbe merkeziyle kundak merkezi arasındaki doğu veya batı ofsetini (mm cinsinden) ölçün. Pozitif doğudur.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Teleskop pozisyonu K/G (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Kubbe takibi olabilir. Kundak devrinin doğru yapılandırıldığını kontrol edin ve bir plate solve senkronizasyonu yapın</value>
@@ -3966,7 +3966,7 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Sekansı duraklat</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Teleskop pozisyonu +Yukarı/-Aşağı (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Kubbe tabanına göre kundak eksen merkezinin yükseklik farkını (mm olarak) ölçün. Alt / Az kundaklar için bu, yükseklik ekseninin merkezi, EQ kundaklar için RA ve DEC eksenlerinin kesiştiği yerdir. Pozitif bir sayı, eksen merkezinin kubbenin tabanından daha yüksek olduğunu, negatif bir sayı ise daha düşük olduğunu gösterir.</value>

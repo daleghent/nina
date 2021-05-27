@@ -2799,7 +2799,7 @@
     <value>シーケンス終了コマンドが見つかりません '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>スタート遅延(秒)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>{0} 秒後にシーケンス開始</value>
@@ -3903,7 +3903,7 @@
     <value>ウィザード モード</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>方位角の許容値(度)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>目標方位角がこの値より離れている場合、ドームは旋回します</value>
@@ -3915,31 +3915,31 @@
     <value>ホームポジションを見つける</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM軸長(mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>経緯台の場合は0にする必要があります。 赤道儀では、赤経 を +/- 90 度まで旋回し、回転軸から望遠鏡の開口部の中心までの、横方向の距離(mm)を測定します</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>ドーム横軸長(mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>並列同架では、アリミゾから鏡筒中心までの横方向の距離(mm) です。 正の値は、鏡筒の軸の右を示します。</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>ドーム半径(mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>ドームの中心から周辺までをベースに沿って測定</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>鏡筒位置 東/西 (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>ドームの中心から架台の中心までの、東または西のオフセット値(mm) を測定します。正の値は東側になります。</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>鏡筒位置 北/南 (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>ドームの追従が不正確な可能性があります。架台が正しい元期で設定されているかを確認し、プレートソルブによる同期を行ってください。</value>
@@ -3957,7 +3957,7 @@
     <value>シーケンスの一時停止</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>スコープ位置 +上/-下 (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>マウント軸の中心と、ドームのベースとの高さの差(mm)を測定します。 経緯台の場合は高度軸の中心からの値であり、赤道儀の場合は赤経軸と赤緯軸 が交差する場所からの値です。 正の数値は、中心軸がドームのベースよりも高いことを示し、負の数は低いことを意味します。</value>

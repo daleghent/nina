@@ -2805,7 +2805,7 @@
     <value>Η εντολή τέλους αλληλουχίας δεν βρέθηκε '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Καθυστέρηση έναρξης (δευτερόλεπτα)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Η αλληλουχία θα ξεκινήσει σε {0} δευτερόλεπτα</value>
@@ -3915,7 +3915,7 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Wizard Mode</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Ανοχή Αζιμούθιου (μοίρες)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>Ο θόλος μετακινείται αν το αζιμούθιο του στόχου είναι εκτός από αυτή την ποσότητα</value>
@@ -3927,31 +3927,31 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Εύρεση Αρχικής Θέσης</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>Μήκος Άξονα Ισημερινής Στήριξης (mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Αν είναι Αλταζιμουθιακή, αυτό θα πρέπει να είναι 0. Για μια ισημερινή στήριξη, στρέψτε την Ο.Α. στις +/-90 μοίρες, και μετρήστε την πλευρική απόσταση (σε mm) από τον άξονα προς το κέντρο του ανοίγματος του τηλεσκοπίου</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Μήκος Πλευρικού Άξονα (mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Ακτίνα Θόλου (mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Μετρήστε από το κέντρο προς το άκρο του θόλου, κατά μήκος της βάσης</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Θέση Τηλεσκοπίου Α/Δ (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Θέση Τηλεσκοπίου B/N (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Dome following may be inaccurate. Check that your mount epoch is configured correctly and do a plate solve sync</value>
@@ -3969,7 +3969,7 @@ Backlash ΕΞΩ:  Όταν ο εστιαστής αλλάζει κατεύθυν
     <value>Παύση Αλληλουχίας</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Θέση Τηλεσκοπίου +Πάνω/-Κάτω (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Μετρήστε τη διαφορά ύψους (σε mm) από το κέντρο της στήριξης σχετικά με τη βάση του θόλου. Για μια αλταζιμουθιακή στήριξη, αυτό είναι από το κέντρο του άξονα Ύψους, και για μια ισημερινή στήριξη είναι το σημείο που τέμνονται οι άξονες Ορθής Αναφοράς και Απόκλισης. Ένας θετικός αριθμός δείχνει ότι το κέντρο είναι πιο ψηλά από την βάση του θόλου, και ένας αρνητικός αριθμός σημαίνει ότι είναι πιο χαμηλά.</value>

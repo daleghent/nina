@@ -2806,7 +2806,7 @@ Vypočtené HFR: {2}
     <value>Příkaz ukončení sekvence nenalezen '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Odložený start (sekundy)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Sekvence začíná po {0} sekundách</value>
@@ -3916,7 +3916,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Režim Průvodce</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimutová Tolerance (stupně)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>Kopule se pohybuje, pokud je vzdálenost azimutu cíle větší než tato hodnota</value>
@@ -3928,31 +3928,31 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Najít Domov</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>Délka Osy GEM (mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Pokud je použit Alt/Az musí být 0. U držáku EQ otočte osu RA na +/- 90 stupňů a změřte boční vzdálenost (v mm) od osy ke středu otvoru dalekohledu</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Délka Příčné Osy (mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>V konfiguraci vedle sebe je to vzdálenost (příčně mm) od rybiny ke středu OTA. Pozitivní je vpravo podél osy OTA.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Poloměr Kopule (mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Změřte od středu k okraji kopule, podél základny</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Poloha Dalekohledu V/Z (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Změřte východní nebo západní odsazení (v mm) od středu montáže ke středu kopule. Pozitivní je na východ.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Poloha Dalekohledu S/J (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Sledování kupole může být nepřesné. Zkontrolujte, zda je vaše epocha správně nakonfigurována, a proveďte platesolving a synchronizaci</value>
@@ -3970,7 +3970,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Pozastavit Sekvenci</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Pozice Dalekohledu + S/-J (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Změřte výškový rozdíl (v mm) od středu osy sestavy vzhledem k základně kopule. U sestavy alt-azimut se měření provádí ze středu osy nadmořské výšky, u sestavy rovníku se provádí od místa, kde se protínají osy RA a DEC. Kladné číslo znamená, že střed osy je větší než základna kopule a záporné číslo znamená, že je menší.</value>

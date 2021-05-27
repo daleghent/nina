@@ -2815,7 +2815,7 @@
     <value>序列结束命令未找到 '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>延时开始(秒)</value>
+    <value>Delay start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>{0} 秒后开始序列</value>
@@ -3925,7 +3925,7 @@
     <value>向导模式</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>方位容差值(度)</value>
+    <value>Azimuth Tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>如果目标方位角偏离超过此值，则圆顶将旋转</value>
@@ -3937,31 +3937,31 @@
     <value>查找零位</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM 轴长度 (mm)</value>
+    <value>GEM Axis Length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>如果Alt/Az，则应为0。对于赤道仪，将RA旋转至+/-90度，并测量从轴到望远镜孔径中心的横向距离(单位：mm)</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>横轴长度 (mm)</value>
+    <value>Lateral Axis Length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>在主镜并排配置中，这是底座到主镜中心的横向距离（单位mm）， OTA轴线右侧为正。</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>圆顶半径(mm)</value>
+    <value>Dome Radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>沿着底部，测量从圆顶的中心到边缘的距离</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>望远镜位置 东/西 (mm)</value>
+    <value>Scope Position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>测量支架中心到圆顶中心的东西偏移量(mm)。东方为正。</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>范围位置 北/南 (mm)</value>
+    <value>Scope Position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>跟随的圆顶可能不准确。请检查你的赤道仪历元配置是否正确，然后进解析同步</value>
@@ -3979,7 +3979,7 @@
     <value>暂停序列</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>望远镜位置 +上/-下 (mm)</value>
+    <value>Scope Position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>测量安装轴中心相对于圆顶底座的高度差(单位：mm)。对于经纬仪/赤道仪，这是从高度轴的中心开始的，对于赤道仪，这是赤经和赤纬轴相交的地方。正数表示轴中心高于圆顶底部，负数表示轴中心低于圆顶。</value>
