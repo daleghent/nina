@@ -2311,7 +2311,7 @@ Vypočtené HFR: {2}
     <value>Pauza</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Pause before Meridian</value>
+    <value>Pauza před Poledníkem</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>FlatMaster</value>
@@ -2752,7 +2752,7 @@ Vypočtené HFR: {2}
     <value>Uložit nastavení cíle</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Scope settle time after flip</value>
+    <value>Stabilizace dalekohledu po překlopení poledníku</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Hledat</value>
@@ -5465,9 +5465,9 @@ Toto nastavení nebude mít žádný vliv na barevné senzory.
 Význam pouze při použití ovladače kamery ASCOM!</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
-    <value>Guiding Start Timeout</value>
+    <value>Spuštění Časového limitu Pointace</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>Filtry</value>
   </data>
 </root>
