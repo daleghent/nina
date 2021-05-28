@@ -197,7 +197,7 @@
                                             VerticalContentAlignment="Center"
                                             Text="{Binding TargetTemp, Mode=TwoWay}"
                                             TextAlignment="Center"
-                                            Unit="°C}" />
+                                            Unit="°C" />
                                     </ninactrl:StepperControl.InnerContent>
                                 </ninactrl:StepperControl>
                             </Grid>
