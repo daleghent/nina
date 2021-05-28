@@ -275,21 +275,21 @@
                                 MinHeight="20"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblMinutesAfterMeridian}" />
-                            <ninactrl:OverlayTextBox
+                            <ninactrl:UnitTextBox
                                 MinWidth="75"
                                 MinHeight="20"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding MinutesAfterMeridian, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}">
-                                <ninactrl:OverlayTextBox.Text>
+                                Unit="min">
+                                <ninactrl:UnitTextBox.Text>
                                     <Binding Path="MinutesAfterMeridian" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
                                             <rules:GreaterZeroRule />
                                         </Binding.ValidationRules>
                                     </Binding>
-                                </ninactrl:OverlayTextBox.Text>
-                            </ninactrl:OverlayTextBox>
+                                </ninactrl:UnitTextBox.Text>
+                            </ninactrl:UnitTextBox>
                         </StackPanel>
                         <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                             <TextBlock
@@ -297,21 +297,21 @@
                                 MinHeight="20"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblMaxMinutesAfterMeridian}" />
-                            <ninactrl:OverlayTextBox
+                            <ninactrl:UnitTextBox
                                 MinWidth="75"
                                 MinHeight="20"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding MaxMinutesAfterMeridian, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}">
-                                <ninactrl:OverlayTextBox.Text>
+                                Unit="min">
+                                <ninactrl:UnitTextBox.Text>
                                     <Binding Path="MaxMinutesAfterMeridian" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
                                             <rules:GreaterZeroRule />
                                         </Binding.ValidationRules>
                                     </Binding>
-                                </ninactrl:OverlayTextBox.Text>
-                            </ninactrl:OverlayTextBox>
+                                </ninactrl:UnitTextBox.Text>
+                            </ninactrl:UnitTextBox>
                         </StackPanel>
                         <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                             <TextBlock
@@ -341,21 +341,21 @@
                                 MinHeight="20"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblScopeSettleTimeAfterFlip}" />
-                            <ninactrl:OverlayTextBox
+                            <ninactrl:UnitTextBox
                                 MinWidth="75"
                                 MinHeight="20"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
-                                <ninactrl:OverlayTextBox.Text>
+                                Unit="s">
+                                <ninactrl:UnitTextBox.Text>
                                     <Binding Path="SettleTime" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
                                             <rules:GreaterZeroRule />
                                         </Binding.ValidationRules>
                                     </Binding>
-                                </ninactrl:OverlayTextBox.Text>
-                            </ninactrl:OverlayTextBox>
+                                </ninactrl:UnitTextBox.Text>
+                            </ninactrl:UnitTextBox>
                         </StackPanel>
                         <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                             <TextBlock
@@ -363,21 +363,21 @@
                                 MinHeight="20"
                                 VerticalAlignment="Center"
                                 Text="{ns:Loc LblPauseTimeBeforeMeridian}" />
-                            <ninactrl:OverlayTextBox
+                            <ninactrl:UnitTextBox
                                 MinWidth="75"
                                 MinHeight="20"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding PauseTimeBeforeMeridian, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}">
-                                <ninactrl:OverlayTextBox.Text>
+                                Unit="min">
+                                <ninactrl:UnitTextBox.Text>
                                     <Binding Path="PauseTimeBeforeMeridian" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
                                             <rules:GreaterZeroRule />
                                         </Binding.ValidationRules>
                                     </Binding>
-                                </ninactrl:OverlayTextBox.Text>
-                            </ninactrl:OverlayTextBox>
+                                </ninactrl:UnitTextBox.Text>
+                            </ninactrl:UnitTextBox>
                         </StackPanel>
                         <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                             <TextBlock

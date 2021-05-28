@@ -70,20 +70,20 @@
                             MinHeight="20"
                             VerticalAlignment="Center"
                             Text="{ns:Loc LblExposureTime}" />
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             Width="120"
                             Height="25"
                             HorizontalAlignment="Left"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding ExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
-                            <ninactrl:OverlayTextBox.Text>
+                            Unit="s">
+                            <ninactrl:UnitTextBox.Text>
                                 <Binding Mode="TwoWay" Path="ExposureTime">
                                     <Binding.ValidationRules>
                                         <rules:GreaterZeroRule />
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </ninactrl:OverlayTextBox.Text>
-                        </ninactrl:OverlayTextBox>
+                            </ninactrl:UnitTextBox.Text>
+                        </ninactrl:UnitTextBox>
                     </StackPanel>
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                         <TextBlock
@@ -142,21 +142,21 @@
                             MinHeight="20"
                             VerticalAlignment="Center"
                             Text="{ns:Loc LblPointingTolerance}" />
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             Width="120"
                             Height="25"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding Threshold, Converter={StaticResource UnitConverter}, ConverterParameter=' arcmin'}">
-                            <ninactrl:OverlayTextBox.Text>
+                            Unit="arcmin">
+                            <ninactrl:UnitTextBox.Text>
                                 <Binding Mode="TwoWay" Path="Threshold">
                                     <Binding.ValidationRules>
                                         <rules:GreaterZeroRule />
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </ninactrl:OverlayTextBox.Text>
-                        </ninactrl:OverlayTextBox>
+                            </ninactrl:UnitTextBox.Text>
+                        </ninactrl:UnitTextBox>
                     </StackPanel>
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                         <TextBlock
@@ -164,21 +164,21 @@
                             MinHeight="20"
                             VerticalAlignment="Center"
                             Text="{ns:Loc LblRotationTolerance}" />
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             Width="120"
                             Height="25"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding RotationTolerance, Converter={StaticResource UnitConverter}, ConverterParameter=°}">
-                            <ninactrl:OverlayTextBox.Text>
+                            Unit="°">
+                            <ninactrl:UnitTextBox.Text>
                                 <Binding Mode="TwoWay" Path="RotationTolerance">
                                     <Binding.ValidationRules>
                                         <rules:GreaterZeroRule />
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </ninactrl:OverlayTextBox.Text>
-                        </ninactrl:OverlayTextBox>
+                            </ninactrl:UnitTextBox.Text>
+                        </ninactrl:UnitTextBox>
                     </StackPanel>
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
                         <TextBlock
@@ -214,21 +214,21 @@
                                 <TextBlock Text="{ns:Loc LblPlateSolveFailedDelayTooltip}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             Width="120"
                             Height="25"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding ReattemptDelay, Converter={StaticResource UnitConverter}, ConverterParameter=' min'}">
-                            <ninactrl:OverlayTextBox.Text>
+                            Unit="min">
+                            <ninactrl:UnitTextBox.Text>
                                 <Binding Mode="TwoWay" Path="ReattemptDelay">
                                     <Binding.ValidationRules>
                                         <rules:GreaterZeroRule />
                                     </Binding.ValidationRules>
                                 </Binding>
-                            </ninactrl:OverlayTextBox.Text>
-                        </ninactrl:OverlayTextBox>
+                            </ninactrl:UnitTextBox.Text>
+                        </ninactrl:UnitTextBox>
                     </StackPanel>
                 </StackPanel>
             </Grid>

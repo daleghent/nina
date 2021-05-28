@@ -85,11 +85,11 @@
                                     <TextBlock Text="{ns:Loc LblAutoFocusExposureTimeTooltip}" />
                                 </TextBlock.ToolTip>
                             </TextBlock>
-                            <ninactrl:OverlayTextBox
+                            <ninactrl:UnitTextBox
                                 Height="25"
                                 HorizontalAlignment="Stretch"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding AutoFocusExposureTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
+                                Unit="s">
                                 <TextBox.Text>
                                     <Binding Path="AutoFocusExposureTime" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
@@ -97,7 +97,7 @@
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
-                            </ninactrl:OverlayTextBox>
+                            </ninactrl:UnitTextBox>
                         </UniformGrid>
                     </UniformGrid>
                     <UniformGrid Columns="2">
@@ -170,20 +170,20 @@
                                     <TextBlock Text="{ns:Loc LblFocuserSettleTimeTooltip}" />
                                 </TextBlock.ToolTip>
                             </TextBlock>
-                            <ninactrl:OverlayTextBox
+                            <ninactrl:UnitTextBox
                                 Height="25"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center"
                                 VerticalContentAlignment="Center"
-                                OverlayText="{Binding FocuserSettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
-                                <ninactrl:OverlayTextBox.Text>
+                                Unit="s">
+                                <ninactrl:UnitTextBox.Text>
                                     <Binding Path="FocuserSettleTime" UpdateSourceTrigger="LostFocus">
                                         <Binding.ValidationRules>
                                             <rules:GreaterZeroRule />
                                         </Binding.ValidationRules>
                                     </Binding>
-                                </ninactrl:OverlayTextBox.Text>
-                            </ninactrl:OverlayTextBox>
+                                </ninactrl:UnitTextBox.Text>
+                            </ninactrl:UnitTextBox>
                         </UniformGrid>
                         <UniformGrid
                             Margin="0,5,0,0"

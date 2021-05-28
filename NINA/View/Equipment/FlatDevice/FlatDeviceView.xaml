@@ -265,14 +265,14 @@
                             Columns="2">
                             <TextBlock Text="{ns:Loc LblFlatDeviceSettleTime}" />
 
-                            <ninactrl:OverlayTextBox
+                            <ninactrl:UnitTextBox
                                 Height="25"
                                 MinWidth="65"
                                 Margin="5,0,0,0"
-                        VerticalContentAlignment="Center"
                                 HorizontalContentAlignment="Left"
+                                VerticalContentAlignment="Center"
                                 IsEnabled="{Binding FlatDeviceInfo.Connected}"
-                                OverlayText="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.FlatDeviceSettings.SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=' ms'}">
+                                Unit="ms">
                                 <TextBox.Text>
                                     <Binding
                                         Mode="TwoWay"
@@ -284,7 +284,7 @@
                                         </Binding.ValidationRules>
                                     </Binding>
                                 </TextBox.Text>
-                            </ninactrl:OverlayTextBox>
+                            </ninactrl:UnitTextBox>
                         </UniformGrid>
                     </Border>
                 </StackPanel>

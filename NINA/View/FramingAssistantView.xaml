@@ -291,11 +291,11 @@
                                         MinValue="0.1"
                                         Value="{Binding FieldOfView, Mode=TwoWay}">
                                         <ninactrl:StepperControl.InnerContent>
-                                            <ninactrl:OverlayTextBox
+                                            <ninactrl:UnitTextBox
                                                 VerticalContentAlignment="Center"
-                                                OverlayText="{Binding FieldOfView, Converter={StaticResource UnitConverter}, ConverterParameter='°|2', Mode=TwoWay}"
                                                 Text="{Binding FieldOfView}"
-                                                TextAlignment="Center" />
+                                                TextAlignment="Center"
+                                                Unit="°" />
                                         </ninactrl:StepperControl.InnerContent>
                                     </ninactrl:StepperControl>
                                 </StackPanel>
@@ -340,19 +340,19 @@
                             </UniformGrid>
                             <UniformGrid Margin="0,0,0,6" Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPixelSize}" />
-                                <ninactrl:OverlayTextBox
+                                <ninactrl:UnitTextBox
                                     Margin="5,0,0,0"
                                     VerticalContentAlignment="Center"
-                                    OverlayText="{Binding CameraPixelSize, Converter={StaticResource UnitConverter}, ConverterParameter=' μm'}"
-                                    Text="{Binding CameraPixelSize}" />
+                                    Text="{Binding CameraPixelSize}"
+                                    Unit="μm" />
                             </UniformGrid>
                             <UniformGrid Margin="0,0,0,6" Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFocalLength}" />
-                                <ninactrl:OverlayTextBox
+                                <ninactrl:UnitTextBox
                                     Margin="5,0,0,0"
                                     VerticalContentAlignment="Center"
-                                    OverlayText="{Binding FocalLength, Converter={StaticResource UnitConverter}, ConverterParameter=' mm'}"
-                                    Text="{Binding FocalLength}" />
+                                    Text="{Binding FocalLength}"
+                                    Unit="mm" />
                             </UniformGrid>
                         </StackPanel>
                     </GroupBox>
@@ -374,11 +374,11 @@
                             </UniformGrid>
                             <UniformGrid Margin="0,0,0,6" Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblOverlapPercentage}" />
-                                <ninactrl:OverlayTextBox
+                                <ninactrl:UnitTextBox
                                     Margin="5,0,0,0"
                                     VerticalContentAlignment="Center"
-                                    OverlayText="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}, StringFormat={}{0}%}"
-                                    Text="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}}" />
+                                    Text="{Binding OverlapPercentage, Converter={StaticResource PercentageConverter}}"
+                                    Unit="%" />
                             </UniformGrid>
                             <UniformGrid Columns="2">
                                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblRotation}" />
@@ -387,14 +387,14 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
-                                    <ninactrl:OverlayTextBox
+                                    <ninactrl:UnitTextBox
                                         MinWidth="35"
                                         Margin="5,0,0,0"
                                         VerticalAlignment="Center"
                                         VerticalContentAlignment="Center"
                                         IsEnabled="{Binding RectangleCalculated}"
-                                        OverlayText="{Binding Rectangle.TotalRotation, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
-                                        Text="{Binding Rectangle.TotalRotation}" />
+                                        Text="{Binding Rectangle.TotalRotation}"
+                                        Unit="°" />
                                     <Slider
                                         Grid.Column="1"
                                         Margin="5,0,0,0"

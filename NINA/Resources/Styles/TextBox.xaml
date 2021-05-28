@@ -49,7 +49,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="1">
+                            CornerRadius="0">
                             <ScrollViewer
                                 x:Name="PART_ContentHost"
                                 Background="{TemplateBinding Background}"
@@ -93,7 +93,7 @@
         <Setter Property="BorderThickness" Value="0,0,0,1" />
     </Style>
 
-    <Style TargetType="{x:Type ninactrl:OverlayTextBox}">
+    <Style TargetType="{x:Type ninactrl:UnitTextBox}">
         <Setter Property="Background">
             <Setter.Value>
                 <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />

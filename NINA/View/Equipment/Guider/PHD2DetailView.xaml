@@ -41,11 +41,11 @@
                         MinWidth="200"
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblDitherPixels}" />
-                    <ninactrl:OverlayTextBox
+                    <ninactrl:UnitTextBox
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding DitherPixels, Converter={StaticResource UnitConverter}, ConverterParameter=' px'}">
+                        Unit="px">
                         <TextBox.Text>
                             <Binding Path="DitherPixels" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
@@ -53,7 +53,7 @@
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
-                    </ninactrl:OverlayTextBox>
+                    </ninactrl:UnitTextBox>
                 </UniformGrid>
                 <UniformGrid
                     Margin="5,5,0,0"
@@ -78,20 +78,20 @@
                         MinWidth="200"
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblSettlePixelTolerance}" />
-                    <ninactrl:OverlayTextBox
+                    <ninactrl:UnitTextBox
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding SettlePixels, Converter={StaticResource UnitConverter}, ConverterParameter=' px'}">
+                        Unit="px">
 
-                        <ninactrl:OverlayTextBox.Text>
+                        <ninactrl:UnitTextBox.Text>
                             <Binding Path="SettlePixels" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:GreaterZeroRule />
                                 </Binding.ValidationRules>
                             </Binding>
-                        </ninactrl:OverlayTextBox.Text>
-                    </ninactrl:OverlayTextBox>
+                        </ninactrl:UnitTextBox.Text>
+                    </ninactrl:UnitTextBox>
                 </UniformGrid>
                 <UniformGrid
                     Margin="5,5,0,0"
@@ -102,11 +102,11 @@
                         MinWidth="200"
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblMinimumSettleTime}" />
-                    <ninactrl:OverlayTextBox
+                    <ninactrl:UnitTextBox
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding SettleTime, Converter={StaticResource UnitConverter}, ConverterParameter=' px'}">
+                        Unit="px">
                         <TextBox.Text>
                             <Binding Path="SettleTime" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
@@ -114,7 +114,7 @@
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
-                    </ninactrl:OverlayTextBox>
+                    </ninactrl:UnitTextBox>
                 </UniformGrid>
                 <UniformGrid
                     Margin="0,5,0,0"
@@ -125,11 +125,11 @@
                         MinWidth="200"
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblSettleTimeout}" />
-                    <ninactrl:OverlayTextBox
+                    <ninactrl:UnitTextBox
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding SettleTimeout, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
+                        Unit="s">
                         <TextBox.Text>
                             <Binding Path="SettleTimeout" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
@@ -137,7 +137,7 @@
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
-                    </ninactrl:OverlayTextBox>
+                    </ninactrl:UnitTextBox>
                 </UniformGrid>
                 <UniformGrid
                     Margin="5,5,0,0"
@@ -164,11 +164,11 @@
                         Text="{ns:Loc LblAutoRetryStartGuidingTimeout}"
                         TextWrapping="Wrap"
                         ToolTip="{ns:Loc LblAutoRetryStartGuidingTimeoutTooltip}" />
-                    <ninactrl:OverlayTextBox
+                    <ninactrl:UnitTextBox
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding AutoRetryStartGuidingTimeoutSeconds, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
+                        Unit="s">
                         <TextBox.Text>
                             <Binding Path="AutoRetryStartGuidingTimeoutSeconds" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
@@ -176,7 +176,7 @@
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
-                    </ninactrl:OverlayTextBox>
+                    </ninactrl:UnitTextBox>
                 </UniformGrid>
                 <UniformGrid
                     Margin="5,5,0,0"
@@ -188,11 +188,11 @@
                         Text="{ns:Loc LblPHD2ROIPct}"
                         TextWrapping="Wrap"
                         ToolTip="{ns:Loc LblPHD2ROIPctTooltip}" />
-                    <ninactrl:OverlayTextBox
+                    <ninactrl:UnitTextBox
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding PHD2ROIPct, Converter={StaticResource UnitConverter}, ConverterParameter=%}">
+                        Unit="%">
                         <TextBox.Text>
                             <Binding Path="PHD2ROIPct" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
@@ -200,7 +200,7 @@
                                 </Binding.ValidationRules>
                             </Binding>
                         </TextBox.Text>
-                    </ninactrl:OverlayTextBox>
+                    </ninactrl:UnitTextBox>
                 </UniformGrid>
                 <UniformGrid
                     Margin="0,5,0,0"

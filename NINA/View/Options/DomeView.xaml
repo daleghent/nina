@@ -49,13 +49,13 @@
                                 <TextBlock Text="{ns:Loc LblDomeScopeNSTooltip}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             MinWidth="80"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding ScopePositionNorthSouth_mm, Converter={StaticResource UnitConverter}, ConverterParameter=' mm'}"
-                            Text="{Binding ScopePositionNorthSouth_mm, UpdateSourceTrigger=LostFocus}" />
+                            Text="{Binding ScopePositionNorthSouth_mm, UpdateSourceTrigger=LostFocus}"
+                            Unit="mm" />
                     </UniformGrid>
                     <UniformGrid
                         Margin="0,5,0,0"
@@ -70,13 +70,13 @@
                                 <TextBlock Text="{ns:Loc LblDomeScopeEWTooltip}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             MinWidth="80"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding ScopePositionEastWest_mm, Converter={StaticResource UnitConverter}, ConverterParameter=' mm'}"
-                            Text="{Binding ScopePositionEastWest_mm, UpdateSourceTrigger=LostFocus}" />
+                            Text="{Binding ScopePositionEastWest_mm, UpdateSourceTrigger=LostFocus}"
+                            Unit="mm" />
                     </UniformGrid>
                     <UniformGrid
                         Margin="0,5,0,0"
@@ -91,13 +91,13 @@
                                 <TextBlock Text="{ns:Loc LblDomeScopeUDTooltip}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             MinWidth="80"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding ScopePositionUpDown_mm, Converter={StaticResource UnitConverter}, ConverterParameter=' mm'}"
-                            Text="{Binding ScopePositionUpDown_mm, UpdateSourceTrigger=LostFocus}" />
+                            Text="{Binding ScopePositionUpDown_mm, UpdateSourceTrigger=LostFocus}"
+                            Unit="mm" />
                     </UniformGrid>
                     <UniformGrid
                         Margin="0,5,0,0"
@@ -112,13 +112,13 @@
                                 <TextBlock Text="{ns:Loc LblDomeRadiusTooltip}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             MinWidth="80"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding DomeRadius_mm, Converter={StaticResource UnitConverter}, ConverterParameter=' mm'}"
-                            Text="{Binding DomeRadius_mm, UpdateSourceTrigger=LostFocus}" />
+                            Text="{Binding DomeRadius_mm, UpdateSourceTrigger=LostFocus}"
+                            Unit="mm" />
                     </UniformGrid>
                     <UniformGrid
                         Margin="0,5,0,0"
@@ -133,13 +133,13 @@
                                 <TextBlock Text="{ns:Loc LblDomeGemAxisLengthTooltip}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             MinWidth="80"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding GemAxis_mm, Converter={StaticResource UnitConverter}, ConverterParameter=' mm'}"
-                            Text="{Binding GemAxis_mm, UpdateSourceTrigger=LostFocus}" />
+                            Text="{Binding GemAxis_mm, UpdateSourceTrigger=LostFocus}"
+                            Unit="mm" />
                     </UniformGrid>
                     <UniformGrid
                         Margin="0,5,0,0"
@@ -154,13 +154,13 @@
                                 <TextBlock Text="{ns:Loc LblDomeLateralAxisLengthTooltip}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             MinWidth="80"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding LateralAxis_mm, Converter={StaticResource UnitConverter}, ConverterParameter=' mm'}"
-                            Text="{Binding LateralAxis_mm, UpdateSourceTrigger=LostFocus}" />
+                            Text="{Binding LateralAxis_mm, UpdateSourceTrigger=LostFocus}"
+                            Unit="mm" />
                     </UniformGrid>
                     <UniformGrid
                         Margin="0,5,0,0"
@@ -175,12 +175,12 @@
                                 <TextBlock Text="{ns:Loc LblDomeAzimuthToleranceDegreesTooltip}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             MinWidth="80"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding AzimuthTolerance_degrees, Converter={StaticResource UnitConverter}, ConverterParameter=°}">
+                            Unit="°">
                             <TextBox.Text>
                                 <Binding Path="AzimuthTolerance_degrees" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -188,7 +188,7 @@
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
-                        </ninactrl:OverlayTextBox>
+                        </ninactrl:UnitTextBox>
                     </UniformGrid>
                     <UniformGrid Margin="0,5,0,0" Columns="2">
                         <TextBlock
@@ -200,11 +200,11 @@
                                 <TextBlock Text="{ns:Loc LblDomeSyncTimeoutTooltip}" />
                             </TextBlock.ToolTip>
                         </TextBlock>
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             Height="25"
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding DomeSyncTimeoutSeconds, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
+                            Unit="mm">
                             <TextBox.Text>
                                 <Binding Path="DomeSyncTimeoutSeconds" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -212,7 +212,7 @@
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
-                        </ninactrl:OverlayTextBox>
+                        </ninactrl:UnitTextBox>
                     </UniformGrid>
                     <UniformGrid
                         Margin="0,5,0,0"

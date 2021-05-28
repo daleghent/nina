@@ -31,14 +31,14 @@
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMechanicalPosition}" />
-                    <ninactrl:OverlayTextBox
+                    <ninactrl:UnitTextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding MechanicalPosition, Converter={StaticResource UnitConverter}, ConverterParameter=°}">
+                        Unit="°">
 
-                        <ninactrl:OverlayTextBox.Text>
+                        <ninactrl:UnitTextBox.Text>
                             <Binding Path="MechanicalPosition" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:FloatRangeRule>
@@ -48,8 +48,8 @@
                                     </rules:FloatRangeRule>
                                 </Binding.ValidationRules>
                             </Binding>
-                        </ninactrl:OverlayTextBox.Text>
-                    </ninactrl:OverlayTextBox>
+                        </ninactrl:UnitTextBox.Text>
+                    </ninactrl:UnitTextBox>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>

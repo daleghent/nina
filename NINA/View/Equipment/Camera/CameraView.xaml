@@ -691,11 +691,11 @@
                                             StepSize="1"
                                             Value="{Binding TargetTemp, Mode=TwoWay}">
                                             <ninactrl:StepperControl.InnerContent>
-                                                <ninactrl:OverlayTextBox
+                                                <ninactrl:UnitTextBox
                                                     VerticalContentAlignment="Center"
-                                                    OverlayText="{Binding TargetTemp, Converter={StaticResource UnitConverter}, ConverterParameter=' °C|2', Mode=TwoWay}"
                                                     Text="{Binding TargetTemp}"
-                                                    TextAlignment="Center" />
+                                                    TextAlignment="Center"
+                                                    Unit="°C" />
                                             </ninactrl:StepperControl.InnerContent>
                                         </ninactrl:StepperControl>
                                     </Grid>
@@ -717,11 +717,11 @@
                                             StepSize="1"
                                             Value="{Binding CoolingDuration, Mode=TwoWay}">
                                             <ninactrl:StepperControl.InnerContent>
-                                                <ninactrl:OverlayTextBox
+                                                <ninactrl:UnitTextBox
                                                     VerticalContentAlignment="Center"
-                                                    OverlayText="{Binding CoolingDuration, Converter={StaticResource UnitConverter}, ConverterParameter=' min|2', Mode=TwoWay}"
                                                     Text="{Binding CoolingDuration}"
-                                                    TextAlignment="Center" />
+                                                    TextAlignment="Center"
+                                                    Unit="min" />
                                             </ninactrl:StepperControl.InnerContent>
                                         </ninactrl:StepperControl>
                                     </Grid>
@@ -770,11 +770,11 @@
                                             StepSize="1"
                                             Value="{Binding WarmingDuration, Mode=TwoWay}">
                                             <ninactrl:StepperControl.InnerContent>
-                                                <ninactrl:OverlayTextBox
+                                                <ninactrl:UnitTextBox
                                                     VerticalContentAlignment="Center"
-                                                    OverlayText="{Binding WarmingDuration, Converter={StaticResource UnitConverter}, ConverterParameter=' min|2', Mode=TwoWay}"
                                                     Text="{Binding WarmingDuration}"
-                                                    TextAlignment="Center" />
+                                                    TextAlignment="Center"
+                                                    Unit="min" />
                                             </ninactrl:StepperControl.InnerContent>
                                         </ninactrl:StepperControl>
                                     </Grid>

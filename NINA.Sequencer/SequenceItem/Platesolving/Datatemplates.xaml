@@ -220,20 +220,20 @@
                         Margin="10,0,0,0"
                         VerticalAlignment="Center"
                         Text="{ns:Loc LblRotation}" />
-                    <ninactrl:OverlayTextBox
+                    <ninactrl:UnitTextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
                         VerticalContentAlignment="Center"
-                        OverlayText="{Binding Rotation, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
-                        TextAlignment="Right">
-                        <ninactrl:OverlayTextBox.Text>
+                        TextAlignment="Right"
+                        Unit="°">
+                        <ninactrl:UnitTextBox.Text>
                             <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:FullCircleDegreesRule />
                                 </Binding.ValidationRules>
                             </Binding>
-                        </ninactrl:OverlayTextBox.Text>
-                    </ninactrl:OverlayTextBox>
+                        </ninactrl:UnitTextBox.Text>
+                    </ninactrl:UnitTextBox>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>

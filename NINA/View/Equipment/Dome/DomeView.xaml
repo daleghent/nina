@@ -287,13 +287,13 @@
                                             </ToolTip>
                                         </Button.ToolTip>
                                     </Button>
-                                    <ninactrl:OverlayTextBox
+                                    <ninactrl:UnitTextBox
                                         MinWidth="30"
                                         Margin="5,0,0,0"
-                        VerticalContentAlignment="Center"
                                         VerticalAlignment="Center"
-                                        OverlayText="{Binding Path=ActiveProfile.DomeSettings.RotateDegrees, Source={StaticResource ProfileService}, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
-                                        TextAlignment="Right">
+                                        VerticalContentAlignment="Center"
+                                        TextAlignment="Right"
+                                        Unit="°">
                                         <TextBox.Text>
                                             <Binding
                                                 Path="ActiveProfile.DomeSettings.RotateDegrees"
@@ -304,7 +304,7 @@
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
-                                    </ninactrl:OverlayTextBox>
+                                    </ninactrl:UnitTextBox>
                                     <Button
                                         Width="40"
                                         Height="40"
@@ -327,13 +327,13 @@
                                     HorizontalAlignment="Right"
                                     IsEnabled="{Binding DomeInfo.CanSetAzimuth}"
                                     Orientation="Horizontal">
-                                    <ninactrl:OverlayTextBox
+                                    <ninactrl:UnitTextBox
                                         MinWidth="30"
                                         Margin="5,0,0,0"
-                        VerticalContentAlignment="Center"
                                         VerticalAlignment="Center"
-                                        OverlayText="{Binding TargetAzimuthDegrees, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
-                                        TextAlignment="Right">
+                                        VerticalContentAlignment="Center"
+                                        TextAlignment="Right"
+                                        Unit="°">
                                         <TextBox.Text>
                                             <Binding Path="TargetAzimuthDegrees" UpdateSourceTrigger="LostFocus">
                                                 <Binding.ValidationRules>
@@ -341,7 +341,7 @@
                                                 </Binding.ValidationRules>
                                             </Binding>
                                         </TextBox.Text>
-                                    </ninactrl:OverlayTextBox>
+                                    </ninactrl:UnitTextBox>
                                     <Button
                                         Width="40"
                                         Height="40"

@@ -296,13 +296,13 @@
                             Width="150"
                             VerticalAlignment="Center"
                             Text="{ns:Loc LblDevicePollingInterval}" />
-                        <ninactrl:OverlayTextBox
+                        <ninactrl:UnitTextBox
                             MinWidth="120"
                             Margin="10,0,0,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center"
-                            OverlayText="{Binding ActiveProfile.ApplicationSettings.DevicePollingInterval, Converter={StaticResource UnitConverter}, ConverterParameter=' s'}">
+                            Unit="s">
                             <TextBox.Text>
                                 <Binding Path="ActiveProfile.ApplicationSettings.DevicePollingInterval" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>
@@ -310,7 +310,7 @@
                                     </Binding.ValidationRules>
                                 </Binding>
                             </TextBox.Text>
-                        </ninactrl:OverlayTextBox>
+                        </ninactrl:UnitTextBox>
                     </StackPanel>
 
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">

@@ -186,13 +186,13 @@
                                 Grid.ColumnSpan="3"
                                 HorizontalAlignment="Left"
                                 Orientation="Horizontal">
-                                <ninactrl:OverlayTextBox
+                                <ninactrl:UnitTextBox
                                     Height="25"
                                     MinWidth="50"
                                     Margin="5,0,0,0"
-                        VerticalContentAlignment="Center"
-                                    OverlayText="{Binding TargetPosition, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
-                                    Text="{Binding TargetPosition}" />
+                                    VerticalContentAlignment="Center"
+                                    Text="{Binding TargetPosition}"
+                                    Unit="°" />
                                 <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
                                     <ninactrl:CancellableButton
                                         Height="25"
@@ -228,13 +228,13 @@
                                 Grid.ColumnSpan="3"
                                 HorizontalAlignment="Left"
                                 Orientation="Horizontal">
-                                <ninactrl:OverlayTextBox
+                                <ninactrl:UnitTextBox
                                     Height="25"
                                     MinWidth="50"
                                     Margin="5,0,0,0"
-                        VerticalContentAlignment="Center"
-                                    OverlayText="{Binding TargetPosition, Converter={StaticResource UnitConverter}, ConverterParameter=°}"
-                                    Text="{Binding TargetPosition}" />
+                                    VerticalContentAlignment="Center"
+                                    Text="{Binding TargetPosition}"
+                                    Unit="°" />
                                 <Grid IsEnabled="{Binding RotatorInfo.Connected, Converter={StaticResource InverseNullToBooleanConverter}}">
                                     <ninactrl:CancellableButton
                                         Height="25"
