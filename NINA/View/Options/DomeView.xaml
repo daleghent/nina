@@ -204,7 +204,7 @@
                             Height="25"
                             HorizontalAlignment="Stretch"
                             VerticalContentAlignment="Center"
-                            Unit="mm">
+                            Unit="s">
                             <TextBox.Text>
                                 <Binding Path="DomeSyncTimeoutSeconds" UpdateSourceTrigger="LostFocus">
                                     <Binding.ValidationRules>

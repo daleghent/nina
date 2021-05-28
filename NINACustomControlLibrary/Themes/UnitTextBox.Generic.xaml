@@ -44,8 +44,11 @@
                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
                             HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AcceptsTab="False"
                             Background="{TemplateBinding Background}"
                             IsReadOnly="True"
+                            IsTabStop="False"
+                            KeyboardNavigation.TabNavigation="None"
                             Text="{Binding Unit, RelativeSource={RelativeSource AncestorType={x:Type local:UnitTextBox}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextAlignment="Left">
                             <TextBox.Foreground>
@@ -55,7 +58,6 @@
                                 <SolidColorBrush Color="{Binding BorderBrush.Color, ElementName=PART_TextBox}" />
                             </TextBox.BorderBrush>
                         </TextBox>
-                        <Grid />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
