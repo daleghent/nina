@@ -464,6 +464,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 }
 
                 await WaitForStarSelected(progress, ct);
+                await Task.Delay(1000, ct);
                 await WaitForCalibrationFinished(progress, ct);
 
                 using (var cancelOnTimeoutOrParent = CancellationTokenSource.CreateLinkedTokenSource(ct)) {
