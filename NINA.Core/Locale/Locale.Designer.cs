@@ -8847,7 +8847,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Id.
+        ///   Looks up a localized string similar to ID.
         /// </summary>
         internal static string LblId {
             get {
@@ -10386,7 +10386,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1 Stern.
+        ///   Looks up a localized string similar to 1 Star.
         /// </summary>
         internal static string LblObjectType_1STAR {
             get {
@@ -10395,7 +10395,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2 Sterne.
+        ///   Looks up a localized string similar to 2 Stars.
         /// </summary>
         internal static string LblObjectType_2STAR {
             get {
@@ -10404,7 +10404,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3 Sterne.
+        ///   Looks up a localized string similar to 3 Stars.
         /// </summary>
         internal static string LblObjectType_3STAR {
             get {
@@ -10413,7 +10413,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 4 Sterne.
+        ///   Looks up a localized string similar to 4 Stars.
         /// </summary>
         internal static string LblObjectType_4STAR {
             get {
@@ -10422,7 +10422,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 8 Sterne.
+        ///   Looks up a localized string similar to 8 Stars.
         /// </summary>
         internal static string LblObjectType_8STAR {
             get {
@@ -11061,7 +11061,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PHD2 profile id {0} not found. Using {1}.
+        ///   Looks up a localized string similar to PHD2 profile ID {0} not found. Using {1}.
         /// </summary>
         internal static string LblPhd2ProfileNotFound {
             get {
@@ -11124,7 +11124,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to PHD2 Server Url.
+        ///   Looks up a localized string similar to PHD2 Server URL.
         /// </summary>
         internal static string LblPHD2ServerUrl {
             get {
@@ -12111,7 +12111,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Should the Profile with name: {0} and id: {1} be removed?.
+        ///   Looks up a localized string similar to Should the Profile with name: {0} and ID: {1} be removed?.
         /// </summary>
         internal static string LblRemoveProfileText {
             get {
@@ -13598,7 +13598,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to StDev.
+        ///   Looks up a localized string similar to SD.
         /// </summary>
         internal static string LblStDev {
             get {
@@ -14430,7 +14430,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Timeout to set switch value {0} for switch [Id: {1}, Name: {2}]. Current value is {3}..
+        ///   Looks up a localized string similar to Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}..
         /// </summary>
         internal static string LblTimeoutToSetSwitchValue {
             get {
@@ -14548,7 +14548,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Toggles automatic star detection and analysis (Half-Flus-Radius) on/off.
+        ///   Looks up a localized string similar to Toggles automatic star detection and analysis (Half Flux Radius) on/off.
         /// </summary>
         internal static string LblTooltipDetectStars {
             get {
@@ -15246,7 +15246,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usb Port 1.
+        ///   Looks up a localized string similar to USB Port 1.
         /// </summary>
         internal static string LblUPBV2Usb1 {
             get {
@@ -15255,7 +15255,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usb Port 2.
+        ///   Looks up a localized string similar to USB Port 2.
         /// </summary>
         internal static string LblUPBV2Usb2 {
             get {
@@ -15264,7 +15264,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usb Port 3.
+        ///   Looks up a localized string similar to USB Port 3.
         /// </summary>
         internal static string LblUPBV2Usb3 {
             get {
@@ -15273,7 +15273,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usb Port 4.
+        ///   Looks up a localized string similar to USB Port 4.
         /// </summary>
         internal static string LblUPBV2Usb4 {
             get {
@@ -15282,7 +15282,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usb Port 5.
+        ///   Looks up a localized string similar to USB Port 5.
         /// </summary>
         internal static string LblUPBV2Usb5 {
             get {
@@ -15291,7 +15291,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usb Port 6.
+        ///   Looks up a localized string similar to USB Port 6.
         /// </summary>
         internal static string LblUPBV2Usb6 {
             get {
@@ -15300,7 +15300,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Usb.
+        ///   Looks up a localized string similar to USB.
         /// </summary>
         internal static string LblUPBV2UsbPorts {
             get {
@@ -15345,7 +15345,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Url.
+        ///   Looks up a localized string similar to URL.
         /// </summary>
         internal static string LblURL {
             get {
@@ -15725,7 +15725,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weather Underground Station Id.
+        ///   Looks up a localized string similar to Weather Underground Station ID.
         /// </summary>
         internal static string LblWeatherUndergroundStationID {
             get {
