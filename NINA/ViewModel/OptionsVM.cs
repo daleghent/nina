@@ -95,7 +95,6 @@ namespace NINA.ViewModel {
             DownloadIndexesCommand = new RelayCommand(DownloadIndexes);
             OpenSkyAtlasImageRepositoryDiagCommand = new RelayCommand(OpenSkyAtlasImageRepositoryDiag);
             OpenSkySurveyCacheDirectoryDiagCommand = new RelayCommand(OpenSkySurveyCacheDirectoryDiag);
-            ImportFiltersCommand = new RelayCommand(ImportFilters);
             AddFilterCommand = new RelayCommand(AddFilter);
             SetAutoFocusFilterCommand = new RelayCommand(SetAutoFocusFilter);
             RemoveFilterCommand = new RelayCommand(RemoveFilter);
@@ -257,12 +256,16 @@ namespace NINA.ViewModel {
         }
 
         private void RemoveFilter(object obj) {
-            if (SelectedFilter == null && ActiveProfile.FilterWheelSettings.FilterWheelFilters.Count > 0) {
-                SelectedFilter = ActiveProfile.FilterWheelSettings.FilterWheelFilters.Last();
+            var filters = ActiveProfile.FilterWheelSettings.FilterWheelFilters;
+            if (SelectedFilter == null && filters.Count > 0) {
+                SelectedFilter = filters.Last();
             }
-            ActiveProfile.FilterWheelSettings.FilterWheelFilters.Remove(SelectedFilter);
-            if (ActiveProfile.FilterWheelSettings.FilterWheelFilters.Count > 0) {
-                SelectedFilter = ActiveProfile.FilterWheelSettings.FilterWheelFilters.Last();
+            filters.Remove(SelectedFilter);
+            if (filters.Count > 0) {
+                SelectedFilter = filters.Last();
+            }
+            for (short i = 0; i < filters.Count; i++) {
+                filters[i].Position = i;
             }
         }
 
@@ -281,17 +284,6 @@ namespace NINA.ViewModel {
                     } else {
                         SelectedFilter.AutoFocusFilter = !SelectedFilter.AutoFocusFilter;
                     }
-                }
-            }
-        }
-
-        private void ImportFilters(object obj) {
-            var filters = filterWheelMediator.GetAllFilters();
-            if (filters?.Count > 0) {
-                ActiveProfile.FilterWheelSettings.FilterWheelFilters.Clear();
-                var l = filters.OrderBy(x => x.Position);
-                foreach (var filter in l) {
-                    ActiveProfile.FilterWheelSettings.FilterWheelFilters.Add(filter);
                 }
             }
         }
@@ -477,8 +469,6 @@ namespace NINA.ViewModel {
 
         public ICommand OpenSkyAtlasImageRepositoryDiagCommand { get; private set; }
         public ICommand OpenSkySurveyCacheDirectoryDiagCommand { get; private set; }
-
-        public ICommand ImportFiltersCommand { get; private set; }
 
         public ICommand AddFilterCommand { get; private set; }
         public ICommand SetAutoFocusFilterCommand { get; private set; }

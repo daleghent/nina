@@ -46,6 +46,7 @@
     <converters:BooleanOrConverter x:Key="BooleanOrConverter" />
     <converters:PercentageConverter x:Key="PercentageConverter" />
     <converters:UnitConverter x:Key="UnitConverter" />
+    <converters:AddToNumberConverter x:Key="AddToNumberConverter" />
     <converters:DoubleToHalfValueConverter x:Key="DoubleToHalfConverter" />
     <converters:WidthAndValueToWidthConverter x:Key="WidthAndValueToWidthConverter" />
     <converters:OneValueGreaterThanAnotherToVisiblityConverter x:Key="GreaterThanToVisiblityConverter" />

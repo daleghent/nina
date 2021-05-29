@@ -70,7 +70,7 @@ namespace NINA.Equipment.Utility {
             using (var ascomDevices = new ASCOM.Utilities.Profile()) {
                 foreach (ASCOM.Utilities.KeyValuePair device in ascomDevices.RegisteredDevices("FilterWheel")) {
                     try {
-                        AscomFilterWheel fw = new AscomFilterWheel(device.Key, device.Value);
+                        AscomFilterWheel fw = new AscomFilterWheel(device.Key, device.Value, profileService);
                         l.Add(fw);
                     } catch (Exception) {
                         //only add filter wheels which are supported. e.g. x86 drivers will not work in x64

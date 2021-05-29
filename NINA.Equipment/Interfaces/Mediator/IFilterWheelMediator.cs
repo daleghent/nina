@@ -26,7 +26,5 @@ namespace NINA.Equipment.Interfaces.Mediator {
     public interface IFilterWheelMediator : IDeviceMediator<IFilterWheelVM, IFilterWheelConsumer, FilterWheelInfo> {
 
         Task<FilterInfo> ChangeFilter(FilterInfo inputFilter, CancellationToken token = new CancellationToken(), IProgress<ApplicationStatus> progress = null);
-
-        ICollection<FilterInfo> GetAllFilters();
     }
 }

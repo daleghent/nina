@@ -37,7 +37,6 @@ namespace NINA.WPF.Base.Interfaces.ViewModel {
         ICommand DownloadIndexesCommand { get; }
         FileTypeEnum[] FileTypes { get; }
         ImagePatterns ImagePatterns { get; set; }
-        ICommand ImportFiltersCommand { get; }
         ObservableCollection<string> IndexFiles { get; set; }
         CultureInfo Language { get; set; }
         double Latitude { get; set; }

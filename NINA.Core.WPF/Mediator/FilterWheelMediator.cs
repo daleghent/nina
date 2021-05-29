@@ -29,9 +29,5 @@ namespace NINA.WPF.Base.Mediator {
         public Task<FilterInfo> ChangeFilter(FilterInfo inputFilter, CancellationToken token = new CancellationToken(), IProgress<ApplicationStatus> progress = null) {
             return handler.ChangeFilter(inputFilter, token, progress);
         }
-
-        public ICollection<FilterInfo> GetAllFilters() {
-            return handler.GetAllFilters();
-        }
     }
 }
