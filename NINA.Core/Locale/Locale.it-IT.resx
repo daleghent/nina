@@ -1778,7 +1778,7 @@ HFR Calcolato: {2}
     <value>Iperbolico</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Identificativo</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Illuminazione</value>
@@ -2154,19 +2154,19 @@ HFR Calcolato: {2}
     <value>Tipo oggetto</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Stella</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Stelle</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Stelle</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Stelle</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Stelle</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterismo</value>
@@ -2359,7 +2359,7 @@ HFR Calcolato: {2}
     <value>Porta Server PHD2</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>Url Server PHD2</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Settaggi PHD2</value>
@@ -2395,7 +2395,7 @@ HFR Calcolato: {2}
     <value>Impossibile modificare il profilo PHD2</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>ID profilo PHD2 {0} non trovato. Utilizzo {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
@@ -2671,7 +2671,7 @@ HFR Calcolato: {2}
     <value>Rimuovere Profilo?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Si vuole rimuovere il profilo con nome: {0} e id: {1} ?</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Ripeti fino a</value>
@@ -3024,7 +3024,7 @@ Prima di proseguire, si prega di assicurarsi che il sistema sia a fuoco o vicino
     <value>Statistiche</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>Dev. Std</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3223,7 +3223,7 @@ Si vogliono sincronizzare i valori?</value>
     <value>Scadenza</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Timeout per impostare il switch valore {0} per il switch [Id: {1}, Nome: {2}]. Il valore corrente è {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Fuso Orario</value>
@@ -3263,7 +3263,7 @@ Trascina il rettangolo su una stella con le linee di bahtinov. NINA cercherà le
     <value>Sposta l'obiettivo a destra</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Abilita (on/off) Rilevamento ed analisi automatici delle stelle (Metà del raggio del focus)</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Vista Live</value>
@@ -3452,25 +3452,25 @@ aree ad alto inquinamento luminoso. Il tempo di processo sarà  tuttavia aumenta
     <value>Tempo di funzionamento</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>Porta Usb 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>Porta Usb 2</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>Porta usb 3</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>Porta Usb 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>Porta Usb 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>Porta Usb 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
-    <value>Usb</value>
+    <value>USB</value>
   </data>
   <data name="LblUPBV2VariablePower" xml:space="preserve">
     <value>Porta di potenza variabile</value>
@@ -3485,7 +3485,7 @@ aree ad alto inquinamento luminoso. Il tempo di processo sarà  tuttavia aumenta
     <value>Aggiornamento in corso</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Url</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>Limite USB</value>
@@ -5095,7 +5095,7 @@ There the sequence can be planned from scratch using fine granular instructions,
     <value>Weather Underground API Key</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station Id</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Demote selected row</value>
@@ -5477,5 +5477,20 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

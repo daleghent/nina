@@ -1770,7 +1770,7 @@ Obliczone HFR: {2}</value>
     <value>Hiperboliczny</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Id</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Oświetlenie</value>
@@ -2146,19 +2146,19 @@ Obliczone HFR: {2}</value>
     <value>Typ obiektu</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Stern</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Sterne</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Sterne</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Sterne</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Sterne</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asteryzm</value>
@@ -2351,7 +2351,7 @@ Obliczone HFR: {2}</value>
     <value>Port serwera PHD2</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>Adres URL serwera PHD2</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Ustawienia PHD2</value>
@@ -2387,7 +2387,7 @@ Obliczone HFR: {2}</value>
     <value>Failed to change PHD2 profile</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile id {0} not found. Using {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
@@ -2663,7 +2663,7 @@ Obliczone HFR: {2}</value>
     <value>Usunąć profil?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Czy usunąć profil o nazwie: {0} i id: {1}?</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Powtarzaj aż do</value>
@@ -3016,7 +3016,7 @@ Zanim przejdziesz dalej, upewnij się, że Twój fokuser znajduje się w najleps
     <value>Statystyki</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>Odch.</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3215,7 +3215,7 @@ Czy wartości powinny być zsynchronizowane?</value>
     <value>Limit czasu</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Timeout to set switch value {0} for switch [Id: {1}, Name: {2}]. Current value is {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Strefa czasowa</value>
@@ -3255,7 +3255,7 @@ Drag the rectangle over a star with the bahtinov spikes. NINA will try to detect
     <value>Przesuń cel w prawo</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Toggles automatic star detection and analysis (Half-Flus-Radius) on/off</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Live View</value>
@@ -3446,25 +3446,25 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Up-Time</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>Port Usb 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>Port Usb 2</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>Port Usb 3</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>Port Usb 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>Usb Port 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>Usb Port 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
-    <value>Usb</value>
+    <value>USB</value>
   </data>
   <data name="LblUPBV2VariablePower" xml:space="preserve">
     <value>Variable Power Port</value>
@@ -3479,7 +3479,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Aktualizacja</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Adres URL</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>Limit USB</value>
@@ -5089,7 +5089,7 @@ There the sequence can be planned from scratch using fine granular instructions,
     <value>Weather Underground API Key</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station Id</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Demote selected row</value>
@@ -5471,5 +5471,20 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

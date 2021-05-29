@@ -1770,7 +1770,7 @@ Hesaplanan HFR: {2}
     <value>Hiperbolik</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Kimlik</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Aydınlatma</value>
@@ -2146,19 +2146,19 @@ Hesaplanan HFR: {2}
     <value>Obje tipi</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Yıldız</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Yıldız</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Yıldız</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Yıldız</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Yıldız</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterizm</value>
@@ -2351,7 +2351,7 @@ Hesaplanan HFR: {2}
     <value>PHD2 sunucu girişi</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 sunucu Url</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>PHD2 ayarları</value>
@@ -2387,7 +2387,7 @@ Hesaplanan HFR: {2}
     <value>Failed to change PHD2 profile</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile id {0} not found. Using {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Piksel</value>
@@ -2663,7 +2663,7 @@ Hesaplanan HFR: {2}
     <value>Profil kaldırılsın mı?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>{0} adında ve {1} tanımındaki profil kaldırılsın mı?</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Kadar tekrarla</value>
@@ -3016,7 +3016,7 @@ Devam etmeden önce, lütfen sisteminizin şu anda iyi veya iyiye yakın odaklan
     <value>İstatistikler</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>Standart sapma</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3213,7 +3213,7 @@ Devam etmeden önce, lütfen sisteminizin şu anda iyi veya iyiye yakın odaklan
     <value>Zaman aşımı</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>[Id: {1}, Ad: {2}] anahtarı için {0} anahtar değerini ayarlamak zaman aşımına uğradı. Mevcut değer {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Saat dilimi</value>
@@ -3253,7 +3253,7 @@ Dikdörtgeni bahtinov yansımalı bir yıldızın üzerine sürükleyin. NINA ya
     <value>Hedefi sağa taşı</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Otomatik yıldız tespitini ve (Half-Flus-Radius) analizini açıp kapatır</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Canlı görüntü</value>
@@ -3441,22 +3441,22 @@ Dikdörtgeni kadrajın örneklemek istediğiniz kısmına sürükleyin ve örnek
     <value>Çalışma süresi</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>USB giriş 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>USB giriş 2</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>USB giriş 3</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>USB giriş 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>USB giriş 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>USB Giriş 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
     <value>USB</value>
@@ -3474,7 +3474,7 @@ Dikdörtgeni kadrajın örneklemek istediğiniz kısmına sürükleyin ve örnek
     <value>Güncelleniyor</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Url</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>USB limiti</value>
@@ -5084,7 +5084,7 @@ Bu modda sekans, ince ayrıntılı talimatlar, tetikleyiciler ve koşullar kulla
     <value>Weather Underground API anahtarı</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground İstasyon adı</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Seçili satırı aşağı indir</value>
@@ -5466,5 +5466,20 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

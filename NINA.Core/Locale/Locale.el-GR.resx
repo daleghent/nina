@@ -1768,7 +1768,7 @@
     <value>Υπερβολικό</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Ταυτότητα</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Φωτεινότητα</value>
@@ -2144,19 +2144,19 @@
     <value>Τύπος Αντικειμένου</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Αστέρι</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Αστέρια</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Αστέρια</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Αστέρια</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Αστέρια</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Αστερισμός</value>
@@ -2349,7 +2349,7 @@
     <value>Θύρα Server PHD2</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>Url Διακομιστή PHD2</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Ρυθμίσεις PHD2</value>
@@ -2385,7 +2385,7 @@
     <value>Failed to change PHD2 profile</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile id {0} not found. Using {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
@@ -2661,7 +2661,7 @@
     <value>Να αφαιρεθεί το Προφίλ;</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Θέλετε το Προφίλ με το όνομα: {0} και ταυτότητα: {1} να αφαιρεθεί;</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Επανάληψη μέχρι</value>
@@ -3014,7 +3014,7 @@
     <value>Στατιστικά</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>Τυπική Aπόκλιση</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3213,7 +3213,7 @@
     <value>Χρονικό Όριο</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Χρονική Καθυστέρηση για τον ορισμό τιμής της θύρας{0} του τροφοδοτικού [Ταυτότητα: {1}, Όνομα: {2}]. Η τρέχουσα τιμή είναι {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Ζώνη Ώρας</value>
@@ -3253,7 +3253,7 @@
     <value>Μετακίνηση στόχου δεξιά</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Ενεργοποιεί ή όχι την αυτόματη ανίχνευση και ανάλυση αστεριών (Half-Flux-Radius)</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Ζωντανή Προβολή</value>
@@ -3444,25 +3444,25 @@
     <value>Χρόνος σε Λειτουργία</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>Θύρα Usb 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>Θύρα Usb 2</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>Θύρα Usb 3</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>Θύρα Usb 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>Θύρα Usb 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>Θύρα Usb 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
-    <value>Usb</value>
+    <value>USB</value>
   </data>
   <data name="LblUPBV2VariablePower" xml:space="preserve">
     <value>Θύρα Μεταβλητής Παροχής</value>
@@ -3477,7 +3477,7 @@
     <value>Γίνεται Ενημέρωση</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Url</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>Όριο USB</value>
@@ -5087,7 +5087,7 @@ There the sequence can be planned from scratch using fine granular instructions,
     <value>Weather Underground API Key</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station Id</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Demote selected row</value>
@@ -5469,5 +5469,20 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

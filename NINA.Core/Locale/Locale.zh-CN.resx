@@ -2154,19 +2154,19 @@
     <value>目标类型</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>单星</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>双星系统</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>三星系统</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>四星系统</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>八星系统</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>亮星群</value>
@@ -2359,7 +2359,7 @@
     <value>PHD2 服务器端口</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 服务器地址</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>PHD2 设置</value>
@@ -2395,7 +2395,7 @@
     <value>Failed to change PHD2 profile</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile id {0} not found. Using {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>像素</value>
@@ -2671,7 +2671,7 @@
     <value>删除配置文件</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>需要删除配置文件名称: {0} 和 ID: {1} ？</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>重复直到</value>
@@ -3024,7 +3024,7 @@
     <value>统计</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>标准差</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>虚拟天文馆</value>
@@ -3223,7 +3223,7 @@
     <value>超时</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>开关设置超时 值 {0} 开关 [Id: {1}，名称: {2}]，当前值 {3}</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>时区</value>
@@ -3263,7 +3263,7 @@
     <value>延后目标</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>自动星点分析开关（HFR）</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>实时预览</value>
@@ -3454,25 +3454,25 @@
     <value>上传时间</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>Usb 端口 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>Usb 端口 1</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>Usb 端口 2</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>Usb 端口 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>Usb 端口 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>Usb 端口 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
-    <value>Usb</value>
+    <value>USB</value>
   </data>
   <data name="LblUPBV2VariablePower" xml:space="preserve">
     <value>可变电源端口</value>
@@ -3487,7 +3487,7 @@
     <value>更新中</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>地址</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>USB 限制</value>
@@ -5097,7 +5097,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Weather Underground API 密钥</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground 站点ID</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>下移选中行</value>
@@ -5479,5 +5479,20 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

@@ -1769,7 +1769,7 @@ Vypočtené HFR: {2}
     <value>Hyperbola</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Id</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Osvětlení</value>
@@ -2145,19 +2145,19 @@ Vypočtené HFR: {2}
     <value>Typ Objektu</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Hvězda</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>Dvojhvězda</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>Trojhvězda</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>Čtyřhvězda</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Hvězd</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterismus</value>
@@ -2350,7 +2350,7 @@ Vypočtené HFR: {2}
     <value>Port Serveru PHD2</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>Adresa URL Serveru PHD2</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Nastavení PHD2</value>
@@ -2386,7 +2386,7 @@ Vypočtené HFR: {2}
     <value>Změna PHD2 profilu se nezdařila</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>Profilové ID {0} PHD2 nebylo nalezeno. Použit {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixely</value>
@@ -2662,7 +2662,7 @@ Vypočtené HFR: {2}
     <value>Odstranit Profil?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Smazat tento Profil s názvem {0} a id: {1}?</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Opakovat do</value>
@@ -2806,7 +2806,7 @@ Vypočtené HFR: {2}
     <value>Příkaz ukončení sekvence nenalezen '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Delay start</value>
+    <value>Odložený start</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Sekvence začíná po {0} sekundách</value>
@@ -3015,7 +3015,7 @@ Než bude pokračovat, ujistěte se, že je co nejpřesněji zaostřeno</value>
     <value>Statistika</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>StDev</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3214,7 +3214,7 @@ Synchronizovat hodnoty?</value>
     <value>Časový limit</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Bylo dosaženo časového limitu pro nastavenou hodnotu {0} přepínače [Id: {1}, Jméno: {2}]. Aktuální hodnota je {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Časová Zóna</value>
@@ -3254,7 +3254,7 @@ Přetáhněte obdélník na hvězdu s bahtinovskými čarami. NINA provede vyhod
     <value>Přesune cíl doprava</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Přepíná automatickou detekci a analýzu hvězd (HFR)</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Živý Náhled</value>
@@ -3445,25 +3445,25 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Provozní doba</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>Usb Port 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>Usb Port 2</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>Usb Port 3</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>Usb Port 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>Usb Port 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>Usb Port 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
-    <value>Usb</value>
+    <value>USB</value>
   </data>
   <data name="LblUPBV2VariablePower" xml:space="preserve">
     <value>Variabilní Napájecí Port</value>
@@ -3478,7 +3478,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Aktualizace</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Url</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>USB Limit</value>
@@ -3916,7 +3916,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Režim Průvodce</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance</value>
+    <value>Tolerance Azimutu</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>Kopule se pohybuje, pokud je vzdálenost azimutu cíle větší než tato hodnota</value>
@@ -3928,31 +3928,31 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Najít Domov</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length</value>
+    <value>Délka Osy GEM</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Pokud je použit Alt/Az musí být 0. U držáku EQ otočte osu RA na +/- 90 stupňů a změřte boční vzdálenost (v mm) od osy ke středu otvoru dalekohledu</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length</value>
+    <value>Délka Boční Osy</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>V konfiguraci vedle sebe je to vzdálenost (příčně mm) od rybiny ke středu OTA. Pozitivní je vpravo podél osy OTA.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius</value>
+    <value>Poloměr Kopule</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Změřte od středu k okraji kopule, podél základny</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W</value>
+    <value>Poloha Dalekohledu V/Z</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Změřte východní nebo západní odsazení (v mm) od středu montáže ke středu kopule. Pozitivní je na východ.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S</value>
+    <value>Poloha Dalekohledu S/J</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Sledování kupole může být nepřesné. Zkontrolujte, zda je vaše epocha správně nakonfigurována, a proveďte platesolving a synchronizaci</value>
@@ -3970,7 +3970,7 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Pozastavit Sekvenci</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down</value>
+    <value>Pozice Dalekohledu +Nahoru/-Dolů</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Změřte výškový rozdíl (v mm) od středu osy sestavy vzhledem k základně kopule. U sestavy alt-azimut se měření provádí ze středu osy nadmořské výšky, u sestavy rovníku se provádí od místa, kde se protínají osy RA a DEC. Kladné číslo znamená, že střed osy je větší než základna kopule a záporné číslo znamená, že je menší.</value>
@@ -5087,7 +5087,7 @@ Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů 
     <value>API Weather Underground</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Id Stanice Weather Underground</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Přesunout vybraný řádek dolů</value>
@@ -5469,5 +5469,20 @@ Význam pouze při použití ovladače kamery ASCOM!</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filtry</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

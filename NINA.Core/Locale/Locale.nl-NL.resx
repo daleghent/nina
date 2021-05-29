@@ -1768,7 +1768,7 @@ berekende HFR: {2}
     <value>Hyperbolisch</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Id</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Verlichting</value>
@@ -2144,19 +2144,19 @@ berekende HFR: {2}
     <value>Objecttype</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 ster</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 sterren</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 sterren</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 sterren</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 sterren</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterisme</value>
@@ -2349,7 +2349,7 @@ berekende HFR: {2}
     <value>PHD2 server poort</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 Server Url</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>PHD2 instellingen</value>
@@ -2385,7 +2385,7 @@ Verbonden cliënten: {0}
     <value>Failed to change PHD2 profile</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile id {0} not found. Using {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
@@ -2661,7 +2661,7 @@ Verbonden cliënten: {0}
     <value>Profiel verwijderen?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Moet het profiel met naam: {0} en id: {1} worden verwijderd?</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Herhaal tot</value>
@@ -3014,7 +3014,7 @@ Voordat u doorgaat, bevestig dat uw systeem op dit moment goed of dichtbij de go
     <value>Statistieken</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>StDev</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3213,7 +3213,7 @@ Moeten de waarden worden gesynchroniseerd?</value>
     <value>Time-out</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Time-out om schakelwaarde {0} voor schakelaar in te stellen [Id: {1}, Naam: {2}]. Huidige waarde is {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Tijdzone</value>
@@ -3253,7 +3253,7 @@ Sleep de rechthoek over een ster met de Bahtinov spikes. NINA zal proberen de sp
     <value>Beweeg object naar rechts</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Schakelt automatische sterdetectie en analyse (half-flus-radius) aan/uit</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Live weergave</value>
@@ -3442,22 +3442,22 @@ Sleep de rechthoek over het deel van de opname dat u fotograferen wilt en active
     <value>Up-Time</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>USB poort 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>USB poort 2</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>Usb poort 3</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>Usb poort 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>Usb poort 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>Usb poort 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
     <value>USB</value>
@@ -3475,7 +3475,7 @@ Sleep de rechthoek over het deel van de opname dat u fotograferen wilt en active
     <value>Bijwerken</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Url</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>USB-limiet</value>
@@ -5085,7 +5085,7 @@ There the sequence can be planned from scratch using fine granular instructions,
     <value>Weather Underground API Key</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station Id</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Demote selected row</value>
@@ -5467,5 +5467,20 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

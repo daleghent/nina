@@ -1771,7 +1771,7 @@ Dec: {1}</value>
     <value>Гиперболический</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Id</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Освещенность</value>
@@ -2147,19 +2147,19 @@ Dec: {1}</value>
     <value>Тип объекта</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Звезда</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Звезды</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Звезды</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Звезды</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Звёзд</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Астеризм</value>
@@ -2352,7 +2352,7 @@ Dec: {1}</value>
     <value>Порт PHD2 сервера</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>URL-адрес сервера PHD2</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Настройки PHD2</value>
@@ -2388,7 +2388,7 @@ Dec: {1}</value>
     <value>Не удалось изменить PHD2 профиль</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 профиль id {0} не найден. Используется {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Пиксели</value>
@@ -2664,7 +2664,7 @@ Dec: {1}</value>
     <value>Удалить профиль?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Должен ли профиль с именем: {0} и id: {1} быть удален?</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Повторять до</value>
@@ -3017,7 +3017,7 @@ Dec: {1}</value>
     <value>Статистика</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>Стандартное отклонение</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3216,7 +3216,7 @@ Dec: {1}</value>
     <value>Таймаут</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Таймаут для установки значения переключателя {0} для переключателя [Id: {1}, Name: {2}]. Текущее значение {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Часовой пояс</value>
@@ -3256,7 +3256,7 @@ Dec: {1}</value>
     <value>Переместить цель вправо</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Включение/выключение автоматического обнаружения и анализа звёзд (Half-Flus-Radius)</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Живая трансляция</value>
@@ -3447,25 +3447,25 @@ Dec: {1}</value>
     <value>Время с момента включения</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>Порт Usb 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>Порт Usb 2</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>Порт Usb 3</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>Порт Usb 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>Порт Usb 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>Порт Usb 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
-    <value>Usb</value>
+    <value>USB</value>
   </data>
   <data name="LblUPBV2VariablePower" xml:space="preserve">
     <value>Порт переменной мощности</value>
@@ -3480,7 +3480,7 @@ Dec: {1}</value>
     <value>Обновление</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Адрес</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>USB лимит</value>
@@ -5090,7 +5090,7 @@ Dec: {1}</value>
     <value>Ключ API для Weather Underground</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Id станции Weather Underground</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Понизить выбранную строку</value>
@@ -5472,5 +5472,20 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

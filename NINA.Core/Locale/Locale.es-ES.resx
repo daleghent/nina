@@ -1770,7 +1770,7 @@ Calculado HFR: {2}
     <value>Hiberbólica</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Id</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Iluminación</value>
@@ -2146,19 +2146,19 @@ Calculado HFR: {2}
     <value>Tipo de Objeto</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Estrella</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Estrellas</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Estrellas</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Estrellas</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Estrellas</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterismo</value>
@@ -2351,7 +2351,7 @@ Calculado HFR: {2}
     <value>Puerto del Servidor de PHD2</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>Url del Servidor de PHD2</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Ajustes PHD2</value>
@@ -2387,7 +2387,7 @@ Calculado HFR: {2}
     <value>Error al cambiar el perfil de PHD2</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 id de perfil {0} no encontrado. Usando {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Píxeles</value>
@@ -2663,7 +2663,7 @@ Calculado HFR: {2}
     <value>¿Eliminar el perfil?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>¿Quieres eliminar el perfil con nombre: {0} e Id: {1}?</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Repetir hasta</value>
@@ -2807,7 +2807,7 @@ Calculado HFR: {2}
     <value>Comando final de secuencia no encontrado '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Delay start</value>
+    <value>Retraso en el inicio</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Secuencia comenzando en {0} segundos</value>
@@ -3016,7 +3016,7 @@ Antes de continuar, por favor, confirme que su sistema está actualmente en o ce
     <value>Estadísticas</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>Desv.Típ.</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3215,7 +3215,7 @@ Antes de continuar, por favor, confirme que su sistema está actualmente en o ce
     <value>Tiempo de Espera</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Tiempo de espera para establecer el valor de switch {0} para el switch [Id: {1}, nombre {2}]. el valor actual es {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Zona Horaria</value>
@@ -3255,7 +3255,7 @@ Mueve el rectángulo sobre una estrella con las espicas de difracción. NINA tra
     <value>Mover Objetivo a la derecha</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Activa/Desactiva la detección automática de estrellas y el análisis HFR (Half-Flus-Radius)</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Vista en Vivo</value>
@@ -3444,25 +3444,25 @@ Cuando está habilitado, se estirarán los canales de color de forma independien
     <value>Tiempo activo</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>Puerto Usb 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>Puerto Usb 2</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>Puerto Usb 3</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>Puerto Usb 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>Puerto Usb 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>Puerto Usb 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
-    <value>Usb</value>
+    <value>USB</value>
   </data>
   <data name="LblUPBV2VariablePower" xml:space="preserve">
     <value>Puerto de alimentación variable</value>
@@ -3477,7 +3477,7 @@ Cuando está habilitado, se estirarán los canales de color de forma independien
     <value>Actualizando</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Url</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>Límite USB</value>
@@ -3915,7 +3915,7 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Modo asistente</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance</value>
+    <value>Tolerancia de Azimut</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>La cúpula gira, si el acimut del objetivo supera esta cantidad</value>
@@ -3927,31 +3927,31 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Encontrar posición inicial (Home)</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length</value>
+    <value>Longitud del eje GEM</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Si la montura es Alt/Az, debe ser 0. Para una montura EQ, desplaza el eje RA a +/- 90 grados, y mide la distancia lateral (en mm) desde el eje al centro de la apertura del telescopio</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length</value>
+    <value>Longitud del eje lateral</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>En una configuración lado a lado, esta es la distancia (lateral en mm) desde la mordaza hasta el centro del tubo. Positivo es a la derecha a lo largo del eje del tubo.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius</value>
+    <value>Radio de la cúpula</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Medida desde el centro hasta el borde de la cúpula, a lo largo de la base</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W</value>
+    <value>Posición del telescopio E/O</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Medir el descentrado este u oeste (en mm) del centro de la montura desde el centro de la cúpula. Positivo es hacia el este.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S</value>
+    <value>Posición del telescopio N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>El seguimiento de la cúpula puede ser inexacto. Compruebe que el epoch de la montura está configurado correctamente y haga una sincronización por astrometría</value>
@@ -3969,7 +3969,7 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Pausar secuencia</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down</value>
+    <value>Posición del telescopio +Arriba/-Abajo</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Medir la diferencia de altura (en mm) del centro del eje de montura relativa a la base de la cúpula. Para una montura Alt/Az, esta es desde el centro del eje Altitud, y para una montura EQ es en la intersección de los ejes RA y DEC. Un número positivo indica que el centro del eje es más alto que la base de la cúpula, y un número negativo significa que es más bajo.</value>
@@ -5087,7 +5087,7 @@ Allí la secuencia puede planificarse desde cero utilizando instrucciones pormen
     <value>Clave API para Weather Underground</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Id para Weather Underground Station</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Bajar de nivel la fila seleccionada</value>
@@ -5469,5 +5469,20 @@ Este ajuste no tendrá efecto en los sensores de color.
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

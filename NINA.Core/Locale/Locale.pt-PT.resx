@@ -1773,7 +1773,7 @@ HFR Calculado: {2}
     <value>Hiperbólica</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Id</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Iluminação</value>
@@ -2149,19 +2149,19 @@ HFR Calculado: {2}
     <value>Tipo de Objecto</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Estrela</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Estrelas</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Estrelas</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Estrelas</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Estrelas</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterismo</value>
@@ -2354,7 +2354,7 @@ HFR Calculado: {2}
     <value>Porta do Servidor do PHD2</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>Endereço do Servidor do PHD2</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Configurações do PHD2</value>
@@ -2390,7 +2390,7 @@ HFR Calculado: {2}
     <value>Failed to change PHD2 profile</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile id {0} not found. Using {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixeis</value>
@@ -2666,7 +2666,7 @@ HFR Calculado: {2}
     <value>Remover o Perfil?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Eliminar o Perfil com o nome {0} e com o id {1}?</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Repetir até</value>
@@ -3019,7 +3019,7 @@ Antes de prosseguir, confirme se o sistema se encontra focado ou perto</value>
     <value>Estatísticas</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>StDev</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3218,7 +3218,7 @@ Sincronizar os valores?</value>
     <value>Tempo Limite</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Foi atingido o tempo limite para definir o valor {0} para o switch [Id: {1}, Nome: {2}]. Valor actual é {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Fuso Horário</value>
@@ -3258,7 +3258,7 @@ Arraste o rectângulo sobre uma estrela com as spikes provocadas pela máscara b
     <value>Mover o objecto para a direita</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Liga/desliga a análise e detecção de estrela automática (Half-Flus-Radius)</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Live View</value>
@@ -3449,22 +3449,22 @@ Arraste o rectângulo sobre a parte da imagem que deseja efectuar sub-sample e s
     <value>Duração de funcionamento</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>Porta USB 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>Porta USB 2</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>Porta USB 3</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>Porta USB 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>Porta USB 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>Porta USB 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
     <value>USB</value>
@@ -3482,7 +3482,7 @@ Arraste o rectângulo sobre a parte da imagem que deseja efectuar sub-sample e s
     <value>A Actualizar</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Endereço URL</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>Limite USB</value>
@@ -5090,7 +5090,7 @@ A sequência pode ser planificada a partir do zero, usando instruções pormenor
     <value>Chave API de Weather Underground</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Id de Weather Underground Station</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Despromover a linha seleccionada</value>
@@ -5472,5 +5472,20 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

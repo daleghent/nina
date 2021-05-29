@@ -1778,7 +1778,7 @@ Berechneter HFR: {2}
     <value>Hyperbolisch</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Id</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Beleuchtung</value>
@@ -2154,19 +2154,19 @@ Berechneter HFR: {2}
     <value>Objekttyp</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Stern</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Sterne</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Sterne</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Sterne</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Sterne</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterismus</value>
@@ -2359,7 +2359,7 @@ Berechneter HFR: {2}
     <value>PHD2 Serverport</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 Serverurl</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>PHD2 Einstellung</value>
@@ -2395,7 +2395,7 @@ Berechneter HFR: {2}
     <value>Failed to change PHD2 profile</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile id {0} not found. Using {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixel</value>
@@ -2671,7 +2671,7 @@ Berechneter HFR: {2}
     <value>Profil entfernen?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Soll das Profil mit Namen: {0} und Id: {1} entfernt werden?</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Wiederholen bis</value>
@@ -3024,7 +3024,7 @@ Bitte vergewissern, dass das System gut oder nahe im Fokus ist, bevor fortgefahr
     <value>Statistiken</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>σ</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3223,7 +3223,7 @@ Sollen die Werte synchronisiert werden?</value>
     <value>Timeout</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Zeitüberschreitung zum Festlegen des Schalterwertes {0} für Schalter [Id: {1}, Name: {2}]. Aktueller Wert ist {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Zeitzone</value>
@@ -3263,7 +3263,7 @@ Das Rechteck über einen Stern mit Bahtinov Beugungsmuster bewegen. NINA versuch
     <value>Ziel nach rechts bewegen</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Schaltet automatisches Erkennen und Auswerten (Half-Flus-Radius) von Sternen an/aus</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Live Vorschau</value>
@@ -3486,7 +3486,7 @@ Lichtverschmutzten Gebieten. Berechnungszeit ist jedoch erhöht.</value>
     <value>Aktualisiere</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Url</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>USB Limit</value>
@@ -5096,7 +5096,7 @@ There the sequence can be planned from scratch using fine granular instructions,
     <value>Weather Underground API Key</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station Id</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Markierte Reihe nach unten</value>
@@ -5478,5 +5478,20 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>

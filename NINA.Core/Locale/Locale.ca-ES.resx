@@ -1773,7 +1773,7 @@ HFR calculat: {2}    </value>
     <value>Hiperbòlic</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>Id</value>
+    <value>ID</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Il·luminació</value>
@@ -2149,19 +2149,19 @@ HFR calculat: {2}    </value>
     <value>Tipus d'Objecte</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Estrella</value>
+    <value>1 Star</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Estrelles</value>
+    <value>2 Stars</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Estrelles</value>
+    <value>3 Stars</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Estrelles</value>
+    <value>4 Stars</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Estrelles</value>
+    <value>8 Stars</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterix</value>
@@ -2315,7 +2315,7 @@ HFR calculat: {2}    </value>
     <value>Pausat</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Pause before Meridian</value>
+    <value>Pausa abans del canvi de Meridià</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>MasterFlat</value>
@@ -2354,7 +2354,7 @@ HFR calculat: {2}    </value>
     <value>Port del Servidor de PHD2</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>Url del Servidor de PHD2</value>
+    <value>PHD2 Server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Configuració de PHD2</value>
@@ -2390,7 +2390,7 @@ HFR calculat: {2}    </value>
     <value>No s'ha pogut canviar el perfil PHD2</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>No s'ha trobat l'identificador del perfil de PHD2 {0}. Utilitzant {1}</value>
+    <value>PHD2 profile ID {0} not found. Using {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
@@ -2666,7 +2666,7 @@ HFR calculat: {2}    </value>
     <value>Eliminar el perfil?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>S'ha d'eliminar el perfil amb el nom: {0} i l'identificador: {1}?</value>
+    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Repetir fins</value>
@@ -2810,7 +2810,7 @@ HFR calculat: {2}    </value>
     <value>No s'ha trobat l'ordre de finalització de la seqüència '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Delay start</value>
+    <value>Retard d’inici</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Seqüència que comença d'aquí a {0} segons</value>
@@ -3019,7 +3019,7 @@ Abans de continuar, confirmeu que el vostre sistema està centrat o està a punt
     <value>Estadístiques</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>Desviació Típica</value>
+    <value>SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3217,7 +3217,7 @@ Els valors s'han de sincronitzar?</value>
     <value>Temps d'espera</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Temps d'espera per definir el valor del commutador {0} per al commutador [Id: {1}, nom: {2}]. El valor actual és {3}.</value>
+    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Zona Horaria</value>
@@ -3257,7 +3257,7 @@ Arrossegueu el rectangle sobre una estrella amb les puntes de bahtinov. NINA int
     <value>Mou l'objectiu cap a la dreta</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Activa/desactiva l’anàlisi i detecció automàtica d’estrelles HFR (Half-Flus-Radius)</value>
+    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Vista en Directe</value>
@@ -3447,25 +3447,25 @@ Quan estigui activat, els canals de color s’estiraran per separat, ajudant a a
     <value>Temps actiu</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>Port Usb 1</value>
+    <value>USB Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>Port Usb 2</value>
+    <value>USB Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>Port Usb 3</value>
+    <value>USB Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>Port Usb 4</value>
+    <value>USB Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>Port Usb 5</value>
+    <value>USB Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>Port Usb 6</value>
+    <value>USB Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
-    <value>Usb</value>
+    <value>USB</value>
   </data>
   <data name="LblUPBV2VariablePower" xml:space="preserve">
     <value>Port d'alimentació variable</value>
@@ -3480,7 +3480,7 @@ Quan estigui activat, els canals de color s’estiraran per separat, ajudant a a
     <value>Actualitzant</value>
   </data>
   <data name="LblURL" xml:space="preserve">
-    <value>Url</value>
+    <value>URL</value>
   </data>
   <data name="LblUSBLimit" xml:space="preserve">
     <value>Límit USB</value>
@@ -3916,7 +3916,7 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Mode Assitent</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance</value>
+    <value>Tolerància d'azimut</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>La cúpula gira, si l'azimut objectiu supera d'aquesta quantitat</value>
@@ -3928,31 +3928,31 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Trobar Posició Inicial (Home)</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length</value>
+    <value>Longitud de l'eix GEM</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Si la montura és Alt / Az, hauria de ser 0. Per a un montura EQ, girar l'eix AR a +/- 90 graus i mesurar la distància lateral (en mm) des de l'eix fins al centre de l'obertura del telescopi</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length</value>
+    <value>Longitud de l'eix lateral</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>En una configuració costat a costat, aquesta és la distància (lateral, en mm) des de la sella fins al centre OTA. Positiu és a la dreta al llarg de l’eix OTA.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius</value>
+    <value>Radi de la Cúpula</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Mesureu des del centre fins a la vora de la cúpula, al llarg de la base</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W</value>
+    <value>Posició del Telescopi E/O</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Mesureu el desplaçament Est o Oest (en mm) del centre de la muntura des del centre de la cúpula. Positiu és a l’est.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S</value>
+    <value>Posició del Telescopi N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>El seguiment de la cúpula pot ser inexacte. Comproveu que el vostre epoch de la muntura estigui configurada correctament i feu una sincronització de resolució de plaques</value>
@@ -3970,7 +3970,7 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Pausar la seqüència</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down</value>
+    <value>Posició del Telescopi +Amunt/-Avall</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Mesureu la diferència d’alçada (en mm) del centre de l’eix de muntatge en relació amb la base de la muntura. Per a una muntura Alt/Az, es tracta del centre de l'eix d'altitud i, per a una muntura EQ, on es creuen els eixos AR i DEC. Un nombre positiu indica que el centre de l’eix és superior a la base de la muntura i un nombre negatiu significa que és més baix.</value>
@@ -5088,7 +5088,7 @@ Allà, la seqüència es pot planificar des de zero mitjançant instruccions, ac
     <value>Clau API per a Weather Underground</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Id per a Weather Underground Station</value>
+    <value>Weather Underground Station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Baixar el nivell de la fila seleccionada</value>
@@ -5457,18 +5457,33 @@ Un punt de partida per a un bon llindar és un valor de 0,8: qualsevol cosa que 
     <value>Punt de temperatura establert de la càmera</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
-    <value>ASCOM allow odd pixel dimension</value>
+    <value>ASCOM permet dimensió de píxel senar</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
-    <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
-When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
-This setting will have no effect on color sensors.
-Only relevant when using an ASCOM camera driver!</value>
+    <value>En versions anteriors de N.I.N.A. l'amplada i l'alçada del controlador ASCOM estaven sempre restringides a nombres parells, fins i tot per a càmeres monocromes.
+Quan estigui activada, l'aplicació permetrà ara la dimensió total del píxel desiguals a les càmeres monocromes.
+Aquesta configuració no afectarà els sensors amb color.
+Només és rellevant quan s’utilitza un controlador de càmera ASCOM!</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
-    <value>Guiding Start Timeout</value>
+    <value>Temps d'espera per l'inic del guiatge</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>Filtres</value>
+  </data>
+  <data name="LblPHD2Calibrating" xml:space="preserve">
+    <value>PHD2 - Calibrating</value>
+  </data>
+  <data name="LblPHD2SelectingStar" xml:space="preserve">
+    <value>PHD2 - Selecting guide star</value>
+  </data>
+  <data name="LblPHD2Settling" xml:space="preserve">
+    <value>PHD2 - Settling</value>
+  </data>
+  <data name="LblPHD2StartGuiding" xml:space="preserve">
+    <value>PHD2 - Waiting for guiding to start</value>
+  </data>
+  <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
+    <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
 </root>
