@@ -111,14 +111,14 @@ namespace NINATest {
             // setup
             CancellationTokenSource cts = new CancellationTokenSource();
             await sut.Initialize(guider.Object, cts.Token);
-            guider.Setup(m => m.StartGuiding(It.IsAny<bool>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            guider.Setup(m => m.StartGuiding(It.IsAny<bool>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
             // act
             var result = await sut.StartGuiding(It.IsAny<bool>());
 
             // assert
             result.Should().BeTrue();
-            guider.Verify(m => m.StartGuiding(It.IsAny<bool>(), It.IsAny<CancellationToken>()), Times.Once);
+            guider.Verify(m => m.StartGuiding(It.IsAny<bool>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]

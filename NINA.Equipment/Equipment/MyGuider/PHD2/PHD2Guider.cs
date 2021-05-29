@@ -34,6 +34,7 @@ using System.Windows.Threading;
 using NINA.Core.Interfaces;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
+using NINA.Core.Model;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
@@ -173,7 +174,9 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
         // _activeProfile represents whatever GetProfile last returned
         private Phd2ProfileResponse _activeProfile;
+
         private Phd2Profile _selectedProfile;
+
         public Phd2Profile SelectedProfile {
             get {
                 return _selectedProfile;
@@ -206,7 +209,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             try {
                 if (connected) {
                     await GetProfiles();
-                    if (profileService.ActiveProfile.GuiderSettings.PHD2ProfileId.HasValue 
+                    if (profileService.ActiveProfile.GuiderSettings.PHD2ProfileId.HasValue
                         && SelectedProfile?.Id != profileService.ActiveProfile.GuiderSettings.PHD2ProfileId) {
                         await ChangeProfile(profileService.ActiveProfile.GuiderSettings.PHD2ProfileId.Value);
                     }
@@ -240,7 +243,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         }
 
         private async Task<bool> ChangeProfile(int id) {
-            // Trigger a GetProfiles operation in the background after either a success or failure, which will refresh the profile list and 
+            // Trigger a GetProfiles operation in the background after either a success or failure, which will refresh the profile list and
             // set both SelectedProfile and _activeProfile to their latest values
             var targetProfile = AvailableProfiles.FirstOrDefault(x => x.Id == id);
             if (targetProfile == null) {
@@ -281,7 +284,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     return false;
                 }
 
-                await WaitForSettling(ct);
+                await WaitForSettling(default, ct);
 
                 var ditherMsg = new Phd2Dither() {
                     Parameters = new Phd2DitherParameter() {
@@ -301,21 +304,23 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     return false;
                 }
                 Settling = true;
-                await WaitForSettling(ct);
+                await WaitForSettling(default, ct);
             }
             return true;
         }
 
-        private async Task WaitForSettling(CancellationToken ct) {
+        private async Task WaitForSettling(IProgress<ApplicationStatus> progress, CancellationToken ct) {
             try {
                 await Task.Run<bool>(async () => {
                     var elapsed = new TimeSpan();
                     while (Settling == true) {
+                        progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblPHD2Settling"] });
                         elapsed += await CoreUtil.Delay(500, ct);
 
                         if (elapsed.TotalSeconds > (profileService.ActiveProfile.GuiderSettings.SettleTimeout + 10)) {
                             //Failsafe when phd is not sending settlingdone message
                             Notification.ShowWarning(Loc.Instance["LblGuiderNoSettleDone"]);
+                            Logger.Warning("Phd2 - Guider did not send SettleDone message in time. Skipping.");
                             Settling = false;
                         }
                     }
@@ -430,10 +435,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             });
         }
 
-        public async Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
-            var autoRetry = profileService.ActiveProfile.GuiderSettings.AutoRetryStartGuiding;
-            var retryAfterSeconds = profileService.ActiveProfile.GuiderSettings.AutoRetryStartGuidingTimeoutSeconds * 1000;
-
+        public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             if (!Connected)
                 return false;
 
@@ -443,35 +445,52 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 return true;
             }
 
-            if (state == PhdAppState.CALIBRATING) {
-                Logger.Info("Phd2 - App is already calibrating. Waiting for guiding to start");
-                return await WaitForAppState(PhdAppState.GUIDING, ct);
-            }
-
             if (state == PhdAppState.LOSTLOCK) {
                 Logger.Info("Phd2 - App has lost guide star and needs to stop before starting guiding again");
                 await StopGuiding(ct);
             }
 
-            if (!autoRetry) {
-                return await TryStartGuideCommand(forceCalibration, ct)
-                    && await WaitForGuidingStarted(ct);
+            if (state == PhdAppState.CALIBRATING) {
+                Logger.Info("Phd2 - App is already calibrating. Waiting for calibration to finish");
+                await WaitForCalibrationFinished(progress, ct);
             }
 
+            int retries = 1;
+            int maxRetries = profileService.ActiveProfile.GuiderSettings.AutoRetryStartGuiding ? 3 : 1;
+            var retryAfterSeconds = TimeSpan.FromSeconds(profileService.ActiveProfile.GuiderSettings.AutoRetryStartGuidingTimeoutSeconds);
             while (!ct.IsCancellationRequested) {
-                if (!await TryStartGuideCommand(forceCalibration, ct)) {
+                if (!await TryStartGuideCommand(forceCalibration, progress, ct)) {
                     return false;
                 }
+
+                await WaitForStarSelected(progress, ct);
+                await WaitForCalibrationFinished(progress, ct);
+
                 using (var cancelOnTimeoutOrParent = CancellationTokenSource.CreateLinkedTokenSource(ct)) {
                     var timeout = Task.Delay(
                         retryAfterSeconds,
                         cancelOnTimeoutOrParent.Token);
-                    var guidingHasBegun = WaitForGuidingStarted(cancelOnTimeoutOrParent.Token);
+                    var guidingHasBegun = WaitForGuidingStarted(progress, cancelOnTimeoutOrParent.Token);
 
                     if ((await Task.WhenAny(timeout, guidingHasBegun)) == guidingHasBegun) {
+                        // Guiding has been started successfully in time
+                        // Wait for phd2 to settle and exit
+                        await WaitForSettling(progress, ct);
                         return await guidingHasBegun;
                     }
                     cancelOnTimeoutOrParent.Cancel();
+
+                    retries += 1;
+
+                    if (retries > maxRetries) {
+                        // Max number of unsuccessful retries exceeded. Exit.
+                        Logger.Info($"Phd2 - Start guiding has failed");
+                        return false;
+                    }
+
+                    Logger.Info($"Phd2 - Start guiding has timed out after {retryAfterSeconds.TotalSeconds}s. Retrying to start guiding. Attempt {retries} / {maxRetries}");
+                    progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"], Status2 = Loc.Instance["LblPHD2StartGuidingTimeoutRetry"], Progress2 = retries, MaxProgress2 = maxRetries, ProgressType2 = ApplicationStatus.StatusProgressType.ValueOfMaxValue });
+
                     await Task.Delay(5000, ct); // 5000ms sleep between retries
 
                     await StopGuiding(ct); // used to visual inspect that the guider is in the stopped state before retrying.
@@ -482,8 +501,26 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             return false;
         }
 
-        private async Task<bool> TryStartGuideCommand(bool forceCalibration, CancellationToken ct) {
-            await WaitForSettling(ct);
+        private async Task WaitForStarSelected(IProgress<ApplicationStatus> progress, CancellationToken ct) {
+            string state = await GetAppState(); ;
+            while (state == PhdAppState.LOOPING || state == PhdAppState.STOPPED) {
+                progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"], Status2 = Loc.Instance["LblPHD2SelectingStar"] });
+                state = await GetAppState();
+                await Task.Delay(1000, ct);
+            }
+        }
+
+        private async Task WaitForCalibrationFinished(IProgress<ApplicationStatus> progress, CancellationToken ct) {
+            string state = await GetAppState(); ;
+            while (state == PhdAppState.CALIBRATING) {
+                progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"], Status2 = Loc.Instance["LblPHD2Calibrating"] });
+                state = await GetAppState();
+                await Task.Delay(1000, ct);
+            }
+        }
+
+        private async Task<bool> TryStartGuideCommand(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
+            await WaitForSettling(progress, ct);
 
             var guideMsg = new Phd2Guide() {
                 Parameters = new Phd2GuideParameter() {
@@ -497,14 +534,16 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 }
             };
 
+            Logger.Info($"Phd2 - Requesting to start guiding. Recalibrate: {forceCalibration}");
+
             var guideMsgResponse = await SendMessage(guideMsg);
             return guideMsgResponse.error == null;
         }
 
-        private async Task<bool> WaitForGuidingStarted(CancellationToken ct) {
+        private async Task<bool> WaitForGuidingStarted(IProgress<ApplicationStatus> progress, CancellationToken ct) {
             if (await WaitForAppState(PhdAppState.GUIDING, ct)) {
+                progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"], Status2 = Loc.Instance["LblPHD2StartGuiding"] });
                 Settling = true;
-                await WaitForSettling(ct);
                 return true;
             } else {
                 return false;

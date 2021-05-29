@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using NINA.Core.Interfaces;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
+using NINA.Core.Model;
 
 #pragma warning disable 1998
 
@@ -81,7 +82,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return true;
         }
 
-        public async Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
+        public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             return true;
         }
 

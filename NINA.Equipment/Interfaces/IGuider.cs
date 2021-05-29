@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Interfaces;
+using NINA.Core.Model;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -30,7 +31,7 @@ namespace NINA.Equipment.Interfaces {
 
         //Task<bool> Pause(bool pause, CancellationToken ct);
 
-        Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct);
+        Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct);
 
         Task<bool> StopGuiding(CancellationToken ct);
 

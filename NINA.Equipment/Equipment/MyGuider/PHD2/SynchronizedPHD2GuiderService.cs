@@ -181,7 +181,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     startGuidingTask == null) {
                     startGuidingCancellationTokenSource?.Dispose();
                     startGuidingCancellationTokenSource = new CancellationTokenSource();
-                    startGuidingTask = guiderInstance.StartGuiding(forceCalibration, startGuidingCancellationTokenSource.Token);
+                    startGuidingTask = guiderInstance.StartGuiding(forceCalibration, default, startGuidingCancellationTokenSource.Token);
                 }
             }
 

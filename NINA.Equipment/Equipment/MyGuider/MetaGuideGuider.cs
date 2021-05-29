@@ -26,6 +26,7 @@ using NINA.Core.Interfaces;
 using NINA.Core.Locale;
 using NINA.Equipment.Equipment.MyGuider.MetaGuide;
 using NINA.Equipment.Interfaces;
+using NINA.Core.Model;
 
 namespace NINA.Equipment.Equipment.MyGuider {
 
@@ -350,7 +351,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return !ct.IsCancellationRequested && this.IsGuiding;
         }
 
-        public async Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
+        public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             if (!Connected) {
                 return false;
             }
@@ -472,7 +473,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
                     ++lowIntensityGuidingAttemptCount;
                     lowIntensityChangeGuidingTask = Task.Run(async () => {
-                        if (await StartGuiding(false, new CancellationTokenSource(LOW_INTENSITY_GUIDING_TIMEOUT).Token)) {
+                        if (await StartGuiding(false, default, new CancellationTokenSource(LOW_INTENSITY_GUIDING_TIMEOUT).Token)) {
                             guidingHaltedDueToLowIntensity = false;
                             lowIntensityGuidingAttemptCount = 0;
                         } else if (lowIntensityGuidingAttemptCount >= MAX_LOW_INTENSITY_GUIDING_RETRIES) {

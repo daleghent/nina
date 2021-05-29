@@ -10962,6 +10962,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PHD2 - Calibrating.
+        /// </summary>
+        internal static string LblPHD2Calibrating {
+            get {
+                return ResourceManager.GetString("LblPHD2Calibrating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dec: {0}({1}&quot;).
         /// </summary>
         internal static string LblPHD2DecRMS {
@@ -11088,6 +11097,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PHD2 - Selecting guide star.
+        /// </summary>
+        internal static string LblPHD2SelectingStar {
+            get {
+                return ResourceManager.GetString("LblPHD2SelectingStar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PHD2 Server Connection lost!.
         /// </summary>
         internal static string LblPhd2ServerConnectionLost {
@@ -11124,11 +11142,38 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PHD2 - Settling.
+        /// </summary>
+        internal static string LblPHD2Settling {
+            get {
+                return ResourceManager.GetString("LblPHD2Settling", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to PHD2 Setup.
         /// </summary>
         internal static string LblPHD2Setup {
             get {
                 return ResourceManager.GetString("LblPHD2Setup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PHD2 - Waiting for guiding to start.
+        /// </summary>
+        internal static string LblPHD2StartGuiding {
+            get {
+                return ResourceManager.GetString("LblPHD2StartGuiding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PHD2 - Start guiding has timed out. Retrying....
+        /// </summary>
+        internal static string LblPHD2StartGuidingTimeoutRetry {
+            get {
+                return ResourceManager.GetString("LblPHD2StartGuidingTimeoutRetry", resourceCulture);
             }
         }
         

@@ -254,7 +254,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         }
 
         /// <inheritdoc />
-        public Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
+        public Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             return Task.Run(async () => {
                 ct.Register(guiderService.CancelStartGuiding);
                 return await guiderService.StartGuiding(forceCalibration);

@@ -33,6 +33,7 @@ using System.Windows.Media.Imaging;
 using NINA.Core.Interfaces;
 using NINA.Image.ImageAnalysis;
 using NINA.Equipment.Interfaces;
+using NINA.Core.Model;
 
 namespace NINA.Equipment.Equipment.MyGuider {
 
@@ -297,7 +298,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return false;
         }
 
-        public async Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
+        public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             try {
                 if (!await MGen.IsActivelyGuiding(ct)) {
                     await AutoSelectGuideStar();

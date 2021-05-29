@@ -247,7 +247,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
             if (Guider?.Connected == true) {
                 try {
                     progress.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"] });
-                    var guiding = await Guider.StartGuiding(forceCalibration, token);
+                    var guiding = await Guider.StartGuiding(forceCalibration, progress, token);
                     return guiding;
                 } catch (Exception ex) {
                     Logger.Error(ex);

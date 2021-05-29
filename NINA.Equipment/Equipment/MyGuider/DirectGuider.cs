@@ -26,6 +26,7 @@ using NINA.Core.Locale;
 using NINA.Core.Interfaces;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Core.Model;
 
 namespace NINA.Equipment.Equipment.MyGuider {
 
@@ -194,7 +195,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return Task.FromResult(true);
         }
 
-        public Task<bool> StartGuiding(bool forceCalibration, CancellationToken ct) {
+        public Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
             return Task.FromResult(true);
         }
 
