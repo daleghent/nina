@@ -185,6 +185,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
             if (!telescopeInfo.TrackingEnabled) {
                 Logger.Info("Meridian Flip - Telescope is not tracking. Skip flip evaluation");
+                return false;
             }
 
             if ((DateTime.Now - lastFlipTime) < TimeSpan.FromHours(11)) {

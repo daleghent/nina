@@ -75,7 +75,8 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() {
                 Connected = true,
-                TimeToMeridianFlip = 0
+                TimeToMeridianFlip = 0,
+                TrackingEnabled = true
             });
 
             profileServiceMock.SetupGet(x => x.ActiveProfile.MeridianFlipSettings.UseSideOfPier).Returns(false);
@@ -94,7 +95,8 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() {
                 Connected = true,
-                TimeToMeridianFlip = 5
+                TimeToMeridianFlip = 5,
+                TrackingEnabled = true
             });
 
             profileServiceMock.SetupGet(x => x.ActiveProfile.MeridianFlipSettings.UseSideOfPier).Returns(false);
@@ -131,7 +133,8 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
             var telescopeInfo = new TelescopeInfo() {
                 TimeToMeridianFlip = double.NaN,
-                Connected = true
+                Connected = true,
+                TrackingEnabled = true
             };
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(telescopeInfo);
 
@@ -168,7 +171,8 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
             var telescopeInfo = new TelescopeInfo() {
                 TimeToMeridianFlip = TimeSpan.FromMinutes(remainingTimeToFlip).TotalHours,
-                Connected = true
+                Connected = true,
+                TrackingEnabled = true
             };
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(telescopeInfo);
 
@@ -241,7 +245,8 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
                 SideOfPier = pierSide,
                 Coordinates = coordinates,
                 SiderealTime = localSiderealTime,
-                Connected = true
+                Connected = true,
+                TrackingEnabled = true
             };
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(telescopeInfo);
 
@@ -299,7 +304,8 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
                 SideOfPier = pierSide,
                 Coordinates = coordinates,
                 SiderealTime = localSiderealTime,
-                Connected = true
+                Connected = true,
+                TrackingEnabled = true
             };
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(telescopeInfo);
 
@@ -338,7 +344,67 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var telescopeInfo = new TelescopeInfo() {
                 TimeToMeridianFlip = TimeSpan.FromMinutes(remainingTimeToFlip).TotalHours,
                 SideOfPier = pierSide,
-                Connected = true
+                Connected = true,
+                TrackingEnabled = true
+            };
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(telescopeInfo);
+
+            var nextItemMock = new Mock<ISequenceItem>();
+            nextItemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.FromMinutes(nextItemExpectedTime));
+
+            sut.ShouldTrigger(nextItemMock.Object).Should().Be(expectToFlip);
+        }
+
+        [Test]
+        /* Exposure time is 7 minutes
+         * Remaining time to exceed minimum time is 3 minutes
+         * Remaining time to exceed maximum time is 8 minutes
+         * => The exposure still fits in, no flip yet
+         */
+        [TestCase(7, 5, 10, 8, PierSide.pierWest, PierSide.pierEast, false)]
+        [TestCase(7, 5, 10, 8, PierSide.pierEast, PierSide.pierWest, false)]
+        /* Exposure time is 9 minutes
+         * Remaining time to exceed minimum time is 3 minutes
+         * Remaining time to exceed maximum time is 8 minutes
+         * => The exposure does not fit, flip needs to start with a wait time
+         */
+        [TestCase(9, 5, 10, 8, PierSide.pierWest, PierSide.pierEast, false)]
+        [TestCase(9, 5, 10, 8, PierSide.pierEast, PierSide.pierWest, false)]
+        /* Same Test as before, but pier side is already correct and no flip required */
+        [TestCase(9, 5, 10, 8, PierSide.pierEast, PierSide.pierEast, false)]
+        [TestCase(9, 5, 10, 8, PierSide.pierWest, PierSide.pierWest, false)]
+        public void ShouldFlip_NotTracking_NoFlip(
+           double nextItemExpectedTime,
+           double minTimeToFlip,
+           double maxTimeToFlip,
+           double remainingTimeToFlip,
+           PierSide pierSide,
+           PierSide targetPierSide,
+           bool expectToFlip) {
+            var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+
+            var rightAscension = 12.9;
+            var localSiderealTime = 13.0;
+            if (targetPierSide == PierSide.pierWest) {
+                rightAscension -= 12.0;
+            }
+            var coordinates = new Coordinates(Angle.ByHours(rightAscension), Angle.ByDegree(20.0), Epoch.JNOW);
+
+            var settings = new Mock<IMeridianFlipSettings>();
+            settings.SetupGet(m => m.MinutesAfterMeridian).Returns(minTimeToFlip);
+            settings.SetupGet(m => m.MaxMinutesAfterMeridian).Returns(maxTimeToFlip);
+            settings.SetupGet(m => m.PauseTimeBeforeMeridian).Returns(0);
+            settings.SetupGet(m => m.UseSideOfPier).Returns(true);
+
+            profileServiceMock.SetupGet(m => m.ActiveProfile.MeridianFlipSettings).Returns(settings.Object);
+
+            var telescopeInfo = new TelescopeInfo() {
+                TimeToMeridianFlip = TimeSpan.FromMinutes(remainingTimeToFlip).TotalHours,
+                SideOfPier = pierSide,
+                Coordinates = coordinates,
+                SiderealTime = localSiderealTime,
+                Connected = true,
+                TrackingEnabled = false
             };
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(telescopeInfo);
 
