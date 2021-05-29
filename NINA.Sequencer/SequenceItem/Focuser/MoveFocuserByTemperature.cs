@@ -24,6 +24,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.SequenceItem.Focuser {
 
@@ -79,6 +80,7 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
                 var info = focuserMediator.GetInfo();
                 var position = Slope * info.Temperature + Intercept;
 
+                Logger.Info($"Moving Focuser By Temperature - Slope {Slope} * Temperature {info.Temperature} °C + Intercept {Intercept} = Position {position}");
                 return focuserMediator.MoveFocuser((int)position, token);
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
