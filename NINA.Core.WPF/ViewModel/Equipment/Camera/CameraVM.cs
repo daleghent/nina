@@ -750,6 +750,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             }
         }
 
+        public void SetReadoutModeForNormalImages(short mode) {
+            if (CameraInfo.Connected) {
+                Cam.ReadoutModeForNormalImages = mode;
+                CameraInfo.ReadoutModeForNormalImages = mode;
+                BroadcastCameraInfo();
+            }
+        }
+
         public void SetBinning(short x, short y) {
             Cam.SetBinning(x, y);
             CameraInfo.BinX = Cam.BinX;

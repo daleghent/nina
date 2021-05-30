@@ -28,6 +28,8 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         void SetReadoutMode(short mode);
 
+        void SetReadoutModeForNormalImages(short mode);
+
         void SetBinning(short x, short y);
 
         void SetSubSample(bool subSample);

@@ -109,7 +109,8 @@ namespace NINATest.Sequencer.SequenceItem.Camera {
             sut.Mode = 1;
             await sut.Execute(default, default);
 
-            cameraMediatorMock.Verify(x => x.SetReadoutMode(1), Times.Once);
+            cameraMediatorMock.Verify(x => x.SetReadoutMode(It.IsAny<short>()), Times.Never);
+            cameraMediatorMock.Verify(x => x.SetReadoutModeForNormalImages(1), Times.Once);
         }
 
         [Test]
@@ -120,7 +121,7 @@ namespace NINATest.Sequencer.SequenceItem.Camera {
             sut.Mode = 1;
             Func<Task> act = () => { return sut.Execute(default, default); };
 
-            cameraMediatorMock.Verify(x => x.SetReadoutMode(It.IsAny<short>()), Times.Never);
+            cameraMediatorMock.Verify(x => x.SetReadoutModeForNormalImages(It.IsAny<short>()), Times.Never);
             return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
         }
     }

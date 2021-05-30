@@ -57,6 +57,10 @@ namespace NINA.WPF.Base.Mediator {
             handler.SetReadoutMode(value);
         }
 
+        public void SetReadoutModeForNormalImages(short value) {
+            handler.SetReadoutModeForNormalImages(value);
+        }
+
         public void SetBinning(short x, short y) {
             handler.SetBinning(x, y);
         }

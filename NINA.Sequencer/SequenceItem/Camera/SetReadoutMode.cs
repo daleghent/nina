@@ -58,7 +58,7 @@ namespace NINA.Sequencer.SequenceItem.Camera {
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Validate()) {
-                cameraMediator.SetReadoutMode(Mode);
+                cameraMediator.SetReadoutModeForNormalImages(Mode);
                 return Task.CompletedTask;
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
