@@ -130,7 +130,7 @@
     <value>W</value>
   </data>
   <data name="LblAberrationInspector" xml:space="preserve">
-    <value>Aberration Inspector</value>
+    <value>Aberration inspector</value>
   </data>
   <data name="LblActive" xml:space="preserve">
     <value>Active</value>
@@ -139,19 +139,19 @@
     <value>Active filter</value>
   </data>
   <data name="LblActiveSequenceDetails" xml:space="preserve">
-    <value>Active Sequence Details</value>
+    <value>Active sequence details</value>
   </data>
   <data name="LblAddSequenceTarget" xml:space="preserve">
-    <value>Add as Sequence Target</value>
+    <value>Add as sequence target</value>
   </data>
   <data name="LblAdvancedSettings" xml:space="preserve">
-    <value>Advanced Settings</value>
+    <value>Advanced settings</value>
   </data>
   <data name="LblAFContrastDetection" xml:space="preserve">
-    <value>Contrast Detection (Experimental)</value>
+    <value>Contrast detection (experimental)</value>
   </data>
   <data name="LblAFOnButFocuserNotConnected" xml:space="preserve">
-    <value>Auto-Focus is enabled, yet focuser is not connected</value>
+    <value>Autofocus is enabled but a focuser is not connected</value>
   </data>
   <data name="LblAFStarHFR" xml:space="preserve">
     <value>Star HFR</value>
@@ -172,64 +172,64 @@
     <value>Alnitak Flat Panel</value>
   </data>
   <data name="LblAltairCameraSetup" xml:space="preserve">
-    <value>Altair Camera Setup</value>
+    <value>Altair camera setup</value>
   </data>
   <data name="LblAlternativeUIColorSchema" xml:space="preserve">
-    <value>Alternative UI Color Schema</value>
+    <value>Alternative UI color scheme</value>
   </data>
   <data name="LblAltitude" xml:space="preserve">
     <value>Altitude</value>
   </data>
   <data name="LblAltitudeErrorMeasurement" xml:space="preserve">
-    <value>Measure Altitude Error</value>
+    <value>Measure altitude error</value>
   </data>
   <data name="LblAltitudeMeasurement" xml:space="preserve">
-    <value>Altitude Measurement</value>
+    <value>Altitude measurement</value>
   </data>
   <data name="LblAltitudeMeasurementButtonTooltip" xml:space="preserve">
-    <value>Measures Altitude Error by three steps.
-1. Takes image and platesolves for actual coordinates at current position
+    <value>Measures altitude error in three steps:
+1. Takes image and plate solves for actual coordinates at current position
 2. Slew telescope using Right Ascension axis by 0.5 degrees
 3. Take another image at the new position, plate solves it for the actual position
 Using those two points the actual altitude error will be calculated and displayed</value>
   </data>
   <data name="LblAltitudeMeasurementDescription" xml:space="preserve">
-    <value>Point telescope east or west near declination 0 and near horizon.</value>
+    <value>Point telescope east or west near declination 0 and near the horizon.</value>
   </data>
   <data name="LblAltitudeMeasurementSide" xml:space="preserve">
-    <value>Altitude Measurement side</value>
+    <value>Altitude measurement side</value>
   </data>
   <data name="LblAnnotateConstellationBoundaries" xml:space="preserve">
-    <value>Display Constellation Boundaries</value>
+    <value>Display constellation boundaries</value>
   </data>
   <data name="LblAnnotateConstellations" xml:space="preserve">
-    <value>Display and annotate Constellations</value>
+    <value>Display and annotate constellations</value>
   </data>
   <data name="LblAnnotateDSO" xml:space="preserve">
-    <value>Annotate Deep Sky Objects</value>
+    <value>Annotate deep sky objects</value>
   </data>
   <data name="LblAnnotateGrid" xml:space="preserve">
-    <value>Display Grid</value>
+    <value>Display grid</value>
   </data>
   <data name="LblAnnotateImage" xml:space="preserve">
-    <value>Annotate Image</value>
+    <value>Annotate image</value>
   </data>
   <data name="LblAnnotateImageTooltip" xml:space="preserve">
     <value>If checked and a star detection for an image is applied, the image will be annotated with the found stars and their respective HFR value</value>
   </data>
   <data name="LblAPIKey" xml:space="preserve">
-    <value>API Key</value>
+    <value>API key</value>
   </data>
   <data name="LblApparentMagnitude" xml:space="preserve">
-    <value>Apparent Magnitude</value>
+    <value>Apparent magnitude</value>
   </data>
   <data name="LblApparentSize" xml:space="preserve">
-    <value>Apparent Size</value>
+    <value>Apparent size</value>
   </data>
   <data name="LblApplicationInBreakMode" xml:space="preserve">
-    <value>The Application ran into an unhandled exception and most likely has to shut down.
+    <value>The application ran into an unhandled exception and most likely has to shut down.
 The error has been logged to "%localappdata%\NINA\Logs".
-Should the Application try to recover from the error? (Can lead to unexpected behavior)</value>
+Should the application try to recover from the error? (Can lead to unexpected behavior)</value>
   </data>
   <data name="LblApplicationStartDateDescription" xml:space="preserve">
     <value>Application start date with format YYYY-MM-DD</value>
@@ -238,7 +238,7 @@ Should the Application try to recover from the error? (Can lead to unexpected be
     <value>arcmin</value>
   </data>
   <data name="LblMaxArcmin" xml:space="preserve">
-    <value>Max arcmin</value>
+    <value>Max. arcmin</value>
   </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>arcsec</value>
@@ -253,28 +253,28 @@ Should the Application try to recover from the error? (Can lead to unexpected be
     <value>Error retrieving image data from camera!</value>
   </data>
   <data name="LblASIOnly16BitMono" xml:space="preserve">
-    <value>Only 16 bit Monochrome sensors currently supported</value>
+    <value>Only 16 bit monochrome sensors are supported</value>
   </data>
   <data name="LblASPS" xml:space="preserve">
     <value>All Sky Plate Solver</value>
   </data>
   <data name="LblASPSDirectory" xml:space="preserve">
-    <value>ASPS Location</value>
+    <value>ASPS location</value>
   </data>
   <data name="LblASPSNotFound" xml:space="preserve">
-    <value>ASPS exe not found</value>
+    <value>ASPS program not found</value>
   </data>
   <data name="LblASTAP" xml:space="preserve">
     <value>ASTAP, the Astrometric STAcking Program, astrometric solver and FITS viewer</value>
   </data>
   <data name="LblASTAPDirectory" xml:space="preserve">
-    <value>ASTAP Location</value>
+    <value>ASTAP location</value>
   </data>
   <data name="LblASTAPMinimumVersionNote" xml:space="preserve">
     <value>Note: Requires an ASTAP version of 0.9.192 or above. For lower versions, please use ASTAP as Platesolve2 replacement.</value>
   </data>
   <data name="LblASTAPNotFound" xml:space="preserve">
-    <value>ASTAP exe not found</value>
+    <value>ASTAP.exe not found</value>
   </data>
   <data name="LblASTAPShort" xml:space="preserve">
     <value>ASTAP</value>
@@ -286,7 +286,7 @@ Should the Application try to recover from the error? (Can lead to unexpected be
     <value>Astrometry.Net</value>
   </data>
   <data name="LblAutoFocus" xml:space="preserve">
-    <value>Auto Focus</value>
+    <value>Autofocus</value>
   </data>
   <data name="LblAutoFocusAfterHFRChange" xml:space="preserve">
     <value>After HFR increase</value>
@@ -298,7 +298,7 @@ Should the Application try to recover from the error? (Can lead to unexpected be
     <value>After # exposures</value>
   </data>
   <data name="LblAutoFocusAfterSetTime" xml:space="preserve">
-    <value>After elapsed Time</value>
+    <value>After elapsed time</value>
   </data>
   <data name="LblAutoFocusAfterTemperatureChange" xml:space="preserve">
     <value>After temperature change</value>
@@ -307,19 +307,19 @@ Should the Application try to recover from the error? (Can lead to unexpected be
     <value>Temperature amount</value>
   </data>
   <data name="LblAutoFocusExposureTime" xml:space="preserve">
-    <value>Auto Focus Exposure Time</value>
+    <value>Autofocus exposure time</value>
   </data>
   <data name="LblAutoFocusExposureTimeTooltip" xml:space="preserve">
-    <value>Exposure Time used for auto focus when no filter specific time is set or the filter specific time is zero</value>
+    <value>Exposure time used for autofocus when no filter specific time is set or the filter specific time is zero</value>
   </data>
   <data name="LblAutoFocusFilter" xml:space="preserve">
-    <value>Auto Focus Filter</value>
+    <value>Autofocus filter</value>
   </data>
   <data name="LblAutoFocusGearNotConnected" xml:space="preserve">
-    <value>Cannot start Auto Focus. Camera or Focuser is not connected!</value>
+    <value>Cannot start autofocus. Camera or focuser is not connected!</value>
   </data>
   <data name="LblAutoFocusInnerCropRatio" xml:space="preserve">
-    <value>AF Inner Crop Ratio</value>
+    <value>Inner Crop Ratio</value>
   </data>
   <data name="LblAutoFocusInnerCropRatioTooltip" xml:space="preserve">
     <value>If set to a value less than one, star detection during autofocus will only use
@@ -329,17 +329,17 @@ with a lower than 1 Outer Crop Ratio, a rectangular sliver of the image (between
 outer rectangle) will be used for autofocus.</value>
   </data>
   <data name="LblAutoFocusMethod" xml:space="preserve">
-    <value>AF Method</value>
+    <value>Autofocus method</value>
   </data>
   <data name="LblAutoFocusMethodTooltip" xml:space="preserve">
-    <value>When Star HFR is selected, NINA will detect stars in the FOV,
+    <value>When Star HFR is selected, N.I.N.A. will detect stars in the FOV,
 compute their HFR across multiple focus points, and find the minimum HFR.
 The Contrast Detection method uses image processing techniques to estimate contrast
 across multiple focus points, and finds the highest contrast. This method works on
 terrestrial objects or solar system objects as well, but can be sensitive to noise.</value>
   </data>
   <data name="LblAutoFocusNewWorseThanOriginal" xml:space="preserve">
-    <value>New focus point HFR {0} is significantly worse than original HFR {1}</value>
+    <value>New focus point's HFR {0} is significantly worse than the previous HFR {1}</value>
   </data>
   <data name="LblAutoFocusNotEnoughtSpreadedPoints" xml:space="preserve">
     <value>Not enough HFR difference for set of focuspoints. Either the step size is too low or the stars are too much out of focus.</value>
@@ -348,16 +348,16 @@ terrestrial objects or solar system objects as well, but can be sensitive to noi
     <value># exposures</value>
   </data>
   <data name="LblAutoFocusNumberOfAttempts" xml:space="preserve">
-    <value>AF Number of Attempts</value>
+    <value>Number of attempts</value>
   </data>
   <data name="LblAutoFocusNumberOfAttemptsTooltip" xml:space="preserve">
     <value>If autofocus fails because it got worse HFR than original focus, how many times to reattempt autofocus routine until it is either successful or it moves back to original focus position.</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPoint" xml:space="preserve">
-    <value>AF Number of Frames per Point</value>
+    <value>Number of exposures per point</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPointTooltip" xml:space="preserve">
-    <value>How many frames to take for each focus point. If greater than one, multiple frames will be taken for a focus point, and their HFR will be averaged to compute focus point HFR</value>
+    <value>The number of exposures to take at each focus point. If greater than one, multiple frames will be taken for a focus point, and their HFR will be averaged to compute focus point HFR</value>
   </data>
   <data name="LblAutoFocusOnFilterChange" xml:space="preserve">
     <value>On filter change</value>
@@ -366,10 +366,10 @@ terrestrial objects or solar system objects as well, but can be sensitive to noi
     <value>On start</value>
   </data>
   <data name="LblAutoFocusOuterCropRatio" xml:space="preserve">
-    <value>AF Outer Crop Ratio</value>
+    <value>Outer Crop Ratio</value>
   </data>
   <data name="LblAutoFocusReattempting" xml:space="preserve">
-    <value>Reattempting Autofocus</value>
+    <value>Reattempting autofocus</value>
   </data>
   <data name="LblAutoFocusRestoringOriginalPosition" xml:space="preserve">
     <value>Restoring original focus position</value>
@@ -381,38 +381,38 @@ terrestrial objects or solar system objects as well, but can be sensitive to noi
     <value>Switching back to original filter</value>
   </data>
   <data name="LblAutoFocusSwitchingToDefaultFilter" xml:space="preserve">
-    <value>Switching to Auto Focus filter</value>
+    <value>Switching to autofocus filter</value>
   </data>
   <data name="LblAutoMeridianFlip" xml:space="preserve">
-    <value>Auto Meridian Flip</value>
+    <value>Meridian flip settings</value>
   </data>
   <data name="LblAutoStretchFactor" xml:space="preserve">
-    <value>Autostretch factor</value>
+    <value>Stretch factor</value>
   </data>
   <data name="LblAutoStretchFactorTooltip" xml:space="preserve">
-    <value>The factor for the autostretch algorithm that is used to display an image and detect stars. Must be a value between 0 and 1. . A value of 0.2 should work most of the time.</value>
+    <value>The factor for the stretch algorithm that is used to display an image and detect stars. Must be a value between 0 and 1. A value of 0.2 should work well for most cases.</value>
   </data>
   <data name="LblAutoUpdateSource" xml:space="preserve">
-    <value>Auto Update Source</value>
+    <value>Autoupdate source</value>
   </data>
   <data name="LblAzimuth" xml:space="preserve">
     <value>Azimuth</value>
   </data>
   <data name="LblAzimuthErrorMeasurement" xml:space="preserve">
-    <value>Measure Azimuth Error</value>
+    <value>Measure azimuth error</value>
   </data>
   <data name="LblAzimuthMeasurement" xml:space="preserve">
-    <value>Azimuth Measurement</value>
+    <value>Azimuth measurement</value>
   </data>
   <data name="LblAzimuthMeasurementButtonTooltip" xml:space="preserve">
-    <value>Measures Azimuth Error by three steps.
-1. Takes image and platesolves for actual coordinates at current position
+    <value>Measures azimuth error in three steps.
+1. Takes image and plate solves for actual coordinates at current position
 2. Slew telescope using Right Ascension axis by 0.5 degrees
 3. Take another image at the new position, plate solves it for the actual position
 Using those two points the actual azimuth error will be calculated and displayed</value>
   </data>
   <data name="LblAzimuthMeasurementDescription" xml:space="preserve">
-    <value>Point Telescope South near declination 0 and near meridian</value>
+    <value>Point telescope south near declination 0 and near the meridian</value>
   </data>
   <data name="LblBackground" xml:space="preserve">
     <value>Background</value>
@@ -439,7 +439,7 @@ Using those two points the actual azimuth error will be calculated and displayed
     <value>Camera binning</value>
   </data>
   <data name="LblBitDepth" xml:space="preserve">
-    <value>Bit Depth</value>
+    <value>Bit depth</value>
   </data>
   <data name="LblBitDepthADU" xml:space="preserve">
     <value>Bit Depth in ADU</value>
@@ -454,40 +454,40 @@ RA: {0}
 Dec: {1}</value>
   </data>
   <data name="LblBlindSolver" xml:space="preserve">
-    <value>Blind Solver</value>
+    <value>Blind solver</value>
   </data>
   <data name="LblBorder" xml:space="preserve">
     <value>Border</value>
   </data>
   <data name="LblBulbMode" xml:space="preserve">
-    <value>Bulb Mode</value>
+    <value>Bulb mode</value>
   </data>
   <data name="LblBulbSerialPort" xml:space="preserve">
-    <value>Bulb Serial Port</value>
+    <value>Bulb serial port</value>
   </data>
   <data name="LblButtonBackground" xml:space="preserve">
-    <value>Button Background</value>
+    <value>Button background</value>
   </data>
   <data name="LblButtonForeground" xml:space="preserve">
-    <value>Button Foreground</value>
+    <value>Button foreground</value>
   </data>
   <data name="LblButtonForegroundDisabled" xml:space="preserve">
-    <value>Button Foreground Disabled</value>
+    <value>Disabled button foreground</value>
   </data>
   <data name="LblButtonHighlight" xml:space="preserve">
-    <value>Button Highlight</value>
+    <value>Button highlight</value>
   </data>
   <data name="LblByteShuffling" xml:space="preserve">
-    <value>Byte Shuffling</value>
+    <value>Byte shuffling</value>
   </data>
   <data name="LblCache" xml:space="preserve">
     <value>Cache</value>
   </data>
   <data name="LblCalculateBias" xml:space="preserve">
-    <value>Calculate Bias</value>
+    <value>Calculate bias</value>
   </data>
   <data name="LblCalculatedExposureTime" xml:space="preserve">
-    <value>Calculated Exposure Time</value>
+    <value>Calculated exposure time</value>
   </data>
   <data name="LblCam" xml:space="preserve">
     <value>Cam</value>
@@ -496,7 +496,7 @@ Dec: {1}</value>
     <value>Camera</value>
   </data>
   <data name="LblCameraBattery" xml:space="preserve">
-    <value>Camera Battery</value>
+    <value>Camera battery</value>
   </data>
   <data name="LblCameraBusy" xml:space="preserve">
     <value>Camera is busy</value>
@@ -505,10 +505,10 @@ Dec: {1}</value>
     <value>Camera connected</value>
   </data>
   <data name="LblCameraConnectionLost" xml:space="preserve">
-    <value>Camera connection lost! Please reconnect camera!</value>
+    <value>Camera connection lost! Please reconnect the camera!</value>
   </data>
   <data name="LblCameraCoolerNotEnabled" xml:space="preserve">
-    <value>Camera has cooler, yet it is not enabled</value>
+    <value>Camera has a cooler but it is not enabled or on</value>
   </data>
   <data name="LblCameraDownloadFailed" xml:space="preserve">
     <value>Camera download failed.
@@ -522,28 +522,28 @@ Filter: {3}</value>
 able to compensate for ambient temperature variations</value>
   </data>
   <data name="LblCameraNotAtTargetTemp" xml:space="preserve">
-    <value>Camera is at {0}°C yet target temperature is {1}°C</value>
+    <value>Camera temperature is {0}°C but the target temperature is {1}°C</value>
   </data>
   <data name="LblCameraOptions" xml:space="preserve">
-    <value>Camera Options</value>
+    <value>Camera options</value>
   </data>
   <data name="LblCameraParameter" xml:space="preserve">
-    <value>Camera Parameter</value>
+    <value>Camera parameter</value>
   </data>
   <data name="LblCameraState" xml:space="preserve">
-    <value>Camera State</value>
+    <value>Camera state</value>
   </data>
   <data name="LblCameraXSize" xml:space="preserve">
-    <value>Camera X Size</value>
+    <value>Sensor X size</value>
   </data>
   <data name="LblCameraYSize" xml:space="preserve">
-    <value>Camera Y Size</value>
+    <value>Sensor Y size</value>
   </data>
   <data name="LblCamInfo" xml:space="preserve">
-    <value>Camera Info</value>
+    <value>Camera info</value>
   </data>
   <data name="LblCamSettings" xml:space="preserve">
-    <value>Camera Settings</value>
+    <value>Camera settings</value>
   </data>
   <data name="LblCancel" xml:space="preserve">
     <value>Cancel</value>
@@ -552,13 +552,13 @@ able to compensate for ambient temperature variations</value>
     <value>A Canon error occurred: {0}</value>
   </data>
   <data name="LblCaptureImageAndPlatesolve" xml:space="preserve">
-    <value>Capture Image and Platesolve</value>
+    <value>Capture image and plate solve</value>
   </data>
   <data name="LblCaptureImageCovered" xml:space="preserve">
-    <value>Cover Sensor and Capture Image</value>
+    <value>Cover sensor and capture image</value>
   </data>
   <data name="LblCaptureImageUncovered" xml:space="preserve">
-    <value>Uncover Sensor and Capture Image</value>
+    <value>Uncover sensor and capture image</value>
   </data>
   <data name="LblCdC" xml:space="preserve">
     <value>Cartes du Ciel</value>
@@ -567,13 +567,13 @@ able to compensate for ambient temperature variations</value>
     <value>Center Dec</value>
   </data>
   <data name="LblCenterDecdms" xml:space="preserve">
-    <value>Center Dec dms</value>
+    <value>Center Dec DMS</value>
   </data>
   <data name="LblCenterRA" xml:space="preserve">
     <value>Center RA</value>
   </data>
   <data name="LblCenterRAhms" xml:space="preserve">
-    <value>Center RA hms</value>
+    <value>Center RA HMS</value>
   </data>
   <data name="LblCenterTarget" xml:space="preserve">
     <value>Center target</value>
@@ -596,7 +596,7 @@ Do you want to close the sequence and lose the changes anyway?</value>
     <value>Please change the mode dial to manual mode</value>
   </data>
   <data name="LblCheckMeridianFlip" xml:space="preserve">
-    <value>Check Meridian Flip</value>
+    <value>Check meridian flip</value>
   </data>
   <data name="LblChecksum" xml:space="preserve">
     <value>Checksum</value>
@@ -620,28 +620,28 @@ Do you want to close the sequence and lose the changes anyway?</value>
     <value>SHA-512</value>
   </data>
   <data name="LblChipTemp" xml:space="preserve">
-    <value>Chip Temperature</value>
+    <value>Sensor temperature</value>
   </data>
   <data name="LblChipTempShort" xml:space="preserve">
-    <value>Chip Temp.</value>
+    <value>Sensor temp.</value>
   </data>
   <data name="LblChooseProfile" xml:space="preserve">
-    <value>Choose Profile</value>
+    <value>Choose profile</value>
   </data>
   <data name="LblClear" xml:space="preserve">
     <value>Clear</value>
   </data>
   <data name="LblClearCache" xml:space="preserve">
-    <value>Clear Cache</value>
+    <value>Clear cache</value>
   </data>
   <data name="LblClockwise" xml:space="preserve">
     <value>Clockwise</value>
   </data>
   <data name="LblCloudCover" xml:space="preserve">
-    <value>Cloud Cover</value>
+    <value>Cloud cover</value>
   </data>
   <data name="LblColorSensorNotSupported" xml:space="preserve">
-    <value>Color sensor is not supported yet</value>
+    <value>Color sensors are not supported</value>
   </data>
   <data name="LblCompression" xml:space="preserve">
     <value>Compression</value>
@@ -947,7 +947,7 @@ Do you want to close the sequence and lose the changes anyway?</value>
     <value>Continue</value>
   </data>
   <data name="LblContrastMethod" xml:space="preserve">
-    <value>Contrast Detect Method</value>
+    <value>Contrast detection method</value>
   </data>
   <data name="LblCoolCamBtnTooltip" xml:space="preserve">
     <value>Turns the cooler on and cools the camera to the given target temperature.
@@ -958,7 +958,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Cooler</value>
   </data>
   <data name="LblCoolerPower" xml:space="preserve">
-    <value>Cooler Power</value>
+    <value>Cooler power</value>
   </data>
   <data name="LblCooling" xml:space="preserve">
     <value>Cooling</value>
@@ -976,44 +976,44 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Cover your scope now</value>
   </data>
   <data name="LblCurrentMean" xml:space="preserve">
-    <value>Current Mean</value>
+    <value>Current mean</value>
   </data>
   <data name="LblCurrentPosition" xml:space="preserve">
-    <value>Current Position</value>
+    <value>Current position</value>
   </data>
   <data name="LblCurrentSequenceEstimates" xml:space="preserve">
     <value>Est. finish time (this target)</value>
   </data>
   <data name="LblCurrentUIColorSchema" xml:space="preserve">
-    <value>Current UI Color Schema</value>
+    <value>Primary UI color scheme</value>
   </data>
   <data name="LblCurveFittingMethod" xml:space="preserve">
-    <value>AF Curve fitting</value>
+    <value>Curve fitting strategy</value>
   </data>
   <data name="LblCygwinBashNotFound" xml:space="preserve">
-    <value>Cygwin bash not found</value>
+    <value>Cygwin bash shell not found</value>
   </data>
   <data name="LblCygwinDirectory" xml:space="preserve">
-    <value>Cygwin Directory</value>
+    <value>Cygwin folder</value>
   </data>
   <data name="LblDarkFlatCount" xml:space="preserve">
-    <value>Dark Flats to take</value>
+    <value>Dark flats to take</value>
   </data>
   <data name="LblDARVSlew" xml:space="preserve">
-    <value>D.A.R.V. Slew</value>
+    <value>D.A.R.V. slew</value>
   </data>
   <data name="LblDARVSlewButtonTooltip" xml:space="preserve">
     <value>This will take an exposure while slewing the scope slowly to one side and back
-when the lines are not aligned there is some Polar Alignment error</value>
+when the lines are not aligned there is some polar alignment error</value>
   </data>
   <data name="LblDARVSlewDescription" xml:space="preserve">
-    <value>Specify the duration for the D.A.R.V. procedure. The telescope will slew half the time in one direction on RA axis and then slew back. In case of no Polar Alignment error it will display as a straight line. Otherwise a V shaped line. For Azimuth Error Measurement slew the scope near meridian, otherwise east or west.</value>
+    <value>Specify the duration for the D.A.R.V. procedure. The telescope will slew half the time in one direction on RA axis and then slew back. In case of no polar alignment error it will display as a straight line. Otherwise a V shaped line. For the azimuth error measurement, slew the scope near meridian, otherwise east or west.</value>
   </data>
   <data name="LblDataProvidedBy" xml:space="preserve">
-    <value>Initial set of DSO Data provided by:</value>
+    <value>Initial set of DSO data provided by:</value>
   </data>
   <data name="LblDataToDownloadRatio" xml:space="preserve">
-    <value>Download to Data ratio</value>
+    <value>Download to data ratio</value>
   </data>
   <data name="LblDateFormatDescription" xml:space="preserve">
     <value>Date with format YYYY-MM-DD</value>
@@ -1037,13 +1037,13 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Debayered HFR</value>
   </data>
   <data name="LblDebayeredHFRTooltip" xml:space="preserve">
-    <value>Use debayered image to perform HFR computation. More precise, but more resource-intensive.</value>
+    <value>Use a debayered image to perform HFR computation. More precise, but also more resource intensive.</value>
   </data>
   <data name="LblDebayerImage" xml:space="preserve">
-    <value>Debayer Image</value>
+    <value>Debayer image</value>
   </data>
   <data name="LblDebayerImageTooltip" xml:space="preserve">
-    <value>Debayer Image on preview (won't affect saved file)</value>
+    <value>Debayer image on preview (won't affect saved file)</value>
   </data>
   <data name="LblDebayeringImage" xml:space="preserve">
     <value>Debayering image</value>
@@ -1055,19 +1055,19 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Dec</value>
   </data>
   <data name="LblDecCorrections" xml:space="preserve">
-    <value>Dec Corrections</value>
+    <value>Dec corrections</value>
   </data>
   <data name="LblDecError" xml:space="preserve">
-    <value>Dec Error</value>
+    <value>Dec error</value>
   </data>
   <data name="LblDeclination" xml:space="preserve">
     <value>Declination</value>
   </data>
   <data name="LblDecPixError" xml:space="preserve">
-    <value>Dec Pix Error</value>
+    <value>Dec error (px)</value>
   </data>
   <data name="LblDefaultAutoFocusExposureTime" xml:space="preserve">
-    <value>Default Auto Focus Exposure Time</value>
+    <value>Default autofocus exposure time</value>
   </data>
   <data name="LblDefaultSequenceFolder" xml:space="preserve">
     <value>Default folder for sequence files</value>
@@ -1094,61 +1094,61 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Details</value>
   </data>
   <data name="LblDetectedStars" xml:space="preserve">
-    <value>Detected Stars</value>
+    <value>Detected stars</value>
   </data>
   <data name="LblDevicePollingInterval" xml:space="preserve">
     <value>Device polling interval</value>
   </data>
   <data name="LblDewHeater" xml:space="preserve">
-    <value>Dew Heater</value>
+    <value>Dew heater</value>
   </data>
   <data name="LblDewHeaterShort" xml:space="preserve">
-    <value>Dew Heater</value>
+    <value>Dew heater</value>
   </data>
   <data name="LblDewpoint" xml:space="preserve">
-    <value>Dewpoint</value>
+    <value>Dew point</value>
   </data>
   <data name="LblDigitalSkySurvey" xml:space="preserve">
     <value>Digital Sky Survey</value>
   </data>
   <data name="LblDirectGuideDuration" xml:space="preserve">
-    <value>Direct Guide Duration</value>
+    <value>Direct guide duration</value>
   </data>
   <data name="LblDirectGuideDurationTooltip" xml:space="preserve">
     <value>Typical pulse guide duration in seconds</value>
   </data>
   <data name="LblRightAscensionGuideRate" xml:space="preserve">
-    <value>Right Ascension Guide Rate</value>
+    <value>Right Ascension guide rate</value>
   </data>
   <data name="LblRightAscensionGuideRateTooltip" xml:space="preserve">
     <value>Right Ascension guide rate in arcseconds per second</value>
   </data>
   <data name="LblDeclinationGuideRate" xml:space="preserve">
-    <value>Declination Guide Rate</value>
+    <value>Declination guide rate</value>
   </data>
   <data name="LblDeclinationGuideRateTooltip" xml:space="preserve">
     <value>Declination guide rate in arcseconds per second</value>
   </data>
   <data name="LblDirectGuiderConnectionFail" xml:space="preserve">
-    <value>Direct Guider could not connect to Telescope</value>
+    <value>Direct Guider could not connect to telescope</value>
   </data>
   <data name="LblDirectGuiderTelescopeDisconnect" xml:space="preserve">
-    <value>Telescope has been disconnected. Direct Guider will disconnect. Dithering no longer effective!</value>
+    <value>Telescope has been disconnected. Direct Guider will disconnect. Dithering can no longer be done!</value>
   </data>
   <data name="LblDirectoryNotFound" xml:space="preserve">
-    <value>Directory to save image to not found!</value>
+    <value>Image folder not found!</value>
   </data>
   <data name="LblDirectoryNotWritable" xml:space="preserve">
-    <value>Directory to save image to does not have write permissions!</value>
+    <value>Image folder does not have write permissions!</value>
   </data>
   <data name="LblDisabled" xml:space="preserve">
     <value>Disabled</value>
   </data>
   <data name="LblDisableAFGuiding" xml:space="preserve">
-    <value>AF Disable Guiding</value>
+    <value>Disable guiding during AF</value>
   </data>
   <data name="LblDisableAFGuidingTooltip" xml:space="preserve">
-    <value>Disable guiding during auto-focus</value>
+    <value>Disables or suspends guiding during autofocus</value>
   </data>
   <data name="LblDisconnect" xml:space="preserve">
     <value>Disconnect</value>
@@ -1163,19 +1163,19 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Dither</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither Every #</value>
+    <value>Dither every #</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
-    <value>Dithering is enabled, yet guider is not connected</value>
+    <value>Dithering is enabled but guiding device is not connected</value>
   </data>
   <data name="LblDitherPixels" xml:space="preserve">
-    <value>Dither Pixels</value>
+    <value>Dither pixels</value>
   </data>
   <data name="LblDitherPixelsDirectGuiderTooltip" xml:space="preserve">
     <value>Typical number of pixels to dither by. Dithering follows a normal distribution centered at the target, which this value as the standard deviation. 67% of dithers will be within this distance</value>
   </data>
   <data name="LblDitherRAOnly" xml:space="preserve">
-    <value>Dither RA Only</value>
+    <value>Dither in RA only</value>
   </data>
   <data name="LblDome" xml:space="preserve">
     <value>Dome</value>
@@ -1223,7 +1223,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Azimuth</value>
   </data>
   <data name="LblDomeNoSource" xml:space="preserve">
-    <value>No Dome Source</value>
+    <value>No dome source</value>
   </data>
   <data name="LblDomeCannotSlew" xml:space="preserve">
     <value>Dome cannot slew</value>
@@ -1259,7 +1259,7 @@ when the lines are not aligned there is some Polar Alignment error</value>
     <value>Download</value>
   </data>
   <data name="LblDownloadImage" xml:space="preserve">
-    <value>Download Image</value>
+    <value>Download image</value>
   </data>
   <data name="LblDownloadImageTooltip" xml:space="preserve">
     <value>Download Image from the NASA skysurvey for the given coordinates</value>
@@ -1382,10 +1382,10 @@ When this trigger is deactivated the application will just skip the Start Exposu
     <value>Example File Name</value>
   </data>
   <data name="LblFileExtension" xml:space="preserve">
-    <value>File Extension</value>
+    <value>File extension</value>
   </data>
   <data name="LblFileFormatOptions" xml:space="preserve">
-    <value>File Format Options</value>
+    <value>File format options</value>
   </data>
   <data name="LblFileSettings" xml:space="preserve">
     <value>File Settings</value>
@@ -1409,13 +1409,13 @@ When this trigger is deactivated the application will just skip the Start Exposu
     <value>One or more sequence items have a filter set, but filter wheel is not connected</value>
   </data>
   <data name="LblFilterWheel" xml:space="preserve">
-    <value>Filterwheel</value>
+    <value>Filter Wheel</value>
   </data>
   <data name="LblFilterwheelConnected" xml:space="preserve">
-    <value>Filterwheel connected</value>
+    <value>Filter wheel connected</value>
   </data>
   <data name="LblFilterwheelConnectionLost" xml:space="preserve">
-    <value>Filterwheel connection lost! Please reconnect filterwheel!</value>
+    <value>Filter wheel connection lost! Please reconnect filter wheel!</value>
   </data>
   <data name="LblFits" xml:space="preserve">
     <value>FITS</value>
@@ -1622,7 +1622,7 @@ When this trigger is deactivated the application will just skip the Start Exposu
     <value>Focuser Temperature</value>
   </data>
   <data name="LblFocuserUseFilterWheelOffsets" xml:space="preserve">
-    <value>Use FilterWheel Offsets</value>
+    <value>Use filter offsets</value>
   </data>
   <data name="LblFocuserUseFilterWheelOffsetsTooltip" xml:space="preserve">
     <value>When switching from one filter to another the focuser will change it's position relative to the given offset specified for that filter</value>
@@ -1814,7 +1814,7 @@ Calculated HFR: {2}
     <value>Imaging</value>
   </data>
   <data name="LblImportFromFilterWheel" xml:space="preserve">
-    <value>Import Filters from Filterwheel</value>
+    <value>Import names from ASCOM driver</value>
   </data>
   <data name="LblIndexFile" xml:space="preserve">
     <value>Index File</value>
@@ -1823,7 +1823,7 @@ Calculated HFR: {2}
     <value>Info</value>
   </data>
   <data name="LblInitiatePlatesolve" xml:space="preserve">
-    <value>Initiate Platesolve</value>
+    <value>Initiate plate solve</value>
   </data>
   <data name="LblInvalidMode" xml:space="preserve">
     <value>Invalid mode</value>
@@ -1898,7 +1898,7 @@ Calculated HFR: {2}
     <value>Load target set</value>
   </data>
   <data name="LblLocalPlatesolver" xml:space="preserve">
-    <value>Local Platesolver</value>
+    <value>Local plate solver</value>
   </data>
   <data name="LblLocation" xml:space="preserve">
     <value>Location</value>
@@ -1925,7 +1925,7 @@ Calculated HFR: {2}
     <value>Manual Coordinates (J2000)</value>
   </data>
   <data name="LblManualFilterWheel" xml:space="preserve">
-    <value>Manual Filterwheel</value>
+    <value>Manual filter wheel</value>
   </data>
   <data name="LblManualFilterWheelDescription" xml:space="preserve">
     <value>Mirrors the filters that are set up inside the options. When a filter change is requested a notification will pop up to manually change the filter.</value>
@@ -1985,16 +1985,16 @@ Calculated HFR: {2}
     <value>Meridian Offset</value>
   </data>
   <data name="LblPHD2Setup" xml:space="preserve">
-    <value>PHD2 Setup</value>
+    <value>PHD2 setup</value>
   </data>
   <data name="LblMetaGuideSetup" xml:space="preserve">
-    <value>MetaGuide Setup</value>
+    <value>MetaGuide setup</value>
   </data>
   <data name="LblMetaGuideIP" xml:space="preserve">
     <value>MetaGuide IP</value>
   </data>
   <data name="LblMetaGuidePort" xml:space="preserve">
-    <value>MetaGuide Port</value>
+    <value>MetaGuide port</value>
   </data>
   <data name="LblMin" xml:space="preserve">
     <value>Min</value>
@@ -2003,7 +2003,7 @@ Calculated HFR: {2}
     <value>Min. Duration</value>
   </data>
   <data name="LblMinExposureTimeDownloadRatio" xml:space="preserve">
-    <value>Minimum Exposure Time from Download Ratio</value>
+    <value>Minimum exposure time from download ratio</value>
   </data>
   <data name="LblMinExpTime" xml:space="preserve">
     <value>Minimum Exposure Time</value>
@@ -2051,7 +2051,7 @@ Calculated HFR: {2}
     <value>Nautical Dusk</value>
   </data>
   <data name="LblNewPosition" xml:space="preserve">
-    <value>New Position</value>
+    <value>New position</value>
     <comment>Newly Calulated Autofocus Position</comment>
   </data>
   <data name="LblNewUpdateAvailable" xml:space="preserve">
@@ -2067,7 +2067,7 @@ Calculated HFR: {2}
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>From N.I.N.A. to Telescope</value>
+    <value>From N.I.N.A. to telescope</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>No</value>
@@ -2088,7 +2088,7 @@ Calculated HFR: {2}
     <value>There are no options for this file format</value>
   </data>
   <data name="LblNoFilterwheel" xml:space="preserve">
-    <value>No Filterwheel</value>
+    <value>No filter wheel</value>
   </data>
   <data name="LblNoFocuser" xml:space="preserve">
     <value>No Focuser</value>
@@ -2121,7 +2121,7 @@ Calculated HFR: {2}
     <value>No Switch</value>
   </data>
   <data name="LblNoSync" xml:space="preserve">
-    <value>No Sync</value>
+    <value>Do not sync</value>
   </data>
   <data name="LblNoSyncTooltip" xml:space="preserve">
     <value>When enabled the application will never send a sync command to the telescope. This should only be used when having a good pointing model that should not be altered in any way.</value>
@@ -2253,7 +2253,7 @@ Calculated HFR: {2}
     <value>OK</value>
   </data>
   <data name="LblOldPosition" xml:space="preserve">
-    <value>Old Position</value>
+    <value>Old position</value>
     <comment>Previous Focuser Position</comment>
   </data>
   <data name="LblOn" xml:space="preserve">
@@ -2320,7 +2320,7 @@ Calculated HFR: {2}
     <value>Paused</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Pause before Meridian</value>
+    <value>Pause before meridian</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>FlatMaster</value>
@@ -2359,7 +2359,7 @@ Calculated HFR: {2}
     <value>PHD2 Server Port</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 Server URL</value>
+    <value>PHD2 server URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>PHD2 Settings</value>
@@ -2386,7 +2386,7 @@ Calculated HFR: {2}
     <value>Tot: {0} ({1}")</value>
   </data>
   <data name="LblPhd2Profile" xml:space="preserve">
-    <value>PHD2 Profile</value>
+    <value>PHD2 profile</value>
   </data>
   <data name="LblPhd2ProfileChanged" xml:space="preserve">
     <value>Changed PHD2 profile to {0}</value>
@@ -2401,7 +2401,7 @@ Calculated HFR: {2}
     <value>Pixels</value>
   </data>
   <data name="LblMaxPixels" xml:space="preserve">
-    <value>Max Pixels</value>
+    <value>Max. pixels</value>
   </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Pixel Scale</value>
@@ -2446,22 +2446,22 @@ Calculated HFR: {2}
     <value>Platesolve2</value>
   </data>
   <data name="LblPlatesolve2Directory" xml:space="preserve">
-    <value>Platesolve2 Location</value>
+    <value>Platesolve2 location</value>
   </data>
   <data name="LblPlatesolve2NoCoordinates" xml:space="preserve">
     <value>No coordinates available. Platesolve2 requires coordinates to solve!</value>
   </data>
   <data name="LblPlatesolve2NotFound" xml:space="preserve">
-    <value>Platesolve2 exe not found</value>
+    <value>Platesolve2.exe not found</value>
   </data>
   <data name="LblPlateSolvedPolarAlignment" xml:space="preserve">
-    <value>Plate Solved Polar Alignment</value>
+    <value>Plate solved polar alignment</value>
   </data>
   <data name="LblPlateSolveEnding" xml:space="preserve">
-    <value>PlateSolve reached maximum number of attempts, or Meridian Flip necessary.</value>
+    <value>Plate solve has reached the maximum number of attempts or a meridian flip is necessary.</value>
   </data>
   <data name="LblPlatesolveFailed" xml:space="preserve">
-    <value>Platesolve failed</value>
+    <value>Plate solve failed</value>
   </data>
   <data name="LblPlateSolveFailedDelay" xml:space="preserve">
     <value>Delay between attempts</value>
@@ -2488,22 +2488,22 @@ Calculated HFR: {2}
     <value>Telescope not inside tolerance. Repeating...</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceReslew" xml:space="preserve">
-    <value>Telescope not inside tolerance. Re-slew to target...</value>
+    <value>Telescope not inside tolerance. Re-slewing to target...</value>
   </data>
   <data name="LblPlateSolveNotInsideToleranceSyncing" xml:space="preserve">
     <value>Telescope not inside tolerance. Syncing scope...</value>
   </data>
   <data name="LblPlatesolveProvidedBy" xml:space="preserve">
-    <value>Platesolve service provided by</value>
+    <value>Plate solve service provided by</value>
   </data>
   <data name="LblPlateSolver" xml:space="preserve">
-    <value>Plate Solver</value>
+    <value>Plate solver</value>
   </data>
   <data name="LblPlateSolveReattemptDelay" xml:space="preserve">
     <value>Waiting for next plate solve attempt: {0}</value>
   </data>
   <data name="LblPlateSolveSettings" xml:space="preserve">
-    <value>Plate Solver Settings</value>
+    <value>Plate solver settings</value>
   </data>
   <data name="LblPlateSolving" xml:space="preserve">
     <value>Plate Solving</value>
@@ -2530,7 +2530,7 @@ Calculated HFR: {2}
     <value>Position</value>
   </data>
   <data name="LblRelativePosition" xml:space="preserve">
-    <value>Relative Position</value>
+    <value>Relative position</value>
   </data>
   <data name="LblClearGuidingCalibration" xml:space="preserve">
     <value>Clear calibration</value>
@@ -2635,7 +2635,7 @@ Calculated HFR: {2}
     <value>Recenter Image</value>
   </data>
   <data name="LblRecommendedExposureTime" xml:space="preserve">
-    <value>Recommended Exposure Time</value>
+    <value>Recommended exposure time</value>
   </data>
   <data name="LblReconnectAll" xml:space="preserve">
     <value>Reconnect all devices?</value>
@@ -2644,7 +2644,7 @@ Calculated HFR: {2}
     <value>Please reconnect camera!</value>
   </data>
   <data name="LblReconnectFilterwheel" xml:space="preserve">
-    <value>Please reconnect filterwheel!</value>
+    <value>Please reconnect the filter wheel!</value>
   </data>
   <data name="LblReconnectFocuser" xml:space="preserve">
     <value>Please reconnect focuser!</value>
@@ -2785,7 +2785,7 @@ Calculated HFR: {2}
     <value>Selected profile cannot be chosen. It is already in use by another N.I.N.A. instance!</value>
   </data>
   <data name="LblSensorAnalysisPoorFit" xml:space="preserve">
-    <value>Sensor Analysis is irregular, and may not produce accurate results. Consider re-running it.</value>
+    <value>Sensor analysis is irregular, and may not produce accurate results. Consider running it again.</value>
   </data>
   <data name="LblSensorName" xml:space="preserve">
     <value>Sensor Name</value>
@@ -2858,7 +2858,7 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>Set new value</value>
   </data>
   <data name="LblSetPark" xml:space="preserve">
-    <value>Set As Park</value>
+    <value>Set as park</value>
   </data>
   <data name="LblSetParkToolTip" xml:space="preserve">
     <value>Sets the park position to be the current position</value>
@@ -2870,16 +2870,16 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>Settle</value>
   </data>
   <data name="LblSettlePixelTolerance" xml:space="preserve">
-    <value>Settle Pixel Tolerance</value>
+    <value>Settle pixel tolerance</value>
   </data>
   <data name="LblSettleTimeAfterSlew" xml:space="preserve">
     <value>Settle time after slew</value>
   </data>
   <data name="LblSettleTimeout" xml:space="preserve">
-    <value>Settle Timeout</value>
+    <value>Settle timeout</value>
   </data>
   <data name="LblAutoRetryStartGuiding" xml:space="preserve">
-    <value>Guiding Start Retry</value>
+    <value>Guiding start retry</value>
   </data>
   <data name="LblAutoRetryStartGuidingTooltip" xml:space="preserve">
     <value>Attempt to recover StartGuiding command if the guider does not report it is guiding after the specified amount of time.</value>
@@ -2888,13 +2888,13 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>Timeout in seconds before abandoning a StartGuiding command before attempting to a retry.</value>
   </data>
   <data name="LblSharpCapSensorAnalysisPath" xml:space="preserve">
-    <value>SharpCap Sensor Analysis folder</value>
+    <value>SharpCap sensor analysis folder</value>
   </data>
   <data name="LblSharpCapSensorAnalysisLoadedFormat" xml:space="preserve">
     <value>Loaded {0} sensors</value>
   </data>
   <data name="LblSharpCapSensorAnalysisPathTooltip" xml:space="preserve">
-    <value>Folder where SharpCap Sensor Analysis files can be found, if somewhere other than their default location</value>
+    <value>Folder where SharpCap sensor analysis files can be found</value>
   </data>
   <data name="LblSiderealTime" xml:space="preserve">
     <value>Sidereal Time</value>
@@ -2918,7 +2918,7 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>Sky Atlas</value>
   </data>
   <data name="LblSkyAtlasImageDirectory" xml:space="preserve">
-    <value>Sky Atlas Image Directory</value>
+    <value>Sky Atlas image folder</value>
   </data>
   <data name="LblSkyAtlasSkySurvey" xml:space="preserve">
     <value>SkyAtlas (Offline Framing)</value>
@@ -2933,7 +2933,7 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>SkyServer Sky Survey</value>
   </data>
   <data name="LblSkySurveyCacheDirectory" xml:space="preserve">
-    <value>Sky Survey Cache Directory</value>
+    <value>Sky Survey cache folder</value>
   </data>
   <data name="LblSkyTemperature" xml:space="preserve">
     <value>Sky Temperature</value>
@@ -2942,7 +2942,7 @@ This template will be used on startup to initialize the sequence instead of the 
     <value>Slew</value>
   </data>
   <data name="LblSlewCenter" xml:space="preserve">
-    <value>Slew and Center</value>
+    <value>Slew and center</value>
   </data>
   <data name="LblSlewDuration" xml:space="preserve">
     <value>Slew Duration</value>
@@ -3178,13 +3178,13 @@ Should the values be synced?</value>
     <value>Telescope synced to coordinates</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>From Telescope to N.I.N.A.</value>
+    <value>From telescope to N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
-    <value>RA Guide Rate</value>
+    <value>RA guide rate</value>
   </data>
   <data name="LblTelescopeGuideRateDec" xml:space="preserve">
-    <value>Dec Guide Rate</value>
+    <value>Dec guide rate</value>
   </data>
   <data name="LblTempComp" xml:space="preserve">
     <value>Temp Comp</value>
@@ -3315,7 +3315,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Tracking</value>
   </data>
   <data name="LblTrackingRate" xml:space="preserve">
-    <value>Tracking Rate</value>
+    <value>Tracking rate</value>
   </data>
   <data name="LblTrackingStopped" xml:space="preserve">
     <value>Stopped</value>
@@ -3391,94 +3391,94 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Unpark</value>
   </data>
   <data name="LblUPBV2AmpereHours" xml:space="preserve">
-    <value>Ampere Hours</value>
+    <value>Amp-hours</value>
   </data>
   <data name="LblUPBV2AutoDewControl" xml:space="preserve">
-    <value>Automatic Dew Control</value>
+    <value>Automatic dew control</value>
   </data>
   <data name="LblUPBV2AverageCurrent" xml:space="preserve">
-    <value>Average Current</value>
+    <value>Average current</value>
   </data>
   <data name="LblUPBV2Current" xml:space="preserve">
     <value>Current</value>
   </data>
   <data name="LblUPBV2DeviceData" xml:space="preserve">
-    <value>Device Data</value>
+    <value>Device data</value>
   </data>
   <data name="LblUPBV2DewHeater" xml:space="preserve">
-    <value>Dew Heater Port</value>
+    <value>Dew heater port</value>
   </data>
   <data name="LblUPBV2DewHeaterPorts" xml:space="preserve">
-    <value>Dew Heaters</value>
+    <value>Dew heaters</value>
   </data>
   <data name="LblUPBV2DewPoint" xml:space="preserve">
-    <value>Dew Point</value>
+    <value>Dew point</value>
   </data>
   <data name="LblUPBV2ExcessCurrent" xml:space="preserve">
-    <value>Excess Current</value>
+    <value>Excess current</value>
   </data>
   <data name="LblUPBV2InputCurrent" xml:space="preserve">
-    <value>Input Current</value>
+    <value>Input current</value>
   </data>
   <data name="LblUPBV2InputPower" xml:space="preserve">
     <value>Power</value>
   </data>
   <data name="LblUPBV2InputVoltage" xml:space="preserve">
-    <value>Input Voltage</value>
+    <value>Input voltage</value>
   </data>
   <data name="LblUPBV2InvalidResponse" xml:space="preserve">
     <value>Invalid response from Pegasus Astro Ultimate Powerbox V2.</value>
   </data>
   <data name="LblUPBV2Power1" xml:space="preserve">
-    <value>Power Port 1</value>
+    <value>Power port 1</value>
   </data>
   <data name="LblUPBV2Power2" xml:space="preserve">
-    <value>Power Port 2</value>
+    <value>Power port 2</value>
   </data>
   <data name="LblUPBV2Power3" xml:space="preserve">
-    <value>Power Port 3</value>
+    <value>Power port 3</value>
   </data>
   <data name="LblUPBV2Power4" xml:space="preserve">
-    <value>Power Port 4</value>
+    <value>Power port 4</value>
   </data>
   <data name="LblUPBV2PowerPorts" xml:space="preserve">
     <value>Power</value>
   </data>
   <data name="LblUPBV2RelativeHumidity" xml:space="preserve">
-    <value>Relative Humidity</value>
+    <value>Relative humidity</value>
   </data>
   <data name="LblUPBV2Temperature" xml:space="preserve">
     <value>Temperature</value>
   </data>
   <data name="LblUPBV2UpTime" xml:space="preserve">
-    <value>Up-Time</value>
+    <value>Uptime</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>USB Port 1</value>
+    <value>USB port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>USB Port 2</value>
+    <value>USB port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>USB Port 3</value>
+    <value>USB port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>USB Port 4</value>
+    <value>USB port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>USB Port 5</value>
+    <value>USB port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>USB Port 6</value>
+    <value>USB port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
     <value>USB</value>
   </data>
   <data name="LblUPBV2VariablePower" xml:space="preserve">
-    <value>Variable Power Port</value>
+    <value>Variable power port</value>
   </data>
   <data name="LblUPBV2WattHours" xml:space="preserve">
-    <value>Watt Hours</value>
+    <value>Watt-hours</value>
   </data>
   <data name="LblUpdate" xml:space="preserve">
     <value>Update</value>
@@ -3502,7 +3502,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Use bulb mode</value>
   </data>
   <data name="LblUseSharpCapSensorAnalysis" xml:space="preserve">
-    <value>Use SharpCap Sensor Analysis</value>
+    <value>Use SharpCap sensor analysis</value>
   </data>
   <data name="LblUseSideOfPier" xml:space="preserve">
     <value>Use Telescope Side of Pier</value>
@@ -3541,7 +3541,7 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Warning</value>
   </data>
   <data name="LblWarnTelescopeParked" xml:space="preserve">
-    <value>The Telescope is parked, and will be automatically unparked if user proceeds with sequence start</value>
+    <value>The telescope is parked. It will be unparked if the sequence is started</value>
   </data>
   <data name="LblWeather" xml:space="preserve">
     <value>Weather</value>
@@ -3637,31 +3637,31 @@ Drag the rectangle over the part of the frame you want to subsample and enable s
     <value>Fit Image to Area</value>
   </data>
   <data name="UPBV2InputCurrentChartLabel" xml:space="preserve">
-    <value>Input Current (A)</value>
+    <value>Input current (A)</value>
   </data>
   <data name="UPBV2InputVoltageChartLabel" xml:space="preserve">
-    <value>Input Voltage (V)</value>
+    <value>Input voltage (V)</value>
   </data>
   <data name="LblSetMaximumSpeed" xml:space="preserve">
-    <value>Set Maximum Speed</value>
+    <value>Set maximum speed</value>
   </data>
   <data name="LblBackLashSteps" xml:space="preserve">
-    <value>Backlash Steps</value>
+    <value>Backlash steps</value>
   </data>
   <data name="LblReverse" xml:space="preserve">
     <value>Reverse</value>
   </data>
   <data name="LblSetCurrentPosition" xml:space="preserve">
-    <value>Set Current Position</value>
+    <value>Set current position</value>
   </data>
   <data name="LblStepperMotorDirection" xml:space="preserve">
-    <value>Stepper Motor Direction</value>
+    <value>Stepper motor direction</value>
   </data>
   <data name="LblAuto" xml:space="preserve">
     <value>Auto</value>
   </data>
   <data name="LblBayerPattern" xml:space="preserve">
-    <value>Bayer Pattern</value>
+    <value>Bayer pattern</value>
   </data>
   <data name="LblBayerPatternBGGR" xml:space="preserve">
     <value>BGGR</value>
@@ -3701,25 +3701,25 @@ The default of Auto uses any pattern that the camera driver might provide. Does 
     <value>Sky Quality Meter reading</value>
   </data>
   <data name="LblReadoutModePatternDescription" xml:space="preserve">
-    <value>Camera Readout Mode</value>
+    <value>Camera readout mode</value>
   </data>
   <data name="LblSerialPortCannotOpen" xml:space="preserve">
     <value>Cannot open serial port {0}: {1}</value>
   </data>
   <data name="LblPointingTolerance" xml:space="preserve">
-    <value>Pointing Tolerance</value>
+    <value>Pointing tolerance</value>
   </data>
   <data name="LblAutoFocusAfterFlip" xml:space="preserve">
-    <value>Auto Focus after Flip</value>
+    <value>Autofocus after flip</value>
   </data>
   <data name="LblExposureFinished" xml:space="preserve">
     <value>Exposure finished</value>
   </data>
   <data name="LblCameraTimeout" xml:space="preserve">
-    <value>Camera Timeout - Camera did not set image as ready after exposuretime + {0} seconds</value>
+    <value>Camera timeout - Camera did not set image as ready after exposure time + {0} seconds</value>
   </data>
   <data name="LblImagePatternPreview" xml:space="preserve">
-    <value>Pattern Preview</value>
+    <value>Pattern preview</value>
   </data>
   <data name="LblB1950" xml:space="preserve">
     <value>B1950</value>
@@ -3750,7 +3750,7 @@ The default of Auto uses any pattern that the camera driver might provide. Does 
     <comment>Focuser Backlash Compensation Method to add an absolute value after a focuser direction change</comment>
   </data>
   <data name="LblFocuserBacklashMethod" xml:space="preserve">
-    <value>Backlash Compensation Method</value>
+    <value>Backlash compensation method</value>
   </data>
   <data name="LblFocuserBacklashMethodTooltip" xml:space="preserve">
     <value>This controls the backlash compensation method used.
@@ -3772,10 +3772,10 @@ The method can only be changed when the focuser is not connected!</value>
     <comment>Focuser Backlash Compensation Method by overshooting the position and moving back</comment>
   </data>
   <data name="LblFocuserMoveLargeTooltip" xml:space="preserve">
-    <value>Moves focuser by a large amount using five times the Autofocus Stepsize</value>
+    <value>Moves focuser by a large amount using five times the autofocus step size</value>
   </data>
   <data name="LblFocuserMoveSmallTooltip" xml:space="preserve">
-    <value>Moves focuser by a small amount using half the Autofocus Stepsize </value>
+    <value>Moves focuser by a small amount using half the autofocus step size </value>
   </data>
   <data name="LblMoveFocuserTooltip" xml:space="preserve">
     <value>Moves focuser to the specified target position</value>
@@ -3784,28 +3784,28 @@ The method can only be changed when the focuser is not connected!</value>
     <value>Moves rotator to the specified target position</value>
   </data>
   <data name="LblIncompatibleGainsInSequence" xml:space="preserve">
-    <value>Sequence contains items using incompatible Gain settings. These will be ignored!</value>
+    <value>Sequence contains items that use incompatible gain settings. These will be ignored!</value>
   </data>
   <data name="LblIncompatibleOffsetsInSequence" xml:space="preserve">
-    <value>Sequence cotains items using incompatible Offset settings. These will be ignored!</value>
+    <value>Sequence contains items that use incompatible offset settings. These will be ignored!</value>
   </data>
   <data name="LblFlatDeviceAddBinningMode" xml:space="preserve">
-    <value>Add Binning</value>
+    <value>Add binning</value>
   </data>
   <data name="LblFlatDeviceAddGain" xml:space="preserve">
-    <value>Add Gain</value>
+    <value>Add gain</value>
   </data>
   <data name="LblFlatDeviceAreYouSureBinning" xml:space="preserve">
-    <value>Are you sure you want to delete all values for binning</value>
+    <value>Are you sure you want to delete all values for binning?</value>
   </data>
   <data name="LblFlatDeviceAreYouSureGain" xml:space="preserve">
-    <value>Are you sure you want to delete all values for gain</value>
+    <value>Are you sure you want to delete all values for gain?</value>
   </data>
   <data name="LblFlatDeviceDeleteBinningMode" xml:space="preserve">
-    <value>Delete Binning</value>
+    <value>Delete binning</value>
   </data>
   <data name="LblFlatDeviceDeleteGain" xml:space="preserve">
-    <value>Delete Gain</value>
+    <value>Delete gain</value>
   </data>
   <data name="LblCouldNotReachTargetTemperature" xml:space="preserve">
     <value>Camera is unable to reach the specified target temperature!</value>
@@ -3819,10 +3819,10 @@ A duration is optional. Most camera drivers already regulate the cooler power au
 In case a longer duration is needed, a duration can be specified and the application will slowly raise the target temperature of the camera based on the given duration.</value>
   </data>
   <data name="LblWaitForImageSaving" xml:space="preserve">
-    <value>Waiting for Image saving</value>
+    <value>Saving image file</value>
   </data>
   <data name="LblHighGainMode" xml:space="preserve">
-    <value>High Gain Mode</value>
+    <value>High gain mode</value>
   </data>
   <data name="LblHighGainModeTooltip" xml:space="preserve">
     <value>Sets the camera to high gain mode. This gain mode has less read noise compared to low gain and it is advised for most cams to activate always, except when you want to use the lowest possible gain with the highest dynamic range.</value>
@@ -3831,7 +3831,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Focusers without the capability to use absolute positions are currently not supported</value>
   </data>
   <data name="LblQhyIncludeOverscan" xml:space="preserve">
-    <value>Include Overscan Area</value>
+    <value>Include overscan area</value>
   </data>
   <data name="LblQhyIncludeOverscanTooltip" xml:space="preserve">
     <value>Setting to On will the include any optical black and overscan areas of the sensor in images</value>
@@ -3853,7 +3853,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Authors</value>
   </data>
   <data name="LblChangelog" xml:space="preserve">
-    <value>Changelog</value>
+    <value>Change log</value>
   </data>
   <data name="LblDocumentation" xml:space="preserve">
     <value>Documentation</value>
@@ -3868,10 +3868,10 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Repository</value>
   </data>
   <data name="LblThirdPartyLicenses" xml:space="preserve">
-    <value>Third Party Licenses</value>
+    <value>Third party licenses</value>
   </data>
   <data name="LblASCOMPlatformOutdated" xml:space="preserve">
-    <value>ASCOM Platform Version is outdated. Please update to the latest ASCOM platform version. Otherwise the application might not be able to connect to all ASCOM devices.</value>
+    <value>ASCOM Platform version is outdated. Please update to the latest ASCOM platform version. Otherwise the application might not be able to connect to all ASCOM devices.</value>
   </data>
   <data name="LblDomeShutter" xml:space="preserve">
     <value>Shutter</value>
@@ -3907,61 +3907,61 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Rotate the dome to the park location set in the driver and close the shutter</value>
   </data>
   <data name="LblDynamicBrightness" xml:space="preserve">
-    <value>Dynamic Brightness</value>
+    <value>Dynamic brightness</value>
   </data>
   <data name="LblDynamicExposure" xml:space="preserve">
-    <value>Dynamic Exposure</value>
+    <value>Dynamic exposure</value>
   </data>
   <data name="LblFlatPanelBrightness" xml:space="preserve">
-    <value>Flat Panel Brightness</value>
+    <value>Flat panel brightness</value>
   </data>
   <data name="LblFlatPanelMaxBrightness" xml:space="preserve">
-    <value>Max Flat Panel Brightness</value>
+    <value>Max. flat panel brightness</value>
   </data>
   <data name="LblFlatPanelMinBrightness" xml:space="preserve">
-    <value>Min Flat Panel Brightness</value>
+    <value>Min. flat panel brightness</value>
   </data>
   <data name="LblWizardOperationMode" xml:space="preserve">
-    <value>Wizard Mode</value>
+    <value>Wizard mode</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance</value>
+    <value>Azimuth tolerance</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>The dome slews if the target azimuth is off by more than this amount</value>
   </data>
   <data name="LblDomeDirectDriver" xml:space="preserve">
-    <value>Use NINA Direct Following</value>
+    <value>Use N.I.N.A. direct following</value>
   </data>
   <data name="LblDomeFindHome" xml:space="preserve">
-    <value>Find Home</value>
+    <value>Find home</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length</value>
+    <value>GEM axis length</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
-    <value>If Alt/Az, this should be 0. For an EQ mount, slew RA to +/- 90 degrees, and measure the lateral distance (in mm) from the axis to center of the telescope aperture</value>
+    <value>If alt/az, this should be 0. For an EQ mount, slew RA to +/- 90 degrees, and measure the lateral distance from the axis to center of the telescope aperture</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length</value>
+    <value>Lateral axis length</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>In a side-by-side configuration, this is the distance (laterally, in mm) from the saddle to the OTA center. Positive is to the right along the OTA axis.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius</value>
+    <value>Dome radius</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Measure from the center to the rim of the dome, along the base</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W</value>
+    <value>Telescope position E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Measure the East or West offset (in mm) of the center of the mount from the center of the dome. Positive is to the east.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S</value>
+    <value>Telescope position N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Dome following may be inaccurate. Check that your mount epoch is configured correctly and do a plate solve sync</value>
@@ -3970,25 +3970,25 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Error while syncing Dome. Dome following now stopped.</value>
   </data>
   <data name="LblCancelSequence" xml:space="preserve">
-    <value>Cancel Sequence</value>
+    <value>Cancel sequence</value>
   </data>
   <data name="LblDomeScopeNSTooltip" xml:space="preserve">
     <value>Measure the North or South offset (in mm) of the center of the mount from the center of the dome. Positive is to the north.</value>
   </data>
   <data name="LblPauseSequence" xml:space="preserve">
-    <value>Pause Sequence</value>
+    <value>Pause sequence</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down</value>
+    <value>Telescope position +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Measure the height difference (in mm) of the center of the mount axis relative to the base of the dome. For an Alt/Az mount, this is from the center of the Altitude axis, and for an EQ mount this is where the RA and DEC axes intersect. A positive number indicates the center of axis is higher than the base of the dome, and a negative number means it is lower.</value>
   </data>
   <data name="LblDomeSettings" xml:space="preserve">
-    <value>Dome Settings</value>
+    <value>Dome settings</value>
   </data>
   <data name="LblResumeSequence" xml:space="preserve">
-    <value>Resume Sequence</value>
+    <value>Resume sequence</value>
   </data>
   <data name="LblDomeFollowing" xml:space="preserve">
     <value>Dome follows telescope</value>
@@ -4000,7 +4000,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Timed out while waiting for dome synchronization</value>
   </data>
   <data name="LblStartSequence" xml:space="preserve">
-    <value>Start Sequence</value>
+    <value>Start sequence</value>
   </data>
   <data name="LblSequenceContainsDarksAndLights" xml:space="preserve">
     <value>Camera has no mechanical shutter, no automated flat panel is connected and sequence contains DARK/BIAS items mixed in with LIGHT.</value>
@@ -4009,19 +4009,19 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Camera has no mechanical shutter, no automated flat panel is connected and sequence only contains DARK/BIAS items. Make sure camera is covered.</value>
   </data>
   <data name="LblAutoFocusFilterSettings" xml:space="preserve">
-    <value>Auto Focus Filter Settings</value>
+    <value>Autofocus filter settings</value>
   </data>
   <data name="LblMeridianFlipIn" xml:space="preserve">
-    <value>Meridian Flip in</value>
+    <value>Meridian flip in</value>
   </data>
   <data name="LblMeridianFlipCenterFailed" xml:space="preserve">
-    <value>Center after Meridian Flip Failed</value>
+    <value>Centering after meridian flip failed</value>
   </data>
   <data name="LblDefaultGain" xml:space="preserve">
-    <value>Default Gain</value>
+    <value>Default gain</value>
   </data>
   <data name="LblDefaultOffset" xml:space="preserve">
-    <value>Default Offset</value>
+    <value>Default offset</value>
   </data>
   <data name="LblDefaultGainTooltip" xml:space="preserve">
     <value>This value specifies the default gain that should be used whenever no gain was set explicitly</value>
@@ -4039,34 +4039,34 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Camera still connected. Exit anyway?</value>
   </data>
   <data name="LblDisconnectCamera" xml:space="preserve">
-    <value>Disconnect Camera?</value>
+    <value>Disconnect camera?</value>
   </data>
   <data name="LblDisconnectFilterWheel" xml:space="preserve">
-    <value>Disconnect Filter Wheel?</value>
+    <value>Disconnect the filter wheel?</value>
   </data>
   <data name="LblDisconnectFocuser" xml:space="preserve">
-    <value>Disconnect Focuser?</value>
+    <value>Disconnect focuser?</value>
   </data>
   <data name="LblDisconnectRotator" xml:space="preserve">
-    <value>Disconnect Rotator?</value>
+    <value>Disconnect rotator?</value>
   </data>
   <data name="LblDisconnectTelescope" xml:space="preserve">
-    <value>Disconnect Telescope?</value>
+    <value>Disconnect telescope?</value>
   </data>
   <data name="LblTelescopeParkedWarning" xml:space="preserve">
     <value>Telescope is parked. You may need to unpark your scope before slewing.</value>
   </data>
   <data name="LblSideOfPier" xml:space="preserve">
-    <value>Side of Pier</value>
+    <value>Side of pier</value>
   </data>
   <data name="LblCameraTimeoutOption" xml:space="preserve">
-    <value>Camera Timeout</value>
+    <value>Camera timeout</value>
   </data>
   <data name="LblCameraTimeoutTooltip" xml:space="preserve">
     <value>The amount of time after exposure time until the image is considered as lost. When the camera does not send an image ready event after Exposure Time + Timeout the exposure will be cancelled.</value>
   </data>
   <data name="LblCalibrationState" xml:space="preserve">
-    <value>Calibration State</value>
+    <value>Calibration state</value>
   </data>
   <data name="LblFWHM" xml:space="preserve">
     <value>FWHM</value>
@@ -4075,7 +4075,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Intensity</value>
   </data>
   <data name="LblMinIntensity" xml:space="preserve">
-    <value>Minimum Intensity</value>
+    <value>Minimum intensity</value>
   </data>
   <data name="LblMinIntensityTooltip" xml:space="preserve">
     <value>Guide star intensity is measured on a scale of 0-255. If intensity drops below this amount, then NINA will pause guiding until it returns. This may indicate the presence of clouds.</value>
@@ -4093,7 +4093,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Failed to resume guiding after star intensity recovered</value>
   </data>
   <data name="LblSkyFlat" xml:space="preserve">
-    <value>Sky Flats</value>
+    <value>Sky flats</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
     <value>Dome synchronization error. No longer following telescope. {0}</value>
@@ -4102,7 +4102,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Close dome shutter at sequence end</value>
   </data>
   <data name="LblDomeEnableFollowingWarning" xml:space="preserve">
-    <value>Could not enable Dome/Telescope following</value>
+    <value>Could not enable dome or telescope following</value>
   </data>
   <data name="LblParkDomeAtSequenceEnd" xml:space="preserve">
     <value>Park dome at sequence end</value>
@@ -4111,7 +4111,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Allow sync while mount slews</value>
   </data>
   <data name="LblDomeSyncDuringMountSlewTooltip" xml:space="preserve">
-    <value>When Dome Following is enabled, NINA will frequently check if the Dome needs to be rotated to line up with the telescope. When an external application, such as a planetarium or a handset, moves the telescope it may be helpful to wait until the telescope is no longer moving to rotate the dome.</value>
+    <value>When Dome Following is enabled, N.I.N.A. will frequently check if the dome needs to be rotated to line up with the telescope. When an external application, such as a planetarium or a handset, moves the telescope it may be helpful to wait until the telescope is no longer moving to rotate the dome.</value>
   </data>
   <data name="LblDomeFindHomeBeforePark" xml:space="preserve">
     <value>Find home before parking</value>
@@ -4138,25 +4138,25 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Immediately closes the dome shutter if a SafetyMonitor device reports unsafe conditions</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
-    <value>AF Sequence Timeout</value>
+    <value>Sequence timeout</value>
   </data>
   <data name="LblAutoFocusTimeoutTooltip" xml:space="preserve">
-    <value>Amount of time, in seconds, to wait for an auto focus during a sequence before cancelling to continue</value>
+    <value>Amount of time to wait for an autofocus during a sequence before cancelling to continue</value>
   </data>
   <data name="LblMetaGuideLowIntensityStopGuiding" xml:space="preserve">
     <value>Stopped guiding due to low star intensity. There may be clouds.</value>
   </data>
   <data name="LblDomeSyncTimeout" xml:space="preserve">
-    <value>Synchronization Timeout</value>
+    <value>Synchronization timeout</value>
   </data>
   <data name="LblDomeSyncTimeoutTooltip" xml:space="preserve">
-    <value>The maximum amount of time, in seconds, to wait for the Dome and Telescope to synchronize their positions</value>
+    <value>The maximum amount of time to wait for the dome and telescope to synchronize their positions</value>
   </data>
   <data name="LblC2A" xml:space="preserve">
     <value>C2A</value>
   </data>
   <data name="LblCameraName" xml:space="preserve">
-    <value>Camera Name</value>
+    <value>Camera name</value>
   </data>
   <data name="LblRotatorAngleDescription" xml:space="preserve">
     <value>Angle of the rotator</value>
@@ -4168,7 +4168,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Camera not connected</value>
   </data>
   <data name="LblFilterWheelNotConnected" xml:space="preserve">
-    <value>Filterwheel not connected</value>
+    <value>Filter wheel connected</value>
   </data>
   <data name="LblFocuserNotConnected" xml:space="preserve">
     <value>Focuser not connected</value>
@@ -4198,16 +4198,16 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Executing items in parallel</value>
   </data>
   <data name="LblEnterAnnotation" xml:space="preserve">
-    <value>Enter Annotation</value>
+    <value>Enter annotation</value>
   </data>
   <data name="LblAfterIterations" xml:space="preserve">
-    <value>After Iterations</value>
+    <value>After iterations</value>
   </data>
   <data name="LblFlatDeviceNotConnected" xml:space="preserve">
-    <value>Flat Device not connected</value>
+    <value>Flat device not connected</value>
   </data>
   <data name="LblEnterMessage" xml:space="preserve">
-    <value>Enter Message</value>
+    <value>Enter message</value>
   </data>
   <data name="LblMessage" xml:space="preserve">
     <value>Message</value>
@@ -4234,13 +4234,13 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Send coordinates to the Framing Wizard</value>
   </data>
   <data name="LblImportTargets" xml:space="preserve">
-    <value>Import Targets from external source</value>
+    <value>Import targets from an external source</value>
   </data>
   <data name="LblUnknownImportFormat" xml:space="preserve">
-    <value>Unknown format to import targets</value>
+    <value>Unknown file format</value>
   </data>
   <data name="LblUltraMode" xml:space="preserve">
-    <value>Ultra Mode</value>
+    <value>Ultra mode</value>
   </data>
   <data name="LblUltraModeTooltip" xml:space="preserve">
     <value>Enables the Ultra Mode for extra low read noise </value>
@@ -4252,22 +4252,22 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>HIPS 2 FITS Sky Survey</value>
   </data>
   <data name="LblMechanicalPosition" xml:space="preserve">
-    <value>Mechanical Position</value>
+    <value>Mechanical position</value>
   </data>
   <data name="LblSkyPosition" xml:space="preserve">
-    <value>Sky Position</value>
+    <value>Sky position</value>
   </data>
   <data name="LblTargetMechanicalPosition" xml:space="preserve">
-    <value>Target Mechanical Position</value>
+    <value>Target mechanical position</value>
   </data>
   <data name="LblTargetSkyPosition" xml:space="preserve">
-    <value>Target Sky Position</value>
+    <value>Target sky position</value>
   </data>
   <data name="LblMoveMechanicalPosition" xml:space="preserve">
-    <value>Move Mechanical Position</value>
+    <value>Move mechanical position</value>
   </data>
   <data name="LblMoveSkyPosition" xml:space="preserve">
-    <value>Move Sky Position</value>
+    <value>Move sky position</value>
   </data>
   <data name="LblPixelMargin" xml:space="preserve">
     <value>Keep guide stars off sensor edges by at least</value>
@@ -4276,7 +4276,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Add {0} to Minutes after Meridian</value>
   </data>
   <data name="LblFlipTime" xml:space="preserve">
-    <value>Flip Time</value>
+    <value>Flip time</value>
   </data>
   <data name="LblAmount" xml:space="preserve">
     <value>Amount</value>
@@ -4288,7 +4288,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Elapsed</value>
   </data>
   <data name="LblHFRTrend" xml:space="preserve">
-    <value>HFR Trend</value>
+    <value>HFR trend</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopCondition_Description" xml:space="preserve">
     <value>A condition to loop a sequence container for the specified amount of loops</value>
@@ -4558,10 +4558,10 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Restore Guiding</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
-    <value>Evaluate After Exposures</value>
+    <value>Evaluate after exposures</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
-    <value>After Exposures</value>
+    <value>After exposures</value>
   </data>
   <data name="LblDragOver_BottomText" xml:space="preserve">
     <value>INSERT INSTRUCTION BELOW</value>
@@ -4588,40 +4588,40 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Templates</value>
   </data>
   <data name="LblTemplate_DefaultTemplates" xml:space="preserve">
-    <value>Default Templates</value>
+    <value>Default templates</value>
   </data>
   <data name="LblTemplate_DropTemplateHere" xml:space="preserve">
-    <value>Drop Sequence Instruction Set from the Sequence here to create a new Template</value>
+    <value>Drop sequence instruction set from the sequence here to create a new template</value>
   </data>
   <data name="LblTemplate_OverwriteTemplateMessageBox_Caption" xml:space="preserve">
-    <value>Overwrite Template?</value>
+    <value>Overwrite template?</value>
   </data>
   <data name="LblTemplate_OverwriteTemplateMessageBox_Text" xml:space="preserve">
-    <value>Template '{0}' already exists. Do you want to overwrite the existing Template? This action is irreversible.</value>
+    <value>Template '{0}' already exists. Do you want to overwrite the existing template? This action is irreversible.</value>
   </data>
   <data name="LblTemplate_UserTemplates" xml:space="preserve">
-    <value>User Templates</value>
+    <value>User templates</value>
   </data>
   <data name="LblTemplate_DeleteTemplateMessageBox_Caption" xml:space="preserve">
-    <value>Delete Template?</value>
+    <value>Delete template?</value>
   </data>
   <data name="LblTemplate_DeleteTemplateMessageBox_Text" xml:space="preserve">
-    <value>Template '{0}' will be deleted. Do you want to delete the existing Template? This action is irreversible.</value>
+    <value>Do you want to delete the template '{0}'? This action is irreversible.</value>
   </data>
   <data name="Lbl_Sequencer_DeleteItem" xml:space="preserve">
     <value>DELETE ITEM</value>
   </data>
   <data name="LblAddTargetToSequence" xml:space="preserve">
-    <value>Add Target to Sequence</value>
+    <value>Add target to sequence</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Description" xml:space="preserve">
-    <value>Starts AutoFocus after a detected filter change</value>
+    <value>Starts autofocus after a detected filter change</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterFilterChangeTrigger_Name" xml:space="preserve">
     <value>AF After Filter Change</value>
   </data>
   <data name="LblLastFilter" xml:space="preserve">
-    <value>Last Filter</value>
+    <value>Last filter</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterExposures_Description" xml:space="preserve">
     <value>Triggers an autofocus run after the set amount of exposures have been captured</value>
@@ -4703,13 +4703,13 @@ Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assis
     <value>Targets</value>
   </data>
   <data name="LblStartupSequenceTemplate" xml:space="preserve">
-    <value>Startup Sequence Template</value>
+    <value>Startup sequence template</value>
   </data>
   <data name="LblStartupSequenceTemplateTooltip" xml:space="preserve">
     <value>When set, this template will be pre-loaded into the sequencer.</value>
   </data>
   <data name="LblForceGuidingCalibration" xml:space="preserve">
-    <value>Force Calibration</value>
+    <value>Force calibration</value>
   </data>
   <data name="Lbl_SequenceItem_Validation_NoSwitchSelected" xml:space="preserve">
     <value>No switch selected!</value>
@@ -4718,7 +4718,7 @@ Add Deep Sky Object Sequences here or add Targets via Sky Atlas or Framing Assis
     <value>Command a dither after the specified amount of exposures. A value of 0 will disable dither for this item.</value>
   </data>
   <data name="LblInstructionSet" xml:space="preserve">
-    <value>Instruction Set</value>
+    <value>Instruction set</value>
   </data>
   <data name="Lbl_SequenceContainer_AddCondition_Tooltip" xml:space="preserve">
     <value>Add a loop condition to the instruction set.
@@ -4773,13 +4773,13 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Waiting until target has reached specified altitude. {0}° / {1}°</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequence" xml:space="preserve">
-    <value>End of Sequence Instructions</value>
+    <value>End of Sequence instructions</value>
   </data>
   <data name="Lbl_OldSequencer_ParallelEndOfSequence" xml:space="preserve">
-    <value>Parallel End of Sequence Instructions</value>
+    <value>Parallel End of Sequence instructions</value>
   </data>
   <data name="Lbl_OldSequencer_TargetImaging" xml:space="preserve">
-    <value>Target Imaging Instructions</value>
+    <value>Target imaging instructions</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_Name" xml:space="preserve">
     <value>Sequence</value>
@@ -4791,28 +4791,28 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Creates a duplicate of current item and append it to the parent instruction set</value>
   </data>
   <data name="Lbl_OldSequencer_EmptyAreaDescription" xml:space="preserve">
-    <value>Add a new Sequence Target via the + Button, open an existing Target or add Targets via Framing Assistant</value>
+    <value>Add a new sequence target via the + button, open an existing target or add targets via Framing Assistant</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Add new Target</value>
+    <value>Add new target</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
-    <value>Load Target</value>
+    <value>Load target</value>
   </data>
   <data name="Lbl_OldSequencer_OpenTargetSet" xml:space="preserve">
-    <value>Open Target Set</value>
+    <value>Open target set</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
     <value>Simple Sequencer</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
-    <value>End of Last Target Options</value>
+    <value>End of Last Target options</value>
   </data>
   <data name="Lbl_OldSequencer_Template" xml:space="preserve">
     <value>Simple Sequencer Template</value>
   </data>
   <data name="Lbl_OldSequencer_ImportTarget" xml:space="preserve">
-    <value>Import Target</value>
+    <value>Import target</value>
   </data>
   <data name="Lbl_Sequencer_Title" xml:space="preserve">
     <value>Sequencer</value>
@@ -4872,10 +4872,10 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Park Dome</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
-    <value>Parallel Start of Sequence Instructions</value>
+    <value>Parallel Start of Sequence instructions</value>
   </data>
   <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Start of First Target Options</value>
+    <value>Start of first target options</value>
   </data>
   <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
     <value>Cool camera when sequence starts</value>
@@ -4920,7 +4920,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Disconnect Safety Monitor</value>
   </data>
   <data name="LblSafetyMonitorConnected" xml:space="preserve">
-    <value>Safety Monitor Connected</value>
+    <value>Safety Monitor connected</value>
   </data>
   <data name="LblIsSafe" xml:space="preserve">
     <value>Is Safe</value>
@@ -4942,10 +4942,10 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Sequence "{0}" saved successfully at {1}</value>
   </data>
   <data name="LblSetTrackingRate" xml:space="preserve">
-    <value>Set Tracking Rate</value>
+    <value>Set tracking rate</value>
   </data>
   <data name="LblTimeSpan" xml:space="preserve">
-    <value>Time Span</value>
+    <value>Time span</value>
   </data>
   <data name="Lbl_SequenceCondition_TimeSpanCondition_Description" xml:space="preserve">
     <value>Loop instruction set for a given duration. When the duration is over, the remaining instructions inside the set will be skipped.</value>
@@ -4954,10 +4954,10 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Loop for Time Span</value>
   </data>
   <data name="LblFlatDeviceConnectionLost" xml:space="preserve">
-    <value>Flat Device connection lost!</value>
+    <value>Flat device connection lost!</value>
   </data>
   <data name="LblNoSafetyMonitor" xml:space="preserve">
-    <value>No Safety Monitor</value>
+    <value>No safety monitor</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_Gain" xml:space="preserve">
     <value>Invalid Gain. The Gain has to be set between {0} and {1} but is set to {2}</value>
@@ -4970,7 +4970,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
 After solving the frame successfully the telescope will be synced to the solved position.</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
-    <value>Solve and Sync</value>
+    <value>Solve and sync</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DragOver_AddTarget" xml:space="preserve">
     <value>SAVE TARGET</value>
@@ -4979,16 +4979,16 @@ After solving the frame successfully the telescope will be synced to the solved 
     <value>Drop Deep Sky Object Sequences from the Sequence here to save your individual target</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Caption" xml:space="preserve">
-    <value>Overwrite Target?</value>
+    <value>Overwrite target?</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text" xml:space="preserve">
-    <value>Target '{0}' already exists. Do you want to overwrite the existing Target? This action is irreversible.</value>
+    <value>Target '{0}' already exists. Do you want to overwrite it? This action is irreversible.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption" xml:space="preserve">
-    <value>Delete Target?</value>
+    <value>Delete target?</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Text" xml:space="preserve">
-    <value>Target '{0}' will be deleted. Do you want to delete the existing Target? This action is irreversible.</value>
+    <value>Do you want to delete the target '{0}'? This action is irreversible.</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTarget_Tooltip" xml:space="preserve">
     <value>Save the current target and all of its content for re-usage</value>
@@ -5016,34 +5016,34 @@ Example:
     <value>Focuser does not expose any valid temperature</value>
   </data>
   <data name="LblServerEnabled" xml:space="preserve">
-    <value>Server Enabled</value>
+    <value>Server enabled</value>
   </data>
   <data name="LblServerEnabledTooltip" xml:space="preserve">
     <value>Hosts a service on port 59590, currently with the same API as SGP to interoperate with existing applications. If the service fails to start, you may need to update some firewall settings with netsh (see NINA documentation).</value>
   </data>
   <data name="LblServerFailed" xml:space="preserve">
-    <value>Server failed to start. Check the NINA documentation. {0}</value>
+    <value>Server failed to start. Check the N.I.N.A. documentation. {0}</value>
   </data>
   <data name="LblServerStarted" xml:space="preserve">
-    <value>Server Started</value>
+    <value>Server started</value>
   </data>
   <data name="LblServerStopped" xml:space="preserve">
-    <value>Server Stopped</value>
+    <value>Server stopped</value>
   </data>
   <data name="LblCloseAll" xml:space="preserve">
-    <value>Close All</value>
+    <value>Close all</value>
   </data>
   <data name="LblConnectAll" xml:space="preserve">
     <value>Connect all devices?</value>
   </data>
   <data name="LblCollapseSequencerTemplatesByDefault" xml:space="preserve">
-    <value>Collapse Sequence Templates by default</value>
+    <value>Collapse sequence templates by default</value>
   </data>
   <data name="LblCollapseSequencerTemplatesByDefaultTooltip" xml:space="preserve">
     <value>When this option is enabled, adding templates and targets to the sequencer will create them in a collapsed state.</value>
   </data>
   <data name="LblMaxMinutesAfterMeridian" xml:space="preserve">
-    <value>Max Minutes after Meridian</value>
+    <value>Max. minutes after meridian</value>
   </data>
   <data name="Lbl_SequenceItem_Imaging_TakeExposure_Validation_FilePathEmpty" xml:space="preserve">
     <value>No folder was specified to save images to. Please set a valid folder inside the Image File Settings</value>
@@ -5052,7 +5052,7 @@ Example:
     <value>The folder that is specified inside the Image File Settings to save images to was not found. Please validate the folder specified in the Image File Settings.</value>
   </data>
   <data name="LblTheWeatherCompanyAPIKey" xml:space="preserve">
-    <value>TheWeatherCompany API Key</value>
+    <value>TheWeatherCompany API key</value>
   </data>
   <data name="LblTheWeatherCompanyClientDescription" xml:space="preserve">
     <value>Uses TheWeatherCompany's Current Weather API. Weather data is refreshed every 10 minutes.</value>
@@ -5081,23 +5081,23 @@ There the sequence can be planned from scratch using fine granular instructions,
     <value>This will disable the simple sequencer and directly show the advanced sequencer in the sequence tab.</value>
   </data>
   <data name="Lbl_Sequencer_SwitchToOverview" xml:space="preserve">
-    <value>Switch back to Sequencer Dashboard</value>
+    <value>Switch back to Sequencer dashboard</value>
   </data>
   <data name="Lbl_OldSequencer_TargetPreparation" xml:space="preserve">
-    <value>Target Preparation Instructions</value>
+    <value>Target preparation instructions</value>
   </data>
   <data name="LblUnparked" xml:space="preserve">
     <value>Unparked</value>
     <comment>If the telescope is not in park position</comment>
   </data>
   <data name="LblWaitingForTelescopeToPark" xml:space="preserve">
-    <value>Waiting For Telescope To Park</value>
+    <value>Waiting for telescope to park</value>
   </data>
   <data name="LblWeatherUndergroundAPIKey" xml:space="preserve">
-    <value>Weather Underground API Key</value>
+    <value>Weather Underground API key</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station ID</value>
+    <value>Weather Underground station ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Demote selected row</value>
@@ -5142,7 +5142,7 @@ There the sequence can be planned from scratch using fine granular instructions,
     <value>Resume</value>
   </data>
   <data name="LblProfileChooserOnStartup" xml:space="preserve">
-    <value>Profile Chooser on Startup</value>
+    <value>Profile chooser on startup</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonAltitudeCondition_Description" xml:space="preserve">
     <value>Exits the loop when the moon's altitude matches the specified parameters.</value>
@@ -5196,13 +5196,13 @@ There the sequence can be planned from scratch using fine granular instructions,
     <value>Exits the loop when the moon's illumination level matches the specified parameters.</value>
   </data>
   <data name="Lbl_SequenceCondition_MoonIlluminationCondition_Name" xml:space="preserve">
-    <value>Moon Illumination</value>
+    <value>Moon illumination</value>
   </data>
   <data name="Lbl_OldSequencer_TargetClosure" xml:space="preserve">
-    <value>Target Closure Instructions</value>
+    <value>Target closure instructions</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSize" xml:space="preserve">
-    <value>Sample Size</value>
+    <value>Sample size</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_SampleSizeTooltip" xml:space="preserve">
     <value>The maximum sample size of image HFR readings that should be used to determine the HFR trend. 
@@ -5213,7 +5213,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>No writable switch available</value>
   </data>
   <data name="LblPHD2ROIPct" xml:space="preserve">
-    <value>ROI Percentage to find Guidestar</value>
+    <value>ROI percentage to find guide star</value>
   </data>
   <data name="LblPHD2ROIPctTooltip" xml:space="preserve">
     <value>The percentage of the frame to be considered for finding a guidestar in PHD2 measured from the center of the frame</value>
@@ -5234,7 +5234,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>The connected camera lacks a dew heater that can be controlled</value>
   </data>
   <data name="LblAddTargetToTargetList" xml:space="preserve">
-    <value>Add Target To Target List</value>
+    <value>Add target to target list</value>
   </data>
   <data name="LblAddTargetToTargetListTooltip" xml:space="preserve">
     <value>Adds the framed target to the target list section in the advanced sequencer sidebar for later use</value>
@@ -5243,7 +5243,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Target {0} saved to target list</value>
   </data>
   <data name="LblCustomHorizon" xml:space="preserve">
-    <value>Custom Horizon</value>
+    <value>Custom horizon</value>
   </data>
   <data name="LblCustomHorizonTooltip" xml:space="preserve">
     <value>Load a custom horizon file to be used to determine local horizon limits and display the limit in the altitude charts.</value>
@@ -5252,7 +5252,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Failed to load custom horizon</value>
   </data>
   <data name="LblPlanetariumLocationTooltip" xml:space="preserve">
-    <value>Get location from the Planetarium Software</value>
+    <value>Get location from the planetarium software</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Description" xml:space="preserve">
     <value>Waits until the target altitude is above the horizon. If a custom horizon is used, that altitude is used instead of 0</value>
@@ -5261,7 +5261,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Wait until above horizon</value>
   </data>
   <data name="Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress" xml:space="preserve">
-    <value>Waiting until target is above horizon. Target Altitude {0}° / Horizon Altitude {1}°</value>
+    <value>Waiting until target is above horizon. Target altitude: {0}° / Horizon altitude: {1}°</value>
   </data>
   <data name="Lbl_SequenceCondition_AboveHorizonCondition_Description" xml:space="preserve">
     <value>A condition that loops while the target is above the horizon and then stops the current instruction set</value>
@@ -5297,7 +5297,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Snapshots</value>
   </data>
   <data name="LblSlewCenterRotate" xml:space="preserve">
-    <value>Slew, Center and Rotate</value>
+    <value>Slew, center, and rotate</value>
   </data>
   <data name="LblFindHomeToolTip" xml:space="preserve">
     <value>Instructs the telescope to locate the home postion</value>
@@ -5321,7 +5321,7 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Instructs the telescope to locate the home postion. This cannot be done if the telescope is parked</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_FindHome_Name" xml:space="preserve">
-    <value>Find Home</value>
+    <value>Find home</value>
   </data>
   <data name="LblTelescopeNoFindHomeError" xml:space="preserve">
     <value>The telescope has no home location capability</value>
@@ -5333,16 +5333,16 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Park operation cancelled</value>
   </data>
   <data name="LblEstimatedFlatPanelBrightness" xml:space="preserve">
-    <value>Estimated Flat Panel Brightness</value>
+    <value>Estimated flat panel brightness</value>
   </data>
   <data name="LblFlatExposureCalcContinueBrightness" xml:space="preserve">
-    <value>Mean ADU was {0}, starting Exposure Brightness calculation at {1}</value>
+    <value>Mean ADU was {0}. Starting exposure brightness calculation at {1}</value>
   </data>
   <data name="LblFlatExposureCalcFinishedBrightness" xml:space="preserve">
-    <value>Mean ADU is {0} target Exposure Brightness is {1}</value>
+    <value>Mean ADU is {0}. Target exposure brightness is {1}</value>
   </data>
   <data name="LblFlatExposureCalcStartBrightness" xml:space="preserve">
-    <value>Starting Exposure Brightness calculation at {0}</value>
+    <value>Starting exposure brightness calculation at {0}</value>
   </data>
   <data name="LblFast" xml:space="preserve">
     <value>Fast</value>
@@ -5351,10 +5351,10 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Set the button slew rate in degrees per second</value>
   </data>
   <data name="LblFirmwareVersion" xml:space="preserve">
-    <value>Firmware Version</value>
+    <value>Firmware version</value>
   </data>
   <data name="LblFPGAVersion" xml:space="preserve">
-    <value>FPGA Version</value>
+    <value>FPGA version</value>
   </data>
   <data name="LblSensorAirPressure" xml:space="preserve">
     <value>Sensor air pressure</value>
@@ -5369,10 +5369,10 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>The installed QHYCCD USB driver's version of {0} is below the minimum recommeneded version of {1}. Driver updates are available on the QHYCCD website and are recommended for optimal camera function</value>
   </data>
   <data name="LblSDKVersion" xml:space="preserve">
-    <value>SDK Version</value>
+    <value>SDK version</value>
   </data>
   <data name="LblUsbDriverVersion" xml:space="preserve">
-    <value>USB Driver Version</value>
+    <value>USB driver version</value>
   </data>
   <data name="LblFailedChangingConnectionState" xml:space="preserve">
     <value>Failed to change connection state of device.</value>
@@ -5384,13 +5384,13 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>The wizard did not find the right brightness level after 5 tries. Please try changing the step size or the tolerance.</value>
   </data>
   <data name="LblFlatDeviceSettleTime" xml:space="preserve">
-    <value>Settle Time</value>
+    <value>Settle time</value>
   </data>
   <data name="LblInitializingSequencer" xml:space="preserve">
-    <value>Initializing Sequencer...</value>
+    <value>Initializing sequencer...</value>
   </data>
   <data name="LblInitializingLayout" xml:space="preserve">
-    <value>Initializing Layout</value>
+    <value>Initializing layout</value>
   </data>
   <data name="Lbl_SequenceCategory_Rotator" xml:space="preserve">
     <value>Rotator</value>
@@ -5417,44 +5417,44 @@ For quickly changing conditions a smaller sample size will help to respond more 
     <value>Plugins</value>
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
-    <value>No Plugins found</value>
+    <value>No plugins found</value>
   </data>
   <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
-    <value>Show Menu</value>
+    <value>Show menu</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
-    <value>Keep Closed</value>
+    <value>Keep closed</value>
   </data>
   <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
     <value>Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect.</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
-    <value>Failed to save Sequence "{0}": {1}</value>
+    <value>Failed to save sequence "{0}": {1}</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThreshold" xml:space="preserve">
-    <value>R² Threshold</value>
+    <value>R² threshold</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThresholdTooltip" xml:space="preserve">
-    <value>The minimum R² (Coefficient of determination) value that the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful.
+    <value>The minimum R² (Coefficient of determination) value that the selected autofocus fitting has to fulfill for the autofocus run to be considered as successful.
 The value is in the range between 0-1.
-When set to 0, the threshold will not be considered. 
-An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions. 
+When set to 0, the threshold will not be considered.
+An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions.
 A good starting point for a threshold is a value of 0.8 - anything below that is a questionable fit.</value>
     <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
   </data>
   <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
+    <value>Autofocus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
     <comment>First parameter is actual R², second parameter is R² threshold</comment>
   </data>
   <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
+    <value>Autofocus failed! R² (Coefficient of determination) for trend line fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
     <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
   </data>
   <data name="Lbl_SequenceCategory_SafetyMonitor" xml:space="preserve">
     <value>Safety Monitor</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description" xml:space="preserve">
-    <value>Waits until the safety monitor device reports safe conditions again</value>
+    <value>Waits until Safety Monitor device reports a safe condition</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name" xml:space="preserve">
     <value>Wait until safe</value>
@@ -5463,19 +5463,19 @@ A good starting point for a threshold is a value of 0.8 - anything below that is
     <value>Waiting for safe conditions</value>
   </data>
   <data name="LblTemperatureSetPointDescription" xml:space="preserve">
-    <value>Camera Temperature Set Point</value>
+    <value>Camera temperature set point</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
     <value>ASCOM allow odd pixel dimension</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
-    <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
+    <value>In prior versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
 When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
 This setting will have no effect on color sensors.
 Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
-    <value>Guiding Start Timeout</value>
+    <value>Guiding start timeout</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
     <value>Filters</value>
