@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Core.Model.Equipment;
 using NINA.Profile.Interfaces;
 using System;
@@ -35,6 +36,8 @@ namespace NINA.Profile {
             stepSize = 0.5;
             binningMode = new BinningMode(1, 1);
             darkFlatCount = 0;
+            altitudeSite = AltitudeSite.EAST;
+            flatWizardMode = FlatWizardMode.DYNAMICEXPOSURE;
         }
 
         private int flatCount;
@@ -120,6 +123,32 @@ namespace NINA.Profile {
             set {
                 if (darkFlatCount != value) {
                     darkFlatCount = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private AltitudeSite altitudeSite;
+
+        [DataMember]
+        public AltitudeSite AltitudeSite {
+            get => altitudeSite;
+            set {
+                if (altitudeSite != value) {
+                    altitudeSite = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private FlatWizardMode flatWizardMode;
+
+        [DataMember]
+        public FlatWizardMode FlatWizardMode {
+            get => flatWizardMode;
+            set {
+                if (flatWizardMode != value) {
+                    flatWizardMode = value;
                     RaisePropertyChanged();
                 }
             }

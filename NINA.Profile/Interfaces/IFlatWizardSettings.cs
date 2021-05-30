@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Core.Model.Equipment;
 
 namespace NINA.Profile.Interfaces {
@@ -23,5 +24,7 @@ namespace NINA.Profile.Interfaces {
         double StepSize { get; set; }
         BinningMode BinningMode { get; set; }
         int DarkFlatCount { get; set; }
+        AltitudeSite AltitudeSite { get; set; }
+        FlatWizardMode FlatWizardMode { get; set; }
     }
 }

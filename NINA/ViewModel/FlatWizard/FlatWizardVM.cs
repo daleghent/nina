@@ -100,6 +100,8 @@ namespace NINA.ViewModel.FlatWizard {
             FlatCount = profileService.ActiveProfile.FlatWizardSettings.FlatCount;
             DarkFlatCount = profileService.ActiveProfile.FlatWizardSettings.DarkFlatCount;
             BinningMode = profileService.ActiveProfile.FlatWizardSettings.BinningMode;
+            AltitudeSite = profileService.ActiveProfile.FlatWizardSettings.AltitudeSite;
+            FlatWizardMode = profileService.ActiveProfile.FlatWizardSettings.FlatWizardMode;
 
             profileService.ProfileChanged += (sender, args) => {
                 UpdateSingleFlatWizardFilterSettings();
@@ -148,8 +150,11 @@ namespace NINA.ViewModel.FlatWizard {
         public AltitudeSite AltitudeSite {
             get => altitudeSite;
             set {
-                altitudeSite = value;
-                RaisePropertyChanged();
+                if (altitudeSite != value) {
+                    altitudeSite = value;
+                    profileService.ActiveProfile.FlatWizardSettings.AltitudeSite = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
@@ -400,8 +405,11 @@ namespace NINA.ViewModel.FlatWizard {
         public FlatWizardMode FlatWizardMode {
             get => flatWizardMode;
             set {
-                flatWizardMode = value;
-                RaisePropertyChanged();
+                if (flatWizardMode != value) {
+                    flatWizardMode = value;
+                    profileService.ActiveProfile.FlatWizardSettings.FlatWizardMode = value;
+                    RaisePropertyChanged();
+                }
             }
         }
 
