@@ -14,6 +14,7 @@
     xmlns:local="clr-namespace:NINA.View.Equipment.Guider"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -35,12 +36,13 @@
             LastChildFill="True">
             <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFocalLength}" />
-                <TextBox
+                <ninactrl:UnitTextBox
                     MinWidth="50"
                     Margin="5,0,0,0"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
-                    Text="{Binding FocalLength}" />
+                    Text="{Binding FocalLength}" 
+                    Unit="mm"/>
             </StackPanel>
 
             <StackPanel
@@ -48,13 +50,13 @@
                 Orientation="Horizontal"
                 Visibility="{Binding Converter={StaticResource IsMGEN2ToVisibilityConverter}}">
                 <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPixelMargin}" />
-                <TextBox
+                <ninactrl:UnitTextBox
                     MinWidth="50"
                     Margin="5,0,0,0"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
-                    Text="{Binding PixelMargin}" />
-                <TextBlock VerticalAlignment="Center" Text="px " />
+                    Text="{Binding PixelMargin}"
+                    Unit="px"/>
             </StackPanel>
             <StackPanel />
         </DockPanel>

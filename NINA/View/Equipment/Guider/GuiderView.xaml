@@ -95,7 +95,7 @@
                                 VerticalAlignment="Center"
                                 Columns="2">
                                 <TextBlock Text="{ns:Loc LblPixelScale}" />
-                                <TextBlock Margin="5,0,0,0" Text="{Binding GuideStepsHistory.PixelScale, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBlock Margin="5,0,0,0" Text="{Binding GuideStepsHistory.PixelScale, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource UnitConverter}, ConverterParameter=' arcsec/px|2'}" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
