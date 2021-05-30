@@ -1835,13 +1835,13 @@ Calculated HFR: {2}
     <value>Invalid mode (manual) for Exposure Time &gt;30s</value>
   </data>
   <data name="LblIsBayered" xml:space="preserve">
-    <value>Is Bayered</value>
+    <value>Is bayered</value>
   </data>
   <data name="LblIsMoving" xml:space="preserve">
-    <value>Is Moving</value>
+    <value>Is moving</value>
   </data>
   <data name="LblIsSettling" xml:space="preserve">
-    <value>Is Settling</value>
+    <value>Is settling</value>
   </data>
   <data name="LblItemsPerPage" xml:space="preserve">
     <value>Items per page</value>
@@ -1952,7 +1952,7 @@ Calculated HFR: {2}
     <value>Max. binning Y</value>
   </data>
   <data name="LblMaxExpTime" xml:space="preserve">
-    <value>Maximum exposure time</value>
+    <value>Max. exposure time</value>
   </data>
   <data name="LblMaxIncrement" xml:space="preserve">
     <value>Max. increment</value>
@@ -2006,7 +2006,7 @@ Calculated HFR: {2}
     <value>Minimum exposure time from download ratio</value>
   </data>
   <data name="LblMinExpTime" xml:space="preserve">
-    <value>Minimum exposure time</value>
+    <value>Min. exposure time</value>
   </data>
   <data name="LblMinimumAltitude" xml:space="preserve">
     <value>Minimum altitude</value>
@@ -3109,7 +3109,7 @@ Should the values be synced?</value>
     <value>Target</value>
   </data>
   <data name="LblTargetDec" xml:space="preserve">
-    <value>TargetDec</value>
+    <value>Target Dec</value>
   </data>
   <data name="LblTargetHeightDegrees" xml:space="preserve">
     <value>Minimum height (degrees)</value>
@@ -3124,7 +3124,7 @@ Should the values be synced?</value>
     <value>Target position</value>
   </data>
   <data name="LblTargetRA" xml:space="preserve">
-    <value>TargetRA</value>
+    <value>Target RA</value>
   </data>
   <data name="LblTargets" xml:space="preserve">
     <value>Targets</value>
