@@ -145,13 +145,10 @@ namespace NINA.ViewModel.FlatWizard {
             flatDeviceMediator.RemoveConsumer(this);
         }
 
-        private AltitudeSite altitudeSite;
-
         public AltitudeSite AltitudeSite {
-            get => altitudeSite;
+            get => profileService.ActiveProfile.FlatWizardSettings.AltitudeSite;
             set {
-                if (altitudeSite != value) {
-                    altitudeSite = value;
+                if (profileService.ActiveProfile.FlatWizardSettings.AltitudeSite != value) {
                     profileService.ActiveProfile.FlatWizardSettings.AltitudeSite = value;
                     RaisePropertyChanged();
                 }
@@ -400,13 +397,10 @@ namespace NINA.ViewModel.FlatWizard {
             }
         }
 
-        private FlatWizardMode flatWizardMode;
-
         public FlatWizardMode FlatWizardMode {
-            get => flatWizardMode;
+            get => profileService.ActiveProfile.FlatWizardSettings.FlatWizardMode;
             set {
-                if (flatWizardMode != value) {
-                    flatWizardMode = value;
+                if (profileService.ActiveProfile.FlatWizardSettings.FlatWizardMode != value) {
                     profileService.ActiveProfile.FlatWizardSettings.FlatWizardMode = value;
                     RaisePropertyChanged();
                 }
