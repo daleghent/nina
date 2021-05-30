@@ -651,7 +651,7 @@
                                     <TextBox.Text>
                                         <Binding Path="AspsLocation" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <rules:DirectoryExistsRule />
+                                                <rules:FileExistsRule />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
@@ -745,7 +745,7 @@
                                     <TextBox.Text>
                                         <Binding Path="ASTAPLocation" UpdateSourceTrigger="LostFocus">
                                             <Binding.ValidationRules>
-                                                <rules:DirectoryExistsRule />
+                                                <rules:FileExistsRule />
                                             </Binding.ValidationRules>
                                         </Binding>
                                     </TextBox.Text>
