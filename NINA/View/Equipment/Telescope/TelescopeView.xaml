@@ -429,14 +429,32 @@
                                 <TextBlock
                                     Margin="0,0,5,0"
                                     VerticalAlignment="Center"
-                                    Text="{ns:Loc LblRate}">
+                                    Text="{ns:Loc LblPrimaryRate}">
                                     <TextBlock.ToolTip>
                                         <ToolTip ToolTipService.ShowOnDisabled="True">
                                             <TextBlock Text="{ns:Loc LblSetButtonMoveRateToolTip}" />
                                         </ToolTip>
                                     </TextBlock.ToolTip>
                                 </TextBlock>
-                                <ninactrl:StepperControl Value="{Binding Telescope.MovingRate, Mode=TwoWay}" />
+                                <ninactrl:StepperControl Value="{Binding Telescope.PrimaryMovingRate, Mode=TwoWay}" />
+                            </StackPanel>
+                            <StackPanel
+                                Grid.Row="1"
+                                Grid.Column="3"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0,0,5,0"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblSecondaryRate}">
+                                    <TextBlock.ToolTip>
+                                        <ToolTip ToolTipService.ShowOnDisabled="True">
+                                            <TextBlock Text="{ns:Loc LblSetButtonMoveRateToolTip}" />
+                                        </ToolTip>
+                                    </TextBlock.ToolTip>
+                                </TextBlock>
+                                <ninactrl:StepperControl Value="{Binding Telescope.SecondaryMovingRate, Mode=TwoWay}" />
                             </StackPanel>
                             <Button
                                 Grid.Row="2"

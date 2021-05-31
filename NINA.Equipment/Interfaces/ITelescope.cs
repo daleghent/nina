@@ -52,7 +52,8 @@ namespace NINA.Equipment.Interfaces {
         string HoursToMeridianString { get; }
         double TimeToMeridianFlip { get; }
         string TimeToMeridianFlipString { get; }
-        double MovingRate { get; set; }
+        double PrimaryMovingRate { get; set; }
+        double SecondaryMovingRate { get; set; }
         PierSide SideOfPier { get; }
         bool CanSetTrackingEnabled { get; }
         bool TrackingEnabled { get; set; }

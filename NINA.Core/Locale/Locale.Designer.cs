@@ -63,9 +63,9 @@ namespace NINA.Core.Locale {
         /// <summary>
         ///   Looks up a localized string similar to Add new Target.
         /// </summary>
-        internal static string _0000000000000000000000000000 {
+        internal static string Lbl_OldSequencer_AddNewTarget {
             get {
-                return ResourceManager.GetString("0000000000000000000000000000", resourceCulture);
+                return ResourceManager.GetString("Lbl_OldSequencer_AddNewTarget", resourceCulture);
             }
         }
         
@@ -11733,6 +11733,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Primary rate.
+        /// </summary>
+        internal static string LblPrimaryRate {
+            get {
+                return ResourceManager.GetString("LblPrimaryRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile Chooser on Startup.
         /// </summary>
         internal static string LblProfileChooserOnStartup {
@@ -12611,6 +12620,15 @@ namespace NINA.Core.Locale {
         internal static string LblSecondaryBackground {
             get {
                 return ResourceManager.GetString("LblSecondaryBackground", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secondary rate.
+        /// </summary>
+        internal static string LblSecondaryRate {
+            get {
+                return ResourceManager.GetString("LblSecondaryRate", resourceCulture);
             }
         }
         

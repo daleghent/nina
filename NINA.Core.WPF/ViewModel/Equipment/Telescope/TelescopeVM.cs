@@ -686,16 +686,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         private void Move(object obj) {
             string cmd = obj.ToString();
             if (cmd == "W") {
-                MoveAxis(TelescopeAxes.Primary, -Telescope.MovingRate);
+                MoveAxis(TelescopeAxes.Primary, -Telescope.PrimaryMovingRate);
             }
             if (cmd == "O") {
-                MoveAxis(TelescopeAxes.Primary, Telescope.MovingRate);
+                MoveAxis(TelescopeAxes.Primary, Telescope.PrimaryMovingRate);
             }
             if (cmd == "N") {
-                MoveAxis(TelescopeAxes.Secondary, Telescope.MovingRate);
+                MoveAxis(TelescopeAxes.Secondary, Telescope.SecondaryMovingRate);
             }
             if (cmd == "S") {
-                MoveAxis(TelescopeAxes.Secondary, -Telescope.MovingRate);
+                MoveAxis(TelescopeAxes.Secondary, -Telescope.SecondaryMovingRate);
             }
         }
 

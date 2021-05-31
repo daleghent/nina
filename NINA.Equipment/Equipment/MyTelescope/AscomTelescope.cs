@@ -1166,50 +1166,72 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        private double _movingRate = double.NaN;
+        private double primaryMovingRate = double.NaN;
 
-        public double MovingRate {
+        public double PrimaryMovingRate {
             get {
-                if (double.IsNaN(_movingRate)) {
-                    MovingRate = _movingRate;
+                if (double.IsNaN(primaryMovingRate)) {
+                    PrimaryMovingRate = primaryMovingRate;
                 }
 
-                return _movingRate;
+                return primaryMovingRate;
             }
             set {
                 if (Connected) {
-                    double result = value;
-                    if (result < 0) result = 0;
-                    bool incr = result > _movingRate;
-
-                    double max = double.MinValue;
-                    double min = double.MaxValue;
-                    IAxisRates r = device.AxisRates(ASCOM.DeviceInterface.TelescopeAxes.axisSecondary);
-                    IEnumerator e = r.GetEnumerator();
-                    foreach (IRate item in r) {
-                        if (min > item.Minimum) {
-                            min = item.Minimum;
-                        }
-                        if (max < item.Maximum) {
-                            max = item.Maximum;
-                        }
-
-                        if (item.Minimum <= value && value <= item.Maximum) {
-                            result = value;
-                            break;
-                        } else if (incr && value < item.Minimum) {
-                            result = item.Minimum;
-                        } else if (!incr && value > item.Maximum) {
-                            result = item.Maximum;
-                        }
-                    }
-                    if (result > max || double.IsNaN(_movingRate)) result = max;
-                    if (result < min) result = min;
-
-                    _movingRate = result;
+                    primaryMovingRate = GetAdjustedMovingRate(value, primaryMovingRate, ASCOM.DeviceInterface.TelescopeAxes.axisPrimary);
                     RaisePropertyChanged();
                 }
             }
+        }
+
+        private double secondaryMovingRate = double.NaN;
+
+        public double SecondaryMovingRate {
+            get {
+                if (double.IsNaN(secondaryMovingRate)) {
+                    SecondaryMovingRate = secondaryMovingRate;
+                }
+
+                return secondaryMovingRate;
+            }
+            set {
+                if (Connected) {
+                    secondaryMovingRate = GetAdjustedMovingRate(value, secondaryMovingRate, ASCOM.DeviceInterface.TelescopeAxes.axisSecondary);
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double GetAdjustedMovingRate(double value, double oldValue, ASCOM.DeviceInterface.TelescopeAxes axis) {
+            double result = value;
+            if (result < 0) result = 0;
+            bool incr = result > oldValue;
+
+            double max = double.MinValue;
+            double min = double.MaxValue;
+            IAxisRates r = device.AxisRates(ASCOM.DeviceInterface.TelescopeAxes.axisPrimary);
+            IEnumerator e = r.GetEnumerator();
+            foreach (IRate item in r) {
+                if (min > item.Minimum) {
+                    min = item.Minimum;
+                }
+                if (max < item.Maximum) {
+                    max = item.Maximum;
+                }
+
+                if (item.Minimum <= value && value <= item.Maximum) {
+                    result = value;
+                    break;
+                } else if (incr && value < item.Minimum) {
+                    result = item.Minimum;
+                } else if (!incr && value > item.Maximum) {
+                    result = item.Maximum;
+                }
+            }
+            if (result > max || double.IsNaN(oldValue)) result = max;
+            if (result < min) result = min;
+
+            return result;
         }
 
         public void SendCommandString(string command) {
