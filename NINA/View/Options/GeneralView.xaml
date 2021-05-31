@@ -206,6 +206,23 @@
                                 <Binding Source="{StaticResource OrderedSystemFonts}" />
                             </ComboBox.ItemsSource>
                         </ComboBox>
+                        <ComboBox
+                            ItemTemplate="{DynamicResource FontTemplate}"
+                            ItemsSource="{Binding ApplicationFontFamily.FamilyTypefaces}"
+                            SelectedItem="{Binding FamilyTypeface}">
+                            <ComboBox.Resources>
+                                <DataTemplate x:Key="FontTemplate">
+                                    <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
+                                        <TextBlock
+                                            FontStretch="{Binding Stretch}"
+                                            FontStyle="{Binding Style}"
+                                            FontWeight="{Binding Weight}"
+                                            Text="{Binding AdjustedFaceNames[en-US]}"
+                                            ToolTip="{Binding AdjustedFaceNames[en-US]}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.Resources>
+                        </ComboBox>
                     </StackPanel>
 
                     <StackPanel Margin="0,6,0,0" Orientation="Horizontal">

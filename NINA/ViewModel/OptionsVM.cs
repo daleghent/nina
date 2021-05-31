@@ -536,6 +536,19 @@ namespace NINA.ViewModel {
             set {
                 NINA.Properties.Settings.Default.ApplicationFontFamily = value;
                 NINA.Properties.Settings.Default.Save();
+
+                FamilyTypeface = value.FamilyTypefaces.FirstOrDefault(x => (x.AdjustedFaceNames.First().Value == "Regular") || (x.AdjustedFaceNames.First().Value == "Normal")) ?? value.FamilyTypefaces.FirstOrDefault();
+                RaisePropertyChanged();
+            }
+        }
+
+        public FamilyTypeface FamilyTypeface {
+            get {
+                return NINA.Properties.Settings.Default.FamilyTypeface;
+            }
+            set {
+                NINA.Properties.Settings.Default.FamilyTypeface = value;
+                NINA.Properties.Settings.Default.Save();
                 RaisePropertyChanged();
             }
         }

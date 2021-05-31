@@ -94,5 +94,16 @@ namespace NINA.Properties {
                 this["SGPServerEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Windows.Media.FamilyTypeface FamilyTypeface {
+            get {
+                return ((global::System.Windows.Media.FamilyTypeface)(this["FamilyTypeface"]));
+            }
+            set {
+                this["FamilyTypeface"] = value;
+            }
+        }
     }
 }

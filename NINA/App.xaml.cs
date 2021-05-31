@@ -37,6 +37,10 @@ namespace NINA {
         protected override void OnStartup(StartupEventArgs e) {
             Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
+            if (NINA.Properties.Settings.Default.FamilyTypeface == null) {
+                NINA.Properties.Settings.Default.FamilyTypeface = NINA.Properties.Settings.Default.ApplicationFontFamily.FamilyTypefaces.First(x => x.AdjustedFaceNames.First().Value == "Regular");
+            }
+
             if (NINA.Properties.Settings.Default.UpdateSettings) {
                 NINA.Properties.Settings.Default.Upgrade();
                 NINA.Properties.Settings.Default.UpdateSettings = false;
