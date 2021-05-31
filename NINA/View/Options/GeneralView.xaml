@@ -197,6 +197,9 @@
                                     <StackPanel VirtualizingStackPanel.IsVirtualizing="True">
                                         <TextBlock
                                             FontFamily="{Binding Source}"
+                                            FontStretch="Normal"
+                                            FontStyle="Normal"
+                                            FontWeight="Normal"
                                             Text="{Binding Source}"
                                             ToolTip="{Binding Source}" />
                                     </StackPanel>
