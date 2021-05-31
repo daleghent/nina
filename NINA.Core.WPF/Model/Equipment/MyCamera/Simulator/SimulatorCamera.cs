@@ -535,7 +535,10 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
 
                     var coordinates = new Coordinates(Angle.ByDegree(initial.RADegrees + AstroUtil.ArcsecToDegree(Settings.SkySurveySettings.RAError)), Angle.ByDegree(initial.Dec + AstroUtil.ArcsecToDegree(Settings.SkySurveySettings.DecError)), Epoch.J2000);
 
-                    var image = await survey.GetImage(string.Empty, coordinates, AstroUtil.DegreeToArcmin(1), Settings.SkySurveySettings.WidthAndHeight, Settings.SkySurveySettings.WidthAndHeight, token, default);
+                    if (!ImageCache.TryGetValue(coordinates.ToString(), out var image)) {
+                        image = await survey.GetImage(string.Empty, coordinates, AstroUtil.DegreeToArcmin(1), Settings.SkySurveySettings.WidthAndHeight, Settings.SkySurveySettings.WidthAndHeight, token, default);
+                        ImageCache[coordinates.ToString()] = image;
+                    }
                     var data = await ImageArrayExposureData.FromBitmapSource(image.Image);
 
                     var arcsecPerPix = image.Image.PixelWidth / AstroUtil.ArcminToArcsec(image.FoVWidth);
@@ -552,6 +555,8 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             }
             throw new NotSupportedException();
         }
+
+        private Dictionary<string, SkySurveyImage> ImageCache = new Dictionary<string, SkySurveyImage>();
 
         private IProfileService profileService;
         private ITelescopeMediator telescopeMediator;
