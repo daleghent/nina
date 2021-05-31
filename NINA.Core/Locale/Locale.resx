@@ -4793,7 +4793,7 @@ If the position above it is an instruction set that is not currently expanded, i
   <data name="Lbl_OldSequencer_EmptyAreaDescription" xml:space="preserve">
     <value>Add a new Sequence Target via the + Button, open an existing Target or add Targets via Framing Assistant</value>
   </data>
-  <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
+  <data name="0000000000000000000000000000" xml:space="preserve">
     <value>Add new Target</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
@@ -5494,5 +5494,8 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
     <value>PHD2 - Start guiding has timed out. Retrying...</value>
+  </data>
+  <data name="LblFont" xml:space="preserve">
+    <value>Font</value>
   </data>
 </root>

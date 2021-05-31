@@ -103,6 +103,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ## Application Improvements
 ### General
+- It is now possible to change the Application Font in the options
 - Current sequence progress is now displayed in the task bar, also visualizes pause and non-capture tasks during the sequence
 - It is now possible to start, pause, resume and cancel sequences from the preview window
 - Options menu has been restructured to adhere to the Equipment layout

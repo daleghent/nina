@@ -49,6 +49,7 @@ using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment.MyGPS;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using System.Windows.Media;
 
 namespace NINA.ViewModel {
 
@@ -524,6 +525,17 @@ namespace NINA.ViewModel {
             }
             set {
                 profileService.ChangeLocale(value);
+                RaisePropertyChanged();
+            }
+        }
+
+        public FontFamily ApplicationFontFamily {
+            get {
+                return NINA.Properties.Settings.Default.ApplicationFontFamily;
+            }
+            set {
+                NINA.Properties.Settings.Default.ApplicationFontFamily = value;
+                NINA.Properties.Settings.Default.Save();
                 RaisePropertyChanged();
             }
         }

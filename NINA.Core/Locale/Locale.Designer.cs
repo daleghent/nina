@@ -63,9 +63,9 @@ namespace NINA.Core.Locale {
         /// <summary>
         ///   Looks up a localized string similar to Add new Target.
         /// </summary>
-        internal static string Lbl_OldSequencer_AddNewTarget {
+        internal static string _0000000000000000000000000000 {
             get {
-                return ResourceManager.GetString("Lbl_OldSequencer_AddNewTarget", resourceCulture);
+                return ResourceManager.GetString("0000000000000000000000000000", resourceCulture);
             }
         }
         
@@ -8330,6 +8330,15 @@ namespace NINA.Core.Locale {
         internal static string LblFolderToWatch {
             get {
                 return ResourceManager.GetString("LblFolderToWatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Font.
+        /// </summary>
+        internal static string LblFont {
+            get {
+                return ResourceManager.GetString("LblFont", resourceCulture);
             }
         }
         

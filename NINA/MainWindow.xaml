@@ -17,12 +17,14 @@
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:options="clr-namespace:NINA.View.Options"
     xmlns:sequencer="clr-namespace:NINA.View.Sequencer"
+    xmlns:settings="clr-namespace:NINA.Properties"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     xmlns:view="clr-namespace:NINA.View"
     xmlns:vm="clr-namespace:NINA.ViewModel"
     Name="ThisWindow"
     Title="{Binding AppVM.Title}"
     Background="{StaticResource BackgroundBrush}"
+    FontFamily="{Binding ApplicationFontFamily, Source={x:Static settings:Settings.Default}}"
     Icon="/NINA;component/Resources/Logo_Nina.ico"
     Style="{StaticResource MainWindow}">
     <Window.InputBindings>
