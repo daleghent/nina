@@ -106,7 +106,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"
                         VerticalContentAlignment="Center"
-                        Unit="px">
+                        Unit="s">
                         <TextBox.Text>
                             <Binding Path="SettleTime" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
