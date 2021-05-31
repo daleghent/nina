@@ -314,7 +314,7 @@
     <Compile Include="View\Converter\StrategyEvaluatesConditionsAndTriggersToVisibilityConverter.cs" />
     <Compile Include="View\Converter\TargetAreaMinHeightConverter.cs" />
     <Compile Include="View\GroupMenuBehavior.cs" />
-    <Compile Include="View\MiniSequenceItem.xaml.cs">
+    <Compile Include="View\MiniSequencer\MiniSequenceItem.xaml.cs">
       <DependentUpon>MiniSequenceItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MiniSequencer\MiniCondition.xaml.cs">
@@ -408,7 +408,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\MiniSequenceItem.xaml">
+    <Page Include="View\MiniSequencer\MiniSequenceItem.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

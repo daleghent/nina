@@ -42,7 +42,7 @@ namespace NINA.PlateSolving {
             progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblPlateSolving"] });
 
             var result = await solver.SolveAsync(source, parameter, progress, ct);
-            if (result.Success == false && parameter.Coordinates != null) {
+            if (result.Success == false && parameter.Coordinates != null && blindSolver != null) {
                 //Blind solve failover
                 Logger.Debug($"Initial solve failed. Falling back to blind solver");
                 var blindParameter = parameter.Clone();
