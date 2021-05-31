@@ -20,8 +20,14 @@
     <Setting Name="SGPServerEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="FamilyTypeface" Type="System.Windows.Media.FamilyTypeface" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="FontStretch" Type="System.Windows.FontStretch" Scope="User">
+      <Value Profile="(Default)">Normal</Value>
+    </Setting>
+    <Setting Name="FontStyle" Type="System.Windows.FontStyle" Scope="User">
+      <Value Profile="(Default)">Normal</Value>
+    </Setting>
+    <Setting Name="FontWeight" Type="System.Windows.FontWeight" Scope="User">
+      <Value Profile="(Default)">Normal</Value>
     </Setting>
   </Settings>
 </SettingsFile>

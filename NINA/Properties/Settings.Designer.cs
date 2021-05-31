@@ -97,12 +97,37 @@ namespace NINA.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.Windows.Media.FamilyTypeface FamilyTypeface {
+        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
+        public global::System.Windows.FontStretch FontStretch {
             get {
-                return ((global::System.Windows.Media.FamilyTypeface)(this["FamilyTypeface"]));
+                return ((global::System.Windows.FontStretch)(this["FontStretch"]));
             }
             set {
-                this["FamilyTypeface"] = value;
+                this["FontStretch"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
+        public global::System.Windows.FontStyle FontStyle {
+            get {
+                return ((global::System.Windows.FontStyle)(this["FontStyle"]));
+            }
+            set {
+                this["FontStyle"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Normal")]
+        public global::System.Windows.FontWeight FontWeight {
+            get {
+                return ((global::System.Windows.FontWeight)(this["FontWeight"]));
+            }
+            set {
+                this["FontWeight"] = value;
             }
         }
     }

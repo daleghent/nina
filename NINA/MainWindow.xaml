@@ -25,9 +25,9 @@
     Title="{Binding AppVM.Title}"
     Background="{StaticResource BackgroundBrush}"
     FontFamily="{Binding ApplicationFontFamily, Source={x:Static settings:Settings.Default}}"
-    FontStretch="{Binding FamilyTypeface.Stretch, Source={x:Static settings:Settings.Default}}"
-    FontStyle="{Binding FamilyTypeface.Style, Source={x:Static settings:Settings.Default}}"
-    FontWeight="{Binding FamilyTypeface.Weight, Source={x:Static settings:Settings.Default}}"
+    FontStretch="{Binding FontStretch, Source={x:Static settings:Settings.Default}}"
+    FontStyle="{Binding FontStyle, Source={x:Static settings:Settings.Default}}"
+    FontWeight="{Binding FontWeight, Source={x:Static settings:Settings.Default}}"
     Icon="/NINA;component/Resources/Logo_Nina.ico"
     Style="{StaticResource MainWindow}">
     <Window.InputBindings>

@@ -128,6 +128,8 @@ namespace NINA.ViewModel {
                 ProfileChanged();
             };
             ToggleSGPService();
+
+            FamilyTypeface = ApplicationFontFamily.FamilyTypefaces.FirstOrDefault(x => x.Weight == FontWeight && x.Style == FontStyle && x.Stretch == FontStretch);
         }
 
         public PluginOptionsVM PluginOptions { get; }
@@ -538,16 +540,58 @@ namespace NINA.ViewModel {
                 NINA.Properties.Settings.Default.Save();
 
                 FamilyTypeface = value.FamilyTypefaces.FirstOrDefault(x => (x.AdjustedFaceNames.First().Value == "Regular") || (x.AdjustedFaceNames.First().Value == "Normal")) ?? value.FamilyTypefaces.FirstOrDefault();
+                FontStretch = FamilyTypeface.Stretch;
+                FontStyle = FamilyTypeface.Style;
+                FontWeight = FamilyTypeface.Weight;
+
                 RaisePropertyChanged();
             }
         }
 
+        private FamilyTypeface familyTypeface;
+
         public FamilyTypeface FamilyTypeface {
             get {
-                return NINA.Properties.Settings.Default.FamilyTypeface;
+                return familyTypeface;
             }
             set {
-                NINA.Properties.Settings.Default.FamilyTypeface = value;
+                familyTypeface = value;
+                FontStretch = familyTypeface.Stretch;
+                FontStyle = familyTypeface.Style;
+                FontWeight = familyTypeface.Weight;
+
+                RaisePropertyChanged();
+            }
+        }
+
+        public FontStretch FontStretch {
+            get {
+                return NINA.Properties.Settings.Default.FontStretch;
+            }
+            set {
+                NINA.Properties.Settings.Default.FontStretch = value;
+                NINA.Properties.Settings.Default.Save();
+                RaisePropertyChanged();
+            }
+        }
+
+        public FontStyle FontStyle {
+            get {
+                return NINA.Properties.Settings.Default.FontStyle;
+            }
+            set {
+                NINA.Properties.Settings.Default.FontStyle = value;
+                NINA.Properties.Settings.Default.Save();
+                RaisePropertyChanged();
+            }
+        }
+
+        public FontWeight FontWeight {
+            get {
+                return NINA.Properties.Settings.Default.FontWeight;
+            }
+            set {
+                NINA.Properties.Settings.Default.FontWeight = value;
                 NINA.Properties.Settings.Default.Save();
                 RaisePropertyChanged();
             }
