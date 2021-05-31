@@ -184,11 +184,10 @@
                             xmlns:ComponentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
                             Margin="10,0,0,0"
                             ItemTemplate="{DynamicResource FontTemplate}"
-                            ItemsSource="{Binding Source={x:Static Fonts.SystemFontFamilies}}"
                             SelectedItem="{Binding ApplicationFontFamily}">
                             <ComboBox.Resources>
 
-                                <CollectionViewSource x:Key="myFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
+                                <CollectionViewSource x:Key="OrderedSystemFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
                                     <CollectionViewSource.SortDescriptions>
                                         <ComponentModel:SortDescription PropertyName="Source" />
                                     </CollectionViewSource.SortDescriptions>
@@ -203,6 +202,9 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </ComboBox.Resources>
+                            <ComboBox.ItemsSource>
+                                <Binding Source="{StaticResource OrderedSystemFonts}" />
+                            </ComboBox.ItemsSource>
                         </ComboBox>
                     </StackPanel>
 
