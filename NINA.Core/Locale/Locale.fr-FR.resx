@@ -4791,7 +4791,7 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d√
     <value>Ajouter une nouvelle cible de s√©quence via le bouton +, ouvrir une cible existante ou ajouter des cibles via l'assistant de cadrage</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Ajouter une nouvelle cible</value>
+    <value>Add new Target</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
     <value>Charger la cible</value>
@@ -5491,5 +5491,16 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
     <value>PHD2 - Start guiding has timed out. Retrying...</value>
+  </data>
+  <data name="LblFont" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="LblPrimaryRate" xml:space="preserve">
+    <value>Primary rate</value>
+    <comment>Primary telescope axis rate</comment>
+  </data>
+  <data name="LblSecondaryRate" xml:space="preserve">
+    <value>Secondary rate</value>
+    <comment>Secondary telescope axis rate</comment>
   </data>
 </root>

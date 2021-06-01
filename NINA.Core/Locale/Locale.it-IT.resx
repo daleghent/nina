@@ -5493,4 +5493,15 @@ Only relevant when using an ASCOM camera driver!</value>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
     <value>PHD2 - Start guiding has timed out. Retrying...</value>
   </data>
+  <data name="LblFont" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="LblPrimaryRate" xml:space="preserve">
+    <value>Primary rate</value>
+    <comment>Primary telescope axis rate</comment>
+  </data>
+  <data name="LblSecondaryRate" xml:space="preserve">
+    <value>Secondary rate</value>
+    <comment>Secondary telescope axis rate</comment>
+  </data>
 </root>

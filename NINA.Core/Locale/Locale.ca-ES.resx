@@ -2149,19 +2149,19 @@ HFR calculat: {2}    </value>
     <value>Tipus d'Objecte</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Star</value>
+    <value>1 Estrella</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Stars</value>
+    <value>2 Estrelles</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Stars</value>
+    <value>3 Estrelles</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Stars</value>
+    <value>4 Estrelles</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Stars</value>
+    <value>8 Estrelles</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterix</value>
@@ -2354,7 +2354,7 @@ HFR calculat: {2}    </value>
     <value>Port del Servidor de PHD2</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 Server URL</value>
+    <value>URL del Servidor de PHD2</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Configuració de PHD2</value>
@@ -2390,7 +2390,7 @@ HFR calculat: {2}    </value>
     <value>No s'ha pogut canviar el perfil PHD2</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile ID {0} not found. Using {1}</value>
+    <value>No s'ha trobat ID {0} del perfil de PHD2 {0}. Utilitzant {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixels</value>
@@ -2666,7 +2666,7 @@ HFR calculat: {2}    </value>
     <value>Eliminar el perfil?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
+    <value>S'ha d'eliminar el perfil amb el nom: {0} i ID: {1}?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Repetir fins</value>
@@ -2756,7 +2756,7 @@ HFR calculat: {2}    </value>
     <value>Desar el conjunt de l'objectiu</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Scope settle time after flip</value>
+    <value>Temps d’espera després del canvi</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Cercar</value>
@@ -3217,7 +3217,7 @@ Els valors s'han de sincronitzar?</value>
     <value>Temps d'espera</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
+    <value>Temps d'espera per definir el valor del commutador {0} per al commutador [Id: {1}, nom: {2}]. El valor actual és {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Zona Horaria</value>
@@ -3257,7 +3257,7 @@ Arrossegueu el rectangle sobre una estrella amb les puntes de bahtinov. NINA int
     <value>Mou l'objectiu cap a la dreta</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
+    <value>Activa/desactiva l’anàlisi i detecció automàtica d’estrelles HFR (Half-Flus-Radius)</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Vista en Directe</value>
@@ -3447,22 +3447,22 @@ Quan estigui activat, els canals de color s’estiraran per separat, ajudant a a
     <value>Temps actiu</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>USB Port 1</value>
+    <value>Port USB 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>USB Port 2</value>
+    <value>Port Usb 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>USB Port 3</value>
+    <value>Port Usb 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>USB Port 4</value>
+    <value>Port Usb 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>USB Port 5</value>
+    <value>Port Usb 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>USB Port 6</value>
+    <value>Port Usb 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
     <value>USB</value>
@@ -4785,7 +4785,7 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
     <value>Afegiu un nou objectiu de seqüència mitjançant el botó +, obriu un objectiu existent o afegiu objectius mitjançant l’assistent d’enquadrament</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Afegeix nou objectiu</value>
+    <value>Afegir nou objectiu</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
     <value>Carregar objectiu</value>
@@ -5088,7 +5088,7 @@ Allà, la seqüència es pot planificar des de zero mitjançant instruccions, ac
     <value>Clau API per a Weather Underground</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station ID</value>
+    <value>ID per Weather Underground Station</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Baixar el nivell de la fila seleccionada</value>
@@ -5472,18 +5472,29 @@ Només és rellevant quan s’utilitza un controlador de càmera ASCOM!</value>
     <value>Filtres</value>
   </data>
   <data name="LblPHD2Calibrating" xml:space="preserve">
-    <value>PHD2 - Calibrating</value>
+    <value>PHD2 - Calibrant</value>
   </data>
   <data name="LblPHD2SelectingStar" xml:space="preserve">
-    <value>PHD2 - Selecting guide star</value>
+    <value>PHD2 - Seleccionant estrella guia</value>
   </data>
   <data name="LblPHD2Settling" xml:space="preserve">
-    <value>PHD2 - Settling</value>
+    <value>PHD2 - Configuració</value>
   </data>
   <data name="LblPHD2StartGuiding" xml:space="preserve">
-    <value>PHD2 - Waiting for guiding to start</value>
+    <value>PHD2 - Esperant per començar a guiar</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
-    <value>PHD2 - Start guiding has timed out. Retrying...</value>
+    <value>PHD2 - Esgotat el temps per l'inici del guiatge. Intentant de nou...</value>
+  </data>
+  <data name="LblFont" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="LblPrimaryRate" xml:space="preserve">
+    <value>Taxa primària</value>
+    <comment>Primary telescope axis rate</comment>
+  </data>
+  <data name="LblSecondaryRate" xml:space="preserve">
+    <value>Taxa secundària</value>
+    <comment>Secondary telescope axis rate</comment>
   </data>
 </root>

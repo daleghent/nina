@@ -4795,7 +4795,7 @@ Se a posición superior a ela é un conxunto de instrucións que non está expan
     <value>Engade un novo Obxectivo de Secuencia usando do botón +, abre un obxectivo existente ou engade obxectivos mediante o asistente de encadre</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Engadir Novo Obxectivo</value>
+    <value>Add new Target</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
     <value>Cargar Obxectivo</value>
@@ -5495,5 +5495,16 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
     <value>PHD2 - Start guiding has timed out. Retrying...</value>
+  </data>
+  <data name="LblFont" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="LblPrimaryRate" xml:space="preserve">
+    <value>Primary rate</value>
+    <comment>Primary telescope axis rate</comment>
+  </data>
+  <data name="LblSecondaryRate" xml:space="preserve">
+    <value>Secondary rate</value>
+    <comment>Secondary telescope axis rate</comment>
   </data>
 </root>
