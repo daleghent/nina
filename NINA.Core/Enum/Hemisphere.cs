@@ -13,12 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NINA.Core.Enum {
 

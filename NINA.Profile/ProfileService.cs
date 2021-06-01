@@ -13,7 +13,6 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
-using NINA.Core.Enum;
 using NINA.Core.Locale;
 using System;
 using System.Globalization;
@@ -225,16 +224,7 @@ namespace NINA.Profile {
             LocaleChanged?.Invoke(this, null);
         }
 
-        public void ChangeHemisphere(Hemisphere hemisphere) {
-            ActiveProfile.AstrometrySettings.HemisphereType = hemisphere;
-            LocationChanged?.Invoke(this, null);
-        }
-
         public void ChangeLatitude(double latitude) {
-            var hemisphereType = ActiveProfile.AstrometrySettings.HemisphereType;
-            if ((hemisphereType == Hemisphere.SOUTHERN && latitude > 0) || (hemisphereType == Hemisphere.NORTHERN && latitude < 0)) {
-                latitude = -latitude;
-            }
             ActiveProfile.AstrometrySettings.Latitude = latitude;
             LocationChanged?.Invoke(this, null);
         }

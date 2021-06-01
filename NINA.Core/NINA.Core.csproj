@@ -365,6 +365,8 @@
     <Compile Include="Utility\Ticker.cs" />
     <Compile Include="Utility\CoreUtil.cs" />
     <Compile Include="Utility\ValidationRules.cs" />
+    <Compile Include="Utility\ValidationRules\LatitudeRule.cs" />
+    <Compile Include="Utility\ValidationRules\LongitudeRule.cs" />
     <Compile Include="Utility\ValidationRules\DegreesRule.cs" />
     <Compile Include="Utility\ValidationRules\DirectoryExistsRule.cs" />
     <Compile Include="Utility\ValidationRules\DoubleRangeRule.cs" />
