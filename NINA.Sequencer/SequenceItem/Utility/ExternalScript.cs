@@ -48,7 +48,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 dialog.Filter = "Any executable command |*.*";
 
                 if (dialog.ShowDialog() == true) {
-                    Script = dialog.FileName;
+                    Script = "\"" + dialog.FileName + "\"";
                 }
             });
         }

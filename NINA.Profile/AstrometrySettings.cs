@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using NINA.Core.Enum;
 using NINA.Core.Model;
 using NINA.Profile.Interfaces;
 using System;
@@ -40,25 +39,9 @@ namespace NINA.Profile {
         }
 
         protected override void SetDefaultValues() {
-            hemisphereType = Hemisphere.NORTHERN;
             latitude = 0;
             longitude = 0;
             horizonFilePath = string.Empty;
-        }
-
-        private Hemisphere hemisphereType;
-
-        [DataMember]
-        public Hemisphere HemisphereType {
-            get {
-                return hemisphereType;
-            }
-            set {
-                if (hemisphereType != value) {
-                    hemisphereType = value;
-                    RaisePropertyChanged();
-                }
-            }
         }
 
         private double latitude;

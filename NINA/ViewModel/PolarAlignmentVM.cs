@@ -14,7 +14,6 @@
 
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.Equipment.Equipment.MyTelescope;
-using NINA.Utility;
 using NINA.Astrometry;
 using NINA.Profile.Interfaces;
 using System;
@@ -23,8 +22,6 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Threading;
 using NINA.PlateSolving;
-using NINA.WPF.Base.ViewModel.Equipment.Camera;
-using NINA.ViewModel.Interfaces;
 using NINA.Core.Enum;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.Mediator;
@@ -515,7 +512,7 @@ namespace NINA.ViewModel {
                     string msg = "";
 
                     if (direction == Direction.ALTITUDE) {
-                        if (profileService.ActiveProfile.AstrometrySettings.HemisphereType == Hemisphere.NORTHERN) {
+                        if (profileService.ActiveProfile.AstrometrySettings.Latitude >= 0) {
                             if (altitudeSide == AltitudeSite.EAST) {
                                 if (poleErr < 0) {
                                     msg = poleErrString + " too low";
@@ -546,7 +543,7 @@ namespace NINA.ViewModel {
                         }
                     } else if (direction == Direction.AZIMUTH) {
                         //if northern
-                        if (profileService.ActiveProfile.AstrometrySettings.HemisphereType == Hemisphere.NORTHERN) {
+                        if (profileService.ActiveProfile.AstrometrySettings.Latitude >= 0) {
                             if (poleErr < 0) {
                                 msg = poleErrString + " too east";
                             } else {

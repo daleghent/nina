@@ -202,14 +202,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
             double timeToMed = currentCoordinates.RA - siderealTime;
             Coordinates returnCoordinates = new Coordinates(Angle.ByHours(0), Angle.ByDegree(0), Epoch.J2000);
-            if (profileService.ActiveProfile.AstrometrySettings.HemisphereType == Hemisphere.NORTHERN) {
+
+            // If your latitude is exactly 0 derees, congratulations. We'll still put you in the northern hemisphere.
+            if (profileService.ActiveProfile.AstrometrySettings.Latitude >= 0) {
                 returnCoordinates.Dec = 89;
-                returnCoordinates.RA = siderealTime + 6 * Math.Sign(timeToMed);
-            }
-            if (profileService.ActiveProfile.AstrometrySettings.HemisphereType == Hemisphere.SOUTHERN) {
+            } else {
                 returnCoordinates.Dec = -89;
-                returnCoordinates.RA = siderealTime + 6 * Math.Sign(timeToMed);
             }
+
+            returnCoordinates.RA = siderealTime + 6 * Math.Sign(timeToMed);
             return returnCoordinates;
         }
 

@@ -4784,7 +4784,7 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
     <value>Añadir un nuevo objetivo de secuencia a través del botón +, abrir un objetivo existente o añadir objetivos a través del asistente de encuadre</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Añade nuevo objetivo</value>
+    <value>Add new Target</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
     <value>Cargar objetivo</value>
@@ -5484,5 +5484,16 @@ Este ajuste no tendrá efecto en los sensores de color.
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
     <value>PHD2 - Start guiding has timed out. Retrying...</value>
+  </data>
+  <data name="LblFont" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="LblPrimaryRate" xml:space="preserve">
+    <value>Primary rate</value>
+    <comment>Primary telescope axis rate</comment>
+  </data>
+  <data name="LblSecondaryRate" xml:space="preserve">
+    <value>Secondary rate</value>
+    <comment>Secondary telescope axis rate</comment>
   </data>
 </root>

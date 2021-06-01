@@ -10,7 +10,6 @@
     x:Class="NINA.View.Options.GeneralView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:astrometry="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -776,82 +775,83 @@
                     </StackPanel>
                 </UniformGrid>
             </GroupBox>
-            <GroupBox Grid.Row="2" Header="{ns:Loc LblAstrometry}">
-                <StackPanel Margin="0,5,0,0">
-                    <UniformGrid Columns="2">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock
-                                Width="100"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblHemisphere}" />
-                            <ComboBox
-                                MinWidth="120"
-                                Margin="10,0,0,0"
-                                ItemsSource="{Binding Source={util:EnumBindingSource {x:Type astrometry:Hemisphere}}}"
-                                SelectedItem="{Binding ActiveProfile.AstrometrySettings.HemisphereType}" />
-                        </StackPanel>
-                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                            <Button
-                                Width="40"
-                                Height="25"
-                                HorizontalAlignment="Center"
-                                Command="{Binding SiteFromGPSCommand}">
-                                <Button.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblGPSTooltip}" />
-                                </Button.ToolTip>
-                                <Path
-                                    Margin="5"
-                                    Data="{StaticResource GPSSVG}"
-                                    Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
-                            </Button>
-                            <Button
-                                Width="40"
-                                Height="25"
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Center"
-                                Command="{Binding SiteFromPlanetariumCommand}">
-                                <Button.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblPlanetariumLocationTooltip}" />
-                                </Button.ToolTip>
-                                <Path
-                                    Margin="5"
-                                    Data="{StaticResource GetCoordsSVG}"
-                                    Fill="{StaticResource ButtonForegroundBrush}"
-                                    Stretch="Uniform" />
-                            </Button>
-                        </StackPanel>
-                    </UniformGrid>
 
-                    <UniformGrid Columns="2">
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                            <TextBlock
-                                Width="100"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblLatitude}" />
-                            <TextBox
-                                MinWidth="120"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{Binding Latitude}" />
-                        </StackPanel>
-                        <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                            <TextBlock
-                                Width="100"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblLongitude}" />
-                            <TextBox
-                                MinWidth="120"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{Binding Longitude}" />
-                        </StackPanel>
-                    </UniformGrid>
+            <GroupBox Grid.Row="2" Header="{ns:Loc LblAstrometry}">
+                <StackPanel>
+                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblLatitude}" />
+                        <ninactrl:UnitTextBox
+                            MinWidth="120"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Unit="°">
+                            <ninactrl:UnitTextBox.Text>
+                                <Binding Path="Latitude" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:LatitudeRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ninactrl:UnitTextBox.Text>
+                        </ninactrl:UnitTextBox>
+                        <Button
+                            Width="40"
+                            Height="25"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Right"
+                            Command="{Binding SiteFromGPSCommand}">
+                            <Button.ToolTip>
+                                <TextBlock Text="{ns:Loc LblGPSTooltip}" />
+                            </Button.ToolTip>
+                            <Path
+                            Margin="5"
+                            Data="{StaticResource GPSSVG}"
+                            Fill="{StaticResource ButtonForegroundBrush}"
+                            Stretch="Uniform" />
+                        </Button>
+                        <Button
+                            Width="40"
+                            Height="25"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Right"
+                            Command="{Binding SiteFromPlanetariumCommand}">
+                            <Button.ToolTip>
+                                <TextBlock Text="{ns:Loc LblPlanetariumLocationTooltip}" />
+                            </Button.ToolTip>
+                            <Path
+                            Margin="5"
+                            Data="{StaticResource GetCoordsSVG}"
+                            Fill="{StaticResource ButtonForegroundBrush}"
+                            Stretch="Uniform" />
+                        </Button>
+                    </StackPanel>
+                    <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
+                        <TextBlock
+                            Width="150"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblLongitude}" />
+                        <ninactrl:UnitTextBox
+                            MinWidth="120"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Unit="°">
+                            <ninactrl:UnitTextBox.Text>
+                                <Binding Path="Longitude" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:LongitudeRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </ninactrl:UnitTextBox.Text>
+                        </ninactrl:UnitTextBox>
+                    </StackPanel>
+
                     <Grid Margin="0,2,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="150" />
                             <ColumnDefinition />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
@@ -860,7 +860,6 @@
 
                         <TextBox
                             Grid.Column="1"
-                            Margin="10,0,0,0"
                             VerticalAlignment="Center"
                             VerticalContentAlignment="Center">
                             <TextBox.Text>

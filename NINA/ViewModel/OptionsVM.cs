@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using NINA.API.SGP;
 using NINA.Astrometry;
 using NINA.Core.Enum;
 using NINA.Core.Interfaces.API.SGP;
@@ -24,15 +23,10 @@ using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
 using NINA.Equipment.Exceptions;
 using NINA.Equipment.Interfaces.Mediator;
-using NINA.Equipment.Equipment.MyFilterWheel;
-using NINA.Equipment.Equipment.MyFocuser;
-using NINA.Equipment.Equipment.MyPlanetarium;
 using NINA.Plugin;
 using NINA.Profile;
 using NINA.Profile.Interfaces;
 using NINA.Utility;
-using NINA.ViewModel.Imaging;
-using NINA.ViewModel.Interfaces;
 using NINA.ViewModel.Plugins;
 using NINA.WPF.Base.Interfaces.Utility;
 using System;

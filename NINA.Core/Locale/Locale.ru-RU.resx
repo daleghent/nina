@@ -2147,19 +2147,19 @@ Dec: {1}</value>
     <value>Тип объекта</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Star</value>
+    <value>1 Звезда</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Stars</value>
+    <value>2 Звезды</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Stars</value>
+    <value>3 Звезды</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Stars</value>
+    <value>4 Звезды</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Stars</value>
+    <value>8 Звёзд</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Астеризм</value>
@@ -2313,7 +2313,7 @@ Dec: {1}</value>
     <value>Приостановлено</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Pause before Meridian</value>
+    <value>Пауза перед меридианом</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>ФлэтМастер</value>
@@ -2352,7 +2352,7 @@ Dec: {1}</value>
     <value>Порт PHD2 сервера</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 Server URL</value>
+    <value>URL-адрес сервера PHD2</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Настройки PHD2</value>
@@ -2388,7 +2388,7 @@ Dec: {1}</value>
     <value>Не удалось изменить PHD2 профиль</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile ID {0} not found. Using {1}</value>
+    <value>PHD2 профиль id {0} не найден. Используется {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Пиксели</value>
@@ -2664,7 +2664,7 @@ Dec: {1}</value>
     <value>Удалить профиль?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
+    <value>Должен ли профиль с именем: {0} и id: {1} быть удален?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Повторять до</value>
@@ -2754,7 +2754,7 @@ Dec: {1}</value>
     <value>Сохранить набор целей</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Scope settle time after flip</value>
+    <value>Время успокоения телескопа после перекладки</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Поиск</value>
@@ -2808,7 +2808,7 @@ Dec: {1}</value>
     <value>Команда конца серии не найдена '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Delay start</value>
+    <value>Задержка запуска</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Серия начнется через {0} секунд</value>
@@ -3216,7 +3216,7 @@ Dec: {1}</value>
     <value>Таймаут</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
+    <value>Таймаут для установки значения переключателя {0} для переключателя [ID: {1}, Имя: {2}]. Текущее значение {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Часовой пояс</value>
@@ -3256,7 +3256,7 @@ Dec: {1}</value>
     <value>Переместить цель вправо</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
+    <value>Включение/выключение автоматического обнаружения и анализа звёзд (Half-Flux-Radius)</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Живая трансляция</value>
@@ -3447,22 +3447,22 @@ Dec: {1}</value>
     <value>Время с момента включения</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>USB Port 1</value>
+    <value>Порт Usb 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>USB Port 2</value>
+    <value>Порт Usb 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>USB Port 3</value>
+    <value>Порт Usb 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>USB Port 4</value>
+    <value>Порт Usb 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>USB Port 5</value>
+    <value>Порт Usb 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>USB Port 6</value>
+    <value>Порт Usb 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
     <value>USB</value>
@@ -3918,7 +3918,7 @@ Dec: {1}</value>
     <value>Режим мастера</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance</value>
+    <value>Допуск по азимуту</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>Купол движется если азимут цели отличается больше чем это значение</value>
@@ -3930,31 +3930,31 @@ Dec: {1}</value>
     <value>Найти дом</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length</value>
+    <value>Длина оси GEM</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Если Альт/Аз, это должно быть 0. Для экваториальной монтировки двигайте ось П.В. на +/- 90 градусов, и измерьте боковое расстояние (в мм) от оси до центра телескопа</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length</value>
+    <value>Длина боковой оси</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>В конфигурации бок о бок это расстояние (в мм) от ластохвоста к центру трубы. Положительный это направо при направлении оси трубы.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius</value>
+    <value>Радиус купола</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Измерьте от центра до обода купола, вдоль основания</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W</value>
+    <value>Положение телескопа В/З</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Измерьте смещение востока или запада (в мм) центра монтировки от центра купола. Положительный поворот это направление к востоку.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S</value>
+    <value>Положение телескопа С/Ю</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Слежение купола может быть неточным. Убедитесь, что эпоха монтировки сконфигурирована правильно и сделайте плейтсолв</value>
@@ -3972,7 +3972,7 @@ Dec: {1}</value>
     <value>Пауза серии</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down</value>
+    <value>Положение телескопа +вверх/-вниз</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Измерьте разницу в высоте (в мм) центра оси монтировки относительно основания купола. Для крепления Альт/Аз это от центра оси Высоты, и для крепления ЭВ это место пересекаются оси П.В. и Скл. Положительное число указывает на центр оси выше, чем основание купола, а отрицательное число означает, что оно ниже.</value>
@@ -5090,7 +5090,7 @@ Dec: {1}</value>
     <value>Ключ API для Weather Underground</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station ID</value>
+    <value>Id станции Weather Underground</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Понизить выбранную строку</value>
@@ -5459,33 +5459,44 @@ Dec: {1}</value>
     <value>Точка установки температуры камеры</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
-    <value>ASCOM allow odd pixel dimension</value>
+    <value>ASCOM допускает нечетный размер пикселей</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
-    <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
-When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
-This setting will have no effect on color sensors.
-Only relevant when using an ASCOM camera driver!</value>
+    <value>В предыдущих версиях N.I.N.A. ширина и высота драйвера ASCOM всегда ограничивались четными числами, даже для монохромных камер.
+Когда этот параметр включен, приложение теперь будет разрешать полный размер нечетных пикселей на моно-камерах.
+Этот параметр не повлияет на цветные сенсоры.
+Актуально только при использовании драйвера камеры ASCOM!</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
-    <value>Guiding Start Timeout</value>
+    <value>Таймаут начала гидирования</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>Фильтры</value>
   </data>
   <data name="LblPHD2Calibrating" xml:space="preserve">
-    <value>PHD2 - Calibrating</value>
+    <value>PHD2 - Калибровка</value>
   </data>
   <data name="LblPHD2SelectingStar" xml:space="preserve">
-    <value>PHD2 - Selecting guide star</value>
+    <value>PHD2 - Выбор звезды гида</value>
   </data>
   <data name="LblPHD2Settling" xml:space="preserve">
-    <value>PHD2 - Settling</value>
+    <value>PHD2 - Расчет</value>
   </data>
   <data name="LblPHD2StartGuiding" xml:space="preserve">
-    <value>PHD2 - Waiting for guiding to start</value>
+    <value>PHD2 - Ожидание начала гидирования</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
-    <value>PHD2 - Start guiding has timed out. Retrying...</value>
+    <value>PHD2 - Время ожидания начала гидирования истекло. Повтор...</value>
+  </data>
+  <data name="LblFont" xml:space="preserve">
+    <value>Шрифт</value>
+  </data>
+  <data name="LblPrimaryRate" xml:space="preserve">
+    <value>Основная скорость</value>
+    <comment>Primary telescope axis rate</comment>
+  </data>
+  <data name="LblSecondaryRate" xml:space="preserve">
+    <value>Вторичная скорость</value>
+    <comment>Secondary telescope axis rate</comment>
   </data>
 </root>

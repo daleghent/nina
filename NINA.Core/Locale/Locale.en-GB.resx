@@ -3997,7 +3997,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Dome driver is following the telescope already</value>
   </data>
   <data name="LblDomeSyncError_SyncTimeout" xml:space="preserve">
-    <value>Timed out while waiting for dome synchronization</value>
+    <value>Timed out while waiting for dome synchronisation</value>
   </data>
   <data name="LblStartSequence" xml:space="preserve">
     <value>Start sequence</value>
@@ -4096,7 +4096,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Sky flats</value>
   </data>
   <data name="LblDomeFollowFailure" xml:space="preserve">
-    <value>Dome synchronization error. No longer following telescope. {0}</value>
+    <value>Dome synchronisation error. No longer following telescope. {0}</value>
   </data>
   <data name="LblCloseDomeShutterAtSequenceEnd" xml:space="preserve">
     <value>Close dome shutter at sequence end</value>
@@ -4147,7 +4147,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Stopped guiding due to low star intensity. There may be clouds.</value>
   </data>
   <data name="LblDomeSyncTimeout" xml:space="preserve">
-    <value>Synchronization timeout</value>
+    <value>Synchronisation timeout</value>
   </data>
   <data name="LblDomeSyncTimeoutTooltip" xml:space="preserve">
     <value>The maximum amount of time to wait for the dome and telescope to synchronise their positions</value>
@@ -4794,7 +4794,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Add a new sequence target via the + button, open an existing target or add targets via Framing Assistant</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Add new target</value>
+    <value>Add new Target</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
     <value>Load target</value>
@@ -4902,7 +4902,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Ensures the dome remains synchronised with the telescope</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Enable Dome Sync</value>
+    <value>Enable some sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>The Sequence contains rows which are either disabled or where the progress exposure count is equals to the total exposure count. These items are skipped and no items for these rows are generated for the sequencer.</value>
@@ -5494,5 +5494,16 @@ Only relevant when using an ASCOM camera driver!</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
     <value>PHD2 - Start guiding has timed out. Retrying...</value>
+  </data>
+  <data name="LblFont" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="LblPrimaryRate" xml:space="preserve">
+    <value>Primary rate</value>
+    <comment>Primary telescope axis rate</comment>
+  </data>
+  <data name="LblSecondaryRate" xml:space="preserve">
+    <value>Secondary rate</value>
+    <comment>Secondary telescope axis rate</comment>
   </data>
 </root>

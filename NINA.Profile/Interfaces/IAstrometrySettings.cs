@@ -12,13 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Core.Enum;
 using NINA.Core.Model;
 
 namespace NINA.Profile.Interfaces {
 
     public interface IAstrometrySettings : ISettings {
-        Hemisphere HemisphereType { get; set; }
         double Latitude { get; set; }
         double Longitude { get; set; }
         string HorizonFilePath { get; set; }

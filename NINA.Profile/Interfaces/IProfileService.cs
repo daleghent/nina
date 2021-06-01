@@ -13,7 +13,6 @@
 #endregion "copyright"
 
 using NINA.Core.Utility;
-using NINA.Core.Enum;
 using System;
 using System.Globalization;
 
@@ -33,8 +32,6 @@ namespace NINA.Profile.Interfaces {
         bool RemoveProfile(ProfileMeta profileInfo);
 
         void ChangeLocale(CultureInfo language);
-
-        void ChangeHemisphere(Hemisphere hemisphere);
 
         void ChangeLatitude(double latitude);
 
