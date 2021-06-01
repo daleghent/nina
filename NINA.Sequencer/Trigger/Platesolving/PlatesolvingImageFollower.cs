@@ -159,7 +159,8 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 MaxObjects = profileService.ActiveProfile.PlateSolveSettings.MaxObjects,
                 PixelSize = profileService.ActiveProfile.CameraSettings.PixelSize,
                 Regions = profileService.ActiveProfile.PlateSolveSettings.Regions,
-                SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius
+                SearchRadius = profileService.ActiveProfile.PlateSolveSettings.SearchRadius,
+                DisableNotifications = true
             };
             var solveResult = await solver.Solve(loadedImage, parameter, this.progress, token);
             if (!solveResult.Success) {

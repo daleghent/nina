@@ -14,7 +14,6 @@
 
 using NINA.Core.Utility;
 using NINA.Astrometry;
-using NINA.Core.Utility.Notification;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

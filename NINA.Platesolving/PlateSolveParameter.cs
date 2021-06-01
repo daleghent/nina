@@ -32,6 +32,9 @@ namespace NINA.PlateSolving {
         public double Regions { get; set; }
         public int DownSampleFactor { get; set; }
         public int MaxObjects { get; set; }
+
+        public bool DisableNotifications { get; set; } = false;
+
         private Coordinates coordinates;
 
         public Coordinates Coordinates {
