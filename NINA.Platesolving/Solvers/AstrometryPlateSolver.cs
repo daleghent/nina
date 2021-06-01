@@ -226,7 +226,7 @@ namespace NINA.PlateSolving.Solvers {
                 result.Success = false;
             } catch (Exception ex) {
                 result.Success = false;
-                if (parameter.DisableNotifications) {
+                if (!parameter.DisableNotifications) {
                     Notification.ShowError($"Error plate solving with Astrometry.net. {ex.Message}");
                 }
             }
