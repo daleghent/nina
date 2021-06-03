@@ -111,7 +111,7 @@ namespace NINA.Image.ImageAnalysis {
             get {
                 return _brightestStarPositions;
             }
-            set {
+            private set {
                 _brightestStarPositions = value;
             }
         }
@@ -125,6 +125,11 @@ namespace NINA.Image.ImageAnalysis {
             }
         }
 
+        public List<Star> StarList {
+            get => _starlist;
+            private set { _starlist = value; }
+        }
+
         public int DetectedStars { get; set; }
         public double AverageHFR { get; set; }
         public double InnerCropRatio { get; set; }
@@ -135,7 +140,7 @@ namespace NINA.Image.ImageAnalysis {
         public double ContrastStdev { get; set; }
         public ContrastDetectionMethodEnum ContrastDetectionMethod { get; set; }
 
-        private class Star {
+        public class Star {
             public double radius;
             public double HFR;
             public Accord.Point Position;
@@ -193,7 +198,7 @@ namespace NINA.Image.ImageAnalysis {
             }
         }
 
-        private class PixelData {
+        public class PixelData {
             public int PosX;
             public int PosY;
             public ushort value;
