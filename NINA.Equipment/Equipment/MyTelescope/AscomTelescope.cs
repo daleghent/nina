@@ -979,18 +979,34 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                                     translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisPrimary;
                                     break;
                             }
-                            device.MoveAxis(translatedAxis, rate);
+
+                            if (axis == TelescopeAxes.Primary && !CanMovePrimaryAxis) {
+                                Logger.Warning("Telescope cannot move primary axis");
+                                Notification.ShowWarning(Loc.Instance["LblTelescopeCannotMovePrimaryAxis"]);
+                            } else if (axis == TelescopeAxes.Secondary && !CanMoveSecondaryAxis) {
+                                Logger.Warning("Telescope cannot move secondary axis");
+                                Notification.ShowWarning(Loc.Instance["LblTelescopeCannotMoveSecondaryAxis"]);
+                            } else {
+                                var sign = 1;
+                                if (rate < 0) { sign = -1; }
+                                var actualRate = GetAdjustedMovingRate(Math.Abs(rate), Math.Abs(rate), translatedAxis) * sign;
+
+                                device.MoveAxis(translatedAxis, actualRate);
+                            }
                         } catch (Exception e) {
                             Logger.Error(e);
                             Notification.ShowError(e.Message);
                         }
                     } else {
+                        Logger.Warning("Telescope parked");
                         Notification.ShowWarning(Loc.Instance["LblTelescopeParkedWarn"]);
                     }
                 } else {
+                    Logger.Warning("Telescope cannot slew");
                     Notification.ShowWarning(Loc.Instance["LblTelescopeCannotSlew"]);
                 }
             } else {
+                Logger.Warning("Telescope not connected");
                 Notification.ShowWarning(Loc.Instance["LblTelescopeNotConnected"]);
             }
         }
@@ -1165,6 +1181,24 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public string TimeToMeridianFlipString {
             get {
                 return AstroUtil.HoursToHMS(TimeToMeridianFlip);
+            }
+        }
+
+        public bool CanMovePrimaryAxis {
+            get {
+                if (Connected) {
+                    return device.CanMoveAxis(ASCOM.DeviceInterface.TelescopeAxes.axisPrimary);
+                }
+                return false;
+            }
+        }
+
+        public bool CanMoveSecondaryAxis {
+            get {
+                if (Connected) {
+                    return device.CanMoveAxis(ASCOM.DeviceInterface.TelescopeAxes.axisSecondary);
+                }
+                return false;
             }
         }
 

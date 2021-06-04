@@ -14043,6 +14043,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Telescope cannot move primary axis.
+        /// </summary>
+        internal static string LblTelescopeCannotMovePrimaryAxis {
+            get {
+                return ResourceManager.GetString("LblTelescopeCannotMovePrimaryAxis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Telescope cannot move secondary axis.
+        /// </summary>
+        internal static string LblTelescopeCannotMoveSecondaryAxis {
+            get {
+                return ResourceManager.GetString("LblTelescopeCannotMoveSecondaryAxis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Telescope cannot Pulse Guide.
         /// </summary>
         internal static string LblTelescopeCannotPulseGuide {

@@ -77,6 +77,8 @@ namespace NINA.Equipment.Interfaces {
         bool Slewing { get; }
         double GuideRateRightAscensionArcsecPerSec { get; }
         double GuideRateDeclinationArcsecPerSec { get; }
+        bool CanMovePrimaryAxis { get; }
+        bool CanMoveSecondaryAxis { get; }
 
         Task<bool> MeridianFlip(Coordinates targetCoordinates, CancellationToken token);
 

@@ -425,6 +425,7 @@
                                 Grid.Column="3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
+                                IsEnabled="{Binding Telescope.CanMovePrimaryAxis}"
                                 Orientation="Horizontal">
                                 <TextBlock
                                     Margin="0,0,5,0"
@@ -443,6 +444,7 @@
                                 Grid.Column="3"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
+                                IsEnabled="{Binding Telescope.CanMoveSecondaryAxis}"
                                 Orientation="Horizontal">
                                 <TextBlock
                                     Margin="0,0,5,0"
@@ -464,6 +466,7 @@
                                 HorizontalAlignment="Right">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{StaticResource InverseMultiBooleanORConverter}">
+                                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="TelescopeInfo.CanMovePrimaryAxis" />
                                         <Binding Path="IsParkingOrHoming" />
                                         <Binding Path="TelescopeInfo.AtPark" />
                                     </MultiBinding>
@@ -498,6 +501,7 @@
                                 HorizontalAlignment="Left">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{StaticResource InverseMultiBooleanORConverter}">
+                                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="TelescopeInfo.CanMovePrimaryAxis" />
                                         <Binding Path="IsParkingOrHoming" />
                                         <Binding Path="TelescopeInfo.AtPark" />
                                     </MultiBinding>
@@ -532,6 +536,7 @@
                                 VerticalAlignment="Bottom">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{StaticResource InverseMultiBooleanORConverter}">
+                                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="TelescopeInfo.CanMoveSecondaryAxis" />
                                         <Binding Path="IsParkingOrHoming" />
                                         <Binding Path="TelescopeInfo.AtPark" />
                                     </MultiBinding>
@@ -566,6 +571,7 @@
                                 VerticalAlignment="Top">
                                 <Button.IsEnabled>
                                     <MultiBinding Converter="{StaticResource InverseMultiBooleanORConverter}">
+                                        <Binding Converter="{StaticResource InverseBooleanConverter}" Path="TelescopeInfo.CanMoveSecondaryAxis" />
                                         <Binding Path="IsParkingOrHoming" />
                                         <Binding Path="TelescopeInfo.AtPark" />
                                     </MultiBinding>

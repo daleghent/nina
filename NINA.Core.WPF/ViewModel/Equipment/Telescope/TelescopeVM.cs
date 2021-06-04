@@ -424,6 +424,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 Slewing = Telescope.Slewing,
                                 GuideRateRightAscensionArcsecPerSec = Telescope.GuideRateRightAscensionArcsecPerSec,
                                 GuideRateDeclinationArcsecPerSec = Telescope.GuideRateDeclinationArcsecPerSec,
+                                CanMovePrimaryAxis = Telescope.CanMovePrimaryAxis,
+                                CanMoveSecondaryAxis = Telescope.CanMoveSecondaryAxis,
                             };
 
                             // Supporting custom would require an additional dialog box to input the custom rates. We can add that later if there's demand for it

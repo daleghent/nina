@@ -5506,4 +5506,10 @@ Only relevant when using an ASCOM camera driver!</value>
     <value>Secondary rate</value>
     <comment>Secondary telescope axis rate</comment>
   </data>
+  <data name="LblTelescopeCannotMovePrimaryAxis" xml:space="preserve">
+    <value>Telescope cannot move primary axis</value>
+  </data>
+  <data name="LblTelescopeCannotMoveSecondaryAxis" xml:space="preserve">
+    <value>Telescope cannot move secondary axis</value>
+  </data>
 </root>

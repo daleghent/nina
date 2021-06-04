@@ -317,5 +317,19 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             get { return guideRateDeclinationArcsecPerSec; }
             set { guideRateDeclinationArcsecPerSec = value; RaisePropertyChanged(); }
         }
+
+        private bool canMovePrimaryAxis;
+
+        public bool CanMovePrimaryAxis {
+            get { return canMovePrimaryAxis; }
+            set { canMovePrimaryAxis = value; RaisePropertyChanged(); }
+        }
+
+        private bool canMoveSecondaryAxis;
+
+        public bool CanMoveSecondaryAxis {
+            get { return canMoveSecondaryAxis; }
+            set { canMoveSecondaryAxis = value; RaisePropertyChanged(); }
+        }
     }
 }
