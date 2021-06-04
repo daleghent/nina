@@ -35,7 +35,7 @@ namespace NINA.WPF.Base.Behaviors {
               "Enabled",
               typeof(bool),
               typeof(MouseCommandBehavior),
-              new PropertyMetadata(false, RegisterRightMouse));
+              new PropertyMetadata(false, RegisterMouse));
 
         public static bool GetEnabled(DependencyObject obj) {
             return (bool)obj.GetValue(IsEnabledProperty);
@@ -45,7 +45,7 @@ namespace NINA.WPF.Base.Behaviors {
             obj.SetValue(IsEnabledProperty, value);
         }
 
-        private static void RegisterRightMouse(DependencyObject d, DependencyPropertyChangedEventArgs e) {
+        private static void RegisterMouse(DependencyObject d, DependencyPropertyChangedEventArgs e) {
             var element = (UIElement)d;
             var isEnabled = (bool)(e.NewValue);
 
@@ -126,6 +126,9 @@ namespace NINA.WPF.Base.Behaviors {
             if (e.ChangedButton == MouseButton.Right) {
                 var cmd = GetRightMouseUpCommand(element);
                 cmd?.Execute(null);
+            } else if (e.ChangedButton == MouseButton.Left) {
+                var cmd = GetLeftMouseUpCommand(element);
+                cmd?.Execute(null);
             }
         }
 
@@ -136,6 +139,10 @@ namespace NINA.WPF.Base.Behaviors {
                 var cmd = GetRightMouseMoveCommand(element);
                 var point = e.GetPosition(element);
                 cmd?.Execute(point);
+            } else if (e.LeftButton == MouseButtonState.Pressed) {
+                var cmd = GetLeftMouseMoveCommand(element);
+                var point = e.GetPosition(element);
+                cmd?.Execute(point);
             }
         }
 
@@ -144,6 +151,10 @@ namespace NINA.WPF.Base.Behaviors {
 
             if (e.ChangedButton == MouseButton.Right) {
                 var cmd = GetRightMouseDownCommand(element);
+                var position = e.GetPosition(element);
+                cmd?.Execute(position);
+            } else if (e.ChangedButton == MouseButton.Left) {
+                var cmd = GetLeftMouseDownCommand(element);
                 var position = e.GetPosition(element);
                 cmd?.Execute(position);
             }
@@ -180,6 +191,39 @@ namespace NINA.WPF.Base.Behaviors {
 
         public static void SetRightMouseMoveCommand(DependencyObject obj, bool value) {
             obj.SetValue(RightMouseMoveCommandProperty, value);
+        }
+
+        public static readonly DependencyProperty LeftMouseDownCommandProperty =
+            DependencyProperty.RegisterAttached("LeftMouseDownCommand", typeof(ICommand), typeof(MouseCommandBehavior), new PropertyMetadata(null));
+
+        public static ICommand GetLeftMouseDownCommand(DependencyObject obj) {
+            return (ICommand)obj.GetValue(LeftMouseDownCommandProperty);
+        }
+
+        public static void SetLeftMouseDownCommand(DependencyObject obj, bool value) {
+            obj.SetValue(LeftMouseDownCommandProperty, value);
+        }
+
+        public static readonly DependencyProperty LeftMouseUpCommandProperty =
+            DependencyProperty.RegisterAttached("LeftMouseUpCommand", typeof(ICommand), typeof(MouseCommandBehavior), new PropertyMetadata(null));
+
+        public static ICommand GetLeftMouseUpCommand(DependencyObject obj) {
+            return (ICommand)obj.GetValue(LeftMouseUpCommandProperty);
+        }
+
+        public static void SetLeftMouseUpCommand(DependencyObject obj, bool value) {
+            obj.SetValue(LeftMouseUpCommandProperty, value);
+        }
+
+        public static readonly DependencyProperty LeftMouseMoveCommandProperty =
+            DependencyProperty.RegisterAttached("LeftMouseMoveCommand", typeof(ICommand), typeof(MouseCommandBehavior), new PropertyMetadata(null));
+
+        public static ICommand GetLeftMouseMoveCommand(DependencyObject obj) {
+            return (ICommand)obj.GetValue(LeftMouseMoveCommandProperty);
+        }
+
+        public static void SetLeftMouseMoveCommand(DependencyObject obj, bool value) {
+            obj.SetValue(LeftMouseMoveCommandProperty, value);
         }
     }
 }
