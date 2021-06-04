@@ -157,10 +157,10 @@ namespace NINA.WPF.Base.Utility.AutoFocus {
 
             var inputs = points.Select((dp) => dp.X).ToArray();
             var outputs = points.Select((dp) => dp.Y).ToArray();
-            var weights = points.Select((dp) => 1 / (dp.ErrorY * dp.ErrorY)).ToArray();
+            //var weights = points.Select((dp) => 1 / (dp.ErrorY * dp.ErrorY)).ToArray();
             var transformed = new double[inputs.Length];
             var rSquared = new RSquaredLoss(n, outputs);
-            rSquared.Weights = weights;
+            //rSquared.Weights = weights;
             for (var i = 0; i < n; i++) {
                 transformed[i] = Fitting(inputs[i]);
             }

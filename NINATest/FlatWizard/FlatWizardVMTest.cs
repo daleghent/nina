@@ -850,7 +850,7 @@ namespace NINATest.FlatWizard {
                 .Returns(GetMeanImage(32768))
                 .Returns(GetMeanImage(32768))
                 .Returns(GetMeanImage(32768));
-            sut.FlatWizardMode = FlatWizardMode.SKYFLAT;
+            profileMock.SetupGet(x => x.FlatWizardSettings.FlatWizardMode).Returns(FlatWizardMode.SKYFLAT);
             var result = await sut.StartFlatMagic(new List<FlatWizardFilterSettingsWrapper> { settings }, new PauseToken());
 
             result.Should().BeTrue();
