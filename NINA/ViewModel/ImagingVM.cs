@@ -260,6 +260,9 @@ namespace NINA.ViewModel {
                     return data;
                 } finally {
                     progress.Report(new ApplicationStatus() { Status = string.Empty });
+                    if (ImageControl.ShowSubSampler) {
+                        ImageControl.ShowSubSampler = false;
+                    }
                 }
             });
         }
