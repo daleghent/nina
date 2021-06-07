@@ -5493,4 +5493,22 @@ Only relevant when using an ASCOM camera driver!</value>
     <value>Secondary rate</value>
     <comment>Secondary telescope axis rate</comment>
   </data>
+  <data name="LblTelescopeCannotMovePrimaryAxis" xml:space="preserve">
+    <value>Telescope cannot move primary axis</value>
+  </data>
+  <data name="LblTelescopeCannotMoveSecondaryAxis" xml:space="preserve">
+    <value>Telescope cannot move secondary axis</value>
+  </data>
+  <data name="LblPrimaryReversed" xml:space="preserve">
+    <value>Primary reversed</value>
+  </data>
+  <data name="LblPrimaryReversedToolTip" xml:space="preserve">
+    <value>Some mount drivers have a reversed implementation of the primary axis movement. Enable this to reverse the direction on move commands for the primary axis.</value>
+  </data>
+  <data name="LblSecondaryReversed" xml:space="preserve">
+    <value>Secondary reversed</value>
+  </data>
+  <data name="LblSecondaryReversedToolTip" xml:space="preserve">
+    <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
+  </data>
 </root>
