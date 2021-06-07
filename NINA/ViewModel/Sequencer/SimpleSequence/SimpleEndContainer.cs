@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Sequencer.SimpleSequence {
 
-    public class SimpleEndContainer : SequentialContainer, IImmutableContainer {
+    public class SimpleEndContainer : ParallelContainer, IImmutableContainer {
         private WarmCamera warmInstruction;
         private ParkScope parkInstruction;
         private IProfileService profileService;

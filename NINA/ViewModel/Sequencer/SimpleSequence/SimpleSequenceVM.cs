@@ -639,8 +639,12 @@ namespace NINA.ViewModel {
             }
 
             var endArea = factory.GetContainer<EndAreaContainer>();
+            var endContainer = factory.GetContainer<ParallelContainer>();
             foreach (var item in EndOptions.Items) {
-                endArea.Add((ISequenceItem)item.Clone());
+                endContainer.Add((ISequenceItem)item.Clone());
+            }
+            if (endContainer.Items.Count > 0) {
+                endArea.Add(endContainer);
             }
 
             container.Add(startArea);
