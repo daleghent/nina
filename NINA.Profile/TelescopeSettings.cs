@@ -157,5 +157,35 @@ namespace NINA.Profile {
                 }
             }
         }
+
+        private bool primaryReversed;
+
+        [DataMember]
+        public bool PrimaryReversed {
+            get {
+                return primaryReversed;
+            }
+            set {
+                if (primaryReversed != value) {
+                    primaryReversed = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool secondaryReversed;
+
+        [DataMember]
+        public bool SecondaryReversed {
+            get {
+                return secondaryReversed;
+            }
+            set {
+                if (secondaryReversed != value) {
+                    secondaryReversed = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
     }
 }

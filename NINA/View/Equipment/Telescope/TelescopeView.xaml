@@ -679,6 +679,43 @@
                                 </Button.ToolTip>
                                 <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblHome}" />
                             </Button>
+
+                            <StackPanel
+                                Grid.Row="5"
+                                Grid.Column="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Orientation="Vertical">
+                                <UniformGrid Columns="2" IsEnabled="{Binding Telescope.CanMovePrimaryAxis}">
+                                    <TextBlock
+                                        Margin="0,0,5,0"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblPrimaryReversed}">
+                                        <TextBlock.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                <TextBlock Text="{ns:Loc LblPrimaryReversedToolTip}" />
+                                            </ToolTip>
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <CheckBox IsChecked="{Binding Path=ActiveProfile.TelescopeSettings.PrimaryReversed, Source={StaticResource ProfileService}, Mode=TwoWay}" ToolTip="{ns:Loc LblSecondaryReversedToolTip}" />
+                                </UniformGrid>
+                                <UniformGrid
+                                    Margin="0,5,0,0"
+                                    Columns="2"
+                                    IsEnabled="{Binding Telescope.CanMoveSecondaryAxis}">
+                                    <TextBlock
+                                        Margin="0,0,5,0"
+                                        VerticalAlignment="Center"
+                                        Text="{ns:Loc LblSecondaryReversed}">
+                                        <TextBlock.ToolTip>
+                                            <ToolTip ToolTipService.ShowOnDisabled="True">
+                                                <TextBlock Text="{ns:Loc LblSecondaryReversedToolTip}" />
+                                            </ToolTip>
+                                        </TextBlock.ToolTip>
+                                    </TextBlock>
+                                    <CheckBox IsChecked="{Binding Path=ActiveProfile.TelescopeSettings.SecondaryReversed, Source={StaticResource ProfileService}, Mode=TwoWay}" ToolTip="{ns:Loc LblSecondaryReversedToolTip}" />
+                                </UniformGrid>
+                            </StackPanel>
                         </Grid>
                     </GroupBox>
                 </Grid>

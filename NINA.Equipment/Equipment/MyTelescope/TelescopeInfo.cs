@@ -331,5 +331,19 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             get { return canMoveSecondaryAxis; }
             set { canMoveSecondaryAxis = value; RaisePropertyChanged(); }
         }
+
+        private IList<(double, double)> primaryAxisRates;
+
+        public IList<(double, double)> PrimaryAxisRates {
+            get { return primaryAxisRates; }
+            set { primaryAxisRates = value; RaisePropertyChanged(); }
+        }
+
+        private IList<(double, double)> secondaryAxisRates;
+
+        public IList<(double, double)> SecondaryAxisRates {
+            get { return secondaryAxisRates; }
+            set { secondaryAxisRates = value; RaisePropertyChanged(); }
+        }
     }
 }

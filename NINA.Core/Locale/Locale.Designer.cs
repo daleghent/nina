@@ -11742,6 +11742,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Primary reversed.
+        /// </summary>
+        internal static string LblPrimaryReversed {
+            get {
+                return ResourceManager.GetString("LblPrimaryReversed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some mount drivers have a reversed implementation of the primary axis movement. Enable this to reverse the direction on move commands for the primary axis..
+        /// </summary>
+        internal static string LblPrimaryReversedToolTip {
+            get {
+                return ResourceManager.GetString("LblPrimaryReversedToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile Chooser on Startup.
         /// </summary>
         internal static string LblProfileChooserOnStartup {
@@ -12629,6 +12647,24 @@ namespace NINA.Core.Locale {
         internal static string LblSecondaryRate {
             get {
                 return ResourceManager.GetString("LblSecondaryRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Secondary reversed.
+        /// </summary>
+        internal static string LblSecondaryReversed {
+            get {
+                return ResourceManager.GetString("LblSecondaryReversed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis..
+        /// </summary>
+        internal static string LblSecondaryReversedToolTip {
+            get {
+                return ResourceManager.GetString("LblSecondaryReversedToolTip", resourceCulture);
             }
         }
         

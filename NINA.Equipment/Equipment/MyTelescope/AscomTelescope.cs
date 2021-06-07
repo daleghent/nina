@@ -956,29 +956,52 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             return success;
         }
 
+        private ASCOM.DeviceInterface.TelescopeAxes TransformAxis(TelescopeAxes axis) {
+            ASCOM.DeviceInterface.TelescopeAxes translatedAxis;
+            switch (axis) {
+                case TelescopeAxes.Primary:
+                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisPrimary;
+                    break;
+
+                case TelescopeAxes.Secondary:
+                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisSecondary;
+                    break;
+
+                case TelescopeAxes.Tertiary:
+                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisTertiary;
+                    break;
+
+                default:
+                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisPrimary;
+                    break;
+            }
+            return translatedAxis;
+        }
+
+        /// <summary>
+        /// Retrieves axis rates for a given axis
+        /// </summary>
+        /// <param name="axis"></param>
+        /// <returns>A collection of touples of (minimum, maximum) Rates</returns>
+        public IList<(double, double)> GetAxisRates(TelescopeAxes axis) {
+            var translatedAxis = TransformAxis(axis);
+            List<(double, double)> axisRates = new List<(double, double)>();
+            try {
+                var rates = device.AxisRates(translatedAxis);
+                foreach (IRate item in rates) {
+                    axisRates.Add((item.Minimum, item.Maximum));
+                }
+            } catch (Exception) {
+            }
+            return axisRates;
+        }
+
         public void MoveAxis(TelescopeAxes axis, double rate) {
             if (Connected) {
                 if (CanSlew) {
                     if (!AtPark) {
                         try {
-                            ASCOM.DeviceInterface.TelescopeAxes translatedAxis;
-                            switch (axis) {
-                                case TelescopeAxes.Primary:
-                                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisPrimary;
-                                    break;
-
-                                case TelescopeAxes.Secondary:
-                                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisSecondary;
-                                    break;
-
-                                case TelescopeAxes.Tertiary:
-                                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisTertiary;
-                                    break;
-
-                                default:
-                                    translatedAxis = ASCOM.DeviceInterface.TelescopeAxes.axisPrimary;
-                                    break;
-                            }
+                            var translatedAxis = TransformAxis(axis);
 
                             if (axis == TelescopeAxes.Primary && !CanMovePrimaryAxis) {
                                 Logger.Warning("Telescope cannot move primary axis");
@@ -987,9 +1010,13 @@ namespace NINA.Equipment.Equipment.MyTelescope {
                                 Logger.Warning("Telescope cannot move secondary axis");
                                 Notification.ShowWarning(Loc.Instance["LblTelescopeCannotMoveSecondaryAxis"]);
                             } else {
-                                var sign = 1;
-                                if (rate < 0) { sign = -1; }
-                                var actualRate = GetAdjustedMovingRate(Math.Abs(rate), Math.Abs(rate), translatedAxis) * sign;
+                                var actualRate = rate;
+                                if (actualRate != 0) {
+                                    //Check that the given rate falls into the values of acceptable rates and adjust to the nearest rate if outside
+                                    var sign = 1;
+                                    if (actualRate < 0) { sign = -1; }
+                                    actualRate = GetAdjustedMovingRate(Math.Abs(rate), Math.Abs(rate), translatedAxis) * sign;
+                                }
 
                                 device.MoveAxis(translatedAxis, actualRate);
                             }

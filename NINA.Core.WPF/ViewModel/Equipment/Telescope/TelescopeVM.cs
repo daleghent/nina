@@ -426,6 +426,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 GuideRateDeclinationArcsecPerSec = Telescope.GuideRateDeclinationArcsecPerSec,
                                 CanMovePrimaryAxis = Telescope.CanMovePrimaryAxis,
                                 CanMoveSecondaryAxis = Telescope.CanMoveSecondaryAxis,
+                                PrimaryAxisRates = Telescope.GetAxisRates(TelescopeAxes.Primary),
+                                SecondaryAxisRates = Telescope.GetAxisRates(TelescopeAxes.Secondary),
                             };
 
                             // Supporting custom would require an additional dialog box to input the custom rates. We can add that later if there's demand for it
@@ -657,6 +659,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
         public void MoveAxis(TelescopeAxes axis, double rate) {
             if (TelescopeInfo.Connected) {
+                if (axis == TelescopeAxes.Primary) {
+                    rate = profileService.ActiveProfile.TelescopeSettings.PrimaryReversed ? -rate : rate;
+                }
+                if (axis == TelescopeAxes.Secondary) {
+                    rate = profileService.ActiveProfile.TelescopeSettings.SecondaryReversed ? -rate : rate;
+                }
                 Telescope.MoveAxis(axis, rate);
             }
         }

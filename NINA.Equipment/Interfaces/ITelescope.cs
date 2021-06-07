@@ -80,6 +80,8 @@ namespace NINA.Equipment.Interfaces {
         bool CanMovePrimaryAxis { get; }
         bool CanMoveSecondaryAxis { get; }
 
+        IList<(double, double)> GetAxisRates(TelescopeAxes axis);
+
         Task<bool> MeridianFlip(Coordinates targetCoordinates, CancellationToken token);
 
         void MoveAxis(TelescopeAxes axis, double rate);

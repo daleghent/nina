@@ -100,6 +100,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Flat Device Brightness is no longer expressed in percentage, but rather in the absolute values the flat panel supports
 - Flat Device trained brightness levels will be automatically migrated from percentage to absolute values after first flat panel device connection.
 - Filter Wheel List of Filters are now all using the list from the profile instead of having a mix of filters from the ASCOM driver and those from the profile. De-Sync of these lists can't happen anymore.
+- Some mount drivers have reversed primary and secondary axis implementation for manual movements. Now a reverse flag is available to manually correct this behavior.
 
 ## Application Improvements
 ### General
