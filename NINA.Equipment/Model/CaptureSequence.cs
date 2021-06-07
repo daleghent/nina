@@ -187,6 +187,17 @@ namespace NINA.Equipment.Model {
             }
         }
 
+        [XmlIgnore]
+        private ObservableRectangle subSampleRectangle;
+
+        public ObservableRectangle SubSambleRectangle {
+            get => subSampleRectangle;
+            set {
+                subSampleRectangle = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private int _totalExposureCount;
 
         /// <summary>

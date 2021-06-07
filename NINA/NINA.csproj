@@ -634,6 +634,9 @@
     <Compile Include="View\Equipment\Telescope\TelescopeView.xaml.cs">
       <DependentUpon>TelescopeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SubSampleView.xaml.cs">
+      <DependentUpon>SubSampleView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Thumbnail\ThumbnailGradeToImageConverter.cs" />
     <Compile Include="View\Thumbnail\ThumbnailListView.xaml.cs">
       <DependentUpon>ThumbnailListView.xaml</DependentUpon>
@@ -1174,6 +1177,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Equipment\Telescope\TelescopeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SubSampleView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

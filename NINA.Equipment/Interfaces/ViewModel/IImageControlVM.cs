@@ -45,12 +45,7 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         IRenderedImage RenderedImage { get; set; }
         bool ShowBahtinovAnalyzer { get; set; }
         bool ShowCrossHair { get; set; }
-        bool ShowSubSampler { get; set; }
         ApplicationStatus Status { get; set; }
-        ICommand SubSampleDragMoveCommand { get; }
-        ICommand SubSampleDragStartCommand { get; }
-        ICommand SubSampleDragStopCommand { get; }
-        ObservableRectangle SubSampleRectangle { get; set; }
         IWindowServiceFactory WindowServiceFactory { get; set; }
 
         void Dispose();

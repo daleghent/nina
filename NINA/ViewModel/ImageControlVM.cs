@@ -55,7 +55,6 @@ namespace NINA.ViewModel {
             DetectStars = profileService.ActiveProfile.ImageSettings.DetectStars;
             ShowCrossHair = false;
             ShowBahtinovAnalyzer = false;
-            ShowSubSampler = false;
 
             _progress = new Progress<ApplicationStatus>(p => Status = p);
 
@@ -65,19 +64,14 @@ namespace NINA.ViewModel {
             DragStartCommand = new RelayCommand(BahtinovDragStart);
             DragStopCommand = new RelayCommand(BahtinovDragStop);
             DragMoveCommand = new RelayCommand(BahtinovDragMove);
-            SubSampleDragStartCommand = new RelayCommand(SubSampleDragStart);
-            SubSampleDragStopCommand = new RelayCommand(SubSampleDragStop);
-            SubSampleDragMoveCommand = new RelayCommand(SubSampleDragMove);
             InspectAberrationCommand = new AsyncCommand<bool>(() => InspectAberration(), (object o) => Image != null);
 
             PixelPeepStartCommand = new RelayCommand(PixelPeeperStart);
             PixelPeepMoveCommand = new RelayCommand(PixelPeeperMove);
             PixelPeepEndCommand = new RelayCommand(PixelPeeperStop);
 
-            BahtinovRectangle = new ObservableRectangle(-1, -1, 200, 200);
-            SubSampleRectangle = new ObservableRectangle(-1, -1, 600, 600);
+            BahtinovRectangle = new ObservableRectangle(0, 0, 200, 200);
             BahtinovRectangle.PropertyChanged += Rectangle_PropertyChanged;
-            SubSampleRectangle.PropertyChanged += SubSampleRectangle_PropertyChanged;
         }
 
         private bool showPixelPeeper;
@@ -208,16 +202,6 @@ namespace NINA.ViewModel {
             BahtinovDragMove(new DragResult() { Delta = new Vector(0, 0), Mode = DragMode.Move });
         }
 
-        private void SubSampleRectangle_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (SubSampleRectangle.Width > (Image?.Width * 0.8)) {
-                SubSampleRectangle.Width = Image.Width * 0.8;
-            }
-            if (SubSampleRectangle.Height > (Image?.Height * 0.8)) {
-                SubSampleRectangle.Height = Image.Height * 0.8;
-            }
-            SubSampleDragMove(new DragResult() { Delta = new Vector(0, 0), Mode = DragMode.Move });
-        }
-
         private bool _showBahtinovAnalyzer;
 
         public bool ShowBahtinovAnalyzer {
@@ -227,7 +211,6 @@ namespace NINA.ViewModel {
             set {
                 _showBahtinovAnalyzer = value;
                 if (value) {
-                    ShowSubSampler = false;
                     ShowCrossHair = false;
                     BahtinovDragMove(new DragResult() { Delta = new Vector(0, 0), Mode = DragMode.Move });
                 }
@@ -243,18 +226,6 @@ namespace NINA.ViewModel {
             }
             set {
                 _rectangle = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private ObservableRectangle _subSampleRectangle;
-
-        public ObservableRectangle SubSampleRectangle {
-            get {
-                return _subSampleRectangle;
-            }
-            set {
-                _subSampleRectangle = value;
                 RaisePropertyChanged();
             }
         }
@@ -290,35 +261,6 @@ namespace NINA.ViewModel {
             /* Get Pixels */
             var crop = new CroppedBitmap(Image, new Int32Rect((int)BahtinovRectangle.X, (int)BahtinovRectangle.Y, (int)BahtinovRectangle.Width, (int)BahtinovRectangle.Height));
             BahtinovImage = new BahtinovAnalysis(crop, profileService.ActiveProfile.ColorSchemaSettings.ColorSchema.BackgroundColor).GrabBahtinov();
-        }
-
-        private void SubSampleDragStart(object obj) {
-        }
-
-        private void SubSampleDragStop(object obj) {
-        }
-
-        private void SubSampleDragMove(object obj) {
-            if (ShowSubSampler && Image != null) {
-                SubSampleRectangle.PropertyChanged -= SubSampleRectangle_PropertyChanged;
-
-                var dragResult = (DragResult)obj;
-
-                if (dragResult.Mode == DragMode.Move) {
-                    MoveRectangleInBounds(SubSampleRectangle, dragResult.Delta);
-                } else {
-                    ResizeRectangleBounds(SubSampleRectangle, dragResult.Delta, dragResult.Mode);
-                }
-
-                /* set subsample values */
-                cameraMediator.SetSubSampleArea(
-                    (int)SubSampleRectangle.X,
-                    (int)SubSampleRectangle.Y,
-                    (int)SubSampleRectangle.Width,
-                    (int)SubSampleRectangle.Height
-                );
-                SubSampleRectangle.PropertyChanged += SubSampleRectangle_PropertyChanged;
-            }
         }
 
         private void ResizeRectangleBounds(ObservableRectangle rect, Vector vector, DragMode mode) {
@@ -405,9 +347,6 @@ namespace NINA.ViewModel {
         public ICommand DragStartCommand { get; private set; }
         public ICommand DragStopCommand { get; private set; }
         public ICommand DragMoveCommand { get; private set; }
-        public ICommand SubSampleDragStartCommand { get; private set; }
-        public ICommand SubSampleDragStopCommand { get; private set; }
-        public ICommand SubSampleDragMoveCommand { get; private set; }
         public ICommand PixelPeepStartCommand { get; private set; }
         public ICommand PixelPeepEndCommand { get; private set; }
         public ICommand PixelPeepMoveCommand { get; private set; }
@@ -499,13 +438,6 @@ namespace NINA.ViewModel {
                     if (ShowBahtinovAnalyzer) {
                         ResizeRectangleToImageSize(_image, BahtinovRectangle);
                     }
-                    // when subsampling is enabled and a new image is loaded disable the subsampler
-                    // so it doesn't get resized
-                    if (cameraInfo.IsSubSampleEnabled) {
-                        ShowSubSampler = false;
-                    } else {
-                        ResizeRectangleToImageSize(_image, SubSampleRectangle);
-                    }
                 }
                 RaisePropertyChanged();
             }
@@ -564,7 +496,6 @@ namespace NINA.ViewModel {
                 _showCrossHair = value;
                 if (value) {
                     ShowBahtinovAnalyzer = false;
-                    ShowSubSampler = false;
                 }
                 RaisePropertyChanged();
             }
@@ -602,23 +533,6 @@ namespace NINA.ViewModel {
         public IAsyncCommand PlateSolveImageCommand { get; private set; }
 
         public ICommand CancelPlateSolveImageCommand { get; private set; }
-
-        private bool _showSubSampler;
-
-        public bool ShowSubSampler {
-            get {
-                return _showSubSampler;
-            }
-            set {
-                _showSubSampler = value;
-                if (value) {
-                    ShowBahtinovAnalyzer = false;
-                    ShowCrossHair = false;
-                    SubSampleDragMove(new DragResult() { Delta = new Vector(0, 0), Mode = DragMode.Move });
-                }
-                RaisePropertyChanged();
-            }
-        }
 
         public bool IsLiveViewEnabled { get; internal set; }
 

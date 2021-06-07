@@ -360,8 +360,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                                 ExposureMin = Cam.ExposureMin,
                                 SubSampleX = Cam.SubSampleX,
                                 SubSampleY = Cam.SubSampleY,
-                                SubSampleWidth = Cam.SubSampleWidth,
-                                SubSampleHeight = Cam.SubSampleHeight,
+                                SubSampleWidth = Cam.SubSampleWidth == 0 ? Cam.CameraXSize : Cam.SubSampleWidth,
+                                SubSampleHeight = Cam.SubSampleHeight == 0 ? Cam.CameraYSize : Cam.SubSampleHeight,
                                 Connected = true,
                                 CoolerOn = Cam.CoolerOn,
                                 CoolerPower = Cam.CoolerPower,
@@ -682,7 +682,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     SetBinning(sequence.Binning.X, sequence.Binning.Y);
                 }
 
-                SetSubSample(sequence.EnableSubSample);
+                if (sequence.EnableSubSample) {
+                    SetSubSampleArea((int)sequence.SubSambleRectangle.X, (int)sequence.SubSambleRectangle.Y, (int)sequence.SubSambleRectangle.Width, (int)sequence.SubSambleRectangle.Height);
+                }
 
                 CameraInfo.IsExposing = true;
                 CameraInfo.ExposureEndTime = DateTime.Now.AddSeconds(sequence.ExposureTime);
@@ -738,6 +740,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 token.ThrowIfCancellationRequested();
                 CameraInfo.IsExposing = false;
+                Cam.EnableSubSample = false;
                 BroadcastCameraInfo();
             }
         }
@@ -802,13 +805,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             }
         }
 
-        public void SetSubSample(bool subSample) {
-            if (CameraInfo.Connected == true) {
-                Cam.EnableSubSample = subSample;
-                BroadcastCameraInfo();
-            }
-        }
-
         public void SetDewHeater(bool onOff) {
             if (CameraInfo.Connected == true && CameraInfo.HasDewHeater == true) {
                 Cam.DewHeaterOn = onOff;
@@ -837,8 +833,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             }
         }
 
-        public void SetSubSampleArea(int x, int y, int width, int height) {
+        private void SetSubSampleArea(int x, int y, int width, int height) {
             if (CameraInfo.Connected == true && CameraInfo.CanSubSample) {
+                if (x < 0) { x = 0; }
+                if (y < 0) { y = 0; }
+                if (x + width > CameraInfo.XSize) { width = CameraInfo.XSize - x; }
+                if (y + height > CameraInfo.YSize) { height = CameraInfo.YSize - y; }
+
+                Cam.EnableSubSample = true;
                 Cam.SubSampleX = x;
                 Cam.SubSampleY = y;
                 Cam.SubSampleWidth = width;

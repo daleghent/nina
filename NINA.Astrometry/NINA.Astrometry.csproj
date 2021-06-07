@@ -130,7 +130,7 @@
     <Compile Include="Converters\DegreesToDMSConverter.cs" />
     <Compile Include="Converters\HoursToHMSConverter.cs" />
     <Compile Include="Converters\MoonPhaseToGeometryConverter.cs" />
-    <Compile Include="ObservableRectangle.cs" />
+    <Compile Include="ObservableRotatingRectangle.cs" />
     <Compile Include="Coordinates.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="DatabaseInteraction.cs" />

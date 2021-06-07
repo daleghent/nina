@@ -41,10 +41,6 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         void SetBinning(short x, short y);
 
-        void SetSubSample(bool subSample);
-
-        void SetSubSampleArea(int x, int y, int width, int height);
-
         void SetDewHeater(bool onOff);
 
         bool AtTargetTemp { get; }

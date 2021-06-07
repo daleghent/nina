@@ -65,14 +65,6 @@ namespace NINA.WPF.Base.Mediator {
             handler.SetBinning(x, y);
         }
 
-        public void SetSubSample(bool subSample) {
-            handler.SetSubSample(subSample);
-        }
-
-        public void SetSubSampleArea(int x, int y, int width, int height) {
-            handler.SetSubSampleArea(x, y, width, height);
-        }
-
         public void RegisterCaptureBlock(ICameraConsumer cameraConsumer) {
             if (this.blockingConsumer != null) {
                 throw new Exception("CameraMediator already blocked by " + blockingConsumer);

@@ -32,10 +32,6 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         void SetBinning(short x, short y);
 
-        void SetSubSample(bool subSample);
-
-        void SetSubSampleArea(int x, int y, int width, int height);
-
         void AbortExposure();
 
         void SetDewHeater(bool onOff);

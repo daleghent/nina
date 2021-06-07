@@ -50,7 +50,6 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         private ReportAutoFocusPoint _lastAutoFocusPoint;
         private AsyncObservableCollection<DataPoint> _plotFocusPoints;
         private QuadraticFitting _quadraticFitting;
-        private bool _setSubSample = false;
         private TrendlineFitting _trendLineFitting;
         private ICameraMediator cameraMediator;
         private IFilterWheelMediator filterWheelMediator;
@@ -260,7 +259,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             }
 
             var analysis = new StarDetection(image, pixelFormat, profileService.ActiveProfile.ImageSettings.StarSensitivity, profileService.ActiveProfile.ImageSettings.NoiseReduction);
-            if (profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio < 1 && !_setSubSample) {
+            if (profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio < 1 && !IsSubSampleEnabled()) {
                 analysis.UseROI = true;
                 analysis.InnerCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio;
                 analysis.OuterCropRatio = profileService.ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio;
@@ -374,19 +373,6 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             }
         }
 
-        private void RestoreSubSample(System.Drawing.Rectangle oldSubSample) {
-            //Restore original sub-sample rectangle, if appropriate
-            if (_setSubSample && oldSubSample.X >= 0 && oldSubSample.Y >= 0 && oldSubSample.Width > 0 && oldSubSample.Height > 0) {
-                try {
-                    cameraMediator.SetSubSampleArea((int)oldSubSample.X, (int)oldSubSample.Y, (int)oldSubSample.Width, (int)oldSubSample.Height);
-                } catch (Exception e) {
-                    Logger.Warning("Could not set back old sub sample area");
-                    Logger.Warning(e.Message);
-                    Notification.ShowError(e.Message);
-                }
-            }
-        }
-
         private async Task<FilterInfo> SetAutofocusFilter(FilterInfo imagingFilter, CancellationToken token, IProgress<ApplicationStatus> progress) {
             if (profileService.ActiveProfile.FocuserSettings.UseFilterWheelOffsets) {
                 var filter = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters.Where(f => f.AutoFocusFilter == true).FirstOrDefault();
@@ -407,26 +393,16 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             }
         }
 
-        private System.Drawing.Rectangle SetSubSample() {
-            System.Drawing.Rectangle oldSubSample = new System.Drawing.Rectangle();
+        private ObservableRectangle GetSubSampleRectangle() {
             var cameraInfo = cameraMediator.GetInfo();
             if (profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio < 1 && profileService.ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio == 1 && cameraInfo.CanSubSample) {
-                Logger.Debug("Setting camera subsample");
-                oldSubSample = new System.Drawing.Rectangle(cameraInfo.SubSampleX, cameraInfo.SubSampleY, cameraInfo.SubSampleWidth, cameraInfo.SubSampleHeight);
                 int subSampleWidth = (int)Math.Round(cameraInfo.XSize * profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio);
                 int subSampleHeight = (int)Math.Round(cameraInfo.YSize * profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio);
                 int subSampleX = (int)Math.Round((cameraInfo.XSize - subSampleWidth) / 2.0d);
                 int subSampleY = (int)Math.Round((cameraInfo.YSize - subSampleHeight) / 2.0d);
-                try {
-                    cameraMediator.SetSubSampleArea(subSampleX, subSampleY, subSampleWidth, subSampleHeight);
-                } catch (Exception e) {
-                    Logger.Warning("Could not set subsample of rectangle X = " + subSampleX + ", Y = " + subSampleY + ", Width = " + subSampleWidth + ", Height = " + subSampleHeight);
-                    Logger.Warning(e.Message);
-                    _setSubSample = false;
-                }
-                _setSubSample = true;
+                return new ObservableRectangle(subSampleX, subSampleY, subSampleWidth, subSampleHeight);
             }
-            return oldSubSample;
+            return null;
         }
 
         private async Task<IRenderedImage> TakeExposure(FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress) {
@@ -439,7 +415,13 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     expTime = filter.AutoFocusExposureTime;
                 }
                 var seq = new CaptureSequence(expTime, CaptureSequence.ImageTypes.SNAPSHOT, filter, null, 1);
-                seq.EnableSubSample = _setSubSample;
+
+                var subSampleRectangle = GetSubSampleRectangle();
+                if (subSampleRectangle != null) {
+                    seq.EnableSubSample = true;
+                    seq.SubSambleRectangle = subSampleRectangle;
+                }
+
                 if (filter?.AutoFocusBinning != null) {
                     seq.Binning = filter.AutoFocusBinning;
                 } else {
@@ -463,14 +445,14 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                 try {
                     image = await imagingMediator.CaptureAndPrepareImage(seq, prepareParameters, token, progress);
                 } catch (Exception e) {
-                    if (!_setSubSample) {
+                    if (!IsSubSampleEnabled()) {
                         throw e;
                     }
 
                     Logger.Warning("Camera error, trying without subsample");
                     Logger.Warning(e.Message);
-                    _setSubSample = false;
-                    seq.EnableSubSample = _setSubSample;
+                    seq.EnableSubSample = false;
+                    seq.SubSambleRectangle = null;
                     image = await imagingMediator.CaptureAndPrepareImage(seq, prepareParameters, token, progress);
                 }
                 retries++;
@@ -480,6 +462,11 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             } while (image == null && retries < 3);
 
             return image;
+        }
+
+        private bool IsSubSampleEnabled() {
+            var cameraInfo = cameraMediator.GetInfo();
+            return profileService.ActiveProfile.FocuserSettings.AutoFocusInnerCropRatio < 1 && profileService.ActiveProfile.FocuserSettings.AutoFocusOuterCropRatio == 1 && cameraInfo.CanSubSample;
         }
 
         private async Task<bool> ValidateCalculatedFocusPosition(DataPoint focusPoint, FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress, double initialHFR) {
@@ -579,8 +566,6 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                 if (profileService.ActiveProfile.FocuserSettings.AutoFocusDisableGuiding) {
                     guidingStopped = await this.guiderMediator.StopGuiding(token);
                 }
-
-                oldSubSample = SetSubSample();
 
                 FilterInfo autofocusFilter = await SetAutofocusFilter(imagingFilter, token, progress);
 
@@ -698,9 +683,6 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     Logger.Error("Failed to restore previous filter position after AutoFocus", e);
                     Notification.ShowError($"Failed to restore previous filter position: {e.Message}");
                 }
-
-                //Restore original sub-sample rectangle, if appropriate
-                RestoreSubSample(oldSubSample);
 
                 //Restore the temperature compensation of the focuser
                 if (focuserMediator.GetInfo().TempCompAvailable && tempComp) {

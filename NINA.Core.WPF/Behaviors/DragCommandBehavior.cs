@@ -67,7 +67,7 @@ namespace NINA.WPF.Base.Behaviors {
             return (double)obj.GetValue(ResizeBoundaryProperty);
         }
 
-        public static void SetResizeBoundary(DependencyObject obj, bool value) {
+        public static void SetResizeBoundary(DependencyObject obj, double value) {
             obj.SetValue(ResizeBoundaryProperty, value);
         }
 

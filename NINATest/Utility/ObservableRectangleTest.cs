@@ -25,7 +25,7 @@ namespace NINATest.Utility {
         public void Rotation_NoInitialOffset() {
             //Arrange
             var rotation = 45d;
-            ObservableRectangle rectangle = new ObservableRectangle(0);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(0);
 
             //Act
             rectangle.Rotation = rotation;
@@ -39,7 +39,7 @@ namespace NINATest.Utility {
         public void RotationAbove360_NoInitialOffset() {
             //Arrange
             var rotation = 400d;
-            ObservableRectangle rectangle = new ObservableRectangle(0);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(0);
 
             //Act
             rectangle.Rotation = rotation;
@@ -54,7 +54,7 @@ namespace NINATest.Utility {
             //Arrange
             var rotation = 45d;
             var initialRotation = 15d;
-            ObservableRectangle rectangle = new ObservableRectangle(initialRotation);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(initialRotation);
 
             //Act
             rectangle.Rotation = rotation;
@@ -69,7 +69,7 @@ namespace NINATest.Utility {
             //Arrange
             var rotation = 400d;
             var initialRotation = 15d;
-            ObservableRectangle rectangle = new ObservableRectangle(initialRotation);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(initialRotation);
 
             //Act
             rectangle.Rotation = rotation;
@@ -83,7 +83,7 @@ namespace NINATest.Utility {
         public void RotationNegative_NoInitialOffsetSet() {
             //Arrange
             var rotation = 400d;
-            ObservableRectangle rectangle = new ObservableRectangle(0);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(0);
 
             //Act
             rectangle.Rotation = rotation;
@@ -98,7 +98,7 @@ namespace NINATest.Utility {
             //Arrange
             var rotation = -45d;
             var initialRotation = 15d;
-            ObservableRectangle rectangle = new ObservableRectangle(initialRotation);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(initialRotation);
 
             //Act
             rectangle.Rotation = rotation;
@@ -113,7 +113,7 @@ namespace NINATest.Utility {
             //Arrange
             var rotation = 355d;
             var initialRotation = 15d;
-            ObservableRectangle rectangle = new ObservableRectangle(initialRotation);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(initialRotation);
 
             //Act
             rectangle.Rotation = rotation;
@@ -127,7 +127,7 @@ namespace NINATest.Utility {
         public void TotalRotation_NoInitialOffsetNoRotation() {
             //Arrange
             var rotation = 45d;
-            ObservableRectangle rectangle = new ObservableRectangle(0);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(0);
 
             //Act
             rectangle.TotalRotation = rotation;
@@ -141,7 +141,7 @@ namespace NINATest.Utility {
             //Arrange
             var rotation = 45d;
             var initialOffset = 15d;
-            ObservableRectangle rectangle = new ObservableRectangle(initialOffset);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(initialOffset);
 
             //Act
             rectangle.TotalRotation = rotation;
@@ -155,7 +155,7 @@ namespace NINATest.Utility {
             //Arrange
             var rotation = 45d;
             var initialOffset = 15d;
-            ObservableRectangle rectangle = new ObservableRectangle(initialOffset);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(initialOffset);
             rectangle.Rotation = 300d;
 
             //Act
@@ -168,7 +168,7 @@ namespace NINATest.Utility {
         [Test]
         public void Rotation_PropertyChangedFired() {
             //Arrange
-            ObservableRectangle rectangle = new ObservableRectangle(0);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(0);
 
             var propertyChangedFired = false;
             rectangle.PropertyChanged += (obj, events) => {
@@ -185,7 +185,7 @@ namespace NINATest.Utility {
         [Test]
         public void TotalRotation_PropertyChangedFired() {
             //Arrange
-            ObservableRectangle rectangle = new ObservableRectangle(0);
+            ObservableRotatingRectangle rectangle = new ObservableRotatingRectangle(0);
 
             var propertyChangedFired = false;
             rectangle.PropertyChanged += (obj, events) => {

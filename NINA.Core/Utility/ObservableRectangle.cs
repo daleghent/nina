@@ -1,4 +1,4 @@
-#region "copyright"
+﻿#region "copyright"
 
 /*
     Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
@@ -12,22 +12,24 @@
 
 #endregion "copyright"
 
-using NINA.Core.Utility;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace NINA.Astrometry {
+namespace NINA.Core.Utility {
 
     public class ObservableRectangle : BaseINPC {
+
+        public ObservableRectangle() {
+        }
 
         public ObservableRectangle(double x, double y, double width, double height) {
             X = x;
             Y = y;
             Width = width;
             Height = height;
-        }
-
-        public ObservableRectangle(double rotationOffset) {
-            _rotationOffset = rotationOffset;
         }
 
         private double _x;
@@ -75,35 +77,6 @@ namespace NINA.Astrometry {
             set {
                 _height = value;
                 RaisePropertyChanged();
-            }
-        }
-
-        private double _rotation;
-
-        public double Rotation {
-            get {
-                return _rotation;
-            }
-            set {
-                _rotation = AstroUtil.MathMod(value, 360);
-                if (_rotation < 0) { _rotation += 360; }
-
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(TotalRotation));
-            }
-        }
-
-        private readonly double _rotationOffset;
-
-        public double TotalRotation {
-            get {
-                var rotation = _rotationOffset + Rotation;
-                rotation = AstroUtil.MathMod(rotation, 360);
-                return Math.Round(rotation, 2);
-            }
-            set {
-                //This will rise property changed for TotalRotation
-                Rotation = value - _rotationOffset;
             }
         }
     }

@@ -126,6 +126,11 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - The imaging tab layout is now saved per profile, instead of one layout for all profiles
 - Most options and values now also display a unit of measure if applicable
 
+### Subsampling
+- The sub sample button above the image has been removed
+- In the imaging camera control panel when subsampling is enabled a new control will be visible to adjust the subsampling directly there
+- This should be more intuitive to use and does not require a certain order of operations and an active non sub sampled image to set up
+
 ### Local Horizon Display
 - It is now possible to define a custom horizon to be used and displayed in the altitude charts
 - The horizon file consists of a simple mapping of azimuth to altitude values

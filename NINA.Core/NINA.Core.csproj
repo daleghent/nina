@@ -338,6 +338,7 @@
     <Compile Include="Utility\Logger.cs" />
     <Compile Include="Utility\MathHelper.cs" />
     <Compile Include="Interfaces\IMediator.cs" />
+    <Compile Include="Utility\ObservableRectangle.cs" />
     <Compile Include="Utility\PrepareImageParameters.cs" />
     <Compile Include="Utility\MyStopWatch.cs" />
     <Compile Include="Utility\Notification\CustomDisplayPart.xaml.cs">
