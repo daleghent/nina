@@ -681,8 +681,9 @@
                             </Button>
 
                             <StackPanel
-                                Grid.Row="5"
+                                Grid.Row="4"
                                 Grid.Column="0"
+                                Grid.ColumnSpan="3"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Orientation="Vertical">
