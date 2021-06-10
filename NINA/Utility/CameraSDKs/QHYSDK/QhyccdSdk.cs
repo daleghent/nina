@@ -23,26 +23,374 @@ using System.Text;
 
 namespace QHYCCD {
 
-    public static class LibQHYCCD {
+    public class QhySdk : IQhySdk {
         private const string DLLNAME = "qhyccd.dll";
 
-        static LibQHYCCD() {
-            DllLoader.LoadDll(Path.Combine("QHYCCD", DLLNAME));
+        private object lockobj = new object();
+        public IntPtr handle = IntPtr.Zero;
 
-            N_InitQHYCCDResource();
+        private bool sdkIsInitialized = false;
+        private byte refCount = 0;
+
+        public static readonly Lazy<IQhySdk> _instance = new Lazy<IQhySdk>(() => new QhySdk());
+
+        public static IQhySdk Instance => _instance.Value;
+
+        private QhySdk() {
+            if (!sdkIsInitialized && handle == IntPtr.Zero && refCount == 0) {
+                Logger.Trace($"QhyccdSdk: Loading QHY SDK, refCount={refCount}, sdkIsInitialized={sdkIsInitialized}");
+                DllLoader.LoadDll(Path.Combine("QHYCCD", DLLNAME));
+            }
         }
 
-        #region "QHY SDK constants"
+        #region Call Wrappers
+
+        public void InitSdk() {
+            lock (lockobj) {
+                Logger.Trace($"QhyccdSdk: Initializing QHY SDK, refCount={refCount}, sdkIsInitialized={sdkIsInitialized}");
+
+                if (!sdkIsInitialized && handle == IntPtr.Zero && refCount == 0) {
+                    CheckReturn(InitQHYCCDResource(), MethodBase.GetCurrentMethod());
+                    sdkIsInitialized = true;
+                }
+            }
+        }
+
+        public void ReleaseSdk() {
+            lock (lockobj) {
+                Logger.Trace($"QhyccdSdk: Releasing QHY SDK, refCount={refCount}");
+
+                if (sdkIsInitialized && handle == IntPtr.Zero && refCount == 0) {
+                    CheckReturn(ReleaseQHYCCDResource(), MethodBase.GetCurrentMethod());
+                    sdkIsInitialized = false;
+                }
+            }
+        }
+
+        public void Open(StringBuilder id) {
+            lock (lockobj) {
+                Logger.Trace($"QhyccdSdk: Opening {id}, refCount={refCount}");
+
+                if (handle == IntPtr.Zero && refCount == 0 && sdkIsInitialized) {
+                    handle = OpenQHYCCD(id);
+
+                    if (handle == IntPtr.Zero) {
+                        throw new QHYCameraException("Unable to open camera", MethodBase.GetCurrentMethod(), new object[] { id });
+                    }
+                }
+
+                refCount++;
+                Logger.Trace($"QhyccdSdk: Opened {id}, refCount={refCount}");
+            }
+        }
+
+        public void Close() {
+            lock (lockobj) {
+                Logger.Trace($"QhyccdSdk: Closing camera, refCount={refCount}");
+
+                if (handle != IntPtr.Zero && refCount == 1) {
+                    CheckReturn(CloseQHYCCD(handle), MethodBase.GetCurrentMethod(), handle);
+                    handle = IntPtr.Zero;
+                }
+
+                refCount--;
+                Logger.Trace($"QhyccdSdk: Closed camera, refCount={refCount}");
+            }
+        }
+
+        public void InitCamera() {
+            lock (lockobj) {
+                CheckReturn(InitQHYCCD(handle), MethodBase.GetCurrentMethod(), handle);
+            }
+        }
+
+        public uint Scan() {
+            lock (lockobj) {
+                return ScanQHYCCD();
+            }
+        }
+
+        public uint SetBinMode(uint binX, uint binY) {
+            lock (lockobj) {
+                return SetQHYCCDBinMode(handle, binX, binY);
+            }
+        }
+
+        public uint SetBitsMode(uint bitDepth) {
+            lock (lockobj) {
+                return SetQHYCCDBitsMode(handle, bitDepth);
+            }
+        }
+
+        public uint SetStreamMode(byte mode) {
+            lock (lockobj) {
+                return SetQHYCCDStreamMode(handle, mode);
+            }
+        }
+
+        public uint SetDebayerOnOff(bool onoff) {
+            lock (lockobj) {
+                return SetQHYCCDDebayerOnOff(handle, onoff);
+            }
+        }
+
+        public uint GetReadMode(ref uint mode) {
+            return GetQHYCCDReadMode(handle, ref mode);
+        }
+
+        public uint SetReadMode(uint mode) {
+            lock (lockobj) {
+                return SetQHYCCDReadMode(handle, mode);
+            }
+        }
+
+        public uint GetNumberOfReadModes(ref uint numModes) {
+            return GetQHYCCDNumberOfReadModes(handle, ref numModes);
+        }
+
+        public uint GetReadModeName(uint mode, StringBuilder modeName) {
+            return GetQHYCCDReadModeName(handle, mode, modeName);
+        }
+
+        public uint ControlTemp(double targetTemp) {
+            lock (lockobj) {
+                return ControlQHYCCDTemp(handle, targetTemp);
+            }
+        }
+
+        public uint ControlShutter(byte shutterState) {
+            lock (lockobj) {
+                return ControlQHYCCDShutter(handle, shutterState);
+            }
+        }
+
+        public void GetId(uint index, StringBuilder id) {
+            CheckReturn(GetQHYCCDId(index, id), MethodBase.GetCurrentMethod(), index, new object[] { id });
+        }
+
+        public void GetModel(StringBuilder id, StringBuilder model) {
+            CheckReturn(GetQHYCCDModel(id, model), MethodBase.GetCurrentMethod(), new object[] { model });
+        }
+
+        public uint GetParamMinMaxStep(CONTROL_ID controlId, ref double min, ref double max, ref double step) {
+            lock (lockobj) {
+                return GetQHYCCDParamMinMaxStep(handle, controlId, ref min, ref max, ref step);
+            }
+        }
+
+        public uint GetChipInfo(ref double chipW, ref double chipH, ref uint imageX, ref uint imageY, ref double pixelX, ref double pixelY, ref uint bpp) {
+            return GetQHYCCDChipInfo(handle, ref chipW, ref chipH, ref imageX, ref imageY, ref pixelX, ref pixelY, ref bpp);
+        }
+
+        public uint GetEffectiveArea(ref uint startX, ref uint startY, ref uint imageX, ref uint imageY) {
+            return GetQHYCCDEffectiveArea(handle, ref startX, ref startY, ref imageX, ref imageY);
+        }
+
+        public uint SetResolution(uint x, uint y, uint xSize, uint ySize) {
+            lock (lockobj) {
+                return SetQHYCCDResolution(handle, x, y, xSize, ySize);
+            }
+        }
+
+        public uint ExpSingleFrame() {
+            lock (lockobj) {
+                return ExpQHYCCDSingleFrame(handle);
+            }
+        }
+
+        public uint GetSingleFrame(ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] byte[] rawArray) {
+            lock (lockobj) {
+                return GetQHYCCDSingleFrame(handle, ref sizeX, ref sizeY, ref bpp, ref channels, rawArray);
+            }
+        }
+
+        public uint GetSingleFrame(ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] ushort[] rawArray) {
+            lock (lockobj) {
+                return GetQHYCCDSingleFrame(handle, ref sizeX, ref sizeY, ref bpp, ref channels, rawArray);
+            }
+        }
+
+        public uint CancelExposingAndReadout() {
+            lock (lockobj) {
+                return CancelQHYCCDExposingAndReadout(handle);
+            }
+        }
+
+        public uint GetExposureRemaining() {
+            return GetQHYCCDExposureRemaining(handle);
+        }
+
+        public uint GetPressure(ref double hpa) {
+            return GetQHYCCDPressure(handle, ref hpa);
+        }
+
+        public uint GetHumidity(ref double rh) {
+            return GetQHYCCDHumidity(handle, ref rh);
+        }
+
+        public bool IsCfwPlugged() {
+            if (IsQHYCCDCFWPlugged(handle) == QHYCCD_SUCCESS) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public uint GetCfwStatus(byte[] status) {
+            return GetQHYCCDCFWStatus(handle, status);
+        }
+
+        public uint SendOrderToCfw(string order, int length) {
+            lock (lockobj) {
+                return SendOrder2QHYCCDCFW(handle, order, length);
+            }
+        }
+
+        #endregion Call Wrappers
+
+        #region Utility Methods
+
+        public bool IsControl(CONTROL_ID type) {
+            bool result = false;
+
+            if (IsQHYCCDControlAvailable(handle, type) == QHYCCD_SUCCESS) {
+                Logger.Debug($"QHYCCD: Control {type} exists");
+                result = true;
+            } else {
+                Logger.Debug($"QHYCCD: Control Value {type} is not available");
+            }
+
+            return result;
+        }
+
+        public double GetControlValue(CONTROL_ID type) {
+            double rv;
+
+            if ((rv = GetQHYCCDParam(handle, type)) != QHYCCD_ERROR) {
+                Logger.Trace($"QHYCCD: Control {type} = {rv}");
+                return rv;
+            } else {
+                Logger.Error($"QHYCCD: Failed to Get value for control {type}");
+                return QHYCCD_ERROR;
+            }
+        }
+
+        public bool SetControlValue(CONTROL_ID type, double value) {
+            lock (lockobj) {
+                if (SetQHYCCDParam(handle, type, value) == QHYCCD_SUCCESS) {
+                    Logger.Debug($"QHYCCD: Setting Control {type} to {value}");
+                    return true;
+                } else {
+                    Logger.Warning($"QHYCCD: Failed to Set Control {type} with value {value}");
+                    return false;
+                }
+            }
+        }
+
+        public BAYER_ID GetBayerType() {
+            return (BAYER_ID)IsQHYCCDControlAvailable(handle, CONTROL_ID.CAM_COLOR);
+        }
+
+        public string GetSdkVersion() {
+            uint year = 0, month = 0, day = 0, subday = 0;
+            CheckReturn(GetQHYCCDSDKVersion(ref year, ref month, ref day, ref subday), MethodBase.GetCurrentMethod());
+
+            return year.ToString() + "-" + month.ToString() + "-" + day.ToString() + "-" + subday.ToString();
+        }
+
+        public string GetFwVersion() {
+            string version = "N/A";
+            byte[] buf = new byte[10];
+
+            if (GetQHYCCDFWVersion(handle, buf) != QHYCCD_ERROR) {
+                int ver = buf[0] >> 4;
+                if (ver < 9) {
+                    version = Convert.ToString(ver + 16) + "-" + Convert.ToString(buf[0] & -241) + "-" + Convert.ToString(buf[1]);
+                } else {
+                    version = Convert.ToString(ver) + "-" + Convert.ToString(buf[0] & -241) + "-" + Convert.ToString(buf[1]);
+                }
+            }
+
+            return version;
+        }
+
+        public string GetFpgaVersion() {
+            string version = "N/A";
+            byte[] buf = new byte[4];
+
+            for (byte i = 0; i <= 3; i++) {
+                if (GetQHYCCDFPGAVersion(handle, i, buf) != QHYCCD_ERROR) {
+                    if (i > 0) {
+                        version += ", ";
+                    }
+
+                    version = i + ": " + Convert.ToString(buf[0]) + "-" + Convert.ToString(buf[1]) + "-" + Convert.ToString(buf[2]) + "-" + Convert.ToString(buf[3]);
+                } else {
+                    break;
+                }
+            }
+
+            return version;
+        }
+
+        #endregion Utility Methods
+
+        #region Exception Generator
+
+        private static void CheckReturn(uint code, MethodBase callingMethod, params object[] parameters) {
+            switch (code) {
+                case QHYCCD_SUCCESS:
+                    break;
+
+                case QHYCCD_ERROR:
+                    throw new QHYCameraException("QHY SDK returned an error status", callingMethod, parameters);
+                default:
+                    throw new ArgumentOutOfRangeException("QHY SDK returned an unknown error");
+            }
+        }
+
+        public class QHYCameraException : Exception {
+
+            public QHYCameraException(string message, MethodBase callingMethod, object[] parameters) : base(CreateMessage(message, callingMethod, parameters)) {
+            }
+
+            private static string CreateMessage(string message, MethodBase callingMethod, object[] parameters) {
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("Error '" + message + "' from call to ");
+                sb.Append("QHY" + callingMethod.Name + "(");
+                var paramNames = callingMethod.GetParameters().Select(x => x.Name);
+                foreach (var line in paramNames.Zip(parameters, (s, o) => string.Format("{0}={1}, ", s, o))) {
+                    sb.Append(line);
+                }
+                sb.Remove(sb.Length - 2, 2);
+                sb.Append(")");
+                return sb.ToString();
+            }
+        }
+
+        #endregion Exception Generator
+
+        #region QHY SDK constants
 
         /// <summary>
-        /// SDK Return code: Error
+        /// SDK return code: Error
         /// </summary>
         public const uint QHYCCD_ERROR = 0xFFFFFFFF;
 
         /// <summary>
-        /// SDK eturn code: Success
+        /// SDK return code: Success
         /// </summary>
         public const uint QHYCCD_SUCCESS = 0;
+
+        /// <summary>
+        /// SDK return code: Wait 200ms
+        /// </summary>
+        public const uint QHYCCD_DELAY_200MS = 0x2000;
+
+        /// <summary>
+        /// SDK return code: Wait 200ms
+        /// </summary>
+        public const uint QHYCCD_READ_DIRECTLY = 0x2001;
 
         /// <summary>
         /// Sensor bayer mask pattern
@@ -363,12 +711,77 @@ namespace QHYCCD {
             /// <summary>
             /// Unknown/Undocumented
             /// </summary>
-            DDR_BUFFER_READ_THRESHOLD
+            DDR_BUFFER_READ_THRESHOLD,
+
+            /// <summary>
+            /// Unknown/Undocumented
+            /// </summary>
+            DefaultGain,
+
+            /// <summary>
+            /// Unknown/Undocumented
+            /// </summary>
+            DefaultOffset,
+
+            /// <summary>
+            /// Unknown/Undocumented
+            /// </summary>
+            OutputDataActualBits,
+
+            /// <summary>
+            /// Unknown/Undocumented
+            /// </summary>
+            OutputDataAlignment,
+
+            /// <summary>
+            /// Unknown/Undocumented
+            /// </summary>
+            CAM_SINGLEFRAMEMODE,
+
+            /// <summary>
+            /// Unknown/Undocumented
+            /// </summary>
+            CAM_LIVEVIDEOMODE,
+
+            /// <summary>
+            /// Unknown/Undocumented
+            /// </summary>
+            CAM_IS_COLOR,
+
+            /// <summary>
+            /// Unknown/Undocumented
+            /// </summary>
+            hasHardwareFrameCounter,
+
+            /// <summary>
+            /// Unknown/Undocumented
+            /// </summary>
+            CONTROL_MAX_ID_Error,
+
+            /// <summary>
+            /// Sensor chamber huidity sensor
+            /// </summary>
+            CAM_HUMIDITY,
+
+            /// <summary>
+            /// Sensor chamber air prsssure sensor
+            /// </summary>
+            CAM_PRESSURE,
+
+            /// <summary>
+            /// Sensor chamber vacuum pump
+            /// </summary>
+            CONTROL_VACUUM_PUMP,
+
+            /// <summary>
+            /// Unknown/Undocumented
+            /// </summary>
+            CONTROL_SensorChamberCycle_PUMP
         };
 
         /// <summary>
         /// For setting QHY camera exposure mode
-        /// <seealso cref="LibQHYCCD.SetQHYCCDStreamMode(IntPtr, byte)"/>
+        /// <seealso cref="SetQHYCCDStreamMode(IntPtr, byte)"/>
         /// </summary>
         public enum QHYCCD_CAMERA_MODE : byte {
 
@@ -383,14 +796,147 @@ namespace QHYCCD {
             VIDEO_STREAM
         };
 
-        #endregion "QHY SDK constants"
+        #endregion QHY SDK constants
 
-        #region "NINA constants"
+        #region DLL Imports
+
+        [DllImport(DLLNAME, EntryPoint = "CancelQHYCCDExposing", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint CancelQHYCCDExposing(IntPtr handle);
+
+        [DllImport(DLLNAME, EntryPoint = "CancelQHYCCDExposingAndReadout", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint CancelQHYCCDExposingAndReadout(IntPtr handle);
+
+        [DllImport(DLLNAME, EntryPoint = "CloseQHYCCD", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint CloseQHYCCD(IntPtr handle);
+
+        [DllImport(DLLNAME, EntryPoint = "ControlQHYCCDShutter", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint ControlQHYCCDShutter(IntPtr handle, byte shutterState);
+
+        [DllImport(DLLNAME, EntryPoint = "ControlQHYCCDTemp", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint ControlQHYCCDTemp(IntPtr handle, double targetTemp);
+
+        [DllImport(DLLNAME, EntryPoint = "ExpQHYCCDSingleFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint ExpQHYCCDSingleFrame(IntPtr handle);
+
+        [DllImport(DLLNAME, EntryPoint = "IsQHYCCDCFWPlugged", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint IsQHYCCDCFWPlugged(IntPtr handle);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDCFWStatus", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDCFWStatus(IntPtr handle, [In, Out] byte[] cfwStatus);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDCameraStatus", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDCameraStatus(IntPtr handle, [In, Out] byte status);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDChipInfo", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDChipInfo(IntPtr handle, ref double chipw, ref double chiph, ref uint imagew, ref uint imageh, ref double pixelw, ref double pixelh, ref uint bpp);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDEffectiveArea", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDEffectiveArea(IntPtr handle, ref uint startx, ref uint starty, ref uint sizex, ref uint sizey);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDExposureRemaining", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDExposureRemaining(IntPtr handle);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDFWVersion", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDFWVersion(IntPtr handle, [Out] byte[] verBuf);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDId", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDId(uint index, StringBuilder id);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDModel", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDModel(StringBuilder id, StringBuilder model);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDParam", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe double GetQHYCCDParam(IntPtr handle, CONTROL_ID controlid);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDParamMinMaxStep", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDParamMinMaxStep(IntPtr handle, CONTROL_ID controlid, ref double min, ref double max, ref double step);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDNumberOfReadModes", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDNumberOfReadModes(IntPtr handle, ref uint num_modes);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDReadModeResolution", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDReadModeResolution(IntPtr handle, uint mode, ref uint width, ref uint height);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDReadModeName", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDReadModeName(IntPtr handle, uint mode, StringBuilder mode_name);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDReadMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDReadMode(IntPtr handle, ref uint mode);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDSDKVersion", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDSDKVersion(ref uint year, ref uint month, ref uint day, ref uint subday);
+
+        // These two methods are identical on the C side, they just have different pointer types (they're ABI compatible).
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDSingleFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDSingleFrame(IntPtr handle, ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] byte[] rawArray);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDSingleFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDSingleFrame(IntPtr handle, ref uint sizeX, ref uint sizeY, ref uint bpp, ref uint channels, [Out] ushort[] rawArray);
+
+        [DllImport(DLLNAME, EntryPoint = "InitQHYCCD", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint InitQHYCCD(IntPtr handle);
+
+        [DllImport(DLLNAME, EntryPoint = "InitQHYCCDResource", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint InitQHYCCDResource();
+
+        [DllImport(DLLNAME, EntryPoint = "IsQHYCCDControlAvailable", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint IsQHYCCDControlAvailable(IntPtr handle, CONTROL_ID controlid);
+
+        [DllImport(DLLNAME, EntryPoint = "OpenQHYCCD", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe IntPtr OpenQHYCCD(StringBuilder id);
+
+        [DllImport(DLLNAME, EntryPoint = "ReleaseQHYCCDResource", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint ReleaseQHYCCDResource();
+
+        [DllImport(DLLNAME, EntryPoint = "ScanQHYCCD", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint ScanQHYCCD();
+
+        [DllImport(DLLNAME, EntryPoint = "SendOrder2QHYCCDCFW", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SendOrder2QHYCCDCFW(IntPtr handle, string order, int length);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDBinMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SetQHYCCDBinMode(IntPtr handle, uint wbin, uint hbin);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDBitsMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SetQHYCCDBitsMode(IntPtr handle, uint bits);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDDebayerOnOff", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SetQHYCCDDebayerOnOff(IntPtr handle, bool onoff);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDParam", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SetQHYCCDParam(IntPtr handle, CONTROL_ID controlid, double value);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDReadMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SetQHYCCDReadMode(IntPtr handle, uint mode);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDResolution", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SetQHYCCDResolution(IntPtr handle, uint startx, uint starty, uint sizex, uint sizey);
+
+        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDStreamMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint SetQHYCCDStreamMode(IntPtr handle, byte mode);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDFPGAVersion", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDFPGAVersion(IntPtr handle, byte fpga_index, [Out] byte[] buf);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDHumidity", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDHumidity(IntPtr handle, ref double rh);
+
+        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDPressure", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        private static extern unsafe uint GetQHYCCDPressure(IntPtr handle, ref double pressure);
+
+        #endregion DLL Imports
+
+        #region NINA constants
 
         /// <summary>
         /// TEC delay loop
         /// </summary>
         public const int QHYCCD_COOLER_DELAY = 1000;
+
+        /// <summary>
+        /// TEC delay loop
+        /// </summary>
+        public const int QHYCCD_SENSORSTATS_DELAY = 10000;
 
         /// <summary>
         /// Length of QHY camera Id strings.
@@ -409,192 +955,9 @@ namespace QHYCCD {
             ERROR
         };
 
-        #endregion "NINA constants"
+        #endregion NINA constants
 
-        private static void CheckReturn(uint code, MethodBase callingMethod, params object[] parameters) {
-            switch (code) {
-                case LibQHYCCD.QHYCCD_SUCCESS:
-                    break;
-
-                case LibQHYCCD.QHYCCD_ERROR:
-                    throw new QHYCameraException("QHY SDK returned an error status", callingMethod, parameters);
-                default:
-                    throw new ArgumentOutOfRangeException("QHY SDK returned an unknown error");
-            }
-        }
-
-        [DllImport(DLLNAME, EntryPoint = "BeginQHYCCDLive", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint BeginQHYCCDLive(IntPtr handle);
-
-        [DllImport(DLLNAME, EntryPoint = "CancelQHYCCDExposing", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint CancelQHYCCDExposing(IntPtr handle);
-
-        [DllImport(DLLNAME, EntryPoint = "CancelQHYCCDExposingAndReadout", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint CancelQHYCCDExposingAndReadout(IntPtr handle);
-
-        [DllImport(DLLNAME, EntryPoint = "CloseQHYCCD", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint CloseQHYCCD(IntPtr handle);
-
-        [DllImport(DLLNAME, EntryPoint = "ControlQHYCCDGuide", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint ControlQHYCCDGuide(IntPtr handle, byte Direction, UInt16 PulseTime);
-
-        [DllImport(DLLNAME, EntryPoint = "ControlQHYCCDShutter", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint ControlQHYCCDShutter(IntPtr handle, byte targettemp);
-
-        [DllImport(DLLNAME, EntryPoint = "ControlQHYCCDTemp", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint ControlQHYCCDTemp(IntPtr handle, double targettemp);
-
-        [DllImport(DLLNAME, EntryPoint = "ExpQHYCCDSingleFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint ExpQHYCCDSingleFrame(IntPtr handle);
-
-        [DllImport(DLLNAME, EntryPoint = "IsQHYCCDCFWPlugged", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint IsQHYCCDCFWPlugged(IntPtr handle);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDCFWStatus", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDCFWStatus(IntPtr handle, [In, Out] byte[] cfwStatus);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDCameraStatus", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDCameraStatus(IntPtr handle, [In, Out] byte status);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDChipInfo", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDChipInfo(IntPtr handle, ref double chipw, ref double chiph, ref uint imagew, ref uint imageh, ref double pixelw, ref double pixelh, ref uint bpp);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDEffectiveArea", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDEffectiveArea(IntPtr handle, ref uint startx, ref uint starty, ref uint sizex, ref uint sizey);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDExposureRemaining", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDExposureRemaining(IntPtr handle);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDFWVersion", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDFWVersion(IntPtr handle, [Out] byte[] verBuf);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDId", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDId(uint index, StringBuilder id);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDLiveFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDLiveFrame(IntPtr handle, ref uint w, ref uint h, ref uint bpp, ref uint channels, [Out] byte[] rawArray);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDMemLength", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDMemLength(IntPtr handle);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDModel", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDModel(StringBuilder id, StringBuilder model);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDOverScanArea", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDOverScanArea(IntPtr handle, ref uint startx, ref uint starty, ref uint sizex, ref uint sizey);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDParam", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern double GetQHYCCDParam(IntPtr handle, CONTROL_ID controlid);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDParamMinMaxStep", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDParamMinMaxStep(IntPtr handle, CONTROL_ID controlid, ref double min, ref double max, ref double step);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDNumberOfReadModes", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDNumberOfReadModes(IntPtr handle, ref uint num_modes);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDReadModeName", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDReadModeName(IntPtr handle, uint mode, StringBuilder mode_name);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDReadMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDReadMode(IntPtr handle, ref uint mode);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDSDKVersion", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDSDKVersion(ref uint year, ref uint month, ref uint day, ref uint subday);
-
-        // These two methods are identical on the C side, they just have different pointer types (they're ABI compatible).
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDSingleFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDSingleFrame(IntPtr handle, ref uint w, ref uint h, ref uint bpp, ref uint channels, [Out] byte[] rawArray);
-
-        [DllImport(DLLNAME, EntryPoint = "GetQHYCCDSingleFrame", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint GetQHYCCDSingleFrame(IntPtr handle, ref uint w, ref uint h, ref uint bpp, ref uint channels, [Out] ushort[] rawArray);
-
-        public static string GetSDKFormattedVersion() {
-            uint year = 0, month = 0, day = 0, subday = 0;
-            CheckReturn(GetQHYCCDSDKVersion(ref year, ref month, ref day, ref subday), MethodBase.GetCurrentMethod());
-
-            return "20" + year.ToString("D2") + month.ToString("D2") + day.ToString("D2") + "_" + subday.ToString();
-        }
-
-        [DllImport(DLLNAME, EntryPoint = "InitQHYCCD", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint InitQHYCCD(IntPtr handle);
-
-        [DllImport(DLLNAME, EntryPoint = "InitQHYCCDResource", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint InitQHYCCDResource();
-
-        [DllImport(DLLNAME, EntryPoint = "IsQHYCCDControlAvailable", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint IsQHYCCDControlAvailable(IntPtr handle, CONTROL_ID controlid);
-
-        public static void N_CloseQHYCCD(IntPtr handle) {
-            CheckReturn(CloseQHYCCD(handle), MethodBase.GetCurrentMethod(), handle);
-        }
-
-        public static void N_GetQHYCCDId(uint index, StringBuilder id) {
-            CheckReturn(GetQHYCCDId(index, id), MethodBase.GetCurrentMethod(), index, new object[] { id });
-        }
-
-        public static void N_GetQHYCCDModel(StringBuilder id, StringBuilder model) {
-            CheckReturn(GetQHYCCDModel(id, model), MethodBase.GetCurrentMethod(), new object[] { model });
-        }
-
-        public static void N_InitQHYCCD(IntPtr handle) {
-            CheckReturn(InitQHYCCD(handle), MethodBase.GetCurrentMethod(), handle);
-        }
-
-        public static void N_InitQHYCCDResource() {
-            CheckReturn(InitQHYCCDResource(), MethodBase.GetCurrentMethod());
-        }
-
-        public static IntPtr N_OpenQHYCCD(StringBuilder id) {
-            IntPtr cameraP = OpenQHYCCD(id);
-
-            if (cameraP == IntPtr.Zero) {
-                throw new QHYCameraException("Unable to open camera", MethodBase.GetCurrentMethod(), new object[] { id });
-            }
-            return cameraP;
-        }
-
-        public static void N_ReleaseQHYCCDResource() {
-            CheckReturn(ReleaseQHYCCDResource(), MethodBase.GetCurrentMethod());
-        }
-
-        [DllImport(DLLNAME, EntryPoint = "OpenQHYCCD", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern IntPtr OpenQHYCCD(StringBuilder id);
-
-        [DllImport(DLLNAME, EntryPoint = "ReleaseQHYCCDResource", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint ReleaseQHYCCDResource();
-
-        [DllImport(DLLNAME, EntryPoint = "StopQHYCCDLive", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint StopQHYCCDLive(IntPtr handle);
-
-        [DllImport(DLLNAME, EntryPoint = "ScanQHYCCD", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint ScanQHYCCD();
-
-        [DllImport(DLLNAME, EntryPoint = "SendOrder2QHYCCDCFW", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint SendOrder2QHYCCDCFW(IntPtr handle, String order, int length);
-
-        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDBinMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint SetQHYCCDBinMode(IntPtr handle, uint wbin, uint hbin);
-
-        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDBitsMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint SetQHYCCDBitsMode(IntPtr handle, uint bits);
-
-        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDDebayerOnOff", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint SetQHYCCDDebayerOnOff(IntPtr handle, bool onoff);
-
-        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDLogLevel", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint SetQHYCCDLogLevel(byte level);
-
-        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDParam", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint SetQHYCCDParam(IntPtr handle, CONTROL_ID controlid, double value);
-
-        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDReadMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint SetQHYCCDReadMode(IntPtr handle, uint mode);
-
-        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDResolution", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint SetQHYCCDResolution(IntPtr handle, uint startx, uint starty, uint sizex, uint sizey);
-
-        [DllImport(DLLNAME, EntryPoint = "SetQHYCCDStreamMode", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern uint SetQHYCCDStreamMode(IntPtr handle, byte mode);
+        #region Camera Information
 
         /// <summary>
         /// Structure for keeping camera instance information in NINA.
@@ -603,7 +966,7 @@ namespace QHYCCD {
 
             /// <summary>
             /// Sensor bayer pattern
-            /// <seealso cref="LibQHYCCD.BAYER_ID"/>
+            /// <seealso cref="QHYCCDSDK.BAYER_ID"/>
             /// </summary>
             public BAYER_ID BayerPattern;
 
@@ -614,7 +977,7 @@ namespace QHYCCD {
 
             /// <summary>
             /// The camera's current state (managed by NINA, not by SDK)
-            /// <seealso cref="LibQHYCCD.QHYCCD_CAMERA_STATE"/>
+            /// <seealso cref="QHYCCDSDK.QHYCCD_CAMERA_STATE"/>
             /// </summary>
             public string CamState;
 
@@ -664,14 +1027,14 @@ namespace QHYCCD {
             public QHYCCD_SENSOR_AREA CurImage;
 
             /// <summary>
+            /// The sensor's full dimensions
+            /// </summary>
+            public QHYCCD_SENSOR_AREA FullArea;
+
+            /// <summary>
             /// The sensor's Effective Area dimensions
             /// </summary>
             public QHYCCD_SENSOR_AREA EffectiveArea;
-
-            /// <summary>
-            /// The sensor's Overscan Area dimensions
-            /// </summary>
-            public QHYCCD_SENSOR_AREA OverscanArea;
 
             /// <summary>
             /// Maximum shutter speed
@@ -736,6 +1099,11 @@ namespace QHYCCD {
             public bool HasOffset;
 
             /// <summary>
+            /// Camera has readout speeds?
+            /// </summary>
+            public bool HasReadoutSpeed;
+
+            /// <summary>
             /// Camera has mechanical shutter?
             /// </summary>
             public bool HasShutter;
@@ -754,16 +1122,6 @@ namespace QHYCCD {
             /// Image array size (bytes)
             /// </summary>
             public uint ImageSize;
-
-            /// <summary>
-            /// Maximum image width (pixels)
-            /// </summary>
-            public uint ImageX;
-
-            /// <summary>
-            /// Maximum image height (pixels)
-            /// </summary>
-            public uint ImageY;
 
             /// <summary>
             /// Camera index number
@@ -817,6 +1175,21 @@ namespace QHYCCD {
             public IList<string> ReadoutModes;
 
             /// <summary>
+            /// Maximum readout speed
+            /// </summary>
+            public uint ReadoutSpeedMax;
+
+            /// <summary>
+            /// Minimum readout speed
+            /// </summary>
+            public uint ReadoutSpeedMin;
+
+            /// <summary>
+            /// Minimum readout speed increment
+            /// </summary>
+            public uint ReadoutSpeedStep;
+
+            /// <summary>
             /// List of support bin modes
             /// </summary>
             public List<int> SupportedBins;
@@ -835,7 +1208,51 @@ namespace QHYCCD {
             /// Minimum USB bandwidth increment
             /// </summary>
             public double USBStep;
+
+            /// <summary>
+            /// Camera firmware version
+            /// </summary>
+            public string FirmwareVersion;
+
+            /// <summary>
+            /// Camera FPGA version
+            /// </summary>
+            public string FPGAVersion;
+
+            /// <summary>
+            /// QHY SDK version
+            /// </summary>
+            public string SdkVersion;
+
+            /// <summary>
+            /// QHY USB driver version
+            /// </summary>
+            public string UsbDriverVersion;
+
+            /// <summary>
+            /// Has a sensor chamber air pressure sensor?
+            /// </summary>
+            public bool HasSensorAirPressure;
+
+            /// <summary>
+            /// Sensor chamber air pressure
+            /// </summary>
+            public double SensorAirPressure;
+
+            /// <summary>
+            /// Has a sensor chamber humidity sensor?
+            /// </summary>
+            public bool HasSensorHumidity;
+
+            /// <summary>
+            /// Sensor chamber humidity
+            /// </summary>
+            public double SensorHumidity;
         };
+
+        #endregion Camera Information
+
+        #region Sensor Dimension Information
 
         /// <summary>
         /// Information about the sensor's resolution
@@ -863,6 +1280,10 @@ namespace QHYCCD {
             public uint SizeY;
         }
 
+        #endregion Sensor Dimension Information
+
+        #region Filter Wheel Information
+
         /// <summary>
         /// Structure for keeping filter wheel instance information
         /// </summary>
@@ -884,23 +1305,6 @@ namespace QHYCCD {
             public uint Positions;
         }
 
-        public class QHYCameraException : Exception {
-
-            public QHYCameraException(string message, MethodBase callingMethod, object[] parameters) : base(CreateMessage(message, callingMethod, parameters)) {
-            }
-
-            private static string CreateMessage(string message, MethodBase callingMethod, object[] parameters) {
-                StringBuilder sb = new StringBuilder();
-                sb.AppendLine("Error '" + message + "' from call to ");
-                sb.Append("QHY" + callingMethod.Name + "(");
-                var paramNames = callingMethod.GetParameters().Select(x => x.Name);
-                foreach (var line in paramNames.Zip(parameters, (s, o) => string.Format("{0}={1}, ", s, o))) {
-                    sb.Append(line);
-                }
-                sb.Remove(sb.Length - 2, 2);
-                sb.Append(")");
-                return sb.ToString();
-            }
-        }
+        #endregion Filter Wheel Information
     }
 }

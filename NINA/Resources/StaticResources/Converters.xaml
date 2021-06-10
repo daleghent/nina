@@ -68,4 +68,5 @@
     <converters:OptimalExposureCalculatorAnswerConverter x:Key="OptimalExposureCalculatorAnswerConverter" />
     <converters:MinusOneToBaseValueConverter x:Key="MinusOneToBaseValueConverter" />
     <converters:IntListToTextBlockListConverter x:Key="IntListToTextBlockListConverter" />
+    <converters:NullOrEmptyStringToVisibilityCollapsedConverter x:Key="NullOrEmptyStringToVisibilityCollapsedConverter" />
 </ResourceDictionary>

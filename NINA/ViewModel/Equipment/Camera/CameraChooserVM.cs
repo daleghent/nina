@@ -99,12 +99,13 @@ namespace NINA.ViewModel.Equipment.Camera {
 
             /* QHYCCD */
             try {
+                var qhy = new QHYCameras();
                 Logger.Trace("Adding QHYCCD Cameras");
-                uint numCameras = QHYCameras.Count;
+                uint numCameras = qhy.Count;
 
                 if (numCameras > 0) {
                     for (uint i = 0; i < numCameras; i++) {
-                        var cam = QHYCameras.GetCamera(i, profileService);
+                        var cam = qhy.GetCamera(i, profileService);
                         if (!string.IsNullOrEmpty(cam.Name)) {
                             Logger.Debug($"Adding QHY camera {i}: {cam.Id} (as {cam.Name})");
                             Devices.Add(cam);

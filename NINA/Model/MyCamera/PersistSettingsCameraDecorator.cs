@@ -75,14 +75,18 @@ namespace NINA.Model.MyCamera {
             }
             if (this.profileService.ActiveProfile.CameraSettings.ReadoutModeForSnapImages.HasValue) {
                 try {
-                    this.Camera.ReadoutModeForSnapImages = this.profileService.ActiveProfile.CameraSettings.ReadoutModeForSnapImages.Value;
+                    if (this.profileService.ActiveProfile.CameraSettings.ReadoutModeForSnapImages.Value < this.Camera.ReadoutModes.Count) {
+                        this.Camera.ReadoutModeForSnapImages = this.profileService.ActiveProfile.CameraSettings.ReadoutModeForSnapImages.Value;
+                    }
                 } catch (Exception e) {
                     this.profileService.ActiveProfile.CameraSettings.ReadoutModeForSnapImages = null;
                 }
             }
             if (this.profileService.ActiveProfile.CameraSettings.ReadoutModeForNormalImages.HasValue) {
                 try {
-                    this.Camera.ReadoutModeForNormalImages = this.profileService.ActiveProfile.CameraSettings.ReadoutModeForNormalImages.Value;
+                    if (this.profileService.ActiveProfile.CameraSettings.ReadoutModeForNormalImages.Value < this.Camera.ReadoutModes.Count) {
+                        this.Camera.ReadoutModeForNormalImages = this.profileService.ActiveProfile.CameraSettings.ReadoutModeForNormalImages.Value;
+                    }
                 } catch (Exception e) {
                     this.profileService.ActiveProfile.CameraSettings.ReadoutModeForNormalImages = null;
                 }

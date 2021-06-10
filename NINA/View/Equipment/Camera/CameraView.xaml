@@ -62,7 +62,8 @@
                 <Grid>
                     <StackPanel>
                         <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                            <UniformGrid Columns="2">
+                            <UniformGrid
+                                Columns="2">
                                 <UniformGrid
                                     Margin="0,6,0,6"
                                     VerticalAlignment="Center"
@@ -111,7 +112,8 @@
                                 <UniformGrid
                                     Margin="0,6,0,6"
                                     VerticalAlignment="Center"
-                                    Columns="2">
+                                    Columns="2"
+                                    Visibility="{Binding Cam.DriverInfo, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
                                     <TextBlock Text="{ns:Loc LblDriverInfo}" />
                                     <TextBlock
                                         Margin="5,0,0,0"
@@ -121,7 +123,8 @@
                                 <UniformGrid
                                     Margin="0,6,0,6"
                                     VerticalAlignment="Center"
-                                    Columns="2">
+                                    Columns="2"
+                                    Visibility="{Binding Cam.DriverVersion, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
                                     <TextBlock Text="{ns:Loc LblDriverVersion}" />
                                     <TextBlock Margin="5,0,0,0" Text="{Binding Cam.DriverVersion}" />
                                 </UniformGrid>
@@ -142,7 +145,8 @@
                                 <UniformGrid
                                     Margin="0,6,0,6"
                                     VerticalAlignment="Center"
-                                    Columns="2">
+                                    Columns="2"
+                                    Visibility="{Binding Cam.SensorName, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
                                     <TextBlock Text="{ns:Loc LblSensorName}" />
                                     <TextBlock Margin="5,0,0,0" Text="{Binding Cam.SensorName}" />
                                 </UniformGrid>
@@ -254,6 +258,76 @@
                                     <TextBlock Margin="5,0,0,0" Text="{Binding Cam.Offset}" />
                                 </UniformGrid>
                             </UniformGrid>
+                        </Border>
+
+                        <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                            <Border.Resources>
+                                <DataTemplate x:Key="Default">
+                                    <Border />
+                                </DataTemplate>
+                                <DataTemplate x:Key="QhyCcd">
+                                    <StackPanel>
+                                        <UniformGrid Columns="2">
+                                            <UniformGrid
+                                            Margin="0,6,0,6"
+                                            VerticalAlignment="Center"
+                                            Columns="2">
+                                                <TextBlock Text="{ns:Loc LblSDKVersion}" />
+                                                <TextBlock Margin="5,0,0,0" Text="{Binding QhySdkVersion}" />
+                                            </UniformGrid>
+                                            <UniformGrid
+                                            Margin="0,6,0,6"
+                                            VerticalAlignment="Center"
+                                            Columns="2">
+                                                <TextBlock Text="{ns:Loc LblUsbDriverVersion}" />
+                                                <TextBlock Margin="5,0,0,0" Text="{Binding QhyUsbDriverVersion}" />
+                                            </UniformGrid>
+                                        </UniformGrid>
+                                        <UniformGrid Columns="2">
+                                            <UniformGrid
+                                            Margin="0,6,0,6"
+                                            VerticalAlignment="Center"
+                                            Columns="2">
+                                                <TextBlock Text="{ns:Loc LblFirmwareVersion}" />
+                                                <TextBlock Margin="5,0,0,0" Text="{Binding QhyFirmwareVersion}" />
+                                            </UniformGrid>
+                                            <UniformGrid
+                                            Margin="0,6,0,6"
+                                            VerticalAlignment="Center"
+                                            Columns="2">
+                                                <TextBlock Text="{ns:Loc LblFPGAVersion}" />
+                                                <TextBlock Margin="5,0,0,0" Text="{Binding QhyFPGAVersion}" />
+                                            </UniformGrid>
+                                        </UniformGrid>
+                                        <UniformGrid Columns="2">
+                                            <UniformGrid
+                                            Margin="0,6,0,6"
+                                            VerticalAlignment="Center"
+                                            Columns="2"
+                                            Visibility="{Binding QhyHasSensorAirPressure, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                                <TextBlock Text="{ns:Loc LblSensorAirPressure}" />
+                                                <TextBlock Margin="5,0,0,0" Text="{Binding QhySensorAirPressure, StringFormat=\{0:0.00\} hPa, Converter={StaticResource NaNToDoubleDashConverter}}" />
+                                            </UniformGrid>
+                                            <UniformGrid
+                                            Margin="0,6,0,6"
+                                            VerticalAlignment="Center"
+                                            Columns="2"
+                                            Visibility="{Binding QhyHasSensorHumidity, Converter={StaticResource VisibilityConverter}, FallbackValue=Collapsed}">
+                                                <TextBlock Text="{ns:Loc LblSensorHumidity}" />
+                                                <TextBlock Margin="5,0,0,0" Text="{Binding QhySensorHumidity, StringFormat=\{0:0.00\}%, Converter={StaticResource NaNToDoubleDashConverter}}" />
+                                            </UniformGrid>
+                                        </UniformGrid>
+                                    </StackPanel>
+                                </DataTemplate>
+                                <local:CameraTemplateSelector
+                                    x:Key="ContentSelector"
+                                    Default="{StaticResource Default}"
+                                    QhyCcd="{StaticResource QhyCcd}" />
+                            </Border.Resources>
+                            <ContentControl
+                                Content="{Binding}"
+                                ContentTemplateSelector="{StaticResource ContentSelector}"
+                                DataContext="{Binding Cam.Camera}" />
                         </Border>
                     </StackPanel>
                 </Grid>
@@ -534,6 +608,7 @@
                                                     <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
                                                         <Binding Path="CameraInfo.Connected" />
                                                         <Binding Path="CameraInfo.CanSetTemperature" />
+                                                        <Binding Path="CameraInfo.CoolerOn" />
                                                     </MultiBinding>
                                                 </TextBlock.Visibility>
                                             </TextBlock>
@@ -545,6 +620,7 @@
                                                     <MultiBinding Converter="{StaticResource BooleanToVisibilityHiddenMultiConverter}">
                                                         <Binding Path="CameraInfo.Connected" />
                                                         <Binding Path="CameraInfo.CanSetTemperature" />
+                                                        <Binding Path="CameraInfo.CoolerOn" />
                                                     </MultiBinding>
                                                 </TextBlock.Visibility>
                                             </TextBlock>

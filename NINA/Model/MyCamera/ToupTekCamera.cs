@@ -656,9 +656,10 @@ namespace NINA.Model.MyCamera {
             Logger.Trace($"ToupTekCamera - OnEventCallback {nEvent}");
             switch (nEvent) {
                 case ToupCam.eEVENT.EVENT_IMAGE: // Live View Image
-                    Logger.Trace($"ToupTekCamera - Setting DownloadExposure Result on Task {imageReadyTCS.Task.Id}");
+                    var id = imageReadyTCS?.Task?.Id ?? -1;
+                    Logger.Trace($"ToupTekCamera - Setting DownloadExposure Result on Task {id}");
                     var success = imageReadyTCS?.TrySetResult(true);
-                    Logger.Trace($"ToupTekCamera - DownloadExposure Result on Task {imageReadyTCS.Task.Id} set successfully: {success}");
+                    Logger.Trace($"ToupTekCamera - DownloadExposure Result on Task {id} set successfully: {success}");
                     break;
 
                 case ToupCam.eEVENT.EVENT_STILLIMAGE: // Still Image

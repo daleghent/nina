@@ -710,9 +710,10 @@ namespace NINA.Model.MyCamera {
             Logger.Trace($"AltairCamera - OnEventCallback {nEvent}");
             switch (nEvent) {
                 case AltairCam.eEVENT.EVENT_IMAGE: // Live View Image
-                    Logger.Trace($"AltairCamera - Setting DownloadExposure Result on Task {imageReadyTCS.Task.Id}");
+                    var id = imageReadyTCS?.Task?.Id ?? -1;
+                    Logger.Trace($"AltairCamera - Setting DownloadExposure Result on Task {id}");
                     var success = imageReadyTCS?.TrySetResult(true);
-                    Logger.Trace($"AltairCamera - DownloadExposure Result on Task {imageReadyTCS.Task.Id} set successfully: {success}");
+                    Logger.Trace($"AltairCamera - DownloadExposure Result on Task {id} set successfully: {success}");
                     break;
 
                 case AltairCam.eEVENT.EVENT_STILLIMAGE: // Still Image

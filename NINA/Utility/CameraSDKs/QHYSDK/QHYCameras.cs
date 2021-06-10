@@ -19,20 +19,22 @@ using System;
 
 namespace QHYCCD {
 
-    public static class QHYCameras {
+    public class QHYCameras {
         private static readonly QHYCamera[] _cameras = new QHYCamera[16];
+        public IQhySdk Sdk { get; set; } = QhySdk.Instance;
 
-        public static uint Count {
+        public uint Count {
             get {
                 uint num;
 
-                num = LibQHYCCD.ScanQHYCCD();
+                Sdk.InitSdk();
+                num = Sdk.Scan();
                 Logger.Trace(string.Format("QHYCamera - found {0} camera(s)", num));
                 return num;
             }
         }
 
-        public static QHYCamera GetCamera(uint cameraId, IProfileService profileService) {
+        public QHYCamera GetCamera(uint cameraId, IProfileService profileService) {
             if (cameraId > Count)
                 throw new IndexOutOfRangeException();
 

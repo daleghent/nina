@@ -213,6 +213,10 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
                     } catch (OperationCanceledException) {
                         if (fW?.Connected == true) { await Disconnect(); }
                         return false;
+                    } catch (Exception e) {
+                        Logger.Error($"Failed to connect to filter wheel: {e}");
+                        Notification.ShowError(e.Message);
+                        return false;
                     }
                 } else {
                     return false;

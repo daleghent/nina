@@ -60,7 +60,7 @@ namespace NINA.Model.MyTelescope {
 
         void SlewToCoordinatesAsync(Coordinates coordinates);
 
-        void SlewToCoordinates(Coordinates coordinates);
+        bool SlewToCoordinates(Coordinates coordinates);
 
         void SlewToAltAz(TopocentricCoordinates coordinates);
 

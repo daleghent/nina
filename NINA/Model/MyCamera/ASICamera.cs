@@ -12,9 +12,11 @@
 
 #endregion "copyright"
 
-using NINA.Utility;
-using NINA.Utility.Notification;
+using NINA.Model.ImageData;
 using NINA.Profile;
+using NINA.Utility;
+using NINA.Utility.Exceptions;
+using NINA.Utility.Notification;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -22,7 +24,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using ZWOptical.ASISDK;
-using NINA.Model.ImageData;
 
 namespace NINA.Model.MyCamera {
 
@@ -392,21 +393,19 @@ namespace NINA.Model.MyCamera {
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
             using (token.Register(() => AbortExposure())) {
-                var status = ExposureStatus;
-                while (status == ASICameraDll.ASI_EXPOSURE_STATUS.ASI_EXP_WORKING) {
+                while (ExposureStatus == ASICameraDll.ASI_EXPOSURE_STATUS.ASI_EXP_WORKING) {
                     await Task.Delay(100, token);
-                    status = ExposureStatus;
                 }
             }
         }
 
         public async Task<IExposureData> DownloadExposure(CancellationToken token) {
-            return await Task.Run<IExposureData>(async () => {
+            return await Task.Run<IExposureData>(() => {
                 try {
                     var status = ExposureStatus;
-                    while (status == ASICameraDll.ASI_EXPOSURE_STATUS.ASI_EXP_WORKING) {
-                        await Task.Delay(10, token);
-                        status = ExposureStatus;
+                    if (status != ASICameraDll.ASI_EXPOSURE_STATUS.ASI_EXP_SUCCESS) {
+                        Logger.Error($"ASI: Camera reported unsuccessful exposure: {status}");
+                        throw new CameraDownloadFailedException(Locale.Loc.Instance["LblASIImageDownloadError"]);
                     }
 
                     var width = CaptureAreaInfo.Size.Width;
@@ -416,7 +415,8 @@ namespace NINA.Model.MyCamera {
                     ushort[] arr = new ushort[size];
                     int buffersize = width * height * 2;
                     if (!GetExposureData(arr, buffersize)) {
-                        throw new Exception(Locale.Loc.Instance["LblASIImageDownloadError"]);
+                        Logger.Error("ASI: Download of exposure data failed");
+                        throw new CameraDownloadFailedException(Locale.Loc.Instance["LblASIImageDownloadError"]);
                     }
 
                     var metadata = new ImageMetaData();
@@ -429,6 +429,8 @@ namespace NINA.Model.MyCamera {
                         isBayered: SensorType != SensorType.Monochrome,
                         metaData: new ImageMetaData());
                 } catch (OperationCanceledException) {
+                } catch (CameraDownloadFailedException ex) {
+                    Notification.ShowError(ex.Message);
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError(ex.Message);

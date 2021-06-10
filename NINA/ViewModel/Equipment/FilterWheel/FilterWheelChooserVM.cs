@@ -25,6 +25,7 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
 
     internal class FilterWheelChooserVM : EquipmentChooserVM {
 
+
         public FilterWheelChooserVM(IProfileService profileService) : base(profileService) {
         }
 
@@ -58,8 +59,9 @@ namespace NINA.ViewModel.Equipment.FilterWheel {
              * QHY - Integrated or 4-pin connected filter wheels only
              */
             try {
+                var qhy = new QHYFilterWheels();
                 Logger.Trace("Adding QHY integrated/4-pin filter wheels");
-                List<string> fwheels = QHYFilterWheels.GetFilterWheels();
+                List<string> fwheels = qhy.GetFilterWheels();
 
                 if (fwheels.Count > 0) {
                     foreach (var entry in fwheels) {
