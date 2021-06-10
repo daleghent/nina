@@ -656,9 +656,10 @@ namespace NINA.Model.MyCamera {
             Logger.Trace($"OmegonCamera - OnEventCallback {nEvent}");
             switch (nEvent) {
                 case Omegonprocam.eEVENT.EVENT_IMAGE: // Live View Image
-                    Logger.Trace($"OmegonCamera - Setting DownloadExposure Result on Task {imageReadyTCS.Task.Id}");
+                    var id = imageReadyTCS?.Task?.Id ?? -1;
+                    Logger.Trace($"OmegonCamera - Setting DownloadExposure Result on Task {id}");
                     var success = imageReadyTCS?.TrySetResult(true);
-                    Logger.Trace($"OmegonCamera - DownloadExposure Result on Task {imageReadyTCS.Task.Id} set successfully: {success}");
+                    Logger.Trace($"OmegonCamera - DownloadExposure Result on Task {id} set successfully: {success}");
                     break;
 
                 case Omegonprocam.eEVENT.EVENT_STILLIMAGE: // Still Image
