@@ -68,11 +68,15 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         public void CloneTest() {
             var initial = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             initial.Icon = new System.Windows.Media.GeometryGroup();
+            initial.SampleSize = 15;
+            initial.Amount = 33;
 
             var sut = (AutofocusAfterHFRIncreaseTrigger)initial.Clone();
 
             sut.Should().NotBeSameAs(initial);
             sut.Icon.Should().BeSameAs(initial.Icon);
+            sut.SampleSize.Should().Be(15);
+            sut.Amount.Should().Be(33);
         }
 
         [Test]

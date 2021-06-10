@@ -82,6 +82,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             return new AutofocusAfterHFRIncreaseTrigger(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator) {
                 Icon = Icon,
                 Amount = Amount,
+                SampleSize = SampleSize,
                 Name = Name,
                 Category = Category,
                 Description = Description,
