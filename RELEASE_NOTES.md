@@ -195,6 +195,43 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - **ZWO:** 1.18.0
 - **Risingcam** 48.18332.20210120
 
+# Version 1.10 HF3
+
+## Improvements
+- The camera temperature setpoint is now displayed *only* when the cooler is active
+- A secondary HIPS2 server will be attempted if the main HIPS2 image server is not available
+- Canon cameras will now be kept awake to avoid camera auto-shutdown
+- Meridian flip will now be considered on objects traversing through their lowest altitude too
+
+### QHYCCD native driver improvements
+- <span style="color:red">**IMPORTANT:**</span> NINA 1.10 HF3 (and later) require *at least* [QHY System Pack](https://www.qhyccd.com/download.html) version 21.02.20.19 to be installed
+- Improvements to reliability
+- Seamless switching between 11M and 47M modes for the QHY294 Pro
+- QHY CCDs that have fast and slow readout modes can now select the mode
+- QHY cameras that have sensor chamber air pressure and humidity sensors will display their readings on the Equipment > Camera screen
+- QHY camera firmware and FPGA versions are now displayed on the Equipment > Camera screen
+- The integrated filter wheels of A-Series cameras should now operate correctly
+- Live View function has been disabled for QHY cameras. It was functionally inoperative and will be discontinued for all but Canon and Nikon in 1.11
+- The version of the QHY USB driver will be checked and a warning will be presented if it is not the minimum recommended version
+
+## Bug fixes
+- Nikon: Cancelled or aborted exposures are now properly handled
+- FLI: Stop background flush prior to reading out the sensor
+- ASCOM camera: SensorType is no longer considered to be a mandadory property
+- Fixed an issue when the location for ASTAP and ASPS where entered manually the validation was incorrect to assume a folder instead of a file
+- When subsampling selection was still active after the app already subsampled an image it would further try to subsample. In some occasions this could cause a crash. The subsampling rectangle is now disabled after the first additional capture.
+
+## Included Camera SDK Versions:
+- **Altair Astro:** 48.18830.20210423
+- **Atik:** 2020.08.3.642
+- **Canon:** 13.13.0.6408
+- **FLI:** 1.104.0.0
+- **Nikon:** 1.3.2.3000
+- **Omegon:** 39.15325.2019.810
+- **QHY:** 21.02.19.19
+- **ToupTek:** 48.18081.2020.1205
+- **ZWO:** 1.16.3
+
 # Version 1.10 HF2
 
 ## Improvements
