@@ -9,6 +9,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - The camera temperature setpoint is now displayed *only* when the cooler is active
 - A secondary HIPS2 server will be attempted if the main HIPS2 image server is not available
 - Canon cameras will now be kept awake to avoid camera auto-shutdown
+- Meridian flip will now be considered on objects traversing through their lowest altitude too
 
 ### QHYCCD native driver improvements
 - <span style="color:red">**IMPORTANT:**</span> NINA 1.10 HF3 (and later) require *at least* [QHY System Pack](https://www.qhyccd.com/download.html) version 21.02.20.19 to be installed
@@ -25,6 +26,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 - Nikon: Cancelled or aborted exposures are now properly handled
 - FLI: Stop background flush prior to reading out the sensor
 - ASCOM camera: SensorType is no longer considered to be a mandadory property
+- Fixed an issue when the location for ASTAP and ASPS where entered manually the validation was incorrect to assume a folder instead of a file
+- When subsampling selection was still active after the app already subsampled an image it would further try to subsample. In some occasions this could cause a crash. The subsampling rectangle is now disabled after the first additional capture.
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 48.18830.20210423

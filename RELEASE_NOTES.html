@@ -32,6 +32,7 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>The camera temperature setpoint is now displayed <em>only</em> when the cooler is active</li>
 <li>A secondary HIPS2 server will be attempted if the main HIPS2 image server is not available</li>
 <li>Canon cameras will now be kept awake to avoid camera auto-shutdown</li>
+<li>Meridian flip will now be considered on objects traversing through their lowest altitude too</li>
 </ul>
 <h3 id="qhyccd-native-driver-improvements">QHYCCD native driver improvements</h3>
 <ul>
@@ -50,6 +51,8 @@ More details at <a href="https://nighttime-imaging.eu/donate/" target="_blank">n
 <li>Nikon: Cancelled or aborted exposures are now properly handled</li>
 <li>FLI: Stop background flush prior to reading out the sensor</li>
 <li>ASCOM camera: SensorType is no longer considered to be a mandadory property</li>
+<li>Fixed an issue when the location for ASTAP and ASPS where entered manually the validation was incorrect to assume a folder instead of a file</li>
+<li>When subsampling selection was still active after the app already subsampled an image it would further try to subsample. In some occasions this could cause a crash. The subsampling rectangle is now disabled after the first additional capture.</li>
 </ul>
 <h2 id="included-camera-sdk-versions">Included Camera SDK Versions:</h2>
 <ul>
