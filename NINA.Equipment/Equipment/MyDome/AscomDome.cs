@@ -156,7 +156,7 @@ namespace NINA.Equipment.Equipment.MyDome {
         public async Task SlewToAzimuth(double azimuth, CancellationToken ct) {
             if (Connected) {
                 if (CanSetAzimuth) {
-                    ct.Register(StopSlewing);
+                    ct.Register(async () => await StopSlewing());
                     await Task.Run(async () => {
                         device?.SlewToAzimuth(azimuth);
                         while (device != null && device.Slewing && !ct.IsCancellationRequested) {
@@ -164,18 +164,20 @@ namespace NINA.Equipment.Equipment.MyDome {
                         }
                     }, ct);
                 } else {
+                    Logger.Warning("Dome cannot slew");
                     Notification.ShowWarning(Loc.Instance["LblDomeCannotSlew"]);
                 }
             } else {
+                Logger.Warning("Dome is not connected");
                 Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
 
-        public void StopSlewing() {
+        public Task StopSlewing() {
             if (Connected) {
                 // ASCOM only allows you to stop all movement, which includes both shutter and slewing. If the shutter was opening or closing
                 // when this command is received, try and continue the operation afterwards
-                Task.Run(() => {
+                return Task.Run(() => {
                     var priorShutterStatus = ShutterStatus;
                     device?.AbortSlew();
                     if (priorShutterStatus == ShutterState.ShutterClosing) {
@@ -185,23 +187,26 @@ namespace NINA.Equipment.Equipment.MyDome {
                     }
                 });
             } else {
+                Logger.Warning("Dome is not connected");
                 Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
+            return Task.CompletedTask;
         }
 
-        public void StopShutter() {
+        public Task StopShutter() {
             // ASCOM only allows you to stop both slew and shutter movement together. We also don't have a way of determining whether a
             // slew is in progress or what the target azimuth is, so we can't recover for a StopShutter operation
-            StopAll();
+            return StopAll();
         }
 
-        public void StopAll() {
+        public Task StopAll() {
             if (Connected) {
-                // Fire and forget
-                Task.Run(() => device?.AbortSlew());
+                return Task.Run(() => device?.AbortSlew());
             } else {
+                Logger.Warning("Dome is not connected");
                 Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
+            return Task.CompletedTask;
         }
 
         public async Task OpenShutter(CancellationToken ct) {
@@ -216,10 +221,16 @@ namespace NINA.Equipment.Equipment.MyDome {
                     while (device != null && ShutterStatus == ShutterState.ShutterOpening && !ct.IsCancellationRequested) {
                         await Task.Delay(1000, ct);
                     };
+                    if (device != null && ShutterStatus == ShutterState.ShutterClosed) {
+                        Logger.Error("ShutterStatus is still reported as closed after calling CloseShutter.");
+                        Notification.ShowWarning(Loc.Instance["LblDomeCloseShutterStillClosed"]);
+                    }
                 } else {
+                    Logger.Warning("Dome cannot open");
                     Notification.ShowWarning(Loc.Instance["LblDomeCannotSetShutter"]);
                 }
             } else {
+                Logger.Warning("Dome is not connected");
                 Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
@@ -232,10 +243,16 @@ namespace NINA.Equipment.Equipment.MyDome {
                     while (device != null && ShutterStatus == ShutterState.ShutterClosing && !ct.IsCancellationRequested) {
                         await Task.Delay(1000, ct);
                     };
+                    if (device != null && ShutterStatus == ShutterState.ShutterOpen) {
+                        Logger.Error("ShutterStatus is still reported as open after calling CloseShutter.");
+                        Notification.ShowWarning(Loc.Instance["LblDomeCloseShutterStillOpen"]);
+                    }
                 } else {
+                    Logger.Warning("Dome cannot close shutter");
                     Notification.ShowWarning(Loc.Instance["LblDomeCannotSetShutter"]);
                 }
             } else {
+                Logger.Warning("Dome is not connected");
                 Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
@@ -258,9 +275,11 @@ namespace NINA.Equipment.Equipment.MyDome {
                     // Introduce a final delay, in case the Dome driver settles after finding the home position by backtracking
                     await Task.Delay(2000, ct);
                 } else {
+                    Logger.Warning("Dome cannot find home");
                     Notification.ShowWarning(Loc.Instance["LblDomeCannotFindHome"]);
                 }
             } else {
+                Logger.Warning("Dome is not connected");
                 Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
@@ -281,9 +300,11 @@ namespace NINA.Equipment.Equipment.MyDome {
                         await Task.Delay(1000, ct);
                     }
                 } else {
+                    Logger.Warning("Dome cannot find park");
                     Notification.ShowWarning(Loc.Instance["LblDomeCannotPark"]);
                 }
             } else {
+                Logger.Warning("Dome is not connected");
                 Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
@@ -293,9 +314,11 @@ namespace NINA.Equipment.Equipment.MyDome {
                 if (CanSetPark) {
                     device.SetPark();
                 } else {
+                    Logger.Warning("Dome cannot set park");
                     Notification.ShowWarning(Loc.Instance["LblDomeCannotSetPark"]);
                 }
             } else {
+                Logger.Warning("Dome is not connected");
                 Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }
@@ -305,9 +328,11 @@ namespace NINA.Equipment.Equipment.MyDome {
                 if (CanSyncAzimuth) {
                     device.SyncToAzimuth(azimuth);
                 } else {
+                    Logger.Warning("Dome cannot sync azimuth");
                     Notification.ShowWarning(Loc.Instance["LblDomeCannotSyncAzimuth"]);
                 }
             } else {
+                Logger.Warning("Dome is not connected");
                 Notification.ShowWarning(Loc.Instance["LblDomeNotConnected"]);
             }
         }

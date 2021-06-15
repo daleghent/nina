@@ -6320,6 +6320,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation..
+        /// </summary>
+        internal static string LblDomeCloseShutterStillClosed {
+            get {
+                return ResourceManager.GetString("LblDomeCloseShutterStillClosed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. .
+        /// </summary>
+        internal static string LblDomeCloseShutterStillOpen {
+            get {
+                return ResourceManager.GetString("LblDomeCloseShutterStillOpen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dome connected.
         /// </summary>
         internal static string LblDomeConnected {

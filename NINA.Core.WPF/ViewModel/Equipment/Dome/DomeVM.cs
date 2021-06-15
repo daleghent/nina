@@ -67,7 +67,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             CancelChooseDomeCommand = new RelayCommand(CancelChooseDome);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
             RefreshDomeListCommand = new RelayCommand(RefreshDomeList, o => !(Dome?.Connected == true));
-            StopCommand = new RelayCommand(StopAll);
+            StopCommand = new AsyncCommand<bool>(StopAll);
             OpenShutterCommand = new AsyncCommand<bool>(OpenShutterVM);
             CloseShutterCommand = new AsyncCommand<bool>(CloseShutterVM);
             SetParkPositionCommand = new RelayCommand(SetParkPosition);
@@ -333,8 +333,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     return false;
                 }
 
-                Logger.Trace("Opening dome shutter");
+                Logger.Info($"Opening dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
                 await Dome.OpenShutter(cancellationToken);
+                Logger.Info($"Opened dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
                 return true;
             } else {
                 Logger.Warning("Cannot open shutter. Dome does not support it.");
@@ -348,8 +349,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         public async Task<bool> CloseShutter(CancellationToken cancellationToken) {
             if (Dome.CanSetShutter) {
-                Logger.Trace("Closing dome shutter");
+                Logger.Info($"Closing dome shutter. Shutter state before closing {DomeInfo.ShutterStatus}");
                 await Dome.CloseShutter(cancellationToken);
+                Logger.Info($"Closed dome shutter. Shutter state after closing {DomeInfo.ShutterStatus}");
                 return true;
             } else {
                 Logger.Warning("Cannot close shutter. Dome does not support it.");
@@ -363,9 +365,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         public async Task<bool> Park(CancellationToken cancellationToken) {
             if (Dome.CanPark) {
-                Logger.Trace("Parking dome");
+                Logger.Info("Parking dome");
                 await DisableFollowing(cancellationToken);
                 if (profileService.ActiveProfile.DomeSettings.FindHomeBeforePark && Dome.CanFindHome) {
+                    Logger.Info("Fionding home before parking");
                     await Dome.FindHome(cancellationToken);
                 }
                 await Dome.Park(cancellationToken);
@@ -380,10 +383,20 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             await this.domeFollower.WaitForDomeSynchronization(cancellationToken);
         }
 
-        private void StopAll(object p) {
-            this.domeFollower.Stop();
-            Dome?.StopAll();
+        private async Task<bool> StopAll(object p) {
+            Logger.Info("Stopping all dome movement");
+            try {
+                await this.domeFollower.Stop();
+            } catch (Exception ex) {
+                Logger.Error("Stopping dome follower failed", ex.Message);
+            }
+            try {
+                await Dome?.StopAll();
+            } catch (Exception ex) {
+                Logger.Error("Stopping all Dome actions failed", ex.Message);
+            }
             FollowEnabled = false;
+            return true;
         }
 
         private void SetParkPosition(object p) {
@@ -427,6 +440,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         public async Task<bool> SlewToAzimuth(double degrees, CancellationToken token) {
             if (Dome?.Connected == true) {
+                Logger.Info($"Slewing dome to azimuth {degrees}°");
                 await Dome?.SlewToAzimuth(degrees, token);
                 return true;
             }
@@ -436,6 +450,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private async Task<bool> ManualSlew(double degrees) {
             if (Dome.CanSetAzimuth) {
                 this.FollowEnabled = false;
+                Logger.Info($"Manually slewing dome to azimuth {degrees}°");
                 return await SlewToAzimuth(degrees, CancellationToken.None);
             } else {
                 return false;
@@ -446,6 +461,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             if (Dome.CanSetAzimuth) {
                 this.FollowEnabled = false;
                 var targetAzimuth = AstroUtil.EuclidianModulus(this.Dome.Azimuth + degrees, 360.0);
+                Logger.Info($"Rotating dome relatively by {degrees}°");
                 return await SlewToAzimuth(targetAzimuth, CancellationToken.None);
             } else {
                 return false;
@@ -453,6 +469,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         }
 
         private async Task<bool> FindHome(object obj) {
+            Logger.Info($"Finding dome home position");
             await Dome?.FindHome(CancellationToken.None);
             return true;
         }
@@ -486,8 +503,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private void OnFollowChanged(bool followEnabled) {
             if (followEnabled && Dome?.Connected == true) {
                 this.domeFollower.Start();
+                Logger.Info($"Dome following enabled");
             } else {
                 this.domeFollower.Stop();
+                Logger.Info($"Dome following stopped");
             }
         }
 
@@ -560,10 +579,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                 if (deviceInfo.Connected && !deviceInfo.IsSafe && Dome?.ShutterStatus == ShutterState.ShutterOpen) {
                     lock (lockObj) {
                         if (closeShutterTask == null || closeShutterTask.IsCompleted) {
-                            closeShutterTask = Task.Run(() => {
+                            closeShutterTask = Task.Run(async () => {
                                 Logger.Warning("Closing dome shutter due to unsafe conditions");
                                 Notification.ShowWarning(Loc.Instance["LblDomeCloseOnUnsafeWarning"]);
-                                StopAll(null);
+                                await StopAll(null);
                                 return CloseShutter(CancellationToken.None);
                             });
                         }

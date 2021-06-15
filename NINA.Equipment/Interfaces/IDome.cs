@@ -43,11 +43,11 @@ namespace NINA.Equipment.Interfaces {
 
         Task SlewToAzimuth(double azimuth, CancellationToken ct);
 
-        void StopSlewing();
+        Task StopSlewing();
 
-        void StopShutter();
+        Task StopShutter();
 
-        void StopAll();
+        Task StopAll();
 
         Task OpenShutter(CancellationToken ct);
 
