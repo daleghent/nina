@@ -2834,6 +2834,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Author.
+        /// </summary>
+        internal static string LblAuthor {
+            get {
+                return ResourceManager.GetString("LblAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Authors.
         /// </summary>
         internal static string LblAuthors {
@@ -3283,6 +3292,15 @@ namespace NINA.Core.Locale {
         internal static string LblAutoUpdateSource {
             get {
                 return ResourceManager.GetString("LblAutoUpdateSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Available.
+        /// </summary>
+        internal static string LblAvailable {
+            get {
+                return ResourceManager.GetString("LblAvailable", resourceCulture);
             }
         }
         
@@ -7267,6 +7285,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to fetch plugins from repository &quot;{0}&quot;.
+        /// </summary>
+        internal static string LblFailedToFetchPlugins {
+            get {
+                return ResourceManager.GetString("LblFailedToFetchPlugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to load custom horizon.
         /// </summary>
         internal static string LblFailedToLoadCustomHorizon {
@@ -9068,6 +9095,24 @@ namespace NINA.Core.Locale {
         internal static string LblInitiatePlatesolve {
             get {
                 return ResourceManager.GetString("LblInitiatePlatesolve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install.
+        /// </summary>
+        internal static string LblInstall {
+            get {
+                return ResourceManager.GetString("LblInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installed.
+        /// </summary>
+        internal static string LblInstalled {
+            get {
+                return ResourceManager.GetString("LblInstalled", resourceCulture);
             }
         }
         
@@ -10980,6 +11025,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Plugins are pending to be changed on next application start. Should the application be restarted?.
+        /// </summary>
+        internal static string LblPendingPluginsRestart {
+            get {
+                return ResourceManager.GetString("LblPendingPluginsRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to %.
         /// </summary>
         internal static string LblPercentShort {
@@ -11625,11 +11679,74 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Install via the N.I.N.A. plugin manager or manually download and extract the archive into %localappdata%\NINA\Plugins from:.
+        /// </summary>
+        internal static string LblPluginArchiveInstallDescription {
+            get {
+                return ResourceManager.GetString("LblPluginArchiveInstallDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check for updates.
+        /// </summary>
+        internal static string LblPluginCheckForUpdates {
+            get {
+                return ResourceManager.GetString("LblPluginCheckForUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel the check for available online plugins..
+        /// </summary>
+        internal static string LblPluginCheckForUpdatesCancel {
+            get {
+                return ResourceManager.GetString("LblPluginCheckForUpdatesCancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Checks the online plugin repository for available plugins and also checks if newer versions of existing plugins exist..
+        /// </summary>
+        internal static string LblPluginCheckForUpdatesTooltip {
+            get {
+                return ResourceManager.GetString("LblPluginCheckForUpdatesTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins from:.
+        /// </summary>
+        internal static string LblPluginDllInstallDescription {
+            get {
+                return ResourceManager.GetString("LblPluginDllInstallDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Plugin installation for plugin {0} failed..
+        /// </summary>
+        internal static string LblPluginInstallationFailed {
+            get {
+                return ResourceManager.GetString("LblPluginInstallationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Plugins.
         /// </summary>
         internal static string LblPlugins {
             get {
                 return ResourceManager.GetString("LblPlugins", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Install via the N.I.N.A. plugin manager or manually download and run the setup from:.
+        /// </summary>
+        internal static string LblPluginSetupInstallDescription {
+            get {
+                return ResourceManager.GetString("LblPluginSetupInstallDescription", resourceCulture);
             }
         }
         
@@ -12201,6 +12318,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Requires restart.
+        /// </summary>
+        internal static string LblRequiresRestart {
+            get {
+                return ResourceManager.GetString("LblRequiresRestart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rescan Devices.
         /// </summary>
         internal static string LblRescanDevices {
@@ -12602,6 +12728,15 @@ namespace NINA.Core.Locale {
         internal static string LblScopeSettleTimeAfterFlip {
             get {
                 return ResourceManager.GetString("LblScopeSettleTimeAfterFlip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Screenshots.
+        /// </summary>
+        internal static string LblScreenshots {
+            get {
+                return ResourceManager.GetString("LblScreenshots", resourceCulture);
             }
         }
         
@@ -13152,6 +13287,15 @@ namespace NINA.Core.Locale {
         internal static string LblSetTrackingRate {
             get {
                 return ResourceManager.GetString("LblSetTrackingRate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Setup.
+        /// </summary>
+        internal static string LblSetup {
+            get {
+                return ResourceManager.GetString("LblSetup", resourceCulture);
             }
         }
         
@@ -15035,6 +15179,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Uninstall.
+        /// </summary>
+        internal static string LblUninstall {
+            get {
+                return ResourceManager.GetString("LblUninstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The mount operates using an unknown equatorial reference system. {0} will be used. Please configure the mount&apos;s driver with a valid epoch..
         /// </summary>
         internal static string LblUnknownEpochWarning {
@@ -15548,6 +15701,15 @@ namespace NINA.Core.Locale {
         internal static string LblValue {
             get {
                 return ResourceManager.GetString("LblValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version.
+        /// </summary>
+        internal static string LblVersion {
+            get {
+                return ResourceManager.GetString("LblVersion", resourceCulture);
             }
         }
         

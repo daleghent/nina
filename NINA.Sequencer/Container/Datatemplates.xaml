@@ -73,7 +73,7 @@
                             <Setter TargetName="iconarrow" Property="Margin" Value="5,0,10,0" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Head" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                            <Setter TargetName="Head" Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

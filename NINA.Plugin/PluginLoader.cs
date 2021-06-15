@@ -12,38 +12,41 @@
 
 #endregion "copyright"
 
-using System;
+using NINA.Astrometry.Interfaces;
+using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Plugin.Interfaces;
+using NINA.Plugin.ManifestDefinition;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
+using NINA.Sequencer.Utility.DateTimeProvider;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.ComponentModel.Composition.Primitives;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
-using NINA.Core.Utility;
-using NINA.Profile.Interfaces;
-using NINA.Equipment.Interfaces.Mediator;
-using NINA.Sequencer.Utility.DateTimeProvider;
-using System.ComponentModel.Composition.Primitives;
-using NINA.WPF.Base.Interfaces.Mediator;
-using NINA.Core.Locale;
-using NINA.Astrometry.Interfaces;
-using NINA.Equipment.Interfaces;
-using NINA.WPF.Base.Interfaces.ViewModel;
 using Trinet.Core.IO.Ntfs;
 
 namespace NINA.Plugin {
 
-    public class PluginProvider : IPluginProvider {
+    public class PluginLoader : IPluginLoader {
 
-        public PluginProvider(IProfileService profileService,
+        public PluginLoader(IProfileService profileService,
                               ICameraMediator cameraMediator,
                               ITelescopeMediator telescopeMediator,
                               IFocuserMediator focuserMediator,
@@ -100,15 +103,75 @@ namespace NINA.Plugin {
             };
         }
 
+        private void DeployFromStaging() {
+            var staging = Constants.StagingFolder;
+            var destination = Constants.UserExtensionsFolder;
+
+            if (Directory.Exists(staging)) {
+                try {
+                    var sourcePath = staging.TrimEnd('\\', ' ');
+                    var targetPath = destination.TrimEnd('\\', ' ');
+                    var files = Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories)
+                                         .GroupBy(s => Path.GetDirectoryName(s));
+                    foreach (var folder in files) {
+                        try {
+                            var targetFolder = folder.Key.Replace(sourcePath, targetPath);
+                            Directory.CreateDirectory(targetFolder);
+                            foreach (var file in folder) {
+                                var targetFile = Path.Combine(targetFolder, Path.GetFileName(file));
+                                if (File.Exists(targetFile)) {
+                                    File.Delete(targetFile);
+                                }
+
+                                File.Move(file, targetFile);
+                            }
+                        } catch (Exception ex) {
+                            Logger.Error("Failed to deploy plugin file to destination", ex);
+                        }
+                    }
+                    Directory.Delete(staging, true);
+                } catch (Exception ex) {
+                    Logger.Error("Pluging deployment from staging failed", ex);
+                }
+            }
+        }
+
+        private void CleanupEmptyFolders() {
+            try {
+                foreach (var dir in Directory.GetDirectories(Constants.UserExtensionsFolder)) {
+                    if (!Directory.EnumerateFileSystemEntries(dir, "*.*", SearchOption.AllDirectories).Any()) {
+                        Directory.Delete(dir);
+                    }
+                }
+            } catch (Exception ex) {
+                Logger.Error($"Error occured on plugin folder cleanup", ex);
+            }
+        }
+
+        private void DeleteFromDeletion() {
+            try {
+                if (Directory.Exists(Constants.DeletionFolder)) {
+                    Directory.Delete(Constants.DeletionFolder, true);
+                }
+            } catch (Exception ex) {
+                Logger.Error("Plugin deletion from deletion foldre failed", ex);
+            }
+        }
+
         public Task Load() {
             return Task.Run(() => {
                 lock (lockobj) {
                     if (!initialized) {
+                        //Check for pending plugin updates and deploy them
+                        CleanupEmptyFolders();
+                        DeployFromStaging();
+                        DeleteFromDeletion();
+
                         Items = new List<ISequenceItem>();
                         Conditions = new List<ISequenceCondition>();
                         Triggers = new List<ISequenceTrigger>();
                         Container = new List<ISequenceContainer>();
-                        Plugins = new List<IPlugin>();
+                        Plugins = new Dictionary<IPluginManifest, bool>();
 
                         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
 
@@ -119,38 +182,24 @@ namespace NINA.Plugin {
                         Compose(coreCatalog);
 
                         /* Compose the plugin catalog */
-                        var pluginCatalog = new AggregateCatalog();
-                        var coreExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONDIRECTORY, "Plugins");
-                        var userExtensionsFolder = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Plugins");
 
                         var files = new List<string>();
 
-                        if (Directory.Exists(coreExtensionsFolder)) {
-                            files.AddRange(Directory.GetFiles(coreExtensionsFolder, "*.dll"));
-                        }
-
-                        if (Directory.Exists(userExtensionsFolder)) {
-                            files.AddRange(Directory.GetFiles(userExtensionsFolder, "*.dll"));
+                        if (Directory.Exists(Constants.CoreExtensionsFolder)) {
+                            files.AddRange(Directory.GetFiles(Constants.CoreExtensionsFolder, "*.dll"));
                         }
 
                         foreach (var file in files) {
-                            try {
-                                FileInfo fileInfo = new FileInfo(file);
-                                if (fileInfo.AlternateDataStreamExists("Zone.Identifier")) {
-                                    fileInfo.DeleteAlternateDataStream("Zone.Identifier");
-                                }
-
-                                var plugin = new AssemblyCatalog(file);
-                                plugin.Parts.ToArray();
-
-                                pluginCatalog.Catalogs.Add(plugin);
-                                Assemblies.Add(plugin.Assembly);
-                            } catch (Exception ex) {
-                                Logger.Error($"Failed to load plugin {file}", ex);
-                            }
+                            LoadPlugin(file);
                         }
 
-                        Compose(pluginCatalog);
+                        if (Directory.Exists(Constants.UserExtensionsFolder)) {
+                            files.AddRange(Directory.GetFiles(Constants.UserExtensionsFolder, "*.dll", SearchOption.AllDirectories));
+                        }
+
+                        foreach (var file in files) {
+                            LoadPlugin(file);
+                        }
 
                         initialized = true;
                     }
@@ -158,23 +207,102 @@ namespace NINA.Plugin {
             });
         }
 
+        private void LoadPlugin(string file) {
+            try {
+                FileInfo fileInfo = new FileInfo(file);
+                if (fileInfo.AlternateDataStreamExists("Zone.Identifier")) {
+                    fileInfo.DeleteAlternateDataStream("Zone.Identifier");
+                }
+
+                var assemblyBytes = File.ReadAllBytes(file);
+                var assembly = Assembly.Load(assemblyBytes);
+                var plugin = new AssemblyCatalog(assembly);
+
+                var references = plugin.Assembly.GetReferencedAssemblies();
+                if (references.FirstOrDefault(x => x.FullName.Contains("NINA")) != null) {
+                    try {
+                        var manifestImport = new ManifestImport();
+                        var container = GetContainer(plugin);
+                        container.ComposeParts(manifestImport);
+
+                        var manifest = manifestImport.PluginManifestImport;
+
+                        try {
+                            Compose(plugin);
+                            Plugins[manifest] = true;
+                            //Add the loaded plugin assembly to the assembly resolver
+                            Assemblies.Add(plugin.Assembly);
+                        } catch (Exception ex) {
+                            //Manifest ok - plugin composition failed
+                            Logger.Error($"Failed to load plugin {file}", ex);
+                            var failedManifest = new PluginManifest {
+                                Author = manifest.Author,
+                                Identifier = file,
+                                Name = manifest.Name,
+                                Version = manifest.Version,
+                                Descriptions = new PluginDescription {
+                                    ShortDescription = $"Failed to load {file}",
+                                    LongDescription = ex.Message
+                                }
+                            };
+                            Plugins[failedManifest] = false;
+                        }
+                    } catch (Exception ex) {
+                        var message = ex.Message;
+                        if (ex is ReflectionTypeLoadException typeLoadException) {
+                            var loaderExceptions = typeLoadException.LoaderExceptions;
+                            message = string.Join(Environment.NewLine, loaderExceptions.ToList());
+                        }
+
+                        var reflectionAssembly = Assembly.ReflectionOnlyLoadFrom(file);
+
+                        var attr = CustomAttributeData.GetCustomAttributes(reflectionAssembly);
+                        var id = attr.First(x => x.AttributeType == typeof(GuidAttribute)).ConstructorArguments.First().Value.ToString();
+                        var author = attr.FirstOrDefault(x => x.AttributeType == typeof(AssemblyCompanyAttribute))?.ConstructorArguments.FirstOrDefault().Value.ToString() ?? string.Empty;
+                        var version = new PluginVersion(attr.FirstOrDefault(x => x.AttributeType == typeof(AssemblyFileVersionAttribute))?.ConstructorArguments.First().Value.ToString() ?? "1.0.0.0");
+                        var name = attr.FirstOrDefault(x => x.AttributeType == typeof(AssemblyTitleAttribute))?.ConstructorArguments.First().Value.ToString() ?? string.Empty;
+
+                        //Manifest failed - Create a fake manifest using all available file meta info
+                        Logger.Error($"Failed to load plugin {file}", ex);
+                        var fvi = FileVersionInfo.GetVersionInfo(file);
+                        var fileVersion = new Version(fvi.FileVersion);
+                        var failedManifest = new PluginManifest {
+                            Author = fvi.CompanyName,
+                            Identifier = id,
+                            Name = name,
+                            Version = version,
+                            Descriptions = new PluginDescription {
+                                ShortDescription = $"Failed to load {file}",
+                                LongDescription = message
+                            }
+                        };
+
+                        Plugins[failedManifest] = false;
+                    }
+                }
+            } catch (Exception ex) {
+                //This should only happen for non plugin assemblies, that are not even targeting .NET
+                Logger.Trace($"The dll inside the plugins failed to load. Most likely it is not a pugin but an external non .NET dependency. Error: {ex}");
+            }
+        }
+
         private void Compose(ComposablePartCatalog catalog) {
             try {
                 var container = GetContainer(catalog);
+                var parts = new SequencerPartsImport();
+                container.ComposeParts(parts);
 
-                container.ComposeParts(this);
-
-                foreach (var template in DataTemplateImports) {
+                foreach (var template in parts.DataTemplateImports) {
                     Application.Current?.Resources.MergedDictionaries.Add(template);
                 }
 
-                Items = Items.Concat(Assign(ItemImports, resourceDictionary)).ToList();
-                Conditions = Conditions.Concat(Assign(ConditionImports, resourceDictionary)).ToList();
-                Triggers = Triggers.Concat(Assign(TriggerImports, resourceDictionary)).ToList();
-                Container = Container.Concat(Assign(ContainerImports, resourceDictionary)).ToList();
-                Plugins = Plugins.Concat(PluginImports).ToList();
+                Items = Items.Concat(Assign(parts.ItemImports, resourceDictionary)).ToList();
+                Conditions = Conditions.Concat(Assign(parts.ConditionImports, resourceDictionary)).ToList();
+                Triggers = Triggers.Concat(Assign(parts.TriggerImports, resourceDictionary)).ToList();
+                Container = Container.Concat(Assign(parts.ContainerImports, resourceDictionary)).ToList();
             } catch (Exception ex) {
                 Logger.Error(ex);
+                throw ex;
             }
         }
 
@@ -214,26 +342,8 @@ namespace NINA.Plugin {
         public IList<ISequenceCondition> Conditions { get; private set; }
         public IList<ISequenceTrigger> Triggers { get; private set; }
         public IList<ISequenceContainer> Container { get; private set; }
-        public IList<IPlugin> Plugins { get; private set; }
+        public IDictionary<IPluginManifest, bool> Plugins { get; private set; }
         public IList<Assembly> Assemblies { get; private set; } = new List<Assembly>();
-
-        [ImportMany(typeof(ISequenceItem))]
-        public IEnumerable<Lazy<ISequenceItem, Dictionary<string, object>>> ItemImports { get; private set; }
-
-        [ImportMany(typeof(ISequenceCondition))]
-        public IEnumerable<Lazy<ISequenceCondition, Dictionary<string, object>>> ConditionImports { get; private set; }
-
-        [ImportMany(typeof(ISequenceTrigger))]
-        public IEnumerable<Lazy<ISequenceTrigger, Dictionary<string, object>>> TriggerImports { get; private set; }
-
-        [ImportMany(typeof(ISequenceContainer))]
-        public IEnumerable<Lazy<ISequenceContainer, Dictionary<string, object>>> ContainerImports { get; private set; }
-
-        [ImportMany(typeof(ResourceDictionary))]
-        public IEnumerable<ResourceDictionary> DataTemplateImports { get; private set; }
-
-        [ImportMany(typeof(IPlugin))]
-        public IEnumerable<IPlugin> PluginImports { get; private set; }
 
         private readonly IProfileService profileService;
         private readonly ICameraMediator cameraMediator;
@@ -270,7 +380,7 @@ namespace NINA.Plugin {
         private static IEnumerable<Type> GetCoreSequencerTypes() {
             IEnumerable<Type> loadableTypes;
             try {
-                loadableTypes = System.Reflection.Assembly.GetExecutingAssembly().GetTypes();
+                loadableTypes = Assembly.GetAssembly(typeof(ISequenceItem)).GetTypes();
             } catch (ReflectionTypeLoadException e) {
                 loadableTypes = e.Types.Where(t => t != null);
             }
@@ -324,5 +434,29 @@ namespace NINA.Plugin {
                 return label;
             }
         }
+    }
+
+    public class ManifestImport {
+
+        [Import(typeof(IPluginManifest))]
+        public IPluginManifest PluginManifestImport { get; private set; }
+    }
+
+    public class SequencerPartsImport {
+
+        [ImportMany(typeof(ISequenceItem))]
+        public IEnumerable<Lazy<ISequenceItem, Dictionary<string, object>>> ItemImports { get; private set; }
+
+        [ImportMany(typeof(ISequenceCondition))]
+        public IEnumerable<Lazy<ISequenceCondition, Dictionary<string, object>>> ConditionImports { get; private set; }
+
+        [ImportMany(typeof(ISequenceTrigger))]
+        public IEnumerable<Lazy<ISequenceTrigger, Dictionary<string, object>>> TriggerImports { get; private set; }
+
+        [ImportMany(typeof(ISequenceContainer))]
+        public IEnumerable<Lazy<ISequenceContainer, Dictionary<string, object>>> ContainerImports { get; private set; }
+
+        [ImportMany(typeof(ResourceDictionary))]
+        public IEnumerable<ResourceDictionary> DataTemplateImports { get; private set; }
     }
 }

@@ -12,7 +12,6 @@
 
 #endregion "copyright"
 
-using NINA.Plugin;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
@@ -41,53 +40,34 @@ namespace NINA.Sequencer {
         public IList<IDateTimeProvider> DateTimeProviders { get; private set; }
 
         public SequencerFactory(
-                IPluginProvider pluginProvider
+                IList<ISequenceItem> items,
+                IList<ISequenceCondition> conditions,
+                IList<ISequenceTrigger> triggers,
+                IList<ISequenceContainer> container,
+                IList<IDateTimeProvider> dateTimeProviders
         ) {
-            Task.Run(async () => {
-                await pluginProvider.Load();
+            DateTimeProviders = new List<IDateTimeProvider>(dateTimeProviders);
+            Items = new ObservableCollection<ISequenceItem>(items);
+            Conditions = new ObservableCollection<ISequenceCondition>(conditions);
+            Triggers = new ObservableCollection<ISequenceTrigger>(triggers);
+            Container = new ObservableCollection<ISequenceContainer>(container);
 
-                DateTimeProviders = new List<IDateTimeProvider>(pluginProvider.DateTimeProviders);
-                Items = new ObservableCollection<ISequenceItem>(pluginProvider.Items);
-                Conditions = new ObservableCollection<ISequenceCondition>(pluginProvider.Conditions);
-                Triggers = new ObservableCollection<ISequenceTrigger>(pluginProvider.Triggers);
-                Container = new ObservableCollection<ISequenceContainer>(pluginProvider.Container);
-
-                var instructions = new List<ISequenceEntity>();
-                foreach (var item in Items) {
-                    instructions.Add(item);
-                }
-                foreach (var condition in Conditions) {
-                    instructions.Add(condition);
-                }
-                foreach (var trigger in Triggers) {
-                    instructions.Add(trigger);
-                }
-
-                ItemsView = CollectionViewSource.GetDefaultView(instructions);
-                ItemsView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
-                ItemsView.SortDescriptions.Add(new SortDescription("Category", ListSortDirection.Ascending));
-                ItemsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
-                ItemsView.Filter += new Predicate<object>(ApplyViewFilter);
-
-                Initialized = true;
-            });
-        }
-
-        private object lockObj = new object();
-
-        private bool initialized;
-
-        public bool Initialized {
-            get {
-                lock (lockObj) {
-                    return initialized;
-                }
+            var instructions = new List<ISequenceEntity>();
+            foreach (var item in Items) {
+                instructions.Add(item);
             }
-            set {
-                lock (lockObj) {
-                    initialized = value;
-                }
+            foreach (var condition in Conditions) {
+                instructions.Add(condition);
             }
+            foreach (var trigger in Triggers) {
+                instructions.Add(trigger);
+            }
+
+            ItemsView = CollectionViewSource.GetDefaultView(instructions);
+            ItemsView.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
+            ItemsView.SortDescriptions.Add(new SortDescription("Category", ListSortDirection.Ascending));
+            ItemsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            ItemsView.Filter += new Predicate<object>(ApplyViewFilter);
         }
 
         private bool ApplyViewFilter(object obj) {

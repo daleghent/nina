@@ -11,14 +11,16 @@
     <Style TargetType="{x:Type ListView}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{StaticResource BorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListView">
                     <Border
                         Name="Border"
                         Background="Transparent"
-                        BorderBrush="{StaticResource BorderBrush}"
-                        BorderThickness="1">
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
                         <ScrollViewer Style="{DynamicResource {x:Static GridView.GridViewScrollViewerStyleKey}}">
                             <ItemsPresenter />
                         </ScrollViewer>
@@ -140,7 +142,7 @@
                             <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryBrush}" />
                         </Trigger>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryBrush}" />
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Foreground" Value="{StaticResource ButtonForegroundDisabledBrush}" />

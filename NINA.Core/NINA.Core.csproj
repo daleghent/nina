@@ -270,6 +270,7 @@
     <Compile Include="Utility\Converters\NaNToEmptyTextConverter.cs" />
     <Compile Include="Utility\Converters\NaNToVisibilityCollapsedConverter.cs" />
     <Compile Include="Utility\Converters\NaNToVisibilityConverter.cs" />
+    <Compile Include="Utility\Converters\NullImageConverter.cs" />
     <Compile Include="Utility\Converters\NullOrEmptyStringToVisibilityCollapsedConverter.cs" />
     <Compile Include="Utility\Converters\NullToVisibilityCollapsedConverter.cs" />
     <Compile Include="Utility\Converters\NullToVisibilityConverter.cs" />

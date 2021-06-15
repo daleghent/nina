@@ -1,5 +1,6 @@
 ﻿using NINA.Core.Utility;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Interfaces;
 using NINA.Profile.Interfaces;
 using NINA.Utility;
 using NINA.ViewModel;
@@ -91,6 +92,10 @@ namespace NINA {
                 Debug.Print($"Time to create IImageHistoryVM {sw.Elapsed}");
 
                 sw = Stopwatch.StartNew();
+                var pluginsVM = _kernel.Get<IPluginsVM>();
+                Debug.Print($"Time to create IPluginsVM {sw.Elapsed}");
+
+                sw = Stopwatch.StartNew();
                 var mainWindowVM = new MainWindowVM {
                     AppVM = appvm,
                     ImageSaveController = imageSaveController,
@@ -107,7 +112,8 @@ namespace NINA {
                     VersionCheckVM = versionCheckVM,
                     ApplicationStatusVM = applicationStatusVM,
 
-                    ImageHistoryVM = imageHistoryVM
+                    ImageHistoryVM = imageHistoryVM,
+                    PluginsVM = pluginsVM
                 };
                 Debug.Print($"Time to create MainWindowVM {sw.Elapsed}");
 

@@ -1,4 +1,5 @@
 ﻿using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Interfaces;
 using NINA.ViewModel.FlatWizard;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
@@ -23,5 +24,6 @@ namespace NINA.ViewModel {
         public IApplicationDeviceConnectionVM ApplicationDeviceConnectionVM { get; set; }
         public IImageSaveController ImageSaveController { get; set; }
         public IImageHistoryVM ImageHistoryVM { get; set; }
+        public IPluginsVM PluginsVM { get; set; }
     }
 }

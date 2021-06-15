@@ -44,6 +44,7 @@ using NINA.Equipment.Equipment.MyGPS;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using System.Windows.Media;
+using NINA.Plugin.Interfaces;
 
 namespace NINA.ViewModel {
 
@@ -57,13 +58,10 @@ namespace NINA.ViewModel {
                          ProjectVersion projectVersion,
                          IPlanetariumFactory planetariumFactory,
                          IDockManagerVM dockManagerVM,
-                         ISGPServiceHost sgpServiceHost,
-                         IPluginProvider pluginProvider) : base(profileService) {
+                         ISGPServiceHost sgpServiceHost) : base(profileService) {
             Title = "LblOptions";
             CanClose = false;
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
-
-            this.PluginOptions = new PluginOptionsVM(pluginProvider, profileService);
 
             this.exposureCalculatorVM = exposureCalculatorVM;
             DeviceConsumer = deviceConsumer;
@@ -125,8 +123,6 @@ namespace NINA.ViewModel {
 
             FamilyTypeface = ApplicationFontFamily.FamilyTypefaces.FirstOrDefault(x => x.Weight == FontWeight && x.Style == FontStyle && x.Stretch == FontStretch);
         }
-
-        public PluginOptionsVM PluginOptions { get; }
 
         private void OpenHorizonFilePathDiag(object obj) {
             var dialog = GetFilteredFileDialog(string.Empty, string.Empty, "Horizon File|*.hrz");

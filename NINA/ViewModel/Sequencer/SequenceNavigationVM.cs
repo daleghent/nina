@@ -13,13 +13,20 @@
 #endregion "copyright"
 
 using NINA.Astrometry;
+using NINA.Astrometry.Interfaces;
 using NINA.Core.Utility;
+using NINA.Equipment.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Plugin;
+using NINA.Plugin.Interfaces;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.Interfaces.Mediator;
 using NINA.Utility;
 using NINA.ViewModel.Interfaces;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -44,13 +51,22 @@ namespace NINA.ViewModel.Sequencer {
             get => "SequenceVM";
         }
 
-        public SequenceNavigationVM(IProfileService profileService, ISequenceMediator sequenceMediator, ISimpleSequenceVM simpleSequenceVM, ISequence2VM sequence2VM, ISequencerFactory factory) : base(profileService) {
+        public SequenceNavigationVM(
+                IProfileService profileService,
+                ISequenceMediator sequenceMediator,
+                IPluginLoader pluginProvider,
+                ICameraMediator cameraMediator,
+                IApplicationStatusMediator applicationStatusMediator,
+                INighttimeCalculator nighttimeCalculator,
+                IPlanetariumFactory planetariumFactory,
+                IFramingAssistantVM framingAssistantVM,
+                IApplicationMediator applicationMediator) : base(profileService) {
             Title = "LblSequence";
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current?.Resources["SequenceSVG"];
 
-            this.factory = factory;
-            this.simpleSequenceVM = simpleSequenceVM;
-            this.sequence2VM = sequence2VM;
+            //this.factory = factory;
+            //this.simpleSequenceVM = simpleSequenceVM;
+            //this.sequence2VM = sequence2VM;
             this.sequenceMediator = sequenceMediator;
             this.sequenceMediator.RegisterSequenceNavigation(this);
 
@@ -76,10 +92,16 @@ namespace NINA.ViewModel.Sequencer {
             SwitchToAdvancedSequenceCommand = new RelayCommand((object o) => SwitchToAdvancedView());
 
             Task.Run(async () => {
-                while (!Initialized) {
-                    await Task.Delay(300);
-                }
-                RaisePropertyChanged(nameof(Initialized));
+                await pluginProvider.Load();
+                this.factory = new SequencerFactory(pluginProvider.Items, pluginProvider.Conditions, pluginProvider.Triggers, pluginProvider.Container, pluginProvider.DateTimeProviders);
+
+                this.simpleSequenceVM = new SimpleSequenceVM(profileService, sequenceMediator, cameraMediator, applicationStatusMediator, nighttimeCalculator, planetariumFactory, framingAssistantVM, applicationMediator, factory);
+                this.sequence2VM = new Sequence2VM(profileService, sequenceMediator, applicationStatusMediator, factory);
+
+                await Task.WhenAll(simpleSequenceVM.Initialize(), sequence2VM.Initialize());
+
+                Initialized = true;
+
                 if (profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer) {
                     this.ActiveSequencerVM = sequence2VM;
                 } else {
@@ -110,8 +132,21 @@ namespace NINA.ViewModel.Sequencer {
             get => sequence2VM;
         }
 
+        private object lockObj = new object();
+        private bool initialized;
+
         public bool Initialized {
-            get => factory.Initialized;
+            get {
+                lock (lockObj) {
+                    return initialized;
+                }
+            }
+            private set {
+                lock (lockObj) {
+                    initialized = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         public override string ToString() {

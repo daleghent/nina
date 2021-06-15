@@ -29,6 +29,7 @@
   <?define NINA.Astrometry_TargetDir=$(var.NINA.Astrometry.TargetDir)?>
   <?define NINA.Image_TargetDir=$(var.NINA.Image.TargetDir)?>
   <?define NINA.WPF.Base_TargetDir=$(var.NINA.WPF.Base.TargetDir)?>
+  <?define NINA.Plugin_TargetDir=$(var.NINA.Plugin.TargetDir)?>
 
   <Product Id="*" Name="N.I.N.A. - Nighttime Imaging 'N' Astronomy" Language="1033" Version="!(bind.fileVersion.NINA.exe)" Manufacturer="N.I.N.A." UpgradeCode="5DC025EA-3D24-4E6B-9F82-79718D70896A">
     <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
@@ -576,7 +577,10 @@
       <Component Win64="$(var.Win64)" Id="NINA.WPF.Base.dll" Guid="da3b598c-5da9-46a8-a70d-a9a0c86705a4">
         <File Id="NINA.WPF.Base.dll" Name="NINA.WPF.Base.dll" Source="$(var.NINA.WPF.Base_TargetDir)NINA.WPF.Base.dll" />
       </Component>
-      <Component Win64="$(var.Win64)"  Id="Trinet.Core.IO.Ntfs.dll" Guid="194dc6f2-ec04-439a-ab26-b9edbe4daee0">
+      <Component Win64="$(var.Win64)" Id="NINA.Plugin.dll" Guid="ac594ba2-c9c0-470e-ac04-cf9e3cba2d73">
+        <File Id="NINA.Plugin.dll" Name="NINA.Plugin.dll" Source="$(var.NINA.Plugin_TargetDir)NINA.Plugin.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="Trinet.Core.IO.Ntfs.dll" Guid="194dc6f2-ec04-439a-ab26-b9edbe4daee0">
         <File Id="Trinet.Core.IO.Ntfs.dll" Name="Trinet.Core.IO.Ntfs.dll" Source="$(var.NINA_TargetDir)Trinet.Core.IO.Ntfs.dll" />
       </Component>
     </ComponentGroup>

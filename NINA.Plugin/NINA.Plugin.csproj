@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{669ABFB3-9B43-4D6C-BE30-19EC67D8FE6D}</ProjectGuid>
+    <ProjectGuid>{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>NINA.Plugin</RootNamespace>
@@ -31,11 +31,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Namotion.Reflection, Version=1.0.23.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+      <HintPath>..\packages\Namotion.Reflection.1.0.23\lib\net45\Namotion.Reflection.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NJsonSchema, Version=10.4.4.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+      <HintPath>..\packages\NJsonSchema.10.4.4\lib\net45\NJsonSchema.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -43,30 +56,52 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <Reference Include="Trinet.Core.IO.Ntfs, Version=4.1.1.0, Culture=neutral, PublicKeyToken=0aeaaa20a328a46c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Trinet.Core.IO.Ntfs.4.1.1\lib\net462\Trinet.Core.IO.Ntfs.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Constants.cs" />
+    <Compile Include="PluginBase.cs" />
+    <Compile Include="ManifestDefinition\ConcreteManifestConverter.cs" />
+    <Compile Include="Interfaces\IPluginVersion.cs" />
+    <Compile Include="ManifestDefinition\InstallerChecksum.cs" />
+    <Compile Include="ManifestDefinition\InstallerType.cs" />
+    <Compile Include="Interfaces\IPluginManifest.cs" />
+    <Compile Include="Interfaces\IPluginLoader.cs" />
+    <Compile Include="Interfaces\IPluginDescription.cs" />
+    <Compile Include="Interfaces\IPluginInstallerDetails.cs" />
+    <Compile Include="ManifestDefinition\PluginVersion.cs" />
+    <Compile Include="ManifestDefinition\PluginDescription.cs" />
+    <Compile Include="ManifestDefinition\PluginInstallerDetails.cs" />
+    <Compile Include="ManifestDefinition\PluginManifest.cs" />
+    <Compile Include="PluginInstaller.cs" />
+    <Compile Include="PluginLoader.cs" />
+    <Compile Include="PluginFetcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NINA.Astrometry\NINA.Astrometry.csproj">
-      <Project>{57b7cc6e-a410-4866-9bf9-278b94118e3d}</Project>
+      <Project>{57B7CC6E-A410-4866-9BF9-278B94118E3D}</Project>
       <Name>NINA.Astrometry</Name>
     </ProjectReference>
-    <ProjectReference Include="..\NINA.Core.WPF\NINA.Core.WPF.csproj">
-      <Project>{a407425a-4bf0-429e-8867-045c4cd10d3f}</Project>
-      <Name>NINA.Core.WPF</Name>
+    <ProjectReference Include="..\NINA.Core.WPF\NINA.WPF.Base.csproj">
+      <Project>{A407425A-4BF0-429E-8867-045C4CD10D3F}</Project>
+      <Name>NINA.WPF.Base</Name>
     </ProjectReference>
     <ProjectReference Include="..\NINA.Core\NINA.Core.csproj">
-      <Project>{f906e54b-9ce8-4a66-856b-e876dd305f2b}</Project>
+      <Project>{F906E54B-9CE8-4A66-856B-E876DD305F2B}</Project>
       <Name>NINA.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\NINA.Equipment\NINA.Equipment.csproj">
-      <Project>{20b7c98e-f7f8-497e-b5e5-02fa99d4b98b}</Project>
+      <Project>{20B7C98E-F7F8-497E-B5E5-02FA99D4B98B}</Project>
       <Name>NINA.Equipment</Name>
     </ProjectReference>
     <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
-      <Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>
+      <Project>{8540150E-7FF0-4F7B-A714-0F6ABDB1AC60}</Project>
       <Name>NINA.Profile</Name>
     </ProjectReference>
     <ProjectReference Include="..\NINA.Sequencer\NINA.Sequencer.csproj">
@@ -76,9 +111,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
+    <None Include="ManifestCreation\CreateManifest.ps1" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

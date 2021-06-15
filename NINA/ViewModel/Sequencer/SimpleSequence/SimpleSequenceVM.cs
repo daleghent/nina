@@ -82,6 +82,7 @@ namespace NINA.ViewModel {
                 ISequencerFactory factory
         ) : base(profileService) {
             this.applicationMediator = applicationMediator;
+            this.factory = factory;
 
             this.sequenceMediator = sequenceMediator;
             this.applicationStatusMediator = applicationStatusMediator;
@@ -119,12 +120,10 @@ namespace NINA.ViewModel {
                     target.Target.DeepSkyObject = dso;
                 }
             };
+        }
 
-            Task.Run(async () => {
-                this.factory = factory;
-                while (!factory.Initialized) {
-                    await Task.Delay(300);
-                }
+        public Task Initialize() {
+            return Task.Run(async () => {
                 await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => {
                     var targetArea = factory.GetContainer<TargetAreaContainer>();
                     var rootContainer = factory.GetContainer<SequenceRootContainer>();

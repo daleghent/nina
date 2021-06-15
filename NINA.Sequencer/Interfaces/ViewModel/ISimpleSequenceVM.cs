@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using NINA.Astrometry;
 using NINA.Core.Model;
@@ -35,6 +36,8 @@ namespace NINA.ViewModel.Interfaces {
         ICommand BuildSequenceCommand { get; }
         ISimpleDSOContainer SelectedTarget { get; set; }
         IWindowServiceFactory WindowServiceFactory { get; set; }
+
+        Task Initialize();
 
         bool LoadTarget();
 

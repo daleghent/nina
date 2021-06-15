@@ -16,6 +16,7 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:options="clr-namespace:NINA.View.Options"
+    xmlns:plugin="clr-namespace:NINA.View.Plugins"
     xmlns:sequencer="clr-namespace:NINA.View.Sequencer"
     xmlns:settings="clr-namespace:NINA.Properties"
     xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
@@ -266,6 +267,28 @@
                         </TabItem.Header>
                         <TabItem.Content>
                             <options:TabPage DataContext="{Binding OptionsVM}" />
+                        </TabItem.Content>
+                    </TabItem>
+                    <TabItem>
+                        <TabItem.Header>
+                            <Grid Width="50" Height="50">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="10" />
+                                </Grid.RowDefinitions>
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource PuzzlePieceSVG}"
+                                    Stretch="Uniform"
+                                    Style="{StaticResource TabItemPath}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Style="{StaticResource SideBarTextBlock}"
+                                    Text="{ns:Loc LblPlugins}" />
+                            </Grid>
+                        </TabItem.Header>
+                        <TabItem.Content>
+                            <plugin:PluginsView DataContext="{Binding PluginsVM}" />
                         </TabItem.Content>
                     </TabItem>
                 </TabControl>

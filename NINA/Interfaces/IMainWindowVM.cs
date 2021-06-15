@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.Interfaces;
 using NINA.ViewModel.FlatWizard;
 using NINA.ViewModel.FramingAssistant;
 using NINA.ViewModel.ImageHistory;
@@ -36,5 +37,6 @@ namespace NINA.ViewModel.Interfaces {
         IApplicationDeviceConnectionVM ApplicationDeviceConnectionVM { get; }
         IImageSaveController ImageSaveController { get; }
         IImageHistoryVM ImageHistoryVM { get; }
+        IPluginsVM PluginsVM { get; }
     }
 }

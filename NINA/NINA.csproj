@@ -157,8 +157,8 @@
     <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop, Version=1.0.168.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
     </Reference>
-    <Reference Include="Namotion.Reflection, Version=1.0.19.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\Namotion.Reflection.1.0.19\lib\net45\Namotion.Reflection.dll</HintPath>
+    <Reference Include="Namotion.Reflection, Version=1.0.23.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+      <HintPath>..\packages\Namotion.Reflection.1.0.23\lib\net45\Namotion.Reflection.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -196,8 +196,8 @@
     <Reference Include="Nito.Mvvm.Core, Version=1.3.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nito.Mvvm.Core.1.3.0\lib\netstandard2.0\Nito.Mvvm.Core.dll</HintPath>
     </Reference>
-    <Reference Include="NJsonSchema, Version=10.4.1.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
-      <HintPath>..\packages\NJsonSchema.10.4.1\lib\net45\NJsonSchema.dll</HintPath>
+    <Reference Include="NJsonSchema, Version=10.4.4.0, Culture=neutral, PublicKeyToken=c2f9c3bdfae56102, processorArchitecture=MSIL">
+      <HintPath>..\packages\NJsonSchema.10.4.4\lib\net45\NJsonSchema.dll</HintPath>
     </Reference>
     <Reference Include="OxyPlot, Version=2.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
       <HintPath>..\packages\OxyPlot.Core.2.0.0\lib\net45\OxyPlot.dll</HintPath>
@@ -298,8 +298,13 @@
     <Compile Include="Utility\ProjectVersion.cs" />
     <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
     <Compile Include="ViewModel\ImageControlVM.cs" />
+    <Compile Include="Interfaces\IPluginsVM.cs" />
+    <Compile Include="ViewModel\Plugins\ExtendedPluginManifest.cs" />
+    <Compile Include="ViewModel\Plugins\PluginInstallerDescriptionTemplateSelector.cs" />
+    <Compile Include="ViewModel\Plugins\PluginState.cs" />
+    <Compile Include="ViewModel\Plugins\PluginStateToDataTemplateSelector.cs" />
+    <Compile Include="ViewModel\Plugins\PluginsVM.cs" />
     <Compile Include="ViewModel\Plugins\PluginOptionsDataTemplateSelector.cs" />
-    <Compile Include="ViewModel\Plugins\PluginOptionsVM.cs" />
     <Compile Include="ViewModel\Sequencer\SequenceNavigationVM.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleDSOContainer.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
@@ -316,7 +321,10 @@
     <Compile Include="View\Imaging\AnchorableSequenceNavigationView.xaml.cs">
       <DependentUpon>AnchorableSequenceNavigationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Options\PluginsView.xaml.cs">
+    <Compile Include="View\Plugins\AvailablePluginsView.xaml.cs">
+      <DependentUpon>AvailablePluginsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Plugins\PluginsView.xaml.cs">
       <DependentUpon>PluginsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\ApplicationDeviceConnectionVM.cs" />
@@ -1092,6 +1100,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Plugins\AvailablePluginsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Options\EquipmentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1128,7 +1140,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Options\PluginsView.xaml">
+    <Page Include="View\Plugins\PluginsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -1449,6 +1461,10 @@
     <ProjectReference Include="..\NINA.Platesolving\NINA.PlateSolving.csproj">
       <Project>{a721d420-3c8e-4e96-9558-37b50801ff6b}</Project>
       <Name>NINA.PlateSolving</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NINA.Plugin\NINA.Plugin.csproj">
+      <Project>{03ace0fa-069a-43cf-8b20-7bb3c32d8c1d}</Project>
+      <Name>NINA.Plugin</Name>
     </ProjectReference>
     <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
       <Project>{8540150e-7ff0-4f7b-a714-0f6abdb1ac60}</Project>

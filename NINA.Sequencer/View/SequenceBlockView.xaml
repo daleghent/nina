@@ -45,7 +45,7 @@
                                 <Setter Property="Background" Value="{StaticResource SecondaryBrush}" />
                             </DataTrigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                <Setter Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
                             </Trigger>
                         </Style.Triggers>
                     </Style>
@@ -118,7 +118,7 @@
                             <Setter Property="Background" Value="White" />
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                    <Setter Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="False">
                                     <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />

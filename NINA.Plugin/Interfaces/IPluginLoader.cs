@@ -21,11 +21,11 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 
-namespace NINA.Plugin {
+namespace NINA.Plugin.Interfaces {
 
-    public interface IPluginProvider {
+    public interface IPluginLoader {
         IList<Assembly> Assemblies { get; }
-        IList<IPlugin> Plugins { get; }
+        IDictionary<IPluginManifest, bool> Plugins { get; }
         IList<ISequenceCondition> Conditions { get; }
         IList<ISequenceContainer> Container { get; }
         IList<ISequenceItem> Items { get; }

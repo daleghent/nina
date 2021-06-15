@@ -28,7 +28,14 @@ namespace NINA.Core.Utility.Http {
             this.Parameters = parameters;
         }
 
+        public HttpGetRequest(string url, bool rethrowOnError, params object[] parameters) : this(url, parameters) {
+            this.Parameters = parameters;
+            this.rethrowOnError = rethrowOnError;
+        }
+
         public object[] Parameters { get; }
+
+        private bool rethrowOnError = false;
 
         public override async Task<string> Request(CancellationToken ct, IProgress<int> progress = null) {
             string result = string.Empty;
@@ -57,6 +64,9 @@ namespace NINA.Core.Utility.Http {
                     if (response != null) {
                         response.Close();
                         response = null;
+                    }
+                    if (rethrowOnError) {
+                        throw ex;
                     }
                 } finally {
                     request = null;

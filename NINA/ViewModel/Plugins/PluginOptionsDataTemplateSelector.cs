@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Plugin;
+using NINA.Plugin.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,7 @@ namespace NINA.ViewModel.Plugins {
         public DataTemplate Default { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
-            var plugin = item as IPlugin;
+            var plugin = item as IPluginManifest;
             if (plugin != null) {
                 if (Application.Current.Resources.Contains(plugin.Name + "_Options")) {
                     return (DataTemplate)Application.Current.Resources[plugin.Name + "_Options"];

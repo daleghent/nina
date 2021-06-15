@@ -62,6 +62,9 @@ using NINA.WPF.Base.ViewModel.Equipment.Focuser;
 using NINA.WPF.Base.ViewModel.Equipment.Guider;
 using NINA.WPF.Base.ViewModel.Equipment.Rotator;
 using NINA.WPF.Base.ViewModel.Imaging;
+using NINA.Plugin.Interfaces;
+using NINA.Interfaces;
+using NINA.ViewModel.Plugins;
 
 namespace NINA.Utility {
 
@@ -88,7 +91,6 @@ namespace NINA.Utility {
                     Bind<IFlatDeviceVM>().To<FlatDeviceVM>().InSingletonScope();
                     Bind<IGuiderVM>().To<GuiderVM>().InSingletonScope();
                     Bind<IExposureCalculatorVM>().To<ExposureCalculatorVM>().InSingletonScope();
-                    Bind<ISimpleSequenceVM>().To<SimpleSequenceVM>().InSingletonScope();
                     Bind<IPolarAlignmentVM>().To<PolarAlignmentVM>().InSingletonScope();
                     Bind<ISkyAtlasVM>().To<SkyAtlasVM>().InSingletonScope();
                     Bind<IFramingAssistantVM>().To<FramingAssistantVM>().InSingletonScope();
@@ -165,17 +167,17 @@ namespace NINA.Utility {
                     Bind<IDeviceChooserVM>().To<FocuserChooserVM>().WhenInjectedInto<IFocuserVM>().InSingletonScope();
                     Bind<IDeviceFactory>().To<FocuserFactory>().WhenInjectedInto<FocuserChooserVM>().InSingletonScope();
 
-                    Bind<ISequence2VM>().To<Sequence2VM>().InSingletonScope();
                     Bind<IImageSaveMediator>().To<ImageSaveMediator>().InSingletonScope();
                     Bind<IImageSaveController>().To<ImageSaveController>().InSingletonScope();
                     Bind<ISGPServiceHost>().To<SGPServiceHost>().InSingletonScope();
                     Bind<ISGPService>().To<SGPServiceFrontend>().InSingletonScope();
                     Bind<ISGPServiceBackend>().To<SGPServiceBackend>().InSingletonScope();
                     Bind<ISequenceNavigationVM>().To<SequenceNavigationVM>().InSingletonScope();
-                    Bind<ISequencerFactory>().To<SequencerFactory>().InSingletonScope();
                     Bind<IMyMessageBoxVM>().To<MyMessageBoxVM>();
 
-                    Bind<IPluginProvider>().To<PluginProvider>().InSingletonScope();
+                    Bind<IPluginLoader>().To<PluginLoader>().InSingletonScope();
+
+                    Bind<IPluginsVM>().To<PluginsVM>().InSingletonScope();
                 } catch (Exception e) {
                     Logger.Error(e);
                     throw e;

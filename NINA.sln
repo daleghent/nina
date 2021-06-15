@@ -48,6 +48,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.Image", "NINA.Image\NI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.WPF.Base", "NINA.Core.WPF\NINA.WPF.Base.csproj", "{A407425A-4BF0-429E-8867-045C4CD10D3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NINA.Plugin", "NINA.Plugin\NINA.Plugin.csproj", "{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -237,6 +239,18 @@ Global
 		{A407425A-4BF0-429E-8867-045C4CD10D3F}.Release|x64.Build.0 = Release|Any CPU
 		{A407425A-4BF0-429E-8867-045C4CD10D3F}.Release|x86.ActiveCfg = Release|Any CPU
 		{A407425A-4BF0-429E-8867-045C4CD10D3F}.Release|x86.Build.0 = Release|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Debug|x64.Build.0 = Debug|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Debug|x86.Build.0 = Debug|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Release|x64.ActiveCfg = Release|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Release|x64.Build.0 = Release|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Release|x86.ActiveCfg = Release|Any CPU
+		{03ACE0FA-069A-43CF-8B20-7BB3C32D8C1D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

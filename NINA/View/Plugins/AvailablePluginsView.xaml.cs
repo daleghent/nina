@@ -14,6 +14,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,15 +28,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace NINA.View.Options {
+namespace NINA.View.Plugins {
 
     /// <summary>
-    /// Interaction logic for PluginsView.xaml
+    /// Interaction logic for AvailablePluginsView.xaml
     /// </summary>
-    public partial class PluginsView : UserControl {
+    public partial class AvailablePluginsView : UserControl {
 
-        public PluginsView() {
+        public AvailablePluginsView() {
             InitializeComponent();
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e) {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }

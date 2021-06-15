@@ -94,4 +94,5 @@
     <converters:CameraDefaultValueConverter x:Key="CameraDefaultValueConverter" />
     <thumb:ThumbnailGradeToImageConverter x:Key="ThumbnailGradeToImageConverter" />
     <thumb:ThumbnailGradeToButtonImageConverter x:Key="ThumbnailGradeToButtonImageConverter" />
+    <converters:NullImageConverter x:Key="NullImageConverter" />
 </ResourceDictionary>

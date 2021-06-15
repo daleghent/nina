@@ -31,6 +31,8 @@ using System.Windows.Input;
 using NINA.Equipment.Equipment;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using System.IO;
+using System.Linq;
 
 namespace NINA.ViewModel {
 
@@ -137,6 +139,15 @@ namespace NINA.ViewModel {
             }
 
             imageSaveMediator.Shutdown();
+
+            /*if (Directory.Exists(Plugin.Constants.StagingFolder) && Directory.EnumerateFileSystemEntries(Plugin.Constants.StagingFolder).Any()
+                || Directory.Exists(Plugin.Constants.DeletionFolder) && Directory.EnumerateFileSystemEntries(Plugin.Constants.DeletionFolder).Any()) {
+                Approach doesn't seem to work well together with the profiles and it will switch the active profile, as the app is not closed in time
+                var diag = MyMessageBox.Show(Loc.Instance["LblPendingPluginsRestart"], "", MessageBoxButton.YesNo, MessageBoxResult.Cancel);
+                if (diag == MessageBoxResult.Yes) {
+                    System.Windows.Forms.Application.Restart();
+                }
+            }*/
 
             Application.Current.Shutdown();
         }

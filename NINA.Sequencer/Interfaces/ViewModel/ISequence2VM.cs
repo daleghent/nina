@@ -16,6 +16,7 @@ using NINA.Sequencer.Container;
 using NINA.Core.Utility;
 using System.Collections.Generic;
 using System.Windows.Input;
+using System.Threading.Tasks;
 
 namespace NINA.ViewModel.Sequencer {
 
@@ -24,6 +25,8 @@ namespace NINA.ViewModel.Sequencer {
         ICommand CancelSequenceCommand { get; }
         NINA.Sequencer.ISequencer Sequencer { get; }
         NINA.Sequencer.ISequencerFactory SequencerFactory { get; }
+
+        Task Initialize();
 
         IList<IDeepSkyObjectContainer> GetDeepSkyObjectContainerTemplates();
 

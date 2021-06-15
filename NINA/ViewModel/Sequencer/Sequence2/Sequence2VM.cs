@@ -63,27 +63,7 @@ namespace NINA.ViewModel.Sequencer {
         public Sequence2VM(
             IProfileService profileService,
             ISequenceMediator sequenceMediator,
-            ICameraMediator cameraMediator,
-            ITelescopeMediator telescopeMediator,
-            IFocuserMediator focuserMediator,
-            IFilterWheelMediator filterWheelMediator,
-            IGuiderMediator guiderMediator,
-            IRotatorMediator rotatorMediator,
-            IFlatDeviceMediator flatDeviceMediator,
-            IWeatherDataMediator weatherDataMediator,
-            IImagingMediator imagingMediator,
             IApplicationStatusMediator applicationStatusMediator,
-            INighttimeCalculator nighttimeCalculator,
-            IPlanetariumFactory planetariumFactory,
-            IImageHistoryVM imageHistoryVM,
-            IDeepSkyObjectSearchVM deepSkyObjectSearchVM,
-            IDomeMediator domeMediator,
-            IImageSaveMediator imageSaveMediator,
-            ISwitchMediator switchMediator,
-            ISafetyMonitorMediator safetyMonitorMediator,
-            IApplicationResourceDictionary resourceDictionary,
-            IApplicationMediator applicationMediator,
-            IFramingAssistantVM framingAssistantVM,
             ISequencerFactory factory
 
             ) : base(profileService) {
@@ -122,12 +102,10 @@ namespace NINA.ViewModel.Sequencer {
                     }
                 }
             });
+        }
 
-            Task.Run(async () => {
-                while (!factory.Initialized) {
-                    await Task.Delay(300);
-                }
-
+        public Task Initialize() {
+            return Task.Run(async () => {
                 await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => {
                     SequenceJsonConverter = new SequenceJsonConverter(SequencerFactory);
                     TemplateController = new TemplateController(SequenceJsonConverter, profileService);
