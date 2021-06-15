@@ -5523,4 +5523,10 @@ Only relevant when using an ASCOM camera driver!</value>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
     <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
   </data>
+  <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
+    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+  </data>
+  <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
+    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
+  </data>
 </root>

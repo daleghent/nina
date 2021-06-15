@@ -5503,15 +5503,21 @@ Este ajuste no tendrá efecto en los sensores de color.
     <value>Telescope cannot move secondary axis</value>
   </data>
   <data name="LblPrimaryReversed" xml:space="preserve">
-    <value>Primary reversed</value>
+    <value>Primario invertido</value>
   </data>
   <data name="LblPrimaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the primary axis movement. Enable this to reverse the direction on move commands for the primary axis.</value>
+    <value>Algunos drivers de la montura tienen una implementación inversa del movimiento del eje primario. Habilite esto para invertir la dirección en los comandos de movimiento del eje primario.</value>
   </data>
   <data name="LblSecondaryReversed" xml:space="preserve">
-    <value>Secondary reversed</value>
+    <value>Secundario invertido</value>
   </data>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
+    <value>Algunos drivers de la montura tienen una implementación inversa del movimiento del eje secundario. Habilita esto para invertir la dirección en los comandos de movimiento para el eje secundario.</value>
+  </data>
+  <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
+    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+  </data>
+  <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
+    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
   </data>
 </root>

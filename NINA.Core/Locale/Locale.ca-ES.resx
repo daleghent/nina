@@ -5504,15 +5504,21 @@ Només és rellevant quan s’utilitza un controlador de càmera ASCOM!</value>
     <value>El Telescopi no pot desplaçar l'eix secundari</value>
   </data>
   <data name="LblPrimaryReversed" xml:space="preserve">
-    <value>Primary reversed</value>
+    <value>Primari invertit</value>
   </data>
   <data name="LblPrimaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the primary axis movement. Enable this to reverse the direction on move commands for the primary axis.</value>
+    <value>Alguns controladors de la muntura tenen una implementació inversa del moviment de l'eix primari. Activa-ho per invertir la direcció de les ordres de moviment de l'eix primari.</value>
   </data>
   <data name="LblSecondaryReversed" xml:space="preserve">
-    <value>Secondary reversed</value>
+    <value>Secundari invertit</value>
   </data>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
+    <value>Alguns controladors de la muntura tenen una implementació inversa del moviment de l'eix primari. Activa-ho per invertir la direcció de les ordres de moviment de l'eix primari.</value>
+  </data>
+  <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
+    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+  </data>
+  <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
+    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
   </data>
 </root>
