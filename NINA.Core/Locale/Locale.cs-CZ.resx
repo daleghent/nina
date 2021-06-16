@@ -2145,19 +2145,19 @@ Vypočtené HFR: {2}
     <value>Typ Objektu</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Star</value>
+    <value>1 Hvězda</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Stars</value>
+    <value>2 Hvězdy</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Stars</value>
+    <value>3 Hvězdy</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Stars</value>
+    <value>4 Hvězdy</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Stars</value>
+    <value>8 Hvězd</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterismus</value>
@@ -2350,7 +2350,7 @@ Vypočtené HFR: {2}
     <value>Port Serveru PHD2</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 Server URL</value>
+    <value>Adresa URL Serveru PHD2</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>Nastavení PHD2</value>
@@ -2386,7 +2386,7 @@ Vypočtené HFR: {2}
     <value>Změna PHD2 profilu se nezdařila</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile ID {0} not found. Using {1}</value>
+    <value>Profilové ID {0} PHD2 nebylo nalezeno. Použit {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Pixely</value>
@@ -2662,7 +2662,7 @@ Vypočtené HFR: {2}
     <value>Odstranit Profil?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
+    <value>Odstranit Profil s názvem {0} a id: {1}?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Opakovat do</value>
@@ -3214,7 +3214,7 @@ Synchronizovat hodnoty?</value>
     <value>Časový limit</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
+    <value>Časový limit pro nastavení hodnoty přepínače {0} pro přepínač [ID: {1}, název: {2}]. Aktuální hodnota je {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Časová Zóna</value>
@@ -3254,7 +3254,7 @@ Přetáhněte obdélník na hvězdu s bahtinovskými čarami. NINA provede vyhod
     <value>Přesune cíl doprava</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
+    <value>Zapíná a vypíná automatickou detekci a analýzu hvězd (HFR)</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Živý Náhled</value>
@@ -3445,22 +3445,22 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Provozní doba</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>USB Port 1</value>
+    <value>Usb Port 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>USB Port 2</value>
+    <value>Usb Port 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>USB Port 3</value>
+    <value>Usb Port 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>USB Port 4</value>
+    <value>Usb Port 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>USB Port 5</value>
+    <value>Usb Port 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>USB Port 6</value>
+    <value>Usb Port 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
     <value>USB</value>
@@ -4785,7 +4785,7 @@ Pokud výše umístěna pozice sady pokynů není rozšířena, bude přesunuta 
     <value>Přidejte nový Cíl Sekvence pomocí Tlačítka +, otevřete existující Cíl nebo přidejte Cíl pomocí Průvodcem Rámování</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Add new Target</value>
+    <value>Přidat nový Cíl</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
     <value>Načíst Cíl</value>
@@ -5087,7 +5087,7 @@ Zde lze sekvenci naplánovat od nuly pomocí podrobných pokynů, spouštěčů 
     <value>API Weather Underground</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station ID</value>
+    <value>Id Stanice Weather Underground</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Přesunout vybraný řádek dolů</value>
@@ -5471,47 +5471,53 @@ Význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Filtry</value>
   </data>
   <data name="LblPHD2Calibrating" xml:space="preserve">
-    <value>PHD2 - Calibrating</value>
+    <value>PHD2 - Kalibrace</value>
   </data>
   <data name="LblPHD2SelectingStar" xml:space="preserve">
-    <value>PHD2 - Selecting guide star</value>
+    <value>PHD2 - Výběr pointační hvězdy</value>
   </data>
   <data name="LblPHD2Settling" xml:space="preserve">
-    <value>PHD2 - Settling</value>
+    <value>PHD2 - Nastavení</value>
   </data>
   <data name="LblPHD2StartGuiding" xml:space="preserve">
-    <value>PHD2 - Waiting for guiding to start</value>
+    <value>PHD2 - Čeká se na zahájení pointace</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
-    <value>PHD2 - Start guiding has timed out. Retrying...</value>
+    <value>PHD2 - Čas pointace vypršel. Opakování...</value>
   </data>
   <data name="LblFont" xml:space="preserve">
-    <value>Font</value>
+    <value>Písmo</value>
   </data>
   <data name="LblPrimaryRate" xml:space="preserve">
-    <value>Primary rate</value>
+    <value>Primární rychlost</value>
     <comment>Primary telescope axis rate</comment>
   </data>
   <data name="LblSecondaryRate" xml:space="preserve">
-    <value>Secondary rate</value>
+    <value>Sekundární rychlost</value>
     <comment>Secondary telescope axis rate</comment>
   </data>
   <data name="LblTelescopeCannotMovePrimaryAxis" xml:space="preserve">
-    <value>Telescope cannot move primary axis</value>
+    <value>Dalekohled nemůže pohybovat primární osou</value>
   </data>
   <data name="LblTelescopeCannotMoveSecondaryAxis" xml:space="preserve">
-    <value>Telescope cannot move secondary axis</value>
+    <value>Dalekohled nemůže pohybovat sekundární osou</value>
   </data>
   <data name="LblPrimaryReversed" xml:space="preserve">
-    <value>Primary reversed</value>
+    <value>Primární obrácený</value>
   </data>
   <data name="LblPrimaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the primary axis movement. Enable this to reverse the direction on move commands for the primary axis.</value>
+    <value>Některé ovladače montáže mají obrácenou implementaci pohybu primární osy. Povolte toto pro obrácení směru při povelech pohybu pro primární osu.</value>
   </data>
   <data name="LblSecondaryReversed" xml:space="preserve">
-    <value>Secondary reversed</value>
+    <value>Sekundární obrácený</value>
   </data>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
+    <value>Některé ovladače montáže mají obrácenou implementaci pohybu sekundární osy. Povolte toto pro obrácení směru při povelech pohybu pro sekundární osu.</value>
+  </data>
+  <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
+    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+  </data>
+  <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
+    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
   </data>
 </root>
