@@ -36,9 +36,6 @@ namespace NINA.Equipment.Model {
             TargetName = string.Empty;
             Mode = SequenceMode.STANDARD;
             Coordinates = new Coordinates(0, 0, Epoch.J2000, Coordinates.RAType.Hours);
-            AltitudeVisible = false;
-            HasChanged = false;
-            PropertyChanged += CaptureSequenceList_PropertyChanged;
         }
 
         private AsyncObservableCollection<CaptureSequence> _items = new AsyncObservableCollection<CaptureSequence>();
@@ -66,40 +63,15 @@ namespace NINA.Equipment.Model {
 
         public void Add(CaptureSequence s) {
             Items.Add(s);
-            if (Items.Count(i => i.Enabled) == 1) {
-                ActiveSequence = Items.First(i => i.Enabled);
-            }
-            HasChanged = true;
-            s.PropertyChanged += Sequence_Item_PropertyChanged;
-        }
-
-        private void Sequence_Item_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            if (sender.GetType().GetProperty(e.PropertyName).GetCustomAttributes(false).Any(a => a is XmlIgnoreAttribute))
-                return;
-
-            if (e.PropertyName != nameof(CaptureSequence.ProgressExposureCount))
-                HasChanged = true;
         }
 
         public void AddAt(int idx, CaptureSequence s) {
             Items.Insert(idx, s);
-            if (Items.Count(i => i.Enabled) == 1) {
-                ActiveSequence = Items.First(i => i.Enabled);
-            }
         }
 
         public void RemoveAt(int idx) {
             if (Items.Count > idx) {
-                if (Items[idx] == ActiveSequence) {
-                    if (idx == Items.Count - 1) {
-                        ActiveSequence = null;
-                    } else {
-                        ActiveSequence = Items[idx + 1];
-                    }
-                }
-                Items[idx].PropertyChanged -= Sequence_Item_PropertyChanged;
                 Items.RemoveAt(idx);
-                HasChanged = true;
             }
         }
 
@@ -109,7 +81,6 @@ namespace NINA.Equipment.Model {
 
         public bool ResetActiveSequence() {
             if (Items.Count > 0) {
-                ActiveSequence = Items[0];
                 return true;
             }
             return false;
@@ -122,7 +93,6 @@ namespace NINA.Equipment.Model {
                 using (StreamWriter writer = new StreamWriter(path)) {
                     xmlSerializer.Serialize(writer, this);
                 }
-                HasChanged = false;
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
@@ -169,9 +139,6 @@ namespace NINA.Equipment.Model {
                     s.FilterType = filter;
                 }
             }
-            if (l.ActiveSequence == null && l.Count > 0) {
-                l.ActiveSequence = l.Items.SkipWhile(x => x.TotalExposureCount - x.ProgressExposureCount == 0).FirstOrDefault();
-            }
             l.DSO?.SetDateAndPosition(NighttimeCalculator.GetReferenceDate(DateTime.Now), latitude, longitude);
         }
 
@@ -196,7 +163,6 @@ namespace NINA.Equipment.Model {
                 c = (List<CaptureSequenceList>)xmlSerializer.Deserialize(stream);
                 foreach (var l in c) {
                     AdjustSequenceToMatchCurrentProfile(filters, latitude, longitude, l);
-                    l.MarkAsUnchanged();
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -205,24 +171,8 @@ namespace NINA.Equipment.Model {
             return c;
         }
 
-        private void PlumbInSequencePropertyChangedEvents() {
-            foreach (var s in Items)
-                s.PropertyChanged += Sequence_Item_PropertyChanged;
-        }
-
         public CaptureSequenceList(CaptureSequence seq) : this() {
             Add(seq);
-            HasChanged = false;
-        }
-
-        private void CaptureSequenceList_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
-            // see if we need to worry our pretty heads about this property
-            if (GetType().GetProperty(e.PropertyName).GetCustomAttributes(false).Any(a => a is XmlIgnoreAttribute))
-                return;
-
-            if ((e.PropertyName != nameof(HasChanged)) && (e.PropertyName != nameof(TargetNameWithModifiedIndicator))
-                && (e.PropertyName != nameof(ActiveSequenceIndex)))
-                HasChanged = true;
         }
 
         public void SetSequenceTarget(DeepSkyObject dso) {
@@ -230,7 +180,6 @@ namespace NINA.Equipment.Model {
             Coordinates = dso.Coordinates;
             Rotation = dso.Rotation;
             this.DSO = dso;
-            HasChanged = true;
         }
 
         private string _targetName;
@@ -243,13 +192,7 @@ namespace NINA.Equipment.Model {
             set {
                 _targetName = value;
                 RaisePropertyChanged();
-                RaisePropertyChanged(nameof(TargetNameWithModifiedIndicator));
             }
-        }
-
-        [XmlIgnore]
-        public string TargetNameWithModifiedIndicator {
-            get { return _targetName + (HasChanged ? " *" : ""); }
         }
 
         private SequenceMode _mode;
@@ -261,32 +204,6 @@ namespace NINA.Equipment.Model {
             }
             set {
                 _mode = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _isRunning;
-
-        [XmlIgnore]
-        public bool IsRunning {
-            get {
-                return _isRunning;
-            }
-            set {
-                _isRunning = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _isFinished;
-
-        [XmlIgnore]
-        public bool IsFinished {
-            get {
-                return _isFinished;
-            }
-            set {
-                _isFinished = value;
                 RaisePropertyChanged();
             }
         }
@@ -328,16 +245,6 @@ namespace NINA.Equipment.Model {
             }
 
             return seq;
-        }
-
-        public CaptureSequence Next() {
-            if (Items.Count == 0) { return null; }
-
-            ActiveSequence = GetNextSequenceItem(ActiveSequence);
-            if (ActiveSequence != null) {
-                ActiveSequence.ProgressExposureCount++;
-            }
-            return ActiveSequence;
         }
 
         private Coordinates _coordinates;
@@ -472,7 +379,6 @@ namespace NINA.Equipment.Model {
             RaisePropertyChanged(nameof(DecDegrees));
             RaisePropertyChanged(nameof(DecMinutes));
             RaisePropertyChanged(nameof(DecSeconds));
-            AltitudeVisible = true;
             DSO.Name = this.TargetName;
             DSO.Coordinates = Coordinates;
             DSO.Rotation = Rotation;
@@ -497,36 +403,6 @@ namespace NINA.Equipment.Model {
                     profileService.ActiveProfile.AstrometrySettings.Longitude
                 );*/
                 RaisePropertyChanged();
-            }
-        }
-
-        private object lockobj = new object();
-        private CaptureSequence _activeSequence;
-
-        [XmlIgnore]
-        public CaptureSequence ActiveSequence {
-            get {
-                lock (lockobj) {
-                    if (_activeSequence != null && !_activeSequence.Enabled) {
-                        _activeSequence = Items.FirstOrDefault(i => i.Enabled);
-                        RaisePropertyChanged(nameof(ActiveSequence));
-                        RaisePropertyChanged(nameof(ActiveSequenceIndex));
-                    }
-                    return _activeSequence;
-                }
-            }
-            private set {
-                lock (lockobj) {
-                    _activeSequence = value;
-                    RaisePropertyChanged(nameof(ActiveSequence));
-                    RaisePropertyChanged(nameof(ActiveSequenceIndex));
-                }
-            }
-        }
-
-        public int ActiveSequenceIndex {
-            get {
-                return Items.IndexOf(_activeSequence) == -1 ? -1 : Items.IndexOf(_activeSequence) + 1;
             }
         }
 
@@ -728,91 +604,6 @@ namespace NINA.Equipment.Model {
             }
             set {
                 _autoFocusAfterHFRChangeAmount = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool _altitudeVisisble;
-
-        [XmlIgnore]
-        public bool AltitudeVisible {
-            get {
-                return _altitudeVisisble;
-            }
-            private set {
-                _altitudeVisisble = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private string sequenceFileName;
-
-        [XmlIgnore]
-        public string SequenceFileName {
-            get {
-                return sequenceFileName;
-            }
-            set {
-                sequenceFileName = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public bool HasFileName {
-            get { return !string.IsNullOrWhiteSpace(sequenceFileName); }
-        }
-
-        private bool hasChanged;
-
-        [XmlIgnore]
-        public bool HasChanged {
-            get { return hasChanged; }
-            private set {
-                hasChanged = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(TargetNameWithModifiedIndicator));
-            }
-        }
-
-        public void MarkAsUnchanged() {
-            HasChanged = false;
-        }
-
-        private DateTime _estimatedStartTime;
-
-        [XmlIgnore]
-        public DateTime EstimatedStartTime {
-            get {
-                return _estimatedStartTime;
-            }
-            set {
-                _estimatedStartTime = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private DateTime _estimatedEndTime;
-
-        [XmlIgnore]
-        public DateTime EstimatedEndTime {
-            get {
-                return _estimatedEndTime;
-            }
-            set {
-                _estimatedEndTime = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private TimeSpan _estimatedDuration;
-
-        [XmlIgnore]
-        public TimeSpan EstimatedDuration {
-            get {
-                return _estimatedDuration;
-            }
-            set {
-                _estimatedDuration = value;
                 RaisePropertyChanged();
             }
         }
