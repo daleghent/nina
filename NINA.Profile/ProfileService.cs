@@ -417,7 +417,15 @@ namespace NINA.Profile {
                         }
 
                         // Backup old profile
-                        File.Move(profileFile, Path.Combine(backupfolder, Path.GetFileName(profileFile)));
+                        var backupDestination = Path.Combine(backupfolder, Path.GetFileName(profileFile));
+                        if (!File.Exists(backupDestination)) {
+                            try {
+                                File.Move(profileFile, backupDestination);
+                            } catch (Exception ex) {
+                                Logger.Error(ex);
+                            }
+                        }
+
                         // Save adjusted profile
                         File.WriteAllText(profileFile, profile);
                     }
