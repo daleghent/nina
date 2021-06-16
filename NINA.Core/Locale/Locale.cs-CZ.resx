@@ -5515,9 +5515,64 @@ Význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Některé ovladače montáže mají obrácenou implementaci pohybu sekundární osy. Povolte toto pro obrácení směru při povelech pohybu pro sekundární osu.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
-    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+    <value>Otevření štěrbiny selhalo. Stav štěrbiny je stále hlášen jako zavřená.</value>
   </data>
   <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
-    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
+    <value>Zavření štěrbiny selhalo. Stav štěrbiny je stále hlášen jako otevřeno. </value>
+  </data>
+  <data name="LblAuthor" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="LblAvailable" xml:space="preserve">
+    <value>K dispozici</value>
+  </data>
+  <data name="LblInstalled" xml:space="preserve">
+    <value>Nainstalováno</value>
+  </data>
+  <data name="LblVersion" xml:space="preserve">
+    <value>Verze</value>
+  </data>
+  <data name="LblFailedToFetchPlugins" xml:space="preserve">
+    <value>Nepodařilo se načíst pluginy z úložiště „{0}“</value>
+  </data>
+  <data name="LblPluginCheckForUpdates" xml:space="preserve">
+    <value>Zkontrolovat aktualizace</value>
+  </data>
+  <data name="LblPluginDllInstallDescription" xml:space="preserve">
+    <value>Instalovat přes N.I.N.A. správce pluginů nebo ručně stáhnout a zkopírovat soubor DLL do souboru %localappdata%\NINA\Plugins z:</value>
+  </data>
+  <data name="LblPluginSetupInstallDescription" xml:space="preserve">
+    <value>Instalovat přes N.I.N.A. správce pluginů nebo ručně stáhnout a spustit nastavení z:</value>
+  </data>
+  <data name="LblScreenshots" xml:space="preserve">
+    <value>Snímek obrazovky</value>
+  </data>
+  <data name="LblSetup" xml:space="preserve">
+    <value>Nastavení</value>
+    <comment>Setup as in application setup/installer</comment>
+  </data>
+  <data name="LblInstall" xml:space="preserve">
+    <value>Nainstalujte</value>
+  </data>
+  <data name="LblPendingPluginsRestart" xml:space="preserve">
+    <value>Pluginy čekají na změnu při příštím spuštění aplikace. Měla by být aplikace restartována?</value>
+  </data>
+  <data name="LblPluginArchiveInstallDescription" xml:space="preserve">
+    <value>Instalovat přes N.I.N.A. správce pluginů nebo ručně stáhnout a extrahovat archiv do %localappdata%\NINA\Pluginy z:</value>
+  </data>
+  <data name="LblPluginInstallationFailed" xml:space="preserve">
+    <value>Instalace pluginu {0} se nezdařila.</value>
+  </data>
+  <data name="LblRequiresRestart" xml:space="preserve">
+    <value>Vyžaduje restart</value>
+  </data>
+  <data name="LblUninstall" xml:space="preserve">
+    <value>Odinstalovat</value>
+  </data>
+  <data name="LblPluginCheckForUpdatesCancel" xml:space="preserve">
+    <value>Zrušit kontrolu dostupných online pluginů.</value>
+  </data>
+  <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
+    <value>Zkontroluje v online úložišti pluginů dostupné pluginy a také zkontroluje, zda existují novější verze existujících pluginů.</value>
   </data>
 </root>
