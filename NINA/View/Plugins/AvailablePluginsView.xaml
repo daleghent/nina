@@ -363,7 +363,6 @@
                         <GroupBox Header="{ns:Loc LblDescription}" Visibility="{Binding Descriptions.LongDescription, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
                             <TextBlock
                                 Margin="0,5,0,5"
-                                FontStyle="Italic"
                                 Text="{Binding Descriptions.LongDescription}"
                                 TextWrapping="Wrap" />
                         </GroupBox>
