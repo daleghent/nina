@@ -141,9 +141,6 @@ namespace NINA.Sequencer.SequenceItem.Switch {
                     WritableSwitches = new ReadOnlyCollection<IWritableSwitch>(CreateDummyList());
                 }
 
-                if (switchIndex >= 0 && WritableSwitches.Count > switchIndex) {
-                    SelectedSwitch = WritableSwitches[switchIndex];
-                }
                 i.Add(Loc.Instance["LblSwitchNotConnected"]);
             } else {
                 if (WritableSwitches.Count > 0) {
@@ -162,6 +159,13 @@ namespace NINA.Sequencer.SequenceItem.Switch {
                     i.Add(Loc.Instance["Lbl_SequenceItem_Validation_NoWritableSwitch"]);
                 }
             }
+
+            if (switchIndex >= 0 && WritableSwitches.Count > switchIndex) {
+                if (WritableSwitches[switchIndex] != SelectedSwitch) {
+                    SelectedSwitch = WritableSwitches[switchIndex];
+                }
+            }
+
             var s = SelectedSwitch;
 
             if (s == null) {
