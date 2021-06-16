@@ -119,7 +119,10 @@ echo "Copy NINA.WPF.Base.pdb to setup output"
 copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.WPF.Base.pdb" "$(TargetDir)NINA.WPF.Base.pdb" /Y
 
 echo "Copy NINACustomControlLibrary.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINACustomControlLibrary.pdb" "$(TargetDir)NINACustomControlLibrary.pdb" /Y</PostBuildEvent>
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINACustomControlLibrary.pdb" "$(TargetDir)NINACustomControlLibrary.pdb" /Y
+
+echo "Copy NINA.Plugin.pdb to setup output"
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Plugin.pdb" "$(TargetDir)NINA.Plugin.pdb" /Y</PostBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
