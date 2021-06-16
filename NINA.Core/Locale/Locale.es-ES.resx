@@ -5520,4 +5520,59 @@ Este ajuste no tendrá efecto en los sensores de color.
   <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
     <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
   </data>
+  <data name="LblAuthor" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="LblAvailable" xml:space="preserve">
+    <value>Disponible</value>
+  </data>
+  <data name="LblInstalled" xml:space="preserve">
+    <value>Instalado</value>
+  </data>
+  <data name="LblVersion" xml:space="preserve">
+    <value>Versión</value>
+  </data>
+  <data name="LblFailedToFetchPlugins" xml:space="preserve">
+    <value>Error al obtener plugins del repositorio "{0}"</value>
+  </data>
+  <data name="LblPluginCheckForUpdates" xml:space="preserve">
+    <value>Buscar actualizaciones</value>
+  </data>
+  <data name="LblPluginDllInstallDescription" xml:space="preserve">
+    <value>Instalar a través del gestor de complementos (plugins) de N.I.N.A. o descargar manualmente y copiar el archivo DLL en %localappdata%\NINA\Plugins de:</value>
+  </data>
+  <data name="LblPluginSetupInstallDescription" xml:space="preserve">
+    <value>Instalar a través del gestor de plugins de N.I.N.A. o descargar manualmente y ejecutar la configuración desde:</value>
+  </data>
+  <data name="LblScreenshots" xml:space="preserve">
+    <value>Capturas de pantalla</value>
+  </data>
+  <data name="LblSetup" xml:space="preserve">
+    <value>Configurar</value>
+    <comment>Setup as in application setup/installer</comment>
+  </data>
+  <data name="LblInstall" xml:space="preserve">
+    <value>Instalar</value>
+  </data>
+  <data name="LblPendingPluginsRestart" xml:space="preserve">
+    <value>Plugins pendientes de ser modificados al volver a iniciar la aplicación. ¿Debe reiniciarse la aplicación?</value>
+  </data>
+  <data name="LblPluginArchiveInstallDescription" xml:space="preserve">
+    <value>Instale a través del administrador de complementos (plugins) de N.I.N.A. o descargue y extraiga manualmente el archivo en %localappdata%\NINA\Plugins desde:</value>
+  </data>
+  <data name="LblPluginInstallationFailed" xml:space="preserve">
+    <value>Falló la instalación del plugin para el plugin {0}.</value>
+  </data>
+  <data name="LblRequiresRestart" xml:space="preserve">
+    <value>Requiere reiniciar</value>
+  </data>
+  <data name="LblUninstall" xml:space="preserve">
+    <value>Desinstalar</value>
+  </data>
+  <data name="LblPluginCheckForUpdatesCancel" xml:space="preserve">
+    <value>Cancelar la comprobación de plugins disponibles en línea.</value>
+  </data>
+  <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
+    <value>Comprueba el repositorio de plugins en línea para ver los disponibles y comprueba si existen nuevas versiones de los existentes.</value>
+  </data>
 </root>

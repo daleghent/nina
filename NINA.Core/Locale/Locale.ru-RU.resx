@@ -5523,4 +5523,59 @@ Dec: {1}</value>
   <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
     <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
   </data>
+  <data name="LblAuthor" xml:space="preserve">
+    <value>Author</value>
+  </data>
+  <data name="LblAvailable" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="LblInstalled" xml:space="preserve">
+    <value>Installed</value>
+  </data>
+  <data name="LblVersion" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="LblFailedToFetchPlugins" xml:space="preserve">
+    <value>Failed to fetch plugins from repository "{0}"</value>
+  </data>
+  <data name="LblPluginCheckForUpdates" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="LblPluginDllInstallDescription" xml:space="preserve">
+    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins from:</value>
+  </data>
+  <data name="LblPluginSetupInstallDescription" xml:space="preserve">
+    <value>Install via the N.I.N.A. plugin manager or manually download and run the setup from:</value>
+  </data>
+  <data name="LblScreenshots" xml:space="preserve">
+    <value>Screenshots</value>
+  </data>
+  <data name="LblSetup" xml:space="preserve">
+    <value>Setup</value>
+    <comment>Setup as in application setup/installer</comment>
+  </data>
+  <data name="LblInstall" xml:space="preserve">
+    <value>Install</value>
+  </data>
+  <data name="LblPendingPluginsRestart" xml:space="preserve">
+    <value>Plugins are pending to be changed on next application start. Should the application be restarted?</value>
+  </data>
+  <data name="LblPluginArchiveInstallDescription" xml:space="preserve">
+    <value>Install via the N.I.N.A. plugin manager or manually download and extract the archive into %localappdata%\NINA\Plugins from:</value>
+  </data>
+  <data name="LblPluginInstallationFailed" xml:space="preserve">
+    <value>Plugin installation for plugin {0} failed.</value>
+  </data>
+  <data name="LblRequiresRestart" xml:space="preserve">
+    <value>Requires restart</value>
+  </data>
+  <data name="LblUninstall" xml:space="preserve">
+    <value>Uninstall</value>
+  </data>
+  <data name="LblPluginCheckForUpdatesCancel" xml:space="preserve">
+    <value>Cancel the check for available online plugins.</value>
+  </data>
+  <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
+    <value>Checks the online plugin repository for available plugins and also checks if newer versions of existing plugins exist.</value>
+  </data>
 </root>
