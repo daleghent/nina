@@ -105,6 +105,10 @@ namespace NINA.Plugin.ManifestDefinition {
                         'type': 'string',
                         'format': 'uri-reference'
                     },
+                    'ChangelogURL' : {
+                        'type': 'string',
+                        'format': 'uri-reference'
+                    },
                     'Tags': {
                         'type': 'array',
                         'items': {
@@ -216,8 +220,7 @@ namespace NINA.Plugin.ManifestDefinition {
                             'required': ['URL', 'Checksum', 'ChecksumType', 'Type']
                     }
                 },
-                'required': ['Name', 'Identifier', 'Version', 'Author', 'Repository', 'License', 'LicenseURL', 'MinimumApplicationVersion', 'Descriptions', 'Installer'],
-                'additionalProperties': false
+                'required': ['Name', 'Identifier', 'Version', 'Author', 'Repository', 'License', 'LicenseURL', 'MinimumApplicationVersion', 'Descriptions', 'Installer']
             }";
         }
 
