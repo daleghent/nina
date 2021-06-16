@@ -54,8 +54,8 @@ namespace NINA.ViewModel.Plugins {
             });
             UpdatePluginCommand = new AsyncCommand<bool>(() => InstallPlugin(true));
             InstallPluginCommand = new AsyncCommand<bool>(() => InstallPlugin(false));
-            CancelInstallPluginCommand = new RelayCommand((object o) => installCts?.Cancel());
-            CancelFetchPluginsCommand = new RelayCommand((object o) => fetchCts?.Cancel());
+            CancelInstallPluginCommand = new RelayCommand((object o) => { try { installCts?.Cancel(); } catch (Exception) { } });
+            CancelFetchPluginsCommand = new RelayCommand((object o) => { try { fetchCts?.Cancel(); } catch (Exception) { } });
             UninstallPluginCommand = new AsyncCommand<bool>(UninstallPlugin);
 
             _ = Task.Run(async () => {
