@@ -82,6 +82,12 @@ namespace NINA.Plugin {
             }
         }
 
+        public string ChangelogURL {
+            get {
+                return GetCustomMetadata("ChangelogURL");
+            }
+        }
+
         public string[] Tags {
             get {
                 var assembly = this.GetType().Assembly;

@@ -61,6 +61,11 @@ namespace NINA.Plugin.Interfaces {
         string Repository { get; }
 
         /// <summary>
+        /// A link to the list of changes for each version of the plugin.
+        /// </summary>
+        string ChangelogURL { get; }
+
+        /// <summary>
         /// Short tags to find the plugin searching by tags.
         /// </summary>
         string[] Tags { get; }

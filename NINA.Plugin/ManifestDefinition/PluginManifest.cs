@@ -249,6 +249,8 @@ namespace NINA.Plugin.ManifestDefinition {
         [JsonProperty(Required = Required.Always)]
         public string LicenseURL { get; set; }
 
+        public string ChangelogURL { get; set; }
+
         [JsonProperty]
         public string[] Tags { get; set; }
 
