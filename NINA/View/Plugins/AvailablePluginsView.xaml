@@ -410,6 +410,12 @@
                         </GroupBox>
 
                         <GroupBox Header="{ns:Loc LblScreenshots}">
+                            <GroupBox.Visibility>
+                                <MultiBinding Converter="{StaticResource AllNullOrEmptyStringToVisibilityCollapsedMultiConverter}">
+                                    <Binding Path="Descriptions.ScreenshotURL" />
+                                    <Binding Path="Descriptions.AltScreenshotURL" />
+                                </MultiBinding>
+                            </GroupBox.Visibility>
                             <StackPanel Orientation="Vertical">
                                 <Image
                                     MaxHeight="1000"

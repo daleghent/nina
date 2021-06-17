@@ -223,6 +223,7 @@
     <Compile Include="Utility\Converters\AddToNumberConverter.cs" />
     <Compile Include="Utility\Converters\AFFittingToColorConverter.cs" />
     <Compile Include="Utility\Converters\AFFittingToVisibilityConverter.cs" />
+    <Compile Include="Utility\Converters\AllNullOrEmptyStringToVisibilityCollapsedMultiConverter.cs" />
     <Compile Include="Utility\Converters\AutoFocusContrastDetectionToCollapsedVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\AutoFocusHFRToCollapsedVisibilityConverter.cs" />
     <Compile Include="Utility\Converters\BooleanAndConverter.cs" />
