@@ -5516,64 +5516,64 @@ Només és rellevant quan s’utilitza un controlador de càmera ASCOM!</value>
     <value>Alguns controladors de la muntura tenen una implementació inversa del moviment de l'eix primari. Activa-ho per invertir la direcció de les ordres de moviment de l'eix primari.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
-    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+    <value>S'ha produït un error en obrir l'obturador. L'estat de l'obturador encara s'informa com a tancat després d'iniciar l'operació d'obturador obert.</value>
   </data>
   <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
-    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
+    <value>No s'ha pogut tancar l'obturador. L'estat de l'obturador encara s'informa com a obert després d'iniciar l'operació de tancament de l'obturador. </value>
   </data>
   <data name="LblAuthor" xml:space="preserve">
-    <value>Author</value>
+    <value>Autor</value>
   </data>
   <data name="LblAvailable" xml:space="preserve">
-    <value>Available</value>
+    <value>Disponible</value>
   </data>
   <data name="LblInstalled" xml:space="preserve">
-    <value>Installed</value>
+    <value>Instal·lat</value>
   </data>
   <data name="LblVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>Versió</value>
   </data>
   <data name="LblFailedToFetchPlugins" xml:space="preserve">
-    <value>Failed to fetch plugins from repository "{0}"</value>
+    <value>No s'han pogut obtenir complements del dipòsit "{0}"</value>
   </data>
   <data name="LblPluginCheckForUpdates" xml:space="preserve">
-    <value>Check for updates</value>
+    <value>Cerca actualitzacions</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins from:</value>
+    <value>Instal·leu-la mitjançant el gestor de connectors de N.I.N.A. o descarregueu manualment i copieu el fitxer DLL a %localappdata%\NINA\Plugins des de:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and run the setup from:</value>
+    <value>Instal·leu-la mitjançant el gestor de connectors de N.I.N.A. o descarregueu manualment i executeu la configuració des de:</value>
   </data>
   <data name="LblScreenshots" xml:space="preserve">
-    <value>Screenshots</value>
+    <value>Captures de pantalla</value>
   </data>
   <data name="LblSetup" xml:space="preserve">
-    <value>Setup</value>
+    <value>Configuració</value>
     <comment>Setup as in application setup/installer</comment>
   </data>
   <data name="LblInstall" xml:space="preserve">
-    <value>Install</value>
+    <value>Instal·la</value>
   </data>
   <data name="LblPendingPluginsRestart" xml:space="preserve">
-    <value>Plugins are pending to be changed on next application start. Should the application be restarted?</value>
+    <value>Els connectors estan pendents de canviar-se el proper inici de l'aplicació. Cal reiniciar l'aplicació?</value>
   </data>
   <data name="LblPluginArchiveInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and extract the archive into %localappdata%\NINA\Plugins from:</value>
+    <value>Instal·leu-la mitjançant el gestor de connectors de N.I.N.A. o descarrega i extreu manualment l'arxiu a %localappdata%\NINA\Plugins des de:</value>
   </data>
   <data name="LblPluginInstallationFailed" xml:space="preserve">
-    <value>Plugin installation for plugin {0} failed.</value>
+    <value>La instal·lació del connector per al connector {0} ha fallat.</value>
   </data>
   <data name="LblRequiresRestart" xml:space="preserve">
-    <value>Requires restart</value>
+    <value>És necessari reiniciar</value>
   </data>
   <data name="LblUninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>Desinstal·lar</value>
   </data>
   <data name="LblPluginCheckForUpdatesCancel" xml:space="preserve">
-    <value>Cancel the check for available online plugins.</value>
+    <value>Cancel·la la comprovació dels connectors disponibles en línia.</value>
   </data>
   <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
-    <value>Checks the online plugin repository for available plugins and also checks if newer versions of existing plugins exist.</value>
+    <value>Comprova el dipòsit de connectors en línia per als connectors disponibles i també comprova si existeixen versions més recents de connectors existents.</value>
   </data>
 </root>
