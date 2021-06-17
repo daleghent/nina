@@ -379,9 +379,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                 await WindowService.ShowDialog(syncVM, Loc.Instance["LblSyncLatLong"], System.Windows.ResizeMode.NoResize, System.Windows.WindowStyle.ToolWindow);
 
                                 if (syncVM.Mode == LatLongSyncMode.NINA) {
+                                    Logger.Info($"Importing coordinates from mount into N.I.N.A. - mount latitude {Telescope.SiteLatitude} , longitude {Telescope.SiteLongitude} -> N.I.N.A. latitude {profileService.ActiveProfile.AstrometrySettings.Latitude} , longitude {profileService.ActiveProfile.AstrometrySettings.Longitude} ");
                                     profileService.ChangeLatitude(Telescope.SiteLatitude);
                                     profileService.ChangeLongitude(Telescope.SiteLongitude);
                                 } else if (syncVM.Mode == LatLongSyncMode.TELESCOPE) {
+                                    Logger.Info($"Importing coordinates from N.I.N.A. into mount - N.I.N.A. latitude {profileService.ActiveProfile.AstrometrySettings.Latitude} , longitude {profileService.ActiveProfile.AstrometrySettings.Longitude} -> mount latitude {Telescope.SiteLatitude} , longitude {Telescope.SiteLongitude}");
                                     Telescope.SiteLatitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
                                     Telescope.SiteLongitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
                                 }
