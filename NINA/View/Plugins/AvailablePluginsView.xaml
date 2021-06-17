@@ -380,7 +380,7 @@
                             </StackPanel>
                         </GroupBox>
 
-                        <GroupBox Header="{ns:Loc LblDescription}" Visibility="{Binding Descriptions.LongDescription, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                        <GroupBox Header="{ns:Loc LblDescription}" Visibility="{Binding Descriptions.LongDescription, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
                             <TextBlock
                                 Margin="0,5,0,5"
                                 Text="{Binding Descriptions.LongDescription}"
