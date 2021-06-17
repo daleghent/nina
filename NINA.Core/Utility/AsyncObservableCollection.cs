@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -24,7 +25,7 @@ namespace NINA.Core.Utility {
 
     public class AsyncObservableCollection<T> : ObservableCollection<T> {
 
-        private SynchronizationContext _synchronizationContext =
+        private readonly SynchronizationContext _synchronizationContext =
             Application.Current?.Dispatcher != null
             ? new DispatcherSynchronizationContext(Application.Current.Dispatcher)
             : null;
@@ -36,34 +37,32 @@ namespace NINA.Core.Utility {
             : base(list) {
         }
 
-        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e) {
+        private void RunOnSynchronizationContext(Action action) {
             if (SynchronizationContext.Current == _synchronizationContext) {
-                // Execute the CollectionChanged event on the current thread
-                RaiseCollectionChanged(e);
+                action();
             } else {
-                // Raises the CollectionChanged event on the creator thread
-                _synchronizationContext.Send(RaiseCollectionChanged, e);
+                _synchronizationContext.Send(_ => action(), null);
             }
         }
 
-        private void RaiseCollectionChanged(object param) {
-            // We are in the creator thread, call the base implementation directly
-            base.OnCollectionChanged((NotifyCollectionChangedEventArgs)param);
+        protected override void InsertItem(int index, T item) {
+            RunOnSynchronizationContext(() => base.InsertItem(index, item));
         }
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e) {
-            if (SynchronizationContext.Current == _synchronizationContext) {
-                // Execute the PropertyChanged event on the current thread
-                RaisePropertyChanged(e);
-            } else {
-                // Raises the PropertyChanged event on the creator thread
-                _synchronizationContext.Send(RaisePropertyChanged, e);
-            }
+        protected override void RemoveItem(int index) {
+            RunOnSynchronizationContext(() => base.RemoveItem(index));
         }
 
-        private void RaisePropertyChanged(object param) {
-            // We are in the creator thread, call the base implementation directly
-            base.OnPropertyChanged((PropertyChangedEventArgs)param);
+        protected override void SetItem(int index, T item) {
+            RunOnSynchronizationContext(() => base.SetItem(index, item));
+        }
+
+        protected override void MoveItem(int oldIndex, int newIndex) {
+            RunOnSynchronizationContext(() => base.MoveItem(oldIndex, newIndex));
+        }
+
+        protected override void ClearItems() {
+            RunOnSynchronizationContext(() => base.ClearItems());
         }
 
         public void AddSorted(T item, IComparer<T> comparer = null) {

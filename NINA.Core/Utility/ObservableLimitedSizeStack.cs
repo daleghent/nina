@@ -37,36 +37,20 @@ namespace NINA.Core.Utility {
         public AsyncObservableLimitedSizedStack(int maxSize, IEnumerable<T> collection) : base(maxSize, collection) {
         }
 
-        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e) {
-            if (_synchronizationContext == null) { return; }
+        private void RunOnSynchronizationContext(Action action) {
             if (SynchronizationContext.Current == _synchronizationContext) {
-                // Execute the CollectionChanged event on the current thread
-                RaiseCollectionChanged(e);
+                action();
             } else {
-                // Raises the CollectionChanged event on the creator thread
-                _synchronizationContext.Send(RaiseCollectionChanged, e);
+                _synchronizationContext.Send(_ => action(), null);
             }
         }
 
-        private void RaiseCollectionChanged(object param) {
-            // We are in the creator thread, call the base implementation directly
-            base.OnCollectionChanged((NotifyCollectionChangedEventArgs)param);
+        protected override void ClearItems() {
+            RunOnSynchronizationContext(() => base.ClearItems());
         }
 
-        protected override void OnPropertyChanged(PropertyChangedEventArgs e) {
-            if (_synchronizationContext == null) { return; }
-            if (SynchronizationContext.Current == _synchronizationContext) {
-                // Execute the PropertyChanged event on the current thread
-                RaisePropertyChanged(e);
-            } else {
-                // Raises the PropertyChanged event on the creator thread
-                _synchronizationContext.Send(RaisePropertyChanged, e);
-            }
-        }
-
-        private void RaisePropertyChanged(object param) {
-            // We are in the creator thread, call the base implementation directly
-            base.OnPropertyChanged((PropertyChangedEventArgs)param);
+        protected override void AddItem(T item) {
+            RunOnSynchronizationContext(() => base.AddItem(item));
         }
     }
 
@@ -88,17 +72,21 @@ namespace NINA.Core.Utility {
 
         protected ReaderWriterLockSlim _lock = new ReaderWriterLockSlim();
 
-        public void Add(T item) {
+        public virtual void Add(T item) {
             _lock.EnterWriteLock();
             try {
-                this._underLyingLinkedList.AddLast(item);
-
-                if (this._underLyingLinkedList.Count > _maxSize)
-                    this._underLyingLinkedList.RemoveFirst();
-                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+                AddItem(item);
             } finally {
                 _lock.ExitWriteLock();
             }
+        }
+
+        protected virtual void AddItem(T item) {
+            this._underLyingLinkedList.AddLast(item);
+
+            if (this._underLyingLinkedList.Count > _maxSize)
+                this._underLyingLinkedList.RemoveFirst();
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
         }
 
         public int MaxSize {
@@ -154,11 +142,15 @@ namespace NINA.Core.Utility {
         public void Clear() {
             _lock.EnterWriteLock();
             try {
-                _underLyingLinkedList.Clear();
-                OnCollectionChanged(NotifyCollectionChangedAction.Reset);
+                ClearItems();
             } finally {
                 _lock.ExitWriteLock();
             }
+        }
+
+        protected virtual void ClearItems() {
+            _underLyingLinkedList.Clear();
+            OnCollectionChanged(NotifyCollectionChangedAction.Reset);
         }
 
         public bool Contains(T value) {
