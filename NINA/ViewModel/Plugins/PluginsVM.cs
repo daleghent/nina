@@ -181,7 +181,6 @@ namespace NINA.ViewModel.Plugins {
                 using (fetchCts = new CancellationTokenSource()) {
                     foreach (var repo in repositories) {
                         try {
-                            throw new Exception();
                             var fetcher = new PluginFetcher(repo);
                             onlinePlugins.AddRange(await fetcher.RequestAll(new PluginVersion(CoreUtil.Version), progress, fetchCts.Token));
                         } catch (Exception ex) {
