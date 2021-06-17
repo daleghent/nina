@@ -344,6 +344,22 @@
                                     FontStyle="Italic"
                                     Text="{Binding Descriptions.ShortDescription}"
                                     TextWrapping="Wrap" />
+                                <StackPanel
+                                    Margin="0,0,0,10"
+                                    Orientation="Horizontal"
+                                    Visibility="{Binding Tags, Converter={StaticResource CollectionContainsItemsToVisibilityConverter}}">
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontStyle="Italic"
+                                        Text="{ns:Loc LblTags}" />
+                                    <TextBlock FontStyle="Italic" Text=":" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontStyle="Italic"
+                                        Text="{Binding Tags, Converter={StaticResource StringCollectionToStringConverter}, ConverterParameter=', '}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
                             </StackPanel>
 
                             <Grid Grid.Column="1">

@@ -96,4 +96,5 @@
     <thumb:ThumbnailGradeToButtonImageConverter x:Key="ThumbnailGradeToButtonImageConverter" />
     <converters:NullImageConverter x:Key="NullImageConverter" />
     <converters:AllNullOrEmptyStringToVisibilityCollapsedMultiConverter x:Key="AllNullOrEmptyStringToVisibilityCollapsedMultiConverter" />
+    <converters:StringCollectionToStringConverter x:Key="StringCollectionToStringConverter" />
 </ResourceDictionary>
