@@ -37,7 +37,7 @@ namespace NINA.Core.Utility {
             : base(list) {
         }
 
-        private void RunOnSynchronizationContext(Action action) {
+        protected void RunOnSynchronizationContext(Action action) {
             if (SynchronizationContext.Current == _synchronizationContext) {
                 action();
             } else {

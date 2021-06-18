@@ -48,7 +48,7 @@ namespace NINA.Core.Utility {
         private void RegisterPropertyChanged(IList items) {
             foreach (INotifyPropertyChanged item in items) {
                 if (item != null) {
-                    item.PropertyChanged += new PropertyChangedEventHandler(item_PropertyChanged);
+                    item.PropertyChanged += new PropertyChangedEventHandler(Item_PropertyChanged);
                 }
             }
         }
@@ -56,13 +56,13 @@ namespace NINA.Core.Utility {
         private void DeregisterPropertyChanged(IList items) {
             foreach (INotifyPropertyChanged item in items) {
                 if (item != null) {
-                    item.PropertyChanged -= new PropertyChangedEventHandler(item_PropertyChanged);
+                    item.PropertyChanged -= new PropertyChangedEventHandler(Item_PropertyChanged);
                 }
             }
         }
 
-        private void item_PropertyChanged(object sender, PropertyChangedEventArgs e) {
-            base.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        private void Item_PropertyChanged(object sender, PropertyChangedEventArgs e) {
+            RunOnSynchronizationContext(() => base.OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset)));
         }
     }
 }
