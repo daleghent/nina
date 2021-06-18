@@ -231,6 +231,14 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
             this.cameraInfo = deviceInfo;
         }
 
+        public void UpdateEndAutoFocusRun(AutoFocusInfo info) {
+            ;
+        }
+
+        public void UpdateUserFocused(FocuserInfo info) {
+            ;
+        }
+
         public class Chart {
 
             public Chart(string name, string filePath) {

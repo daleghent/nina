@@ -658,6 +658,8 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     }
                 } while (reattempt);
                 completed = true;
+                AutoFocusInfo info = new AutoFocusInfo(report.Temperature, report.CalculatedFocusPoint.Position,report.Filter, report.Timestamp);
+                focuserMediator.BroadcastSuccessfulAutoFocusRun(info);
             } catch (OperationCanceledException) {
                 Logger.Warning("AutoFocus cancelled");
             } catch (Exception ex) {

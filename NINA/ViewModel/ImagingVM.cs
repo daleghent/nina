@@ -376,6 +376,14 @@ namespace NINA.ViewModel {
             this.weatherDataInfo = deviceInfo;
         }
 
+        public void UpdateEndAutoFocusRun(AutoFocusInfo info) {
+            ;
+        }
+
+        public void UpdateUserFocused(FocuserInfo info) {
+            ;
+        }
+
         private int ExposureId { get { return Interlocked.Increment(ref _exposuerId); } }
     }
 }

@@ -179,5 +179,13 @@ namespace NINA.WPF.Base.Utility {
         public void UpdateDeviceInfo(SwitchInfo deviceInfo) {
             SwitchInfo = deviceInfo;
         }
+
+        public void UpdateEndAutoFocusRun(AutoFocusInfo info) {
+            ;
+        }
+
+        public void UpdateUserFocused(FocuserInfo info) {
+            ;
+        }
     }
 }

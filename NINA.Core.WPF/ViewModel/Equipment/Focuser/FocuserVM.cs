@@ -103,7 +103,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         private Task<int> MoveFocuserInternal(int position) {
             moveCts?.Dispose();
             moveCts = new CancellationTokenSource();
-            return MoveFocuser(position, moveCts.Token);
+            var result = MoveFocuser(position, moveCts.Token);
+            BroadcastUserFocused();
+            return result;
         }
 
         private Task<int> MoveFocuserRelativeInternal(int position) {
@@ -311,6 +313,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
         private void BroadcastFocuserInfo() {
             focuserMediator.Broadcast(FocuserInfo);
+        }
+
+        private void BroadcastUserFocused() {
+            focuserMediator.BroadcastUserFocused(FocuserInfo);
         }
 
         private int targetPosition;

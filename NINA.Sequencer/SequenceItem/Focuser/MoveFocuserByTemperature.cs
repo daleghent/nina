@@ -34,11 +34,12 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Focuser")]
     [Export(typeof(ISequenceItem))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class MoveFocuserByTemperature : SequenceItem, IValidatable {
+    public class MoveFocuserByTemperature : SequenceItem, IValidatable, IFocuserConsumer {
 
         [ImportingConstructor]
         public MoveFocuserByTemperature(IFocuserMediator focuserMediator) {
             this.focuserMediator = focuserMediator;
+            this.focuserMediator.RegisterConsumer(this);
         }
 
         private IFocuserMediator focuserMediator;
@@ -50,6 +51,21 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             get => slope;
             set {
                 slope = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private static double lastTemperature = -1000;
+
+        private static double lastRoundoff = 0;
+
+        private bool absolute = true;
+
+        [JsonProperty]
+        public bool Absolute {
+            get => absolute;
+            set {
+                absolute = value;
                 RaisePropertyChanged();
             }
         }
@@ -78,10 +94,31 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Validate()) {
                 var info = focuserMediator.GetInfo();
-                var position = Slope * info.Temperature + Intercept;
-
-                Logger.Info($"Moving Focuser By Temperature - Slope {Slope} * Temperature {info.Temperature} °C + Intercept {Intercept} = Position {position}");
-                return focuserMediator.MoveFocuser((int)position, token);
+                double position = info.Position, delta = 0;
+                int deltaInt = 0;
+                double thisTemperature = 0;
+                Task<int> result;
+                if (absolute) {
+                    position = Slope * info.Temperature + Intercept;
+                    Logger.Info($"Moving Focuser By Temperature - Slope {Slope} * Temperature {info.Temperature} °C + Intercept {Intercept} = Position {position}");
+                    result = focuserMediator.MoveFocuser((int)position, token);
+                } else {
+                    if (lastTemperature == -1000) {
+                        thisTemperature = info.Temperature;
+                        delta = 0;
+                        deltaInt = 0;
+                        Logger.Info($"Moving Focuser By Temperature - Slope {Slope} * ( DeltaT ) °C (relative mode) - lastTemperature initialized to {lastTemperature}");
+                    } else {
+                        delta = lastRoundoff + (info.Temperature - lastTemperature) * Slope;
+                        deltaInt = (int)Math.Round(delta);
+                        thisTemperature = info.Temperature;
+                        Logger.Info($"Moving Focuser By Temperature - LastRoundoff {lastRoundoff} + Slope {Slope} * ( Temperature {thisTemperature} - PrevTemperature {lastTemperature} ) °C (relative mode) = Delta {delta} / DeltaInt {deltaInt}");
+                    }
+                    result = focuserMediator.MoveFocuserRelative((int)delta, token);
+                    lastTemperature = thisTemperature;
+                    lastRoundoff = delta - deltaInt;
+                }
+                return result;
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
@@ -95,6 +132,7 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
                 Description = Description,
                 Slope = Slope,
                 Intercept = Intercept,
+                Absolute = Absolute
             };
         }
 
@@ -112,12 +150,34 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             return i.Count == 0;
         }
 
-        public override void AfterParentChanged() {
-            Validate();
+        public string MiniDescription {
+            get {
+                return $"{Slope} * " + (absolute ? $"T + {Intercept}" : "DeltaT");
+            }
         }
 
         public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(MoveFocuserByTemperature)}, Slope: {Slope}, Intercept {Intercept}";
+            return $"Category: {Category}, Item: {nameof(MoveFocuserByTemperature)}, Slope: {Slope}" + (absolute ? $", Intercept {Intercept}" : " (Relative mode)");
+        }
+
+        public void UpdateDeviceInfo(Equipment.Equipment.MyFocuser.FocuserInfo deviceInfo) {
+            ;
+        }
+
+        public void Dispose() {
+            focuserMediator.RemoveConsumer(this);
+        }
+
+        public void UpdateEndAutoFocusRun(AutoFocusInfo info) {
+            Logger.Info($"Autofocus notification received - Temperature {info.Temperature}");
+            lastTemperature = info.Temperature;
+            lastRoundoff = 0;
+        }
+
+        public void UpdateUserFocused(Equipment.Equipment.MyFocuser.FocuserInfo info) {
+            Logger.Info($"User Focused notification received - Temperature {info.Temperature}");
+            lastTemperature = info.Temperature;
+            lastRoundoff = 0;
         }
     }
 }
