@@ -33,5 +33,17 @@ namespace NINA.WPF.Base.Mediator {
         public Task<int> MoveFocuserRelative(int position, CancellationToken ct) {
             return handler.MoveFocuserRelative(position, ct);
         }
+
+        public void BroadcastSuccessfulAutoFocusRun(AutoFocusInfo info) {
+            foreach (IFocuserConsumer c in consumers) {
+                c.UpdateEndAutoFocusRun(info);
+            }
+        }
+
+        public void BroadcastUserFocused(FocuserInfo info) {
+            foreach (IFocuserConsumer c in consumers) {
+                c.UpdateUserFocused(info);
+            }
+        }
     }
 }

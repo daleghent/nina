@@ -13,8 +13,10 @@
     xmlns:local="clr-namespace:NINA.Sequencer.SequenceItem.Focuser"
     xmlns:mini="clr-namespace:NINA.View.Sequencer.MiniSequencer"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
-    xmlns:view="clr-namespace:NINA.View.Sequencer">
+    xmlns:view="clr-namespace:NINA.View.Sequencer"
+    xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary">
 
+    <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
     <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Focuser.MoveFocuserAbsolute_Mini">
         <mini:MiniSequenceItem>
             <mini:MiniSequenceItem.SequenceItemContent>
@@ -66,11 +68,9 @@
     <DataTemplate x:Key="NINA.Sequencer.SequenceItem.Focuser.MoveFocuserByTemperature_Mini">
         <mini:MiniSequenceItem>
             <mini:MiniSequenceItem.SequenceItemContent>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Slope}" />
-                    <TextBlock VerticalAlignment="Center" Text="* x + " />
-                    <TextBlock VerticalAlignment="Center" Text="{Binding Intercept}" />
-                </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="{Binding MiniDescription}" />
+                    </StackPanel>
             </mini:MiniSequenceItem.SequenceItemContent>
         </mini:MiniSequenceItem>
     </DataTemplate>
@@ -79,20 +79,30 @@
             <view:SequenceBlockView.SequenceItemContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSlope}" />
-                    <TextBox
+                    <ninactrl:UnitTextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding Slope}" />
+                        Text="{Binding Slope}"
+                        Unit="steps/°C"/>
+                    <TextBlock Margin="20,0,0,0" VerticalAlignment="Center" Text="{ns:Loc LblAbsolute}" />
+                    <CheckBox
+                        MinWidth="40"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding Absolute}" />
                     <TextBlock
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
+                        IsEnabled="{Binding Absolute}"
                         Text="{ns:Loc LblIntercept}" />
-                    <TextBox
+                    <ninactrl:UnitTextBox
                         MinWidth="40"
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding Intercept}" />
+                        IsEnabled="{Binding Absolute}"
+                        Text="{Binding Intercept}"
+                        Unit="steps"/>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemContent>
         </view:SequenceBlockView>

@@ -13,9 +13,32 @@
 #endregion "copyright"
 
 using NINA.Equipment.Equipment.MyFocuser;
+using System;
 
 namespace NINA.Equipment.Interfaces.Mediator {
 
+    public class AutoFocusInfo {
+
+        public AutoFocusInfo(double temperature, double position, string filter, DateTime timestamp) {
+            Temperature = temperature;
+            Position = position;
+            Filter = filter;
+            Timestamp = timestamp;
+        }
+        public string Filter { get; set; }
+
+        public DateTime Timestamp { get; set; }
+
+        public double Temperature { get; set; }
+
+        public double Position { get; set; }
+    }
+
     public interface IFocuserConsumer : IDeviceConsumer<FocuserInfo> {
+
+        void UpdateEndAutoFocusRun(AutoFocusInfo info);
+
+        void UpdateUserFocused(FocuserInfo info);
+
     }
 }
