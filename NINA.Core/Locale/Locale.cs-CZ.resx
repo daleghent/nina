@@ -5575,4 +5575,7 @@ Význam pouze při použití ovladače kamery ASCOM!</value>
   <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
     <value>Zkontroluje v online úložišti pluginů dostupné pluginy a také zkontroluje, zda existují novější verze existujících pluginů.</value>
   </data>
+  <data name="LblTags" xml:space="preserve">
+    <value>Značky</value>
+  </data>
 </root>

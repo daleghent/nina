@@ -5572,4 +5572,7 @@ Only relevant when using an ASCOM camera driver!</value>
   <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
     <value>Checks the online plugin repository for available plugins and also checks if newer versions of existing plugins exist.</value>
   </data>
+  <data name="LblTags" xml:space="preserve">
+    <value>Tags</value>
+  </data>
 </root>
