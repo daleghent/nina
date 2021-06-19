@@ -26,6 +26,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.SequenceItem.Utility {
 
@@ -38,6 +39,8 @@ namespace NINA.Sequencer.SequenceItem.Utility {
     public class WaitUntilAboveHorizon : SequenceItem, IValidatable {
         private IProfileService profileService;
         private bool hasDsoParent;
+        private IList<string> issues = new List<string>();
+        private double altitudeOffset;
 
         [ImportingConstructor]
         public WaitUntilAboveHorizon(IProfileService profileService) {
@@ -57,7 +60,15 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             }
         }
 
-        private IList<string> issues = new List<string>();
+        [JsonProperty]
+        public double AltitudeOffset {
+            get => altitudeOffset;
+            set {
+                altitudeOffset = value;
+                RaisePropertyChanged();
+                Validate();
+            }
+        }
 
         public IList<string> Issues {
             get => issues;
@@ -79,6 +90,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 if (horizon != null) {
                     horizonAltitude = horizon.GetAltitude(altaz.Azimuth.Degree);
                 }
+                horizonAltitude = horizonAltitude + AltitudeOffset;
 
                 progress?.Report(new ApplicationStatus() {
                     Status = string.Format(Loc.Instance["Lbl_SequenceItem_Utility_WaitUntilAboveHorizon_Progress"], Math.Round(altaz.Altitude.Degree, 2), Math.Round(horizonAltitude, 2))
@@ -87,7 +99,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                 if (altaz.Altitude.Degree > horizonAltitude) {
                     break;
                 } else {
-                    await NINA.Core.Utility.CoreUtil.Delay(TimeSpan.FromSeconds(UpdateInterval), token);
+                    await CoreUtil.Delay(TimeSpan.FromSeconds(UpdateInterval), token);
                 }
             } while (true);
         }
@@ -123,7 +135,7 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             var maxAlt = AstroUtil.GetAltitude(0, profileService.ActiveProfile.AstrometrySettings.Latitude, Coordinates.DecDegrees);
 
             var horizon = profileService.ActiveProfile.AstrometrySettings.Horizon;
-            var minHorizonAlt = horizon?.GetMinAltitude() ?? 0;
+            var minHorizonAlt = (horizon?.GetMinAltitude() ?? 0) + AltitudeOffset;
 
             if (maxAlt < minHorizonAlt) {
                 issues.Add(Loc.Instance["LblUnreachableAltitudeForHorizon"]);

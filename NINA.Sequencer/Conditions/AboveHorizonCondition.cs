@@ -46,10 +46,12 @@ namespace NINA.Sequencer.Conditions {
         private string risingSettingDisplay;
         private bool hasDsoParent;
         private double horizonAltitude;
+        private double altitudeOffset;
 
         [ImportingConstructor]
         public AboveHorizonCondition(IProfileService profileService) {
             this.profileService = profileService;
+            altitudeOffset = 0;
             Coordinates = new InputCoordinates();
             ConditionWatchdog = new ConditionWatchdog(() => { CalculateCurrentAltitude(); return Task.CompletedTask; }, TimeSpan.FromSeconds(5));
         }
@@ -85,6 +87,16 @@ namespace NINA.Sequencer.Conditions {
             set {
                 hasDsoParent = value;
                 RaisePropertyChanged();
+            }
+        }
+
+        [JsonProperty]
+        public double AltitudeOffset {
+            get => altitudeOffset;
+            set {
+                altitudeOffset = value;
+                RaisePropertyChanged();
+                CalculateCurrentAltitude();
             }
         }
 
@@ -178,7 +190,7 @@ namespace NINA.Sequencer.Conditions {
             if (horizon != null) {
                 horizonAltitude = Math.Round(horizon.GetAltitude(CurrentAzimuth), 2);
             }
-            HorizonAltitude = horizonAltitude;
+            HorizonAltitude = horizonAltitude + AltitudeOffset;
         }
     }
 }

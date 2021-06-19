@@ -113,6 +113,27 @@ namespace NINATest.Sequencer.Conditions {
         }
 
         [Test]
+        [TestCase(-20, true)]
+        [TestCase(-10, false)]
+        public void CustomHorizon_AboveHorizon_WithOffset_CheckFalse(int offset, bool expected) {
+            var horizonDefinition = $"20 20" + Environment.NewLine + "100 20";
+            using (var sr = new StringReader(horizonDefinition)) {
+                var horizon = CustomHorizon.FromReader(sr);
+                profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Horizon).Returns(horizon);
+            }
+
+            var sut = new AboveHorizonCondition(profileServiceMock.Object);
+            sut.AltitudeOffset = offset;
+            var mockDateProvider = new Mock<ICustomDateTime>();
+            mockDateProvider.SetupGet(x => x.Now).Returns(new DateTime(2020, 1, 1, 0, 0, 0));
+            var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
+
+            sut.Coordinates.Coordinates = coordinates;
+
+            sut.Check(default).Should().Be(expected);
+        }
+
+        [Test]
         public void AttachNewParent_HasDSOContainerParent_RetrieveParentCoordinates() {
             var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000);
             var parentMock = new Mock<IDeepSkyObjectContainer>();
