@@ -5576,6 +5576,6 @@ Este ajuste no tendrá efecto en los sensores de color.
     <value>Comprueba el repositorio de plugins en línea para ver los disponibles y comprueba si existen nuevas versiones de los existentes.</value>
   </data>
   <data name="LblTags" xml:space="preserve">
-    <value>Tags</value>
+    <value>Etiquetas</value>
   </data>
 </root>
