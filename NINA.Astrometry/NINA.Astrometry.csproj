@@ -189,4 +189,13 @@
   </Target>
   <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <Import Project="..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets" Condition="Exists('..\packages\Stub.System.Data.SQLite.Core.NetFramework.1.0.113.3\build\net46\Stub.System.Data.SQLite.Core.NetFramework.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+		if exist "$(SolutionDir)code_sign.pfx" (
+			echo  "Trying to sign $(TargetPath)"
+			signtool sign /t http://timestamp.digicert.com /a /v /fd SHA256 $(TargetPath)
+		)
+	
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

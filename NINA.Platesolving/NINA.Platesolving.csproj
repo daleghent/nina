@@ -102,4 +102,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+		if exist "$(SolutionDir)code_sign.pfx" (
+			echo  "Trying to sign $(TargetPath)"
+			signtool sign /t http://timestamp.digicert.com /a /v /fd SHA256 $(TargetPath)
+		)
+	
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

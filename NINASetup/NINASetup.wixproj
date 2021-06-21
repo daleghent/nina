@@ -15,6 +15,7 @@
     <DefineConstants>Debug</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <SignOutput>True</SignOutput>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
@@ -24,6 +25,7 @@
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <SignOutput>True</SignOutput>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
@@ -33,6 +35,7 @@
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <SignOutput>True</SignOutput>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
@@ -170,14 +173,14 @@
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
+  <Target Name="SignCabs">
+    <Exec Command="signtool.exe sign /t http://timestamp.digicert.com /v /a /fd SHA256 &quot;%(SignCabs.FullPath)&quot;" />
+  </Target>
+  <Target Name="SignMsi">
+    <Exec Command="signtool.exe sign /t http://timestamp.digicert.com /v /a /fd SHA256 &quot;%(SignMsi.FullPath)&quot;" />
+  </Target>
   <PropertyGroup>
-    <PostBuildEvent>if $(ConfigurationName) == Release (
-	if exist "$(SolutionDir)sign.ps1" (
-		if exist "$(SolutionDir)code_sign.pfx" (
-			echo  "Trying to sign files"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetPath)"		)
-	)
-)</PostBuildEvent>
+    <PostBuildEvent></PostBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.

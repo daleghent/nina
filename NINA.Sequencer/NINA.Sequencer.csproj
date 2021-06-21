@@ -508,4 +508,13 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Accord.3.8.0\build\Accord.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Accord.3.8.0\build\Accord.targets'))" />
   </Target>
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+		if exist "$(SolutionDir)code_sign.pfx" (
+			echo  "Trying to sign $(TargetPath)"
+			signtool sign /t http://timestamp.digicert.com /a /v /fd SHA256 $(TargetPath)
+		)
+	
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

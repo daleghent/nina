@@ -17,6 +17,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <SignOutput>True</SignOutput>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
@@ -26,6 +27,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <SignOutput>True</SignOutput>
     <IntermediateOutputPath>obj\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
@@ -73,6 +75,12 @@
   <Target Name="EnsureWixToolsetInstalled" Condition=" '$(WixTargetsImported)' != 'true' ">
     <Error Text="The WiX Toolset v3.11 (or newer) build tools must be installed to build this project. To download the WiX Toolset, see http://wixtoolset.org/releases/" />
   </Target>
+  <Target Name="SignBundleEngine">
+    <Exec Command="signtool.exe sign /t http://timestamp.digicert.com /v /a /fd SHA256 &quot;@(SignBundleEngine)&quot;" />
+  </Target>
+  <Target Name="SignBundle">
+    <Exec Command="signtool.exe sign /t http://timestamp.digicert.com /v /a /fd SHA256 &quot;@(SignBundle)&quot;" />
+  </Target>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
     <DefineConstants>Debug</DefineConstants>
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
@@ -80,57 +88,52 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <OutputPath>bin\$(Platform)\$(Configuration)\</OutputPath>
+    <SignOutput>True</SignOutput>
     <IntermediateOutputPath>obj\$(Platform)\$(Configuration)\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>%25LOCALAPPDATA%25\Pandoc\pandoc.exe "$(SolutionDir)RELEASE_NOTES.md" -f markdown -t rtf -s -o "$(SolutionDir)RELEASE_NOTES.rtf"</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PostBuildEvent>del $(SolutionDir)RELEASE_NOTES.rtf
+    <PostBuildEvent>
+      del $(SolutionDir)RELEASE_NOTES.rtf
 
-echo "Copy NINA.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.pdb" "$(TargetDir)NINA.pdb" /Y
+      echo "Copy NINA.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.pdb" "$(TargetDir)NINA.pdb" /Y
 
-echo "Copy NINA.Astrometry.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Astrometry.pdb" "$(TargetDir)NINA.Astrometry.pdb" /Y
+      echo "Copy NINA.Astrometry.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Astrometry.pdb" "$(TargetDir)NINA.Astrometry.pdb" /Y
 
-echo "Copy NINA.Core.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Core.pdb" "$(TargetDir)NINA.Core.pdb" /Y
+      echo "Copy NINA.Core.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Core.pdb" "$(TargetDir)NINA.Core.pdb" /Y
 
-echo "Copy NINA.Equipment.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Equipment.pdb" "$(TargetDir)NINA.Equipment.pdb" /Y
+      echo "Copy NINA.Equipment.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Equipment.pdb" "$(TargetDir)NINA.Equipment.pdb" /Y
 
-echo "Copy NINA.Image.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Image.pdb" "$(TargetDir)NINA.Image.pdb" /Y
+      echo "Copy NINA.Image.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Image.pdb" "$(TargetDir)NINA.Image.pdb" /Y
 
-echo "Copy NINA.MGEN.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.MGEN.pdb" "$(TargetDir)NINA.MGEN.pdb" /Y
+      echo "Copy NINA.MGEN.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.MGEN.pdb" "$(TargetDir)NINA.MGEN.pdb" /Y
 
-echo "Copy NINA.Platesolving.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Platesolving.pdb" "$(TargetDir)NINA.Platesolving.pdb" /Y
+      echo "Copy NINA.Platesolving.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Platesolving.pdb" "$(TargetDir)NINA.Platesolving.pdb" /Y
 
-echo "Copy NINA.Profile.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Profile.pdb" "$(TargetDir)NINA.Profile.pdb" /Y
+      echo "Copy NINA.Profile.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Profile.pdb" "$(TargetDir)NINA.Profile.pdb" /Y
 
-echo "Copy NINA.Sequencer.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Sequencer.pdb" "$(TargetDir)NINA.Sequencer.pdb" /Y
+      echo "Copy NINA.Sequencer.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Sequencer.pdb" "$(TargetDir)NINA.Sequencer.pdb" /Y
 
-echo "Copy NINA.WPF.Base.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.WPF.Base.pdb" "$(TargetDir)NINA.WPF.Base.pdb" /Y
+      echo "Copy NINA.WPF.Base.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.WPF.Base.pdb" "$(TargetDir)NINA.WPF.Base.pdb" /Y
 
-echo "Copy NINACustomControlLibrary.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINACustomControlLibrary.pdb" "$(TargetDir)NINACustomControlLibrary.pdb" /Y
+      echo "Copy NINACustomControlLibrary.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINACustomControlLibrary.pdb" "$(TargetDir)NINACustomControlLibrary.pdb" /Y
 
-echo "Copy NINA.Plugin.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Plugin.pdb" "$(TargetDir)NINA.Plugin.pdb" /Y
-
-if $(ConfigurationName) == Release (
-	if exist "$(SolutionDir)sign.ps1" (
-		if exist "$(SolutionDir)code_sign.pfx" (
-			echo  "Trying to sign files"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetPath)"		)
-	)
-)</PostBuildEvent>
+      echo "Copy NINA.Plugin.pdb to setup output"
+      copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Plugin.pdb" "$(TargetDir)NINA.Plugin.pdb" /Y
+    </PostBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.

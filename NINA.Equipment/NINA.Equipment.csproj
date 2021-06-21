@@ -399,4 +399,13 @@
     <Error Condition="!Exists('..\packages\Microsoft.NETFramework.ReferenceAssemblies.net48.1.0.0\build\Microsoft.NETFramework.ReferenceAssemblies.net48.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.NETFramework.ReferenceAssemblies.net48.1.0.0\build\Microsoft.NETFramework.ReferenceAssemblies.net48.targets'))" />
   </Target>
   <Import Project="..\packages\Microsoft.NETFramework.ReferenceAssemblies.net48.1.0.0\build\Microsoft.NETFramework.ReferenceAssemblies.net48.targets" Condition="Exists('..\packages\Microsoft.NETFramework.ReferenceAssemblies.net48.1.0.0\build\Microsoft.NETFramework.ReferenceAssemblies.net48.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+		if exist "$(SolutionDir)code_sign.pfx" (
+			echo  "Trying to sign $(TargetPath)"
+			signtool sign /t http://timestamp.digicert.com /a /v /fd SHA256 $(TargetPath)
+		)
+	
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

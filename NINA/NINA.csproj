@@ -1591,23 +1591,11 @@ if $(Platform) == x86 (
 
 
 if $(ConfigurationName) == Release (
-	if exist "$(SolutionDir)sign.ps1" (
 		if exist "$(SolutionDir)code_sign.pfx" (
-			echo  "Trying to sign files"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetPath)"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Plugin.dll"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Sequencer.dll"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.WPF.Base.dll"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.PlateSolving.dll"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Equipment.dll"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Image.dll"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Astrometry.dll"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINACustomControlLibrary.dll"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Profile.dll"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Core.dll"
-			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.MGEN.dll"
+			echo  "Trying to sign $(TargetPath)"
+			signtool sign /t http://timestamp.digicert.com /v /a /fd SHA256 $(TargetPath)
 		)
-	)
+	
 )</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
