@@ -54,7 +54,6 @@ using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel.Sequencer {
-
     internal class Sequence2VM : BaseVM, ISequence2VM {
         private IApplicationStatusMediator applicationStatusMediator;
         private ISequenceMediator sequenceMediator;
@@ -102,6 +101,8 @@ namespace NINA.ViewModel.Sequencer {
                     }
                 }
             });
+            SkipCurrentItemCommand = new AsyncCommand<bool>(SkipCurrentItem);
+            SkipToEndOfSequenceCommand = new AsyncCommand<bool>(SkipToEndOfSequence);
         }
 
         public Task Initialize() {
@@ -136,6 +137,24 @@ namespace NINA.ViewModel.Sequencer {
                     }
                 }));
             });
+        }
+
+        private Task<bool> SkipCurrentItem(object arg) {
+            Sequencer.MainContainer.SkipCurrentRunningItems();
+            return Task.FromResult(true);
+        }
+
+        private async Task<bool> SkipToEndOfSequence(object arg) {
+            var startContainer = Sequencer.MainContainer.Items[0] as ISequenceContainer;
+            var targetContainer = Sequencer.MainContainer.Items[1] as ISequenceContainer;
+            if (startContainer.Status == SequenceEntityStatus.RUNNING) {
+                await startContainer.Interrupt();
+                await Task.Delay(100);
+            }
+            if (targetContainer.Status == SequenceEntityStatus.RUNNING) {
+                await targetContainer.Interrupt();
+            }
+            return true;
         }
 
         private void AddTargetToController(object obj) {
@@ -350,6 +369,8 @@ namespace NINA.ViewModel.Sequencer {
 
         public ICommand DetachCommand { get; set; }
         public IAsyncCommand StartSequenceCommand { get; private set; }
+        public IAsyncCommand SkipCurrentItemCommand { get; private set; }
+        public IAsyncCommand SkipToEndOfSequenceCommand { get; private set; }
         public ICommand CancelSequenceCommand { get; private set; }
 
         public ICommand LoadSequenceCommand { get; }

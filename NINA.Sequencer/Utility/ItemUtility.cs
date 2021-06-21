@@ -38,13 +38,17 @@ namespace NINA.Sequencer.Utility {
         }
 
         public static bool IsInRootContainer(ISequenceContainer parent) {
+            return GetRootContainer(parent) != null;
+        }
+
+        public static ISequenceRootContainer GetRootContainer(ISequenceContainer parent) {
             if (parent != null) {
-                if (parent is ISequenceRootContainer) {
-                    return true;
+                if (parent is ISequenceRootContainer rootContainer) {
+                    return rootContainer;
                 }
-                return IsInRootContainer(parent.Parent);
+                return GetRootContainer(parent.Parent);
             } else {
-                return false;
+                return null;
             }
         }
     }

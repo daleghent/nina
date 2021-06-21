@@ -47,6 +47,29 @@ namespace NINA.Sequencer.Container {
         public SequenceRootContainer() : base(new SequentialStrategy()) {
         }
 
+        private object runningItemsLock = new object();
+        private List<ISequenceItem> runningItems = new List<ISequenceItem>();
+
+        public void AddRunningItem(ISequenceItem item) {
+            lock (runningItemsLock) {
+                runningItems.Add(item);
+            }
+        }
+
+        public void RemoveRunningItem(ISequenceItem item) {
+            lock (runningItemsLock) {
+                runningItems.Remove(item);
+            }
+        }
+
+        public void SkipCurrentRunningItems() {
+            lock (runningItemsLock) {
+                foreach (var item in runningItems) {
+                    item.Skip();
+                }
+            }
+        }
+
         public override ICommand DropIntoCommand => new RelayCommand((o) => {
             (Items[1] as TargetAreaContainer).DropIntoCommand.Execute(o);
         });

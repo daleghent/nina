@@ -12,10 +12,17 @@
 
 #endregion "copyright"
 
+using NINA.Sequencer.SequenceItem;
 using NINA.Sequencer.Trigger;
 
 namespace NINA.Sequencer.Container {
 
     public interface ISequenceRootContainer : ISequenceContainer, ITriggerable {
+
+        void AddRunningItem(ISequenceItem item);
+
+        void RemoveRunningItem(ISequenceItem item);
+
+        void SkipCurrentRunningItems();
     }
 }

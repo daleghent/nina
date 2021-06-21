@@ -23,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.SequenceItem {
 
@@ -114,40 +115,59 @@ namespace NINA.Sequencer.SequenceItem {
             this.Parent?.ResetProgressCascaded();
         }
 
+        private CancellationTokenSource localCts;
+
         public async Task Run(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Status == SequenceEntityStatus.CREATED) {
-                Status = SequenceEntityStatus.RUNNING;
-                try {
-                    Logger.Info($"Starting {this}");
-                    if (this is IValidatable && !(this is ISequenceContainer)) {
-                        var validatable = this as IValidatable;
-                        if (!validatable.Validate()) {
-                            throw new SequenceItemSkippedException(string.Join(",", validatable.Issues));
+            using (localCts = CancellationTokenSource.CreateLinkedTokenSource(token)) {
+                if (Status == SequenceEntityStatus.CREATED) {
+                    Status = SequenceEntityStatus.RUNNING;
+                    var root = ItemUtility.GetRootContainer(this.Parent);
+                    try {
+                        Logger.Info($"Starting {this}");
+                        if (this is IValidatable && !(this is ISequenceContainer)) {
+                            var validatable = this as IValidatable;
+                            if (!validatable.Validate()) {
+                                throw new SequenceItemSkippedException(string.Join(",", validatable.Issues));
+                            }
+                        }
+
+                        if (root != null && !(this is ISequenceContainer)) {
+                            root.AddRunningItem(this);
+                        }
+
+                        await this.Execute(progress, localCts.Token);
+
+                        Logger.Info($"Finishing {this}");
+                        Status = SequenceEntityStatus.FINISHED;
+                    } catch (SequenceItemSkippedException ex) {
+                        Logger.Warning($"{this} - " + ex.Message);
+                        Status = SequenceEntityStatus.SKIPPED;
+                    } catch (OperationCanceledException ex) {
+                        if (localCts.IsCancellationRequested) {
+                            Status = SequenceEntityStatus.SKIPPED;
+                            Logger.Debug($"Skipped {this}");
+                        } else {
+                            Status = SequenceEntityStatus.CREATED;
+                            Logger.Debug($"Cancelled {this}");
+                            throw ex;
+                        }
+                    } catch (Exception ex) {
+                        Status = SequenceEntityStatus.FAILED;
+                        Logger.Error($"{this} - ", ex);
+                        //Todo Error policy - e.g. Continue; Throw and cancel; Retry;
+                    } finally {
+                        progress?.Report(new ApplicationStatus());
+                        if (root != null && !(this is ISequenceContainer)) {
+                            root?.RemoveRunningItem(this);
                         }
                     }
-
-                    await this.Execute(progress, token);
-                    Logger.Info($"Finishing {this}");
-                    Status = SequenceEntityStatus.FINISHED;
-                } catch (SequenceItemSkippedException ex) {
-                    Logger.Warning($"{this} - " + ex.Message);
-                    Status = SequenceEntityStatus.SKIPPED;
-                } catch (OperationCanceledException ex) {
-                    Status = SequenceEntityStatus.CREATED;
-                    Logger.Debug($"Cancelled {this}");
-                    throw ex;
-                } catch (Exception ex) {
-                    Status = SequenceEntityStatus.FAILED;
-                    Logger.Error($"{this} - ", ex);
-                    //Todo Error policy - e.g. Continue; Throw and cancel; Retry;
-                } finally {
-                    progress?.Report(new ApplicationStatus());
                 }
             }
         }
 
         public void Skip() {
             this.Status = SequenceEntityStatus.SKIPPED;
+            localCts?.Cancel();
         }
     }
 }

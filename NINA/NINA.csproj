@@ -619,6 +619,9 @@
     <Compile Include="View\Equipment\Rotator\RotatorView.xaml.cs">
       <DependentUpon>RotatorView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Sequencer\AdvancedSequencer\AdvancedSequencerView.xaml.cs">
+      <DependentUpon>AdvancedSequencerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Sequencer\SequencerVMTemplateSelector.cs" />
     <Compile Include="View\Sequencer\SequenceView.xaml.cs">
       <DependentUpon>SequenceView.xaml</DependentUpon>
@@ -1164,6 +1167,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Sequencer\AdvancedSequencer\AdvancedSequencerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Sequencer\SequenceView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -1543,7 +1550,6 @@
     <Folder Include="External\x86\Nikon\Type0028\" />
     <Folder Include="External\x86\Nikon\Type0029\" />
     <Folder Include="ViewModel\Equipment\" />
-    <Folder Include="View\Sequencer\Sequence2\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

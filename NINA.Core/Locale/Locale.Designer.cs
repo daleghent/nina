@@ -1833,6 +1833,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Abort and run end of sequence instructions.
+        /// </summary>
+        internal static string Lbl_Sequencer_AbortToEnd {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_AbortToEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Interrupts the currently running sequence instruction and skips everything up until the end of sequence instructions to be run.
+        /// </summary>
+        internal static string Lbl_Sequencer_AbortToEnd_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_AbortToEnd_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE ITEM.
         /// </summary>
         internal static string Lbl_Sequencer_DeleteItem {
@@ -1892,6 +1910,15 @@ namespace NINA.Core.Locale {
         internal static string Lbl_Sequencer_SaveSequence_Tooltip {
             get {
                 return ResourceManager.GetString("Lbl_Sequencer_SaveSequence_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip currently running instruction(s).
+        /// </summary>
+        internal static string Lbl_Sequencer_SkipCurrentInstructions {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_SkipCurrentInstructions", resourceCulture);
             }
         }
         
