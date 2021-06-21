@@ -51,6 +51,8 @@ namespace NINA.Profile {
 
             qhyIncludeOverscan = false;
             ascomAllowUnevenPixelSize = true;
+
+            binAverageEnabled = false;
         }
 
         private string id;
@@ -494,6 +496,19 @@ namespace NINA.Profile {
             set {
                 if (ascomAllowUnevenPixelSize != value) {
                     ascomAllowUnevenPixelSize = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool? binAverageEnabled;
+
+        [DataMember]
+        public bool? BinAverageEnabled {
+            get => binAverageEnabled;
+            set {
+                if (binAverageEnabled != value) {
+                    binAverageEnabled = value;
                     RaisePropertyChanged();
                 }
             }

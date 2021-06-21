@@ -3517,6 +3517,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Binning averages pixels.
+        /// </summary>
+        internal static string LblBinAverageEnabled {
+            get {
+                return ResourceManager.GetString("LblBinAverageEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By default, binning is additive. Data are still the same bitness as the camera, so bright pixels can be clipped. Average mode prevents this clipping from taking place at the expense of some dynamic range due to integer division..
+        /// </summary>
+        internal static string LblBinAverageEnabledTooltop {
+            get {
+                return ResourceManager.GetString("LblBinAverageEnabledTooltop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Binning.
         /// </summary>
         internal static string LblBinning {

@@ -5588,4 +5588,10 @@ Only relevant when using an ASCOM camera driver!</value>
   <data name="LblTags" xml:space="preserve">
     <value>Tags</value>
   </data>
+  <data name="LblBinAverageEnabled" xml:space="preserve">
+    <value>Binning averages pixels</value>
+  </data>
+  <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
+    <value>By default, binning is additive. Data are still the same bitness as the camera, so bright pixels can be clipped. Average mode prevents this clipping from taking place at the expense of some dynamic range due to integer division.</value>
+  </data>
 </root>

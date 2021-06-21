@@ -52,5 +52,6 @@ namespace NINA.Profile.Interfaces {
         int Timeout { get; set; }
         bool? DewHeaterOn { get; set; }
         bool ASCOMAllowUnevenPixelDimension { get; set; }
+        bool? BinAverageEnabled { get; set; }
     }
 }

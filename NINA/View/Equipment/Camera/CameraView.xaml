@@ -497,6 +497,22 @@
                                             </CheckBox.ToolTip>
                                         </CheckBox>
                                     </DockPanel>
+                                    <DockPanel Margin="0,0,0,6">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblBinAverageEnabled}" />
+                                        <CheckBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            IsChecked="{Binding BinAverageEnabled}">
+                                            <CheckBox.ToolTip>
+                                                <ToolTip>
+                                                    <TextBlock Text="{ns:Loc LblBinAverageEnabledTooltop}" />
+                                                </ToolTip>
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </DockPanel>
                                 </StackPanel>
                             </DataTemplate>
                             <DataTemplate x:Key="QhyCcd">

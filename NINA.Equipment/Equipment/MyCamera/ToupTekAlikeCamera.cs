@@ -85,31 +85,46 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
         }
 
+        public bool BinAverageEnabled {
+            get {
+                return profileService.ActiveProfile.CameraSettings.BinAverageEnabled == true;
+            }
+            set {
+                if (profileService.ActiveProfile.CameraSettings.BinAverageEnabled != value) {
+                    profileService.ActiveProfile.CameraSettings.BinAverageEnabled = value;
+                    RaisePropertyChanged();
+                    // Force binning mode to be set again
+                    BinX = BinX;
+                }
+            }
+        }
+
         public short BinX {
             get {
                 sdk.get_Option(ToupTekAlikeOption.OPTION_BINNING, out var bin);
-                return (short)bin;
+                return (short)(bin & 0x0F);
             }
             set {
-                if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BINNING, value)) {
-                    Logger.Error($"{Category} - Could not set Binning to {value }");
+                int binValue = value;
+                if (binValue > 1 && BinAverageEnabled) {
+                    binValue |= 0x80;
+                }
+
+                if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BINNING, binValue)) {
+                    Logger.Error($"{Category} - Could not set Binning to {binValue}");
                 } else {
-                    RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(BinX));
+                    RaisePropertyChanged(nameof(BinY));
                 }
             }
         }
 
         public short BinY {
             get {
-                sdk.get_Option(ToupTekAlikeOption.OPTION_BINNING, out var bin);
-                return (short)bin;
+                return BinX;
             }
             set {
-                if (!sdk.put_Option(ToupTekAlikeOption.OPTION_BINNING, value)) {
-                    Logger.Error($"{Category} - Could not set Binning to {value }");
-                } else {
-                    RaisePropertyChanged();
-                }
+                BinX = value;
             }
         }
 
@@ -814,7 +829,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public async Task<IExposureData> DownloadExposure(CancellationToken token) {
-            if (imageReadyTCS.Task.IsCanceled) { return null; }
+            if (imageReadyTCS?.Task.IsCanceled != false) { return null; }
             using (token.Register(() => imageReadyTCS.TrySetCanceled())) {
                 using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(15))) {
                     using (cts.Token.Register(() => { Logger.Error($"{Category} - No Image Callback Event received"); imageReadyTCS.TrySetResult(true); })) {
@@ -895,7 +910,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             if (!sdk.Trigger(0)) {
                 Logger.Warning($"{Category} - Could not stop exposure");
             }
-            imageReadyTCS.TrySetCanceled();
+            imageReadyTCS?.TrySetCanceled();
         }
 
         public void StopLiveView() {
