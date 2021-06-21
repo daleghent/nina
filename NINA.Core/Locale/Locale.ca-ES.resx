@@ -5577,6 +5577,6 @@ Només és rellevant quan s’utilitza un controlador de càmera ASCOM!</value>
     <value>Comprova el dipòsit de connectors en línia per als connectors disponibles i també comprova si existeixen versions més recents de connectors existents.</value>
   </data>
   <data name="LblTags" xml:space="preserve">
-    <value>Tags</value>
+    <value>Etiquetes</value>
   </data>
 </root>
