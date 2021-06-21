@@ -1554,41 +1554,61 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-      if exist "$(ProjectDir)External\x64\Altair" (
-      echo "Copy Altair x64 DLLs"
-      xcopy "$(ProjectDir)External\x64\Altair" "$(TargetDir)\External\x64\Altair" /h/i/c/k/e/r/y
-      )
-      if exist "$(ProjectDir)External\x86\Altair" (
-      echo "Copy Altair x86 DLLs"
-      xcopy "$(ProjectDir)External\x86\Altair" "$(TargetDir)\External\x86\Altair" /h/i/c/k/e/r/y
-      )
+if exist "$(ProjectDir)External\x64\Altair" (
+	echo "Copy Altair x64 DLLs"
+	xcopy "$(ProjectDir)External\x64\Altair" "$(TargetDir)\External\x64\Altair" /h/i/c/k/e/r/y
+)
+if exist "$(ProjectDir)External\x86\Altair" (
+	echo "Copy Altair x86 DLLs"
+	xcopy "$(ProjectDir)External\x86\Altair" "$(TargetDir)\External\x86\Altair" /h/i/c/k/e/r/y
+)
 
-      if exist "$(ProjectDir)External\x64\Canon" (
-      echo "Copy Canon x64 DLLs"
-      xcopy "$(ProjectDir)External\x64\Canon" "$(TargetDir)\External\x64\Canon" /h/i/c/k/e/r/y
-      )
-      if exist "$(ProjectDir)External\x86\Canon" (
-      echo "Copy Canon x86 DLLs"
-      xcopy "$(ProjectDir)External\x86\Canon" "$(TargetDir)\External\x86\Canon" /h/i/c/k/e/r/y
-      )
+if exist "$(ProjectDir)External\x64\Canon" (
+	echo "Copy Canon x64 DLLs"
+	xcopy "$(ProjectDir)External\x64\Canon" "$(TargetDir)\External\x64\Canon" /h/i/c/k/e/r/y
+)
+if exist "$(ProjectDir)External\x86\Canon" (
+	echo "Copy Canon x86 DLLs"
+	xcopy "$(ProjectDir)External\x86\Canon" "$(TargetDir)\External\x86\Canon" /h/i/c/k/e/r/y
+)
 
-      if exist "$(ProjectDir)External\x64\Nikon" (
-      echo "Copy Nikon x64 DLLs"
-      xcopy "$(ProjectDir)External\x64\Nikon" "$(TargetDir)\External\x64\Nikon" /h/i/c/k/e/r/y
-      )
-      if exist "$(ProjectDir)External\x86\Nikon" (
-      echo "Copy Nikon x86 DLLs"
-      xcopy "$(ProjectDir)External\x86\Nikon" "$(TargetDir)\External\x86\Nikon" /h/i/c/k/e/r/y
-      )
+if exist "$(ProjectDir)External\x64\Nikon" (
+	echo "Copy Nikon x64 DLLs"
+	xcopy "$(ProjectDir)External\x64\Nikon" "$(TargetDir)\External\x64\Nikon" /h/i/c/k/e/r/y
+)
+if exist "$(ProjectDir)External\x86\Nikon" (
+	echo "Copy Nikon x86 DLLs"
+	xcopy "$(ProjectDir)External\x86\Nikon" "$(TargetDir)\External\x86\Nikon" /h/i/c/k/e/r/y
+)
 
-      if $(Platform) == x86 (
-      if exist "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat" (
-      echo "Making x86 large address aware"
-      call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat"
-      editbin /largeaddressaware "$(TargetPath)"
-      )
-      )
-    </PostBuildEvent>
+if $(Platform) == x86 (
+	if exist "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat" (
+		echo "Making x86 large address aware"
+		call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat"
+		editbin /largeaddressaware "$(TargetPath)"
+	)
+)
+
+
+if $(ConfigurationName) == Release (
+	if exist "$(SolutionDir)sign.ps1" (
+		if exist "$(SolutionDir)code_sign.pfx" (
+			echo  "Trying to sign files"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetPath)"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Plugin.dll"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Sequencer.dll"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.WPF.Base.dll"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.PlateSolving.dll"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Equipment.dll"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Image.dll"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Astrometry.dll"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINACustomControlLibrary.dll"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Profile.dll"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.Core.dll"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetDir)\NINA.MGEN.dll"
+		)
+	)
+)</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

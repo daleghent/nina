@@ -122,7 +122,15 @@ echo "Copy NINACustomControlLibrary.pdb to setup output"
 copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINACustomControlLibrary.pdb" "$(TargetDir)NINACustomControlLibrary.pdb" /Y
 
 echo "Copy NINA.Plugin.pdb to setup output"
-copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Plugin.pdb" "$(TargetDir)NINA.Plugin.pdb" /Y</PostBuildEvent>
+copy "$(SolutionDir)NINA\bin\$(Platform)\$(ConfigurationName)\NINA.Plugin.pdb" "$(TargetDir)NINA.Plugin.pdb" /Y
+
+if $(ConfigurationName) == Release (
+	if exist "$(SolutionDir)sign.ps1" (
+		if exist "$(SolutionDir)code_sign.pfx" (
+			echo  "Trying to sign files"
+			start /wait powershell -command "$(SolutionDir)sign.ps1 -file $(TargetPath)"		)
+	)
+)</PostBuildEvent>
   </PropertyGroup>
   <!--
 	To modify your build process, add your task inside one of the targets below and uncomment it.
