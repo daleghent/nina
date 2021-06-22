@@ -15,6 +15,7 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:sequencer="clr-namespace:NINA.View.Sequencer.MiniSequencer;assembly=NINA.Sequencer"
+    xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
@@ -23,18 +24,112 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <ninactrl:AsyncProcessButton
+        <Grid
             Grid.Row="1"
             Height="30"
-            Margin="10"
-            ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
-            ButtonImage="{StaticResource PlaySVG}"
-            CancelButtonImage="{StaticResource CancelSVG}"
-            CancelCommand="{Binding CancelSequenceCommand}"
-            CancelToolTip="{ns:Loc LblCancelSequence}"
-            Command="{Binding StartSequenceCommand}"
-            LoadingImageBrush="{StaticResource PrimaryBrush}"
-            ToolTip="{ns:Loc LblTooltipStartSequence}" />
+            Margin="10">
+            <!--<ninactrl:AsyncProcessButton
+                    Grid.Row="1"
+                    Height="30"
+                    Margin="10"
+                    ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
+                    ButtonImage="{StaticResource PlaySVG}"
+                    CancelButtonImage="{StaticResource CancelSVG}"
+                    CancelCommand="{Binding CancelSequenceCommand}"
+                    CancelToolTip="{ns:Loc LblCancelSequence}"
+                    Command="{Binding StartSequenceCommand}"
+                    LoadingImageBrush="{StaticResource PrimaryBrush}"
+                    ToolTip="{ns:Loc LblTooltipStartSequence}" />-->
+
+            <Grid>
+                <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">
+                    <Grid Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource VisibilityConverter}}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" Visibility="{Binding PauseSequenceCommand, Converter={StaticResource NullToVisibilityConverter}}">
+                            <xceed:SplitButton
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding SkipCurrentItemCommand}"
+                                Style="{StaticResource StandardSplitButton}"
+                                ToolTip="{ns:Loc Lbl_Sequencer_SkipCurrentInstructions}"
+                                Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                                <xceed:SplitButton.Content>
+                                    <Path
+                                        Width="40"
+                                        Margin="5"
+                                        Data="{StaticResource SkipSVG}"
+                                        Fill="{StaticResource ButtonForegroundBrush}"
+                                        RenderTransformOrigin="0.5,0.5"
+                                        Stretch="Uniform" />
+                                </xceed:SplitButton.Content>
+                                <xceed:SplitButton.DropDownContent>
+                                    <StackPanel Orientation="Vertical">
+                                        <Button
+                                            HorizontalAlignment="Stretch"
+                                            Command="{Binding SkipToEndOfSequenceCommand}"
+                                            CommandParameter="Rotate"
+                                            Style="{StaticResource BackgroundButton}"
+                                            ToolTip="{ns:Loc Lbl_Sequencer_AbortToEnd_Tooltip}">
+                                            <Path
+                                                Width="40"
+                                                Height="25"
+                                                Margin="5"
+                                                Data="{StaticResource FlagFinishSVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                RenderTransformOrigin="0.5,0.5"
+                                                Stretch="Uniform" />
+                                        </Button>
+                                    </StackPanel>
+                                </xceed:SplitButton.DropDownContent>
+                            </xceed:SplitButton>
+                        </Grid>
+
+                        <ninactrl:LoadingControl
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Stretch"
+                            LoadingImageBrush="{StaticResource PrimaryBrush}" />
+
+                        <Grid Grid.Column="2" Visibility="{Binding CancelSequenceCommand, Converter={StaticResource NullToVisibilityConverter}}">
+                            <Button Command="{Binding CancelSequenceCommand}">
+                                <Path
+                                    Width="40"
+                                    Margin="5"
+                                    Data="{StaticResource CancelSVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    RenderTransformOrigin="0.5,0.5"
+                                    Stretch="Uniform" />
+                                <Button.ToolTip>
+                                    <ToolTip ToolTipService.ShowOnDisabled="True">
+                                        <TextBlock Text="{ns:Loc LblCancelSequence}" />
+                                    </ToolTip>
+                                </Button.ToolTip>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Grid>
+                <Button Command="{Binding StartSequenceCommand}" Visibility="{Binding StartSequenceCommand.Execution.IsNotCompleted, Converter={StaticResource InverseBoolToVisibilityConverter}}">
+                    <Button.ToolTip>
+                        <ToolTip ToolTipService.ShowOnDisabled="True">
+                            <TextBlock Text="{ns:Loc LblTooltipStartSequence}" />
+                        </ToolTip>
+                    </Button.ToolTip>
+                    <Grid>
+                        <Path
+                            Width="40"
+                            Margin="5"
+                            Data="{StaticResource PlaySVG}"
+                            Fill="{StaticResource ButtonForegroundBrush}"
+                            RenderTransformOrigin="0.5,0.5"
+                            Stretch="Uniform" />
+                        <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" />
+                    </Grid>
+                </Button>
+            </Grid>
+        </Grid>
         <ScrollViewer
             Grid.Row="0"
             Margin="5,5,5,5"
