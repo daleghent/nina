@@ -40,6 +40,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             this.Id = deviceInfo.id;
             this.Name = deviceInfo.displayname;
             this.Description = deviceInfo.model.name;
+            this.MaxFanSpeed = (int)deviceInfo.model.maxfanspeed;
             this.PixelSizeX = Math.Round(deviceInfo.model.xpixsz, 2);
             this.PixelSizeY = Math.Round(deviceInfo.model.ypixsz, 2);
 
@@ -168,6 +169,26 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public double PixelSizeY { get; }
 
+        public int MaxFanSpeed { get; }
+
+        public int FanSpeed {
+            get {
+                sdk.get_Option(ToupTekAlikeOption.OPTION_FAN, out var fanSpeed);
+                return fanSpeed;
+            }
+            set {
+                var currentFanSpeed = FanSpeed;
+                var targetFanSpeed = Math.Max(0, Math.Min(MaxFanSpeed, value));
+                if (currentFanSpeed != targetFanSpeed) {
+                    if (sdk.put_Option(ToupTekAlikeOption.OPTION_FAN, value)) {
+                        RaisePropertyChanged();
+                    } else {
+                        Logger.Error($"{Category} - Could not set Fan to {value}");
+                    }
+                }
+            }
+        }
+
         private bool canGetTemperature;
 
         public bool CanGetTemperature {
@@ -200,8 +221,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             set {
                 if (sdk.put_Option(ToupTekAlikeOption.OPTION_TEC, value ? 1 : 0)) {
-                    //Toggle fan, if supported
-                    sdk.put_Option(ToupTekAlikeOption.OPTION_FAN, value ? 1 : 0);
+                    // If fan is currently off, set it to its minimum speed
+                    if (MaxFanSpeed > 0 && FanSpeed == 0) {
+                        FanSpeed = 1;
+                    }
+
                     RaisePropertyChanged();
                 } else {
                     Logger.Error($"{Category} - Could not set Cooler to {value}");

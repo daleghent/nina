@@ -513,6 +513,28 @@
                                             </CheckBox.ToolTip>
                                         </CheckBox>
                                     </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding MaxFanSpeed, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                        <StackPanel MinWidth="100" Orientation="Horizontal">
+                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFanSpeed}" />
+                                            <StackPanel Opacity="0.4" Orientation="Horizontal">
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    VerticalAlignment="Center"
+                                                    Text="(" />
+                                                <TextBlock VerticalAlignment="Center" Text="0" />
+                                                <TextBlock VerticalAlignment="Center" Text="-" />
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding MaxFanSpeed}" />
+                                                <TextBlock VerticalAlignment="Center" Text=")" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <ninactrl:IntStepperControl
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            MaxValue="{Binding MaxFanSpeed}"
+                                            MinValue="0"
+                                            StepSize="1"
+                                            Value="{Binding FanSpeed, Mode=TwoWay}" />
+                                    </DockPanel>
                                 </StackPanel>
                             </DataTemplate>
                             <DataTemplate x:Key="QhyCcd">

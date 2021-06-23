@@ -7348,6 +7348,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fan speed.
+        /// </summary>
+        internal static string LblFanSpeed {
+            get {
+                return ResourceManager.GetString("LblFanSpeed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fast.
         /// </summary>
         internal static string LblFast {
