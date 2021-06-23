@@ -34,43 +34,24 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             this.profileService = profileService;
         }
 
-        public short InterfaceVersion {
-            get {
-                return device.InterfaceVersion;
-            }
-        }
-
         public int[] FocusOffsets {
             get {
-                return device.FocusOffsets;
+                return GetProperty(nameof(FilterWheel.FocusOffsets), new int[] { });
             }
         }
 
         public string[] Names {
             get {
-                return device.Names;
+                return GetProperty(nameof(FilterWheel.Names), new string[] { });
             }
         }
 
         public short Position {
             get {
-                if (Connected) {
-                    return device.Position;
-                } else {
-                    return -1;
-                }
+                return GetProperty<short>(nameof(FilterWheel.Position), -1);
             }
             set {
-                if (Connected) {
-                    try {
-                        Logger.Debug($"ASCOM FW: Moving to position {value}");
-                        device.Position = value;
-                    } catch (ASCOM.DriverAccessCOMException ex) {
-                        Notification.ShowWarning(ex.Message);
-                    }
-                }
-
-                RaisePropertyChanged();
+                SetProperty(nameof(Focuser.Position), value);
             }
         }
 

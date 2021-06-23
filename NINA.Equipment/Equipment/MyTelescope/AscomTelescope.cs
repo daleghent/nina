@@ -46,304 +46,157 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         private IProfileService profileService;
 
         private void Initialize() {
-            _canGetAlignmentMode = true;
-            _canGetAltitude = true;
-            _canGetApertureArea = true;
-            _canGetApertureDiameter = true;
-            _canGetAzimuth = true;
-            _canDoRefraction = true;
-            _canGetFocalLength = true;
-            _canSetUTCDate = true;
-            _canGetSlewing = true;
-            _canGetSideOfPier = true;
-            _canGetSiteElevation = true;
-            _canSetSiteElevation = true;
-            _canGetSiteLatLong = true;
-            _canSetSiteLatLong = true;
-            _canSetSlewSettleTime = true;
-            _canGetTargetRaDec = true;
-            _canSetTargetRaDec = true;
             _hasUnknownEpoch = false;
         }
 
-        private bool _canGetAlignmentMode;
-
         public AlignmentModes AlignmentMode {
             get {
-                AlignmentModes val = AlignmentModes.algGermanPolar;
-                try {
-                    if (Connected && _canGetAlignmentMode) {
-                        val = device.AlignmentMode;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    Logger.Debug("AlignmentMode GET is not implemented in this driver");
-                    _canGetAlignmentMode = false;
-                }
-                return val;
+                return GetProperty(nameof(Telescope.AlignmentMode), AlignmentModes.algGermanPolar);
             }
         }
 
         public bool CanSetSiteLatLong {
             get {
-                return _canSetSiteLatLong;
-            }
-        }
-
-        private bool _canGetAltitude;
-
-        private double _altitude = double.NaN;
-
-        public double Altitude {
-            get {
-                try {
-                    if (Connected && _canGetAltitude) {
-                        _altitude = device.Altitude;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    Logger.Debug("Altitude GET is not implemented in this driver");
-                    _canGetAltitude = false;
-                }
-                return _altitude;
-            }
-        }
-
-        public string AltitudeString => double.IsNaN(Altitude) ? string.Empty : AstroUtil.DegreesToDMS(Altitude);
-
-        private bool _canGetAzimuth;
-
-        private double _azimuth = double.NaN;
-
-        public double Azimuth {
-            get {
-                try {
-                    if (Connected && _canGetAzimuth) {
-                        _azimuth = device.Azimuth;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    Logger.Debug("Azimuth GET is not implemented in this driver");
-                    _canGetAzimuth = false;
-                }
-                return _azimuth;
-            }
-        }
-
-        public string AzimuthString => double.IsNaN(Azimuth) ? string.Empty : AstroUtil.DegreesToDMS(Azimuth);
-
-        private bool _canGetApertureArea;
-
-        public double ApertureArea {
-            get {
-                double val = -1;
-                try {
-                    if (Connected && _canGetApertureArea) {
-                        val = device.Altitude;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    Logger.Debug("ApertureArea GET is not implemented in this driver");
-                    _canGetApertureArea = false;
-                }
-                return val;
-            }
-        }
-
-        private bool _canGetApertureDiameter;
-
-        public double ApertureDiameter {
-            get {
-                double val = -1;
-                try {
-                    if (Connected && _canGetApertureDiameter) {
-                        val = device.ApertureDiameter;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    Logger.Debug("ApertureDiameter GET is not implemented in this driver");
-                    _canGetApertureDiameter = false;
-                }
-                return val;
-            }
-        }
-
-        public bool AtHome {
-            get {
-                if (Connected) {
-                    return device.AtHome;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool AtPark {
-            get {
-                if (Connected) {
-                    return device.AtPark;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanFindHome {
-            get {
-                if (Connected) {
-                    return device.CanFindHome;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanPark {
-            get {
-                if (Connected) {
-                    return device.CanPark;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanPulseGuide {
-            get {
-                if (Connected) {
-                    return device.CanPulseGuide;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanSetDeclinationRate {
-            get {
-                if (Connected) {
-                    return device.CanSetDeclinationRate;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanSetGuideRates {
-            get {
-                if (Connected) {
-                    return device.CanSetGuideRates;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanSetPark {
-            get {
-                if (Connected) {
-                    return device.CanSetPark;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanSetPierSide {
-            get {
-                if (Connected) {
-                    return device.CanSetPierSide;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanSetRightAscensionRate {
-            get {
-                if (Connected) {
-                    return device.CanSetRightAscensionRate;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanSetTrackingRate {
-            get {
-                if (Connected) {
-                    return device.CanSetTracking;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanSlew {
-            get {
-                if (Connected) {
-                    return device.CanSlew;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanSlewAltAz {
-            get {
-                if (Connected) {
-                    return device.CanSlewAltAz;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanSlewAltAzAsync {
-            get {
-                if (Connected) {
-                    return device.CanSlewAltAzAsync;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        public bool CanSlewAsync {
-            get {
-                if (Connected) {
-                    try {
-                        return device.CanSlewAsync;
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                        ASCOMInteraction.LogComplianceIssue();
-                    }
+                if (propertySETMemory.TryGetValue(nameof(Telescope.SiteLatitude), out var memory)) {
+                    return memory.IsImplemented;
                 }
                 return false;
             }
         }
 
+        public double Altitude {
+            get {
+                return GetProperty(nameof(Telescope.Altitude), double.NaN);
+            }
+        }
+
+        public string AltitudeString => double.IsNaN(Altitude) ? string.Empty : AstroUtil.DegreesToDMS(Altitude);
+
+        public double Azimuth {
+            get {
+                return GetProperty(nameof(Telescope.Azimuth), double.NaN);
+            }
+        }
+
+        public string AzimuthString => double.IsNaN(Azimuth) ? string.Empty : AstroUtil.DegreesToDMS(Azimuth);
+
+        public double ApertureArea {
+            get {
+                return GetProperty(nameof(Telescope.ApertureArea), -1d);
+            }
+        }
+
+        public double ApertureDiameter {
+            get {
+                return GetProperty(nameof(Telescope.ApertureDiameter), -1d);
+            }
+        }
+
+        public bool AtHome {
+            get {
+                return GetProperty(nameof(Telescope.AtHome), false);
+            }
+        }
+
+        public bool AtPark {
+            get {
+                return GetProperty(nameof(Telescope.AtPark), false);
+            }
+        }
+
+        public bool CanFindHome {
+            get {
+                return GetProperty(nameof(Telescope.CanFindHome), false);
+            }
+        }
+
+        public bool CanPark {
+            get {
+                return GetProperty(nameof(Telescope.CanPark), false);
+            }
+        }
+
+        public bool CanPulseGuide {
+            get {
+                return GetProperty(nameof(Telescope.CanPulseGuide), false);
+            }
+        }
+
+        public bool CanSetDeclinationRate {
+            get {
+                return GetProperty(nameof(Telescope.CanSetDeclinationRate), false);
+            }
+        }
+
+        public bool CanSetGuideRates {
+            get {
+                return GetProperty(nameof(Telescope.CanSetGuideRates), false);
+            }
+        }
+
+        public bool CanSetPark {
+            get {
+                return GetProperty(nameof(Telescope.CanSetPark), false);
+            }
+        }
+
+        public bool CanSetPierSide {
+            get {
+                return GetProperty(nameof(Telescope.CanSetPierSide), false);
+            }
+        }
+
+        public bool CanSetRightAscensionRate {
+            get {
+                return GetProperty(nameof(Telescope.CanSetRightAscensionRate), false);
+            }
+        }
+
+        public bool CanSetTrackingRate {
+            get {
+                return GetProperty(nameof(Telescope.CanSetTracking), false);
+            }
+        }
+
+        public bool CanSlew {
+            get {
+                return GetProperty(nameof(Telescope.CanSlew), false);
+            }
+        }
+
+        public bool CanSlewAltAz {
+            get {
+                return GetProperty(nameof(Telescope.CanSlewAltAz), false);
+            }
+        }
+
+        public bool CanSlewAltAzAsync {
+            get {
+                return GetProperty(nameof(Telescope.CanSlewAltAzAsync), false);
+            }
+        }
+
+        public bool CanSlewAsync {
+            get {
+                return GetProperty(nameof(Telescope.CanSlewAsync), false);
+            }
+        }
+
         public bool CanSync {
             get {
-                if (Connected) {
-                    return device.CanSync;
-                } else {
-                    return false;
-                }
+                return GetProperty(nameof(Telescope.CanSync), false);
             }
         }
 
         public bool CanSyncAltAz {
             get {
-                if (Connected) {
-                    return device.CanSyncAltAz;
-                } else {
-                    return false;
-                }
+                return GetProperty(nameof(Telescope.CanSyncAltAz), false);
             }
         }
 
         public bool CanUnpark {
             get {
-                if (Connected) {
-                    return device.CanUnpark;
-                } else {
-                    return false;
-                }
+                return GetProperty(nameof(Telescope.CanUnpark), false);
             }
         }
 
@@ -355,11 +208,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public double Declination {
             get {
-                if (Connected) {
-                    return device.Declination;
-                } else {
-                    return -1;
-                }
+                return GetProperty(nameof(Telescope.Declination), -1d);
             }
         }
 
@@ -371,91 +220,41 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public double DeclinationRate {
             get {
-                if (Connected) {
-                    return device.DeclinationRate;
-                } else {
-                    return -1;
-                }
+                return GetProperty(nameof(Telescope.DeclinationRate), -1d);
             }
             set {
-                try {
-                    if (CanSetDeclinationRate) {
-                        device.DeclinationRate = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
+                if (CanSetDeclinationRate) {
+                    SetProperty(nameof(Telescope.DeclinationRate), value);
                 }
             }
         }
 
         public double RightAscensionRate {
             get {
-                if (Connected) {
-                    return device.RightAscensionRate;
-                } else {
-                    return -1;
-                }
+                return GetProperty(nameof(Telescope.RightAscensionRate), -1d);
             }
             set {
-                try {
-                    if (CanSetRightAscensionRate) {
-                        device.RightAscensionRate = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
+                if (CanSetRightAscensionRate) {
+                    SetProperty(nameof(Telescope.RightAscensionRate), value);
                 }
             }
         }
-
-        private bool _canGetSideOfPier;
 
         public PierSide SideOfPier {
             get {
-                PierSide val = PierSide.pierUnknown;
-                try {
-                    if (Connected && _canGetSideOfPier) {
-                        val = (PierSide)device.SideOfPier;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    Logger.Debug("SideOfPier GET is not implemented in this driver");
-                    _canGetSideOfPier = false;
-                }
-                return val;
+                var pierside = GetProperty(nameof(Telescope.SideOfPier), ASCOM.DeviceInterface.PierSide.pierUnknown);
+                return (PierSide)pierside;
             }
             set {
-                try {
-                    if (CanSetPierSide) {
-                        device.SideOfPier = (ASCOM.DeviceInterface.PierSide)value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
+                if (CanSetPierSide) {
+                    SetProperty(nameof(Telescope.SideOfPier), (ASCOM.DeviceInterface.PierSide)value);
                 }
             }
         }
 
-        private bool _canDoRefraction;
-
         public bool DoesRefraction {
             get {
-                bool val = false;
-                try {
-                    if (Connected && _canDoRefraction) {
-                        val = device.DoesRefraction;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    Logger.Debug("DoesRefraction GET is not implemented in this driver");
-                    _canDoRefraction = false;
-                }
-                return val;
+                return GetProperty(nameof(Telescope.DoesRefraction), false);
             }
         }
 
@@ -469,40 +268,21 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        private bool _canGetFocalLength;
-
         public double FocalLength {
             get {
-                double val = -1;
-                try {
-                    if (Connected && _canGetFocalLength) {
-                        val = device.FocalLength;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    Logger.Debug("FocalLength GET is not implemented in this driver");
-                    _canGetFocalLength = false;
-                }
-                return val;
+                return GetProperty(nameof(Telescope.FocalLength), -1d);
             }
         }
 
         public short InterfaceVersion {
             get {
-                if (Connected) {
-                    return device.InterfaceVersion;
-                } else {
-                    return -1;
-                }
+                return GetProperty<short>(nameof(Telescope.InterfaceVersion), -1);
             }
         }
 
         public double RightAscension {
             get {
-                if (Connected) {
-                    return device.RightAscension;
-                } else {
-                    return -1;
-                }
+                return GetProperty(nameof(Telescope.RightAscension), -1d);
             }
         }
 
@@ -514,11 +294,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public double SiderealTime {
             get {
-                if (Connected) {
-                    return device.SiderealTime;
-                } else {
-                    return -1;
-                }
+                return GetProperty(nameof(Telescope.SiderealTime), -1d);
             }
         }
 
@@ -528,39 +304,22 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        private bool _canGetSlewing;
-
         public bool Slewing {
             get {
-                bool val = false;
-                try {
-                    if (Connected && _canGetSlewing) {
-                        val = device.Slewing;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _canGetSlewing = false;
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(Loc.Instance["LblTelescope"] + Environment.NewLine + ex.Message);
-                }
-                return val;
+                return GetProperty(nameof(Telescope.Slewing), false);
             }
         }
 
         public ArrayList SupportedActions {
             get {
-                if (Connected) {
-                    return device.SupportedActions;
-                } else {
-                    return new ArrayList();
-                }
+                return GetProperty(nameof(Telescope.SupportedActions), new ArrayList());
             }
         }
 
         public bool IsPulseGuiding {
             get {
                 if (CanPulseGuide) {
-                    return device.IsPulseGuiding;
+                    return GetProperty(nameof(Telescope.IsPulseGuiding), false);
                 } else {
                     return false;
                 }
@@ -570,24 +329,16 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public double GuideRateDeclinationArcsecPerSec {
             get {
                 if (CanSetGuideRates) {
-                    try {
-                        return device.GuideRateDeclination * 3600.0;
-                    } catch (PropertyNotImplementedException) {
-                        Logger.Warning("GuideRateDeclination GET is not implemented in this driver, although CanSetGuideRates is returning true");
+                    var rate = GetProperty(nameof(Telescope.GuideRateDeclination), double.NaN);
+                    if (!double.IsNaN(rate)) {
+                        return rate * 3600.0;
                     }
                 }
                 return double.NaN;
             }
             set {
-                try {
-                    if (CanSetGuideRates) {
-                        device.GuideRateDeclination = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
+                if (CanSetGuideRates) {
+                    SetProperty(nameof(Telescope.GuideRateDeclination), value);
                 }
             }
         }
@@ -595,245 +346,88 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         public double GuideRateRightAscensionArcsecPerSec {
             get {
                 if (CanSetGuideRates) {
-                    try {
-                        return device.GuideRateRightAscension * 3600.0;
-                    } catch (PropertyNotImplementedException) {
-                        Logger.Warning("GuideRateRightAscension GET is not implemented in this driver, although CanSetGuideRates is returning true");
+                    var rate = GetProperty(nameof(Telescope.GuideRateRightAscension), double.NaN);
+                    if (!double.IsNaN(rate)) {
+                        return rate * 3600.0;
                     }
                 }
                 return double.NaN;
             }
             set {
-                try {
-                    if (CanSetGuideRates) {
-                        device.GuideRateRightAscension = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
+                if (CanSetGuideRates) {
+                    SetProperty(nameof(Telescope.GuideRateRightAscension), value);
                 }
             }
         }
-
-        private bool _canSetUTCDate;
 
         public DateTime UTCDate {
             get {
-                if (Connected) {
-                    return device.UTCDate;
-                } else {
-                    return DateTime.MinValue;
-                }
+                return GetProperty(nameof(Telescope.UTCDate), DateTime.MinValue);
             }
             set {
-                try {
-                    if (Connected && _canSetUTCDate) {
-                        device.UTCDate = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                    _canSetUTCDate = false;
-                }
+                SetProperty(nameof(Telescope.UTCDate), value);
             }
         }
-
-        private bool _canGetSiteElevation;
-        private bool _canSetSiteElevation;
 
         public double SiteElevation {
             get {
-                double val = -1;
-                if (Connected && _canGetSiteElevation) {
-                    try {
-                        val = device.SiteElevation;
-                    } catch (PropertyNotImplementedException) {
-                        Logger.Debug("SiteElevation GET is not implemented in this driver");
-                        _canGetSiteElevation = false;
-                    }
-                }
-                return val;
+                return GetProperty(nameof(Telescope.SiteElevation), -1d);
             }
             set {
-                try {
-                    if (Connected && _canSetSiteElevation) {
-                        device.SiteElevation = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                    _canSetSiteElevation = false;
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
-                } catch (ASCOM.InvalidOperationException ex) {
-                    Logger.Warning(ex.Message);
-                }
+                SetProperty(nameof(Telescope.SiteElevation), value);
             }
         }
 
-        private bool _canGetSiteLatLong;
-        private bool _canSetSiteLatLong;
-
         public double SiteLatitude {
             get {
-                double val = -1;
-                if (Connected && _canGetSiteLatLong) {
-                    try {
-                        val = device.SiteLatitude;
-                    } catch (PropertyNotImplementedException) {
-                        Logger.Debug("SiteLatitude GET is not implemented in this driver");
-                        _canGetSiteLatLong = false;
-                    }
-                }
-                return val;
+                return GetProperty(nameof(Telescope.SiteLatitude), -1d);
             }
             set {
-                try {
-                    if (Connected && _canSetSiteLatLong) {
-                        device.SiteLatitude = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                    _canSetSiteLatLong = false;
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
-                } catch (ASCOM.InvalidOperationException ex) {
-                    Logger.Warning(ex.Message);
-                }
+                SetProperty(nameof(Telescope.SiteLatitude), value);
             }
         }
 
         public double SiteLongitude {
             get {
-                double val = -1;
-                if (Connected && _canGetSiteLatLong) {
-                    try {
-                        val = device.SiteLongitude;
-                    } catch (PropertyNotImplementedException) {
-                        Logger.Debug("SiteLongitude GET is not implemented in this driver");
-                        _canGetSiteLatLong = false;
-                    }
-                }
-                return val;
+                return GetProperty(nameof(Telescope.SiteLongitude), -1d);
             }
             set {
-                try {
-                    if (Connected && _canSetSiteLatLong) {
-                        device.SiteLongitude = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                    _canSetSiteLatLong = false;
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
-                } catch (ASCOM.InvalidOperationException ex) {
-                    Logger.Warning(ex.Message);
-                }
+                SetProperty(nameof(Telescope.SiteLongitude), value);
             }
         }
-
-        private bool _canSetSlewSettleTime;
 
         public short SlewSettleTime {
             get {
-                short val = -1;
-                if (Connected && _canSetSlewSettleTime) {
-                    try {
-                        val = device.SlewSettleTime;
-                    } catch (PropertyNotImplementedException) {
-                        Logger.Debug("SlewSettleTime GET is not implemented in this driver");
-                        _canSetSlewSettleTime = false;
-                    }
-                }
-                return val;
+                return GetProperty<short>(nameof(Telescope.SlewSettleTime), -1);
             }
             set {
-                try {
-                    if (Connected && _canSetSlewSettleTime) {
-                        device.SlewSettleTime = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                    _canSetSlewSettleTime = false;
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
-                }
+                SetProperty(nameof(Telescope.SlewSettleTime), value);
             }
         }
-
-        private bool _canGetTargetRaDec;
-        private bool _canSetTargetRaDec;
 
         public double TargetDeclination {
             get {
                 double val = double.NaN;
-                if (Connected && _canGetTargetRaDec && Slewing) {
-                    try {
-                        val = device.TargetDeclination;
-                    } catch (PropertyNotImplementedException) {
-                        Logger.Debug("TargetDeclination GET is not implemented in this driver");
-                        _canGetTargetRaDec = false;
-                    } catch (DriverAccessCOMException ex) {
-                        Logger.Warning(ex.Message);
-                    } catch (ASCOM.InvalidOperationException ex) {
-                        Logger.Warning(ex.Message);
-                    }
+                if (!Slewing) {
+                    val = GetProperty(nameof(Telescope.TargetDeclination), double.NaN);
                 }
                 return val;
             }
             set {
-                try {
-                    if (Connected && _canSetTargetRaDec) {
-                        device.TargetDeclination = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                    _canSetTargetRaDec = false;
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
-                } catch (ASCOM.InvalidOperationException ex) {
-                    Logger.Warning(ex.Message);
-                }
+                SetProperty(nameof(Telescope.TargetDeclination), value);
             }
         }
 
         public double TargetRightAscension {
             get {
                 double val = double.NaN;
-                if (Connected && _canGetTargetRaDec && Slewing) {
-                    try {
-                        val = device.TargetRightAscension;
-                    } catch (PropertyNotImplementedException) {
-                        Logger.Debug("TargetRightAscension GET is not implemented in this driver");
-                        _canGetTargetRaDec = false;
-                    } catch (DriverAccessCOMException ex) {
-                        Logger.Warning(ex.Message);
-                    } catch (ASCOM.InvalidOperationException ex) {
-                        Logger.Warning(ex.Message);
-                    }
+                if (!Slewing) {
+                    val = GetProperty(nameof(Telescope.TargetRightAscension), double.NaN);
                 }
                 return val;
             }
             set {
-                try {
-                    if (Connected && _canSetTargetRaDec) {
-                        device.TargetRightAscension = value;
-                        RaisePropertyChanged();
-                    }
-                } catch (PropertyNotImplementedException ex) {
-                    Logger.Warning(ex.Message);
-                    _canSetTargetRaDec = false;
-                } catch (InvalidValueException ex) {
-                    Logger.Warning(ex.Message);
-                } catch (ASCOM.InvalidOperationException ex) {
-                    Logger.Warning(ex.Message);
-                }
+                SetProperty(nameof(Telescope.TargetRightAscension), value);
             }
         }
 
@@ -1084,13 +678,11 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
         public bool TrackingEnabled {
             get {
-                return Connected && device.Tracking;
+                return GetProperty(nameof(Telescope.Tracking), false);
             }
             set {
                 if (CanSetTrackingEnabled) {
-                    if (device.Tracking != value) {
-                        device.Tracking = value;
-                        RaisePropertyChanged();
+                    if (SetProperty(nameof(Telescope.Tracking), value)) {
                         RaisePropertyChanged(nameof(TrackingMode));
                         RaisePropertyChanged(nameof(TrackingRate));
                     }

@@ -5606,4 +5606,7 @@ Only relevant when using an ASCOM camera driver!</value>
   <data name="LblFanSpeed" xml:space="preserve">
     <value>Fan speed</value>
   </data>
+  <data name="LblUnableToConnect" xml:space="preserve">
+    <value>Unable to connect to {0}. Reason: {1}</value>
+  </data>
 </root>

@@ -83,68 +83,41 @@ namespace NINA.Equipment.Equipment.MyDome {
         public AscomDome(string domeId, string domeName) : base(domeId, domeName) {
         }
 
-        private T TryGetProperty<T>(Func<T> supplier, T defaultT, ref bool isImplemented) {
-            try {
-                if (isImplemented && Connected) {
-                    return supplier();
-                } else {
-                    return defaultT;
-                }
-            } catch (PropertyNotImplementedException) {
-                isImplemented = false;
-                return defaultT;
-            } catch (Exception) {
-                return defaultT;
-            }
-        }
+        public bool DriverCanFollow => GetProperty(nameof(Dome.CanSlave), false);
 
-        private bool canSlaveImplemented = true;
-        public bool DriverCanFollow => TryGetProperty(() => device.CanSlave, false, ref canSlaveImplemented);
+        public bool CanSetShutter => GetProperty(nameof(Dome.CanSetShutter), false);
 
-        private bool canSetShutterImplemented = true;
-        public bool CanSetShutter => TryGetProperty(() => device.CanSetShutter, false, ref canSetShutterImplemented);
+        public bool CanSetPark => GetProperty(nameof(Dome.CanSetPark), false);
 
-        private bool canSetParkImplemented = true;
-        public bool CanSetPark => TryGetProperty(() => device.CanSetPark, false, ref canSetParkImplemented);
+        public bool CanSetAzimuth => GetProperty(nameof(Dome.CanSetAzimuth), false);
 
-        private bool canSetAzimuthImplemented = true;
-        public bool CanSetAzimuth => TryGetProperty(() => device.CanSetAzimuth, false, ref canSetAzimuthImplemented);
+        public bool CanPark => GetProperty(nameof(Dome.CanPark), false);
 
-        private bool canParkImplemented = true;
-        public bool CanPark => TryGetProperty(() => device.CanPark, false, ref canParkImplemented);
+        public bool CanFindHome => GetProperty(nameof(Dome.CanFindHome), false);
 
-        private bool canFindHomeImplemented = true;
-        public bool CanFindHome => TryGetProperty(() => device.CanFindHome, false, ref canFindHomeImplemented);
+        public double Azimuth => GetProperty(nameof(Dome.Azimuth), -1d);
 
-        private bool azimuthImplemented = true;
-        public double Azimuth => TryGetProperty(() => device.Azimuth, -1, ref azimuthImplemented);
+        public bool AtPark => GetProperty(nameof(Dome.AtPark), false);
 
-        private bool atParkImplemented = true;
-        public bool AtPark => TryGetProperty(() => device.AtPark, false, ref atParkImplemented);
-
-        private bool atHomeImplemented = true;
-        public bool AtHome => TryGetProperty(() => device.AtPark, false, ref atHomeImplemented);
-
-        private bool slavedImplemented = true;
+        public bool AtHome => GetProperty(nameof(Dome.AtPark), false);
 
         public bool DriverFollowing {
             get {
-                return TryGetProperty<bool>(() => device.Slaved, false, ref slavedImplemented);
+                return GetProperty(nameof(Dome.Slaved), false);
             }
             set {
-                if (Connected) {
-                    device.Slaved = value;
-                    RaisePropertyChanged();
-                }
+                SetProperty(nameof(Dome.Slaved), value);
             }
         }
 
-        private bool slewingImplemented = true;
-        public bool Slewing => TryGetProperty(() => device.Slewing, false, ref slewingImplemented);
+        public bool Slewing => GetProperty(nameof(Dome.Slewing), false);
 
-        private bool shutterStatusImplemented = true;
-
-        public ShutterState ShutterStatus => TryGetProperty(() => device.ShutterStatus.FromASCOM(), ShutterState.ShutterNone, ref shutterStatusImplemented);
+        public ShutterState ShutterStatus {
+            get {
+                var ascomState = GetProperty(nameof(Dome.ShutterStatus), ASCOM.DeviceInterface.ShutterState.shutterError);
+                return ascomState.FromASCOM();
+            }
+        }
 
         public bool CanSyncAzimuth => Connected && device.CanSyncAzimuth;
 

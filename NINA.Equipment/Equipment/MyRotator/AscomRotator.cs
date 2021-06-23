@@ -30,37 +30,27 @@ namespace NINA.Equipment.Equipment.MyRotator {
 
         public bool CanReverse {
             get {
-                if (Connected) {
-                    return device.CanReverse;
-                } else {
-                    return false;
-                }
+                return GetProperty(nameof(Rotator.CanReverse), false);
             }
         }
 
         public bool Reverse {
             get {
                 if (CanReverse) {
-                    return device.Reverse;
-                } else {
-                    return false;
+                    return GetProperty(nameof(Rotator.Reverse), false);
                 }
+                return false;
             }
             set {
                 if (CanReverse) {
-                    device.Reverse = value;
-                    RaisePropertyChanged();
+                    SetProperty(nameof(Rotator.Reverse), value);
                 }
             }
         }
 
         public bool IsMoving {
             get {
-                if (Connected) {
-                    return device.IsMoving;
-                } else {
-                    return false;
-                }
+                return GetProperty(nameof(Rotator.IsMoving), false);
             }
         }
 
@@ -82,21 +72,13 @@ namespace NINA.Equipment.Equipment.MyRotator {
 
         public float MechanicalPosition {
             get {
-                if (Connected) {
-                    return device.Position;
-                } else {
-                    return float.NaN;
-                }
+                return GetProperty(nameof(Rotator.Position), float.NaN);
             }
         }
 
         public float StepSize {
             get {
-                if (Connected) {
-                    return device.StepSize;
-                } else {
-                    return float.NaN;
-                }
+                return GetProperty(nameof(Rotator.StepSize), float.NaN);
             }
         }
 

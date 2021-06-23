@@ -12,15 +12,19 @@
 
 #endregion "copyright"
 
+using ASCOM;
 using ASCOM.DriverAccess;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Core.Utility.Notification;
 using NINA.Equipment.Interfaces;
+using NINA.Equipment.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -82,49 +86,56 @@ namespace NINA.Equipment.Equipment {
 
         private bool connected;
 
+        private void DisconnectOnConnectionError() {
+            try {
+                Notification.ShowWarning(ConnectionLostMessage);
+                Disconnect();
+            } catch (Exception ex) {
+                Logger.Error(ex);
+            }
+        }
+
         public bool Connected {
             get {
-                if (connected) {
-                    bool val = false;
+                lock (lockObj) {
+                    if (connected && device != null) {
+                        bool val = false;
 
-                    try {
-                        bool expected;
-                        lock (lockObj) {
-                            val = device.Connected;
-                            expected = connected;
-                        }
-                        if (expected != val) {
-                            Logger.Error($"{Name} should be connected={expected} but reports to be connected={val}");
-                            Notification.ShowWarning(ConnectionLostMessage);
-                            Disconnect();
-                        }
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                        Notification.ShowWarning(ConnectionLostMessage);
                         try {
-                            Disconnect();
-                        } catch (Exception disconnectEx) {
-                            Logger.Error(disconnectEx);
+                            bool expected;
+                            val = device?.Connected ?? false;
+                            expected = connected;
+                            if (expected != val) {
+                                Logger.Error($"{Name} should be connected but reports to be disconnected. Trying to reconnect...");
+                                try {
+                                    Connected = true;
+                                    if (!device.Connected) {
+                                        throw new NotConnectedException();
+                                    }
+                                    val = true;
+                                    Logger.Info($"{Name} reconnection successful");
+                                } catch (Exception ex) {
+                                    Logger.Error("Reconnection failed. The device might be disconnected! - ", ex.Message);
+                                    DisconnectOnConnectionError();
+                                }
+                            }
+                        } catch (Exception ex) {
+                            Logger.Error(ex);
+                            DisconnectOnConnectionError();
                         }
+                        return val;
+                    } else {
+                        return false;
                     }
-                    return val;
-                } else {
-                    return false;
                 }
             }
             private set {
-                try {
-                    Logger.Debug($"{Name} - Try SET Connected to {value}");
-                    lock (lockObj) {
-                        if (device != null) {
-                            device.Connected = value;
-                            connected = value;
-                        }
+                lock (lockObj) {
+                    if (device != null) {
+                        Logger.Debug($"SET {Name} Connected to {value}");
+                        device.Connected = value;
+                        connected = value;
                     }
-                } catch (Exception ex) {
-                    Logger.Error($"{Name} - Connected SET failed", ex);
-                    Notification.ShowError(Loc.Instance["LblFailedChangingConnectionState"] + Environment.NewLine + ex.Message);
-                    connected = false;
                 }
             }
         }
@@ -158,6 +169,8 @@ namespace NINA.Equipment.Equipment {
         public Task<bool> Connect(CancellationToken token) {
             return Task.Run(async () => {
                 try {
+                    propertyGETMemory = new Dictionary<string, PropertyMemory>();
+                    propertySETMemory = new Dictionary<string, PropertyMemory>();
                     Logger.Trace($"{Name} - Calling PreConnect");
                     await PreConnect();
 
@@ -175,7 +188,7 @@ namespace NINA.Equipment.Equipment {
                     CoreUtil.HandleAscomCOMException(ex);
                 } catch (Exception ex) {
                     Logger.Error(ex);
-                    Notification.ShowError($"Unable to connect to {Id} - {Name} " + ex.Message);
+                    Notification.ShowError(string.Format(Loc.Instance["LblUnableToConnect"], Name, ex.Message));
                 }
                 return Connected;
             });
@@ -206,18 +219,175 @@ namespace NINA.Equipment.Equipment {
         }
 
         public void Disconnect() {
-            Logger.Trace($"{Name} - Calling PreDisconnect");
-            PreDisconnect();
-            Connected = false;
-            Logger.Trace($"{Name} - Calling PostDisconnect");
-            PostDisconnect();
-            Dispose();
+            lock (lockObj) {
+                Logger.Info($"Disconnecting from {Id} {Name}");
+                Logger.Trace($"{Name} - Calling PreDisconnect");
+                PreDisconnect();
+                try {
+                    Connected = false;
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+                connected = false;
+                Logger.Trace($"{Name} - Calling PostDisconnect");
+                PostDisconnect();
+                Dispose();
+            }
+            RaiseAllPropertiesChanged();
         }
 
         public void Dispose() {
             Logger.Trace($"{Name} - Disposing device");
             device?.Dispose();
             device = null;
+        }
+
+        protected Dictionary<string, PropertyMemory> propertyGETMemory = new Dictionary<string, PropertyMemory>();
+        protected Dictionary<string, PropertyMemory> propertySETMemory = new Dictionary<string, PropertyMemory>();
+
+        /// <summary>
+        /// Tries to get a property by its name. If an exception occurs the last known value will be used instead.
+        /// If a PropertyNotImplementedException occurs, the "isImplemetned" value will be set to false
+        /// </summary>
+        /// <typeparam name="PropT"></typeparam>
+        /// <param name="propertyName">Property Name of the AscomDevice property</param>
+        /// <param name="defaultValue">The default value to be returned when not connected or not implemented</param>
+        /// <returns></returns>
+        protected PropT GetProperty<PropT>(string propertyName, PropT defaultValue) {
+            if (device != null) {
+                var retries = 3;
+
+                var interval = TimeSpan.FromMilliseconds(100);
+                var type = device.GetType();
+
+                if (!propertyGETMemory.TryGetValue(propertyName, out var memory)) {
+                    memory = new PropertyMemory(type.GetProperty(propertyName));
+                    propertyGETMemory[propertyName] = memory;
+                }
+
+                for (int i = 0; i < retries; i++) {
+                    try {
+                        if (i > 0) {
+                            Thread.Sleep(interval);
+                            Logger.Info($"Retrying to GET {type.Name}.{propertyName} - Attempt {i + 1} / {retries}");
+                        }
+
+                        if (memory.IsImplemented && Connected) {
+                            PropT value = (PropT)memory.GetValue(device);
+
+                            Logger.Trace($"GET {type.Name}.{propertyName}: {value}");
+
+                            return (PropT)memory.LastValue;
+                        } else {
+                            return defaultValue;
+                        }
+                    } catch (Exception ex) {
+                        if (ex.InnerException is PropertyNotImplementedException || ex.InnerException is System.NotImplementedException) {
+                            Logger.Info($"Property {type.Name}.{propertyName} GET is not implemented in this driver ({Name})");
+
+                            memory.IsImplemented = false;
+                            return defaultValue;
+                        }
+
+                        if (ex.InnerException is NotConnectedException) {
+                            Logger.Error($"{Name} is not connected ", ex.InnerException);
+                        }
+
+                        var message = ex.InnerException?.Message ?? ex.Message;
+                        Logger.Error($"An unexpected exception occurred during GET of {type.Name}.{propertyName}: ", message);
+                    }
+                }
+
+                var val = (PropT)memory.LastValue;
+                Logger.Info($"GET {type.Name}.{propertyName} failed - Returning last known value {val}");
+                return val;
+            }
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Tries to set a property by its name. If an exception occurs it will be logged.
+        /// If a PropertyNotImplementedException occurs, the "isImplemetned" value will be set to false
+        /// </summary>
+        /// <typeparam name="PropT"></typeparam>
+        /// <param name="propertyName">Property Name of the AscomDevice property</param>
+        /// <param name="value">The value to be set for the given property</param>
+        /// <returns></returns>
+        protected bool SetProperty<PropT>(string propertyName, PropT value, [CallerMemberName] string originalPropertyName = null) {
+            if (device != null) {
+                var type = device.GetType();
+
+                if (!propertySETMemory.TryGetValue(propertyName, out var memory)) {
+                    memory = new PropertyMemory(type.GetProperty(propertyName));
+                    propertySETMemory[propertyName] = memory;
+                }
+
+                try {
+                    if (memory.IsImplemented && Connected) {
+                        memory.SetValue(device, value);
+
+                        Logger.Trace($"SET {type.Name}.{propertyName}: {value}");
+                        RaisePropertyChanged(originalPropertyName);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } catch (Exception ex) {
+                    if (ex.InnerException is PropertyNotImplementedException || ex.InnerException is System.NotImplementedException) {
+                        Logger.Info($"Property {type.Name}.{propertyName} SET is not implemented in this driver ({Name})");
+                        memory.IsImplemented = false;
+                        return false;
+                    }
+
+                    if (ex is InvalidValueException) {
+                        Logger.Warning(ex.Message);
+                        return false;
+                    }
+
+                    if (ex is ASCOM.InvalidOperationException) {
+                        Logger.Warning(ex.Message);
+                        return false;
+                    }
+
+                    if (ex.InnerException is NotConnectedException) {
+                        Logger.Error($"{Name} is not connected ", ex.InnerException);
+                        return false;
+                    }
+
+                    var message = ex.InnerException?.Message ?? ex.Message;
+                    Logger.Error($"An unexpected exception occurred during SET of {type.Name}.{propertyName}: {message}");
+                }
+            }
+            return false;
+        }
+
+        protected class PropertyMemory {
+
+            public PropertyMemory(PropertyInfo p) {
+                info = p;
+                IsImplemented = true;
+
+                LastValue = null;
+                if (p.PropertyType.IsValueType) {
+                    LastValue = Activator.CreateInstance(p.PropertyType);
+                }
+            }
+
+            private PropertyInfo info;
+            public bool IsImplemented { get; set; }
+            public object LastValue { get; set; }
+
+            public object GetValue(AscomDriver device) {
+                var value = info.GetValue(device);
+
+                LastValue = value;
+
+                return value;
+            }
+
+            public void SetValue(AscomDriver device, object value) {
+                info.SetValue(device, value);
+            }
         }
     }
 }

@@ -34,35 +34,22 @@ namespace NINA.Equipment.Equipment.MyFocuser {
 
         public bool IsMoving {
             get {
-                if (Connected) {
-                    return device.IsMoving;
-                } else {
-                    return false;
-                }
+                return GetProperty(nameof(Focuser.IsMoving), false);
             }
         }
 
         public int MaxIncrement {
             get {
-                if (Connected) {
-                    return Math.Abs(device.MaxIncrement);
-                } else {
-                    return -1;
-                }
+                return GetProperty(nameof(Focuser.MaxIncrement), -1);
             }
         }
 
         public int MaxStep {
             get {
-                if (Connected) {
-                    return Math.Abs(device.MaxStep);
-                } else {
-                    return -1;
-                }
+                return GetProperty(nameof(Focuser.MaxStep), -1);
             }
         }
 
-        private bool _canGetPosition;
         private bool _isAbsolute;
 
         //Used for relative focusers
@@ -71,93 +58,43 @@ namespace NINA.Equipment.Equipment.MyFocuser {
         public int Position {
             get {
                 if (_isAbsolute) {
-                    int pos = -1;
-                    try {
-                        if (Connected && _canGetPosition) {
-                            pos = Math.Abs(device.Position);
-                        }
-                    } catch (PropertyNotImplementedException) {
-                        _canGetPosition = false;
-                    } catch (System.NotImplementedException) {
-                        _canGetPosition = false;
-                    } catch (DriverException ex) {
-                        Logger.Error(ex);
-                    } catch (Exception ex) {
-                        Logger.Error(ex);
-                    }
-                    return pos;
+                    return GetProperty(nameof(Focuser.Position), -1); ;
                 } else {
                     return internalPosition;
                 }
             }
         }
 
-        private bool _canGetStepSize;
-
         public double StepSize {
             get {
-                double stepSize = double.NaN;
-                try {
-                    if (Connected && _canGetStepSize) {
-                        stepSize = device.StepSize;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _canGetStepSize = false;
-                } catch (System.NotImplementedException) {
-                    _canGetStepSize = false;
-                } catch (DriverException ex) {
-                    Logger.Error(ex);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                }
-                return stepSize;
+                return GetProperty(nameof(Focuser.StepSize), double.NaN);
             }
         }
 
         public bool TempCompAvailable {
             get {
-                if (Connected) {
-                    return device.TempCompAvailable;
-                } else {
-                    return false;
-                }
+                return GetProperty(nameof(Focuser.TempCompAvailable), false);
             }
         }
 
         public bool TempComp {
             get {
-                if (Connected && device.TempCompAvailable) {
-                    return device.TempComp;
+                if (TempCompAvailable) {
+                    return GetProperty(nameof(Focuser.TempComp), false);
                 } else {
                     return false;
                 }
             }
             set {
-                if (Connected && device.TempCompAvailable) {
-                    device.TempComp = value;
+                if (Connected && TempCompAvailable) {
+                    SetProperty(nameof(Focuser.TempCompAvailable), value);
                 }
             }
         }
 
-        private bool _hasTemperature;
-
         public double Temperature {
             get {
-                double temperature = double.NaN;
-                try {
-                    if (Connected && _hasTemperature) {
-                        temperature = device.Temperature;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasTemperature = false;
-                } catch (System.NotImplementedException) {
-                    _hasTemperature = false;
-                } catch (DriverException ex) {
-                    Logger.Error(ex);
-                } catch (Exception ex) {
-                    Logger.Error(ex);
-                }
-                return temperature;
+                return GetProperty(nameof(Focuser.Temperature), double.NaN);
             }
         }
 
@@ -235,9 +172,6 @@ namespace NINA.Equipment.Equipment.MyFocuser {
         private void Initialize() {
             internalPosition = device.MaxStep / 2;
             _isAbsolute = device.Absolute;
-            _canGetPosition = true;
-            _canGetStepSize = true;
-            _hasTemperature = true;
             _canHalt = true;
         }
 

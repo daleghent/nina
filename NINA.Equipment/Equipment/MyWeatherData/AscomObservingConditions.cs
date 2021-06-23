@@ -29,263 +29,91 @@ namespace NINA.Equipment.Equipment.MyWeatherData {
         public AscomObservingConditions(string weatherDataId, string weatherDataName) : base(weatherDataId, weatherDataName) {
         }
 
-        private bool _hasAveragePeriod;
-
         public double AveragePeriod {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasAveragePeriod) {
-                        wxstat = device.AveragePeriod;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasAveragePeriod = false;
-                }
-                return wxstat;
-            }
-            set {
-                try {
-                    if (Connected && _hasAveragePeriod) {
-                        device.AveragePeriod = value;
-                    }
-                } catch (InvalidValueException ex) {
-                    Logger.Error(ex);
-                    Notification.ShowError(ex.Message);
-                }
+                return GetProperty(nameof(ObservingConditions.AveragePeriod), double.NaN);
             }
         }
-
-        private bool _hasCloudCover;
 
         public double CloudCover {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasCloudCover) {
-                        wxstat = device.CloudCover;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasCloudCover = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.CloudCover), double.NaN);
             }
         }
-
-        private bool _hasDewPoint;
 
         public double DewPoint {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasDewPoint) {
-                        wxstat = device.DewPoint;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasDewPoint = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.DewPoint), double.NaN);
             }
         }
-
-        private bool _hasHumidity;
 
         public double Humidity {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasHumidity) {
-                        wxstat = device.Humidity;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasHumidity = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.Humidity), double.NaN);
             }
         }
-
-        private bool _hasPressure;
 
         public double Pressure {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasPressure) {
-                        wxstat = device.Pressure;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasPressure = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.Pressure), double.NaN);
             }
         }
-
-        private bool _hasRainRate;
 
         public double RainRate {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasRainRate) {
-                        wxstat = device.RainRate;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasRainRate = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.RainRate), double.NaN);
             }
         }
-
-        private bool _hasSkyBrightness;
 
         public double SkyBrightness {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasSkyBrightness) {
-                        wxstat = device.SkyBrightness;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasSkyBrightness = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.SkyBrightness), double.NaN);
             }
         }
-
-        private bool _hasSkyQuality;
 
         public double SkyQuality {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasSkyQuality) {
-                        wxstat = device.SkyQuality;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasSkyQuality = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.SkyQuality), double.NaN);
             }
         }
-
-        private bool _hasSkyTemperature;
 
         public double SkyTemperature {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasSkyTemperature) {
-                        wxstat = device.SkyTemperature;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasSkyTemperature = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.SkyTemperature), double.NaN);
             }
         }
-
-        private bool _hasStarFWHM;
 
         public double StarFWHM {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasStarFWHM) {
-                        wxstat = device.StarFWHM;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasStarFWHM = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.StarFWHM), double.NaN);
             }
         }
-
-        private bool _hasTemperature;
 
         public double Temperature {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasTemperature) {
-                        wxstat = device.Temperature;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasTemperature = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.Temperature), double.NaN);
             }
         }
-
-        private bool _hasWindDirection;
 
         public double WindDirection {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasWindDirection) {
-                        wxstat = device.WindDirection;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasWindDirection = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.WindDirection), double.NaN);
             }
         }
-
-        private bool _hasWindGust;
 
         public double WindGust {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasWindGust) {
-                        wxstat = device.WindGust;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasWindGust = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.WindGust), double.NaN);
             }
         }
 
-        private bool _hasWindSpeed;
-
         public double WindSpeed {
             get {
-                double wxstat = double.NaN;
-                try {
-                    if (Connected && _hasWindSpeed) {
-                        wxstat = device.WindSpeed;
-                    }
-                } catch (PropertyNotImplementedException) {
-                    _hasWindSpeed = false;
-                }
-                return wxstat;
+                return GetProperty(nameof(ObservingConditions.WindSpeed), double.NaN);
             }
         }
 
         protected override string ConnectionLostMessage => Loc.Instance["LblWeatherConnectionLost"];
-
-        private void Init() {
-            _hasAveragePeriod = true;
-            _hasCloudCover = true;
-            _hasDewPoint = true;
-            _hasHumidity = true;
-            _hasPressure = true;
-            _hasRainRate = true;
-            _hasSkyBrightness = true;
-            _hasSkyQuality = true;
-            _hasSkyTemperature = true;
-            _hasStarFWHM = true;
-            _hasTemperature = true;
-            _hasWindDirection = true;
-            _hasWindGust = true;
-            _hasWindSpeed = true;
-        }
-
-        protected override Task PostConnect() {
-            Init();
-            return Task.CompletedTask;
-        }
 
         protected override ObservingConditions GetInstance(string id) {
             return new ObservingConditions(id); ;

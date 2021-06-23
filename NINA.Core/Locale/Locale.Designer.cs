@@ -15179,6 +15179,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to connect to {0}. Reason: {1}.
+        /// </summary>
+        internal static string LblUnableToConnect {
+            get {
+                return ResourceManager.GetString("LblUnableToConnect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to connect camera.
         /// </summary>
         internal static string LblUnableToConnectCamera {

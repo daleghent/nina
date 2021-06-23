@@ -19,7 +19,6 @@ using System.Collections;
 namespace NINA.Equipment.Interfaces {
 
     public interface IFilterWheel : IDevice {
-        short InterfaceVersion { get; }
         int[] FocusOffsets { get; }
         string[] Names { get; }
         short Position { get; set; }

@@ -34,13 +34,7 @@ namespace NINA.Equipment.Equipment.MySafetyMonitor {
 
         public bool IsSafe {
             get {
-                if (Connected) {
-                    var isSafe = device.IsSafe;
-                    Logger.Trace($"AscomSafetyMonitor - IsSafe: {isSafe}");
-                    return isSafe;
-                } else {
-                    return false;
-                }
+                return GetProperty(nameof(SafetyMonitor.IsSafe), false);
             }
         }
 

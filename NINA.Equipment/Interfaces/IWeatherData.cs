@@ -19,7 +19,7 @@ namespace NINA.Equipment.Interfaces {
         /// <summary>
         /// Time period, in hours, over which to average sensor readings
         /// </summary>
-        double AveragePeriod { get; set; }
+        double AveragePeriod { get; }
 
         /// <summary>
         /// Percent of sky covered by clouds
