@@ -340,13 +340,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         }
 
         public async Task Disconnect() {
+            if (Focuser != null) {
+                Logger.Info("Disconnected Focuser");
+            }
+
             await updateTimer.Stop();
             Focuser?.Disconnect();
             Focuser = null;
             FocuserInfo = DeviceInfo.CreateDefaultInstance<FocuserInfo>();
             BroadcastFocuserInfo();
             RaisePropertyChanged(nameof(Focuser));
-            Logger.Info("Disconnected Focuser");
         }
 
         public void RefreshFocuserList(object obj) {
