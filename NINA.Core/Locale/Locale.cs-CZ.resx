@@ -5579,18 +5579,24 @@ Význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Značky</value>
   </data>
   <data name="LblBinAverageEnabled" xml:space="preserve">
-    <value>Binning averages pixels</value>
+    <value>Binning s průměrnou hodnotou pixelů</value>
   </data>
   <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
-    <value>By default, binning is additive. Data are still the same bitness as the camera, so bright pixels can be clipped. Average mode prevents this clipping from taking place at the expense of some dynamic range due to integer division.</value>
+    <value>Ve výchozím nastavení je binování aditivní. Data mají stále stejné bity jako kamera, takže lze oříznout jasné pixely. Průměrný režim zabrání tomu, aby k tomuto řezu došlo na úkor dynamického rozsahu v důsledku celého dělení.</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd" xml:space="preserve">
-    <value>Abort and run end of sequence instructions</value>
+    <value>Zrušit a spustit pokyny na konci sekvence</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd_Tooltip" xml:space="preserve">
-    <value>Interrupts the currently running sequence instruction and skips everything up until the end of sequence instructions to be run</value>
+    <value>Přeruší aktuálně spuštěnou instrukci sekvence a přeskočí vše až do konce instrukcí sekvence, které mají být spuštěny</value>
   </data>
   <data name="Lbl_Sequencer_SkipCurrentInstructions" xml:space="preserve">
-    <value>Skip currently running instruction(s)</value>
+    <value>Přeskočit aktuálně spuštěný pokyn(y)</value>
+  </data>
+  <data name="LblFanSpeed" xml:space="preserve">
+    <value>Fan speed</value>
+  </data>
+  <data name="LblUnableToConnect" xml:space="preserve">
+    <value>Unable to connect to {0}. Reason: {1}</value>
   </data>
 </root>

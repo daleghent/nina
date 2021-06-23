@@ -5604,4 +5604,10 @@ Only relevant when using an ASCOM camera driver!</value>
   <data name="Lbl_Sequencer_SkipCurrentInstructions" xml:space="preserve">
     <value>Skip currently running instruction(s)</value>
   </data>
+  <data name="LblFanSpeed" xml:space="preserve">
+    <value>Fan speed</value>
+  </data>
+  <data name="LblUnableToConnect" xml:space="preserve">
+    <value>Unable to connect to {0}. Reason: {1}</value>
+  </data>
 </root>

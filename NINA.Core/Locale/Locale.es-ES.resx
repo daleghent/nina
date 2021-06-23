@@ -5579,18 +5579,24 @@ Este ajuste no tendrá efecto en los sensores de color.
     <value>Etiquetas</value>
   </data>
   <data name="LblBinAverageEnabled" xml:space="preserve">
-    <value>Binning averages pixels</value>
+    <value>El binning promedia los píxeles</value>
   </data>
   <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
-    <value>By default, binning is additive. Data are still the same bitness as the camera, so bright pixels can be clipped. Average mode prevents this clipping from taking place at the expense of some dynamic range due to integer division.</value>
+    <value>Por defecto, el binning es aditivo. Los datos siguen teniendo la misma densidad de bits que la cámara, por lo que los píxeles brillantes pueden ser recortados. El modo promedio evita que se produzca este recorte a costa de un cierto rango dinámico debido a la división por enteros.</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd" xml:space="preserve">
-    <value>Abort and run end of sequence instructions</value>
+    <value>Aborta y ejecuta el final de las instrucciones de secuencia</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd_Tooltip" xml:space="preserve">
-    <value>Interrupts the currently running sequence instruction and skips everything up until the end of sequence instructions to be run</value>
+    <value>Interrumpe la instrucción de secuencia que se está ejecutando actualmente y se salta todo hasta el final de las instrucciones de secuencia que se van a ejecutar</value>
   </data>
   <data name="Lbl_Sequencer_SkipCurrentInstructions" xml:space="preserve">
-    <value>Skip currently running instruction(s)</value>
+    <value>Saltar instrucción(es) que se está(n) ejecutando actualmente</value>
+  </data>
+  <data name="LblFanSpeed" xml:space="preserve">
+    <value>Fan speed</value>
+  </data>
+  <data name="LblUnableToConnect" xml:space="preserve">
+    <value>Unable to connect to {0}. Reason: {1}</value>
   </data>
 </root>
