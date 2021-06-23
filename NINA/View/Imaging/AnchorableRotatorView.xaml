@@ -86,12 +86,13 @@
                         <UniformGrid VerticalAlignment="Center" Columns="2">
                             <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblTargetPosition}" />
                             <StackPanel Orientation="Horizontal">
-                                <TextBox
+                                <ninactrl:UnitTextBox
                                     Height="25"
                                     MinWidth="90"
                                     Margin="5,0,0,0"
                                     VerticalContentAlignment="Center"
-                                    Text="{Binding TargetPosition, StringFormat={}{0:0.##}°}" />
+                                    Text="{Binding TargetPosition, StringFormat={}{0:0.##}}"
+                                    Unit="°" />
                             </StackPanel>
                         </UniformGrid>
                     </Border>
