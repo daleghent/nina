@@ -5594,9 +5594,9 @@ Význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Přeskočit aktuálně spuštěný pokyn(y)</value>
   </data>
   <data name="LblFanSpeed" xml:space="preserve">
-    <value>Fan speed</value>
+    <value>Rychlost ventilátoru</value>
   </data>
   <data name="LblUnableToConnect" xml:space="preserve">
-    <value>Unable to connect to {0}. Reason: {1}</value>
+    <value>Nelze se připojit k {0}. Důvod: {1}</value>
   </data>
 </root>
