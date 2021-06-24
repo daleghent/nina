@@ -154,6 +154,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public override string Method { get => "get_profiles"; }
     }
 
+    public class Phd2GetLockPosition : Phd2Method {
+        public override string Id { get => PHD2EventId.GET_LOCK_POSITION; }
+        public override string Method { get => "get_lock_position"; }
+    }
+
     public class Phd2SetProfile : Phd2Method<Array> {
         public override string Id { get => PHD2EventId.SET_PROFILE; }
         public override string Method { get => "set_profile"; }
@@ -170,6 +175,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public const string SET_CONNECTED = "20";
         public const string SET_PROFILE = "30";
 
+        public const string GET_LOCK_POSITION = "94";
         public const string GET_CAMERA_FRAME_SIZE = "95";
         public const string GET_PIXEL_SCALE = "96";
         public const string GET_STAR_IMAGE = "97";
@@ -213,6 +219,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
     public class GetProfilesResponse : PhdMethodResponse {
         public Phd2ProfileResponse[] result;
+    }
+
+    public class GetLockPositionResponse : PhdMethodResponse {
+        public int[] result;
     }
 
     public class PhdError {

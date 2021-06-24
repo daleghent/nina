@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NINA.Core.Interfaces;
 using NINA.Equipment.Equipment;
+using NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents;
 
 namespace NINATest {
 
@@ -49,22 +50,22 @@ namespace NINATest {
             var historySize = 100;
             GuideStepsHistory gsh = new GuideStepsHistory(historySize, GuiderScaleEnum.PIXELS, 4);
 
-            IGuideStep step1 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step1 = new PhdEventGuideStep() {
                 RADistanceRaw = -25,
                 DECDistanceRaw = -36
             };
 
-            IGuideStep step2 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step2 = new PhdEventGuideStep() {
                 RADistanceRaw = -625,
                 DECDistanceRaw = -1296
             };
 
-            IGuideStep step3 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step3 = new PhdEventGuideStep() {
                 RADistanceRaw = -25,
                 DECDistanceRaw = -36
             };
 
-            IGuideStep step4 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step4 = new PhdEventGuideStep() {
                 RADistanceRaw = -625,
                 DECDistanceRaw = -1296
             };
@@ -88,22 +89,22 @@ namespace NINATest {
             GuideStepsHistory gsh = new GuideStepsHistory(historySize, GuiderScaleEnum.ARCSECONDS, 4);
             gsh.PixelScale = scale;
 
-            IGuideStep step1 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step1 = new PhdEventGuideStep() {
                 RADistanceRaw = -25,
                 DECDistanceRaw = -36
             };
 
-            IGuideStep step2 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step2 = new PhdEventGuideStep() {
                 RADistanceRaw = -625,
                 DECDistanceRaw = -1296
             };
 
-            IGuideStep step3 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step3 = new PhdEventGuideStep() {
                 RADistanceRaw = -25,
                 DECDistanceRaw = -36
             };
 
-            IGuideStep step4 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step4 = new PhdEventGuideStep() {
                 RADistanceRaw = -625,
                 DECDistanceRaw = -1296
             };
@@ -127,22 +128,22 @@ namespace NINATest {
             GuideStepsHistory gsh = new GuideStepsHistory(historySize, GuiderScaleEnum.ARCSECONDS, 4);
             gsh.PixelScale = scale;
 
-            IGuideStep step1 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step1 = new PhdEventGuideStep() {
                 RADistanceRaw = -25,
                 DECDistanceRaw = -36
             };
 
-            IGuideStep step2 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step2 = new PhdEventGuideStep() {
                 RADistanceRaw = -625,
                 DECDistanceRaw = -1296
             };
 
-            IGuideStep step3 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step3 = new PhdEventGuideStep() {
                 RADistanceRaw = -25,
                 DECDistanceRaw = -36
             };
 
-            IGuideStep step4 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step4 = new PhdEventGuideStep() {
                 RADistanceRaw = -625,
                 DECDistanceRaw = -1296
             };
@@ -167,32 +168,32 @@ namespace NINATest {
             var historySize = 5;
             GuideStepsHistory gsh = new GuideStepsHistory(historySize, GuiderScaleEnum.PIXELS, 4);
 
-            IGuideStep step1 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step1 = new PhdEventGuideStep() {
                 RADistanceRaw = -1,
                 DECDistanceRaw = -1
             };
 
-            IGuideStep step2 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step2 = new PhdEventGuideStep() {
                 RADistanceRaw = -2,
                 DECDistanceRaw = -2
             };
 
-            IGuideStep step3 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step3 = new PhdEventGuideStep() {
                 RADistanceRaw = -3,
                 DECDistanceRaw = -3
             };
 
-            IGuideStep step4 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step4 = new PhdEventGuideStep() {
                 RADistanceRaw = -4,
                 DECDistanceRaw = -4
             };
 
-            IGuideStep step5 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step5 = new PhdEventGuideStep() {
                 RADistanceRaw = -5,
                 DECDistanceRaw = -5
             };
 
-            IGuideStep step6 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step6 = new PhdEventGuideStep() {
                 RADistanceRaw = -6,
                 DECDistanceRaw = -6
             };
@@ -221,32 +222,32 @@ namespace NINATest {
             var historySize = 5;
             GuideStepsHistory gsh = new GuideStepsHistory(historySize, GuiderScaleEnum.PIXELS, 4);
 
-            IGuideStep step1 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step1 = new PhdEventGuideStep() {
                 RADistanceRaw = -1,
                 DECDistanceRaw = -1
             };
 
-            IGuideStep step2 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step2 = new PhdEventGuideStep() {
                 RADistanceRaw = -2,
                 DECDistanceRaw = -2
             };
 
-            IGuideStep step3 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step3 = new PhdEventGuideStep() {
                 RADistanceRaw = -3,
                 DECDistanceRaw = -3
             };
 
-            IGuideStep step4 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step4 = new PhdEventGuideStep() {
                 RADistanceRaw = -4,
                 DECDistanceRaw = -4
             };
 
-            IGuideStep step5 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step5 = new PhdEventGuideStep() {
                 RADistanceRaw = -5,
                 DECDistanceRaw = -5
             };
 
-            IGuideStep step6 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step6 = new PhdEventGuideStep() {
                 RADistanceRaw = -6,
                 DECDistanceRaw = -6
             };
@@ -279,32 +280,32 @@ namespace NINATest {
             var historySize = 100;
             GuideStepsHistory gsh = new GuideStepsHistory(historySize, GuiderScaleEnum.PIXELS, 4);
 
-            IGuideStep step1 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step1 = new PhdEventGuideStep() {
                 RADuration = -1,
                 DECDuration = -1
             };
 
-            IGuideStep step2 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step2 = new PhdEventGuideStep() {
                 RADuration = -2,
                 DECDuration = -2
             };
 
-            IGuideStep step3 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step3 = new PhdEventGuideStep() {
                 RADuration = -3,
                 DECDuration = -3
             };
 
-            IGuideStep step4 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step4 = new PhdEventGuideStep() {
                 RADuration = -4,
                 DECDuration = -4
             };
 
-            IGuideStep step5 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step5 = new PhdEventGuideStep() {
                 RADuration = -5,
                 DECDuration = -5
             };
 
-            IGuideStep step6 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step6 = new PhdEventGuideStep() {
                 RADuration = -6,
                 DECDuration = -6
             };
@@ -325,32 +326,32 @@ namespace NINATest {
             var historySize = 3;
             GuideStepsHistory gsh = new GuideStepsHistory(historySize, GuiderScaleEnum.PIXELS, 4);
 
-            IGuideStep step1 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step1 = new PhdEventGuideStep() {
                 RADuration = -10,
                 DECDuration = -10
             };
 
-            IGuideStep step2 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step2 = new PhdEventGuideStep() {
                 RADuration = -20,
                 DECDuration = -20
             };
 
-            IGuideStep step3 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step3 = new PhdEventGuideStep() {
                 RADuration = -3,
                 DECDuration = -3
             };
 
-            IGuideStep step4 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step4 = new PhdEventGuideStep() {
                 RADuration = -4,
                 DECDuration = -4
             };
 
-            IGuideStep step5 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step5 = new PhdEventGuideStep() {
                 RADuration = -5,
                 DECDuration = -5
             };
 
-            IGuideStep step6 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step6 = new PhdEventGuideStep() {
                 RADuration = -6,
                 DECDuration = -6
             };
@@ -371,32 +372,32 @@ namespace NINATest {
             var historySize = 3;
             GuideStepsHistory gsh = new GuideStepsHistory(historySize, GuiderScaleEnum.PIXELS, 4);
 
-            IGuideStep step1 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step1 = new PhdEventGuideStep() {
                 RADuration = -100,
                 DECDuration = -100
             };
 
-            IGuideStep step2 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step2 = new PhdEventGuideStep() {
                 RADuration = -20,
                 DECDuration = -20
             };
 
-            IGuideStep step3 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step3 = new PhdEventGuideStep() {
                 RADuration = -3,
                 DECDuration = -3
             };
 
-            IGuideStep step4 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step4 = new PhdEventGuideStep() {
                 RADuration = -4,
                 DECDuration = -4
             };
 
-            IGuideStep step5 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step5 = new PhdEventGuideStep() {
                 RADuration = -5,
                 DECDuration = -5
             };
 
-            IGuideStep step6 = new PHD2Guider.PhdEventGuideStep() {
+            IGuideStep step6 = new PhdEventGuideStep() {
                 RADuration = -6,
                 DECDuration = -6
             };

@@ -25,7 +25,6 @@ using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,6 +34,7 @@ using NINA.Core.Interfaces;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
 using NINA.Core.Model;
+using NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
@@ -167,11 +167,6 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
         public string DriverVersion => "1.0";
 
-        public class Phd2Profile {
-            public int Id { get; set; }
-            public string Name { get; set; }
-        }
-
         // _activeProfile represents whatever GetProfile last returned
         private Phd2ProfileResponse _activeProfile;
 
@@ -191,19 +186,14 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
         public AsyncObservableCollection<Phd2Profile> AvailableProfiles { get; private set; } = new AsyncObservableCollection<Phd2Profile>();
 
-        /*private async Task<TcpClient> ConnectClient() {
-            var client = new TcpClient();
-            await client.ConnectAsync(Settings.PHD2ServerUrl, Settings.PHD2ServerPort);
-            return client;
-        }*/
         private TaskCompletionSource<bool> _tcs;
 
         public async Task<bool> Connect(CancellationToken token) {
             _tcs = new TaskCompletionSource<bool>();
             var startedPHD2 = await StartPHD2Process();
-#pragma warning disable 4014
-            Task.Run(RunListener);
-#pragma warning restore 4014
+
+            _ = Task.Run(RunListener);
+
             bool connected = await _tcs.Task;
 
             try {
@@ -218,8 +208,9 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
                 var msg = new Phd2GetPixelScale();
                 var resp = await SendMessage(msg);
-                if (resp.result != null)
+                if (resp.result != null) {
                     PixelScale = double.Parse(resp.result.ToString().Replace(",", "."), CultureInfo.InvariantCulture);
+                }
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -231,7 +222,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
         private async Task<bool> ProfileSelectionChanged() {
             if (SelectedProfile == null) {
-                Logger.Error("No SelectedProfile");
+                Logger.Error("No profile selected");
                 return false;
             }
 
@@ -408,6 +399,18 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             return null;
         }
 
+        private async Task<LockPosition> GetLockPosition(
+            int receiveTimeout = 0) {
+            var msg = new Phd2GetLockPosition();
+            var lockPositionResponse = await SendMessage<GetLockPositionResponse>(
+                msg,
+                receiveTimeout);
+            if (lockPositionResponse?.result != null && lockPositionResponse.result.Count() == 2) {
+                return new LockPosition(lockPositionResponse.result[0], lockPositionResponse.result[1]);
+            }
+            return null;
+        }
+
         private async Task<string> GetAppState(
             int receiveTimeout = 0) {
             var msg = new Phd2GetAppState();
@@ -463,52 +466,70 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     return false;
                 }
 
-                await WaitForStarSelected(progress, ct);
-                await Task.Delay(1000, ct);
-                await WaitForCalibrationFinished(progress, ct);
+                var starSelected = await WaitForStarSelected(progress, ct);
+                if (starSelected) {
+                    await Task.Delay(1000, ct);
+                    await WaitForCalibrationFinished(progress, ct);
 
-                using (var cancelOnTimeoutOrParent = CancellationTokenSource.CreateLinkedTokenSource(ct)) {
-                    var timeout = Task.Delay(
-                        retryAfterSeconds,
-                        cancelOnTimeoutOrParent.Token);
-                    var guidingHasBegun = WaitForGuidingStarted(progress, cancelOnTimeoutOrParent.Token);
+                    using (var cancelOnTimeoutOrParent = CancellationTokenSource.CreateLinkedTokenSource(ct)) {
+                        var timeout = Task.Delay(
+                            retryAfterSeconds,
+                            cancelOnTimeoutOrParent.Token);
+                        var guidingHasBegun = WaitForGuidingStarted(progress, cancelOnTimeoutOrParent.Token);
 
-                    if ((await Task.WhenAny(timeout, guidingHasBegun)) == guidingHasBegun) {
-                        // Guiding has been started successfully in time
-                        // Wait for phd2 to settle and exit
-                        await WaitForSettling(progress, ct);
-                        return await guidingHasBegun;
+                        if ((await Task.WhenAny(timeout, guidingHasBegun)) == guidingHasBegun) {
+                            // Guiding has been started successfully in time
+                            // Wait for phd2 to settle and exit
+                            await WaitForSettling(progress, ct);
+                            return true;
+                        }
+                        cancelOnTimeoutOrParent.Cancel();
                     }
-                    cancelOnTimeoutOrParent.Cancel();
-
-                    retries += 1;
-
-                    if (retries > maxRetries) {
-                        // Max number of unsuccessful retries exceeded. Exit.
-                        Logger.Info($"Phd2 - Start guiding has failed");
-                        return false;
-                    }
-
-                    Logger.Info($"Phd2 - Start guiding has timed out after {retryAfterSeconds.TotalSeconds}s. Retrying to start guiding. Attempt {retries} / {maxRetries}");
-                    progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"], Status2 = Loc.Instance["LblPHD2StartGuidingTimeoutRetry"], Progress2 = retries, MaxProgress2 = maxRetries, ProgressType2 = ApplicationStatus.StatusProgressType.ValueOfMaxValue });
-
-                    await Task.Delay(5000, ct); // 5000ms sleep between retries
-
-                    await StopGuiding(ct); // used to visual inspect that the guider is in the stopped state before retrying.
-
-                    await Task.Delay(1000, ct); // 1000ms sleep between retries
                 }
+                retries += 1;
+
+                if (retries > maxRetries) {
+                    // Max number of unsuccessful retries exceeded. Exit.
+                    Logger.Warning($"Phd2 - Start guiding has failed after {maxRetries} retries");
+                    return false;
+                }
+
+                Logger.Warning($"Phd2 - Start guiding has timed out after {retryAfterSeconds.TotalSeconds}s. Retrying to start guiding. Attempt {retries} / {maxRetries}");
+                progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"], Status2 = Loc.Instance["LblPHD2StartGuidingTimeoutRetry"], Progress2 = retries, MaxProgress2 = maxRetries, ProgressType2 = ApplicationStatus.StatusProgressType.ValueOfMaxValue });
+
+                await Task.Delay(1000, ct); // 1000ms sleep between retries
+
+                await StopGuiding(ct); // used to visual inspect that the guider is in the stopped state before retrying.
+
+                await Task.Delay(5000, ct); // 5000ms sleep between retries
             }
             return false;
         }
 
-        private async Task WaitForStarSelected(IProgress<ApplicationStatus> progress, CancellationToken ct) {
-            string state = await GetAppState(); ;
-            while (state == PhdAppState.LOOPING || state == PhdAppState.STOPPED) {
-                progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"], Status2 = Loc.Instance["LblPHD2SelectingStar"] });
-                state = await GetAppState();
-                await Task.Delay(1000, ct);
+        private async Task<bool> WaitForStarSelected(IProgress<ApplicationStatus> progress, CancellationToken ct) {
+            var lockPos = await GetLockPosition(5000);
+            if (lockPos == null) {
+                using (var timeoutCts = CancellationTokenSource.CreateLinkedTokenSource(ct)) {
+                    var timeoutTime = TimeSpan.FromSeconds(30);
+                    timeoutCts.CancelAfter(timeoutTime);
+                    try {
+                        while (lockPos == null) {
+                            await Task.Delay(1000, timeoutCts.Token);
+                            lockPos = await GetLockPosition(5000);
+                        }
+                        return true;
+                    } catch (OperationCanceledException ex) {
+                        if (ct.IsCancellationRequested) {
+                            throw ex;
+                        } else {
+                            //After {timeoutTime.TotalSeconds} the state is still in looping or stopped state, so selecting a guide star has failed
+                            Logger.Error($"Failed to select guide star after {timeoutTime.TotalSeconds} seconds");
+                            return false;
+                        }
+                    }
+                }
             }
+            return true;
         }
 
         private async Task WaitForCalibrationFinished(IProgress<ApplicationStatus> progress, CancellationToken ct) {
@@ -608,42 +629,46 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             return true;
         }
 
-        private Task<GenericPhdMethodResponse> SendMessage(Phd2Method msg, int receiveTimeout = 0) {
+        private Task<GenericPhdMethodResponse> SendMessage(Phd2Method msg, int receiveTimeout = 60000) {
             return SendMessage<GenericPhdMethodResponse>(msg, receiveTimeout);
         }
 
-        private async Task<T> SendMessage<T>(Phd2Method msg, int receiveTimeout = 0) where T : PhdMethodResponse {
-            using (var client = new TcpClient()) {
-                Logger.Debug($"Phd2 - Sending message '{JsonConvert.SerializeObject(msg)}'");
-                client.ReceiveTimeout = receiveTimeout;
-                await client.ConnectAsync(
-                    profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl,
-                    profileService.ActiveProfile.GuiderSettings.PHD2ServerPort);
-                var stream = client.GetStream();
-                var data = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(msg, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }) + Environment.NewLine);
+        private async Task<T> SendMessage<T>(Phd2Method msg, int receiveTimeout = 60000) where T : PhdMethodResponse {
+            try {
+                using (var client = new TcpClient()) {
+                    Logger.Debug($"Phd2 - Sending message '{JsonConvert.SerializeObject(msg)}'");
+                    client.ReceiveTimeout = receiveTimeout;
+                    await client.ConnectAsync(
+                        profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl,
+                        profileService.ActiveProfile.GuiderSettings.PHD2ServerPort);
+                    var stream = client.GetStream();
+                    var data = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(msg, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }) + Environment.NewLine);
 
-                await stream.WriteAsync(data, 0, data.Length);
+                    await stream.WriteAsync(data, 0, data.Length);
 
-                using (var reader = new StreamReader(stream, Encoding.UTF8)) {
-                    string line;
-                    while ((line = await reader.ReadLineAsync()) != null) {
-                        var o = JObject.Parse(line);
-                        string phdevent = "";
-                        var t = o.GetValue("id");
-                        if (t != null) {
-                            phdevent = t.ToString();
-                        }
-                        if (phdevent == msg.Id) {
-                            Logger.Debug($"Phd2 - Received message answer '{line}'");
-                            var response = o.ToObject<T>();
-                            CheckPhdError(response);
-                            return response;
+                    using (var reader = new StreamReader(stream, Encoding.UTF8)) {
+                        string line;
+                        while ((line = await reader.ReadLineAsync()) != null) {
+                            var o = JObject.Parse(line);
+                            string phdevent = "";
+                            var t = o.GetValue("id");
+                            if (t != null) {
+                                phdevent = t.ToString();
+                            }
+                            if (phdevent == msg.Id) {
+                                Logger.Debug($"Phd2 - Received message answer '{line}'");
+                                var response = o.ToObject<T>();
+                                CheckPhdError(response);
+                                return response;
+                            }
                         }
                     }
                 }
+            } catch (Exception ex) {
+                Logger.Error("Phd2 error while sending messge", ex);
             }
 
-            return null;
+            return (T)new PhdMethodResponse() { error = new PhdError() { code = -1, message = "Unable to get response from phd2" }, id = 0 };
         }
 
         public IAsyncCommand ProfileSelectionChangedCommand { get; private set; }
@@ -704,11 +729,30 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         AppState = new PhdEventAppState() { State = "Stopped" };
                         break;
                     }
+                case "CalibrationComplete": {
+                        break;
+                    }
+                case "StarSelected": {
+                        Logger.Debug($"PHD2 - Star selected");
+                        break;
+                    }
                 case "StarLost": {
+                        Logger.Debug($"PHD2 - Star lost!");
                         AppState = new PhdEventAppState() { State = "LostLock" };
                         break;
                     }
+                case "LockPositionSet": {
+                        var lockPosition = message.ToObject<PhdEventLockPositionSet>();
+                        Logger.Info($"PHD2 - Lock position set at x:{lockPosition.X} y:{lockPosition.Y}");
+                        break;
+                    }
                 case "LockPositionLost": {
+                        Logger.Info($"PHD2 - Lock position lost!");
+                        AppState = new PhdEventAppState() { State = "LostLock" };
+                        break;
+                    }
+                case "LockPositionShiftLimitReached": {
+                        Logger.Debug($"PHD2 - LockPositionShiftLimitReached!");
                         break;
                     }
                 default: {
@@ -897,452 +941,5 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         public event EventHandler PHD2ConnectionLost;
 
         public event EventHandler<IGuideStep> GuideEvent;
-
-        [DataContract]
-        public class PhdEvent : BaseINPC, IGuideEvent {
-
-            [DataMember]
-            public string Event { get; set; }
-
-            [DataMember]
-            public string TimeStamp { get; set; }
-
-            [DataMember]
-            public string Host { get; set; }
-
-            [DataMember]
-            public int Inst { get; set; }
-        }
-
-        public class PhdEventVersion : PhdEvent {
-            public string PHDVersion;
-            public string PHDSubver;
-            public int MsgVersion;
-        }
-
-        public class PhdEventLockPositionSet : PhdEvent {
-            public int X;
-            public int Y;
-        }
-
-        public class PhdEventCalibrationComplete : PhdEvent {
-            public string Mount;
-        }
-
-        public class PhdEventStarSelected : PhdEvent {
-            public int X;
-            public int Y;
-        }
-
-        public class PhdEventStartGuiding : PhdEvent {
-        }
-
-        public class PhdEventPaused : PhdEvent {
-        }
-
-        public class PhdEventStartCalibration : PhdEvent {
-            public string Mount;
-        }
-
-        public class PhdEventAppState : PhdEvent, IGuiderAppState {
-            private string state;
-
-            public string State {
-                get {
-                    return state;
-                }
-
-                set {
-                    state = value;
-                    RaisePropertyChanged();
-                }
-            }
-        }
-
-        public sealed class PhdAppState {
-            public static readonly string STOPPED = "Stopped";
-            public static readonly string SELECTED = "Selected";
-            public static readonly string CALIBRATING = "Calibrating";
-            public static readonly string GUIDING = "Guiding";
-            public static readonly string LOSTLOCK = "LostLock";
-            public static readonly string PAUSED = "Paused";
-            public static readonly string LOOPING = "Looping";
-        }
-
-        public class PhdEventCalibrationFailed : PhdEvent {
-            public string Reason;
-        }
-
-        public class PhdEventCalibrationDataFlipped : PhdEvent {
-            public string Mount;
-        }
-
-        public class PhdEventLoopingExposures : PhdEvent {
-            public int Frame;
-        }
-
-        public class PhdEventLoopingExposuresStopped : PhdEvent {
-        }
-
-        public class PhdEventSettling : PhdEvent {
-            public int Distance;
-            public int Time;
-            public int SettleTime;
-        }
-
-        public class PhdEventSettleDone : PhdEvent {
-            public int Status;
-            public string Error;
-        }
-
-        public class PhdEventStarLost : PhdEvent {
-            public int Frame;
-            public int Time;
-            public int StarMass;
-            public int SNR;
-            public int AvgDist;
-            public int ErrorCode;
-            public int Status;
-        }
-
-        public class PhdEventGuidingStopped : PhdEvent {
-        }
-
-        public class PhdEventResumed : PhdEvent {
-        }
-
-        [DataContract]
-        public class PhdEventGuideStep : PhdEvent, IGuideStep {
-
-            [DataMember]
-            private double frame;
-
-            [DataMember]
-            private double time;
-
-            [DataMember]
-            private string mount;
-
-            [DataMember]
-            private double dx;
-
-            [DataMember]
-            private double dy;
-
-            [DataMember]
-            private double rADistanceRaw;
-
-            [DataMember]
-            private double decDistanceRaw;
-
-            [DataMember]
-            private double raDistanceDisplay;
-
-            [DataMember]
-            private double decDistanceDisplay;
-
-            [DataMember]
-            private double rADistanceGuide;
-
-            [DataMember]
-            private double decDistanceGuide;
-
-            [DataMember]
-            private double raDistanceGuideDisplay;
-
-            [DataMember]
-            private double decDistanceGuideDisplay;
-
-            [DataMember]
-            private double rADuration;
-
-            [DataMember]
-            private string rADirection;
-
-            [DataMember]
-            private double dECDuration;
-
-            [DataMember]
-            private string decDirection;
-
-            [DataMember]
-            private double starMass;
-
-            [DataMember]
-            private double sNR;
-
-            [DataMember]
-            private double avgDist;
-
-            [DataMember]
-            private bool rALimited;
-
-            [DataMember]
-            private bool decLimited;
-
-            [DataMember]
-            private double errorCode;
-
-            public PhdEventGuideStep() {
-            }
-
-            [DataMember]
-            public double RADistanceGuideDisplay {
-                get {
-                    return raDistanceGuideDisplay;
-                }
-                set {
-                    raDistanceGuideDisplay = value;
-                }
-            }
-
-            [DataMember]
-            public double DecDistanceGuideDisplay {
-                get {
-                    return decDistanceGuideDisplay;
-                }
-                set {
-                    decDistanceGuideDisplay = value;
-                }
-            }
-
-            [DataMember]
-            public double Frame {
-                get {
-                    return frame;
-                }
-
-                set {
-                    frame = value;
-                }
-            }
-
-            [DataMember]
-            public double Time {
-                get {
-                    return time;
-                }
-
-                set {
-                    time = DateTime.UtcNow
-                   .Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc))
-                   .TotalSeconds;
-                }
-            }
-
-            [DataMember]
-            public string Mount {
-                get {
-                    return mount;
-                }
-
-                set {
-                    mount = value;
-                }
-            }
-
-            [DataMember]
-            public double Dx {
-                get {
-                    return dx;
-                }
-
-                set {
-                    dx = value;
-                }
-            }
-
-            [DataMember]
-            public double Dy {
-                get {
-                    return dy;
-                }
-
-                set {
-                    dy = value;
-                }
-            }
-
-            [DataMember]
-            public double RADistanceRaw {
-                get {
-                    return -rADistanceRaw;
-                }
-
-                set {
-                    rADistanceRaw = value;
-                }
-            }
-
-            [DataMember]
-            public double DECDistanceRaw {
-                get {
-                    return decDistanceRaw;
-                }
-
-                set {
-                    decDistanceRaw = value;
-                }
-            }
-
-            [DataMember]
-            public double RADistanceGuide {
-                get {
-                    return rADistanceGuide;
-                }
-
-                set {
-                    rADistanceGuide = value;
-                    RADistanceGuideDisplay = RADistanceGuide;
-                }
-            }
-
-            [DataMember]
-            public double DECDistanceGuide {
-                get {
-                    return decDistanceGuide;
-                }
-
-                set {
-                    decDistanceGuide = value;
-                    DecDistanceGuideDisplay = DECDistanceRaw;
-                }
-            }
-
-            [DataMember]
-            public double RADuration {
-                get {
-                    if (RADirection == "East") {
-                        return -rADuration;
-                    } else {
-                        return rADuration;
-                    }
-                }
-
-                set {
-                    rADuration = value;
-                }
-            }
-
-            [DataMember]
-            public string RADirection {
-                get {
-                    return rADirection;
-                }
-
-                set {
-                    rADirection = value;
-                }
-            }
-
-            [DataMember]
-            public double DECDuration {
-                get {
-                    if (DECDirection == "South") {
-                        return -dECDuration;
-                    } else {
-                        return dECDuration;
-                    }
-                }
-
-                set {
-                    dECDuration = value;
-                }
-            }
-
-            [DataMember]
-            public string DECDirection {
-                get {
-                    return decDirection;
-                }
-
-                set {
-                    decDirection = value;
-                }
-            }
-
-            [DataMember]
-            public double StarMass {
-                get {
-                    return starMass;
-                }
-
-                set {
-                    starMass = value;
-                }
-            }
-
-            [DataMember]
-            public double SNR {
-                get {
-                    return sNR;
-                }
-
-                set {
-                    sNR = value;
-                }
-            }
-
-            [DataMember]
-            public double AvgDist {
-                get {
-                    return avgDist;
-                }
-
-                set {
-                    avgDist = value;
-                }
-            }
-
-            [DataMember]
-            public bool RALimited {
-                get {
-                    return rALimited;
-                }
-
-                set {
-                    rALimited = value;
-                }
-            }
-
-            [DataMember]
-            public bool DecLimited {
-                get {
-                    return decLimited;
-                }
-
-                set {
-                    decLimited = value;
-                }
-            }
-
-            [DataMember]
-            public double ErrorCode {
-                get {
-                    return errorCode;
-                }
-
-                set {
-                    errorCode = value;
-                }
-            }
-
-            public IGuideStep Clone() {
-                return (PhdEventGuideStep)this.MemberwiseClone();
-            }
-        }
-
-        public class PhdEventGuidingDithered : PhdEvent {
-            public int dx;
-            public int dy;
-        }
-
-        public class PhdEventLockPositionLost : PhdEvent {
-        }
-
-        public class PhdEventAlert : PhdEvent {
-            public string Msg;
-            public string Type;
-        }
     }
 }

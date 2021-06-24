@@ -16,6 +16,7 @@ using NINA.Core.Interfaces;
 using NINA.Core.Locale;
 using NINA.Core.Model;
 using NINA.Core.Utility.Notification;
+using NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents;
 using NINA.Equipment.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -143,7 +144,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
             return new GuideInfo() {
                 State = ((PHD2Guider)guiderInstance).AppState?.State,
-                GuideStep = (PHD2Guider.PhdEventGuideStep)guideStep
+                GuideStep = (PhdEventGuideStep)guideStep
             };
         }
 

@@ -81,10 +81,25 @@ namespace NINATest.Sequencer.SequenceItem.Guider {
         [TestCase(true)]
         public async Task Execute_NoIssues_LogicCalled(bool forceCalibration) {
             guiderMediatorMock.Setup(x => x.GetInfo()).Returns(new GuiderInfo() { Connected = true });
+            guiderMediatorMock.Setup(x => x.StartGuiding(It.IsAny<bool>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
             var sut = new StartGuiding(guiderMediatorMock.Object);
             sut.ForceCalibration = forceCalibration;
             await sut.Execute(default, default);
+
+            guiderMediatorMock.Verify(x => x.StartGuiding(It.Is<bool>(f => f == forceCalibration), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task Execute_NoIssues_GuidingFailed_LogicCalled_Throws(bool forceCalibration) {
+            guiderMediatorMock.Setup(x => x.GetInfo()).Returns(new GuiderInfo() { Connected = true });
+
+            var sut = new StartGuiding(guiderMediatorMock.Object);
+            sut.ForceCalibration = forceCalibration;
+            Func<Task> action = () => sut.Execute(default, default);
+            await action.Should().ThrowAsync<Exception>();
 
             guiderMediatorMock.Verify(x => x.StartGuiding(It.Is<bool>(f => f == forceCalibration), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
         }
