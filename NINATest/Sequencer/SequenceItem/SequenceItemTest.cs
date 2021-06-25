@@ -36,6 +36,7 @@ namespace NINATest.Sequencer.SequenceItem {
         public void AttachNewParent_PreviousWasNull_NewParentAttached() {
             //Arrange
             var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
             var testContainerMock = new Mock<ISequenceContainer>();
 
             var newParent = testContainerMock.Object;
@@ -53,6 +54,7 @@ namespace NINATest.Sequencer.SequenceItem {
         public async Task Run_Successfully_StatusToComplete() {
             //Arrange
             var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
 
             //Act
             var sut = mock.Object;
@@ -66,6 +68,7 @@ namespace NINATest.Sequencer.SequenceItem {
         public async Task Run_Unsuccessfully_StatusToFailed() {
             //Arrange
             var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
 
             //Act
             mock.Setup(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Throws(new Exception("Failed to run"));
@@ -81,6 +84,7 @@ namespace NINATest.Sequencer.SequenceItem {
         public async Task Run_Cancelled_StatusToCreated() {
             //Arrange
             var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
 
             //Act
             mock
@@ -102,6 +106,7 @@ namespace NINATest.Sequencer.SequenceItem {
         public async Task Run_Skipped_StatusToCreated() {
             //Arrange
             var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
 
             //Act
             mock
@@ -134,6 +139,8 @@ namespace NINATest.Sequencer.SequenceItem {
         public void Skip() {
             //Arrange
             var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
+            mock.SetupGet(x => x.Attempts).Returns(1);
 
             //Act
             var sut = mock.Object;
@@ -197,6 +204,135 @@ namespace NINATest.Sequencer.SequenceItem {
             sut.Detach();
 
             parent.Verify(x => x.Remove(It.Is<ISequenceItem>(s => s == sut)), Times.Once);
+        }
+
+        [Test]
+        public async Task Run_Unsuccessfully_After3Retries_StatusToFailed() {
+            //Arrange
+            var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
+
+            mock
+                .SetupSequence(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
+                .Throws(new Exception("Failed to run"))
+                .Throws(new Exception("Failed to run"))
+                .Throws(new Exception("Failed to run"));
+
+            //Act
+            var sut = mock.Object;
+            sut.Attempts = 3;
+
+            await sut.Run(default, default);
+
+            //Assert
+            sut.Status.Should().Be(SequenceEntityStatus.FAILED);
+        }
+
+        [Test]
+        public async Task Run_Successfully_After3Retries_StatusToFinished() {
+            //Arrange
+            var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
+
+            mock
+                .SetupSequence(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
+                .Throws(new Exception("Failed to run"))
+                .Throws(new Exception("Failed to run"))
+                .Returns(Task.CompletedTask);
+
+            //Act
+            var sut = mock.Object;
+            sut.Attempts = 3;
+
+            await sut.Run(default, default);
+
+            //Assert
+            sut.Status.Should().Be(SequenceEntityStatus.FINISHED);
+        }
+
+        [Test]
+        public async Task Run_Unsuccessfully_StatusToFailed_SkipInstructionSetOnError_ProperErrorActionTaken() {
+            var parent = new Mock<ISequenceContainer>();
+
+            //Arrange
+            var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
+            mock.Setup(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Throws(new Exception("Failed to run"));
+
+            //Act
+            var sut = mock.Object;
+            sut.AttachNewParent(parent.Object);
+            sut.ErrorBehavior = NINA.Sequencer.Utility.InstructionErrorBehavior.SkipInstructionSetOnError;
+
+            await sut.Run(default, default);
+
+            //Assert
+            sut.Status.Should().Be(SequenceEntityStatus.FAILED);
+            parent.Verify(x => x.Interrupt(), Times.Once);
+        }
+
+        [Test]
+        public async Task Run_Unsuccessfully_StatusToFailed_AbortOnError_ProperErrorActionTaken() {
+            var root = new Mock<ISequenceRootContainer>();
+            var parent = new Mock<ISequenceContainer>();
+            parent.Setup(x => x.Parent).Returns(root.Object);
+
+            //Arrange
+            var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
+            mock.Setup(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Throws(new Exception("Failed to run"));
+
+            //Act
+            var sut = mock.Object;
+            sut.AttachNewParent(parent.Object);
+            sut.ErrorBehavior = NINA.Sequencer.Utility.InstructionErrorBehavior.AbortOnError;
+
+            await sut.Run(default, default);
+
+            //Assert
+            sut.Status.Should().Be(SequenceEntityStatus.FAILED);
+            parent.Verify(x => x.Interrupt(), Times.Never);
+            root.Verify(x => x.Interrupt(), Times.Once);
+        }
+
+        [Test]
+        public async Task Run_Unsuccessfully_StatusToFailed_SkipToSequenceEndInstructions_ProperErrorActionTaken() {
+            var root = new Mock<ISequenceRootContainer>();
+            var parent = new Mock<ISequenceContainer>();
+
+            var start = new Mock<ISequenceContainer>();
+            start.Setup(x => x.Status).Returns(SequenceEntityStatus.RUNNING);
+            var target = new Mock<ISequenceContainer>();
+            target.Setup(x => x.Status).Returns(SequenceEntityStatus.RUNNING);
+            var end = new Mock<ISequenceContainer>();
+            end.Setup(x => x.Status).Returns(SequenceEntityStatus.RUNNING);
+            parent.Setup(x => x.Parent).Returns(target.Object);
+            start.Setup(x => x.Parent).Returns(root.Object);
+            target.Setup(x => x.Parent).Returns(root.Object);
+            end.Setup(x => x.Parent).Returns(root.Object);
+
+            root.Setup(x => x.Items).Returns(new List<ISequenceItem>() { start.Object, target.Object, end.Object });
+
+            //Arrange
+            var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
+            mock.Setup(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Throws(new Exception("Failed to run"));
+
+            //Act
+            var sut = mock.Object;
+            sut.AttachNewParent(parent.Object);
+            sut.ErrorBehavior = NINA.Sequencer.Utility.InstructionErrorBehavior.SkipToSequenceEndInstructions;
+
+            await sut.Run(default, default);
+            await Task.Delay(100);
+
+            //Assert
+            sut.Status.Should().Be(SequenceEntityStatus.FAILED);
+            parent.Verify(x => x.Interrupt(), Times.Never);
+            root.Verify(x => x.Interrupt(), Times.Never);
+            start.Verify(x => x.Interrupt(), Times.Once);
+            target.Verify(x => x.Interrupt(), Times.Once);
+            end.Verify(x => x.Interrupt(), Times.Never);
         }
     }
 }

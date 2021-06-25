@@ -62,6 +62,16 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             Coordinates = new InputCoordinates();
         }
 
+        private Center(Center cloneMe) : this(cloneMe.profileService, cloneMe.telescopeMediator, cloneMe.imagingMediator, cloneMe.filterWheelMediator, cloneMe.guiderMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new Center(this) {
+                Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates.Transform(Epoch.J2000) }
+            };
+        }
+
         private bool inherited;
 
         [JsonProperty]
@@ -145,16 +155,6 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 Inherited = false;
             }
             Validate();
-        }
-
-        public override object Clone() {
-            return new Center(profileService, telescopeMediator, imagingMediator, filterWheelMediator, guiderMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates.Transform(Epoch.J2000) }
-            };
         }
 
         public virtual bool Validate() {

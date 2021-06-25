@@ -53,6 +53,16 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             });
         }
 
+        private ExternalScript(ExternalScript cloneMe) : this() {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new ExternalScript(this) {
+                Script = Script
+            };
+        }
+
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -82,16 +92,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
-        }
-
-        public override object Clone() {
-            return new ExternalScript() {
-                Icon = Icon,
-                Script = Script,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public bool Validate() {

@@ -42,6 +42,18 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             this.focuserMediator.RegisterConsumer(this);
         }
 
+        private MoveFocuserByTemperature(MoveFocuserByTemperature cloneMe) : this(cloneMe.focuserMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new MoveFocuserByTemperature(this) {
+                Slope = Slope,
+                Intercept = Intercept,
+                Absolute = Absolute
+            };
+        }
+
         private IFocuserMediator focuserMediator;
 
         private double slope = 1;
@@ -122,18 +134,6 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
-        }
-
-        public override object Clone() {
-            return new MoveFocuserByTemperature(focuserMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Slope = Slope,
-                Intercept = Intercept,
-                Absolute = Absolute
-            };
         }
 
         public bool Validate() {

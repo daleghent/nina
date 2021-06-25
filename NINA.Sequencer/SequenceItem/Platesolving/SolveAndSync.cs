@@ -55,6 +55,14 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             this.filterWheelMediator = filterWheelMediator;
         }
 
+        private SolveAndSync(SolveAndSync cloneMe) : this(cloneMe.profileService, cloneMe.telescopeMediator, cloneMe.imagingMediator, cloneMe.filterWheelMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new SolveAndSync(this);
+        }
+
         public IWindowServiceFactory WindowServiceFactory { get; set; } = new WindowServiceFactory();
         private IList<string> issues = new List<string>();
 
@@ -110,15 +118,6 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 1
             );
             return await solver.Solve(seq, parameter, plateSolveStatusVM.Progress, progress, token);
-        }
-
-        public override object Clone() {
-            return new SolveAndSync(profileService, telescopeMediator, imagingMediator, filterWheelMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description
-            };
         }
 
         public virtual bool Validate() {

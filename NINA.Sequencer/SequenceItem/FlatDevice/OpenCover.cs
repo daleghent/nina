@@ -38,6 +38,14 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             this.flatDeviceMediator = flatDeviceMediator;
         }
 
+        private OpenCover(OpenCover cloneMe) : this(cloneMe.flatDeviceMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new OpenCover(this);
+        }
+
         private IFlatDeviceMediator flatDeviceMediator;
         private IList<string> issues = new List<string>();
 
@@ -56,15 +64,6 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             }
 
             throw new SequenceItemSkippedException(string.Join(",", Issues));
-        }
-
-        public override object Clone() {
-            return new OpenCover(flatDeviceMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public bool Validate() {

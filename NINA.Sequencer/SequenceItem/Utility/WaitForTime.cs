@@ -52,6 +52,19 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             this.SelectedProvider = selectedProvider;
         }
 
+        private WaitForTime(WaitForTime cloneMe) : this(cloneMe.DateTimeProviders, cloneMe.SelectedProvider) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new WaitForTime(this) {
+                Hours = Hours,
+                Minutes = Minutes,
+                Seconds = Seconds,
+                MinutesOffset = MinutesOffset
+            };
+        }
+
         public IList<IDateTimeProvider> DateTimeProviders {
             get => dateTimeProviders;
             set {
@@ -127,19 +140,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
         public override void AfterParentChanged() {
             UpdateTime();
-        }
-
-        public override object Clone() {
-            return new WaitForTime(DateTimeProviders, SelectedProvider) {
-                Icon = Icon,
-                Hours = Hours,
-                Minutes = Minutes,
-                Seconds = Seconds,
-                MinutesOffset = MinutesOffset,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {

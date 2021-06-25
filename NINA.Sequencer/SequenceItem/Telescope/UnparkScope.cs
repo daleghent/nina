@@ -41,6 +41,14 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             this.telescopeMediator = telescopeMediator;
         }
 
+        private UnparkScope(UnparkScope cloneMe) : this(cloneMe.telescopeMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new UnparkScope(this);
+        }
+
         private ITelescopeMediator telescopeMediator;
         private IList<string> issues = new List<string>();
 
@@ -60,15 +68,6 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
-        }
-
-        public override object Clone() {
-            return new UnparkScope(telescopeMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public bool Validate() {

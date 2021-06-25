@@ -31,6 +31,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.SequenceItem.Imaging {
 
@@ -59,6 +60,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                 IImageHistoryVM imageHistoryVM,
                 IFilterWheelMediator filterWheelMediator,
                 IGuiderMediator guiderMediator) : this(
+                    null,
                     new SwitchFilter(profileService, filterWheelMediator),
                     new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM),
                     new LoopCondition(),
@@ -70,6 +72,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         /// Clone Constructor
         /// </summary>
         public SmartExposure(
+                SmartExposure cloneMe,
                 SwitchFilter switchFilter,
                 TakeExposure takeExposure,
                 LoopCondition loopCondition,
@@ -81,6 +84,40 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             this.Add(ditherAfterExposures);
 
             IsExpanded = false;
+
+            if (cloneMe != null) {
+                CopyMetaData(cloneMe);
+            }
+        }
+
+        private InstructionErrorBehavior errorBehavior = InstructionErrorBehavior.ContinueOnError;
+
+        [JsonProperty]
+        public override InstructionErrorBehavior ErrorBehavior {
+            get => errorBehavior;
+            set {
+                errorBehavior = value;
+                foreach (var item in Items) {
+                    item.ErrorBehavior = errorBehavior;
+                }
+                RaisePropertyChanged();
+            }
+        }
+
+        private int attempts = 1;
+
+        [JsonProperty]
+        public override int Attempts {
+            get => attempts;
+            set {
+                if (value > 0) {
+                    attempts = value;
+                    foreach (var item in Items) {
+                        item.Attempts = attempts;
+                    }
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         public SwitchFilter GetSwitchFilter() {
@@ -128,21 +165,25 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
         public override object Clone() {
             var clone = new SmartExposure(
+                    this,
                     (SwitchFilter)this.GetSwitchFilter().Clone(),
                     (TakeExposure)this.GetTakeExposure().Clone(),
                     (LoopCondition)this.GetLoopCondition().Clone(),
                     (DitherAfterExposures)this.GetDitherAfterExposures().Clone()
-                ) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description
-            };
+                );
             return clone;
         }
 
         public override TimeSpan GetEstimatedDuration() {
             return GetTakeExposure().GetEstimatedDuration();
+        }
+
+        /// <summary>
+        /// When an inner instruction interrupts this set, it should reroute the interrupt to the real parent set
+        /// </summary>
+        /// <returns></returns>
+        public override Task Interrupt() {
+            return this.Parent?.Interrupt();
         }
     }
 }

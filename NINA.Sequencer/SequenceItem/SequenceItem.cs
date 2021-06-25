@@ -29,6 +29,23 @@ namespace NINA.Sequencer.SequenceItem {
 
     [JsonObject(MemberSerialization.OptIn)]
     public abstract class SequenceItem : BaseINPC, ISequenceItem {
+
+        public SequenceItem() {
+        }
+
+        public SequenceItem(SequenceItem cloneMe) {
+            CopyMetaData(cloneMe);
+        }
+
+        protected void CopyMetaData(SequenceItem cloneMe) {
+            Icon = cloneMe.Icon;
+            Name = cloneMe.Name;
+            Category = cloneMe.Category;
+            Description = cloneMe.Description;
+            Attempts = cloneMe.Attempts;
+            ErrorBehavior = cloneMe.ErrorBehavior;
+        }
+
         private string name;
         private bool showMenu;
         private SequenceEntityStatus status = SequenceEntityStatus.CREATED;
@@ -51,6 +68,30 @@ namespace NINA.Sequencer.SequenceItem {
 
         [JsonProperty]
         public ISequenceContainer Parent { get; private set; }
+
+        private InstructionErrorBehavior errorBehavior = InstructionErrorBehavior.ContinueOnError;
+
+        [JsonProperty]
+        public virtual InstructionErrorBehavior ErrorBehavior {
+            get => errorBehavior;
+            set {
+                errorBehavior = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private int attempts = 1;
+
+        [JsonProperty]
+        public virtual int Attempts {
+            get => attempts;
+            set {
+                if (value > 0) {
+                    attempts = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
 
         public virtual ICommand ResetProgressCommand => new RelayCommand((o) => { ResetProgressCascaded(); ShowMenu = false; });
 
@@ -121,7 +162,9 @@ namespace NINA.Sequencer.SequenceItem {
             using (localCts = CancellationTokenSource.CreateLinkedTokenSource(token)) {
                 if (Status == SequenceEntityStatus.CREATED) {
                     Status = SequenceEntityStatus.RUNNING;
+
                     var root = ItemUtility.GetRootContainer(this.Parent);
+
                     try {
                         Logger.Info($"Starting {this}");
                         if (this is IValidatable && !(this is ISequenceContainer)) {
@@ -135,10 +178,48 @@ namespace NINA.Sequencer.SequenceItem {
                             root.AddRunningItem(this);
                         }
 
-                        await this.Execute(progress, localCts.Token);
+                        var success = false;
+                        for (int i = 0; i < Attempts; i++) {
+                            try {
+                                await this.Execute(progress, localCts.Token);
 
-                        Logger.Info($"Finishing {this}");
-                        Status = SequenceEntityStatus.FINISHED;
+                                Logger.Info($"Finishing {this}");
+                                Status = SequenceEntityStatus.FINISHED;
+                                success = true;
+                            } catch (SequenceItemSkippedException ex) {
+                                throw ex;
+                            } catch (OperationCanceledException ex) {
+                                throw ex;
+                            } catch (Exception ex) {
+                                Logger.Error($"{this} - ", ex);
+                                success = false;
+                            }
+                        }
+
+                        if (!success) {
+                            var attemptWord = Attempts > 1 ? "attempts" : "attempt";
+                            Status = SequenceEntityStatus.FAILED;
+                            switch (ErrorBehavior) {
+                                case InstructionErrorBehavior.AbortOnError:
+                                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Aborting Sequence!");
+                                    _ = root.Interrupt();
+                                    break;
+
+                                case InstructionErrorBehavior.SkipInstructionSetOnError:
+                                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Skipping current instruction set.");
+                                    _ = Parent?.Interrupt();
+                                    break;
+
+                                case InstructionErrorBehavior.SkipToSequenceEndInstructions:
+                                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Skipping to end of sequence instructions.");
+                                    _ = SkipToEndOfSequence(root);
+                                    break;
+
+                                default:
+                                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Continuing.");
+                                    break;
+                            }
+                        }
                     } catch (SequenceItemSkippedException ex) {
                         Logger.Warning($"{this} - " + ex.Message);
                         Status = SequenceEntityStatus.SKIPPED;
@@ -151,10 +232,6 @@ namespace NINA.Sequencer.SequenceItem {
                             Logger.Debug($"Cancelled {this}");
                             throw ex;
                         }
-                    } catch (Exception ex) {
-                        Status = SequenceEntityStatus.FAILED;
-                        Logger.Error($"{this} - ", ex);
-                        //Todo Error policy - e.g. Continue; Throw and cancel; Retry;
                     } finally {
                         progress?.Report(new ApplicationStatus());
                         if (root != null && !(this is ISequenceContainer)) {
@@ -163,6 +240,19 @@ namespace NINA.Sequencer.SequenceItem {
                     }
                 }
             }
+        }
+
+        private async Task<bool> SkipToEndOfSequence(ISequenceRootContainer root) {
+            var startContainer = root.Items[0] as ISequenceContainer;
+            var targetContainer = root.Items[1] as ISequenceContainer;
+            if (startContainer.Status == SequenceEntityStatus.RUNNING) {
+                await startContainer.Interrupt();
+                await Task.Delay(100);
+            }
+            if (targetContainer.Status == SequenceEntityStatus.RUNNING) {
+                await targetContainer.Interrupt();
+            }
+            return true;
         }
 
         public void Skip() {

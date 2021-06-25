@@ -302,6 +302,7 @@
     <Compile Include="Utility\DateTimeProvider\SunriseProvider.cs" />
     <Compile Include="Utility\DateTimeProvider\SunsetProvider.cs" />
     <Compile Include="Utility\DateTimeProvider\TimeProvider.cs" />
+    <Compile Include="Utility\InstructionErrorBehavior.cs" />
     <Compile Include="Utility\ItemUtility.cs" />
     <Compile Include="View\Converter\DroppableToDropIntoParametersConverter.cs" />
     <Compile Include="View\Converter\SequenceEntityStatusToVisibilityConverter.cs" />

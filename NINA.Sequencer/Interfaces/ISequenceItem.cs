@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Core.Model;
+using NINA.Sequencer.Utility;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -52,5 +53,15 @@ namespace NINA.Sequencer.SequenceItem {
         TimeSpan GetEstimatedDuration();
 
         ICommand ResetProgressCommand { get; }
+
+        /// <summary>
+        /// Defines the instruction behavor in case of an error
+        /// </summary>
+        InstructionErrorBehavior ErrorBehavior { get; set; }
+
+        /// <summary>
+        /// How many times the instruction should retry in case of an error
+        /// </summary>
+        int Attempts { get; set; }
     }
 }

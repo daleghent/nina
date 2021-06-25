@@ -62,6 +62,14 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
             AutoFocusVMFactory = new AutoFocusVMFactory(profileService, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator);
         }
 
+        private RunAutofocus(RunAutofocus cloneMe) : this(cloneMe.profileService, cloneMe.history, cloneMe.cameraMediator, cloneMe.filterWheelMediator, cloneMe.focuserMediator, cloneMe.guiderMediator, cloneMe.imagingMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new RunAutofocus(this);
+        }
+
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -74,15 +82,6 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
 
         public IWindowServiceFactory WindowServiceFactory { get; set; } = new WindowServiceFactory();
         public IAutoFocusVMFactory AutoFocusVMFactory { get; set; }
-
-        public override object Clone() {
-            return new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
-        }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             var autoFocus = AutoFocusVMFactory.Create();

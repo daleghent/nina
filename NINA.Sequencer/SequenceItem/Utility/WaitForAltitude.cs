@@ -52,6 +52,18 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             Altitude = 30;
         }
 
+        private WaitForAltitude(WaitForAltitude cloneMe) : this(cloneMe.profileService) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new WaitForAltitude(this) {
+                Altitude = Altitude,
+                AboveOrBelow = AboveOrBelow,
+                Coordinates = Coordinates.Clone()
+            };
+        }
+
         [JsonProperty]
         public InputCoordinates Coordinates { get; set; }
 
@@ -108,18 +120,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
                 await NINA.Core.Utility.CoreUtil.Delay(TimeSpan.FromSeconds(1), token);
             } while (true);
-        }
-
-        public override object Clone() {
-            return new WaitForAltitude(profileService) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Altitude = Altitude,
-                AboveOrBelow = AboveOrBelow,
-                Coordinates = Coordinates.Clone()
-            };
         }
 
         public override void AfterParentChanged() {

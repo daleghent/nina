@@ -41,6 +41,16 @@ namespace NINA.Sequencer.SequenceItem.Camera {
             this.cameraMediator = cameraMediator;
         }
 
+        private SetReadoutMode(SetReadoutMode cloneMe) : this(cloneMe.cameraMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new SetReadoutMode(this) {
+                Mode = Mode
+            };
+        }
+
         private ICameraMediator cameraMediator;
 
         [JsonProperty]
@@ -84,16 +94,6 @@ namespace NINA.Sequencer.SequenceItem.Camera {
 
         public override TimeSpan GetEstimatedDuration() {
             return TimeSpan.Zero;
-        }
-
-        public override object Clone() {
-            return new SetReadoutMode(cameraMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Mode = Mode
-            };
         }
 
         public override string ToString() {

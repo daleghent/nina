@@ -29,6 +29,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.SequenceItem.Imaging {
 
@@ -51,18 +52,54 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         [ImportingConstructor]
         public TakeManyExposures(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM) :
                 this(
+                    null,
                     new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM),
                     new LoopCondition() { Iterations = 1 }) {
+        }
+
+        private InstructionErrorBehavior errorBehavior = InstructionErrorBehavior.ContinueOnError;
+
+        [JsonProperty]
+        public override InstructionErrorBehavior ErrorBehavior {
+            get => errorBehavior;
+            set {
+                errorBehavior = value;
+                foreach (var item in Items) {
+                    item.ErrorBehavior = errorBehavior;
+                }
+                RaisePropertyChanged();
+            }
+        }
+
+        private int attempts = 1;
+
+        [JsonProperty]
+        public override int Attempts {
+            get => attempts;
+            set {
+                if (value > 0) {
+                    attempts = value;
+                    foreach (var item in Items) {
+                        item.Attempts = attempts;
+                    }
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         /// <summary>
         /// Clone Constructor
         /// </summary>
-        public TakeManyExposures(TakeExposure takeExposure, LoopCondition loopCondition) {
+        private TakeManyExposures(
+                TakeManyExposures cloneMe, TakeExposure takeExposure, LoopCondition loopCondition) {
             this.Add(takeExposure);
             this.Add(loopCondition);
 
             IsExpanded = false;
+
+            if (cloneMe != null) {
+                CopyMetaData(cloneMe);
+            }
         }
 
         public TakeExposure GetTakeExposure() {
@@ -83,18 +120,22 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
         public override object Clone() {
             var clone = new TakeManyExposures(
+                    this,
                     (TakeExposure)this.GetTakeExposure().Clone(),
-                    (LoopCondition)this.GetLoopCondition().Clone()) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description
-            };
+                    (LoopCondition)this.GetLoopCondition().Clone());
             return clone;
         }
 
         public override TimeSpan GetEstimatedDuration() {
             return GetTakeExposure().GetEstimatedDuration();
+        }
+
+        /// <summary>
+        /// When an inner instruction interrupts this set, it should reroute the interrupt to the real parent set
+        /// </summary>
+        /// <returns></returns>
+        public override Task Interrupt() {
+            return this.Parent?.Interrupt();
         }
     }
 }

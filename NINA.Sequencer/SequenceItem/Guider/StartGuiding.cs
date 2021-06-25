@@ -42,6 +42,16 @@ namespace NINA.Sequencer.SequenceItem.Guider {
             this.guiderMediator = guiderMediator;
         }
 
+        private StartGuiding(StartGuiding cloneMe) : this(cloneMe.guiderMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new StartGuiding(this) {
+                ForceCalibration = ForceCalibration
+            };
+        }
+
         [JsonProperty]
         public bool ForceCalibration { get; set; } = false;
 
@@ -63,16 +73,6 @@ namespace NINA.Sequencer.SequenceItem.Guider {
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
-        }
-
-        public override object Clone() {
-            return new StartGuiding(guiderMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                ForceCalibration = ForceCalibration
-            };
         }
 
         public bool Validate() {

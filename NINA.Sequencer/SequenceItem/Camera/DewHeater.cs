@@ -38,6 +38,16 @@ namespace NINA.Sequencer.SequenceItem.Camera {
             this.cameraMediator = cameraMediator;
         }
 
+        private DewHeater(DewHeater cloneMe) : this(cloneMe.cameraMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new DewHeater(this) {
+                OnOff = OnOff
+            };
+        }
+
         private ICameraMediator cameraMediator;
 
         private bool onOff = false;
@@ -85,16 +95,6 @@ namespace NINA.Sequencer.SequenceItem.Camera {
 
         public override void AfterParentChanged() {
             Validate();
-        }
-
-        public override object Clone() {
-            return new DewHeater(cameraMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                OnOff = OnOff
-            };
         }
 
         public override string ToString() {

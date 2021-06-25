@@ -12,7 +12,7 @@
     xmlns:local="clr-namespace:NINA.View.Sequencer"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary">
     <DataTemplate x:Key="CreatedItem">
-        <Grid />
+        <Grid Width="15" Height="15" />
     </DataTemplate>
     <DataTemplate x:Key="RunningItem">
         <ninactrl:LoadingControl

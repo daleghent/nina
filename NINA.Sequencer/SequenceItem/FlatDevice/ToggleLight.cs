@@ -38,6 +38,16 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             this.flatDeviceMediator = flatDeviceMediator;
         }
 
+        private ToggleLight(ToggleLight cloneMe) : this(cloneMe.flatDeviceMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new ToggleLight(this) {
+                OnOff = OnOff
+            };
+        }
+
         private IFlatDeviceMediator flatDeviceMediator;
         private IList<string> issues = new List<string>();
 
@@ -63,16 +73,6 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             // Todo - this interface lacks progress
             return flatDeviceMediator.ToggleLight(OnOff, token);
-        }
-
-        public override object Clone() {
-            return new ToggleLight(flatDeviceMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                OnOff = OnOff,
-            };
         }
 
         public bool Validate() {

@@ -67,6 +67,27 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
             CameraInfo = this.cameraMediator.GetInfo();
         }
 
+        private TakeExposure(TakeExposure cloneMe) : this(cloneMe.profileService, cloneMe.cameraMediator, cloneMe.imagingMediator, cloneMe.imageSaveMediator, cloneMe.imageHistoryVM) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            var clone = new TakeExposure(this) {
+                ExposureTime = ExposureTime,
+                ExposureCount = 0,
+                Binning = Binning,
+                Gain = Gain,
+                Offset = Offset,
+                ImageType = ImageType,
+            };
+
+            if (clone.Binning == null) {
+                clone.Binning = new BinningMode(1, 1);
+            }
+
+            return clone;
+        }
+
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -189,27 +210,6 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
 
         private bool IsLightSequence() {
             return ImageType == CaptureSequence.ImageTypes.SNAPSHOT || ImageType == CaptureSequence.ImageTypes.LIGHT;
-        }
-
-        public override object Clone() {
-            var clone = new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                ExposureTime = ExposureTime,
-                ExposureCount = 0,
-                Binning = Binning,
-                Gain = Gain,
-                Offset = Offset,
-                ImageType = ImageType,
-            };
-
-            if (clone.Binning == null) {
-                clone.Binning = new BinningMode(1, 1);
-            }
-
-            return clone;
         }
 
         public override void AfterParentChanged() {

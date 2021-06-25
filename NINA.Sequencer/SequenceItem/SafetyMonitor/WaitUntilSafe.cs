@@ -40,6 +40,14 @@ namespace NINA.Sequencer.SequenceItem.SafetyMonitor {
             this.safetyMonitorMediator = safetyMonitorMediator;
         }
 
+        private WaitUntilSafe(WaitUntilSafe cloneMe) : this(cloneMe.safetyMonitorMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new WaitUntilSafe(this);
+        }
+
         private bool isSafe;
 
         public bool IsSafe {
@@ -74,15 +82,6 @@ namespace NINA.Sequencer.SequenceItem.SafetyMonitor {
 
             Issues = i;
             return i.Count == 0;
-        }
-
-        public override object Clone() {
-            return new WaitUntilSafe(safetyMonitorMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public override string ToString() {

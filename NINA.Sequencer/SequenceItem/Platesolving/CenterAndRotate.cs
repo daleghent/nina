@@ -52,6 +52,17 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             this.rotatorMediator = rotatorMediator;
         }
 
+        private CenterAndRotate(CenterAndRotate cloneMe) : this(cloneMe.profileService, cloneMe.telescopeMediator, cloneMe.imagingMediator, cloneMe.rotatorMediator, cloneMe.filterWheelMediator, cloneMe.guiderMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new CenterAndRotate(this) {
+                Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates.Transform(Epoch.J2000) },
+                Rotation = Rotation
+            };
+        }
+
         private double rotation = 0;
 
         [JsonProperty]
@@ -154,17 +165,6 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 Inherited = false;
             }
             Validate();
-        }
-
-        public override object Clone() {
-            return new CenterAndRotate(profileService, telescopeMediator, imagingMediator, rotatorMediator, filterWheelMediator, guiderMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates.Transform(Epoch.J2000) },
-                Rotation = Rotation
-            };
         }
 
         public override bool Validate() {

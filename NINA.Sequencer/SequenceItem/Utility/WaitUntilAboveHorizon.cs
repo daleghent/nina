@@ -48,6 +48,16 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             Coordinates = new InputCoordinates();
         }
 
+        private WaitUntilAboveHorizon(WaitUntilAboveHorizon cloneMe) : this(cloneMe.profileService) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new WaitUntilAboveHorizon(this) {
+                Coordinates = Coordinates.Clone()
+            };
+        }
+
         [JsonProperty]
         public InputCoordinates Coordinates { get; set; }
 
@@ -102,16 +112,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                     await CoreUtil.Delay(TimeSpan.FromSeconds(UpdateInterval), token);
                 }
             } while (true);
-        }
-
-        public override object Clone() {
-            return new WaitUntilAboveHorizon(profileService) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Coordinates = Coordinates.Clone()
-            };
         }
 
         public override void AfterParentChanged() {

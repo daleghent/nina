@@ -41,6 +41,16 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             this.focuserMediator = focuserMediator;
         }
 
+        private MoveFocuserAbsolute(MoveFocuserAbsolute cloneMe) : this(cloneMe.focuserMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new MoveFocuserAbsolute(this) {
+                Position = Position
+            };
+        }
+
         private IFocuserMediator focuserMediator;
 
         private int position = 0;
@@ -71,16 +81,6 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
-        }
-
-        public override object Clone() {
-            return new MoveFocuserAbsolute(focuserMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Position = Position
-            };
         }
 
         public bool Validate() {

@@ -48,6 +48,17 @@ namespace NINA.Sequencer.SequenceItem.Switch {
             SelectedSwitch = WritableSwitches.First();
         }
 
+        private SetSwitchValue(SetSwitchValue cloneMe) : this(cloneMe.switchMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new SetSwitchValue(this) {
+                SwitchIndex = SwitchIndex,
+                Value = Value
+            };
+        }
+
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -56,17 +67,6 @@ namespace NINA.Sequencer.SequenceItem.Switch {
                 issues = value;
                 RaisePropertyChanged();
             }
-        }
-
-        public override object Clone() {
-            return new SetSwitchValue(switchMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                SwitchIndex = SwitchIndex,
-                Value = Value
-            };
         }
 
         private double value;

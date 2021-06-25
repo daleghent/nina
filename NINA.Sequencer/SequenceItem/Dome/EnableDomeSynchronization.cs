@@ -42,6 +42,14 @@ namespace NINA.Sequencer.SequenceItem.Dome {
             this.telescopeMediator = telescopeMediator;
         }
 
+        private EnableDomeSynchronization(EnableDomeSynchronization cloneMe) : this(cloneMe.domeMediator, cloneMe.telescopeMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new EnableDomeSynchronization(this);
+        }
+
         private readonly IDomeMediator domeMediator;
         private readonly ITelescopeMediator telescopeMediator;
         private IList<string> issues = ImmutableList<string>.Empty;
@@ -60,15 +68,6 @@ namespace NINA.Sequencer.SequenceItem.Dome {
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
-        }
-
-        public override object Clone() {
-            return new EnableDomeSynchronization(domeMediator, telescopeMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public bool Validate() {

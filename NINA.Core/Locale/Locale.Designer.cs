@@ -941,6 +941,16 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Defines how the sequence should continue after all attempts have been unsuccessful to execute the instruction.
+        ///The default behavior is to continue on errors, however for some instructions it might be desired to not continue with the execution. For example when the center operation fails to frame the target correctly some recovery steps can then be taken..
+        /// </summary>
+        internal static string Lbl_SequenceItem_ErrorBehavior_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_ErrorBehavior_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Moves the filter wheel to the specified filter.
         /// </summary>
         internal static string Lbl_SequenceItem_FilterWheel_SwitchFilter_Description {
@@ -1315,6 +1325,15 @@ namespace NINA.Core.Locale {
         internal static string Lbl_SequenceItem_MoveUp_Tooltip {
             get {
                 return ResourceManager.GetString("Lbl_SequenceItem_MoveUp_Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The number of attempts that should be made when the instruction fails to execute..
+        /// </summary>
+        internal static string Lbl_SequenceItem_NumberOfAttempts_Tooltip {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceItem_NumberOfAttempts_Tooltip", resourceCulture);
             }
         }
         
@@ -2290,6 +2309,15 @@ namespace NINA.Core.Locale {
         internal static string LblAberrationInspector {
             get {
                 return ResourceManager.GetString("LblAberrationInspector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Abort.
+        /// </summary>
+        internal static string LblAbortOnError {
+            get {
+                return ResourceManager.GetString("LblAbortOnError", resourceCulture);
             }
         }
         
@@ -5305,6 +5333,15 @@ namespace NINA.Core.Locale {
         internal static string LblContinue {
             get {
                 return ResourceManager.GetString("LblContinue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Continue.
+        /// </summary>
+        internal static string LblContinueOnError {
+            get {
+                return ResourceManager.GetString("LblContinueOnError", resourceCulture);
             }
         }
         
@@ -10494,6 +10531,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of attempts.
+        /// </summary>
+        internal static string LblNumberOfAttempts {
+            get {
+                return ResourceManager.GetString("LblNumberOfAttempts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Object name (e.g. M 31).
         /// </summary>
         internal static string LblObjectNameHint {
@@ -10832,6 +10878,15 @@ namespace NINA.Core.Locale {
         internal static string LblOn {
             get {
                 return ResourceManager.GetString("LblOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On error.
+        /// </summary>
+        internal static string LblOnError {
+            get {
+                return ResourceManager.GetString("LblOnError", resourceCulture);
             }
         }
         
@@ -12489,6 +12544,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Retries.
+        /// </summary>
+        internal static string LblRetries {
+            get {
+                return ResourceManager.GetString("LblRetries", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reverse.
         /// </summary>
         internal static string LblReverse {
@@ -13449,6 +13513,24 @@ namespace NINA.Core.Locale {
         internal static string LblSize {
             get {
                 return ResourceManager.GetString("LblSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip current instruction set.
+        /// </summary>
+        internal static string LblSkipInstructionSetOnError {
+            get {
+                return ResourceManager.GetString("LblSkipInstructionSetOnError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Skip to end of sequence instructions.
+        /// </summary>
+        internal static string LblSkipToSequenceEndInstructions {
+            get {
+                return ResourceManager.GetString("LblSkipToSequenceEndInstructions", resourceCulture);
             }
         }
         

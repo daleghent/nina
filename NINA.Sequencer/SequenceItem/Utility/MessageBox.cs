@@ -33,22 +33,24 @@ namespace NINA.Sequencer.SequenceItem.Utility {
     [JsonObject(MemberSerialization.OptIn)]
     public class MessageBox : SequenceItem {
 
+        [ImportingConstructor]
+        public MessageBox() { }
+
+        private MessageBox(MessageBox cloneMe) : base(cloneMe) {
+        }
+
+        public override object Clone() {
+            return new MessageBox(this) {
+                Text = Text
+            };
+        }
+
         [JsonProperty]
         public string Text { get; set; }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             MyMessageBox.Show(Text);
             return Task.CompletedTask;
-        }
-
-        public override object Clone() {
-            return new MessageBox() {
-                Icon = Icon,
-                Text = Text,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public override string ToString() {

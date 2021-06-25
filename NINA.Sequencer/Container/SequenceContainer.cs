@@ -529,7 +529,7 @@ namespace NINA.Sequencer.Container {
         private CancellationTokenSource localCTS;
         private Task executionTask;
 
-        public async Task Interrupt() {
+        public virtual async Task Interrupt() {
             if (localCTS != null) {
                 localCTS.Cancel();
 

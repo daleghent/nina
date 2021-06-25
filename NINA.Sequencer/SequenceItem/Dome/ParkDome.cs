@@ -40,6 +40,14 @@ namespace NINA.Sequencer.SequenceItem.Dome {
             this.domeMediator = domeMediator;
         }
 
+        private ParkDome(ParkDome cloneMe) : this(cloneMe.domeMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new ParkDome(this);
+        }
+
         private IDomeMediator domeMediator;
         private IList<string> issues = new List<string>();
 
@@ -58,15 +66,6 @@ namespace NINA.Sequencer.SequenceItem.Dome {
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
-        }
-
-        public override object Clone() {
-            return new ParkDome(domeMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public bool Validate() {

@@ -48,6 +48,17 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             UpdateCurrentMoonState();
         }
 
+        private WaitForMoonAltitude(WaitForMoonAltitude cloneMe) : this(cloneMe.profileService) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new WaitForMoonAltitude(this) {
+                Comparator = Comparator,
+                UserMoonAltitude = UserMoonAltitude
+            };
+        }
+
         [JsonProperty]
         public double UserMoonAltitude {
             get => userMoonAltitude;
@@ -118,16 +129,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                     break;
                 }
             } while (true);
-        }
-
-        public override object Clone() {
-            return new WaitForMoonAltitude(profileService) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                UserMoonAltitude = UserMoonAltitude
-            };
         }
 
         public override string ToString() {

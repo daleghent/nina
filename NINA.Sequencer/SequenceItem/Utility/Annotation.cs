@@ -32,6 +32,12 @@ namespace NINA.Sequencer.SequenceItem.Utility {
     [JsonObject(MemberSerialization.OptIn)]
     public class Annotation : SequenceItem {
 
+        [ImportingConstructor]
+        public Annotation() { }
+
+        private Annotation(Annotation cloneMe) : base(cloneMe) {
+        }
+
         [JsonProperty]
         public string Text { get; set; }
 
@@ -40,12 +46,8 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         public override object Clone() {
-            return new Annotation() {
-                Icon = Icon,
-                Text = Text,
-                Name = Name,
-                Category = Category,
-                Description = Description,
+            return new Annotation(this) {
+                Text = Text
             };
         }
 

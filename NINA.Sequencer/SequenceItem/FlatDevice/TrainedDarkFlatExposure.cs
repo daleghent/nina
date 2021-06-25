@@ -36,6 +36,7 @@ using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Locale;
 using NINA.Profile;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
@@ -61,6 +62,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         [ImportingConstructor]
         public TrainedDarkFlatExposure(IProfileService profileService, ICameraMediator cameraMediator, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator, IImageHistoryVM imageHistoryVM, IFilterWheelMediator filterWheelMediator, IFlatDeviceMediator flatDeviceMediator) :
             this(
+                null,
                 profileService,
                 new CloseCover(flatDeviceMediator),
                 new ToggleLight(flatDeviceMediator) { OnOff = false },
@@ -73,7 +75,8 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             ) {
         }
 
-        public TrainedDarkFlatExposure(
+        private TrainedDarkFlatExposure(
+            TrainedDarkFlatExposure cloneMe,
             IProfileService profileService,
             CloseCover closeCover,
             ToggleLight toggleLightOff,
@@ -97,6 +100,40 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             this.Add(openCover);
 
             IsExpanded = false;
+
+            if (cloneMe != null) {
+                CopyMetaData(cloneMe);
+            }
+        }
+
+        private InstructionErrorBehavior errorBehavior = InstructionErrorBehavior.ContinueOnError;
+
+        [JsonProperty]
+        public override InstructionErrorBehavior ErrorBehavior {
+            get => errorBehavior;
+            set {
+                errorBehavior = value;
+                foreach (var item in Items) {
+                    item.ErrorBehavior = errorBehavior;
+                }
+                RaisePropertyChanged();
+            }
+        }
+
+        private int attempts = 1;
+
+        [JsonProperty]
+        public override int Attempts {
+            get => attempts;
+            set {
+                if (value > 0) {
+                    attempts = value;
+                    foreach (var item in Items) {
+                        item.Attempts = attempts;
+                    }
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         [JsonProperty]
@@ -143,6 +180,7 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
 
         public override object Clone() {
             var clone = new TrainedDarkFlatExposure(
+                this,
                 profileService,
                 (CloseCover)this.GetCloseCoverItem().Clone(),
                 (ToggleLight)this.GetToggleLightOffItem().Clone(),
@@ -152,10 +190,6 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
                 (LoopCondition)this.GetIterations().Clone(),
                 (OpenCover)this.GetOpenCoverItem().Clone()
             ) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
                 KeepPanelClosed = KeepPanelClosed,
             };
             return clone;
@@ -204,6 +238,14 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
             RaisePropertyChanged(nameof(Issues));
 
             return valid;
+        }
+
+        /// <summary>
+        /// When an inner instruction interrupts this set, it should reroute the interrupt to the real parent set
+        /// </summary>
+        /// <returns></returns>
+        public override Task Interrupt() {
+            return this.Parent?.Interrupt();
         }
     }
 }

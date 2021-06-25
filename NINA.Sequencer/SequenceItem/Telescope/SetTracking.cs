@@ -51,6 +51,16 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             this.telescopeMediator = telescopeMediator;
         }
 
+        private SetTracking(SetTracking cloneMe) : this(cloneMe.telescopeMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new SetTracking(this) {
+                TrackingMode = TrackingMode
+            };
+        }
+
         private ITelescopeMediator telescopeMediator;
         private IList<string> issues = new List<string>();
 
@@ -86,16 +96,6 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
-        }
-
-        public override object Clone() {
-            return new SetTracking(telescopeMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                TrackingMode = TrackingMode
-            };
         }
 
         public bool Validate() {

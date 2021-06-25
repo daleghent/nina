@@ -47,6 +47,16 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             Coordinates = new InputTopocentricCoordinates(Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Latitude), Angle.ByDegree(profileService.ActiveProfile.AstrometrySettings.Longitude));
         }
 
+        private SlewScopeToAltAz(SlewScopeToAltAz cloneMe) : this(cloneMe.profileService, cloneMe.telescopeMediator, cloneMe.guiderMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new SlewScopeToAltAz(this) {
+                Coordinates = new InputTopocentricCoordinates(Coordinates.Coordinates.Copy())
+            };
+        }
+
         private IProfileService profileService;
         private ITelescopeMediator telescopeMediator;
         private IGuiderMediator guiderMediator;
@@ -78,16 +88,6 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
 
         public override void AfterParentChanged() {
             Validate();
-        }
-
-        public override object Clone() {
-            return new SlewScopeToAltAz(profileService, telescopeMediator, guiderMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Coordinates = new InputTopocentricCoordinates(Coordinates.Coordinates.Copy()),
-            };
         }
 
         public bool Validate() {

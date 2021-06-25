@@ -48,6 +48,17 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             UpdateCurrentSunState();
         }
 
+        private WaitForSunAltitude(WaitForSunAltitude cloneMe) : this(cloneMe.profileService) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new WaitForSunAltitude(this) {
+                Comparator = Comparator,
+                UserSunAltitude = UserSunAltitude
+            };
+        }
+
         [JsonProperty]
         public double UserSunAltitude {
             get => userSunAltitude;
@@ -118,16 +129,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
                     break;
                 }
             } while (true);
-        }
-
-        public override object Clone() {
-            return new WaitForSunAltitude(profileService) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                UserSunAltitude = UserSunAltitude
-            };
         }
 
         public override string ToString() {

@@ -51,6 +51,16 @@ namespace NINA.Sequencer.SequenceItem.FilterWheel {
             this.filterWheelMediator = filterWheelMediator;
         }
 
+        private SwitchFilter(SwitchFilter cloneMe) : this(cloneMe.profileService, cloneMe.filterWheelMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new SwitchFilter(this) {
+                Filter = Filter
+            };
+        }
+
         private IProfileService profileService;
         private IFilterWheelMediator filterWheelMediator;
 
@@ -97,16 +107,6 @@ namespace NINA.Sequencer.SequenceItem.FilterWheel {
 
         public override void AfterParentChanged() {
             Validate();
-        }
-
-        public override object Clone() {
-            return new SwitchFilter(profileService, filterWheelMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Filter = Filter
-            };
         }
 
         public override string ToString() {

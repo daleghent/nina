@@ -42,6 +42,14 @@ namespace NINA.Sequencer.SequenceItem.Guider {
             this.guiderMediator = guiderMediator;
         }
 
+        private Dither(Dither cloneMe) : this(cloneMe.guiderMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new Dither(this);
+        }
+
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -59,15 +67,6 @@ namespace NINA.Sequencer.SequenceItem.Guider {
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
-        }
-
-        public override object Clone() {
-            return new Dither(guiderMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public bool Validate() {

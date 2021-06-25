@@ -45,6 +45,16 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             Coordinates = new InputCoordinates();
         }
 
+        private SlewScopeToRaDec(SlewScopeToRaDec cloneMe) : this(cloneMe.telescopeMediator, cloneMe.guiderMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new SlewScopeToRaDec(this) {
+                Coordinates = Coordinates.Clone()
+            };
+        }
+
         private ITelescopeMediator telescopeMediator;
         private IGuiderMediator guiderMediator;
 
@@ -106,16 +116,6 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
             } else {
                 return null;
             }
-        }
-
-        public override object Clone() {
-            return new SlewScopeToRaDec(telescopeMediator, guiderMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Coordinates = Coordinates.Clone(),
-            };
         }
 
         public bool Validate() {

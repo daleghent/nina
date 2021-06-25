@@ -41,6 +41,16 @@ namespace NINA.Sequencer.SequenceItem.Camera {
             this.cameraMediator = cameraMediator;
         }
 
+        private WarmCamera(WarmCamera cloneMe) : this(cloneMe.cameraMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new WarmCamera(this) {
+                Duration = Duration
+            };
+        }
+
         private ICameraMediator cameraMediator;
 
         [JsonProperty]
@@ -83,16 +93,6 @@ namespace NINA.Sequencer.SequenceItem.Camera {
 
         public override TimeSpan GetEstimatedDuration() {
             return Duration > 0 ? TimeSpan.FromMinutes(Duration) : TimeSpan.FromMinutes(1);
-        }
-
-        public override object Clone() {
-            return new WarmCamera(cameraMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Duration = Duration
-            };
         }
 
         public override string ToString() {

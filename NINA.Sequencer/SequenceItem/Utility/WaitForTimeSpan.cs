@@ -37,6 +37,15 @@ namespace NINA.Sequencer.SequenceItem.Utility {
             Time = 1;
         }
 
+        private WaitForTimeSpan(WaitForTimeSpan cloneMe) : base(cloneMe) {
+        }
+
+        public override object Clone() {
+            return new WaitForTimeSpan(this) {
+                Time = Time
+            };
+        }
+
         private int time;
 
         [JsonProperty]
@@ -54,16 +63,6 @@ namespace NINA.Sequencer.SequenceItem.Utility {
 
         public override TimeSpan GetEstimatedDuration() {
             return TimeSpan.FromSeconds(Time);
-        }
-
-        public override object Clone() {
-            return new WaitForTimeSpan() {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Time = Time
-            };
         }
 
         public override string ToString() {

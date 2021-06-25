@@ -40,6 +40,16 @@ namespace NINA.Sequencer.SequenceItem.Rotator {
             this.rotatorMediator = RotatorMediator;
         }
 
+        private MoveRotatorMechanical(MoveRotatorMechanical cloneMe) : this(cloneMe.rotatorMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new MoveRotatorMechanical(this) {
+                MechanicalPosition = MechanicalPosition
+            };
+        }
+
         private IRotatorMediator rotatorMediator;
 
         private float mechanicalPosition = 0;
@@ -69,16 +79,6 @@ namespace NINA.Sequencer.SequenceItem.Rotator {
             } else {
                 throw new SequenceItemSkippedException(string.Join(",", Issues));
             }
-        }
-
-        public override object Clone() {
-            return new MoveRotatorMechanical(rotatorMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                MechanicalPosition = MechanicalPosition
-            };
         }
 
         public bool Validate() {
