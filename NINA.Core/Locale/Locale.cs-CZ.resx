@@ -5599,4 +5599,32 @@ Význam pouze při použití ovladače kamery ASCOM!</value>
   <data name="LblUnableToConnect" xml:space="preserve">
     <value>Nelze se připojit k {0}. Důvod: {1}</value>
   </data>
+  <data name="LblAbortOnError" xml:space="preserve">
+    <value>Abort</value>
+  </data>
+  <data name="LblContinueOnError" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="LblOnError" xml:space="preserve">
+    <value>On error</value>
+  </data>
+  <data name="LblRetries" xml:space="preserve">
+    <value>Retries</value>
+  </data>
+  <data name="LblSkipInstructionSetOnError" xml:space="preserve">
+    <value>Skip current instruction set</value>
+  </data>
+  <data name="LblSkipToSequenceEndInstructions" xml:space="preserve">
+    <value>Skip to end of sequence instructions</value>
+  </data>
+  <data name="LblNumberOfAttempts" xml:space="preserve">
+    <value>Number of attempts</value>
+  </data>
+  <data name="Lbl_SequenceItem_ErrorBehavior_Tooltip" xml:space="preserve">
+    <value>Defines how the sequence should continue after all attempts have been unsuccessful to execute the instruction.
+The default behavior is to continue on errors, however for some instructions it might be desired to not continue with the execution. For example when the center operation fails to frame the target correctly some recovery steps can then be taken.</value>
+  </data>
+  <data name="Lbl_SequenceItem_NumberOfAttempts_Tooltip" xml:space="preserve">
+    <value>The number of attempts that should be made when the instruction fails to execute.</value>
+  </data>
 </root>
