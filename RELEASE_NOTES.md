@@ -136,6 +136,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - ASCOM connection and disconnection logic is now unified between all devices to ensure same bahvior
 - ASCOM connection that is lost without any raised error will now be tried to be reconnected one time. If an error happens due to that the application will disconnect like before.
 - ASCOM get and set methods use a unified logic to ensure same behavior for all devices
+- *FLI*: Background flush is now disabled prior to readout to prevent a hung readout
 
 ## Application Improvements
 ### General
@@ -164,6 +165,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Gain/Offset fields will now show the default values as a hint text, rather than being populated inside the textbox itself. Having this approach, a user can directly enter specific values without having to clear the default value first.
 - The imaging tab layout is now saved per profile, instead of one layout for all profiles
 - Most options and values now also display a unit of measure if applicable
+- Weather information in equipment tab now shows correct wind direction.
 
 ### Subsampling
 - The sub sample button above the image has been removed
@@ -204,10 +206,6 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Added `$$ROTATEANGLE$$` file pattern
 - Added `$$STARCOUNT$$` file pattern
 - Added `$$TEMPERATURESETPOINT$$` file pattern
-
-## BugFixes
-- Weather information in equipment tab now shows correct wind direction.
-- FLI: Background flush is now disabled prior to readout to prevent a hung readout
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 49.18830.20210423
