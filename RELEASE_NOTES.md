@@ -13,44 +13,59 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ## Complete Sequencer Rework
 
 ### Sequence Tab changed to show a sequence navigation first
-- The old sequence UI is still available and called "Simple Sequence". However it will run the new sequencer framework in the background instead
-- If required the simple sequence can be generated into the advanced sequence for fine tuning
+- Old Sequencer has been renamed to "Simple Sequencer"
+- The internal engine for the simple sequencer has been completely revamped. The simple sequencer will use the advanced sequencer framework internally while exposing a similar user interface that was used previously
+- If required a simple sequence can be generated into the advanced sequence for fine tuning
 - Instead of loading an empty target by default, the UI will show a separate UI when no target was set, where the user can choose which kind of sequence should be loaded instead or jump directly into the advanced sequencer
 - End of sequence options are moved from the options tab to the sequence tab
 - Introduced new start of sequence options to be used
-- Added a "Rotate Target" button to explicitly set, that the rotation for the target should be considered
-- Removed External command and flat panel items from the simple sequencer UI, as these are only for advanced usage and not used by the majority that only use the simple sequencer
+- A new toggle to "Rotate Target" to the desired orientation has been added. Previously this was always done when a rotator was connected and skipped when it was not connected. The new approach should be much more intuitive for the user to understand when rotation will be considered or not.
+- Removed external command and flat panel items from the simple sequencer UI, as these are only for advanced usage and not used by the majority that use the simple sequencer
+- Added support for fetching sky view and location coordinates from the [C2A](http://www.astrosurf.com/c2a/) and [SkytechX](http://www.skytechx.eu/) planetarium programs
+- Sequence mode loop has been changed sligthly to not define a number of exposures on each row but rather on the whole sequence instead to loop through.
 
-### New Advanced Sequencer Tab
-- This will be the new heart of the application, where a custom sequence can be built completely from scratch by individual tiny building blocks
+### New Advanced Sequencer
+- In this area a custom sequence can be built completely from scratch by individual small building blocks
+- Each user has a different flow of how a sequence should look like. This advanced planning can serve most requirements that a user might have.
 - The building blocks consist of these categories
-  - Instruction Sets
+  - *Instruction Sets*
     - These sets group together different instructions
     - Templates can be generated out of these sets to be used later with the same parameters
-  - Instructions
+  - *Instructions*
     - These are the individual steps to automate the sequence
     - Each item has a different operation, like switching to a filter or taking an exposure 
-  - Trigger
+  - *Trigger*
     - Triggers are part of an instruction set and are evaluated after each instruction is processed
     - They have certain conditions that are checked and when these are fullfilled the triggers will fire
     - Examples for these are autofocus after certain parameters, merdian flip or dithering after an amount of exposures
     - Triggers are always cascading. So a trigger on an instruction set on a higher level than the currently executed instruction set will also be evaluated
-  - Loop Conditions
+  - *Loop Conditions*
     - These conditions are attached to an instruction set and drive the behavior of the set
     - As long as a condition is fullfilled, the instruction set will be looped
     - Once a condition is not fullfilled anymore, all remaining instructions inside an instruction set will be skipped
     - Loop conditions are always cascading. So a conditions on an instruction set on a higher level than the currently executed instruction set will also be evaluated
-  - Templates
+  - *Templates*
     - Each instruction set can be saved as a template
     - These templates store all info that has been set inside the instruction set and can be restored for later usage
     - Furthermore these will be stored physically inside the default sequence folder and can be reorganized there
     - Sub folders inside the default sequence folder are possible and will group these templates together
+  - *Targets*
+    - Each Deep Sky Object Sequence be saved as a target
+    - These target store all info that has been set inside the deep sky object sequence and can be restored for later usage
+    - Furthermore these will be stored physically inside the default sequence folder and can be reorganized there
 - For more details on the usage refer to the documentation
 
+## New Plugin Tab
+- With the introduction of the advanced sequencer, a sequence can be planned with individual building blocks. These blocks have been designed to work like small plugins that will be initialized on startup. This opens up the possibility for specialized custom plugins that can be installed independently on demand.
+- To manage these custom plugins for the advanced sequencer a new application tab page has been introduced. There a user can setup and see all installed plugins as well as having the possiblity to see, install and update plugins from the official online plugin repository.
+- Currently plugins are limited to be hooked into the advanced sequencer. More areas to be plugin enabled are planned for the future.
+- The main benefit of these plugins are the possibility to create very specialized behavior, that would only benefit by a smaller user base, without cluttering the application with these capabilities for users that do not need this special behavior.
+
 ### Framing Tab
-- Instead of sending the current target to the sequencer, the user will be prompted to either choose the sequence constructor or directly send the target to the new sequencer while also being able to choose from different templates
-- Replacing of the complete targets is removed, as this is not necessary anymore. 
+- Instead of sending the current target to the sequencer, the user will be prompted to either choose the simple sequencer or directly send the target to the new advanced sequencer while also being able to choose from different templates
+- Replacing of the complete targets is removed, as this is not necessary. 
 - Possibility to manually enter target rotation 
+- A new multi action button replaces the slew button. This button can either "slew", "slew and center" or "slew, center and rotate" your current framing
 
 ### Imaging Tab - Sequence Panel
 - As the new sequencer has a dynamic operation mode, the old summary is not feasible anymore
@@ -91,20 +106,43 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - This allows usage of native camera drivers for Atik cameras with integrated filter wheels
 - The Atik EFW2 and 3 can also be natively connected without using the ASCOM driver
 
-### Native support for Risingcams
+### Improvements for Altair, Touptek, Omegaon and Risingcam native drivers
+- Native driver implementation unified for a common interface, as the underlying SDKs are similar
+- Native support for Risingcam added
+- Additive binning can be turned on
+- Fan speed can be controlled when available
+- Binning info for these cameras are now properly inserted into Metadata
 
+### Guiders
+- MetaGuide is now supported
+- MGEN2 now supports unattended guide star selection and calibration, and automatic meridian flips
+- A ROI percentage can now be set for PHD2 to be considered during guidestar search
+
+### PHD2
+- Dither will be skipped when not actively guiding or the guide star was lost
+- Settle time will now correctly be considered when starting guiding
+- Guiding start timeout will not consider calibration time and will also be used when "Guiding start retry" is off
+- Guiding start retry will not retry more than three times to prevent an infinite loop
+- Profiles can now be switched from the list of available PHD2 profiles
 
 ### Device-related Improvements
-- Canon: Automatically send request to increase shutdown time, when camera is about to shutdown
-- Nikon: Fixed an issue where cancelling an exposure would lead to unexpected bulb exposure times
+- *Canon*: Automatically send request to increase shutdown time, when camera is about to shutdown
+- *Nikon*: Fixed an issue where cancelling an exposure would lead to unexpected bulb exposure times
 - Flat Device Brightness is no longer expressed in percentage, but rather in the absolute values the flat panel supports
-- Flat Device trained brightness levels will be automatically migrated from percentage to absolute values after first flat panel device connection.
+- Flat Device *trained brightness levels* will be *automatically migrated* from percentage to absolute values *after first flat panel device connection*.
 - Filter Wheel List of Filters are now all using the list from the profile instead of having a mix of filters from the ASCOM driver and those from the profile. De-Sync of these lists can't happen anymore.
 - Some mount drivers have reversed primary and secondary axis implementation for manual movements. Now a reverse flag is available to manually correct this behavior.
+- ASCOM Camera driver can now handle odd sensor width & height for mono sensors. A setting to enable this new behavior is available.
+- ASCOM connection and disconnection logic is now unified between all devices to ensure same bahvior
+- ASCOM connection that is lost without any raised error will now be tried to be reconnected one time. If an error happens due to that the application will disconnect like before.
+- ASCOM get and set methods use a unified logic to ensure same behavior for all devices
 
 ## Application Improvements
 ### General
-- It is now possible to change the Application Font in the options
+- The application distribution is now code signed
+- Application initialization is utilizing more parallel processing to startup faster.
+- Application logs are vastly improved to log a lot more info of what is happening at the various levels. INFO level will also contain a lot more info of what is happening at a high level.
+- It is now possible to change the application font in the options
 - Current sequence progress is now displayed in the task bar, also visualizes pause and non-capture tasks during the sequence
 - It is now possible to start, pause, resume and cancel sequences from the preview window
 - Options menu has been restructured to adhere to the Equipment layout
@@ -134,41 +172,29 @@ To identify what has changed in between nightly builds, please refer to the [bit
 
 ### Local Horizon Display
 - It is now possible to define a custom horizon to be used and displayed in the altitude charts
+- Using these custom horizons will make target planning a lot more convenient when only a portion of the sky is available
 - The horizon file consists of a simple mapping of azimuth to altitude values
-- Using these custom horizons it should be a lot more convenient to plan targets when only a portion of the sky is available
-
-### Guiders
-- MetaGuide is now supported
-- MGEN2 now supports unattended guide star selection and calibration, and automatic meridian flips
-- A ROI percentage can now be set for PHD2 to be considered during guidestar search
-- PHD2 - Dither will be skipped when not actively guiding or the guide star was lost
+----
+```markdown
+# Example horizon file content
+# A line starting with # is treated as a comment
+# The horizon file consists of a pair of azimuth and altitude values
+# Azimuth values that are not explicitly defined will interpolate the altitude by using the existing datapoints
+# A minimum of two points have to be defined
+0 10
+100 30
+150 35
+250 30
+300 20
+350 15
+```
+----
 
 ### Auto-focus system
 - Auto-focus can now have different settings for gain, offset and binning per filter
 - When using an autofocus filter with offsets this filter will now also be used for the first and last measurement instead of the filter prior to starting the auto focus
 - During an auto-focus run while taking an image, if the download fails it will be automatically retried up to two times to try to recover
 - A new optional setting R² threshold can now be set. When this threshold is non-zero, the autofocus run has to fullfill a minimum required R² - [Coefficient of determination](https://en.wikipedia.org/wiki/Coefficient_of_determination) - above this threshold to be considered as successful.
-
-### Sequencer
-- Sequencer will check for DARK/BIAS/DARKFLAT before sequence start and warn if no automated flat panel is connected or the camera has no mechanical shutter
-- Added support for fetching sky view and location coordinates from the [C2A](http://www.astrosurf.com/c2a/) and [SkytechX](http://www.skytechx.eu/) planetarium programs
-
-### Device-related Improvements
-- Canon CR3 image format is now supported
-- ASCOM Camera driver can now handle odd sensor width & height for mono sensors. A setting to enable this new behavior is available.
-
-### QHYCCD native driver improvements
-- <span style="color:red">**IMPORTANT:**</span> NINA 1.11 #47 (and later) require *at least* [QHY System Pack](https://www.qhyccd.com/download.html) version 21.02.20.19 to be installed
-- Improvements to reliability
-- Seamless switching between 11M and 47M modes for the QHY294 Pro
-- QHY CCDs that have fast and slow readout modes can now select the mode
-- QHY cameras that have sensor chamber air pressure and humidity sensors will display their readings on the Equipment > Camera screen
-- QHY camera firmware and FPGA versions are now displayed on the Equipment > Camera screen
-- The integrated filter wheels of A-Series cameras should now operate correctly
-- The version of the QHY USB driver will be checked and a warning will be presented if it is not the minimum recommended version
-
-### Image Preview
-- Ability to inspect pixel area and pixel values in detail by holding right click
 
 ### File name patterns and FITS keywords
 - Added `CENTALT`, and `CENTAZ` keywords
@@ -177,11 +203,11 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Added `$$TELESCOPE$$` file pattern
 - Added `$$ROTATEANGLE$$` file pattern
 - Added `$$STARCOUNT$$` file pattern
+- Added `$$TEMPERATURESETPOINT$$` file pattern
 
 ## BugFixes
 - Weather information in equipment tab now shows correct wind direction.
 - FLI: Background flush is now disabled prior to readout to prevent a hung readout
-- Binning info for Altair cameras are now properly inserted into Metadata
 
 ## Included Camera SDK Versions:
 - **Altair Astro:** 49.18830.20210423
