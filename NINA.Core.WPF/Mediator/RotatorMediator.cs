@@ -25,6 +25,10 @@ namespace NINA.WPF.Base.Mediator {
             handler.Sync(skyAngle);
         }
 
+        public Task<float> MoveMechanical(float position) {
+            return handler.MoveMechanical(position);
+        }
+
         public Task<float> Move(float position) {
             return handler.Move(position);
         }

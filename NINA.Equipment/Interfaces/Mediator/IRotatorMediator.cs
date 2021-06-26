@@ -22,6 +22,8 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         void Sync(float skyAngle);
 
+        Task<float> MoveMechanical(float position);
+
         Task<float> Move(float position);
 
         Task<float> MoveRelative(float position);
