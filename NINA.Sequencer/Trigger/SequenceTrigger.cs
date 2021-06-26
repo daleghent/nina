@@ -37,6 +37,17 @@ namespace NINA.Sequencer.Trigger {
             TriggerRunner = new SequentialContainer();
         }
 
+        public SequenceTrigger(SequenceTrigger cloneMe) : this() {
+            CopyMetaData(cloneMe);
+        }
+
+        protected void CopyMetaData(SequenceTrigger cloneMe) {
+            Icon = cloneMe.Icon;
+            Name = cloneMe.Name;
+            Category = cloneMe.Category;
+            Description = cloneMe.Description;
+        }
+
         [OnDeserializing]
         public void OnDeserializing(StreamingContext context) {
             this.TriggerRunner?.Items.Clear();

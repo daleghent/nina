@@ -53,6 +53,19 @@ namespace NINA.Sequencer.Conditions {
             ConditionWatchdog = new ConditionWatchdog(() => { Tick(); return Task.CompletedTask; }, TimeSpan.FromSeconds(1));
         }
 
+        private TimeCondition(TimeCondition cloneMe) : this(cloneMe.DateTimeProviders, cloneMe.SelectedProvider) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new TimeCondition(this) {
+                Hours = Hours,
+                Minutes = Minutes,
+                Seconds = Seconds,
+                MinutesOffset = MinutesOffset
+            };
+        }
+
         public ICustomDateTime DateTime { get; set; }
 
         public IList<IDateTimeProvider> DateTimeProviders {
@@ -162,19 +175,6 @@ namespace NINA.Sequencer.Conditions {
 
         public override bool Check(ISequenceItem nextItem) {
             return DateTime.Now + (nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero) <= CalculateRemainingTime();
-        }
-
-        public override object Clone() {
-            return new TimeCondition(DateTimeProviders, SelectedProvider) {
-                Icon = Icon,
-                Hours = Hours,
-                Minutes = Minutes,
-                Seconds = Seconds,
-                MinutesOffset = MinutesOffset,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public override string ToString() {

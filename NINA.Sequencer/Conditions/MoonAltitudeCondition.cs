@@ -50,6 +50,17 @@ namespace NINA.Sequencer.Conditions {
             ConditionWatchdog = new ConditionWatchdog(() => { CalculateCurrentMoonState(); return Task.CompletedTask; }, TimeSpan.FromSeconds(5));
         }
 
+        private MoonAltitudeCondition(MoonAltitudeCondition cloneMe) : this(cloneMe.profileService) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new MoonAltitudeCondition(this) {
+                UserMoonAltitude = UserMoonAltitude,
+                Comparator = Comparator
+            };
+        }
+
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context) {
             RunWatchdogIfInsideSequenceRoot();
@@ -87,17 +98,6 @@ namespace NINA.Sequencer.Conditions {
             .Where(p => p != ComparisonOperatorEnum.EQUALS)
             .Where(p => p != ComparisonOperatorEnum.NOT_EQUAL)
             .ToArray();
-
-        public override object Clone() {
-            return new MoonAltitudeCondition(profileService) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                UserMoonAltitude = UserMoonAltitude,
-                Comparator = Comparator
-            };
-        }
 
         public override void AfterParentChanged() {
             RunWatchdogIfInsideSequenceRoot();

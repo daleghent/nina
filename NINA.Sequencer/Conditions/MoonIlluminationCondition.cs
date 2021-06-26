@@ -48,6 +48,17 @@ namespace NINA.Sequencer.Conditions {
             ConditionWatchdog = new ConditionWatchdog(() => { CalculateCurrentMoonState(); return Task.CompletedTask; }, TimeSpan.FromSeconds(5));
         }
 
+        private MoonIlluminationCondition(MoonIlluminationCondition cloneMe) : this() {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new MoonIlluminationCondition(this) {
+                UserMoonIllumination = UserMoonIllumination,
+                Comparator = Comparator
+            };
+        }
+
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context) {
             RunWatchdogIfInsideSequenceRoot();
@@ -85,17 +96,6 @@ namespace NINA.Sequencer.Conditions {
             .Where(p => p != ComparisonOperatorEnum.EQUALS)
             .Where(p => p != ComparisonOperatorEnum.NOT_EQUAL)
             .ToArray();
-
-        public override object Clone() {
-            return new MoonIlluminationCondition() {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                UserMoonIllumination = UserMoonIllumination,
-                Comparator = Comparator
-            };
-        }
 
         public override void AfterParentChanged() {
             RunWatchdogIfInsideSequenceRoot();

@@ -69,6 +69,14 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             this.history = historyVM;
         }
 
+        private MeridianFlipTrigger(MeridianFlipTrigger cloneMe) : this(cloneMe.profileService, cloneMe.cameraMediator, cloneMe.telescopeMediator, cloneMe.guiderMediator, cloneMe.focuserMediator, cloneMe.imagingMediator, cloneMe.applicationStatusMediator, cloneMe.filterWheelMediator, cloneMe.history) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new MeridianFlipTrigger(this);
+        }
+
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -77,15 +85,6 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 issues = ImmutableList.CreateRange(value);
                 RaisePropertyChanged();
             }
-        }
-
-        public override object Clone() {
-            return new MeridianFlipTrigger(profileService, cameraMediator, telescopeMediator, guiderMediator, focuserMediator, imagingMediator, applicationStatusMediator, filterWheelMediator, history) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         protected DateTime latestFlipTime;

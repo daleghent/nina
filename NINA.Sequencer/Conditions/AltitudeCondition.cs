@@ -52,6 +52,17 @@ namespace NINA.Sequencer.Conditions {
             ConditionWatchdog = new ConditionWatchdog(() => { CalculateCurrentAltitude(); return Task.CompletedTask; }, TimeSpan.FromSeconds(5));
         }
 
+        private AltitudeCondition(AltitudeCondition cloneMe) : this(cloneMe.profileService) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new AltitudeCondition(this) {
+                Altitude = Altitude,
+                Coordinates = Coordinates.Clone()
+            };
+        }
+
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context) {
             RunWatchdogIfInsideSequenceRoot();
@@ -117,17 +128,6 @@ namespace NINA.Sequencer.Conditions {
                 risingSettingDisplay = value;
                 RaisePropertyChanged();
             }
-        }
-
-        public override object Clone() {
-            return new AltitudeCondition(profileService) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Altitude = Altitude,
-                Coordinates = Coordinates.Clone()
-            };
         }
 
         public override void AfterParentChanged() {

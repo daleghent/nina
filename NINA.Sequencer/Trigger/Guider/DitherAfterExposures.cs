@@ -51,6 +51,17 @@ namespace NINA.Sequencer.Trigger.Guider {
             TriggerRunner.Add(new Dither(guiderMediator));
         }
 
+        private DitherAfterExposures(DitherAfterExposures cloneMe) : this(cloneMe.guiderMediator, cloneMe.history) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new DitherAfterExposures(this) {
+                AfterExposures = AfterExposures,
+                TriggerRunner = (SequentialContainer)TriggerRunner.Clone()
+            };
+        }
+
         private int lastTriggerId = 0;
         private int afterExposures;
 
@@ -75,17 +86,6 @@ namespace NINA.Sequencer.Trigger.Guider {
 
         public int ProgressExposures {
             get => AfterExposures > 0 ? history.ImageHistory.Count % AfterExposures : 0;
-        }
-
-        public override object Clone() {
-            return new DitherAfterExposures(guiderMediator, history) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                AfterExposures = AfterExposures,
-                TriggerRunner = (SequentialContainer)TriggerRunner.Clone()
-            };
         }
 
         public override async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {

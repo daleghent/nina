@@ -44,6 +44,18 @@ namespace NINA.Sequencer.Conditions {
             ConditionWatchdog = new ConditionWatchdog(() => { Tick(); return Task.CompletedTask; }, TimeSpan.FromSeconds(1));
         }
 
+        private TimeSpanCondition(TimeSpanCondition cloneMe) : this() {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new TimeSpanCondition(this) {
+                Hours = Hours,
+                Minutes = Minutes,
+                Seconds = Seconds
+            };
+        }
+
         private void Tick() {
             RaisePropertyChanged(nameof(RemainingTime));
         }
@@ -109,18 +121,6 @@ namespace NINA.Sequencer.Conditions {
         public override bool Check(ISequenceItem nextItem) {
             var nextItemDuration = nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero;
             return (RemainingTime - nextItemDuration) > TimeSpan.Zero;
-        }
-
-        public override object Clone() {
-            return new TimeSpanCondition() {
-                Icon = Icon,
-                Hours = Hours,
-                Minutes = Minutes,
-                Seconds = Seconds,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public override void SequenceBlockInitialize() {

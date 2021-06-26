@@ -38,6 +38,16 @@ namespace NINA.Sequencer.Conditions {
             Iterations = 2;
         }
 
+        private LoopCondition(LoopCondition cloneMe) : this() {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new LoopCondition(this) {
+                Iterations = Iterations
+            };
+        }
+
         private int completedIterations;
         private int iterations;
 
@@ -61,16 +71,6 @@ namespace NINA.Sequencer.Conditions {
 
         public override bool Check(ISequenceItem nextItem) {
             return CompletedIterations < Iterations;
-        }
-
-        public override object Clone() {
-            return new LoopCondition() {
-                Icon = Icon,
-                Iterations = Iterations,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public override void ResetProgress() {

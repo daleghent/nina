@@ -56,6 +56,16 @@ namespace NINA.Sequencer.Conditions {
             ConditionWatchdog = new ConditionWatchdog(() => { CalculateCurrentAltitude(); return Task.CompletedTask; }, TimeSpan.FromSeconds(5));
         }
 
+        private AboveHorizonCondition(AboveHorizonCondition cloneMe) : this(cloneMe.profileService) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new AboveHorizonCondition(this) {
+                Coordinates = Coordinates.Clone()
+            };
+        }
+
         [OnDeserialized]
         public void OnDeserialized(StreamingContext context) {
             RunWatchdogIfInsideSequenceRoot();
@@ -138,16 +148,6 @@ namespace NINA.Sequencer.Conditions {
                 isEastOfMeridian = value;
                 RaisePropertyChanged();
             }
-        }
-
-        public override object Clone() {
-            return new AboveHorizonCondition(profileService) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                Coordinates = Coordinates.Clone()
-            };
         }
 
         public override void AfterParentChanged() {

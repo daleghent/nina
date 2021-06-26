@@ -64,6 +64,16 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator));
         }
 
+        private AutofocusAfterFilterChange(AutofocusAfterFilterChange cloneMe) : this(cloneMe.profileService, cloneMe.history, cloneMe.cameraMediator, cloneMe.filterWheelMediator, cloneMe.focuserMediator, cloneMe.guiderMediator, cloneMe.imagingMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new AutofocusAfterFilterChange(this) {
+                TriggerRunner = (SequentialContainer)TriggerRunner.Clone()
+            };
+        }
+
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -75,16 +85,6 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         }
 
         public FilterInfo LastAutoFocusFilter { get; private set; }
-
-        public override object Clone() {
-            return new AutofocusAfterFilterChange(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                TriggerRunner = (SequentialContainer)TriggerRunner.Clone()
-            };
-        }
 
         public override async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             await TriggerRunner.Run(progress, token);

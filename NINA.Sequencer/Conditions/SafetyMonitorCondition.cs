@@ -42,6 +42,14 @@ namespace NINA.Sequencer.Conditions {
             ConditionWatchdog = new ConditionWatchdog(InterruptWhenUnsafe, TimeSpan.FromSeconds(5));
         }
 
+        private SafetyMonitorCondition(SafetyMonitorCondition cloneMe) : this(cloneMe.safetyMonitorMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new SafetyMonitorCondition(this);
+        }
+
         private bool isSafe;
 
         public bool IsSafe {
@@ -80,15 +88,6 @@ namespace NINA.Sequencer.Conditions {
             var info = safetyMonitorMediator.GetInfo();
             IsSafe = info.Connected && info.IsSafe;
             return IsSafe;
-        }
-
-        public override object Clone() {
-            return new SafetyMonitorCondition(safetyMonitorMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-            };
         }
 
         public override void AfterParentChanged() {

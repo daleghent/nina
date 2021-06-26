@@ -77,6 +77,19 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             Coordinates = new InputCoordinates();
         }
 
+        private CenterAfterDriftTrigger(CenterAfterDriftTrigger cloneMe) : this(cloneMe.profileService, cloneMe.history, cloneMe.telescopeMediator, cloneMe.filterWheelMediator, cloneMe.guiderMediator, cloneMe.imagingMediator, cloneMe.cameraMediator, cloneMe.imageSaveMediator, cloneMe.applicationStatusMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new CenterAfterDriftTrigger(this) {
+                TriggerRunner = (SequentialContainer)TriggerRunner.Clone(),
+                DistanceArcMinutes = DistanceArcMinutes,
+                AfterExposures = AfterExposures,
+                Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates?.Transform(Epoch.J2000) }
+            };
+        }
+
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -85,19 +98,6 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 issues = ImmutableList.CreateRange(value);
                 RaisePropertyChanged();
             }
-        }
-
-        public override object Clone() {
-            return new CenterAfterDriftTrigger(profileService, history, telescopeMediator, filterWheelMediator, guiderMediator, imagingMediator, cameraMediator, imageSaveMediator, applicationStatusMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                TriggerRunner = (SequentialContainer)TriggerRunner.Clone(),
-                DistanceArcMinutes = DistanceArcMinutes,
-                AfterExposures = AfterExposures,
-                Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates?.Transform(Epoch.J2000) }
-            };
         }
 
         [JsonProperty]

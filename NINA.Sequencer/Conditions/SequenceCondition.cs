@@ -31,6 +31,21 @@ namespace NINA.Sequencer.Conditions {
 
     [JsonObject(MemberSerialization.OptIn)]
     public abstract class SequenceCondition : BaseINPC, ISequenceCondition {
+
+        public SequenceCondition() {
+        }
+
+        public SequenceCondition(SequenceCondition cloneMe) {
+            CopyMetaData(cloneMe);
+        }
+
+        protected void CopyMetaData(SequenceCondition cloneMe) {
+            Icon = cloneMe.Icon;
+            Name = cloneMe.Name;
+            Category = cloneMe.Category;
+            Description = cloneMe.Description;
+        }
+
         public string Name { get; set; }
         public string Description { get; set; }
         public GeometryGroup Icon { get; set; }

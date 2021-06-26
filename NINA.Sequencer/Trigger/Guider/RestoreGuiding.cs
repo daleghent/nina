@@ -48,6 +48,16 @@ namespace NINA.Sequencer.Trigger.Guider {
             TriggerRunner.Add(new StartGuiding(guiderMediator) { ForceCalibration = false });
         }
 
+        private RestoreGuiding(RestoreGuiding cloneMe) : this(cloneMe.guiderMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new RestoreGuiding(this) {
+                TriggerRunner = (SequentialContainer)TriggerRunner.Clone()
+            };
+        }
+
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -56,16 +66,6 @@ namespace NINA.Sequencer.Trigger.Guider {
                 issues = ImmutableList.CreateRange(value);
                 RaisePropertyChanged();
             }
-        }
-
-        public override object Clone() {
-            return new RestoreGuiding(guiderMediator) {
-                Icon = Icon,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                TriggerRunner = (SequentialContainer)TriggerRunner.Clone()
-            };
         }
 
         public override async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {

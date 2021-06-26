@@ -68,6 +68,18 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             TriggerRunner.Add(new RunAutofocus(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator));
         }
 
+        private AutofocusAfterHFRIncreaseTrigger(AutofocusAfterHFRIncreaseTrigger cloneMe) : this(cloneMe.profileService, cloneMe.history, cloneMe.cameraMediator, cloneMe.filterWheelMediator, cloneMe.focuserMediator, cloneMe.guiderMediator, cloneMe.imagingMediator) {
+            CopyMetaData(cloneMe);
+        }
+
+        public override object Clone() {
+            return new AutofocusAfterHFRIncreaseTrigger(this) {
+                Amount = Amount,
+                SampleSize = SampleSize,
+                TriggerRunner = (SequentialContainer)TriggerRunner.Clone()
+            };
+        }
+
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -76,18 +88,6 @@ namespace NINA.Sequencer.Trigger.Autofocus {
                 issues = ImmutableList.CreateRange(value);
                 RaisePropertyChanged();
             }
-        }
-
-        public override object Clone() {
-            return new AutofocusAfterHFRIncreaseTrigger(profileService, history, cameraMediator, filterWheelMediator, focuserMediator, guiderMediator, imagingMediator) {
-                Icon = Icon,
-                Amount = Amount,
-                SampleSize = SampleSize,
-                Name = Name,
-                Category = Category,
-                Description = Description,
-                TriggerRunner = (SequentialContainer)TriggerRunner.Clone()
-            };
         }
 
         private double amount;
