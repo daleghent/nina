@@ -5637,4 +5637,7 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="Lbl_SequenceItem_NumberOfAttempts_Tooltip" xml:space="preserve">
     <value>The number of attempts that should be made when the instruction fails to execute.</value>
   </data>
+  <data name="LblStopSequence" xml:space="preserve">
+    <value>Stop Sequence</value>
+  </data>
 </root>

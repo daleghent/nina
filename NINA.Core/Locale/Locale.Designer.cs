@@ -14031,6 +14031,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stop Sequence.
+        /// </summary>
+        internal static string LblStopSequence {
+            get {
+                return ResourceManager.GetString("LblStopSequence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Stop Tracking.
         /// </summary>
         internal static string LblStopTracking {

@@ -98,13 +98,13 @@
                                 <Path
                                     Width="40"
                                     Margin="5"
-                                    Data="{StaticResource CancelSVG}"
+                                    Data="{StaticResource StopSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
                                     RenderTransformOrigin="0.5,0.5"
                                     Stretch="Uniform" />
                                 <Button.ToolTip>
                                     <ToolTip ToolTipService.ShowOnDisabled="True">
-                                        <TextBlock Text="{ns:Loc LblCancelSequence}" />
+                                        <TextBlock Text="{ns:Loc LblStopSequence}" />
                                     </ToolTip>
                                 </Button.ToolTip>
                             </Button>

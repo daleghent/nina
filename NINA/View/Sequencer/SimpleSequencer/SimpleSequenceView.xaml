@@ -485,9 +485,9 @@
                     <ninactrl:AsyncProcessButton
                         ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
                         ButtonImage="{StaticResource PlaySVG}"
-                        CancelButtonImage="{StaticResource CancelSVG}"
+                        CancelButtonImage="{StaticResource StopSVG}"
                         CancelCommand="{Binding CancelSequenceCommand}"
-                        CancelToolTip="{ns:Loc LblCancelSequence}"
+                        CancelToolTip="{ns:Loc LblStopSequence}"
                         Command="{Binding StartSequenceCommand}"
                         LoadingImageBrush="{StaticResource PrimaryBrush}"
                         ToolTip="{ns:Loc LblTooltipStartSequence}" />
