@@ -90,6 +90,7 @@ namespace NINA.Plugin {
                                 /*client.DownloadProgressChanged += (s, e) => {
                                     progress?.Report(e.ProgressPercentage);
                                 };*/
+                                Logger.Info($"Downloading plugin from {manifest.Installer.URL}");
                                 await client.DownloadFileTaskAsync(manifest.Installer.URL, tempFile);
                             }
                         }
@@ -113,7 +114,8 @@ namespace NINA.Plugin {
                 if (update) {
                     try {
                         Uninstall(manifest);
-                    } catch (Exception) {
+                    } catch (Exception ex) {
+                        Logger.Error($"Failed to uninstall plugin {manifest.Name}", ex);
                     }
                 }
 
@@ -142,7 +144,8 @@ namespace NINA.Plugin {
                     if (File.Exists(tempFile)) {
                         File.Delete(tempFile);
                     }
-                } catch (Exception) {
+                } catch (Exception ex) {
+                    Logger.Error("Failed to delete plugin temp file", ex);
                 }
             }
 
@@ -154,7 +157,7 @@ namespace NINA.Plugin {
                 try {
                     File.Move(file, Path.Combine(Constants.DeletionFolder, Path.GetRandomFileName()));
                 } catch (Exception ex) {
-                    Logger.Debug($"Failed to move file to deletion location {file} due to {ex.Message}");
+                    Logger.Error($"Failed to move file to deletion location {file} due to {ex.Message}");
                 }
             }
         }
@@ -204,6 +207,7 @@ namespace NINA.Plugin {
         }
 
         private async Task InstallDLL(IPluginManifest manifest, string sourceFile) {
+            Logger.Info($"Installing plugin DLL {manifest.Name}");
             var name = Path.GetFileName(sourceFile);
             var destination = Path.Combine(GetDestinationFolderFromManifest(manifest), name);
 
@@ -223,6 +227,7 @@ namespace NINA.Plugin {
         }
 
         private Task InstallArchive(IPluginManifest manifest, string tempFile) {
+            Logger.Info($"Installing plugin archive {manifest.Name}");
             var destination = GetDestinationFolderFromManifest(manifest);
 
             using (ZipArchive archive = ZipFile.Open(tempFile, ZipArchiveMode.Read)) {
