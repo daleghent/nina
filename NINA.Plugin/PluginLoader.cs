@@ -154,7 +154,7 @@ namespace NINA.Plugin {
                     Directory.Delete(Constants.DeletionFolder, true);
                 }
             } catch (Exception ex) {
-                Logger.Error("Plugin deletion from deletion foldre failed", ex);
+                Logger.Error("Plugin deletion from deletion folder failed", ex);
             }
         }
 
@@ -232,9 +232,9 @@ namespace NINA.Plugin {
                             Plugins[manifest] = true;
                             //Add the loaded plugin assembly to the assembly resolver
                             Assemblies.Add(plugin.Assembly);
+                            Logger.Info($"Successfully loaded plugin {manifest.Name} version {manifest.Version}");
                         } catch (Exception ex) {
                             //Manifest ok - plugin composition failed
-                            Logger.Error($"Failed to load plugin {file}", ex);
                             var failedManifest = new PluginManifest {
                                 Author = manifest.Author,
                                 Identifier = file,
@@ -245,6 +245,7 @@ namespace NINA.Plugin {
                                     LongDescription = ex.Message
                                 }
                             };
+                            Logger.Error($"Failed to load plugin at {file} - {failedManifest.Name} version {failedManifest.Version}", ex);
                             Plugins[failedManifest] = false;
                         }
                     } catch (Exception ex) {
@@ -263,7 +264,6 @@ namespace NINA.Plugin {
                         var name = attr.FirstOrDefault(x => x.AttributeType == typeof(AssemblyTitleAttribute))?.ConstructorArguments.First().Value.ToString() ?? string.Empty;
 
                         //Manifest failed - Create a fake manifest using all available file meta info
-                        Logger.Error($"Failed to load plugin {file}", ex);
                         var fvi = FileVersionInfo.GetVersionInfo(file);
                         var fileVersion = new Version(fvi.FileVersion);
                         var failedManifest = new PluginManifest {
@@ -278,11 +278,12 @@ namespace NINA.Plugin {
                         };
 
                         Plugins[failedManifest] = false;
+                        Logger.Error($"Failed to load plugin at {file} - {failedManifest.Name} version {failedManifest.Version} {message}");
                     }
                 }
             } catch (Exception ex) {
                 //This should only happen for non plugin assemblies, that are not even targeting .NET
-                Logger.Trace($"The dll inside the plugins failed to load. Most likely it is not a pugin but an external non .NET dependency. Error: {ex}");
+                Logger.Trace($"The dll inside the plugins folder failed to load. Most likely it is not a pugin but an external non .NET dependency. File: {file}, Error: {ex}");
             }
         }
 
