@@ -192,6 +192,7 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>ASCOM connection and disconnection logic is now unified between all devices to ensure same bahvior</li>
 <li>ASCOM connection that is lost without any raised error will now be tried to be reconnected one time. If an error happens due to that the application will disconnect like before.</li>
 <li>ASCOM get and set methods use a unified logic to ensure same behavior for all devices</li>
+<li><em>FLI</em>: Background flush is now disabled prior to readout to prevent a hung readout</li>
 </ul>
 <h2 id="application-improvements">Application Improvements</h2>
 <h3 id="general">General</h3>
@@ -221,6 +222,7 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>Gain/Offset fields will now show the default values as a hint text, rather than being populated inside the textbox itself. Having this approach, a user can directly enter specific values without having to clear the default value first.</li>
 <li>The imaging tab layout is now saved per profile, instead of one layout for all profiles</li>
 <li>Most options and values now also display a unit of measure if applicable</li>
+<li>Weather information in equipment tab now shows correct wind direction.</li>
 </ul>
 <h3 id="subsampling">Subsampling</h3>
 <ul>
@@ -264,11 +266,6 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>Added <code>$$ROTATEANGLE$$</code> file pattern</li>
 <li>Added <code>$$STARCOUNT$$</code> file pattern</li>
 <li>Added <code>$$TEMPERATURESETPOINT$$</code> file pattern</li>
-</ul>
-<h2 id="bugfixes">BugFixes</h2>
-<ul>
-<li>Weather information in equipment tab now shows correct wind direction.</li>
-<li>FLI: Background flush is now disabled prior to readout to prevent a hung readout</li>
 </ul>
 <h2 id="included-camera-sdk-versions">Included Camera SDK Versions:</h2>
 <ul>
@@ -330,7 +327,7 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>Updates to various vendor-supplied SDKs for bug fixes and new model support in the respective native drivers</li>
 <li>QHY: Legacy CCD and A-series cameras can now select Normal or Fast readout speeds when using the native driver</li>
 </ul>
-<h2 id="bugfixes-1">Bugfixes</h2>
+<h2 id="bugfixes">Bugfixes</h2>
 <ul>
 <li>The telescope will no longer go on a journey to the celestial pole before going to the park position</li>
 <li>Parking the telescope from the Equipment &gt; Telescope screen will no longer cause the UI to freeze while the telescope is in the process of parking</li>
@@ -384,7 +381,7 @@ To identify what has changed in between nightly builds, please refer to the <a h
 <li>Rotators will now display the sky angle as the current position, when rotation via plate solving was invoked</li>
 <li>Added toggle to reverse direction for rotators</li>
 </ul>
-<h2 id="bugfixes-2">Bugfixes</h2>
+<h2 id="bugfixes-1">Bugfixes</h2>
 <ul>
 <li>When using a DSLR and Astrometry.net the uploaded file is now correctly sent as FITS instead of raw format</li>
 <li>Log files now show correct operating system version</li>
@@ -828,7 +825,7 @@ Thank you for your support!</p>
 </ul>
 </li>
 </ul>
-<h2 id="bugfixes-3">Bugfixes</h2>
+<h2 id="bugfixes-2">Bugfixes</h2>
 <ul>
 <li>Fixed when FramingAssistant was not opened before and a DSO was selected from the SkyAtlas as Framing Source an error could occur</li>
 <li>Fixed scrolling through Framing Assistant Offline Sky Map while cursor was inside Rectangle ignored zooming</li>
@@ -936,7 +933,7 @@ the background itself will be moved like in an orrery</li>
 <li>Previously the auto update was always just looking for released versions. Now multiple sources (Release, Beta and Nightly) can be selected and the auto updater updates to the respective version accordingls.</li>
 <li>Additionally the changelog for the new version will now be displayed prior to updating, too.</li>
 </ul>
-<h2 id="bugfixes-4">Bugfixes</h2>
+<h2 id="bugfixes-3">Bugfixes</h2>
 <ul>
 <li>Corrected Max Binning level for ASI Cameras</li>
 <li>Focuser move command fixed where lots of move commands where sent by accident</li>
@@ -1057,7 +1054,7 @@ Thank you for your support!</p>
 <li>Latitude and Longitude can now be synced from application to telescope and vica versa (when supported).</li>
 <li>Serial Relay (via USB) interaction for Nikon Bulb</li>
 </ul>
-<h2 id="bugfixes-5">Bugfixes</h2>
+<h2 id="bugfixes-4">Bugfixes</h2>
 <ul>
 <li>Fixed Canon issue that a second exposure is accidentally triggered, causing the camera to be stuck</li>
 <li>Fixed memory leak when using Free Image RAW Converter</li>
