@@ -224,13 +224,13 @@ namespace NINA.Sequencer.SequenceItem {
                         Logger.Warning($"{this} - " + ex.Message);
                         Status = SequenceEntityStatus.SKIPPED;
                     } catch (OperationCanceledException ex) {
-                        if (localCts.IsCancellationRequested) {
-                            Status = SequenceEntityStatus.SKIPPED;
-                            Logger.Debug($"Skipped {this}");
-                        } else {
+                        if (!localCts.IsCancellationRequested) {
                             Status = SequenceEntityStatus.CREATED;
                             Logger.Debug($"Cancelled {this}");
                             throw ex;
+                        } else {
+                            Status = SequenceEntityStatus.SKIPPED;
+                            Logger.Debug($"Skipped {this}");
                         }
                     } finally {
                         progress?.Report(new ApplicationStatus());
