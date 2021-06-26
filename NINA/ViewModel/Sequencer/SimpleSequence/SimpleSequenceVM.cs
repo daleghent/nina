@@ -321,10 +321,14 @@ namespace NINA.ViewModel {
         }
 
         public bool ImportTargets() {
+            var initialDirectory = string.Empty;
+            if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
+                initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
+            }
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = false;
             dialog.Title = Loc.Instance["LblImportTargets"];
-            dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+            dialog.InitialDirectory = initialDirectory;
             dialog.FileName = "";
             dialog.DefaultExt = "csv";
             dialog.Filter = "Telescopius|*." + dialog.DefaultExt;
@@ -415,8 +419,12 @@ namespace NINA.ViewModel {
         }
 
         private void SaveTargetSet(object obj) {
+            var initialDirectory = string.Empty;
+            if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
+                initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
+            }
             Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+            dialog.InitialDirectory = initialDirectory;
             dialog.Title = Loc.Instance["LblSaveTargetSet"];
             dialog.FileName = "";
             dialog.DefaultExt = "ninaTargetSet";
@@ -436,10 +444,14 @@ namespace NINA.ViewModel {
         }
 
         public bool LoadTargetSet() {
+            var initialDirectory = string.Empty;
+            if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
+                initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
+            }
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = false;
             dialog.Title = Loc.Instance["LblLoadTargetSet"];
-            dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+            dialog.InitialDirectory = initialDirectory;
             dialog.FileName = "";
             dialog.DefaultExt = "ninaTargetSet";
             dialog.Filter = "N.I.N.A target set files|*." + dialog.DefaultExt;
@@ -464,11 +476,15 @@ namespace NINA.ViewModel {
         }
 
         public bool LoadTarget() {
+            var initialDirectory = string.Empty;
+            if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
+                initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
+            }
             // LoadSequence loads .xml files indivually - user may select any number of files from same folder
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = true;
             dialog.Title = Loc.Instance["LblLoadSequence"];
-            dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+            dialog.InitialDirectory = initialDirectory;
             dialog.FileName = "Target";
             dialog.DefaultExt = ".xml";
             dialog.Filter = "XML documents|*.xml";
@@ -505,8 +521,12 @@ namespace NINA.ViewModel {
 
         private void SaveAsSequence(object obj) {
             try {
+                var initialDirectory = string.Empty;
+                if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
+                    initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
+                }
                 Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-                dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+                dialog.InitialDirectory = initialDirectory;
                 dialog.Title = Loc.Instance["LblSaveAsSequence"];
                 dialog.DefaultExt = ".xml";
                 dialog.Filter = "XML documents|*.xml";

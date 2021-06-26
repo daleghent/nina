@@ -54,6 +54,7 @@ using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel.Sequencer {
+
     internal class Sequence2VM : BaseVM, ISequence2VM {
         private IApplicationStatusMediator applicationStatusMediator;
         private ISequenceMediator sequenceMediator;
@@ -197,7 +198,7 @@ namespace NINA.ViewModel.Sequencer {
         private void LoadSequence(object obj) {
             var initialDirectory = string.Empty;
             if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
-                initialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+                initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
             }
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = false;
@@ -244,7 +245,7 @@ namespace NINA.ViewModel.Sequencer {
             try {
                 var initialDirectory = string.Empty;
                 if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
-                    initialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+                    initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
                 }
                 Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
                 dialog.InitialDirectory = initialDirectory;
