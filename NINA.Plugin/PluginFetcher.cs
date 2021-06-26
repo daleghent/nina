@@ -38,7 +38,7 @@ namespace NINA.Plugin {
             List<PluginManifest> plugins = new List<PluginManifest>();
             try {
                 var req = new HttpGetRequest(repositoryURL + "/plugins/manifest", true);
-
+                Logger.Info($"Fetching plugin manifests from {req.Url}");
                 var res = await req.Request(ct);
                 if (!string.IsNullOrEmpty(res)) {
                     var arr = JArray.Parse(res);
@@ -53,6 +53,7 @@ namespace NINA.Plugin {
                         }
                     }
                 }
+                Logger.Info($"Found {plugins.Count} valid plugins at {req.Url}");
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw ex;
@@ -76,7 +77,7 @@ namespace NINA.Plugin {
                     }
                 }));
 
-                Logger.Error($"VersionInfo JSON did not validate against schema! {Environment.NewLine}{errorString}");
+                Logger.Error($"Plugin Manifest JSON did not validate against schema! {Environment.NewLine}{errorString}");
             }
             return plugin;
         }
