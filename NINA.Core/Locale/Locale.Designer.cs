@@ -1951,6 +1951,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target &quot;{0}&quot; has been created..
+        /// </summary>
+        internal static string Lbl_Sequencer_TargetSidebar_Created {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_TargetSidebar_Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete Target?.
         /// </summary>
         internal static string Lbl_Sequencer_TargetSidebar_DeleteTargetMessageBox_Caption {
@@ -2001,6 +2010,15 @@ namespace NINA.Core.Locale {
         internal static string Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text {
             get {
                 return ResourceManager.GetString("Lbl_Sequencer_TargetSidebar_OverwriteMessageBox_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target &quot;{0}&quot; has been updated..
+        /// </summary>
+        internal static string Lbl_Sequencer_TargetSidebar_Updated {
+            get {
+                return ResourceManager.GetString("Lbl_Sequencer_TargetSidebar_Updated", resourceCulture);
             }
         }
         
@@ -14638,6 +14656,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sequence template &quot;{0}&quot; has been created..
+        /// </summary>
+        internal static string LblTemplate_Created {
+            get {
+                return ResourceManager.GetString("LblTemplate_Created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Default Templates.
         /// </summary>
         internal static string LblTemplate_DefaultTemplates {
@@ -14688,6 +14715,15 @@ namespace NINA.Core.Locale {
         internal static string LblTemplate_OverwriteTemplateMessageBox_Text {
             get {
                 return ResourceManager.GetString("LblTemplate_OverwriteTemplateMessageBox_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequence template &quot;{0}&quot; has been updated..
+        /// </summary>
+        internal static string LblTemplate_Updated {
+            get {
+                return ResourceManager.GetString("LblTemplate_Updated", resourceCulture);
             }
         }
         

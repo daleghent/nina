@@ -86,7 +86,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                 TriggerRunner = (SequentialContainer)TriggerRunner.Clone(),
                 DistanceArcMinutes = DistanceArcMinutes,
                 AfterExposures = AfterExposures,
-                Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates?.Transform(Epoch.J2000) }
+                Coordinates = Coordinates.Clone()
             };
         }
 
@@ -114,6 +114,16 @@ namespace NINA.Sequencer.Trigger.Platesolving {
                     RaisePropertyChanged(nameof(DistanceArcMinutes));
                     RaisePropertyChanged(nameof(DistancePixels));
                 }
+            }
+        }
+
+        private bool inherited;
+
+        public bool Inherited {
+            get => inherited;
+            set {
+                inherited = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -220,7 +230,13 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             if (Parent == null) {
                 SequenceBlockTeardown();
             } else {
-                Coordinates.Coordinates = ItemUtility.RetrieveContextCoordinates(this.Parent).Item1;
+                var coordinates = ItemUtility.RetrieveContextCoordinates(this.Parent).Item1;
+                if (coordinates != null) {
+                    Coordinates.Coordinates = coordinates;
+                    Inherited = true;
+                } else {
+                    Inherited = false;
+                }
                 Validate();
                 if (Parent.Status == SequenceEntityStatus.RUNNING) {
                     SequenceBlockInitialize();
@@ -242,7 +258,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             if (!telescopeInfo.Connected) {
                 i.Add(Loc.Instance["LblTelescopeNotConnected"]);
             }
-            if (Coordinates?.Coordinates == null) {
+            if (!Inherited) {
                 i.Add(Loc.Instance["LblNoTarget"]);
             }
 

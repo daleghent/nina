@@ -68,7 +68,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
         public override object Clone() {
             return new Center(this) {
-                Coordinates = new InputCoordinates() { Coordinates = Coordinates.Coordinates.Transform(Epoch.J2000) }
+                Coordinates = Coordinates.Clone()
             };
         }
 

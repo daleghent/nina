@@ -138,9 +138,11 @@ namespace NINA.Plugin {
 
         private void CleanupEmptyFolders() {
             try {
-                foreach (var dir in Directory.GetDirectories(Constants.UserExtensionsFolder)) {
-                    if (!Directory.EnumerateFileSystemEntries(dir, "*.*", SearchOption.AllDirectories).Any()) {
-                        Directory.Delete(dir);
+                if (Directory.Exists(Constants.UserExtensionsFolder)) {
+                    foreach (var dir in Directory.GetDirectories(Constants.UserExtensionsFolder)) {
+                        if (!Directory.EnumerateFileSystemEntries(dir, "*.*", SearchOption.AllDirectories).Any()) {
+                            Directory.Delete(dir);
+                        }
                     }
                 }
             } catch (Exception ex) {

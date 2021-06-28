@@ -171,9 +171,11 @@ namespace NINA.ViewModel.Sequencer {
                     System.Windows.MessageBoxResult.No
                   ) == System.Windows.MessageBoxResult.Yes) {
                     TargetController.AddTarget(clonedContainer);
+                    Notification.ShowSuccess(string.Format(Loc.Instance["Lbl_Sequencer_TargetSidebar_Updated"], clonedContainer.Name));
                 }
             } else {
                 TargetController.AddTarget(clonedContainer);
+                Notification.ShowSuccess(string.Format(Loc.Instance["Lbl_Sequencer_TargetSidebar_Created"], clonedContainer.Name));
             }
         }
 
@@ -184,7 +186,8 @@ namespace NINA.ViewModel.Sequencer {
             clonedContainer.ResetAll();
 
             bool addTemplate = true;
-            if (TemplateController.UserTemplates.Any(t => t.Container.Name == clonedContainer.Name && t.SubGroups.Count() == 0)) {
+            var templateExists = TemplateController.UserTemplates.Any(t => t.Container.Name == clonedContainer.Name && t.SubGroups.Count() == 0);
+            if (templateExists) {
                 var result = MyMessageBox.Show(string.Format(Loc.Instance["LblTemplate_OverwriteTemplateMessageBox_Text"], clonedContainer.Name),
                     Loc.Instance["LblTemplate_OverwriteTemplateMessageBox_Caption"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);
                 addTemplate = result == System.Windows.MessageBoxResult.OK;
@@ -192,6 +195,11 @@ namespace NINA.ViewModel.Sequencer {
 
             if (addTemplate) {
                 TemplateController.AddNewUserTemplate(clonedContainer);
+                if (templateExists) {
+                    Notification.ShowSuccess(string.Format(Loc.Instance["LblTemplate_Updated"], clonedContainer.Name));
+                } else {
+                    Notification.ShowSuccess(string.Format(Loc.Instance["LblTemplate_Created"], clonedContainer.Name));
+                }
             }
         }
 

@@ -89,7 +89,6 @@ namespace NINA.Sequencer {
                 }
 
                 RefreshFilters();
-                Notification.ShowSuccess(string.Format(Loc.Instance["Lbl_SequenceTargetController_SavedTarget"], deepSkyObjectContainer.Target?.TargetName ?? deepSkyObjectContainer.Name));
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(Loc.Instance["Lbl_SequenceTargetController_AddNewTargetFailed"]);
