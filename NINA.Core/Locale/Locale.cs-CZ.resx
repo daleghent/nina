@@ -5600,31 +5600,46 @@ Význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Nelze se připojit k {0}. Důvod: {1}</value>
   </data>
   <data name="LblAbortOnError" xml:space="preserve">
-    <value>Abort</value>
+    <value>Zrušit</value>
   </data>
   <data name="LblContinueOnError" xml:space="preserve">
-    <value>Continue</value>
+    <value>Pokračovat</value>
   </data>
   <data name="LblOnError" xml:space="preserve">
-    <value>On error</value>
+    <value>Při chybě</value>
   </data>
   <data name="LblRetries" xml:space="preserve">
-    <value>Retries</value>
+    <value>Opakuje</value>
   </data>
   <data name="LblSkipInstructionSetOnError" xml:space="preserve">
-    <value>Skip current instruction set</value>
+    <value>Přeskočit aktuální sadu instrukcí</value>
   </data>
   <data name="LblSkipToSequenceEndInstructions" xml:space="preserve">
-    <value>Skip to end of sequence instructions</value>
+    <value>Přeskočit na konec pokynů sekvence</value>
   </data>
   <data name="LblNumberOfAttempts" xml:space="preserve">
-    <value>Number of attempts</value>
+    <value>Počet pokusů</value>
   </data>
   <data name="Lbl_SequenceItem_ErrorBehavior_Tooltip" xml:space="preserve">
-    <value>Defines how the sequence should continue after all attempts have been unsuccessful to execute the instruction.
-The default behavior is to continue on errors, however for some instructions it might be desired to not continue with the execution. For example when the center operation fails to frame the target correctly some recovery steps can then be taken.</value>
+    <value>Definuje, jak by měla posloupnost pokračovat poté, co všechny pokusy o provedení instrukce nebyly úspěšné.
+Výchozí chování je pokračovat v chybách, ale pro některé instrukce může být žádoucí nepokračovat s provedením. Například, když centrální operace nedokáže správně nastavit cíl, lze provést některé kroky k obnově.</value>
   </data>
   <data name="Lbl_SequenceItem_NumberOfAttempts_Tooltip" xml:space="preserve">
-    <value>The number of attempts that should be made when the instruction fails to execute.</value>
+    <value>Počet pokusů, které by měly být provedeny, když se instrukce nepodaří provést.</value>
+  </data>
+  <data name="LblStopSequence" xml:space="preserve">
+    <value>Zastavte Sekvenci</value>
+  </data>
+  <data name="LblTemplate_Created" xml:space="preserve">
+    <value>Sequence template "{0}" has been created.</value>
+  </data>
+  <data name="LblTemplate_Updated" xml:space="preserve">
+    <value>Sequence template "{0}" has been updated.</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
+    <value>Target "{0}" has been created.</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
+    <value>Target "{0}" has been updated.</value>
   </data>
 </root>

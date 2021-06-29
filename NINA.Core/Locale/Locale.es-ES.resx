@@ -5600,31 +5600,46 @@ Este ajuste no tendrá efecto en los sensores de color.
     <value>No se puede conectar a {0}. Razón: {1}</value>
   </data>
   <data name="LblAbortOnError" xml:space="preserve">
-    <value>Abort</value>
+    <value>Abortar</value>
   </data>
   <data name="LblContinueOnError" xml:space="preserve">
-    <value>Continue</value>
+    <value>Continuar</value>
   </data>
   <data name="LblOnError" xml:space="preserve">
-    <value>On error</value>
+    <value>En caso de error</value>
   </data>
   <data name="LblRetries" xml:space="preserve">
-    <value>Retries</value>
+    <value>Reintentos</value>
   </data>
   <data name="LblSkipInstructionSetOnError" xml:space="preserve">
-    <value>Skip current instruction set</value>
+    <value>Ignorar el conjunto actual de instrucciones</value>
   </data>
   <data name="LblSkipToSequenceEndInstructions" xml:space="preserve">
-    <value>Skip to end of sequence instructions</value>
+    <value>Saltar a las instrucciones de final de secuencia</value>
   </data>
   <data name="LblNumberOfAttempts" xml:space="preserve">
-    <value>Number of attempts</value>
+    <value>Número de Intentos</value>
   </data>
   <data name="Lbl_SequenceItem_ErrorBehavior_Tooltip" xml:space="preserve">
-    <value>Defines how the sequence should continue after all attempts have been unsuccessful to execute the instruction.
-The default behavior is to continue on errors, however for some instructions it might be desired to not continue with the execution. For example when the center operation fails to frame the target correctly some recovery steps can then be taken.</value>
+    <value>Define cómo debe continuar la secuencia después de que todos los intentos de ejecutar la instrucción hayan sido infructuosos.
+El comportamiento por defecto es continuar en caso de error, sin embargo para algunas instrucciones puede desearse no continuar con la ejecución. Por ejemplo, cuando la operación de centrado no consigue encuadrar el objetivo correctamente, se pueden tomar medidas de recuperación.</value>
   </data>
   <data name="Lbl_SequenceItem_NumberOfAttempts_Tooltip" xml:space="preserve">
-    <value>The number of attempts that should be made when the instruction fails to execute.</value>
+    <value>Número de intentos que se deben hacer cuando la instrucción falla al ejecutarse.</value>
+  </data>
+  <data name="LblStopSequence" xml:space="preserve">
+    <value>Detener la secuencia</value>
+  </data>
+  <data name="LblTemplate_Created" xml:space="preserve">
+    <value>Sequence template "{0}" has been created.</value>
+  </data>
+  <data name="LblTemplate_Updated" xml:space="preserve">
+    <value>Sequence template "{0}" has been updated.</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
+    <value>Target "{0}" has been created.</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
+    <value>Target "{0}" has been updated.</value>
   </data>
 </root>

@@ -5500,134 +5500,149 @@ Dec: {1}</value>
     <comment>Secondary telescope axis rate</comment>
   </data>
   <data name="LblTelescopeCannotMovePrimaryAxis" xml:space="preserve">
-    <value>Telescope cannot move primary axis</value>
+    <value>Телескоп не может переместить первичную ось</value>
   </data>
   <data name="LblTelescopeCannotMoveSecondaryAxis" xml:space="preserve">
-    <value>Telescope cannot move secondary axis</value>
+    <value>Телескоп не может переместить вторичную ось</value>
   </data>
   <data name="LblPrimaryReversed" xml:space="preserve">
-    <value>Primary reversed</value>
+    <value>Первичный обратный</value>
   </data>
   <data name="LblPrimaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the primary axis movement. Enable this to reverse the direction on move commands for the primary axis.</value>
+    <value>Некоторые драйверы монтировок имеют обратную реализацию движения первичной оси. Включите этот параметр, чтобы изменить направление команд перемещения для первичной оси.</value>
   </data>
   <data name="LblSecondaryReversed" xml:space="preserve">
-    <value>Secondary reversed</value>
+    <value>Вторичный обратный</value>
   </data>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
+    <value>Некоторые драйверы монтировок имеют обратную реализацию движения вторичной оси. Включите этот параметр, чтобы изменить направление команд перемещения для вторичной оси.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
-    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+    <value>Ошибка при открытии затвора. Состояние затвора все равно сообщается, что закрыто после открытия затвора.</value>
   </data>
   <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
-    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
+    <value>Не удалось закрыть затвор. Состояние затвора все еще указывается как открытое после запуска операции закрытия затвора. </value>
   </data>
   <data name="LblAuthor" xml:space="preserve">
-    <value>Author</value>
+    <value>Автор</value>
   </data>
   <data name="LblAvailable" xml:space="preserve">
-    <value>Available</value>
+    <value>Доступно</value>
   </data>
   <data name="LblInstalled" xml:space="preserve">
-    <value>Installed</value>
+    <value>Установлено</value>
   </data>
   <data name="LblVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>Версия</value>
   </data>
   <data name="LblFailedToFetchPlugins" xml:space="preserve">
-    <value>Failed to fetch plugins from repository "{0}"</value>
+    <value>Не удалось получить плагины из репозитория "{0}"</value>
   </data>
   <data name="LblPluginCheckForUpdates" xml:space="preserve">
-    <value>Check for updates</value>
+    <value>Проверить обновления</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins from:</value>
+    <value>Установите через менеджер плагинов N.I.N.A. или вручную скачайте и скопируйте файл DLL в %localappdata%\NINA\Plugins от:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and run the setup from:</value>
+    <value>Установите через менеджер плагинов N.I.N.A. или скачайте вручную и запустите установку из:</value>
   </data>
   <data name="LblScreenshots" xml:space="preserve">
-    <value>Screenshots</value>
+    <value>Скриншоты</value>
   </data>
   <data name="LblSetup" xml:space="preserve">
-    <value>Setup</value>
+    <value>Настройка</value>
     <comment>Setup as in application setup/installer</comment>
   </data>
   <data name="LblInstall" xml:space="preserve">
-    <value>Install</value>
+    <value>Установить</value>
   </data>
   <data name="LblPendingPluginsRestart" xml:space="preserve">
-    <value>Plugins are pending to be changed on next application start. Should the application be restarted?</value>
+    <value>Плагины ожидают изменения при следующем запуске приложения. Перезапустить приложение?</value>
   </data>
   <data name="LblPluginArchiveInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and extract the archive into %localappdata%\NINA\Plugins from:</value>
+    <value>Установите через менеджер плагинов N.I.N.A. или вручную скачайте и распакуйте архив в %localappdata%\NINA\Plugins из:</value>
   </data>
   <data name="LblPluginInstallationFailed" xml:space="preserve">
-    <value>Plugin installation for plugin {0} failed.</value>
+    <value>Установка плагина для плагина {0} не удалась.</value>
   </data>
   <data name="LblRequiresRestart" xml:space="preserve">
-    <value>Requires restart</value>
+    <value>Требуется перезагрузка</value>
   </data>
   <data name="LblUninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>Удалить</value>
   </data>
   <data name="LblPluginCheckForUpdatesCancel" xml:space="preserve">
-    <value>Cancel the check for available online plugins.</value>
+    <value>Отменить проверку доступных онлайн-плагинов.</value>
   </data>
   <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
-    <value>Checks the online plugin repository for available plugins and also checks if newer versions of existing plugins exist.</value>
+    <value>Проверяет репозиторий доступных плагинов онлайн, а также проверяет, существуют ли новые версии существующих плагинов.</value>
   </data>
   <data name="LblTags" xml:space="preserve">
-    <value>Tags</value>
+    <value>Теги</value>
   </data>
   <data name="LblBinAverageEnabled" xml:space="preserve">
-    <value>Binning averages pixels</value>
+    <value>Биннинг усредняет пиксели</value>
   </data>
   <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
-    <value>By default, binning is additive. Data are still the same bitness as the camera, so bright pixels can be clipped. Average mode prevents this clipping from taking place at the expense of some dynamic range due to integer division.</value>
+    <value>По умолчанию биннинг является аддитивным. Данные по-прежнему имеют ту же разрядность, что и камера, поэтому яркие пиксели могут быть обрезаны. Средний режим предотвращает это ограничение за счет некоторого динамического диапазона из-за целочисленного деления.</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd" xml:space="preserve">
-    <value>Abort and run end of sequence instructions</value>
+    <value>Прервать и запускать инструкции в конце последовательности</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd_Tooltip" xml:space="preserve">
-    <value>Interrupts the currently running sequence instruction and skips everything up until the end of sequence instructions to be run</value>
+    <value>Прерывает инструкцию по выполняемой последовательности и пропускает все вверх до конца инструкций последовательности для запуска</value>
   </data>
   <data name="Lbl_Sequencer_SkipCurrentInstructions" xml:space="preserve">
-    <value>Skip currently running instruction(s)</value>
+    <value>Пропустить текущие инструкции(и)</value>
   </data>
   <data name="LblFanSpeed" xml:space="preserve">
-    <value>Fan speed</value>
+    <value>Скорость вентилятора</value>
   </data>
   <data name="LblUnableToConnect" xml:space="preserve">
-    <value>Unable to connect to {0}. Reason: {1}</value>
+    <value>Не удалось подключиться к {0}. Причина: {1}</value>
   </data>
   <data name="LblAbortOnError" xml:space="preserve">
-    <value>Abort</value>
+    <value>Прервать</value>
   </data>
   <data name="LblContinueOnError" xml:space="preserve">
-    <value>Continue</value>
+    <value>Продолжить</value>
   </data>
   <data name="LblOnError" xml:space="preserve">
-    <value>On error</value>
+    <value>При ошибке</value>
   </data>
   <data name="LblRetries" xml:space="preserve">
-    <value>Retries</value>
+    <value>Попытки</value>
   </data>
   <data name="LblSkipInstructionSetOnError" xml:space="preserve">
-    <value>Skip current instruction set</value>
+    <value>Пропустить текущий набор инструкций</value>
   </data>
   <data name="LblSkipToSequenceEndInstructions" xml:space="preserve">
-    <value>Skip to end of sequence instructions</value>
+    <value>Перейти к концу инструкций последовательности</value>
   </data>
   <data name="LblNumberOfAttempts" xml:space="preserve">
-    <value>Number of attempts</value>
+    <value>Количество попыток</value>
   </data>
   <data name="Lbl_SequenceItem_ErrorBehavior_Tooltip" xml:space="preserve">
-    <value>Defines how the sequence should continue after all attempts have been unsuccessful to execute the instruction.
-The default behavior is to continue on errors, however for some instructions it might be desired to not continue with the execution. For example when the center operation fails to frame the target correctly some recovery steps can then be taken.</value>
+    <value>Определяет, как последовательность должна продолжаться после того, как все попытки выполнить инструкцию оказались безуспешными.
+Поведение по умолчанию - продолжить выполнение ошибок, однако для некоторых инструкций может быть желательно не продолжать выполнение. Например, когда операция центра не может правильно сформировать цель, могут быть предприняты некоторые шаги по восстановлению.</value>
   </data>
   <data name="Lbl_SequenceItem_NumberOfAttempts_Tooltip" xml:space="preserve">
-    <value>The number of attempts that should be made when the instruction fails to execute.</value>
+    <value>Количество попыток, которое необходимо сделать при невыполнении инструкции.</value>
+  </data>
+  <data name="LblStopSequence" xml:space="preserve">
+    <value>Остановить последовательность</value>
+  </data>
+  <data name="LblTemplate_Created" xml:space="preserve">
+    <value>Sequence template "{0}" has been created.</value>
+  </data>
+  <data name="LblTemplate_Updated" xml:space="preserve">
+    <value>Sequence template "{0}" has been updated.</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
+    <value>Target "{0}" has been created.</value>
+  </data>
+  <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
+    <value>Target "{0}" has been updated.</value>
   </data>
 </root>
