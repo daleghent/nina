@@ -113,10 +113,7 @@ namespace NINA.API.SGP {
                 }
 
                 captureSequence.EnableSubSample = true;
-                camera.SubSampleX = input.X.Value;
-                camera.SubSampleY = input.Y.Value;
-                camera.SubSampleHeight = input.Height.Value;
-                camera.SubSampleWidth = input.Width.Value;
+                captureSequence.SubSambleRectangle = new ObservableRectangle(input.X.Value, input.Y.Value, input.Width.Value, input.Height.Value);
             }
 
             var inputDirectory = Path.GetDirectoryName(input.Path);
