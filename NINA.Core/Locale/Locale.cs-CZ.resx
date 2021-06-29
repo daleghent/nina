@@ -5631,15 +5631,15 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Zastavte Sekvenci</value>
   </data>
   <data name="LblTemplate_Created" xml:space="preserve">
-    <value>Sequence template "{0}" has been created.</value>
+    <value>Šablona sekvence "{0}" byla vytvořena.</value>
   </data>
   <data name="LblTemplate_Updated" xml:space="preserve">
-    <value>Sequence template "{0}" has been updated.</value>
+    <value>Šablona sekvence "{0}" byla aktualizována.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
-    <value>Target "{0}" has been created.</value>
+    <value>Cíl "{0}" byl vytvořen.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
-    <value>Target "{0}" has been updated.</value>
+    <value>Cíl "{0}" byl aktualizován.</value>
   </data>
 </root>

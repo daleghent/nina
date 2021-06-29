@@ -5631,15 +5631,15 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
     <value>Detener la secuencia</value>
   </data>
   <data name="LblTemplate_Created" xml:space="preserve">
-    <value>Sequence template "{0}" has been created.</value>
+    <value>Se ha creado la plantilla de la secuencia "{0}".</value>
   </data>
   <data name="LblTemplate_Updated" xml:space="preserve">
-    <value>Sequence template "{0}" has been updated.</value>
+    <value>Se ha actualizado la plantilla de la secuencia "{0}".</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
-    <value>Target "{0}" has been created.</value>
+    <value>Se ha creado el objetivo "{0}".</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
-    <value>Target "{0}" has been updated.</value>
+    <value>Se ha actualizado el objetivo "{0}".</value>
   </data>
 </root>
