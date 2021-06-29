@@ -36,28 +36,28 @@ namespace NINA.API.SGP {
         }
 
         public SgAbortImageResponse AbortImage() {
-            var camera = cameraVM.Cam;
-            if (camera?.Connected != true) {
+            var cameraInfo = cameraVM.GetDeviceInfo();
+            if (cameraInfo?.Connected != true) {
                 return new SgAbortImageResponse() {
                     Success = false,
                     Message = "No camera is connected"
                 };
             }
-            camera?.AbortExposure();
+            cameraVM.AbortExposure();
             return new SgAbortImageResponse() {
                 Success = true
             };
         }
 
         public SgCaptureImageResponse CaptureImage(SgCaptureImage input) {
-            var camera = cameraVM.Cam;
-            if (camera?.Connected != true) {
+            var cameraInfo = cameraVM.GetDeviceInfo();
+            if (cameraInfo.Connected != true) {
                 return new SgCaptureImageResponse() {
                     Success = false,
                     Message = "No camera is connected"
                 };
             }
-            if (cameraVM.GetDeviceInfo().IsExposing) {
+            if (cameraInfo.IsExposing) {
                 return new SgCaptureImageResponse() {
                     Success = false,
                     Message = "Camera is busy"
@@ -105,7 +105,7 @@ namespace NINA.API.SGP {
                 if (!input.X.HasValue || !input.Y.HasValue || !input.Width.HasValue || !input.Height.HasValue) {
                     throw new ArgumentException("If UseSubframe enabled, you must provide X, Y, Width, and Height");
                 }
-                if (!camera.CanSubSample) {
+                if (!cameraInfo.CanSubSample) {
                     return new SgCaptureImageResponse() {
                         Success = false,
                         Message = "Camera does not support subframes"
@@ -154,7 +154,7 @@ namespace NINA.API.SGP {
                     return response;
                 }
 
-                if (cameraChooserVM.SelectedDevice == selectedDevice && cameraVM.Cam?.Connected == true) {
+                if (cameraChooserVM.SelectedDevice == selectedDevice && cameraVM.GetDeviceInfo().Connected == true) {
                     Logger.Trace(String.Format("Camera device {0} already connected", input.DeviceName));
                     response.Success = true;
                 } else {
@@ -206,8 +206,8 @@ namespace NINA.API.SGP {
         }
 
         public SgGetCameraPropsResponse GetCameraProps() {
-            var camera = cameraVM.Cam;
-            if (camera?.Connected != true) {
+            var cameraInfo = cameraVM.GetDeviceInfo();
+            if (cameraInfo.Connected != true) {
                 return new SgGetCameraPropsResponse() {
                     Success = false,
                     Message = "No camera connected"
@@ -216,20 +216,20 @@ namespace NINA.API.SGP {
 
             return new SgGetCameraPropsResponse() {
                 Success = true,
-                GainValues = camera.Gains.Select(g => g.ToString()).ToArray(),
-                IsoValues = camera.Gains.Select(g => g.ToString()).ToArray(),
-                NumPixelsX = camera.CameraXSize,
-                NumPixelsY = camera.CameraYSize,
-                SupportsSubframe = camera.CanSubSample,
-                CanSetTemperature = camera.CanSetTemperature
+                GainValues = cameraInfo.Gains.Select(g => g.ToString()).ToArray(),
+                IsoValues = cameraInfo.Gains.Select(g => g.ToString()).ToArray(),
+                NumPixelsX = cameraInfo.XSize,
+                NumPixelsY = cameraInfo.YSize,
+                SupportsSubframe = cameraInfo.CanSubSample,
+                CanSetTemperature = cameraInfo.CanSetTemperature
             };
         }
 
         public SgGetDeviceStatusResponse GetDeviceStatus(SgGetDeviceStatus input) {
             if (input.Device == DeviceType.Camera) {
-                var camera = cameraVM.Cam;
+                var cameraInfo = cameraVM.GetDeviceInfo();
                 var state = StateType.IDLE;
-                if (camera == null || camera.Connected != true) {
+                if (cameraInfo.Connected != true) {
                     state = StateType.DISCONNECTED;
                 } else if (cameraVM.GetDeviceInfo().IsExposing) {
                     state = StateType.BUSY;
@@ -270,8 +270,8 @@ namespace NINA.API.SGP {
         }
 
         public SgSetCameraCoolerEnabledResponse SetCameraCoolerEnabled(SgSetCameraCoolerEnabled input) {
-            var camera = cameraVM.Cam;
-            if (camera?.Connected != true) {
+            var cameraInfo = cameraVM.GetDeviceInfo();
+            if (cameraInfo?.Connected != true) {
                 return new SgSetCameraCoolerEnabledResponse() {
                     Success = false,
                     Message = "No camera connected"
@@ -279,7 +279,7 @@ namespace NINA.API.SGP {
             }
 
             try {
-                camera.CoolerOn = input.Enabled;
+                cameraVM.SetCooler(input.Enabled);
                 return new SgSetCameraCoolerEnabledResponse() {
                     Success = true
                 };
@@ -292,8 +292,8 @@ namespace NINA.API.SGP {
         }
 
         public SgCameraCoolerResponse GetCameraCooler() {
-            var camera = cameraVM.Cam;
-            if (camera?.Connected != true) {
+            var cameraInfo = cameraVM.GetDeviceInfo();
+            if (cameraInfo.Connected != true) {
                 return new SgCameraCoolerResponse() {
                     Success = false,
                     Message = "No camera connected"
@@ -303,7 +303,7 @@ namespace NINA.API.SGP {
             try {
                 return new SgCameraCoolerResponse() {
                     Success = true,
-                    Enabled = camera.CoolerOn
+                    Enabled = cameraInfo.CoolerOn
                 };
             } catch (Exception ex) {
                 return new SgCameraCoolerResponse() {
@@ -314,8 +314,8 @@ namespace NINA.API.SGP {
         }
 
         public SgGetCameraTempResponse GetCameraTemp() {
-            var camera = cameraVM.Cam;
-            if (camera?.Connected != true) {
+            var cameraInfo = cameraVM.GetDeviceInfo();
+            if (cameraInfo.Connected != true) {
                 return new SgGetCameraTempResponse() {
                     Success = false,
                     Message = "No camera connected"
@@ -325,7 +325,7 @@ namespace NINA.API.SGP {
             try {
                 return new SgGetCameraTempResponse() {
                     Success = true,
-                    Temperature = camera.Temperature
+                    Temperature = cameraInfo.Temperature
                 };
             } catch (Exception ex) {
                 return new SgGetCameraTempResponse() {
@@ -336,8 +336,8 @@ namespace NINA.API.SGP {
         }
 
         public SgSetCameraTempResponse SetCameraTemp(SgSetCameraTemp input) {
-            var camera = cameraVM.Cam;
-            if (camera?.Connected != true) {
+            var cameraInfo = cameraVM.GetDeviceInfo();
+            if (cameraInfo.Connected != true) {
                 return new SgSetCameraTempResponse() {
                     Success = false,
                     Message = "No camera connected"
@@ -345,7 +345,7 @@ namespace NINA.API.SGP {
             }
 
             try {
-                camera.TemperatureSetPoint = input.Temperature;
+                cameraVM.SetTemperature(input.Temperature);
                 return new SgSetCameraTempResponse() {
                     Success = true
                 };

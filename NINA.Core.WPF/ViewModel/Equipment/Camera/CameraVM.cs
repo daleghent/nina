@@ -872,6 +872,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             return CameraInfo;
         }
 
+        public void SetTemperature(double temperature) {
+            if (Cam.CanSetTemperature) {
+                Cam.TemperatureSetPoint = temperature;
+            }
+        }
+
+        public void SetCooler(bool onOff) {
+            Cam.CoolerOn = onOff;
+        }
+
         public AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>> CoolerPowerHistory { get; private set; }
         public AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>> CCDTemperatureHistory { get; private set; }
         public IAsyncCommand CoolCamCommand { get; private set; }

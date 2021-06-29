@@ -40,6 +40,10 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         double TargetTemp { get; }
 
+        void SetTemperature(double temperature);
+
+        void SetCooler(bool onOff);
+
         Task Capture(CaptureSequence sequence, CancellationToken token,
             IProgress<ApplicationStatus> progress);
 
@@ -50,8 +54,6 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<bool> CoolCamera(double temperature, TimeSpan duration, IProgress<ApplicationStatus> progress, CancellationToken ct);
 
         Task<bool> WarmCamera(TimeSpan duration, IProgress<ApplicationStatus> progress, CancellationToken ct);
-
-        ICamera Cam { get; }
 
         IDeviceChooserVM CameraChooserVM { get; set; }
     }
