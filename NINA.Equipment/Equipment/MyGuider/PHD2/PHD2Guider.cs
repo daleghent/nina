@@ -420,6 +420,13 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             return appStateResponse?.result?.ToString();
         }
 
+        private async Task<bool> IsCalibrated() {
+            var msg = new Phd2GetCalibrated();
+            var response = await SendMessage<BooleanPhdMethodResponse>(msg, 5000);
+
+            return response?.result ?? false;
+        }
+
         private Task<bool> WaitForAppState(
             string targetState,
             CancellationToken ct,
@@ -458,6 +465,8 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 await WaitForCalibrationFinished(progress, ct);
             }
 
+            var isCalibrated = forceCalibration ? false : await IsCalibrated();
+
             int retries = 1;
             int maxRetries = profileService.ActiveProfile.GuiderSettings.AutoRetryStartGuiding ? 3 : 1;
             var retryAfterSeconds = TimeSpan.FromSeconds(profileService.ActiveProfile.GuiderSettings.AutoRetryStartGuidingTimeoutSeconds);
@@ -468,8 +477,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
                 var starSelected = await WaitForStarSelected(progress, ct);
                 if (starSelected) {
-                    await Task.Delay(1000, ct);
-                    await WaitForCalibrationFinished(progress, ct);
+                    if (!isCalibrated) {
+                        await Task.Delay(1000, ct);
+                        await WaitForCalibrationFinished(progress, ct);
+                    }
 
                     using (var cancelOnTimeoutOrParent = CancellationTokenSource.CreateLinkedTokenSource(ct)) {
                         var timeout = Task.Delay(
@@ -629,20 +640,21 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             return true;
         }
 
-        private Task<GenericPhdMethodResponse> SendMessage(Phd2Method msg, int receiveTimeout = 60000) {
+        public Task<GenericPhdMethodResponse> SendMessage(Phd2Method msg, int receiveTimeout = 60000) {
             return SendMessage<GenericPhdMethodResponse>(msg, receiveTimeout);
         }
 
-        private async Task<T> SendMessage<T>(Phd2Method msg, int receiveTimeout = 60000) where T : PhdMethodResponse {
+        public async Task<T> SendMessage<T>(Phd2Method msg, int receiveTimeout = 60000) where T : PhdMethodResponse {
             try {
                 using (var client = new TcpClient()) {
-                    Logger.Debug($"Phd2 - Sending message '{JsonConvert.SerializeObject(msg)}'");
+                    var serializedMessage = JsonConvert.SerializeObject(msg, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore });
+                    Logger.Debug($"Phd2 - Sending message '{serializedMessage}'");
                     client.ReceiveTimeout = receiveTimeout;
                     await client.ConnectAsync(
                         profileService.ActiveProfile.GuiderSettings.PHD2ServerUrl,
                         profileService.ActiveProfile.GuiderSettings.PHD2ServerPort);
                     var stream = client.GetStream();
-                    var data = Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(msg, new JsonSerializerSettings() { NullValueHandling = NullValueHandling.Ignore }) + Environment.NewLine);
+                    var data = Encoding.ASCII.GetBytes(serializedMessage + Environment.NewLine);
 
                     await stream.WriteAsync(data, 0, data.Length);
 
