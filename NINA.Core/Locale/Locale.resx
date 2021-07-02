@@ -5653,4 +5653,7 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
     <value>Target "{0}" has been updated.</value>
   </data>
+  <data name="LblWaitingForSlew" xml:space="preserve">
+    <value>Waiting for prior slew</value>
+  </data>
 </root>

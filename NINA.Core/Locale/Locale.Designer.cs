@@ -15977,6 +15977,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Waiting for prior slew.
+        /// </summary>
+        internal static string LblWaitingForSlew {
+            get {
+                return ResourceManager.GetString("LblWaitingForSlew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Waiting for telescope to locate the home position.
         /// </summary>
         internal static string LblWaitingForTelescopeToFindHome {

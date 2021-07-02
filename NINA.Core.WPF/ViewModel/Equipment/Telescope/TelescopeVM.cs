@@ -839,16 +839,32 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             try {
                 coords = coords.Transform(TelescopeInfo.EquatorialSystem);
                 if (Telescope?.Connected == true) {
+                    if (Telescope?.Slewing == true && Telescope?.TrackingEnabled == false) {
+                        Logger.Warning("Slew issued while telesope is possibly in the process of parking!");
+                    }
+
+                    if (Telescope?.Slewing == true) {
+                        Logger.Warning("Slew issued while a prior slew is still in progress! Waiting for the prior slew to complete");
+                        progress.Report(
+                            new ApplicationStatus() {
+                                Status = Loc.Instance["LblWaitingForSlew"]
+                            }
+                        );
+
+                        await WaitForSlew(token);
+                    }
+
+                    if (Telescope?.AtPark == true) {
+                        Logger.Error("Slew requested while telescope is parked");
+                        Notification.ShowError(Loc.Instance["LblTelescopeParkedWarning"]);
+                        return false;
+                    }
+
                     progress.Report(
                         new ApplicationStatus() {
                             Status = Loc.Instance["LblSlew"]
                         }
                     );
-
-                    if (Telescope?.CanPark == true && Telescope?.AtPark == true) {
-                        Logger.Warning("Telescope is parked");
-                        Notification.ShowWarning(Loc.Instance["LblTelescopeParkedWarning"]);
-                    }
 
                     var position = GetCurrentPosition();
                     Logger.Info($"Slewing from {position} to {coords}");
