@@ -231,6 +231,46 @@
                                                 FontWeight="Bold"
                                                 Text="{Binding Version.Build}" />
                                         </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding Homepage, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontSize="16"
+                                                Text="{ns:Loc LblHomepage}" />
+                                            <TextBlock FontSize="16" Text=":" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="16"
+                                                TextWrapping="Wrap">
+                                                <Hyperlink NavigateUri="{Binding Homepage, FallbackValue=''}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        Text="{Binding Homepage, FallbackValue=''}"
+                                                        TextWrapping="Wrap" />
+                                                </Hyperlink>
+                                            </TextBlock>
+                                        </StackPanel>
+                                        <StackPanel Orientation="Horizontal" Visibility="{Binding ChangelogURL, Converter={StaticResource NullOrEmptyStringToVisibilityCollapsedConverter}}">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontSize="16"
+                                                Text="{ns:Loc LblChangelog}" />
+                                            <TextBlock FontSize="16" Text=":" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                VerticalAlignment="Center"
+                                                FontSize="16"
+                                                TextWrapping="Wrap">
+                                                <Hyperlink NavigateUri="{Binding ChangelogURL, FallbackValue=''}" RequestNavigate="Hyperlink_RequestNavigate">
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        Text="{Binding ChangelogURL, FallbackValue=''}"
+                                                        TextWrapping="Wrap" />
+                                                </Hyperlink>
+                                            </TextBlock>
+                                        </StackPanel>
                                         <TextBlock
                                             Margin="0,10,0,10"
                                             FontSize="16"
