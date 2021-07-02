@@ -92,8 +92,11 @@ namespace NINATest.Sequencer.SequenceItem {
                 .Throws(new OperationCanceledException());
             var sut = mock.Object;
 
+            var cts = new CancellationTokenSource();
+
             try {
-                await sut.Run(default, default);
+                cts.Cancel();
+                await sut.Run(default, cts.Token);
                 Assert.Fail(); // When no exception is thrown
             } catch (OperationCanceledException) {
             }

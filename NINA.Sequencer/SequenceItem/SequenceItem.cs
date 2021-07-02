@@ -224,7 +224,7 @@ namespace NINA.Sequencer.SequenceItem {
                         Logger.Warning($"{this} - " + ex.Message);
                         Status = SequenceEntityStatus.SKIPPED;
                     } catch (OperationCanceledException ex) {
-                        if (!localCts.IsCancellationRequested) {
+                        if (token.IsCancellationRequested) {
                             Status = SequenceEntityStatus.CREATED;
                             Logger.Debug($"Cancelled {this}");
                             throw ex;
