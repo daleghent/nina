@@ -1338,7 +1338,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Centers the telescope via plate solving for the given coordinates.
+        ///   Looks up a localized string similar to Slews to the target and centers the telescope via plate solving for the given coordinates.
         /// </summary>
         internal static string Lbl_SequenceItem_Platesolving_Center_Description {
             get {
@@ -1347,7 +1347,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Center.
+        ///   Looks up a localized string similar to Slew and center.
         /// </summary>
         internal static string Lbl_SequenceItem_Platesolving_Center_Name {
             get {
@@ -1356,7 +1356,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Centers and rotates the telescope via plate solving and a rotator for the given coordinates and rotation.
+        ///   Looks up a localized string similar to Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation.
         /// </summary>
         internal static string Lbl_SequenceItem_Platesolving_CenterAndRotate_Description {
             get {
@@ -1365,7 +1365,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Center and Rotate.
+        ///   Looks up a localized string similar to Slew, center and rotate.
         /// </summary>
         internal static string Lbl_SequenceItem_Platesolving_CenterAndRotate_Name {
             get {
@@ -1375,7 +1375,8 @@ namespace NINA.Core.Locale {
         
         /// <summary>
         ///   Looks up a localized string similar to Takes an image and solves the image using the current telescope position as reference.
-        ///After solving the frame successfully the telescope will be synced to the solved position..
+        ///After solving the frame successfully the telescope will be synced to the solved position.
+        ///Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!.
         /// </summary>
         internal static string Lbl_SequenceItem_Platesolving_SolveAndSync_Description {
             get {
