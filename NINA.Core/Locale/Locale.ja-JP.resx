@@ -4374,16 +4374,16 @@
     <value>露出</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>指定された座標と回転角度に、プレートソルブによって望遠鏡を中心に合わせ、望遠鏡と回転装置を回転させます</value>
+    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>中心合わせと回転</value>
+    <value>Slew, center and rotate</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>指定された座標にプレートソルブして、望遠鏡を中央に合わせます</value>
+    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>中心合わせ</value>
+    <value>Slew and center</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>望遠鏡を所定の位置にパークさせます</value>
@@ -4944,7 +4944,9 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>無効なオフセットです。オフセットは {0} から {1}の間 でなければなりませんが、 {2} に設定されています</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>現在の望遠鏡の位置を参照して撮像し、プレートソルブします。画像のプレートソルブが成功すれば、望遠鏡はその位置に同期されます。</value>
+    <value>Takes an image and solves the image using the current telescope position as reference.
+After solving the frame successfully the telescope will be synced to the solved position.
+Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>プレートソルブと同期</value>
@@ -5626,5 +5628,8 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
     <value>Target "{0}" has been updated.</value>
+  </data>
+  <data name="LblWaitingForSlew" xml:space="preserve">
+    <value>Waiting for prior slew</value>
   </data>
 </root>

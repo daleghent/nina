@@ -4386,16 +4386,16 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Hacer exposición</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Centra y rota el telescopio a través de astrometría y un rotador para las coordenadas y rotación dadas</value>
+    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Centrar y girar</value>
+    <value>Slew, center and rotate</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Centra el telescopio a través de astrometría para las coordenadas dadas</value>
+    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Centrar</value>
+    <value>Slew and center</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Aparca el telescopio a la posición de aparcado</value>
@@ -4956,8 +4956,9 @@ Es mejor utilizarlo junto con otra condición de bucle para no terminar en un bu
     <value>Offset no válido. El offset debe establecerse entre {0} y {1} pero está establecido en {2}</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Toma una imagen y resuelve la imagen usando la posición actual del telescopio como referencia.
-Después de resolverla con éxito, el telescopio se sincronizará con la posición resuelta.</value>
+    <value>Takes an image and solves the image using the current telescope position as reference.
+After solving the frame successfully the telescope will be synced to the solved position.
+Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>Resolver y Sinc</value>
@@ -5641,5 +5642,8 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
     <value>Se ha actualizado el objetivo "{0}".</value>
+  </data>
+  <data name="LblWaitingForSlew" xml:space="preserve">
+    <value>Waiting for prior slew</value>
   </data>
 </root>

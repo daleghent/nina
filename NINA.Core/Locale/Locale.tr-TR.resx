@@ -4383,16 +4383,16 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Çekim yap</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Teleskopu, plate solving aracılığıyla verilen koordinat ve yöne çevirir ve merkezler</value>
+    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Çevir ve merkezle</value>
+    <value>Slew, center and rotate</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Teleskopu plate solving aracılığıyla verilen koordinatlara merkezler</value>
+    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Merkezle</value>
+    <value>Slew and center</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Teleskopu park pozisyonunda park eder</value>
@@ -4953,8 +4953,9 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Geçersiz Offset. Offset {0} ve {1} arasında olmalı, ancak {2} olarak ayarlandı</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Bir görüntüyü alır ve geçerli teleskop konumunu referans olarak kullanarak görüntüyü çözer.
-Kadrajı başarıyla çözdükten sonra, teleskop çözülen konuma senkronize edilecektir.</value>
+    <value>Takes an image and solves the image using the current telescope position as reference.
+After solving the frame successfully the telescope will be synced to the solved position.
+Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>Çöz ve senkronize et</value>
@@ -5638,5 +5639,8 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
     <value>Target "{0}" has been updated.</value>
+  </data>
+  <data name="LblWaitingForSlew" xml:space="preserve">
+    <value>Waiting for prior slew</value>
   </data>
 </root>
