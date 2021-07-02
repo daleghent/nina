@@ -47,5 +47,9 @@ namespace NINA.Plugin.ManifestDefinition {
 
         [JsonProperty(Required = Required.Always)]
         public int Build { get; set; }
+
+        public override string ToString() {
+            return $"{Major}.{Minor}.{Patch}.{Build}";
+        }
     }
 }
