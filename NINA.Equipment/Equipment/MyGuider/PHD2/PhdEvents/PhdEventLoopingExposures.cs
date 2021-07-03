@@ -12,9 +12,13 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
+
 namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
 
     public class PhdEventLoopingExposures : PhdEvent {
-        public int Frame;
+
+        [JsonProperty]
+        public int Frame { get; set; }
     }
 }

@@ -308,10 +308,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblPHD2Settling"] });
                         elapsed += await CoreUtil.Delay(500, ct);
 
-                        if (elapsed.TotalSeconds > (profileService.ActiveProfile.GuiderSettings.SettleTimeout + 10)) {
+                        var timeout = profileService.ActiveProfile.GuiderSettings.SettleTimeout;
+                        if (elapsed.TotalSeconds > (timeout + 10)) {
                             //Failsafe when phd is not sending settlingdone message
-                            Notification.ShowWarning(Loc.Instance["LblGuiderNoSettleDone"]);
-                            Logger.Warning("Phd2 - Guider did not send SettleDone message in time. Skipping.");
+                            Notification.ShowWarning(string.Format(Loc.Instance["LblGuiderNoSettleDone"], timeout));
+                            Logger.Warning($"Phd2 - Guider did not send SettleDone message in expected time  ({timeout}s + 10s). Skipping.");
                             Settling = false;
                         }
                     }
@@ -713,7 +714,9 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         break;
                     }
                 case "Settling": {
+                        var settleInfo = message.ToObject<PhdEventSettling>();
                         Settling = true;
+                        Logger.Info($"PHD2 settling started. Time: {settleInfo.Time}, Distance: {settleInfo.Distance}");
                         break;
                     }
                 case "SettleDone": {
@@ -721,7 +724,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         Settling = false;
                         var settleDone = message.ToObject<PhdEventSettleDone>();
                         if (settleDone.Error != null) {
-                            Notification.ShowError("PHD2 Error: " + settleDone.Error);
+                            Logger.Error("PHD2 error:" + settleDone.Error);
+                            Notification.ShowError("PHD2 error: " + settleDone.Error);
+                        } else {
+                            Logger.Info("PHD2 settle completed");
                         }
                         break;
                     }
@@ -749,7 +755,8 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         break;
                     }
                 case "StarLost": {
-                        Logger.Debug($"PHD2 - Star lost!");
+                        var starlost = message.ToObject<PhdEventStarLost>();
+                        Logger.Warning($"PHD2 - Star lost! Code: {starlost.ErrorCode}");
                         AppState = new PhdEventAppState() { State = "LostLock" };
                         break;
                     }
@@ -759,7 +766,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         break;
                     }
                 case "LockPositionLost": {
-                        Logger.Info($"PHD2 - Lock position lost!");
+                        Logger.Warning($"PHD2 - Lock position lost!");
                         AppState = new PhdEventAppState() { State = "LostLock" };
                         break;
                     }
@@ -912,6 +919,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                                     string phdevent = "";
                                     if (t != null) {
                                         phdevent = t.ToString();
+                                        Logger.Trace($"PHD2 event received - {o}");
                                         ProcessEvent(phdevent, o);
                                     }
                                 }

@@ -12,10 +12,16 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
+
 namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
 
     public class PhdEventSettleDone : PhdEvent {
-        public int Status;
-        public string Error;
+
+        [JsonProperty]
+        public int Status { get; set; }
+
+        [JsonProperty]
+        public string Error { get; set; }
     }
 }

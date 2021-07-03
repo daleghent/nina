@@ -12,15 +12,31 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
+
 namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
 
     public class PhdEventStarLost : PhdEvent {
-        public int Frame;
-        public int Time;
-        public int StarMass;
-        public int SNR;
-        public int AvgDist;
-        public int ErrorCode;
-        public int Status;
+
+        [JsonProperty]
+        public int Frame { get; set; }
+
+        [JsonProperty]
+        public int Time { get; set; }
+
+        [JsonProperty]
+        public double StarMass { get; set; }
+
+        [JsonProperty]
+        public double SNR { get; set; }
+
+        [JsonProperty]
+        public double AvgDist { get; set; }
+
+        [JsonProperty]
+        public int ErrorCode { get; set; }
+
+        [JsonProperty]
+        public int Status { get; set; }
     }
 }

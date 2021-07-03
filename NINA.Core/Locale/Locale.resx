@@ -1700,7 +1700,7 @@ Calculated HFR: {2}
     <value>Guider did not send resume message in time. Sequence will resume, but make sure Guider is guiding again!</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>Guider did not send SettleDone message in time. Skipping.</value>
+    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>Guider resume failed</value>

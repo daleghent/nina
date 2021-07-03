@@ -14,6 +14,7 @@
 
 using System;
 using System.Runtime.Serialization;
+using Newtonsoft.Json;
 using NINA.Core.Interfaces;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
@@ -22,78 +23,102 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
     public class PhdEventGuideStep : PhdEvent, IGuideStep {
 
         [DataMember]
+        [JsonProperty]
         private double frame;
 
         [DataMember]
+        [JsonProperty]
         private double time;
 
         [DataMember]
+        [JsonProperty]
         private string mount;
 
         [DataMember]
+        [JsonProperty]
         private double dx;
 
         [DataMember]
+        [JsonProperty]
         private double dy;
 
         [DataMember]
+        [JsonProperty]
         private double rADistanceRaw;
 
         [DataMember]
+        [JsonProperty]
         private double decDistanceRaw;
 
         [DataMember]
+        [JsonProperty]
         private double raDistanceDisplay;
 
         [DataMember]
+        [JsonProperty]
         private double decDistanceDisplay;
 
         [DataMember]
+        [JsonProperty]
         private double rADistanceGuide;
 
         [DataMember]
+        [JsonProperty]
         private double decDistanceGuide;
 
         [DataMember]
+        [JsonProperty]
         private double raDistanceGuideDisplay;
 
         [DataMember]
+        [JsonProperty]
         private double decDistanceGuideDisplay;
 
         [DataMember]
+        [JsonProperty]
         private double rADuration;
 
         [DataMember]
+        [JsonProperty]
         private string rADirection;
 
         [DataMember]
+        [JsonProperty]
         private double dECDuration;
 
         [DataMember]
+        [JsonProperty]
         private string decDirection;
 
         [DataMember]
+        [JsonProperty]
         private double starMass;
 
         [DataMember]
+        [JsonProperty]
         private double sNR;
 
         [DataMember]
+        [JsonProperty]
         private double avgDist;
 
         [DataMember]
+        [JsonProperty]
         private bool rALimited;
 
         [DataMember]
+        [JsonProperty]
         private bool decLimited;
 
         [DataMember]
+        [JsonProperty]
         private double errorCode;
 
         public PhdEventGuideStep() {
         }
 
         [DataMember]
+        [JsonProperty]
         public double RADistanceGuideDisplay {
             get {
                 return raDistanceGuideDisplay;
@@ -104,6 +129,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double DecDistanceGuideDisplay {
             get {
                 return decDistanceGuideDisplay;
@@ -114,6 +140,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double Frame {
             get {
                 return frame;
@@ -125,6 +152,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double Time {
             get {
                 return time;
@@ -138,6 +166,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public string Mount {
             get {
                 return mount;
@@ -149,6 +178,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double Dx {
             get {
                 return dx;
@@ -160,6 +190,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double Dy {
             get {
                 return dy;
@@ -171,6 +202,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double RADistanceRaw {
             get {
                 return -rADistanceRaw;
@@ -182,6 +214,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double DECDistanceRaw {
             get {
                 return decDistanceRaw;
@@ -193,6 +226,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double RADistanceGuide {
             get {
                 return rADistanceGuide;
@@ -205,6 +239,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double DECDistanceGuide {
             get {
                 return decDistanceGuide;
@@ -217,6 +252,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double RADuration {
             get {
                 if (RADirection == "East") {
@@ -232,6 +268,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public string RADirection {
             get {
                 return rADirection;
@@ -243,6 +280,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double DECDuration {
             get {
                 if (DECDirection == "South") {
@@ -258,6 +296,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public string DECDirection {
             get {
                 return decDirection;
@@ -269,6 +308,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double StarMass {
             get {
                 return starMass;
@@ -280,6 +320,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double SNR {
             get {
                 return sNR;
@@ -291,6 +332,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double AvgDist {
             get {
                 return avgDist;
@@ -302,6 +344,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public bool RALimited {
             get {
                 return rALimited;
@@ -313,6 +356,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public bool DecLimited {
             get {
                 return decLimited;
@@ -324,6 +368,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         }
 
         [DataMember]
+        [JsonProperty]
         public double ErrorCode {
             get {
                 return errorCode;

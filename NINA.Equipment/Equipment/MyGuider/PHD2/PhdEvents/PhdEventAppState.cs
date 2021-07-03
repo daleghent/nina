@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
 using NINA.Equipment.Interfaces;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
@@ -19,6 +20,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
     public class PhdEventAppState : PhdEvent, IGuiderAppState {
         private string state;
 
+        [JsonProperty]
         public string State {
             get {
                 return state;

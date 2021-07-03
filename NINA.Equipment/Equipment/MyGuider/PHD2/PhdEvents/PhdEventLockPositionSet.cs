@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
@@ -19,9 +20,11 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
     public class PhdEventLockPositionSet : PhdEvent {
 
         [DataMember]
-        public int X { get; set; }
+        [JsonProperty]
+        public double X { get; set; }
 
         [DataMember]
-        public int Y { get; set; }
+        [JsonProperty]
+        public double Y { get; set; }
     }
 }

@@ -8714,7 +8714,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Guider did not send SettleDone message in time. Skipping..
+        ///   Looks up a localized string similar to Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping..
         /// </summary>
         internal static string LblGuiderNoSettleDone {
             get {

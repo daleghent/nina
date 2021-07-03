@@ -12,9 +12,13 @@
 
 #endregion "copyright"
 
+using Newtonsoft.Json;
+
 namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
 
     public class PhdEventCalibrationComplete : PhdEvent {
-        public string Mount;
+
+        [JsonProperty]
+        public string Mount { get; set; }
     }
 }

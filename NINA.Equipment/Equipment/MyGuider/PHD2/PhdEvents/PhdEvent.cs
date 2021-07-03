@@ -15,6 +15,7 @@
 using NINA.Core.Utility;
 using System.Runtime.Serialization;
 using NINA.Core.Interfaces;
+using Newtonsoft.Json;
 
 namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
 
@@ -22,15 +23,19 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
     public class PhdEvent : BaseINPC, IGuideEvent {
 
         [DataMember]
+        [JsonProperty]
         public string Event { get; set; }
 
         [DataMember]
+        [JsonProperty]
         public string TimeStamp { get; set; }
 
         [DataMember]
+        [JsonProperty]
         public string Host { get; set; }
 
         [DataMember]
+        [JsonProperty]
         public int Inst { get; set; }
     }
 }
