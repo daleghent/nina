@@ -40,5 +40,6 @@ namespace NINA.Profile.Interfaces {
         void RemoveGain(int gain);
 
         void RemoveBinning(BinningMode binningMode);
+        void ClearBrightnessInfo(FlatDeviceFilterSettingsKey key);
     }
 }

@@ -167,6 +167,12 @@ namespace NINA.Profile {
             return FilterSettings.ContainsKey(key) ? FilterSettings[key] : null;
         }
 
+        public void ClearBrightnessInfo(FlatDeviceFilterSettingsKey key) {
+            if (filterSettings.ContainsKey(key)) {
+                filterSettings[key] = null;
+            }
+        }
+
         public IEnumerable<BinningMode> GetBrightnessInfoBinnings() {
             var result = FilterSettings.Keys.Select(key => key.Binning).ToList();
 

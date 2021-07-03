@@ -193,7 +193,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                         if (profileService.ActiveProfile.FlatDeviceSettings.FilterSettings != null) {
                             foreach (var setting in profileService.ActiveProfile.FlatDeviceSettings.FilterSettings.ToArray()) {
                                 var info = profileService.ActiveProfile.FlatDeviceSettings.GetBrightnessInfo(setting.Key);
-                                if (!double.IsNaN(info.Brightness)) {
+                                if (info != null && !double.IsNaN(info.Brightness)) {
                                     var migratedInfo = new FlatDeviceFilterSettingsValue((int)(setting.Value.Brightness * FlatDeviceInfo.MaxBrightness), info.Time);
                                     profileService.ActiveProfile.FlatDeviceSettings.AddBrightnessInfo(setting.Key, migratedInfo);
                                 }
@@ -504,6 +504,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                     timing = new FilterTiming(profileService, key, isFilterNameColumn);
                     column.AddFilterTiming(timing);
                 } else {
+                    if (timing.Time == 0 && timing.Brightness == 0) {
+                        profileService.ActiveProfile.FlatDeviceSettings.ClearBrightnessInfo(timing.Key);
+                    }
                     timing.RaiseChanged();
                     existingFilterKeys?.Remove(key);
                 }
