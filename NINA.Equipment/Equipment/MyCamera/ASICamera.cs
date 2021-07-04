@@ -610,12 +610,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private bool SetControlValue(ASICameraDll.ASI_CONTROL_TYPE type, int value) {
-            var control = GetControl(type);
-            if (control != null && value <= control.MaxValue && value >= control.MinValue) {
-                control.Value = value;
-                return true;
-            } else {
-                Logger.Warning(string.Format("Failed to set ASI Control Value {0} with value {1}", type, value));
+            try {
+                var control = GetControl(type);
+                if (control != null && value <= control.MaxValue && value >= control.MinValue) {
+                    control.Value = value;
+                    return true;
+                } else {
+                    Logger.Warning(string.Format("Failed to set ASI Control Value {0} with value {1}", type, value));
+                    return false;
+                }
+            } catch (Exception ex) {
+                Logger.Error($"Error occurred during set of ASI Control Value {type}:", ex);
                 return false;
             }
         }
