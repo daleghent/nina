@@ -706,6 +706,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you want to reset the complete sequence run?.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset sequence?.
+        /// </summary>
+        internal static string Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sequence Start Area.
         /// </summary>
         internal static string Lbl_SequenceContainer_SequenceRootContainer_StartArea {

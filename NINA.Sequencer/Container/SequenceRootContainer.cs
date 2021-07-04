@@ -27,6 +27,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using NINA.Core.MyMessageBox;
+using NINA.Core.Locale;
 
 namespace NINA.Sequencer.Container {
 
@@ -46,6 +48,14 @@ namespace NINA.Sequencer.Container {
         [ImportingConstructor]
         public SequenceRootContainer() : base(new SequentialStrategy()) {
         }
+
+        public override ICommand ResetProgressCommand => new RelayCommand(
+            (o) => {
+                if (MyMessageBox.Show(Loc.Instance["Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt"], Loc.Instance["Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption"], System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxResult.No) == System.Windows.MessageBoxResult.Yes) {
+                    base.ResetProgressCommand.Execute(o);
+                }
+            }
+        );
 
         private object runningItemsLock = new object();
         private List<ISequenceItem> runningItems = new List<ISequenceItem>();

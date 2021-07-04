@@ -5656,4 +5656,10 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="LblWaitingForSlew" xml:space="preserve">
     <value>Waiting for prior slew</value>
   </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
+    <value>Do you want to reset the complete sequence run?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
+    <value>Reset sequence?</value>
+  </data>
 </root>
