@@ -1685,7 +1685,7 @@
     <value>ガイドカメラが再開メッセージを時間内に送りませんでした。シーケンスは再開しますが、ガイドカメラがガイドを再開しているか確認して下さい。</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>ガイダーが時間内に安定化済みのメッセージを送りませんでした。スキップします。</value>
+    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>ガイダー再開失敗</value>
@@ -5631,5 +5631,11 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
     <value>Waiting for prior slew</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
+    <value>Do you want to reset the complete sequence run?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
+    <value>Reset sequence?</value>
   </data>
 </root>

@@ -1695,7 +1695,7 @@ HFR calculat: {2}    </value>
     <value>El Guiatge no ha enviat el missatge de reiniciar a temps. Es reprendrà la seqüència, però assegureu-vos que el Guiatge tornia a funcionar!</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>El Guiatge no ha enviat el missatge de SettleDone a temps. Ignorant el guiatge.</value>
+    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>Fallada en la reiniciació del Guiatge</value>
@@ -5646,5 +5646,11 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
     <value>Waiting for prior slew</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
+    <value>Do you want to reset the complete sequence run?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
+    <value>Reset sequence?</value>
   </data>
 </root>

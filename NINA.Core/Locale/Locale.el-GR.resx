@@ -1690,7 +1690,7 @@
     <value>Ο Οδηγητής δεν μπορούσε να στείλει σήμα συνέχειας εγκαίρως. Η αλληλουχία θα συνεχίσει, αλλά σιγουρευτείτε ότι ο Οδηγητής οδηγεί ξανά!</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>Ο Οδηγητής δεν έστειλε το μήνυμα SettleDone εγκαίρως. Γίνεται παράλειψη.</value>
+    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>Η επανέναρξη του Οδηγητή απέτυχε</value>
@@ -5645,5 +5645,11 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
     <value>Waiting for prior slew</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
+    <value>Do you want to reset the complete sequence run?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
+    <value>Reset sequence?</value>
   </data>
 </root>

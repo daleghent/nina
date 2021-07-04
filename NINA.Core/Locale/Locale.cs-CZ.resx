@@ -1691,7 +1691,8 @@ Vypočtené HFR: {2}
     <value>Pointační kamera neodeslala včas zprávu o obnovení. Sekvence bude pokračovat, ale ujistěte se, že pointační kamera funguje!</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>Pointace neodeslala SettleDone zprávu včas. Přeskočit.</value>
+    <value>Pointace neposlala zprávu SettleDone po očekávaném čase ({0} s + 10 s).
+Přeskočit.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>Obnova pointace se nezdařila</value>
@@ -4387,16 +4388,16 @@ Je-li požadovaný delší čas, lze zadat délku a aplikovat na základě zadan
     <value>Provést Expozici</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
+    <value>Přejezd k cíli, vycentruje cíl a otočí dalekohled pomocí platesolvingu a rotátoru pro dané souřadnice a rotaci</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Slew, center and rotate</value>
+    <value>Přejezd, centrovat a otočit</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
+    <value>Přejezd k cíli a vycentruje dalekohled pomocí platesolvingu pro dané souřadnice</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Slew and center</value>
+    <value>Přejezd a centrovat</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Zaparkovat dalekohled do parkovací polohy</value>
@@ -4957,9 +4958,9 @@ Použijte ve spojení s jinou podmínkou smyčky, kdy bezpečnost hlásí bezpe�
     <value>Neplatný Offset. Offset musí být mezi {0} a {1}, ale je nastaven na {2}</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Takes an image and solves the image using the current telescope position as reference.
-After solving the frame successfully the telescope will be synced to the solved position.
-Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!</value>
+    <value>Pořídí snímek a řeší jej pomocí referenční aktuální polohy dalekohledu.
+Po úspěšném vyřešení snímku bude dalekohled synchronizován do řešené polohy.
+Varování: Tato instrukce NEVYCENTRUJE dalekohled na cíl, ale pouze synchronizuje aktuální nastavenou pozici!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>Platesolving a Synchronizace</value>
@@ -5645,6 +5646,12 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Cíl "{0}" byl aktualizován.</value>
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
-    <value>Waiting for prior slew</value>
+    <value>Čekat na předchozí přejezd</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
+    <value>Chcete resetovat kompletní běh sekvence?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
+    <value>Reset sekvence?</value>
   </data>
 </root>

@@ -1692,7 +1692,7 @@ Calculado HFR: {2}
     <value>Guiado no envió el mensaje de reanudar a tiempo. La secuencia se reanudará, ¡pero asegúrese que el Guiado está funcionando!</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>Guiado no envió mensaje SettleDone a tiempo. Omitiéndolo.</value>
+    <value>El programa de guiado no ha mandado el mensaje SettleDonde tras el tiempo previsto ({0}s + 10s). Ignorándolo.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>Falló la reanudación del Guider</value>
@@ -4386,16 +4386,16 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Hacer exposición</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
+    <value>Se desplaza hacia el objeto, lo centra y rota el telescopio vía astrometría (platesolve) y un rotador a las coordenadas y ángulo especificados</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Slew, center and rotate</value>
+    <value>Moverse, centrar y rotar</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
+    <value>Dirige y centra el telescopio vía astrometría (platesolve) a las coordenadas dadas especificadas</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Slew and center</value>
+    <value>Mover y centrar</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Aparca el telescopio a la posición de aparcado</value>
@@ -4956,9 +4956,9 @@ Es mejor utilizarlo junto con otra condición de bucle para no terminar en un bu
     <value>Offset no válido. El offset debe establecerse entre {0} y {1} pero está establecido en {2}</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Takes an image and solves the image using the current telescope position as reference.
-After solving the frame successfully the telescope will be synced to the solved position.
-Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!</value>
+    <value>Toma una imagen y resuelve la imagen usando la posición actual del telescopio como referencia.
+Después de resolver la imagen con éxito, el telescopio se sincronizará con la posición resuelta.
+Advertencia: Esta instrucción NO centrará el telescopio en un objeto, ¡sino que sincronizará la posición a la que apunta en ese momento!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>Resolver y Sinc</value>
@@ -5644,6 +5644,12 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
     <value>Se ha actualizado el objetivo "{0}".</value>
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
-    <value>Waiting for prior slew</value>
+    <value>Esperando al movimiento previo</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
+    <value>¿Desea reiniciar la secuencia completa?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
+    <value>¿Reiniciar la secuencia?</value>
   </data>
 </root>

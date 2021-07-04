@@ -1693,7 +1693,7 @@ Dec: {1}</value>
     <value>Гид не послал сообщения о возобновлении вовремя. Серия будет возобновлена, но убедитесь, что гид направляет снова!</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>Гид не послал сообщение SettleDone вовремя. Пропуск.</value>
+    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>Ошибка при возобновлении гида</value>
@@ -5648,5 +5648,11 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
     <value>Waiting for prior slew</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
+    <value>Do you want to reset the complete sequence run?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
+    <value>Reset sequence?</value>
   </data>
 </root>

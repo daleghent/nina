@@ -1700,7 +1700,7 @@
     <value>导星程序没有在指定时间内恢复通信，序列将继续拍摄，但请手动确认导星已经在进行</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>导星没有在指定时间内返回稳定完成消息，跳过。</value>
+    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>导星恢复失败</value>
@@ -5655,5 +5655,11 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
     <value>Waiting for prior slew</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
+    <value>Do you want to reset the complete sequence run?</value>
+  </data>
+  <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
+    <value>Reset sequence?</value>
   </data>
 </root>
