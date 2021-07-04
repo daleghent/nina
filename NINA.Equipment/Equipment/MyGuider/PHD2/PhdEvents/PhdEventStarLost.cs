@@ -37,6 +37,6 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2.PhdEvents {
         public int ErrorCode { get; set; }
 
         [JsonProperty]
-        public int Status { get; set; }
+        public string Status { get; set; }
     }
 }

@@ -725,7 +725,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         var settleDone = message.ToObject<PhdEventSettleDone>();
                         if (settleDone.Error != null) {
                             Logger.Error("PHD2 error:" + settleDone.Error);
-                            Notification.ShowError("PHD2 error: " + settleDone.Error);
+                            Notification.ShowWarning("PHD2 error: " + settleDone.Error);
                         } else {
                             Logger.Info("PHD2 settle completed");
                         }
@@ -756,7 +756,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     }
                 case "StarLost": {
                         var starlost = message.ToObject<PhdEventStarLost>();
-                        Logger.Warning($"PHD2 - Star lost! Code: {starlost.ErrorCode}");
+                        Logger.Warning($"PHD2 - Star lost! Status: {starlost.Status}");
                         AppState = new PhdEventAppState() { State = "LostLock" };
                         break;
                     }
