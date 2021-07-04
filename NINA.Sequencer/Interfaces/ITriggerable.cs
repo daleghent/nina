@@ -30,6 +30,6 @@ namespace NINA.Sequencer.Trigger {
 
         bool Remove(ISequenceTrigger trigger);
 
-        Task RunTriggers(ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token);
+        Task RunTriggers(ISequenceItem previousItem, ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token);
     }
 }

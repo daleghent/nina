@@ -97,7 +97,7 @@ namespace NINA.Sequencer.Trigger.Guider {
             }
         }
 
-        public override bool ShouldTrigger(ISequenceItem nextItem) {
+        public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             RaisePropertyChanged(nameof(ProgressExposures));
             return lastTriggerId < history.ImageHistory.Count && history.ImageHistory.Count > 0 && ProgressExposures == 0;
         }

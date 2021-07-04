@@ -108,7 +108,7 @@ namespace NINA.Sequencer.Conditions {
                 $"CurrentSunAltitude: {CurrentSunAltitude}, Comparator: {Comparator}, UserSunAltitude: {UserSunAltitude}";
         }
 
-        public override bool Check(ISequenceItem nextItem) {
+        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             // See if the sun's altitude is outside of the user's wishes
             switch (Comparator) {
                 case ComparisonOperatorEnum.LESS_THAN:

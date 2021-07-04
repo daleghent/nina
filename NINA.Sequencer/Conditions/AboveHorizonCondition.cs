@@ -165,7 +165,7 @@ namespace NINA.Sequencer.Conditions {
             return $"Condition: {nameof(AboveHorizonCondition)}";
         }
 
-        public override bool Check(ISequenceItem nextItem) {
+        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             CalculateCurrentAltitude();
 
             return CurrentAltitude >= HorizonAltitude;

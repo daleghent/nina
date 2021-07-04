@@ -173,7 +173,7 @@ namespace NINA.Sequencer.Conditions {
             RunWatchdogIfInsideSequenceRoot();
         }
 
-        public override bool Check(ISequenceItem nextItem) {
+        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             return DateTime.Now + (nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero) <= CalculateRemainingTime();
         }
 

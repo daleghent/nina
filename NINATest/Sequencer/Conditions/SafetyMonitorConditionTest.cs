@@ -52,7 +52,7 @@ namespace NINATest.Sequencer.Conditions {
             var sut = new SafetyMonitorCondition(monitorMock.Object);
             monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = true });
 
-            sut.Check(null).Should().BeTrue();
+            sut.Check(null, null).Should().BeTrue();
             sut.IsSafe.Should().BeTrue();
         }
 
@@ -61,7 +61,7 @@ namespace NINATest.Sequencer.Conditions {
             var sut = new SafetyMonitorCondition(monitorMock.Object);
             monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = false });
 
-            sut.Check(null).Should().BeFalse();
+            sut.Check(null, null).Should().BeFalse();
             sut.IsSafe.Should().BeFalse();
         }
 
@@ -70,7 +70,7 @@ namespace NINATest.Sequencer.Conditions {
             var sut = new SafetyMonitorCondition(monitorMock.Object);
             monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = false });
 
-            sut.Check(null).Should().BeFalse();
+            sut.Check(null, null).Should().BeFalse();
             sut.IsSafe.Should().BeFalse();
         }
 

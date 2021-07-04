@@ -96,7 +96,7 @@ namespace NINATest.Sequencer.Conditions {
             sut.UserSunAltitude = userAlt;
             sut.CurrentSunAltitude = currentAlt;
 
-            sut.Check(default).Should().Be(expected);
+            sut.Check(default, default).Should().Be(expected);
         }
 
         [Test]

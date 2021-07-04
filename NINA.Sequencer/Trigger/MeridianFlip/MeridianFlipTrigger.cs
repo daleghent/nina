@@ -173,7 +173,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             return TimeSpan.FromHours(TimeToMeridianFlip);
         }
 
-        public override bool ShouldTrigger(ISequenceItem nextItem) {
+        public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             var telescopeInfo = telescopeMediator.GetInfo();
             //var settings = profileService.ActiveProfile.MeridianFlipSettings;
 

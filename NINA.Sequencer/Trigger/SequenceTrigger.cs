@@ -115,7 +115,7 @@ namespace NINA.Sequencer.Trigger {
             AfterParentChanged();
         }
 
-        public abstract bool ShouldTrigger(ISequenceItem nextItem);
+        public abstract bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem);
 
         public abstract Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token);
 

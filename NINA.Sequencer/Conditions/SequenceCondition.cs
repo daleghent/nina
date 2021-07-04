@@ -90,7 +90,7 @@ namespace NINA.Sequencer.Conditions {
             AfterParentChanged();
         }
 
-        public abstract bool Check(ISequenceItem nextItem);
+        public abstract bool Check(ISequenceItem previousItem, ISequenceItem nextItem);
 
         public abstract object Clone();
 

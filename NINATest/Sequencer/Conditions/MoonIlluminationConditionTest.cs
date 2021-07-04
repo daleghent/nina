@@ -87,7 +87,7 @@ namespace NINATest.Sequencer.Conditions {
             sut.UserMoonIllumination = userAlt;
             sut.CurrentMoonIllumination = currentAlt;
 
-            sut.Check(default).Should().Be(expected);
+            sut.Check(default, default).Should().Be(expected);
         }
 
         [Test]

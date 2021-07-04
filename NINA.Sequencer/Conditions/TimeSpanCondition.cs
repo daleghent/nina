@@ -118,7 +118,7 @@ namespace NINA.Sequencer.Conditions {
         private DateTime? startTime;
         private TimeSpan? previousRemainingTime;
 
-        public override bool Check(ISequenceItem nextItem) {
+        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             var nextItemDuration = nextItem?.GetEstimatedDuration() ?? TimeSpan.Zero;
             return (RemainingTime - nextItemDuration) > TimeSpan.Zero;
         }

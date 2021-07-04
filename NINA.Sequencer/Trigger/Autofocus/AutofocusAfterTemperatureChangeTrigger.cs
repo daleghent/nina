@@ -114,7 +114,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             initialTemperature = focuserMediator.GetInfo()?.Temperature ?? double.NaN;
         }
 
-        public override bool ShouldTrigger(ISequenceItem nextItem) {
+        public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (history.ImageHistory == null) { return false; }
             if (history.ImageHistory.Count == 0) { return false; }
 

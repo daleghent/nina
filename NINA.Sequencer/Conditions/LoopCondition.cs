@@ -69,7 +69,7 @@ namespace NINA.Sequencer.Conditions {
             }
         }
 
-        public override bool Check(ISequenceItem nextItem) {
+        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             return CompletedIterations < Iterations;
         }
 

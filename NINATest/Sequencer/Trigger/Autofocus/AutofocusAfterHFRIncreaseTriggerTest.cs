@@ -94,7 +94,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var sut = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Amount = 1;
 
-            var trigger = sut.ShouldTrigger(null);
+            var trigger = sut.ShouldTrigger(null, null);
 
             trigger.Should().BeFalse();
         }
@@ -121,7 +121,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var sut = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Amount = changeAmount;
 
-            var trigger = sut.ShouldTrigger(null);
+            var trigger = sut.ShouldTrigger(null, null);
 
             trigger.Should().Be(shouldTrigger);
         }
@@ -148,7 +148,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             sut.SampleSize = 4;
             sut.Amount = changeAmount;
 
-            var trigger = sut.ShouldTrigger(null);
+            var trigger = sut.ShouldTrigger(null, null);
 
             trigger.Should().Be(shouldTrigger);
         }
@@ -188,7 +188,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var sut = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Amount = changeAmount;
 
-            var trigger = sut.ShouldTrigger(null);
+            var trigger = sut.ShouldTrigger(null, null);
 
             trigger.Should().Be(shouldTrigger);
         }
@@ -245,7 +245,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var sut = new AutofocusAfterHFRIncreaseTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Amount = changeAmount;
 
-            var trigger = sut.ShouldTrigger(null);
+            var trigger = sut.ShouldTrigger(null, null);
 
             trigger.Should().Be(shouldTrigger);
         }

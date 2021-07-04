@@ -72,7 +72,7 @@ namespace NINA.Sequencer.Trigger.Guider {
             await TriggerRunner.Run(progress, token);
         }
 
-        public override bool ShouldTrigger(ISequenceItem nextItem) {
+        public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (nextItem is IExposureItem) {
                 var takeExposure = (IExposureItem)nextItem;
                 return takeExposure.ImageType == "LIGHT";

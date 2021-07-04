@@ -103,7 +103,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
             var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object);
             sut.AfterExposures = afterExpsoures;
 
-            var trigger = sut.ShouldTrigger(null);
+            var trigger = sut.ShouldTrigger(null, null);
 
             trigger.Should().Be(shouldTrigger);
         }
@@ -119,12 +119,12 @@ namespace NINATest.Sequencer.Trigger.Guider {
             var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object);
             sut.AfterExposures = 1;
 
-            var test1 = sut.ShouldTrigger(null);
+            var test1 = sut.ShouldTrigger(null, null);
             await sut.Execute(default, default, default);
-            var test2 = sut.ShouldTrigger(null);
+            var test2 = sut.ShouldTrigger(null, null);
 
             history.Add(new ImageHistoryPoint(100, null, "LIGHT"));
-            var test3 = sut.ShouldTrigger(null);
+            var test3 = sut.ShouldTrigger(null, null);
 
             test1.Should().BeTrue();
             test2.Should().BeFalse();

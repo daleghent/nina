@@ -84,7 +84,7 @@ namespace NINA.Sequencer.Conditions {
             return i.Count == 0;
         }
 
-        public override bool Check(ISequenceItem nextItem) {
+        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             var info = safetyMonitorMediator.GetInfo();
             IsSafe = info.Connected && info.IsSafe;
             return IsSafe;
@@ -109,7 +109,7 @@ namespace NINA.Sequencer.Conditions {
         }
 
         private async Task InterruptWhenUnsafe() {
-            if (!Check(null)) {
+            if (!Check(null, null)) {
                 if (this.Parent != null) {
                     Logger.Info("Unsafe conditions detected - Interrupting current Instruction Set");
                     await this.Parent.Interrupt();

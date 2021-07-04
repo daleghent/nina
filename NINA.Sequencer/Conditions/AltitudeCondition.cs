@@ -145,7 +145,7 @@ namespace NINA.Sequencer.Conditions {
             return $"Condition: {nameof(AltitudeCondition)}, Altitude >= {Altitude}";
         }
 
-        public override bool Check(ISequenceItem nextItem) {
+        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             CalculateCurrentAltitude();
 
             return IsEastOfMeridian || CurrentAltitude >= Altitude;

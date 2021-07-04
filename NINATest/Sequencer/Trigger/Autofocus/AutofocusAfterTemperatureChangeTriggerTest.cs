@@ -97,7 +97,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             var sut = new AutofocusAfterTemperatureChangeTrigger(profileServiceMock.Object, historyMock.Object, cameraMediatorMock.Object, filterWheelMediatorMock.Object, focuserMediatorMock.Object, guiderMediatorMock.Object, imagingMediatorMock.Object);
             sut.Amount = tempAmount;
 
-            var trigger = sut.ShouldTrigger(null);
+            var trigger = sut.ShouldTrigger(null, null);
 
             trigger.Should().Be(shouldTrigger);
         }
@@ -122,7 +122,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             sut.Initialize();
             sut.Amount = tempAmount;
 
-            var trigger = sut.ShouldTrigger(null);
+            var trigger = sut.ShouldTrigger(null, null);
 
             trigger.Should().Be(shouldTrigger);
         }
@@ -147,7 +147,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
             sut.Initialize();
             sut.Amount = tempAmount;
 
-            var trigger = sut.ShouldTrigger(null);
+            var trigger = sut.ShouldTrigger(null, null);
 
             trigger.Should().Be(shouldTrigger);
         }

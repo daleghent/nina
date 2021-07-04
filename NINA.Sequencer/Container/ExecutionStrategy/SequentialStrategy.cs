@@ -34,24 +34,26 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
         }
 
         public async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
+            ISequenceItem previous = null;
             ISequenceItem next = null;
             context.Iterations = 0;
 
             InitializeBlock(context);
 
             try {
-                while ((next = GetNextItem(context)) != null && CanContinue(context, next)) {
+                while ((next = GetNextItem(context)) != null && CanContinue(context, previous, next)) {
                     StartBlock(context);
 
-                    while ((next = GetNextItem(context)) != null && CanContinue(context, next)) {
+                    while ((next = GetNextItem(context)) != null && CanContinue(context, previous, next)) {
                         token.ThrowIfCancellationRequested();
-                        await RunTriggers(context, next, progress, token);
+                        await RunTriggers(context, previous, next, progress, token);
                         await next.Run(progress, token);
+                        previous = next;
                     }
 
                     FinishBlock(context);
 
-                    if (CanContinue(context, next)) {
+                    if (CanContinue(context, previous, next)) {
                         foreach (var item in context.GetItemsSnapshot()) {
                             if (item is ISequenceContainer) {
                                 (item as ISequenceContainer).ResetAll();
@@ -107,14 +109,14 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
             return items.FirstOrDefault(x => x.Status == SequenceEntityStatus.CREATED);
         }
 
-        private async Task RunTriggers(ISequenceContainer container, ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token) {
+        private async Task RunTriggers(ISequenceContainer container, ISequenceItem previousItem, ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token) {
             var triggerable = container as ITriggerable;
             if (triggerable != null) {
-                await triggerable.RunTriggers(nextItem, progress, token);
+                await triggerable.RunTriggers(previousItem, nextItem, progress, token);
             }
 
             if (container.Parent != null) {
-                await RunTriggers(container.Parent, nextItem, progress, token);
+                await RunTriggers(container.Parent, previousItem, nextItem, progress, token);
             }
         }
 
@@ -151,18 +153,18 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
             }
         }
 
-        private bool CanContinue(ISequenceContainer container, ISequenceItem nextItem) {
+        private bool CanContinue(ISequenceContainer container, ISequenceItem previousItem, ISequenceItem nextItem) {
             var conditionable = container as IConditionable;
             var canContinue = false;
             var conditions = conditionable?.GetConditionsSnapshot();
             if (conditions.Count > 0) {
-                canContinue = conditionable.CheckConditions(nextItem);
+                canContinue = conditionable.CheckConditions(previousItem, nextItem);
             } else {
                 canContinue = container.Iterations < 1;
             }
 
             if (container.Parent != null) {
-                canContinue = canContinue && CanContinue(container.Parent, nextItem);
+                canContinue = canContinue && CanContinue(container.Parent, previousItem, nextItem);
             }
 
             return canContinue;

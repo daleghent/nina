@@ -24,7 +24,7 @@ namespace NINA.Sequencer.Conditions {
 
         bool Remove(ISequenceCondition condition);
 
-        bool CheckConditions(ISequenceItem nextItem);
+        bool CheckConditions(ISequenceItem previousItem, ISequenceItem nextItem);
 
         void ResetConditions();
 

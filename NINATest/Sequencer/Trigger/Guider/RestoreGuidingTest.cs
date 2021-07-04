@@ -84,9 +84,9 @@ namespace NINATest.Sequencer.Trigger.Guider {
                 ImageType = "LIGHT"
             };
 
-            var test1 = sut.ShouldTrigger(null);
-            var test2 = sut.ShouldTrigger(takeDarkExposureItem);
-            var test3 = sut.ShouldTrigger(takeLightExposureItem);
+            var test1 = sut.ShouldTrigger(null, null);
+            var test2 = sut.ShouldTrigger(null, takeDarkExposureItem);
+            var test3 = sut.ShouldTrigger(null, takeLightExposureItem);
 
             test1.Should().BeFalse();
             test2.Should().BeFalse();

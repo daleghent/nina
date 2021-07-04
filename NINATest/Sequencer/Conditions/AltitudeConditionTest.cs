@@ -58,7 +58,7 @@ namespace NINATest.Sequencer.Conditions {
             sut.Altitude = targetAltitude;
 
             Assert.IsTrue(
-                sut.Check(null));
+                sut.Check(null, null));
         }
 
         [Test]
@@ -77,7 +77,7 @@ namespace NINATest.Sequencer.Conditions {
             sut.Altitude = targetAltitude;
 
             Assert.IsTrue(
-                sut.Check(null));
+                sut.Check(null, null));
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace NINATest.Sequencer.Conditions {
             sut.Coordinates.Coordinates = coords;
             sut.Altitude = targetAltitude;
             Assert.IsFalse(
-                sut.Check(null));
+                sut.Check(null, null));
         }
 
         [Test]

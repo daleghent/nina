@@ -279,7 +279,7 @@ namespace NINATest.Sequencer.Container {
 
         [Test]
         public void CheckConditions_NoConditionsAvailable_False() {
-            var check = Sut.CheckConditions(null);
+            var check = Sut.CheckConditions(null, null);
 
             check.Should().BeFalse();
         }
@@ -287,10 +287,10 @@ namespace NINATest.Sequencer.Container {
         [Test]
         public void CheckConditions_OneTruthyConditionAvailable_True() {
             var conditionMock = new Mock<ISequenceCondition>();
-            conditionMock.Setup(x => x.Check(It.IsAny<ISequenceItem>())).Returns(true);
+            conditionMock.Setup(x => x.Check(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
             Sut.Add(conditionMock.Object);
 
-            var check = Sut.CheckConditions(null);
+            var check = Sut.CheckConditions(null, null);
 
             check.Should().BeTrue();
         }
@@ -298,10 +298,10 @@ namespace NINATest.Sequencer.Container {
         [Test]
         public void CheckConditions_OneFalsyConditionAvailable_True() {
             var conditionMock = new Mock<ISequenceCondition>();
-            conditionMock.Setup(x => x.Check(It.IsAny<ISequenceItem>())).Returns(false);
+            conditionMock.Setup(x => x.Check(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(false);
             Sut.Add(conditionMock.Object);
 
-            var check = Sut.CheckConditions(null);
+            var check = Sut.CheckConditions(null, null);
 
             check.Should().BeFalse();
         }
@@ -309,13 +309,13 @@ namespace NINATest.Sequencer.Container {
         [Test]
         public void CheckConditions_AtLeastOneFalsyConditionAvailable_True() {
             var conditionMock = new Mock<ISequenceCondition>();
-            conditionMock.Setup(x => x.Check(It.IsAny<ISequenceItem>())).Returns(false);
+            conditionMock.Setup(x => x.Check(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(false);
             var condition2Mock = new Mock<ISequenceCondition>();
-            condition2Mock.Setup(x => x.Check(It.IsAny<ISequenceItem>())).Returns(true);
+            condition2Mock.Setup(x => x.Check(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
             Sut.Add(conditionMock.Object);
             Sut.Add(condition2Mock.Object);
 
-            var check = Sut.CheckConditions(null);
+            var check = Sut.CheckConditions(null, null);
 
             check.Should().BeFalse();
         }
@@ -323,13 +323,13 @@ namespace NINATest.Sequencer.Container {
         [Test]
         public void CheckConditions_AllTruthyConditionAvailable_True() {
             var conditionMock = new Mock<ISequenceCondition>();
-            conditionMock.Setup(x => x.Check(It.IsAny<ISequenceItem>())).Returns(true);
+            conditionMock.Setup(x => x.Check(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
             var condition2Mock = new Mock<ISequenceCondition>();
-            condition2Mock.Setup(x => x.Check(It.IsAny<ISequenceItem>())).Returns(true);
+            condition2Mock.Setup(x => x.Check(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
             Sut.Add(conditionMock.Object);
             Sut.Add(condition2Mock.Object);
 
-            var check = Sut.CheckConditions(null);
+            var check = Sut.CheckConditions(null, null);
 
             check.Should().BeTrue();
         }

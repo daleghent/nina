@@ -78,7 +78,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
             sut.SequenceBlockStarted();
 
-            var result = sut.ShouldTrigger(null);
+            var result = sut.ShouldTrigger(null, null);
 
             result.Should().BeFalse();
         }
@@ -103,7 +103,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
             sut.Initialize();
 
-            var result = sut.ShouldTrigger(null);
+            var result = sut.ShouldTrigger(null, null);
 
             result.Should().BeTrue();
         }
@@ -112,7 +112,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         public void Test_ShouldTrigger_WhenAlwaysNullThenNoTrigger() {
             sut.SequenceBlockStarted();
 
-            var result = sut.ShouldTrigger(null);
+            var result = sut.ShouldTrigger(null, null);
 
             result.Should().BeFalse();
         }

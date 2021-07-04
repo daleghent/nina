@@ -22,9 +22,10 @@ namespace NINA.Sequencer.Conditions {
         /// <summary>
         /// Determine if the condition is satisfied or not. Will be called after each processed sequence item.
         /// </summary>
+        /// <param name="previousItem">The previous instruction that was executed</param>
         /// <param name="nextItem">The next item that is scheduled to be processed</param>
         /// <returns></returns>
-        bool Check(ISequenceItem nextItem);
+        bool Check(ISequenceItem previousItem, ISequenceItem nextItem);
 
         /// <summary>
         /// When the sequencer is started this method is called

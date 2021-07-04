@@ -26,9 +26,10 @@ namespace NINA.Sequencer.Trigger {
         /// <summary>
         /// After each Sequence Item was processed this method will be called to determin if the trigger should be executed
         /// </summary>
-        /// <param name="nextItem"></param>
+        /// <param name="previousItem">The previous instruction that was executed</param>
+        /// <param name="nextItem">The next instruction that will be executed next</param>
         /// <returns></returns>
-        bool ShouldTrigger(ISequenceItem nextItem);
+        bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem);
 
         /// <summary>
         /// When the sequencer is started this method is called

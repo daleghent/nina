@@ -236,7 +236,7 @@ namespace NINA.Sequencer.Container {
             }
         }
 
-        public bool CheckConditions(ISequenceItem nextItem) {
+        public bool CheckConditions(ISequenceItem previousItem, ISequenceItem nextItem) {
             lock (lockObj) {
                 if (Conditions.Count == 0) {
                     return false;
@@ -244,7 +244,7 @@ namespace NINA.Sequencer.Container {
 
                 bool check = true;
                 foreach (var condition in Conditions) {
-                    check = check && condition.Check(nextItem);
+                    check = check && condition.Check(previousItem, nextItem);
                 }
 
                 return check;
@@ -475,13 +475,13 @@ namespace NINA.Sequencer.Container {
             this.Parent?.ResetProgressCascaded();
         }
 
-        public async Task RunTriggers(ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token) {
+        public async Task RunTriggers(ISequenceItem previousItem, ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token) {
             IList<ISequenceTrigger> localTriggers;
             lock (lockObj) {
                 localTriggers = Triggers.ToArray();
             }
             foreach (var trigger in localTriggers) {
-                if (trigger.ShouldTrigger(nextItem)) {
+                if (trigger.ShouldTrigger(previousItem, nextItem)) {
                     await trigger.Run(nextItem.Parent, progress, token);
                 }
             }

@@ -94,7 +94,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
             historyMock.SetupGet(x => x.AutoFocusPoints).Returns(afHistory);
 
-            var should = afTrigger.ShouldTrigger(null);
+            var should = afTrigger.ShouldTrigger(null, null);
 
             should.Should().Be(shouldTrigger);
         }
@@ -112,7 +112,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
             await Task.Delay(TimeSpan.FromMilliseconds(initDelay));
 
-            var should = afTrigger.ShouldTrigger(null);
+            var should = afTrigger.ShouldTrigger(null, null);
 
             should.Should().Be(shouldTrigger);
         }

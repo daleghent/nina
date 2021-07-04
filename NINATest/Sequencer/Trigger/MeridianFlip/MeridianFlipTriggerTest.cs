@@ -84,7 +84,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var itemMock = new Mock<ISequenceItem>();
             itemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.Zero);
 
-            var should = sut.ShouldTrigger(itemMock.Object);
+            var should = sut.ShouldTrigger(null, itemMock.Object);
 
             should.Should().BeTrue();
         }
@@ -104,7 +104,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var itemMock = new Mock<ISequenceItem>();
             itemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.FromHours(10));
 
-            var should = sut.ShouldTrigger(itemMock.Object);
+            var should = sut.ShouldTrigger(null, itemMock.Object);
 
             should.Should().BeTrue();
         }
@@ -123,7 +123,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var nextItemMock = new Mock<ISequenceItem>();
             nextItemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.FromMinutes(6000));
 
-            sut.ShouldTrigger(nextItemMock.Object).Should().BeFalse();
+            sut.ShouldTrigger(null, nextItemMock.Object).Should().BeFalse();
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var nextItemMock = new Mock<ISequenceItem>();
             nextItemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.FromMinutes(6000));
 
-            sut.ShouldTrigger(nextItemMock.Object).Should().BeFalse();
+            sut.ShouldTrigger(null, nextItemMock.Object).Should().BeFalse();
         }
 
         [Test]
@@ -179,7 +179,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var nextItemMock = new Mock<ISequenceItem>();
             nextItemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.FromMinutes(minTimeToFlip));
 
-            sut.ShouldTrigger(nextItemMock.Object).Should().Be(expectToFlip);
+            sut.ShouldTrigger(null, nextItemMock.Object).Should().Be(expectToFlip);
         }
 
         [Test]
@@ -253,7 +253,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var nextItemMock = new Mock<ISequenceItem>();
             nextItemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.FromMinutes(minTimeToFlip));
 
-            sut.ShouldTrigger(nextItemMock.Object).Should().Be(expectToFlip);
+            sut.ShouldTrigger(null, nextItemMock.Object).Should().Be(expectToFlip);
         }
 
         [Test]
@@ -312,7 +312,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var nextItemMock = new Mock<ISequenceItem>();
             nextItemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.FromMinutes(nextItemExpectedTime));
 
-            sut.ShouldTrigger(nextItemMock.Object).Should().Be(expectToFlip);
+            sut.ShouldTrigger(null, nextItemMock.Object).Should().Be(expectToFlip);
         }
 
         [Test]
@@ -352,7 +352,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var nextItemMock = new Mock<ISequenceItem>();
             nextItemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.FromMinutes(nextItemExpectedTime));
 
-            sut.ShouldTrigger(nextItemMock.Object).Should().Be(expectToFlip);
+            sut.ShouldTrigger(null, nextItemMock.Object).Should().Be(expectToFlip);
         }
 
         [Test]
@@ -411,7 +411,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             var nextItemMock = new Mock<ISequenceItem>();
             nextItemMock.Setup(x => x.GetEstimatedDuration()).Returns(TimeSpan.FromMinutes(nextItemExpectedTime));
 
-            sut.ShouldTrigger(nextItemMock.Object).Should().Be(expectToFlip);
+            sut.ShouldTrigger(null, nextItemMock.Object).Should().Be(expectToFlip);
         }
     }
 }

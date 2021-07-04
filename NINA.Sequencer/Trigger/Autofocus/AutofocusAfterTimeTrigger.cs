@@ -117,7 +117,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             }
         }
 
-        public override bool ShouldTrigger(ISequenceItem nextItem) {
+        public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             var lastAF = history.AutoFocusPoints.LastOrDefault();
             if (lastAF == null) {
                 Elapsed = Math.Round((DateTime.Now - initialTime).TotalMinutes, 2);

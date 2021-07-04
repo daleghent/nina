@@ -33,7 +33,7 @@ namespace NINATest.Sequencer.Conditions {
 
         private class SeuqenceConditionImpl : SequenceCondition {
 
-            public override bool Check(ISequenceItem nextItem) {
+            public override bool Check(ISequenceItem prevItem, ISequenceItem nextItem) {
                 throw new NotImplementedException();
             }
 

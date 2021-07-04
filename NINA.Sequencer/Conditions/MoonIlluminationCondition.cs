@@ -106,7 +106,7 @@ namespace NINA.Sequencer.Conditions {
                 $"CurrentMoonIllumination: { CurrentMoonIllumination}%, Comparator: {Comparator}, UserMoonIllumination: {UserMoonIllumination}%";
         }
 
-        public override bool Check(ISequenceItem nextItem) {
+        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             // See if the moon's illumination is outside of the user's wishes
             switch (Comparator) {
                 case ComparisonOperatorEnum.LESS_THAN:

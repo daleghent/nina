@@ -196,7 +196,7 @@ namespace NINATest.Sequencer.Conditions {
             sut.Minutes = 0;
             sut.Seconds = remainingSeconds;
 
-            sut.Check(itemMock.Object).Should().Be(expected);
+            sut.Check(null, itemMock.Object).Should().Be(expected);
         }
     }
 }

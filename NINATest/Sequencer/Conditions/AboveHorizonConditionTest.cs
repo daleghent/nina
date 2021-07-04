@@ -61,7 +61,7 @@ namespace NINATest.Sequencer.Conditions {
 
             sut.Coordinates.Coordinates = coordinates;
 
-            sut.Check(default).Should().BeTrue();
+            sut.Check(default, default).Should().BeTrue();
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace NINATest.Sequencer.Conditions {
 
             sut.Coordinates.Coordinates = coordinates;
 
-            sut.Check(default).Should().BeFalse();
+            sut.Check(default, default).Should().BeFalse();
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace NINATest.Sequencer.Conditions {
 
             sut.Coordinates.Coordinates = coordinates;
 
-            sut.Check(default).Should().BeTrue();
+            sut.Check(default, default).Should().BeTrue();
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace NINATest.Sequencer.Conditions {
 
             sut.Coordinates.Coordinates = coordinates;
 
-            sut.Check(default).Should().BeFalse();
+            sut.Check(default, default).Should().BeFalse();
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace NINATest.Sequencer.Conditions {
 
             sut.Coordinates.Coordinates = coordinates;
 
-            sut.Check(default).Should().Be(expected);
+            sut.Check(default, default).Should().Be(expected);
         }
 
         [Test]

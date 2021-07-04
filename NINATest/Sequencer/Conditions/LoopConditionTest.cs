@@ -42,7 +42,7 @@ namespace NINATest.Sequencer.Conditions {
             var sut = new LoopCondition();
             sut.Iterations = 5;
 
-            sut.Check(null).Should().BeTrue();
+            sut.Check(null, null).Should().BeTrue();
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace NINATest.Sequencer.Conditions {
                 sut.SequenceBlockFinished();
             }
 
-            sut.Check(null).Should().BeTrue();
+            sut.Check(null, null).Should().BeTrue();
         }
 
         [Test]
@@ -73,7 +73,7 @@ namespace NINATest.Sequencer.Conditions {
                 sut.SequenceBlockFinished();
             }
 
-            sut.Check(null).Should().BeFalse();
+            sut.Check(null, null).Should().BeFalse();
         }
 
         [Test]

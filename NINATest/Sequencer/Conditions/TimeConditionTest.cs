@@ -167,7 +167,7 @@ namespace NINATest.Sequencer.Conditions {
             var sut = new TimeCondition(new List<IDateTimeProvider>() { providerMock.Object }, providerMock.Object);
             sut.DateTime = dateMock.Object;
 
-            sut.Check(nextItemMock.Object).Should().Be(expected);
+            sut.Check(null, nextItemMock.Object).Should().Be(expected);
         }
 
         [Test]
