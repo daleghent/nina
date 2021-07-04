@@ -21,7 +21,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Sequencer.Trigger {
 
-    public interface ISequenceTrigger : ISequenceEntity {
+    public interface ISequenceTrigger : ISequenceEntity, ISequenceHasChanged {
 
         /// <summary>
         /// After each Sequence Item was processed this method will be called to determin if the trigger should be executed

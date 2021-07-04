@@ -31,7 +31,7 @@ using System.Windows.Media;
 namespace NINA.Sequencer.Trigger {
 
     [JsonObject(MemberSerialization.OptIn)]
-    public abstract class SequenceTrigger : BaseINPC, ISequenceTrigger {
+    public abstract class SequenceTrigger : SequenceHasChanged, ISequenceTrigger {
 
         public SequenceTrigger() {
             TriggerRunner = new SequentialContainer();

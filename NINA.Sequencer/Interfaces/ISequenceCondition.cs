@@ -17,7 +17,7 @@ using System.Windows.Input;
 
 namespace NINA.Sequencer.Conditions {
 
-    public interface ISequenceCondition : ISequenceEntity {
+    public interface ISequenceCondition : ISequenceEntity, ISequenceHasChanged {
 
         /// <summary>
         /// Determine if the condition is satisfied or not. Will be called after each processed sequence item.

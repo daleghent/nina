@@ -24,7 +24,7 @@ using NINA.Equipment.Equipment.MyCamera;
 
 namespace NINA.Sequencer.Container {
 
-    public interface ISimpleDSOContainer {
+    public interface ISimpleDSOContainer : ISequenceHasChanged {
         ISimpleExposure ActiveExposure { get; set; }
         ICommand AddSimpleExposureCommand { get; }
         bool AutoFocusAfterHFRChange { get; set; }

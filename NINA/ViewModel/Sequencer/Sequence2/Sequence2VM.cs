@@ -117,7 +117,7 @@ namespace NINA.ViewModel.Sequencer {
                     rootContainer.Add(SequencerFactory.GetContainer<StartAreaContainer>());
                     rootContainer.Add(SequencerFactory.GetContainer<TargetAreaContainer>());
                     rootContainer.Add(SequencerFactory.GetContainer<EndAreaContainer>());
-
+                    rootContainer.ClearHasChanged();
                     Sequencer = new NINA.Sequencer.Sequencer(
                         rootContainer
                     );
@@ -204,6 +204,9 @@ namespace NINA.ViewModel.Sequencer {
         }
 
         private void LoadSequence(object obj) {
+            if (Sequencer.MainContainer.AskHasChanged(SavePath ?? "")) {
+                return;
+            }
             var initialDirectory = string.Empty;
             if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
                 initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
@@ -229,6 +232,7 @@ namespace NINA.ViewModel.Sequencer {
                     SavePath = file;
                     Sequencer.MainContainer = container;
                     Sequencer.MainContainer.Validate();
+                    Sequencer.MainContainer.ClearHasChanged();
                 } else {
                     Logger.Error("Unable to load sequence - Sequencer root element must be sequence root container!");
                     Notification.ShowError(Loc.Instance["Lbl_Sequencer_RootElementMustBeRootContainer"]);
@@ -267,6 +271,7 @@ namespace NINA.ViewModel.Sequencer {
                     var json = SequenceJsonConverter.Serialize(Sequencer.MainContainer);
                     File.WriteAllText(dialog.FileName, json);
                     SavePath = dialog.FileName;
+                    Sequencer.MainContainer.ClearHasChanged();
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
@@ -281,6 +286,7 @@ namespace NINA.ViewModel.Sequencer {
                 try {
                     var json = SequenceJsonConverter.Serialize(Sequencer.MainContainer);
                     File.WriteAllText(SavePath, json);
+                    Sequencer.MainContainer.ClearHasChanged();
                 } catch (Exception ex) {
                     Logger.Error(ex);
                     Notification.ShowError(string.Format(Loc.Instance["Lbl_Sequencer_SaveSequence_FailureNotification"], Sequencer.MainContainer.Name, ex.Message));

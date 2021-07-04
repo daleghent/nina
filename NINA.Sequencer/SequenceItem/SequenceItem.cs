@@ -28,7 +28,7 @@ using NINA.Sequencer.Utility;
 namespace NINA.Sequencer.SequenceItem {
 
     [JsonObject(MemberSerialization.OptIn)]
-    public abstract class SequenceItem : BaseINPC, ISequenceItem {
+    public abstract class SequenceItem : SequenceHasChanged, ISequenceItem {
 
         public SequenceItem() {
         }
@@ -130,7 +130,9 @@ namespace NINA.Sequencer.SequenceItem {
         public abstract object Clone();
 
         public void Detach() {
-            Parent?.Remove(this);
+            if (!(this is ISimpleDSOContainer) || !AskHasChanged(Name)) {
+                Parent?.Remove(this);
+            }
         }
 
         public abstract Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token);

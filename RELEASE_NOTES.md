@@ -54,6 +54,9 @@ To identify what has changed in between nightly builds, please refer to the [bit
     - These target store all info that has been set inside the deep sky object sequence and can be restored for later usage
     - Furthermore these will be stored physically inside the default sequence folder and can be reorganized there
 - For more details on the usage refer to the documentation
+  
+### Sequence Change Warning
+- A warning dialog is displayed whenever a sequence is changed and not saved whenever exiting NINA or overloading the sequence.
 
 ## New Plugin Tab
 - With the introduction of the advanced sequencer, a sequence can be planned with individual building blocks. These blocks have been designed to work like small plugins that will be initialized on startup. This opens up the possibility for specialized custom plugins that can be installed independently on demand.

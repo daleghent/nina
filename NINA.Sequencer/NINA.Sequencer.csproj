@@ -175,6 +175,7 @@
     <Compile Include="Interfaces\IExecutionStrategy.cs" />
     <Compile Include="Interfaces\IExposureItem.cs" />
     <Compile Include="Interfaces\IImmutableContainer.cs" />
+    <Compile Include="Interfaces\ISequenceHasChanged.cs" />
     <Compile Include="Interfaces\ViewModel\ISequence2VM.cs" />
     <Compile Include="Interfaces\ISequenceCondition.cs" />
     <Compile Include="Interfaces\ISequenceContainer.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Interfaces\ViewModel\ISimpleSequenceVM.cs" />
     <Compile Include="Mediator\SequenceMediator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SequenceHasChanged.cs" />
     <Compile Include="SequenceItem\Autofocus\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>

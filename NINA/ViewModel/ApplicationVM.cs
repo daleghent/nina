@@ -131,6 +131,15 @@ namespace NINA.ViewModel {
         }
 
         private void ExitApplication(object obj) {
+            Sequencer.ISequenceNavigationVM vm = ((Interfaces.IMainWindowVM)Application.Current.MainWindow.DataContext).SequenceNavigationVM;
+            if (vm.Sequence2VM.Sequencer.MainContainer.AskHasChanged(vm.Sequence2VM.Sequencer.MainContainer.Name)) {
+                return;
+            }
+            foreach (var item in ((SimpleSequenceVM)vm.SimpleSequenceVM).Targets.Items) {
+                if (item.AskHasChanged(item.Name)) {
+                    return;
+                }
+            }
             if (cameraInfo.Connected) {
                 var diag = MyMessageBox.Show(Loc.Instance["LblCameraConnectedOnExit"], "", MessageBoxButton.OKCancel, MessageBoxResult.Cancel);
                 if (diag != MessageBoxResult.OK) {

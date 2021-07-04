@@ -556,5 +556,43 @@ namespace NINA.Sequencer.Container {
                 return Triggers.ToArray();
             }
         }
+
+        public override bool HasChanged {
+            get {
+                if (base.HasChanged) {
+                    return true;
+                }
+                foreach (ISequenceItem item in Items) {
+                    if (item.HasChanged) {
+                        return true;
+                    }
+                }
+                foreach (ISequenceTrigger item in Triggers) {
+                    if (item.HasChanged) {
+                        return true;
+                    }
+                }
+                foreach (ISequenceCondition item in Conditions) {
+                    if (item.HasChanged) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            set => base.HasChanged = value;
+        }
+
+        public override void ClearHasChanged() {
+            base.ClearHasChanged();
+            foreach (ISequenceItem item in Items) {
+                item.ClearHasChanged();
+            }
+            foreach (ISequenceTrigger item in Triggers) {
+                item.ClearHasChanged();
+            }
+            foreach (ISequenceCondition item in Conditions) {
+                item.ClearHasChanged();
+            }
+        }
     }
 }

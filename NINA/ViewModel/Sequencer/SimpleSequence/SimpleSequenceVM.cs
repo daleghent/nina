@@ -131,7 +131,7 @@ namespace NINA.ViewModel {
                     rootContainer.Add(targetArea);
                     rootContainer.Add(new SimpleEndContainer(factory, profileService));
                     (targetArea.Items as ObservableCollection<ISequenceItem>).CollectionChanged += SimpleSequenceVM_CollectionChanged;
-
+                    rootContainer.ClearHasChanged();
                     Sequencer = new NINA.Sequencer.Sequencer(
                         rootContainer
                     );
@@ -437,6 +437,7 @@ namespace NINA.ViewModel {
                     var target = item as SimpleDSOContainer;
                     if (target != null) {
                         cslCollection.Add(MigrateToCaptureSequenceList(target));
+                        target.ClearHasChanged();
                     }
                 }
                 CaptureSequenceList.SaveSequenceSet(cslCollection, dialog.FileName);
@@ -467,6 +468,9 @@ namespace NINA.ViewModel {
                     ));
                     foreach (var csl in set) {
                         this.Targets.Add(MigrateFromCaptureSequenceList(csl));
+                    }
+                    foreach (var item in Targets.Items) {
+                        item.ClearHasChanged();
                     }
                     SelectedTarget = Targets.Items.FirstOrDefault() as SimpleDSOContainer;
                 }
@@ -505,6 +509,9 @@ namespace NINA.ViewModel {
                         SelectedTarget = transform;
                     }
                 }
+                foreach (var item in Targets.Items) {
+                    item.ClearHasChanged();
+                }
             }
             (SelectedTarget as SimpleDSOContainer)?.ResetProgressCascaded();
             return Targets?.Items.Count > 0;
@@ -516,6 +523,7 @@ namespace NINA.ViewModel {
             } else {
                 var csl = MigrateToCaptureSequenceList(SelectedTarget);
                 csl.Save(SelectedTarget.FileName);
+                SelectedTarget.ClearHasChanged();
             }
         }
 
@@ -539,6 +547,7 @@ namespace NINA.ViewModel {
                     SelectedTarget.FileName = dialog.FileName;
                     var csl = MigrateToCaptureSequenceList(SelectedTarget);
                     csl.Save(dialog.FileName);
+                    SelectedTarget.ClearHasChanged();
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
