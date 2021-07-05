@@ -216,8 +216,7 @@ namespace NINA.Plugin {
                     fileInfo.DeleteAlternateDataStream("Zone.Identifier");
                 }
 
-                var assemblyBytes = File.ReadAllBytes(file);
-                var assembly = Assembly.Load(assemblyBytes);
+                var assembly = Assembly.LoadFrom(file);
                 var plugin = new AssemblyCatalog(assembly);
 
                 var references = plugin.Assembly.GetReferencedAssemblies();
