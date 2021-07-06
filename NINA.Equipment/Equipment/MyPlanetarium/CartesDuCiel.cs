@@ -70,7 +70,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 if (!Match(columns.Last(), @"(?<=Equinox:).*", out var equinox)) { throw new PlanetariumObjectNotSelectedException(); }
                 equinox = equinox.Replace("\r", string.Empty).Replace("\n", string.Empty);
 
-                var coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), equinox.ToLower() == "now" ? Epoch.JNOW : Epoch.J2000);
+                var coordinates = new Coordinates(Angle.ByDegree(ra), Angle.ByDegree(dec), equinox.ToLower().Contains("2000") ? Epoch.J2000 : Epoch.JNOW);
 
                 var dso = new DeepSkyObject(columns[3].Trim(), coordinates.Transform(Epoch.J2000), string.Empty, null);
 
@@ -94,13 +94,13 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 var queryEq = new BasicQuery(address, port, commandEq);
                 string responseEq = await queryEq.SendQuery();
 
-                if (!responseRa.StartsWith("OK!") && !responseDec.StartsWith("OK!") && !responseEq.StartsWith("OK!")) { throw new PlanetariumObjectNotSelectedException(); }
+                if (!responseRa.StartsWith("OK!") || !responseDec.StartsWith("OK!")) { throw new PlanetariumObjectNotSelectedException(); }
 
                 var ra = double.Parse(responseRa.Replace("OK!", string.Empty).Replace("\r", string.Empty).Replace("\n", string.Empty), CultureInfo.InvariantCulture);
                 var dec = double.Parse(responseDec.Replace("OK!", string.Empty).Replace("\r", string.Empty).Replace("\n", string.Empty), CultureInfo.InvariantCulture);
                 var equinox = responseEq.Replace("OK!", string.Empty).Replace("\r", string.Empty).Replace("\n", string.Empty);
 
-                var coordinates = new Coordinates(Angle.ByHours(ra), Angle.ByDegree(dec), equinox.ToLower() == "J2000" ? Epoch.J2000 : Epoch.JNOW);
+                var coordinates = new Coordinates(Angle.ByHours(ra), Angle.ByDegree(dec), equinox.ToLower().Contains("2000") ? Epoch.J2000 : Epoch.JNOW);
 
                 return new DeepSkyObject(string.Empty, coordinates.Transform(Epoch.J2000), string.Empty, null);
             } catch (Exception ex) {
