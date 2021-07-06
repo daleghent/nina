@@ -1421,7 +1421,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Moves the rotator to the mechanical angle.
+        ///   Looks up a localized string similar to Moves the rotator to the specified mechanical angle.
         /// </summary>
         internal static string Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description {
             get {
@@ -1430,7 +1430,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Move Rotator Mechanical.
+        ///   Looks up a localized string similar to Rotate by mechanical angle.
         /// </summary>
         internal static string Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name {
             get {
