@@ -1695,7 +1695,7 @@ HFR calculat: {2}    </value>
     <value>El Guiatge no ha enviat el missatge de reiniciar a temps. Es reprendrà la seqüència, però assegureu-vos que el Guiatge tornia a funcionar!</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
+    <value>El Guiatge no ha enviat cap missatge SettleDone després del temps previst ({0} s + 10s). Saltant.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>Fallada en la reiniciació del Guiatge</value>
@@ -4387,16 +4387,16 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Fer exposició</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
+    <value>Centra y gira el telescopi a través de la resolució de plaques i un rotador per a les coordenades y rotació donades</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Slew, center and rotate</value>
+    <value>Gira, Centra i Rota</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
+    <value>Envia i centra el telescopi a través de l'astrometria per a las coordenades donades</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Slew and center</value>
+    <value>Gira i centra</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Situa el telescopi a la posició aparcament (park)</value>
@@ -4957,9 +4957,9 @@ S’utilitza millor juntament amb una altra condició de bucle per no acabar en 
     <value>Desplaçament no vàlid. El desplaçament s'ha d'establir entre {0} i {1}, però s'ha definit com a {2}</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Takes an image and solves the image using the current telescope position as reference.
-After solving the frame successfully the telescope will be synced to the solved position.
-Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!</value>
+    <value>Pren una imatge i la resol amb la posició actual del telescopi com a referència.
+Després de resoldre el la imatge amb èxit, el telescopi es sincronitzarà amb la posició resolta.
+Advertència: Aquesta instrucció NO centrarà el telescopi a un objectiu, sinó que només sincronitzarà la posició de punt actual!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>Resoldre i Sinc</value>
@@ -5388,10 +5388,10 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
     <value>Rotador</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
-    <value>Mou el rotador a l’angle mecànic</value>
+    <value>Moves the rotator to the specified mechanical angle</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
-    <value>Mou el Rotador Mecànic</value>
+    <value>Rotate by mechanical angle</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>Meridià</value>
@@ -5633,24 +5633,24 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
     <value>Aturar la seqüència</value>
   </data>
   <data name="LblTemplate_Created" xml:space="preserve">
-    <value>Sequence template "{0}" has been created.</value>
+    <value>S'ha creat la plantilla de seqüència "{0}".</value>
   </data>
   <data name="LblTemplate_Updated" xml:space="preserve">
-    <value>Sequence template "{0}" has been updated.</value>
+    <value>S'ha actualitzat la plantilla de seqüència "{0}".</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
-    <value>Target "{0}" has been created.</value>
+    <value>S'ha creat l'objectiu "{0}".</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
-    <value>Target "{0}" has been updated.</value>
+    <value>S'ha actualitzat l'objectiu "{0}".</value>
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
-    <value>Waiting for prior slew</value>
+    <value>Esperant el moviment prèvi</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
-    <value>Do you want to reset the complete sequence run?</value>
+    <value>Voleu restablir l'execució completa de la seqüència?</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
-    <value>Reset sequence?</value>
+    <value>Restablir la Seqüència?</value>
   </data>
 </root>

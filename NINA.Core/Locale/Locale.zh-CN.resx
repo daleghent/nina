@@ -5397,10 +5397,10 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>旋转器</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
-    <value>将旋转器转到机械角度</value>
+    <value>Moves the rotator to the specified mechanical angle</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
-    <value>机械转动旋转器</value>
+    <value>Rotate by mechanical angle</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>中天</value>
