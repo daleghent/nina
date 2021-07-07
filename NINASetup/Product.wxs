@@ -1958,8 +1958,11 @@
   <?endif?>
 
   <Fragment>
-    <CustomAction Id='API_Firewall_listen_ipv6' Directory='INSTALLFOLDER' Execute='deferred' Impersonate='no' ExeCommand='"[SystemFolder]netsh.exe" http add iplisten ipaddress=::' Return='asyncWait' />
-    <CustomAction Id='API_Firewall_listen_ipv4' Directory='INSTALLFOLDER' Execute='deferred' Impersonate='no' ExeCommand='"[SystemFolder]netsh.exe" http add iplisten ipaddress=0.0.0.0' Return='asyncWait' />
-    <CustomAction Id='API_Firewall_add_urlacl' Directory='INSTALLFOLDER' Execute='deferred' Impersonate='no' ExeCommand='"[SystemFolder]netsh.exe" http add urlacl url=http://+:59590/ user=Everyone' Return='asyncWait' />
+    <SetProperty Id="API_Firewall_listen_ipv6" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add iplisten ipaddress=::" Before="API_Firewall_listen_ipv6" />
+    <CustomAction Id="API_Firewall_listen_ipv6" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
+    <SetProperty Id="API_Firewall_listen_ipv4" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add iplisten ipaddress=0.0.0.0" Before="API_Firewall_listen_ipv4" />
+    <CustomAction Id="API_Firewall_listen_ipv4" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
+    <SetProperty Id="API_Firewall_add_urlacl" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add urlacl url=http://+:59590/ user=Everyone" Before="API_Firewall_add_urlacl" />
+    <CustomAction Id="API_Firewall_add_urlacl" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
   </Fragment>
 </Wix>
