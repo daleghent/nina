@@ -462,8 +462,8 @@ namespace NINATest {
 
             var sut = new FITSHeaderCard(key, value, comment);
 
-            var expectedValue = "'QXuUfwRN6t5OumSP9f'";
-            var expectedComment = "QXuUfwRN6t5OumSP9fFoWki4vUIvBXwFVYIDKROyCscAZ";
+            var expectedValue = "'QXuUfwRN6t5OumSP9fFo'";
+            var expectedComment = "QXuUfwRN6t5OumSP9fFoWki4vUIvBXwFVYIDKROyCsc";
 
             sut.Key.Should().Be(key);
             sut.Value.Should().Be(expectedValue);

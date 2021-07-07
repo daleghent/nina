@@ -29,14 +29,14 @@ namespace NINA.Image.FileFormat.FITS {
              */
             this.Key = key;
             if (value == null) { value = string.Empty; }
-            if (value.Length > 18) {
-                value = value.Substring(0, 18);
+            if (value.Length > 20) {
+                value = value.Substring(0, 20);
             }
             this.Value = $"'{value.Replace(@"'", @"''")}'".PadRight(20);
 
             if (comment == null) { comment = string.Empty; }
-            if (comment?.Length > 45) {
-                comment = comment.Substring(0, 45);
+            if (comment?.Length > 43) {
+                comment = comment.Substring(0, 43);
             }
             this.Comment = comment;
         }
@@ -62,8 +62,8 @@ namespace NINA.Image.FileFormat.FITS {
         public FITSHeaderCard(string key, DateTime value, string comment) {
             this.Key = key;
             this.Value = @"'" + value.ToString(@"yyyy-MM-ddTHH:mm:ss.fff", CultureInfo.InvariantCulture) + @"'";
-            if (comment?.Length > 45) {
-                comment = comment.Substring(0, 45);
+            if (comment?.Length > 40) {
+                comment = comment.Substring(0, 40);
             }
             this.Comment = comment;
         }
