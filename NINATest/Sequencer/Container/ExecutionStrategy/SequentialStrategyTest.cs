@@ -252,5 +252,201 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
             // Will be called once - after execution of the last item
             conditionableMock.Verify(x => x.CheckConditions(It.Is<ISequenceItem>(item => item == item2Mock.Object), It.Is<ISequenceItem>(item => item == null)), Times.Once);
         }
+
+        [Test]
+        public async Task Execute_BlockStarted_MultipleIterations_SequenceBlockInitializeCalled() {
+            var containerMock = new Mock<SequenceContainer>(new Mock<IExecutionStrategy>().Object);
+
+            var conditionableMock = containerMock.As<IConditionable>();
+            var conditionMock = new Mock<ISequenceCondition>();
+            conditionableMock.Setup(x => x.GetConditionsSnapshot()).Returns(new List<ISequenceCondition>() { conditionMock.Object });
+            conditionableMock.Setup(x => x.CheckConditions(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+
+            var triggerableMock = containerMock.As<ITriggerable>();
+            var triggerMock = new Mock<ISequenceTrigger>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>() { triggerMock.Object });
+            triggerableMock.Setup(x => x.RunTriggers(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            var item1Mock = new Mock<ISequenceItem>();
+            item1Mock
+                .SetupSequence(x => x.Status)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED);
+            var item2Mock = new Mock<ISequenceItem>();
+            item2Mock
+                .SetupSequence(x => x.Status)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED);
+            var items = new List<ISequenceItem>() { item1Mock.Object, item2Mock.Object };
+            foreach (var item in items) {
+                containerMock.Object.Items.Add(item);
+            }
+
+            var sut = new SequentialStrategy();
+            await sut.Execute(containerMock.Object, default, default);
+
+            item1Mock.Verify(x => x.SequenceBlockInitialize(), Times.Once);
+            item2Mock.Verify(x => x.SequenceBlockInitialize(), Times.Once);
+            conditionMock.Verify(x => x.SequenceBlockInitialize(), Times.Once);
+            triggerMock.Verify(x => x.SequenceBlockInitialize(), Times.Once);
+        }
+
+        [Test]
+        public async Task Execute_BlockStarted_MultipleIterations_SequenceBlockTeardownCalled() {
+            var containerMock = new Mock<SequenceContainer>(new Mock<IExecutionStrategy>().Object);
+
+            var conditionableMock = containerMock.As<IConditionable>();
+            var conditionMock = new Mock<ISequenceCondition>();
+            conditionableMock.Setup(x => x.GetConditionsSnapshot()).Returns(new List<ISequenceCondition>() { conditionMock.Object });
+            conditionableMock.Setup(x => x.CheckConditions(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+
+            var triggerableMock = containerMock.As<ITriggerable>();
+            var triggerMock = new Mock<ISequenceTrigger>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>() { triggerMock.Object });
+            triggerableMock.Setup(x => x.RunTriggers(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            var item1Mock = new Mock<ISequenceItem>();
+            item1Mock
+                .SetupSequence(x => x.Status)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED);
+            var item2Mock = new Mock<ISequenceItem>();
+            item2Mock
+                .SetupSequence(x => x.Status)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED);
+            var items = new List<ISequenceItem>() { item1Mock.Object, item2Mock.Object };
+            foreach (var item in items) {
+                containerMock.Object.Items.Add(item);
+            }
+
+            var sut = new SequentialStrategy();
+            await sut.Execute(containerMock.Object, default, default);
+
+            item1Mock.Verify(x => x.SequenceBlockTeardown(), Times.Once);
+            item2Mock.Verify(x => x.SequenceBlockTeardown(), Times.Once);
+            conditionMock.Verify(x => x.SequenceBlockTeardown(), Times.Once);
+            triggerMock.Verify(x => x.SequenceBlockTeardown(), Times.Once);
+        }
+
+        [Test]
+        public async Task Execute_BlockStarted_MultipleIterations_SequenceBlockStartedCalled() {
+            var containerMock = new Mock<SequenceContainer>(new Mock<IExecutionStrategy>().Object);
+
+            var conditionableMock = containerMock.As<IConditionable>();
+            var conditionMock = new Mock<ISequenceCondition>();
+            conditionableMock.Setup(x => x.GetConditionsSnapshot()).Returns(new List<ISequenceCondition>() { conditionMock.Object });
+            conditionableMock.Setup(x => x.CheckConditions(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+
+            var triggerableMock = containerMock.As<ITriggerable>();
+            var triggerMock = new Mock<ISequenceTrigger>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>() { triggerMock.Object });
+            triggerableMock.Setup(x => x.RunTriggers(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            var item1Mock = new Mock<ISequenceItem>();
+            item1Mock
+                .SetupSequence(x => x.Status)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED);
+            var item2Mock = new Mock<ISequenceItem>();
+            item2Mock
+                .SetupSequence(x => x.Status)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED);
+            var items = new List<ISequenceItem>() { item1Mock.Object, item2Mock.Object };
+            foreach (var item in items) {
+                containerMock.Object.Items.Add(item);
+            }
+
+            var sut = new SequentialStrategy();
+            await sut.Execute(containerMock.Object, default, default);
+
+            item1Mock.Verify(x => x.SequenceBlockStarted(), Times.Exactly(3));
+            item2Mock.Verify(x => x.SequenceBlockStarted(), Times.Exactly(3));
+            conditionMock.Verify(x => x.SequenceBlockStarted(), Times.Exactly(3));
+            triggerMock.Verify(x => x.SequenceBlockStarted(), Times.Exactly(3));
+        }
+
+        [Test]
+        public async Task Execute_BlockStarted_MultipleIterations_SequenceBlockFinishedCalled() {
+            var containerMock = new Mock<SequenceContainer>(new Mock<IExecutionStrategy>().Object);
+
+            var conditionableMock = containerMock.As<IConditionable>();
+            var conditionMock = new Mock<ISequenceCondition>();
+            conditionableMock.Setup(x => x.GetConditionsSnapshot()).Returns(new List<ISequenceCondition>() { conditionMock.Object });
+            conditionableMock.Setup(x => x.CheckConditions(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+
+            var triggerableMock = containerMock.As<ITriggerable>();
+            var triggerMock = new Mock<ISequenceTrigger>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>() { triggerMock.Object });
+            triggerableMock.Setup(x => x.RunTriggers(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).Returns(Task.CompletedTask);
+
+            var item1Mock = new Mock<ISequenceItem>();
+            item1Mock
+                .SetupSequence(x => x.Status)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED);
+            var item2Mock = new Mock<ISequenceItem>();
+            item2Mock
+                .SetupSequence(x => x.Status)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED)
+                .Returns(SequenceEntityStatus.FINISHED);
+            var items = new List<ISequenceItem>() { item1Mock.Object, item2Mock.Object };
+            foreach (var item in items) {
+                containerMock.Object.Items.Add(item);
+            }
+
+            var sut = new SequentialStrategy();
+            await sut.Execute(containerMock.Object, default, default);
+
+            item1Mock.Verify(x => x.SequenceBlockFinished(), Times.Exactly(3));
+            item2Mock.Verify(x => x.SequenceBlockFinished(), Times.Exactly(3));
+            conditionMock.Verify(x => x.SequenceBlockFinished(), Times.Exactly(3));
+            triggerMock.Verify(x => x.SequenceBlockFinished(), Times.Exactly(3));
+        }
     }
 }

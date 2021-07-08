@@ -56,6 +56,29 @@ namespace NINATest.Sequencer {
         }
 
         [Test]
+        public async Task Start_NoIssues_HasChildTriggers_ItemsGetInitialized() {
+            var rootMock = new Mock<ISequenceRootContainer>();
+            var childContainerMock = new Mock<ISequenceContainer>();
+            childContainerMock.SetupGet(x => x.Issues).Returns(new List<string>());
+            var itemMock = new Mock<ISequenceItem>();
+            childContainerMock.Setup(x => x.GetItemsSnapshot()).Returns(new List<ISequenceItem>() { itemMock.Object });
+
+            var items = new List<ISequenceItem>() {
+                childContainerMock.Object
+            };
+
+            rootMock.Setup(x => x.GetItemsSnapshot()).Returns(items);
+            rootMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>());
+            var sut = new NINA.Sequencer.Sequencer(rootMock.Object);
+
+            var progress = new Progress<ApplicationStatus>();
+            var ct = new CancellationToken();
+            await sut.Start(progress, ct);
+
+            itemMock.Verify(x => x.Initialize(), Times.Once);
+        }
+
+        [Test]
         public async Task Start_NoIssues_HasChildTriggers_TriggersGetInitialized() {
             var rootMock = new Mock<ISequenceRootContainer>();
             var childContainerMock = new Mock<ISequenceContainer>();
@@ -153,6 +176,29 @@ namespace NINATest.Sequencer {
             await sut.Start(progress, ct);
 
             conditionMock.Verify(x => x.Teardown(), Times.Once);
+        }
+
+        [Test]
+        public async Task Start_NoIssues_HasChildTriggers_ItemsGetTeardowned() {
+            var rootMock = new Mock<ISequenceRootContainer>();
+            var childContainerMock = new Mock<ISequenceContainer>();
+            childContainerMock.SetupGet(x => x.Issues).Returns(new List<string>());
+            var itemMock = new Mock<ISequenceItem>();
+            childContainerMock.Setup(x => x.GetItemsSnapshot()).Returns(new List<ISequenceItem>() { itemMock.Object });
+
+            var items = new List<ISequenceItem>() {
+                childContainerMock.Object
+            };
+
+            rootMock.Setup(x => x.GetItemsSnapshot()).Returns(items);
+            rootMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>());
+            var sut = new NINA.Sequencer.Sequencer(rootMock.Object);
+
+            var progress = new Progress<ApplicationStatus>();
+            var ct = new CancellationToken();
+            await sut.Start(progress, ct);
+
+            itemMock.Verify(x => x.Teardown(), Times.Once);
         }
     }
 }

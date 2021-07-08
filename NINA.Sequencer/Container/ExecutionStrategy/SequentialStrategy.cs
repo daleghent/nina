@@ -75,6 +75,10 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
         }
 
         private void TeardownBlock(ISequenceContainer context) {
+            foreach (var item in context.GetItemsSnapshot()) {
+                item.SequenceBlockTeardown();
+            }
+
             var conditionable = context as IConditionable;
             if (conditionable != null) {
                 foreach (var condition in conditionable.GetConditionsSnapshot()) {
@@ -90,6 +94,10 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
         }
 
         private void InitializeBlock(ISequenceContainer context) {
+            foreach (var item in context.GetItemsSnapshot()) {
+                item.SequenceBlockInitialize();
+            }
+
             var conditionable = context as IConditionable;
             if (conditionable != null) {
                 foreach (var condition in conditionable.GetConditionsSnapshot()) {
@@ -121,6 +129,10 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
         }
 
         private void StartBlock(ISequenceContainer container) {
+            foreach (var item in container.GetItemsSnapshot()) {
+                item.SequenceBlockStarted();
+            }
+
             var conditionable = container as IConditionable;
             if (conditionable != null) {
                 foreach (var condition in conditionable.GetConditionsSnapshot()) {
@@ -137,6 +149,10 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
 
         private void FinishBlock(ISequenceContainer container) {
             container.Iterations++;
+
+            foreach (var item in container.GetItemsSnapshot()) {
+                item.SequenceBlockFinished();
+            }
 
             var conditionable = container as IConditionable;
             if (conditionable != null) {

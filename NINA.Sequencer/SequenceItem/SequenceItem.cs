@@ -261,5 +261,23 @@ namespace NINA.Sequencer.SequenceItem {
             this.Status = SequenceEntityStatus.SKIPPED;
             localCts?.Cancel();
         }
+
+        public virtual void Initialize() {
+        }
+
+        public virtual void SequenceBlockInitialize() {
+        }
+
+        public virtual void SequenceBlockStarted() {
+        }
+
+        public virtual void SequenceBlockFinished() {
+        }
+
+        public virtual void SequenceBlockTeardown() {
+        }
+
+        public virtual void Teardown() {
+        }
     }
 }

@@ -123,6 +123,7 @@ namespace NINA.Sequencer {
                 }
 
                 foreach (var item in context.GetItemsSnapshot()) {
+                    item.Initialize();
                     if (item is ISequenceContainer) {
                         var container = item as ISequenceContainer;
                         Initialize(container);
@@ -147,6 +148,7 @@ namespace NINA.Sequencer {
                 }
 
                 foreach (var item in context.GetItemsSnapshot()) {
+                    item.Teardown();
                     if (item is ISequenceContainer) {
                         var container = item as ISequenceContainer;
                         Teardown(container);
