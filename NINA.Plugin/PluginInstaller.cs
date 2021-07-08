@@ -79,6 +79,9 @@ namespace NINA.Plugin {
                     using (WebClient client = new WebClient()) {
                         using (ct.Register(() => client.CancelAsync(), useSynchronizationContext: false)) {
                             using (Stream rawStream = client.OpenRead(manifest.Installer.URL)) {
+                                Logger.Info($"Downloading plugin from {manifest.Installer.URL}");
+                                var data = await client.DownloadDataTaskAsync(manifest.Installer.URL);
+
                                 string contentDisposition = client.ResponseHeaders["content-disposition"];
                                 if (!string.IsNullOrEmpty(contentDisposition)) {
                                     string lookFor = "filename=";
@@ -87,11 +90,10 @@ namespace NINA.Plugin {
                                         tempFile = Path.Combine(Path.GetTempPath(), contentDisposition.Substring(index + lookFor.Length).Replace("\"", ""));
                                 }
 
-                                /*client.DownloadProgressChanged += (s, e) => {
-                                    progress?.Report(e.ProgressPercentage);
-                                };*/
-                                Logger.Info($"Downloading plugin from {manifest.Installer.URL}");
-                                await client.DownloadFileTaskAsync(manifest.Installer.URL, tempFile);
+                                using (var fs = new FileStream(tempFile, FileMode.Create)) {
+                                    Logger.Debug($"Saving downloaded plugin to temporary path {tempFile}");
+                                    await fs.WriteAsync(data, 0, data.Length);
+                                }
                             }
                         }
                     }
@@ -102,10 +104,6 @@ namespace NINA.Plugin {
                         throw ex;
                     }
                 }
-
-                var req = new HttpDownloadFileRequest(manifest.Installer.URL, tempFile);
-
-                await req.Request(ct);
 
                 if (!ValidateChecksum(tempFile, manifest)) {
                     throw new Exception($"Checksum of file {tempFile} does not match expected checksum {manifest.Installer.Checksum} of type {manifest.Installer.ChecksumType}. File may be corrupted");
@@ -207,9 +205,9 @@ namespace NINA.Plugin {
         }
 
         private async Task InstallDLL(IPluginManifest manifest, string sourceFile) {
-            Logger.Info($"Installing plugin DLL {manifest.Name}");
             var name = Path.GetFileName(sourceFile);
             var destination = Path.Combine(GetDestinationFolderFromManifest(manifest), name);
+            Logger.Info($"Installing plugin {manifest.Name} - moving DLL to {destination}");
 
             using (Stream source = File.Open(sourceFile, FileMode.Open)) {
                 if (!Directory.Exists(Path.GetDirectoryName(destination))) {
@@ -227,8 +225,8 @@ namespace NINA.Plugin {
         }
 
         private Task InstallArchive(IPluginManifest manifest, string tempFile) {
-            Logger.Info($"Installing plugin archive {manifest.Name}");
             var destination = GetDestinationFolderFromManifest(manifest);
+            Logger.Info($"Installing plugin {manifest.Name} - extracting archive to {destination}");
 
             using (ZipArchive archive = ZipFile.Open(tempFile, ZipArchiveMode.Read)) {
                 archive.ExtractToDirectory(destination, true);
