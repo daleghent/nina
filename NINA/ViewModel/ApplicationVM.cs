@@ -138,6 +138,8 @@ namespace NINA.ViewModel {
             foreach (var item in ((SimpleSequenceVM)vm.SimpleSequenceVM).Targets.Items) {
                 if (item.AskHasChanged(item.Name)) {
                     return;
+                } else {
+                    break;
                 }
             }
             if (cameraInfo.Connected) {
