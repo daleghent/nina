@@ -39,7 +39,6 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
         [ImportingConstructor]
         public MoveFocuserByTemperature(IFocuserMediator focuserMediator) {
             this.focuserMediator = focuserMediator;
-            this.focuserMediator.RegisterConsumer(this);
         }
 
         private MoveFocuserByTemperature(MoveFocuserByTemperature cloneMe) : this(cloneMe.focuserMediator) {
@@ -165,7 +164,6 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
         }
 
         public void Dispose() {
-            focuserMediator.RemoveConsumer(this);
         }
 
         public void UpdateEndAutoFocusRun(AutoFocusInfo info) {
@@ -178,6 +176,14 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             Logger.Info($"User Focused notification received - Temperature {info.Temperature}");
             lastTemperature = info.Temperature;
             lastRoundoff = 0;
+        }
+
+        public override void Initialize() {
+            this.focuserMediator.RegisterConsumer(this);
+        }
+
+        public override void Teardown() {
+            focuserMediator.RemoveConsumer(this);
         }
     }
 }
