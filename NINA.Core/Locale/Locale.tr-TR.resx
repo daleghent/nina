@@ -237,7 +237,7 @@ Uygulama, hatayı düzeltmeyi denesin mi? (Beklenmedik sonuçlar oluşabilir)</v
     <value>yay dakika</value>
   </data>
   <data name="LblMaxArcmin" xml:space="preserve">
-    <value>Max arcmin</value>
+    <value>Maks. yay dakika</value>
   </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>yay saniye</value>
@@ -1155,7 +1155,7 @@ Daha uzun bir süre gerektiğinde, bir süre belirtilebilir ve uygulama, verilen
     <value>Dither</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither Every #</value>
+    <value>Her # de bir dither</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>Dithering etkin, takipçi henüz bağlanmadı</value>
@@ -1692,7 +1692,7 @@ Hesaplanan HFR: {2}
     <value>Takipçi devam etm mesajını zamanında göndermedi. Sekans devam edecek ancak takipçinin tekrar takip edip etmediğinden emin olun!</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
+    <value>Takip sistemi beklenen ({0}sn + 10sn) sürede YerleşmeTamamlandı sinyali göndermedi. Atlanıyor.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>Takipçi yenilemesi başarısız</value>
@@ -1770,7 +1770,7 @@ Hesaplanan HFR: {2}
     <value>Hiperbolik</value>
   </data>
   <data name="LblId" xml:space="preserve">
-    <value>ID</value>
+    <value>Kimlik</value>
   </data>
   <data name="LblIllumination" xml:space="preserve">
     <value>Aydınlatma</value>
@@ -2059,7 +2059,7 @@ Hesaplanan HFR: {2}
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>From N.I.N.A. to Telescope</value>
+    <value>N.I.N.A. dan teleskopa</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>Yok</value>
@@ -2146,19 +2146,19 @@ Hesaplanan HFR: {2}
     <value>Obje tipi</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Star</value>
+    <value>1 Yıldız</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Stars</value>
+    <value>2 Yıldız</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Stars</value>
+    <value>3 Yıldız</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Stars</value>
+    <value>4 Yıldız</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Stars</value>
+    <value>8 Yıldız</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>Asterizm</value>
@@ -2312,7 +2312,7 @@ Hesaplanan HFR: {2}
     <value>Beklemede</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Pause before Meridian</value>
+    <value>Neridyenden önce bekle</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>Ana düz kare</value>
@@ -2327,7 +2327,7 @@ Hesaplanan HFR: {2}
     <value>PHD2 ekipmana bağlanamadı</value>
   </data>
   <data name="LblPhd2FailedGetProfiles" xml:space="preserve">
-    <value>PHD2 wasn't able to provide profiles</value>
+    <value>PHD2 profil sağlayamadı</value>
   </data>
   <data name="LblPHD2HistorySize" xml:space="preserve">
     <value>PHD2 geçmişi boyutu</value>
@@ -2351,7 +2351,7 @@ Hesaplanan HFR: {2}
     <value>PHD2 sunucu girişi</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 Server URL</value>
+    <value>PHD2 Sunucu URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>PHD2 ayarları</value>
@@ -2378,22 +2378,22 @@ Hesaplanan HFR: {2}
     <value>Top.:{0}({1}")</value>
   </data>
   <data name="LblPhd2Profile" xml:space="preserve">
-    <value>PHD2 Profile</value>
+    <value>PHD2 profili</value>
   </data>
   <data name="LblPhd2ProfileChanged" xml:space="preserve">
-    <value>Changed PHD2 profile to {0}</value>
+    <value>PHD2 profili {0}e değiştirildi</value>
   </data>
   <data name="LblPhd2ProfileChangeFailed" xml:space="preserve">
-    <value>Failed to change PHD2 profile</value>
+    <value>PHD2 profili değiştirilemedi</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile ID {0} not found. Using {1}</value>
+    <value>PHD2 profil kimliği {0} bulunamadı. {1} kullanılıyor</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>Piksel</value>
   </data>
   <data name="LblMaxPixels" xml:space="preserve">
-    <value>Max Pixels</value>
+    <value>Maks. Piksel</value>
   </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>Piksel ölçüsü</value>
@@ -2501,10 +2501,10 @@ Hesaplanan HFR: {2}
     <value>Plate solve Uygulama</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
-    <value>Recentering after too much drift</value>
+    <value>Aşırı kaymadan sonra yeniden merkezleme</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
-    <value>No target set</value>
+    <value>Hedef seti yok</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>Lütfen {0} filtresine geçin</value>
@@ -2663,7 +2663,7 @@ Hesaplanan HFR: {2}
     <value>Profil kaldırılsın mı?</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
+    <value>Profil adı: {0} ve kimliği: {1} kaldırılsın mı?</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>Kadar tekrarla</value>
@@ -2753,7 +2753,7 @@ Hesaplanan HFR: {2}
     <value>Hedef setini kaydet</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Scope settle time after flip</value>
+    <value>Geçiş sonrası teleskop yerleşme süresi</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>Ara</value>
@@ -2807,7 +2807,7 @@ Hesaplanan HFR: {2}
     <value>Sekans bitiş komutu bulunamadı '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Delay start</value>
+    <value>Erteleme başladı</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>Sekans {0} saniyede başlıyor</value>
@@ -3168,7 +3168,7 @@ Devam etmeden önce, lütfen sisteminizin şu anda iyi veya iyiye yakın odaklan
     <value>Teleskop koordinatlara senkronize edildi</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>From Telescope to N.I.N.A.</value>
+    <value>Teleskoptan N.I.N.A.'ya</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>RA Takip oranı</value>
@@ -3213,7 +3213,7 @@ Devam etmeden önce, lütfen sisteminizin şu anda iyi veya iyiye yakın odaklan
     <value>Zaman aşımı</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
+    <value>Amahtar [Kimliği: {1}, Adı: {2}] için anahtar değeri {0} zaman aşımına uğradı. Mevcut değer {3}.</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>Saat dilimi</value>
@@ -3222,7 +3222,7 @@ Devam etmeden önce, lütfen sisteminizin şu anda iyi veya iyiye yakın odaklan
     <value>Offset</value>
   </data>
   <data name="LblTimeOffsetTooltip" xml:space="preserve">
-    <value>Offset in minutes from the fixed time of day</value>
+    <value>Günün sabit bir zamanına göre dakika cinsinden Offset</value>
   </data>
   <data name="LblTo" xml:space="preserve">
     <value>den</value>
@@ -3253,7 +3253,7 @@ Dikdörtgeni bahtinov yansımalı bir yıldızın üzerine sürükleyin. NINA ya
     <value>Hedefi sağa taşı</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
+    <value>Otomatik yıldız algılama ve analizini (Half Flux radius) açıp/kapatır</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>Canlı görüntü</value>
@@ -3441,22 +3441,22 @@ Dikdörtgeni kadrajın örneklemek istediğiniz kısmına sürükleyin ve örnek
     <value>Çalışma süresi</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>USB Port 1</value>
+    <value>USB Giriş 1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>USB Port 2</value>
+    <value>USB Giriş 2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>USB Port 3</value>
+    <value>USB Giriş 3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>USB Port 4</value>
+    <value>USB Giriş 4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>USB Port 5</value>
+    <value>USB Giriş 5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>USB Port 6</value>
+    <value>USB Giriş 6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
     <value>USB</value>
@@ -3912,7 +3912,7 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Sihirbaz modu</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance</value>
+    <value>Azimut toleransı</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>Hedef azimut bu miktardan daha darsa kubbe döner</value>
@@ -3924,31 +3924,31 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Başlangıç pozisyonunu bul</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length</value>
+    <value>GEM Aks uzunluğu</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>Alt / Az kundaklar için 0 olmalıdır. EQ kundaklar için RA'yı +/- 90 dereceye kadar döndürün ve eksenden teleskop açıklığının merkezine yanal mesafeyi (mm cinsinden) ölçün</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length</value>
+    <value>Yanal Aks uzunluğu</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>Yan yana konfigürasyonda kızaktan optik tüp merkezine olan mesafedir (yanlamasına, mm cinsinden). Pozitif, optik tüp ekseni boyunca sağdadır.</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius</value>
+    <value>Kubbe çapı</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>Merkezden kubbenin kenarına kadar taban boyunu ölçün</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W</value>
+    <value>Teleskop pozisyonu D/B</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>Kubbe merkeziyle kundak merkezi arasındaki doğu veya batı ofsetini (mm cinsinden) ölçün. Pozitif doğudur.</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S</value>
+    <value>Teleskop pozisyonu K/G</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>Kubbe takibi olabilir. Kundak devrinin doğru yapılandırıldığını kontrol edin ve bir plate solve senkronizasyonu yapın</value>
@@ -3966,7 +3966,7 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Sekansı duraklat</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down</value>
+    <value>Teleskop pozisyonu +Yukarı/-Aşağı</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>Kubbe tabanına göre kundak eksen merkezinin yükseklik farkını (mm olarak) ölçün. Alt / Az kundaklar için bu, yükseklik ekseninin merkezi, EQ kundaklar için RA ve DEC eksenlerinin kesiştiği yerdir. Pozitif bir sayı, eksen merkezinin kubbenin tabanından daha yüksek olduğunu, negatif bir sayı ise daha düşük olduğunu gösterir.</value>
@@ -4383,16 +4383,16 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Çekim yap</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
+    <value>Verilen koordinatlara yönelme ve döndürme işlemi için plate solving ve bir döndürücü aracılığıyla teleskopu hedefe çevirir, merkezler ve döndürür</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Slew, center and rotate</value>
+    <value>Çevir, merkezle ve döndür</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
+    <value>Teleskopu plate solving aracılığıyla verilen koordinatlara çevirir ve merkezler</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Slew and center</value>
+    <value>Çevir ve merkezle</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Teleskopu park pozisyonunda park eder</value>
@@ -4464,10 +4464,10 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Zamanı bekle</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
-    <value>Center After Drift</value>
+    <value>Kaymadan sonra merkezleme</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+    <value>Plate solving teleskopun hedef koordinatlardan çok uzağa sürüklendiğini belirledikten sonra yeniden merkezleme başlatmak için bir tetikleyici</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>Son otomatik netleme çalışmasından veya sekans başlangıcından bu yana HFR, yüzde olarak belirtilen miktarda arttıktan sonra bir otomatik netleme çalışmasını başlatmak için tetikleyici</value>
@@ -4539,13 +4539,13 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Pozlamalar sonrası dither</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuiding_Description" xml:space="preserve">
-    <value>Resumes guiding if it was previously interrupted</value>
+    <value>Daha önce kesintiye uğrayan takibi devam ettirir</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuidings_Name" xml:space="preserve">
-    <value>Restore Guiding</value>
+    <value>Takibi onar</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
-    <value>Evaluate After Exposures</value>
+    <value>Pozlamalardan sonra deeğerlendirme</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>Pozlamalar sonrası</value>
@@ -4781,7 +4781,7 @@ Yukarıdaki pozisyon, şu anda genişletilmemiş bir yönerge setiyse, o yönerg
     <value>+ Düğmesi aracılığıyla yeni bir Sekans Hedefi ekleyin, mevcut bir hedefi açın veya Çerçeveleme Asistanı aracılığıyla hedefler ekleyin</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Add new Target</value>
+    <value>Yeni hedef ekle</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
     <value>Hedef yükle</value>
@@ -4790,7 +4790,7 @@ Yukarıdaki pozisyon, şu anda genişletilmemiş bir yönerge setiyse, o yönerg
     <value>Hedef seti aç</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequencer</value>
+    <value>Basit Sıralayıcı</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>Sonuncu hedef seçeneklerinin sonu</value>
@@ -4889,7 +4889,7 @@ Yukarıdaki pozisyon, şu anda genişletilmemiş bir yönerge setiyse, o yönerg
     <value>Kubbenin teleskopla senkronize olmasını sağlar</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Enable Dome Sync</value>
+    <value>Kubbe senkronizasyonunu etkinleştir</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>Sekans, devre dışı bırakılan veya devam eden pozlama sayısının toplam poz sayısına eşit olduğu satırlar içerir. Bu öğeler atlanır ve sıralayıcı için bu satırlar için hiçbir öğe oluşturulmaz.</value>
@@ -4913,11 +4913,11 @@ Yukarıdaki pozisyon, şu anda genişletilmemiş bir yönerge setiyse, o yönerg
     <value>Güvenli</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
-    <value>A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays safe.</value>
+    <value>Bağlı Güvenlik Monitörünün bildiriminin güvenli olup olmadığını kontrol eden ve monior güvenli ortam bildirdiği sürece talimat setini döngüye sokan bir durum. Cihaz güvenli olmayan ortam bildirirse, mevcut komut seti durdurulur.
+Güvenlik monitörü sürekli güvenli ortam bildirirse sonsuz bir döngüye girilmemesi için, en iyi kullanım şekli başka bir döngü koşuluyla birlikte kullanılmasıdır.</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
-    <value>Loop while safe</value>
+    <value>Güvenli olduğu sürece döngüyü sürdür</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
     <value>Mevcut yönerge setini ve içeriğini, tekrar kullanmak üzere bir şablon olarak kaydet</value>
@@ -4953,9 +4953,9 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>Geçersiz Offset. Offset {0} ve {1} arasında olmalı, ancak {2} olarak ayarlandı</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Takes an image and solves the image using the current telescope position as reference.
-After solving the frame successfully the telescope will be synced to the solved position.
-Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!</value>
+    <value>Bir görüntü alır ve mevcut teleskop konumunu referans olarak kullanarak görüntüyü tanımlar.
+Çerçeveyi başarıyla tanımladıktan sonra, teleskop tanımlanan konuma senkronize edilecektir.
+Uyarı: Bu talimat, teleskopu bir hedefe MERKEZLEMEZ, sadece mevcut yönlendirilen konumunu senkronize eder!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>Çöz ve senkronize et</value>
@@ -4998,7 +4998,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     = &gt; Konum = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Move Focuser by Temp.</value>
+    <value>Odaklayıcıyı sıcaklığa göre çalıştır</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>Odaklayıcı geçerli bir sıcaklık algılamadı</value>
@@ -5085,7 +5085,7 @@ Bu modda sekans, ince ayrıntılı talimatlar, tetikleyiciler ve koşullar kulla
     <value>Weather Underground API anahtarı</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station ID</value>
+    <value>Weather Underground İstasyon Kimliği</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>Seçili satırı aşağı indir</value>
@@ -5384,10 +5384,10 @@ Hızla değişen koşullar için, daha küçük bir örnek boyutu, örneğin hı
     <value>Döndürücü</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
-    <value>Moves the rotator to the specified mechanical angle</value>
+    <value>Döndürücüyü belirtilen mekanik açıya hareket ettirir</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
-    <value>Rotate by mechanical angle</value>
+    <value>Mekanik aciyla döndür</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>Meridyen</value>
@@ -5408,245 +5408,263 @@ Hızla değişen koşullar için, daha küçük bir örnek boyutu, örneğin hı
     <value>Hiç eklenti bulunmadı</value>
   </data>
   <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
-    <value>Show Menu</value>
+    <value>Menüyü göster</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
-    <value>Keep Closed</value>
+    <value>Kapalı tut</value>
   </data>
   <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
-    <value>Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect.</value>
+    <value>Belirlenen odak noktası konumu eğrinin genel ölçüm noktalarının dışında. Yerleştirme yanlış ve büyük olasılıkla otomatik odak ayarları yanlış.</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
-    <value>Failed to save Sequence "{0}": {1}</value>
+    <value>Sıralama kaydedilemedi "{0}": {1}</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThreshold" xml:space="preserve">
-    <value>R² Threshold</value>
+    <value>R² Eşik değeri</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThresholdTooltip" xml:space="preserve">
-    <value>The minimum R² (Coefficient of determination) value that the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful.
-The value is in the range between 0-1.
-When set to 0, the threshold will not be considered. 
-An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions. 
-A good starting point for a threshold is a value of 0.8 - anything below that is a questionable fit.</value>
+    <value>Otomatik odaklamanın başarılı olarak kabul edilmesi için seçilen otomatik odak ayarının yerine getirmesi gereken minimum R² (Belirleme katsayısı) değeri.
+Değer 0-1 aralığındadır.
+0 olarak ayarlandığında, eşik dikkate alınmaz.
+R² değeri 0,9'un üzerinde olan bir otomatik odaklama ideal olarak kabul edilebilir. Bununla birlikte, daha düşük bir değer, yarı ideal koşullarda yine de odaklayabilir.
+Bir eşik için iyi bir başlangıç ​​noktası 0,8 değeridir - bunun altındaki herhangi bir şey sorgulanabilir bir uyumdur.</value>
     <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
   </data>
   <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
+    <value>Otomatik Odaklama başarısız oldu! Eğri uydurma için R² (belirleme katsayısı) eşiğin altında. {0} / {1}</value>
     <comment>First parameter is actual R², second parameter is R² threshold</comment>
   </data>
   <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
+    <value>Otomatik Odaklama başarısız! Trend çizgisi uydurma için R² (belirleme katsayısı) eşiğin altında. Sol: {0} / {2}; Sağ: {1} / {2}</value>
     <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
   </data>
   <data name="Lbl_SequenceCategory_SafetyMonitor" xml:space="preserve">
-    <value>Safety Monitor</value>
+    <value>Güvenlik Monitörü</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description" xml:space="preserve">
-    <value>Waits until the safety monitor device reports safe conditions again</value>
+    <value>Güvenlik monitörü güvenli koşulları tekrar bildirinceye kadar bekler</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name" xml:space="preserve">
-    <value>Wait until safe</value>
+    <value>Güvenlilik bildirilene dek bekle</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
-    <value>Waiting for safe conditions</value>
+    <value>Güvenli koşullar bekleniyor</value>
   </data>
   <data name="LblTemperatureSetPointDescription" xml:space="preserve">
-    <value>Camera Temperature Set Point</value>
+    <value>Kamera sıcaklığı ayar noktası</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
-    <value>ASCOM allow odd pixel dimension</value>
+    <value>ASCOM tek sayılı piksel boyutuna izin verir</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
-    <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
-When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
-This setting will have no effect on color sensors.
-Only relevant when using an ASCOM camera driver!</value>
+    <value>N.I.N.A.'nın önceki Sürümlerinde ASCOM sürücü genişliği ve yüksekliği, mono kameralar için bile her zaman çift sayılarla sınırlandırılmıştır.
+Etkinleştirildiğinde, uygulama artık mono kameralarda tam tek sayılı piksel boyutuna izin verecektir.
+Bu ayarın renk sensörleri üzerinde hiçbir etkisi olmaz.
+Yalnızca bir ASCOM kamera sürücüsü kullanıldığında geçerlidir!</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
-    <value>Guiding Start Timeout</value>
+    <value>Takip başlatımı zaman aşımına uğradı</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>Filtreler</value>
   </data>
   <data name="LblPHD2Calibrating" xml:space="preserve">
-    <value>PHD2 - Calibrating</value>
+    <value>PHD2 - Kalibre ediliyor</value>
   </data>
   <data name="LblPHD2SelectingStar" xml:space="preserve">
-    <value>PHD2 - Selecting guide star</value>
+    <value>PHD2 - Seçilen takip yıldızı</value>
   </data>
   <data name="LblPHD2Settling" xml:space="preserve">
-    <value>PHD2 - Settling</value>
+    <value>PHD2 - Yerleşiyor</value>
   </data>
   <data name="LblPHD2StartGuiding" xml:space="preserve">
-    <value>PHD2 - Waiting for guiding to start</value>
+    <value>PHD2 - Takibe başlamak için bekliyor</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
-    <value>PHD2 - Start guiding has timed out. Retrying...</value>
+    <value>PHD2 - Takibe başlama zaman aşımına uğradı. Yeniden deneniyor...</value>
   </data>
   <data name="LblFont" xml:space="preserve">
-    <value>Font</value>
+    <value>Yazı tipi</value>
   </data>
   <data name="LblPrimaryRate" xml:space="preserve">
-    <value>Primary rate</value>
+    <value>Birincil oran</value>
     <comment>Primary telescope axis rate</comment>
   </data>
   <data name="LblSecondaryRate" xml:space="preserve">
-    <value>Secondary rate</value>
+    <value>İkincil oran</value>
     <comment>Secondary telescope axis rate</comment>
   </data>
   <data name="LblTelescopeCannotMovePrimaryAxis" xml:space="preserve">
-    <value>Telescope cannot move primary axis</value>
+    <value>Teleskop birincil eksende hareket edemiyor</value>
   </data>
   <data name="LblTelescopeCannotMoveSecondaryAxis" xml:space="preserve">
-    <value>Telescope cannot move secondary axis</value>
+    <value>Teleskop ikincil eksende hareket edemiyor</value>
   </data>
   <data name="LblPrimaryReversed" xml:space="preserve">
-    <value>Primary reversed</value>
+    <value>Birincil tersine çevrildi</value>
   </data>
   <data name="LblPrimaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the primary axis movement. Enable this to reverse the direction on move commands for the primary axis.</value>
+    <value>Bazı kundak sürücüleri, birincil eksen hareketinin ters bir uygulamasına sahiptir. Birincil eksen için hareket komutları sırasında yönü tersine çevirmek için bunu etkinleştirin.</value>
   </data>
   <data name="LblSecondaryReversed" xml:space="preserve">
-    <value>Secondary reversed</value>
+    <value>İkincil tersine çevrildi</value>
   </data>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
+    <value>Bazı kundak sürücüleri, ikincil eksen hareketinin ters bir uygulamasına sahiptir. İkincil eksen için hareket komutları sırasında yönü tersine çevirmek için bunu etkinleştirin.</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
-    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+    <value>Kapak açılamadı. Kapağı açma işlemi başlatıldıktan sonra kapak durumu hala kapalı olarak bildirildi.</value>
   </data>
   <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
-    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
+    <value>Kapak kapatılamadı. Kapağı kapatma işlemi başlatıldıktan sonra kapak durumu hala açık olarak bildirildi. </value>
   </data>
   <data name="LblAuthor" xml:space="preserve">
-    <value>Author</value>
+    <value>Yazar</value>
   </data>
   <data name="LblAvailable" xml:space="preserve">
-    <value>Available</value>
+    <value>Mevcut</value>
   </data>
   <data name="LblInstalled" xml:space="preserve">
-    <value>Installed</value>
+    <value>Kuruldu</value>
   </data>
   <data name="LblVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>Sürüm</value>
   </data>
   <data name="LblFailedToFetchPlugins" xml:space="preserve">
-    <value>Failed to fetch plugins from repository "{0}"</value>
+    <value>"{0}" Deposundan eklentiler getirilemedi</value>
   </data>
   <data name="LblPluginCheckForUpdates" xml:space="preserve">
-    <value>Check for updates</value>
+    <value>Güncellemeleri kontrol et</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins from:</value>
+    <value>N.I.N.A. Eklenti Yöneticisini kurun veya şu adresten DLL dosyasını indirip, %localappdata%\NINA\Plugins klasörüne kopyalayın:</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and run the setup from:</value>
+    <value>N.I.N.A. Eklenti Yöneticisiyle kurun veya şu adresten kurulum dosyasını indirip, çalıştırın:</value>
   </data>
   <data name="LblScreenshots" xml:space="preserve">
-    <value>Screenshots</value>
+    <value>Ekran görüntüleri</value>
   </data>
   <data name="LblSetup" xml:space="preserve">
-    <value>Setup</value>
+    <value>Kurulum</value>
     <comment>Setup as in application setup/installer</comment>
   </data>
   <data name="LblInstall" xml:space="preserve">
-    <value>Install</value>
+    <value>Kur</value>
   </data>
   <data name="LblPendingPluginsRestart" xml:space="preserve">
-    <value>Plugins are pending to be changed on next application start. Should the application be restarted?</value>
+    <value>Eklentiler değiştirilmek için uygulamanın yeniden başlatılmasını bekliyor. Uygulama şimdi yeniden başlatılsın mı?</value>
   </data>
   <data name="LblPluginArchiveInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and extract the archive into %localappdata%\NINA\Plugins from:</value>
+    <value>N.I.N.A. Eklenti Yöneticisini kurun veya şu adresten arşivi indirip, %localappdata%\NINA\Plugins klasörüne açın:</value>
   </data>
   <data name="LblPluginInstallationFailed" xml:space="preserve">
-    <value>Plugin installation for plugin {0} failed.</value>
+    <value>{0} eklenti kurulumu başarısız oldu.</value>
   </data>
   <data name="LblRequiresRestart" xml:space="preserve">
-    <value>Requires restart</value>
+    <value>Yeniden başlatma gerekiyor</value>
   </data>
   <data name="LblUninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>Kaldır</value>
   </data>
   <data name="LblPluginCheckForUpdatesCancel" xml:space="preserve">
-    <value>Cancel the check for available online plugins.</value>
+    <value>Mevcut çevrimiçi eklentileri kontrol etmekten vazgeç.</value>
   </data>
   <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
-    <value>Checks the online plugin repository for available plugins and also checks if newer versions of existing plugins exist.</value>
+    <value>Mevcut eklentiler için çevrimiçi eklenti deposunu kontrol eder ve ayrıca mevcut eklentilerin daha yeni sürümlerinin olup olmadığını kontrol eder.</value>
   </data>
   <data name="LblTags" xml:space="preserve">
-    <value>Tags</value>
+    <value>Etiketler</value>
   </data>
   <data name="LblBinAverageEnabled" xml:space="preserve">
-    <value>Binning averages pixels</value>
+    <value>Binning ortalama pikselleri</value>
   </data>
   <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
-    <value>By default, binning is additive. Data are still the same bitness as the camera, so bright pixels can be clipped. Average mode prevents this clipping from taking place at the expense of some dynamic range due to integer division.</value>
+    <value>Varsayılan olarak, binning ek katkıdır. Veriler hala kamera ile aynı bit değerinde olduğu için parlak pikseller kırpılabilir. Ortalama modu, bu kırpmanın tamsayıya bölünmesi nedeniyle bazı dinamik aralıklar pahasına gerçekleşmesini engeller.</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd" xml:space="preserve">
-    <value>Abort and run end of sequence instructions</value>
+    <value>İptal et ve sıralama talimatları bitimini çalıştır</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd_Tooltip" xml:space="preserve">
-    <value>Interrupts the currently running sequence instruction and skips everything up until the end of sequence instructions to be run</value>
+    <value>Halihazırda çalışan sıralama talimatını keser ve çalıştırılacak sıralama talimatlarının sonuna kadar her şeyi atlar</value>
   </data>
   <data name="Lbl_Sequencer_SkipCurrentInstructions" xml:space="preserve">
-    <value>Skip currently running instruction(s)</value>
+    <value>Mevcut çalışan talimat(lar)ı atla</value>
   </data>
   <data name="LblFanSpeed" xml:space="preserve">
-    <value>Fan speed</value>
+    <value>Fan hızı</value>
   </data>
   <data name="LblUnableToConnect" xml:space="preserve">
-    <value>Unable to connect to {0}. Reason: {1}</value>
+    <value>{0} bağlanılamıyor. Nedeni: {1}</value>
   </data>
   <data name="LblAbortOnError" xml:space="preserve">
-    <value>Abort</value>
+    <value>Durdur</value>
   </data>
   <data name="LblContinueOnError" xml:space="preserve">
-    <value>Continue</value>
+    <value>Devam</value>
   </data>
   <data name="LblOnError" xml:space="preserve">
-    <value>On error</value>
+    <value>Hata durumunda</value>
   </data>
   <data name="LblRetries" xml:space="preserve">
-    <value>Retries</value>
+    <value>Yeniden deniyor</value>
   </data>
   <data name="LblSkipInstructionSetOnError" xml:space="preserve">
-    <value>Skip current instruction set</value>
+    <value>Mevcut talimat setini atla</value>
   </data>
   <data name="LblSkipToSequenceEndInstructions" xml:space="preserve">
-    <value>Skip to end of sequence instructions</value>
+    <value>Sekans sonu talimatlarına atla</value>
   </data>
   <data name="LblNumberOfAttempts" xml:space="preserve">
-    <value>Number of attempts</value>
+    <value>Deneme sayısı</value>
   </data>
   <data name="Lbl_SequenceItem_ErrorBehavior_Tooltip" xml:space="preserve">
-    <value>Defines how the sequence should continue after all attempts have been unsuccessful to execute the instruction.
-The default behavior is to continue on errors, however for some instructions it might be desired to not continue with the execution. For example when the center operation fails to frame the target correctly some recovery steps can then be taken.</value>
+    <value>Talimatı yürütmek için yapılan tüm girişimler başarısız olduktan sonra sıralamanın nasıl devam etmesi gerektiğini tanımlar.
+Varsayılan davranış, hatalara devam etmektir, ancak bazı talimatlar için yürütmeye devam etmemek istenebilir. Örneğin, merkezleme işlemi hedefi doğru şekilde çerçeveleyemediğinde bazı kurtarma adımları atılabilir.</value>
   </data>
   <data name="Lbl_SequenceItem_NumberOfAttempts_Tooltip" xml:space="preserve">
-    <value>The number of attempts that should be made when the instruction fails to execute.</value>
+    <value>Talimat yürütülemediğinde yapılması gereken deneme sayısı.</value>
   </data>
   <data name="LblStopSequence" xml:space="preserve">
-    <value>Stop Sequence</value>
+    <value>Sekansı durdur</value>
   </data>
   <data name="LblTemplate_Created" xml:space="preserve">
-    <value>Sequence template "{0}" has been created.</value>
+    <value>Sekans şablonu "{0}" oluşturuldu.</value>
   </data>
   <data name="LblTemplate_Updated" xml:space="preserve">
-    <value>Sequence template "{0}" has been updated.</value>
+    <value>Sekans şablonu "{0}" güncellendi.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
-    <value>Target "{0}" has been created.</value>
+    <value>Hedef "{0}" oluşturuldu.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
-    <value>Target "{0}" has been updated.</value>
+    <value>Hedef "{0}" güncellendi.</value>
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
-    <value>Waiting for prior slew</value>
+    <value>Önceki dönüş için bekleniyor</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
-    <value>Do you want to reset the complete sequence run?</value>
+    <value>Sekans çalışmasının tamamını yeniden başlatmak istiyor musunuz?</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
-    <value>Reset sequence?</value>
+    <value>Sekans yeniden başlatılsın mı?</value>
+  </data>
+  <data name="LblMountType" xml:space="preserve">
+    <value>Mount Type</value>
+  </data>
+  <data name="LblEquatorial" xml:space="preserve">
+    <value>Equatorial</value>
+  </data>
+  <data name="LblForkOnWedge" xml:space="preserve">
+    <value>Fork on Wedge</value>
+  </data>
+  <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
+    <value>DEC Horizontal Offset</value>
+  </data>
+  <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
+    <value>The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is "to the right", which is east for the northern hemisphere and west for the southern.</value>
+  </data>
+  <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
+    <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
   </data>
 </root>

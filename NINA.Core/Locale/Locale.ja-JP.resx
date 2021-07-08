@@ -237,7 +237,7 @@
     <value>角度分</value>
   </data>
   <data name="LblMaxArcmin" xml:space="preserve">
-    <value>Max arcmin</value>
+    <value>最大分角</value>
   </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>角度秒</value>
@@ -1151,7 +1151,7 @@
     <value>デザリング</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither Every #</value>
+    <value>#枚毎にデザリング</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>デザリングがオンになっていますが、ガイドカメラが未接続です。</value>
@@ -1685,7 +1685,7 @@
     <value>ガイドカメラが再開メッセージを時間内に送りませんでした。シーケンスは再開しますが、ガイドカメラがガイドを再開しているか確認して下さい。</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
+    <value>ガイドカメラが、予定時間（{0}秒＋10秒）が経過しても、SettleDoneメッセージを送信しませんでした。スキップしています。</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>ガイダー再開失敗</value>
@@ -2052,7 +2052,7 @@
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>From N.I.N.A. to Telescope</value>
+    <value>N.I.N.A.から望遠鏡へ</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>いいえ</value>
@@ -2139,19 +2139,19 @@
     <value>対象タイプ</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Star</value>
+    <value>1スター</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Stars</value>
+    <value>2スター</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Stars</value>
+    <value>3スター</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Stars</value>
+    <value>4スター</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Stars</value>
+    <value>8スター</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>星群</value>
@@ -2305,7 +2305,7 @@
     <value>一次停止中</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Pause before Meridian</value>
+    <value>子午線反転前に一時停止</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>フラットマスター</value>
@@ -2320,7 +2320,7 @@
     <value>PHD2が装置と接続できませんでした。</value>
   </data>
   <data name="LblPhd2FailedGetProfiles" xml:space="preserve">
-    <value>PHD2 wasn't able to provide profiles</value>
+    <value>PHD2からプロファイルを取得できませんでした</value>
   </data>
   <data name="LblPHD2HistorySize" xml:space="preserve">
     <value>PHD2履歴サイズ</value>
@@ -2344,7 +2344,7 @@
     <value>PHD2サーバーポート</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 Server URL</value>
+    <value>PHD2サーバーURL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>PHD2設定</value>
@@ -2370,22 +2370,22 @@
     <value>合計:{0}({1}")</value>
   </data>
   <data name="LblPhd2Profile" xml:space="preserve">
-    <value>PHD2 Profile</value>
+    <value>PHD2プロファイル</value>
   </data>
   <data name="LblPhd2ProfileChanged" xml:space="preserve">
-    <value>Changed PHD2 profile to {0}</value>
+    <value>PHD2プロファイルを{0} に変更しました</value>
   </data>
   <data name="LblPhd2ProfileChangeFailed" xml:space="preserve">
-    <value>Failed to change PHD2 profile</value>
+    <value>PHD2のプロファイル変更に失敗しました</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile ID {0} not found. Using {1}</value>
+    <value>PHD2のプロファイル ID {0} が見つかりません。 {1} を使用します。</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>ピクセル</value>
   </data>
   <data name="LblMaxPixels" xml:space="preserve">
-    <value>Max Pixels</value>
+    <value>最大ピクセル</value>
   </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>ピクセルスケール</value>
@@ -2493,10 +2493,10 @@
     <value>プレートソルブ</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
-    <value>Recentering after too much drift</value>
+    <value>多くドリフトした際の最中央化</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
-    <value>No target set</value>
+    <value>目標セットがありません</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>フィルター{0} へ変更して下さい。</value>
@@ -2655,7 +2655,7 @@
     <value>プロファイルを除去しますか？</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
+    <value>プロファイル: {0} ID: {1} を削除しますか？</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>まで繰り返し</value>
@@ -2745,7 +2745,7 @@
     <value>ターゲット設定を保存</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Scope settle time after flip</value>
+    <value>反転後の鏡筒の安定化時間</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>検索</value>
@@ -2799,7 +2799,7 @@
     <value>シーケンス終了コマンドが見つかりません '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Delay start</value>
+    <value>遅延スタート</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>{0} 秒後にシーケンス開始</value>
@@ -3008,7 +3008,7 @@
     <value>統計</value>
   </data>
   <data name="LblStDev" xml:space="preserve">
-    <value>SD</value>
+    <value>標準偏差SD</value>
   </data>
   <data name="LblStellarium" xml:space="preserve">
     <value>Stellarium</value>
@@ -3161,7 +3161,7 @@
     <value>赤道儀が座標に同期済み</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>From Telescope to N.I.N.A.</value>
+    <value>望遠鏡からN.I.N.A.へ</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>RAガイドレート</value>
@@ -3206,16 +3206,16 @@
     <value>タイムアウト</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
+    <value>スイッチ [ID: {1}, 名前: {2}] の 値{0} を設定するタイムアウト値。現在の値は {3} です。</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>タイムゾーン</value>
   </data>
   <data name="LblTimeOffset" xml:space="preserve">
-    <value>Offset</value>
+    <value>オフセット</value>
   </data>
   <data name="LblTimeOffsetTooltip" xml:space="preserve">
-    <value>Offset in minutes from the fixed time of day</value>
+    <value>一日の決められた時間からのオフセット（分）</value>
   </data>
   <data name="LblTo" xml:space="preserve">
     <value>終了</value>
@@ -3246,7 +3246,7 @@
     <value>ターゲットを右に移動する。</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
+    <value>星の自動検出と分析(明るさの半値幅) のオン／オフ切り替え</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>ライブビュー</value>
@@ -3436,22 +3436,22 @@
     <value>アップタイム</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>USB Port 1</value>
+    <value>USBポート1</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>USB Port 2</value>
+    <value>USBポート2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>USB Port 3</value>
+    <value>USBポート3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>USB Port 4</value>
+    <value>USBポート4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>USB Port 5</value>
+    <value>Usbポート５</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>USB Port 6</value>
+    <value>Usbポート６</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
     <value>USB</value>
@@ -3903,7 +3903,7 @@
     <value>ウィザード モード</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance</value>
+    <value>方位角トレランス</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>目標方位角がこの値より離れている場合、ドームは旋回します</value>
@@ -3915,31 +3915,31 @@
     <value>ホームポジションを見つける</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length</value>
+    <value>GEMの軸長</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>経緯台の場合は0にする必要があります。 赤道儀では、赤経 を +/- 90 度まで旋回し、回転軸から望遠鏡の開口部の中心までの、横方向の距離(mm)を測定します</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length</value>
+    <value>横軸長</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>並列同架では、アリミゾから鏡筒中心までの横方向の距離(mm) です。 正の値は、鏡筒の軸の右を示します。</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius</value>
+    <value>ドーム半径</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>ドームの中心から周辺までをベースに沿って測定</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W</value>
+    <value>スコープポジション E/W</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>ドームの中心から架台の中心までの、東または西のオフセット値(mm) を測定します。正の値は東側になります。</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S</value>
+    <value>スコープポジション N/S</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>ドームの追従が不正確な可能性があります。架台が正しい元期で設定されているかを確認し、プレートソルブによる同期を行ってください。</value>
@@ -3957,7 +3957,7 @@
     <value>シーケンスの一時停止</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down</value>
+    <value>スコープポジション +Up/-Down</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>マウント軸の中心と、ドームのベースとの高さの差(mm)を測定します。 経緯台の場合は高度軸の中心からの値であり、赤道儀の場合は赤経軸と赤緯軸 が交差する場所からの値です。 正の数値は、中心軸がドームのベースよりも高いことを示し、負の数は低いことを意味します。</value>
@@ -4374,16 +4374,16 @@
     <value>露出</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
+    <value>プレートソルブと回転装置を使って、指定された座標と回転角度に、目標を導入し、中心に合わせ、望遠鏡を回転させます</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Slew, center and rotate</value>
+    <value>導入、中心合わせ、回転</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
+    <value>プレートソルブして、指定された座標に目標を導入し、望遠鏡を中央に合わせます</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Slew and center</value>
+    <value>導入と中心合わせ</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>望遠鏡を所定の位置にパークさせます</value>
@@ -4455,10 +4455,10 @@
     <value>指定時間待機</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
-    <value>Center After Drift</value>
+    <value>ドリフト後に再中央化</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+    <value>プレートソルブ後に目標座標から大きく移動したと判断し、再中央化開始するトリガー</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>前回のオートフォーカス実行またはシーケンス開始後で、HFRが設定値（パーセント）だけ増えた後に、オートフォーカスを開始するトリガー</value>
@@ -4530,13 +4530,13 @@
     <value>露出後のディザー</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuiding_Description" xml:space="preserve">
-    <value>Resumes guiding if it was previously interrupted</value>
+    <value>中断していたガイドを再開します</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuidings_Name" xml:space="preserve">
-    <value>Restore Guiding</value>
+    <value>ガイドの復元</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
-    <value>Evaluate After Exposures</value>
+    <value>撮影後の評価</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>露出後</value>
@@ -4772,7 +4772,7 @@
     <value>+ ボタンを使用して新しいシーケンス目標を追加します。既存の目標を開くか、フレーミング支援を使って目標を追加します</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Add new Target</value>
+    <value>新しい目標の追加</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
     <value>目標の読み込み</value>
@@ -4781,7 +4781,7 @@
     <value>目標セットを開く</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequencer</value>
+    <value>シンプルシーケンサー</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>最後の目標終了のオプション</value>
@@ -4880,7 +4880,7 @@
     <value>ドームが望遠鏡と同期したままになるようにします</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Enable Dome Sync</value>
+    <value>ドーム同期を有効化</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>シーケンスには、無効な行または進行した撮影枚数が合計撮影枚数と等しい行が含まれています。 これらの項目はスキップされ、行内のどの項目も、シーケンサーに生成されません。</value>
@@ -4904,11 +4904,11 @@
     <value>安全です</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
-    <value>A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays safe.</value>
+    <value>接続されたセーフティモニター装置が安全であるかを確認し、モニターが安全であることを報告している間、命令セットをループさせる条件。 モニターが安全でないことを報告した場合、現在の命令セットは停止します。
+一番良いのは、無限ループにならないように、セーフティモニターが安全である間、別のループ条件と組み合わせて使用することです。</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
-    <value>Loop while safe</value>
+    <value>安全な間ループ</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
     <value>現在の命令セットとすべてのコンテンツを、再使用するためのテンプレートとして保存します</value>
@@ -4944,9 +4944,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
     <value>無効なオフセットです。オフセットは {0} から {1}の間 でなければなりませんが、 {2} に設定されています</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Takes an image and solves the image using the current telescope position as reference.
-After solving the frame successfully the telescope will be synced to the solved position.
-Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!</value>
+    <value>現在の望遠鏡の位置を基準とし、画像を撮影してプレートソルブします。プレートソルブが成功すると、その位置に望遠鏡を同期します。
+注意：この命令は、目標を望遠鏡の中心に合わせるものではありません。現在の導入位置に同期させるだけです。</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>プレートソルブと同期</value>
@@ -4989,7 +4988,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     =&gt; 位置 = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Move Focuser by Temp.</value>
+    <value>Tempの値でフォーカサーを駆動</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>フォーカサーの周囲は、有効な温度になっていません</value>
@@ -5076,7 +5075,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>Weather UndergroundのAPIキー</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station ID</value>
+    <value>Weather Underground ステーションID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>選択した行を下げる</value>
@@ -5373,10 +5372,10 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>回転装置</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
-    <value>Moves the rotator to the specified mechanical angle</value>
+    <value>回転装置を、指定された機械的角度に移動します</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
-    <value>Rotate by mechanical angle</value>
+    <value>機械的角度で回転</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>子午線</value>
@@ -5397,245 +5396,260 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>プラグインが見つかりません</value>
   </data>
   <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
-    <value>Show Menu</value>
+    <value>メニュー表示</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
-    <value>Keep Closed</value>
+    <value>閉じたままにする</value>
   </data>
   <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
-    <value>Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect.</value>
+    <value>決定されたフォーカス位置が、曲線の全体的な測定位置から外れています。近似が不正確ですし、ほぼ間違いなくオートフォーカスの設定が正しくありません。</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
-    <value>Failed to save Sequence "{0}": {1}</value>
+    <value>シーケンス「{0}」の保存に失敗しました： {1}</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThreshold" xml:space="preserve">
-    <value>R² Threshold</value>
+    <value>R2しきい値</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThresholdTooltip" xml:space="preserve">
-    <value>The minimum R² (Coefficient of determination) value that the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful.
-The value is in the range between 0-1.
-When set to 0, the threshold will not be considered. 
-An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions. 
-A good starting point for a threshold is a value of 0.8 - anything below that is a questionable fit.</value>
+    <value>オートフォーカスが成功したとみなされるフォーカス近似Ｒ²(決定係数) の最小値です。値の範囲は0から1です。
+0に設定すると、しきい値は考慮されません。
+0.9を超える値のR²で実行するオートフォーカスが、理想的だと見なされことができます。しかしそれより低い値でも、多少劣る状態でオートフォーカスすることが可能です。
+最初に設定するしきい値は0.8より大きくすると良いでしょう。それより低い場合は、近似が不確かになります。</value>
     <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
   </data>
   <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
+    <value>オートフォーカスに失敗しました！フィッティングカーブ用のR²(決定係数) がしきい値を下回っています。左: {0} /; 右: / {1}</value>
     <comment>First parameter is actual R², second parameter is R² threshold</comment>
   </data>
   <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
+    <value>オートフォーカスに失敗しました！トレンドラインフィッテイングのR²がしきい値を下回っています。左: {0} / {2}; 右: {1} / {2}</value>
     <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
   </data>
   <data name="Lbl_SequenceCategory_SafetyMonitor" xml:space="preserve">
-    <value>Safety Monitor</value>
+    <value>セーフティモニター</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description" xml:space="preserve">
-    <value>Waits until the safety monitor device reports safe conditions again</value>
+    <value>セーフティモニター装置が再び安全な状態を報告するまで待機します</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name" xml:space="preserve">
-    <value>Wait until safe</value>
+    <value>安全になるまで待機</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
-    <value>Waiting for safe conditions</value>
+    <value>安全な状態まで待機中</value>
   </data>
   <data name="LblTemperatureSetPointDescription" xml:space="preserve">
-    <value>Camera Temperature Set Point</value>
+    <value>カメラ温度設定値</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
-    <value>ASCOM allow odd pixel dimension</value>
+    <value>ASCOMは奇数のピクセルサイズを許可</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
-    <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
-When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
-This setting will have no effect on color sensors.
-Only relevant when using an ASCOM camera driver!</value>
+    <value>N.I.N.A.の以前のバージョンでは、モノラルカメラの場合でも、ASCOMドライバーの幅と高さは常に偶数に制限されていました。この機能を有効にすると、モノラルカメラの奇数ピクセルサイズをすべて使うことができます。この設定は、カラーセンサーの場合は機能しません。
+ASCOMカメラドライバーを使用している場合にのみ有効です。</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
-    <value>Guiding Start Timeout</value>
+    <value>ガイド再開タイムアウト</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>フィルター</value>
   </data>
   <data name="LblPHD2Calibrating" xml:space="preserve">
-    <value>PHD2 - Calibrating</value>
+    <value>PHD2 - キャリブレーション中</value>
   </data>
   <data name="LblPHD2SelectingStar" xml:space="preserve">
-    <value>PHD2 - Selecting guide star</value>
+    <value>HD2 - ガイド星選択中</value>
   </data>
   <data name="LblPHD2Settling" xml:space="preserve">
-    <value>PHD2 - Settling</value>
+    <value>PHD2 - セトリング中</value>
   </data>
   <data name="LblPHD2StartGuiding" xml:space="preserve">
-    <value>PHD2 - Waiting for guiding to start</value>
+    <value>PHD2 - ガイド開始の待機中</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
-    <value>PHD2 - Start guiding has timed out. Retrying...</value>
+    <value>PHD2 - ガイド開始がタイムアウトしました。再試行中...</value>
   </data>
   <data name="LblFont" xml:space="preserve">
-    <value>Font</value>
+    <value>フォント</value>
   </data>
   <data name="LblPrimaryRate" xml:space="preserve">
-    <value>Primary rate</value>
+    <value>赤経軸回転速度</value>
     <comment>Primary telescope axis rate</comment>
   </data>
   <data name="LblSecondaryRate" xml:space="preserve">
-    <value>Secondary rate</value>
+    <value>赤緯軸回転速度</value>
     <comment>Secondary telescope axis rate</comment>
   </data>
   <data name="LblTelescopeCannotMovePrimaryAxis" xml:space="preserve">
-    <value>Telescope cannot move primary axis</value>
+    <value>望遠鏡は赤経軸を動かすことができません</value>
   </data>
   <data name="LblTelescopeCannotMoveSecondaryAxis" xml:space="preserve">
-    <value>Telescope cannot move secondary axis</value>
+    <value>望遠鏡は赤緯軸を動かすことができません</value>
   </data>
   <data name="LblPrimaryReversed" xml:space="preserve">
-    <value>Primary reversed</value>
+    <value>赤経軸反転</value>
   </data>
   <data name="LblPrimaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the primary axis movement. Enable this to reverse the direction on move commands for the primary axis.</value>
+    <value>赤道儀のドライバーの中には、赤経軸の移動を逆にするものがあります。これを有効にすると、赤経軸の移動コマンドの方向を反転します。</value>
   </data>
   <data name="LblSecondaryReversed" xml:space="preserve">
-    <value>Secondary reversed</value>
+    <value>赤緯軸反転</value>
   </data>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
+    <value>赤道儀のドライバーの中には、赤緯軸の移動を逆にするものがあります。これを有効にすると、赤緯軸の移動コマンドの方向を反転します。</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
-    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+    <value>シャッターを開くことができませんでした。シャッターを開く操作を開始した後でも、閉じたままだと報告されています。</value>
   </data>
   <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
-    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
+    <value>シャッターを閉じることができませんでした。シャッターを閉じる操作を開始した後でも、開いたままだと報告されています。 </value>
   </data>
   <data name="LblAuthor" xml:space="preserve">
-    <value>Author</value>
+    <value>作成者</value>
   </data>
   <data name="LblAvailable" xml:space="preserve">
-    <value>Available</value>
+    <value>利用可能</value>
   </data>
   <data name="LblInstalled" xml:space="preserve">
-    <value>Installed</value>
+    <value>インストール済み</value>
   </data>
   <data name="LblVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>バージョン</value>
   </data>
   <data name="LblFailedToFetchPlugins" xml:space="preserve">
-    <value>Failed to fetch plugins from repository "{0}"</value>
+    <value>リポジトリ "{0}" からプラグインを取得できませんでした</value>
   </data>
   <data name="LblPluginCheckForUpdates" xml:space="preserve">
-    <value>Check for updates</value>
+    <value>アップデートを確認</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins from:</value>
+    <value>N.I.N.A.プラグインマネージャからインストールするか、ここからDLLファイルを手動でダウンロードし、 %localappdata%\NINA\Plugins にコピーします。</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and run the setup from:</value>
+    <value>N.I.N.A.プラグインマネージャからインストールするか、手動でダウンロードし、ここからセットアップを実行してください。</value>
   </data>
   <data name="LblScreenshots" xml:space="preserve">
-    <value>Screenshots</value>
+    <value>スクリーンショット</value>
   </data>
   <data name="LblSetup" xml:space="preserve">
-    <value>Setup</value>
+    <value>セットアップ</value>
     <comment>Setup as in application setup/installer</comment>
   </data>
   <data name="LblInstall" xml:space="preserve">
-    <value>Install</value>
+    <value>インストール</value>
   </data>
   <data name="LblPendingPluginsRestart" xml:space="preserve">
-    <value>Plugins are pending to be changed on next application start. Should the application be restarted?</value>
+    <value>プラグインは次回のアプリケーション開始時に変更されます。アプリケーションを再起動しますか？</value>
   </data>
   <data name="LblPluginArchiveInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and extract the archive into %localappdata%\NINA\Plugins from:</value>
+    <value>N.I.N.A.プラグインマネージャからインストールするか、ここから手動でアーカイブをダウンロードし、 %localappdata%\NINA\Plugins に展開してください。</value>
   </data>
   <data name="LblPluginInstallationFailed" xml:space="preserve">
-    <value>Plugin installation for plugin {0} failed.</value>
+    <value>プラグイン {0} のインストールに失敗しました。</value>
   </data>
   <data name="LblRequiresRestart" xml:space="preserve">
-    <value>Requires restart</value>
+    <value>再起動が必要です</value>
   </data>
   <data name="LblUninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>アンインストール</value>
   </data>
   <data name="LblPluginCheckForUpdatesCancel" xml:space="preserve">
-    <value>Cancel the check for available online plugins.</value>
+    <value>利用可能なオンラインプラグインの確認操作を取り消します。</value>
   </data>
   <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
-    <value>Checks the online plugin repository for available plugins and also checks if newer versions of existing plugins exist.</value>
+    <value>利用可能なオンラインのプラグイン・リポジトリを確認し、既存のプラグインの新しいバージョンが存在するかどうかを確認します。</value>
   </data>
   <data name="LblTags" xml:space="preserve">
-    <value>Tags</value>
+    <value>タグ</value>
   </data>
   <data name="LblBinAverageEnabled" xml:space="preserve">
-    <value>Binning averages pixels</value>
+    <value>ピクセルの平均値でビニング</value>
   </data>
   <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
-    <value>By default, binning is additive. Data are still the same bitness as the camera, so bright pixels can be clipped. Average mode prevents this clipping from taking place at the expense of some dynamic range due to integer division.</value>
+    <value>デフォルトでは、ビニングは加算で行われます。データはカメラと同じビットのままのため、明るいピクセルはクリップされる可能性があります。平均モードでは、整数除算によってダイナミックレンジを犠牲にし、このクリッピングを防ぎます。</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd" xml:space="preserve">
-    <value>Abort and run end of sequence instructions</value>
+    <value>中止してシーケンスの終了命令を実行</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd_Tooltip" xml:space="preserve">
-    <value>Interrupts the currently running sequence instruction and skips everything up until the end of sequence instructions to be run</value>
+    <value>現在実行中のシーケンス命令を中断し、実行することになっていた、シーケンスの最後までのすべての命令をスキップします</value>
   </data>
   <data name="Lbl_Sequencer_SkipCurrentInstructions" xml:space="preserve">
-    <value>Skip currently running instruction(s)</value>
+    <value>現在実行中の命令をスキップ</value>
   </data>
   <data name="LblFanSpeed" xml:space="preserve">
-    <value>Fan speed</value>
+    <value>ファンの速度</value>
   </data>
   <data name="LblUnableToConnect" xml:space="preserve">
-    <value>Unable to connect to {0}. Reason: {1}</value>
+    <value>{1} のため、{0} に接続できません。</value>
   </data>
   <data name="LblAbortOnError" xml:space="preserve">
-    <value>Abort</value>
+    <value>中止</value>
   </data>
   <data name="LblContinueOnError" xml:space="preserve">
-    <value>Continue</value>
+    <value>続行</value>
   </data>
   <data name="LblOnError" xml:space="preserve">
-    <value>On error</value>
+    <value>エラー処理</value>
   </data>
   <data name="LblRetries" xml:space="preserve">
-    <value>Retries</value>
+    <value>再試行</value>
   </data>
   <data name="LblSkipInstructionSetOnError" xml:space="preserve">
-    <value>Skip current instruction set</value>
+    <value>現在の命令セットをスキップ</value>
   </data>
   <data name="LblSkipToSequenceEndInstructions" xml:space="preserve">
-    <value>Skip to end of sequence instructions</value>
+    <value>シーケンス命令の最後までスキップ</value>
   </data>
   <data name="LblNumberOfAttempts" xml:space="preserve">
-    <value>Number of attempts</value>
+    <value>試行回数</value>
   </data>
   <data name="Lbl_SequenceItem_ErrorBehavior_Tooltip" xml:space="preserve">
-    <value>Defines how the sequence should continue after all attempts have been unsuccessful to execute the instruction.
-The default behavior is to continue on errors, however for some instructions it might be desired to not continue with the execution. For example when the center operation fails to frame the target correctly some recovery steps can then be taken.</value>
+    <value>どうしても命令がうまく実行できないときに、シーケンスを続行する方法を定義します。
+デフォルトではエラーが起きても続行しますが、実行を継続しないことが望ましい命令があります。 たとえば、目標を正しくフレームの中心に配置できない場合は、回復ステップを実行することができます。</value>
   </data>
   <data name="Lbl_SequenceItem_NumberOfAttempts_Tooltip" xml:space="preserve">
-    <value>The number of attempts that should be made when the instruction fails to execute.</value>
+    <value>命令の実行に失敗するときの試行回数。</value>
   </data>
   <data name="LblStopSequence" xml:space="preserve">
-    <value>Stop Sequence</value>
+    <value>シーケンスの停止</value>
   </data>
   <data name="LblTemplate_Created" xml:space="preserve">
-    <value>Sequence template "{0}" has been created.</value>
+    <value>シーケンステンプレート "{0}" が作成されました。</value>
   </data>
   <data name="LblTemplate_Updated" xml:space="preserve">
-    <value>Sequence template "{0}" has been updated.</value>
+    <value>シーケンステンプレート "{0}" が更新されました。</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
-    <value>Target "{0}" has been created.</value>
+    <value>目標 "{0}" が作成されました。</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
-    <value>Target "{0}" has been updated.</value>
+    <value>目標 "{0}" が更新されました。</value>
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
-    <value>Waiting for prior slew</value>
+    <value>前の導入の待機中</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
-    <value>Do you want to reset the complete sequence run?</value>
+    <value>シーケンス全体の実行をリセットしますか？</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
-    <value>Reset sequence?</value>
+    <value>シーケンスをリセットしますか？</value>
+  </data>
+  <data name="LblMountType" xml:space="preserve">
+    <value>Mount Type</value>
+  </data>
+  <data name="LblEquatorial" xml:space="preserve">
+    <value>Equatorial</value>
+  </data>
+  <data name="LblForkOnWedge" xml:space="preserve">
+    <value>Fork on Wedge</value>
+  </data>
+  <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
+    <value>DEC Horizontal Offset</value>
+  </data>
+  <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
+    <value>The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is "to the right", which is east for the northern hemisphere and west for the southern.</value>
+  </data>
+  <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
+    <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
   </data>
 </root>

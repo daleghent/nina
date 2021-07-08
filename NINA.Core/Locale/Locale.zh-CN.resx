@@ -238,7 +238,7 @@
     <value>角分</value>
   </data>
   <data name="LblMaxArcmin" xml:space="preserve">
-    <value>Max arcmin</value>
+    <value>最大角分</value>
   </data>
   <data name="LblArcsec" xml:space="preserve">
     <value>角秒</value>
@@ -1163,7 +1163,7 @@
     <value>抖动</value>
   </data>
   <data name="LblDitherEveryNoFrame" xml:space="preserve">
-    <value>Dither Every #</value>
+    <value>每 # 张抖动</value>
   </data>
   <data name="LblDitherOnButGuiderNotConnected" xml:space="preserve">
     <value>抖动已启用，但未连接导星工具</value>
@@ -2067,7 +2067,7 @@
     <value>N.I.N.A.</value>
   </data>
   <data name="LblNINAToTelescope" xml:space="preserve">
-    <value>From N.I.N.A. to Telescope</value>
+    <value>从N.I.N.A.导入赤道仪</value>
   </data>
   <data name="LblNo" xml:space="preserve">
     <value>否</value>
@@ -2154,19 +2154,19 @@
     <value>目标类型</value>
   </data>
   <data name="LblObjectType_1STAR" xml:space="preserve">
-    <value>1 Star</value>
+    <value>单星</value>
   </data>
   <data name="LblObjectType_2STAR" xml:space="preserve">
-    <value>2 Stars</value>
+    <value>双星</value>
   </data>
   <data name="LblObjectType_3STAR" xml:space="preserve">
-    <value>3 Stars</value>
+    <value>三星</value>
   </data>
   <data name="LblObjectType_4STAR" xml:space="preserve">
-    <value>4 Stars</value>
+    <value>四星</value>
   </data>
   <data name="LblObjectType_8STAR" xml:space="preserve">
-    <value>8 Stars</value>
+    <value>八星</value>
   </data>
   <data name="LblObjectType_ASTER" xml:space="preserve">
     <value>亮星群</value>
@@ -2320,7 +2320,7 @@
     <value>已暂停</value>
   </data>
   <data name="LblPauseTimeBeforeMeridian" xml:space="preserve">
-    <value>Pause before Meridian</value>
+    <value>中天前暂停</value>
   </data>
   <data name="LblPegasusFlatMaster" xml:space="preserve">
     <value>Pegasus平场板</value>
@@ -2335,7 +2335,7 @@
     <value>PHD2 无法连接到设备</value>
   </data>
   <data name="LblPhd2FailedGetProfiles" xml:space="preserve">
-    <value>PHD2 wasn't able to provide profiles</value>
+    <value>PHD2 无法提供配置文件</value>
   </data>
   <data name="LblPHD2HistorySize" xml:space="preserve">
     <value>PHD2 历史尺寸</value>
@@ -2359,7 +2359,7 @@
     <value>PHD2 服务器端口</value>
   </data>
   <data name="LblPHD2ServerUrl" xml:space="preserve">
-    <value>PHD2 Server URL</value>
+    <value>PHD2 服务器 URL</value>
   </data>
   <data name="LblPHD2Settings" xml:space="preserve">
     <value>PHD2 设置</value>
@@ -2386,22 +2386,22 @@
     <value>总: {0} ({1}")</value>
   </data>
   <data name="LblPhd2Profile" xml:space="preserve">
-    <value>PHD2 Profile</value>
+    <value>PHD2 配置文件</value>
   </data>
   <data name="LblPhd2ProfileChanged" xml:space="preserve">
-    <value>Changed PHD2 profile to {0}</value>
+    <value>PHD2 配置文件已更改为 {0}</value>
   </data>
   <data name="LblPhd2ProfileChangeFailed" xml:space="preserve">
-    <value>Failed to change PHD2 profile</value>
+    <value>更改 PHD2 配置文件失败</value>
   </data>
   <data name="LblPhd2ProfileNotFound" xml:space="preserve">
-    <value>PHD2 profile ID {0} not found. Using {1}</value>
+    <value>未找到PHD2配置文件 ID {0} 。正在使用 {1}</value>
   </data>
   <data name="LblPixels" xml:space="preserve">
     <value>像素</value>
   </data>
   <data name="LblMaxPixels" xml:space="preserve">
-    <value>Max Pixels</value>
+    <value>最小角分</value>
   </data>
   <data name="LblPixelScale" xml:space="preserve">
     <value>像素比例</value>
@@ -2509,10 +2509,10 @@
     <value>解析</value>
   </data>
   <data name="LblCenterAfterDrift" xml:space="preserve">
-    <value>Recentering after too much drift</value>
+    <value>偏移过多后重新居中</value>
   </data>
   <data name="LblNoTarget" xml:space="preserve">
-    <value>No target set</value>
+    <value>没有设置目标</value>
   </data>
   <data name="LblPleaseChangeToFilter" xml:space="preserve">
     <value>请更换滤镜 {0}</value>
@@ -2671,7 +2671,7 @@
     <value>删除配置文件</value>
   </data>
   <data name="LblRemoveProfileText" xml:space="preserve">
-    <value>Should the Profile with name: {0} and ID: {1} be removed?</value>
+    <value>名称为: {0} ， ID为: {1} 的PHD2配置文件是否应该删除？</value>
   </data>
   <data name="LblRepeatUntil" xml:space="preserve">
     <value>重复直到</value>
@@ -2761,7 +2761,7 @@
     <value>保存目标设置</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
-    <value>Scope settle time after flip</value>
+    <value>翻转后稳定时间</value>
   </data>
   <data name="LblSearch" xml:space="preserve">
     <value>搜索</value>
@@ -2815,7 +2815,7 @@
     <value>序列结束命令未找到 '{0}'</value>
   </data>
   <data name="LblSequenceDelay" xml:space="preserve">
-    <value>Delay start</value>
+    <value>延迟开始</value>
   </data>
   <data name="LblSequenceDelayStatus" xml:space="preserve">
     <value>{0} 秒后开始序列</value>
@@ -3178,7 +3178,7 @@
     <value>从赤道仪同步坐标</value>
   </data>
   <data name="LblTelescopeToNINA" xml:space="preserve">
-    <value>From Telescope to N.I.N.A.</value>
+    <value>从赤道仪导入N.I.N.A.</value>
   </data>
   <data name="LblTelescopeGuideRateRA" xml:space="preserve">
     <value>赤经导星速率</value>
@@ -3223,16 +3223,16 @@
     <value>超时</value>
   </data>
   <data name="LblTimeoutToSetSwitchValue" xml:space="preserve">
-    <value>Timeout to set switch value {0} for switch [ID: {1}, Name: {2}]. Current value is {3}.</value>
+    <value>为开关[ID: {1}, 名称: {2}]，设置的超时时间 {0} 。当前值是 {3}。</value>
   </data>
   <data name="LblTimeZone" xml:space="preserve">
     <value>时区</value>
   </data>
   <data name="LblTimeOffset" xml:space="preserve">
-    <value>Offset</value>
+    <value>偏移</value>
   </data>
   <data name="LblTimeOffsetTooltip" xml:space="preserve">
-    <value>Offset in minutes from the fixed time of day</value>
+    <value>每天以固定分钟数偏移</value>
   </data>
   <data name="LblTo" xml:space="preserve">
     <value>到</value>
@@ -3263,7 +3263,7 @@
     <value>延后目标</value>
   </data>
   <data name="LblTooltipDetectStars" xml:space="preserve">
-    <value>Toggles automatic star detection and analysis (Half Flux Radius) on/off</value>
+    <value>打开/关闭自动星点侦测和分析 (HFR)</value>
   </data>
   <data name="LblToolTipLiveView" xml:space="preserve">
     <value>实时预览</value>
@@ -3454,22 +3454,22 @@
     <value>上传时间</value>
   </data>
   <data name="LblUPBV2Usb1" xml:space="preserve">
-    <value>USB Port 1</value>
+    <value>USB 端口2</value>
   </data>
   <data name="LblUPBV2Usb2" xml:space="preserve">
-    <value>USB Port 2</value>
+    <value>USB 端口2</value>
   </data>
   <data name="LblUPBV2Usb3" xml:space="preserve">
-    <value>USB Port 3</value>
+    <value>USB 端口3</value>
   </data>
   <data name="LblUPBV2Usb4" xml:space="preserve">
-    <value>USB Port 4</value>
+    <value>USB 端口4</value>
   </data>
   <data name="LblUPBV2Usb5" xml:space="preserve">
-    <value>USB Port 5</value>
+    <value>USB 端口5</value>
   </data>
   <data name="LblUPBV2Usb6" xml:space="preserve">
-    <value>USB Port 6</value>
+    <value>USB 端口6</value>
   </data>
   <data name="LblUPBV2UsbPorts" xml:space="preserve">
     <value>USB</value>
@@ -3925,7 +3925,7 @@
     <value>向导模式</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegrees" xml:space="preserve">
-    <value>Azimuth Tolerance</value>
+    <value>方位容差</value>
   </data>
   <data name="LblDomeAzimuthToleranceDegreesTooltip" xml:space="preserve">
     <value>如果目标方位角偏离超过此值，则圆顶将旋转</value>
@@ -3937,31 +3937,31 @@
     <value>查找零位</value>
   </data>
   <data name="LblDomeGemAxisLength" xml:space="preserve">
-    <value>GEM Axis Length</value>
+    <value>GEM 轴长度</value>
   </data>
   <data name="LblDomeGemAxisLengthTooltip" xml:space="preserve">
     <value>如果Alt/Az，则应为0。对于赤道仪，将RA旋转至+/-90度，并测量从轴到望远镜孔径中心的横向距离(单位：mm)</value>
   </data>
   <data name="LblDomeLateralAxisLength" xml:space="preserve">
-    <value>Lateral Axis Length</value>
+    <value>横轴长度</value>
   </data>
   <data name="LblDomeLateralAxisLengthTooltip" xml:space="preserve">
     <value>在主镜并排配置中，这是底座到主镜中心的横向距离（单位mm）， OTA轴线右侧为正。</value>
   </data>
   <data name="LblDomeRadius" xml:space="preserve">
-    <value>Dome Radius</value>
+    <value>圆顶半径</value>
   </data>
   <data name="LblDomeRadiusTooltip" xml:space="preserve">
     <value>沿着底部，测量从圆顶的中心到边缘的距离</value>
   </data>
   <data name="LblDomeScopeEW" xml:space="preserve">
-    <value>Scope Position E/W</value>
+    <value>望远镜位置 东/西</value>
   </data>
   <data name="LblDomeScopeEWTooltip" xml:space="preserve">
     <value>测量支架中心到圆顶中心的东西偏移量(mm)。东方为正。</value>
   </data>
   <data name="LblDomeScopeNS" xml:space="preserve">
-    <value>Scope Position N/S</value>
+    <value>望远镜位置 北/南</value>
   </data>
   <data name="LblDomeFollowPointingError" xml:space="preserve">
     <value>跟随的圆顶可能不准确。请检查你的赤道仪历元配置是否正确，然后进解析同步</value>
@@ -3979,7 +3979,7 @@
     <value>暂停序列</value>
   </data>
   <data name="LblDomeScopeUD" xml:space="preserve">
-    <value>Scope Position +Up/-Down</value>
+    <value>望远镜位置 +上/-下</value>
   </data>
   <data name="LblDomeScopeUDTooltip" xml:space="preserve">
     <value>测量安装轴中心相对于圆顶底座的高度差(单位：mm)。对于经纬仪/赤道仪，这是从高度轴的中心开始的，对于赤道仪，这是赤经和赤纬轴相交的地方。正数表示轴中心高于圆顶底部，负数表示轴中心低于圆顶。</value>
@@ -4477,10 +4477,10 @@
     <value>等待到达时间</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Name" xml:space="preserve">
-    <value>Center After Drift</value>
+    <value>偏移后居中</value>
   </data>
   <data name="Lbl_SequenceTrigger_CenterAfterDriftTrigger_Description" xml:space="preserve">
-    <value>A trigger to initiate a recentering after platesolving determines the telescope has drifted too far from the target coordinates</value>
+    <value>望远镜偏移目标坐标后，启动重新解析居中的触发器</value>
   </data>
   <data name="Lbl_SequenceTrigger_AutofocusAfterHFRIncreaseTrigger_Description" xml:space="preserve">
     <value>自上次自动对焦运行或序列拍摄开始后，当HFR增加给定量（以百分比表示）后，启动自动对焦</value>
@@ -4552,13 +4552,13 @@
     <value>曝光之后抖动</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuiding_Description" xml:space="preserve">
-    <value>Resumes guiding if it was previously interrupted</value>
+    <value>继续导星（假如之前被中止）</value>
   </data>
   <data name="Lbl_SequenceTrigger_Guider_RestoreGuidings_Name" xml:space="preserve">
-    <value>Restore Guiding</value>
+    <value>恢复导星</value>
   </data>
   <data name="LblEvaluteAfterExposures" xml:space="preserve">
-    <value>Evaluate After Exposures</value>
+    <value>曝光后计算</value>
   </data>
   <data name="LblAfterExposures" xml:space="preserve">
     <value>曝光后</value>
@@ -4794,7 +4794,7 @@
     <value>通过 + 按钮添加新的序列目标，打开现有目标或通过构图助手添加目标</value>
   </data>
   <data name="Lbl_OldSequencer_AddNewTarget" xml:space="preserve">
-    <value>Add new Target</value>
+    <value>添加新的目标</value>
   </data>
   <data name="Lbl_OldSequencer_LoadTarget" xml:space="preserve">
     <value>加载目标</value>
@@ -4803,7 +4803,7 @@
     <value>打开目标集</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
-    <value>Simple Sequencer</value>
+    <value>简单序列生成器</value>
   </data>
   <data name="Lbl_OldSequencer_EndOfSequenceHeader" xml:space="preserve">
     <value>最后目标结束后选项</value>
@@ -4902,7 +4902,7 @@
     <value>确保圆顶保持与望远镜同步</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Enable Dome Sync</value>
+    <value>启用圆顶同步</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>序列包含已禁用或进度曝光次数等于总曝光次数的条目。 这些项目被跳过，序列中没有任何新的项目。</value>
@@ -4926,11 +4926,11 @@
     <value>安全的</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Description" xml:space="preserve">
-    <value>A condition that checks the connected Safety Monitor device if it is safe and loops the instruction set as long as the safety monior reports to be safe. If the device returns to not be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays safe.</value>
+    <value>设置条件：读取已连接的安全监控数据，当所有监控安全时，循环执行指令集。如果监控反馈威胁警报，则当前指令集将停止。
+最好与其他循环条件组合使用，以避免在安全监控无异常时陷入无限循环。</value>
   </data>
   <data name="Lbl_SequenceCondition_SafetyMonitorCondition_Name" xml:space="preserve">
-    <value>Loop while safe</value>
+    <value>安全时循环</value>
   </data>
   <data name="Lbl_SequenceContainer_SaveAsTemplate_Tooltip" xml:space="preserve">
     <value>保存当前指令及其所有内容作为重新使用的模板</value>
@@ -5011,7 +5011,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     =&gt; 位置 = 2 * 10 + 1000 = 1020</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Name" xml:space="preserve">
-    <value>Move Focuser by Temp.</value>
+    <value>根据温度移动调焦器。</value>
   </data>
   <data name="Lbl_SequenceItem_Focuser_MoveFocuserByTemperature_Validation_NoTemperature" xml:space="preserve">
     <value>调焦器没有显示任何有效温度</value>
@@ -5098,7 +5098,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>Weather Underground API 密钥</value>
   </data>
   <data name="LblWeatherUndergroundStationID" xml:space="preserve">
-    <value>Weather Underground Station ID</value>
+    <value>Weather Underground 站点ID</value>
   </data>
   <data name="LblTooltipDemoteSimpleExposure" xml:space="preserve">
     <value>下移选中行</value>
@@ -5415,206 +5415,206 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>SkytechX</value>
   </data>
   <data name="LblPlugins" xml:space="preserve">
-    <value>Plugins</value>
+    <value>插件</value>
   </data>
   <data name="LblNoPluginsFound" xml:space="preserve">
-    <value>No Plugins found</value>
+    <value>没有找到插件</value>
   </data>
   <data name="Lbl_SequenceItem_Show_Menu" xml:space="preserve">
-    <value>Show Menu</value>
+    <value>显示菜单</value>
   </data>
   <data name="Lbl_SequenceItem_FlatDevice_TrainedFlatExposure_KeepClosed" xml:space="preserve">
-    <value>Keep Closed</value>
+    <value>保持关闭</value>
   </data>
   <data name="LblAutoFocusPointOutsideOfBounds" xml:space="preserve">
-    <value>Determined focus point position is outside of the overall measurement points of the curve. Fitting is incorrect and autofocus settings most likely incorrect.</value>
+    <value>指定的焦点位置在对焦曲线的总体测量范围之外。适配不正确，自动对焦设置很可能不正确。</value>
   </data>
   <data name="Lbl_Sequencer_SaveSequence_FailureNotification" xml:space="preserve">
-    <value>Failed to save Sequence "{0}": {1}</value>
+    <value>保存序列失败 "{0}": {1}</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThreshold" xml:space="preserve">
-    <value>R² Threshold</value>
+    <value>R² 阈值</value>
   </data>
   <data name="LblAutoFocusCorrelationCoefficientThresholdTooltip" xml:space="preserve">
-    <value>The minimum R² (Coefficient of determination) value that the selected auto focus fitting has to fulfill for the auto focus run to be considered as successful.
-The value is in the range between 0-1.
-When set to 0, the threshold will not be considered. 
-An autofocus run with an R² value above 0.9 can be considered as ideal. However a lower value can still achieve focus in semi ideal conditions. 
-A good starting point for a threshold is a value of 0.8 - anything below that is a questionable fit.</value>
+    <value>最小R² (可决系数) 值，让选定的自动对焦设置与实际运行匹配时才可被视为成功。
+该值在0到1之间。
+设置为0时，将不考虑阈值。
+带R²的自动对焦大于0.9的值可视为理想值。然而，在半理想条件下，较低的值仍然可以成功完成对焦。
+常用的阈值起点值是0.8，低于该值的任何值都是需要存疑的。</value>
     <comment>https://en.wikipedia.org/wiki/Coefficient_of_determination</comment>
   </data>
   <data name="LblAutoFocusCurveCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for curve fitting is below threshold. {0} / {1}</value>
+    <value>自动对焦失败！曲线拟合的R² (可决系数) 低于阈值。 {0} / {1}</value>
     <comment>First parameter is actual R², second parameter is R² threshold</comment>
   </data>
   <data name="LblAutoFocusTrendCorrelationCoefficientLow" xml:space="preserve">
-    <value>Auto Focus failed! R² (Coefficient of determination) for trendline fitting is below threshold. Left: {0} / {2}; Right: {1} / {2}</value>
+    <value>自动对焦失败！趋势线的 R² (可决系数) 拟合低于阈值。左: {0} / {2}; 右: {1} / {2}</value>
     <comment>First parameter is actual R² of left trend, second parameter is actual R² of right trend, third parameter is R² threshold</comment>
   </data>
   <data name="Lbl_SequenceCategory_SafetyMonitor" xml:space="preserve">
-    <value>Safety Monitor</value>
+    <value>安全监控</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Description" xml:space="preserve">
-    <value>Waits until the safety monitor device reports safe conditions again</value>
+    <value>等待安全监控再次报告安全状况</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Name" xml:space="preserve">
-    <value>Wait until safe</value>
+    <value>等待，直到安全</value>
   </data>
   <data name="Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting" xml:space="preserve">
-    <value>Waiting for safe conditions</value>
+    <value>等待安全条件...</value>
   </data>
   <data name="LblTemperatureSetPointDescription" xml:space="preserve">
-    <value>Camera Temperature Set Point</value>
+    <value>相机温度设定点</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimension" xml:space="preserve">
-    <value>ASCOM allow odd pixel dimension</value>
+    <value>ASCOM 允许奇数像素尺寸</value>
   </data>
   <data name="LblASCOMAllowUnevenPixelDimensionTooltip" xml:space="preserve">
-    <value>In prior Versions of N.I.N.A. the ASCOM driver width &amp; height were always restricted to even numbers, even for mono cameras. 
-When enabled, the application will now allow for the full odd pixel dimension on mono cameras. 
-This setting will have no effect on color sensors.
-Only relevant when using an ASCOM camera driver!</value>
+    <value>在以前的N.I.N.A.版本中，ASCOM相机的驱动程序，即使是黑白相机，画面分辨率的宽度和高度被限制为偶数。
+启用后，应用程序现在将允许在黑白相机上使用完整的奇数像素尺寸。
+此设置对颜色相机没有影响。
+仅在使用ASCOM相机驱动程序时相关！</value>
   </data>
   <data name="LblAutoRetryStartGuidingTimeout" xml:space="preserve">
-    <value>Guiding Start Timeout</value>
+    <value>开始导星超时</value>
   </data>
   <data name="LblFilters" xml:space="preserve">
-    <value>Filters</value>
+    <value>滤镜</value>
   </data>
   <data name="LblPHD2Calibrating" xml:space="preserve">
-    <value>PHD2 - Calibrating</value>
+    <value>PHD2 - 校准中</value>
   </data>
   <data name="LblPHD2SelectingStar" xml:space="preserve">
-    <value>PHD2 - Selecting guide star</value>
+    <value>PHD2 - 正在选择被导星</value>
   </data>
   <data name="LblPHD2Settling" xml:space="preserve">
-    <value>PHD2 - Settling</value>
+    <value>PHD2 - 稳定中</value>
   </data>
   <data name="LblPHD2StartGuiding" xml:space="preserve">
-    <value>PHD2 - Waiting for guiding to start</value>
+    <value>PHD2 - 等待开始导星</value>
   </data>
   <data name="LblPHD2StartGuidingTimeoutRetry" xml:space="preserve">
-    <value>PHD2 - Start guiding has timed out. Retrying...</value>
+    <value>PHD2 - 开始导星超时。正在重试...</value>
   </data>
   <data name="LblFont" xml:space="preserve">
-    <value>Font</value>
+    <value>字体</value>
   </data>
   <data name="LblPrimaryRate" xml:space="preserve">
-    <value>Primary rate</value>
+    <value>主要速率</value>
     <comment>Primary telescope axis rate</comment>
   </data>
   <data name="LblSecondaryRate" xml:space="preserve">
-    <value>Secondary rate</value>
+    <value>第二速率</value>
     <comment>Secondary telescope axis rate</comment>
   </data>
   <data name="LblTelescopeCannotMovePrimaryAxis" xml:space="preserve">
-    <value>Telescope cannot move primary axis</value>
+    <value>赤道仪主轴无法移动</value>
   </data>
   <data name="LblTelescopeCannotMoveSecondaryAxis" xml:space="preserve">
-    <value>Telescope cannot move secondary axis</value>
+    <value>赤道仪次轴无法移动</value>
   </data>
   <data name="LblPrimaryReversed" xml:space="preserve">
-    <value>Primary reversed</value>
+    <value>反转主轴</value>
   </data>
   <data name="LblPrimaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the primary axis movement. Enable this to reverse the direction on move commands for the primary axis.</value>
+    <value>一些赤道仪的电机具有主轴反向运动的功能。启用此选项可反转用于主轴移动命令的方向。</value>
   </data>
   <data name="LblSecondaryReversed" xml:space="preserve">
-    <value>Secondary reversed</value>
+    <value>反转次轴</value>
   </data>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
-    <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
+    <value>一些赤道仪的电机具有次轴反向运动的功能。启用此选项可反转用于次轴移动命令的方向。</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
-    <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
+    <value>打开快门失败。启动快门操作后，快门状态仍然被报告为已关闭。</value>
   </data>
   <data name="LblDomeCloseShutterStillOpen" xml:space="preserve">
-    <value>Closing the shutter failed. The shutter status is still reported as open after initiating close shutter operation. </value>
+    <value>关闭快门失败。启动关闭快门操作后，快门状态仍然被报告为打开状态。 </value>
   </data>
   <data name="LblAuthor" xml:space="preserve">
-    <value>Author</value>
+    <value>作者</value>
   </data>
   <data name="LblAvailable" xml:space="preserve">
-    <value>Available</value>
+    <value>可用</value>
   </data>
   <data name="LblInstalled" xml:space="preserve">
-    <value>Installed</value>
+    <value>已安装</value>
   </data>
   <data name="LblVersion" xml:space="preserve">
-    <value>Version</value>
+    <value>版本</value>
   </data>
   <data name="LblFailedToFetchPlugins" xml:space="preserve">
-    <value>Failed to fetch plugins from repository "{0}"</value>
+    <value>无法从存储库获取插件“{0}”</value>
   </data>
   <data name="LblPluginCheckForUpdates" xml:space="preserve">
-    <value>Check for updates</value>
+    <value>检查更新</value>
   </data>
   <data name="LblPluginDllInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and copy the DLL file into %localappdata%\NINA\Plugins from:</value>
+    <value>通过 N.I.N.A. 插件管理器安装或手动下载并复制DLL 文件到 %localappdata%\NINA\Plugins</value>
   </data>
   <data name="LblPluginSetupInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and run the setup from:</value>
+    <value>通过 N.I.N.A. 插件管理器安装或手动下载并复制DLL 文件到 \NINA\Plugins</value>
   </data>
   <data name="LblScreenshots" xml:space="preserve">
-    <value>Screenshots</value>
+    <value>屏幕截图</value>
   </data>
   <data name="LblSetup" xml:space="preserve">
-    <value>Setup</value>
+    <value>安装</value>
     <comment>Setup as in application setup/installer</comment>
   </data>
   <data name="LblInstall" xml:space="preserve">
-    <value>Install</value>
+    <value>安装</value>
   </data>
   <data name="LblPendingPluginsRestart" xml:space="preserve">
-    <value>Plugins are pending to be changed on next application start. Should the application be restarted?</value>
+    <value>插件正等待程序下次启动时更改，是否现在重启程序？</value>
   </data>
   <data name="LblPluginArchiveInstallDescription" xml:space="preserve">
-    <value>Install via the N.I.N.A. plugin manager or manually download and extract the archive into %localappdata%\NINA\Plugins from:</value>
+    <value>通过 N.I.N.A. 插件管理器安装或手动下载并复制DLL 文件到 %localappdata%\NINA\Plugins</value>
   </data>
   <data name="LblPluginInstallationFailed" xml:space="preserve">
-    <value>Plugin installation for plugin {0} failed.</value>
+    <value>插件 {0} 安装失败。</value>
   </data>
   <data name="LblRequiresRestart" xml:space="preserve">
-    <value>Requires restart</value>
+    <value>需要重启</value>
   </data>
   <data name="LblUninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>卸载</value>
   </data>
   <data name="LblPluginCheckForUpdatesCancel" xml:space="preserve">
-    <value>Cancel the check for available online plugins.</value>
+    <value>取消插件在线更新检查。</value>
   </data>
   <data name="LblPluginCheckForUpdatesTooltip" xml:space="preserve">
-    <value>Checks the online plugin repository for available plugins and also checks if newer versions of existing plugins exist.</value>
+    <value>检查在线插件库是否有可用的插件，并检查现有插件是否有新版本。</value>
   </data>
   <data name="LblTags" xml:space="preserve">
-    <value>Tags</value>
+    <value>标签</value>
   </data>
   <data name="LblBinAverageEnabled" xml:space="preserve">
-    <value>Binning averages pixels</value>
+    <value>平均值合并像素</value>
   </data>
   <data name="LblBinAverageEnabledTooltop" xml:space="preserve">
-    <value>By default, binning is additive. Data are still the same bitness as the camera, so bright pixels can be clipped. Average mode prevents this clipping from taking place at the expense of some dynamic range due to integer division.</value>
+    <value>默认情况下，合并像素是加法运算。数据的位深仍保持不变，因此亮的像素可以被剪裁。 平均值算法可以使用整数除法运算，牺牲部分动态范围以防止剪裁。</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd" xml:space="preserve">
-    <value>Abort and run end of sequence instructions</value>
+    <value>中止运行，并执行结束指令</value>
   </data>
   <data name="Lbl_Sequencer_AbortToEnd_Tooltip" xml:space="preserve">
-    <value>Interrupts the currently running sequence instruction and skips everything up until the end of sequence instructions to be run</value>
+    <value>中断当前正在运行的序列指令并跳过余下所有内容，运行序列结束指令</value>
   </data>
   <data name="Lbl_Sequencer_SkipCurrentInstructions" xml:space="preserve">
-    <value>Skip currently running instruction(s)</value>
+    <value>跳过当前正在运行的指令 (s)</value>
   </data>
   <data name="LblFanSpeed" xml:space="preserve">
-    <value>Fan speed</value>
+    <value>风扇速度</value>
   </data>
   <data name="LblUnableToConnect" xml:space="preserve">
-    <value>Unable to connect to {0}. Reason: {1}</value>
+    <value>无法连接到 {0}。原因： {1}</value>
   </data>
   <data name="LblAbortOnError" xml:space="preserve">
     <value>Abort</value>
   </data>
   <data name="LblContinueOnError" xml:space="preserve">
-    <value>Continue</value>
+    <value>继续</value>
   </data>
   <data name="LblOnError" xml:space="preserve">
     <value>On error</value>
@@ -5661,5 +5661,23 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
     <value>Reset sequence?</value>
+  </data>
+  <data name="LblMountType" xml:space="preserve">
+    <value>Mount Type</value>
+  </data>
+  <data name="LblEquatorial" xml:space="preserve">
+    <value>Equatorial</value>
+  </data>
+  <data name="LblForkOnWedge" xml:space="preserve">
+    <value>Fork on Wedge</value>
+  </data>
+  <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
+    <value>DEC Horizontal Offset</value>
+  </data>
+  <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
+    <value>The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is "to the right", which is east for the northern hemisphere and west for the southern.</value>
+  </data>
+  <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
+    <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
   </data>
 </root>
