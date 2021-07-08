@@ -259,7 +259,9 @@ namespace NINA.Sequencer.SequenceItem {
 
         public void Skip() {
             this.Status = SequenceEntityStatus.SKIPPED;
-            localCts?.Cancel();
+            try {
+                localCts?.Cancel();
+            } catch (Exception) { }
         }
 
         public virtual void Initialize() {
