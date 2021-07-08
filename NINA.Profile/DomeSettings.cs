@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Profile.Interfaces;
 using System;
 using System.Runtime.Serialization;
@@ -229,6 +230,36 @@ namespace NINA.Profile {
             set {
                 if (closeOnUnsafe != value) {
                     closeOnUnsafe = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private MountTypeEnum mountType = MountTypeEnum.EQUATORIAL;
+
+        [DataMember]
+        public MountTypeEnum MountType {
+            get {
+                return mountType;
+            }
+            set {
+                if (mountType != value) {
+                    mountType = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private double decOffsetHorizontal_mm = 0.0;
+
+        [DataMember]
+        public double DecOffsetHorizontal_mm {
+            get {
+                return decOffsetHorizontal_mm;
+            }
+            set {
+                if (decOffsetHorizontal_mm != value) {
+                    decOffsetHorizontal_mm = value;
                     RaisePropertyChanged();
                 }
             }

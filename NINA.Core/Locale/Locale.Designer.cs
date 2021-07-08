@@ -6493,6 +6493,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to DEC Horizontal Offset.
+        /// </summary>
+        internal static string LblDomeDecOffsetHorizontal {
+            get {
+                return ResourceManager.GetString("LblDomeDecOffsetHorizontal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is &quot;to the right&quot;, which is east for the northern hemisphere and west for the southern..
+        /// </summary>
+        internal static string LblDomeDecOffsetHorizontalTooltip {
+            get {
+                return ResourceManager.GetString("LblDomeDecOffsetHorizontalTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use NINA Direct Following.
         /// </summary>
         internal static string LblDomeDirectDriver {
@@ -6687,6 +6705,15 @@ namespace NINA.Core.Locale {
         internal static string LblDomeRadius {
             get {
                 return ResourceManager.GetString("LblDomeRadius", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dome radius not configured properly. The calculated scope position is beyond the dome..
+        /// </summary>
+        internal static string LblDomeRadiusMisconfigured {
+            get {
+                return ResourceManager.GetString("LblDomeRadiusMisconfigured", resourceCulture);
             }
         }
         
@@ -7218,6 +7245,15 @@ namespace NINA.Core.Locale {
         internal static string LblEpoch {
             get {
                 return ResourceManager.GetString("LblEpoch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Equatorial.
+        /// </summary>
+        internal static string LblEquatorial {
+            get {
+                return ResourceManager.GetString("LblEquatorial", resourceCulture);
             }
         }
         
@@ -8521,6 +8557,15 @@ namespace NINA.Core.Locale {
         internal static string LblForceGuidingCalibration {
             get {
                 return ResourceManager.GetString("LblForceGuidingCalibration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fork on Wedge.
+        /// </summary>
+        internal static string LblForkOnWedge {
+            get {
+                return ResourceManager.GetString("LblForkOnWedge", resourceCulture);
             }
         }
         
@@ -10132,6 +10177,15 @@ namespace NINA.Core.Locale {
         internal static string LblMoonSet {
             get {
                 return ResourceManager.GetString("LblMoonSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mount Type.
+        /// </summary>
+        internal static string LblMountType {
+            get {
+                return ResourceManager.GetString("LblMountType", resourceCulture);
             }
         }
         

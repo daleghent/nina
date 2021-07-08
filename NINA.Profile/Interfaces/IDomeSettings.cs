@@ -12,6 +12,8 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
+
 namespace NINA.Profile.Interfaces {
 
     public interface IDomeSettings : ISettings {
@@ -28,5 +30,7 @@ namespace NINA.Profile.Interfaces {
         bool SynchronizeDuringMountSlew { get; set; }
         double RotateDegrees { get; set; }
         bool CloseOnUnsafe { get; set; }
+        MountTypeEnum MountType { get; set; }
+        double DecOffsetHorizontal_mm { get; set; }
     }
 }

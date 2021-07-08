@@ -87,6 +87,7 @@
     <Compile Include="Database\Schema\VisualDescription.cs" />
     <Compile Include="Enum\CameraType.cs" />
     <Compile Include="Enum\Hemisphere.cs" />
+    <Compile Include="Enum\MountTypeEnum.cs" />
     <Compile Include="Enum\OvershootDirection.cs" />
     <Compile Include="Enum\SequenceEntityStatus.cs" />
     <Compile Include="Enum\SequenceMode.cs" />

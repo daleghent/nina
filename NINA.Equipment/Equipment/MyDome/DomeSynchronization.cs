@@ -18,6 +18,8 @@ using System;
 using Accord.Math;
 using NINA.Core.Enum;
 using NINA.Equipment.Interfaces;
+using NINA.Core.Locale;
+using NINA.Core.Utility.Notification;
 
 namespace NINA.Equipment.Equipment.MyDome {
 
@@ -32,18 +34,19 @@ namespace NINA.Equipment.Equipment.MyDome {
         }
 
         /// <summary>
-        /// Gets the dome azimuth required so the scope points directly out of the shutter. This works for Alt-Az and EQ mounts,
+        /// Gets the dome azimuth required so the scope points directly out of the shutter. This works for Alt-Az, EQ mounts, and fork mounts on a wedge
         /// and depends on careful user measurements including:
         ///  1) Dome radius, in mm
         ///  2) GEM axis length, in mm - starting from where the RA and DEC axes intersect, measured laterally to the center of the scope aperture
-        ///     Alt-Az mounts set this value to 0
-        ///  3) Lateral axis length, in mm - starting from the saddle plate. This is used in side by side setups where the scope is not centered on the saddle
+        ///     Alt-Az mounts set this value to 0. This applies only to Equatorial Mounts
+        ///  3) DEC horizontal offset, in mm - the horizontal distance from the DEC axis (the base of the mount) to the center of the OTA. Positive is "to the right".
+        ///  4) Lateral axis length, in mm - starting from the saddle plate. This is used in side by side setups where the scope is not centered on the saddle
         ///      It points in the same direction as the y-axis (to the East)
-        ///  4) Mount offset as a 3D vector relative to the center of the dome sphere.
+        ///  5) Mount offset as a 3D vector relative to the center of the dome sphere. This is the point where the RA and DEC axes intersect.
         ///     a) The x-axis in the positive direction points North
         ///     b) The y-axis in the positive direction points East
         ///     c) The z-axis points up
-        ///  5) The latitude and longitude of the scope site
+        ///  6) The latitude and longitude of the scope site
         ///
         /// This method uses an algorithm that solves equations that are derived in the Wikipedia article
         /// entitled Line-sphere intersection (https://en.wikipedia.org/wiki/Line%E2%80%93sphere_intersection)
@@ -60,47 +63,19 @@ namespace NINA.Equipment.Equipment.MyDome {
             Angle siteLatitude,
             Angle siteLongitude,
             PierSide sideOfPier) {
-            if (sideOfPier == PierSide.pierUnknown) {
-                throw new InvalidOperationException("Side of Pier is unknown");
-            }
-
             scopeCoordinates = scopeCoordinates.Transform(Epoch.JNOW);
             var domeSettings = profileService.ActiveProfile.DomeSettings;
             // To calculate the effect of rotations in the southern hemisphere we augment a few of the rotations to pretend as if it were the northern hemisphere,
             // and then add 180 degrees to the final result
-            var latitudeFactor = (siteLatitude.Radians >= 0) ? 1.0 : -1.0;
 
             var origin = new Vector4(0, 0, 0, 1);
-            // The coordinate system has the y-axis positive in the left direction when facing the celestial pole, so E/W mount offset and lateral offset
-            // need to be inverted. This also needs to be inverted for the Southern hemisphere, since the configuration is always E/W instead of left/right when
-            // facing the pole
-            var mountOffset = Matrix4x4.CreateTranslation(
-                new Vector3(
-                    (float)(domeSettings.ScopePositionNorthSouth_mm * latitudeFactor),
-                    -(float)(domeSettings.ScopePositionEastWest_mm * latitudeFactor),
-                    (float)(domeSettings.ScopePositionUpDown_mm)));
-            // At either pole (90 degrees) we need to rotate counter-clockwise around the Y-axis.
-            var latitudeRotationRadians = -Math.Abs(siteLatitude.Radians);
+            Matrix4x4 scopeOriginTranslation;
+            if (domeSettings.MountType == MountTypeEnum.EQUATORIAL) {
+                scopeOriginTranslation = CalculateGEM(scopeCoordinates, localSiderealTime, siteLatitude, sideOfPier);
+            } else {
+                scopeOriginTranslation = CalculateForkOnWedge(scopeCoordinates, localSiderealTime, siteLatitude);
+            }
 
-            var latitudeAdjustment = Matrix4x4.CreateRotationY((float)latitudeRotationRadians);
-            // Rotation around the RA axis depends on the side of pier. On the east side, 6 hours is North, and on the west side, 18 hours is north
-            var localHour = Angle.ByHours(localSiderealTime - scopeCoordinates.RA);
-            var pierFactor = ((sideOfPier == PierSide.pierEast) ? 1.0 : -1.0) * latitudeFactor;
-            // In the southern hemisphere, RA goes the opposite direction it does in the north
-            var raRotationRadians = pierFactor * HALF_PI - (localHour.Radians * latitudeFactor);
-            var raRotationAdjustment = Matrix4x4.CreateRotationX((float)(raRotationRadians));
-            // Rotation around Dec is along the Z axis
-            // The north celestial pole is at +90 DEC, and the south pole is at -90 DEC
-            var decRotationRadians = pierFactor * (HALF_PI - (Angle.ByDegree(scopeCoordinates.Dec).Radians * latitudeFactor));
-            var decRotationAdjustment = Matrix4x4.CreateRotationZ((float)(decRotationRadians));
-            // Lateral axis does not need to be flipped because it is always "to the right" instead of "to the east"
-            var gemAdjustment = Matrix4x4.CreateTranslation(
-                new Vector3(
-                    0.0f,
-                    -(float)domeSettings.LateralAxis_mm,
-                    (float)domeSettings.GemAxis_mm));
-
-            var scopeOriginTranslation = mountOffset * latitudeAdjustment * raRotationAdjustment * decRotationAdjustment * gemAdjustment;
             var scopeApertureOrigin = scopeOriginTranslation * origin;
 
             // The OTA points along the positive X-axis before any transformations take place. Transforming the point (1, 0, 0) provides a unit
@@ -111,6 +86,11 @@ namespace NINA.Equipment.Equipment.MyDome {
             // intersects the sphere
             var dotProduct = Vector4.Dot(scopeDirection, scopeApertureOrigin);
             var domeRadius = domeSettings.DomeRadius_mm;
+            if (Vector4.Dot(scopeApertureOrigin, scopeApertureOrigin) > (domeRadius * domeRadius)) {
+                Notification.ShowError(Loc.Instance["LblDomeRadiusMisconfigured"]);
+                throw new Exception(Loc.Instance["LblDomeRadiusMisconfigured"]);
+            }
+
             var underRoot = (dotProduct * dotProduct) - Vector4.Dot(scopeApertureOrigin, scopeApertureOrigin) + (domeRadius * domeRadius);
             var distance = -dotProduct + Math.Sqrt(underRoot);
 
@@ -125,6 +105,89 @@ namespace NINA.Equipment.Equipment.MyDome {
                 domeAzimuthRadians = (domeAzimuthRadians + Math.PI) % TWO_PI;
             }
             return Angle.ByRadians(domeAzimuthRadians);
+        }
+
+        private Matrix4x4 CalculateForkOnWedge(
+            Coordinates scopeCoordinates,
+            double localSiderealTime,
+            Angle siteLatitude) {
+            var domeSettings = profileService.ActiveProfile.DomeSettings;
+            var latitudeFactor = (siteLatitude.Radians >= 0) ? 1.0 : -1.0;
+            var mountOffset = Matrix4x4.CreateTranslation(
+                new Vector3(
+                    (float)(domeSettings.ScopePositionNorthSouth_mm * latitudeFactor),
+                    -(float)(domeSettings.ScopePositionEastWest_mm * latitudeFactor),
+                    (float)domeSettings.ScopePositionUpDown_mm));
+            // At either pole (90 degrees) we need to rotate counter-clockwise around the Y-axis.
+            var latitudeRotationRadians = -Math.Abs(siteLatitude.Radians);
+
+            var latitudeAdjustment = Matrix4x4.CreateRotationY((float)latitudeRotationRadians);
+            // Rotation around the RA axis does not depend on the side of pier for a fork mount
+            var localHour = Angle.ByHours(localSiderealTime - scopeCoordinates.RA);
+            // In the southern hemisphere, RA goes the opposite direction it does in the north
+            var raRotationRadians = -localHour.Radians * latitudeFactor;
+            var raRotationAdjustment = Matrix4x4.CreateRotationX((float)raRotationRadians);
+            // Rotation around Dec is along the Y axis for a fork mount
+            // The north celestial pole is at +90 DEC, and the south pole is at -90 DEC
+            var decRotationRadians = HALF_PI - (Angle.ByDegree(scopeCoordinates.Dec).Radians * latitudeFactor);
+            var decRotationAdjustment = Matrix4x4.CreateRotationY(-(float)decRotationRadians);
+            var raOffsetAdjustment = Matrix4x4.CreateTranslation(
+                new Vector3(
+                    0.0f,
+                    -(float)domeSettings.DecOffsetHorizontal_mm,
+                    0.0f));
+            // lateral axis is used for side by side saddles
+            var decOffsetAdjustment = Matrix4x4.CreateTranslation(
+                new Vector3(
+                    0.0f,
+                    0.0f,
+                    (float)domeSettings.LateralAxis_mm));
+
+            return mountOffset * latitudeAdjustment * raRotationAdjustment * raOffsetAdjustment * decRotationAdjustment * decOffsetAdjustment;
+        }
+
+        private Matrix4x4 CalculateGEM(
+            Coordinates scopeCoordinates,
+            double localSiderealTime,
+            Angle siteLatitude,
+            PierSide sideOfPier) {
+            if (sideOfPier == PierSide.pierUnknown) {
+                throw new InvalidOperationException("Side of Pier is unknown");
+            }
+
+            var domeSettings = profileService.ActiveProfile.DomeSettings;
+            var latitudeFactor = (siteLatitude.Radians >= 0) ? 1.0 : -1.0;
+
+            // The coordinate system has the y-axis positive in the left direction when facing the celestial pole, so E/W mount offset and lateral offset
+            // need to be inverted. This also needs to be inverted for the Southern hemisphere, since the configuration is always E/W instead of left/right when
+            // facing the pole
+            var mountOffset = Matrix4x4.CreateTranslation(
+                new Vector3(
+                    (float)(domeSettings.ScopePositionNorthSouth_mm * latitudeFactor),
+                    -(float)(domeSettings.ScopePositionEastWest_mm * latitudeFactor),
+                    (float)domeSettings.ScopePositionUpDown_mm));
+            // At either pole (90 degrees) we need to rotate counter-clockwise around the Y-axis.
+            var latitudeRotationRadians = -Math.Abs(siteLatitude.Radians);
+
+            var latitudeAdjustment = Matrix4x4.CreateRotationY((float)latitudeRotationRadians);
+            // Rotation around the RA axis depends on the side of pier. On the east side, 6 hours is North, and on the west side, 18 hours is north
+            var localHour = Angle.ByHours(localSiderealTime - scopeCoordinates.RA);
+            var pierFactor = ((sideOfPier == PierSide.pierEast) ? 1.0 : -1.0) * latitudeFactor;
+            // In the southern hemisphere, RA goes the opposite direction it does in the north
+            var raRotationRadians = pierFactor * HALF_PI - (localHour.Radians * latitudeFactor);
+            var raRotationAdjustment = Matrix4x4.CreateRotationX((float)raRotationRadians);
+            // Rotation around Dec is along the Z axis
+            // The north celestial pole is at +90 DEC, and the south pole is at -90 DEC
+            var decRotationRadians = pierFactor * (HALF_PI - (Angle.ByDegree(scopeCoordinates.Dec).Radians * latitudeFactor));
+            var decRotationAdjustment = Matrix4x4.CreateRotationZ((float)decRotationRadians);
+            // Lateral axis does not need to be flipped because it is always "to the right" instead of "to the east"
+            var gemAdjustment = Matrix4x4.CreateTranslation(
+                new Vector3(
+                    0.0f,
+                    -(float)domeSettings.LateralAxis_mm,
+                    (float)domeSettings.GemAxis_mm));
+
+            return mountOffset * latitudeAdjustment * raRotationAdjustment * decRotationAdjustment * gemAdjustment;
         }
     }
 }

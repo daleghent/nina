@@ -30,8 +30,10 @@ namespace NINATest.Dome {
         }
 
         private DomeSynchronization Initialize(
+            MountTypeEnum mountType = MountTypeEnum.EQUATORIAL,
             double domeRadius = 1000.0,
             double gemAxisLength = 0.0,
+            double decOffsetHorizontal = 0.0,
             double lateralAxisLength = 0.0,
             double mountOffsetX = 0.0,
             double mountOffsetY = 0.0,
@@ -39,8 +41,10 @@ namespace NINATest.Dome {
             double siteLatitude = 41.3,
             double siteLongitude = -74.4) {
             var mockProfileService = new Mock<IProfileService>();
+            mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.MountType).Returns(mountType);
             mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.DomeRadius_mm).Returns(domeRadius);
             mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.GemAxis_mm).Returns(gemAxisLength);
+            mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.DecOffsetHorizontal_mm).Returns(decOffsetHorizontal);
             mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.LateralAxis_mm).Returns(lateralAxisLength);
             mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.ScopePositionNorthSouth_mm).Returns(mountOffsetX);
             mockProfileService.SetupGet(x => x.ActiveProfile.DomeSettings.ScopePositionEastWest_mm).Returns(mountOffsetY);
@@ -210,6 +214,36 @@ namespace NINATest.Dome {
             var poleCoordinates = GetCoordinatesFromAltAz(Math.Abs(this.siteLatitude), 0);
             Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierEast).Equals(Angle.ByDegree(0.0), DEGREES_EPSILON));
             Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierWest).Equals(Angle.ByDegree(0.0), DEGREES_EPSILON));
+        }
+
+        [Test]
+        public void ForkOnWedge_Straight_Test() {
+            var sut = Initialize(mountType: MountTypeEnum.FORK_ON_WEDGE, domeRadius: 1000);
+
+            var poleCoordinates = GetCoordinatesFromAltAz(Math.Abs(siteLatitude), 0);
+            Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierEast).Equals(Angle.ByDegree(0.0), DEGREES_EPSILON));
+            Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierWest).Equals(Angle.ByDegree(0.0), DEGREES_EPSILON));
+        }
+
+        [Test]
+        [TestCase(-500)]
+        [TestCase(-250)]
+        [TestCase(250)]
+        [TestCase(500)]
+        public void ForkOnWedge_Straight_HorizontalOffset_Test(double horizontalOffset) {
+            var domeRadius = 1000;
+            var sut = Initialize(mountType: MountTypeEnum.FORK_ON_WEDGE, domeRadius: domeRadius, decOffsetHorizontal: horizontalOffset);
+            // Set RA and Dec explicitly to ensure the fork mount isn't rotated along the RA when pointed at the pole
+            var poleCoordinates = new Coordinates(
+                ra: Angle.ByHours(localSiderealTime),
+                dec: Angle.ByDegree(90),
+                epoch: Epoch.JNOW);
+
+            var otaToDomeDistance = Math.Sqrt(domeRadius * domeRadius - horizontalOffset * horizontalOffset);
+            var northSouthDistanceProjected = Math.Cos(Angle.ByDegree(siteLatitude).Radians) * otaToDomeDistance;
+            var expectedAzimuth = Angle.ByRadians(Math.Atan(horizontalOffset / northSouthDistanceProjected));
+            Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierEast).Equals(expectedAzimuth, DEGREES_EPSILON));
+            Assert.IsTrue(CalculateAzimuth(sut, poleCoordinates, PierSide.pierWest).Equals(expectedAzimuth, DEGREES_EPSILON));
         }
     }
 }
