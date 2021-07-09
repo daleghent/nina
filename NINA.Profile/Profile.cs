@@ -373,11 +373,11 @@ namespace NINA.Profile {
                         };
                     }
                 } catch (Exception ex) {
-                    Logger.Error(ex);
+                    Logger.Error($"Profile failed to load at {path} ", ex);
                     var backup = path + ".bkp";
                     if (File.Exists(backup)) {
                         try {
-                            Logger.Info("Restoring corrupt profile from backup");
+                            Logger.Info($"Restoring corrupt profile from backup ${backup}");
                             File.Copy(backup, path, true);
                             using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) {
                                 var serializer = new DataContractSerializer(typeof(Profile));

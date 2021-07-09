@@ -1275,12 +1275,48 @@
     <Content Include="External\x64\SQLite\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <ContentWithTargetPath Include="External\x64\VCRedis\msvcp100.dll" Condition="'$(Platform)' == 'x64'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>msvcp100.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="External\x64\VCRedis\msvcp140.dll" Condition="'$(Platform)' == 'x64'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>msvcp140.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="External\x64\VCRedis\msvcr100.dll" Condition="'$(Platform)' == 'x64'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>msvcr100.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="External\x64\VCRedis\vcruntime140.dll" Condition="'$(Platform)' == 'x64'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>vcruntime140.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="External\x64\VCRedis\vcruntime140_1.dll" Condition="'$(Platform)' == 'x64'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>vcruntime140_1.dll</TargetPath>
+    </ContentWithTargetPath>
     <Content Include="External\x86\Risingcam\nncam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="External\x86\SQLite\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <ContentWithTargetPath Include="External\x86\VCRedis\msvcp100.dll" Condition="'$(Platform)' == 'x86'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>msvcp100.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="External\x86\VCRedis\msvcp140.dll" Condition="'$(Platform)' == 'x86'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>msvcp140.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="External\x86\VCRedis\msvcr100.dll" Condition="'$(Platform)' == 'x86'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>msvcr100.dll</TargetPath>
+    </ContentWithTargetPath>
+    <ContentWithTargetPath Include="External\x86\VCRedis\vcruntime140.dll" Condition="'$(Platform)' == 'x86'">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <TargetPath>vcruntime140.dll</TargetPath>
+    </ContentWithTargetPath>
     <Content Include="Utility\DCRaw\dcraw.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1613,49 +1649,49 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
-if exist "$(ProjectDir)External\x64\Altair" (
-	echo "Copy Altair x64 DLLs"
-	xcopy "$(ProjectDir)External\x64\Altair" "$(TargetDir)\External\x64\Altair" /h/i/c/k/e/r/y
-)
-if exist "$(ProjectDir)External\x86\Altair" (
-	echo "Copy Altair x86 DLLs"
-	xcopy "$(ProjectDir)External\x86\Altair" "$(TargetDir)\External\x86\Altair" /h/i/c/k/e/r/y
-)
+      if exist "$(ProjectDir)External\x64\Altair" (
+      echo "Copy Altair x64 DLLs"
+      xcopy "$(ProjectDir)External\x64\Altair" "$(TargetDir)\External\x64\Altair" /h/i/c/k/e/r/y
+      )
+      if exist "$(ProjectDir)External\x86\Altair" (
+      echo "Copy Altair x86 DLLs"
+      xcopy "$(ProjectDir)External\x86\Altair" "$(TargetDir)\External\x86\Altair" /h/i/c/k/e/r/y
+      )
 
-if exist "$(ProjectDir)External\x64\Canon" (
-	echo "Copy Canon x64 DLLs"
-	xcopy "$(ProjectDir)External\x64\Canon" "$(TargetDir)\External\x64\Canon" /h/i/c/k/e/r/y
-)
-if exist "$(ProjectDir)External\x86\Canon" (
-	echo "Copy Canon x86 DLLs"
-	xcopy "$(ProjectDir)External\x86\Canon" "$(TargetDir)\External\x86\Canon" /h/i/c/k/e/r/y
-)
+      if exist "$(ProjectDir)External\x64\Canon" (
+      echo "Copy Canon x64 DLLs"
+      xcopy "$(ProjectDir)External\x64\Canon" "$(TargetDir)\External\x64\Canon" /h/i/c/k/e/r/y
+      )
+      if exist "$(ProjectDir)External\x86\Canon" (
+      echo "Copy Canon x86 DLLs"
+      xcopy "$(ProjectDir)External\x86\Canon" "$(TargetDir)\External\x86\Canon" /h/i/c/k/e/r/y
+      )
 
-if exist "$(ProjectDir)External\x64\Nikon" (
-	echo "Copy Nikon x64 DLLs"
-	xcopy "$(ProjectDir)External\x64\Nikon" "$(TargetDir)\External\x64\Nikon" /h/i/c/k/e/r/y
-)
-if exist "$(ProjectDir)External\x86\Nikon" (
-	echo "Copy Nikon x86 DLLs"
-	xcopy "$(ProjectDir)External\x86\Nikon" "$(TargetDir)\External\x86\Nikon" /h/i/c/k/e/r/y
-)
+      if exist "$(ProjectDir)External\x64\Nikon" (
+      echo "Copy Nikon x64 DLLs"
+      xcopy "$(ProjectDir)External\x64\Nikon" "$(TargetDir)\External\x64\Nikon" /h/i/c/k/e/r/y
+      )
+      if exist "$(ProjectDir)External\x86\Nikon" (
+      echo "Copy Nikon x86 DLLs"
+      xcopy "$(ProjectDir)External\x86\Nikon" "$(TargetDir)\External\x86\Nikon" /h/i/c/k/e/r/y
+      )
 
-if $(Platform) == x86 (
-	if exist "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat" (
-		echo "Making x86 large address aware"
-		call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat"
-		editbin /largeaddressaware "$(TargetPath)"
-	)
-)
+      if $(Platform) == x86 (
+      if exist "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat" (
+      echo "Making x86 large address aware"
+      call "$(DevEnvDir)..\..\VC\Auxiliary\Build\vcvars32.bat"
+      editbin /largeaddressaware "$(TargetPath)"
+      )
+      )
 
+      if $(ConfigurationName) == SignedRelease (
+      if exist "$(SolutionDir)code_sign.pfx" (
+      echo  "Trying to sign $(TargetPath)"
+      signtool sign /t http://timestamp.digicert.com /v /a /fd SHA256 $(TargetPath)
+      )
 
-if $(ConfigurationName) == SignedRelease (
-		if exist "$(SolutionDir)code_sign.pfx" (
-			echo  "Trying to sign $(TargetPath)"
-			signtool sign /t http://timestamp.digicert.com /v /a /fd SHA256 $(TargetPath)
-		)
-	
-)</PostBuildEvent>
+      )
+    </PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
