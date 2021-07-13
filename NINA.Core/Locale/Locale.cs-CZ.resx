@@ -2040,10 +2040,10 @@ Přeskočit.</value>
     <value>Nativní</value>
   </data>
   <data name="LblNauticalDawn" xml:space="preserve">
-    <value>Nautické Svítání</value>
+    <value>Námořní Svítání</value>
   </data>
   <data name="LblNauticalDusk" xml:space="preserve">
-    <value>Nautický Soumrak</value>
+    <value>Námořní Soumrak</value>
   </data>
   <data name="LblNewPosition" xml:space="preserve">
     <value>Nová Pozice</value>
@@ -5658,21 +5658,21 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Reset sekvence?</value>
   </data>
   <data name="LblMountType" xml:space="preserve">
-    <value>Mount Type</value>
+    <value>Typ Montáže</value>
   </data>
   <data name="LblEquatorial" xml:space="preserve">
-    <value>Equatorial</value>
+    <value>Rovníková</value>
   </data>
   <data name="LblForkOnWedge" xml:space="preserve">
-    <value>Fork on Wedge</value>
+    <value>Vidlicová montáž na klínu</value>
   </data>
   <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
-    <value>DEC Horizontal Offset</value>
+    <value>Horizontální rozdíl v DEC</value>
   </data>
   <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
-    <value>The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is "to the right", which is east for the northern hemisphere and west for the southern.</value>
+    <value>Horizontální rozdíl od středu OTA k ose deklinace (motor ve spodní části držáku vidlice). Pozitivní je „zprava doprava“, což je východ na severní polokouli a západ na jih.</value>
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
-    <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
+    <value>Poloměr kopule není nastaven správně. Vypočítaná poloha dalekohledu je za kopulí.</value>
   </data>
 </root>

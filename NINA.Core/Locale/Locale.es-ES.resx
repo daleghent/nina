@@ -5387,10 +5387,10 @@ Para condiciones que cambian rápidamente, un menor tamaño de muestra ayudará 
     <value>Rotador</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
-    <value>Moves the rotator to the specified mechanical angle</value>
+    <value>Mueve el rotador al ángulo mecánico especificado</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
-    <value>Rotate by mechanical angle</value>
+    <value>Rotar por ángulo mecánico</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>Meridiano</value>
@@ -5653,21 +5653,21 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
     <value>¿Reiniciar la secuencia?</value>
   </data>
   <data name="LblMountType" xml:space="preserve">
-    <value>Mount Type</value>
+    <value>Tipo de montura</value>
   </data>
   <data name="LblEquatorial" xml:space="preserve">
-    <value>Equatorial</value>
+    <value>Ecuatorial</value>
   </data>
   <data name="LblForkOnWedge" xml:space="preserve">
-    <value>Fork on Wedge</value>
+    <value>Horquilla sobre cuña</value>
   </data>
   <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
-    <value>DEC Horizontal Offset</value>
+    <value>Desplazamiento horizontal en DEC</value>
   </data>
   <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
-    <value>The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is "to the right", which is east for the northern hemisphere and west for the southern.</value>
+    <value>El desplazamiento horizontal del centro del OTA con respecto al eje de declinación (el motor en la base de la montura de tipo horquilla). Positivo es "a la derecha", que es el este para el hemisferio norte y el oeste para el sur.</value>
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
-    <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
+    <value>Radio de la cúpula no configurado correctamente. La posición calculada del telescopio está más allá de la cúpula.</value>
   </data>
 </root>
