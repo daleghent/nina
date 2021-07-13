@@ -206,10 +206,7 @@ namespace NINA.ViewModel.Plugins {
                     var p = kv.Key;
 
                     if (onlinePluginDict.TryGetValue(p.Identifier, out var common)) {
-                        if (common.Version.Major >= p.Version.Major
-                            && common.Version.Minor >= p.Version.Minor
-                            && common.Version.Patch >= p.Version.Patch
-                            && common.Version.Build > p.Version.Build) {
+                        if (PluginVersionCompare(common.Version, p.Version) > 0) {
                             onlinePluginDict[p.Identifier].State = PluginState.UpdateAvailable;
                         } else {
                             onlinePluginDict[p.Identifier].State = PluginState.Installed;
@@ -232,6 +229,37 @@ namespace NINA.ViewModel.Plugins {
                 Logger.Error(ex);
             }
             return true;
+        }
+
+        public int PluginVersionCompare(IPluginVersion v1, IPluginVersion v2) {
+            if (v2 == null)
+                return 1;
+
+            if (v1.Major != v2.Major)
+                if (v1.Major > v2.Major)
+                    return 1;
+                else
+                    return -1;
+
+            if (v1.Minor != v2.Minor)
+                if (v1.Minor > v2.Minor)
+                    return 1;
+                else
+                    return -1;
+
+            if (v1.Patch != v2.Patch)
+                if (v1.Patch > v2.Patch)
+                    return 1;
+                else
+                    return -1;
+
+            if (v1.Build != v2.Build)
+                if (v1.Build > v2.Build)
+                    return 1;
+                else
+                    return -1;
+
+            return 0;
         }
     }
 }
