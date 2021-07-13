@@ -102,32 +102,19 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             }
         }
 
+
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Validate()) {
                 var info = focuserMediator.GetInfo();
-                double position = info.Position, delta = 0;
-                int deltaInt = 0;
-                double thisTemperature = 0;
+                double position = info.Position;
                 Task<int> result;
                 if (absolute) {
                     position = Slope * info.Temperature + Intercept;
                     Logger.Info($"Moving Focuser By Temperature - Slope {Slope} * Temperature {info.Temperature} °C + Intercept {Intercept} = Position {position}");
                     result = focuserMediator.MoveFocuser((int)position, token);
                 } else {
-                    if (lastTemperature == -1000) {
-                        thisTemperature = info.Temperature;
-                        delta = 0;
-                        deltaInt = 0;
-                        Logger.Info($"Moving Focuser By Temperature - Slope {Slope} * ( DeltaT ) °C (relative mode) - lastTemperature initialized to {lastTemperature}");
-                    } else {
-                        delta = lastRoundoff + (info.Temperature - lastTemperature) * Slope;
-                        deltaInt = (int)Math.Round(delta);
-                        thisTemperature = info.Temperature;
-                        Logger.Info($"Moving Focuser By Temperature - LastRoundoff {lastRoundoff} + Slope {Slope} * ( Temperature {thisTemperature} - PrevTemperature {lastTemperature} ) °C (relative mode) = Delta {delta} / DeltaInt {deltaInt}");
-                    }
-                    result = focuserMediator.MoveFocuserRelative((int)delta, token);
-                    lastTemperature = thisTemperature;
-                    lastRoundoff = delta - deltaInt;
+                    Logger.Info($"Moving Focuser By Temperature Relative - Slope {Slope}");
+                    result = focuserMediator.MoveFocuserByTemperatureRelative(info.Temperature, slope, token);
                 }
                 return result;
             } else {
@@ -178,12 +165,5 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             lastRoundoff = 0;
         }
 
-        public override void Initialize() {
-            this.focuserMediator.RegisterConsumer(this);
-        }
-
-        public override void Teardown() {
-            focuserMediator.RemoveConsumer(this);
-        }
     }
 }

@@ -12,9 +12,11 @@
 
 #endregion "copyright"
 
+using NINA.Core.Utility;
 using NINA.Equipment.Equipment.MyFocuser;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Equipment.Interfaces.ViewModel;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,13 +36,21 @@ namespace NINA.WPF.Base.Mediator {
             return handler.MoveFocuserRelative(position, ct);
         }
 
+        public Task<int> MoveFocuserByTemperatureRelative(double temperature, double slope, CancellationToken ct) {
+            return handler.MoveFocuserByTemperatureRelative(temperature, slope, ct);
+        }
+
         public void BroadcastSuccessfulAutoFocusRun(AutoFocusInfo info) {
+            Logger.Info($"Autofocus notification received - Temperature {info.Temperature}");
+            handler.SetFocusedTemperature(info.Temperature);
             foreach (IFocuserConsumer c in consumers) {
                 c.UpdateEndAutoFocusRun(info);
             }
         }
 
         public void BroadcastUserFocused(FocuserInfo info) {
+            Logger.Info($"User Focused notification received - Temperature {info.Temperature}");
+            handler.SetFocusedTemperature(info.Temperature);
             foreach (IFocuserConsumer c in consumers) {
                 c.UpdateUserFocused(info);
             }

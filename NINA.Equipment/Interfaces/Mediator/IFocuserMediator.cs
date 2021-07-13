@@ -27,6 +27,8 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         Task<int> MoveFocuserRelative(int position, CancellationToken ct);
 
+        Task<int> MoveFocuserByTemperatureRelative(double temperature, double Slope, CancellationToken ct);
+
         void BroadcastSuccessfulAutoFocusRun(AutoFocusInfo info);
 
         void BroadcastUserFocused(FocuserInfo info);

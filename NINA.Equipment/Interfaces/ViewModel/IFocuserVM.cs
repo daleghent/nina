@@ -25,5 +25,10 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<int> MoveFocuser(int position, CancellationToken ct);
 
         Task<int> MoveFocuserRelative(int position, CancellationToken ct);
+
+        Task<int> MoveFocuserByTemperatureRelative(double temperature, double slope, CancellationToken ct);
+
+        void SetFocusedTemperature(double temperature);
+
     }
 }

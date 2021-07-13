@@ -38,6 +38,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         private readonly IFocuserMediator focuserMediator;
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private readonly IProgress<ApplicationStatus> progress;
+        private double lastFocusedTemperature = -1000;
+        private double lastRoundoff = 0;
 
         public FocuserVM(IProfileService profileService, IFocuserMediator focuserMediator, IApplicationStatusMediator applicationStatusMediator, IDeviceChooserVM focuserChooserVm, IImageGeometryProvider imageGeometryProvider) : base(profileService) {
             Title = "LblFocuser";
@@ -112,6 +114,37 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             moveCts?.Dispose();
             moveCts = new CancellationTokenSource();
             return MoveFocuserRelative(position, moveCts.Token);
+        }
+
+        public void SetFocusedTemperature(double temp) {
+            Logger.Debug($"Resetting last roundoff error");
+            Interlocked.Exchange(ref lastRoundoff, 0.0);
+            Logger.Debug($"Storing focused temperature - {temp} C");
+            Interlocked.Exchange(ref lastFocusedTemperature, temp);
+        }
+
+        public async Task<int> MoveFocuserByTemperatureRelative(double temperature, double slope, CancellationToken ct) {
+            await ss.WaitAsync(ct);
+            try {
+                double delta = 0;
+                int deltaInt = 0;
+                if (lastFocusedTemperature == -1000) {
+                    delta = 0;
+                    deltaInt = 0;
+                    Logger.Info($"Moving Focuser By Temperature - Slope {slope} * ( DeltaT ) °C (relative mode) - lastTemperature initialized to {temperature}");
+                } else {
+                    delta = lastRoundoff + (Focuser.Temperature - lastFocusedTemperature) * slope;
+                    deltaInt = (int)Math.Round(delta);
+                    Logger.Info($"Moving Focuser By Temperature - LastRoundoff {lastRoundoff} + Slope {slope} * ( Temperature {temperature} - PrevTemperature {lastFocusedTemperature} ) °C (relative mode) = Delta {delta} / DeltaInt {deltaInt}");
+                }
+                int pos = Position;
+                var result = await MoveFocuserInternal(pos+deltaInt, ct);
+                lastFocusedTemperature = temperature;
+                lastRoundoff = delta - deltaInt;
+                return result;
+            } finally {
+                ss.Release();
+            }
         }
 
         public async Task<int> MoveFocuser(int position, CancellationToken ct) {
