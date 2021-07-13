@@ -158,6 +158,14 @@
                         <TextBlock Width="150">Simulated Dec Error (arcsecs)</TextBlock>
                         <TextBox Width="100" Text="{Binding DecError}" />
                     </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="150">Simulated Az Shift (arcsecs)</TextBlock>
+                        <TextBox Width="100" Text="{Binding AzShift}" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="150">Simulated Alt Shift (arcsecs)</TextBlock>
+                        <TextBox Width="100" Text="{Binding AltShift}" />
+                    </StackPanel>
                 </StackPanel>
             </GroupBox>
             <Grid.Style>

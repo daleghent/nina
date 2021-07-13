@@ -50,6 +50,30 @@ namespace NINA.WPF.Base.Model.Equipment.MyCamera.Simulator {
             }
         }
 
+        private int azShift;
+
+        public int AzShift {
+            get => azShift;
+            set {
+                lock (lockObj) {
+                    azShift = value;
+                }
+                RaisePropertyChanged();
+            }
+        }
+
+        private int altShift;
+
+        public int AltShift {
+            get => altShift;
+            set {
+                lock (lockObj) {
+                    altShift = value;
+                }
+                RaisePropertyChanged();
+            }
+        }
+
         private int widthAndHeight;
 
         public int WidthAndHeight {
