@@ -321,6 +321,9 @@ namespace NINA.ViewModel {
         }
 
         public bool ImportTargets() {
+            if (AskHasChanged()) {
+                return false;
+            }
             var initialDirectory = string.Empty;
             if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
                 initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
@@ -444,7 +447,28 @@ namespace NINA.ViewModel {
             }
         }
 
+        public bool AskHasChanged() {
+            string names = null;
+            foreach (var item in Targets.Items) {
+                if (item.HasChanged) {
+                    if (names == null) {
+                        names = item.Name;
+                    } else {
+                        names += ", " + item.Name;
+                    }
+                }
+            }
+            if (names != null &&
+                MyMessageBox.Show(string.Format(Loc.Instance["LblChangedSequenceWarning"], names), Loc.Instance["LblChangedSequenceWarningTitle"], MessageBoxButton.YesNo, MessageBoxResult.Yes) == MessageBoxResult.No) {
+                return true;
+            }
+            return false;
+        }
+
         public bool LoadTargetSet() {
+            if (AskHasChanged()) {
+                return false;
+            }
             var initialDirectory = string.Empty;
             if (Directory.Exists(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder)) {
                 initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
