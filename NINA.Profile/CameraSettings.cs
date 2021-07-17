@@ -416,7 +416,7 @@ namespace NINA.Profile {
         public short? ReadoutMode {
             get => readoutMode;
             set {
-                if (readoutMode != value) {
+                if (readoutMode != value && value >= 0) {
                     readoutMode = value;
                     RaisePropertyChanged();
                 }
@@ -429,7 +429,7 @@ namespace NINA.Profile {
         public short? ReadoutModeForSnapImages {
             get => readoutModeForSnapImages;
             set {
-                if (readoutModeForSnapImages != value) {
+                if (readoutModeForSnapImages != value && value >= 0) {
                     readoutModeForSnapImages = value;
                     RaisePropertyChanged();
                 }
@@ -442,7 +442,7 @@ namespace NINA.Profile {
         public short? ReadoutModeForNormalImages {
             get => readoutModeForNormalImages;
             set {
-                if (readoutModeForNormalImages != value) {
+                if (readoutModeForNormalImages != value && value >= 0) {
                     readoutModeForNormalImages = value;
                     RaisePropertyChanged();
                 }

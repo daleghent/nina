@@ -38,8 +38,8 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private static readonly TimeSpan COOLING_TIMEOUT = TimeSpan.FromSeconds(2);
         private AsyncObservableCollection<BinningMode> _binningModes;
         private bool _connected = false;
-        private short _readoutModeForNormalImages;
-        private short _readoutModeForSnapImages;
+        private short _readoutModeForNormalImages = 0;
+        private short _readoutModeForSnapImages = 0;
         private Task coolerTask;
         private CancellationTokenSource coolerWorkerCts;
         private Task sensorStatsTask;
@@ -394,7 +394,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public short ReadoutModeForNormalImages {
             get => _readoutModeForNormalImages;
             set {
-                _readoutModeForNormalImages = value;
+                if (value >= 0 && value < ReadoutModes.Count) {
+                    _readoutModeForNormalImages = value;
+                } else {
+                    _readoutModeForNormalImages = 0;
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -402,7 +407,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public short ReadoutModeForSnapImages {
             get => _readoutModeForSnapImages;
             set {
-                _readoutModeForSnapImages = value;
+                if (value >= 0 && value < ReadoutModes.Count) {
+                    _readoutModeForSnapImages = value;
+                } else {
+                    _readoutModeForSnapImages = 0;
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -418,17 +428,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     } else {
                         if ((rv = Sdk.GetReadMode(ref mode)) != QhySdk.QHYCCD_SUCCESS) {
                             Logger.Error($"QHYCCD: GetQHYCCDReadMode() failed. Returned {rv}");
-                            return -1;
+                            return 0;
                         }
                     }
 
                     return (short)mode;
                 } else {
-                    return -1;
+                    return 0;
                 }
             }
             set {
-                if (value < ReadoutModes.Count) {
+                if (value >= 0 && value < ReadoutModes.Count) {
                     uint rv;
                     string modeName = ReadoutModes[value];
                     uint mode = (uint)value;

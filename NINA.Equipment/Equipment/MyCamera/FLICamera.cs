@@ -412,14 +412,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     if ((rv = LibFLI.FLIGetCameraMode(CameraH, ref mode)) != LibFLI.FLI_SUCCESS) {
                         Logger.Error($"FLI: FLIGetCameraMode() failed. Returned {rv}");
 
-                        return -1;
+                        return 0;
                     }
 
                     Logger.Debug($"FLI: Current readout mode: {mode} ({ReadoutModes.Cast<string>().ToArray()[mode]})");
 
                     return (short)mode;
                 } else {
-                    return -1;
+                    return 0;
                 }
             }
             set {
@@ -476,7 +476,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public short ReadoutModeForNormalImages {
             get => Info.ReadoutModeNormal;
             set {
-                Info.ReadoutModeNormal = value;
+                if (value >= 0 && value < ReadoutModes.Count) {
+                    Info.ReadoutModeNormal = value;
+                } else {
+                    Info.ReadoutModeNormal = 0;
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -484,7 +489,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public short ReadoutModeForSnapImages {
             get => Info.ReadoutModeSnap;
             set {
-                Info.ReadoutModeSnap = value;
+                if (value >= 0 && value < ReadoutModes.Count) {
+                    Info.ReadoutModeSnap = value;
+                } else {
+                    Info.ReadoutModeSnap = 0;
+                }
+
                 RaisePropertyChanged();
             }
         }

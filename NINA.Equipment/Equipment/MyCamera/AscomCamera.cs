@@ -430,7 +430,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public short ReadoutModeForSnapImages {
             get => readoutModeForSnapImages;
             set {
-                readoutModeForSnapImages = value;
+                if (value >= 0 && value < ReadoutModes.Count) {
+                    readoutModeForSnapImages = value;
+                } else {
+                    readoutModeForSnapImages = 0;
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -440,7 +445,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public short ReadoutModeForNormalImages {
             get => readoutModeForNormalImages;
             set {
-                readoutModeForNormalImages = value;
+                if (value >= 0 && value < ReadoutModes.Count) {
+                    readoutModeForNormalImages = value;
+                } else {
+                    readoutModeForNormalImages = 0;
+                }
+
                 RaisePropertyChanged();
             }
         }
@@ -647,7 +657,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short ReadoutMode {
             get {
-                return GetProperty<short>(nameof(Camera.ReadoutMode), -1);
+                return GetProperty<short>(nameof(Camera.ReadoutMode), 0);
             }
             set {
                 if (Connected && (value != ReadoutMode) && (value < ReadoutModes.Count)) {

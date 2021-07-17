@@ -746,17 +746,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
         }
 
         public void SetReadoutMode(short mode) {
-            if (CameraInfo.Connected) {
-                Cam.ReadoutMode = mode;
-                CameraInfo.ReadoutMode = mode;
+            if (CameraInfo.Connected && mode >= 0 && mode < CameraInfo.ReadoutModes.Count()) {
+                Cam.ReadoutMode = CameraInfo.ReadoutMode = mode;
                 BroadcastCameraInfo();
             }
         }
 
         public void SetReadoutModeForNormalImages(short mode) {
-            if (CameraInfo.Connected) {
-                Cam.ReadoutModeForNormalImages = mode;
-                CameraInfo.ReadoutModeForNormalImages = mode;
+            if (CameraInfo.Connected && mode >= 0 && mode < CameraInfo.ReadoutModes.Count()) {
+                Cam.ReadoutModeForNormalImages = CameraInfo.ReadoutModeForNormalImages = mode;
                 BroadcastCameraInfo();
             }
         }
