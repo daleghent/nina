@@ -5515,6 +5515,9 @@ Este ajuste no tendrá efecto en los sensores de color.
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
     <value>Algunos drivers de la montura tienen una implementación inversa del movimiento del eje secundario. Habilita esto para invertir la dirección en los comandos de movimiento para el eje secundario.</value>
   </data>
+  <data name="LblSequenceTitle" xml:space="preserve">
+    <value>Current sequence title</value>
+  </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>La apertura de la cúpula falló, el estado de apertura se notifica como cerrado tras iniciar la operación de su apertura.</value>
   </data>
@@ -5669,5 +5672,13 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
     <value>Radio de la cúpula no configurado correctamente. La posición calculada del telescopio está más allá de la cúpula.</value>
+  </data>
+  <data name="LblAdvancedSequenceTitle" xml:space="preserve">
+    <value>Advanced Sequence</value>
+    <comment>Default advanced sequencer title</comment>
+  </data>
+  <data name="LblTargetSetTitle" xml:space="preserve">
+    <value>Target Set</value>
+    <comment>Default simple sequencer title</comment>
   </data>
 </root>

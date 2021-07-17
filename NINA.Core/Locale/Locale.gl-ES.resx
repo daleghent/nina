@@ -5526,6 +5526,9 @@ Só é relevante cando se usa un controlador de cámara ASCOM!</value>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
     <value>Algúns controladores de montura teñen unha implementación inversa do movemento do eixe secundario. Habilítao para inverter a dirección dos comandos de movemento para o eixe secundario.</value>
   </data>
+  <data name="LblSequenceTitle" xml:space="preserve">
+    <value>Current sequence title</value>
+  </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Fallou a apertura do obturador. O estado do obturador aínda se informa como pechado a pesar de que se iniciou a operación de apertura.</value>
   </data>
@@ -5680,5 +5683,13 @@ O comportamento predeterminado é continuar con erros, pero para algunhas instru
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
     <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
+  </data>
+  <data name="LblAdvancedSequenceTitle" xml:space="preserve">
+    <value>Advanced Sequence</value>
+    <comment>Default advanced sequencer title</comment>
+  </data>
+  <data name="LblTargetSetTitle" xml:space="preserve">
+    <value>Target Set</value>
+    <comment>Default simple sequencer title</comment>
   </data>
 </root>
