@@ -68,7 +68,7 @@ using CsvHelper.Configuration;
 
 namespace NINA.ViewModel {
 
-    internal class SimpleSequenceVM : BaseVM, ISimpleSequenceVM, ICameraConsumer {
+    internal class SimpleSequenceVM : SequencerBaseVM, ISimpleSequenceVM, ICameraConsumer {
 
         public SimpleSequenceVM(
                 IProfileService profileService,
@@ -127,6 +127,7 @@ namespace NINA.ViewModel {
                 await Application.Current.Dispatcher.BeginInvoke(DispatcherPriority.Render, new Action(() => {
                     var targetArea = factory.GetContainer<TargetAreaContainer>();
                     var rootContainer = factory.GetContainer<SequenceRootContainer>();
+                    rootContainer.Name = Loc.Instance["LblTargetSetTitle"];
                     rootContainer.Add(new SimpleStartContainer(factory, profileService));
                     rootContainer.Add(targetArea);
                     rootContainer.Add(new SimpleEndContainer(factory, profileService));
@@ -236,8 +237,6 @@ namespace NINA.ViewModel {
         private void CancelSequence(object obj) {
             cts?.Cancel();
         }
-
-        public NINA.Sequencer.Sequencer Sequencer { get; private set; }
 
         public bool DoMeridianFlip {
             get => profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
@@ -427,9 +426,14 @@ namespace NINA.ViewModel {
                 initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
             }
             Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-            dialog.InitialDirectory = initialDirectory;
             dialog.Title = Loc.Instance["LblSaveTargetSet"];
-            dialog.FileName = "";
+            if (string.IsNullOrEmpty(SavePath) || Path.GetExtension(SavePath) != ".ninaTargetSet") {
+                dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+                dialog.FileName = "";
+            } else {
+                dialog.InitialDirectory = Path.GetDirectoryName(SavePath);
+                dialog.FileName = Path.GetFileName(SavePath);
+            }
             dialog.DefaultExt = "ninaTargetSet";
             dialog.Filter = "N.I.N.A target set files|*." + dialog.DefaultExt;
             dialog.OverwritePrompt = true;
@@ -444,6 +448,7 @@ namespace NINA.ViewModel {
                     }
                 }
                 CaptureSequenceList.SaveSequenceSet(cslCollection, dialog.FileName);
+                SavePath = dialog.FileName;
             }
         }
 
@@ -476,8 +481,13 @@ namespace NINA.ViewModel {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = false;
             dialog.Title = Loc.Instance["LblLoadTargetSet"];
-            dialog.InitialDirectory = initialDirectory;
-            dialog.FileName = "";
+            if (string.IsNullOrEmpty(SavePath) || Path.GetExtension(SavePath) != ".ninaTargetSet") {
+                dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+                dialog.FileName = "";
+            } else {
+                dialog.InitialDirectory = Path.GetDirectoryName(SavePath);
+                dialog.FileName = Path.GetFileName(SavePath);
+            }
             dialog.DefaultExt = "ninaTargetSet";
             dialog.Filter = "N.I.N.A target set files|*." + dialog.DefaultExt;
 
@@ -497,6 +507,7 @@ namespace NINA.ViewModel {
                         item.ClearHasChanged();
                     }
                     SelectedTarget = Targets.Items.FirstOrDefault() as SimpleDSOContainer;
+                    SavePath = dialog.FileName;
                 }
             }
             (SelectedTarget as SimpleDSOContainer)?.ResetProgressCascaded();

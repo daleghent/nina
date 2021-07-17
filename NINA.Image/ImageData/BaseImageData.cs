@@ -270,6 +270,8 @@ namespace NINA.Image.ImageData {
                 p.Set(ImagePatternKeys.StarCount, this.StarDetectionAnalysis.DetectedStars);
             }
 
+            p.Set(ImagePatternKeys.SequenceTitle, metadata.Sequence.Title);
+
             return p;
         }
 

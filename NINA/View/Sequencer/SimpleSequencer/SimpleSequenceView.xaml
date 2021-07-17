@@ -38,11 +38,32 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Grid Margin="5,0,0,0">
+                <Grid
+            Name="PART_Header"
+            Grid.Row="0"
+            MinHeight="35"
+            Margin="0"
+            HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}"
+            Background="{StaticResource SecondaryBackgroundBrush}">
+                    <TextBox
+                    MinWidth="200"
+                    Margin="10,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Background="{StaticResource SecondaryBackgroundBrush}"
+                    FontSize="10pt"
+                    Foreground="{StaticResource ButtonForegroundBrush}"
+                    Text="{Binding Sequencer.MainContainer.SequenceTitle, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+
+                <Grid Margin="5,0,0,0"
+                      Grid.Row="1">
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition Width="Auto" />
@@ -225,10 +246,10 @@
                     </StackPanel>
                 </Grid>
 
-                <local:SimpleDSOContainerView Grid.Row="2" DataContext="{Binding SelectedTarget}" />
+                <local:SimpleDSOContainerView Grid.Row="3" DataContext="{Binding SelectedTarget}" />
 
                 <Border
-                    Grid.Row="3"
+                    Grid.Row="4"
                     BorderBrush="{StaticResource BorderBrush}"
                     BorderThickness="0,0,0,1">
                     <Grid Margin="5,0,0,0">

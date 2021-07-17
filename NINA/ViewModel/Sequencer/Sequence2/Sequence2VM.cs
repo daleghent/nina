@@ -55,7 +55,7 @@ using NINA.WPF.Base.Interfaces.ViewModel;
 
 namespace NINA.ViewModel.Sequencer {
 
-    internal class Sequence2VM : BaseVM, ISequence2VM {
+    internal class Sequence2VM : SequencerBaseVM, ISequence2VM {
         private IApplicationStatusMediator applicationStatusMediator;
         private ISequenceMediator sequenceMediator;
         private DispatcherTimer validationTimer;
@@ -114,6 +114,7 @@ namespace NINA.ViewModel.Sequencer {
                     TargetController = new TargetController(SequenceJsonConverter, profileService);
 
                     var rootContainer = SequencerFactory.GetContainer<SequenceRootContainer>();
+                    rootContainer.Name = Loc.Instance["LblAdvancedSequenceTitle"];
                     rootContainer.Add(SequencerFactory.GetContainer<StartAreaContainer>());
                     rootContainer.Add(SequencerFactory.GetContainer<TargetAreaContainer>());
                     rootContainer.Add(SequencerFactory.GetContainer<EndAreaContainer>());
@@ -214,8 +215,13 @@ namespace NINA.ViewModel.Sequencer {
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = false;
             dialog.Title = Loc.Instance["LblLoad"];
-            dialog.InitialDirectory = initialDirectory;
-            dialog.FileName = "";
+            if (string.IsNullOrEmpty(SavePath) || Path.GetExtension(SavePath) != ".json") {
+                dialog.InitialDirectory = initialDirectory;
+                dialog.FileName = "";
+            } else {
+                dialog.InitialDirectory = Path.GetDirectoryName(SavePath);
+                dialog.FileName = Path.GetFileName(SavePath);
+            }
             dialog.DefaultExt = "json";
             dialog.Filter = "N.I.N.A. sequence JSON|*." + dialog.DefaultExt;
 
@@ -233,6 +239,7 @@ namespace NINA.ViewModel.Sequencer {
                     Sequencer.MainContainer = container;
                     Sequencer.MainContainer.Validate();
                     Sequencer.MainContainer.ClearHasChanged();
+                    SavePath = file;
                 } else {
                     Logger.Error("Unable to load sequence - Sequencer root element must be sequence root container!");
                     Notification.ShowError(Loc.Instance["Lbl_Sequencer_RootElementMustBeRootContainer"]);
@@ -243,16 +250,6 @@ namespace NINA.ViewModel.Sequencer {
             }
         }
 
-        private string savePath = string.Empty;
-
-        public string SavePath {
-            get => savePath;
-            set {
-                savePath = value;
-                RaisePropertyChanged();
-            }
-        }
-
         private void SaveAsSequence(object arg) {
             try {
                 var initialDirectory = string.Empty;
@@ -260,9 +257,14 @@ namespace NINA.ViewModel.Sequencer {
                     initialDirectory = Path.GetFullPath(profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder);
                 }
                 Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
-                dialog.InitialDirectory = initialDirectory;
                 dialog.Title = Loc.Instance["LblSave"];
-                dialog.FileName = Sequencer.MainContainer.Name;
+                if (string.IsNullOrEmpty(SavePath) || Path.GetExtension(SavePath) != ".json") {
+                    dialog.InitialDirectory = initialDirectory;
+                    dialog.FileName = Sequencer.MainContainer.Name;
+                } else {
+                    dialog.InitialDirectory = Path.GetDirectoryName(SavePath);
+                    dialog.FileName = Path.GetFileName(SavePath);
+                }
                 dialog.DefaultExt = "json";
                 dialog.Filter = "N.I.N.A. sequence JSON|*." + dialog.DefaultExt;
                 dialog.OverwritePrompt = true;
@@ -297,8 +299,6 @@ namespace NINA.ViewModel.Sequencer {
                 Notification.ShowSuccess(string.Format(Loc.Instance["Lbl_Sequencer_SaveSequence_Notification"], Sequencer.MainContainer.Name, SavePath));
             }
         }
-
-        public NINA.Sequencer.ISequencer Sequencer { get; private set; }
 
         public ISequencerFactory SequencerFactory { get; }
 

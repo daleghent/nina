@@ -113,6 +113,9 @@ namespace NINA.Core.Model {
 
             p = new ImagePattern(ImagePatternKeys.StarCount, Locale.Loc.Instance["LblStarCount"]);
             patterns.Add(p.Key, p);
+
+            p = new ImagePattern(ImagePatternKeys.SequenceTitle, Locale.Loc.Instance["LblSequenceTitle"]);
+            patterns.Add(p.Key, p);
         }
 
         public bool Set(string key, string value) {
@@ -188,6 +191,7 @@ namespace NINA.Core.Model {
             p.Set(ImagePatternKeys.Telescope, "OptiCo 60mm f-15");
             p.Set(ImagePatternKeys.RotatorAngle, 289.4);
             p.Set(ImagePatternKeys.StarCount, 3294);
+            p.Set(ImagePatternKeys.SequenceTitle, "SequenceTitle");
 
             return p;
         }
@@ -225,6 +229,7 @@ namespace NINA.Core.Model {
         public static readonly string Telescope = "$$TELESCOPE$$";
         public static readonly string RotatorAngle = "$$ROTATORANGLE$$";
         public static readonly string StarCount = "$$STARCOUNT$$";
+        public static readonly string SequenceTitle = "$$SEQUENCETITLE$$";
     }
 
     public class ImagePattern {

@@ -123,7 +123,7 @@
                 Background="{StaticResource SecondaryBackgroundBrush}"
                 FontSize="10pt"
                 Foreground="{StaticResource ButtonForegroundBrush}"
-                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                Text="{Binding SequenceTitle, UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel
                 x:Name="ButtonCommands"
                 Grid.Column="2"

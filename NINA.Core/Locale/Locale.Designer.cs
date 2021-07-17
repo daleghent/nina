@@ -2449,6 +2449,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced Sequence.
+        /// </summary>
+        internal static string LblAdvancedSequenceTitle {
+            get {
+                return ResourceManager.GetString("LblAdvancedSequenceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Advanced Settings.
         /// </summary>
         internal static string LblAdvancedSettings {
@@ -13284,6 +13293,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Current sequence title.
+        /// </summary>
+        internal static string LblSequenceTitle {
+            get {
+                return ResourceManager.GetString("LblSequenceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serial Port.
         /// </summary>
         internal static string LblSerialPort {
@@ -14410,6 +14428,15 @@ namespace NINA.Core.Locale {
         internal static string LblTargets {
             get {
                 return ResourceManager.GetString("LblTargets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Set.
+        /// </summary>
+        internal static string LblTargetSetTitle {
+            get {
+                return ResourceManager.GetString("LblTargetSetTitle", resourceCulture);
             }
         }
         

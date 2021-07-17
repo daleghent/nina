@@ -92,5 +92,19 @@ namespace NINA.Sequencer.Container {
                 Description = Description,
             };
         }
+
+        private string sequenceTitle;
+
+        public string SequenceTitle {
+            get {
+                return string.IsNullOrEmpty(sequenceTitle) ? Name : sequenceTitle;
+            }
+            set {
+                if (sequenceTitle != value) {
+                    sequenceTitle = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
     }
 }

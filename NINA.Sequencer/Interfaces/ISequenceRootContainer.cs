@@ -24,5 +24,7 @@ namespace NINA.Sequencer.Container {
         void RemoveRunningItem(ISequenceItem item);
 
         void SkipCurrentRunningItems();
+
+        string SequenceTitle { get; set; }
     }
 }

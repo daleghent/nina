@@ -32,6 +32,7 @@ namespace NINA.Image.ImageData {
         public ObserverParameter Observer { get; set; } = new ObserverParameter();
         public WeatherDataParameter WeatherData { get; set; } = new WeatherDataParameter();
         public WorldCoordinateSystem WorldCoordinateSystem = null;
+        public SequenceParameter Sequence = new SequenceParameter();
 
         /// <summary>
         /// Fill relevant info from a Profile
@@ -158,5 +159,9 @@ namespace NINA.Image.ImageData {
         public double WindDirection { get; set; } = double.NaN;
         public double WindGust { get; set; } = double.NaN;
         public double WindSpeed { get; set; } = double.NaN;
+    }
+
+    public class SequenceParameter {
+        public string Title { get; set; } = string.Empty;
     }
 }

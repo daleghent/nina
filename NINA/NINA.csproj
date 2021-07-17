@@ -332,6 +332,7 @@
     <Compile Include="ViewModel\Plugins\PluginsVM.cs" />
     <Compile Include="ViewModel\Plugins\PluginOptionsDataTemplateSelector.cs" />
     <Compile Include="ViewModel\Sequencer\SequenceNavigationVM.cs" />
+    <Compile Include="ViewModel\Sequencer\SequencerBaseVM.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleDSOContainer.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleEndContainer.cs" />

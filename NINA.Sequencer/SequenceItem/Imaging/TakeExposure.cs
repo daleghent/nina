@@ -196,6 +196,14 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                     imageData.MetaData.Target.Rotation = target.Rotation;
                 }
 
+                ISequenceContainer parent = Parent;
+                while (parent != null && !(parent is SequenceRootContainer)) {
+                    parent = parent.Parent;
+                }
+                if (parent is SequenceRootContainer item) {
+                    imageData.MetaData.Sequence.Title = item.SequenceTitle;
+                }
+
                 await imageSaveMediator.Enqueue(imageData, prepareTask, progress, token);
 
                 if (IsLightSequence()) {
