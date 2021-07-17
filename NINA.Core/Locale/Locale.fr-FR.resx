@@ -5522,6 +5522,9 @@ Uniquement pertinent lorsque vous utilisez un pilote de caméra ASCOM !</value>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
     <value>Certains pilotes de monture ont une implémentation inversée du mouvement de l'axe secondaire. Activez cette option pour inverser la direction des commandes de déplacement de l'axe secondaire.</value>
   </data>
+  <data name="LblSequenceTitle" xml:space="preserve">
+    <value>Current sequence title</value>
+  </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>L'ouverture de l'obturateur a échoué. L'état de l'obturateur est toujours signalé comme étant fermé après avoir lancé l'ouverture de l'obturateur.</value>
   </data>
@@ -5676,5 +5679,13 @@ Le comportement par défaut est de continuer en cas d'erreur, mais pour certaine
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
     <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
+  </data>
+  <data name="LblAdvancedSequenceTitle" xml:space="preserve">
+    <value>Advanced Sequence</value>
+    <comment>Default advanced sequencer title</comment>
+  </data>
+  <data name="LblTargetSetTitle" xml:space="preserve">
+    <value>Target Set</value>
+    <comment>Default simple sequencer title</comment>
   </data>
 </root>

@@ -5512,6 +5512,9 @@ Yalnızca bir ASCOM kamera sürücüsü kullanıldığında geçerlidir!</value>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
     <value>Bazı kundak sürücüleri, ikincil eksen hareketinin ters bir uygulamasına sahiptir. İkincil eksen için hareket komutları sırasında yönü tersine çevirmek için bunu etkinleştirin.</value>
   </data>
+  <data name="LblSequenceTitle" xml:space="preserve">
+    <value>Current sequence title</value>
+  </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Kapak açılamadı. Kapağı açma işlemi başlatıldıktan sonra kapak durumu hala kapalı olarak bildirildi.</value>
   </data>
@@ -5666,5 +5669,13 @@ Varsayılan davranış, hatalara devam etmektir, ancak bazı talimatlar için y�
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
     <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
+  </data>
+  <data name="LblAdvancedSequenceTitle" xml:space="preserve">
+    <value>Advanced Sequence</value>
+    <comment>Default advanced sequencer title</comment>
+  </data>
+  <data name="LblTargetSetTitle" xml:space="preserve">
+    <value>Target Set</value>
+    <comment>Default simple sequencer title</comment>
   </data>
 </root>

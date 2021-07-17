@@ -5520,6 +5520,9 @@ To má význam pouze při použití ovladače kamery ASCOM!</value>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
     <value>Některé ovladače montáže mají obrácenou implementaci pohybu sekundární osy. Povolte toto pro obrácení směru při povelech pohybu pro sekundární osu.</value>
   </data>
+  <data name="LblSequenceTitle" xml:space="preserve">
+    <value>Current sequence title</value>
+  </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Otevření štěrbiny selhalo. Stav štěrbiny je stále hlášen jako zavřená.</value>
   </data>
@@ -5674,5 +5677,13 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
     <value>Poloměr kopule není nastaven správně. Vypočítaná poloha dalekohledu je za kopulí.</value>
+  </data>
+  <data name="LblAdvancedSequenceTitle" xml:space="preserve">
+    <value>Advanced Sequence</value>
+    <comment>Default advanced sequencer title</comment>
+  </data>
+  <data name="LblTargetSetTitle" xml:space="preserve">
+    <value>Target Set</value>
+    <comment>Default simple sequencer title</comment>
   </data>
 </root>

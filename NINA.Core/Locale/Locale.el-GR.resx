@@ -5515,6 +5515,9 @@ Only relevant when using an ASCOM camera driver!</value>
   <data name="LblSecondaryReversedToolTip" xml:space="preserve">
     <value>Some mount drivers have a reversed implementation of the secondary axis movement. Enable this to reverse the direction on move commands for the secondary axis.</value>
   </data>
+  <data name="LblSequenceTitle" xml:space="preserve">
+    <value>Current sequence title</value>
+  </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Opening the shutter failed. The shutter status is still reported as closed after initiating open shutter operation.</value>
   </data>
@@ -5669,5 +5672,13 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
     <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
+  </data>
+  <data name="LblAdvancedSequenceTitle" xml:space="preserve">
+    <value>Advanced Sequence</value>
+    <comment>Default advanced sequencer title</comment>
+  </data>
+  <data name="LblTargetSetTitle" xml:space="preserve">
+    <value>Target Set</value>
+    <comment>Default simple sequencer title</comment>
   </data>
 </root>
