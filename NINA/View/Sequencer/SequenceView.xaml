@@ -107,6 +107,16 @@
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Command="{Binding AddTargetCommand}">
+                                <Button.Style>
+                                    <Style BasedOn="{StaticResource StandardButton}" TargetType="{x:Type Button}">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SimpleSequenceHasTargets}" Value="True">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
                                 <Button.ToolTip>
                                     <ToolTip ToolTipService.ShowOnDisabled="True">
                                         <TextBlock Text="{ns:Loc LblTooltipAddTarget}" />
@@ -123,6 +133,40 @@
                                         FontStyle="Italic"
                                         Foreground="{StaticResource ButtonForegroundBrush}"
                                         Text="{ns:Loc Lbl_OldSequencer_AddNewTarget}" />
+                                </StackPanel>
+                            </Button>
+                            <Button
+                                Width="150"
+                                Height="150"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Command="{Binding SwitchToTargetSetCommand}">
+                                <Button.Style>
+                                    <Style BasedOn="{StaticResource StandardButton}" TargetType="{x:Type Button}">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding SimpleSequenceHasTargets}" Value="True">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Button.Style>
+                                <Button.ToolTip>
+                                    <ToolTip ToolTipService.ShowOnDisabled="True">
+                                        <TextBlock Text="{ns:Loc LblTooltipSwitchTargetSet}" />
+                                    </ToolTip>
+                                </Button.ToolTip>
+                                <StackPanel Orientation="Vertical">
+                                    <Path
+                                        Height="60"
+                                        Margin="5"
+                                        Data="{StaticResource CopySVG}"
+                                        Fill="{StaticResource ButtonForegroundBrush}"
+                                        Stretch="Uniform" />
+                                    <TextBlock
+                                        FontStyle="Italic"
+                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                        Text="{ns:Loc LblTargetSetTitle}" />
                                 </StackPanel>
                             </Button>
 

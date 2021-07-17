@@ -15181,6 +15181,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Switches to the simple target set planning mode.
+        /// </summary>
+        internal static string LblTooltipSwitchTargetSet {
+            get {
+                return ResourceManager.GetString("LblTooltipSwitchTargetSet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Starts Exposure.
         /// </summary>
         internal static string LblTooltipTakeExposure {

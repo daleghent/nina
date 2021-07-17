@@ -74,6 +74,9 @@ namespace NINA.ViewModel.Sequencer {
                 simpleSequenceVM.AddTargetCommand.Execute(o);
                 ActiveSequencerVM = simpleSequenceVM;
             });
+            SwitchToTargetSetCommand = new RelayCommand((object o) => {
+                ActiveSequencerVM = simpleSequenceVM;
+            });
             LoadSequenceCommand = new RelayCommand((object o) => {
                 if (SimpleSequenceVM.LoadTarget()) {
                     ActiveSequencerVM = simpleSequenceVM;
@@ -123,6 +126,7 @@ namespace NINA.ViewModel.Sequencer {
         public ICommand LoadTargetSetCommand { get; private set; }
         public ICommand ImportTargetsCommand { get; private set; }
         public ICommand SwitchToAdvancedSequenceCommand { get; private set; }
+        public ICommand SwitchToTargetSetCommand { get; private set; }
 
         public ISimpleSequenceVM SimpleSequenceVM {
             get => simpleSequenceVM;
@@ -131,6 +135,8 @@ namespace NINA.ViewModel.Sequencer {
         public ISequence2VM Sequence2VM {
             get => sequence2VM;
         }
+
+        public bool SimpleSequenceHasTargets => ((SimpleSequenceVM)simpleSequenceVM).Targets.Items.Count > 0;
 
         private object lockObj = new object();
         private bool initialized;
