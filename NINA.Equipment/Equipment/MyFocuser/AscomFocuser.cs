@@ -87,7 +87,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
             }
             set {
                 if (Connected && TempCompAvailable) {
-                    SetProperty(nameof(Focuser.TempCompAvailable), value);
+                    SetProperty(nameof(Focuser.TempComp), value);
                 }
             }
         }
