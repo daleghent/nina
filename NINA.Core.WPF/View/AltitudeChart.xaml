@@ -25,7 +25,7 @@
             <util:BindingProxy x:Key="proxy" Data="{Binding ElementName=UC, Path=NighttimeData}" />
         </Grid.Resources>
         <oxy:Plot
-            MinHeight="180"
+            MinHeight="75"
             VerticalAlignment="Stretch"
             Background="{StaticResource BackgroundBrush}"
             PlotAreaBackground="{StaticResource BackgroundBrush}"
@@ -35,6 +35,7 @@
                     AxislineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                     EndPosition="1"
                     IntervalLength="30"
+                    IsAxisVisible="{Binding AnnotateAltitudeAxis, ElementName=UC}"
                     IsPanEnabled="False"
                     IsZoomEnabled="False"
                     MajorGridlineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}, Converter={StaticResource SetAlphaToColorConverter}, ConverterParameter=60}"
@@ -49,6 +50,7 @@
                 <oxy:DateTimeAxis
                     AxislineColor="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                     IntervalType="Hours"
+                    IsAxisVisible="{Binding AnnotateTimeAxis, ElementName=UC}"
                     IsPanEnabled="False"
                     IsZoomEnabled="False"
                     MajorStep="0.125"

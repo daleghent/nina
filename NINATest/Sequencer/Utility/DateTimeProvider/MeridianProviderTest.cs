@@ -41,16 +41,14 @@ namespace NINATest.Sequencer.Utility.DateTimeProvider {
         [TestCase(7, 10, 0, 20)]
         [TestCase(6, 10, 11, 20)]
         public void GetDateTime_EntityHasParentWithCoordinates_CalculatesTimeToMeridian(double ra, double dec, int expectedHour, int expectedMinute) {
-            //Shift RA/Dec depending on the time zone to have consistent tests, as this is location dependent
-            var offset = TimeZone.CurrentTimeZone.GetUtcOffset(DateTime.Now);
-            if (TimeZone.CurrentTimeZone.IsDaylightSavingTime(DateTime.Now)) { offset -= TimeSpan.FromHours(1); }
-            ra = AstroUtil.EuclidianModulus(ra - offset.TotalHours, 24);
-            dec = AstroUtil.EuclidianModulus(dec - offset.TotalHours * 15, 360);
+            ra = AstroUtil.EuclidianModulus(ra, 24);
+            dec = AstroUtil.EuclidianModulus(dec, 360);
 
             var profileServiceMock = new Mock<IProfileService>();
             profileServiceMock.SetupGet(x => x.ActiveProfile.AstrometrySettings.Latitude).Returns(10);
 
             var referenceDate = new DateTime(2020, 1, 1, 0, 0, 0);
+            referenceDate = DateTime.SpecifyKind(referenceDate, DateTimeKind.Utc);
 
             var customDateTimeMock = new Mock<ICustomDateTime>();
             customDateTimeMock.SetupGet(x => x.Now).Returns(referenceDate);

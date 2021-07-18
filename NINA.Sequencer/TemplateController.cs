@@ -44,6 +44,7 @@ namespace NINA.Sequencer {
         public const string DefaultTemplatesGroup = "LblTemplate_DefaultTemplates";
         private const string UserTemplatesGroup = "LblTemplate_UserTemplates";
         public const string TemplateFileExtension = ".template.json";
+        private ISequenceSettings activeSequenceSettings;
 
         public IList<TemplatedSequenceContainer> UserTemplates => Templates.Where(t => t.Group == UserTemplatesGroup).ToList();
 
@@ -105,7 +106,8 @@ namespace NINA.Sequencer {
             sequenceTemplateFolderWatcher.EnableRaisingEvents = true;
 
             profileService.ProfileChanged += ProfileService_ProfileChanged;
-            profileService.ActiveProfile.SequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
+            activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
+            activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
         }
 
         private bool ApplyViewFilter(object obj) {
@@ -124,7 +126,9 @@ namespace NINA.Sequencer {
         }
 
         private void ProfileService_ProfileChanged(object sender, System.EventArgs e) {
-            profileService.ActiveProfile.SequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
+            activeSequenceSettings.PropertyChanged -= SequenceSettings_SequencerTemplatesFolderChanged;
+            activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
+            activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTemplatesFolderChanged;
             LoadUserTemplates();
         }
 

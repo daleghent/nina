@@ -18,5 +18,6 @@ namespace NINA.Sequencer.Container {
 
     public interface IDeepSkyObjectContainer : ISequenceContainer {
         InputTarget Target { get; set; }
+        NighttimeData NighttimeData { get; }
     }
 }

@@ -30,13 +30,16 @@ using System.Windows.Data;
 using System.Windows.Input;
 using NINA.Core.Utility.Notification;
 using NINA.Core.Locale;
+using OxyPlot.Axes;
 
 namespace NINA.Sequencer {
 
-    public class TargetController {
+    public class TargetController : BaseINPC {
         private readonly SequenceJsonConverter sequenceJsonConverter;
         private readonly IProfileService profileService;
         private string targetPath;
+        private FileSystemWatcher sequenceTargetsFolderWatcher;
+        public const string TargetsFileExtension = ".json";
 
         public IList<TargetSequenceContainer> Targets { get; }
 
@@ -46,6 +49,7 @@ namespace NINA.Sequencer {
         public ICollectionView TargetsMenuView { get => targetsMenuView.View; }
 
         private string viewFilter = string.Empty;
+        private ISequenceSettings activeSequenceSettings;
 
         public string ViewFilter {
             get => viewFilter;
@@ -62,17 +66,87 @@ namespace NINA.Sequencer {
             Targets = new List<TargetSequenceContainer>();
 
             targetsView = new CollectionViewSource { Source = Targets };
-            TargetsView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            targetsView.GroupDescriptions.Add(new PropertyGroupDescription(nameof(TargetSequenceContainer.Grouping)));
+            TargetsView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Weight), ListSortDirection.Ascending));
             TargetsView.Filter += new Predicate<object>(ApplyViewFilter);
+            SortByRelevance = true;
 
             targetsMenuView = new CollectionViewSource { Source = Targets };
-            TargetsMenuView.SortDescriptions.Add(new SortDescription("Name", ListSortDirection.Ascending));
+            TargetsMenuView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Name), ListSortDirection.Ascending));
 
             LoadTargets();
+
+            ToggleSortCommand = new RelayCommand(x => {
+                if (SortByRelevance) {
+                    TargetsView.SortDescriptions.RemoveAt(0);
+                    TargetsView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Weight), ListSortDirection.Ascending));
+                } else if (SortByName) {
+                    TargetsView.SortDescriptions.RemoveAt(0);
+                    TargetsView.SortDescriptions.Add(new SortDescription(nameof(TargetSequenceContainer.Name), ListSortDirection.Ascending));
+                }
+            });
+
+            sequenceTargetsFolderWatcher = new FileSystemWatcher(profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder, "*" + TargetsFileExtension);
+
+            sequenceTargetsFolderWatcher.Created += SequenceTargetsFolderWatcher_Changed;
+            sequenceTargetsFolderWatcher.Changed += SequenceTargetsFolderWatcher_Changed;
+            sequenceTargetsFolderWatcher.Deleted += SequenceTargetsFolderWatcher_Changed;
+            sequenceTargetsFolderWatcher.IncludeSubdirectories = true;
+            sequenceTargetsFolderWatcher.EnableRaisingEvents = true;
+
+            profileService.ProfileChanged += ProfileService_ProfileChanged;
+            activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
+            activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTargetsFolderChanged;
         }
+
+        private bool sortByRelevance;
+
+        public bool SortByRelevance {
+            get => sortByRelevance;
+            set {
+                sortByRelevance = value;
+                if (value) {
+                    SortByName = false;
+                }
+                RaisePropertyChanged();
+            }
+        }
+
+        private bool sortByName;
+
+        public bool SortByName {
+            get => sortByName;
+            set {
+                sortByName = value;
+                if (value) {
+                    SortByRelevance = false;
+                }
+                RaisePropertyChanged();
+            }
+        }
+
+        public ICommand ToggleSortCommand { get; }
 
         private bool ApplyViewFilter(object obj) {
             return (obj as TargetSequenceContainer).Name.IndexOf(ViewFilter, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private void SequenceTargetsFolderWatcher_Changed(object sender, FileSystemEventArgs e) {
+            LoadTargets();
+        }
+
+        private void SequenceSettings_SequencerTargetsFolderChanged(object sender, System.EventArgs e) {
+            if ((e as PropertyChangedEventArgs)?.PropertyName == nameof(profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder)) {
+                sequenceTargetsFolderWatcher.Path = profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder;
+                LoadTargets();
+            }
+        }
+
+        private void ProfileService_ProfileChanged(object sender, System.EventArgs e) {
+            activeSequenceSettings.PropertyChanged -= SequenceSettings_SequencerTargetsFolderChanged;
+            activeSequenceSettings = profileService.ActiveProfile.SequenceSettings;
+            activeSequenceSettings.PropertyChanged += SequenceSettings_SequencerTargetsFolderChanged;
+            LoadTargets();
         }
 
         public void AddTarget(IDeepSkyObjectContainer deepSkyObjectContainer) {
@@ -98,22 +172,29 @@ namespace NINA.Sequencer {
         private void LoadTargets() {
             try {
                 targetPath = profileService.ActiveProfile.SequenceSettings.SequencerTargetsFolder;
+                var rootParts = targetPath.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
 
                 if (!Directory.Exists(targetPath)) {
                     Directory.CreateDirectory(targetPath);
                 }
 
-                foreach (var target in Targets) {
+                foreach (var target in Targets.ToList()) {
                     Application.Current.Dispatcher.Invoke(() => Targets.Remove(target));
                 }
 
-                foreach (var file in Directory.GetFiles(targetPath, "*.json", SearchOption.AllDirectories)) {
+                foreach (var file in Directory.GetFiles(targetPath, "*" + TargetsFileExtension, SearchOption.AllDirectories)) {
                     try {
                         var container = sequenceJsonConverter.Deserialize(File.ReadAllText(file));
 
                         var dsoContainer = container as IDeepSkyObjectContainer;
                         if (dsoContainer != null) {
-                            Targets.Add(new TargetSequenceContainer(profileService, dsoContainer));
+                            var target = new TargetSequenceContainer(profileService, dsoContainer);
+                            var fileInfo = new FileInfo(file);
+                            container.Name = fileInfo.Name.Replace(TargetsFileExtension, "");
+                            var parts = fileInfo.Directory.FullName.Split(new char[] { Path.DirectorySeparatorChar }, System.StringSplitOptions.RemoveEmptyEntries);
+                            target.SubGroups = parts.Except(rootParts).ToArray();
+
+                            Targets.Add(target);
                         }
                     } catch (Exception ex) {
                         Logger.Error($"Invalid target JSON {file}", ex);
@@ -138,7 +219,9 @@ namespace NINA.Sequencer {
 
         public void DeleteTarget(TargetSequenceContainer targetSequenceContainer) {
             try {
-                var file = Path.Combine(targetPath, NINA.Core.Utility.CoreUtil.ReplaceAllInvalidFilenameChars(targetSequenceContainer.Name) + ".json");
+                if (targetSequenceContainer == null) return;
+
+                var file = Path.Combine(targetPath, Path.Combine(targetSequenceContainer.SubGroups), CoreUtil.ReplaceAllInvalidFilenameChars(targetSequenceContainer.Name) + ".json");
                 if (File.Exists(file)) {
                     File.Delete(file);
                 }
@@ -157,10 +240,47 @@ namespace NINA.Sequencer {
 
         public TargetSequenceContainer(IProfileService profileService, IDeepSkyObjectContainer container) {
             Container = container;
+            SubGroups = new string[0];
             this.profileService = profileService;
         }
 
+        public string Grouping => (SubGroups.Count() > 0 ? $"{string.Join(" › ", SubGroups)}" : "Base");
+        public string[] SubGroups { get; set; }
+
         public string Name { get => Container.Name; }
+
+        /// <summary>
+        /// The weight is calculated based on the following parameters
+        /// - Distance of the max altitude from the middle of the night
+        /// - Maximum altitude normalized
+        /// -> Weight = Sum of (distance * 2) and max altitude
+        /// </summary>
+        public double Weight {
+            get {
+                var sunSet = Container.NighttimeData.SunRiseAndSet.Set;
+                var sunRise = Container.NighttimeData.SunRiseAndSet.Rise;
+
+                if (sunSet.HasValue && sunRise.HasValue) {
+                    var substract = sunRise.Value - sunSet.Value;
+                    var middle = sunSet.Value.AddSeconds(substract.TotalSeconds / 2d);
+
+                    var middleNight = DateTimeAxis.ToDouble(middle);
+                    var maxAlt = Container.Target.DeepSkyObject.MaxAltitude;
+
+                    var timeAtMax = maxAlt.X;
+
+                    var distanceWeight = Math.Abs(middleNight - timeAtMax);
+
+                    var altitudeWeight = 1 - ((maxAlt.Y - (-90)) / (90 - (-90)));
+
+                    return (2 * distanceWeight + altitudeWeight) / 3;
+                } else {
+                    return 1;
+                }
+            }
+        }
+
+        private static readonly DateTime TimeOrigin = new DateTime(1899, 12, 31, 0, 0, 0, DateTimeKind.Utc);
 
         public IDeepSkyObjectContainer Container { get; }
 
