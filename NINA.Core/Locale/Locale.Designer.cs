@@ -3774,6 +3774,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to By Name.
+        /// </summary>
+        internal static string LblByName {
+            get {
+                return ResourceManager.GetString("LblByName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to By Relevance.
+        /// </summary>
+        internal static string LblByRelevance {
+            get {
+                return ResourceManager.GetString("LblByRelevance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Byte Shuffling.
         /// </summary>
         internal static string LblByteShuffling {
@@ -13252,6 +13270,24 @@ namespace NINA.Core.Locale {
         internal static string LblSequenceModeStandard {
             get {
                 return ResourceManager.GetString("LblSequenceModeStandard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sequencer Targets Folder.
+        /// </summary>
+        internal static string LblSequencerTargetsFolder {
+            get {
+                return ResourceManager.GetString("LblSequencerTargetsFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The folder where sequence targets for the advanced sequencer are stored in.
+        /// </summary>
+        internal static string LblSequencerTargetsFolderTooltip {
+            get {
+                return ResourceManager.GetString("LblSequencerTargetsFolderTooltip", resourceCulture);
             }
         }
         

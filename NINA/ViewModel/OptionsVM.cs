@@ -76,6 +76,7 @@ namespace NINA.ViewModel {
             OpenSharpCapSensorAnalysisFolderDiagCommand = new RelayCommand(OpenSharpCapSensorAnalysisFolderDiag);
             OpenSequenceTemplateDiagCommand = new RelayCommand(OpenSequenceTemplateDiag);
             OpenStartupSequenceTemplateDiagCommand = new RelayCommand(OpenStartupSequenceTemplateDiag);
+            OpenTargetsFolderDiagCommand = new RelayCommand(OpenTargetsFolderDiag);
             OpenSequenceFolderDiagCommand = new RelayCommand(OpenSequenceFolderDiag);
             OpenSequenceTemplateFolderDiagCommand = new RelayCommand(OpenSequenceTemplateFolderDiag);
             OpenCygwinFileDiagCommand = new RelayCommand(OpenCygwinFileDiag);
@@ -353,6 +354,16 @@ namespace NINA.ViewModel {
             }
         }
 
+        private void OpenTargetsFolderDiag(object o) {
+            using (var diag = new System.Windows.Forms.FolderBrowserDialog()) {
+                diag.SelectedPath = ActiveProfile.SequenceSettings.SequencerTargetsFolder;
+                System.Windows.Forms.DialogResult result = diag.ShowDialog();
+                if (result == System.Windows.Forms.DialogResult.OK) {
+                    ActiveProfile.SequenceSettings.SequencerTargetsFolder = diag.SelectedPath + "\\";
+                }
+            }
+        }
+
         private void OpenSequenceTemplateFolderDiag(object o) {
             using (var diag = new System.Windows.Forms.FolderBrowserDialog()) {
                 diag.SelectedPath = ActiveProfile.SequenceSettings.SequencerTemplatesFolder;
@@ -452,6 +463,7 @@ namespace NINA.ViewModel {
 
         public ICommand OpenSequenceTemplateDiagCommand { get; private set; }
         public ICommand OpenStartupSequenceTemplateDiagCommand { get; private set; }
+        public ICommand OpenTargetsFolderDiagCommand { get; private set; }
 
         public ICommand OpenSequenceFolderDiagCommand { get; private set; }
         public ICommand OpenSequenceTemplateFolderDiagCommand { get; private set; }

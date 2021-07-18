@@ -33,5 +33,19 @@ namespace NINA.WPF.Base.View {
             get => (NighttimeData)GetValue(NighttimeDataProperty);
             set => SetValue(NighttimeDataProperty, value);
         }
+
+        public static DependencyProperty AnnotateAltitudeAxisProperty = DependencyProperty.Register("AnnotateAltitudeAxis", typeof(bool), typeof(AltitudeChart), new PropertyMetadata(true));
+
+        public bool AnnotateAltitudeAxis {
+            get => (bool)GetValue(AnnotateAltitudeAxisProperty);
+            set => SetValue(AnnotateAltitudeAxisProperty, value);
+        }
+
+        public static DependencyProperty AnnotateTimeAxisProperty = DependencyProperty.Register("AnnotateTimeAxis", typeof(bool), typeof(AltitudeChart), new PropertyMetadata(true));
+
+        public bool AnnotateTimeAxis {
+            get => (bool)GetValue(AnnotateTimeAxisProperty);
+            set => SetValue(AnnotateTimeAxisProperty, value);
+        }
     }
 }

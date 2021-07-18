@@ -5684,4 +5684,10 @@ O comportamento padrão é continuar em caso de erros. No entanto, para algumas 
     <value>Target Set</value>
     <comment>Default simple sequencer title</comment>
   </data>
+  <data name="LblTargetSetTitle" xml:space="preserve">
+    <value>Target Set</value>
+  </data>
+  <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
+    <value>Switches to the simple target set planning mode</value>
+  </data>
 </root>

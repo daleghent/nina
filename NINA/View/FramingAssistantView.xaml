@@ -629,7 +629,10 @@
                     Grid.Row="1"
                     Margin="5"
                     VerticalAlignment="Bottom">
-                    <alt:AltitudeChart DataContext="{Binding DSO}" NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
+                    <alt:AltitudeChart
+                        MinHeight="180"
+                        DataContext="{Binding DSO}"
+                        NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                 </Grid>
             </Grid>
         </ScrollViewer>

@@ -1884,13 +1884,13 @@ Přeskočit.</value>
     <value>Načítání sekvence se nezdařilo</value>
   </data>
   <data name="LblLoadSequenceSetFailed" xml:space="preserve">
-    <value>Načtení cílové sady se nezdařilo</value>
+    <value>Načtení stanoveného cíle se nezdařilo</value>
   </data>
   <data name="LblLoadSequenceToolTip" xml:space="preserve">
     <value>Načíst sekvence z xml souboru</value>
   </data>
   <data name="LblLoadTargetSet" xml:space="preserve">
-    <value>Nahrát cílovou sadu</value>
+    <value>Nahrát stanovený cíl</value>
   </data>
   <data name="LblLocalPlatesolver" xml:space="preserve">
     <value>Místní Platesolving</value>
@@ -2753,7 +2753,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Uložit Sekvenci jako soubor xml</value>
   </data>
   <data name="LblSaveTargetSet" xml:space="preserve">
-    <value>Uložit nastavení cíle</value>
+    <value>Uložit stanovený cíl</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
     <value>Stabilizace dalekohledu po překlopení poledníku</value>
@@ -4795,7 +4795,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Načíst Cíl</value>
   </data>
   <data name="Lbl_OldSequencer_OpenTargetSet" xml:space="preserve">
-    <value>Otevřít Cílovou Sadu</value>
+    <value>Otevřít Stanovený Cíl</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
     <value>Jednoduchá Sekvence</value>
@@ -4846,7 +4846,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Nástroj</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Description" xml:space="preserve">
-    <value>Podmínka, která se opakuje, dokud se cíl nedostane pod danou výšku, a poté zastaví aktuální sadu instrukcí</value>
+    <value>Podmínka, která se opakuje, dokud se stanovený cíl nedostane pod danou výšku, a poté zastaví aktuální sadu instrukcí</value>
   </data>
   <data name="Lbl_SequenceCondition_AltitudeCondition_Name" xml:space="preserve">
     <value>Smyčka, Dokud Nadmořská výška Neklesne Pod</value>
@@ -5521,7 +5521,7 @@ To má význam pouze při použití ovladače kamery ASCOM!</value>
     <value>Některé ovladače montáže mají obrácenou implementaci pohybu sekundární osy. Povolte toto pro obrácení směru při povelech pohybu pro sekundární osu.</value>
   </data>
   <data name="LblSequenceTitle" xml:space="preserve">
-    <value>Current sequence title</value>
+    <value>Aktuální název sekvence</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Otevření štěrbiny selhalo. Stav štěrbiny je stále hlášen jako zavřená.</value>
@@ -5679,11 +5679,17 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Poloměr kopule není nastaven správně. Vypočítaná poloha dalekohledu je za kopulí.</value>
   </data>
   <data name="LblAdvancedSequenceTitle" xml:space="preserve">
-    <value>Advanced Sequence</value>
+    <value>Pokročilá Sekvence</value>
     <comment>Default advanced sequencer title</comment>
   </data>
   <data name="LblTargetSetTitle" xml:space="preserve">
-    <value>Target Set</value>
+    <value>Stanovit Cíl</value>
     <comment>Default simple sequencer title</comment>
+  </data>
+  <data name="LblTargetSetTitle" xml:space="preserve">
+    <value>Stanovit Cíl</value>
+  </data>
+  <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
+    <value>Přepne do režimu jednoduchého plánování stanoveného cíle</value>
   </data>
 </root>

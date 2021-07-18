@@ -449,9 +449,11 @@
                                 Grid.RowSpan="5"
                                 Grid.Column="1"
                                 MinWidth="400"
+                                MinHeight="120"
                                 Margin="10,0,0,0"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Stretch"
+                                AnnotateAltitudeAxis="False"
                                 DataContext="{Binding Target.DeepSkyObject}"
                                 NighttimeData="{Binding Source={StaticResource nighttimeProxy}, Path=Data}" />
                         </Grid>

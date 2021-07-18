@@ -125,7 +125,9 @@ namespace NINATest.Sequencer.Conditions {
             var sut = new AboveHorizonCondition(profileServiceMock.Object);
             sut.AltitudeOffset = offset;
             var mockDateProvider = new Mock<ICustomDateTime>();
-            mockDateProvider.SetupGet(x => x.Now).Returns(new DateTime(2020, 1, 1, 0, 0, 0));
+            var date = new DateTime(2020, 1, 1, 23, 0, 0);
+            date = DateTime.SpecifyKind(date, DateTimeKind.Utc);
+            mockDateProvider.SetupGet(x => x.Now).Returns(date);
             var coordinates = new Coordinates(Angle.ByDegree(1), Angle.ByDegree(2), Epoch.J2000, mockDateProvider.Object);
 
             sut.Coordinates.Coordinates = coordinates;
