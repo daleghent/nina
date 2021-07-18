@@ -116,13 +116,13 @@ namespace NINA.View {
         public static readonly DependencyProperty RectangleOpacityProperty =
             DependencyProperty.Register(nameof(RectangleOpacity), typeof(double), typeof(ImageView));
 
-        public double RectangleFontSize {
-            get { return (double)GetValue(OpacityProperty); }
+        public int RectangleFontSize {
+            get { return (int)GetValue(OpacityProperty); }
             set { SetValue(OpacityProperty, value); }
         }
 
         public static readonly DependencyProperty RectangleFontSizeProperty =
-            DependencyProperty.Register(nameof(RectangleFontSize), typeof(double), typeof(ImageView));
+            DependencyProperty.Register(nameof(RectangleFontSize), typeof(int), typeof(ImageView));
 
         private void Sv_SizeChanged(object sender, SizeChangedEventArgs e) {
             RecalculateScalingFactors();

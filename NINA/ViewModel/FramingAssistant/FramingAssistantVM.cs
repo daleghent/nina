@@ -1008,7 +1008,7 @@ namespace NINA.ViewModel.FramingAssistant {
                     RedrawRectangle();
                 };
 
-                FontSize = (int)((height / verticalPanels) * 0.1);
+                FontSize = Math.Max(1, (int)((height / verticalPanels) * 0.1));
             }
         }
 
