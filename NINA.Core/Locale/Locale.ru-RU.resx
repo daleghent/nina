@@ -5684,4 +5684,10 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>Target Set</value>
     <comment>Default simple sequencer title</comment>
   </data>
+  <data name="LblTargetSetTitle" xml:space="preserve">
+    <value>Target Set</value>
+  </data>
+  <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
+    <value>Switches to the simple target set planning mode</value>
+  </data>
 </root>

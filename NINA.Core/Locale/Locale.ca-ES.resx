@@ -5682,4 +5682,10 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
     <value>Target Set</value>
     <comment>Default simple sequencer title</comment>
   </data>
+  <data name="LblTargetSetTitle" xml:space="preserve">
+    <value>Target Set</value>
+  </data>
+  <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
+    <value>Switches to the simple target set planning mode</value>
+  </data>
 </root>
