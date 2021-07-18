@@ -5681,12 +5681,20 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="LblTargetSetTitle" xml:space="preserve">
     <value>Target Set</value>
-    <comment>Default simple sequencer title</comment>
-  </data>
-  <data name="LblTargetSetTitle" xml:space="preserve">
-    <value>Target Set</value>
   </data>
   <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
     <value>Switches to the simple target set planning mode</value>
+  </data>
+  <data name="LblByName" xml:space="preserve">
+    <value>By Name</value>
+  </data>
+  <data name="LblByRelevance" xml:space="preserve">
+    <value>By Relevance</value>
+  </data>
+  <data name="LblSequencerTargetsFolder" xml:space="preserve">
+    <value>Sequencer Targets Folder</value>
+  </data>
+  <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
+    <value>The folder where sequence targets for the advanced sequencer are stored in</value>
   </data>
 </root>

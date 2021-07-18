@@ -5684,12 +5684,20 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
   </data>
   <data name="LblTargetSetTitle" xml:space="preserve">
     <value>Stanovit Cíl</value>
-    <comment>Default simple sequencer title</comment>
-  </data>
-  <data name="LblTargetSetTitle" xml:space="preserve">
-    <value>Stanovit Cíl</value>
   </data>
   <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
     <value>Přepne do režimu jednoduchého plánování stanoveného cíle</value>
+  </data>
+  <data name="LblByName" xml:space="preserve">
+    <value>By Name</value>
+  </data>
+  <data name="LblByRelevance" xml:space="preserve">
+    <value>By Relevance</value>
+  </data>
+  <data name="LblSequencerTargetsFolder" xml:space="preserve">
+    <value>Sequencer Targets Folder</value>
+  </data>
+  <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
+    <value>The folder where sequence targets for the advanced sequencer are stored in</value>
   </data>
 </root>
