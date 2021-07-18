@@ -64,7 +64,6 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
                     }
                 }
 
-                context.Skip();
                 //Mark rest of items as skipped
                 foreach (var item in context.GetItemsSnapshot().Where(x => x.Status == SequenceEntityStatus.CREATED)) {
                     item.Skip();
