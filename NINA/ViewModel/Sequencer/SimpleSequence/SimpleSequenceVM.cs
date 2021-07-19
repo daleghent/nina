@@ -427,8 +427,8 @@ namespace NINA.ViewModel {
             }
             Microsoft.Win32.SaveFileDialog dialog = new Microsoft.Win32.SaveFileDialog();
             dialog.Title = Loc.Instance["LblSaveTargetSet"];
-            if (string.IsNullOrEmpty(SavePath) || Path.GetExtension(SavePath) != ".ninaTargetSet") {
-                dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+            if (string.IsNullOrEmpty(SavePath) || Path.GetExtension(SavePath) != ".ninaTargetSet" || !Directory.Exists(Path.GetDirectoryName(SavePath))) {
+                dialog.InitialDirectory = initialDirectory;
                 dialog.FileName = "";
             } else {
                 dialog.InitialDirectory = Path.GetDirectoryName(SavePath);
