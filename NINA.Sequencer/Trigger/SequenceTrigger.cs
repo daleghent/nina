@@ -17,6 +17,7 @@ using NINA.Core.Enum;
 using NINA.Core.Model;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
+using NINA.Sequencer.Validations;
 using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
@@ -94,9 +95,19 @@ namespace NINA.Sequencer.Trigger {
             Status = SequenceEntityStatus.RUNNING;
             try {
                 this.TriggerRunner.ResetAll();
-                await this.Execute(context, progress, token);
 
-                Status = SequenceEntityStatus.CREATED;
+                if (this is IValidatable && !(this is ISequenceContainer)) {
+                    var validatable = this as IValidatable;
+                    if (!validatable.Validate()) {
+                        throw new SequenceEntityFailedValidationException(string.Join(", ", validatable.Issues));
+                    }
+                }
+
+                await this.Execute(context, progress, token);
+                Status = SequenceEntityStatus.FINISHED;
+            } catch (SequenceEntityFailedValidationException ex) {
+                Status = SequenceEntityStatus.FAILED;
+                Logger.Error($"{this} - " + ex.Message);
             } catch (OperationCanceledException) {
                 Status = SequenceEntityStatus.CREATED;
             } catch (Exception ex) {

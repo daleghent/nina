@@ -106,6 +106,24 @@ namespace NINATest.Sequencer.SequenceItem {
         }
 
         [Test]
+        public async Task Run_Failed_ValidationFailure() {
+            //Arrange
+            var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
+
+            //Act
+            mock
+                .Setup(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
+                .Throws(new SequenceEntityFailedValidationException());
+            var sut = mock.Object;
+
+            await sut.Run(default, default);
+
+            //Assert
+            sut.Status.Should().Be(SequenceEntityStatus.FAILED);
+        }
+
+        [Test]
         public async Task Run_Skipped_StatusToCreated() {
             //Arrange
             var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();

@@ -201,6 +201,7 @@
     <Compile Include="Model\PagedList.cs" />
     <Compile Include="Model\ProfileCameraState.cs" />
     <Compile Include="Model\RMS.cs" />
+    <Compile Include="Model\SequenceEntityFailedValidationException.cs" />
     <Compile Include="Model\SequenceItemSkippedException.cs" />
     <Compile Include="Model\SynchronizedClientInfo.cs" />
     <Compile Include="MyMessageBox\MyMessageBox.cs" />

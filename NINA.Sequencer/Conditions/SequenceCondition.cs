@@ -14,8 +14,10 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
+using NINA.Core.Model;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
+using NINA.Sequencer.Validations;
 using NINA.Core.Utility;
 using System;
 using System.Collections.Generic;
@@ -90,7 +92,29 @@ namespace NINA.Sequencer.Conditions {
             AfterParentChanged();
         }
 
-        public abstract bool Check(ISequenceItem previousItem, ISequenceItem nextItem);
+        public virtual bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
+            try {
+                if (this is IValidatable && !(this is ISequenceContainer)) {
+                    var validatable = this as IValidatable;
+                    if (!validatable.Validate()) {
+                        throw new SequenceEntityFailedValidationException(string.Join(", ", validatable.Issues));
+                    }
+                }
+
+                return this.Check(previousItem, nextItem);
+            } catch (SequenceEntityFailedValidationException ex) {
+                Logger.Error($"{this} - " + ex.Message);
+                Status = SequenceEntityStatus.FAILED;
+                return false;
+            } catch (OperationCanceledException) {
+                Status = SequenceEntityStatus.CREATED;
+                return false;
+            } catch (Exception ex) {
+                Status = SequenceEntityStatus.FAILED;
+                Logger.Error(ex);
+                return false;
+            }
+        }
 
         public abstract object Clone();
 

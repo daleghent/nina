@@ -172,7 +172,7 @@ namespace NINA.Sequencer.SequenceItem {
                         if (this is IValidatable && !(this is ISequenceContainer)) {
                             var validatable = this as IValidatable;
                             if (!validatable.Validate()) {
-                                throw new SequenceItemSkippedException(string.Join(",", validatable.Issues));
+                                throw new SequenceEntityFailedValidationException(string.Join(", ", validatable.Issues));
                             }
                         }
 
@@ -222,6 +222,9 @@ namespace NINA.Sequencer.SequenceItem {
                                     break;
                             }
                         }
+                    } catch (SequenceEntityFailedValidationException ex) {
+                        Logger.Error($"{this} - " + ex.Message);
+                        Status = SequenceEntityStatus.FAILED;
                     } catch (SequenceItemSkippedException ex) {
                         Logger.Warning($"{this} - " + ex.Message);
                         Status = SequenceEntityStatus.SKIPPED;
