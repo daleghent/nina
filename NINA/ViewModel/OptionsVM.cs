@@ -96,7 +96,7 @@ namespace NINA.ViewModel {
             CloneProfileCommand = new RelayCommand(CloneProfile, (object o) => { return SelectedProfile != null; });
             RemoveProfileCommand = new RelayCommand(RemoveProfile, (object o) => { return SelectedProfile != null && SelectedProfile.Id != profileService.ActiveProfile.Id; });
             SelectProfileCommand = new RelayCommand(SelectProfile, (o) => {
-                return SelectedProfile != null;
+                return SelectedProfile != null && SelectedProfile.Id != profileService.ActiveProfile.Id;
             });
 
             CopyToCustomSchemaCommand = new RelayCommand(CopyToCustomSchema, (object o) => ActiveProfile.ColorSchemaSettings.ColorSchema?.Name != "Custom");
