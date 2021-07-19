@@ -92,7 +92,7 @@ namespace NINA.Sequencer.Conditions {
             AfterParentChanged();
         }
 
-        public virtual bool RunCheck(ISequenceItem previousItem, ISequenceItem nextItem) {
+        public bool RunCheck(ISequenceItem previousItem, ISequenceItem nextItem) {
             try {
                 if (this is IValidatable && !(this is ISequenceContainer)) {
                     var validatable = this as IValidatable;
