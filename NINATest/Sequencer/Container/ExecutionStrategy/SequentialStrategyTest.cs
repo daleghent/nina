@@ -64,7 +64,7 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
             var containerMock = new Mock<SequenceContainer>(new Mock<IExecutionStrategy>().Object);
             var conditionMock = new Mock<ISequenceCondition>();
             conditionMock
-                .SetupSequence(x => x.Check(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()))
+                .SetupSequence(x => x.RunCheck(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()))
                 .Returns(true)
                 .Returns(true)
                 .Returns(true)
@@ -99,7 +99,7 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
             var containerMock = new Mock<SequenceContainer>(new Mock<IExecutionStrategy>().Object);
             var conditionMock = new Mock<ISequenceCondition>();
             conditionMock
-                .SetupSequence(x => x.Check(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()))
+                .SetupSequence(x => x.RunCheck(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()))
                 .Returns(true)
                 .Returns(true)
                 .Returns(false);

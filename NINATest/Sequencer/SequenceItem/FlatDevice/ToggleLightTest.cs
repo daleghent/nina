@@ -105,7 +105,7 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
             await sut.Run(default, default);
 
             fdMediatorMock.Verify(x => x.ToggleLight(It.IsAny<double>(), It.IsAny<CancellationToken>()), Times.Never);
-            sut.Status.Should().Be(SequenceEntityStatus.SKIPPED);
+            sut.Status.Should().Be(SequenceEntityStatus.FAILED);
         }
 
         [Test]

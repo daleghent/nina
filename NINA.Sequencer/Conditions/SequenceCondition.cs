@@ -92,7 +92,7 @@ namespace NINA.Sequencer.Conditions {
             AfterParentChanged();
         }
 
-        public virtual bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
+        public virtual bool RunCheck(ISequenceItem previousItem, ISequenceItem nextItem) {
             try {
                 if (this is IValidatable && !(this is ISequenceContainer)) {
                     var validatable = this as IValidatable;
@@ -115,6 +115,8 @@ namespace NINA.Sequencer.Conditions {
                 return false;
             }
         }
+
+        public abstract bool Check(ISequenceItem previousItem, ISequenceItem nextItem);
 
         public abstract object Clone();
 

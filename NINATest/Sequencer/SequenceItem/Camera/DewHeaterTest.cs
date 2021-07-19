@@ -99,7 +99,7 @@ namespace NINATest.Sequencer.SequenceItem.Camera {
             await sut.Run(default, default);
 
             cameraMediatorMock.Verify(x => x.SetDewHeater(It.IsAny<bool>()), Times.Never);
-            sut.Status.Should().Be(SequenceEntityStatus.SKIPPED);
+            sut.Status.Should().Be(SequenceEntityStatus.FAILED);
         }
     }
 }

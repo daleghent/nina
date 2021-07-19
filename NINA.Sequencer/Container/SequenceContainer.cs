@@ -244,7 +244,7 @@ namespace NINA.Sequencer.Container {
 
                 bool check = true;
                 foreach (var condition in Conditions) {
-                    check = check && condition.Check(previousItem, nextItem);
+                    check = check && condition.RunCheck(previousItem, nextItem);
                 }
 
                 return check;
