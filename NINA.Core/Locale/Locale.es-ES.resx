@@ -5516,7 +5516,7 @@ Este ajuste no tendrá efecto en los sensores de color.
     <value>Algunos drivers de la montura tienen una implementación inversa del movimiento del eje secundario. Habilita esto para invertir la dirección en los comandos de movimiento para el eje secundario.</value>
   </data>
   <data name="LblSequenceTitle" xml:space="preserve">
-    <value>Current sequence title</value>
+    <value>Título de la secuencia actual</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>La apertura de la cúpula falló, el estado de apertura se notifica como cerrado tras iniciar la operación de su apertura.</value>
@@ -5674,25 +5674,25 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
     <value>Radio de la cúpula no configurado correctamente. La posición calculada del telescopio está más allá de la cúpula.</value>
   </data>
   <data name="LblAdvancedSequenceTitle" xml:space="preserve">
-    <value>Advanced Sequence</value>
+    <value>Secuencia avanzada</value>
     <comment>Default advanced sequencer title</comment>
   </data>
   <data name="LblTargetSetTitle" xml:space="preserve">
-    <value>Target Set</value>
+    <value>Objeto fijado</value>
   </data>
   <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
-    <value>Switches to the simple target set planning mode</value>
+    <value>Cambia al modo de planificación simple de planificación para el objeto establecido</value>
   </data>
   <data name="LblByName" xml:space="preserve">
-    <value>By Name</value>
+    <value>Por nombre</value>
   </data>
   <data name="LblByRelevance" xml:space="preserve">
-    <value>By Relevance</value>
+    <value>Por relevancia</value>
   </data>
   <data name="LblSequencerTargetsFolder" xml:space="preserve">
-    <value>Sequencer Targets Folder</value>
+    <value>Carpeta de objetivos del secuenciador</value>
   </data>
   <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
-    <value>The folder where sequence targets for the advanced sequencer are stored in</value>
+    <value>La carpeta donde se almacenan los objetivos de la secuencia avanzada del secuenciador</value>
   </data>
 </root>

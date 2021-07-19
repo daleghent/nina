@@ -5388,10 +5388,10 @@ Per a condicions de canvi sobtat, una mida de mostra més petita ajudarà a resp
     <value>Rotador</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
-    <value>Moves the rotator to the specified mechanical angle</value>
+    <value>Mou el rotador a l’angle mecànic especificat</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
-    <value>Rotate by mechanical angle</value>
+    <value>Rotar l'angle mecànic</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>Meridià</value>
@@ -5517,7 +5517,7 @@ Només és rellevant quan s’utilitza un controlador de càmera ASCOM!</value>
     <value>Alguns controladors de la muntura tenen una implementació inversa del moviment de l'eix primari. Activa-ho per invertir la direcció de les ordres de moviment de l'eix primari.</value>
   </data>
   <data name="LblSequenceTitle" xml:space="preserve">
-    <value>Current sequence title</value>
+    <value>Títol de la seqüència actual</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>S'ha produït un error en obrir l'obturador. L'estat de l'obturador encara s'informa com a tancat després d'iniciar l'operació d'obturador obert.</value>
@@ -5657,43 +5657,43 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
     <value>Restablir la Seqüència?</value>
   </data>
   <data name="LblMountType" xml:space="preserve">
-    <value>Mount Type</value>
+    <value>Tipus de muntura</value>
   </data>
   <data name="LblEquatorial" xml:space="preserve">
     <value>Equatorial</value>
   </data>
   <data name="LblForkOnWedge" xml:space="preserve">
-    <value>Fork on Wedge</value>
+    <value>Forquilla a la falca</value>
   </data>
   <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
-    <value>DEC Horizontal Offset</value>
+    <value>Desplaçament Horitzontal en DEC</value>
   </data>
   <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
-    <value>The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is "to the right", which is east for the northern hemisphere and west for the southern.</value>
+    <value>Desplaçament horitzontal del centre de l'OTA respecte a l'eix de declinació (el motor a la base del suport de la forquilla). Positiu és "a la dreta", que és a l'est per a l'hemisferi nord i a l'oest per al sud.</value>
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
-    <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
+    <value>El radi de la cúpula no està configurat correctament. La posició d'abast calculada està més enllà de la cúpula.</value>
   </data>
   <data name="LblAdvancedSequenceTitle" xml:space="preserve">
-    <value>Advanced Sequence</value>
+    <value>Seqüència Avançada</value>
     <comment>Default advanced sequencer title</comment>
   </data>
   <data name="LblTargetSetTitle" xml:space="preserve">
-    <value>Target Set</value>
+    <value>Objectiu definit</value>
   </data>
   <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
-    <value>Switches to the simple target set planning mode</value>
+    <value>Canvia al mode de planificació de conjunts de destinacions senzills</value>
   </data>
   <data name="LblByName" xml:space="preserve">
-    <value>By Name</value>
+    <value>Per Nom</value>
   </data>
   <data name="LblByRelevance" xml:space="preserve">
-    <value>By Relevance</value>
+    <value>Per Rellevància</value>
   </data>
   <data name="LblSequencerTargetsFolder" xml:space="preserve">
-    <value>Sequencer Targets Folder</value>
+    <value>Carpeta d'objectius del seqüenciador</value>
   </data>
   <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
-    <value>The folder where sequence targets for the advanced sequencer are stored in</value>
+    <value>La carpeta on s’emmagatzemen les plantilles de seqüència per al seqüenciador avançat</value>
   </data>
 </root>
