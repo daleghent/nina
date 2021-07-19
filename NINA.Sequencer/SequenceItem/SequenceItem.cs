@@ -160,6 +160,31 @@ namespace NINA.Sequencer.SequenceItem {
 
         private CancellationTokenSource localCts;
 
+        private void RunErrorBehavior(ISequenceRootContainer root) {
+            var attemptWord = Attempts != 1 ? "attempts" : "attempt";
+            Status = SequenceEntityStatus.FAILED;
+            switch (ErrorBehavior) {
+                case InstructionErrorBehavior.AbortOnError:
+                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Aborting Sequence!");
+                    _ = root.Interrupt();
+                    break;
+
+                case InstructionErrorBehavior.SkipInstructionSetOnError:
+                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Skipping current instruction set.");
+                    _ = Parent?.Interrupt();
+                    break;
+
+                case InstructionErrorBehavior.SkipToSequenceEndInstructions:
+                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Skipping to end of sequence instructions.");
+                    _ = SkipToEndOfSequence(root);
+                    break;
+
+                default:
+                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Continuing.");
+                    break;
+            }
+        }
+
         public async Task Run(IProgress<ApplicationStatus> progress, CancellationToken token) {
             using (localCts = CancellationTokenSource.CreateLinkedTokenSource(token)) {
                 if (Status == SequenceEntityStatus.CREATED) {
@@ -172,6 +197,7 @@ namespace NINA.Sequencer.SequenceItem {
                         if (this is IValidatable && !(this is ISequenceContainer)) {
                             var validatable = this as IValidatable;
                             if (!validatable.Validate()) {
+                                RunErrorBehavior(root);
                                 throw new SequenceEntityFailedValidationException(string.Join(", ", validatable.Issues));
                             }
                         }
@@ -199,28 +225,7 @@ namespace NINA.Sequencer.SequenceItem {
                         }
 
                         if (!success) {
-                            var attemptWord = Attempts > 1 ? "attempts" : "attempt";
-                            Status = SequenceEntityStatus.FAILED;
-                            switch (ErrorBehavior) {
-                                case InstructionErrorBehavior.AbortOnError:
-                                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Aborting Sequence!");
-                                    _ = root.Interrupt();
-                                    break;
-
-                                case InstructionErrorBehavior.SkipInstructionSetOnError:
-                                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Skipping current instruction set.");
-                                    _ = Parent?.Interrupt();
-                                    break;
-
-                                case InstructionErrorBehavior.SkipToSequenceEndInstructions:
-                                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Skipping to end of sequence instructions.");
-                                    _ = SkipToEndOfSequence(root);
-                                    break;
-
-                                default:
-                                    Logger.Error($"Instruction failed after {Attempts} {attemptWord}. Error behavior is set to {ErrorBehavior}. Continuing.");
-                                    break;
-                            }
+                            RunErrorBehavior(root);
                         }
                     } catch (SequenceEntityFailedValidationException ex) {
                         Logger.Error($"{this} - " + ex.Message);
