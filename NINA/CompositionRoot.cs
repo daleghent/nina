@@ -120,7 +120,7 @@ namespace NINA {
                 return mainWindowVM;
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
         }
     }

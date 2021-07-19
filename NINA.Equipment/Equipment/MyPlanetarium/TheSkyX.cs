@@ -68,7 +68,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 return new DeepSkyObject(raDecName[2], newCoordinates, string.Empty, null);
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
         }
 
@@ -120,7 +120,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 return loc;
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
         }
 

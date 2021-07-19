@@ -115,7 +115,7 @@ namespace NINA.Image.FileFormat.XISF {
                         sampleFormat = header.Image.Attribute("sampleFormat").Value.ToString();
                     } catch (InvalidDataException ex) {
                         Logger.Error($"XISF: Could not read image data: {ex}");
-                        throw ex;
+                        throw;
                     } catch (Exception ex) {
                         Logger.Error($"XISF: Could not find image data type: {ex}");
                         throw new InvalidDataException("Could not find XISF image data type");

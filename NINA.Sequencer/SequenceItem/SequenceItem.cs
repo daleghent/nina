@@ -189,9 +189,9 @@ namespace NINA.Sequencer.SequenceItem {
                                 Status = SequenceEntityStatus.FINISHED;
                                 success = true;
                             } catch (SequenceItemSkippedException ex) {
-                                throw ex;
+                                throw;
                             } catch (OperationCanceledException ex) {
-                                throw ex;
+                                throw;
                             } catch (Exception ex) {
                                 Logger.Error($"{this} - ", ex);
                                 success = false;
@@ -229,7 +229,7 @@ namespace NINA.Sequencer.SequenceItem {
                         if (token.IsCancellationRequested) {
                             Status = SequenceEntityStatus.CREATED;
                             Logger.Debug($"Cancelled {this}");
-                            throw ex;
+                            throw;
                         } else {
                             Status = SequenceEntityStatus.SKIPPED;
                             Logger.Debug($"Skipped {this}");

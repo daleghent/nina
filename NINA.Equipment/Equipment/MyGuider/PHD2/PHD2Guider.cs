@@ -532,7 +532,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                         return true;
                     } catch (OperationCanceledException ex) {
                         if (ct.IsCancellationRequested) {
-                            throw ex;
+                            throw;
                         } else {
                             //After {timeoutTime.TotalSeconds} the state is still in looping or stopped state, so selecting a guide star has failed
                             Logger.Error($"Failed to select guide star after {timeoutTime.TotalSeconds} seconds");

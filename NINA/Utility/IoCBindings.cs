@@ -180,7 +180,7 @@ namespace NINA.Utility {
                     Bind<IPluginsVM>().To<PluginsVM>().InSingletonScope();
                 } catch (Exception e) {
                     Logger.Error(e);
-                    throw e;
+                    throw;
                 }
             }
         }

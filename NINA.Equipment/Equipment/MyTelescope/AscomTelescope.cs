@@ -707,7 +707,7 @@ namespace NINA.Equipment.Equipment.MyTelescope {
 
                     return true;
                 } catch (OperationCanceledException e) {
-                    throw e;
+                    throw;
                 } catch (Exception e) {
                     Logger.Error(e);
                     Notification.ShowError(e.Message);

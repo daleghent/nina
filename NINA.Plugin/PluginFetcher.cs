@@ -56,7 +56,7 @@ namespace NINA.Plugin {
                 Logger.Info($"Found {plugins.Count} valid plugins at {req.Url}");
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
             return plugins;
         }

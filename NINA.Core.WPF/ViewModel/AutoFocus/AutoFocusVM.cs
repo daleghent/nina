@@ -446,11 +446,11 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     image = await imagingMediator.CaptureAndPrepareImage(seq, prepareParameters, token, progress);
                 } catch (Exception e) {
                     if (!IsSubSampleEnabled()) {
-                        throw e;
+                        throw;
                     }
 
                     Logger.Warning("Camera error, trying without subsample");
-                    Logger.Warning(e.Message);
+                    Logger.Error(e);
                     seq.EnableSubSample = false;
                     seq.SubSambleRectangle = null;
                     image = await imagingMediator.CaptureAndPrepareImage(seq, prepareParameters, token, progress);
@@ -658,7 +658,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     }
                 } while (reattempt);
                 completed = true;
-                AutoFocusInfo info = new AutoFocusInfo(report.Temperature, report.CalculatedFocusPoint.Position,report.Filter, report.Timestamp);
+                AutoFocusInfo info = new AutoFocusInfo(report.Temperature, report.CalculatedFocusPoint.Position, report.Filter, report.Timestamp);
                 focuserMediator.BroadcastSuccessfulAutoFocusRun(info);
             } catch (OperationCanceledException) {
                 Logger.Warning("AutoFocus cancelled");

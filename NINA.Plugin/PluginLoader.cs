@@ -304,7 +304,7 @@ namespace NINA.Plugin {
                 Container = Container.Concat(Assign(parts.ContainerImports, resourceDictionary)).ToList();
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
         }
 

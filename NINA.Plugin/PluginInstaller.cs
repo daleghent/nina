@@ -61,7 +61,7 @@ namespace NINA.Plugin {
                 }
             } catch (Exception ex) {
                 Logger.Error($"Failed to move plugin {manifest.Name} to deletion location", ex);
-                throw ex;
+                throw;
             }
         }
 
@@ -101,7 +101,7 @@ namespace NINA.Plugin {
                     if (ex.Status == WebExceptionStatus.RequestCanceled) {
                         throw new OperationCanceledException();
                     } else {
-                        throw ex;
+                        throw;
                     }
                 }
 

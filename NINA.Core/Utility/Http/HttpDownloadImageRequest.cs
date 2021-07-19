@@ -58,7 +58,7 @@ namespace NINA.Core.Utility.Http {
                         if (ex.Status == WebExceptionStatus.RequestCanceled) {
                             throw new OperationCanceledException();
                         } else {
-                            throw ex;
+                            throw;
                         }
                     }
                 }

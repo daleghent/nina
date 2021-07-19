@@ -236,7 +236,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 if (Cam != null) {
                     Cam.TemperatureSetPoint = Cam.Temperature;
                 }
-                throw ex;
+                throw;
             } finally {
             }
 

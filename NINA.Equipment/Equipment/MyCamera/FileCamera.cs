@@ -533,7 +533,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                         return new CachedExposureData(image);
                     } catch (Exception ex) {
                         if (tries > 3) {
-                            throw ex;
+                            throw;
                         }
                         await CoreUtil.Wait(TimeSpan.FromSeconds(1), token);
                     }

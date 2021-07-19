@@ -61,7 +61,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
         }
 
@@ -91,7 +91,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 }
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
         }
 

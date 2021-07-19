@@ -59,7 +59,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 return loc;
             } catch (Exception ex) {
                 Logger.Error($"Stellarium: Failed to import site info: {ex}");
-                throw ex;
+                throw;
             }
         }
 
@@ -95,7 +95,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 return dso;
             } catch (Exception ex) {
                 Logger.Error($"Stellarium: Failed to import view info: {ex}");
-                throw ex;
+                throw;
             }
         }
 
@@ -121,7 +121,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 return dso;
             } catch (Exception ex) {
                 Logger.Error($"Stellarium: Failed to import object info: {ex}");
-                throw ex;
+                throw;
             }
         }
 

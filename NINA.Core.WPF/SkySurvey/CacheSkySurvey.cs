@@ -133,7 +133,7 @@ namespace NINA.WPF.Base.SkySurvey {
                 return element;
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
         }
 

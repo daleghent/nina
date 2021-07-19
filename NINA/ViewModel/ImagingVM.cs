@@ -243,16 +243,16 @@ namespace NINA.ViewModel {
                         }
                     } catch (System.OperationCanceledException ex) {
                         cameraMediator.AbortExposure();
-                        throw ex;
+                        throw;
                     } catch (CameraConnectionLostException ex) {
                         Logger.Error(ex);
                         Notification.ShowError(Loc.Instance["LblCameraConnectionLost"]);
-                        throw ex;
+                        throw;
                     } catch (Exception ex) {
                         Notification.ShowError(Loc.Instance["LblUnexpectedError"] + Environment.NewLine + ex.Message);
                         Logger.Error(ex);
                         cameraMediator.AbortExposure();
-                        throw ex;
+                        throw;
                     } finally {
                         progress.Report(new ApplicationStatus() { Status = "" });
                         semaphoreSlim.Release();

@@ -259,7 +259,7 @@ namespace NINA.Sequencer.Container {
                     } catch (OperationCanceledException ex) {
                         if (token.IsCancellationRequested) {
                             // The main token got cancelled - bubble up exception
-                            throw ex;
+                            throw;
                         }
                     }
                 }

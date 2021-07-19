@@ -77,7 +77,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 return dso;
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
         }
 
@@ -105,7 +105,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 return new DeepSkyObject(string.Empty, coordinates.Transform(Epoch.J2000), string.Empty, null);
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
         }
 
@@ -133,7 +133,7 @@ namespace NINA.Equipment.Equipment.MyPlanetarium {
                 return coords;
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             }
         }
 

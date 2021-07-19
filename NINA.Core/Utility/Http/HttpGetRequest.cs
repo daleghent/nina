@@ -66,7 +66,7 @@ namespace NINA.Core.Utility.Http {
                         response = null;
                     }
                     if (rethrowOnError) {
-                        throw ex;
+                        throw;
                     }
                 } finally {
                     request = null;

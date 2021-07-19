@@ -87,10 +87,10 @@ namespace NINA.Image.ImageData {
                     Logger.Debug($"Saving temporary image at {actualPath}");
                 }
             } catch (OperationCanceledException ex) {
-                throw ex;
+                throw;
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             } finally {
             }
             return actualPath;
@@ -128,7 +128,7 @@ namespace NINA.Image.ImageData {
                 return newFileName;
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             } finally {
             }
         }
@@ -283,10 +283,10 @@ namespace NINA.Image.ImageData {
                     actualPath = FinalizeSave(tempPath, fileSaveInfo.FilePattern);
                 }
             } catch (OperationCanceledException ex) {
-                throw ex;
+                throw;
             } catch (Exception ex) {
                 Logger.Error(ex);
-                throw ex;
+                throw;
             } finally {
             }
             return actualPath;
