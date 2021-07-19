@@ -36,7 +36,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
     public class RotatorVM : DockableVM, IRotatorVM {
 
         public RotatorVM(IProfileService profileService, IRotatorMediator rotatorMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
-            Title = "LblRotator";
+            Title = Loc.Instance["LblRotator"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["RotatorSVG"];
 
             this.rotatorMediator = rotatorMediator;

@@ -39,7 +39,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
     public class SwitchVM : DockableVM, ISwitchVM {
 
         public SwitchVM(IProfileService profileService, IApplicationStatusMediator applicationStatusMediator, ISwitchMediator switchMediator) : base(profileService) {
-            Title = "LblSwitch";
+            Title = Loc.Instance["LblSwitch"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SwitchesSVG"];
             SwitchChooserVM = new SwitchChooserVM(profileService);
             Task.Run(() => SwitchChooserVM.GetEquipment());

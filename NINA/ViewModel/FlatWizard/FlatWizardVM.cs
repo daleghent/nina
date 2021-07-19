@@ -83,7 +83,7 @@ namespace NINA.ViewModel.FlatWizard {
                             IApplicationStatusMediator applicationStatusMediator,
                             IMyMessageBoxVM messageBox,
                             ITwilightCalculator twilightCalculator) : base(profileService) {
-            Title = "LblFlatWizard";
+            Title = Loc.Instance["LblFlatWizard"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("FlatWizardSVG");
 
             var pauseTokenSource = new PauseTokenSource();

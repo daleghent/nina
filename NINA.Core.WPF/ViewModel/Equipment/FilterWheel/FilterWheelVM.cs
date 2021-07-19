@@ -37,7 +37,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
     public class FilterWheelVM : DockableVM, IFilterWheelVM {
 
         public FilterWheelVM(IProfileService profileService, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
-            Title = "LblFilterWheel";
+            Title = Loc.Instance["LblFilterWheel"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["FWSVG"];
 
             this.filterWheelMediator = filterWheelMediator;

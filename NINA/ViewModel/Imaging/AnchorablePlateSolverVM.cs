@@ -74,7 +74,7 @@ namespace NINA.ViewModel.Imaging {
                 IImagingMediator imagingMediator,
                 IApplicationStatusMediator applicationStatusMediator,
                 IFilterWheelMediator filterWheelMediator) : base(profileService) {
-            Title = "LblPlateSolving";
+            Title = Loc.Instance["LblPlateSolving"];
 
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);

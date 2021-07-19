@@ -43,7 +43,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
         private readonly SemaphoreSlim ss = new SemaphoreSlim(1, 1);
 
         public SafetyMonitorVM(IProfileService profileService, ISafetyMonitorMediator safetyMonitorMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
-            Title = "LblSafetyMonitor";
+            Title = Loc.Instance["LblSafetyMonitor"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ShieldSVG"];
 
             this.safetyMonitorMediator = safetyMonitorMediator;

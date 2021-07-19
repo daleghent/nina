@@ -43,7 +43,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
         public CameraVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator,
             IDeviceChooserVM cameraChooserVM) : base(profileService) {
-            Title = "LblCamera";
+            Title = Loc.Instance["LblCamera"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CameraSVG"];
 
             CameraChooserVM = cameraChooserVM;

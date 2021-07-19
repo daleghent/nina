@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Sequencer.Conditions;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
@@ -31,6 +32,7 @@ namespace NINA.Plugin.Interfaces {
         IList<ISequenceItem> Items { get; }
         IList<ISequenceTrigger> Triggers { get; }
         IList<IDateTimeProvider> DateTimeProviders { get; }
+        IList<IDockableVM> DockableVMs { get; }
 
         Task Load();
     }

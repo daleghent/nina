@@ -50,7 +50,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             this.telescopeMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
             this.domeMediator = domeMediator;
-            Title = "LblTelescope";
+            Title = Loc.Instance["LblTelescope"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["TelescopeSVG"];
 
             progress = new Progress<ApplicationStatus>(p => {

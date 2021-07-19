@@ -14,6 +14,7 @@
 
 using Newtonsoft.Json;
 using NINA.Core.Enum;
+using NINA.Core.Locale;
 using NINA.Core.Model;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Utility;
@@ -58,7 +59,7 @@ namespace NINA.WPF.Base.ViewModel.Imaging {
                 IImagingMediator imagingMediator,
                 IApplicationStatusMediator applicationStatusMediator
         ) : base(profileService) {
-            Title = "LblAutoFocus";
+            Title = Loc.Instance["LblAutoFocus"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current?.Resources["AutoFocusSVG"];
 
             this.cameraMediator = cameraMediator;

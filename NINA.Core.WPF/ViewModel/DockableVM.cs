@@ -19,10 +19,11 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Collections.Generic;
 using NINA.Core.Locale;
+using NINA.Equipment.Interfaces.ViewModel;
 
 namespace NINA.WPF.Base.ViewModel {
 
-    public class DockableVM : BaseVM {
+    public class DockableVM : BaseVM, IDockableVM {
 
         public DockableVM(IProfileService profileService) : base(profileService) {
             this.CanClose = true;
@@ -35,6 +36,8 @@ namespace NINA.WPF.Base.ViewModel {
                 RaisePropertyChanged(nameof(Title));
             };
         }
+
+        public virtual bool IsTool { get; } = false;
 
         private bool _isClosed;
 
@@ -70,8 +73,7 @@ namespace NINA.WPF.Base.ViewModel {
 
         public string Title {
             get {
-                return Loc.Instance[_titleLabel];
-                ;
+                return _titleLabel;
             }
             set {
                 _titleLabel = value;

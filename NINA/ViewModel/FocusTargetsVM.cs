@@ -29,6 +29,7 @@ using NINA.Core.Utility;
 using NINA.Astrometry;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Core.Locale;
 
 namespace NINA.ViewModel {
 
@@ -39,7 +40,7 @@ namespace NINA.ViewModel {
         private readonly System.Timers.Timer updateTimer;
 
         public FocusTargetsVM(IProfileService profileService, ITelescopeMediator telescopeMediator, IApplicationResourceDictionary resourceDictionary) : base(profileService) {
-            Title = "LblManualFocusTargets";
+            Title = Loc.Instance["LblManualFocusTargets"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)resourceDictionary["FocusTargetsSVG"];
 
             this.telescopeMediator = telescopeMediator;

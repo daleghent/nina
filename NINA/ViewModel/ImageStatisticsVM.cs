@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Locale;
 using NINA.Image.ImageData;
 using NINA.Image.Interfaces;
 using NINA.Profile.Interfaces;
@@ -27,7 +28,7 @@ namespace NINA.ViewModel {
         private AllImageStatistics _statistics;
 
         public ImageStatisticsVM(IProfileService profileService) : base(profileService) {
-            Title = "LblStatistics";
+            Title = Loc.Instance["LblStatistics"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["HistogramSVG"];
         }
 

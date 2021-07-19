@@ -24,6 +24,7 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         GeometryGroup ImageGeometry { get; set; }
         bool IsClosed { get; set; }
         bool IsVisible { get; set; }
+        bool IsTool { get; }
         string Title { get; set; }
 
         void Hide(object o);

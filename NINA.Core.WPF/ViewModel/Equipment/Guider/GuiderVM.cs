@@ -39,7 +39,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
     public class GuiderVM : DockableVM, IGuiderVM {
 
         public GuiderVM(IProfileService profileService, IGuiderMediator guiderMediator, IApplicationStatusMediator applicationStatusMediator, IDeviceChooserVM deviceChooser) : base(profileService) {
-            Title = "LblGuider";
+            Title = Loc.Instance["LblGuider"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["GuiderSVG"];
 
             this.guiderMediator = guiderMediator;

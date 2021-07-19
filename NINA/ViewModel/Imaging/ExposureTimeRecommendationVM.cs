@@ -50,7 +50,7 @@ namespace NINA.ViewModel.Imaging {
             ICameraMediator cameraMediator)
             : base(profileService) {
             this._imagingMediator = imagingMediator;
-            this.Title = "LblExposureCalculator";
+            this.Title = Loc.Instance["LblExposureCalculator"];
             this._sharpCapSensorAnalysisReader = sharpCapSensorAnalysisReader;
             this.cameraMediator = cameraMediator;
             if (Application.Current != null) {

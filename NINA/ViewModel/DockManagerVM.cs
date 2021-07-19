@@ -45,17 +45,36 @@ using NINA.Equipment.Interfaces.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.ViewModel.Imaging;
+using NINA.Plugin.Interfaces;
 
 namespace NINA.ViewModel {
 
     internal class DockManagerVM : BaseVM, IDockManagerVM {
 
-        public DockManagerVM(IProfileService profileService, ICameraVM cameraVM, ISequenceNavigationVM sequenceNavigationVM,
-            IThumbnailVM thumbnailVM, ISwitchVM switchVM, IFilterWheelVM filterWheelVM, IFocuserVM focuserVM, IRotatorVM rotatorVM,
-            IWeatherDataVM weatherDataVM, IDomeVM domeVM, IAnchorableSnapshotVM snapshotVM,
-            IPolarAlignmentVM polarAlignmentVM, IAnchorablePlateSolverVM plateSolverVM, ITelescopeVM telescopeVM, IGuiderVM guiderVM,
-            IFocusTargetsVM focusTargetsVM, IAutoFocusToolVM autoFocusToolVM, IExposureCalculatorVM exposureCalculatorVM, IImageHistoryVM imageHistoryVM,
-            IImageControlVM imageControlVM, IImageStatisticsVM imageStatisticsVM, IFlatDeviceVM flatDeviceVM, ISafetyMonitorVM safetyMonitorVM) : base(profileService) {
+        public DockManagerVM(IProfileService profileService,
+                             ICameraVM cameraVM,
+                             ISequenceNavigationVM sequenceNavigationVM,
+                             IThumbnailVM thumbnailVM,
+                             ISwitchVM switchVM,
+                             IFilterWheelVM filterWheelVM,
+                             IFocuserVM focuserVM,
+                             IRotatorVM rotatorVM,
+                             IWeatherDataVM weatherDataVM,
+                             IDomeVM domeVM,
+                             IAnchorableSnapshotVM snapshotVM,
+                             IPolarAlignmentVM polarAlignmentVM,
+                             IAnchorablePlateSolverVM plateSolverVM,
+                             ITelescopeVM telescopeVM,
+                             IGuiderVM guiderVM,
+                             IFocusTargetsVM focusTargetsVM,
+                             IAutoFocusToolVM autoFocusToolVM,
+                             IExposureCalculatorVM exposureCalculatorVM,
+                             IImageHistoryVM imageHistoryVM,
+                             IImageControlVM imageControlVM,
+                             IImageStatisticsVM imageStatisticsVM,
+                             IFlatDeviceVM flatDeviceVM,
+                             ISafetyMonitorVM safetyMonitorVM,
+                             IPluginLoader pluginProvider) : base(profileService) {
             LoadAvalonDockLayoutCommand = new AsyncCommand<bool>((object o) => Task.Run(() => InitializeAvalonDockLayout(o)));
             ResetDockLayoutCommand = new RelayCommand(ResetDockLayout, (object o) => _dockmanager != null);
 
@@ -111,6 +130,35 @@ namespace NINA.ViewModel {
             ClosingCommand = new RelayCommand(ClosingApplication);
 
             profileService.ProfileChanged += ProfileService_ProfileChanged;
+
+            Task.Run(async () => {
+                await pluginProvider.Load();
+                foreach (var dockable in pluginProvider.DockableVMs) {
+                    Anchorables.Add(dockable);
+                    if (dockable.IsTool) {
+                        AnchorableTools.Add(dockable);
+                    } else {
+                        AnchorableInfoPanels.Add(dockable);
+                    }
+                }
+                Initialized = true;
+            });
+        }
+
+        private bool initialized;
+
+        public bool Initialized {
+            get {
+                lock (lockObj) {
+                    return initialized;
+                }
+            }
+            private set {
+                lock (lockObj) {
+                    initialized = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
 
         private void ProfileService_ProfileChanged(object sender, EventArgs e) {
@@ -190,7 +238,10 @@ namespace NINA.ViewModel {
         private object lockObj = new object();
         private Dispatcher _dispatcher = Application.Current?.Dispatcher ?? Dispatcher.CurrentDispatcher;
 
-        public bool InitializeAvalonDockLayout(object o) {
+        public async Task<bool> InitializeAvalonDockLayout(object o) {
+            while (!Initialized) {
+                await Task.Delay(100);
+            }
             lock (lockObj) {
                 if (!_dockloaded) {
                     _dispatcher.Invoke(new Action(() => {

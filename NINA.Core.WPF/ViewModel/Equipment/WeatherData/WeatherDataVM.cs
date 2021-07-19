@@ -35,7 +35,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
     public class WeatherDataVM : DockableVM, IWeatherDataVM {
 
         public WeatherDataVM(IProfileService profileService, IWeatherDataMediator weatherDataMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
-            Title = "LblWeather";
+            Title = Loc.Instance["LblWeather"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CloudSVG"];
 
             this.weatherDataMediator = weatherDataMediator;

@@ -59,7 +59,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             FlatDeviceChooserVM = flatDeviceChooserVm;
             Task.Run(() => FlatDeviceChooserVM.GetEquipment());
 
-            Title = "LblFlatDevice";
+            Title = Loc.Instance["LblFlatDevice"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("LightBulbSVG");
 
             ConnectCommand = new AsyncCommand<bool>(Connect);

@@ -58,7 +58,7 @@ namespace NINA.PlateSolving.Solvers {
                 //Copy Image to local app data
                 imagePath = await PrepareAndSaveImage(source, cancelToken);
 
-                progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSolving"] });
+                progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblSolving"] });
 
                 outputPath = GetOutputPath(imagePath);
 
@@ -67,7 +67,7 @@ namespace NINA.PlateSolving.Solvers {
                 //Extract solution coordinates
                 result = ReadResult(outputPath, parameter, imageProperties);
             } finally {
-                progress.Report(new ApplicationStatus() { Status = string.Empty });
+                progress?.Report(new ApplicationStatus() { Status = string.Empty });
                 if (imagePath != null && File.Exists(imagePath)) {
                     File.Delete(imagePath);
                 }
@@ -108,11 +108,11 @@ namespace NINA.PlateSolving.Solvers {
             process.EnableRaisingEvents = true;
 
             process.OutputDataReceived += (object sender, System.Diagnostics.DataReceivedEventArgs e) => {
-                progress.Report(new ApplicationStatus() { Status = e.Data });
+                progress?.Report(new ApplicationStatus() { Status = e.Data });
             };
 
             process.ErrorDataReceived += (object sender, System.Diagnostics.DataReceivedEventArgs e) => {
-                progress.Report(new ApplicationStatus() { Status = e.Data });
+                progress?.Report(new ApplicationStatus() { Status = e.Data });
             };
             Logger.Debug($"Starting process '{executableLocation}' with args '{startInfo.Arguments}'");
             process.Start();

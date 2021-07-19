@@ -64,7 +64,7 @@ namespace NINA.ViewModel.Imaging {
                 IApplicationStatusMediator applicationStatusMediator,
                 IImageSaveMediator imageSaveMediator,
                 IImageHistoryVM imageHistoryVM) : base(profileService) {
-            Title = "LblImaging";
+            Title = Loc.Instance["LblImaging"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ImagingSVG"];
             this.applicationStatusMediator = applicationStatusMediator;
             this.cameraMediator = cameraMediator;

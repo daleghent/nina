@@ -42,7 +42,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
         private double lastRoundoff = 0;
 
         public FocuserVM(IProfileService profileService, IFocuserMediator focuserMediator, IApplicationStatusMediator applicationStatusMediator, IDeviceChooserVM focuserChooserVm, IImageGeometryProvider imageGeometryProvider) : base(profileService) {
-            Title = "LblFocuser";
+            Title = Loc.Instance["LblFocuser"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("FocusSVG");
 
             this.focuserMediator = focuserMediator;
@@ -138,7 +138,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                     Logger.Info($"Moving Focuser By Temperature - LastRoundoff {lastRoundoff} + Slope {slope} * ( Temperature {temperature} - PrevTemperature {lastFocusedTemperature} ) °C (relative mode) = Delta {delta} / DeltaInt {deltaInt}");
                 }
                 int pos = Position;
-                var result = await MoveFocuserInternal(pos+deltaInt, ct);
+                var result = await MoveFocuserInternal(pos + deltaInt, ct);
                 lastFocusedTemperature = temperature;
                 lastRoundoff = delta - deltaInt;
                 return result;

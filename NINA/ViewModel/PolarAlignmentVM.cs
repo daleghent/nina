@@ -49,7 +49,7 @@ namespace NINA.ViewModel {
                 IImageControlVM imageControlVM,
                 IFilterWheelMediator filterWheelMediator
         ) : base(profileService) {
-            Title = "LblPolarAlignment";
+            Title = Loc.Instance["LblPolarAlignment"];
 
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PolarAlignSVG"];
 

@@ -14,6 +14,7 @@
 
 using NINA.Astrometry;
 using NINA.Astrometry.Interfaces;
+using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
@@ -61,7 +62,7 @@ namespace NINA.ViewModel.Sequencer {
                 IPlanetariumFactory planetariumFactory,
                 IFramingAssistantVM framingAssistantVM,
                 IApplicationMediator applicationMediator) : base(profileService) {
-            Title = "LblSequence";
+            Title = Loc.Instance["LblSequence"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current?.Resources["SequenceSVG"];
 
             //this.factory = factory;

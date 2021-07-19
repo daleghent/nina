@@ -42,7 +42,7 @@ namespace NINA.ViewModel.ImageHistory {
     public class ImageHistoryVM : DockableVM, IImageHistoryVM {
 
         public ImageHistoryVM(IProfileService profileService, IImageSaveMediator imageSaveMediator) : base(profileService) {
-            Title = "LblHFRHistory";
+            Title = Loc.Instance["LblHFRHistory"];
 
             if (System.Windows.Application.Current != null) {
                 ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["HFRHistorySVG"];

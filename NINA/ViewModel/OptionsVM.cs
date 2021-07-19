@@ -59,7 +59,7 @@ namespace NINA.ViewModel {
                          IPlanetariumFactory planetariumFactory,
                          IDockManagerVM dockManagerVM,
                          ISGPServiceHost sgpServiceHost) : base(profileService) {
-            Title = "LblOptions";
+            Title = Loc.Instance["LblOptions"];
             CanClose = false;
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SettingsSVG"];
 

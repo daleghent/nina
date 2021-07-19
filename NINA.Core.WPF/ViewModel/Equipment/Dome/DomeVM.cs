@@ -48,7 +48,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             ISafetyMonitorMediator safetyMonitorMediator,
             IApplicationResourceDictionary resourceDictionary,
             IDeviceUpdateTimerFactory deviceUpdateTimerFactory) : base(profileService) {
-            Title = "LblDome";
+            Title = Loc.Instance["LblDome"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)resourceDictionary["ObservatorySVG"];
 
             this.domeMediator = domeMediator;

@@ -17,6 +17,7 @@ using NINA.Core.Locale;
 using NINA.Core.Utility;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
+using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Plugin.Interfaces;
 using NINA.Plugin.ManifestDefinition;
 using NINA.Profile.Interfaces;
@@ -173,6 +174,7 @@ namespace NINA.Plugin {
                         Conditions = new List<ISequenceCondition>();
                         Triggers = new List<ISequenceTrigger>();
                         Container = new List<ISequenceContainer>();
+                        DockableVMs = new List<IDockableVM>();
                         Plugins = new Dictionary<IPluginManifest, bool>();
 
                         AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
@@ -291,17 +293,19 @@ namespace NINA.Plugin {
         private void Compose(ComposablePartCatalog catalog) {
             try {
                 var container = GetContainer(catalog);
-                var parts = new SequencerPartsImport();
+                var parts = new PartsImport();
                 container.ComposeParts(parts);
 
                 foreach (var template in parts.DataTemplateImports) {
                     Application.Current?.Resources.MergedDictionaries.Add(template);
                 }
 
-                Items = Items.Concat(Assign(parts.ItemImports, resourceDictionary)).ToList();
-                Conditions = Conditions.Concat(Assign(parts.ConditionImports, resourceDictionary)).ToList();
-                Triggers = Triggers.Concat(Assign(parts.TriggerImports, resourceDictionary)).ToList();
-                Container = Container.Concat(Assign(parts.ContainerImports, resourceDictionary)).ToList();
+                Items = Items.Concat(AssignSequenceEntity(parts.ItemImports, resourceDictionary)).ToList();
+                Conditions = Conditions.Concat(AssignSequenceEntity(parts.ConditionImports, resourceDictionary)).ToList();
+                Triggers = Triggers.Concat(AssignSequenceEntity(parts.TriggerImports, resourceDictionary)).ToList();
+                Container = Container.Concat(AssignSequenceEntity(parts.ContainerImports, resourceDictionary)).ToList();
+
+                DockableVMs = DockableVMs.Concat(parts.DockableVMImports).ToList();
             } catch (Exception ex) {
                 Logger.Error(ex);
                 throw;
@@ -344,6 +348,7 @@ namespace NINA.Plugin {
         public IList<ISequenceCondition> Conditions { get; private set; }
         public IList<ISequenceTrigger> Triggers { get; private set; }
         public IList<ISequenceContainer> Container { get; private set; }
+        public IList<IDockableVM> DockableVMs { get; private set; }
         public IDictionary<IPluginManifest, bool> Plugins { get; private set; }
         public IList<Assembly> Assemblies { get; private set; } = new List<Assembly>();
 
@@ -399,7 +404,7 @@ namespace NINA.Plugin {
             return sequencerTypes;
         }
 
-        private IOrderedEnumerable<T> Assign<T>(IEnumerable<Lazy<T, Dictionary<string, object>>> imports, IApplicationResourceDictionary resourceDictionary) where T : ISequenceEntity {
+        private IOrderedEnumerable<T> AssignSequenceEntity<T>(IEnumerable<Lazy<T, Dictionary<string, object>>> imports, IApplicationResourceDictionary resourceDictionary) where T : ISequenceEntity {
             var items = new List<T>();
             foreach (var importItem in imports) {
                 try {
@@ -444,7 +449,7 @@ namespace NINA.Plugin {
         public IPluginManifest PluginManifestImport { get; private set; }
     }
 
-    public class SequencerPartsImport {
+    public class PartsImport {
 
         [ImportMany(typeof(ISequenceItem))]
         public IEnumerable<Lazy<ISequenceItem, Dictionary<string, object>>> ItemImports { get; private set; }
@@ -460,5 +465,8 @@ namespace NINA.Plugin {
 
         [ImportMany(typeof(ResourceDictionary))]
         public IEnumerable<ResourceDictionary> DataTemplateImports { get; private set; }
+
+        [ImportMany(typeof(IDockableVM))]
+        public IEnumerable<IDockableVM> DockableVMImports { get; private set; }
     }
 }

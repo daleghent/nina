@@ -23,13 +23,14 @@ using NINA.Core.Model;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
+using NINA.Core.Locale;
 
 namespace NINA.ViewModel {
 
     internal class ApplicationStatusVM : DockableVM, IApplicationStatusVM {
 
         public ApplicationStatusVM(IProfileService profileService, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
-            Title = "LblApplicationStatus";
+            Title = Loc.Instance["LblApplicationStatus"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["ApplicationStatusSVG"];
 
             this.applicationStatusMediator = applicationStatusMediator;

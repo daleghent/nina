@@ -150,7 +150,11 @@ namespace NINA.Utility.AvalonDock {
                     return SafetyMonitorTemplate;
 
                 default:
-                    return base.SelectTemplate(item, container);
+                    if (item != null && Application.Current.Resources.Contains(item.GetType().FullName + "_Dockable")) {
+                        return (DataTemplate)Application.Current.Resources[item.GetType().FullName + "_Dockable"];
+                    } else {
+                        return base.SelectTemplate(item, container);
+                    }
             }
         }
     }

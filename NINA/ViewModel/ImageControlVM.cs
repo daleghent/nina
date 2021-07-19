@@ -43,7 +43,7 @@ namespace NINA.ViewModel {
     internal class ImageControlVM : DockableVM, ICameraConsumer, IImageControlVM {
 
         public ImageControlVM(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
-            Title = "LblImage";
+            Title = Loc.Instance["LblImage"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["PictureSVG"];
 
             this.cameraMediator = cameraMediator;

@@ -28,13 +28,14 @@ using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Image;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.ViewModel;
+using NINA.Core.Locale;
 
 namespace NINA.ViewModel {
 
     internal class ThumbnailVM : DockableVM, IThumbnailVM {
 
         public ThumbnailVM(IProfileService profileService, IImagingMediator imagingMediator, IImageSaveMediator imageSaveMediator) : base(profileService) {
-            Title = "LblImageHistory";
+            Title = Loc.Instance["LblImageHistory"];
             CanClose = false;
             ImageGeometry = (GeometryGroup)System.Windows.Application.Current.Resources["HistorySVG"];
 
