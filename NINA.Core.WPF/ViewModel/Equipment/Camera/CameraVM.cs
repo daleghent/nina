@@ -838,11 +838,31 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 if (x + width > CameraInfo.XSize) { width = CameraInfo.XSize - x; }
                 if (y + height > CameraInfo.YSize) { height = CameraInfo.YSize - y; }
 
-                Cam.EnableSubSample = true;
-                Cam.SubSampleX = x;
-                Cam.SubSampleY = y;
-                Cam.SubSampleWidth = width;
-                Cam.SubSampleHeight = height;
+                if (CameraInfo.SensorType != Core.Enum.SensorType.Monochrome) {
+                    if (x % 2 > 0) {
+                        x += 1;
+                    }
+                    if (width % 2 > 0) {
+                        width -= 1;
+                    }
+                    if (y % 2 > 0) {
+                        y += 1;
+                    }
+                    if (height % 2 > 0) {
+                        height -= 1;
+                    }
+                }
+
+                if (x >= width || y >= height) {
+                    Logger.Warning($"Invalid subsample dimensions for camera {x}x{y} {width}x{height}.");
+                    Cam.EnableSubSample = false;
+                } else {
+                    Cam.EnableSubSample = true;
+                    Cam.SubSampleX = x;
+                    Cam.SubSampleY = y;
+                    Cam.SubSampleWidth = width;
+                    Cam.SubSampleHeight = height;
+                }
             }
         }
 
