@@ -211,7 +211,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Added `$$TEMPERATURESETPOINT$$` file pattern
 
 ## Included Camera SDK Versions:
-- **Altair Astro:** 49.18830.20210423
+- **Altair Astro:** 49.19154.20210630
 - **Atik:** 2020.10.19.677
 - **Canon:** 13.13.0.6408
 - **FLI:** 1.104.0.0
