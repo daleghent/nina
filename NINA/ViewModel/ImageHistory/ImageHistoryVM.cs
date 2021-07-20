@@ -186,6 +186,7 @@ namespace NINA.ViewModel.ImageHistory {
             }
             set {
                 _imageHistoryLeftSelected = value;
+                ImageHistoryLeftSelectedKey = value.ToString();
                 RaisePropertyChanged();
             }
         }
@@ -198,6 +199,31 @@ namespace NINA.ViewModel.ImageHistory {
             }
             set {
                 _imageHistoryRightSelected = value;
+                ImageHistoryRightSelectedKey = value.ToString();
+                RaisePropertyChanged();
+            }
+        }
+
+        private string _imageHistoryLeftSelectedKey;
+
+        public string ImageHistoryLeftSelectedKey {
+            get {
+                return _imageHistoryLeftSelectedKey;
+            }
+            set {
+                _imageHistoryLeftSelectedKey = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        private string _imageHistoryRightSelectedKey;
+
+        public string ImageHistoryRightSelectedKey {
+            get {
+                return _imageHistoryRightSelectedKey;
+            }
+            set {
+                _imageHistoryRightSelectedKey = value;
                 RaisePropertyChanged();
             }
         }

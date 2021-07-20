@@ -358,7 +358,7 @@
                     <oxy:LineSeries
                         Title="{Binding ImageHistoryLeftSelected}"
                         DataFieldX="Index"
-                        DataFieldY="{Binding ImageHistoryLeftSelected}"
+                        DataFieldY="{Binding ImageHistoryLeftSelectedKey}"
                         ItemsSource="{Binding ObservableImageHistoryView}"
                         MarkerFill="{Binding Path=Color, Source={StaticResource PrimaryBrush}}"
                         MarkerType="Circle"
@@ -377,7 +377,7 @@
                     <oxy:LineSeries
                         Title="{Binding ImageHistoryRightSelected}"
                         DataFieldX="Index"
-                        DataFieldY="{Binding ImageHistoryRightSelected}"
+                        DataFieldY="{Binding ImageHistoryRightSelectedKey}"
                         ItemsSource="{Binding ObservableImageHistoryView}"
                         MarkerFill="{Binding Path=Color, Source={StaticResource SecondaryBrush}}"
                         MarkerType="Square"
