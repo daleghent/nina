@@ -914,6 +914,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
                  */
                 DriverVersionCheck();
 
+                Logger.Info($"QHYCCD: SDK version: {QhySdkVersion}");
+                Logger.Info($"QHYCCD: USB driver version: {QhyUsbDriverVersion}");
+                Logger.Info($"QHYCCD: Camera firmware version: {QhyFirmwareVersion}");
+                Logger.Info($"QHYCCD: Camera FPGA versions: {QhyFPGAVersion}");
+
                 /*
                  * Announce that this camera is now initialized and ready
                  */
