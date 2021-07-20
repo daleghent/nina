@@ -322,6 +322,7 @@
     <Compile Include="Utility\IoCBindings.cs" />
     <Compile Include="Utility\PaneTemplateSelector.cs" />
     <Compile Include="Utility\ProjectVersion.cs" />
+    <Compile Include="ViewModel\AboutSDKsVM.cs" />
     <Compile Include="ViewModel\FlatWizard\ParabolicTrendline.cs" />
     <Compile Include="ViewModel\ImageControlVM.cs" />
     <Compile Include="Interfaces\IPluginsVM.cs" />
@@ -338,6 +339,9 @@
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleEndContainer.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleExposure.cs" />
     <Compile Include="ViewModel\Sequencer\SimpleSequence\SimpleStartContainer.cs" />
+    <Compile Include="View\About\AboutSDKsView.xaml.cs">
+      <DependentUpon>AboutSDKsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CameraControlView.xaml.cs">
       <DependentUpon>CameraControlView.xaml</DependentUpon>
     </Compile>
@@ -851,6 +855,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\About\AboutPageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\About\AboutSDKsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

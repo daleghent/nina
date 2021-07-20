@@ -71,5 +71,19 @@
                 <local:ThirdPartyLicensesView />
             </TabItem.Content>
         </TabItem>
+        <TabItem>
+            <TabItem.Header>
+                <TextBlock
+                    MinHeight="30"
+                    Margin="5,0,5,0"
+                    FontSize="14"
+                    Style="{StaticResource SideBarTextBlock}"
+                    Text="{ns:Loc LblVendorSDKs}"
+                    TextWrapping="Wrap" />
+            </TabItem.Header>
+            <TabItem.Content>
+                <local:AboutSDKsView />
+            </TabItem.Content>
+        </TabItem>
     </TabControl>
 </UserControl>

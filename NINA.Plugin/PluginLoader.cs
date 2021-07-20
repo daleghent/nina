@@ -165,6 +165,8 @@ namespace NINA.Plugin {
             return Task.Run(() => {
                 lock (lockobj) {
                     if (!initialized) {
+                        Stopwatch sw = Stopwatch.StartNew();
+
                         //Check for pending plugin updates and deploy them
                         CleanupEmptyFolders();
                         DeployFromStaging();
@@ -206,12 +208,14 @@ namespace NINA.Plugin {
                         }
 
                         initialized = true;
+                        Debug.Print($"Time to load all plugins {sw.Elapsed}");
                     }
                 }
             });
         }
 
         private void LoadPlugin(string file) {
+            Stopwatch sw = Stopwatch.StartNew();
             try {
                 FileInfo fileInfo = new FileInfo(file);
                 if (fileInfo.AlternateDataStreamExists("Zone.Identifier")) {
@@ -287,6 +291,8 @@ namespace NINA.Plugin {
             } catch (Exception ex) {
                 //This should only happen for non plugin assemblies, that are not even targeting .NET
                 Logger.Trace($"The dll inside the plugins folder failed to load. Most likely it is not a pugin but an external non .NET dependency. File: {file}, Error: {ex}");
+            } finally {
+                Debug.Print($"Time to load plugin {Path.GetFileNameWithoutExtension(file)} {sw.Elapsed}");
             }
         }
 

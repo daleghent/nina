@@ -5705,4 +5705,13 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
     <value>The folder where sequence targets for the advanced sequencer are stored in</value>
   </data>
+  <data name="LblNotInstalled" xml:space="preserve">
+    <value>Not installed</value>
+  </data>
+  <data name="LblVendor" xml:space="preserve">
+    <value>Vendor</value>
+  </data>
+  <data name="LblVendorSDKs" xml:space="preserve">
+    <value>Vendor SDKs</value>
+  </data>
 </root>

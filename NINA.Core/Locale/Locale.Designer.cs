@@ -10622,6 +10622,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not installed.
+        /// </summary>
+        internal static string LblNotInstalled {
+            get {
+                return ResourceManager.GetString("LblNotInstalled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No valid firmware version..
         /// </summary>
         internal static string LblNoValidFirmwareVersion {
@@ -16045,6 +16054,24 @@ namespace NINA.Core.Locale {
         internal static string LblValue {
             get {
                 return ResourceManager.GetString("LblValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor.
+        /// </summary>
+        internal static string LblVendor {
+            get {
+                return ResourceManager.GetString("LblVendor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor SDKs.
+        /// </summary>
+        internal static string LblVendorSDKs {
+            get {
+                return ResourceManager.GetString("LblVendorSDKs", resourceCulture);
             }
         }
         

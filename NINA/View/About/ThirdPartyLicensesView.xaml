@@ -26,7 +26,7 @@
             However it depends on various third party libraries which carry their own copyright notices and license terms which are explained below.</TextBlock>
         <Grid Grid.Row="1" Margin="20,20,0,0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" MinWidth="150" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
