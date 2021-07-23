@@ -227,13 +227,16 @@ namespace NINA.Sequencer.SequenceItem {
                         if (!success) {
                             RunErrorBehavior(root);
                         }
+                    } catch (SequenceEntityFailedException ex) {
+                        Logger.Error($"Failed: {this} - " + ex.Message);
+                        Status = SequenceEntityStatus.FAILED;
                     } catch (SequenceEntityFailedValidationException ex) {
-                        Logger.Error($"{this} - " + ex.Message);
+                        Logger.Error($"Failed validation: {this} - " + ex.Message);
                         Status = SequenceEntityStatus.FAILED;
                     } catch (SequenceItemSkippedException ex) {
-                        Logger.Warning($"{this} - " + ex.Message);
+                        Logger.Warning($"Skipped {this}");
                         Status = SequenceEntityStatus.SKIPPED;
-                    } catch (OperationCanceledException ex) {
+                    } catch (OperationCanceledException) {
                         if (token.IsCancellationRequested) {
                             Status = SequenceEntityStatus.CREATED;
                             Logger.Debug($"Cancelled {this}");

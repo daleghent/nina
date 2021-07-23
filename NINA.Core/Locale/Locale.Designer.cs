@@ -14747,6 +14747,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unpark operation was cancelled.
+        /// </summary>
+        internal static string LblTelescopeUnparkCancelled {
+            get {
+                return ResourceManager.GetString("LblTelescopeUnparkCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Temp Comp.
         /// </summary>
         internal static string LblTempComp {
@@ -16171,6 +16180,15 @@ namespace NINA.Core.Locale {
         internal static string LblWaitingForTelescopeToPark {
             get {
                 return ResourceManager.GetString("LblWaitingForTelescopeToPark", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Waiting for telescope to unpark.
+        /// </summary>
+        internal static string LblWaitingForTelescopeToUnpark {
+            get {
+                return ResourceManager.GetString("LblWaitingForTelescopeToUnpark", resourceCulture);
             }
         }
         

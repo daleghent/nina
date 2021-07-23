@@ -105,9 +105,12 @@ namespace NINA.Sequencer.Trigger {
 
                 await this.Execute(context, progress, token);
                 Status = SequenceEntityStatus.FINISHED;
+            } catch (SequenceEntityFailedException ex) {
+                Logger.Error($"Failed: {this} - " + ex.Message);
+                Status = SequenceEntityStatus.FAILED;
             } catch (SequenceEntityFailedValidationException ex) {
                 Status = SequenceEntityStatus.FAILED;
-                Logger.Error($"{this} - " + ex.Message);
+                Logger.Error($"Failed validation: {this} - " + ex.Message);
             } catch (OperationCanceledException) {
                 Status = SequenceEntityStatus.CREATED;
             } catch (Exception ex) {

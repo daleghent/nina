@@ -102,9 +102,13 @@ namespace NINA.Sequencer.Conditions {
                 }
 
                 return this.Check(previousItem, nextItem);
-            } catch (SequenceEntityFailedValidationException ex) {
-                Logger.Error($"{this} - " + ex.Message);
+            } catch (SequenceEntityFailedException ex) {
+                Logger.Error($"Failed: {this} - " + ex.Message);
                 Status = SequenceEntityStatus.FAILED;
+                return false;
+            } catch (SequenceEntityFailedValidationException ex) {
+                Status = SequenceEntityStatus.FAILED;
+                Logger.Error($"Failed validation: {this} - " + ex.Message);
                 return false;
             } catch (OperationCanceledException) {
                 Status = SequenceEntityStatus.CREATED;

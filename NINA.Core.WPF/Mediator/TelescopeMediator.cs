@@ -63,8 +63,8 @@ namespace NINA.WPF.Base.Mediator {
             return handler.ParkTelescope(progress, token);
         }
 
-        public void UnparkTelescope() {
-            handler.UnparkTelescope();
+        public Task<bool> UnparkTelescope(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            return handler.UnparkTelescope(progress, token);
         }
 
         public Coordinates GetCurrentPosition() {

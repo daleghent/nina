@@ -67,7 +67,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 return ParkTelescope(progress, _cancelSlewTelescopeSource.Token);
             });
 
-            UnparkCommand = new RelayCommand(UnparkTelescope);
+            UnparkCommand = new AsyncCommand<bool>(() => {
+                InitCancelSlewTelescope();
+                return UnparkTelescope(progress, _cancelSlewTelescopeSource.Token);
+            });
             SetParkPositionCommand = new AsyncCommand<bool>(SetParkPosition);
             SlewToCoordinatesCommand = new AsyncCommand<bool>(SlewToCoordinatesInternal);
             RefreshTelescopeListCommand = new RelayCommand(RefreshTelescopeList, o => !(Telescope?.Connected == true));
@@ -214,14 +217,39 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             return returnCoordinates;
         }
 
-        private void UnparkTelescope(object o) {
-            Telescope.Unpark();
-        }
+        public async Task<bool> UnparkTelescope(IProgress<ApplicationStatus> progress, CancellationToken token) {
+            bool success = false;
+            Logger.Info("Telescope ordered to unpark");
 
-        public void UnparkTelescope() {
-            if (Telescope.Connected && Telescope.CanUnpark && Telescope.AtPark) {
-                Telescope.Unpark();
-            }
+            await Task.Run(async () => {
+                if (Telescope.Connected && Telescope.AtPark) {
+                    if (Telescope.CanUnpark) {
+                        try {
+                            progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblWaitingForTelescopeToUnpark"] });
+                            Telescope.Unpark();
+
+                            while (Telescope.AtPark) {
+                                if (token.IsCancellationRequested) {
+                                    Logger.Warning("Unpark cancelled");
+                                    throw new OperationCanceledException();
+                                }
+
+                                await CoreUtil.Delay(TimeSpan.FromSeconds(2), token);
+                            }
+
+                            success = true;
+                        } catch (OperationCanceledException) {
+                            Notification.ShowWarning(Loc.Instance["LblTelescopeUnparkCancelled"]);
+                        } catch (Exception e) {
+                            Notification.ShowError(e.Message);
+                        } finally {
+                            progress?.Report(new ApplicationStatus { Status = string.Empty });
+                        }
+                    }
+                }
+            });
+
+            return success;
         }
 
         public async Task<bool> FindHome(IProgress<ApplicationStatus> progress, CancellationToken token) {
