@@ -78,22 +78,20 @@ namespace NINA.Plugin {
                 try {
                     using (WebClient client = new WebClient()) {
                         using (ct.Register(() => client.CancelAsync(), useSynchronizationContext: false)) {
-                            using (Stream rawStream = client.OpenRead(manifest.Installer.URL)) {
-                                Logger.Info($"Downloading plugin from {manifest.Installer.URL}");
-                                var data = await client.DownloadDataTaskAsync(manifest.Installer.URL);
+                            Logger.Info($"Downloading plugin from {manifest.Installer.URL}");
+                            var data = await client.DownloadDataTaskAsync(manifest.Installer.URL);
 
-                                string contentDisposition = client.ResponseHeaders["content-disposition"];
-                                if (!string.IsNullOrEmpty(contentDisposition)) {
-                                    string lookFor = "filename=";
-                                    int index = contentDisposition.IndexOf(lookFor, StringComparison.CurrentCultureIgnoreCase);
-                                    if (index >= 0)
-                                        tempFile = Path.Combine(Path.GetTempPath(), contentDisposition.Substring(index + lookFor.Length).Replace("\"", ""));
-                                }
+                            string contentDisposition = client.ResponseHeaders["content-disposition"];
+                            if (!string.IsNullOrEmpty(contentDisposition)) {
+                                string lookFor = "filename=";
+                                int index = contentDisposition.IndexOf(lookFor, StringComparison.CurrentCultureIgnoreCase);
+                                if (index >= 0)
+                                    tempFile = Path.Combine(Path.GetTempPath(), contentDisposition.Substring(index + lookFor.Length).Replace("\"", ""));
+                            }
 
-                                using (var fs = new FileStream(tempFile, FileMode.Create)) {
-                                    Logger.Debug($"Saving downloaded plugin to temporary path {tempFile}");
-                                    await fs.WriteAsync(data, 0, data.Length);
-                                }
+                            using (var fs = new FileStream(tempFile, FileMode.Create)) {
+                                Logger.Debug($"Saving downloaded plugin to temporary path {tempFile}");
+                                await fs.WriteAsync(data, 0, data.Length);
                             }
                         }
                     }

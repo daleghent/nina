@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINATest.Sequencer.SequenceItem.Telescope {
@@ -82,7 +83,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             var sut = new UnparkScope(telescopeMediatorMock.Object);
             await sut.Execute(default, default);
 
-            telescopeMediatorMock.Verify(x => x.UnparkTelescope(), Times.Once);
+            telescopeMediatorMock.Verify(x => x.UnparkTelescope(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -92,8 +93,8 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             var sut = new UnparkScope(telescopeMediatorMock.Object);
             Func<Task> act = () => { return sut.Execute(default, default); };
 
-            telescopeMediatorMock.Verify(x => x.UnparkTelescope(), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
+            telescopeMediatorMock.Verify(x => x.UnparkTelescope(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Never);
+            return act.Should().ThrowAsync<SequenceEntityFailedValidationException>(string.Join(",", sut.Issues));
         }
 
         [Test]

@@ -5714,4 +5714,10 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="LblVendorSDKs" xml:space="preserve">
     <value>Vendor SDKs</value>
   </data>
+  <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
+    <value>Unpark operation was cancelled</value>
+  </data>
+  <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
+    <value>Waiting for telescope to unpark</value>
+  </data>
 </root>
