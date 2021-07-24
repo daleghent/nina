@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Core.Enum;
 
 namespace NINATest.Sequencer.SequenceItem.Telescope {
 
@@ -79,10 +80,23 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
         [Test]
         public async Task Execute_NoIssues_LogicCalled() {
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = true });
+            telescopeMediatorMock.Setup(x => x.UnparkTelescope(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
             var sut = new UnparkScope(telescopeMediatorMock.Object);
             await sut.Execute(default, default);
 
+            telescopeMediatorMock.Verify(x => x.UnparkTelescope(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
+        public async Task Execute_NoIssues_LogicCalled_ButUnparkFailed() {
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = true });
+            telescopeMediatorMock.Setup(x => x.UnparkTelescope(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>())).ReturnsAsync(false);
+
+            var sut = new UnparkScope(telescopeMediatorMock.Object);
+            Func<Task> act = async () => await sut.Execute(default, default);
+
+            await act.Should().ThrowAsync<SequenceEntityFailedException>();
             telescopeMediatorMock.Verify(x => x.UnparkTelescope(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
         }
 
