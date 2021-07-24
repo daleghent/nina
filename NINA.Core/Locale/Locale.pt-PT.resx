@@ -5698,4 +5698,19 @@ O comportamento padrão é continuar em caso de erros. No entanto, para algumas 
   <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
     <value>The folder where sequence targets for the advanced sequencer are stored in</value>
   </data>
+  <data name="LblNotInstalled" xml:space="preserve">
+    <value>Not installed</value>
+  </data>
+  <data name="LblVendor" xml:space="preserve">
+    <value>Vendor</value>
+  </data>
+  <data name="LblVendorSDKs" xml:space="preserve">
+    <value>Vendor SDKs</value>
+  </data>
+  <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
+    <value>Unpark operation was cancelled</value>
+  </data>
+  <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
+    <value>Waiting for telescope to unpark</value>
+  </data>
 </root>

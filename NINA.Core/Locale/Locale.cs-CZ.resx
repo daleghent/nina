@@ -151,7 +151,7 @@
     <value>Detekce Kontrastu (Experimentální)</value>
   </data>
   <data name="LblAFOnButFocuserNotConnected" xml:space="preserve">
-    <value>Auto-ostření povoleno, ale zaostření není připojen</value>
+    <value>AutoOstření povoleno, ale zaostření není připojen</value>
   </data>
   <data name="LblAFStarHFR" xml:space="preserve">
     <value>Hvězda HFR</value>
@@ -163,7 +163,7 @@
     <value>Použít nejjasnější n hvězd</value>
   </data>
   <data name="LblAFUseBrightestStarsTooltip" xml:space="preserve">
-    <value>Omezí Auto-ostření na nejjasnější hvězdy. 0 neomezeně.</value>
+    <value>Omezí AutoOstření na nejjasnější hvězdy. 0 neomezeně.</value>
   </data>
   <data name="LblAllProSpikeAFlatPanel" xml:space="preserve">
     <value>AllPro Spike-a-Flat Panel</value>
@@ -307,19 +307,19 @@ Má se aplikace pokusit zotavit z chyby? (Může vést k neočekávanému chová
     <value>Teplotní hodnota</value>
   </data>
   <data name="LblAutoFocusExposureTime" xml:space="preserve">
-    <value>Čas Expozice Auto-ostření</value>
+    <value>Čas Expozice AutoOstření</value>
   </data>
   <data name="LblAutoFocusExposureTimeTooltip" xml:space="preserve">
     <value>Expoziční Čas použitý pro auto-ostření, pokud pro tento filtr není nastaven čas nebo je nula</value>
   </data>
   <data name="LblAutoFocusFilter" xml:space="preserve">
-    <value>Filtr Auto-ostření</value>
+    <value>Filtr AutoOstření</value>
   </data>
   <data name="LblAutoFocusGearNotConnected" xml:space="preserve">
-    <value>Nelze spustit Auto-ostření. Kamera nebo Zaostření není připojen!</value>
+    <value>Nelze spustit AutoOstření. Kamera nebo Zaostření není připojen!</value>
   </data>
   <data name="LblAutoFocusInnerCropRatio" xml:space="preserve">
-    <value>Poměr Vnitřního Oříznutí Auto-ostření</value>
+    <value>Poměr Vnitřního Oříznutí AutoOstření</value>
   </data>
   <data name="LblAutoFocusInnerCropRatioTooltip" xml:space="preserve">
     <value>Pokud je nastavena na hodnotu menší než jedna, detekce hvězd během automatického zaostřování bude používat pouze
@@ -345,13 +345,13 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value># expozice</value>
   </data>
   <data name="LblAutoFocusNumberOfAttempts" xml:space="preserve">
-    <value>Počet Pokusů Auto-ostření</value>
+    <value>Počet Pokusů AutoOstření</value>
   </data>
   <data name="LblAutoFocusNumberOfAttemptsTooltip" xml:space="preserve">
     <value>Pokud auto-ostření selže, protože HFR je horší než původní zaostření, určuje, kolik pokusů auto-ostření má být provedeno, než bude úspěšné. Jinak bude obnovena původní poloha zaostření.</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPoint" xml:space="preserve">
-    <value>Auto-ostření Počet Snímků na Bod</value>
+    <value>AutoOstření Počet Snímků na Bod</value>
   </data>
   <data name="LblAutoFocusNumberOfFramesPerPointTooltip" xml:space="preserve">
     <value>Kolik snímků se použije k určení ostřícího bodu. Pokud je hodnota větší než 1, použije se více snímků a bod zaostření se vypočítá z jejich průměru</value>
@@ -363,10 +363,10 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Při startu</value>
   </data>
   <data name="LblAutoFocusOuterCropRatio" xml:space="preserve">
-    <value>Poměr Vnějšího Oříznutí Auto-ostření</value>
+    <value>Poměr Vnějšího Oříznutí AutoOstření</value>
   </data>
   <data name="LblAutoFocusReattempting" xml:space="preserve">
-    <value>Opakovaný pokus Auto-ostření</value>
+    <value>Opakovaný pokus AutoOstření</value>
   </data>
   <data name="LblAutoFocusRestoringOriginalPosition" xml:space="preserve">
     <value>Obnovování původní polohu zaostření</value>
@@ -378,7 +378,7 @@ Detekce kontrastu používá techniky zpracování obrazu k odhadu kontrastu pro
     <value>Přepínání na původní filtr</value>
   </data>
   <data name="LblAutoFocusSwitchingToDefaultFilter" xml:space="preserve">
-    <value>Přepínání na filtr Auto-ostření</value>
+    <value>Přepínání na filtr AutoOstření</value>
   </data>
   <data name="LblAutoMeridianFlip" xml:space="preserve">
     <value>Automatické Překlopení Poledníku</value>
@@ -983,7 +983,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Aktuální Barevné Schéma Uživatelského Rozhraní</value>
   </data>
   <data name="LblCurveFittingMethod" xml:space="preserve">
-    <value>Auto-ostření Přizpůsobení Křivky</value>
+    <value>AutoOstření Přizpůsobení Křivky</value>
   </data>
   <data name="LblCygwinBashNotFound" xml:space="preserve">
     <value>Cygwin bash nenalezen</value>
@@ -1061,7 +1061,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Chyba v Dec Pix</value>
   </data>
   <data name="LblDefaultAutoFocusExposureTime" xml:space="preserve">
-    <value>Výchozí Čas Expozice Auto-ostření</value>
+    <value>Výchozí Čas Expozice AutoOstření</value>
   </data>
   <data name="LblDefaultSequenceFolder" xml:space="preserve">
     <value>Výchozí složka pro soubory sekvence</value>
@@ -1139,7 +1139,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Zakázat</value>
   </data>
   <data name="LblDisableAFGuiding" xml:space="preserve">
-    <value>Auto-ostření Zakáže Pointaci</value>
+    <value>AutoOstření Zakáže Pointaci</value>
   </data>
   <data name="LblDisableAFGuidingTooltip" xml:space="preserve">
     <value>Nepointovat při auto-ostření</value>
@@ -1580,13 +1580,13 @@ Když je tato aktivace deaktivována, aplikace pouze přeskočí Start expozice 
     <value>Zaostření</value>
   </data>
   <data name="LblFocuserAutoFocusInitialOffsetSteps" xml:space="preserve">
-    <value>Počáteční Krok Auto-ostření</value>
+    <value>Počáteční Krok AutoOstření</value>
   </data>
   <data name="LblFocuserAutoFocusInitialOffsetStepsTooltip" xml:space="preserve">
     <value>Prvotní počet kroků, které zastření posune směrem ven před zahájením procesu auto-ostření.</value>
   </data>
   <data name="LblFocuserAutoFocusStepSize" xml:space="preserve">
-    <value>Velikost Kroku Auto-ostření</value>
+    <value>Velikost Kroku AutoOstření</value>
   </data>
   <data name="LblFocuserAutoFocusStepSizeTooltip" xml:space="preserve">
     <value>Velikost jednoho ostřícího kroku použitého pro automatické zaostřování. Jeden krok musí být menší než tolerance kritického bodu zaostření</value>
@@ -2985,7 +2985,7 @@ Tato šablona bude použita při spuštění generování sekvence místo výcho
     <value>Určuje citlivost algoritmu detekce hvězd. Vyšší nastavení může mylně detekovat šum a může trvat déle</value>
   </data>
   <data name="LblStartAutoFocus" xml:space="preserve">
-    <value>Spustit Auto-ostření</value>
+    <value>Spustit AutoOstření</value>
   </data>
   <data name="LblStartBacklashMeasurementConfirmation" xml:space="preserve">
     <value>Měření Zpětné vůle začne.
@@ -3705,7 +3705,7 @@ Standard Auto používá standard, který může poskytnout ovladač kamery. To 
     <value>Tolerance při Pointaci</value>
   </data>
   <data name="LblAutoFocusAfterFlip" xml:space="preserve">
-    <value>Auto-ostření po překlopení Poledníku</value>
+    <value>AutoOstření po překlopení Poledníku</value>
   </data>
   <data name="LblExposureFinished" xml:space="preserve">
     <value>Expozice dokončena</value>
@@ -4004,7 +4004,7 @@ V případě potřeby delší doby trvání lze zadat dobu trvání a aplikace p
     <value>Kamera nemá mechanickou závěrku, není připojen žádný automatický FlatBox a sekvence obsahuje pouze položky DARK/BIAS. Ujistěte se, že je kamera zakrytá.</value>
   </data>
   <data name="LblAutoFocusFilterSettings" xml:space="preserve">
-    <value>Nastavení Filtru Auto-ostření</value>
+    <value>Nastavení Filtru AutoOstření</value>
   </data>
   <data name="LblMeridianFlipIn" xml:space="preserve">
     <value>Překlopení Poledníku v</value>
@@ -4133,7 +4133,7 @@ V případě potřeby delší doby trvání lze zadat dobu trvání a aplikace p
     <value>Okamžitě zavřít štěrbinu kopule, pokud zařízení SafetyMonitor ohlásí nebezpečné podmínky</value>
   </data>
   <data name="LblAutoFocusTimeout" xml:space="preserve">
-    <value>Časový limit Sekvence Auto-ostření</value>
+    <value>Časový limit Sekvence AutoOstření</value>
   </data>
   <data name="LblAutoFocusTimeoutTooltip" xml:space="preserve">
     <value>Čas čekání na auto-ostření v sekundách během sekvence, před zrušením operace</value>
@@ -4319,7 +4319,7 @@ V případě potřeby delší doby trvání lze zadat dobu trvání a aplikace p
     <value>Spustí auto-ostření</value>
   </data>
   <data name="Lbl_SequenceItem_Autofocus_RunAutofocus_Name" xml:space="preserve">
-    <value>Spustit Auto-ostření</value>
+    <value>Spustit AutoOstření</value>
   </data>
   <data name="Lbl_SequenceItem_Camera_CoolCamera_Description" xml:space="preserve">
     <value>Ochladí kameru na danou teplotu a dobu trvání</value>
@@ -5699,5 +5699,20 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
   </data>
   <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
     <value>Složka, ve které jsou uloženy sekvenční cíle pro pokročilý sekvencér</value>
+  </data>
+  <data name="LblNotInstalled" xml:space="preserve">
+    <value>Není instalován</value>
+  </data>
+  <data name="LblVendor" xml:space="preserve">
+    <value>Vendor</value>
+  </data>
+  <data name="LblVendorSDKs" xml:space="preserve">
+    <value>Vendor SDKs</value>
+  </data>
+  <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
+    <value>Unpark operation was cancelled</value>
+  </data>
+  <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
+    <value>Waiting for telescope to unpark</value>
   </data>
 </root>

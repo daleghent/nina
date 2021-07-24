@@ -5696,4 +5696,19 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
   <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
     <value>La carpeta on s’emmagatzemen les plantilles de seqüència per al seqüenciador avançat</value>
   </data>
+  <data name="LblNotInstalled" xml:space="preserve">
+    <value>Not installed</value>
+  </data>
+  <data name="LblVendor" xml:space="preserve">
+    <value>Vendor</value>
+  </data>
+  <data name="LblVendorSDKs" xml:space="preserve">
+    <value>Vendor SDKs</value>
+  </data>
+  <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
+    <value>Unpark operation was cancelled</value>
+  </data>
+  <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
+    <value>Waiting for telescope to unpark</value>
+  </data>
 </root>
