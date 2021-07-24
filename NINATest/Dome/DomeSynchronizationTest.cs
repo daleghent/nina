@@ -206,7 +206,6 @@ namespace NINATest.Dome {
         [TestCase(0)]
         [TestCase(200)]
         [TestCase(400)]
-        [TestCase(600)]
         public void NorthOffset_AltAz_Test(int length) {
             var sut = Initialize(gemAxisLength: length, mountOffsetX: 500, domeRadius: 1000);
 
