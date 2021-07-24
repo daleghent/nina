@@ -356,6 +356,10 @@ namespace NINA.Sequencer.Container {
             get => slewToTarget;
             set {
                 slewToTarget = value;
+                if (!slewToTarget) {
+                    CenterTarget = slewToTarget;
+                    RotateTarget = slewToTarget;
+                }
                 RaisePropertyChanged();
             }
         }
@@ -365,6 +369,8 @@ namespace NINA.Sequencer.Container {
             get => centerTarget;
             set {
                 centerTarget = value;
+                if (centerTarget) { SlewToTarget = centerTarget; }
+                if (!centerTarget) { RotateTarget = centerTarget; }
                 RaisePropertyChanged();
             }
         }
@@ -374,6 +380,7 @@ namespace NINA.Sequencer.Container {
             get => rotateTarget;
             set {
                 rotateTarget = value;
+                if (rotateTarget) { CenterTarget = rotateTarget; }
                 RaisePropertyChanged();
             }
         }
@@ -549,13 +556,13 @@ namespace NINA.Sequencer.Container {
                 startup.Add((ISequenceItem)(firstInstruction as SimpleExposure).GetSwitchFilter().Clone());
             }
 
-            if (SlewToTarget) {
+            if (SlewToTarget && !CenterTarget && !RotateTarget) {
                 var slew = factory.GetItem<SlewScopeToRaDec>();
                 slew.Coordinates = Target.InputCoordinates;
                 startup.Add(slew);
             }
 
-            if (CenterTarget) {
+            if (CenterTarget && !RotateTarget) {
                 var center = factory.GetItem<Center>();
                 center.Coordinates = Target.InputCoordinates;
                 startup.Add(center);
