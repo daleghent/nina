@@ -19,178 +19,178 @@
     d:DesignWidth="300"
     mc:Ignorable="d">
     <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="5,0,5,0">
-            <Border
-                Margin="0,5,0,0"
-                BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0"
-                Visibility="{Binding FlatDeviceInfo.Connected, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
-                <Grid VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblConnected}" />
-                    <CheckBox
-                        Grid.Column="1"
-                        Width="20"
-                        Height="20"
-                        Margin="5,0,0,0"
-                        HorizontalAlignment="Left"
-                        BorderBrush="Transparent"
-                        IsChecked="{Binding FlatDeviceInfo.Connected, FallbackValue=False, Mode=OneWay}"
-                        IsEnabled="False"
-                        Style="{StaticResource CheckmarkCheckbox}" />
-                </Grid>
-            </Border>
+        <Grid Margin="5,0,5,0" IsEnabled="{Binding FlatDeviceInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
+            <Grid IsEnabled="{Binding FlatDeviceInfo.Connected}">
+                <Border
+                    Margin="0,5,0,0"
+                    VerticalAlignment="Top"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="0"
+                    Visibility="{Binding FlatDeviceInfo.Connected, Converter={StaticResource InverseBooleanToVisibilityCollapsedConverter}}">
+                    <UniformGrid VerticalAlignment="Center" Columns="2">
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblConnected}" />
+                        <CheckBox
+                            Width="20"
+                            Height="20"
+                            Margin="5,0,0,0"
+                            HorizontalAlignment="Left"
+                            BorderBrush="Transparent"
+                            IsChecked="{Binding FlatDeviceInfo.Connected, FallbackValue=False, Mode=OneWay}"
+                            IsEnabled="False"
+                            Style="{StaticResource CheckmarkCheckbox}" />
+                    </UniformGrid>
+                </Border>
+                <StackPanel Orientation="Vertical" Visibility="{Binding FlatDeviceInfo.Connected, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
 
-            <Border
-                BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0"
-                Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                <Grid Margin="0,6,0,6">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        Text="{ns:Loc LblFlatDeviceLight}"
-                        TextWrapping="WrapWithOverflow" />
-                    <CheckBox
-                        Grid.Column="1"
-                        Height="25"
-                        Margin="5,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        Command="{Binding ToggleLightCommand}"
-                        CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}"
-                        IsChecked="{Binding FlatDeviceInfo.LightOn}" />
-                </Grid>
-            </Border>
-            <Border
-                BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0"
-                Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                <Grid Margin="0,6,0,6" VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceCoverCurrently}" />
-                    <TextBlock
-                        Grid.Column="1"
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding FlatDeviceInfo.LocalizedLightOnState}" />
-                </Grid>
-            </Border>
-            <Border
-                BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0"
-                Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                <Grid Margin="0,6,0,6" VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceBrightness}" />
-                    <Grid Grid.Column="1" VerticalAlignment="Center">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.7*" />
-                            <ColumnDefinition Width="15px" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox
-                            x:Name="BrightnessInput"
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Height="25"
-                            Margin="5,0,0,0"
-                            VerticalAlignment="Center"
-                            HorizontalContentAlignment="Center"
-                            IsEnabled="{Binding FlatDeviceInfo.Connected}"
-                            Text="{Binding Brightness, Converter={StaticResource PercentageConverter}, ConverterParameter=2, StringFormat={}{0:F1}}" />
-                        <Button
-                            Grid.Column="2"
-                            Margin="5"
-                            Command="{Binding SetBrightnessCommand}"
-                            CommandParameter="{Binding Text, ElementName=BrightnessInput}">
-                            <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblFlatDeviceSetBrightness}" />
-                        </Button>
-                    </Grid>
-                </Grid>
-            </Border>
-            <Border
-                BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0"
-                Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                <Grid Margin="0,6,0,6" VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceCoverCurrently}" />
-                    <StackPanel Grid.Column="1" Orientation="Horizontal">
-                        <TextBlock
-                            Margin="5,0,0,0"
-                            VerticalAlignment="Center"
-                            Text="{Binding FlatDeviceInfo.Brightness, Converter={StaticResource PercentageConverter}, ConverterParameter=2}" />
-                    </StackPanel>
-                </Grid>
-            </Border>
-            <Border
-                BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0"
-                Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                <Grid Margin="0,6,0,6" VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceCover}" />
-                    <StackPanel
-                        Grid.Column="1"
-                        MinHeight="25"
-                        Orientation="Horizontal">
-                        <Grid IsEnabled="{Binding FlatDeviceInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
-                            <Button
-                                MinWidth="80"
+                    <Border
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0"
+                        Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Grid Margin="0,6,0,6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblFlatDeviceLight}"
+                                TextWrapping="WrapWithOverflow" />
+                            <CheckBox
+                                Grid.Column="1"
+                                Height="25"
                                 Margin="5,0,0,0"
-                                HorizontalAlignment="Center"
-                                Command="{Binding OpenCoverCommand}">
-                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblFlatDeviceOpenButton}" />
-                            </Button>
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Command="{Binding ToggleLightCommand}"
+                                CommandParameter="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}"
+                                IsChecked="{Binding FlatDeviceInfo.LightOn}" />
                         </Grid>
-                        <Grid IsEnabled="{Binding FlatDeviceInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
-                            <Button
-                                MinWidth="80"
+                    </Border>
+                    <Border
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0"
+                        Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Grid Margin="0,6,0,6" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceCoverCurrently}" />
+                            <TextBlock
+                                Grid.Column="1"
                                 Margin="5,0,0,0"
-                                HorizontalAlignment="Center"
-                                Command="{Binding CloseCoverCommand}">
-                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblFlatDeviceClose}" />
-                            </Button>
+                                VerticalAlignment="Center"
+                                Text="{Binding FlatDeviceInfo.LocalizedLightOnState}" />
                         </Grid>
-                    </StackPanel>
-                </Grid>
-            </Border>
-            <Border
-                BorderBrush="{StaticResource BorderBrush}"
-                BorderThickness="0"
-                Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
-                <Grid Margin="0,6,0,6" VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="2*" />
-                    </Grid.ColumnDefinitions>
-                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceCoverCurrently}" />
-                    <TextBlock
-                        Grid.Column="1"
-                        Margin="5,0,0,0"
-                        VerticalAlignment="Center"
-                        Text="{Binding FlatDeviceInfo.LocalizedCoverState}" />
-                </Grid>
-            </Border>
-        </StackPanel>
+                    </Border>
+                    <Border
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0"
+                        Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Grid Margin="0,6,0,6" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceBrightness}" />
+                            <Grid Grid.Column="1" VerticalAlignment="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0.7*" />
+                                    <ColumnDefinition Width="15px" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox
+                                    x:Name="BrightnessInput"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Height="25"
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    HorizontalContentAlignment="Center"
+                                    IsEnabled="{Binding FlatDeviceInfo.Connected}"
+                                    Text="{Binding Brightness, Converter={StaticResource PercentageConverter}, ConverterParameter=2, StringFormat={}{0:F1}}" />
+                                <Button
+                                    Grid.Column="2"
+                                    Margin="5"
+                                    Command="{Binding SetBrightnessCommand}"
+                                    CommandParameter="{Binding Text, ElementName=BrightnessInput}">
+                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblFlatDeviceSetBrightness}" />
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                    <Border
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0"
+                        Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Grid Margin="0,6,0,6" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceCoverCurrently}" />
+                            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding FlatDeviceInfo.Brightness, Converter={StaticResource PercentageConverter}, ConverterParameter=2}" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0"
+                        Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Grid Margin="0,6,0,6" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceCover}" />
+                            <StackPanel
+                                Grid.Column="1"
+                                MinHeight="25"
+                                Orientation="Horizontal">
+                                <Grid IsEnabled="{Binding FlatDeviceInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
+                                    <Button
+                                        MinWidth="80"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        Command="{Binding OpenCoverCommand}">
+                                        <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblFlatDeviceOpenButton}" />
+                                    </Button>
+                                </Grid>
+                                <Grid IsEnabled="{Binding FlatDeviceInfo, Converter={StaticResource InverseNullToBooleanConverter}}">
+                                    <Button
+                                        MinWidth="80"
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        Command="{Binding CloseCoverCommand}">
+                                        <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{ns:Loc LblFlatDeviceClose}" />
+                                    </Button>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <Border
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="0"
+                        Visibility="{Binding FlatDeviceInfo.SupportsOpenClose, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
+                        <Grid Margin="0,6,0,6" VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFlatDeviceCoverCurrently}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{Binding FlatDeviceInfo.LocalizedCoverState}" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Grid>
     </ScrollViewer>
 </UserControl>
