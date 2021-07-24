@@ -40,7 +40,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             this.imageSaveMediator.ImageSaved += ImageSaveMediator_ImageSaved;
             this.applicationStatusMediator = applicationStatusMediator;
             this.progress = new Progress<ApplicationStatus>(ProgressStatusUpdate);
-            var lastLightImage = history.ImageHistory.Where(x => x.Type == "LIGHT").LastOrDefault();
+            var lastLightImage = history.ImageHistory.Where(x => x.LocalPath != null && x.Type == "LIGHT").LastOrDefault();
             LastPlatesolvedId = lastLightImage != null ? lastLightImage.Id : -1;
         }
 
@@ -51,13 +51,17 @@ namespace NINA.Sequencer.Trigger.Platesolving {
             applicationStatusMediator.StatusUpdate(status);
         }
 
+        private bool ImageHistoryIsRelevant(ImageHistoryPoint p) {
+            return p.LocalPath != null && p.Type == "LIGHT" && p.Id > LastPlatesolvedId;
+        }
+
         private void ImageSaveMediator_ImageSaved(object sender, ImageSavedEventArgs e) {
             lock (lockObj) {
                 if (ProgressExposures < AfterExposures) {
                     return;
                 }
 
-                var recentLightHistory = history.ImageHistory.Where(x => x.Type == "LIGHT" && x.Id > LastPlatesolvedId).ToList();
+                var recentLightHistory = history.ImageHistory.Where(ImageHistoryIsRelevant).ToList();
                 var matchingHistoryItem = recentLightHistory.Where(x => new Uri(x.LocalPath) == e.PathToImage).FirstOrDefault();
                 if (matchingHistoryItem == null) {
                     return;
@@ -106,7 +110,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
 
         public int ProgressExposures {
             get {
-                return history.ImageHistory.Count(x => x.Type == "LIGHT" && x.Id > LastPlatesolvedId);
+                return history.ImageHistory.Count(ImageHistoryIsRelevant);
             }
         }
 
