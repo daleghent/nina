@@ -64,6 +64,10 @@ namespace NINA.ViewModel.Plugins {
                 SelectedInstalledPlugin = InstalledPlugins.FirstOrDefault();
                 RaisePropertyChanged(nameof(AvailablePlugins));
                 RaisePropertyChanged(nameof(SelectedAvailablePlugin));
+
+                if (InstalledPlugins?.Count > 0) {
+                    await FetchPluginsCommand.ExecuteAsync("Initial");
+                }
             });
         }
 
@@ -151,6 +155,16 @@ namespace NINA.ViewModel.Plugins {
             }
         }
 
+        private int availablePluginUpdateCount;
+
+        public int AvailablePluginUpdateCount {
+            get => availablePluginUpdateCount;
+            private set {
+                availablePluginUpdateCount = value;
+                RaisePropertyChanged();
+            }
+        }
+
         private IList<ExtendedPluginManifest> availablePlugins;
 
         public IList<ExtendedPluginManifest> AvailablePlugins {
@@ -184,9 +198,8 @@ namespace NINA.ViewModel.Plugins {
                             var fetcher = new PluginFetcher(repo);
                             onlinePlugins.AddRange(await fetcher.RequestAll(new PluginVersion(CoreUtil.Version), progress, fetchCts.Token));
                         } catch (Exception ex) {
-                            Logger.Error(ex);
                             var host = new Uri(repo).Host;
-                            Notification.ShowError(string.Format(Loc.Instance["LblFailedToFetchPlugins"], host));
+                            Logger.Error($"Failed to fetch plugins from {host}", ex);
                         }
                     }
                 }
@@ -224,6 +237,8 @@ namespace NINA.ViewModel.Plugins {
                 }
                 AvailablePlugins = list;
                 SelectedAvailablePlugin = m;
+
+                AvailablePluginUpdateCount = AvailablePlugins.Where(x => x.State == PluginState.UpdateAvailable).Count();
             } catch (OperationCanceledException) {
             } catch (Exception ex) {
                 Logger.Error(ex);

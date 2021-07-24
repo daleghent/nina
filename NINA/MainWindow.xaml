@@ -281,6 +281,21 @@
                                     Data="{StaticResource PuzzlePieceSVG}"
                                     Stretch="Uniform"
                                     Style="{StaticResource TabItemPath}" />
+                                <Border
+                                    Width="15"
+                                    Height="15"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Background="{StaticResource ButtonBackgroundBrush}"
+                                    CornerRadius="1"
+                                    Visibility="{Binding PluginsVM.AvailablePluginUpdateCount, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                        Text="{Binding PluginsVM.AvailablePluginUpdateCount}" />
+                                </Border>
                                 <TextBlock
                                     Grid.Row="1"
                                     Style="{StaticResource SideBarTextBlock}"

@@ -403,6 +403,22 @@
                                 Data="{StaticResource GridSVG}"
                                 Stretch="Uniform"
                                 Style="{StaticResource TabItemPath}" />
+
+                            <Border
+                                Width="15"
+                                Height="15"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Background="{StaticResource ButtonBackgroundBrush}"
+                                CornerRadius="1"
+                                Visibility="{Binding AvailablePluginUpdateCount, Converter={StaticResource ZeroToVisibilityConverter}}">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontWeight="Bold"
+                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                    Text="{Binding AvailablePluginUpdateCount}" />
+                            </Border>
                         </Grid>
                     </Grid>
                     <TextBlock

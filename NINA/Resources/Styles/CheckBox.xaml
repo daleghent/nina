@@ -101,7 +101,7 @@
                         Background="{StaticResource BackgroundBrush}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="1"
-                        CornerRadius="10">
+                        CornerRadius="50">
                         <Grid>
                             <Path
                                 x:Name="PART_CheckedSymbol"
