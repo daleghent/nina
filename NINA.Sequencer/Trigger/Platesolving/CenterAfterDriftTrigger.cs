@@ -197,6 +197,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         }
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
+            if (nextItem == null) { return false; }
             RaisePropertyChanged(nameof(ProgressExposures));
             if (LastDistanceArcMinutes >= DistanceArcMinutes) {
                 Logger.Info($"Drift exceeded threshold: {LastDistanceArcMinutes} / {DistanceArcMinutes} arc minutes");

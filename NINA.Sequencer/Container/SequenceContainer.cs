@@ -482,7 +482,8 @@ namespace NINA.Sequencer.Container {
             }
             foreach (var trigger in localTriggers) {
                 if (trigger.ShouldTrigger(previousItem, nextItem)) {
-                    await trigger.Run(nextItem.Parent, progress, token);
+                    var context = nextItem?.Parent ?? previousItem?.Parent ?? this;
+                    await trigger.Run(context, progress, token);
                 }
             }
         }

@@ -5720,4 +5720,7 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Waiting for telescope to unpark</value>
   </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Global Triggers</value>
+  </data>
 </root>

@@ -159,6 +159,27 @@ namespace NINA.Sequencer {
 
         private IList<string> Validate(ISequenceContainer container) {
             List<string> issues = new List<string>();
+
+            if (container is IConditionable conditionable) {
+                foreach (var condition in conditionable.GetConditionsSnapshot()) {
+                    if (condition is IValidatable) {
+                        var v = condition as IValidatable;
+                        v.Validate();
+                        issues.AddRange(v.Issues);
+                    }
+                }
+            }
+
+            if (container is ITriggerable triggerable) {
+                foreach (var trigger in triggerable.GetTriggersSnapshot()) {
+                    if (trigger is IValidatable) {
+                        var v = trigger as IValidatable;
+                        v.Validate();
+                        issues.AddRange(v.Issues);
+                    }
+                }
+            }
+
             foreach (var item in container.GetItemsSnapshot()) {
                 if (item is IValidatable) {
                     var v = item as IValidatable;
@@ -167,26 +188,6 @@ namespace NINA.Sequencer {
                 }
 
                 if (item is ISequenceContainer) {
-                    if (item is IConditionable) {
-                        foreach (var condition in (item as IConditionable).GetConditionsSnapshot()) {
-                            if (condition is IValidatable) {
-                                var v = condition as IValidatable;
-                                v.Validate();
-                                issues.AddRange(v.Issues);
-                            }
-                        }
-                    }
-
-                    if (item is ITriggerable) {
-                        foreach (var trigger in (item as ITriggerable).GetTriggersSnapshot()) {
-                            if (trigger is IValidatable) {
-                                var v = trigger as IValidatable;
-                                v.Validate();
-                                issues.AddRange(v.Issues);
-                            }
-                        }
-                    }
-
                     issues.AddRange(Validate(item as ISequenceContainer));
                 }
             }

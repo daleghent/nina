@@ -159,6 +159,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         }
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
+            if (nextItem == null) { return false; }
             var fwInfo = this.filterWheelMediator.GetInfo();
 
             var lastAF = history.AutoFocusPoints?.LastOrDefault();

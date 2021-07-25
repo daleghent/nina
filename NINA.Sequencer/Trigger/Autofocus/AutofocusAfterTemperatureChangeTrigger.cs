@@ -115,6 +115,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         }
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
+            if (nextItem == null) { return false; }
             if (history.ImageHistory == null) { return false; }
             if (history.ImageHistory.Count == 0) { return false; }
 

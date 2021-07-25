@@ -55,6 +55,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         protected IImageHistoryVM history;
 
         protected DateTime lastFlipTime = DateTime.MinValue;
+        protected Coordinates lastFlipCoordiantes;
 
         [ImportingConstructor]
         public MeridianFlipTrigger(IProfileService profileService, ICameraMediator cameraMediator, ITelescopeMediator telescopeMediator, IGuiderMediator guiderMediator, IFocuserMediator focuserMediator, IImagingMediator imagingMediator, IApplicationStatusMediator applicationStatusMediator, IFilterWheelMediator filterWheelMediator, IImageHistoryVM historyVM) : base() {
@@ -111,7 +112,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             set { }
         }
 
-        public virtual Boolean UseSideOfPier {
+        public virtual bool UseSideOfPier {
             get {
                 return profileService.ActiveProfile.MeridianFlipSettings.UseSideOfPier;
             }
@@ -142,7 +143,11 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
         }
 
         public override Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
-            var target = ItemUtility.RetrieveContextCoordinates(context).Item1 ?? telescopeMediator.GetCurrentPosition();
+            var target = ItemUtility.RetrieveContextCoordinates(context).Item1;
+            if (target == null) {
+                target = telescopeMediator.GetCurrentPosition();
+                Logger.Warning("No target information available for flip. Taking current telescope coordinates instead");
+            }
 
             var timeToFlip = CalculateMinimumTimeRemaining();
             if (timeToFlip > TimeSpan.FromHours(2)) {
@@ -151,12 +156,14 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             }
 
             lastFlipTime = DateTime.Now;
+            lastFlipCoordiantes = target;
             return new MeridianFlipVM(profileService, cameraMediator, telescopeMediator, guiderMediator, focuserMediator, imagingMediator, applicationStatusMediator, filterWheelMediator, history)
                 .MeridianFlip(target, timeToFlip);
         }
 
         public override void AfterParentChanged() {
             lastFlipTime = DateTime.MinValue;
+            lastFlipCoordiantes = null;
         }
 
         protected virtual TimeSpan CalculateMinimumTimeRemaining() {
@@ -187,13 +194,14 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 return false;
             }
 
-            if ((DateTime.Now - lastFlipTime) < TimeSpan.FromHours(11)) {
-                //A flip for the same target is only expected every 12 hours on planet earth
+            // When side of pier is disabled - check if the last flip time was less than 11 hours ago and further check if the current position is similar to the last flip position. If all are true, no flip is required.
+            if (UseSideOfPier == false && (DateTime.Now - lastFlipTime) < TimeSpan.FromHours(11) && lastFlipCoordiantes != null && (lastFlipCoordiantes - telescopeInfo.Coordinates).Distance.ArcMinutes < 20) {
+                //A flip for the same target is only expected every 12 hours on planet earth and
                 Logger.Debug($"Meridian Flip - Flip for the current target already happened at {lastFlipTime}. Skip flip evaluation");
                 return false;
             }
 
-            var nextInstructionTime = nextItem.GetEstimatedDuration().TotalSeconds;
+            var nextInstructionTime = nextItem?.GetEstimatedDuration().TotalSeconds ?? 0;
 
             //The time to meridian flip reported by the telescope is the latest time for a flip to happen
             var minimumTimeRemaining = CalculateMinimumTimeRemaining();
@@ -283,16 +291,18 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
         public virtual bool Validate() {
             var i = new List<string>();
-            var cameraInfo = telescopeMediator.GetInfo();
+            var meridianFlipSettings = profileService.ActiveProfile.MeridianFlipSettings;
+            var telescopeInfo = telescopeMediator.GetInfo();
 
-            if (!cameraMediator.GetInfo().Connected) {
+            if (meridianFlipSettings.Recenter && !cameraMediator.GetInfo().Connected) {
                 i.Add(Loc.Instance["LblCameraNotConnected"]);
             }
-            if (!cameraInfo.Connected) {
+
+            if (!telescopeInfo.Connected) {
                 i.Add(Loc.Instance["LblTelescopeNotConnected"]);
             }
 
-            if (profileService.ActiveProfile.MeridianFlipSettings.AutoFocusAfterFlip) {
+            if (meridianFlipSettings.AutoFocusAfterFlip) {
                 if (!focuserMediator.GetInfo().Connected) {
                     i.Add(Loc.Instance["LblFocuserNotConnected"]);
                 }

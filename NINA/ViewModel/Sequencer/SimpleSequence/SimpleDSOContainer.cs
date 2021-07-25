@@ -80,7 +80,6 @@ namespace NINA.Sequencer.Container {
         private AutofocusAfterExposures autoFocusAfterSetExposuresTrigger;
         private AutofocusAfterTemperatureChangeTrigger autoFocusAfterTemperatureChangeTrigger;
         private AutofocusAfterHFRIncreaseTrigger autoFocusAfterHFRChangeTrigger;
-        private MeridianFlipTrigger flipTrigger;
         private LoopCondition rotateLoopCondition;
         private bool autoFocusAfterSetTime;
         private bool autoFocusAfterSetExposures;
@@ -129,7 +128,6 @@ namespace NINA.Sequencer.Container {
             this.autoFocusAfterSetExposuresTrigger = factory.GetTrigger<AutofocusAfterExposures>();
             this.autoFocusAfterTemperatureChangeTrigger = factory.GetTrigger<AutofocusAfterTemperatureChangeTrigger>();
             this.autoFocusAfterHFRChangeTrigger = factory.GetTrigger<AutofocusAfterHFRIncreaseTrigger>();
-            this.flipTrigger = factory.GetTrigger<MeridianFlipTrigger>();
 
             this.rotateLoopCondition = factory.GetCondition<LoopCondition>();
             this.rotateLoopCondition.Iterations = 1;
@@ -390,19 +388,6 @@ namespace NINA.Sequencer.Container {
             get => autoFocusOnStart;
             set {
                 autoFocusOnStart = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public bool MeridianFlipEnabled {
-            get => meridianFlipEnabled;
-            set {
-                meridianFlipEnabled = value;
-                if (value) {
-                    this.Triggers.Add(flipTrigger);
-                } else {
-                    this.Triggers.Remove(flipTrigger);
-                }
                 RaisePropertyChanged();
             }
         }

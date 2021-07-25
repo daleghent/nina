@@ -448,5 +448,38 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
             conditionMock.Verify(x => x.SequenceBlockFinished(), Times.Exactly(3));
             triggerMock.Verify(x => x.SequenceBlockFinished(), Times.Exactly(3));
         }
+
+        [Test]
+        public async Task Execute_WithOneInstruction_FirstExecutes_NormalTriggerableEvaluatedOnce_RootTriggerableTwice() {
+            var containerMock = new Mock<SequenceContainer>(new Mock<IExecutionStrategy>().Object);
+            var triggerableMock = containerMock.As<ITriggerable>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>());
+
+            var rootMock = new Mock<ISequenceRootContainer>();
+            var triggerableRootMock = rootMock.As<ITriggerable>();
+            triggerableRootMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>());
+
+            containerMock.Object.AttachNewParent(rootMock.Object);
+
+            var item1Mock = new Mock<ISequenceItem>();
+            item1Mock
+                .SetupSequence(x => x.Status)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.CREATED)
+                .Returns(SequenceEntityStatus.FINISHED);
+
+            var items = new List<ISequenceItem>() { item1Mock.Object };
+            foreach (var item in items) {
+                containerMock.Object.Items.Add(item);
+            }
+
+            var sut = new SequentialStrategy();
+            await sut.Execute(containerMock.Object, default, default);
+
+            triggerableMock.Verify(x => x.RunTriggers(It.Is<ISequenceItem>(item => item == null), It.Is<ISequenceItem>(item => item == item1Mock.Object), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            triggerableRootMock.Verify(x => x.RunTriggers(It.Is<ISequenceItem>(item => item == null), It.Is<ISequenceItem>(item => item == item1Mock.Object), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+            triggerableRootMock.Verify(x => x.RunTriggers(It.Is<ISequenceItem>(item => item == item1Mock.Object), It.Is<ISequenceItem>(item => item == null), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
     }
 }

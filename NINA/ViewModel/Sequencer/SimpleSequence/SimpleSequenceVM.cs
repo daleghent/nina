@@ -65,6 +65,7 @@ using NINA.Equipment.Equipment;
 using NINA.WPF.Base.ViewModel;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using CsvHelper.Configuration;
+using NINA.Sequencer.Trigger;
 
 namespace NINA.ViewModel {
 
@@ -137,6 +138,7 @@ namespace NINA.ViewModel {
                         rootContainer
                     );
 
+                    this.flipTrigger = factory.GetTrigger<MeridianFlipTrigger>();
                     DoMeridianFlip = profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
 
                     EstimatedDownloadTime = profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime;
@@ -238,20 +240,16 @@ namespace NINA.ViewModel {
             cts?.Cancel();
         }
 
+        private MeridianFlipTrigger flipTrigger;
+
         public bool DoMeridianFlip {
             get => profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
             set {
                 profileService.ActiveProfile.SequenceSettings.DoMeridianFlip = value;
                 if (value) {
-                    foreach (var item in Targets.Items) {
-                        var target = item as SimpleDSOContainer;
-                        target.MeridianFlipTrigger = factory.GetTrigger<MeridianFlipTrigger>();
-                    }
+                    (Sequencer.MainContainer as ITriggerable).Add(flipTrigger);
                 } else {
-                    foreach (var item in Targets.Items) {
-                        var target = item as SimpleDSOContainer;
-                        target.MeridianFlipTrigger = null;
-                    }
+                    (Sequencer.MainContainer as ITriggerable).Remove(flipTrigger);
                 }
                 RaisePropertyChanged();
             }
@@ -688,13 +686,18 @@ namespace NINA.ViewModel {
 
         private void BuildSequence() {
             var container = factory.GetContainer<SequenceRootContainer>();
+
+            foreach (var trigger in Sequencer.MainContainer.GetTriggersSnapshot()) {
+                container.Add(trigger);
+            }
+
             var startArea = factory.GetContainer<StartAreaContainer>();
-            foreach (var item in StartOptions.Items) {
+            foreach (var item in StartOptions.GetItemsSnapshot()) {
                 startArea.Add((ISequenceItem)item.Clone());
             }
 
             var targetArea = factory.GetContainer<TargetAreaContainer>();
-            foreach (var item in Targets.Items) {
+            foreach (var item in Targets.GetItemsSnapshot()) {
                 var target = item as SimpleDSOContainer;
                 if (target.Status == SequenceEntityStatus.CREATED) {
                     targetArea.Add(target.TransformToDSOContainer());
@@ -703,7 +706,7 @@ namespace NINA.ViewModel {
 
             var endArea = factory.GetContainer<EndAreaContainer>();
             var endContainer = factory.GetContainer<ParallelContainer>();
-            foreach (var item in EndOptions.Items) {
+            foreach (var item in EndOptions.GetItemsSnapshot()) {
                 endContainer.Add((ISequenceItem)item.Clone());
             }
             if (endContainer.Items.Count > 0) {
@@ -856,10 +859,6 @@ namespace NINA.ViewModel {
 
             if (completed) {
                 container.Status = SequenceEntityStatus.FINISHED;
-            }
-
-            if (DoMeridianFlip) {
-                container.MeridianFlipEnabled = true;
             }
 
             return container;

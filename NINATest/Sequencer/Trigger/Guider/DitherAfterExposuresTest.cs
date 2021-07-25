@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 using NINA.Equipment.Equipment.MyGuider;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Model;
+using NINA.Sequencer.SequenceItem;
 
 namespace NINATest.Sequencer.Trigger.Guider {
 
@@ -103,7 +104,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
             var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object);
             sut.AfterExposures = afterExpsoures;
 
-            var trigger = sut.ShouldTrigger(null, null);
+            var trigger = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
 
             trigger.Should().Be(shouldTrigger);
         }
@@ -119,12 +120,12 @@ namespace NINATest.Sequencer.Trigger.Guider {
             var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object);
             sut.AfterExposures = 1;
 
-            var test1 = sut.ShouldTrigger(null, null);
+            var test1 = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
             await sut.Execute(default, default, default);
-            var test2 = sut.ShouldTrigger(null, null);
+            var test2 = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
 
             history.Add(new ImageHistoryPoint(100, null, "LIGHT"));
-            var test3 = sut.ShouldTrigger(null, null);
+            var test3 = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
 
             test1.Should().BeTrue();
             test2.Should().BeFalse();

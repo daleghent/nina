@@ -8705,6 +8705,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Global Triggers.
+        /// </summary>
+        internal static string LblGlobalTriggers {
+            get {
+                return ResourceManager.GetString("LblGlobalTriggers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to GPS connected on port.
         /// </summary>
         internal static string LblGPSConnected {

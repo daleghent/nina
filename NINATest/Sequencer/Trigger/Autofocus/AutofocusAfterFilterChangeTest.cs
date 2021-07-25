@@ -18,6 +18,7 @@ using NINA.Equipment.Equipment.MyFocuser;
 using NINA.Equipment.Equipment.MyCamera;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Utility.AutoFocus;
+using NINA.Sequencer.SequenceItem;
 
 namespace NINATest.Sequencer.Trigger.Autofocus {
 
@@ -78,7 +79,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
             sut.SequenceBlockStarted();
 
-            var result = sut.ShouldTrigger(null, null);
+            var result = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
 
             result.Should().BeFalse();
         }
@@ -103,7 +104,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
 
             sut.Initialize();
 
-            var result = sut.ShouldTrigger(null, null);
+            var result = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
 
             result.Should().BeTrue();
         }
@@ -112,7 +113,7 @@ namespace NINATest.Sequencer.Trigger.Autofocus {
         public void Test_ShouldTrigger_WhenAlwaysNullThenNoTrigger() {
             sut.SequenceBlockStarted();
 
-            var result = sut.ShouldTrigger(null, null);
+            var result = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
 
             result.Should().BeFalse();
         }

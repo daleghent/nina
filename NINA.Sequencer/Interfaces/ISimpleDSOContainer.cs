@@ -47,7 +47,6 @@ namespace NINA.Sequencer.Container {
         DateTime EstimatedEndTime { get; set; }
         DateTime EstimatedStartTime { get; set; }
         string FileName { get; set; }
-        bool MeridianFlipEnabled { get; set; }
         SequenceMode Mode { get; set; }
         NighttimeData NighttimeData { get; }
         ICommand PromoteSimpleExposureCommand { get; }

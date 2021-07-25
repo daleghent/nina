@@ -106,6 +106,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         }
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
+            if (nextItem == null) { return false; }
             RaisePropertyChanged(nameof(ProgressExposures));
             var shouldTrigger =
                 lastTriggerId < history.ImageHistory.Count
