@@ -8,21 +8,17 @@
     License, v. 2.0. If a copy of the MPL was not distributed with this
     file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
-<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension">
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" xmlns:bal="http://schemas.microsoft.com/wix/BalExtension" xmlns:util="http://schemas.microsoft.com/wix/UtilExtension" xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
   <?if $(var.Platform) = x64 ?>
   <?define SetupMsiName = "NINASetup.msi" ?>
   <?define Win64 = "yes"?>
   <?define SetupSource = "$(var.NINASetup.TargetDir)" ?>
   <?define DefaultInstallDir = "[ProgramFiles64Folder]N.I.N.A. - Nighttime Imaging 'N' Astronomy" ?>
-  <?define VCRedist2013 = "$(var.ProjectDir)\vc_redist2013.x64.exe" ?>
-  <?define VCRedist2017 = "$(var.ProjectDir)\vc_redist.x64.exe" ?>
   <?else ?>
   <?define SetupMsiName = "NINASetup.msi" ?>
   <?define Win64 = "no"?>
   <?define SetupSource = "$(var.NINASetup.TargetDir)" ?>
   <?define DefaultInstallDir = "[ProgramFilesFolder]N.I.N.A. - Nighttime Imaging 'N' Astronomy" ?>
-  <?define VCRedist2013 = "$(var.ProjectDir)\vc_redist2013.x86.exe" ?>
-  <?define VCRedist2017 = "$(var.ProjectDir)\vc_redist.x86.exe" ?>
   <?endif ?>
   <Bundle Name="N.I.N.A. - Nighttime Imaging 'N' Astronomy" Version="!(bind.packageVersion.NINASetup)" Manufacturer="N.I.N.A." UpgradeCode="E51BC85C-6DE1-4653-9B0B-3C80754E4C90">
     <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
@@ -48,7 +44,6 @@
       Condition='PreviousInstallFolder' />
     <Variable Name="LaunchTarget" Value="[InstallFolder]\NINA.exe" />
     <Chain>
-      <PackageGroupRef Id="NetFx472Redist" />
       <MsiPackage Id="NINASetup" Name="$(var.SetupMsiName)" SourceFile="$(var.SetupSource)" DisplayInternalUI="yes">
         <MsiProperty Name="INSTALLFOLDER" Value="[InstallFolder]" />
       </MsiPackage>

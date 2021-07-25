@@ -40,7 +40,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Bundle.wxs" />
-    <Compile Include="DotNetCheck.wxs" />
   </ItemGroup>
   <ItemGroup>
     <WixExtension Include="WixNetFxExtension">
