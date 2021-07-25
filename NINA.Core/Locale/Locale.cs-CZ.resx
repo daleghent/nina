@@ -5710,9 +5710,9 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Vendor SDKs</value>
   </data>
   <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
-    <value>Unpark operation was cancelled</value>
+    <value>Operace odparkovat zrušena.</value>
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
-    <value>Waiting for telescope to unpark</value>
+    <value>Čekat na odparkování dalekohledu</value>
   </data>
 </root>

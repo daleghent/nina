@@ -5705,9 +5705,9 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
     <value>SDK del vendedor</value>
   </data>
   <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
-    <value>Unpark operation was cancelled</value>
+    <value>La operación de desaparear ha sido cancelada</value>
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
-    <value>Waiting for telescope to unpark</value>
+    <value>Esperando para desparramar el telescopio</value>
   </data>
 </root>
