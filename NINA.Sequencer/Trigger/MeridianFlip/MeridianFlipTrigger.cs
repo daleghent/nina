@@ -70,7 +70,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             this.history = historyVM;
         }
 
-        private MeridianFlipTrigger(MeridianFlipTrigger cloneMe) : this(cloneMe.profileService, cloneMe.cameraMediator, cloneMe.telescopeMediator, cloneMe.guiderMediator, cloneMe.focuserMediator, cloneMe.imagingMediator, cloneMe.applicationStatusMediator, cloneMe.filterWheelMediator, cloneMe.history) {
+        protected MeridianFlipTrigger(MeridianFlipTrigger cloneMe) : this(cloneMe.profileService, cloneMe.cameraMediator, cloneMe.telescopeMediator, cloneMe.guiderMediator, cloneMe.focuserMediator, cloneMe.imagingMediator, cloneMe.applicationStatusMediator, cloneMe.filterWheelMediator, cloneMe.history) {
             CopyMetaData(cloneMe);
         }
 
@@ -78,7 +78,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             return new MeridianFlipTrigger(this);
         }
 
-        private IList<string> issues = new List<string>();
+        protected IList<string> issues = new List<string>();
 
         public IList<string> Issues {
             get => issues;
@@ -121,7 +121,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
         public virtual DateTime LatestFlipTime {
             get => latestFlipTime;
-            private set {
+            protected set {
                 latestFlipTime = value;
                 RaisePropertyChanged();
             }
@@ -129,7 +129,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
 
         public virtual DateTime EarliestFlipTime {
             get => earliestFlipTime;
-            private set {
+            protected set {
                 earliestFlipTime = value;
                 RaisePropertyChanged();
             }
@@ -185,11 +185,15 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
             //var settings = profileService.ActiveProfile.MeridianFlipSettings;
 
             if (!telescopeInfo.Connected || double.IsNaN(telescopeInfo.TimeToMeridianFlip)) {
+                EarliestFlipTime = DateTime.MinValue;
+                LatestFlipTime = DateTime.MinValue;
                 Logger.Error("Meridian Flip - Telescope is not connected to evaluate if a flip should happen!");
                 return false;
             }
 
             if (!telescopeInfo.TrackingEnabled) {
+                EarliestFlipTime = DateTime.MinValue;
+                LatestFlipTime = DateTime.MinValue;
                 Logger.Info("Meridian Flip - Telescope is not tracking. Skip flip evaluation");
                 return false;
             }

@@ -31,6 +31,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Locale;
+using NINA.Sequencer.Utility;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.Trigger.Autofocus {
 
@@ -119,14 +121,24 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (nextItem == null) { return false; }
+
+            bool shouldTrigger = false;
             var lastAF = history.AutoFocusPoints.LastOrDefault();
             if (lastAF == null) {
                 Elapsed = Math.Round((DateTime.Now - initialTime).TotalMinutes, 2);
-                return (DateTime.Now - initialTime) >= TimeSpan.FromMinutes(Amount);
+                shouldTrigger = (DateTime.Now - initialTime) >= TimeSpan.FromMinutes(Amount);
             } else {
                 Elapsed = Math.Round((DateTime.Now - lastAF.AutoFocusPoint.Time).TotalMinutes, 2);
-                return (DateTime.Now - lastAF.AutoFocusPoint.Time) >= TimeSpan.FromMinutes(Amount);
+                shouldTrigger = (DateTime.Now - lastAF.AutoFocusPoint.Time) >= TimeSpan.FromMinutes(Amount);
             }
+
+            if (shouldTrigger) {
+                if (ItemUtility.IsTooCloseToMeridianFlip(Parent, TriggerRunner.GetItemsSnapshot().First().GetEstimatedDuration())) {
+                    Logger.Warning("Autofocus should be triggered, however the meridian flip is too close to be executed");
+                    shouldTrigger = false;
+                }
+            }
+            return shouldTrigger;
         }
 
         public override string ToString() {

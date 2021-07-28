@@ -15,8 +15,15 @@
 using FluentAssertions;
 using Moq;
 using NINA.Astrometry;
+using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Interfaces.Mediator;
+using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
+using NINA.Sequencer.Trigger;
+using NINA.Sequencer.Trigger.MeridianFlip;
 using NINA.Sequencer.Utility;
+using NINA.WPF.Base.Interfaces.Mediator;
+using NINA.WPF.Base.Interfaces.ViewModel;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -144,6 +151,135 @@ namespace NINATest.Sequencer.Utility {
             var isIn = ItemUtility.IsInRootContainer(containerMock.Object);
 
             isIn.Should().BeTrue();
+        }
+
+        [Test]
+        public void GetMeridianFlipTime_NoParent_NoMeridianFlip_Zero() {
+            var containerMock = new Mock<ISequenceContainer>();
+
+            var time = ItemUtility.GetMeridianFlipTime(containerMock.Object);
+
+            time.Should().Be(DateTime.MinValue);
+        }
+
+        [Test]
+        public void GetMeridianFlipTime_WithParent_NoMeridianFlip_Zero() {
+            var parentMock = new Mock<ISequenceRootContainer>();
+            var containerMock = new Mock<ISequenceContainer>();
+            containerMock.SetupGet(x => x.Parent).Returns(parentMock.Object);
+
+            var time = ItemUtility.GetMeridianFlipTime(containerMock.Object);
+
+            time.Should().Be(DateTime.MinValue);
+        }
+
+        [Test]
+        public void GetMeridianFlipTime_NoParent_NoMeridianFlip_ButOtherTriggers_Zero() {
+            var containerMock = new Mock<ISequenceContainer>();
+
+            var triggerableMock = containerMock.As<ITriggerable>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>() { new Mock<ISequenceTrigger>().Object });
+
+            var time = ItemUtility.GetMeridianFlipTime(containerMock.Object);
+
+            time.Should().Be(DateTime.MinValue);
+        }
+
+        [Test]
+        public void GetMeridianFlipTime_WithParent_NoMeridianFlip_ButOtherTriggers_Zero() {
+            var parentMock = new Mock<ISequenceRootContainer>();
+            var containerMock = new Mock<ISequenceContainer>();
+            containerMock.SetupGet(x => x.Parent).Returns(parentMock.Object);
+
+            var triggerableMock = parentMock.As<ITriggerable>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>() { new Mock<ISequenceTrigger>().Object });
+
+            var time = ItemUtility.GetMeridianFlipTime(containerMock.Object);
+
+            time.Should().Be(DateTime.MinValue);
+        }
+
+        private MeridianFlipTrigger PrepareTrigger(TimeSpan timeToFlip) {
+            var profileServiceMock = new Mock<IProfileService>();
+            var telescopeMediatorMock = new Mock<ITelescopeMediator>();
+            var guiderMediatorMock = new Mock<IGuiderMediator>();
+            var imagingMediatorMock = new Mock<IImagingMediator>();
+            var applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
+            var filterMediatorMock = new Mock<IFilterWheelMediator>();
+            var cameraMediatorMock = new Mock<ICameraMediator>();
+            var focuserMediatorMock = new Mock<IFocuserMediator>();
+            var historyMock = new Mock<IImageHistoryVM>();
+
+            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() {
+                Connected = true,
+                TimeToMeridianFlip = timeToFlip.TotalHours,
+                TrackingEnabled = true
+            });
+            profileServiceMock.SetupGet(x => x.ActiveProfile.MeridianFlipSettings.UseSideOfPier).Returns(false);
+
+            var flip = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+
+            flip.ShouldTrigger(null, null);
+
+            return flip;
+        }
+
+        [Test]
+        public void GetMeridianFlipTime_NoParent_WithMeridianFlip_ProperTime() {
+            var containerMock = new Mock<ISequenceContainer>();
+
+            var triggerableMock = containerMock.As<ITriggerable>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>() { new Mock<ISequenceTrigger>().Object, PrepareTrigger(TimeSpan.FromHours(1)) });
+
+            var time = ItemUtility.GetMeridianFlipTime(containerMock.Object);
+
+            time.Should().BeCloseTo(DateTime.Now + TimeSpan.FromHours(1), TimeSpan.FromMinutes(1));
+        }
+
+        [Test]
+        public void GetMeridianFlipTime_WithParent_WithMeridianFlip_ProperTime() {
+            var parentMock = new Mock<ISequenceRootContainer>();
+            var containerMock = new Mock<ISequenceContainer>();
+            containerMock.SetupGet(x => x.Parent).Returns(parentMock.Object);
+
+            var triggerableMock = parentMock.As<ITriggerable>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>() { PrepareTrigger(TimeSpan.FromHours(1)), new Mock<ISequenceTrigger>().Object });
+
+            var time = ItemUtility.GetMeridianFlipTime(containerMock.Object);
+
+            time.Should().BeCloseTo(DateTime.Now + TimeSpan.FromHours(1), TimeSpan.FromMinutes(1));
+        }
+
+        [Test]
+        [TestCase(1, 1, true)]
+        [TestCase(1, 2, true)]
+        [TestCase(2, 1, false)]
+        public void IsTooCloseToMeridian_NoParent_WithMeridianFlip(int hoursToFlip, int estimatedTime, bool expected) {
+            var containerMock = new Mock<ISequenceContainer>();
+
+            var triggerableMock = containerMock.As<ITriggerable>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>() { PrepareTrigger(TimeSpan.FromHours(hoursToFlip)) });
+
+            var isTooClose = ItemUtility.IsTooCloseToMeridianFlip(containerMock.Object, TimeSpan.FromHours(estimatedTime));
+
+            isTooClose.Should().Be(expected);
+        }
+
+        [Test]
+        [TestCase(1, 1, true)]
+        [TestCase(1, 2, true)]
+        [TestCase(2, 1, false)]
+        public void IsTooCloseToMeridian_WithParent_WithMeridianFlip(int hoursToFlip, int estimatedTime, bool expected) {
+            var parentMock = new Mock<ISequenceRootContainer>();
+            var containerMock = new Mock<ISequenceContainer>();
+            containerMock.SetupGet(x => x.Parent).Returns(parentMock.Object);
+
+            var triggerableMock = parentMock.As<ITriggerable>();
+            triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>() { PrepareTrigger(TimeSpan.FromHours(hoursToFlip)) });
+
+            var isTooClose = ItemUtility.IsTooCloseToMeridianFlip(containerMock.Object, TimeSpan.FromHours(estimatedTime));
+
+            isTooClose.Should().Be(expected);
         }
     }
 }

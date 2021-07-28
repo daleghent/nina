@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NINA.Sequencer.Trigger;
+using NINA.Sequencer.Trigger.MeridianFlip;
 
 namespace NINA.Sequencer.Utility {
 
@@ -50,6 +52,50 @@ namespace NINA.Sequencer.Utility {
             } else {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Checks if the current context or one of its parents contains a meridian flip trigger and returns the estimated time of the flip
+        /// </summary>
+        /// <param name="context">current context instruction set</param>
+        /// <returns></returns>
+        public static DateTime GetMeridianFlipTime(ISequenceContainer context) {
+            if (context == null) { return DateTime.MinValue; }
+
+            if (context is ITriggerable triggerable) {
+                var snapshot = triggerable.GetTriggersSnapshot();
+                if (snapshot?.Count > 0) {
+                    var item = snapshot.FirstOrDefault(x => typeof(MeridianFlipTrigger).IsAssignableFrom(x.GetType()));
+                    if (item != null) {
+                        return ((MeridianFlipTrigger)item).LatestFlipTime;
+                    }
+                }
+            }
+            if (context.Parent != null) {
+                return GetMeridianFlipTime(context.Parent);
+            } else {
+                return DateTime.MinValue;
+            }
+        }
+
+        /// <summary>
+        /// Checks if the current context or one of its parents contains a meridian flip trigger and checks if the remaining time is enough to complete prior to the flip
+        /// </summary>
+        /// <param name="context">current context instruction set</param>
+        /// <param name="estimatedDuration">estimated duration of the item to run</param>
+        /// <returns>
+        /// true: is too close and can't finish before flip
+        /// false: can finish before flip or no meridian flip trigger is present
+        /// </returns>
+        public static bool IsTooCloseToMeridianFlip(ISequenceContainer context, TimeSpan estimatedDuration) {
+            var estimatedItemFinishTime = DateTime.Now + TimeSpan.FromSeconds(estimatedDuration.TotalSeconds * 1.5);
+
+            var flipTime = GetMeridianFlipTime(context);
+
+            if (flipTime > DateTime.MinValue && estimatedItemFinishTime > flipTime) {
+                return true;
+            }
+            return false;
         }
     }
 }

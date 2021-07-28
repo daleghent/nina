@@ -121,17 +121,24 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
         public override TimeSpan GetEstimatedDuration() {
             var filter = filterWheelMediator.GetInfo()?.SelectedFilter;
 
-            var exposureTime = profileService.ActiveProfile.FocuserSettings.AutoFocusExposureTime;
+            var focuserSettings = profileService.ActiveProfile.FocuserSettings;
+
+            var exposureTime = focuserSettings.AutoFocusExposureTime;
             if (filter != null) {
                 var filterTime = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters[filter.Position].AutoFocusExposureTime;
                 exposureTime = filterTime > 0 ? filterTime : exposureTime;
             }
 
             // + 2 because the autofocus will take an initial exposure and a final exposure to evaluate the run
-            var steps = profileService.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps * 2 * profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint + 2;
-            var settleTime = profileService.ActiveProfile.FocuserSettings.FocuserSettleTime;
+            var steps = focuserSettings.AutoFocusInitialOffsetSteps * 2 * focuserSettings.AutoFocusNumberOfFramesPerPoint + 2;
 
-            var time = steps * (exposureTime + settleTime);
+            // Assume for focuser settle time an additional 2 seconds for focuser movement itself
+            var settleTime = focuserSettings.FocuserSettleTime + 2;
+
+            var instructionAttempts = Math.Max(1, Attempts);
+            var afAttemptsSetting = Math.Max(1, focuserSettings.AutoFocusTotalNumberOfAttempts);
+
+            var time = afAttemptsSetting * instructionAttempts * steps * (exposureTime + settleTime);
 
             return TimeSpan.FromSeconds(time);
         }

@@ -104,10 +104,10 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
         }
 
         [Test]
-        [TestCase(10, 5, 1, 0, 120)]
-        [TestCase(10, 5, 1, 5, 180)]
-        [TestCase(10, 5, 3, 0, 320)]
-        [TestCase(10, 5, 3, 5, 480)]
+        [TestCase(10, 5, 1, 0, 144)]
+        [TestCase(10, 5, 1, 5, 204)]
+        [TestCase(10, 5, 3, 0, 384)]
+        [TestCase(10, 5, 3, 5, 544)]
         public void GetEstimatedDuration_WithFilterTime_ReturnsCorrectEstimate(double filterTime, int initialSteps, int framesPerPoint, int settleTime, double expectedDuration) {
             filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = new FilterInfo() { Position = 0 } });
             profileServiceMock.SetupGet(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>() { new FilterInfo() { Position = 0, AutoFocusExposureTime = filterTime } });
@@ -122,10 +122,10 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
         }
 
         [Test]
-        [TestCase(10, 5, 1, 0, 120)]
-        [TestCase(10, 5, 1, 5, 180)]
-        [TestCase(10, 5, 3, 0, 320)]
-        [TestCase(10, 5, 3, 5, 480)]
+        [TestCase(10, 5, 1, 0, 144)]
+        [TestCase(10, 5, 1, 5, 204)]
+        [TestCase(10, 5, 3, 0, 384)]
+        [TestCase(10, 5, 3, 5, 544)]
         public void GetEstimatedDuration_WithDefaultTime_ReturnsCorrectEstimate(double defaultTime, int initialSteps, int framesPerPoint, int settleTime, double expectedDuration) {
             filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = null });
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusExposureTime).Returns(defaultTime);
@@ -139,10 +139,10 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
         }
 
         [Test]
-        [TestCase(10, 5, 1, 0, 120)]
-        [TestCase(10, 5, 1, 5, 180)]
-        [TestCase(10, 5, 3, 0, 320)]
-        [TestCase(10, 5, 3, 5, 480)]
+        [TestCase(10, 5, 1, 0, 144)]
+        [TestCase(10, 5, 1, 5, 204)]
+        [TestCase(10, 5, 3, 0, 384)]
+        [TestCase(10, 5, 3, 5, 544)]
         public void GetEstimatedDuration_WithFilterTimeZeroFallback_ReturnsCorrectEstimate(double defaultTime, int initialSteps, int framesPerPoint, int settleTime, double expectedDuration) {
             filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = new FilterInfo() { Position = 0 } });
             profileServiceMock.SetupGet(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>() { new FilterInfo() { Position = 0, AutoFocusExposureTime = 0 } });
@@ -150,6 +150,31 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps).Returns(initialSteps);
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint).Returns(framesPerPoint);
             profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.FocuserSettleTime).Returns(settleTime);
+
+            var duration = sut.GetEstimatedDuration();
+
+            duration.Should().Be(TimeSpan.FromSeconds(expectedDuration));
+        }
+
+        [Test]
+        [TestCase(10, 5, 1, 0, 2, 1, 288)]
+        [TestCase(10, 5, 1, 5, 2, 1, 408)]
+        [TestCase(10, 5, 3, 0, 2, 1, 768)]
+        [TestCase(10, 5, 3, 5, 2, 1, 1088)]
+        [TestCase(10, 5, 1, 0, 0, 2, 288)]
+        [TestCase(10, 5, 1, 5, 0, 2, 408)]
+        [TestCase(10, 5, 3, 0, 0, 2, 768)]
+        [TestCase(10, 5, 3, 5, 0, 2, 1088)]
+        public void GetEstimatedDuration_WithFilterTimeZeroFallback_MultiAttempts_ReturnsCorrectEstimate(double defaultTime, int initialSteps, int framesPerPoint, int settleTime, int instructionAttempts, int profileAttempts, double expectedDuration) {
+            filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = new FilterInfo() { Position = 0 } });
+            profileServiceMock.SetupGet(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>() { new FilterInfo() { Position = 0, AutoFocusExposureTime = 0 } });
+            profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusExposureTime).Returns(defaultTime);
+            profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusInitialOffsetSteps).Returns(initialSteps);
+            profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint).Returns(framesPerPoint);
+            profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.FocuserSettleTime).Returns(settleTime);
+            profileServiceMock.SetupGet(x => x.ActiveProfile.FocuserSettings.AutoFocusTotalNumberOfAttempts).Returns(profileAttempts);
+
+            sut.Attempts = instructionAttempts;
 
             var duration = sut.GetEstimatedDuration();
 

@@ -36,6 +36,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Locale;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.Trigger.Autofocus {
 
@@ -160,6 +161,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (nextItem == null) { return false; }
+            bool shouldTrigger = false;
             var fwInfo = this.filterWheelMediator.GetInfo();
 
             var lastAF = history.AutoFocusPoints?.LastOrDefault();
@@ -211,7 +213,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
                         if (HFRTrendPercentage > Amount) {
                             /* Trigger autofocus after HFR change */
                             Logger.Debug($"Autofocus after HFR change has been triggered, as current HFR trend is {HFRTrendPercentage}% higher compared to threshold of {Amount}%");
-                            return true;
+                            shouldTrigger = true;
                         }
                     }
                 } else {
@@ -222,7 +224,13 @@ namespace NINA.Sequencer.Trigger.Autofocus {
                 OriginalHFR = 0;
             }
 
-            return false;
+            if (shouldTrigger) {
+                if (ItemUtility.IsTooCloseToMeridianFlip(Parent, TriggerRunner.GetItemsSnapshot().First().GetEstimatedDuration())) {
+                    Logger.Warning("Autofocus should be triggered, however the meridian flip is too close to be executed");
+                    shouldTrigger = false;
+                }
+            }
+            return shouldTrigger;
         }
 
         public override string ToString() {

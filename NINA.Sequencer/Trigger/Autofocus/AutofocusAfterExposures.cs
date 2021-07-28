@@ -31,6 +31,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Locale;
+using NINA.Core.Utility;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.Trigger.Autofocus {
 
@@ -49,6 +51,9 @@ namespace NINA.Sequencer.Trigger.Autofocus {
         private IFocuserMediator focuserMediator;
         private IGuiderMediator guiderMediator;
         private IImagingMediator imagingMediator;
+
+        private int lastTriggerId = 0;
+        private int afterExposures;
 
         [ImportingConstructor]
         public AutofocusAfterExposures(IProfileService profileService, IImageHistoryVM history, ICameraMediator cameraMediator, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IGuiderMediator guiderMediator, IImagingMediator imagingMediator) : base() {
@@ -84,9 +89,6 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             }
         }
 
-        private int lastTriggerId = 0;
-        private int afterExposures;
-
         [JsonProperty]
         public int AfterExposures {
             get => afterExposures;
@@ -107,12 +109,20 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (nextItem == null) { return false; }
+
             RaisePropertyChanged(nameof(ProgressExposures));
             var shouldTrigger =
                 lastTriggerId < history.ImageHistory.Count
                 && history.ImageHistory.Count > 0
                 && ProgressExposures == 0
                 && history.ImageHistory.Last().AutoFocusPoint == null;
+
+            if (shouldTrigger) {
+                if (ItemUtility.IsTooCloseToMeridianFlip(Parent, TriggerRunner.GetItemsSnapshot().First().GetEstimatedDuration())) {
+                    Logger.Warning("Autofocus should be triggered, however the meridian flip is too close to be executed");
+                    shouldTrigger = false;
+                }
+            }
 
             return shouldTrigger;
         }

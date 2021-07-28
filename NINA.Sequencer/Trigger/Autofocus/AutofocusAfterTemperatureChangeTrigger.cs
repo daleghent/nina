@@ -32,6 +32,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Locale;
+using NINA.Sequencer.Utility;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.Trigger.Autofocus {
 
@@ -119,6 +121,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             if (history.ImageHistory == null) { return false; }
             if (history.ImageHistory.Count == 0) { return false; }
 
+            bool shouldTrigger = false;
             var lastAF = history.AutoFocusPoints.LastOrDefault();
             var info = focuserMediator.GetInfo();
 
@@ -132,11 +135,19 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
             if (lastAF == null && !double.IsNaN(initialTemperature)) {
                 DeltaT = Math.Round(Math.Abs(initialTemperature - info.Temperature), 2);
-                return Math.Abs(initialTemperature - info.Temperature) >= Amount;
+                shouldTrigger = Math.Abs(initialTemperature - info.Temperature) >= Amount;
             } else {
                 DeltaT = Math.Round(Math.Abs(lastAF.AutoFocusPoint.Temperature - info.Temperature), 2);
-                return Math.Abs(lastAF.AutoFocusPoint.Temperature - info.Temperature) >= Amount;
+                shouldTrigger = Math.Abs(lastAF.AutoFocusPoint.Temperature - info.Temperature) >= Amount;
             }
+
+            if (shouldTrigger) {
+                if (ItemUtility.IsTooCloseToMeridianFlip(Parent, TriggerRunner.GetItemsSnapshot().First().GetEstimatedDuration())) {
+                    Logger.Warning("Autofocus should be triggered, however the meridian flip is too close to be executed");
+                    shouldTrigger = false;
+                }
+            }
+            return shouldTrigger;
         }
 
         public override string ToString() {
