@@ -285,7 +285,7 @@
                                     </StackPanel>
                                     <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
                                         <TextBlock Text="|" />
-                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblAutoMeridianFlip}" />
+                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc Lbl_SequenceTrigger_MeridianFlipTrigger_Name}" />
                                         <StackPanel.Style>
                                             <Style TargetType="StackPanel">
                                                 <Style.Triggers>
@@ -299,9 +299,7 @@
                                 </WrapPanel>
                             </WrapPanel>
                         </Expander.Header>
-                        <ScrollViewer
-                            HorizontalScrollBarVisibility="Auto"
-                            VerticalScrollBarVisibility="Disabled">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                             <StackPanel Margin="0,2,0,2" Orientation="Horizontal">
                                 <TextBlock
                                     MinHeight="20"
@@ -324,7 +322,7 @@
                                     MinHeight="20"
                                     Margin="5,0,5,0"
                                     VerticalAlignment="Center"
-                                    Text="{ns:Loc LblAutoMeridianFlip}" />
+                                    Text="{ns:Loc Lbl_SequenceTrigger_MeridianFlipTrigger_Name}" />
                                 <CheckBox HorizontalAlignment="Left" IsChecked="{Binding DataContext.DoMeridianFlip, Mode=TwoWay, ElementName=UC}" />
                             </StackPanel>
                         </ScrollViewer>
@@ -369,9 +367,7 @@
                                 </WrapPanel>
                             </WrapPanel>
                         </Expander.Header>
-                        <ScrollViewer
-                            HorizontalScrollBarVisibility="Auto"
-                            VerticalScrollBarVisibility="Disabled">
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
                             <StackPanel Margin="0,2,0,2" Orientation="Horizontal">
                                 <TextBlock
                                     MinHeight="20"
