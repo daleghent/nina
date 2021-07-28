@@ -2289,9 +2289,6 @@
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>望遠鏡はシーケンス終了時にパーク位置に行くように設定されていますが、接続されていません。</value>
   </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>シーケンス終了時に赤道儀をパーク位置にする</value>
-  </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>子午線跨ぎ</value>
   </data>
@@ -3509,9 +3506,6 @@
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>カメラ待ち</value>
-  </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>シーケンス終了時にカメラを昇温する</value>
   </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>シーケンス終了時にカメラを昇温する設定ですが、できません。</value>
@@ -4852,12 +4846,6 @@
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>シーケンス命令の並列実行開始</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>最初の目標開始のオプション</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>シーケンス開始時のカメラの冷却</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>シーケンス開始時にフラット装置の蓋を開く</value>
   </data>
@@ -4866,9 +4854,6 @@
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>シーケンス開始時にドームのパークを解除する</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>シーケンス開始時に赤道儀のパークを解除する</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>ドームのシャッターを開きます</value>
@@ -5691,5 +5676,29 @@ ASCOMカメラドライバーを使用している場合にのみ有効です。
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Waiting for telescope to unpark</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Global Triggers</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>

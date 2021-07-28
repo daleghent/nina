@@ -2296,9 +2296,6 @@ Hesaplanan HFR: {2}
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>Teleskop, sıralama sonunda park edilmeye ayarlandı, henüz bağlanmadı</value>
   </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>Sekans bittiğinde kundağı park et</value>
-  </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>Meridyeni geç</value>
   </data>
@@ -3514,9 +3511,6 @@ Dikdörtgeni kadrajın örneklemek istediğiniz kısmına sürükleyin ve örnek
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>Kamera bekleniyor</value>
-  </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>Sekans bitince kamerayı ısıt</value>
   </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>Kamera sekans bitince ısıtılmaya ayarlandı ancak henüz bunu yapamaz</value>
@@ -4861,12 +4855,6 @@ Yukarıdaki pozisyon, şu anda genişletilmemiş bir yönerge setiyse, o yönerg
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Sekans Yönergesi Paralel Başlangıcı</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>İlk hedef seçeneklerinin başlangıcı</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Sekans başladığında kamerayı soğut</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>Sekans başladığında kapağı aç</value>
   </data>
@@ -4875,9 +4863,6 @@ Yukarıdaki pozisyon, şu anda genişletilmemiş bir yönerge setiyse, o yönerg
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Sekans başladığında kubbeyi parktan çıkar</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>Sekans başladığında kundağı parktan çıkar</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Kubbe kapağını açar</value>
@@ -5706,5 +5691,29 @@ Varsayılan davranış, hatalara devam etmektir, ancak bazı talimatlar için y�
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Waiting for telescope to unpark</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Global Triggers</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>

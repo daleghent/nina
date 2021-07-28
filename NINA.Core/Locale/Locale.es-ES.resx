@@ -2296,9 +2296,6 @@ Calculado HFR: {2}
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>El Telescopio está configurado para aparcarse al final de la secuencia, pero no está conectado</value>
   </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>Aparcar el telescopio cuando termine la secuencia</value>
-  </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>Paso de Meridiano</value>
   </data>
@@ -3517,9 +3514,6 @@ Cuando está habilitado, se estirarán los canales de color de forma independien
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>Esperando a la Cámara</value>
-  </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>Calentar la Cámara cuando la secuencia termine</value>
   </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>La cámara está esperando calentarse al final de la secuencia, pero es incapaz de hacerlo</value>
@@ -4864,12 +4858,6 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Instrucciones en paralelo de Inicio de Secuencia</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Inicio de Opciones del Primer Objetivo</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Enfría la Cámara cuando la secuencia empiece</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>Abrir tapa cuando se inicia la secuencia</value>
   </data>
@@ -4878,9 +4866,6 @@ Si la posición anterior es un conjunto de instrucciones que no está actualment
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Desparcar cúpula al iniciar la secuencia</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>Desparcar la montura al iniciar la secuencia</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Abre el obturador de la cúpula</value>
@@ -5709,5 +5694,29 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Esperando para desparramar el telescopio</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Activadores globales</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>

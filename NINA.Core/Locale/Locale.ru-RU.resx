@@ -1693,7 +1693,7 @@ Dec: {1}</value>
     <value>Гид не послал сообщения о возобновлении вовремя. Серия будет возобновлена, но убедитесь, что гид направляет снова!</value>
   </data>
   <data name="LblGuiderNoSettleDone" xml:space="preserve">
-    <value>Guider did not send SettleDone message after expected time ({0}s + 10s). Skipping.</value>
+    <value>Гид не отправил сообщение SettleDone после ожидаемого времени ({0}s + 10s). Пропуск.</value>
   </data>
   <data name="LblGuiderResumeFailed" xml:space="preserve">
     <value>Ошибка при возобновлении гида</value>
@@ -2296,9 +2296,6 @@ Dec: {1}</value>
   </data>
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>Телескоп установлен в парковку в конце серии, но не подключен</value>
-  </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>Парковка монтировки по окончании серии</value>
   </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>После меридиана</value>
@@ -3521,9 +3518,6 @@ Dec: {1}</value>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>Ожидание камеры</value>
   </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>Нагреть камеру по окончании серии</value>
-  </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>Камера настроена на прогрев в конце серии, но она не может сделать это</value>
   </data>
@@ -4389,16 +4383,16 @@ Dec: {1}</value>
     <value>Сделать экспозицию</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Description" xml:space="preserve">
-    <value>Slews to the target, centers the target and rotates the telescope via plate solving and a rotator for the given coordinates and rotation</value>
+    <value>Движение к цели, центрирует цель и вращает телескоп с помощью плейтсолва и ротатора для заданных координат и вращения</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_CenterAndRotate_Name" xml:space="preserve">
-    <value>Slew, center and rotate</value>
+    <value>Двигаться, отцентрировать и вращать</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Description" xml:space="preserve">
-    <value>Slews to the target and centers the telescope via plate solving for the given coordinates</value>
+    <value>Движется к цели и центрирует телескоп посредством плейтсолва для заданных координат</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_Center_Name" xml:space="preserve">
-    <value>Slew and center</value>
+    <value>Двигаться и отцентрировать</value>
   </data>
   <data name="Lbl_SequenceItem_Telescope_ParkScope_Description" xml:space="preserve">
     <value>Паркует телескоп к позиции парка</value>
@@ -4867,12 +4861,6 @@ Dec: {1}</value>
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Параллельный старт инструкций по серии</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Настройки запуска первой цели</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Охладить камеру при запуске серии</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>Открывать крышу при запуске серии</value>
   </data>
@@ -4881,9 +4869,6 @@ Dec: {1}</value>
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Распарковка купола в начале серии</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>Распарковка монтировки при начале серии</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Открывает затвор купола</value>
@@ -4959,9 +4944,9 @@ Dec: {1}</value>
     <value>Недопустимое смещение. Смещение должно быть установлено между {0} и {1} , но установлено в {2}</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Takes an image and solves the image using the current telescope position as reference.
-After solving the frame successfully the telescope will be synced to the solved position.
-Warning: This instruction will NOT center the telescope to a target, but will just sync the current pointing position!</value>
+    <value>Делает изображение и решает его, используя текущее положение телескопа в качестве эталона.
+После успешного решения кадра телескоп будет синхронизирован с решенным положением.
+Предупреждение: эта инструкция НЕ центрирует телескоп по цели, а просто синхронизирует текущее положение наведения!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>Разрешить и синхронизировать</value>
@@ -5390,10 +5375,10 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>Ротатор</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Description" xml:space="preserve">
-    <value>Moves the rotator to the specified mechanical angle</value>
+    <value>Перемещает вращатель в указанный механический угол</value>
   </data>
   <data name="Lbl_SequenceItem_Rotator_MoveRotatorMechanical_Name" xml:space="preserve">
-    <value>Rotate by mechanical angle</value>
+    <value>Повернуть на механический угол</value>
   </data>
   <data name="LblMeridian" xml:space="preserve">
     <value>Меридиан</value>
@@ -5519,7 +5504,7 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>Некоторые драйверы монтировок имеют обратную реализацию движения вторичной оси. Включите этот параметр, чтобы изменить направление команд перемещения для вторичной оси.</value>
   </data>
   <data name="LblSequenceTitle" xml:space="preserve">
-    <value>Current sequence title</value>
+    <value>Название текущей последовательности</value>
   </data>
   <data name="LblDomeCloseShutterStillClosed" xml:space="preserve">
     <value>Ошибка при открытии затвора. Состояние затвора все равно сообщается, что закрыто после открытия затвора.</value>
@@ -5638,79 +5623,103 @@ Warning: This instruction will NOT center the telescope to a target, but will ju
     <value>Остановить последовательность</value>
   </data>
   <data name="LblTemplate_Created" xml:space="preserve">
-    <value>Sequence template "{0}" has been created.</value>
+    <value>Был создан шаблон последовательности "{0}".</value>
   </data>
   <data name="LblTemplate_Updated" xml:space="preserve">
-    <value>Sequence template "{0}" has been updated.</value>
+    <value>Шаблон последовательности "{0}" был обновлен.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Created" xml:space="preserve">
-    <value>Target "{0}" has been created.</value>
+    <value>Цель "{0}" была создана.</value>
   </data>
   <data name="Lbl_Sequencer_TargetSidebar_Updated" xml:space="preserve">
-    <value>Target "{0}" has been updated.</value>
+    <value>Цель "{0}" была обновлена.</value>
   </data>
   <data name="LblWaitingForSlew" xml:space="preserve">
-    <value>Waiting for prior slew</value>
+    <value>Ожидание действия до движения</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPrompt" xml:space="preserve">
-    <value>Do you want to reset the complete sequence run?</value>
+    <value>Вы хотите сбросить полную последовательность?</value>
   </data>
   <data name="Lbl_SequenceContainer_SequenceRootContainer_ResetPromptCaption" xml:space="preserve">
-    <value>Reset sequence?</value>
+    <value>Сбросить последовательность?</value>
   </data>
   <data name="LblMountType" xml:space="preserve">
-    <value>Mount Type</value>
+    <value>Тип монтировки</value>
   </data>
   <data name="LblEquatorial" xml:space="preserve">
-    <value>Equatorial</value>
+    <value>Экваториальный</value>
   </data>
   <data name="LblForkOnWedge" xml:space="preserve">
-    <value>Fork on Wedge</value>
+    <value>Вилка на клине</value>
   </data>
   <data name="LblDomeDecOffsetHorizontal" xml:space="preserve">
-    <value>DEC Horizontal Offset</value>
+    <value>Горизонтальное смещение DEC</value>
   </data>
   <data name="LblDomeDecOffsetHorizontalTooltip" xml:space="preserve">
-    <value>The horizontal offset of the center of the OTA with respect to the Declination axis (the motor at the base of the fork mount). Positive is "to the right", which is east for the northern hemisphere and west for the southern.</value>
+    <value>Горизонтальное смещение центра трубы относительно оси наклона (двигатель у основания вилочного крепления). Положительное - «вправо», то есть на восток для северного полушария и на запад для южного.</value>
   </data>
   <data name="LblDomeRadiusMisconfigured" xml:space="preserve">
-    <value>Dome radius not configured properly. The calculated scope position is beyond the dome.</value>
+    <value>Радиус купола настроен некорректно. Расчетная позиция области выходит за рамки купола.</value>
   </data>
   <data name="LblAdvancedSequenceTitle" xml:space="preserve">
-    <value>Advanced Sequence</value>
+    <value>Расширенная серия</value>
     <comment>Default advanced sequencer title</comment>
   </data>
   <data name="LblTargetSetTitle" xml:space="preserve">
-    <value>Target Set</value>
+    <value>Целевой набор</value>
   </data>
   <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
-    <value>Switches to the simple target set planning mode</value>
+    <value>Переключение в простой режим планирования целевых заданий</value>
   </data>
   <data name="LblByName" xml:space="preserve">
-    <value>By Name</value>
+    <value>По имени</value>
   </data>
   <data name="LblByRelevance" xml:space="preserve">
-    <value>By Relevance</value>
+    <value>По актуальности</value>
   </data>
   <data name="LblSequencerTargetsFolder" xml:space="preserve">
-    <value>Sequencer Targets Folder</value>
+    <value>Целевая папка последовательности</value>
   </data>
   <data name="LblSequencerTargetsFolderTooltip" xml:space="preserve">
-    <value>The folder where sequence targets for the advanced sequencer are stored in</value>
+    <value>Папка, в которой хранятся цели последовательностей для расширенной серии</value>
   </data>
   <data name="LblNotInstalled" xml:space="preserve">
-    <value>Not installed</value>
+    <value>Не установлен</value>
   </data>
   <data name="LblVendor" xml:space="preserve">
-    <value>Vendor</value>
+    <value>Поставщик</value>
   </data>
   <data name="LblVendorSDKs" xml:space="preserve">
-    <value>Vendor SDKs</value>
+    <value>SDK поставщиков</value>
   </data>
   <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
-    <value>Unpark operation was cancelled</value>
+    <value>Операция распарковки была отменена</value>
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
-    <value>Waiting for telescope to unpark</value>
+    <value>Ожидание распарковки телескопа</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Глобальные триггеры</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>

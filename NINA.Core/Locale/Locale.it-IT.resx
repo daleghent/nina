@@ -2304,9 +2304,6 @@ HFR Calcolato: {2}
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>Il telescopio è impostato per parcheggiarsi al termine della sequenza, ma non è collegato</value>
   </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>Parcheggia il telescopio quando la sequenza finisce</value>
-  </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>Passaggio Meridiano</value>
   </data>
@@ -3525,9 +3522,6 @@ aree ad alto inquinamento luminoso. Il tempo di processo sarà  tuttavia aumenta
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>Aspettando la Camera</value>
-  </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>Riscalda camera quando la sequenza termina</value>
   </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>La camera è impostata per scaldarsi al termine della sequenza, ma non è possibile completare il comando</value>
@@ -4872,12 +4866,6 @@ Se la posizione sopra è un set di istruzioni che non è attualmente espanso, ve
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Parallel Start of Sequence Instructions</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Start of First Target Options</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Raffredda fotocamera all'avvio della sequenza</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>Apri la copertura all'avvio della sequenza</value>
   </data>
@@ -4886,9 +4874,6 @@ Se la posizione sopra è un set di istruzioni che non è attualmente espanso, ve
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Sblocca la cupola all'inizio della sequenza</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>Sblocca la montatura all'avvio della sequenza</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Apre la serranda della cupola</value>
@@ -5717,5 +5702,29 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Waiting for telescope to unpark</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Global Triggers</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>

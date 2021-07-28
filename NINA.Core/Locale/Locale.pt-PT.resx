@@ -2299,9 +2299,6 @@ HFR Calculado: {2}
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>O telescópio está definido para efectuar park no final da sequência, contudo não está conectado</value>
   </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>Ir para a posição de park quando a sequência terminar</value>
-  </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>Passar o Meridiano</value>
   </data>
@@ -3522,9 +3519,6 @@ Arraste o rectângulo sobre a parte da imagem que deseja efectuar sub-sample e s
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>A aguardar pela Câmera</value>
-  </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>Aquece a câmera quando a sequência terminar</value>
   </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>A câmera está definida para aquecer no final da sequência, contudo não é possível</value>
@@ -4867,12 +4861,6 @@ Se a posição acima não for um conjunto de instruções expandido, será movid
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Inicio Paralelo das Instruções de Sequência</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Opções de inicio do primeiro objecto</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Refrigerar a câmera ao iniciar a sequência</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>Abrir a tampa quando a sequência iniciar</value>
   </data>
@@ -4881,9 +4869,6 @@ Se a posição acima não for um conjunto de instruções expandido, será movid
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Colocar o observatório na posição de unpark ao iniciar a sequência</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>Ir para a posição de unpark quando a sequência iniciar</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Abre a janela de observação do observatório</value>
@@ -5712,5 +5697,29 @@ O comportamento padrão é continuar em caso de erros. No entanto, para algumas 
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Waiting for telescope to unpark</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Global Triggers</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>

@@ -2299,9 +2299,6 @@ HFR calculat: {2}    </value>
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>El telescopi està configurat per aparcar al final de la seqüència, però no està connectat</value>
   </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>Aparcar el Telescopi quan acabi la seqüència</value>
-  </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>Pas del Meridià</value>
   </data>
@@ -3520,9 +3517,6 @@ Quan estigui activat, els canals de color s’estiraran per separat, ajudant a a
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>Esperant a la Càmera</value>
-  </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>Escalfar la càmera quant finalitzi la seqüència</value>
   </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>La càmera està configurada per escalfar-se al final de la seqüència, però no pot fer-ho</value>
@@ -4865,12 +4859,6 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Instruccions en paral·lel de l'Inici de Seqüència</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Inici d'Opcions del Primer Objectiu</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Refreda la Càmera quan comenci la seqüència</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>Obrir tapa quan s'inicia la seqüència</value>
   </data>
@@ -4879,9 +4867,6 @@ Si la posició que hi ha a sobre és un conjunt d’instruccions que actualment 
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Desaparcar (unpark) la cúpula a l'iniciar la seqüència</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>Treure la muntura de l'aparcament (unpark) al començar la seqüència</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Obre l'obturador de la cúpula</value>
@@ -5710,5 +5695,29 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Waiting for telescope to unpark</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Global Triggers</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>

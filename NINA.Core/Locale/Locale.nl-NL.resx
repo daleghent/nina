@@ -2294,9 +2294,6 @@ berekende HFR: {2}
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>Telescoop is ingesteld om te parkeren aan het eind van de sequentie, maar is niet verbonden</value>
   </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>Parkeer montering wanneer de sequentie eindigt</value>
-  </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>Passeert meridiaan</value>
   </data>
@@ -3515,9 +3512,6 @@ Sleep de rechthoek over het deel van de opname dat u fotograferen wilt en active
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>Wachten op camera</value>
-  </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>Warm de camera op wanneer de reeks eindigt</value>
   </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>Camera is ingesteld om op te warmen aan het einde van de sequentie, maar is niet in staat dit te doen</value>
@@ -4862,12 +4856,6 @@ If the position above it is an instruction set that is not currently expanded, i
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Parallel Start of Sequence Instructions</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Start of First Target Options</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Cool camera when sequence starts</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>Open cover when sequence starts</value>
   </data>
@@ -4876,9 +4864,6 @@ If the position above it is an instruction set that is not currently expanded, i
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Unpark dome at sequence start</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>Unpark mount when sequence starts</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Opens the shutter of the dome</value>
@@ -5707,5 +5692,29 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Waiting for telescope to unpark</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Global Triggers</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>

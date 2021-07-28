@@ -2299,9 +2299,6 @@ Přeskočit.</value>
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>Dalekohled je nastaven tak, aby parkoval na konci sekvence, ale není připojen</value>
   </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>Umístit dalekohled do parkovací polohy na konci sekvence</value>
-  </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>Průchod Poledníkem</value>
   </data>
@@ -3522,9 +3519,6 @@ Je-li povoleno, barevné kanály budou roztaženy samostatně, což pomůže skr
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>Počkat na Kameru</value>
-  </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>Na konci sekvence zahřát kameru</value>
   </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>Kamera je nastavena, aby se na konci sekvence zahřála, příkaz nelze provést</value>
@@ -4869,12 +4863,6 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Pokyny pro Paralelní Zahájení Sekvence</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Začátek Prvních Cílových Možností</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Po spuštění sekvence ochladit kameru</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>Otevřít kryt při spuštění sekvence</value>
   </data>
@@ -4883,9 +4871,6 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Odparkovat kopuli a spustit sekvenci</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>Při spuštění sekvence odparkovat</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Otevřít štěrbinu kopule</value>
@@ -5714,5 +5699,29 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Čekat na odparkování dalekohledu</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Globální Spouštěče</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>

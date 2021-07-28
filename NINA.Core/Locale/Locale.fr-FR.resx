@@ -2304,9 +2304,6 @@ HFR calculé: {2}</value>
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>e télescope est configuré pour se parker à la fin de la séquence, mais il n'est pas connecté</value>
   </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>Parker la monture lorsque la séquence se termine</value>
-  </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>Passage Méridien</value>
   </data>
@@ -3524,9 +3521,6 @@ Lorsque cette option est activée, les canaux de couleur sont ajustés avec un s
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>En attente de la caméra</value>
-  </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>Réchauffer la caméra en fin de séquence</value>
   </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>La caméra est réglée pour se réchauffer à la fin de la séquence, mais elle est incapable de le faire.</value>
@@ -4871,12 +4865,6 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Instructions de démarrage de séquence parallèle</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Options de départ de la première cible</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Refroidir la caméra au démarrage de la séquence</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>Ouvrir le capot au démarrage de la séquence</value>
   </data>
@@ -4885,9 +4873,6 @@ Si la position au dessus est un jeu d'instructions qui n'est pas actuellement d�
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Déparquer le dôme au début de la séquence</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>Démonter la monture au démarrage de la séquence</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Ouvre le volet du dôme</value>
@@ -5716,5 +5701,29 @@ Le comportement par défaut est de continuer en cas d'erreur, mais pour certaine
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Waiting for telescope to unpark</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Global Triggers</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>

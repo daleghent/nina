@@ -2294,9 +2294,6 @@
   <data name="LblParkEnabledButTelescopeNotConnected" xml:space="preserve">
     <value>Το Τηλεσκόπιο έχει ρυθμιστεί να σταθμεύσει στο τέλος της αλληλουχίας, αλλά δεν είναι συνδεδεμένο</value>
   </data>
-  <data name="LblParkMountAtSequenceEnd" xml:space="preserve">
-    <value>Στάθμευση Τηλεσκοπίου όταν τελειώσει η αλληλουχία</value>
-  </data>
   <data name="LblPassMeridian" xml:space="preserve">
     <value>Μετά τον Μεσημβρινό</value>
   </data>
@@ -3517,9 +3514,6 @@
   </data>
   <data name="LblWaitingForCamera" xml:space="preserve">
     <value>Αναμονή για Κάμερα</value>
-  </data>
-  <data name="LblWarmCamAtSequenceEnd" xml:space="preserve">
-    <value>Θέρμανση κάμερας όταν τελειώσει η αλληλουχία</value>
   </data>
   <data name="LblWarmEnabledButCameraCannotWarm" xml:space="preserve">
     <value>Η κάμερα έχει οριστεί να θερμανθεί στο τέλος της αλληλουχίας, αλλά δεν μπορεί να το κάνει</value>
@@ -4864,12 +4858,6 @@ If the position above it is an instruction set that is not currently expanded, i
   <data name="Lbl_OldSequencer_StartOfSequence" xml:space="preserve">
     <value>Parallel Start of Sequence Instructions</value>
   </data>
-  <data name="Lbl_OldSequencer_StartOfSequenceHeader" xml:space="preserve">
-    <value>Start of First Target Options</value>
-  </data>
-  <data name="LblCoolCamAtSequenceStart" xml:space="preserve">
-    <value>Ψύξη κάμερας όταν ξεκινήσει η αλληλουχία</value>
-  </data>
   <data name="LblFlatDeviceOpenAtSequenceStart" xml:space="preserve">
     <value>Άνοιγμα καλύμματος όταν ξεκινήσει η αλληλουχία</value>
   </data>
@@ -4878,9 +4866,6 @@ If the position above it is an instruction set that is not currently expanded, i
   </data>
   <data name="LblUnparkDomeAtSequenceStart" xml:space="preserve">
     <value>Unpark dome at sequence start</value>
-  </data>
-  <data name="LblUnparkMountAtSequenceStart" xml:space="preserve">
-    <value>Unpark mount when sequence starts</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_OpenDomeShutter_Description" xml:space="preserve">
     <value>Ανοίγει το κλείστρο του θόλου</value>
@@ -5709,5 +5694,29 @@ The default behavior is to continue on errors, however for some instructions it 
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Waiting for telescope to unpark</value>
+  </data>
+  <data name="LblGlobalTriggers" xml:space="preserve">
+    <value>Global Triggers</value>
+  </data>
+  <data name="LblTargetOptions" xml:space="preserve">
+    <value>Target Options</value>
+  </data>
+  <data name="LblCoolCamera" xml:space="preserve">
+    <value>Cool Camera</value>
+  </data>
+  <data name="LblParkMount" xml:space="preserve">
+    <value>Park Mount</value>
+  </data>
+  <data name="LblTargetSetEndOptions" xml:space="preserve">
+    <value>Target Set End Options</value>
+  </data>
+  <data name="LblTargetSetStartOptions" xml:space="preserve">
+    <value>Target Set Start Options</value>
+  </data>
+  <data name="LblUnparkMount" xml:space="preserve">
+    <value>Unpark Mount</value>
+  </data>
+  <data name="LblWarmCamera" xml:space="preserve">
+    <value>Warm Camera</value>
   </data>
 </root>
