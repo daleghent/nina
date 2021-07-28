@@ -41,28 +41,28 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition />
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <Grid
-            Name="PART_Header"
-            Grid.Row="0"
-            MinHeight="35"
-            Margin="0"
-            HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}"
-            Background="{StaticResource SecondaryBackgroundBrush}">
+                    Name="PART_Header"
+                    Grid.Row="0"
+                    MinHeight="35"
+                    Margin="0"
+                    HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}"
+                    Background="{StaticResource SecondaryBackgroundBrush}">
                     <TextBox
-                    MinWidth="200"
-                    Margin="10,0,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Background="{StaticResource SecondaryBackgroundBrush}"
-                    FontSize="10pt"
-                    Foreground="{StaticResource ButtonForegroundBrush}"
-                    Text="{Binding Sequencer.MainContainer.SequenceTitle, UpdateSourceTrigger=PropertyChanged}" />
+                        MinWidth="200"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Background="{StaticResource SecondaryBackgroundBrush}"
+                        FontSize="10pt"
+                        Foreground="{StaticResource ButtonForegroundBrush}"
+                        Text="{Binding Sequencer.MainContainer.SequenceTitle, UpdateSourceTrigger=PropertyChanged}" />
                 </Grid>
 
-                <Grid Margin="5,0,0,0"
-                      Grid.Row="1">
+                <Grid Grid.Row="1" Margin="5,0,0,0">
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
@@ -251,92 +251,144 @@
                 <Border
                     Grid.Row="4"
                     BorderBrush="{StaticResource BorderBrush}"
-                    BorderThickness="0,0,0,1">
-                    <Grid Margin="5,0,0,0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <GroupBox>
-                            <GroupBox.Header>
+                    BorderThickness="0">
+                    <Expander DataContext="{Binding StartOptions}">
+                        <Expander.Header>
+                            <WrapPanel Orientation="Horizontal">
+                                <TextBlock Text="{ns:Loc LblTargetSetStartOptions}" />
+                                <WrapPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                        <TextBlock Text="|" />
+                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblCoolCamera}" />
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding CoolCameraAtSequenceStart}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                        <TextBlock Text="|" />
+                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblUnparkMount}" />
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding UnparkMountAtSequenceStart}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                        <TextBlock Text="|" />
+                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblAutoMeridianFlip}" />
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding DataContext.DoMeridianFlip, Mode=TwoWay, ElementName=UC}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                    </StackPanel>
+                                </WrapPanel>
+                            </WrapPanel>
+                        </Expander.Header>
+                        <ScrollViewer
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Disabled">
+                            <StackPanel Margin="0,2,0,2" Orientation="Horizontal">
                                 <TextBlock
+                                    MinHeight="20"
+                                    Margin="5,0,5,0"
                                     VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="{ns:Loc Lbl_OldSequencer_StartOfSequenceHeader}" />
-                            </GroupBox.Header>
-                            <UniformGrid Columns="2" DataContext="{Binding StartOptions}">
-                                <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                                    <TextBlock
-                                        MinWidth="200"
-                                        MinHeight="20"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblCoolCamAtSequenceStart}" />
-                                    <CheckBox HorizontalAlignment="Left" IsChecked="{Binding CoolCameraAtSequenceStart, Mode=TwoWay}" />
-                                </StackPanel>
-                                <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                                    <TextBlock
-                                        MinWidth="200"
-                                        MinHeight="20"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblUnparkMountAtSequenceStart}" />
-                                    <CheckBox HorizontalAlignment="Left" IsChecked="{Binding UnparkMountAtSequenceStart, Mode=TwoWay}" />
-                                </StackPanel>
+                                    Text="{ns:Loc LblCoolCamera}" />
+                                <CheckBox
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Left"
+                                    IsChecked="{Binding CoolCameraAtSequenceStart, Mode=TwoWay}" />
 
-                                <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                                    <TextBlock
-                                        MinWidth="200"
-                                        MinHeight="20"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblAutoMeridianFlip}" />
-                                    <CheckBox HorizontalAlignment="Left" IsChecked="{Binding DataContext.DoMeridianFlip, Mode=TwoWay, ElementName=UC}" />
-                                </StackPanel>
-                            </UniformGrid>
-                        </GroupBox>
-
-                        <Border
-                            Grid.Column="1"
-                            BorderBrush="{StaticResource BorderBrush}"
-                            BorderThickness="0.5" />
-
-                        <GroupBox Grid.Column="2">
-                            <GroupBox.Header>
                                 <TextBlock
+                                    MinHeight="20"
+                                    Margin="5,0,5,0"
                                     VerticalAlignment="Center"
-                                    FontSize="16"
-                                    Text="{ns:Loc Lbl_OldSequencer_EndOfSequenceHeader}" />
-                            </GroupBox.Header>
-                            <Grid DataContext="{Binding EndOptions}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
-                                    <TextBlock
-                                        MinWidth="200"
-                                        MinHeight="20"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblWarmCamAtSequenceEnd}" />
-                                    <CheckBox HorizontalAlignment="Left" IsChecked="{Binding WarmCamAtSequenceEnd, Mode=TwoWay}" />
-                                </StackPanel>
-                                <StackPanel
-                                    Grid.Column="1"
-                                    Margin="0,5,0,0"
-                                    Orientation="Horizontal">
-                                    <TextBlock
-                                        MinWidth="200"
-                                        MinHeight="20"
-                                        VerticalAlignment="Center"
-                                        Text="{ns:Loc LblParkMountAtSequenceEnd}" />
-                                    <CheckBox HorizontalAlignment="Left" IsChecked="{Binding ParkMountAtSequenceEnd, Mode=TwoWay}" />
-                                </StackPanel>
-                            </Grid>
-                        </GroupBox>
-                    </Grid>
+                                    Text="{ns:Loc LblUnparkMount}" />
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding UnparkMountAtSequenceStart, Mode=TwoWay}" />
+
+                                <TextBlock
+                                    MinHeight="20"
+                                    Margin="5,0,5,0"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblAutoMeridianFlip}" />
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding DataContext.DoMeridianFlip, Mode=TwoWay, ElementName=UC}" />
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Expander>
+                </Border>
+
+                <Border
+                    Grid.Row="5"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="0,1,0,1">
+                    <Expander DataContext="{Binding EndOptions}">
+                        <Expander.Header>
+                            <WrapPanel Orientation="Horizontal">
+                                <TextBlock Text="{ns:Loc LblTargetSetEndOptions}" />
+                                <WrapPanel Orientation="Horizontal">
+                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                        <TextBlock Text="|" />
+                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblWarmCamera}" />
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding WarmCamAtSequenceEnd}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                    </StackPanel>
+                                    <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                        <TextBlock Text="|" />
+                                        <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblParkMount}" />
+                                        <StackPanel.Style>
+                                            <Style TargetType="StackPanel">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ParkMountAtSequenceEnd}" Value="False">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </StackPanel.Style>
+                                    </StackPanel>
+                                </WrapPanel>
+                            </WrapPanel>
+                        </Expander.Header>
+                        <ScrollViewer
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Disabled">
+                            <StackPanel Margin="0,2,0,2" Orientation="Horizontal">
+                                <TextBlock
+                                    MinHeight="20"
+                                    Margin="5,0,5,0"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblWarmCamera}" />
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding WarmCamAtSequenceEnd, Mode=TwoWay}" />
+
+                                <TextBlock
+                                    MinHeight="20"
+                                    Margin="5,0,5,0"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblParkMount}" />
+                                <CheckBox HorizontalAlignment="Left" IsChecked="{Binding ParkMountAtSequenceEnd, Mode=TwoWay}" />
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Expander>
                 </Border>
             </Grid>
         </ScrollViewer>

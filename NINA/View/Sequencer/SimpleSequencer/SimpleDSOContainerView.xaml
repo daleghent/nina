@@ -47,7 +47,10 @@
                             Margin="0,6,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSequenceDelay}" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblSequenceDelay}" />
                             <ninactrl:UnitTextBox
                                 Margin="5,0,0,0"
                                 VerticalAlignment="Center"
@@ -71,7 +74,10 @@
                             Margin="0,6,0,0"
                             VerticalAlignment="Center"
                             Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSequenceMode}" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblSequenceMode}" />
                             <ComboBox
                                 Margin="5,0,0,0"
                                 IsEnabled="{Binding DataContext.IsRunning, RelativeSource={RelativeSource AncestorType={x:Type local:SimpleSequenceView}, Mode=FindAncestor}, Converter={StaticResource InverseBooleanConverter}}"
@@ -108,55 +114,7 @@
                     </UniformGrid>
                 </Border>
 
-                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,6,0,0"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblStartGuiding}" />
-                            <CheckBox
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Left"
-                                IsChecked="{Binding StartGuiding}" />
-                        </UniformGrid>
-                    </UniformGrid>
-                </Border>
                 <StackPanel Visibility="{Binding Target.InputCoordinates, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
-                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                        <UniformGrid Columns="2" Rows="2">
-                            <UniformGrid
-                                Margin="0,6,0,0"
-                                VerticalAlignment="Center"
-                                Columns="2">
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblSlewToTarget}" />
-                                <CheckBox
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding SlewToTarget}" />
-                            </UniformGrid>
-                            <UniformGrid
-                                Margin="5,6,0,0"
-                                VerticalAlignment="Center"
-                                Columns="2">
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblCenterTarget}" />
-                                <CheckBox
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding CenterTarget}" />
-                            </UniformGrid>
-                            <UniformGrid
-                                Margin="0,6,0,0"
-                                VerticalAlignment="Center"
-                                Columns="2">
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblRotateTarget}" />
-                                <CheckBox
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Left"
-                                    IsChecked="{Binding RotateTarget}" />
-                            </UniformGrid>
-                        </UniformGrid>
-                    </Border>
                     <Border
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
@@ -166,7 +124,10 @@
                                 Margin="0,6,0,0"
                                 VerticalAlignment="Center"
                                 Columns="4">
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblEstimatedDownloadTime}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblEstimatedDownloadTime}" />
                                 <TextBox
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Stretch"
@@ -174,7 +135,10 @@
                             </UniformGrid>
                             <UniformGrid Margin="0,6,0,6" Columns="4">
 
-                                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblETA}" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblETA}" />
                                 <UniformGrid
                                     Margin="0,0,0,0"
                                     VerticalAlignment="Center"
@@ -235,7 +199,10 @@
                                     </Style.Triggers>
                                 </Style>
                             </UniformGrid.Style>
-                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblCurrentSequenceEstimates}" />
+                            <TextBlock
+                                Margin="5,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{ns:Loc LblCurrentSequenceEstimates}" />
                             <UniformGrid
                                 Margin="0,0,0,0"
                                 VerticalAlignment="Center"
@@ -269,6 +236,7 @@
                                 VerticalAlignment="Center"
                                 Columns="2">
                                 <TextBlock
+                                    Margin="5,0,0,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     Text="{ns:Loc LblDuration}" />
@@ -280,12 +248,135 @@
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
-                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,1">
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0">
                         <Expander>
                             <Expander.Header>
-                                <StackPanel Orientation="Horizontal">
+                                <WrapPanel Orientation="Horizontal">
+                                    <TextBlock Text="{ns:Loc LblTargetOptions}" />
+                                    <WrapPanel Orientation="Horizontal">
+                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                            <TextBlock Text="|" />
+                                            <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblSlewToTarget}" />
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding SlewToTarget}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                        </StackPanel>
+                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                            <TextBlock Text="|" />
+                                            <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblCenterTarget}" />
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding CenterTarget}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                        </StackPanel>
+
+                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                            <TextBlock Text="|" />
+                                            <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblRotateTarget}" />
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding RotateTarget}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                        </StackPanel>
+                                        <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
+                                            <TextBlock Text="|" />
+                                            <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblStartGuiding}" />
+                                            <StackPanel.Style>
+                                                <Style TargetType="StackPanel">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding StartGuiding}" Value="False">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </StackPanel.Style>
+                                        </StackPanel>
+                                    </WrapPanel>
+                                </WrapPanel>
+                            </Expander.Header>
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock
+                                            Margin="5,5,5,5"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblSlewToTarget}" />
+                                        <CheckBox
+                                            Grid.Column="1"
+                                            Margin="0,5,0,5"
+                                            IsChecked="{Binding SlewToTarget}" />
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            Margin="5,5,5,5"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblCenterTarget}" />
+                                        <CheckBox
+                                            Grid.Column="3"
+                                            Margin="0,5,0,5"
+                                            IsChecked="{Binding CenterTarget}" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Margin="5,0,5,5"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblRotateTarget}" />
+                                        <CheckBox
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="0,0,0,5"
+                                            IsChecked="{Binding RotateTarget}" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.Column="2"
+                                            Margin="5,0,5,5"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblStartGuiding}" />
+                                        <CheckBox
+                                            Grid.Row="1"
+                                            Grid.Column="3"
+                                            Margin="0,0,0,5"
+                                            IsChecked="{Binding StartGuiding}" />
+                                    </Grid>
+                                </Grid>
+                            </ScrollViewer>
+                        </Expander>
+                    </Border>
+
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,1,0,0">
+                        <Expander>
+                            <Expander.Header>
+                                <WrapPanel Orientation="Horizontal">
                                     <TextBlock Text="{ns:Loc LblAutoFocus}" />
-                                    <StackPanel Orientation="Horizontal">
+                                    <WrapPanel Orientation="Horizontal">
                                         <StackPanel Margin="5,0,0,0" Orientation="Horizontal">
                                             <TextBlock Text="|" />
                                             <TextBlock Margin="5,0,0,0" Text="{ns:Loc LblAutoFocusOnStart}" />
@@ -370,180 +461,175 @@
                                                 </Style>
                                             </StackPanel.Style>
                                         </StackPanel>
-                                        <!--<StackPanel.Style>
-                                                    <Style TargetType="StackPanel">
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ElementName=PART_AutoFocusExpander, Path=IsExpanded}" Value="True">
-                                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </StackPanel.Style>-->
-                                    </StackPanel>
-                                </StackPanel>
+                                    </WrapPanel>
+                                </WrapPanel>
                             </Expander.Header>
-
-                            <StackPanel Orientation="Vertical">
-                                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                                    <UniformGrid Columns="2">
-                                        <UniformGrid
-                                            Margin="0,6,0,0"
+                            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="auto" />
+                                            <ColumnDefinition Width="auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition Height="auto" />
+                                        </Grid.RowDefinitions>
+                                        <TextBlock
+                                            MinHeight="20"
+                                            Margin="5,0,5,0"
                                             VerticalAlignment="Center"
-                                            Columns="2">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusOnStart}" />
-                                            <CheckBox
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                IsChecked="{Binding AutoFocusOnStart}" />
-                                        </UniformGrid>
-                                        <UniformGrid
-                                            Margin="0,6,0,0"
+                                            Text="{ns:Loc LblAutoFocusOnStart}" />
+                                        <CheckBox
+                                            Grid.Column="1"
+                                            Margin="0,5,0,5"
+                                            IsChecked="{Binding AutoFocusOnStart}" />
+                                        <TextBlock
+                                            Grid.Column="2"
+                                            Margin="5,0,5,0"
                                             VerticalAlignment="Center"
-                                            Columns="2">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusOnFilterChange}" />
-                                            <CheckBox
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                IsChecked="{Binding AutoFocusOnFilterChange}" />
-                                        </UniformGrid>
-                                    </UniformGrid>
-                                </Border>
-                                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                                    <UniformGrid Columns="2">
-                                        <UniformGrid Margin="0,6,0,0" Columns="2">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusAfterSetTime}" />
-                                            <CheckBox
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                IsChecked="{Binding AutoFocusAfterSetTime}" />
-                                        </UniformGrid>
-                                        <UniformGrid
-                                            Margin="0,6,0,0"
+                                            Text="{ns:Loc LblAutoFocusOnFilterChange}" />
+                                        <CheckBox
+                                            Grid.Column="3"
+                                            Margin="0,5,0,5"
+                                            HorizontalAlignment="Left"
+                                            IsChecked="{Binding AutoFocusOnFilterChange}" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Margin="5,0,5,5"
                                             VerticalAlignment="Center"
-                                            Columns="2">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusSetTime}" />
-
-                                            <ninactrl:UnitTextBox
-                                                Width="120"
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                VerticalAlignment="Center"
-                                                VerticalContentAlignment="Center"
-                                                Unit="min">
-                                                <ninactrl:UnitTextBox.Text>
-                                                    <Binding Path="AutoFocusSetTime" UpdateSourceTrigger="LostFocus">
-                                                        <Binding.ValidationRules>
-                                                            <rules:GreaterZeroRule />
-                                                        </Binding.ValidationRules>
-                                                    </Binding>
-                                                </ninactrl:UnitTextBox.Text>
-                                            </ninactrl:UnitTextBox>
-                                        </UniformGrid>
-                                    </UniformGrid>
-                                </Border>
-                                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
-                                    <UniformGrid Columns="2">
-                                        <UniformGrid
-                                            Margin="0,6,0,0"
+                                            Text="{ns:Loc LblAutoFocusAfterSetTime}" />
+                                        <CheckBox
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            Margin="0,0,0,5"
+                                            IsChecked="{Binding AutoFocusAfterSetTime}" />
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Grid.Column="2"
+                                            Margin="5,0,5,5"
                                             VerticalAlignment="Center"
-                                            Columns="2">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusAfterSetExposures}" />
-                                            <CheckBox
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                IsChecked="{Binding AutoFocusAfterSetExposures}" />
-                                        </UniformGrid>
-                                        <UniformGrid
-                                            Margin="0,6,0,0"
+                                            Text="{ns:Loc LblAutoFocusSetTime}" />
+                                        <ninactrl:UnitTextBox
+                                            Grid.Row="1"
+                                            Grid.Column="3"
+                                            Width="90"
+                                            HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
-                                            Columns="2">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusNrOfExposures}" />
-                                            <TextBox
-                                                Width="120"
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Left">
-                                                <TextBox.Text>
-                                                    <Binding Path="AutoFocusSetExposures" UpdateSourceTrigger="LostFocus">
-                                                        <Binding.ValidationRules>
-                                                            <rules:GreaterZeroRule />
-                                                        </Binding.ValidationRules>
-                                                    </Binding>
-                                                </TextBox.Text>
-                                            </TextBox>
-                                        </UniformGrid>
-                                    </UniformGrid>
-                                </Border>
-                                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,0">
-                                    <UniformGrid Columns="2">
-                                        <UniformGrid
-                                            Margin="0,6,0,0"
+                                            VerticalContentAlignment="Center"
+                                            Unit="min">
+                                            <ninactrl:UnitTextBox.Text>
+                                                <Binding Path="AutoFocusSetTime" UpdateSourceTrigger="LostFocus">
+                                                    <Binding.ValidationRules>
+                                                        <rules:GreaterZeroRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </ninactrl:UnitTextBox.Text>
+                                        </ninactrl:UnitTextBox>
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Margin="5,0,5,5"
                                             VerticalAlignment="Center"
-                                            Columns="2">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusAfterTemperatureChange}" />
-                                            <CheckBox
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                IsChecked="{Binding AutoFocusAfterTemperatureChange}" />
-                                        </UniformGrid>
-                                        <UniformGrid
-                                            Margin="0,6,0,0"
+                                            Text="{ns:Loc LblAutoFocusAfterSetExposures}" />
+                                        <CheckBox
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Margin="0,0,0,5"
+                                            IsChecked="{Binding AutoFocusAfterSetExposures}" />
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Grid.Column="2"
+                                            Margin="5,0,5,5"
                                             VerticalAlignment="Center"
-                                            Columns="2">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusAfterTemperatureChangeAmount}" />
-                                            <StackPanel Orientation="Horizontal">
-                                                <ninactrl:UnitTextBox
-                                                    Width="120"
-                                                    Margin="5,0,0,0"
-                                                    HorizontalAlignment="Left"
-                                                    Unit="°">
-                                                    <ninactrl:UnitTextBox.Text>
-                                                        <Binding Path="AutoFocusAfterTemperatureChangeAmount" UpdateSourceTrigger="LostFocus">
-                                                            <Binding.ValidationRules>
-                                                                <rules:GreaterZeroRule />
-                                                            </Binding.ValidationRules>
-                                                        </Binding>
-                                                    </ninactrl:UnitTextBox.Text>
-                                                </ninactrl:UnitTextBox>
-                                            </StackPanel>
-                                        </UniformGrid>
-                                    </UniformGrid>
-                                </Border>
-                                <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0,0,0,0">
-                                    <UniformGrid Columns="2">
-                                        <UniformGrid
-                                            Margin="0,6,0,6"
+                                            Text="{ns:Loc LblAutoFocusNrOfExposures}" />
+                                        <TextBox
+                                            Grid.Row="2"
+                                            Grid.Column="3"
+                                            Width="90"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center">
+                                            <TextBox.Text>
+                                                <Binding Path="AutoFocusSetExposures" UpdateSourceTrigger="LostFocus">
+                                                    <Binding.ValidationRules>
+                                                        <rules:GreaterZeroRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
+                                        <TextBlock
+                                            Grid.Row="3"
+                                            Margin="5,0,5,5"
                                             VerticalAlignment="Center"
-                                            Columns="2">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusAfterHFRChange}" />
-                                            <CheckBox
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Left"
-                                                IsChecked="{Binding AutoFocusAfterHFRChange}" />
-                                        </UniformGrid>
-                                        <UniformGrid
-                                            Margin="0,6,0,6"
+                                            Text="{ns:Loc LblAutoFocusAfterTemperatureChange}" />
+                                        <CheckBox
+                                            Grid.Row="3"
+                                            Grid.Column="1"
+                                            Margin="0,0,0,5"
+                                            IsChecked="{Binding AutoFocusAfterTemperatureChange}" />
+                                        <TextBlock
+                                            Grid.Row="3"
+                                            Grid.Column="2"
+                                            Margin="5,0,5,5"
                                             VerticalAlignment="Center"
-                                            Columns="2">
-                                            <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblAutoFocusAfterHFRChangeAmount}" />
-                                            <StackPanel Orientation="Horizontal">
-                                                <ninactrl:UnitTextBox
-                                                    Width="120"
-                                                    Margin="5,0,0,0"
-                                                    HorizontalAlignment="Left"
-                                                    Unit="%">
-                                                    <ninactrl:UnitTextBox.Text>
-                                                        <Binding Path="AutoFocusAfterHFRChangeAmount" UpdateSourceTrigger="LostFocus">
-                                                            <Binding.ValidationRules>
-                                                                <rules:GreaterZeroRule />
-                                                            </Binding.ValidationRules>
-                                                        </Binding>
-                                                    </ninactrl:UnitTextBox.Text>
-                                                </ninactrl:UnitTextBox>
-                                            </StackPanel>
-                                        </UniformGrid>
-                                    </UniformGrid>
-                                </Border>
-                            </StackPanel>
+                                            Text="{ns:Loc LblAutoFocusAfterTemperatureChangeAmount}" />
+                                        <ninactrl:UnitTextBox
+                                            Grid.Row="3"
+                                            Grid.Column="3"
+                                            Width="90"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Unit="°">
+                                            <ninactrl:UnitTextBox.Text>
+                                                <Binding Path="AutoFocusAfterTemperatureChangeAmount" UpdateSourceTrigger="LostFocus">
+                                                    <Binding.ValidationRules>
+                                                        <rules:GreaterZeroRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </ninactrl:UnitTextBox.Text>
+                                        </ninactrl:UnitTextBox>
+                                        <TextBlock
+                                            Grid.Row="4"
+                                            Margin="5,0,5,5"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblAutoFocusAfterHFRChange}" />
+                                        <CheckBox
+                                            Grid.Row="4"
+                                            Grid.Column="1"
+                                            Margin="0,0,0,5"
+                                            IsChecked="{Binding AutoFocusAfterHFRChange}" />
+                                        <TextBlock
+                                            Grid.Row="4"
+                                            Grid.Column="2"
+                                            Margin="5,0,5,5"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblAutoFocusAfterHFRChangeAmount}" />
+                                        <ninactrl:UnitTextBox
+                                            Grid.Row="4"
+                                            Grid.Column="3"
+                                            Width="90"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Unit="%">
+                                            <ninactrl:UnitTextBox.Text>
+                                                <Binding Path="AutoFocusAfterHFRChangeAmount" UpdateSourceTrigger="LostFocus">
+                                                    <Binding.ValidationRules>
+                                                        <rules:GreaterZeroRule />
+                                                    </Binding.ValidationRules>
+                                                </Binding>
+                                            </ninactrl:UnitTextBox.Text>
+                                        </ninactrl:UnitTextBox>
+                                    </Grid>
+                                </Grid>
+                            </ScrollViewer>
                         </Expander>
                     </Border>
                 </StackPanel>
@@ -554,7 +640,6 @@
                     <util:BindingProxy x:Key="nighttimeProxy" Data="{Binding NighttimeData}" />
                 </Grid.Resources>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -691,7 +776,7 @@
                     Grid.Column="0"
                     Margin="0,5,0,0"
                     VerticalAlignment="Center"
-                    DataContext="{Binding Target.InputCoordinates}"
+                    DataContext="{Binding Target}"
                     Orientation="Horizontal">
                     <TextBlock
                         Width="50"
@@ -704,8 +789,8 @@
                         TextAlignment="Right">
                         <TextBox.Text>
                             <MultiBinding Converter="{StaticResource DecDegreeConverter}" UpdateSourceTrigger="LostFocus">
-                                <Binding Path="NegativeDec" />
-                                <Binding Path="DecDegrees">
+                                <Binding Path="InputCoordinates.NegativeDec" />
+                                <Binding Path="InputCoordinates.DecDegrees">
                                     <Binding.ValidationRules>
                                         <rules:DegreesRule />
                                     </Binding.ValidationRules>
@@ -720,7 +805,7 @@
                         VerticalAlignment="Center"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="DecMinutes" UpdateSourceTrigger="LostFocus">
+                            <Binding Path="InputCoordinates.DecMinutes" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:MinutesRule />
                                 </Binding.ValidationRules>
@@ -734,7 +819,7 @@
                         VerticalAlignment="Center"
                         TextAlignment="Right">
                         <TextBox.Text>
-                            <Binding Path="DecSeconds" UpdateSourceTrigger="LostFocus">
+                            <Binding Path="InputCoordinates.DecSeconds" UpdateSourceTrigger="LostFocus">
                                 <Binding.ValidationRules>
                                     <rules:SecondsRule />
                                 </Binding.ValidationRules>
@@ -742,13 +827,7 @@
                         </TextBox.Text>
                     </TextBox>
                     <TextBlock VerticalAlignment="Center">s</TextBlock>
-                </StackPanel>
-                <StackPanel
-                    Grid.Row="3"
-                    Grid.Column="0"
-                    Margin="0,5,0,0"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
+                    <TextBlock Width="10" />
                     <TextBlock
                         Width="50"
                         VerticalAlignment="Center"
@@ -756,7 +835,6 @@
                     <TextBox
                         Width="40"
                         Margin="5,0,0,0"
-                        DataContext="{Binding Target}"
                         TextAlignment="Right">
                         <TextBox.Text>
                             <Binding Path="Rotation" UpdateSourceTrigger="LostFocus">
@@ -770,7 +848,7 @@
                 </StackPanel>
 
                 <alt:AltitudeChart
-                    Grid.Row="4"
+                    Grid.Row="3"
                     MinWidth="400"
                     Margin="10,0,0,0"
                     HorizontalAlignment="Stretch"
