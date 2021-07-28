@@ -681,7 +681,10 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 Logger.Error("Phd2 error while sending messge", ex);
             }
 
-            return (T)new PhdMethodResponse() { error = new PhdError() { code = -1, message = "Unable to get response from phd2" }, id = 0 };
+            var genericError = (T)Activator.CreateInstance(typeof(T));
+            genericError.id = 1;
+            genericError.error = new PhdError() { code = -1, message = "Unable to get response from phd2" };
+            return genericError;
         }
 
         public IAsyncCommand ProfileSelectionChangedCommand { get; private set; }
