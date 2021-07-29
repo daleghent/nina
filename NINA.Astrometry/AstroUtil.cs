@@ -31,12 +31,13 @@ namespace NINA.Astrometry {
             _ = new EarthRotationParameterUpdater().Update();
         }
 
-        private static double DegreeToRadiansFactor = Math.PI / 180d;
-        private static double RadiansToDegreeFactor = 180d / Math.PI;
-        private static double RadianstoHourFactor = 12d / Math.PI;
-        private static double DaysToSecondsFactor = 60d * 60d * 24d;
-        private static double SecondsToDaysFactor = 1.0 / (60d * 60d * 24d);
-        public static readonly double SIDEREAL_RATE_ARCSECONDS_PER_SECOND = 15.041;
+        private const double DegreeToRadiansFactor = Math.PI / 180d;
+        private const double RadiansToDegreeFactor = 180d / Math.PI;
+        private const double RadianstoHourFactor = 12d / Math.PI;
+        private const double DaysToSecondsFactor = 60d * 60d * 24d;
+        private const double SecondsToDaysFactor = 1.0 / (60d * 60d * 24d);
+        public const double SIDEREAL_RATE_ARCSECONDS_PER_SECOND = 15.041;
+        private const double ArcSecPerPixConversionFactor = RadiansToDegreeFactor * 60d * 60d / 1000d;
 
         /// <summary>
         /// Convert degree to radians
@@ -622,8 +623,8 @@ namespace NINA.Astrometry {
         /// <returns></returns>
         public static double ArcsecPerPixel(double pixelSize, double focalLength) {
             // arcseconds inside one radian and compensated by the difference of microns in pixels and mm in focal length
-            var factor = DegreeToArcsec(ToDegree(1)) / 1000d;
-            return (pixelSize / focalLength) * factor;
+            //var factor = DegreeToArcsec(ToDegree(1)) / 1000d;
+            return (pixelSize / focalLength) * ArcSecPerPixConversionFactor;
         }
 
         public static double MaxFieldOfView(double arcsecPerPixel, double width, double height) {

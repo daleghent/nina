@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using FluentAssertions;
 using NINA.Astrometry;
 using NUnit.Framework;
 using System;
@@ -673,6 +674,14 @@ namespace NINATest.AstrometryTest {
         [TestCase(35d, 2.5, 20.5, ExpectedResult = 9.56)]
         public double DeterminePolarAlignmentError(double startDeclination, double driftRate, double declinationError) {
             return Math.Round(AstroUtil.DegreeToArcmin(AstroUtil.DetermineDriftAlignError(startDeclination, driftRate, AstroUtil.ArcsecToDegree(declinationError))), 2);
+        }
+
+        [TestCase(1, 100, 2.06264806)]
+        [TestCase(3.8, 700, 1.1197232)]
+        public void ArcSecPerPixel_CorrectlyTransformed(double pixelSize, double focalLength, double expected) {
+            var px = AstroUtil.ArcsecPerPixel(pixelSize, focalLength);
+
+            px.Should().BeApproximately(expected, 0.00001);
         }
     }
 }
