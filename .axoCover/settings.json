@@ -6,7 +6,7 @@
   "IsRedirectingFrameworkAssemblies": true,
   "TestSettings": "",
   "ExcludeAttributes": "System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute",
-  "ExcludeFiles": "",
+  "ExcludeFiles": "*.xaml;*.xaml.cs;*.g.cs",
   "ExcludeDirectories": "",
   "Filters": "+[*]*",
   "IsIncludingSolutionAssemblies": true,
