@@ -25,7 +25,16 @@ using System.Windows.Controls;
 
 namespace NINA.View.Sequencer.MiniSequencer {
 
-    internal class MiniSequencerDataTemplateSelector : DataTemplateSelector {
+    public class MiniSequencerDataTemplateSelector : DataTemplateSelector {
+        private ResourceDictionary resources;
+
+        public MiniSequencerDataTemplateSelector(ResourceDictionary resources) {
+            this.resources = resources;
+        }
+
+        public MiniSequencerDataTemplateSelector() : this(Application.Current.Resources) {
+        }
+
         public DataTemplate SequenceContainer { get; set; }
         public DataTemplate DeepSkyObjectContainer { get; set; }
         public DataTemplate SequenceItem { get; set; }
@@ -33,8 +42,8 @@ namespace NINA.View.Sequencer.MiniSequencer {
         public DataTemplate SequenceCondition { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
-            if (Application.Current.Resources.Contains(item.GetType().FullName + "_Mini")) {
-                return (DataTemplate)Application.Current.Resources[item.GetType().FullName + "_Mini"];
+            if (resources.Contains(item.GetType().FullName + "_Mini")) {
+                return (DataTemplate)resources[item.GetType().FullName + "_Mini"];
             } else if (item is IImmutableContainer) {
                 return SequenceItem;
             } else if (item is IDeepSkyObjectContainer) {
