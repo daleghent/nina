@@ -25,7 +25,7 @@ using System.Windows.Data;
 
 namespace NINA.View.Sequencer.Converter {
 
-    internal class StrategyEvaluatesConditionsAndTriggersToVisibilityConverter : IValueConverter {
+    public class StrategyEvaluatesConditionsAndTriggersToVisibilityConverter : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value == null) {

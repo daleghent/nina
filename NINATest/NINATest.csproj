@@ -386,6 +386,11 @@
     <Compile Include="Sequencer\Utility\DateTimeProvider\SunsetProviderTest.cs" />
     <Compile Include="Sequencer\Utility\DateTimeProvider\TimeProviderTest.cs" />
     <Compile Include="Sequencer\Utility\ItemUtilityTest.cs" />
+    <Compile Include="Sequencer\View\Converter\DroppableToDropIntoParametersConverterTest.cs" />
+    <Compile Include="Sequencer\View\Converter\SequenceEntityStatusRunningToVisibilityConverterTest.cs" />
+    <Compile Include="Sequencer\View\Converter\SequenceEntityStatusToVisibilityConverterTest.cs" />
+    <Compile Include="Sequencer\View\Converter\StrategyEvaluatesConditionsAndTriggersToVisibilityConverterTest.cs" />
+    <Compile Include="Sequencer\View\Converter\TargetAreaMinHeightConverterTest.cs" />
     <Compile Include="Sequencer\View\MiniSequencer\MiniSequencerDataTemplateSelectorTest.cs" />
     <Compile Include="Sequencer\View\SequenceDataTemplateSelectorTest.cs" />
     <Compile Include="SerialCommunication\ResponseTests.cs" />

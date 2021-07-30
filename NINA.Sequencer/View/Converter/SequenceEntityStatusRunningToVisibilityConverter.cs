@@ -20,12 +20,12 @@ using System.Windows.Data;
 
 namespace NINA.View.Sequencer.Converter {
 
-    public class SequenceEntityStatusToVisibilityConverter : IValueConverter {
+    public class SequenceEntityStatusRunningToVisibilityConverter : IValueConverter {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             if (value is SequenceEntityStatus status) {
-                if (status == SequenceEntityStatus.SKIPPED || status == SequenceEntityStatus.FINISHED) return Visibility.Collapsed;
-                return Visibility.Visible;
+                if (status == SequenceEntityStatus.RUNNING) return Visibility.Visible;
+                return Visibility.Collapsed;
             }
             return Visibility.Collapsed;
         }

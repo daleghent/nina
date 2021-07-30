@@ -319,6 +319,7 @@
     <Compile Include="Utility\InstructionErrorBehavior.cs" />
     <Compile Include="Utility\ItemUtility.cs" />
     <Compile Include="View\Converter\DroppableToDropIntoParametersConverter.cs" />
+    <Compile Include="View\Converter\SequenceEntityStatusRunningToVisibilityConverter.cs" />
     <Compile Include="View\Converter\SequenceEntityStatusToVisibilityConverter.cs" />
     <Compile Include="View\Converter\StrategyEvaluatesConditionsAndTriggersToVisibilityConverter.cs" />
     <Compile Include="View\Converter\TargetAreaMinHeightConverter.cs" />

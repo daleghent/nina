@@ -26,6 +26,8 @@ namespace NINA.View.Sequencer.Converter {
     public class TargetAreaMinHeightConverter : IMultiValueConverter {
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture) {
+            if (values == null || values.Length < 3) { throw new ArgumentException("Must provide three parameters - viewport height, itemcontrol, actual height"); }
+
             var availableHeight = (double)values[0];
             var itemsControl = (ItemsControl)values[1];
             var contentHeight = (double)values[2] - itemsControl.ActualHeight;
