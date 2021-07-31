@@ -8642,6 +8642,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to {0} from the framing wizard.
+        /// </summary>
+        internal static string LblFramingWizardSlewFailed {
+            get {
+                return ResourceManager.GetString("LblFramingWizardSlewFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to FreeImage.
         /// </summary>
         internal static string LblFreeImage {
@@ -12820,6 +12829,87 @@ namespace NINA.Core.Locale {
         internal static string LblRotatorNotConnected {
             get {
                 return ResourceManager.GetString("LblRotatorNotConnected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adjusted rotator target to {0}.
+        /// </summary>
+        internal static string LblRotatorRangeAdjusted {
+            get {
+                return ResourceManager.GetString("LblRotatorRangeAdjusted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Full.
+        /// </summary>
+        internal static string LblRotatorRangeFull {
+            get {
+                return ResourceManager.GetString("LblRotatorRangeFull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No restrictions for mechanical position.
+        /// </summary>
+        internal static string LblRotatorRangeFullTooltip {
+            get {
+                return ResourceManager.GetString("LblRotatorRangeFullTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 180 Degrees.
+        /// </summary>
+        internal static string LblRotatorRangeHalf {
+            get {
+                return ResourceManager.GetString("LblRotatorRangeHalf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Half of the mechanical position range is supported. Orientations outside of this range are adjusted 180 degrees to fit within the configured range..
+        /// </summary>
+        internal static string LblRotatorRangeHalfTooltip {
+            get {
+                return ResourceManager.GetString("LblRotatorRangeHalfTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 90 Degrees.
+        /// </summary>
+        internal static string LblRotatorRangeQuarter {
+            get {
+                return ResourceManager.GetString("LblRotatorRangeQuarter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 90 degrees of the mechanical position range is supported. This is useful primarily for square sensors. Orientations outside of this range are adjusted to fit within the configured range..
+        /// </summary>
+        internal static string LblRotatorRangeQuarterTooltip {
+            get {
+                return ResourceManager.GetString("LblRotatorRangeQuarterTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mechanical Range Start.
+        /// </summary>
+        internal static string LblRotatorRangeStart {
+            get {
+                return ResourceManager.GetString("LblRotatorRangeStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mechanical Range.
+        /// </summary>
+        internal static string LblRotatorRangeType {
+            get {
+                return ResourceManager.GetString("LblRotatorRangeType", resourceCulture);
             }
         }
         

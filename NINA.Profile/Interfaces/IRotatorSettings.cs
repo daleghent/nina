@@ -12,10 +12,14 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
+
 namespace NINA.Profile.Interfaces {
 
     public interface IRotatorSettings : ISettings {
         string Id { get; set; }
         bool Reverse { get; set; }
+        RotatorRangeTypeEnum RangeType { get; set; }
+        float RangeStartMechanicalPosition { get; set; }
     }
 }

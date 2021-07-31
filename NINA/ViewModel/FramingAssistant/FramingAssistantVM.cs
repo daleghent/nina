@@ -187,16 +187,34 @@ namespace NINA.ViewModel.FramingAssistant {
                 slewTokenSource?.Cancel();
                 slewTokenSource?.Dispose();
                 slewTokenSource = new CancellationTokenSource();
-                switch (o.ToString()) {
-                    case "Center":
-                        return await Center(Rectangle.Coordinates, slewTokenSource.Token);
+                bool result;
+                try {
+                    switch (o.ToString()) {
+                        case "Center":
+                            result = await Center(Rectangle.Coordinates, slewTokenSource.Token);
+                            break;
 
-                    case "Rotate":
-                        return await CenterAndRotate(Rectangle.Coordinates, Rectangle.TotalRotation, slewTokenSource.Token);
+                        case "Rotate":
+                            result = await CenterAndRotate(Rectangle.Coordinates, Rectangle.TotalRotation, slewTokenSource.Token);
+                            break;
 
-                    default:
-                        return await SlewToCoordinates(Rectangle.Coordinates, slewTokenSource.Token);
+                        default:
+                            result = await SlewToCoordinates(Rectangle.Coordinates, slewTokenSource.Token);
+                            break;
+                    }
+
+                    if (!result) {
+                        Logger.Error($"Failed to {o} from the framing wizard");
+                    }
+                } catch (Exception e) {
+                    Logger.Error($"Failed to {o} from the framing wizard", e);
+                    result = false;
                 }
+
+                if (!result) {
+                    Notification.ShowError(String.Format(Loc.Instance["LblFramingWizardSlewFailed"], o.ToString()));
+                }
+                return result;
             }, (object o) => RectangleCalculated);
 
             CancelSlewToCoordinatesCommand = new RelayCommand((object o) => slewTokenSource?.Cancel());

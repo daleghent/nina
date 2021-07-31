@@ -110,6 +110,7 @@ namespace NINA.Utility {
                     Bind<IImageControlVM>().To<ImageControlVM>().InSingletonScope();
                     Bind<IImageHistoryVM>().To<ImageHistoryVM>().InSingletonScope();
                     Bind<IImageStatisticsVM>().To<ImageStatisticsVM>().InSingletonScope();
+                    Bind<IDeviceChooserVM>().To<RotatorChooserVM>().WhenInjectedExactlyInto<RotatorVM>().InSingletonScope();
                     Bind<IDeviceChooserVM>().To<DomeChooserVM>().WhenInjectedExactlyInto<DomeVM>().InSingletonScope();
                     Bind<IDeviceChooserVM>().To<CameraChooserVM>().WhenInjectedExactlyInto<CameraVM>().InSingletonScope();
                     Bind<IDeviceChooserVM>().To<CameraChooserVM>().WhenInjectedExactlyInto<SGPServiceBackend>().InSingletonScope();

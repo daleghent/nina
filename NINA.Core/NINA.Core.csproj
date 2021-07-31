@@ -89,6 +89,7 @@
     <Compile Include="Enum\Hemisphere.cs" />
     <Compile Include="Enum\MountTypeEnum.cs" />
     <Compile Include="Enum\OvershootDirection.cs" />
+    <Compile Include="Enum\RotatorRangeTypeEnum.cs" />
     <Compile Include="Enum\SequenceEntityStatus.cs" />
     <Compile Include="Enum\SequenceMode.cs" />
     <Compile Include="Enum\SkySurveySource.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Model\SequenceEntityFailedValidationException.cs" />
     <Compile Include="Model\SequenceItemSkippedException.cs" />
     <Compile Include="Model\SynchronizedClientInfo.cs" />
+    <Compile Include="Model\TooltipDescriptionAttribute.cs" />
     <Compile Include="MyMessageBox\MyMessageBox.cs" />
     <Compile Include="MyMessageBox\MyMessageBoxView.xaml.cs">
       <DependentUpon>MyMessageBoxView.xaml</DependentUpon>
@@ -261,6 +263,7 @@
     <Compile Include="Utility\Converters\DoubleToBooleanConverter.cs" />
     <Compile Include="Utility\Converters\DoubleToHalfValueConverter.cs" />
     <Compile Include="Utility\Converters\DrawingToMediaBrushConverter.cs" />
+    <Compile Include="Utility\Converters\EnumTooltipConverter.cs" />
     <Compile Include="Utility\Converters\FilenameConverter.cs" />
     <Compile Include="Utility\Converters\FilterWheelFilterConverter.cs" />
     <Compile Include="Utility\Converters\ImagePatternToTextConverter.cs" />

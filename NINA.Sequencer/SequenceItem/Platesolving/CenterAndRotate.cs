@@ -35,6 +35,7 @@ using System.Threading.Tasks;
 using NINA.Core.Locale;
 using NINA.Equipment.Model;
 using NINA.Core.Model.Equipment;
+using NINA.Core.Utility.Notification;
 
 namespace NINA.Sequencer.SequenceItem.Platesolving {
 
@@ -84,6 +85,12 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 var stoppedGuiding = await guiderMediator.StopGuiding(token);
                 await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
+                var targetRotation = rotatorMediator.GetTargetPosition((float)Rotation);
+                if (Math.Abs(targetRotation - Rotation) > 0.1) {
+                    Logger.Info($"Rotator target position {Rotation} adjusted to {targetRotation} to be within the allowed mechanical range");
+                    Notification.ShowInformation(String.Format(Loc.Instance["LblRotatorRangeAdjusted"], targetRotation));
+                }
+
                 /* Loop until the rotation is within tolerances*/
                 while (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
                     var solveResult = await Solve(progress, token);
@@ -92,19 +99,22 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     }
 
                     orientation = (float)solveResult.Orientation;
-
-                    rotationDistance = (float)((float)Rotation - orientation);
-
-                    var movement = AstroUtil.EuclidianModulus(rotationDistance, 180);
-                    var movement2 = movement - 180;
-
-                    if (movement < Math.Abs(movement2)) {
-                        rotationDistance = movement;
-                    } else {
-                        rotationDistance = movement2;
-                    }
-
                     rotatorMediator.Sync(orientation);
+
+                    rotationDistance = targetRotation - orientation;
+                    if (profileService.ActiveProfile.RotatorSettings.RangeType == Core.Enum.RotatorRangeTypeEnum.FULL) {
+                        // If the full rotation range is allowed, then consider the 180-degree rotated orientation as well in case it is closer
+                        var movement = AstroUtil.EuclidianModulus(rotationDistance, 180);
+                        var movement2 = movement - 180;
+
+                        if (movement < Math.Abs(movement2)) {
+                            rotationDistance = movement;
+                        } else {
+                            targetRotation = AstroUtil.EuclidianModulus(targetRotation + 180, 360);
+                            Logger.Info($"Changing rotation target to {targetRotation} instead since it is closer to the current position");
+                            rotationDistance = movement2;
+                        }
+                    }
 
                     if (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
                         Logger.Info($"Rotator not inside tolerance {profileService.ActiveProfile.PlateSolveSettings.RotationTolerance} - Current {orientation}° / Target: {Rotation}° - Moving rotator relatively by {rotationDistance}°");

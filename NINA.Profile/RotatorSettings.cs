@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using NINA.Core.Enum;
 using NINA.Profile.Interfaces;
 using System;
 using System.Runtime.Serialization;
@@ -30,6 +31,8 @@ namespace NINA.Profile {
         protected override void SetDefaultValues() {
             id = "No_Device";
             reverse = false;
+            rangeType = RotatorRangeTypeEnum.FULL;
+            rangeStartMechanicalPosition = 0.0f;
         }
 
         private string id;
@@ -57,6 +60,36 @@ namespace NINA.Profile {
             set {
                 if (reverse != value) {
                     reverse = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private RotatorRangeTypeEnum rangeType;
+
+        [DataMember]
+        public RotatorRangeTypeEnum RangeType {
+            get {
+                return rangeType;
+            }
+            set {
+                if (rangeType != value) {
+                    rangeType = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private float rangeStartMechanicalPosition;
+
+        [DataMember]
+        public float RangeStartMechanicalPosition {
+            get {
+                return rangeStartMechanicalPosition;
+            }
+            set {
+                if (rangeStartMechanicalPosition != value) {
+                    rangeStartMechanicalPosition = value;
                     RaisePropertyChanged();
                 }
             }

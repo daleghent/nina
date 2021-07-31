@@ -36,5 +36,13 @@ namespace NINA.WPF.Base.Mediator {
         public Task<float> MoveRelative(float position) {
             return handler.MoveRelative(position);
         }
+
+        public float GetTargetPosition(float position) {
+            return handler.GetTargetPosition(position);
+        }
+
+        public float GetTargetMechanicalPosition(float position) {
+            return handler.GetTargetMechanicalPosition(position);
+        }
     }
 }

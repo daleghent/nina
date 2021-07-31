@@ -311,6 +311,7 @@
     <Compile Include="PlateSolving\ImageSolverTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RMSTest.cs" />
+    <Compile Include="Rotator\RotatorVMTest.cs" />
     <Compile Include="Sequencer\Conditions\AboveHorizonConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\AltitudeConditionTest.cs" />
     <Compile Include="Sequencer\Conditions\ConditionWatchdogTest.cs" />

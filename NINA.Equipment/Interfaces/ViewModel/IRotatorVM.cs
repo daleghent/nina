@@ -26,5 +26,9 @@ namespace NINA.Equipment.Interfaces.ViewModel {
         Task<float> Move(float position);
 
         Task<float> MoveRelative(float position);
+
+        float GetTargetPosition(float position);
+
+        float GetTargetMechanicalPosition(float position);
     }
 }
