@@ -5727,4 +5727,34 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="LblWarmCamera" xml:space="preserve">
     <value>Warm Camera</value>
   </data>
+  <data name="LblRotatorRangeType" xml:space="preserve">
+    <value>Mechanical Range</value>
+  </data>
+  <data name="LblRotatorRangeStart" xml:space="preserve">
+    <value>Mechanical Range Start</value>
+  </data>
+  <data name="LblRotatorRangeFull" xml:space="preserve">
+    <value>Full</value>
+  </data>
+  <data name="LblRotatorRangeFullTooltip" xml:space="preserve">
+    <value>No restrictions for mechanical position</value>
+  </data>
+  <data name="LblRotatorRangeHalf" xml:space="preserve">
+    <value>180 Degrees</value>
+  </data>
+  <data name="LblRotatorRangeHalfTooltip" xml:space="preserve">
+    <value>Half of the mechanical position range is supported. Orientations outside of this range are adjusted 180 degrees to fit within the configured range.</value>
+  </data>
+  <data name="LblRotatorRangeQuarter" xml:space="preserve">
+    <value>90 Degrees</value>
+  </data>
+  <data name="LblRotatorRangeQuarterTooltip" xml:space="preserve">
+    <value>90 degrees of the mechanical position range is supported. This is useful primarily for square sensors. Orientations outside of this range are adjusted to fit within the configured range.</value>
+  </data>
+  <data name="LblRotatorRangeAdjusted" xml:space="preserve">
+    <value>Adjusted rotator target to {0}</value>
+  </data>
+  <data name="LblFramingWizardSlewFailed" xml:space="preserve">
+    <value>Failed to {0} from the framing wizard</value>
+  </data>
 </root>
