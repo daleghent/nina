@@ -332,24 +332,29 @@
                                             VerticalAlignment="Center"
                                             Text="{ns:Loc LblSlewToTarget}" />
                                         <CheckBox
+                                            Name ="SlewToTarget"
                                             Grid.Column="1"
                                             Margin="0,5,0,5"
-                                            IsChecked="{Binding SlewToTarget}" />
+                                            IsChecked="{Binding SlewToTarget}"
+                                            IsEnabled="{Binding ElementName=CenterTarget, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}" />
                                         <TextBlock
                                             Grid.Column="2"
                                             Margin="5,5,5,5"
                                             VerticalAlignment="Center"
                                             Text="{ns:Loc LblCenterTarget}" />
                                         <CheckBox
+                                            Name ="CenterTarget"
                                             Grid.Column="3"
                                             Margin="0,5,0,5"
-                                            IsChecked="{Binding CenterTarget}" />
+                                            IsChecked="{Binding CenterTarget}"
+                                            IsEnabled="{Binding ElementName=RotateTarget, Path=IsChecked, Converter={StaticResource InverseBooleanConverter}}" />
                                         <TextBlock
                                             Grid.Row="1"
                                             Margin="5,0,5,5"
                                             VerticalAlignment="Center"
                                             Text="{ns:Loc LblRotateTarget}" />
                                         <CheckBox
+                                            Name="RotateTarget"
                                             Grid.Row="1"
                                             Grid.Column="1"
                                             Margin="0,0,0,5"

@@ -97,4 +97,5 @@
     <converters:NullImageConverter x:Key="NullImageConverter" />
     <converters:AllNullOrEmptyStringToVisibilityCollapsedMultiConverter x:Key="AllNullOrEmptyStringToVisibilityCollapsedMultiConverter" />
     <converters:StringCollectionToStringConverter x:Key="StringCollectionToStringConverter" />
+    <converters:EnumTooltipTypeConverter x:Key="EnumTooltipTypeConverter" />
 </ResourceDictionary>

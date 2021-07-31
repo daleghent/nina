@@ -13,8 +13,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:equip="clr-namespace:NINA.View.Equipment"
     xmlns:local="clr-namespace:NINA.View"
+    xmlns:enum="clr-namespace:NINA.Core.Enum;assembly=NINA.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
+    xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -138,7 +141,62 @@
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
-
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblRotatorRangeType}" />
+                                <ComboBox
+                                    Name="PART_RotatorRangeTypeList"
+                                    Margin="5,0,0,0"
+                                    ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:RotatorRangeTypeEnum}}}"
+                                    SelectedItem="{Binding Source={StaticResource ProfileService}, Path=ActiveProfile.RotatorSettings.RangeType}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <ListBoxItem 
+                                                Content="{Binding Path=.}"
+                                                ToolTip="{Binding Path=., Converter={StaticResource EnumTooltipTypeConverter}}" />
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                            </UniformGrid>
+                        </UniformGrid>
+                    </Border>
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
+                        <UniformGrid Columns="2">
+                            <UniformGrid
+                                Margin="0,6,0,6"
+                                VerticalAlignment="Center"
+                                Columns="2">
+                                <TextBlock Text="{ns:Loc LblRotatorRangeStart}" />
+                                <ninactrl:UnitTextBox
+                                    MinWidth="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    VerticalContentAlignment="Center"
+                                    Unit="°">
+                                    <TextBox.Text>
+                                        <Binding Source="{StaticResource ProfileService}" Path="ActiveProfile.RotatorSettings.RangeStartMechanicalPosition" UpdateSourceTrigger="LostFocus">
+                                            <Binding.ValidationRules>
+                                                <rules:FullCircleDegreesRule />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </ninactrl:UnitTextBox>
+                            </UniformGrid>
+                        </UniformGrid>
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=PART_RotatorRangeTypeList, Path=SelectedItem}" Value="0">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
+                    </Border>
                     <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="0">
                         <UniformGrid Columns="2">
                             <UniformGrid

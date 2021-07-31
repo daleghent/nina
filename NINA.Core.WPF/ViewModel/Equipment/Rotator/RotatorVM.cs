@@ -35,13 +35,19 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
     public class RotatorVM : DockableVM, IRotatorVM {
 
-        public RotatorVM(IProfileService profileService, IRotatorMediator rotatorMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public RotatorVM(
+            IProfileService profileService, 
+            IRotatorMediator rotatorMediator,
+            IDeviceChooserVM rotatorChooserVM,
+            IApplicationResourceDictionary resourceDictionary,
+            IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = Loc.Instance["LblRotator"];
-            ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["RotatorSVG"];
+            ImageGeometry = (System.Windows.Media.GeometryGroup)resourceDictionary["RotatorSVG"];
 
             this.rotatorMediator = rotatorMediator;
             this.rotatorMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
+            RotatorChooserVM = rotatorChooserVM;
             Task.Run(() => RotatorChooserVM.GetEquipment());
 
             ConnectCommand = new AsyncCommand<bool>(() => Connect());
@@ -85,33 +91,37 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             }
         }
 
-        public async Task<float> Move(float targetPosition) {
+        public async Task<float> Move(float requestedPosition) {
             _moveCts?.Dispose();
             _moveCts = new CancellationTokenSource();
             float pos = float.NaN;
             await Task.Run(async () => {
                 try {
                     RotatorInfo.IsMoving = true;
-                    // Focuser position should be in [0, 360)
-                    targetPosition = AstroUtil.EuclidianModulus(targetPosition, 360);
+
+                    var adjustedTargetPosition = GetTargetPosition(requestedPosition);
+                    if (Math.Abs(adjustedTargetPosition - requestedPosition) > 0.1) {
+                        Logger.Info($"Adjusted rotator target to {adjustedTargetPosition}");
+                        Notification.ShowInformation(String.Format(Loc.Instance["LblRotatorRangeAdjusted"], adjustedTargetPosition));
+                    }
 
                     applicationStatusMediator.StatusUpdate(
                         new ApplicationStatus() {
                             Source = Title,
-                            Status = string.Format(Loc.Instance["LblMovingRotatorToPosition"], Math.Round(targetPosition, 2))
+                            Status = string.Format(Loc.Instance["LblMovingRotatorToPosition"], Math.Round(adjustedTargetPosition, 2))
                         }
                     );
 
-                    Logger.Debug($"Move rotator to {targetPosition}°");
+                    Logger.Debug($"Move rotator to {adjustedTargetPosition}°");
 
-                    rotator.MoveAbsolute(targetPosition);
-                    while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.Position - targetPosition) > 1) && (Math.Abs(RotatorInfo.Position - targetPosition) < 359))) {
+                    rotator.MoveAbsolute(adjustedTargetPosition);
+                    while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.Position - adjustedTargetPosition) > 1) && (Math.Abs(RotatorInfo.Position - adjustedTargetPosition) < 359))) {
                         _moveCts.Token.ThrowIfCancellationRequested();
                         await Task.Delay(TimeSpan.FromSeconds(1));
-                        Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.Position} - Target Position {targetPosition}");
+                        Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.Position} - Target Position {adjustedTargetPosition}");
                     }
-                    RotatorInfo.Position = targetPosition;
-                    pos = targetPosition;
+                    RotatorInfo.Position = adjustedTargetPosition;
+                    pos = adjustedTargetPosition;
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
                 } finally {
@@ -126,33 +136,36 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             return pos;
         }
 
-        public async Task<float> MoveMechanical(float targetPosition) {
+        public async Task<float> MoveMechanical(float requestedPosition) {
             _moveCts?.Dispose();
             _moveCts = new CancellationTokenSource();
             float pos = float.NaN;
             await Task.Run(async () => {
                 try {
                     RotatorInfo.IsMoving = true;
-                    // Focuser position should be in [0, 360)
-                    targetPosition = AstroUtil.EuclidianModulus(targetPosition, 360);
+
+                    var adjustedTargetPosition = GetTargetMechanicalPosition(requestedPosition);
+                    if (Math.Abs(adjustedTargetPosition - requestedPosition) > 0.1) {
+                        Logger.Info($"Adjusted rotator mechanical target to {adjustedTargetPosition}");
+                        Notification.ShowInformation(String.Format(Loc.Instance["LblRotatorRangeAdjusted"], adjustedTargetPosition));
+                    }
 
                     applicationStatusMediator.StatusUpdate(
                         new ApplicationStatus() {
                             Source = Title,
-                            Status = string.Format(Loc.Instance["LblMovingRotatorToMechanicalPosition"], Math.Round(targetPosition, 2))
+                            Status = string.Format(Loc.Instance["LblMovingRotatorToMechanicalPosition"], Math.Round(adjustedTargetPosition, 2))
                         }
                     );
 
-                    Logger.Debug($"Move rotator mechanical to {targetPosition}°");
-
-                    rotator.MoveAbsoluteMechanical(targetPosition);
-                    while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) > 1) && (Math.Abs(RotatorInfo.MechanicalPosition - targetPosition) < 359))) {
+                    Logger.Debug($"Move rotator mechanical to {adjustedTargetPosition}°");
+                    rotator.MoveAbsoluteMechanical(adjustedTargetPosition);
+                    while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.MechanicalPosition - adjustedTargetPosition) > 1) && (Math.Abs(RotatorInfo.MechanicalPosition - adjustedTargetPosition) < 359))) {
                         _moveCts.Token.ThrowIfCancellationRequested();
                         await Task.Delay(TimeSpan.FromSeconds(1));
-                        Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.MechanicalPosition} - Target Position {targetPosition}");
+                        Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.MechanicalPosition} - Target Position {adjustedTargetPosition}");
                     }
-                    RotatorInfo.Position = targetPosition;
-                    pos = targetPosition;
+                    RotatorInfo.Position = adjustedTargetPosition;
+                    pos = adjustedTargetPosition;
                     BroadcastRotatorInfo();
                 } catch (OperationCanceledException) {
                 } finally {
@@ -168,12 +181,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
         }
 
         public async Task<float> MoveRelative(float offset) {
-            float pos = -1;
             if (rotator?.Connected == true) {
-                pos = rotator.Position + offset;
-                await Move(pos);
+                return await MoveMechanical(rotator.MechanicalPosition + offset);
             }
-            return pos;
+            return -1;
         }
 
         private void UpdateRotatorValues(Dictionary<string, object> rotatorValues) {
@@ -239,19 +250,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             RotatorChooserVM.GetEquipment();
         }
 
-        private RotatorChooserVM rotatorChooserVM;
-
-        public RotatorChooserVM RotatorChooserVM {
-            get {
-                if (rotatorChooserVM == null) {
-                    rotatorChooserVM = new RotatorChooserVM(profileService);
-                }
-                return rotatorChooserVM;
-            }
-            set {
-                rotatorChooserVM = value;
-            }
-        }
+        public IDeviceChooserVM RotatorChooserVM { get; private set; }
 
         private float targetPosition;
 
@@ -386,6 +385,52 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
         private void BroadcastRotatorInfo() {
             rotatorMediator.Broadcast(GetDeviceInfo());
+        }
+
+        public float GetTargetPosition(float position) {
+            if (!rotator.Synced) {
+                // This indicates a code bug from the caller, so this message is not localized
+                throw new Exception("Rotator not synced!");
+            }
+
+            // Focuser position should be in [0, 360)
+            position = AstroUtil.EuclidianModulus(position, 360);
+            var offset = rotator.MechanicalPosition - rotator.Position;
+            var mechanicalPosition = AstroUtil.EuclidianModulus(position + offset, 360);
+            var targetMechanicalPosition = GetTargetMechanicalPosition(mechanicalPosition);
+            return AstroUtil.EuclidianModulus(targetMechanicalPosition - offset + 360, 360);
+        }
+
+        public float GetTargetMechanicalPosition(float position) {
+            // Focuser position should be in [0, 360)
+            position = AstroUtil.EuclidianModulus(position, 360);
+            var rangeType = profileService.ActiveProfile.RotatorSettings.RangeType;
+            var rangeStart = profileService.ActiveProfile.RotatorSettings.RangeStartMechanicalPosition;
+            float rangeStartDistance = AstroUtil.EuclidianModulus(position - rangeStart + 360, 360);
+            float targetMechanicalPosition;
+            if (rangeType == Core.Enum.RotatorRangeTypeEnum.FULL) {
+                targetMechanicalPosition = position;
+            } else if (rangeType == Core.Enum.RotatorRangeTypeEnum.HALF) {
+                if (rangeStartDistance < 180.0) {
+                    targetMechanicalPosition = position;
+                } else {
+                    targetMechanicalPosition = position + 180;
+                }
+            } else if (rangeType == Core.Enum.RotatorRangeTypeEnum.QUARTER) {
+                if (rangeStartDistance < 90.0) {
+                    targetMechanicalPosition = position;
+                } else if (rangeStartDistance < 180.0) {
+                    targetMechanicalPosition = position + 270;
+                } else if (rangeStartDistance < 270.0) {
+                    targetMechanicalPosition = position + 180;
+                } else {
+                    targetMechanicalPosition = position + 90;
+                }
+            } else {
+                throw new NotImplementedException();
+            }
+
+            return AstroUtil.EuclidianModulus(targetMechanicalPosition, 360);
         }
     }
 }

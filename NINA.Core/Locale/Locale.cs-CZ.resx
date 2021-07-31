@@ -1884,13 +1884,13 @@ Přeskočit.</value>
     <value>Načítání sekvence se nezdařilo</value>
   </data>
   <data name="LblLoadSequenceSetFailed" xml:space="preserve">
-    <value>Načtení stanoveného cíle se nezdařilo</value>
+    <value>Načtení cílové sady se nezdařilo</value>
   </data>
   <data name="LblLoadSequenceToolTip" xml:space="preserve">
     <value>Načíst sekvence z xml souboru</value>
   </data>
   <data name="LblLoadTargetSet" xml:space="preserve">
-    <value>Nahrát stanovený cíl</value>
+    <value>Nahrát cílovou sadu</value>
   </data>
   <data name="LblLocalPlatesolver" xml:space="preserve">
     <value>Místní Platesolving</value>
@@ -2750,7 +2750,7 @@ Klient odpojen od synchronizované služby PHD2.
     <value>Uložit Sekvenci jako soubor xml</value>
   </data>
   <data name="LblSaveTargetSet" xml:space="preserve">
-    <value>Uložit stanovený cíl</value>
+    <value>Uložit nastavení cíle</value>
   </data>
   <data name="LblScopeSettleTimeAfterFlip" xml:space="preserve">
     <value>Stabilizace dalekohledu po překlopení poledníku</value>
@@ -4789,7 +4789,7 @@ Pokud se jedná o instrukční sadu, která není aktuálně rozbalena, bude př
     <value>Načíst Cíl</value>
   </data>
   <data name="Lbl_OldSequencer_OpenTargetSet" xml:space="preserve">
-    <value>Otevřít Stanovený Cíl</value>
+    <value>Otevřít Cílovou Sadu</value>
   </data>
   <data name="Lbl_OldSequencer_Title" xml:space="preserve">
     <value>Jednoduchá Sekvence</value>
@@ -4946,9 +4946,9 @@ Použijte ve spojení s jinou podmínkou smyčky, kdy bezpečnost hlásí bezpe�
     <value>Neplatný Offset. Offset musí být mezi {0} a {1}, ale je nastaven na {2}</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Description" xml:space="preserve">
-    <value>Pořidí snímek a vyřeší obraz pomocí aktuální polohy dalekohledu jako reference.
+    <value>Pořídí snímek a vyřeší obraz pomocí aktuální polohy dalekohledu jako reference.
 Po úspěšném vyřešení snímku bude dalekohled synchronizován s řešenou pozicí.
-Upozornění: Tento pokyn nebude vystředět dalekohled na cíl, ale bude pouze synchronizovat aktuální ukazovací polohu!</value>
+Upozornění: Tento pokyn nevystředí dalekohled na cíl, ale bude pouze synchronizovat aktuální ukazovací polohu!</value>
   </data>
   <data name="Lbl_SequenceItem_Platesolving_SolveAndSync_Name" xml:space="preserve">
     <value>Platesolving a Synchronizace</value>
@@ -5218,7 +5218,7 @@ U rychle se měnících podmínek pomůže menší velikost vzorku rychleji reag
     <value>Přidat Cíl do Cílového Seznamu</value>
   </data>
   <data name="LblAddTargetToTargetListTooltip" xml:space="preserve">
-    <value>Přidá nastavený cíl do cílové sekce seznamu v postranním panelu pokročilé sekvencer pro pozdější použití</value>
+    <value>Přidá nastavený cíl do cílové sekce seznamu v postranním panelu pokročilého sekvencéru pro pozdější použití</value>
   </data>
   <data name="Lbl_SequenceTargetController_SavedTarget" xml:space="preserve">
     <value>Cíl {0} uložen do cílového seznamu</value>
@@ -5668,10 +5668,10 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <comment>Default advanced sequencer title</comment>
   </data>
   <data name="LblTargetSetTitle" xml:space="preserve">
-    <value>Stanovit Cíl</value>
+    <value>Cílová Sada</value>
   </data>
   <data name="LblTooltipSwitchTargetSet" xml:space="preserve">
-    <value>Přepne do režimu jednoduchého plánování stanoveného cíle</value>
+    <value>Přepne do režimu plánování jednoduché sady cílů</value>
   </data>
   <data name="LblByName" xml:space="preserve">
     <value>Podle Názvu</value>
@@ -5695,7 +5695,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Vendor SDKs</value>
   </data>
   <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
-    <value>Operace odparkovat zrušena.</value>
+    <value>Operace odparkovat zrušena</value>
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
     <value>Čekat na odparkování dalekohledu</value>
@@ -5704,24 +5704,54 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Globální Spouštěče</value>
   </data>
   <data name="LblTargetOptions" xml:space="preserve">
-    <value>Target Options</value>
+    <value>Možnosti Cíle</value>
   </data>
   <data name="LblCoolCamera" xml:space="preserve">
-    <value>Cool Camera</value>
+    <value>Chladit Kameru</value>
   </data>
   <data name="LblParkMount" xml:space="preserve">
-    <value>Park Mount</value>
+    <value>Parkovat Montáž</value>
   </data>
   <data name="LblTargetSetEndOptions" xml:space="preserve">
-    <value>Target Set End Options</value>
+    <value>Možnosti Konce Cílové Sady</value>
   </data>
   <data name="LblTargetSetStartOptions" xml:space="preserve">
-    <value>Target Set Start Options</value>
+    <value>Možnosti Spuštění Cíle Sady</value>
   </data>
   <data name="LblUnparkMount" xml:space="preserve">
-    <value>Unpark Mount</value>
+    <value>Odparkovat Montáž</value>
   </data>
   <data name="LblWarmCamera" xml:space="preserve">
-    <value>Warm Camera</value>
+    <value>Zahřát Kameru</value>
+  </data>
+  <data name="LblRotatorRangeType" xml:space="preserve">
+    <value>Mechanical Range</value>
+  </data>
+  <data name="LblRotatorRangeStart" xml:space="preserve">
+    <value>Mechanical Range Start</value>
+  </data>
+  <data name="LblRotatorRangeFull" xml:space="preserve">
+    <value>Full</value>
+  </data>
+  <data name="LblRotatorRangeFullTooltip" xml:space="preserve">
+    <value>No restrictions for mechanical position</value>
+  </data>
+  <data name="LblRotatorRangeHalf" xml:space="preserve">
+    <value>180 Degrees</value>
+  </data>
+  <data name="LblRotatorRangeHalfTooltip" xml:space="preserve">
+    <value>Half of the mechanical position range is supported. Orientations outside of this range are adjusted 180 degrees to fit within the configured range.</value>
+  </data>
+  <data name="LblRotatorRangeQuarter" xml:space="preserve">
+    <value>90 Degrees</value>
+  </data>
+  <data name="LblRotatorRangeQuarterTooltip" xml:space="preserve">
+    <value>90 degrees of the mechanical position range is supported. This is useful primarily for square sensors. Orientations outside of this range are adjusted to fit within the configured range.</value>
+  </data>
+  <data name="LblRotatorRangeAdjusted" xml:space="preserve">
+    <value>Adjusted rotator target to {0}</value>
+  </data>
+  <data name="LblFramingWizardSlewFailed" xml:space="preserve">
+    <value>Failed to {0} from the framing wizard</value>
   </data>
 </root>
