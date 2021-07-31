@@ -34,6 +34,7 @@ using NINA.Core.Enum;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Locale;
 using NINA.WPF.Base.ViewModel;
+using NINA.Sequencer.Interfaces;
 
 namespace NINA.Sequencer.Trigger.MeridianFlip {
 
@@ -43,7 +44,7 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Telescope")]
     [Export(typeof(ISequenceTrigger))]
     [JsonObject(MemberSerialization.OptIn)]
-    public class MeridianFlipTrigger : SequenceTrigger, IValidatable {
+    public class MeridianFlipTrigger : SequenceTrigger, IMeridianFlipTrigger, IValidatable {
         protected IProfileService profileService;
         protected ITelescopeMediator telescopeMediator;
         protected IGuiderMediator guiderMediator;

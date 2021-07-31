@@ -19,6 +19,7 @@ using NINA.Equipment.Equipment.MyTelescope;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
+using NINA.Sequencer.Interfaces;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Trigger.MeridianFlip;
 using NINA.Sequencer.Utility;
@@ -199,7 +200,7 @@ namespace NINATest.Sequencer.Utility {
             time.Should().Be(DateTime.MinValue);
         }
 
-        private MeridianFlipTrigger PrepareTrigger(TimeSpan timeToFlip) {
+        private IMeridianFlipTrigger PrepareTrigger(TimeSpan timeToFlip) {
             var profileServiceMock = new Mock<IProfileService>();
             var telescopeMediatorMock = new Mock<ITelescopeMediator>();
             var guiderMediatorMock = new Mock<IGuiderMediator>();

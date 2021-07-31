@@ -21,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Trigger.MeridianFlip;
+using NINA.Sequencer.Interfaces;
 
 namespace NINA.Sequencer.Utility {
 
@@ -65,9 +66,9 @@ namespace NINA.Sequencer.Utility {
             if (context is ITriggerable triggerable) {
                 var snapshot = triggerable.GetTriggersSnapshot();
                 if (snapshot?.Count > 0) {
-                    var item = snapshot.FirstOrDefault(x => typeof(MeridianFlipTrigger).IsAssignableFrom(x.GetType()));
+                    var item = snapshot.FirstOrDefault(x => x is IMeridianFlipTrigger);
                     if (item != null) {
-                        return ((MeridianFlipTrigger)item).LatestFlipTime;
+                        return ((IMeridianFlipTrigger)item).LatestFlipTime;
                     }
                 }
             }
@@ -92,7 +93,7 @@ namespace NINA.Sequencer.Utility {
 
             var flipTime = GetMeridianFlipTime(context);
 
-            if (flipTime > DateTime.MinValue && estimatedItemFinishTime > flipTime) {
+            if (flipTime > DateTime.Now && estimatedItemFinishTime > flipTime) {
                 return true;
             }
             return false;
