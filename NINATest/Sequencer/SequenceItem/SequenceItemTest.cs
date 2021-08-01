@@ -65,6 +65,43 @@ namespace NINATest.Sequencer.SequenceItem {
         }
 
         [Test]
+        public async Task Run_Successfully_MultiAttempts_RunOnlyOnce_StatusToComplete() {
+            //Arrange
+            var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
+
+            //Act
+            var sut = mock.Object;
+            sut.Attempts = 10;
+            await sut.Run(default, default);
+
+            //Assert
+            sut.Status.Should().Be(SequenceEntityStatus.FINISHED);
+            mock.Verify(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
+        public async Task Run_Successfully_MultiAttempts_FailTwiceFinishOnThird_StatusToComplete() {
+            //Arrange
+            var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
+            mock.CallBase = true;
+
+            mock.SetupSequence(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()))
+                .Throws(new Exception("Failed to run"))
+                .Throws(new Exception("Failed to run"))
+                .Returns(Task.CompletedTask);
+
+            //Act
+            var sut = mock.Object;
+            sut.Attempts = 10;
+            await sut.Run(default, default);
+
+            //Assert
+            sut.Status.Should().Be(SequenceEntityStatus.FINISHED);
+            mock.Verify(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Exactly(3));
+        }
+
+        [Test]
         public async Task Run_Unsuccessfully_StatusToFailed() {
             //Arrange
             var mock = new Mock<NINA.Sequencer.SequenceItem.SequenceItem>();
@@ -247,6 +284,7 @@ namespace NINATest.Sequencer.SequenceItem {
 
             //Assert
             sut.Status.Should().Be(SequenceEntityStatus.FAILED);
+            mock.Verify(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Exactly(3));
         }
 
         [Test]
@@ -269,6 +307,7 @@ namespace NINATest.Sequencer.SequenceItem {
 
             //Assert
             sut.Status.Should().Be(SequenceEntityStatus.FINISHED);
+            mock.Verify(x => x.Execute(It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Exactly(3));
         }
 
         [Test]

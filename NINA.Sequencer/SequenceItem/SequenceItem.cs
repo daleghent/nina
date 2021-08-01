@@ -214,6 +214,7 @@ namespace NINA.Sequencer.SequenceItem {
                                 Logger.Info($"Finishing {this}");
                                 Status = SequenceEntityStatus.FINISHED;
                                 success = true;
+                                break;
                             } catch (SequenceItemSkippedException ex) {
                                 throw;
                             } catch (OperationCanceledException ex) {
