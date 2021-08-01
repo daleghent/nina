@@ -29,8 +29,6 @@ using NINA.Sequencer.SequenceItem.Telescope;
 using NINA.Sequencer.SequenceItem.Utility;
 using NINA.Sequencer.Trigger;
 using NINA.Sequencer.Trigger.Autofocus;
-using NINA.Sequencer.Trigger.Guider;
-using NINA.Sequencer.Trigger.MeridianFlip;
 using NINA.Utility;
 using NINA.Astrometry;
 using NINA.ViewModel.FramingAssistant;
@@ -85,7 +83,6 @@ namespace NINA.Sequencer.Container {
         private bool autoFocusAfterSetExposures;
         private bool autoFocusAfterTemperatureChange;
         private bool autoFocusAfterHFRChange;
-        private bool meridianFlipEnabled;
         private ICameraMediator cameraMediator;
         private ISimpleExposure selectedSimpleExposure;
         private DateTime estimatedStartTime;
@@ -188,19 +185,6 @@ namespace NINA.Sequencer.Container {
             get => estimatedDuration;
             set {
                 estimatedDuration = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public MeridianFlipTrigger MeridianFlipTrigger {
-            get => Triggers.FirstOrDefault(x => x is MeridianFlipTrigger) as MeridianFlipTrigger;
-            set {
-                if (value != null) {
-                    Add(value);
-                } else {
-                    var t = Triggers.FirstOrDefault(x => x is MeridianFlipTrigger);
-                    Remove(t);
-                }
                 RaisePropertyChanged();
             }
         }
@@ -610,10 +594,6 @@ namespace NINA.Sequencer.Container {
             clone.AutoFocusAfterTemperatureChangeAmount = AutoFocusAfterTemperatureChangeAmount;
             clone.AutoFocusAfterHFRChange = AutoFocusAfterHFRChange;
             clone.AutoFocusAfterHFRChangeAmount = AutoFocusAfterHFRChangeAmount;
-
-            if (profileService.ActiveProfile.SequenceSettings.DoMeridianFlip) {
-                clone.Triggers.Add(factory.GetTrigger<MeridianFlipTrigger>());
-            }
 
             foreach (var item in clone.Items) {
                 item.AttachNewParent(clone);

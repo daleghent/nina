@@ -212,7 +212,7 @@ namespace NINA.Sequencer.Trigger.Autofocus {
 
                         if (HFRTrendPercentage > Amount) {
                             /* Trigger autofocus after HFR change */
-                            Logger.Debug($"Autofocus after HFR change has been triggered, as current HFR trend is {HFRTrendPercentage}% higher compared to threshold of {Amount}%");
+                            Logger.Info($"Autofocus after HFR change should be triggered, as current HFR trend is {HFRTrendPercentage}% higher compared to threshold of {Amount}%");
                             shouldTrigger = true;
                         }
                     }
