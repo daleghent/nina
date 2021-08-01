@@ -85,11 +85,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 var stoppedGuiding = await guiderMediator.StopGuiding(token);
                 await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
-                var targetRotation = rotatorMediator.GetTargetPosition((float)Rotation);
-                if (Math.Abs(targetRotation - Rotation) > 0.1) {
-                    Logger.Info($"Rotator target position {Rotation} adjusted to {targetRotation} to be within the allowed mechanical range");
-                    Notification.ShowInformation(String.Format(Loc.Instance["LblRotatorRangeAdjusted"], targetRotation));
-                }
+                var targetRotation = (float)Rotation;
 
                 /* Loop until the rotation is within tolerances*/
                 while (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
@@ -100,6 +96,13 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
 
                     orientation = (float)solveResult.Orientation;
                     rotatorMediator.Sync(orientation);
+
+                    var prevTargetRotation = targetRotation;
+                    targetRotation = rotatorMediator.GetTargetPosition(prevTargetRotation);
+                    if (Math.Abs(targetRotation - prevTargetRotation) > 0.1) {
+                        Logger.Info($"Rotator target position {Rotation} adjusted to {targetRotation} to be within the allowed mechanical range");
+                        Notification.ShowInformation(String.Format(Loc.Instance["LblRotatorRangeAdjusted"], targetRotation));
+                    }
 
                     rotationDistance = targetRotation - orientation;
                     if (profileService.ActiveProfile.RotatorSettings.RangeType == Core.Enum.RotatorRangeTypeEnum.FULL) {
