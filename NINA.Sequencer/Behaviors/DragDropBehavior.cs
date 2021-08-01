@@ -29,6 +29,14 @@ using System.Windows.Media.Imaging;
 namespace NINA.Sequencer.Behaviors {
 
     public class DragDropBehavior : Behavior<FrameworkElement> {
+
+        public DragDropBehavior(Grid layoutParent) {
+            this.layoutParent = layoutParent;
+        }
+
+        public DragDropBehavior() : this(Application.Current.MainWindow.FindName("RootGrid") as Grid) {
+        }
+
         private MouseEventArgs mouseOverEventArgs = new MouseEventArgs(Mouse.PrimaryDevice, 0);
         private readonly List<Tuple<DependencyObject, Behavior>> detachedForeignBehaviors = new List<Tuple<DependencyObject, Behavior>>();
         private readonly List<Tuple<DependencyObject, Behavior>> detachedOwnChildrenBehaviors = new List<Tuple<DependencyObject, Behavior>>();
@@ -39,7 +47,7 @@ namespace NINA.Sequencer.Behaviors {
         private FrameworkElement draggedOverElement;
         private bool overBehaviorElement = false;
         private Effect previousEffect;
-        private readonly Grid layoutParent = (Application.Current.MainWindow.FindName("RootGrid") as Grid);
+        private readonly Grid layoutParent;
         private UIElement currentMouseOverElement;
         private readonly TranslateTransform movingTransform = new TranslateTransform();
 
@@ -68,7 +76,9 @@ namespace NINA.Sequencer.Behaviors {
                 previousParent = parentObject;
             } while ((parentObject = VisualTreeHelper.GetParent(parentObject)) != null);
 
-            DetachUnwantedBehaviors(parentObject, e);
+            if (parentObject != null) {
+                DetachUnwantedBehaviors(parentObject, e);
+            }
 
             // render clone of current to be dragged object
             RenderTargetBitmap rtb = RenderClone(parentObject as FrameworkElement);
@@ -118,7 +128,7 @@ namespace NINA.Sequencer.Behaviors {
         }
 
         private RenderTargetBitmap RenderClone(FrameworkElement obj) {
-            if (obj != null) {
+            if (obj != null && obj.ActualWidth > 0 && obj.ActualHeight > 0) {
                 RenderTargetBitmap rtb = new RenderTargetBitmap((int)obj.ActualWidth, (int)obj.ActualWidth, 96, 96, PixelFormats.Pbgra32);
                 DrawingVisual visual = new DrawingVisual();
                 using (DrawingContext context = visual.RenderOpen()) {

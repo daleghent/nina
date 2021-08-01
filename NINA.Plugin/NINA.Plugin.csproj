@@ -109,6 +109,10 @@
       <Project>{20B7C98E-F7F8-497E-B5E5-02FA99D4B98B}</Project>
       <Name>NINA.Equipment</Name>
     </ProjectReference>
+    <ProjectReference Include="..\NINA.Platesolving\NINA.PlateSolving.csproj">
+      <Project>{A721D420-3C8E-4E96-9558-37B50801FF6B}</Project>
+      <Name>NINA.PlateSolving</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NINA.Profile\NINA.Profile.csproj">
       <Project>{8540150E-7FF0-4F7B-A714-0F6ABDB1AC60}</Project>
       <Name>NINA.Profile</Name>

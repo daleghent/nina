@@ -65,6 +65,8 @@ using NINA.WPF.Base.ViewModel.Imaging;
 using NINA.Plugin.Interfaces;
 using NINA.Interfaces;
 using NINA.ViewModel.Plugins;
+using NINA.PlateSolving.Interfaces;
+using NINA.PlateSolving;
 
 namespace NINA.Utility {
 
@@ -175,6 +177,8 @@ namespace NINA.Utility {
                     Bind<ISGPServiceBackend>().To<SGPServiceBackend>().InSingletonScope();
                     Bind<ISequenceNavigationVM>().To<SequenceNavigationVM>().InSingletonScope();
                     Bind<IMyMessageBoxVM>().To<MyMessageBoxVM>();
+
+                    Bind<IPlateSolverFactory>().To<PlateSolverFactoryProxy>().InSingletonScope();
 
                     Bind<IPluginLoader>().To<PluginLoader>().InSingletonScope();
 

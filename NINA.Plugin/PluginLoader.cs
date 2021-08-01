@@ -15,9 +15,11 @@
 using NINA.Astrometry.Interfaces;
 using NINA.Core.Locale;
 using NINA.Core.Utility;
+using NINA.Core.Utility.WindowService;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Equipment.Interfaces.ViewModel;
+using NINA.PlateSolving.Interfaces;
 using NINA.Plugin.Interfaces;
 using NINA.Plugin.ManifestDefinition;
 using NINA.Profile.Interfaces;
@@ -68,7 +70,9 @@ namespace NINA.Plugin {
                               ISafetyMonitorMediator safetyMonitorMediator,
                               IApplicationResourceDictionary resourceDictionary,
                               IApplicationMediator applicationMediator,
-                              IFramingAssistantVM framingAssistantVM) {
+                              IFramingAssistantVM framingAssistantVM,
+                              IPlateSolverFactory plateSolverFactory,
+                              IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.telescopeMediator = telescopeMediator;
@@ -91,6 +95,8 @@ namespace NINA.Plugin {
             this.resourceDictionary = resourceDictionary;
             this.applicationMediator = applicationMediator;
             this.framingAssistantVM = framingAssistantVM;
+            this.platesolverFactory = plateSolverFactory;
+            this.windowServiceFactory = windowServiceFactory;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
                 new TimeProvider(),
@@ -343,6 +349,8 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(safetyMonitorMediator);
             container.ComposeExportedValue(applicationMediator);
             container.ComposeExportedValue(framingAssistantVM);
+            container.ComposeExportedValue(platesolverFactory);
+            container.ComposeExportedValue(windowServiceFactory);
 
             return container;
         }
@@ -380,6 +388,8 @@ namespace NINA.Plugin {
         private readonly IApplicationResourceDictionary resourceDictionary;
         private readonly IApplicationMediator applicationMediator;
         private readonly IFramingAssistantVM framingAssistantVM;
+        private readonly IPlateSolverFactory platesolverFactory;
+        private readonly IWindowServiceFactory windowServiceFactory;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
             return this.Assemblies.FirstOrDefault(x => x.GetName().Name == args.Name);

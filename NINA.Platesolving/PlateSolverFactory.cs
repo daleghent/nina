@@ -17,8 +17,28 @@ using System;
 using NINA.PlateSolving.Solvers;
 using NINA.Core.Enum;
 using NINA.PlateSolving.Interfaces;
+using NINA.Equipment.Interfaces.Mediator;
 
 namespace NINA.PlateSolving {
+
+    public class PlateSolverFactoryProxy : IPlateSolverFactory {
+
+        public IPlateSolver GetBlindSolver(IPlateSolveSettings plateSolveSettings) {
+            return PlateSolverFactory.GetBlindSolver(plateSolveSettings);
+        }
+
+        public IPlateSolver GetPlateSolver(IPlateSolveSettings plateSolveSettings) {
+            return PlateSolverFactory.GetPlateSolver(plateSolveSettings);
+        }
+
+        public ICaptureSolver GetCaptureSolver(IPlateSolver plateSolver, IPlateSolver blindSolver, IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator) {
+            return new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
+        }
+
+        public ICenteringSolver GetCenteringSolver(IPlateSolver plateSolver, IPlateSolver blindSolver, IImagingMediator imagingMediator, ITelescopeMediator telescopeMediator, IFilterWheelMediator filterWheelMediator) {
+            return new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator);
+        }
+    }
 
     public static class PlateSolverFactory {
 
@@ -62,10 +82,6 @@ namespace NINA.PlateSolving {
             }
 
             return GetPlateSolver(plateSolveSettings, type);
-        }
-
-        internal static IPlateSolver GetBlindSolver(object plateSolveSettings) {
-            throw new NotImplementedException();
         }
     }
 }

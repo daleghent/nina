@@ -36,6 +36,7 @@ using NINA.Core.Locale;
 using NINA.Equipment.Model;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Utility.Notification;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINA.Sequencer.SequenceItem.Platesolving {
 
@@ -49,11 +50,31 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         private IRotatorMediator rotatorMediator;
 
         [ImportingConstructor]
-        public CenterAndRotate(IProfileService profileService, ITelescopeMediator telescopeMediator, IImagingMediator imagingMediator, IRotatorMediator rotatorMediator, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator) : base(profileService, telescopeMediator, imagingMediator, filterWheelMediator, guiderMediator) {
+        public CenterAndRotate(IProfileService profileService,
+                               ITelescopeMediator telescopeMediator,
+                               IImagingMediator imagingMediator,
+                               IRotatorMediator rotatorMediator,
+                               IFilterWheelMediator filterWheelMediator,
+                               IGuiderMediator guiderMediator,
+                               IPlateSolverFactory plateSolverFactory,
+                               IWindowServiceFactory windowServiceFactory) : base(profileService,
+                                                                        telescopeMediator,
+                                                                        imagingMediator,
+                                                                        filterWheelMediator,
+                                                                        guiderMediator,
+                                                                        plateSolverFactory,
+                                                                        windowServiceFactory) {
             this.rotatorMediator = rotatorMediator;
         }
 
-        private CenterAndRotate(CenterAndRotate cloneMe) : this(cloneMe.profileService, cloneMe.telescopeMediator, cloneMe.imagingMediator, cloneMe.rotatorMediator, cloneMe.filterWheelMediator, cloneMe.guiderMediator) {
+        private CenterAndRotate(CenterAndRotate cloneMe) : this(cloneMe.profileService,
+                                                                cloneMe.telescopeMediator,
+                                                                cloneMe.imagingMediator,
+                                                                cloneMe.rotatorMediator,
+                                                                cloneMe.filterWheelMediator,
+                                                                cloneMe.guiderMediator,
+                                                                cloneMe.plateSolverFactory,
+                                                                cloneMe.windowServiceFactory) {
             CopyMetaData(cloneMe);
         }
 
@@ -76,8 +97,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            var service = WindowServiceFactory.Create();
-            service.Show(plateSolveStatusVM, plateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
+            var service = windowServiceFactory.Create();
+            service.Show(PlateSolveStatusVM, PlateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
             try {
                 var orientation = 0.0f;
                 float rotationDistance = float.MaxValue;
@@ -101,7 +122,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     targetRotation = rotatorMediator.GetTargetPosition(prevTargetRotation);
                     if (Math.Abs(targetRotation - prevTargetRotation) > 0.1) {
                         Logger.Info($"Rotator target position {Rotation} adjusted to {targetRotation} to be within the allowed mechanical range");
-                        Notification.ShowInformation(String.Format(Loc.Instance["LblRotatorRangeAdjusted"], targetRotation));
+                        Notification.ShowInformation(string.Format(Loc.Instance["LblRotatorRangeAdjusted"], targetRotation));
                     }
 
                     rotationDistance = targetRotation - orientation;
@@ -141,10 +162,10 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         private async Task<PlateSolveResult> Solve(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
-            var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var plateSolver = plateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var blindSolver = plateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
 
-            var solver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
+            var solver = plateSolverFactory.GetCaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
             var parameter = new CaptureSolverParameter() {
                 Attempts = profileService.ActiveProfile.PlateSolveSettings.NumberOfAttempts,
                 Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,
@@ -165,7 +186,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 new BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
                 1
             );
-            return await solver.Solve(seq, parameter, plateSolveStatusVM.Progress, progress, token);
+            return await solver.Solve(seq, parameter, PlateSolveStatusVM.Progress, progress, token);
         }
 
         public override void AfterParentChanged() {
@@ -193,7 +214,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         public override string ToString() {
-            return $"Category: {Category}, Item: {nameof(CenterAndRotate)}, Coordinates {Coordinates?.Coordinates}, Rotation: {Rotation}";
+            return $"Category: {Category}, Item: {nameof(CenterAndRotate)}, Coordinates {Coordinates?.Coordinates}, Rotation: {Rotation}°";
         }
     }
 }

@@ -35,6 +35,7 @@ using NINA.Equipment.Model;
 using NINA.Core.Model.Equipment;
 using NINA.Core.Locale;
 using NINA.WPF.Base.ViewModel;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINA.Sequencer.SequenceItem.Platesolving {
 
@@ -50,19 +51,35 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         protected IImagingMediator imagingMediator;
         protected IFilterWheelMediator filterWheelMediator;
         protected IGuiderMediator guiderMediator;
-        protected PlateSolvingStatusVM plateSolveStatusVM = new PlateSolvingStatusVM();
+        protected IPlateSolverFactory plateSolverFactory;
+        protected IWindowServiceFactory windowServiceFactory;
+        public PlateSolvingStatusVM PlateSolveStatusVM { get; } = new PlateSolvingStatusVM();
 
         [ImportingConstructor]
-        public Center(IProfileService profileService, ITelescopeMediator telescopeMediator, IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator, IGuiderMediator guiderMediator) {
+        public Center(IProfileService profileService,
+                      ITelescopeMediator telescopeMediator,
+                      IImagingMediator imagingMediator,
+                      IFilterWheelMediator filterWheelMediator,
+                      IGuiderMediator guiderMediator,
+                      IPlateSolverFactory plateSolverFactory,
+                      IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
             this.imagingMediator = imagingMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.guiderMediator = guiderMediator;
+            this.plateSolverFactory = plateSolverFactory;
+            this.windowServiceFactory = windowServiceFactory;
             Coordinates = new InputCoordinates();
         }
 
-        private Center(Center cloneMe) : this(cloneMe.profileService, cloneMe.telescopeMediator, cloneMe.imagingMediator, cloneMe.filterWheelMediator, cloneMe.guiderMediator) {
+        private Center(Center cloneMe) : this(cloneMe.profileService,
+                                              cloneMe.telescopeMediator,
+                                              cloneMe.imagingMediator,
+                                              cloneMe.filterWheelMediator,
+                                              cloneMe.guiderMediator,
+                                              cloneMe.plateSolverFactory,
+                                              cloneMe.windowServiceFactory) {
             CopyMetaData(cloneMe);
         }
 
@@ -86,7 +103,6 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         [JsonProperty]
         public InputCoordinates Coordinates { get; set; }
 
-        public IWindowServiceFactory WindowServiceFactory { get; set; } = new WindowServiceFactory();
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -100,10 +116,10 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         protected virtual async Task<PlateSolveResult> DoCenter(IProgress<ApplicationStatus> progress, CancellationToken token) {
             await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
 
-            var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
-            var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var plateSolver = plateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var blindSolver = plateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
 
-            var solver = new CenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator);
+            var solver = plateSolverFactory.GetCenteringSolver(plateSolver, blindSolver, imagingMediator, telescopeMediator, filterWheelMediator);
             var parameter = new CenterSolveParameter() {
                 Attempts = profileService.ActiveProfile.PlateSolveSettings.NumberOfAttempts,
                 Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,
@@ -126,12 +142,12 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 new BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
                 1
             );
-            return await solver.Center(seq, parameter, plateSolveStatusVM.Progress, progress, token);
+            return await solver.Center(seq, parameter, PlateSolveStatusVM.Progress, progress, token);
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            var service = WindowServiceFactory.Create();
-            service.Show(plateSolveStatusVM, plateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
+            var service = windowServiceFactory.Create();
+            service.Show(PlateSolveStatusVM, PlateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
             try {
                 var stoppedGuiding = await guiderMediator.StopGuiding(token);
                 var result = await DoCenter(progress, token);

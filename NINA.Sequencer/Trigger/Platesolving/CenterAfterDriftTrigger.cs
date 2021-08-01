@@ -37,6 +37,8 @@ using NINA.Core.Utility.Notification;
 using NINA.Sequencer.Utility;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Core.Enum;
+using NINA.PlateSolving;
+using NINA.Core.Utility.WindowService;
 
 namespace NINA.Sequencer.Trigger.Platesolving {
 
@@ -145,7 +147,7 @@ namespace NINA.Sequencer.Trigger.Platesolving {
         }
 
         public override async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
-            var centerSequenceItem = new Center(profileService, telescopeMediator, imagingMediator, filterWheelMediator, guiderMediator) {
+            var centerSequenceItem = new Center(profileService, telescopeMediator, imagingMediator, filterWheelMediator, guiderMediator, new PlateSolverFactoryProxy(), new WindowServiceFactory()) {
                 Coordinates = Coordinates
             };
             await centerSequenceItem.Execute(progress, token);

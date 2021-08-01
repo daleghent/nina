@@ -51,6 +51,7 @@ using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.SkySurvey;
 using NINA.WPF.Base.ViewModel;
+using NINA.Core.Utility.WindowService;
 
 namespace NINA.ViewModel.FramingAssistant {
 
@@ -228,7 +229,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private async Task<bool> Center(Coordinates coordinates, CancellationToken token) {
-            var center = new Center(profileService, telescopeMediator, imagingMediator, filterWheelMediator, guiderMediator);
+            var center = new Center(profileService, telescopeMediator, imagingMediator, filterWheelMediator, guiderMediator, new PlateSolverFactoryProxy(), new WindowServiceFactory());
 
             center.Coordinates = new InputCoordinates(coordinates);
             var isValid = center.Validate();
@@ -243,7 +244,7 @@ namespace NINA.ViewModel.FramingAssistant {
         }
 
         private async Task<bool> CenterAndRotate(Coordinates coordinates, double rotation, CancellationToken token) {
-            var centerAndRotate = new CenterAndRotate(profileService, telescopeMediator, imagingMediator, rotatorMediator, filterWheelMediator, guiderMediator);
+            var centerAndRotate = new CenterAndRotate(profileService, telescopeMediator, imagingMediator, rotatorMediator, filterWheelMediator, guiderMediator, new PlateSolverFactoryProxy(), new WindowServiceFactory());
 
             centerAndRotate.Coordinates = new InputCoordinates(coordinates);
             centerAndRotate.Rotation = rotation;

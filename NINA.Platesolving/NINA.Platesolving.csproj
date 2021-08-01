@@ -70,6 +70,7 @@
     <Compile Include="Interfaces\ICenteringSolver.cs" />
     <Compile Include="Interfaces\IImageSolver.cs" />
     <Compile Include="Interfaces\IPlateSolver.cs" />
+    <Compile Include="Interfaces\IPlateSolverFactory.cs" />
     <Compile Include="PlateSolveImageProperties.cs" />
     <Compile Include="PlateSolveParameter.cs" />
     <Compile Include="PlateSolveProgress.cs" />

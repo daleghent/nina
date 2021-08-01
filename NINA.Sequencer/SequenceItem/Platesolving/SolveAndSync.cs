@@ -31,6 +31,7 @@ using NINA.Core.Locale;
 using NINA.Equipment.Model;
 using NINA.Core.Model.Equipment;
 using NINA.WPF.Base.ViewModel;
+using NINA.PlateSolving.Interfaces;
 
 namespace NINA.Sequencer.SequenceItem.Platesolving {
 
@@ -45,17 +46,31 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         private ITelescopeMediator telescopeMediator;
         private IImagingMediator imagingMediator;
         private IFilterWheelMediator filterWheelMediator;
-        protected PlateSolvingStatusVM plateSolveStatusVM = new PlateSolvingStatusVM();
+        private IPlateSolverFactory plateSolverFactory;
+        private IWindowServiceFactory windowServiceFactory;
+        public PlateSolvingStatusVM PlateSolveStatusVM { get; } = new PlateSolvingStatusVM();
 
         [ImportingConstructor]
-        public SolveAndSync(IProfileService profileService, ITelescopeMediator telescopeMediator, IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator) {
+        public SolveAndSync(IProfileService profileService,
+                            ITelescopeMediator telescopeMediator,
+                            IImagingMediator imagingMediator,
+                            IFilterWheelMediator filterWheelMediator,
+                            IPlateSolverFactory plateSolverFactory,
+                            IWindowServiceFactory windowServiceFactory) {
             this.profileService = profileService;
             this.telescopeMediator = telescopeMediator;
             this.imagingMediator = imagingMediator;
             this.filterWheelMediator = filterWheelMediator;
+            this.plateSolverFactory = plateSolverFactory;
+            this.windowServiceFactory = windowServiceFactory;
         }
 
-        private SolveAndSync(SolveAndSync cloneMe) : this(cloneMe.profileService, cloneMe.telescopeMediator, cloneMe.imagingMediator, cloneMe.filterWheelMediator) {
+        private SolveAndSync(SolveAndSync cloneMe) : this(cloneMe.profileService,
+                                                          cloneMe.telescopeMediator,
+                                                          cloneMe.imagingMediator,
+                                                          cloneMe.filterWheelMediator,
+                                                          cloneMe.plateSolverFactory,
+                                                          cloneMe.windowServiceFactory) {
             CopyMetaData(cloneMe);
         }
 
@@ -63,7 +78,6 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             return new SolveAndSync(this);
         }
 
-        public IWindowServiceFactory WindowServiceFactory { get; set; } = new WindowServiceFactory();
         private IList<string> issues = new List<string>();
 
         public IList<string> Issues {
@@ -75,8 +89,8 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            var service = WindowServiceFactory.Create();
-            service.Show(plateSolveStatusVM, plateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
+            var service = windowServiceFactory.Create();
+            service.Show(PlateSolveStatusVM, PlateSolveStatusVM.Title, System.Windows.ResizeMode.CanResize, System.Windows.WindowStyle.ToolWindow);
             try {
                 var result = await DoSolve(progress, token);
                 if (result.Success == false) {
@@ -93,10 +107,10 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
         }
 
         protected virtual async Task<PlateSolveResult> DoSolve(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            var plateSolver = PlateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
-            var blindSolver = PlateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var plateSolver = plateSolverFactory.GetPlateSolver(profileService.ActiveProfile.PlateSolveSettings);
+            var blindSolver = plateSolverFactory.GetBlindSolver(profileService.ActiveProfile.PlateSolveSettings);
 
-            var solver = new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
+            var solver = plateSolverFactory.GetCaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
             var parameter = new CaptureSolverParameter() {
                 Attempts = profileService.ActiveProfile.PlateSolveSettings.NumberOfAttempts,
                 Binning = profileService.ActiveProfile.PlateSolveSettings.Binning,
@@ -117,7 +131,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 new BinningMode(profileService.ActiveProfile.PlateSolveSettings.Binning, profileService.ActiveProfile.PlateSolveSettings.Binning),
                 1
             );
-            return await solver.Solve(seq, parameter, plateSolveStatusVM.Progress, progress, token);
+            return await solver.Solve(seq, parameter, PlateSolveStatusVM.Progress, progress, token);
         }
 
         public virtual bool Validate() {
