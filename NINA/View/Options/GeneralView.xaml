@@ -392,388 +392,392 @@
                 Grid.Row="1"
                 DataContext="{Binding ActiveProfile.ColorSchemaSettings}"
                 Header="{ns:Loc LblCurrentUIColorSchema}">
-                <UniformGrid Columns="2">
-                    <StackPanel Orientation="Vertical">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                    <UniformGrid Columns="2">
+                        <StackPanel Orientation="Vertical">
 
-                        <ComboBox
-                            Grid.ColumnSpan="2"
-                            Height="30"
-                            Margin="0,5,0,5"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            DisplayMemberPath="Name"
-                            DockPanel.Dock="Left"
-                            ItemsSource="{Binding ColorSchemas.Items}"
-                            SelectedItem="{Binding ColorSchema}" />
+                            <ComboBox
+                                Grid.ColumnSpan="2"
+                                Height="30"
+                                Margin="0,5,0,5"
+                                HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Stretch"
+                                DisplayMemberPath="Name"
+                                DockPanel.Dock="Left"
+                                ItemsSource="{Binding ColorSchemas.Items}"
+                                SelectedItem="{Binding ColorSchema}" />
 
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblPrimary}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.PrimaryColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblBorder}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.BorderColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblSecondaryBackground}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.SecondaryBackgroundColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblButtonBackground}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.ButtonBackgroundColor}" />
-                        </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblPrimary}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.PrimaryColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblBorder}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.BorderColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblSecondaryBackground}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.SecondaryBackgroundColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblButtonBackground}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.ButtonBackgroundColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblButtonForeground}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.ButtonForegroundColor}" />
-                        </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblButtonForeground}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.ButtonForegroundColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblNotificationWarning}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.NotificationWarningColor}" />
-                        </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblNotificationWarning}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.NotificationWarningColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblNotificationWarningText}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.NotificationWarningTextColor}" />
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblNotificationWarningText}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.NotificationWarningTextColor}" />
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical">
-                        <Button
-                            Width="40"
-                            Height="30"
-                            Margin="5,5,0,0"
-                            HorizontalAlignment="Left"
-                            Command="{Binding Source={StaticResource OptionsProxy}, Path=Data.CopyToCustomSchemaCommand}"
-                            DockPanel.Dock="Right">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource CopySVG}"
-                                Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
-                        </Button>
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblSecondary}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.SecondaryColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblBackground}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.BackgroundColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblTertiaryBackground}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.TertiaryBackgroundColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblButtonHighlight}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.ButtonBackgroundSelectedColor}" />
-                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                            <Button
+                                Width="40"
+                                Height="30"
+                                Margin="5,5,0,0"
+                                HorizontalAlignment="Left"
+                                Command="{Binding Source={StaticResource OptionsProxy}, Path=Data.CopyToCustomSchemaCommand}"
+                                DockPanel.Dock="Right">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource CopySVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    Stretch="Uniform" />
+                            </Button>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblSecondary}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.SecondaryColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                   Text="{ns:Loc LblBackground}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.BackgroundColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                   Text="{ns:Loc LblTertiaryBackground}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.TertiaryBackgroundColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblButtonHighlight}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.ButtonBackgroundSelectedColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblButtonForegroundDisabled}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.ButtonForegroundDisabledColor}" />
-                        </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblButtonForegroundDisabled}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.ButtonForegroundDisabledColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblNotificationError}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.NotificationErrorColor}" />
-                        </StackPanel>
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblNotificationError}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.NotificationErrorColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblNotificationErrorText}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding ColorSchema.NotificationErrorTextColor}" />
+                            <StackPanel IsEnabled="{Binding ColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblNotificationErrorText}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding ColorSchema.NotificationErrorTextColor}" />
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </UniformGrid>
+                    </UniformGrid>
+                </ScrollViewer>
             </GroupBox>
             <GroupBox
                 Grid.Row="1"
                 Grid.Column="1"
                 DataContext="{Binding ActiveProfile.ColorSchemaSettings}"
                 Header="{ns:Loc LblAlternativeUIColorSchema}">
-                <UniformGrid Columns="2">
-                    <StackPanel Orientation="Vertical">
-                        <ComboBox
-                            Grid.ColumnSpan="2"
-                            Height="30"
-                            Margin="0,5,0,5"
-                            DisplayMemberPath="Name"
-                            ItemsSource="{Binding ColorSchemas.Items}"
-                            SelectedItem="{Binding AltColorSchema}" />
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblPrimary}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.PrimaryColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblBorder}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.BorderColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblSecondaryBackground}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.SecondaryBackgroundColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblButtonBackground}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.ButtonBackgroundColor}" />
-                        </StackPanel>
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                    <UniformGrid Columns="2">
+                        <StackPanel Orientation="Vertical">
+                            <ComboBox
+                                Grid.ColumnSpan="2"
+                                Height="30"
+                                Margin="0,5,0,5"
+                                DisplayMemberPath="Name"
+                                ItemsSource="{Binding ColorSchemas.Items}"
+                                SelectedItem="{Binding AltColorSchema}" />
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblPrimary}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.PrimaryColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblBorder}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.BorderColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblSecondaryBackground}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.SecondaryBackgroundColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblButtonBackground}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.ButtonBackgroundColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblButtonForeground}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.ButtonForegroundColor}" />
-                        </StackPanel>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblButtonForeground}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.ButtonForegroundColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblNotificationWarning}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.NotificationWarningColor}" />
-                        </StackPanel>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblNotificationWarning}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.NotificationWarningColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblNotificationWarningText}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.NotificationWarningTextColor}" />
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblNotificationWarningText}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.NotificationWarningTextColor}" />
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical">
-                        <Button
-                            Width="40"
-                            Height="30"
-                            Margin="5,5,0,0"
-                            HorizontalAlignment="Left"
-                            Command="{Binding Source={StaticResource OptionsProxy}, Path=Data.CopyToAlternativeCustomSchemaCommand}">
-                            <Path
-                                Margin="5"
-                                Data="{StaticResource CopySVG}"
-                                Fill="{StaticResource ButtonForegroundBrush}"
-                                Stretch="Uniform" />
-                        </Button>
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblSecondary}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.SecondaryColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblBackground}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.BackgroundColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblTertiaryBackground}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.TertiaryBackgroundColor}" />
-                        </StackPanel>
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblButtonHighlight}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.ButtonBackgroundSelectedColor}" />
-                        </StackPanel>
+                        <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                            <Button
+                                Width="40"
+                                Height="30"
+                                Margin="5,5,0,0"
+                                HorizontalAlignment="Left"
+                                Command="{Binding Source={StaticResource OptionsProxy}, Path=Data.CopyToAlternativeCustomSchemaCommand}">
+                                <Path
+                                    Margin="5"
+                                    Data="{StaticResource CopySVG}"
+                                    Fill="{StaticResource ButtonForegroundBrush}"
+                                    Stretch="Uniform" />
+                            </Button>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblSecondary}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.SecondaryColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblBackground}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.BackgroundColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblTertiaryBackground}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.TertiaryBackgroundColor}" />
+                            </StackPanel>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblButtonHighlight}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.ButtonBackgroundSelectedColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblButtonForegroundDisabled}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.ButtonForegroundDisabledColor}" />
-                        </StackPanel>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblButtonForegroundDisabled}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.ButtonForegroundDisabledColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblNotificationError}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.NotificationErrorColor}" />
-                        </StackPanel>
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblNotificationError}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.NotificationErrorColor}" />
+                            </StackPanel>
 
-                        <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
-                            <TextBlock
-                                Width="170"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblNotificationErrorText}" />
-                            <xceed:ColorPicker
-                                Width="80"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center"
-                                SelectedColor="{Binding AltColorSchema.NotificationErrorTextColor}" />
+                            <StackPanel IsEnabled="{Binding AltColorSchema.IsEditable}" Orientation="Horizontal">
+                                <TextBlock
+                                    Width="170"
+                                    VerticalAlignment="Center"
+                                    Text="{ns:Loc LblNotificationErrorText}" />
+                                <xceed:ColorPicker
+                                    Width="80"
+                                    HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Center"
+                                    SelectedColor="{Binding AltColorSchema.NotificationErrorTextColor}" />
+                            </StackPanel>
                         </StackPanel>
-                    </StackPanel>
-                </UniformGrid>
+                    </UniformGrid>
+                </ScrollViewer>
             </GroupBox>
 
             <GroupBox Grid.Row="2" Header="{ns:Loc LblAstrometry}">
@@ -807,10 +811,10 @@
                                 <TextBlock Text="{ns:Loc LblGPSTooltip}" />
                             </Button.ToolTip>
                             <Path
-                            Margin="5"
-                            Data="{StaticResource GPSSVG}"
-                            Fill="{StaticResource ButtonForegroundBrush}"
-                            Stretch="Uniform" />
+                                Margin="5"
+                                Data="{StaticResource GPSSVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
                         </Button>
                         <Button
                             Width="40"
@@ -822,10 +826,10 @@
                                 <TextBlock Text="{ns:Loc LblPlanetariumLocationTooltip}" />
                             </Button.ToolTip>
                             <Path
-                            Margin="5"
-                            Data="{StaticResource GetCoordsSVG}"
-                            Fill="{StaticResource ButtonForegroundBrush}"
-                            Stretch="Uniform" />
+                                Margin="5"
+                                Data="{StaticResource GetCoordsSVG}"
+                                Fill="{StaticResource ButtonForegroundBrush}"
+                                Stretch="Uniform" />
                         </Button>
                     </StackPanel>
                     <StackPanel Margin="0,5,0,0" Orientation="Horizontal">
