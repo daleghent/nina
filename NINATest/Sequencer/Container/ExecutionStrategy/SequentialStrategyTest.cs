@@ -450,7 +450,7 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
         }
 
         [Test]
-        public async Task Execute_WithOneInstruction_FirstExecutes_NormalTriggerableEvaluatedOnce_RootTriggerableTwice() {
+        public async Task Execute_WithOneInstruction_FirstExecutes_NormalTriggerableEvaluatedOnce_AfterTriggerableEvaluatedOnce() {
             var containerMock = new Mock<SequenceContainer>(new Mock<IExecutionStrategy>().Object);
             var triggerableMock = containerMock.As<ITriggerable>();
             triggerableMock.Setup(x => x.GetTriggersSnapshot()).Returns(new List<ISequenceTrigger>());
@@ -477,9 +477,10 @@ namespace NINATest.Sequencer.Container.ExecutionStrategy {
             await sut.Execute(containerMock.Object, default, default);
 
             triggerableMock.Verify(x => x.RunTriggers(It.Is<ISequenceItem>(item => item == null), It.Is<ISequenceItem>(item => item == item1Mock.Object), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+            triggerableMock.Verify(x => x.RunTriggersAfter(It.Is<ISequenceItem>(item => item == item1Mock.Object), It.Is<ISequenceItem>(item => item == null), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
 
             triggerableRootMock.Verify(x => x.RunTriggers(It.Is<ISequenceItem>(item => item == null), It.Is<ISequenceItem>(item => item == item1Mock.Object), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
-            triggerableRootMock.Verify(x => x.RunTriggers(It.Is<ISequenceItem>(item => item == item1Mock.Object), It.Is<ISequenceItem>(item => item == null), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+            triggerableRootMock.Verify(x => x.RunTriggersAfter(It.Is<ISequenceItem>(item => item == item1Mock.Object), It.Is<ISequenceItem>(item => item == null), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }

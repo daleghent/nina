@@ -15,6 +15,7 @@
 using FluentAssertions;
 using Moq;
 using NINA.Core.Enum;
+using NINA.Core.Model;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer;
 using NINA.Sequencer.Conditions;
@@ -31,6 +32,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.ServiceModel.Configuration;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINATest.Sequencer.Container {
@@ -216,6 +218,118 @@ namespace NINATest.Sequencer.Container {
             var validatableItemMock = itemMock.As<IValidatable>();
             validatableItemMock.Setup(x => x.Validate()).Returns(true);
             var item2Mock = new Mock<ISequenceItem>();
+            var validatableItem2Mock = itemMock.As<IValidatable>();
+            validatableItem2Mock.Setup(x => x.Validate()).Returns(false);
+
+            Sut.Add(itemMock.Object);
+            Sut.Add(item2Mock.Object);
+
+            var valid = Sut.Validate();
+
+            validatableItemMock.Verify(x => x.Validate(), Times.Once);
+            validatableItem2Mock.Verify(x => x.Validate(), Times.Once);
+            valid.Should().BeFalse();
+        }
+
+        [Test]
+        public void AfterParentChanged_ConditionValidation() {
+            var itemMock = new Mock<ISequenceCondition>();
+            var validatableItemMock = itemMock.As<IValidatable>();
+            var item2Mock = new Mock<ISequenceCondition>();
+            var validatableItem2Mock = itemMock.As<IValidatable>();
+
+            Sut.Add(itemMock.Object);
+            Sut.Add(item2Mock.Object);
+
+            Sut.AfterParentChanged();
+
+            itemMock.Verify(x => x.AfterParentChanged(), Times.Once);
+            validatableItemMock.Verify(x => x.Validate(), Times.Once);
+            item2Mock.Verify(x => x.AfterParentChanged(), Times.Once);
+            validatableItem2Mock.Verify(x => x.Validate(), Times.Once);
+        }
+
+        [Test]
+        public void Validate_AllConditionsValid() {
+            var itemMock = new Mock<ISequenceCondition>();
+            var validatableItemMock = itemMock.As<IValidatable>();
+            validatableItemMock.Setup(x => x.Validate()).Returns(true);
+            var item2Mock = new Mock<ISequenceCondition>();
+            var validatableItem2Mock = itemMock.As<IValidatable>();
+            validatableItem2Mock.Setup(x => x.Validate()).Returns(true);
+
+            Sut.Add(itemMock.Object);
+            Sut.Add(item2Mock.Object);
+
+            var valid = Sut.Validate();
+
+            validatableItemMock.Verify(x => x.Validate(), Times.Once);
+            validatableItem2Mock.Verify(x => x.Validate(), Times.Once);
+            valid.Should().BeTrue();
+        }
+
+        [Test]
+        public void Validate_OneConditionInvalid() {
+            var itemMock = new Mock<ISequenceCondition>();
+            var validatableItemMock = itemMock.As<IValidatable>();
+            validatableItemMock.Setup(x => x.Validate()).Returns(true);
+            var item2Mock = new Mock<ISequenceCondition>();
+            var validatableItem2Mock = itemMock.As<IValidatable>();
+            validatableItem2Mock.Setup(x => x.Validate()).Returns(false);
+
+            Sut.Add(itemMock.Object);
+            Sut.Add(item2Mock.Object);
+
+            var valid = Sut.Validate();
+
+            validatableItemMock.Verify(x => x.Validate(), Times.Once);
+            validatableItem2Mock.Verify(x => x.Validate(), Times.Once);
+            valid.Should().BeFalse();
+        }
+
+        [Test]
+        public void AfterParentChanged_TriggerValidation() {
+            var itemMock = new Mock<ISequenceTrigger>();
+            var validatableItemMock = itemMock.As<IValidatable>();
+            var item2Mock = new Mock<ISequenceTrigger>();
+            var validatableItem2Mock = itemMock.As<IValidatable>();
+
+            Sut.Add(itemMock.Object);
+            Sut.Add(item2Mock.Object);
+
+            Sut.AfterParentChanged();
+
+            itemMock.Verify(x => x.AfterParentChanged(), Times.Once);
+            validatableItemMock.Verify(x => x.Validate(), Times.Once);
+            item2Mock.Verify(x => x.AfterParentChanged(), Times.Once);
+            validatableItem2Mock.Verify(x => x.Validate(), Times.Once);
+        }
+
+        [Test]
+        public void Validate_AllTriggersValid() {
+            var itemMock = new Mock<ISequenceTrigger>();
+            var validatableItemMock = itemMock.As<IValidatable>();
+            validatableItemMock.Setup(x => x.Validate()).Returns(true);
+            var item2Mock = new Mock<ISequenceTrigger>();
+            var validatableItem2Mock = itemMock.As<IValidatable>();
+            validatableItem2Mock.Setup(x => x.Validate()).Returns(true);
+
+            Sut.Add(itemMock.Object);
+            Sut.Add(item2Mock.Object);
+
+            var valid = Sut.Validate();
+
+            validatableItemMock.Verify(x => x.Validate(), Times.Once);
+            validatableItem2Mock.Verify(x => x.Validate(), Times.Once);
+            valid.Should().BeTrue();
+        }
+
+        [Test]
+        public void Validate_OneTriggerInvalid() {
+            var itemMock = new Mock<ISequenceTrigger>();
+            var validatableItemMock = itemMock.As<IValidatable>();
+            validatableItemMock.Setup(x => x.Validate()).Returns(true);
+            var item2Mock = new Mock<ISequenceTrigger>();
             var validatableItem2Mock = itemMock.As<IValidatable>();
             validatableItem2Mock.Setup(x => x.Validate()).Returns(false);
 
@@ -813,6 +927,127 @@ namespace NINATest.Sequencer.Container {
             itemMock.Verify(x => x.ResetProgress(), Times.Exactly(2));
             containerMock.Verify(x => x.ResetAll(), Times.Once);
             conditionMock.Verify(x => x.ResetProgress(), Times.Once);
+        }
+
+        [Test]
+        public async Task Triggerable_RunTriggers_Called() {
+            var beforeTrigger = new Mock<ISequenceTrigger>();
+            var afterTrigger = new Mock<ISequenceTrigger>();
+            var mixedTrigger = new Mock<ISequenceTrigger>();
+
+            beforeTrigger.Setup(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+            beforeTrigger.Setup(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(false);
+
+            afterTrigger.Setup(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(false);
+            afterTrigger.Setup(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+
+            mixedTrigger.Setup(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+            mixedTrigger.Setup(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+
+            Sut.Add(beforeTrigger.Object);
+            Sut.Add(afterTrigger.Object);
+            Sut.Add(mixedTrigger.Object);
+
+            await Sut.RunTriggers(default, default, default, default);
+
+            beforeTrigger.Verify(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Once);
+            beforeTrigger.Verify(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Never);
+            beforeTrigger.Verify(x => x.Run(It.IsAny<ISequenceContainer>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            afterTrigger.Verify(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Once);
+            afterTrigger.Verify(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Never);
+            afterTrigger.Verify(x => x.Run(It.IsAny<ISequenceContainer>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Never);
+
+            mixedTrigger.Verify(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Once);
+            mixedTrigger.Verify(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Never);
+            mixedTrigger.Verify(x => x.Run(It.IsAny<ISequenceContainer>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
+        public async Task Triggerable_RunTriggersAfter_Called() {
+            var beforeTrigger = new Mock<ISequenceTrigger>();
+            var afterTrigger = new Mock<ISequenceTrigger>();
+            var mixedTrigger = new Mock<ISequenceTrigger>();
+
+            beforeTrigger.Setup(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+            beforeTrigger.Setup(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(false);
+
+            afterTrigger.Setup(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(false);
+            afterTrigger.Setup(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+
+            mixedTrigger.Setup(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+            mixedTrigger.Setup(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>())).Returns(true);
+
+            Sut.Add(beforeTrigger.Object);
+            Sut.Add(afterTrigger.Object);
+            Sut.Add(mixedTrigger.Object);
+
+            await Sut.RunTriggersAfter(default, default, default, default);
+
+            beforeTrigger.Verify(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Never);
+            beforeTrigger.Verify(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Once);
+            beforeTrigger.Verify(x => x.Run(It.IsAny<ISequenceContainer>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Never);
+
+            afterTrigger.Verify(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Never);
+            afterTrigger.Verify(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Once);
+            afterTrigger.Verify(x => x.Run(It.IsAny<ISequenceContainer>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+
+            mixedTrigger.Verify(x => x.ShouldTrigger(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Never);
+            mixedTrigger.Verify(x => x.ShouldTriggerAfter(It.IsAny<ISequenceItem>(), It.IsAny<ISequenceItem>()), Times.Once);
+            mixedTrigger.Verify(x => x.Run(It.IsAny<ISequenceContainer>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Test]
+        [TestCase(false, true, true, true, true)]
+        [TestCase(false, true, true, false, true)]
+        [TestCase(false, true, false, true, true)]
+        [TestCase(false, false, true, true, true)]
+        [TestCase(false, true, false, false, true)]
+        [TestCase(false, false, true, false, true)]
+        [TestCase(false, false, false, true, true)]
+        [TestCase(false, false, false, false, false)]
+        [TestCase(true, true, true, true, true)]
+        [TestCase(true, true, true, false, true)]
+        [TestCase(true, true, false, true, true)]
+        [TestCase(true, false, true, true, true)]
+        [TestCase(true, true, false, false, true)]
+        [TestCase(true, false, true, false, true)]
+        [TestCase(true, false, false, true, true)]
+        [TestCase(true, false, false, false, true)]
+        public void HasChanged(bool baseChanged, bool itemchanged, bool triggerchanged, bool conditionchanged, bool expected) {
+            var item = new Mock<ISequenceItem>();
+            item.SetupGet(x => x.HasChanged).Returns(itemchanged);
+            var trigger = new Mock<ISequenceTrigger>();
+            trigger.SetupGet(x => x.HasChanged).Returns(triggerchanged);
+            var condition = new Mock<ISequenceCondition>();
+            condition.SetupGet(x => x.HasChanged).Returns(conditionchanged);
+
+            Sut.HasChanged = baseChanged;
+            Sut.Add(item.Object);
+            Sut.Add(trigger.Object);
+            Sut.Add(condition.Object);
+
+            Sut.HasChanged.Should().Be(expected);
+        }
+
+        [Test]
+        public void ClearHasChanged() {
+            var item = new Mock<ISequenceItem>();
+            var trigger = new Mock<ISequenceTrigger>();
+            var condition = new Mock<ISequenceCondition>();
+
+            Sut.Add(item.Object);
+            Sut.Add(trigger.Object);
+            Sut.Add(condition.Object);
+            Sut.HasChanged = true;
+
+            //Act
+            Sut.ClearHasChanged();
+
+            Sut.HasChanged.Should().BeFalse();
+            item.Verify(x => x.ClearHasChanged(), Times.Once);
+            trigger.Verify(x => x.ClearHasChanged(), Times.Once);
+            condition.Verify(x => x.ClearHasChanged(), Times.Once);
         }
     }
 }

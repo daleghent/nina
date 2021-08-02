@@ -131,6 +131,10 @@ namespace NINA.Sequencer.Trigger {
 
         public abstract bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem);
 
+        public virtual bool ShouldTriggerAfter(ISequenceItem previousItem, ISequenceItem nextItem) {
+            return false;
+        }
+
         public abstract Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token);
 
         public abstract object Clone();

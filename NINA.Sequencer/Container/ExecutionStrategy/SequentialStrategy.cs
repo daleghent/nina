@@ -54,7 +54,7 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
                         previous = next;
 
                         next = GetNextItem(context, previous);
-                        await RunTriggers(root, previous, next, progress, token);
+                        await RunTriggersAfter(context, previous, next, progress, token);
                     }
 
                     FinishBlock(context);
@@ -136,6 +136,17 @@ namespace NINA.Sequencer.Container.ExecutionStrategy {
 
             if (container?.Parent != null) {
                 await RunTriggers(container.Parent, previousItem, nextItem, progress, token);
+            }
+        }
+
+        private async Task RunTriggersAfter(ISequenceContainer container, ISequenceItem previousItem, ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token) {
+            var triggerable = container as ITriggerable;
+            if (triggerable != null) {
+                await triggerable.RunTriggersAfter(previousItem, nextItem, progress, token);
+            }
+
+            if (container?.Parent != null) {
+                await RunTriggersAfter(container.Parent, previousItem, nextItem, progress, token);
             }
         }
 

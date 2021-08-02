@@ -488,6 +488,19 @@ namespace NINA.Sequencer.Container {
             }
         }
 
+        public async Task RunTriggersAfter(ISequenceItem previousItem, ISequenceItem nextItem, IProgress<ApplicationStatus> progress, CancellationToken token) {
+            IList<ISequenceTrigger> localTriggers;
+            lock (lockObj) {
+                localTriggers = Triggers.ToArray();
+            }
+            foreach (var trigger in localTriggers) {
+                if (trigger.ShouldTriggerAfter(previousItem, nextItem)) {
+                    var context = nextItem?.Parent ?? previousItem?.Parent ?? this;
+                    await trigger.Run(context, progress, token);
+                }
+            }
+        }
+
         public virtual bool Validate() {
             lock (lockObj) {
                 var valid = true;
