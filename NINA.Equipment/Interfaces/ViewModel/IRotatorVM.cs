@@ -13,6 +13,7 @@
 #endregion "copyright"
 
 using NINA.Equipment.Equipment.MyRotator;
+using System;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Interfaces.ViewModel {
@@ -23,9 +24,13 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
         Task<float> MoveMechanical(float position);
 
+        Task<float> MoveMechanical(float position, TimeSpan waitTime);
+
         Task<float> Move(float position);
 
         Task<float> MoveRelative(float position);
+
+        Task<float> MoveRelative(float position, TimeSpan waitTime);
 
         float GetTargetPosition(float position);
 

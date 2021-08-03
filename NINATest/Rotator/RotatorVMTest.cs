@@ -53,7 +53,7 @@ namespace NINATest.Rotator {
             mockProfileService = new Mock<IProfileService>();
             mockResourceDictionary = new Mock<IApplicationResourceDictionary>();
             mockProfileService.SetupProperty(p => p.ActiveProfile.RotatorSettings.Id);
-            mockProfileService.SetupGet(p => p.ActiveProfile.ApplicationSettings.DevicePollingInterval).Returns(1);
+            mockProfileService.SetupGet(p => p.ActiveProfile.ApplicationSettings.DevicePollingInterval).Returns(0);
             mockProfileService.SetupGet(p => p.ActiveProfile.RotatorSettings.RangeType).Returns(() => rangeType);
             mockProfileService.SetupGet(p => p.ActiveProfile.RotatorSettings.RangeStartMechanicalPosition).Returns(() => rangeStartMechanicalPosition);
         }
@@ -81,6 +81,7 @@ namespace NINATest.Rotator {
             mockRotator.Setup(x => x.Connect(It.IsAny<CancellationToken>())).Callback<CancellationToken>(ct => {
                 rotatorConnected = true;
             }).ReturnsAsync(true);
+
             mockRotatorDeviceChooserVM.SetupGet(x => x.SelectedDevice).Returns(mockRotator.Object);
 
             var connectionResult = await rotatorVM.Connect();
@@ -114,7 +115,7 @@ namespace NINATest.Rotator {
             mechanicalPosition = 10.0f;
             offset = 5.0f;
 
-            var result = await sut.MoveMechanical(requestedPosition);
+            var result = await sut.MoveMechanical(requestedPosition, TimeSpan.Zero);
             Assert.AreEqual(expectedPosition, result);
             mockRotator.Verify(x => x.MoveAbsoluteMechanical(expectedPosition), Times.Once);
         }
@@ -131,7 +132,7 @@ namespace NINATest.Rotator {
             mechanicalPosition = 10.0f;
             offset = 5.0f;
 
-            var result = await sut.MoveRelative(requestedAmount);
+            var result = await sut.MoveRelative(requestedAmount, TimeSpan.Zero);
             Assert.AreEqual(expectedPosition, result);
             mockRotator.Verify(x => x.MoveAbsoluteMechanical(expectedPosition), Times.Once);
         }

@@ -36,7 +36,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
     public class RotatorVM : DockableVM, IRotatorVM {
 
         public RotatorVM(
-            IProfileService profileService, 
+            IProfileService profileService,
             IRotatorMediator rotatorMediator,
             IDeviceChooserVM rotatorChooserVM,
             IApplicationResourceDictionary resourceDictionary,
@@ -137,6 +137,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
         }
 
         public async Task<float> MoveMechanical(float requestedPosition) {
+            return await MoveMechanical(requestedPosition, TimeSpan.FromSeconds(1));
+        }
+
+        public async Task<float> MoveMechanical(float requestedPosition, TimeSpan waitTime) {
             _moveCts?.Dispose();
             _moveCts = new CancellationTokenSource();
             float pos = float.NaN;
@@ -161,7 +165,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
                     rotator.MoveAbsoluteMechanical(adjustedTargetPosition);
                     while (RotatorInfo.IsMoving || ((Math.Abs(RotatorInfo.MechanicalPosition - adjustedTargetPosition) > 1) && (Math.Abs(RotatorInfo.MechanicalPosition - adjustedTargetPosition) < 359))) {
                         _moveCts.Token.ThrowIfCancellationRequested();
-                        await Task.Delay(TimeSpan.FromSeconds(1));
+                        await Task.Delay(waitTime);
                         Logger.Trace($"Waiting for rotator to reach destination. IsMoving: {RotatorInfo.IsMoving} - Current Position {RotatorInfo.MechanicalPosition} - Target Position {adjustedTargetPosition}");
                     }
                     RotatorInfo.Position = adjustedTargetPosition;
@@ -181,8 +185,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
         }
 
         public async Task<float> MoveRelative(float offset) {
+            return await MoveRelative(offset, TimeSpan.FromSeconds(1));
+        }
+
+        public async Task<float> MoveRelative(float offset, TimeSpan waitTime) {
             if (rotator?.Connected == true) {
-                return await MoveMechanical(rotator.MechanicalPosition + offset);
+                return await MoveMechanical(rotator.MechanicalPosition + offset, waitTime);
             }
             return -1;
         }
