@@ -95,7 +95,13 @@ namespace NINA.Sequencer.SequenceItem.Autofocus {
                 }
 
                 var report = await autoFocus.StartAutoFocus(filter, token, progress);
-                history.AppendAutoFocusPoint(report);
+
+                token.ThrowIfCancellationRequested();
+                if (report == null) {
+                    throw new SequenceEntityFailedException();
+                } else {
+                    history.AppendAutoFocusPoint(report);
+                }
             } finally {
                 service.DelayedClose(TimeSpan.FromSeconds(10));
             }

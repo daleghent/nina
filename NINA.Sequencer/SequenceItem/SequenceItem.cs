@@ -234,7 +234,7 @@ namespace NINA.Sequencer.SequenceItem {
                     } catch (SequenceEntityFailedValidationException ex) {
                         Logger.Error($"Failed validation: {this} - " + ex.Message);
                         Status = SequenceEntityStatus.FAILED;
-                    } catch (SequenceItemSkippedException ex) {
+                    } catch (SequenceItemSkippedException) {
                         Logger.Warning($"Skipped {this}");
                         Status = SequenceEntityStatus.SKIPPED;
                     } catch (OperationCanceledException) {
