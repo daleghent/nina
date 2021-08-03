@@ -212,6 +212,37 @@ namespace NINATest.Sequencer.SequenceItem.Autofocus {
         }
 
         [Test]
+        public async Task Execute_UnSuccessfully_WithAllParametersPassedCorrectly() {
+            var windowMock = new Mock<IWindowService>();
+            var windowFactoryMock = new Mock<IWindowServiceFactory>();
+            windowFactoryMock.Setup(x => x.Create()).Returns(windowMock.Object);
+
+            var autofocusMock = new Mock<IAutoFocusVM>();
+            autofocusMock.Setup(af => af.StartAutoFocus(It.IsAny<FilterInfo>(), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>())).Returns(Task.FromResult<AutoFocusReport>(null));
+            var autofocusVMFactoryMock = new Mock<IAutoFocusVMFactory>();
+            autofocusVMFactoryMock.Setup(x => x.Create()).Returns(autofocusMock.Object);
+
+            var filter = new FilterInfo() { Position = 0 };
+            filterWheelMediatorMock.Setup(x => x.GetInfo()).Returns(new FilterWheelInfo() { SelectedFilter = filter });
+            var profileFilter = new FilterInfo() { Position = 0 };
+            profileServiceMock.Setup(x => x.ActiveProfile.FilterWheelSettings.FilterWheelFilters).Returns(new ObserveAllCollection<FilterInfo>() { profileFilter });
+
+            sut.AutoFocusVMFactory = autofocusVMFactoryMock.Object;
+            sut.WindowServiceFactory = windowFactoryMock.Object;
+
+            Func<Task> act = () => sut.Execute(default, default);
+
+            await act.Should().ThrowAsync<SequenceEntityFailedException>();
+
+            windowFactoryMock.Verify(x => x.Create(), Times.Once);
+            windowMock.Verify(x => x.Show(It.Is<IAutoFocusVM>(o => o == autofocusMock.Object), It.Is<string>(t => t == NINA.Core.Locale.Loc.Instance["LblAutoFocus"]), It.IsAny<ResizeMode>(), It.IsAny<WindowStyle>()), Times.Once);
+            windowMock.Verify(x => x.DelayedClose(It.Is<TimeSpan>(t => t.TotalSeconds == 10)), Times.Once);
+
+            autofocusMock.Verify(x => x.StartAutoFocus(It.Is<FilterInfo>(f => f == profileFilter), It.IsAny<CancellationToken>(), It.IsAny<IProgress<ApplicationStatus>>()), Times.Once);
+            historyMock.Verify(h => h.AppendAutoFocusPoint(It.IsAny<AutoFocusReport>()), Times.Never);
+        }
+
+        [Test]
         public void AfterParentChanged_ValidateIsCalled() {
             cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = false });
             focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new FocuserInfo() { Connected = false });
