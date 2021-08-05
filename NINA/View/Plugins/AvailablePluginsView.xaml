@@ -232,7 +232,7 @@
             </Border>
             <Grid
                 Grid.Column="1"
-                Opacity="0.6"
+                Opacity="0.4"
                 Visibility="{Binding AvailablePlugins, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -241,8 +241,8 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1" Orientation="Vertical">
                     <Path
-                        MaxWidth="80"
-                        MaxHeight="80"
+                        MaxWidth="100"
+                        MaxHeight="100"
                         Margin="5"
                         Data="{StaticResource PuzzlePieceSVG}"
                         Fill="{StaticResource PrimaryBrush}"

@@ -491,7 +491,7 @@
                 <StackPanel
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Opacity="0.6"
+                    Opacity="0.4"
                     Orientation="Vertical"
                     Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}">
                     <Path
@@ -523,7 +523,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontStyle="Italic"
-                Opacity="0.6"
+                Opacity="0.4"
                 Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_StartArea}"
                 Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}" />
             <i:Interaction.Behaviors>
@@ -539,7 +539,7 @@
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 FontStyle="Italic"
-                Opacity="0.6"
+                Opacity="0.4"
                 Text="{ns:Loc Lbl_SequenceContainer_SequenceRootContainer_EndArea}"
                 Visibility="{Binding Items.Count, Converter={StaticResource InverseZeroToVisibilityConverter}}" />
             <i:Interaction.Behaviors>

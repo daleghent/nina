@@ -52,7 +52,7 @@
             </TabItem.Header>
             <TabItem.Content>
                 <Grid>
-                    <Grid Opacity="0.6" Visibility="{Binding InstalledPlugins, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
+                    <Grid Opacity="0.4" Visibility="{Binding InstalledPlugins, Converter={StaticResource InverseCollectionContainsItemsToVisibilityConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition Height="Auto" />
@@ -60,8 +60,8 @@
                         </Grid.RowDefinitions>
                         <StackPanel Grid.Row="1" Orientation="Vertical">
                             <Path
-                                MaxWidth="80"
-                                MaxHeight="80"
+                                MaxWidth="100"
+                                MaxHeight="100"
                                 Margin="5"
                                 Data="{StaticResource PuzzlePieceSVG}"
                                 Fill="{StaticResource PrimaryBrush}"

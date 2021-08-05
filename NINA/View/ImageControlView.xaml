@@ -296,7 +296,7 @@
                             BorderBrush="{StaticResource BorderBrush}"
                             BorderThickness="1">
                             <Border.Background>
-                                <SolidColorBrush Opacity=".5" Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
+                                <SolidColorBrush Opacity="0.4" Color="{Binding Path=Color, Source={StaticResource SecondaryBrush}}" />
                             </Border.Background>
                             <Grid>
                                 <Grid.RowDefinitions>

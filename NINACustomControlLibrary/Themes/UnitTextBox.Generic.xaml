@@ -52,7 +52,7 @@
                             Text="{Binding Unit, RelativeSource={RelativeSource AncestorType={x:Type local:UnitTextBox}}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             TextAlignment="Left">
                             <TextBox.Foreground>
-                                <SolidColorBrush Opacity="0.3" Color="{Binding Foreground.Color, RelativeSource={RelativeSource AncestorType={x:Type local:UnitTextBox}}}" />
+                                <SolidColorBrush Opacity="0.4" Color="{Binding Foreground.Color, RelativeSource={RelativeSource AncestorType={x:Type local:UnitTextBox}}}" />
                             </TextBox.Foreground>
                             <TextBox.BorderBrush>
                                 <SolidColorBrush Color="{Binding BorderBrush.Color, ElementName=PART_TextBox}" />

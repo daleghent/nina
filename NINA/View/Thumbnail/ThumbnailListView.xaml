@@ -27,7 +27,7 @@
             VerticalAlignment="Center"
             Data="{StaticResource HistorySVG}"
             Fill="{StaticResource ButtonForegroundDisabledBrush}"
-            Opacity="0.2"
+            Opacity="0.4"
             Stretch="Uniform" />
         <ScrollViewer
             x:Name="ScrollViewer"

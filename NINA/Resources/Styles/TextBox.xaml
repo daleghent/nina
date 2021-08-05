@@ -54,7 +54,6 @@
                                 x:Name="PART_ContentHost"
                                 Background="{TemplateBinding Background}"
                                 Focusable="False"
-                                Opacity="1"
                                 ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                 ScrollViewer.VerticalScrollBarVisibility="Hidden" />
                         </Border>

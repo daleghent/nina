@@ -215,7 +215,7 @@
                             x:Name="DisabledOverlay"
                             Background="{StaticResource BackgroundBrush}"
                             CornerRadius="10"
-                            Opacity="0.5"
+                            Opacity="0.4"
                             Visibility="Collapsed" />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">

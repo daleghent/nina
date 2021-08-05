@@ -186,7 +186,7 @@
                     VerticalAlignment="Center"
                     Data="{StaticResource PictureSVG}"
                     Fill="{StaticResource ButtonForegroundDisabledBrush}"
-                    Opacity="0.2"
+                    Opacity="0.4"
                     Stretch="Uniform" />
                 <Viewbox Stretch="Uniform">
                     <Canvas

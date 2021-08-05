@@ -131,7 +131,7 @@
                             behavior:DragCommandBehavior.OverrideCursor="True"
                             behavior:DragCommandBehavior.ResizeBoundary="20"
                             Fill="{StaticResource SecondaryBrush}"
-                            Opacity="0.5" />
+                            Opacity="0.4" />
                     </Canvas>
                 </Viewbox>
             </Border>
