@@ -27,11 +27,12 @@
         </DataTemplate>
         <DataTemplate x:Key="Navigation">
             <Path
-                MaxWidth="80"
-                MaxHeight="80"
+                MaxWidth="100"
+                MaxHeight="100"
                 Margin="5"
                 Data="{StaticResource SatelliteDishSVG}"
-                Fill="{StaticResource PrimaryBrush}"
+                Fill="{StaticResource ButtonForegroundDisabledBrush}"
+                Opacity="0.2"
                 Stretch="Uniform" />
         </DataTemplate>
         <seq:SequencerVMTemplateSelector
