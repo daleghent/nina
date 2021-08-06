@@ -170,15 +170,6 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start of First Target Options.
-        /// </summary>
-        internal static string Lbl_OldSequencer_StartOfSequenceHeader {
-            get {
-                return ResourceManager.GetString("Lbl_OldSequencer_StartOfSequenceHeader", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Advanced Sequencer.
         /// </summary>
         internal static string Lbl_OldSequencer_SwitchToAdvanced {
@@ -5419,15 +5410,6 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cool camera when sequence starts.
-        /// </summary>
-        internal static string LblCoolCamAtSequenceStart {
-            get {
-                return ResourceManager.GetString("LblCoolCamAtSequenceStart", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Turns the cooler on and cools the camera to the given target temperature.
         ///A duration is optional. Most camera drivers already regulate the cooler power automatically and will only gradually decrease the temperature.
         ///In case a longer duration is needed, a duration can be specified and the application will slowly lower the target temperature of the camera based on the given duration..
@@ -5435,6 +5417,15 @@ namespace NINA.Core.Locale {
         internal static string LblCoolCamBtnTooltip {
             get {
                 return ResourceManager.GetString("LblCoolCamBtnTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cool Camera.
+        /// </summary>
+        internal static string LblCoolCamera {
+            get {
+                return ResourceManager.GetString("LblCoolCamera", resourceCulture);
             }
         }
         
@@ -11198,11 +11189,11 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Park mount when sequence ends.
+        ///   Looks up a localized string similar to Park Mount.
         /// </summary>
-        internal static string LblParkMountAtSequenceEnd {
+        internal static string LblParkMount {
             get {
-                return ResourceManager.GetString("LblParkMountAtSequenceEnd", resourceCulture);
+                return ResourceManager.GetString("LblParkMount", resourceCulture);
             }
         }
         
@@ -14549,6 +14540,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Target Options.
+        /// </summary>
+        internal static string LblTargetOptions {
+            get {
+                return ResourceManager.GetString("LblTargetOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Target Position.
         /// </summary>
         internal static string LblTargetPosition {
@@ -14572,6 +14572,24 @@ namespace NINA.Core.Locale {
         internal static string LblTargets {
             get {
                 return ResourceManager.GetString("LblTargets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Set End Options.
+        /// </summary>
+        internal static string LblTargetSetEndOptions {
+            get {
+                return ResourceManager.GetString("LblTargetSetEndOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target Set Start Options.
+        /// </summary>
+        internal static string LblTargetSetStartOptions {
+            get {
+                return ResourceManager.GetString("LblTargetSetStartOptions", resourceCulture);
             }
         }
         
@@ -15604,6 +15622,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to set mount latitude to {0} and longitude to {1}!.
+        /// </summary>
+        internal static string LblUnableToSetMountLatLong {
+            get {
+                return ResourceManager.GetString("LblUnableToSetMountLatLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to start camera exposure.
         /// </summary>
         internal static string LblUnableToStartExposure {
@@ -15725,11 +15752,11 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unpark mount when sequence starts.
+        ///   Looks up a localized string similar to Unpark Mount.
         /// </summary>
-        internal static string LblUnparkMountAtSequenceStart {
+        internal static string LblUnparkMount {
             get {
-                return ResourceManager.GetString("LblUnparkMountAtSequenceStart", resourceCulture);
+                return ResourceManager.GetString("LblUnparkMount", resourceCulture);
             }
         }
         
@@ -16301,15 +16328,6 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warm camera when sequence ends.
-        /// </summary>
-        internal static string LblWarmCamAtSequenceEnd {
-            get {
-                return ResourceManager.GetString("LblWarmCamAtSequenceEnd", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Warms the camera back to ambient temperature and turns the cooler off.
         ///A duration is optional. Most camera drivers already regulate the cooler power automatically and will only gradually increase the temperature.
         ///In case a longer duration is needed, a duration can be specified and the application will slowly raise the target temperature of the camera based on the given duration..
@@ -16317,6 +16335,15 @@ namespace NINA.Core.Locale {
         internal static string LblWarmCamBtnTooltip {
             get {
                 return ResourceManager.GetString("LblWarmCamBtnTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warm Camera.
+        /// </summary>
+        internal static string LblWarmCamera {
+            get {
+                return ResourceManager.GetString("LblWarmCamera", resourceCulture);
             }
         }
         

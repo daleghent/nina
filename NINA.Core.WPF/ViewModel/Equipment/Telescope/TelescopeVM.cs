@@ -398,7 +398,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             if (Math.Abs(Telescope.SiteLatitude - profileService.ActiveProfile.AstrometrySettings.Latitude) > LAT_LONG_TOLERANCE
                                 || Math.Abs(Telescope.SiteLongitude - profileService.ActiveProfile.AstrometrySettings.Longitude) > LAT_LONG_TOLERANCE) {
                                 var syncVM = new TelescopeLatLongSyncVM(
-                                    Telescope.CanSetSiteLatLong,
                                     profileService.ActiveProfile.AstrometrySettings.Latitude,
                                     profileService.ActiveProfile.AstrometrySettings.Longitude,
                                     Telescope.SiteLatitude,
@@ -412,8 +411,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                                     profileService.ChangeLongitude(Telescope.SiteLongitude);
                                 } else if (syncVM.Mode == LatLongSyncMode.TELESCOPE) {
                                     Logger.Info($"Importing coordinates from N.I.N.A. into mount - N.I.N.A. latitude {profileService.ActiveProfile.AstrometrySettings.Latitude} , longitude {profileService.ActiveProfile.AstrometrySettings.Longitude} -> mount latitude {Telescope.SiteLatitude} , longitude {Telescope.SiteLongitude}");
-                                    Telescope.SiteLatitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
-                                    Telescope.SiteLongitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
+                                    var targetLatitude = profileService.ActiveProfile.AstrometrySettings.Latitude;
+                                    var targetLongitude = profileService.ActiveProfile.AstrometrySettings.Longitude;
+                                    Telescope.SiteLatitude = targetLatitude;
+                                    Telescope.SiteLongitude = targetLongitude;
+
+                                    if (Math.Abs(Telescope.SiteLatitude - targetLatitude) > LAT_LONG_TOLERANCE || Math.Abs(Telescope.SiteLongitude - targetLongitude) > LAT_LONG_TOLERANCE) {
+                                        Notification.ShowError(string.Format(Loc.Instance["LblUnableToSetMountLatLong"], Math.Round(targetLatitude, 3), Math.Round(targetLongitude, 3)));
+                                    }
                                 }
                             }
 

@@ -63,7 +63,6 @@ namespace NINA.Equipment.Interfaces {
         double SiteLatitude { get; set; }
         double SiteLongitude { get; set; }
         double SiteElevation { get; }
-        bool CanSetSiteLatLong { get; }
         bool AtHome { get; }
         bool CanFindHome { get; }
         bool AtPark { get; }

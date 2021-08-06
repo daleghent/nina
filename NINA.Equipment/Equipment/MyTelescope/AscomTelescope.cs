@@ -55,15 +55,6 @@ namespace NINA.Equipment.Equipment.MyTelescope {
             }
         }
 
-        public bool CanSetSiteLatLong {
-            get {
-                if (propertySETMemory.TryGetValue(nameof(Telescope.SiteLatitude), out var memory)) {
-                    return memory.IsImplemented;
-                }
-                return false;
-            }
-        }
-
         public double Altitude {
             get {
                 return GetProperty(nameof(Telescope.Altitude), double.NaN);
@@ -1056,8 +1047,6 @@ namespace NINA.Equipment.Equipment.MyTelescope {
         protected override Task PostConnect() {
             Initialize();
             EquatorialSystem = DetermineEquatorialSystem();
-            SiteLongitude = SiteLongitude;
-            SiteLatitude = SiteLatitude;
             trackingModes = GetTrackingModes();
             return Task.CompletedTask;
         }
