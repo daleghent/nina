@@ -14,6 +14,7 @@
 
 using NINA.Core.Locale;
 using NINA.Core.Utility;
+using NINA.Equipment.SDK.CameraSDKs.SVBonySDK;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -86,6 +87,12 @@ namespace NINA.ViewModel {
             } catch (Exception) {
                 ToupTekSDKVersion = Loc.Instance["LblNotInstalled"];
             }
+
+            try {
+                SVBonySDKVersion = SVBonyPInvoke.GetSDKVersion();
+            } catch (Exception) {
+                SVBonySDKVersion = Loc.Instance["LblNotInstalled"];
+            }
         }
 
         public string AltairSDKVersion { get; }
@@ -98,5 +105,6 @@ namespace NINA.ViewModel {
         public string QHYSDKVersion { get; }
         public string RisingCamSDKVersion { get; }
         public string ToupTekSDKVersion { get; }
+        public string SVBonySDKVersion { get; }
     }
 }

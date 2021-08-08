@@ -408,13 +408,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public double PixelSizeX {
             get {
-                return -1;
+                return double.NaN;
             }
         }
 
         public double PixelSizeY {
             get {
-                return -1;
+                return double.NaN;
             }
         }
 

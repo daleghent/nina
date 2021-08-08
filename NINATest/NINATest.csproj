@@ -258,6 +258,9 @@
     <Compile Include="Database\DatabaseInteractionTest.cs" />
     <Compile Include="Dome\DomeFollowerTest.cs" />
     <Compile Include="Dome\DomeVMTest.cs" />
+    <Compile Include="Equipment\Camera\SVBonyCameraTest.cs" />
+    <Compile Include="Equipment\SDK\CameraSDKs\SVBony\SVBonyProviderTest.cs" />
+    <Compile Include="Equipment\SDK\CameraSDKs\SVBony\SVBonySDKTest.cs" />
     <Compile Include="FITSTest.cs" />
     <Compile Include="FlatDevice\AlnitakCommandTest.cs" />
     <Compile Include="FlatDevice\AlnitakResponseTest.cs" />

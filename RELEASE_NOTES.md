@@ -84,6 +84,9 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Displays star drift during guiding in a graph
 - Dithering during sequencing
 
+### SVBony
+- Added a native driver for SVBony cameras. Currently without temperature control and tested with SVBony 305M Pro.
+
 ### ASCOM Dome
 - ASCOM Domes are supported throughout the application
   - Natively provides azimuth synchronization with the telescope, so no additional applications are needed (such as ASCOM Device Hub)
@@ -210,17 +213,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 - Added `$$STARCOUNT$$` file pattern
 - Added `$$TEMPERATURESETPOINT$$` file pattern
 
-## Included Camera SDK Versions:
-- **Altair Astro:** 49.19154.20210630
-- **Atik:** 2020.10.19.677
-- **Canon:** 13.13.0.6408
-- **FLI:** 1.104.0.0
-- **Nikon:** 1.3.2.3000
-- **Omegon:** 48.17739.2020.924
-- **QHY:** 21.7.16.13
-- **ToupTek:** 48.18081.2020.1205
-- **ZWO:** 1.18.0
-- **Risingcam** 48.18332.20210120
+#### Included Camera SDK Versions can now be found inside the about page of N.I.N.A.
 
 # Version 1.10 HF3
 

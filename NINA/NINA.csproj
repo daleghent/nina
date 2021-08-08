@@ -1304,6 +1304,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>vcruntime140_1.dll</TargetPath>
     </ContentWithTargetPath>
+    <Content Include="External\x64\SVBony\SVBCameraSDK.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="External\x86\Risingcam\nncam.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1326,6 +1329,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <TargetPath>vcruntime140.dll</TargetPath>
     </ContentWithTargetPath>
+    <Content Include="External\x86\SVBony\SVBCameraSDK.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Utility\DCRaw\dcraw.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -7177,7 +7177,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair and ToupTek cameras).
+        ///   Looks up a localized string similar to Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver).
         /// </summary>
         internal static string LblEnableBitScalingTooltip {
             get {
@@ -15595,7 +15595,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unable to connect camera.
+        ///   Looks up a localized string similar to Unable to connect camera {0}.
         /// </summary>
         internal static string LblUnableToConnectCamera {
             get {

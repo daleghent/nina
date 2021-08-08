@@ -289,6 +289,17 @@ namespace NINA.ViewModel.Imaging {
                         width += (int)delta.X;
                         height += (int)delta.Y;
                     }
+                    /* Validate and adjust total boundaries */
+                    if (x < 0) { x = 0; }
+                    if (y < 0) { y = 0; }
+                    if (width < 1) { width = 1; }
+                    if (height < 1) { height = 1; }
+                    if (x >= CameraInfo.XSize) { x = CameraInfo.XSize - 1; }
+                    if (y >= CameraInfo.YSize) { y = CameraInfo.YSize - 1; }
+
+                    if (x + width > CameraInfo.XSize) { width = CameraInfo.XSize - x; }
+                    if (y + height > CameraInfo.YSize) { height = CameraInfo.YSize - y; }
+
                     SubSampleRectangle = new ObservableRectangle(x, y, width, height);
                 }
             }

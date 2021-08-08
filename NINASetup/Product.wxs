@@ -100,6 +100,7 @@
       <ComponentGroupRef Id="External_x64_Risingcam_files" />
       <ComponentGroupRef Id="External_x64_MGEN_files" />
       <ComponentGroupRef Id="External_x64_VCRedis_files" />
+      <ComponentGroupRef Id="External_x64_SVBony_files" />
       <?else?>
       <ComponentGroupRef Id="External_x86_FTDI_files" />
       <ComponentGroupRef Id="External_x86_AllPro_files" />
@@ -147,6 +148,7 @@
       <ComponentGroupRef Id="External_x86_MGEN_files" />
       <ComponentGroupRef Id="External_x86_Risingcam_files" />
       <ComponentGroupRef Id="External_x86_VCRedis_files" />
+      <ComponentGroupRef Id="External_x86_SVBony_files" />
       <?endif?>
       <ComponentGroupRef Id="Utility_ColorSchema_files" />
       <ComponentGroupRef Id="Utility_DCRaw_files" />
@@ -251,6 +253,7 @@
               <Directory Id="External_x64_MGEN" Name="MGEN" />
               <Directory Id="External_x64_Risingcam" Name="Risingcam" />
               <Directory Id="External_x64_VCRedis" Name="VCRedis" />
+              <Directory Id="External_x64_SVBony" Name="SVBony" />
             </Directory>
             <Directory Id="External_x86" Name="x86">
               <Directory Id="External_x86_Nikon" Name="Nikon">
@@ -301,6 +304,7 @@
               <Directory Id="External_x86_MGEN" Name="MGEN" />
               <Directory Id="External_x86_Risingcam" Name="Risingcam" />
               <Directory Id="External_x86_VCRedis" Name="VCRedis" />
+              <Directory Id="External_x86_SVBony" Name="SVBony" />
             </Directory>
           </Directory>
           <Directory Id="Utility" Name="Utility">
@@ -1491,6 +1495,14 @@
     </ComponentGroup>
   </Fragment>
 
+  <Fragment>
+    <ComponentGroup Id="External_x64_SVBony_files" Directory="External_x64_SVBony">
+      <Component Win64="$(var.Win64)" Id="External_x64_SVBony_SVBCameraSDK.dll" Guid="964cd499-e6e4-4e2c-bc29-58b6aa3f6fc0">
+        <File Id="External_x64_SVBony_SVBCameraSDK.dll" Name="SVBCameraSDK.dll" Source="$(var.NINA_TargetDir)External\x64\SVBony\SVBCameraSDK.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
   <?else?>
 
   <!-- x86 Dependencies -->
@@ -1993,6 +2005,14 @@
     <ComponentGroup Id="External_x86_SQLite_files" Directory="External_x86_SQLite">
       <Component Win64="$(var.Win64)" Id="External_x86_SQLite_SQLite.Interop.dll" Guid="28344711-a224-4ebe-a286-67b583207993">
         <File Id="External_x86_SQLite_SQLite.Interop.dll" Name="SQLite.Interop.dll" Source="$(var.NINA_TargetDir)External\x86\SQLite\SQLite.Interop.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="External_x86_SVBony_files" Directory="External_x86_SVBony">
+      <Component Win64="$(var.Win64)" Id="External_x86_SVBony_SVBCameraSDK.dll" Guid="bfcb2ecb-89b8-4a74-906f-b6d5ccf17e62">
+        <File Id="External_x86_SVBony_SVBCameraSDK.dll" Name="SVBCameraSDK.dll" Source="$(var.NINA_TargetDir)External\x86\SVBony\SVBCameraSDK.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>

@@ -49,6 +49,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock FontWeight="Bold" Text="{ns:Loc LblVendor}" />
             <TextBlock
@@ -119,6 +120,12 @@
                 Grid.Row="10"
                 Grid.Column="1"
                 Text="{Binding ZWOSDKVersion}" />
+
+            <TextBlock Grid.Row="11" Text="SVBony" />
+            <TextBlock
+                Grid.Row="11"
+                Grid.Column="1"
+                Text="{Binding SVBonySDKVersion}" />
         </Grid>
     </Grid>
 </UserControl>

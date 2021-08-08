@@ -148,9 +148,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public short MaxBinY => 1;
 
-        public double PixelSizeX => -1;
+        public double PixelSizeX => double.NaN;
 
-        public double PixelSizeY => -1;
+        public double PixelSizeY => double.NaN;
 
         public bool CanSetTemperature => false;
 

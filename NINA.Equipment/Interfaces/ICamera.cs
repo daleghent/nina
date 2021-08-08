@@ -91,14 +91,14 @@ namespace NINA.Equipment.Interfaces {
 
         void StopExposure();
 
+        void AbortExposure();
+
+        Task<IExposureData> DownloadExposure(CancellationToken token);
+
         void StartLiveView();
 
         Task<IExposureData> DownloadLiveView(CancellationToken token);
 
         void StopLiveView();
-
-        void AbortExposure();
-
-        Task<IExposureData> DownloadExposure(CancellationToken token);
     }
 }

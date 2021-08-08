@@ -425,6 +425,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                             return true;
                         } else {
+                            Notification.ShowError(string.Format(Loc.Instance["LblUnableToConnectCamera"], cam.Name));
                             this.Cam = null;
                             return false;
                         }
@@ -853,7 +854,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                     }
                 }
 
-                if (x >= width || y >= height) {
+                if (x >= CameraInfo.XSize || y >= CameraInfo.YSize) {
                     Logger.Warning($"Invalid subsample dimensions for camera {x}x{y} {width}x{height}.");
                     Cam.EnableSubSample = false;
                 } else {

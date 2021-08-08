@@ -29,6 +29,7 @@ using NINA.Core.Locale;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Model.Equipment.MyCamera.Simulator;
+using NINA.Equipment.SDK.CameraSDKs.SVBonySDK;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
@@ -152,6 +153,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                         var cam = new ToupTekAlikeCamera(instance.ToDeviceInfo(), new RisingcamSDKWrapper(), profileService);
                         devices.Add(cam);
                     }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                /* SVBony */
+                try {
+                    var provider = new SVBonyProvider(profileService);
+                    devices.AddRange(provider.GetEquipment());
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }

@@ -175,6 +175,7 @@
     <Compile Include="Equipment\MyCamera\NikonCamera.cs" />
     <Compile Include="Equipment\MyCamera\PersistSettingsCameraDecorator.cs" />
     <Compile Include="Equipment\MyCamera\QHYCamera.cs" />
+    <Compile Include="Equipment\MyCamera\SVBonyCamera.cs" />
     <Compile Include="Equipment\MyCamera\ToupTekAlikeCamera.cs" />
     <Compile Include="Equipment\MyCamera\ToupTekAlike\AltairSDKWrapper.cs" />
     <Compile Include="Equipment\MyCamera\ToupTekAlike\OmegonSDKWrapper.cs" />
@@ -303,6 +304,7 @@
     <Compile Include="Interfaces\IPlanetariumFactory.cs" />
     <Compile Include="Interfaces\IRotator.cs" />
     <Compile Include="Interfaces\ISafetyMonitor.cs" />
+    <Compile Include="Interfaces\ISVBonySDK.cs" />
     <Compile Include="Interfaces\ISwitch.cs" />
     <Compile Include="Interfaces\ISwitchHub.cs" />
     <Compile Include="Interfaces\ISynchronizedPHD2GuiderService.cs" />
@@ -340,6 +342,7 @@
     <Compile Include="Interfaces\ViewModel\IDeviceVM.cs" />
     <Compile Include="Interfaces\ViewModel\IDockableVM.cs" />
     <Compile Include="Interfaces\ViewModel\IDomeVM.cs" />
+    <Compile Include="Interfaces\ViewModel\IEquipmentProvider.cs" />
     <Compile Include="Interfaces\ViewModel\IFilterWheelVM.cs" />
     <Compile Include="Interfaces\ViewModel\IFlatDeviceVM.cs" />
     <Compile Include="Interfaces\ViewModel\IFocuserVM.cs" />
@@ -369,6 +372,11 @@
     <Compile Include="SDK\CameraSDKs\QHYSDK\QhyccdSdk.cs" />
     <Compile Include="SDK\CameraSDKs\QHYSDK\QHYFilterWheels.cs" />
     <Compile Include="SDK\CameraSDKs\RisingcamSDK\nncam.cs" />
+    <Compile Include="SDK\CameraSDKs\SVBonySDK\ISVBonyPInvokeProxy.cs" />
+    <Compile Include="SDK\CameraSDKs\SVBonySDK\SVBonyControl.cs" />
+    <Compile Include="SDK\CameraSDKs\SVBonySDK\SVBonyPInvoke.cs" />
+    <Compile Include="SDK\CameraSDKs\SVBonySDK\SVBonyProvider.cs" />
+    <Compile Include="SDK\CameraSDKs\SVBonySDK\SVBonySDK.cs" />
     <Compile Include="SDK\CameraSDKs\ToupTekSDK\toupcam.cs" />
     <Compile Include="SDK\FlatDeviceSDKs\AllPro\USBD.cs" />
     <Compile Include="SDK\FlatDeviceSDKs\AlnitakSDK\AlnitakCommands.cs" />
