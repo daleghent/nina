@@ -1291,7 +1291,7 @@ Quan les marques no estan alineades, significa que hi ha un error d'Alineació P
     <value>Activar escalat de bit</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Guardar imatges de 10/12/14 bits amb escala a 16 bits. (Només rellevant per a les càmeres Altair i ToupTek)</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Activat</value>
@@ -3348,7 +3348,7 @@ Arrossegueu el rectangle sobre la part del marc que vulgueu fer SubMostra i acti
     <value>Tipus</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Impossible connectar la càmera</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Impossible establir el temps d'exposició</value>

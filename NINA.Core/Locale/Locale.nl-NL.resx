@@ -1285,7 +1285,7 @@ wanneer de lijnen niet zijn uitgelijnd is er er een of andere polaire uitlijning
     <value>Schakel bit schalen in</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Sla 10/12/14 bit afbeeldingen op als 16 bits afbeeldingen. (Alleen van toepassing voor Altair en ToupTek camera's)</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Ingeschakeld</value>
@@ -3344,7 +3344,7 @@ Sleep de rechthoek over het deel van de opname dat u fotograferen wilt en active
     <value>Type</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Kan camera niet verbinden</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Kan belichtingstijd niet instellen</value>

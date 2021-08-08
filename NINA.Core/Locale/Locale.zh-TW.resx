@@ -1295,7 +1295,7 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>開啟位擴增</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>將 10/12/14 位元存儲為 16 位元. (只支持 Altair 和 ToupTek 相機)</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>已啟用</value>
@@ -3354,7 +3354,7 @@ You can also calculate the bias by clicking the Snapshot button next to Bias Mea
     <value>類型</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>無法連接相機</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>無法設置曝光時間</value>

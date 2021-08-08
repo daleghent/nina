@@ -1290,7 +1290,7 @@ No caso de ser necessário efectuar a refrigeração de forma mais prolongada, a
     <value>Ativar escala de bits</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Guardar imagens de 10/12/14 bits com uma escala de 16 bits. (relevante apenas para as câmeras Altair e ToupTek)</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Activado</value>
@@ -3349,7 +3349,7 @@ Arraste o rectângulo sobre a parte da imagem que deseja efectuar sub-sample e s
     <value>Tipo</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Não foi possível conectar a câmera</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Não foi possível definir o tempo de exposição</value>

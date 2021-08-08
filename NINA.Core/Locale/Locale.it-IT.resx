@@ -1295,7 +1295,7 @@ Quando le linee non sono allineate significa che c'è un errore di allineamento 
     <value>Abilita la rimappatura dei bit bit</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Salva immagini 10/12/14 bit con il ridimensionamento a 16 bit. (Solo rilevante per le telecamere Altair e ToupTek)</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Abilitato</value>
@@ -3354,7 +3354,7 @@ Trascina il rettangolo  sulla parte del fotogramma che vuoi estrarre ed abilita 
     <value>Tipo</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Impossibile connetetre camera</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Impossibile impostare tempo esposizione</value>

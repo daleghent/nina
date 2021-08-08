@@ -1287,7 +1287,7 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
     <value>Habilita Escalado de bit</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Guardar imágenes de 10/12/14 bits con escalado de 16 bits. (Solo relevante para cámaras Altair y ToupTek)</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Habilitado</value>
@@ -3346,7 +3346,7 @@ Mueve el rectángulo sobre la parte del Encuadre que quieres hacer subsampling. 
     <value>Tipo</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Imposible conectar la cámara</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Imposible establecer el tiempo de exposición</value>

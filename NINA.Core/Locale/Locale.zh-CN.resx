@@ -1295,7 +1295,7 @@
     <value>开启位扩增</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>将 10/12/14 位存储为 16 位. (只支持 Altair 和 ToupTek 相机)</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>已启用</value>
@@ -3354,7 +3354,7 @@
     <value>类型</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>无法连接相机</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>无法设置曝光时间</value>

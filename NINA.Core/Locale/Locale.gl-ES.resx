@@ -1296,7 +1296,7 @@ cara atrás; cando as liñas non están aliñadas hai algún erro de aliñación
     <value>Activar escalado de bit</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Gardar imaxes de 10/12/14 bits con escalado a 16 bits. (Só relevante para cámaras Altair e Toup Tek)</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Activado</value>
@@ -3355,7 +3355,7 @@ Move o rectangulo sobre a parte do Encadre no que queres facer subsampling. A c�
     <value>Tipo</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Non se pode conectar a cámara</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Non se pode establecer o tempo de exposición</value>

@@ -1295,7 +1295,7 @@ wenn die Linien nicht ausgerichtet sind, gibt es einen Polarausrichtungsfehler</
     <value>Bitskalierung aktivieren</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Speichere 10/12/14 bit Bilder mit einer Skalierung zu 16 Bits. (Nur relevant für Altair und ToupTek Kameras)</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Aktiv</value>
@@ -3355,7 +3355,7 @@ Das Rechteck über einen Teil des Bildes bewegen das Sie fotografieren wollen un
     <value>Typ</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Verbindung zur Kamera konnte nicht hergestellt werden</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Belichtungszeit konnte nicht gesetzt werden</value>

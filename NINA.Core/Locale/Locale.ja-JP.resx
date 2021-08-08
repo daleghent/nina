@@ -1283,7 +1283,7 @@
     <value>ビットスケーリングをオンにする。</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>10/12/14ビットの画像を16ビットのスケールに合わせてセーブする。（AltairとToupTekのカメラのみに関連します）</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>オン</value>
@@ -3337,7 +3337,7 @@
     <value>タイプ</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>カメラと接続できません。</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>露出時間を設定できません。</value>

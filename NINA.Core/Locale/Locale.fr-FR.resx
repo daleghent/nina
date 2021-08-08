@@ -1295,7 +1295,7 @@ si les traces d'étoiles ne sont pas alignées, c'est qu'il y a une erreur d'ali
     <value>Activer la mise à l'échelle Bits</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Enregistrez des images 10/12/14 bits avec une mise à l’échelle sur 16 bits. (Uniquement pertinent pour les caméras Altair et ToupTek)</value>
+    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Activé</value>
@@ -3353,7 +3353,7 @@ Faites glisser le rectangle sur la partie du cadre que vous souhaitez sous-écha
     <value>Type</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Impossible de connecter la caméra</value>
+    <value>Unable to connect camera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Impossible de définir le temps d'exposition</value>
