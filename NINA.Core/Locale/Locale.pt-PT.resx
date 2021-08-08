@@ -5752,4 +5752,7 @@ O comportamento padrão é continuar em caso de erros. No entanto, para algumas 
   <data name="LblFramingWizardSlewFailed" xml:space="preserve">
     <value>Failed to {0} from the framing wizard</value>
   </data>
+  <data name="LblUnableToSetMountLatLong" xml:space="preserve">
+    <value>Unable to set mount latitude to {0} and longitude to {1}!</value>
+  </data>
 </root>

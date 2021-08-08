@@ -5749,4 +5749,7 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
   <data name="LblFramingWizardSlewFailed" xml:space="preserve">
     <value>Error al {0} desde el asistente de encuadre</value>
   </data>
+  <data name="LblUnableToSetMountLatLong" xml:space="preserve">
+    <value>¡No se puede establecer la latitud de la montura a {0} y la longitud a {1}!</value>
+  </data>
 </root>

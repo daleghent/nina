@@ -5754,4 +5754,7 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
   <data name="LblFramingWizardSlewFailed" xml:space="preserve">
     <value>{0} se nezdařilo z průvodce rámování</value>
   </data>
+  <data name="LblUnableToSetMountLatLong" xml:space="preserve">
+    <value>Zeměpisnou šířku {0} a {1} délku montáže nelze upravit!</value>
+  </data>
 </root>
