@@ -273,7 +273,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
                     imagingMediator.SetImage(analysis.GetAnnotatedImage());
                 }
 
-                Logger.Debug(string.Format("Current Focus: Position: {0}, HRF: {1}", _focusPosition, analysis.AverageHFR));
+                Logger.Debug($"Current Focus: Position: {_focusPosition}, HFR: {analysis.AverageHFR}");
 
                 return new MeasureAndError() { Measure = analysis.AverageHFR, Stdev = analysis.HFRStdDev };
             } else {
@@ -470,10 +470,10 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
         }
 
         private async Task<bool> ValidateCalculatedFocusPosition(DataPoint focusPoint, FilterInfo filter, CancellationToken token, IProgress<ApplicationStatus> progress, double initialHFR) {
+            var rSquaredThreshold = profileService.ActiveProfile.FocuserSettings.RSquaredThreshold;
             if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR) {
                 // Evaluate R² for Fittings to be above threshold
 
-                var rSquaredThreshold = profileService.ActiveProfile.FocuserSettings.RSquaredThreshold;
                 if (rSquaredThreshold > 0) {
                     var hyperbolicBad = HyperbolicFitting.RSquared < rSquaredThreshold;
                     var quadraticBad = QuadraticFitting.RSquared < rSquaredThreshold;
@@ -512,7 +512,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
             _focusPosition = await focuserMediator.MoveFocuser((int)focusPoint.X, token);
 
-            if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR) {
+            if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR && rSquaredThreshold <= 0) {
                 double hfr = (await GetAverageMeasurement(filter, profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint, token, progress)).Measure;
 
                 if (initialHFR != 0 && hfr > (initialHFR * 1.15)) {
@@ -551,7 +551,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             int numberOfAttempts = 0;
             System.Drawing.Rectangle oldSubSample = new System.Drawing.Rectangle();
             int initialFocusPosition = focuserMediator.GetInfo().Position;
-            double initialHFR = 0;
+            double initialHFR = double.NaN;
 
             bool tempComp = false;
             bool guidingStopped = false;
@@ -571,7 +571,7 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
 
                 initialFocusPosition = focuserMediator.GetInfo().Position;
 
-                if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR) {
+                if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR && profileService.ActiveProfile.FocuserSettings.RSquaredThreshold <= 0) {
                     //Get initial position information, as average of multiple exposures, if configured this way
                     initialHFR = (await GetAverageMeasurement(autofocusFilter, profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint, token, progress)).Measure;
                 }
