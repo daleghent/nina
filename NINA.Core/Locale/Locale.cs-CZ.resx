@@ -1289,7 +1289,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Povolit bitové měřítko</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
+    <value>Uložte 10/12/14 bitové obrázky se škálováním na 16 bitů. (Platí pouze pro kamery Altair, Omegon, SVBony, RisingCam a ToupTek při použití nativního ovladače)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Povoleno</value>
@@ -3349,7 +3349,7 @@ Přesunout obdélník na část snímku, který chcete snímat, a aktivujte čá
     <value>Typ</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Unable to connect camera {0}</value>
+    <value>Nelze připojit kameru {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Nelze nastavit expoziční čas</value>
