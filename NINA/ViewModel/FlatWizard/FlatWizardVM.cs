@@ -89,8 +89,8 @@ namespace NINA.ViewModel.FlatWizard {
             var pauseTokenSource = new PauseTokenSource();
 
             progress = new Progress<ApplicationStatus>(p => Status = p);
-            StartFlatSequenceCommand = new AsyncCommand<bool>(() => CaptureForSingleFilter(pauseTokenSource.Token), (object o) => cameraInfo.Connected);
-            StartMultiFlatSequenceCommand = new AsyncCommand<bool>(() => CaptureForSelectedFilters(pauseTokenSource.Token), (object o) => cameraInfo.Connected && filterWheelInfo.Connected);
+            StartFlatSequenceCommand = new AsyncCommand<bool>(() => CaptureForSingleFilter(pauseTokenSource.Token), (object o) => cameraInfo.Connected && cameraMediator.IsFreeToCapture(this));
+            StartMultiFlatSequenceCommand = new AsyncCommand<bool>(() => CaptureForSelectedFilters(pauseTokenSource.Token), (object o) => cameraInfo.Connected && filterWheelInfo.Connected && cameraMediator.IsFreeToCapture(this));
             SlewToZenithCommand = new AsyncCommand<bool>(() => SlewToZenith(CancellationToken.None), (object o) => telescopeInfo.Connected);
 
             CancelFlatExposureSequenceCommand = new RelayCommand(CancelFindExposureTime);
@@ -729,12 +729,22 @@ namespace NINA.ViewModel.FlatWizard {
             return result;
         }
 
-        private Task<bool> CaptureForSelectedFilters(PauseToken pt) {
-            return StartFlatMagic(Filters.Where(f => f.IsChecked), pt);
+        private async Task<bool> CaptureForSelectedFilters(PauseToken pt) {
+            try {
+                cameraMediator.RegisterCaptureBlock(this);
+                return await StartFlatMagic(Filters.Where(f => f.IsChecked), pt);
+            } finally {
+                cameraMediator.ReleaseCaptureBlock(this);
+            }
         }
 
-        private Task<bool> CaptureForSingleFilter(PauseToken pt) {
-            return StartFlatMagic(new List<FlatWizardFilterSettingsWrapper> { SingleFlatWizardFilterSettings }, pt);
+        private async Task<bool> CaptureForSingleFilter(PauseToken pt) {
+            try {
+                cameraMediator.RegisterCaptureBlock(this);
+                return await StartFlatMagic(new List<FlatWizardFilterSettingsWrapper> { SingleFlatWizardFilterSettings }, pt);
+            } finally {
+                cameraMediator.ReleaseCaptureBlock(this);
+            }
         }
 
         public async Task<bool> StartFlatMagic(IEnumerable<FlatWizardFilterSettingsWrapper> filterWrappers, PauseToken pt) {

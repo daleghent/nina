@@ -190,6 +190,7 @@ namespace NINA.ViewModel.FramingAssistant {
                 slewTokenSource = new CancellationTokenSource();
                 bool result;
                 try {
+                    cameraMediator.RegisterCaptureBlock(this);
                     switch (o.ToString()) {
                         case "Center":
                             result = await Center(Rectangle.Coordinates, slewTokenSource.Token);
@@ -210,14 +211,15 @@ namespace NINA.ViewModel.FramingAssistant {
                 } catch (Exception e) {
                     Logger.Error($"Failed to {o} from the framing wizard", e);
                     result = false;
+                } finally {
+                    cameraMediator.ReleaseCaptureBlock(this);
                 }
 
                 if (!result) {
                     Notification.ShowError(String.Format(Loc.Instance["LblFramingWizardSlewFailed"], o.ToString()));
                 }
                 return result;
-            }, (object o) => RectangleCalculated);
-
+            }, (object o) => RectangleCalculated && cameraMediator.IsFreeToCapture(this));
             CancelSlewToCoordinatesCommand = new RelayCommand((object o) => slewTokenSource?.Cancel());
 
             ScrollViewerSizeChangedCommand = new RelayCommand((parameter) => {

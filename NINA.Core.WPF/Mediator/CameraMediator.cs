@@ -26,7 +26,7 @@ using NINA.Equipment.Interfaces.ViewModel;
 namespace NINA.WPF.Base.Mediator {
 
     public class CameraMediator : DeviceMediator<ICameraVM, ICameraConsumer, CameraInfo>, ICameraMediator {
-        private ICameraConsumer blockingConsumer;
+        private object blockingConsumer;
 
         public Task Capture(CaptureSequence sequence, CancellationToken token,
             IProgress<ApplicationStatus> progress) {
@@ -65,7 +65,7 @@ namespace NINA.WPF.Base.Mediator {
             handler.SetBinning(x, y);
         }
 
-        public void RegisterCaptureBlock(ICameraConsumer cameraConsumer) {
+        public void RegisterCaptureBlock(object cameraConsumer) {
             if (this.blockingConsumer != null) {
                 throw new Exception("CameraMediator already blocked by " + blockingConsumer);
             }
@@ -73,13 +73,13 @@ namespace NINA.WPF.Base.Mediator {
             blockingConsumer = cameraConsumer;
         }
 
-        public void ReleaseCaptureBlock(ICameraConsumer cameraConsumer) {
+        public void ReleaseCaptureBlock(object cameraConsumer) {
             if (this.blockingConsumer == cameraConsumer) {
                 blockingConsumer = null;
             }
         }
 
-        public bool IsFreeToCapture(ICameraConsumer cameraConsumer) {
+        public bool IsFreeToCapture(object cameraConsumer) {
             return blockingConsumer == null ? true : cameraConsumer == blockingConsumer;
         }
 
@@ -97,6 +97,18 @@ namespace NINA.WPF.Base.Mediator {
 
         public void SetDewHeater(bool onOff) {
             handler.SetDewHeater(onOff);
+        }
+
+        public void RegisterCaptureBlock(ICameraConsumer cameraConsumer) {
+            RegisterCaptureBlock((object)cameraConsumer);
+        }
+
+        public void ReleaseCaptureBlock(ICameraConsumer cameraConsumer) {
+            ReleaseCaptureBlock((object)cameraConsumer);
+        }
+
+        public bool IsFreeToCapture(ICameraConsumer cameraConsumer) {
+            return IsFreeToCapture((object)cameraConsumer);
         }
     }
 }

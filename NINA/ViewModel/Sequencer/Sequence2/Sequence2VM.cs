@@ -58,22 +58,25 @@ namespace NINA.ViewModel.Sequencer {
     internal class Sequence2VM : SequencerBaseVM, ISequence2VM {
         private IApplicationStatusMediator applicationStatusMediator;
         private ISequenceMediator sequenceMediator;
+        private ICameraMediator cameraMediator;
         private DispatcherTimer validationTimer;
 
         public Sequence2VM(
             IProfileService profileService,
             ISequenceMediator sequenceMediator,
             IApplicationStatusMediator applicationStatusMediator,
+            ICameraMediator cameraMediator,
             ISequencerFactory factory
 
             ) : base(profileService) {
             this.applicationStatusMediator = applicationStatusMediator;
 
             this.sequenceMediator = sequenceMediator;
+            this.cameraMediator = cameraMediator;
 
             SequencerFactory = factory;
 
-            StartSequenceCommand = new AsyncCommand<bool>(StartSequence);
+            StartSequenceCommand = new AsyncCommand<bool>(StartSequence, (object o) => cameraMediator.IsFreeToCapture(this));
             CancelSequenceCommand = new RelayCommand(CancelSequence);
             SaveAsSequenceCommand = new RelayCommand(SaveAsSequence);
             SaveSequenceCommand = new RelayCommand(SaveSequence);
@@ -353,9 +356,11 @@ namespace NINA.ViewModel.Sequencer {
             IsRunning = true;
             TaskBarProgressState = TaskbarItemProgressState.Normal;
             try {
+                cameraMediator.RegisterCaptureBlock(this);
                 await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token);
                 return true;
             } finally {
+                cameraMediator.ReleaseCaptureBlock(this);
                 TaskBarProgressState = TaskbarItemProgressState.None;
                 IsRunning = false;
             }

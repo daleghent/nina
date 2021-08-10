@@ -109,7 +109,7 @@ namespace NINA.ViewModel {
             SaveTargetSetCommand = new RelayCommand(SaveTargetSet);
             LoadTargetSetCommand = new RelayCommand((object o) => LoadTargetSet());
             ImportTargetsCommand = new RelayCommand((object o) => ImportTargets());
-            StartSequenceCommand = new AsyncCommand<bool>(StartSequence);
+            StartSequenceCommand = new AsyncCommand<bool>(StartSequence, (object o) => cameraMediator.IsFreeToCapture(this));
             CancelSequenceCommand = new RelayCommand(CancelSequence);
             SwitchToOverviewCommand = new RelayCommand((object o) => sequenceMediator.SwitchToOverview(), (object o) => !profileService.ActiveProfile.SequenceSettings.DisableSimpleSequencer);
 
@@ -222,6 +222,7 @@ namespace NINA.ViewModel {
             IsRunning = true;
             TaskBarProgressState = TaskbarItemProgressState.Normal;
             try {
+                cameraMediator.RegisterCaptureBlock(this);
                 //Reset start and end of sequence options in case they were both already done
                 if (Sequencer.MainContainer.Items[2].Status == SequenceEntityStatus.FINISHED) {
                     Sequencer.MainContainer.Items[0].ResetProgress();
@@ -231,6 +232,7 @@ namespace NINA.ViewModel {
                 await Sequencer.Start(new Progress<ApplicationStatus>(p => Status = p), cts.Token);
                 return true;
             } finally {
+                cameraMediator.ReleaseCaptureBlock(this);
                 TaskBarProgressState = TaskbarItemProgressState.None;
                 IsRunning = false;
             }

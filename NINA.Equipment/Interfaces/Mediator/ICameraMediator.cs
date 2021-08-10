@@ -56,5 +56,11 @@ namespace NINA.Equipment.Interfaces.Mediator {
         void ReleaseCaptureBlock(ICameraConsumer cameraConsumer);
 
         bool IsFreeToCapture(ICameraConsumer cameraConsumer);
+
+        void RegisterCaptureBlock(object cameraConsumer);
+
+        void ReleaseCaptureBlock(object cameraConsumer);
+
+        bool IsFreeToCapture(object cameraConsumer);
     }
 }
