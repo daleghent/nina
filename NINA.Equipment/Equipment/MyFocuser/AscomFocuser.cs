@@ -172,6 +172,7 @@ namespace NINA.Equipment.Equipment.MyFocuser {
         private void Initialize() {
             internalPosition = device.MaxStep / 2;
             _isAbsolute = device.Absolute;
+            if (!_isAbsolute) { Logger.Info("The focuser is a relative focuser. Simulating absoute focuser behavior"); }
             _canHalt = true;
         }
 
