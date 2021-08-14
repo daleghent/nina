@@ -31,6 +31,10 @@ namespace NINA.PlateSolving {
             return PlateSolverFactory.GetPlateSolver(plateSolveSettings);
         }
 
+        public IImageSolver GetImageSolver(IPlateSolver plateSolver, IPlateSolver blindSolver) {
+            return new ImageSolver(plateSolver, blindSolver);
+        }
+
         public ICaptureSolver GetCaptureSolver(IPlateSolver plateSolver, IPlateSolver blindSolver, IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator) {
             return new CaptureSolver(plateSolver, blindSolver, imagingMediator, filterWheelMediator);
         }

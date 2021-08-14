@@ -23,6 +23,8 @@ namespace NINA.PlateSolving.Interfaces {
 
         IPlateSolver GetBlindSolver(IPlateSolveSettings plateSolveSettings);
 
+        IImageSolver GetImageSolver(IPlateSolver plateSolver, IPlateSolver blindSolver);
+
         ICaptureSolver GetCaptureSolver(IPlateSolver plateSolver, IPlateSolver blindSolver, IImagingMediator imagingMediator, IFilterWheelMediator filterWheelMediator);
 
         ICenteringSolver GetCenteringSolver(IPlateSolver plateSolver, IPlateSolver blindSolver, IImagingMediator imagingMediator, ITelescopeMediator telescopeMediator, IFilterWheelMediator filterWheelMediator);
