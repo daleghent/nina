@@ -101,6 +101,7 @@
       <ComponentGroupRef Id="External_x64_MGEN_files" />
       <ComponentGroupRef Id="External_x64_VCRedis_files" />
       <ComponentGroupRef Id="External_x64_SVBony_files" />
+      <ComponentGroupRef Id="External_x64_SBIG_files" />
       <?else?>
       <ComponentGroupRef Id="External_x86_FTDI_files" />
       <ComponentGroupRef Id="External_x86_AllPro_files" />
@@ -149,6 +150,7 @@
       <ComponentGroupRef Id="External_x86_Risingcam_files" />
       <ComponentGroupRef Id="External_x86_VCRedis_files" />
       <ComponentGroupRef Id="External_x86_SVBony_files" />
+      <ComponentGroupRef Id="External_x86_SBIG_files" />
       <?endif?>
       <ComponentGroupRef Id="Utility_ColorSchema_files" />
       <ComponentGroupRef Id="Utility_DCRaw_files" />
@@ -254,6 +256,7 @@
               <Directory Id="External_x64_Risingcam" Name="Risingcam" />
               <Directory Id="External_x64_VCRedis" Name="VCRedis" />
               <Directory Id="External_x64_SVBony" Name="SVBony" />
+              <Directory Id="External_x64_SBIG" Name="SBIG" />
             </Directory>
             <Directory Id="External_x86" Name="x86">
               <Directory Id="External_x86_Nikon" Name="Nikon">
@@ -305,6 +308,7 @@
               <Directory Id="External_x86_Risingcam" Name="Risingcam" />
               <Directory Id="External_x86_VCRedis" Name="VCRedis" />
               <Directory Id="External_x86_SVBony" Name="SVBony" />
+              <Directory Id="External_x86_SBIG" Name="SBIG" />
             </Directory>
           </Directory>
           <Directory Id="Utility" Name="Utility">
@@ -1506,6 +1510,14 @@
     </ComponentGroup>
   </Fragment>
 
+  <Fragment>
+    <ComponentGroup Id="External_x64_SBIG_files" Directory="External_x64_SBIG">
+      <Component Win64="$(var.Win64)" Id="External_x64_SBIG_SBIGUDrv.dll" Guid="a917ce6a-480f-48cc-a8cc-4ef8da7048db">
+        <File Id="External_x64_SBIG_SBIGUDrv.dll" Name="SBIGUDrv.dll" Source="$(var.NINA_TargetDir)External\x64\SBIG\SBIGUDrv.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
   <?else?>
 
   <!-- x86 Dependencies -->
@@ -2016,6 +2028,14 @@
     <ComponentGroup Id="External_x86_SVBony_files" Directory="External_x86_SVBony">
       <Component Win64="$(var.Win64)" Id="External_x86_SVBony_SVBCameraSDK.dll" Guid="bfcb2ecb-89b8-4a74-906f-b6d5ccf17e62">
         <File Id="External_x86_SVBony_SVBCameraSDK.dll" Name="SVBCameraSDK.dll" Source="$(var.NINA_TargetDir)External\x86\SVBony\SVBCameraSDK.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <ComponentGroup Id="External_x86_SBIG_files" Directory="External_x86_SBIG">
+      <Component Win64="$(var.Win64)" Id="External_x86_SBIG_SBIGUDrv.dll" Guid="ae8c1bd5-519e-4e44-a7ed-b7e88d62d255">
+        <File Id="External_x86_SBIG_SBIGUDrv.dll" Name="SBIGUDrv.dll" Source="$(var.NINA_TargetDir)External\x86\SBIG\SBIGUDrv.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
