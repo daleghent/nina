@@ -151,19 +151,6 @@ namespace NINATest.Sequencer.SequenceItem.Switch {
         }
 
         [Test]
-        public Task Execute_HasIssues_LogicNotCalled() {
-            switchMediatorMock.Setup(x => x.GetInfo()).Returns(new SwitchInfo() {
-                Connected = false
-            });
-
-            var sut = new SetSwitchValue(switchMediatorMock.Object);
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            switchMediatorMock.Verify(x => x.SetSwitchValue(It.IsAny<short>(), It.IsAny<double>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
-
-        [Test]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
             var sut = new SetSwitchValue(switchMediatorMock.Object);
 

@@ -84,7 +84,7 @@ namespace NINATest.Sequencer.SequenceItem.SafetyMonitor {
             sut.WaitInterval = TimeSpan.Zero;
             await sut.Execute(default, default);
 
-            safetyMonitorMock.Verify(x => x.GetInfo(), Times.Exactly(2));
+            safetyMonitorMock.Verify(x => x.GetInfo(), Times.Exactly(1));
         }
 
         [Test]
@@ -99,17 +99,6 @@ namespace NINATest.Sequencer.SequenceItem.SafetyMonitor {
             await sut.Execute(default, default);
 
             safetyMonitorMock.Verify(x => x.GetInfo(), Times.Exactly(3));
-        }
-
-        [Test]
-        public Task Execute_HasIssues_LogicNotCalled() {
-            safetyMonitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = false });
-
-            var sut = new WaitUntilSafe(safetyMonitorMock.Object);
-
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
         }
 
         [Test]

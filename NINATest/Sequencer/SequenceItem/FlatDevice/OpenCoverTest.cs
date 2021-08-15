@@ -90,20 +90,6 @@ namespace NINATest.Sequencer.SequenceItem.FlatDevice {
         }
 
         [Test]
-        [TestCase(false, false)]
-        [TestCase(false, true)]
-        [TestCase(true, false)]
-        public Task Execute_HasIssues_LogicNotCalled(bool isConnected, bool canClose) {
-            fdMediatorMock.Setup(x => x.GetInfo()).Returns(new FlatDeviceInfo() { Connected = isConnected, SupportsOpenClose = canClose });
-
-            var sut = new OpenCover(fdMediatorMock.Object);
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            fdMediatorMock.Verify(x => x.OpenCover(It.IsAny<CancellationToken>()), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
-
-        [Test]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
             var sut = new OpenCover(fdMediatorMock.Object);
 

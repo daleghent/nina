@@ -61,12 +61,8 @@ namespace NINA.Sequencer.SequenceItem.Guider {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                //todo missing progress
-                return guiderMediator.StopGuiding(token);
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
-            }
+            //todo missing progress
+            return guiderMediator.StopGuiding(token);
         }
 
         public bool Validate() {

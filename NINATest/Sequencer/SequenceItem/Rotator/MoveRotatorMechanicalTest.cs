@@ -91,18 +91,6 @@ namespace NINATest.Sequencer.SequenceItem.Rotator {
         }
 
         [Test]
-        public Task Execute_HasIssues_LogicNotCalled() {
-            rotatorMediatorMock.Setup(x => x.GetInfo()).Returns(new RotatorInfo() { Connected = false });
-
-            var sut = new MoveRotatorMechanical(rotatorMediatorMock.Object);
-            sut.MechanicalPosition = 10;
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            rotatorMediatorMock.Verify(x => x.Move(It.IsAny<float>()), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
-
-        [Test]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
             var sut = new MoveRotatorMechanical(rotatorMediatorMock.Object);
 

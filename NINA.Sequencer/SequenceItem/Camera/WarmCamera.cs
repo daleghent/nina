@@ -67,11 +67,7 @@ namespace NINA.Sequencer.SequenceItem.Camera {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                return cameraMediator.WarmCamera(TimeSpan.FromMinutes(Duration), progress, token);
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
-            }
+            return cameraMediator.WarmCamera(TimeSpan.FromMinutes(Duration), progress, token);
         }
 
         public bool Validate() {

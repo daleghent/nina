@@ -94,11 +94,11 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
             try {
                 var result = await DoSolve(progress, token);
                 if (result.Success == false) {
-                    throw new Exception(Loc.Instance["LblPlatesolveFailed"]);
+                    throw new SequenceEntityFailedException(Loc.Instance["LblPlatesolveFailed"]);
                 } else {
                     var sync = await telescopeMediator.Sync(result.Coordinates);
                     if (!sync) {
-                        throw new Exception(Loc.Instance["LblSyncFailed"]);
+                        throw new SequenceEntityFailedException(Loc.Instance["LblSyncFailed"]);
                     }
                 }
             } finally {

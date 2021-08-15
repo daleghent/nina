@@ -102,24 +102,20 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             }
         }
 
-
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                var info = focuserMediator.GetInfo();
-                double position = info.Position;
-                Task<int> result;
-                if (absolute) {
-                    position = Slope * info.Temperature + Intercept;
-                    Logger.Info($"Moving Focuser By Temperature - Slope {Slope} * Temperature {info.Temperature} °C + Intercept {Intercept} = Position {position}");
-                    result = focuserMediator.MoveFocuser((int)position, token);
-                } else {
-                    Logger.Info($"Moving Focuser By Temperature Relative - Slope {Slope}");
-                    result = focuserMediator.MoveFocuserByTemperatureRelative(info.Temperature, slope, token);
-                }
-                return result;
+            var info = focuserMediator.GetInfo();
+            Task<int> result;
+
+            if (absolute) {
+                double position = Slope * info.Temperature + Intercept;
+                Logger.Info($"Moving Focuser By Temperature - Slope {Slope} * Temperature {info.Temperature} °C + Intercept {Intercept} = Position {position}");
+                result = focuserMediator.MoveFocuser((int)position, token);
             } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
+                Logger.Info($"Moving Focuser By Temperature Relative - Slope {Slope}");
+                result = focuserMediator.MoveFocuserByTemperatureRelative(info.Temperature, slope, token);
             }
+
+            return result;
         }
 
         public bool Validate() {
@@ -164,6 +160,5 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
             lastTemperature = info.Temperature;
             lastRoundoff = 0;
         }
-
     }
 }

@@ -86,14 +86,9 @@ namespace NINA.Sequencer.SequenceItem.FilterWheel {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Filter == null) {
-                throw new SequenceItemSkippedException("Skipping SwitchFilter - No Filter was selected");
-            }
-            if (Validate()) {
-                return this.filterWheelMediator.ChangeFilter(Filter, token, progress);
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
-            }
+            return Filter == null
+                ? throw new SequenceItemSkippedException("Skipping SwitchFilter - No Filter was selected")
+                : filterWheelMediator.ChangeFilter(Filter, token, progress);
         }
 
         public bool Validate() {

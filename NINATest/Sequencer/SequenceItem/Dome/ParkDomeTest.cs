@@ -86,17 +86,6 @@ namespace NINATest.Sequencer.SequenceItem.Dome {
         }
 
         [Test]
-        public Task Execute_HasIssues_LogicNotCalled() {
-            domeMediatorMock.Setup(x => x.GetInfo()).Returns(new DomeInfo() { Connected = false });
-
-            var sut = new ParkDome(domeMediatorMock.Object);
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            domeMediatorMock.Verify(x => x.Park(It.IsAny<CancellationToken>()), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
-
-        [Test]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
             var sut = new ParkDome(domeMediatorMock.Object);
 

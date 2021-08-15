@@ -112,7 +112,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                 while (Math.Abs(rotationDistance) > profileService.ActiveProfile.PlateSolveSettings.RotationTolerance) {
                     var solveResult = await Solve(progress, token);
                     if (!solveResult.Success) {
-                        throw new Exception(Loc.Instance["LblPlatesolveFailed"]);
+                        throw new SequenceEntityFailedException(Loc.Instance["LblPlatesolveFailed"]);
                     }
 
                     orientation = (float)solveResult.Orientation;

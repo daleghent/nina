@@ -147,17 +147,6 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
         }
 
         [Test]
-        public Task Execute_HasIssues_LogicNotCalled() {
-            telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() { Connected = false });
-
-            var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object);
-            Func<Task> act = () => { return sut.Execute(default, default); };
-            guiderMediatorMock.Verify(x => x.StopGuiding(It.IsAny<CancellationToken>()), Times.Never);
-            telescopeMediatorMock.Verify(x => x.SlewToCoordinatesAsync(It.IsAny<TopocentricCoordinates>(), It.IsAny<CancellationToken>()), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
-
-        [Test]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
             var sut = new SlewScopeToAltAz(profileServiceMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object);
 

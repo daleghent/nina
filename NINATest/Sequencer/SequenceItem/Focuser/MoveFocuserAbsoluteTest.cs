@@ -92,18 +92,6 @@ namespace NINATest.Sequencer.SequenceItem.Focuser {
         }
 
         [Test]
-        public Task Execute_HasIssues_LogicNotCalled() {
-            focuserMediatorMock.Setup(x => x.GetInfo()).Returns(new FocuserInfo() { Connected = false });
-
-            var sut = new MoveFocuserAbsolute(focuserMediatorMock.Object);
-            sut.Position = 10;
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            focuserMediatorMock.Verify(x => x.MoveFocuser(It.IsAny<int>(), It.IsAny<CancellationToken>()), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
-
-        [Test]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
             var sut = new MoveFocuserAbsolute(focuserMediatorMock.Object);
 

@@ -75,12 +75,8 @@ namespace NINA.Sequencer.SequenceItem.Focuser {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                // todo - Interface lacks progress
-                return focuserMediator.MoveFocuser(Position, token);
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
-            }
+            // todo - Interface lacks progress
+            return focuserMediator.MoveFocuser(Position, token);
         }
 
         public bool Validate() {

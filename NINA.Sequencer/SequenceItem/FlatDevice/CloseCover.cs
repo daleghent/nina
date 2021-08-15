@@ -58,12 +58,8 @@ namespace NINA.Sequencer.SequenceItem.FlatDevice {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                // Todo - this interface lacks progress
-                return flatDeviceMediator.CloseCover(token);
-            }
-
-            throw new SequenceItemSkippedException(string.Join(",", Issues));
+            // Todo - this interface lacks progress
+            return flatDeviceMediator.CloseCover(token);
         }
 
         public bool Validate() {

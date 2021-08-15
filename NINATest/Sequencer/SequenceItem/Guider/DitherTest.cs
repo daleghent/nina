@@ -87,17 +87,6 @@ namespace NINATest.Sequencer.SequenceItem.Guider {
         }
 
         [Test]
-        public Task Execute_HasIssues_LogicNotCalled() {
-            guiderMediatorMock.Setup(x => x.GetInfo()).Returns(new GuiderInfo() { Connected = false });
-
-            var sut = new Dither(guiderMediatorMock.Object);
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            guiderMediatorMock.Verify(x => x.Dither(It.IsAny<CancellationToken>()), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
-
-        [Test]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
             var sut = new Dither(guiderMediatorMock.Object);
 

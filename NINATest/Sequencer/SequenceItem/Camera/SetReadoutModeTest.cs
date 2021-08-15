@@ -112,17 +112,5 @@ namespace NINATest.Sequencer.SequenceItem.Camera {
             cameraMediatorMock.Verify(x => x.SetReadoutMode(It.IsAny<short>()), Times.Never);
             cameraMediatorMock.Verify(x => x.SetReadoutModeForNormalImages(1), Times.Once);
         }
-
-        [Test]
-        public Task Execute_HasIssues_LogicNotCalled() {
-            cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = false, ReadoutModes = new List<string>() { "0", "1" } });
-
-            var sut = new SetReadoutMode(cameraMediatorMock.Object);
-            sut.Mode = 1;
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            cameraMediatorMock.Verify(x => x.SetReadoutModeForNormalImages(It.IsAny<short>()), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
     }
 }

@@ -155,17 +155,6 @@ namespace NINATest.Sequencer.SequenceItem.Imaging {
         }
 
         [Test]
-        public Task Execute_HasIssues_LogicNotCalled() {
-            profileServiceMock.SetupGet(x => x.ActiveProfile.ImageFileSettings.FilePath).Returns(TestContext.CurrentContext.TestDirectory);
-            cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = false });
-
-            var sut = new TakeExposure(profileServiceMock.Object, cameraMediatorMock.Object, imagingMediatorMock.Object, imageSaveMediatorMock.Object, historyMock.Object);
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
-
-        [Test]
         [TestCase(1)]
         [TestCase(100)]
         [TestCase(0)]

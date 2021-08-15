@@ -85,13 +85,9 @@ namespace NINA.Sequencer.SequenceItem.Utility {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                string sequenceCompleteCommand = Script;
-                ExternalCommandExecutor externalCommandExecutor = new ExternalCommandExecutor(progress);
-                return externalCommandExecutor.RunSequenceCompleteCommandTask(sequenceCompleteCommand, token);
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
-            }
+            string sequenceCompleteCommand = Script;
+            ExternalCommandExecutor externalCommandExecutor = new ExternalCommandExecutor(progress);
+            return externalCommandExecutor.RunSequenceCompleteCommandTask(sequenceCompleteCommand, token);
         }
 
         public bool Validate() {

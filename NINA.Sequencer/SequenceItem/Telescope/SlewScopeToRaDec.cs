@@ -83,14 +83,10 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                var stoppedGuiding = await guiderMediator.StopGuiding(token);
-                await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
-                if (stoppedGuiding) {
-                    await guiderMediator.StartGuiding(false, progress, token);
-                }
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
+            var stoppedGuiding = await guiderMediator.StopGuiding(token);
+            await telescopeMediator.SlewToCoordinatesAsync(Coordinates.Coordinates, token);
+            if (stoppedGuiding) {
+                await guiderMediator.StartGuiding(false, progress, token);
             }
         }
 

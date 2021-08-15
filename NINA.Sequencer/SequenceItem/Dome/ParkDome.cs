@@ -60,12 +60,8 @@ namespace NINA.Sequencer.SequenceItem.Dome {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                // Todo - this interface lacks progress
-                return domeMediator.Park(token);
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
-            }
+            // Todo - this interface lacks progress
+            return domeMediator.Park(token);
         }
 
         public bool Validate() {

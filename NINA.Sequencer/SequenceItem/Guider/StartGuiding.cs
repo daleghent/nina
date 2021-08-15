@@ -66,12 +66,8 @@ namespace NINA.Sequencer.SequenceItem.Guider {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                if (!await guiderMediator.StartGuiding(ForceCalibration, progress, token)) {
-                    throw new Exception("Failed to start guiding");
-                }
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
+            if (!await guiderMediator.StartGuiding(ForceCalibration, progress, token)) {
+                throw new SequenceEntityFailedException("Failed to start guiding");
             }
         }
 

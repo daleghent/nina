@@ -117,11 +117,7 @@ namespace NINA.Sequencer.SequenceItem.Switch {
         }
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                return switchMediator.SetSwitchValue(switchIndex, Value, progress, token);
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
-            }
+            return switchMediator.SetSwitchValue(switchIndex, Value, progress, token);
         }
 
         private IList<IWritableSwitch> CreateDummyList() {

@@ -105,20 +105,6 @@ namespace NINATest.Sequencer.SequenceItem.Guider {
         }
 
         [Test]
-        [TestCase(false, false)]
-        [TestCase(false, true)]
-        public Task Execute_HasIssues_LogicNotCalled(bool connected, bool canClearCalibaration) {
-            guiderMediatorMock.Setup(x => x.GetInfo()).Returns(new GuiderInfo() { Connected = connected, CanClearCalibration = canClearCalibaration });
-
-            var sut = new StartGuiding(guiderMediatorMock.Object);
-            sut.ForceCalibration = true;
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            guiderMediatorMock.Verify(x => x.StartGuiding(It.IsAny<bool>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
-
-        [Test]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
             var sut = new StartGuiding(guiderMediatorMock.Object);
 

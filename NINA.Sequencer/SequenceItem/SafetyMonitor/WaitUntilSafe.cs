@@ -89,18 +89,14 @@ namespace NINA.Sequencer.SequenceItem.SafetyMonitor {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                var info = safetyMonitorMediator.GetInfo();
-                IsSafe = info.Connected && info.IsSafe;
-                while (!IsSafe) {
-                    progress?.Report(new ApplicationStatus() { Status = Loc.Instance["Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting"] });
-                    await CoreUtil.Wait(WaitInterval, token, default);
+            var info = safetyMonitorMediator.GetInfo();
+            IsSafe = info.Connected && info.IsSafe;
+            while (!IsSafe) {
+                progress?.Report(new ApplicationStatus() { Status = Loc.Instance["Lbl_SequenceItem_SafetyMonitor_WaitUntilSafe_Waiting"] });
+                await CoreUtil.Wait(WaitInterval, token, default);
 
-                    info = safetyMonitorMediator.GetInfo();
-                    IsSafe = info.Connected && info.IsSafe;
-                }
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
+                info = safetyMonitorMediator.GetInfo();
+                IsSafe = info.Connected && info.IsSafe;
             }
         }
     }

@@ -109,22 +109,6 @@ namespace NINATest.Sequencer.SequenceItem.Camera {
         }
 
         [Test]
-        [TestCase(false, true)]
-        [TestCase(true, false)]
-        [TestCase(false, false)]
-        public Task Execute_HasIssues_LogicNotCalled(bool connected, bool canTemp) {
-            cameraMediatorMock.Setup(x => x.GetInfo()).Returns(new CameraInfo() { Connected = connected, CanSetTemperature = canTemp });
-
-            var sut = new CoolCamera(cameraMediatorMock.Object);
-            sut.Temperature = 10;
-            sut.Duration = 10;
-            Func<Task> act = () => { return sut.Execute(default, default); };
-
-            cameraMediatorMock.Verify(x => x.CoolCamera(It.IsAny<double>(), It.IsAny<TimeSpan>(), It.IsAny<IProgress<ApplicationStatus>>(), It.IsAny<CancellationToken>()), Times.Never);
-            return act.Should().ThrowAsync<SequenceItemSkippedException>(string.Join(",", sut.Issues));
-        }
-
-        [Test]
         [TestCase(0, 1)]
         [TestCase(1, 1)]
         [TestCase(2, 2)]

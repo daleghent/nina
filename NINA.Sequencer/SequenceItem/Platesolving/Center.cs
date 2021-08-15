@@ -155,7 +155,7 @@ namespace NINA.Sequencer.SequenceItem.Platesolving {
                     await guiderMediator.StartGuiding(false, progress, token);
                 }
                 if (result.Success == false) {
-                    throw new Exception(Loc.Instance["LblPlatesolveFailed"]);
+                    throw new SequenceEntityFailedException(Loc.Instance["LblPlatesolveFailed"]);
                 }
             } finally {
                 service.DelayedClose(TimeSpan.FromSeconds(10));

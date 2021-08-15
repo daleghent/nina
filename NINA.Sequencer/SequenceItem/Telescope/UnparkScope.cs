@@ -61,10 +61,6 @@ namespace NINA.Sequencer.SequenceItem.Telescope {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (!Validate()) {
-                throw new SequenceEntityFailedValidationException(string.Join(", ", Issues));
-            }
-
             bool success = await telescopeMediator.UnparkTelescope(progress, token);
 
             if (!success) {

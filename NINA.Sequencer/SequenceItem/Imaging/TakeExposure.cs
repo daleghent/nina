@@ -166,54 +166,50 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
         }
 
         public override async Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
-            if (Validate()) {
-                var capture = new CaptureSequence() {
-                    ExposureTime = ExposureTime,
-                    Binning = Binning,
-                    Gain = Gain,
-                    Offset = Offset,
-                    ImageType = ImageType,
-                    ProgressExposureCount = ExposureCount,
-                    TotalExposureCount = ExposureCount + 1,
-                };
+            var capture = new CaptureSequence() {
+                ExposureTime = ExposureTime,
+                Binning = Binning,
+                Gain = Gain,
+                Offset = Offset,
+                ImageType = ImageType,
+                ProgressExposureCount = ExposureCount,
+                TotalExposureCount = ExposureCount + 1,
+            };
 
-                var imageParams = new PrepareImageParameters(null, false);
-                if (IsLightSequence()) {
-                    imageParams = new PrepareImageParameters(true, true);
-                }
-
-                var target = RetrieveTarget(this.Parent);
-
-                var exposureData = await imagingMediator.CaptureImage(capture, token, progress);
-
-                var imageData = await exposureData.ToImageData(progress, token);
-
-                var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
-
-                if (target != null) {
-                    imageData.MetaData.Target.Name = target.TargetName;
-                    imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
-                    imageData.MetaData.Target.Rotation = target.Rotation;
-                }
-
-                ISequenceContainer parent = Parent;
-                while (parent != null && !(parent is SequenceRootContainer)) {
-                    parent = parent.Parent;
-                }
-                if (parent is SequenceRootContainer item) {
-                    imageData.MetaData.Sequence.Title = item.SequenceTitle;
-                }
-
-                await imageSaveMediator.Enqueue(imageData, prepareTask, progress, token);
-
-                if (IsLightSequence()) {
-                    imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageType);
-                }
-
-                ExposureCount++;
-            } else {
-                throw new SequenceItemSkippedException(string.Join(",", Issues));
+            var imageParams = new PrepareImageParameters(null, false);
+            if (IsLightSequence()) {
+                imageParams = new PrepareImageParameters(true, true);
             }
+
+            var target = RetrieveTarget(this.Parent);
+
+            var exposureData = await imagingMediator.CaptureImage(capture, token, progress);
+
+            var imageData = await exposureData.ToImageData(progress, token);
+
+            var prepareTask = imagingMediator.PrepareImage(imageData, imageParams, token);
+
+            if (target != null) {
+                imageData.MetaData.Target.Name = target.TargetName;
+                imageData.MetaData.Target.Coordinates = target.InputCoordinates.Coordinates;
+                imageData.MetaData.Target.Rotation = target.Rotation;
+            }
+
+            ISequenceContainer parent = Parent;
+            while (parent != null && !(parent is SequenceRootContainer)) {
+                parent = parent.Parent;
+            }
+            if (parent is SequenceRootContainer item) {
+                imageData.MetaData.Sequence.Title = item.SequenceTitle;
+            }
+
+            await imageSaveMediator.Enqueue(imageData, prepareTask, progress, token);
+
+            if (IsLightSequence()) {
+                imageHistoryVM.Add(imageData.MetaData.Image.Id, await imageData.Statistics, ImageType);
+            }
+
+            ExposureCount++;
         }
 
         private bool IsLightSequence() {
