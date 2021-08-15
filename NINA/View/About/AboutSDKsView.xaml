@@ -50,6 +50,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <TextBlock FontWeight="Bold" Text="{ns:Loc LblVendor}" />
             <TextBlock
@@ -126,6 +127,12 @@
                 Grid.Row="11"
                 Grid.Column="1"
                 Text="{Binding SVBonySDKVersion}" />
+
+            <TextBlock Grid.Row="12" Text="SBIG" />
+            <TextBlock
+                Grid.Row="12"
+                Grid.Column="1"
+                Text="{Binding SBIGSDKVersion}" />
         </Grid>
     </Grid>
 </UserControl>

@@ -87,6 +87,9 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ### SVBony
 - Added a native driver for SVBony cameras. Currently without temperature control and tested with SVBony 305M Pro.
 
+### SBIG
+- Added a native driver for SBIG cameras.
+
 ### ASCOM Dome
 - ASCOM Domes are supported throughout the application
   - Natively provides azimuth synchronization with the telescope, so no additional applications are needed (such as ASCOM Device Hub)
