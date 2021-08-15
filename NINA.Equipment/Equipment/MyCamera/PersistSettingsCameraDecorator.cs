@@ -51,7 +51,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     this.profileService.ActiveProfile.CameraSettings.BinningY = null;
                 }
             }
-            if (this.profileService.ActiveProfile.CameraSettings.Gain.HasValue) {
+            if (this.profileService.ActiveProfile.CameraSettings.Gain.HasValue && this.Camera.CanSetGain) {
                 try {
                     this.Camera.Gain = this.profileService.ActiveProfile.CameraSettings.Gain.Value;
                 } catch (Exception e) {
@@ -59,7 +59,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     this.profileService.ActiveProfile.CameraSettings.Gain = null;
                 }
             }
-            if (this.profileService.ActiveProfile.CameraSettings.Offset.HasValue) {
+            if (this.profileService.ActiveProfile.CameraSettings.Offset.HasValue && this.Camera.CanSetOffset) {
                 try {
                     this.Camera.Offset = this.profileService.ActiveProfile.CameraSettings.Offset.Value;
                 } catch (Exception e) {
@@ -67,7 +67,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     this.profileService.ActiveProfile.CameraSettings.Offset = null;
                 }
             }
-            if (this.profileService.ActiveProfile.CameraSettings.USBLimit.HasValue) {
+            if (this.profileService.ActiveProfile.CameraSettings.USBLimit.HasValue && this.Camera.CanSetUSBLimit) {
                 try {
                     this.Camera.USBLimit = this.profileService.ActiveProfile.CameraSettings.USBLimit.Value;
                 } catch (Exception e) {
@@ -200,13 +200,22 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public int BitDepth => this.Camera.BitDepth;
 
-        public int Offset { get => this.Camera.Offset; set => this.Camera.Offset = value; }
+        public int Offset { 
+            get => this.Camera.Offset;
+            set {
+                if (this.Camera.CanSetOffset) {
+                    this.Camera.Offset = value;
+                }
+            }
+        }
 
         public int USBLimit {
             get => this.Camera.USBLimit;
             set {
-                this.Camera.USBLimit = value;
-                this.profileService.ActiveProfile.CameraSettings.USBLimit = value;
+                if (this.Camera.CanSetUSBLimit) {
+                    this.Camera.USBLimit = value;
+                    this.profileService.ActiveProfile.CameraSettings.USBLimit = value;
+                }
             }
         }
 
@@ -232,7 +241,19 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public int GainMin => this.Camera.GainMin;
 
-        public int Gain { get => this.Camera.Gain; set => this.Camera.Gain = value; }
+        public int Gain {
+            get {
+                if (CanGetGain) {
+                    return this.Camera.Gain;
+                }
+                return -1;
+            }
+            set {
+                if (CanSetGain) {
+                    this.Camera.Gain = value;
+                }
+            }
+        }
 
         public double ElectronsPerADU => this.Camera.ElectronsPerADU;
 

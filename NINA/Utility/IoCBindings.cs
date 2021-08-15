@@ -67,6 +67,8 @@ using NINA.Interfaces;
 using NINA.ViewModel.Plugins;
 using NINA.PlateSolving.Interfaces;
 using NINA.PlateSolving;
+using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
+using NINA.Core.Interfaces.Utility;
 
 namespace NINA.Utility {
 
@@ -120,7 +122,8 @@ namespace NINA.Utility {
                     Bind<IDeviceChooserVM>().To<GuiderChooserVM>().WhenInjectedExactlyInto<GuiderVM>().InSingletonScope();
                     Bind<IFlatWizardUserPromptVM>().To<FlatWizardUserPromptVM>().InSingletonScope();
                     Bind<ITwilightCalculator>().To<TwilightCalculator>().InSingletonScope();
-
+                    Bind<IMicroCacheFactory>().To<DefaultMicroCacheFactory>().InSingletonScope();
+                    Bind<ISbigSdk>().To<SbigSdk>().InSingletonScope();
                     Bind<ProjectVersion>().ToMethod(f => new ProjectVersion(NINA.Core.Utility.CoreUtil.Version)).InSingletonScope();
 
                     Bind<IFlatWizardVM>().ToMethod(f => new FlatWizardVM(f.Kernel.Get<IProfileService>(),

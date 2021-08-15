@@ -30,14 +30,19 @@ using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces;
 using NINA.WPF.Base.Model.Equipment.MyCamera.Simulator;
 using NINA.Equipment.SDK.CameraSDKs.SVBonySDK;
+using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
     public class CameraChooserVM : DeviceChooserVM {
-        private ITelescopeMediator telescopeMediator;
+        private readonly ITelescopeMediator telescopeMediator;
+        private readonly ISbigSdk sbigSdk;
 
-        public CameraChooserVM(IProfileService profileService, ITelescopeMediator telescopeMediator) : base(profileService) {
+        public CameraChooserVM(
+            IProfileService profileService, ITelescopeMediator telescopeMediator, ISbigSdk sbigSdk
+            ) : base(profileService) {
             this.telescopeMediator = telescopeMediator;
+            this.sbigSdk = sbigSdk;
         }
 
         public override void GetEquipment() {
@@ -160,6 +165,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 /* SVBony */
                 try {
                     var provider = new SVBonyProvider(profileService);
+                    devices.AddRange(provider.GetEquipment());
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                /* SBIG */
+                try {
+                    var provider = new SBIGCameraProvider(profileService, sbigSdk);
                     devices.AddRange(provider.GetEquipment());
                 } catch (Exception ex) {
                     Logger.Error(ex);

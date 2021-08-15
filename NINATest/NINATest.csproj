@@ -418,6 +418,7 @@
     <Compile Include="FlatDevice\AlnitakFlipFlatSimulatorTest.cs" />
     <Compile Include="FlatDevice\FlatDeviceSettingsTest.cs" />
     <Compile Include="Dome\DomeSynchronizationTest.cs" />
+    <Compile Include="Utility\BlittableTest.cs" />
     <Compile Include="Utility\ObservableRectangleTest.cs" />
     <Compile Include="WeatherData\PegasusAstro\UltimatePowerboxV2Test.cs" />
     <Compile Include="XISFTest.cs" />
