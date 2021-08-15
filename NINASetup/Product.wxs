@@ -596,6 +596,9 @@
       <Component Win64="$(var.Win64)" Id="Trinet.Core.IO.Ntfs.dll" Guid="194dc6f2-ec04-439a-ab26-b9edbe4daee0">
         <File Id="Trinet.Core.IO.Ntfs.dll" Name="Trinet.Core.IO.Ntfs.dll" Source="$(var.NINA_TargetDir)Trinet.Core.IO.Ntfs.dll" />
       </Component>
+      <Component Win64="$(var.Win64)" Id="MdXaml.dll" Guid="dd68150f-b4f4-42a7-af8d-67f830c48918">
+        <File Id="MdXaml.dll" Name="MdXaml.dll" Source="$(var.NINA_TargetDir)MdXaml.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>

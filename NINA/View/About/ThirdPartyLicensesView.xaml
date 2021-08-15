@@ -57,6 +57,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock FontWeight="Bold">Library</TextBlock>
@@ -321,6 +322,17 @@
             </TextBlock>
             <TextBlock Grid.Row="23" Grid.Column="2">
                 <Hyperlink NavigateUri="https://opensource.org/licenses/BSD-2-Clause" RequestNavigate="Hyperlink_RequestNavigate">The 2-Clause BSD License</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="24"
+                Grid.Column="0"
+                Text="MdXaml" />
+            <TextBlock Grid.Row="24" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/whistyun/MdXaml" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/whistyun/MdXaml</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="24" Grid.Column="2">
+                <Hyperlink NavigateUri="https://opensource.org/licenses/MIT" RequestNavigate="Hyperlink_RequestNavigate">The MIT License</Hyperlink>
             </TextBlock>
         </Grid>
     </Grid>

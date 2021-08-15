@@ -52,6 +52,7 @@
                 <ResourceDictionary Source="Resources\Styles\ToggleSwitch.xaml" />
                 <ResourceDictionary Source="Resources\Styles\ContextMenu.xaml" />
                 <ResourceDictionary Source="Resources\Styles\SplitButton.xaml" />
+                <ResourceDictionary Source="Resources\Styles\Markdown.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/ToastNotifications.Messages;component/Themes/Default.xaml" />
                 <ResourceDictionary Source="Resources\Styles\ProgressStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
