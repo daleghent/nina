@@ -52,5 +52,9 @@ namespace NINA.Astrometry {
             var coordinates = new Coordinates(ra, dec, Epoch.J2000);
             return coordinates.Transform(epoch);
         }
+
+        public override string ToString() {
+            return $"Alt: {this.Altitude}; Az: {this.Azimuth}";
+        }
     }
 }
