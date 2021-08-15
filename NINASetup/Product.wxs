@@ -603,6 +603,9 @@
       <Component Win64="$(var.Win64)" Id="MdXaml.dll" Guid="dd68150f-b4f4-42a7-af8d-67f830c48918">
         <File Id="MdXaml.dll" Name="MdXaml.dll" Source="$(var.NINA_TargetDir)MdXaml.dll" />
       </Component>
+      <Component Win64="$(var.Win64)" Id="ICSharpCode.AvalonEdit.dll" Guid="1c6db533-6ea8-4091-93be-7d16b6be9054">
+        <File Id="ICSharpCode.AvalonEdit.dll" Name="ICSharpCode.AvalonEdit.dll" Source="$(var.NINA_TargetDir)ICSharpCode.AvalonEdit.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
