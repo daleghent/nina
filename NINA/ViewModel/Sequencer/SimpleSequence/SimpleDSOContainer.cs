@@ -707,6 +707,11 @@ namespace NINA.Sequencer.Container {
             return (resp != null);
         }
 
+        public override string ToString() {
+            var baseString = base.ToString();
+            return $"{baseString}, Target: {Target?.TargetName} {Target?.InputCoordinates?.Coordinates} {Target?.Rotation}";
+        }
+
         public ICommand AddSimpleExposureCommand { get; private set; }
         public ICommand RemoveSimpleExposureCommand { get; private set; }
         public ICommand ResetSimpleExposureCommand { get; private set; }

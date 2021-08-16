@@ -482,7 +482,7 @@ namespace NINA.ViewModel {
             dialog.Multiselect = false;
             dialog.Title = Loc.Instance["LblLoadTargetSet"];
             if (string.IsNullOrEmpty(SavePath) || Path.GetExtension(SavePath) != ".ninaTargetSet") {
-                dialog.InitialDirectory = profileService.ActiveProfile.SequenceSettings.DefaultSequenceFolder;
+                dialog.InitialDirectory = initialDirectory;
                 dialog.FileName = "";
             } else {
                 dialog.InitialDirectory = Path.GetDirectoryName(SavePath);
