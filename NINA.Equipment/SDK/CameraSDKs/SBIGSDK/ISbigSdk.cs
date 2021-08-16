@@ -10,11 +10,19 @@ using System.Threading;
 
 namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
 
-    public struct CameraQueryInfo {
+    public struct DeviceQueryInfo {
         public SBIG.CameraType CameraType;
         public string Name;
         public string SerialNumber;
         public SBIG.DeviceType DeviceId;
+        public FilterWheelInfo? FilterWheelInfo;
+    }
+
+    public struct DeviceInfo {
+        public SBIG.DeviceType DeviceId;
+        public SBIG.CameraType CameraType;
+        public CcdCameraInfo? CameraInfo;
+        public FilterWheelInfo? FilterWheelInfo;
     }
 
     public struct ReadoutMode {
@@ -101,15 +109,30 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         public CcdType CcdType;
     }
 
+    public struct FilterWheelInfo {
+        public SBIG.CfwModelSelect Model;
+        public SBIG.CfwPosition Position;
+        public SBIG.CfwStatus Status;
+        public uint FirmwareVersion;
+        public uint FilterCount;
+    }
+
+    public struct FilterWheelStatus {
+        public SBIG.CfwPosition Position;
+        public SBIG.CfwStatus Status;
+    }
+
+    public class SBIGExposureData {
+        public ushort[] Data;
+        public ushort Width;
+        public ushort Height;
+    }
+
     public interface ISbigSdk {
 
-        void InitSdk();
+        DeviceInfo OpenDevice(SBIG.DeviceType deviceId);
 
-        void ReleaseSdk();
-
-        SBIG.CameraType OpenDevice(SBIG.DeviceType deviceId);
-
-        void CloseDevice();
+        void CloseDevice(SBIG.DeviceType deviceId);
 
         string GetSdkVersion();
 
@@ -119,22 +142,28 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
 
         R UnivDrvCommand<P, R>(SBIG.Cmd command, P Params) where R : new();
 
-        CameraQueryInfo[] QueryUsbCameras();
+        DeviceQueryInfo[] QueryUsbDevices();
 
-        CcdCameraInfo GetCameraInfo();
+        CcdCameraInfo GetCameraInfo(SBIG.DeviceType deviceId);
 
-        SBIG.QueryTemperatureStatusResults2 QueryTemperatureStatus();
+        FilterWheelInfo? GetFilterWheelInfo(SBIG.DeviceType deviceId);
 
-        void RegulateTemperature(double celcius);
+        SBIG.QueryTemperatureStatusResults2 QueryTemperatureStatus(SBIG.DeviceType deviceId);
 
-        void DisableTemperatureRegulation();
+        void RegulateTemperature(SBIG.DeviceType deviceId, double celcius);
 
-        CommandState GetExposureState();
+        void DisableTemperatureRegulation(SBIG.DeviceType deviceId);
 
-        SBIG.StartExposureParams2 StartExposure(ReadoutMode readoutMode, bool darkFrame, double exposureTimeSecs, Point exposureStart, Size exposureSize);
+        CommandState GetExposureState(SBIG.DeviceType deviceId);
 
-        void EndExposure();
+        void StartExposure(SBIG.DeviceType deviceId, ReadoutMode readoutMode, bool darkFrame, double exposureTimeSecs, Point exposureStart, Size exposureSize);
 
-        ushort[] DownloadExposure(SBIG.StartExposureParams2 exposureParams, CancellationToken ct);
+        void EndExposure(SBIG.DeviceType deviceId);
+
+        SBIGExposureData DownloadExposure(SBIG.DeviceType deviceId, CancellationToken ct);
+
+        void SetFilterWheelPosition(SBIG.DeviceType deviceId, ushort position);
+
+        FilterWheelStatus GetFilterWheelStatus(SBIG.DeviceType deviceId);
     }
 }

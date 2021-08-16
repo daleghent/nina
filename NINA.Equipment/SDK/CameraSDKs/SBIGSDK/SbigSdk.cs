@@ -20,14 +20,82 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
     public class SbigSdk : ISbigSdk {
 
         private object driverLock = new object();
-        private object exposureLock = new object();
         private IMicroCache<SBIG.QueryTemperatureStatusResults2> queryTemperatureStatusCache;
-        private CcdCameraInfo openedCameraInfo;
 
-        private static bool sdkIsInitialized = false;
-        private static byte refCount = 0;
-        private static SBIG.DeviceType? openedDevice;
-        private static SBIG.CameraType openedDeviceType = SBIG.CameraType.NoCamera;
+        private class ConnectedDevice {
+            public DeviceInfo deviceInfo;
+            public SBIG.StartExposureParams2 latestStartExposureParams;
+            public byte refCount = 0;
+            public short handle;
+        }
+        private Dictionary<SBIG.DeviceType, ConnectedDevice> connectedDevices = new Dictionary<SBIG.DeviceType, ConnectedDevice>();
+
+        /// <summary>
+        /// An RAII contain for open driver handles that restores the previous driver instance on release, and additionally closes the driver instance if it owns (created) it
+        /// </summary>
+        private class DriverInstance : IDisposable {
+
+            private readonly ISbigSdk sbigSdk;
+
+            private readonly short previousHandle;
+
+            public short Handle { get; private set; }
+
+            private bool ownsHandle;
+
+            private DriverInstance(ISbigSdk sbigSdk, short handle, bool ownsHandle, short previousHandle) {
+                this.sbigSdk = sbigSdk;
+                Handle = handle;
+                this.ownsHandle = ownsHandle;
+                this.previousHandle = previousHandle;
+            }
+
+            public static DriverInstance Create(ISbigSdk sbigSdk) {
+                var driverHandleResult = sbigSdk.UnivDrvCommand<object, SBIG.GetDriverHandleResults>(SBIG.Cmd.CC_GET_DRIVER_HANDLE, null);
+                var previousHandle = driverHandleResult.handle;
+                sbigSdk.UnivDrvCommand<short>(SBIG.Cmd.CC_SET_DRIVER_HANDLE, -1);
+                sbigSdk.UnivDrvCommand<object>(SBIG.Cmd.CC_OPEN_DRIVER, null);
+                driverHandleResult = sbigSdk.UnivDrvCommand<object, SBIG.GetDriverHandleResults>(SBIG.Cmd.CC_GET_DRIVER_HANDLE, null);
+                var handle = driverHandleResult.handle;
+                bool ownsHandle = true;
+
+                // The SBIG SDK seems to "optimize" by not actually creating a new instance if an already open instance doesn't have an open device. In this case, we can't close
+                // on release
+                if (handle == previousHandle) {
+                    Logger.Trace($"SBIGSDK: New driver instance {handle} is the same as the already active one. Relinquishing ownership");
+                    ownsHandle = false;
+                } else {
+                    Logger.Trace($"SBIGSDK: Created driver instance {handle}");
+                }
+                return new DriverInstance(sbigSdk, handle: handle, ownsHandle: ownsHandle, previousHandle: previousHandle);
+            }
+
+            public static DriverInstance GetExisting(ISbigSdk sbigSdk, short handle) {
+                var driverHandleResult = sbigSdk.UnivDrvCommand<object, SBIG.GetDriverHandleResults>(SBIG.Cmd.CC_GET_DRIVER_HANDLE, null);
+                var previousHandle = driverHandleResult.handle;
+                Logger.Trace($"SBIGSDK: Setting existing driver instance {handle}");
+                sbigSdk.UnivDrvCommand<short>(SBIG.Cmd.CC_SET_DRIVER_HANDLE, handle);
+                return new DriverInstance(sbigSdk, handle: handle, ownsHandle: false, previousHandle: previousHandle);
+            }
+
+            public void ReleaseOwnership() {
+                // This method is useful if you create a driver instance that successfully later opens a device, so we avoid closing on release
+                this.ownsHandle = false;
+            }
+
+            public void Dispose() {
+                if (ownsHandle) {
+                    Logger.Trace($"SBIGSDK: Closing driver instance {this.Handle}");
+                    SBIG.UnivDrvCommand(SBIG.Cmd.CC_CLOSE_DRIVER, null);
+                    ownsHandle = false;
+                }
+
+                if (this.previousHandle != this.Handle) {
+                    Logger.Trace($"SBIGSDK: Restoring previous handle {this.previousHandle}");
+                    sbigSdk.UnivDrvCommand<short>(SBIG.Cmd.CC_SET_DRIVER_HANDLE, this.previousHandle);
+                }
+            }
+        }
 
         public SbigSdk(IMicroCacheFactory microCacheFactory) {
             this.queryTemperatureStatusCache = microCacheFactory.Create<SBIG.QueryTemperatureStatusResults2>();
@@ -42,80 +110,99 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         }
 
         /// <summary>
-        /// Ensures the SDK is initialized, and increments a ref counter if it already is
-        /// </summary>
-        public void InitSdk() {
-            lock (driverLock) {
-                Logger.Trace($"SBIGSDK: Initializing SBIG SDK, refCount={refCount}, sdkIsInitialized={sdkIsInitialized}");
-
-                if (!sdkIsInitialized && refCount == 0) {
-                    UnivDrvCommand<object>(SBIG.Cmd.CC_OPEN_DRIVER, null);
-                    sdkIsInitialized = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Releases the SDK, freeing it if the ref count drops to 0. Every SDK client should call InitSdk on initialization, and ReleaseSdk on teardown
-        /// </summary>
-        public void ReleaseSdk() {
-            lock (driverLock) {
-                Logger.Trace($"SBIGSDK: Releasing SBIG SDK, refCount={refCount}");
-
-                if (sdkIsInitialized && refCount == 0) {
-                    if (openedDevice.HasValue) {
-                        CloseDevice();
-                    }
-
-                    SBIG.UnivDrvCommand(SBIG.Cmd.CC_CLOSE_DRIVER, null);
-                    sdkIsInitialized = false;
-                }
-            }
-        }
-
-        /// <summary>
         /// Opens the device connected on the interface defined by deviceId
         /// </summary>
         /// <param name="deviceId">An enumeration representing the port and connection type for the device (ie, USB1, USB2, etc). The deviceId from QueryUsbDevices should be provided</param>
-        /// <returns>The type of device opened up. Raises an exception if the device couldn't be opened</returns>
-        public SBIG.CameraType OpenDevice(SBIG.DeviceType deviceId) {
+        /// <returns>Information about the opened device. Raises an exception if the device couldn't be opened</returns>
+        public DeviceInfo OpenDevice(SBIG.DeviceType deviceId) {
             lock (driverLock) {
-                Logger.Trace($"SBIGSDK: Opening device {deviceId}, refCount={refCount}");
+                Logger.Trace($"SBIGSDK: Opening device {deviceId}");
 
-                if (openedDevice.HasValue) {
-                    if (openedDevice.Value == deviceId) {
-                        Logger.Trace($"SBIGSDK: Device {deviceId} already opened. Only increasing ref count");
-                    } else {
-                        throw new Exception($"Cannot open {deviceId} when {openedDevice.Value} is already open");
-                    }
+                ConnectedDevice connectedDevice;
+                if (connectedDevices.TryGetValue(deviceId, out connectedDevice)) {
+                    Logger.Trace($"SBIGSDK: Device {deviceId} already open, deviceRefCount={connectedDevice.refCount}");
+                    ++connectedDevice.refCount;
                 } else {
-                    UnivDrvCommand(SBIG.Cmd.CC_OPEN_DEVICE, new SBIG.OpenDeviceParams { deviceType = deviceId });
-                    var result = UnivDrvCommand<SBIG.EstablishLinkParams, SBIG.EstablishLinkResults>(SBIG.Cmd.CC_ESTABLISH_LINK, new SBIG.EstablishLinkParams());
-                    openedDeviceType = result.cameraType;
-                    if (openedDeviceType != SBIG.CameraType.NoCamera) {
-                        openedCameraInfo = GetCameraInfo();
-                    }
-                    openedDevice = deviceId;
-                }
+                    using (var driver = DriverInstance.Create(this)) {
+                        UnivDrvCommand(SBIG.Cmd.CC_OPEN_DEVICE, new SBIG.OpenDeviceParams { deviceType = deviceId });
+                        var linkResult = UnivDrvCommand<SBIG.EstablishLinkParams, SBIG.EstablishLinkResults>(SBIG.Cmd.CC_ESTABLISH_LINK, new SBIG.EstablishLinkParams());
+                        CcdCameraInfo? cameraInfo = null;
+                        if (linkResult.cameraType != SBIG.CameraType.NoCamera) {
+                            cameraInfo = GetCameraInfoAlreadyActive();
+                        }
 
-                ++refCount;
-                Logger.Trace($"SBIGSDK: Opened device {deviceId}, cameraType={openedDeviceType}, refCount={refCount}");
-                return openedDeviceType;
+                        var filterWheelInfo = GetFilterWheelInfoAlreadyActive();
+                        connectedDevice = new ConnectedDevice() {
+                            deviceInfo = new DeviceInfo() {
+                                DeviceId = deviceId,
+                                CameraType = linkResult.cameraType,
+                                FilterWheelInfo = filterWheelInfo,
+                                CameraInfo = cameraInfo
+                            },
+                            handle = driver.Handle,
+                            refCount = 1
+                        };
+                        connectedDevices.Add(deviceId, connectedDevice);
+                        driver.ReleaseOwnership();
+
+                        Logger.Trace($"SBIGSDK: Opened device {deviceId}, cameraType={linkResult.cameraType}");
+                    }
+                }
+                return connectedDevice.deviceInfo;
             }
         }
 
-        /// <summary>
-        /// Closes the open device
-        /// NOTE: For now this supports just one open device. When Filter Wheel support is added, this will likely take a parameter to know which device to close
-        /// </summary>
-        public void CloseDevice() {
+        private ConnectedDevice GetConnectedDevice(SBIG.DeviceType deviceId) {
             lock (driverLock) {
-                Logger.Trace($"SBIGSDK: Closing device {openedDevice}");
-
-                if (openedDevice.HasValue) {
-                    SBIG.UnivDrvCommand(SBIG.Cmd.CC_CLOSE_DEVICE, null);
-                    openedDevice = null;
+                ConnectedDevice result;
+                if (connectedDevices.TryGetValue(deviceId, out result)) {
+                    return result;
+                } else {
+                    return null;
                 }
+            }
+        }
+
+        private DriverInstance SetActiveDriver(SBIG.DeviceType deviceId) {
+            lock (driverLock) {
+                var connectedDevice = GetConnectedDevice(deviceId);
+                if (connectedDevice != null) {
+                    return DriverInstance.GetExisting(this, connectedDevice.handle);
+                }
+                return null;
+            }
+        }
+
+        private DriverInstance EnsureActiveDriver(SBIG.DeviceType deviceId) {
+            var activeDevice = SetActiveDriver(deviceId);
+            if (activeDevice == null) {
+                throw new Exception($"SBIG device {deviceId} is not connected");
+            }
+            return activeDevice;
+        }
+
+        /// <summary>
+        /// Closes the connected device
+        /// </summary>
+        /// <param name="deviceId">The connected device to operate on</param>
+        public void CloseDevice(SBIG.DeviceType deviceId) {
+            lock (driverLock) {
+                Logger.Trace($"SBIGSDK: Closing device {deviceId}");
+                var connectedDevice = GetConnectedDevice(deviceId);
+                if (connectedDevice == null) {
+                    // No connected device, move on
+                    Logger.Warning($"SBIGSDK: Can't close device {deviceId}, since it doesn't seem to be open");
+                } else if (connectedDevice.refCount > 1) {
+                    Logger.Trace($"SBIGSDK: Released device {deviceId}, deviceRefCount={connectedDevice.refCount}");
+                    --connectedDevice.refCount;
+                } else {
+                    using (var driver = SetActiveDriver(deviceId)) {
+                        SBIG.UnivDrvCommand(SBIG.Cmd.CC_CLOSE_DEVICE, null);
+                        connectedDevices.Remove(deviceId);
+                    }
+
+                    Logger.Trace($"SBIGSDK: Closed device {deviceId}");
+                }                
             }
         }
 
@@ -138,8 +225,55 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// <summary>
         /// Gets a unified set of camera settings and information for the connected imaging device
         /// </summary>
+        /// <param name="deviceId">The connected device to operate on</param>
         /// <returns>A struct containing a union of all relevant camera information</returns>
-        public CcdCameraInfo GetCameraInfo() {
+        public CcdCameraInfo GetCameraInfo(SBIG.DeviceType deviceId) {
+            lock (driverLock) {
+                using (var driver = EnsureActiveDriver(deviceId)) {
+                    return GetCameraInfoAlreadyActive();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets information about the connected filter wheel. If the device doesn't have a filter wheel, then this returns null
+        /// </summary>
+        /// <param name="deviceId">The connected device to operate on</param>
+        /// <returns>A struct containing a union of all relevant filter wheel information, or null if there's no filter wheel on the requested device</returns>
+        public FilterWheelInfo? GetFilterWheelInfo(SBIG.DeviceType deviceId) {
+            lock (driverLock) {
+                using (var driver = EnsureActiveDriver(deviceId)) {
+                    return GetFilterWheelInfoAlreadyActive();
+                }
+            }
+        }
+
+        private FilterWheelInfo? GetFilterWheelInfoAlreadyActive() {
+            try {
+                var cfwParams = new SBIG.CfwParams() {
+                    cfwModel = SBIG.CfwModelSelect.CFWSEL_AUTO,
+                    cfwCommand = SBIG.CfwCommand.CFWC_GET_INFO,
+                    cfwParam1 = (ushort)SBIG.CfwGetInfoSelect.CFWG_FIRMWARE_VERSION
+                };
+                var cfwResult = UnivDrvCommand<SBIG.CfwParams, SBIG.CfwResult>(SBIG.Cmd.CC_CFW, cfwParams);
+                return new FilterWheelInfo() {
+                    Model = cfwResult.cfwModel,
+                    Position = cfwResult.cfwPosition,
+                    Status = cfwResult.cfwStatus,
+                    FirmwareVersion = cfwResult.cfwResult1,
+                    FilterCount = cfwResult.cfwResult2
+                };
+            } catch (Exception) {
+                // UnivDrvCommand throws a CE_BAD_PARAMETER error if there's no filter wheel on the device. This is unfortunately the only way to tell if there's a FW
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets camera info for a device that's already active. This is useful during initial device connection
+        /// </summary>
+        /// <returns>A struct containing a union of all relevant camera information</returns>
+        private CcdCameraInfo GetCameraInfoAlreadyActive() {             
             var cameraInfo = new CcdCameraInfo();
             var ccdInfo01 = UnivDrvCommand<SBIG.GetCcdInfoParams, SBIG.GetCcdInfoResults01>(
                 SBIG.Cmd.CC_GET_CCD_INFO, new SBIG.GetCcdInfoParams(SBIG.CcdInfoRequest.ImagingCcdStandard));
@@ -284,14 +418,23 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// Queries temperature status from the connected CCD camera. This uses a thread-safe cache with a 1-second TTL to simplify accessing the temperature information
         /// without overwhelming the device with one request per property per device poll
         /// </summary>
+        /// <param name="deviceId">The connected device to operate on</param>
         /// <returns>The queried temperature status</returns>
-        public SBIG.QueryTemperatureStatusResults2 QueryTemperatureStatus() {
-            var serialNumber = openedCameraInfo.SerialNumber;
-            return this.queryTemperatureStatusCache.GetOrAdd(
-                serialNumber,
-                () => UnivDrvCommand<SBIG.QueryTemperatureStatusParams, SBIG.QueryTemperatureStatusResults2>(
-                SBIG.Cmd.CC_QUERY_TEMPERATURE_STATUS, new SBIG.QueryTemperatureStatusParams(SBIG.TempStatusRequest.TEMP_STATUS_ADVANCED2)),
-                TimeSpan.FromSeconds(1));
+        public SBIG.QueryTemperatureStatusResults2 QueryTemperatureStatus(SBIG.DeviceType deviceId) {
+            lock (driverLock) {
+                var connectedDevice = GetConnectedDevice(deviceId);
+                var serialNumber = connectedDevice.deviceInfo.CameraInfo.Value.SerialNumber;
+                return this.queryTemperatureStatusCache.GetOrAdd(
+                    serialNumber,
+                    () => { 
+                        using (var driver = EnsureActiveDriver(deviceId)) {
+                            return UnivDrvCommand<SBIG.QueryTemperatureStatusParams, SBIG.QueryTemperatureStatusResults2>(
+                                SBIG.Cmd.CC_QUERY_TEMPERATURE_STATUS,
+                                new SBIG.QueryTemperatureStatusParams(SBIG.TempStatusRequest.TEMP_STATUS_ADVANCED2));
+                         }
+                    },
+                    TimeSpan.FromSeconds(1));
+            }
         }
 
         /// <summary>
@@ -372,140 +515,231 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// Queries all cameras connected on the USB bus
         /// </summary>
         /// <returns>An array containing all connected cameras. This will be empty if there are no cameras.</returns>
-        public CameraQueryInfo[] QueryUsbCameras() {
-            var queryResults = UnivDrvCommand<object, SBIG.QueryUsbResults>(SBIG.Cmd.CC_QUERY_USB, (object)null);
-            var queryInfos = new CameraQueryInfo[queryResults.camerasFound];
-            for (int i = 0; i < queryResults.camerasFound; i++) {
-                queryInfos[i].CameraType = queryResults.dev[i].cameraType;
-                queryInfos[i].Name = queryResults.dev[i].name;
-                queryInfos[i].SerialNumber = queryResults.dev[i].serialNumber;
-                queryInfos[i].DeviceId = (SBIG.DeviceType)((ushort)SBIG.DeviceType.USB1 + i);
+        public DeviceQueryInfo[] QueryUsbDevices() {
+            lock (driverLock) {
+                using (var driver = DriverInstance.Create(this)) {
+                    var queryResults = UnivDrvCommand<object, SBIG.QueryUsbResults>(SBIG.Cmd.CC_QUERY_USB, (object)null);
+
+                    // Queried USB devices excludes already connected devices, so we have to manually append them to the list so devices that comprise multiple equipment can 
+                    // be independently connected
+                    var queryInfos = new DeviceQueryInfo[queryResults.camerasFound + connectedDevices.Count];
+                    for (int i = 0; i < queryResults.camerasFound; i++) {
+                        queryInfos[i].CameraType = queryResults.dev[i].cameraType;
+                        queryInfos[i].Name = queryResults.dev[i].name;
+                        queryInfos[i].SerialNumber = queryResults.dev[i].serialNumber;
+                        queryInfos[i].DeviceId = (SBIG.DeviceType)((ushort)SBIG.DeviceType.USB1 + i);
+                        DeviceInfo? connectedDevice;
+                        try {
+                            connectedDevice = OpenDevice(queryInfos[i].DeviceId);
+                            queryInfos[i].FilterWheelInfo = connectedDevice?.FilterWheelInfo;
+                        } finally {
+                            CloseDevice(queryInfos[i].DeviceId);
+                        }
+                    }
+                    int j = queryResults.camerasFound;
+                    foreach (var connectedDevice in connectedDevices.Values) {
+                        queryInfos[j].CameraType = connectedDevice.deviceInfo.CameraType;
+                        queryInfos[j].Name = connectedDevice.deviceInfo.CameraInfo.Value.Name;
+                        queryInfos[j].SerialNumber = connectedDevice.deviceInfo.CameraInfo.Value.SerialNumber;
+                        queryInfos[j].DeviceId = connectedDevice.deviceInfo.DeviceId;
+                        queryInfos[j].FilterWheelInfo = connectedDevice.deviceInfo.FilterWheelInfo;
+                        ++j;
+                    }
+
+                    return queryInfos;
+                }
             }
-            return queryInfos;
         }
 
         /// <summary>
         /// Enables temperature regulation at the given set point. If temperature regulation is already enabled, it updates the set point
         /// </summary>
+        /// <param name="deviceId">The connected device to operate on</param>
         /// <param name="celcius">The set point</param>
-        public void RegulateTemperature(double celcius) {
-            // CONSIDER: AutoFreeze is an option for guiding cameras to reduce readout noise. It would be easy to support as an equipment option, but probably
-            // won't be needed for regular imaging
-            var tempRegulationParams = new SBIG.SetTemperatureRegulationParams2 {
-                state = SBIG.TemperatureRegulation.On,
-                ccdSetpointCelcius = celcius
-            };
-            UnivDrvCommand(SBIG.Cmd.CC_SET_TEMPERATURE_REGULATION2, tempRegulationParams);
-            this.queryTemperatureStatusCache.Remove(openedCameraInfo.SerialNumber);
+        public void RegulateTemperature(SBIG.DeviceType deviceId, double celcius) {
+            lock (driverLock) {
+                using (var driver = EnsureActiveDriver(deviceId)) {
+                    var connectedDevice = GetConnectedDevice(deviceId);
+                    var serialNumber = connectedDevice.deviceInfo.CameraInfo.Value.SerialNumber;
+
+                    // CONSIDER: AutoFreeze is an option for guiding cameras to reduce readout noise. It would be easy to support as an equipment option, but probably
+                    // won't be needed for regular imaging
+                    var tempRegulationParams = new SBIG.SetTemperatureRegulationParams2 {
+                        state = SBIG.TemperatureRegulation.On,
+                        ccdSetpointCelcius = celcius
+                    };
+                    UnivDrvCommand(SBIG.Cmd.CC_SET_TEMPERATURE_REGULATION2, tempRegulationParams);
+                    this.queryTemperatureStatusCache.Remove(serialNumber);
+                }
+            }
         }
 
         /// <summary>
         /// Disables temperature regulation if it is enabled, or does nothing otherwise
         /// </summary>
-        public void DisableTemperatureRegulation() {
-            var tempRegulationParams = new SBIG.SetTemperatureRegulationParams2 {
-                state = SBIG.TemperatureRegulation.Off
-            };
-            UnivDrvCommand(SBIG.Cmd.CC_SET_TEMPERATURE_REGULATION2, tempRegulationParams);
-            this.queryTemperatureStatusCache.Remove(openedCameraInfo.SerialNumber);
+        /// <param name="deviceId">The connected device to operate on</param>
+        public void DisableTemperatureRegulation(SBIG.DeviceType deviceId) {
+            lock (driverLock) {
+                using (var driver = EnsureActiveDriver(deviceId)) {
+                    var connectedDevice = GetConnectedDevice(deviceId);
+                    var serialNumber = connectedDevice.deviceInfo.CameraInfo.Value.SerialNumber;
+                    var tempRegulationParams = new SBIG.SetTemperatureRegulationParams2 {
+                        state = SBIG.TemperatureRegulation.Off
+                    };
+                    UnivDrvCommand(SBIG.Cmd.CC_SET_TEMPERATURE_REGULATION2, tempRegulationParams);
+                    this.queryTemperatureStatusCache.Remove(serialNumber);
+                }
+            }            
         }
 
         /// <summary>
         /// Gets the exposure state (Idle/In Progress/Complete), which is useful for polling to determine when to download the exposure
         /// </summary>
+        /// <param name="deviceId">The connected device to operate on</param>
         /// <returns>A CommandState representing the exposure state</returns>
-        public CommandState GetExposureState() {
-            var status = UnivDrvCommand<SBIG.QueryCommandStatusParams, SBIG.QueryCommandStatusResults>(
-                SBIG.Cmd.CC_QUERY_COMMAND_STATUS, new SBIG.QueryCommandStatusParams(SBIG.Cmd.CC_START_EXPOSURE));
-            var rawState = ((ushort)status.status & 0x3);
-            // The 2 least significant bits represent Ccd camera status. Bit 0 is "Complete" if set, and "In Progress" otherwise. Bit 1 is "Command Active" if set, and "Idle" otherwise.
-            if ((rawState & 0x2) == 0) {
-                return CommandState.IDLE;
-            } else if ((rawState & 0x1) == 0) {
-                return CommandState.IN_PROGRESS;
-            } else {
-                return CommandState.COMPLETE;
+        public CommandState GetExposureState(SBIG.DeviceType deviceId) {
+            lock (driverLock) {
+                using (var driver = EnsureActiveDriver(deviceId)) {
+                    var status = UnivDrvCommand<SBIG.QueryCommandStatusParams, SBIG.QueryCommandStatusResults>(
+                        SBIG.Cmd.CC_QUERY_COMMAND_STATUS, 
+                        new SBIG.QueryCommandStatusParams(SBIG.Cmd.CC_START_EXPOSURE));
+                    var rawState = ((ushort)status.status & 0x3);
+                    // The 2 least significant bits represent Ccd camera status. Bit 0 is "Complete" if set, and "In Progress" otherwise. Bit 1 is "Command Active" if set, and "Idle" otherwise.
+                    if ((rawState & 0x2) == 0) {
+                        return CommandState.IDLE;
+                    } else if ((rawState & 0x1) == 0) {
+                        return CommandState.IN_PROGRESS;
+                    } else {
+                        return CommandState.COMPLETE;
+                    }
+                }
             }
         }
 
         /// <summary>
-        /// Starts an exposure, and returns the SBIG parameters later needed to download the exposure
+        /// Starts an exposure. EndExposure must be called to either abort, or after the exposure is complete (use GetExposureState)
         /// </summary>
+        /// <param name="deviceId">The connected device to operate on</param>
         /// <param name="readoutMode">The readout mode</param>
         /// <param name="darkFrame">Whether this is a dark frame. This will be used to close/open the internal shutter if one is available</param>
         /// <param name="exposureTimeSecs">Exposure time in seconds. The SDK supports hundredths of a second, so any additional precision is ignored</param>
         /// <param name="exposureStart">The X,Y coordinates representing a bounding box for the exposure. Unless ROI is used, this should be 0, 0</param>
         /// <param name="exposureSize">The width, height of a bounding box for the exposure. This should account for the amount of binning represented in the readout mode</param>
-        /// <returns></returns>
-        public SBIG.StartExposureParams2 StartExposure(ReadoutMode readoutMode, bool darkFrame, double exposureTimeSecs, Point exposureStart, Size exposureSize) {
-            var targetShutterState = darkFrame ? SBIG.ShutterState.Close : SBIG.ShutterState.Open;
-            var exposureTimeHundredths = (uint)Math.Round(exposureTimeSecs * 100.0f);
-            var exposureParams = new SBIG.StartExposureParams2() {
-                ccd = SBIG.CCD.Imaging,
-                readoutMode = readoutMode.RawMode,
-                abgState = SBIG.AbgState.Off,
-                openShutter = targetShutterState,
-                exposureTime = exposureTimeHundredths,
-                top = (ushort)exposureStart.Y,
-                left = (ushort)exposureStart.X,
-                height = (ushort)exposureSize.Height,
-                width = (ushort)exposureSize.Width
-            };
+        public void StartExposure(SBIG.DeviceType deviceId, ReadoutMode readoutMode, bool darkFrame, double exposureTimeSecs, Point exposureStart, Size exposureSize) {
+            lock (driverLock) {
+                var connectedDevice = GetConnectedDevice(deviceId);
+                using (var driver = EnsureActiveDriver(deviceId)) {
+                    var targetShutterState = darkFrame ? SBIG.ShutterState.Close : SBIG.ShutterState.Open;
+                    var exposureTimeHundredths = (uint)Math.Round(exposureTimeSecs * 100.0f);
+                    var exposureParams = new SBIG.StartExposureParams2() {
+                        ccd = SBIG.CCD.Imaging,
+                        readoutMode = readoutMode.RawMode,
+                        abgState = SBIG.AbgState.Off,
+                        openShutter = targetShutterState,
+                        exposureTime = exposureTimeHundredths,
+                        top = (ushort)exposureStart.Y,
+                        left = (ushort)exposureStart.X,
+                        height = (ushort)exposureSize.Height,
+                        width = (ushort)exposureSize.Width
+                    };
 
-            UnivDrvCommand<SBIG.StartExposureParams2>(SBIG.Cmd.CC_START_EXPOSURE2, exposureParams);
-            return exposureParams;
+                    UnivDrvCommand(SBIG.Cmd.CC_START_EXPOSURE2, exposureParams);
+                    connectedDevice.latestStartExposureParams = exposureParams;
+                }
+            }            
         }
 
         /// <summary>
         /// Ends an exposure. This must be called before downloading an exposure (readout). This method is also used for aborting an exposure
         /// </summary>
-        public void EndExposure() {
-            UnivDrvCommand<SBIG.EndExposureParams>(SBIG.Cmd.CC_END_EXPOSURE, new SBIG.EndExposureParams(SBIG.CCD.Imaging));
+        public void EndExposure(SBIG.DeviceType deviceId) {
+            lock (driverLock) {
+                using (var driver = EnsureActiveDriver(deviceId)) {
+                    UnivDrvCommand(SBIG.Cmd.CC_END_EXPOSURE, new SBIG.EndExposureParams(SBIG.CCD.Imaging));
+                }
+            }
         }
 
         /// <summary>
-        /// Downloads an exposure
+        /// Downloads an exposure. EndExposure must have been called already
         /// </summary>
-        /// <param name="exposureParams">Exposure parameters returned by StartExposure</param>
+        /// <param name="deviceId">The connected device to operate on</param>
         /// <param name="ct">The cancellation token</param>
-        /// <returns>Flat array of 16-bit pixel data</returns>
-        public ushort[] DownloadExposure(SBIG.StartExposureParams2 exposureParams, CancellationToken ct) {
-            // Only one exposure can be readout at a time, so the exposureLock ensures no interlacing occurs
-            lock (exposureLock) {
-                var readoutParams = new SBIG.StartReadoutParams() {
-                    ccd = SBIG.CCD.Imaging,
-                    readoutMode = exposureParams.readoutMode,
-                    left = exposureParams.left,
-                    top = exposureParams.top,
-                    width = exposureParams.width,
-                    height = exposureParams.height,
-                };
-                UnivDrvCommand(SBIG.Cmd.CC_START_READOUT, readoutParams);
+        /// <returns>Object containing flat array of 16-bit pixel data and other metadata</returns>
+        public SBIGExposureData DownloadExposure(SBIG.DeviceType deviceId, CancellationToken ct) {
+            // Only one exposure can be readout at a time, so the entire driver should be locked during exposure download
+            lock (driverLock) {
+                var connectedDevice = GetConnectedDevice(deviceId);
+                var exposureParams = connectedDevice.latestStartExposureParams;
+                using (var driver = EnsureActiveDriver(deviceId)) {
+                    var readoutParams = new SBIG.StartReadoutParams() {
+                        ccd = SBIG.CCD.Imaging,
+                        readoutMode = exposureParams.readoutMode,
+                        left = exposureParams.left,
+                        top = exposureParams.top,
+                        width = exposureParams.width,
+                        height = exposureParams.height,
+                    };
+                    UnivDrvCommand(SBIG.Cmd.CC_START_READOUT, readoutParams);
 
-                var data = new ushort[exposureParams.width * exposureParams.height];
-                var dataGcHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
-                var pinnedPtr = dataGcHandle.AddrOfPinnedObject();
-                var readoutLineParams = new SBIG.ReadoutLineParams() {
-                    ccd = SBIG.CCD.Imaging,
-                    pixelStart = exposureParams.left,
-                    pixelLength = exposureParams.width,
-                    readoutMode = exposureParams.readoutMode
-                };
+                    var data = new ushort[exposureParams.width * exposureParams.height];
+                    var dataGcHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
+                    var pinnedPtr = dataGcHandle.AddrOfPinnedObject();
+                    var readoutLineParams = new SBIG.ReadoutLineParams() {
+                        ccd = SBIG.CCD.Imaging,
+                        pixelStart = exposureParams.left,
+                        pixelLength = exposureParams.width,
+                        readoutMode = exposureParams.readoutMode
+                    };
 
-                var pinnedParams = GCHandle.Alloc(readoutLineParams, GCHandleType.Pinned);
-                try {
-                    for (int i = 0; i < exposureParams.height; i++) {
-                        if (ct.IsCancellationRequested) {
-                            throw new OperationCanceledException();
+                    var pinnedParams = GCHandle.Alloc(readoutLineParams, GCHandleType.Pinned);
+                    try {
+                        for (int i = 0; i < exposureParams.height; i++) {
+                            if (ct.IsCancellationRequested) {
+                                throw new OperationCanceledException();
+                            }
+                            UnivDrvCommandDirect(SBIG.Cmd.CC_READOUT_LINE, pinnedParams.AddrOfPinnedObject(), pinnedPtr + (i * exposureParams.width * sizeof(ushort)));
                         }
-                        UnivDrvCommandDirect(SBIG.Cmd.CC_READOUT_LINE, pinnedParams.AddrOfPinnedObject(), pinnedPtr + (i * exposureParams.width * sizeof(ushort)));
-                    }                    
-                } finally {
-                    pinnedParams.Free();
-                    dataGcHandle.Free();
-                }
+                    } finally {
+                        pinnedParams.Free();
+                        dataGcHandle.Free();
+                    }
 
-                return data;
+                    return new SBIGExposureData() {
+                        Data = data,
+                        Width = exposureParams.width,
+                        Height = exposureParams.height
+                    };
+                }
+            }
+        }
+
+        public void SetFilterWheelPosition(SBIG.DeviceType deviceId, ushort position) {
+            lock (driverLock) {
+                using (var device = EnsureActiveDriver(deviceId)) {
+                    var cfwParams = new SBIG.CfwParams() {
+                        cfwModel = SBIG.CfwModelSelect.CFWSEL_AUTO,
+                        cfwCommand = SBIG.CfwCommand.CFWC_GOTO,
+                        cfwParam1 = (uint)position
+                    };
+                    UnivDrvCommand<SBIG.CfwParams, SBIG.CfwResult>(SBIG.Cmd.CC_CFW, cfwParams);
+                }
+            }
+        }
+
+        public FilterWheelStatus GetFilterWheelStatus(SBIG.DeviceType deviceId) {
+            lock (driverLock) {
+                using (var device = EnsureActiveDriver(deviceId)) {
+                    var queryStatusParams = new SBIG.CfwParams() {
+                        cfwModel = SBIG.CfwModelSelect.CFWSEL_AUTO,
+                        cfwCommand = SBIG.CfwCommand.CFWC_QUERY
+                    };
+                    var queryStatusResult = UnivDrvCommand<SBIG.CfwParams, SBIG.CfwResult>(SBIG.Cmd.CC_CFW, queryStatusParams);
+                    return new FilterWheelStatus() {
+                        Position = queryStatusResult.cfwPosition,
+                        Status = queryStatusResult.cfwStatus
+                    };
+                }
             }
         }
     }

@@ -25,12 +25,16 @@ using NINA.Equipment.Utility;
 using NINA.Core.Locale;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
+using NINA.Equipment.Equipment.MyCamera;
+using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
     public class FilterWheelChooserVM : DeviceChooserVM {
 
-        public FilterWheelChooserVM(IProfileService profileService) : base(profileService) {
+        private readonly ISbigSdk sbigSdk;
+        public FilterWheelChooserVM(ISbigSdk sbigSdk, IProfileService profileService) : base(profileService) {
+            this.sbigSdk = sbigSdk;
         }
 
         public override void GetEquipment() {
@@ -123,6 +127,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                         Logger.Debug($"Adding ZWOptical Filter Wheel {i})");
                         devices.Add(fw);
                     }
+                } catch (Exception ex) {
+                    Logger.Error(ex);
+                }
+
+                /* SBIG filter wheels */
+                try {
+                    var provider = new SBIGFilterWheelProvider(sbigSdk, profileService);
+                    devices.AddRange(provider.GetEquipment());
                 } catch (Exception ex) {
                     Logger.Error(ex);
                 }

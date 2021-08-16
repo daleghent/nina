@@ -376,6 +376,83 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             AutoFreeze,
             DisableAutoFreeze
         }
+
+        public enum CfwModelSelect : ushort {
+            CFWSEL_UNKNOWN = 0,         /*!< Unknown Model	*/
+            CFWSEL_CFW2,            /*!< CFW2			*/
+            CFWSEL_CFW5,            /*!< CFW5			*/
+            CFWSEL_CFW8,            /*!< CFW8			*/
+            CFWSEL_CFWL,            /*!< CFWL			*/
+            CFWSEL_CFW402,          /*!< CFW-402		*/
+            CFWSEL_AUTO,            /*!< Auto			*/
+            CFWSEL_CFW6A,           /*!< CFW-6A			*/
+            CFWSEL_CFW10,           /*!< CFW10			*/
+            CFWSEL_CFW10_SERIAL,    /*!< CFW10-Serial	*/
+            CFWSEL_CFW9,            /*!< CFW9			*/
+            CFWSEL_CFWL8,           /*!< CFWL8			*/
+            CFWSEL_CFWL8G,          /*!< CFWL8-G		*/
+            CFWSEL_CFW1603,         /*!< CFW1603		*/
+            CFWSEL_FW5_STX,         /*!< FW5-STX		*/
+            CFWSEL_FW5_8300,        /*!< FW5-8300		*/
+            CFWSEL_FW8_8300,        /*!< FW8-8300		*/
+            CFWSEL_FW7_STX,         /*!< FW7-STX		*/
+            CFWSEL_FW8_STT,         /*!< FW8-STT		*/
+            CFWSEL_FW5_STF_DETENT	/*!< FW5-STF Detent */
+        }
+
+        public enum CfwCommand : ushort {
+            CFWC_QUERY = 0,         /*!< Query			*/
+            CFWC_GOTO,          /*!< Go-to slot		*/
+            CFWC_INIT,          /*!< Initialize		*/
+            CFWC_GET_INFO,      /*!< Get Info		*/
+            CFWC_OPEN_DEVICE,   /*!< Open device	*/
+            CFWC_CLOSE_DEVICE	/*!< Close device	*/
+        }
+
+        public enum CfwStatus : ushort {
+            CFWS_UNKNOWN = 0,   /*!< Unknown state	*/
+            CFWS_IDLE,      /*!< Idle state		*/
+            CFWS_BUSY		/*!< Busy state		*/
+        }
+
+        public enum CfwError : ushort {
+            CFWE_NONE = 0,              /*!< No error					*/
+            CFWE_BUSY,              /*!< Busy error					*/
+            CFWE_BAD_COMMAND,       /*!< Bad command error			*/
+            CFWE_CAL_ERROR,         /*!< Calibration error			*/
+            CFWE_MOTOR_TIMEOUT,     /*!< Motor timeout error		*/
+            CFWE_BAD_MODEL,         /*!< Bad model error			*/
+            CFWE_DEVICE_NOT_CLOSED, /*!< Device not closed	error	*/
+            CFWE_DEVICE_NOT_OPEN,   /*!< Device not open error		*/
+            CFWE_I2C_ERROR			/*!< I2C communication error	*/
+        }
+
+        public enum CfwPosition : ushort {
+            CFWP_UNKNOWN = 0,   /*!< Unknown	*/
+            CFWP_1,         /*!< Slot 1		*/
+            CFWP_2,         /*!< Slot 2		*/
+            CFWP_3,         /*!< Slot 3		*/
+            CFWP_4,         /*!< Slot 4		*/
+            CFWP_5,         /*!< Slot 5		*/
+            CFWP_6,         /*!< Slot 6		*/
+            CFWP_7,         /*!< Slot 7		*/
+            CFWP_8,         /*!< Slot 8		*/
+            CFWP_9,         /*!< Slot 9		*/
+            CFWP_10			/*!< Slot 10	*/
+        }
+
+        public enum CfwComPort : ushort {
+            CFWPORT_COM1 = 1,   /*!< COM1	*/
+            CFWPORT_COM2,   /*!< COM2	*/
+            CFWPORT_COM3,   /*!< COM3	*/
+            CFWPORT_COM4 	/*!< COM4	*/
+        }
+
+        public enum CfwGetInfoSelect : ushort {
+            CFWG_FIRMWARE_VERSION = 0,  /*!< Firmware version	*/
+            CFWG_CAL_DATA,          /*!< Calibration data	*/
+            CFWG_DATA_REGISTERS		/*!< Data registers		*/
+        }
         
         #endregion Enums
 
@@ -702,6 +779,38 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             public ushort tYMinus;
         }
 
+        [StructLayout(LayoutKind.Sequential)] //, Pack = 8)]
+        public class SetDriverHandleParams {
+            public short handle;
+        }
+
+        [StructLayout(LayoutKind.Sequential)] //, Pack = 8)]
+        public class GetDriverHandleResults {
+            public short handle;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 8)]
+        public class CfwParams {
+            public CfwModelSelect cfwModel;
+            public CfwCommand cfwCommand;
+            public uint cfwParam1;
+            public uint cfwParam2;
+
+            public ushort outLength = 0;
+            public UIntPtr outPtr = UIntPtr.Zero;
+            public ushort inLength = 0;
+            public UIntPtr inPtr = UIntPtr.Zero;
+        }
+
+        [StructLayout(LayoutKind.Sequential, Pack = 8)]
+        public class CfwResult {
+            public CfwModelSelect cfwModel;
+            public CfwPosition cfwPosition;
+            public CfwStatus cfwStatus;
+            public CfwError cfwError;
+            public uint cfwResult1;
+            public uint cfwResult2;
+        }
 
         /// <summary>
         /// gets thrown whenever an SBIG operation doesn't return success (CE_NO_ERROR)
