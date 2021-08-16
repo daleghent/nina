@@ -20,10 +20,11 @@ using System.Threading.Tasks;
 namespace NINA.Equipment.Equipment.MyCamera {
     public class SBIGCamera : BaseINPC, ICamera {
 
-        private readonly CameraQueryInfo queriedCameraInfo;
+        private readonly DeviceQueryInfo queriedCameraInfo;
         private readonly ISbigSdk sdk;
+        private SDK.CameraSDKs.SBIGSDK.DeviceInfo? connectedDevice;
 
-        public SBIGCamera(ISbigSdk sdk, CameraQueryInfo queriedCameraInfo) {
+        public SBIGCamera(ISbigSdk sdk, DeviceQueryInfo queriedCameraInfo) {
             this.sdk = sdk;
             this.BinningModes = new AsyncObservableCollection<BinningMode>();
             this.queriedCameraInfo = queriedCameraInfo;
@@ -74,15 +75,13 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
             return Task.Run(() => {
                 Logger.Info($"SBIGCCD: Attempting to connect {this.queriedCameraInfo.DeviceId}");
-                sdk.InitSdk();
                 try {
-                    var cameraType = sdk.OpenDevice(this.queriedCameraInfo.DeviceId);
-                    if (cameraType == SBIG.CameraType.NoCamera) {
+                    ConnectedDevice = sdk.OpenDevice(this.queriedCameraInfo.DeviceId);
+                    if (ConnectedDevice.CameraType == SBIG.CameraType.NoCamera) {
                         throw new InvalidOperationException($"SBIGCCD: Cannot connect {this.queriedCameraInfo.DeviceId} since it is not a camera");
                     }
 
-                    var cameraInfo = sdk.GetCameraInfo();
-                    SetCameraProperties(cameraInfo);
+                    SetCameraProperties(ConnectedDevice.CameraInfo.Value);
                     Connected = true;
                     if (CanSetTemperature) {
                         CoolerOn = false;
@@ -92,12 +91,27 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     return true;
                 } catch (Exception e) {
                     Logger.Error($"SBIGCCD: Failed to connect {this.queriedCameraInfo.DeviceId}", e);
-                    Notification.ShowError($"Failed to connect {this.queriedCameraInfo.DeviceId}, {e}");
+                    Notification.ShowError($"Failed to connect {this.queriedCameraInfo.DeviceId}, {e.Message}");
+                    if (connectedDevice.HasValue) {
+                        sdk.CloseDevice(connectedDevice.Value.DeviceId);
+                        connectedDevice = null;
+                    }
                     Connected = false;
-                    sdk.ReleaseSdk();
                     return false;
                 }
             }, ct);
+        }
+
+        private SDK.CameraSDKs.SBIGSDK.DeviceInfo ConnectedDevice {
+            get {
+                if (connectedDevice.HasValue) {
+                    return connectedDevice.Value;
+                }
+                throw new Exception($"No connected SBIG device");
+            }
+            set {
+                connectedDevice = value;
+            }
         }
 
         public void Disconnect() {
@@ -106,13 +120,15 @@ namespace NINA.Equipment.Equipment.MyCamera {
             }
 
             try {
-                CoolerOn = false;
-                sdk.CloseDevice();
+                if (connectedDevice.HasValue) {
+                    CoolerOn = false;
+                    sdk.CloseDevice(connectedDevice.Value.DeviceId);
+                }
             } catch (Exception e) {
                 Logger.Error($"SBIGCCD: Failed while trying to close device {this.queriedCameraInfo.DeviceId}. Ignoring", e);
             } finally {
+                connectedDevice = null;
                 Connected = false;
-                sdk.ReleaseSdk();
             }
         }
 
@@ -376,7 +392,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public double Temperature {
             get {
-                var tempStatus = sdk.QueryTemperatureStatus();
+                if (!Connected) {
+                    return double.NaN;
+                }
+                var tempStatus = sdk.QueryTemperatureStatus(ConnectedDevice.DeviceId);
                 return tempStatus.imagingCCDTemperature;
             }
         }
@@ -384,8 +403,12 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private double _temperatureSetPoint = 0.0d;
         public double TemperatureSetPoint {
             get {
+                if (!Connected) {
+                    return double.NaN;
+                }
+
                 if (CoolerOn) {
-                    var tempStatus = sdk.QueryTemperatureStatus();
+                    var tempStatus = sdk.QueryTemperatureStatus(ConnectedDevice.DeviceId);
                     var ccdSetPoint = tempStatus.ccdSetpoint;
                     if (ccdSetPoint != _temperatureSetPoint) {
                         _temperatureSetPoint = ccdSetPoint;
@@ -395,10 +418,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 return _temperatureSetPoint;
             }
             set {
-                if (_temperatureSetPoint != value) {
+                if (Connected && _temperatureSetPoint != value) {
                     _temperatureSetPoint = value;
                     if (CoolerOn) {
-                        sdk.RegulateTemperature(value);
+                        sdk.RegulateTemperature(ConnectedDevice.DeviceId, value);
                     }
 
                     RaisePropertyChanged();
@@ -409,30 +432,31 @@ namespace NINA.Equipment.Equipment.MyCamera {
         public bool CoolerOn {
             get {
                 if (Connected) {
-                    var tempStatus = sdk.QueryTemperatureStatus();
+                    var tempStatus = sdk.QueryTemperatureStatus(ConnectedDevice.DeviceId);
                     return tempStatus.coolingEnabled == 1;
                 } else {
                     return false;
                 }
             }
             set {
-                if (value) {
-                    sdk.RegulateTemperature(TemperatureSetPoint);
-                } else {
-                    sdk.DisableTemperatureRegulation();
+                if (Connected) {
+                    if (value) {
+                        sdk.RegulateTemperature(ConnectedDevice.DeviceId, TemperatureSetPoint);
+                    } else {
+                        sdk.DisableTemperatureRegulation(ConnectedDevice.DeviceId);
+                    }
+                    RaisePropertyChanged();
                 }
-                RaisePropertyChanged();
             }
         }
 
         public double CoolerPower {
             get {
-                if (Connected) {
-                    var tempStatus = sdk.QueryTemperatureStatus();
-                    return tempStatus.imagingCCDPower;
-                } else {
-                    return 0.0;
+                if (!Connected) {
+                    return double.NaN;
                 }
+                var tempStatus = sdk.QueryTemperatureStatus(ConnectedDevice.DeviceId);
+                return tempStatus.imagingCCDPower;
             }
         }
 
@@ -449,7 +473,6 @@ namespace NINA.Equipment.Equipment.MyCamera {
             BinY = y;
         }
 
-        private SBIG.StartExposureParams2 _inProgressExposureParams;
         public void StartExposure(CaptureSequence sequence) {
             var isDarkFrame = sequence.ImageType == CaptureSequence.ImageTypes.DARK ||
                                sequence.ImageType == CaptureSequence.ImageTypes.BIAS ||
@@ -465,17 +488,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 exposureSize = new Size(CameraXSize / BinX, CameraYSize / BinY);
             }
 
-            _inProgressExposureParams = sdk.StartExposure(readoutMode, isDarkFrame, sequence.ExposureTime, exposureStart, exposureSize);
+            sdk.StartExposure(ConnectedDevice.DeviceId, readoutMode, isDarkFrame, sequence.ExposureTime, exposureStart, exposureSize);
         }
 
         public async Task<IExposureData> DownloadExposure(CancellationToken ct) {
             return await Task.Run(() => {
                 try {
-                    var exposureData = sdk.DownloadExposure(this._inProgressExposureParams, ct);
+                    var exposureData = sdk.DownloadExposure(ConnectedDevice.DeviceId, ct);
                     return new ImageArrayExposureData(
-                        input: exposureData,
-                        width: this._inProgressExposureParams.width,
-                        height: this._inProgressExposureParams.height,
+                        input: exposureData.Data,
+                        width: exposureData.Width,
+                        height: exposureData.Height,
                         bitDepth: BitDepth,
                         isBayered: SensorType != SensorType.Monochrome && BinX == 1 && BinY == 1,
                         metaData: new ImageMetaData());
@@ -489,15 +512,17 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void StopExposure() {
-            sdk.EndExposure();
+            if (Connected) {
+                sdk.EndExposure(ConnectedDevice.DeviceId);
+            }
         }
 
         public async Task WaitUntilExposureIsReady(CancellationToken token) {
             using (token.Register(() => AbortExposure())) {
-                while (sdk.GetExposureState() == CommandState.IN_PROGRESS) {
+                while (sdk.GetExposureState(ConnectedDevice.DeviceId) == CommandState.IN_PROGRESS) {
                     await Task.Delay(100, token);
                 }
-                sdk.EndExposure();
+                sdk.EndExposure(ConnectedDevice.DeviceId);
             }
         }
 

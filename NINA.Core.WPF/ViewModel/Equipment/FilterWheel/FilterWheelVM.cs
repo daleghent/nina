@@ -36,10 +36,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
     public class FilterWheelVM : DockableVM, IFilterWheelVM {
 
-        public FilterWheelVM(IProfileService profileService, IFilterWheelMediator filterWheelMediator, IFocuserMediator focuserMediator, IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
+        public FilterWheelVM(
+            IProfileService profileService, 
+            IFilterWheelMediator filterWheelMediator, 
+            IFocuserMediator focuserMediator,
+            IDeviceChooserVM filterWheelChooserVM,
+            IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = Loc.Instance["LblFilterWheel"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["FWSVG"];
 
+            FilterWheelChooserVM = filterWheelChooserVM;
             this.filterWheelMediator = filterWheelMediator;
             this.filterWheelMediator.RegisterHandler(this);
             Task.Run(() => FilterWheelChooserVM.GetEquipment());
@@ -308,18 +314,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             return FilterWheelInfo;
         }
 
-        public FilterWheelChooserVM FilterWheelChooserVM {
-            get {
-                if (_filterWheelChooserVM == null) {
-                    _filterWheelChooserVM = new FilterWheelChooserVM(profileService);
-                }
-                return _filterWheelChooserVM;
-            }
-            set {
-                _filterWheelChooserVM = value;
-            }
-        }
-
+        public IDeviceChooserVM FilterWheelChooserVM { get; set; }
         public IAsyncCommand ChooseFWCommand { get; private set; }
         public ICommand CancelChooseFWCommand { get; private set; }
         public ICommand DisconnectCommand { get; private set; }

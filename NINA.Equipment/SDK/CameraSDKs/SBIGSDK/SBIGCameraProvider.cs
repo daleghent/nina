@@ -12,28 +12,23 @@ using System.Threading.Tasks;
 
 namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
     public class SBIGCameraProvider : IEquipmentProvider<ICamera> {
-        private IProfileService profileService;
-        private ISbigSdk sbigSdk;
+        private readonly ISbigSdk sbigSdk;
 
-        public SBIGCameraProvider(IProfileService profileService, ISbigSdk sbigSdk) {
-            this.profileService = profileService;
+        public SBIGCameraProvider(ISbigSdk sbigSdk) {
             this.sbigSdk = sbigSdk;
         }
 
         public IList<ICamera> GetEquipment() {
             Logger.Debug("Getting SBIG Cameras");
 
-            try {
-                var devices = new List<ICamera>();
-                sbigSdk.InitSdk();
-                foreach (var instance in sbigSdk.QueryUsbCameras()) {
+            var devices = new List<ICamera>();
+            foreach (var instance in sbigSdk.QueryUsbDevices()) {
+                if (instance.CameraType != SbigSharp.SBIG.CameraType.NoCamera) {
                     var cam = new SBIGCamera(sbigSdk, instance);
                     devices.Add(cam);
                 }
-                return devices;
-            } finally {
-                sbigSdk.ReleaseSdk();
             }
+            return devices;
         }
     }
 }
