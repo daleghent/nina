@@ -762,9 +762,9 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
         [StructLayout(LayoutKind.Sequential, Pack = 8)]
         public class GetCcdInfoResults6
         {
-            public ulong cameraBits;
-            public ulong ccdBits;
-            public ulong extraBits;
+            public uint cameraBits;
+            public uint ccdBits;
+            public uint extraBits;
         }
 
         /// <summary>
@@ -779,12 +779,12 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK.SbigSharp
             public ushort tYMinus;
         }
 
-        [StructLayout(LayoutKind.Sequential)] //, Pack = 8)]
+        [StructLayout(LayoutKind.Sequential, Pack = 8)]
         public class SetDriverHandleParams {
             public short handle;
         }
 
-        [StructLayout(LayoutKind.Sequential)] //, Pack = 8)]
+        [StructLayout(LayoutKind.Sequential, Pack = 8)]
         public class GetDriverHandleResults {
             public short handle;
         }
