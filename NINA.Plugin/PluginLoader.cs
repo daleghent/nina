@@ -223,6 +223,8 @@ namespace NINA.Plugin {
         private void LoadPlugin(string file) {
             Stopwatch sw = Stopwatch.StartNew();
             try {
+                var applicationVersion = new Version(CoreUtil.Version);
+
                 FileInfo fileInfo = new FileInfo(file);
                 if (fileInfo.AlternateDataStreamExists("Zone.Identifier")) {
                     fileInfo.DeleteAlternateDataStream("Zone.Identifier");
@@ -242,10 +244,18 @@ namespace NINA.Plugin {
 
                         try {
                             Compose(plugin);
-                            Plugins[manifest] = true;
-                            //Add the loaded plugin assembly to the assembly resolver
-                            Assemblies.Add(plugin.Assembly);
-                            Logger.Info($"Successfully loaded plugin {manifest.Name} version {manifest.Version}");
+
+                            if (manifest.MinimumApplicationVersion.Major <= applicationVersion.Major
+                                && manifest.MinimumApplicationVersion.Minor <= applicationVersion.Minor
+                                && manifest.MinimumApplicationVersion.Patch <= applicationVersion.Build
+                                && manifest.MinimumApplicationVersion.Build <= applicationVersion.Revision) {
+                                Plugins[manifest] = true;
+                                //Add the loaded plugin assembly to the assembly resolver
+                                Assemblies.Add(plugin.Assembly);
+                                Logger.Info($"Successfully loaded plugin {manifest.Name} version {manifest.Version}");
+                            } else {
+                                throw new Exception($"The plugin is not compatible with this version of N.I.N.A. as it requires a minimum version of {manifest.MinimumApplicationVersion}, but N.I.N.A. is {applicationVersion}");
+                            }
                         } catch (Exception ex) {
                             //Manifest ok - plugin composition failed
                             var failedManifest = new PluginManifest {
