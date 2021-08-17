@@ -33,6 +33,7 @@ using NINA.Core.Interfaces;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
+using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
@@ -45,21 +46,25 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
             this.guiderMediator = guiderMediator;
             this.guiderMediator.RegisterHandler(this);
             GuiderChooserVM = deviceChooser;
-            Task.Run(() => GuiderChooserVM.GetEquipment());
+            _ = Rescan();
 
             this.applicationStatusMediator = applicationStatusMediator;
 
             ConnectGuiderCommand = new AsyncCommand<bool>(Connect);
             CancelConnectGuiderCommand = new RelayCommand(CancelConnectGuider);
-            RefreshGuiderListCommand = new RelayCommand(RefreshGuiderList, o => !(Guider?.Connected == true));
+            RefreshGuiderListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Guider?.Connected == true));
             DisconnectGuiderCommand = new RelayCommand((object o) => Disconnect(), (object o) => Guider?.Connected == true);
             ClearGraphCommand = new RelayCommand((object o) => ResetGraphValues());
 
             GuideStepsHistory = new GuideStepsHistory(HistorySize, GuiderScale, GuiderMaxY);
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
-                GuiderChooserVM.GetEquipment();
+                AsyncContext.Run(Rescan);
             };
+        }
+
+        public async Task Rescan() {
+            await Task.Run(() => GuiderChooserVM.GetEquipment());
         }
 
         public IDeviceChooserVM GuiderChooserVM { get; private set; }
@@ -118,10 +123,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
         private void ResetGraphValues() {
             GuideStepsHistory.Clear();
-        }
-
-        public void RefreshGuiderList(object obj) {
-            GuiderChooserVM.GetEquipment();
         }
 
         public async Task<bool> Connect() {

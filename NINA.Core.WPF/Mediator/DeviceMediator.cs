@@ -52,6 +52,10 @@ namespace NINA.WPF.Base.Mediator {
             consumers.Remove(consumer);
         }
 
+        public Task Rescan() {
+            return handler?.Rescan();
+        }
+
         /// <summary>
         /// Connect the device
         /// </summary>

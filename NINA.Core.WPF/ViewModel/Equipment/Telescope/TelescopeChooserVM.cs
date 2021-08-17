@@ -43,8 +43,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                     Logger.Error(ex);
                 }
 
-                Devices = devices;
-                DetermineSelectedDevice(profileService.ActiveProfile.TelescopeSettings.Id);
+                DetermineSelectedDevice(devices, profileService.ActiveProfile.TelescopeSettings.Id);
             }
         }
     }

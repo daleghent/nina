@@ -42,8 +42,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     Logger.Error(ex);
                 }
 
-                Devices = devices;
-                DetermineSelectedDevice(profileService.ActiveProfile.DomeSettings.Id);
+                DetermineSelectedDevice(devices, profileService.ActiveProfile.DomeSettings.Id);
             }
         }
     }

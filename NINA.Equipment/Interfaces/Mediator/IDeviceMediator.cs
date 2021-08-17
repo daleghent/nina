@@ -24,6 +24,8 @@ namespace NINA.Equipment.Interfaces.Mediator {
 
         void RemoveConsumer(TConsumer consumer);
 
+        Task Rescan();
+
         Task<bool> Connect();
 
         Task Disconnect();

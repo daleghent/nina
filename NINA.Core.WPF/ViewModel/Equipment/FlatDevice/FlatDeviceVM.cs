@@ -36,6 +36,7 @@ using NINA.Profile;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
+using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
@@ -57,7 +58,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterConsumer(this);
             FlatDeviceChooserVM = flatDeviceChooserVm;
-            Task.Run(() => FlatDeviceChooserVM.GetEquipment());
+            _ = Rescan();
 
             Title = Loc.Instance["LblFlatDevice"];
             ImageGeometry = imageGeometryProvider.GetImageGeometry("LightBulbSVG");
@@ -68,7 +69,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             OpenCoverCommand = new AsyncCommand<bool>(() => OpenCover(CancellationToken.None));
             CloseCoverCommand = new AsyncCommand<bool>(() => CloseCover(CancellationToken.None));
             RefreshFlatDeviceListCommand =
-                new RelayCommand(RefreshFlatDeviceList, o => flatDevice?.Connected != true);
+                new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(flatDevice?.Connected == true));
             SetBrightnessCommand = new AsyncCommand<bool>(o => SetBrightness(o, CancellationToken.None));
             ToggleLightCommand = new AsyncCommand<bool>(o => ToggleLight(o, CancellationToken.None));
             AddGainCommand = new RelayCommand(AddGain);
@@ -89,6 +90,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
             UpdateWizardValueBlocks();
         }
 
+        public async Task Rescan() {
+            await Task.Run(() => FlatDeviceChooserVM.GetEquipment());
+        }
+
         private void FlatDeviceSettingsChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e) {
             RaisePropertyChanged(nameof(Gains));
             RaisePropertyChanged(nameof(BinningModes));
@@ -102,7 +107,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
         private void ProfileChanged(object sender, EventArgs e) {
             flatDeviceSettings.PropertyChanged -= FlatDeviceSettingsChanged;
             profileService.ActiveProfile.FilterWheelSettings.PropertyChanged += FilterWheelSettingsChanged;
-            RefreshFlatDeviceList(null);
+            AsyncContext.Run(Rescan);
             flatDeviceSettings = profileService.ActiveProfile.FlatDeviceSettings;
             flatDeviceSettings.PropertyChanged += FlatDeviceSettingsChanged;
             RaisePropertyChanged(nameof(Gains));
@@ -384,10 +389,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
 
         public FlatDeviceInfo GetDeviceInfo() {
             return FlatDeviceInfo;
-        }
-
-        private void RefreshFlatDeviceList(object obj) {
-            FlatDeviceChooserVM.GetEquipment();
         }
 
         private void UpdateFlatDeviceValues(Dictionary<string, object> flatDeviceValues) {

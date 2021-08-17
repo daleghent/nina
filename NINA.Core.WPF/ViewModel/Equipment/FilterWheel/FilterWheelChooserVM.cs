@@ -31,8 +31,8 @@ using NINA.Equipment.SDK.CameraSDKs.SBIGSDK;
 namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
     public class FilterWheelChooserVM : DeviceChooserVM {
-
         private readonly ISbigSdk sbigSdk;
+
         public FilterWheelChooserVM(ISbigSdk sbigSdk, IProfileService profileService) : base(profileService) {
             this.sbigSdk = sbigSdk;
         }
@@ -152,8 +152,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
                 devices.Add(new ManualFilterWheel(this.profileService));
 
-                Devices = devices;
-                DetermineSelectedDevice(profileService.ActiveProfile.FilterWheelSettings.Id);
+                DetermineSelectedDevice(devices, profileService.ActiveProfile.FilterWheelSettings.Id);
             }
         }
     }

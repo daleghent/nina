@@ -48,8 +48,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
                 }
 
                 devices.Add(new SafetyMonitorSimulator());
-                Devices = devices;
-                DetermineSelectedDevice(profileService.ActiveProfile.SafetyMonitorSettings.Id);
+
+                DetermineSelectedDevice(devices, profileService.ActiveProfile.SafetyMonitorSettings.Id);
             }
         }
     }

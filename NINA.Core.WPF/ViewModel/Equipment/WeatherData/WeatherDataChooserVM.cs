@@ -48,8 +48,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
                 devices.Add(new TheWeatherCompany(this.profileService));
                 devices.Add(new WeatherUnderground(this.profileService));
 
-                Devices = devices;
-                DetermineSelectedDevice(profileService.ActiveProfile.WeatherDataSettings.Id);
+                DetermineSelectedDevice(devices, profileService.ActiveProfile.WeatherDataSettings.Id);
             }
         }
     }

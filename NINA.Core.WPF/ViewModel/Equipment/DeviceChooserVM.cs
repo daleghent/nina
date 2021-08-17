@@ -68,15 +68,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment {
             }
         }
 
-        public void DetermineSelectedDevice(string id) {
-            if (Devices.Count > 0) {
-                var items = (from device in Devices where device.Id == id select device);
+        protected void DetermineSelectedDevice(IList<IDevice> d, string id) {
+            if (d.Count > 0) {
+                var items = (from device in d where device.Id == id select device);
                 if (items.Count() > 0) {
                     SelectedDevice = items.First();
                 } else {
-                    SelectedDevice = Devices.First();
+                    SelectedDevice = d.First();
                 }
             }
+            Devices = d;
         }
     }
 }

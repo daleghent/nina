@@ -30,6 +30,7 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces;
+using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
@@ -48,12 +49,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             this.rotatorMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
             RotatorChooserVM = rotatorChooserVM;
-            Task.Run(() => RotatorChooserVM.GetEquipment());
+            _ = Rescan();
 
             ConnectCommand = new AsyncCommand<bool>(() => Connect());
             CancelConnectCommand = new RelayCommand(CancelConnectRotator);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
-            RefreshRotatorListCommand = new RelayCommand(RefreshRotatorList, o => !(rotator?.Connected == true));
+            RefreshRotatorListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(rotator?.Connected == true));
             MoveCommand = new AsyncCommand<float>(() => Move(TargetPosition), (p) => RotatorInfo.Connected && RotatorInfo.Synced);
             MoveMechanicalCommand = new AsyncCommand<float>(() => MoveMechanical(TargetPosition), (p) => RotatorInfo.Connected);
             HaltCommand = new RelayCommand(Halt);
@@ -66,8 +67,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
             );
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
-                RefreshRotatorList(null);
+                AsyncContext.Run(Rescan);
             };
+        }
+
+        public async Task Rescan() {
+            await Task.Run(() => RotatorChooserVM.GetEquipment());
         }
 
         private void Reverse(object obj) {
@@ -252,10 +257,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
         public RotatorInfo GetDeviceInfo() {
             return RotatorInfo;
-        }
-
-        public void RefreshRotatorList(object obj) {
-            RotatorChooserVM.GetEquipment();
         }
 
         public IDeviceChooserVM RotatorChooserVM { get; private set; }

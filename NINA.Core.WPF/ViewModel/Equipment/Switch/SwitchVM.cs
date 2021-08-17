@@ -42,7 +42,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
             Title = Loc.Instance["LblSwitch"];
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["SwitchesSVG"];
             SwitchChooserVM = new SwitchChooserVM(profileService);
-            Task.Run(() => SwitchChooserVM.GetEquipment());
+            _ = Rescan();
 
             this.applicationStatusMediator = applicationStatusMediator;
             this.switchMediator = switchMediator;
@@ -51,7 +51,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
             ConnectCommand = new AsyncCommand<bool>(Connect);
             DisconnectCommand = new AsyncCommand<bool>(async () => { await Disconnect(); return true; });
             CancelConnectCommand = new RelayCommand((object o) => CancelConnect());
-            RefreshDevicesCommand = new RelayCommand((object o) => RefreshDevices(), o => !(SwitchHub?.Connected == true));
+            RefreshDevicesCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(SwitchHub?.Connected == true));
 
             updateTimer = new DeviceUpdateTimer(
                  GetSwitchValues,
@@ -60,6 +60,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
              );
 
             SetSwitchValueCommand = new AsyncCommand<bool>(SetSwitchValue);
+
+            profileService.ProfileChanged += (object sender, EventArgs e) => {
+                AsyncContext.Run(Rescan);
+            };
+        }
+
+        public async Task Rescan() {
+            await Task.Run(() => SwitchChooserVM.GetEquipment());
         }
 
         private async Task<bool> SetSwitchValue(object arg) {
@@ -164,10 +172,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
 
         private void CancelConnect() {
             connectSwitchCts?.Cancel();
-        }
-
-        private void RefreshDevices() {
-            SwitchChooserVM.GetEquipment();
         }
 
         public SwitchChooserVM SwitchChooserVM { get; set; }

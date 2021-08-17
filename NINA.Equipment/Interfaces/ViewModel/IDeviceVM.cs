@@ -18,6 +18,8 @@ namespace NINA.Equipment.Interfaces.ViewModel {
 
     public interface IDeviceVM<TInfo> {
 
+        Task Rescan();
+
         Task<bool> Connect();
 
         Task Disconnect();

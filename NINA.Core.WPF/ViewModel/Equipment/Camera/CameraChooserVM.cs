@@ -220,8 +220,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 devices.Add(new FileCamera(profileService, telescopeMediator));
                 devices.Add(new SimulatorCamera(profileService, telescopeMediator));
 
-                Devices = devices;
-                DetermineSelectedDevice(profileService.ActiveProfile.CameraSettings.Id);
+                DetermineSelectedDevice(devices, profileService.ActiveProfile.CameraSettings.Id);
             }
         }
     }

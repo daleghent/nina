@@ -31,14 +31,15 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
+using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
 
     public class FilterWheelVM : DockableVM, IFilterWheelVM {
 
         public FilterWheelVM(
-            IProfileService profileService, 
-            IFilterWheelMediator filterWheelMediator, 
+            IProfileService profileService,
+            IFilterWheelMediator filterWheelMediator,
             IFocuserMediator focuserMediator,
             IDeviceChooserVM filterWheelChooserVM,
             IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
@@ -48,7 +49,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             FilterWheelChooserVM = filterWheelChooserVM;
             this.filterWheelMediator = filterWheelMediator;
             this.filterWheelMediator.RegisterHandler(this);
-            Task.Run(() => FilterWheelChooserVM.GetEquipment());
+            _ = Rescan();
 
             this.focuserMediator = focuserMediator;
             this.applicationStatusMediator = applicationStatusMediator;
@@ -56,7 +57,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             ChooseFWCommand = new AsyncCommand<bool>(() => ChooseFW());
             CancelChooseFWCommand = new RelayCommand(CancelChooseFW);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectFW());
-            RefreshFWListCommand = new RelayCommand(RefreshFWList, o => !(FW?.Connected == true));
+            RefreshFWListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(FW?.Connected == true));
             ChangeFilterCommand = new AsyncCommand<bool>(async () => {
                 _changeFilterCancellationSource?.Dispose();
                 _changeFilterCancellationSource = new CancellationTokenSource();
@@ -65,8 +66,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             }, (object o) => FilterWheelInfo.Connected && !FilterWheelInfo.IsMoving);
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
-                RefreshFWList(null);
+                AsyncContext.Run(Rescan);
             };
+        }
+
+        public async Task Rescan() {
+            await Task.Run(() => FilterWheelChooserVM.GetEquipment());
         }
 
         private CancellationTokenSource _changeFilterCancellationSource;
@@ -136,10 +141,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                 semaphoreSlim.Release();
             }
             return FilterWheelInfo.SelectedFilter;
-        }
-
-        private void RefreshFWList(object obj) {
-            FilterWheelChooserVM.GetEquipment();
         }
 
         private IFilterWheel _fW;
