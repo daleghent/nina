@@ -26,21 +26,24 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NINA.Profile.Interfaces;
 
 namespace NINATest.Sequencer.SequenceItem.Guider {
 
     [TestFixture]
     internal class DitherTest {
         public Mock<IGuiderMediator> guiderMediatorMock;
+        public Mock<IProfileService> profileServiceMock;
 
         [SetUp]
         public void Setup() {
             guiderMediatorMock = new Mock<IGuiderMediator>();
+            profileServiceMock = new Mock<IProfileService>();
         }
 
         [Test]
         public void Clone_ItemClonedProperly() {
-            var sut = new Dither(guiderMediatorMock.Object);
+            var sut = new Dither(guiderMediatorMock.Object, profileServiceMock.Object);
             sut.Name = "SomeName";
             sut.Description = "SomeDescription";
             sut.Icon = new System.Windows.Media.GeometryGroup();
@@ -56,7 +59,7 @@ namespace NINATest.Sequencer.SequenceItem.Guider {
         public void Validate_NoIssues() {
             guiderMediatorMock.Setup(x => x.GetInfo()).Returns(new GuiderInfo() { Connected = true });
 
-            var sut = new Dither(guiderMediatorMock.Object);
+            var sut = new Dither(guiderMediatorMock.Object, profileServiceMock.Object);
             var valid = sut.Validate();
 
             valid.Should().BeTrue();
@@ -68,7 +71,7 @@ namespace NINATest.Sequencer.SequenceItem.Guider {
         public void Validate_NotConnected_OneIssue() {
             guiderMediatorMock.Setup(x => x.GetInfo()).Returns(new GuiderInfo() { Connected = false });
 
-            var sut = new Dither(guiderMediatorMock.Object);
+            var sut = new Dither(guiderMediatorMock.Object, profileServiceMock.Object);
             var valid = sut.Validate();
 
             valid.Should().BeFalse();
@@ -80,7 +83,7 @@ namespace NINATest.Sequencer.SequenceItem.Guider {
         public async Task Execute_NoIssues_LogicCalled() {
             guiderMediatorMock.Setup(x => x.GetInfo()).Returns(new GuiderInfo() { Connected = true });
 
-            var sut = new Dither(guiderMediatorMock.Object);
+            var sut = new Dither(guiderMediatorMock.Object, profileServiceMock.Object);
             await sut.Execute(default, default);
 
             guiderMediatorMock.Verify(x => x.Dither(It.IsAny<CancellationToken>()), Times.Once);
@@ -88,11 +91,12 @@ namespace NINATest.Sequencer.SequenceItem.Guider {
 
         [Test]
         public void GetEstimatedDuration_BasedOnParameters_ReturnsCorrectEstimate() {
-            var sut = new Dither(guiderMediatorMock.Object);
+            profileServiceMock.SetupGet(x => x.ActiveProfile.GuiderSettings.SettleTimeout).Returns(100);
+            var sut = new Dither(guiderMediatorMock.Object, profileServiceMock.Object);
 
             var duration = sut.GetEstimatedDuration();
 
-            duration.Should().Be(TimeSpan.Zero);
+            duration.Should().Be(TimeSpan.FromSeconds(100));
         }
     }
 }

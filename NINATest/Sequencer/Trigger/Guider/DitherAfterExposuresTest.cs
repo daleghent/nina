@@ -30,6 +30,7 @@ using NINA.Equipment.Equipment.MyGuider;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Model;
 using NINA.Sequencer.SequenceItem;
+using NINA.Profile.Interfaces;
 
 namespace NINATest.Sequencer.Trigger.Guider {
 
@@ -37,17 +38,20 @@ namespace NINATest.Sequencer.Trigger.Guider {
     public class DitherAfterExposuresTest {
         private Mock<IImageHistoryVM> historyMock;
         private Mock<IGuiderMediator> guiderMediatorMock;
+        private Mock<IProfileService> profileServiceMock;
 
         [SetUp]
         public void Setup() {
             historyMock = new Mock<IImageHistoryVM>();
             guiderMediatorMock = new Mock<IGuiderMediator>();
+            profileServiceMock = new Mock<IProfileService>();
+            profileServiceMock.Setup(x => x.ActiveProfile.GuiderSettings.SettleTimeout).Returns(0);
             guiderMediatorMock.Setup(x => x.GetInfo()).Returns(new GuiderInfo() { Connected = true });
         }
 
         [Test]
         public void CloneTest() {
-            var initial = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object);
+            var initial = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object, profileServiceMock.Object);
             initial.Icon = new System.Windows.Media.GeometryGroup();
 
             var sut = (DitherAfterExposures)initial.Clone();
@@ -60,7 +64,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
         public async Task ExecuteTest() {
             historyMock.SetupGet(x => x.ImageHistory).Returns(new List<ImageHistoryPoint>());
 
-            var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object);
+            var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object, profileServiceMock.Object);
             await sut.Execute(default, default, default);
 
             guiderMediatorMock.Verify(x => x.Dither(It.IsAny<CancellationToken>()), Times.Once);
@@ -68,7 +72,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
 
         [Test]
         public void InitializeTest() {
-            var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object);
+            var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object, profileServiceMock.Object);
             sut.SequenceBlockStarted();
 
             Assert.Pass();
@@ -101,7 +105,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
             }
             historyMock.SetupGet(x => x.ImageHistory).Returns(history);
 
-            var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object);
+            var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object, profileServiceMock.Object);
             sut.AfterExposures = afterExpsoures;
 
             var trigger = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);
@@ -117,7 +121,7 @@ namespace NINATest.Sequencer.Trigger.Guider {
             }
             historyMock.SetupGet(x => x.ImageHistory).Returns(history);
 
-            var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object);
+            var sut = new DitherAfterExposures(guiderMediatorMock.Object, historyMock.Object, profileServiceMock.Object);
             sut.AfterExposures = 1;
 
             var test1 = sut.ShouldTrigger(null, new Mock<ISequenceItem>().Object);

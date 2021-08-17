@@ -25,6 +25,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
+using NINA.Profile.Interfaces;
 
 namespace NINA.Sequencer.SequenceItem.Guider {
 
@@ -36,13 +37,15 @@ namespace NINA.Sequencer.SequenceItem.Guider {
     [JsonObject(MemberSerialization.OptIn)]
     public class Dither : SequenceItem, IValidatable {
         protected IGuiderMediator guiderMediator;
+        protected IProfileService profileService;
 
         [ImportingConstructor]
-        public Dither(IGuiderMediator guiderMediator) {
+        public Dither(IGuiderMediator guiderMediator, IProfileService profileService) {
             this.guiderMediator = guiderMediator;
+            this.profileService = profileService;
         }
 
-        private Dither(Dither cloneMe) : this(cloneMe.guiderMediator) {
+        private Dither(Dither cloneMe) : this(cloneMe.guiderMediator, cloneMe.profileService) {
             CopyMetaData(cloneMe);
         }
 
@@ -80,6 +83,10 @@ namespace NINA.Sequencer.SequenceItem.Guider {
 
         public override string ToString() {
             return $"Category: {Category}, Item: {nameof(Dither)}";
+        }
+
+        public override TimeSpan GetEstimatedDuration() {
+            return TimeSpan.FromSeconds(profileService.ActiveProfile.GuiderSettings.SettleTimeout);
         }
     }
 }

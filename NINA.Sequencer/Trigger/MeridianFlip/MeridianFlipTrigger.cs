@@ -224,14 +224,14 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                 Logger.Info($"Meridian Flip - Remaining Time is between minimum and maximum flip time. Minimum time remaining {minimumTimeRemaining}, maximum time remaining {maximumTimeRemaining}. Flip should happen now");
                 return true;
             } else {
-                //The minimum time to flip has not been reached yet. Check if a flip is required based on the estimation of the next instruction
-                var noRemainingTime = maximumTimeRemaining <= TimeSpan.FromSeconds(nextInstructionTime);
-
                 if (UseSideOfPier && telescopeInfo.SideOfPier == PierSide.pierUnknown) {
                     Logger.Error("Side of Pier usage is enabled, however the side of pier reported by the driver is unknown. Ignoring side of pier to calculate the flip time");
                 }
 
                 if (UseSideOfPier && telescopeInfo.SideOfPier != PierSide.pierUnknown) {
+                    //The minimum time to flip has not been reached yet. Check if a flip is required based on the estimation of the next instruction
+                    var noRemainingTime = maximumTimeRemaining <= TimeSpan.FromSeconds(nextInstructionTime);
+
                     if (noRemainingTime) {
                         // There is no more time remaining. Project the side of pier to that at the time after the flip and check if this flip is required
                         var projectedSiderealTime = Angle.ByHours(AstroUtil.EuclidianModulus(telescopeInfo.SiderealTime + originalMaximumTimeRemaining.TotalHours, 24));
@@ -269,6 +269,9 @@ namespace NINA.Sequencer.Trigger.MeridianFlip {
                         }
                     }
                 } else {
+                    //The minimum time to flip has not been reached yet. Check if a flip is required based on the estimation of the next instruction plus a 2 minute window due to not having side of pier access for dalyed flip evaluation
+                    var noRemainingTime = maximumTimeRemaining <= (TimeSpan.FromSeconds(nextInstructionTime) + TimeSpan.FromMinutes(2));
+
                     if (noRemainingTime) {
                         Logger.Info($"Meridian Flip - No more remaining time available before flip. Max remaining time {maximumTimeRemaining}, next instruction time {nextInstructionTime}. Flip should happen now");
                         return true;

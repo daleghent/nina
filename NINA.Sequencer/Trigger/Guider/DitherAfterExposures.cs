@@ -30,6 +30,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
+using NINA.Profile.Interfaces;
+using NINA.Sequencer.Utility;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.Trigger.Guider {
 
@@ -42,16 +45,18 @@ namespace NINA.Sequencer.Trigger.Guider {
     public class DitherAfterExposures : SequenceTrigger, IValidatable {
         private IGuiderMediator guiderMediator;
         private IImageHistoryVM history;
+        private IProfileService profileService;
 
         [ImportingConstructor]
-        public DitherAfterExposures(IGuiderMediator guiderMediator, IImageHistoryVM history) : base() {
+        public DitherAfterExposures(IGuiderMediator guiderMediator, IImageHistoryVM history, IProfileService profileService) : base() {
             this.guiderMediator = guiderMediator;
             this.history = history;
+            this.profileService = profileService;
             AfterExposures = 1;
-            TriggerRunner.Add(new Dither(guiderMediator));
+            TriggerRunner.Add(new Dither(guiderMediator, profileService));
         }
 
-        private DitherAfterExposures(DitherAfterExposures cloneMe) : this(cloneMe.guiderMediator, cloneMe.history) {
+        private DitherAfterExposures(DitherAfterExposures cloneMe) : this(cloneMe.guiderMediator, cloneMe.history, cloneMe.profileService) {
             CopyMetaData(cloneMe);
         }
 
@@ -100,7 +105,16 @@ namespace NINA.Sequencer.Trigger.Guider {
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
             if (nextItem == null) { return false; }
             RaisePropertyChanged(nameof(ProgressExposures));
-            return lastTriggerId < history.ImageHistory.Count && history.ImageHistory.Count > 0 && ProgressExposures == 0;
+            var shouldTrigger = lastTriggerId < history.ImageHistory.Count && history.ImageHistory.Count > 0 && ProgressExposures == 0;
+
+            if (shouldTrigger) {
+                if (ItemUtility.IsTooCloseToMeridianFlip(Parent, TriggerRunner.GetItemsSnapshot().First().GetEstimatedDuration())) {
+                    Logger.Warning("Dither should be triggered, however the meridian flip is too close to be executed");
+                    shouldTrigger = false;
+                }
+            }
+
+            return shouldTrigger;
         }
 
         public override string ToString() {

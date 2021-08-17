@@ -64,7 +64,7 @@ namespace NINA.Sequencer.SequenceItem.Imaging {
                     new SwitchFilter(profileService, filterWheelMediator),
                     new TakeExposure(profileService, cameraMediator, imagingMediator, imageSaveMediator, imageHistoryVM),
                     new LoopCondition(),
-                    new DitherAfterExposures(guiderMediator, imageHistoryVM)
+                    new DitherAfterExposures(guiderMediator, imageHistoryVM, profileService)
                 ) {
         }
 

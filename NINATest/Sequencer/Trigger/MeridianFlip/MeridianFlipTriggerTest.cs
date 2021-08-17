@@ -316,12 +316,18 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
         }
 
         [Test]
-        /* Exposure time is 7 minutes
+        /* Exposure time is 6 minutes
          * Remaining time to exceed minimum time is 3 minutes
          * Remaining time to exceed maximum time is 8 minutes
          * => The exposure still fits in, no flip yet
          */
-        [TestCase(7, 5, 10, 8, PierSide.pierWest, false)]
+        [TestCase(5, 5, 10, 8, PierSide.pierWest, false)]
+        /* Exposure time is 6 minutes
+         * Remaining time to exceed minimum time is 3 minutes
+         * Remaining time to exceed maximum time is 8 minutes
+         * => The exposure still fits in, but the two minute grace period hits
+         */
+        [TestCase(7, 5, 10, 8, PierSide.pierWest, true)]
         /* Exposure time is 9 minutes
          * Remaining time to exceed minimum time is 3 minutes
          * Remaining time to exceed maximum time is 8 minutes
