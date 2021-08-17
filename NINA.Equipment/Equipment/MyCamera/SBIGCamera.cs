@@ -170,7 +170,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
             BinningModes.Clear();
             for (short i = 1; i <= MaxBinX; ++i) {
                 BinningModes.Add(new BinningMode(i, i));
-            } 
+            }
         }
 
         private bool _hasShutter = false;
@@ -212,7 +212,7 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         private string _sensorName;
-        public string SensorName { 
+        public string SensorName {
             get => _sensorName;
             set {
                 if (value != _sensorName) {

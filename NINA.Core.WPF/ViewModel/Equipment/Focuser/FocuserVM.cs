@@ -30,6 +30,7 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
+using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
 
@@ -49,12 +50,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             this.focuserMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
             FocuserChooserVM = focuserChooserVm;
-            Task.Run(() => FocuserChooserVM.GetEquipment());
+            _ = Rescan();
 
             ChooseFocuserCommand = new AsyncCommand<bool>(() => ChooseFocuser());
             CancelChooseFocuserCommand = new RelayCommand(CancelChooseFocuser);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
-            RefreshFocuserListCommand = new RelayCommand(RefreshFocuserList, o => Focuser?.Connected != true);
+            RefreshFocuserListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Focuser?.Connected == true));
             MoveFocuserInSmallCommand = new AsyncCommand<int>(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / -2d)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
             MoveFocuserInLargeCommand = new AsyncCommand<int>(() => MoveFocuserRelativeInternal(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize * -5), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
             MoveFocuserOutSmallCommand = new AsyncCommand<int>(() => MoveFocuserRelativeInternal((int)Math.Round(profileService.ActiveProfile.FocuserSettings.AutoFocusStepSize / 2d)), (p) => FocuserInfo.Connected && !FocuserInfo.IsMoving);
@@ -70,13 +71,17 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             );
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
-                RefreshFocuserList(null);
+                AsyncContext.Run(Rescan);
             };
 
             progress = new Progress<ApplicationStatus>(p => {
                 p.Source = this.Title;
                 this.applicationStatusMediator.StatusUpdate(p);
             });
+        }
+
+        public async Task Rescan() {
+            await Task.Run(() => FocuserChooserVM.GetEquipment());
         }
 
         private void ToggleTempComp(object obj) {
@@ -383,10 +388,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
             FocuserInfo = DeviceInfo.CreateDefaultInstance<FocuserInfo>();
             BroadcastFocuserInfo();
             RaisePropertyChanged(nameof(Focuser));
-        }
-
-        public void RefreshFocuserList(object obj) {
-            FocuserChooserVM.GetEquipment();
         }
 
         public Task<bool> Connect() {

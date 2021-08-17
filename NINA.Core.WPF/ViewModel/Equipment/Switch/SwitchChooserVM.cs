@@ -56,8 +56,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Switch {
                     /* Pegasus Astro Ultimate Powerbox V2 */
                     devices.Add(new UltimatePowerBoxV2(profileService));
 
-                    Devices = devices;
-                    DetermineSelectedDevice(profileService.ActiveProfile.SwitchSettings.Id);
+                    DetermineSelectedDevice(devices, profileService.ActiveProfile.SwitchSettings.Id);
                 }
             }
         }

@@ -34,6 +34,7 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
+using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
 
@@ -57,7 +58,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 p.Source = this.Title;
                 this.applicationStatusMediator.StatusUpdate(p);
             });
-            Task.Run(() => TelescopeChooserVM.GetEquipment());
+            _ = Rescan();
 
             ChooseTelescopeCommand = new AsyncCommand<bool>(() => ChooseTelescope());
             CancelChooseTelescopeCommand = new RelayCommand(CancelChooseTelescope);
@@ -73,7 +74,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             });
             SetParkPositionCommand = new AsyncCommand<bool>(SetParkPosition);
             SlewToCoordinatesCommand = new AsyncCommand<bool>(SlewToCoordinatesInternal);
-            RefreshTelescopeListCommand = new RelayCommand(RefreshTelescopeList, o => !(Telescope?.Connected == true));
+            RefreshTelescopeListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Telescope?.Connected == true));
             FindHomeCommand = new AsyncCommand<bool>(() => {
                 InitCancelSlewTelescope();
                 return FindHome(progress, _cancelSlewTelescopeSource.Token);
@@ -92,8 +93,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             );
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
-                RefreshTelescopeList(null);
+                AsyncContext.Run(Rescan);
             };
+        }
+
+        public async Task Rescan() {
+            await Task.Run(() => TelescopeChooserVM.GetEquipment());
         }
 
         public bool SendToSnapPort(bool start) {
@@ -110,10 +115,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                 Notification.ShowError(Loc.Instance["LblTelescopeNotConnectedForCommand"]);
                 return false;
             }
-        }
-
-        private void RefreshTelescopeList(object obj) {
-            TelescopeChooserVM.GetEquipment();
         }
 
         public async Task<bool> ParkTelescope(IProgress<ApplicationStatus> progress, CancellationToken token) {

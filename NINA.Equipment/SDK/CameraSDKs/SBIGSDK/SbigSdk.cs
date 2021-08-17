@@ -433,7 +433,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                                 new SBIG.QueryTemperatureStatusParams(SBIG.TempStatusRequest.TEMP_STATUS_ADVANCED2));
                          }
                     },
-                    TimeSpan.FromSeconds(1));
+                    TimeSpan.FromSeconds(5));
             }
         }
 
@@ -735,6 +735,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                         cfwCommand = SBIG.CfwCommand.CFWC_QUERY
                     };
                     var queryStatusResult = UnivDrvCommand<SBIG.CfwParams, SBIG.CfwResult>(SBIG.Cmd.CC_CFW, queryStatusParams);
+
+                    Logger.Trace($"SBIGSDK: FilterWheel status. Position={queryStatusResult.cfwPosition}, Status={queryStatusResult.cfwStatus}");
                     return new FilterWheelStatus() {
                         Position = queryStatusResult.cfwPosition,
                         Status = queryStatusResult.cfwStatus

@@ -34,8 +34,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Focuser {
                     devices.Add(device);
                 }
 
-                Devices = devices;
-                DetermineSelectedDevice(profileService.ActiveProfile.FocuserSettings.Id);
+                DetermineSelectedDevice(devices, profileService.ActiveProfile.FocuserSettings.Id);
             }
         }
     }

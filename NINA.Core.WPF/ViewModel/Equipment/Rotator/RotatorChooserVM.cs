@@ -45,8 +45,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Rotator {
 
                 devices.Add(new ManualRotator(profileService));
 
-                Devices = devices;
-                DetermineSelectedDevice(profileService.ActiveProfile.RotatorSettings.Id);
+                DetermineSelectedDevice(devices, profileService.ActiveProfile.RotatorSettings.Id);
             }
         }
     }

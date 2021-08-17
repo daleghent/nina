@@ -34,8 +34,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FlatDevice {
                     devices.Add(device);
                 }
 
-                Devices = devices;
-                DetermineSelectedDevice(profileService.ActiveProfile.FlatDeviceSettings.Id);
+                DetermineSelectedDevice(devices, profileService.ActiveProfile.FlatDeviceSettings.Id);
             }
         }
     }

@@ -36,6 +36,7 @@ using NINA.Equipment.Model;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
+using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
@@ -47,7 +48,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             ImageGeometry = (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["CameraSVG"];
 
             CameraChooserVM = cameraChooserVM;
-            Task.Run(() => CameraChooserVM.GetEquipment());
+            _ = Rescan();
 
             this.cameraMediator = cameraMediator;
             this.cameraMediator.RegisterHandler(this);
@@ -67,7 +68,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 return WarmCamera(TimeSpan.FromMinutes(WarmingDuration), new Progress<ApplicationStatus>(p => Status = p), _cancelChangeTemperatureCts.Token);
             }, (object o) => !TempChangeRunning);
             CancelCoolCamCommand = new RelayCommand(CancelCoolCamera);
-            RefreshCameraListCommand = new RelayCommand(RefreshCameraList, o => !(Cam?.Connected == true));
+            RefreshCameraListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Cam?.Connected == true));
 
             TempChangeRunning = false;
             CoolerPowerHistory = new AsyncObservableLimitedSizedStack<KeyValuePair<DateTime, double>>(100);
@@ -81,9 +82,13 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             );
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
-                RefreshCameraList(null);
+                AsyncContext.Run(Rescan);
                 RaiseAllPropertiesChanged();  // Reload DefaultGain, and other default camera settings
             };
+        }
+
+        public async Task Rescan() {
+            await Task.Run(() => CameraChooserVM.GetEquipment());
         }
 
         private ApplicationStatus _status;
@@ -99,10 +104,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 this.applicationStatusMediator.StatusUpdate(_status);
             }
-        }
-
-        private void RefreshCameraList(object obj) {
-            CameraChooserVM.GetEquipment();
         }
 
         private ICameraMediator cameraMediator;

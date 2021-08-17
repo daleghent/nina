@@ -56,22 +56,42 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         public AsyncObservableCollection<FilterInfo> Filters {
             get {
                 var filtersList = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters;
-                int i = filtersList.Count();
                 int positions = (int)sbigFilterWheelInfo.FilterCount;
 
-                if (positions < i) {
-                    /* Too many filters defined. Truncate the list */
-                    for (; i > positions; i--) {
-                        filtersList.RemoveAt(i - 1);
-                    }
-                } else if (positions > i) {
-                    /* Too few filters defined. Add missing filter names using Slot <#> format */
-                    for (; i <= positions; i++) {
-                        var filter = new FilterInfo(string.Format($"Slot {i}"), 0, (short)i);
-                        filtersList.Add(filter);
+                var seen = new bool[positions];
+                for (int i = filtersList.Count - 1; i >= 0; --i) {
+                    if (filtersList[i].Position < 0 || filtersList[i].Position >= positions) {
+                        // Remove any that are out of bounds
+                        filtersList.RemoveAt(i);
+                    } else if (seen[filtersList[i].Position]) {
+                        // Remove duplicates
+                        filtersList.RemoveAt(i);
+                    } else {
+                        seen[filtersList[i].Position] = true;
                     }
                 }
 
+                var sorted = true;
+                for (int i = 0; i < positions; ++i) {
+                    if (!seen[i]) {
+                        var filter = new FilterInfo(string.Format($"Slot {i}"), 0, (short)i);
+                        if (i != filtersList.Count) {
+                            sorted = false;
+                        }
+                        filtersList.Add(filter);
+                    } else if (filtersList[i].Position != i) {
+                        sorted = false;
+                    }
+                }
+
+                // Lastly, ensure the filters are sorted by position
+                if (!sorted) {
+                    var filtersListSortedCopy = filtersList.OrderBy(x => x.Position).ToList();
+                    filtersList.Clear();
+                    foreach (var filter in filtersListSortedCopy) {
+                        filtersList.Add(filter);
+                    }
+                }
                 return filtersList;
             }
         }
@@ -87,6 +107,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
             }
         }
 
+        private short lastSetPosition = -1;
         public short Position { 
             get {
                 if (!Connected) {
@@ -95,18 +116,25 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                 }
 
                 var filterWheelStatus = sdk.GetFilterWheelStatus(connectedDevice.Value.DeviceId);
-                if (filterWheelStatus.Status == SBIG.CfwStatus.CFWS_BUSY || filterWheelStatus.Position == SBIG.CfwPosition.CFWP_UNKNOWN) {
+                if (filterWheelStatus.Status == SBIG.CfwStatus.CFWS_BUSY) {
                     return -1;
+                } else if (filterWheelStatus.Position == SBIG.CfwPosition.CFWP_UNKNOWN && filterWheelStatus.Status == SBIG.CfwStatus.CFWS_IDLE) {
+                    // Some models can't report their position, so return the last set position while idle
+                    return lastSetPosition;
                 }
 
-                return (short)filterWheelStatus.Position;
+                // Filter wheel positions start from 1, but NINA expects them to be 0-based
+                return (short)(filterWheelStatus.Position - 1);
             }
             set {
                 var currentPosition = this.Position;
                 Logger.Debug($"SBIGFW: Moving to position {value}. Currently {currentPosition}");
-                if (currentPosition > 0 && currentPosition != value) {
-                    sdk.SetFilterWheelPosition(connectedDevice.Value.DeviceId, (ushort)value);
+                if (currentPosition != value) {
+                    // SBIG positions start from 1
+                    sdk.SetFilterWheelPosition(connectedDevice.Value.DeviceId, (ushort)(value + 1));
                     RaisePropertyChanged();
+
+                    lastSetPosition = value;
                 }
             }
         }
@@ -116,7 +144,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                 return Task.FromResult(true);
             }
 
-            return Task.Run(() => {
+            return Task.Run(async () => {
                 Logger.Info($"SBIGFW: Attempting to connect {this.queriedDeviceInfo.DeviceId}");
                 try {
                     ConnectedDevice = sdk.OpenDevice(this.queriedDeviceInfo.DeviceId);
@@ -124,7 +152,30 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
                         throw new InvalidOperationException($"SBIGFW: Cannot connect {this.queriedDeviceInfo.DeviceId} since it is not a filter wheel");
                     }
 
+                    // During connection, the filter wheel might be calibrating and rotating through filters. We wait for it to stop in this case
+                    // so we can detect whether it's a model that can report position
+                    var timeoutCts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+                    var cts = CancellationTokenSource.CreateLinkedTokenSource(ct, timeoutCts.Token);
+                    var filterWheelStatus = new FilterWheelStatus() {
+                        Position = SBIG.CfwPosition.CFWP_UNKNOWN,
+                        Status = SBIG.CfwStatus.CFWS_UNKNOWN
+                    };
+                    while (!cts.Token.IsCancellationRequested) {
+                        filterWheelStatus = sdk.GetFilterWheelStatus(connectedDevice.Value.DeviceId);
+                        if (filterWheelStatus.Position != SBIG.CfwPosition.CFWP_UNKNOWN || filterWheelStatus.Status != SBIG.CfwStatus.CFWS_BUSY) {
+                            break;
+                        }
+                        Logger.Debug($"SBIGFW: Filter wheel has unknown position on connection. Waiting until it is no longer busy to proceed");
+                        await Task.Delay(TimeSpan.FromMilliseconds(500), cts.Token);
+                    }
+                    cts.Token.ThrowIfCancellationRequested();
+
                     Connected = true;
+                    if (filterWheelStatus.Position == SBIG.CfwPosition.CFWP_UNKNOWN) {
+                        Logger.Info($"SBIGFW: Filter wheel has unknown position on connection. Setting to first filter position for initialization");
+                        Position = 1;
+                    }
+
                     Logger.Info($"SBIGFW: Successfully connected {this.queriedDeviceInfo.DeviceId}");
                     return true;
                 } catch (Exception e) {

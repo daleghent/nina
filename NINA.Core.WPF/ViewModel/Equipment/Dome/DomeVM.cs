@@ -33,6 +33,7 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
+using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
@@ -59,14 +60,14 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             this.safetyMonitorMediator = safetyMonitorMediator;
             this.safetyMonitorMediator.RegisterConsumer(this);
             DomeChooserVM = domeChooserVM;
-            Task.Run(() => DomeChooserVM.GetEquipment());
+            _ = Rescan();
             this.domeFollower = domeFollower;
             this.domeFollower.PropertyChanged += DomeFollower_PropertyChanged;
 
             ChooseDomeCommand = new AsyncCommand<bool>(() => ChooseDome());
             CancelChooseDomeCommand = new RelayCommand(CancelChooseDome);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
-            RefreshDomeListCommand = new RelayCommand(RefreshDomeList, o => !(Dome?.Connected == true));
+            RefreshDomeListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(Dome?.Connected == true));
             StopCommand = new AsyncCommand<bool>(StopAll);
             OpenShutterCommand = new AsyncCommand<bool>(OpenShutterVM);
             CloseShutterCommand = new AsyncCommand<bool>(CloseShutterVM);
@@ -85,8 +86,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             );
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
-                RefreshDomeList(null);
+                AsyncContext.Run(Rescan);
             };
+        }
+
+        public async Task Rescan() {
+            await Task.Run(() => DomeChooserVM.GetEquipment());
         }
 
         private void DomeFollower_PropertyChanged(object sender, PropertyChangedEventArgs e) {
@@ -277,10 +282,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         private void BroadcastDomeInfo() {
             domeMediator.Broadcast(DomeInfo);
-        }
-
-        public void RefreshDomeList(object obj) {
-            DomeChooserVM.GetEquipment();
         }
 
         public Task<bool> Connect() {

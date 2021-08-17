@@ -60,8 +60,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     Logger.Error(ex);
                 }
 
-                Devices = devices;
-                DetermineSelectedDevice(profileService.ActiveProfile.GuiderSettings.GuiderName);
+                DetermineSelectedDevice(devices, profileService.ActiveProfile.GuiderSettings.GuiderName);
             }
         }
     }

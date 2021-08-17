@@ -31,6 +31,7 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Equipment;
 using NINA.Equipment.Interfaces;
+using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
 
@@ -49,12 +50,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
             this.safetyMonitorMediator = safetyMonitorMediator;
             this.safetyMonitorMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
-            Task.Run(() => SafetyMonitorChooserVM.GetEquipment());
+            _ = Rescan();
 
             ConnectCommand = new AsyncCommand<bool>(() => Connect());
             CancelConnectCommand = new RelayCommand(CancelConnect);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
-            RefreshMonitorListCommand = new RelayCommand(RefreshMonitorList, o => !(safetyMonitor?.Connected == true));
+            RefreshMonitorListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(safetyMonitor?.Connected == true));
 
             updateTimer = new DeviceUpdateTimer(
                 GetMonitorValues,
@@ -63,8 +64,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
             );
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
-                RefreshMonitorList(null);
+                AsyncContext.Run(Rescan);
             };
+        }
+
+        public async Task Rescan() {
+            await Task.Run(() => SafetyMonitorChooserVM.GetEquipment());
         }
 
         private SafetyMonitorChooserVM safetyMonitorChooserVM;
@@ -79,10 +84,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.SafetyMonitor {
             set {
                 safetyMonitorChooserVM = value;
             }
-        }
-
-        public void RefreshMonitorList(object obj) {
-            SafetyMonitorChooserVM.GetEquipment();
         }
 
         private void UpdateMonitorValues(Dictionary<string, object> monitorValues) {

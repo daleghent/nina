@@ -29,6 +29,7 @@ using NINA.Core.MyMessageBox;
 using NINA.Equipment.Interfaces.ViewModel;
 using NINA.Equipment.Interfaces;
 using NINA.Equipment.Equipment;
+using Nito.AsyncEx;
 
 namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
 
@@ -41,12 +42,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
             this.weatherDataMediator = weatherDataMediator;
             this.weatherDataMediator.RegisterHandler(this);
             this.applicationStatusMediator = applicationStatusMediator;
-            Task.Run(() => WeatherDataChooserVM.GetEquipment());
+            _ = Rescan();
 
             ChooseWeatherDataCommand = new AsyncCommand<bool>(() => ChooseWeatherData());
             CancelChooseWeatherDataCommand = new RelayCommand(CancelChooseWeatherData);
             DisconnectCommand = new AsyncCommand<bool>(() => DisconnectDiag());
-            RefreshWeatherDataListCommand = new RelayCommand(RefreshWeatherDataList, o => !(WeatherData?.Connected == true));
+            RefreshWeatherDataListCommand = new AsyncCommand<bool>(async o => { await Rescan(); return true; }, o => !(WeatherData?.Connected == true));
 
             updateTimer = new DeviceUpdateTimer(
                 GetWeatherDataValues,
@@ -55,8 +56,12 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
             );
 
             profileService.ProfileChanged += (object sender, EventArgs e) => {
-                RefreshWeatherDataList(null);
+                AsyncContext.Run(Rescan);
             };
+        }
+
+        public async Task Rescan() {
+            await Task.Run(() => WeatherDataChooserVM.GetEquipment());
         }
 
         private CancellationTokenSource _cancelChooseWeatherDataSource;
@@ -242,10 +247,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.WeatherData {
 
         private void BroadcastWeatherDataInfo() {
             weatherDataMediator.Broadcast(WeatherDataInfo);
-        }
-
-        public void RefreshWeatherDataList(object obj) {
-            WeatherDataChooserVM.GetEquipment();
         }
 
         public Task<bool> Connect() {
