@@ -278,7 +278,6 @@
                         <ScrollBar
                             x:Name="PART_HorizontalScrollBar"
                             Grid.Row="1"
-                            Grid.Column="1"
                             Maximum="{TemplateBinding ScrollableWidth}"
                             Orientation="Horizontal"
                             ViewportSize="{TemplateBinding ViewportWidth}"
