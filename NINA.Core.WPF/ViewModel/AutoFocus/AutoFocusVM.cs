@@ -511,10 +511,9 @@ namespace NINA.WPF.Base.ViewModel.AutoFocus {
             }
 
             _focusPosition = await focuserMediator.MoveFocuser((int)focusPoint.X, token);
+            double hfr = (await GetAverageMeasurement(filter, profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint, token, progress)).Measure;
 
             if (profileService.ActiveProfile.FocuserSettings.AutoFocusMethod == AFMethodEnum.STARHFR && rSquaredThreshold <= 0) {
-                double hfr = (await GetAverageMeasurement(filter, profileService.ActiveProfile.FocuserSettings.AutoFocusNumberOfFramesPerPoint, token, progress)).Measure;
-
                 if (initialHFR != 0 && hfr > (initialHFR * 1.15)) {
                     Logger.Warning(string.Format("New focus point HFR {0} is significantly worse than original HFR {1}", hfr, initialHFR));
                     Notification.ShowWarning(string.Format(Loc.Instance["LblAutoFocusNewWorseThanOriginal"], hfr, initialHFR));
