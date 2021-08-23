@@ -83,7 +83,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     ditherCancellationTokenSource.Token.ThrowIfCancellationRequested();
                 }
 
-                var result = await guiderInstance.Dither(ditherCancellationTokenSource.Token);
+                var result = await guiderInstance.Dither(null, ditherCancellationTokenSource.Token);
                 return result;
             } catch (OperationCanceledException) {
                 return false;
@@ -243,7 +243,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
 
             // no other clients exist, just dither
             if (!otherAliveClients.Any()) {
-                var output = await guiderInstance.Dither(ditherCancellationTokenSource.Token);
+                var output = await guiderInstance.Dither(default, ditherCancellationTokenSource.Token);
                 ditherCancellationTokenSource = null;
                 return output;
             }

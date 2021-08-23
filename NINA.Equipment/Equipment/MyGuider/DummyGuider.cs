@@ -90,7 +90,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return true;
         }
 
-        public async Task<bool> Dither(CancellationToken ct) {
+        public async Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken ct) {
             return true;
         }
 

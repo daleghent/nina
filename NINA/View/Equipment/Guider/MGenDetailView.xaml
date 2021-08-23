@@ -25,6 +25,7 @@
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <Image Source="{Binding Display}" />
@@ -34,33 +35,50 @@
             Width="Auto"
             Margin="0,5,0,5"
             LastChildFill="True">
-            <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
-                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFocalLength}" />
-                <ninactrl:UnitTextBox
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblFocalLength}" />
+                    <ninactrl:UnitTextBox
                     MinWidth="50"
                     Margin="5,0,0,0"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
                     Text="{Binding FocalLength}" 
                     Unit="mm"/>
-            </StackPanel>
+                </StackPanel>
 
-            <StackPanel
+                <StackPanel
                 DockPanel.Dock="Right"
                 Orientation="Horizontal"
                 Visibility="{Binding Converter={StaticResource IsMGEN2ToVisibilityConverter}}">
-                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPixelMargin}" />
-                <ninactrl:UnitTextBox
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblPixelMargin}" />
+                    <ninactrl:UnitTextBox
                     MinWidth="50"
                     Margin="5,0,0,0"
                     VerticalAlignment="Center"
                     VerticalContentAlignment="Center"
                     Text="{Binding PixelMargin}"
                     Unit="px"/>
+                </StackPanel>
+                <StackPanel/>
+            </DockPanel>
+        <DockPanel Grid.Row="2"
+            Width="Auto"
+            Margin="0,5,0,5"
+            LastChildFill="True">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblMGENDitherSettleTime}" />
+                <ninactrl:UnitTextBox
+                    MinWidth="50"
+                    Margin="5,0,0,0"
+                    VerticalAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding DitherSettlingTime}" 
+                    Unit="s"/>
             </StackPanel>
-            <StackPanel />
+            <StackPanel/>
+            <StackPanel/>
         </DockPanel>
-        <Grid Grid.Row="2">
+        <Grid Grid.Row="3">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition />

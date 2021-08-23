@@ -10091,6 +10091,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dither settling time.
+        /// </summary>
+        internal static string LblMGENDitherSettleTime {
+            get {
+                return ResourceManager.GetString("LblMGENDitherSettleTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Min.
         /// </summary>
         internal static string LblMin {

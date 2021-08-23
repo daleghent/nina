@@ -35,7 +35,7 @@ namespace NINA.Equipment.Interfaces {
 
         Task<bool> StopGuiding(CancellationToken ct);
 
-        Task<bool> Dither(CancellationToken ct);
+        Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken ct);
 
         Task<bool> ClearCalibration(CancellationToken ct);
     }

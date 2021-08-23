@@ -149,7 +149,7 @@ namespace NINATest {
 
             // assert
             result.Should().BeTrue();
-            guider.Verify(m => m.Dither(It.IsAny<CancellationToken>()), Times.Never);
+            guider.Verify(m => m.Dither(default, It.IsAny<CancellationToken>()), Times.Never);
         }
 
         [Test]
@@ -159,14 +159,14 @@ namespace NINATest {
             await sut.Initialize(guider.Object, cts.Token);
             Guid id = Guid.NewGuid();
             sut.ConnectedClients.Add(new SynchronizedClientInfo { InstanceID = id, NextExposureTime = 10 });
-            guider.Setup(m => m.Dither(It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            guider.Setup(m => m.Dither(default, It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
             // act
             var result = await sut.SynchronizedDither(id);
 
             // assert
             result.Should().BeTrue();
-            guider.Verify(m => m.Dither(It.IsAny<CancellationToken>()), Times.Once);
+            guider.Verify(m => m.Dither(default, It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -178,14 +178,14 @@ namespace NINATest {
             Guid id2 = Guid.NewGuid();
             sut.ConnectedClients.Add(new SynchronizedClientInfo { InstanceID = id, NextExposureTime = 10 });
             sut.ConnectedClients.Add(new SynchronizedClientInfo { InstanceID = id2, NextExposureTime = 10, LastPing = DateTime.Now.Subtract(TimeSpan.FromSeconds(5)) });
-            guider.Setup(m => m.Dither(It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            guider.Setup(m => m.Dither(default, It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
             // act
             var result = await sut.SynchronizedDither(id);
 
             // assert
             result.Should().BeTrue();
-            guider.Verify(m => m.Dither(It.IsAny<CancellationToken>()), Times.Once);
+            guider.Verify(m => m.Dither(default, It.IsAny<CancellationToken>()), Times.Once);
         }
 
         [Test]
@@ -197,14 +197,14 @@ namespace NINATest {
             Guid id2 = Guid.NewGuid();
             sut.ConnectedClients.Add(new SynchronizedClientInfo { InstanceID = id, NextExposureTime = 10 });
             sut.ConnectedClients.Add(new SynchronizedClientInfo { InstanceID = id2, NextExposureTime = 10, LastPing = DateTime.Now });
-            guider.Setup(m => m.Dither(It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            guider.Setup(m => m.Dither(default, It.IsAny<CancellationToken>())).ReturnsAsync(true);
 
             // act
             var result = await sut.SynchronizedDither(id);
 
             // assert
             result.Should().BeTrue();
-            guider.Verify(m => m.Dither(It.IsAny<CancellationToken>()), Times.Once);
+            guider.Verify(m => m.Dither(default, It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }
