@@ -217,7 +217,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
 
         public event EventHandler<IGuideStep> GuideEvent { add { } remove { } }
 
-        public async Task<bool> Dither(CancellationToken ct) {
+        public async Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken ct) {
             State = "Dithering...";
 
             var settleTime = TimeSpan.FromSeconds(profileService.ActiveProfile.GuiderSettings.SettleTime);

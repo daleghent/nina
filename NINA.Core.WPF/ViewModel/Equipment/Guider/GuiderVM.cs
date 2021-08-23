@@ -246,9 +246,13 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
         public async Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken token) {
             if (Guider?.Connected == true) {
+                IProgress<ApplicationStatus> prog = new Progress<ApplicationStatus>(p => {
+                    p.Source = Loc.Instance["LblGuider"];
+                    this.applicationStatusMediator.StatusUpdate(p);
+                });
                 try {
                     progress.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"] });
-                    var guiding = await Guider.StartGuiding(forceCalibration, progress, token);
+                    var guiding = await Guider.StartGuiding(forceCalibration, prog, token);
                     return guiding;
                 } catch (OperationCanceledException ex) {
                     throw;
@@ -281,16 +285,19 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
 
         public async Task<bool> Dither(CancellationToken token) {
             if (Guider?.Connected == true) {
+                IProgress<ApplicationStatus> prog = new Progress<ApplicationStatus>(p => {
+                    p.Source = Loc.Instance["LblDither"];
+                    this.applicationStatusMediator.StatusUpdate(p);
+                });
                 try {
                     Guider.GuideEvent -= Guider_GuideEvent;
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Status = Loc.Instance["LblDither"], Source = Title });
                     GuideStepsHistory.AddDitherIndicator();
-                    await Guider.Dither(token);
+                    await Guider.Dither(prog, token);
                 } finally {
                     Guider.GuideEvent += Guider_GuideEvent;
                     applicationStatusMediator.StatusUpdate(new ApplicationStatus() { Status = string.Empty, Source = Title });
                 }
-
                 return true;
             } else {
                 await Disconnect();

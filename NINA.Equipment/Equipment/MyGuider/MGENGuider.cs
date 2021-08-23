@@ -18,6 +18,7 @@ using NINA.Profile.Interfaces;
 using NINA.Core.Utility;
 using NINA.Astrometry;
 using NINA.Core.Utility.Notification;
+using NINA.Core.Locale;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -107,6 +108,17 @@ namespace NINA.Equipment.Equipment.MyGuider {
             }
 
             set {
+            }
+        }
+
+        public int DitherSettlingTime {
+            get {
+                return profileService.ActiveProfile.GuiderSettings.SettleTime;
+            }
+
+            set {
+                profileService.ActiveProfile.GuiderSettings.SettleTime = value;
+                RaisePropertyChanged();
             }
         }
 
@@ -277,13 +289,13 @@ namespace NINA.Equipment.Equipment.MyGuider {
             Connected = false;
         }
 
-        public async Task<bool> Dither(CancellationToken ct) {
+        public async Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken ct) {
             try {
                 if (await MGen.IsGuidingActive(ct)) {
                     Logger.Debug("MGEN - Dithering");
                     var task = await Task.Run<bool>(async () => {
                         bool dithered = await MGen.Dither(ct);
-                        if (dithered) await WaitForSettling(2000, ct);
+                        if (dithered) await WaitForSettling(DitherSettlingTime, progress, ct);
                         return dithered;
                     });
                 } else {
@@ -294,6 +306,8 @@ namespace NINA.Equipment.Equipment.MyGuider {
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError("Failed to communicate to MGEN during dithering");
+            } finally {
+                progress.Report(new ApplicationStatus { Status = string.Empty });
             }
             return false;
         }
@@ -303,14 +317,18 @@ namespace NINA.Equipment.Equipment.MyGuider {
                 if (!await MGen.IsActivelyGuiding(ct)) {
                     await AutoSelectGuideStar();
                 }
-                await StartCalibrationIfRequired(forceCalibration, ct);
+                var calibrated = await StartCalibrationIfRequired(forceCalibration, ct);
                 Logger.Debug("MGEN - Starting Guiding");
                 await MGen.StartGuiding(ct);
-                await WaitForSettling(5000, ct);
+                if (calibrated) {
+                    await WaitForSettling(DitherSettlingTime, progress, ct);
+                }
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(ex.Message);
                 return false;
+            } finally {
+                progress.Report(new ApplicationStatus { Status = string.Empty });
             }
             return true;
         }
@@ -337,9 +355,10 @@ namespace NINA.Equipment.Equipment.MyGuider {
                         return false;
                     } else {
                         needsCalibration = false;
+                        return true;
                     }
                 }
-                return true;
+                return false;
             }
         }
 
@@ -360,8 +379,8 @@ namespace NINA.Equipment.Equipment.MyGuider {
             }
         }
 
-        private async Task WaitForSettling(int millisDelay, CancellationToken ct) {
-            await CoreUtil.Delay(millisDelay, ct);
+        private async Task WaitForSettling(int secondsDelay, IProgress<ApplicationStatus> progress, CancellationToken ct) {
+            await CoreUtil.Wait(TimeSpan.FromSeconds(secondsDelay), ct, progress, Loc.Instance["LblSettle"]);
         }
 
         public async Task<bool> Connect(CancellationToken token) {

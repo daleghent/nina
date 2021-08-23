@@ -262,7 +262,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
             return true;
         }
 
-        public async Task<bool> Dither(CancellationToken ct) {
+        public async Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken ct) {
             if (Connected) {
                 var state = await GetAppState();
                 if (state != PhdAppState.GUIDING) {

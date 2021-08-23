@@ -246,7 +246,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
         }
 
         /// <inheritdoc />
-        public Task<bool> Dither(CancellationToken ct) {
+        public Task<bool> Dither(IProgress<ApplicationStatus> progress, CancellationToken ct) {
             return Task.Run(async () => {
                 ct.Register(guiderService.CancelSynchronizedDither);
                 return await guiderService.SynchronizedDither(profileService.ActiveProfile.Id);
