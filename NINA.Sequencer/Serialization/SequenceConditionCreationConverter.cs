@@ -15,6 +15,7 @@
 using System;
 using NINA.Sequencer.Conditions;
 using Newtonsoft.Json.Linq;
+using NINA.Core.Utility;
 
 namespace NINA.Sequencer.Serialization {
 
@@ -26,10 +27,19 @@ namespace NINA.Sequencer.Serialization {
         }
 
         public override ISequenceCondition Create(Type objectType, JObject jObject) {
-            var t = GetType(jObject.GetValue("$type").ToString());
-            var method = factory.GetType().GetMethod(nameof(factory.GetCondition)).MakeGenericMethod(new Type[] { t });
-            var obj = method.Invoke(factory, null);
-            return (ISequenceCondition)obj;
+            if (jObject.TryGetValue("$type", out var token)) {
+                var t = GetType(jObject.GetValue("$type").ToString());
+                try {
+                    var method = factory.GetType().GetMethod(nameof(factory.GetCondition)).MakeGenericMethod(new Type[] { t });
+                    var obj = method.Invoke(factory, null);
+                    return (ISequenceCondition)obj;
+                } catch (Exception e) {
+                    Logger.Error($"Encountered unknown sequence condition: {token?.ToString()}");
+                    return new UnknownSequenceCondition();
+                }
+            } else {
+                return new UnknownSequenceCondition();
+            }
         }
     }
 }

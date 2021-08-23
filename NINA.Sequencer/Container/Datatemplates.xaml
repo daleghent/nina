@@ -548,4 +548,8 @@
             </i:Interaction.Behaviors>
         </Grid>
     </DataTemplate>
+
+    <DataTemplate DataType="{x:Type local:UnknownSequenceContainer}">
+        <view:SequenceBlockView DataContext="{Binding}" />
+    </DataTemplate>
 </ResourceDictionary>

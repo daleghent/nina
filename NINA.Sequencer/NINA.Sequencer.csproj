@@ -154,6 +154,7 @@
     <Compile Include="Conditions\SunAltitudeCondition.cs" />
     <Compile Include="Conditions\TimeCondition.cs" />
     <Compile Include="Conditions\TimeSpanCondition.cs" />
+    <Compile Include="Conditions\UnknownSequenceCondition.cs" />
     <Compile Include="Container\Datatemplates.xaml.cs">
       <DependentUpon>Datatemplates.xaml</DependentUpon>
     </Compile>
@@ -167,6 +168,7 @@
     <Compile Include="Container\SequentialContainer.cs" />
     <Compile Include="Container\StartAreaContainer.cs" />
     <Compile Include="Container\TargetAreaContainer.cs" />
+    <Compile Include="Container\UnknownSequenceContainer.cs" />
     <Compile Include="Converters\IsLightImageTypeToVisibilityConverter.cs" />
     <Compile Include="DropInParameters.cs" />
     <Compile Include="Interfaces\DragDrop\IDropContainer.cs" />
@@ -309,6 +311,7 @@
     <Compile Include="Trigger\Platesolving\CenterAfterDriftTrigger.cs" />
     <Compile Include="Trigger\Platesolving\PlatesolvingImageFollower.cs" />
     <Compile Include="Trigger\SequenceTrigger.cs" />
+    <Compile Include="Trigger\UnknownSequenceTrigger.cs" />
     <Compile Include="Utility\DateTimeProvider\DawnProvider.cs" />
     <Compile Include="Utility\DateTimeProvider\DuskProvider.cs" />
     <Compile Include="Utility\DateTimeProvider\MeridianProvider.cs" />
