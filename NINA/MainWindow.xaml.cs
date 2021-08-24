@@ -12,6 +12,7 @@
 
 #endregion "copyright"
 
+using Microsoft.Win32;
 using System;
 using System.Windows;
 using System.Windows.Input;
@@ -26,6 +27,13 @@ namespace NINA {
 
         public MainWindow() {
             InitializeComponent();
+            SystemEvents.DisplaySettingsChanged += SystemEvents_DisplaySettingsChanged;
+        }
+
+        private void SystemEvents_DisplaySettingsChanged(object sender, EventArgs e) {
+            var tmp = this.WindowState;
+            this.WindowState = WindowState.Minimized;
+            this.WindowState = tmp;
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e) {
