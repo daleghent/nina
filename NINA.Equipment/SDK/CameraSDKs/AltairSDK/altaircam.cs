@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Threading;
 using NINA.Core.Utility;
 using System.IO;
+using System.Runtime.ExceptionServices;
 
 /*
     Versin: 48.17962.2020.1110
@@ -1472,6 +1473,7 @@ namespace Altair {
 
         /*  bits: 24 (RGB24), 32 (RGB32), 8 (Gray) or 16 (Gray) */
 
+        [HandleProcessCorruptedStateExceptions]
         public bool PullImage(IntPtr pImageData, int bits, out uint pnWidth, out uint pnHeight) {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed) {
                 pnWidth = pnHeight = 0;
@@ -1480,6 +1482,7 @@ namespace Altair {
             return (Altaircam_PullImage(_handle, pImageData, bits, out pnWidth, out pnHeight) >= 0);
         }
 
+        [HandleProcessCorruptedStateExceptions]
         public bool PullImageV2(ushort[] pImageData, int bits, out FrameInfoV2 pInfo) {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed) {
                 pInfo.width = pInfo.height = pInfo.flag = pInfo.seq = 0;
@@ -1491,6 +1494,7 @@ namespace Altair {
 
         /*  bits: 24 (RGB24), 32 (RGB32), 8 (Gray) or 16 (Gray) */
 
+        [HandleProcessCorruptedStateExceptions]
         public bool PullStillImage(IntPtr pImageData, int bits, out uint pnWidth, out uint pnHeight) {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed) {
                 pnWidth = pnHeight = 0;
@@ -1499,6 +1503,7 @@ namespace Altair {
             return (Altaircam_PullStillImage(_handle, pImageData, bits, out pnWidth, out pnHeight) >= 0);
         }
 
+        [HandleProcessCorruptedStateExceptions]
         public bool PullStillImageV2(IntPtr pImageData, int bits, out FrameInfoV2 pInfo) {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed) {
                 pInfo.width = pInfo.height = pInfo.flag = pInfo.seq = 0;
@@ -1512,6 +1517,7 @@ namespace Altair {
             rowPitch: The distance from one row to the next row. rowPitch = 0 means using the default row pitch
         */
 
+        [HandleProcessCorruptedStateExceptions]
         public bool PullImageWithRowPitch(IntPtr pImageData, int bits, int rowPitch, out uint pnWidth, out uint pnHeight) {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed) {
                 pnWidth = pnHeight = 0;
@@ -1520,6 +1526,7 @@ namespace Altair {
             return (Altaircam_PullImageWithRowPitch(_handle, pImageData, bits, rowPitch, out pnWidth, out pnHeight) >= 0);
         }
 
+        [HandleProcessCorruptedStateExceptions]
         public bool PullImageWithRowPitchV2(IntPtr pImageData, int bits, int rowPitch, out FrameInfoV2 pInfo) {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed) {
                 pInfo.width = pInfo.height = pInfo.flag = pInfo.seq = 0;
@@ -1533,6 +1540,7 @@ namespace Altair {
             rowPitch: The distance from one row to the next row. rowPitch = 0 means using the default row pitch
         */
 
+        [HandleProcessCorruptedStateExceptions]
         public bool PullStillImageWithRowPitch(IntPtr pImageData, int bits, int rowPitch, out uint pnWidth, out uint pnHeight) {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed) {
                 pnWidth = pnHeight = 0;
@@ -1541,6 +1549,7 @@ namespace Altair {
             return (Altaircam_PullStillImageWithRowPitch(_handle, pImageData, bits, rowPitch, out pnWidth, out pnHeight) >= 0);
         }
 
+        [HandleProcessCorruptedStateExceptions]
         public bool PullStillImageWithRowPitchV2(IntPtr pImageData, int bits, int rowPitch, out FrameInfoV2 pInfo) {
             if (_handle == null || _handle.IsInvalid || _handle.IsClosed) {
                 pInfo.width = pInfo.height = pInfo.flag = pInfo.seq = 0;

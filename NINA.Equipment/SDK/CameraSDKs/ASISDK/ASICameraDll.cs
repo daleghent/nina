@@ -18,6 +18,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text;
@@ -318,6 +319,7 @@ namespace ZWOptical.ASISDK {
             CheckReturn(ASIInitCamera(cameraId), MethodBase.GetCurrentMethod(), cameraId);
         }
 
+        [HandleProcessCorruptedStateExceptions]
         public static void CloseCamera(int cameraId) {
             CheckReturn(ASICloseCamera(cameraId), MethodBase.GetCurrentMethod(), cameraId);
         }
@@ -422,6 +424,7 @@ namespace ZWOptical.ASISDK {
             return result;
         }
 
+        [HandleProcessCorruptedStateExceptions]
         public static bool GetDataAfterExp(int cameraId, ushort[] buffer, int bufferSize) {
             var result = ASIGetDataAfterExp(cameraId, buffer, bufferSize);
             if (result == ASI_ERROR_CODE.ASI_ERROR_TIMEOUT)
