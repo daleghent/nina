@@ -5752,4 +5752,7 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
   <data name="LblUnableToSetMountLatLong" xml:space="preserve">
     <value>¡No se puede establecer la latitud de la montura a {0} y la longitud a {1}!</value>
   </data>
+  <data name="LblMGENDitherSettleTime" xml:space="preserve">
+    <value>Dither settling time</value>
+  </data>
 </root>

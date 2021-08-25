@@ -1291,7 +1291,7 @@ Quan les marques no estan alineades, significa que hi ha un error d'Alineació P
     <value>Activar escalat de bit</value>
   </data>
   <data name="LblEnableBitScalingTooltip" xml:space="preserve">
-    <value>Save 10/12/14 bit images with scaling to 16 bits. (Only relevant for Altair, Omegon, SVBony, RisingCam and ToupTek cameras, when using the native driver)</value>
+    <value>Guarda imatges de 10/12/14 bits amb escala a 16 bits. (Només rellevant per a les càmeres Altair, Omegon, SVBony, RisingCam i ToupTek quan s'utilitza el controlador natiu)</value>
   </data>
   <data name="LblEnabled" xml:space="preserve">
     <value>Activat</value>
@@ -3348,7 +3348,7 @@ Arrossegueu el rectangle sobre la part del marc que vulgueu fer SubMostra i acti
     <value>Tipus</value>
   </data>
   <data name="LblUnableToConnectCamera" xml:space="preserve">
-    <value>Unable to connect camera {0}</value>
+    <value>Impossible connectar a la càmera {0}</value>
   </data>
   <data name="LblUnableToSetExposureTime" xml:space="preserve">
     <value>Impossible establir el temps d'exposició</value>
@@ -5682,75 +5682,78 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
     <value>La carpeta on s’emmagatzemen les plantilles de seqüència per al seqüenciador avançat</value>
   </data>
   <data name="LblNotInstalled" xml:space="preserve">
-    <value>Not installed</value>
+    <value>No instal·lat</value>
   </data>
   <data name="LblVendor" xml:space="preserve">
-    <value>Vendor</value>
+    <value>Venedor</value>
   </data>
   <data name="LblVendorSDKs" xml:space="preserve">
-    <value>Vendor SDKs</value>
+    <value>SDK del venedor</value>
   </data>
   <data name="LblTelescopeUnparkCancelled" xml:space="preserve">
-    <value>Unpark operation was cancelled</value>
+    <value>L'operació de desaparcar s'ha cancel·lat</value>
   </data>
   <data name="LblWaitingForTelescopeToUnpark" xml:space="preserve">
-    <value>Waiting for telescope to unpark</value>
+    <value>Esperant al telescopi per desaparcar</value>
   </data>
   <data name="LblGlobalTriggers" xml:space="preserve">
-    <value>Global Triggers</value>
+    <value>Activadors globals</value>
   </data>
   <data name="LblTargetOptions" xml:space="preserve">
-    <value>Target Options</value>
+    <value>Opcions de l'objecte</value>
   </data>
   <data name="LblCoolCamera" xml:space="preserve">
-    <value>Cool Camera</value>
+    <value>Refredar la Càmera</value>
   </data>
   <data name="LblParkMount" xml:space="preserve">
-    <value>Park Mount</value>
+    <value>Aparcar Muntura</value>
   </data>
   <data name="LblTargetSetEndOptions" xml:space="preserve">
-    <value>Target Set End Options</value>
+    <value>Opcions finals per a l'objecte</value>
   </data>
   <data name="LblTargetSetStartOptions" xml:space="preserve">
-    <value>Target Set Start Options</value>
+    <value>Opcions d'inici per a l'objecte</value>
   </data>
   <data name="LblUnparkMount" xml:space="preserve">
-    <value>Unpark Mount</value>
+    <value>Desaparcar Muntura</value>
   </data>
   <data name="LblWarmCamera" xml:space="preserve">
-    <value>Warm Camera</value>
+    <value>Escalfar la Càmera</value>
   </data>
   <data name="LblRotatorRangeType" xml:space="preserve">
-    <value>Mechanical Range</value>
+    <value>Rang Mecànic</value>
   </data>
   <data name="LblRotatorRangeStart" xml:space="preserve">
-    <value>Mechanical Range Start</value>
+    <value>Inici de Rang Mecànic</value>
   </data>
   <data name="LblRotatorRangeFull" xml:space="preserve">
-    <value>Full</value>
+    <value>Complert</value>
   </data>
   <data name="LblRotatorRangeFullTooltip" xml:space="preserve">
-    <value>No restrictions for mechanical position</value>
+    <value>Sense restriccions per a la posició mecànica</value>
   </data>
   <data name="LblRotatorRangeHalf" xml:space="preserve">
-    <value>180 Degrees</value>
+    <value>180 Graus</value>
   </data>
   <data name="LblRotatorRangeHalfTooltip" xml:space="preserve">
-    <value>Half of the mechanical position range is supported. Orientations outside of this range are adjusted 180 degrees to fit within the configured range.</value>
+    <value>S'admet la meitat del rang de posició mecànica. Les orientacions fora d’aquest rang s’ajusten a 180 graus per adaptar-se a l’interval configurat.</value>
   </data>
   <data name="LblRotatorRangeQuarter" xml:space="preserve">
-    <value>90 Degrees</value>
+    <value>90 Graus</value>
   </data>
   <data name="LblRotatorRangeQuarterTooltip" xml:space="preserve">
-    <value>90 degrees of the mechanical position range is supported. This is useful primarily for square sensors. Orientations outside of this range are adjusted to fit within the configured range.</value>
+    <value>S'admeten 90 graus del rang de posició mecànica. Això és útil principalment per als sensors quadrats. Les orientacions fora d’aquest interval s’ajusten per adaptar-se a l’interval configurat.</value>
   </data>
   <data name="LblRotatorRangeAdjusted" xml:space="preserve">
-    <value>Adjusted rotator target to {0}</value>
+    <value>S'ha ajustat l'objectiu del rotador a {0}</value>
   </data>
   <data name="LblFramingWizardSlewFailed" xml:space="preserve">
-    <value>Failed to {0} from the framing wizard</value>
+    <value>Error al {0} des de l'assistent d'emmarcament</value>
   </data>
   <data name="LblUnableToSetMountLatLong" xml:space="preserve">
-    <value>Unable to set mount latitude to {0} and longitude to {1}!</value>
+    <value>No es pot establir la latitud de la muntura a {0} i la longitud a {1}!</value>
+  </data>
+  <data name="LblMGENDitherSettleTime" xml:space="preserve">
+    <value>Temps d'estabilització del dither</value>
   </data>
 </root>
