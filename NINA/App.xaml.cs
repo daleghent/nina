@@ -21,7 +21,10 @@ using NINA.Utility;
 using NINA.ViewModel.Interfaces;
 using Nito.AsyncEx;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -86,12 +89,35 @@ namespace NINA {
             this.RefreshJumpList(_profileService);
         }
 
+        private void LogResource(ResourceDictionary res, string indentation) {
+            var sb = new StringBuilder();
+            foreach (var key in res.Keys) {
+                sb.Append(key + ";");
+            }
+            Logger.Error(indentation + sb.ToString());
+            LogResource(res.MergedDictionaries, indentation + "==>");
+        }
+
+        private void LogResource(Collection<ResourceDictionary> res, string indentation) {
+            foreach (var dic in res) {
+                LogResource(dic, indentation + "==>");
+            }
+        }
+
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e) {
+            Logger.Error($"An unhandled exception has occurred of type {e.Exception.GetType()}");
             if (e.Exception.InnerException != null) {
-                var message = $"{e.Exception.Message}{Environment.NewLine}{e.Exception.StackTrace}{Environment.NewLine}Inner Exception: {Environment.NewLine}{e.Exception.InnerException}{e.Exception.StackTrace}";
+                var message = $"{e.Exception.Message}{Environment.NewLine}{e.Exception.StackTrace}{Environment.NewLine}Inner Exception of type {e.Exception.InnerException.GetType()}: {Environment.NewLine}{e.Exception.InnerException}{e.Exception.StackTrace}";
                 Logger.Error(message);
             } else {
                 Logger.Error(e.Exception);
+            }
+            if (e.Exception is System.Windows.Markup.XamlParseException xamlEx) {
+                Logger.Error($"Faulting xaml module: {xamlEx.BaseUri}");
+                if (Application.Current?.Resources != null) {
+                    Logger.Error("The following resources are available");
+                    LogResource(Application.Current.Resources, "==>");
+                }
             }
 
             if (Current != null) {
