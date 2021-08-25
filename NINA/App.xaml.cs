@@ -95,10 +95,11 @@ namespace NINA {
             }
 
             if (Current != null) {
-                var result = MyMessageBox.Show(
+                var result = MessageBox.Show(
                     Loc.Instance["LblApplicationInBreakMode"],
                     Loc.Instance["LblUnhandledException"],
                     MessageBoxButton.YesNo,
+                    MessageBoxImage.Error,
                     MessageBoxResult.No);
                 if (result == MessageBoxResult.Yes) {
                     e.Handled = true;

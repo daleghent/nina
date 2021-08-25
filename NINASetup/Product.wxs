@@ -179,6 +179,21 @@
       <ComponentGroupRef Id="cs_CZ_files" />
       <ComponentGroupRef Id="Utility_ExifTool_files" />
       <ComponentGroupRef Id="ca_ES_files" />
+      <ComponentGroupRef Id="ja_files" />
+      <ComponentGroupRef Id="ro_files" />
+      <ComponentGroupRef Id="pt_BR_files" />
+      <ComponentGroupRef Id="pl_files" />
+      <ComponentGroupRef Id="nl_BE_files" />
+      <ComponentGroupRef Id="ko_files" />
+      <ComponentGroupRef Id="it_files" />
+      <ComponentGroupRef Id="hu_files" />
+      <ComponentGroupRef Id="fr_files" />
+      <ComponentGroupRef Id="es_files" />
+      <ComponentGroupRef Id="ru_files" />
+      <ComponentGroupRef Id="sv_files" />
+      <ComponentGroupRef Id="zh_Hans_files" />
+      <ComponentGroupRef Id="zh_Hant_files" />
+      <ComponentGroupRef Id="de_files" />
     </Feature>
     <InstallExecuteSequence>
       <Custom Action="API_Firewall_listen_ipv4" Before="InstallFinalize">NOT Installed</Custom>
@@ -344,6 +359,21 @@
           <Directory Id="cs_CZ" Name="cs-CZ" />
           <Directory Id="ca_ES" Name="ca-ES" />
           <Directory Id="Examples" Name="Examples" />
+          <Directory Id="de" Name="de" />
+          <Directory Id="es" Name="es" />
+          <Directory Id="fr" Name="fr" />
+          <Directory Id="hu" Name="hu" />
+          <Directory Id="it" Name="it" />
+          <Directory Id="ja" Name="ja" />
+          <Directory Id="ko" Name="ko" />
+          <Directory Id="nl_BE" Name="nl-BE" />
+          <Directory Id="pl" Name="pl" />
+          <Directory Id="pt_BR" Name="pt-BR" />
+          <Directory Id="ro" Name="ro" />
+          <Directory Id="ru" Name="ru" />
+          <Directory Id="sv" Name="sv" />
+          <Directory Id="zh_Hans" Name="zh-Hans" />
+          <Directory Id="zh_Hant" Name="zh-Hant" />
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder">
@@ -504,6 +534,15 @@
       <Component Win64="$(var.Win64)" Id="Nito.AsyncEx.Context.dll" Guid="592aa107-1b13-41ae-a569-5fd49bda174e">
         <File Id="Nito.AsyncEx.Context.dll" Name="Nito.AsyncEx.Context.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Context.dll" />
       </Component>
+      <Component Win64="$(var.Win64)" Id="Nito.AsyncEx.Oop.dll" Guid="F2EEDD26-68EE-4101-801C-087718075CAF">
+        <File Id="Nito.AsyncEx.Oop.dll" Name="Nito.AsyncEx.Oop.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Oop.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="Nito.AsyncEx.Interop.WaitHandles.dll" Guid="631B50E6-584B-410A-B861-85DB45ED56B0">
+        <File Id="Nito.AsyncEx.Interop.WaitHandles.dll" Name="Nito.AsyncEx.Interop.WaitHandles.dll" Source="$(var.NINA_TargetDir)Nito.AsyncEx.Interop.WaitHandles.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="Nito.Cancellation.dll" Guid="CA197B09-AD17-4E49-9761-257249813645">
+        <File Id="Nito.Cancellation.dll" Name="Nito.Cancellation.dll" Source="$(var.NINA_TargetDir)Nito.Cancellation.dll" />
+      </Component>
       <Component Win64="$(var.Win64)" Id="NJsonSchema.dll" Guid="9bb5bcda-30df-4aec-b520-efb9fa96ca2d">
         <File Id="NJsonSchema.dll" Name="NJsonSchema.dll" Source="$(var.NINA_TargetDir)NJsonSchema.dll" />
       </Component>
@@ -605,6 +644,54 @@
       </Component>
       <Component Win64="$(var.Win64)" Id="ICSharpCode.AvalonEdit.dll" Guid="1c6db533-6ea8-4091-93be-7d16b6be9054">
         <File Id="ICSharpCode.AvalonEdit.dll" Name="ICSharpCode.AvalonEdit.dll" Source="$(var.NINA_TargetDir)ICSharpCode.AvalonEdit.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="System.Memory.dll" Guid="09a0b0a3-836f-4cc4-b7f9-2b3562e592ce">
+        <File Id="System.Memory.dll" Name="System.Memory.dll" Source="$(var.NINA_TargetDir)System.Memory.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="System.Numerics.Vectors.dll" Guid="03c13c14-3423-4c50-9c7b-abebf2fda2a8">
+        <File Id="System.Numerics.Vectors.dll" Name="System.Numerics.Vectors.dll" Source="$(var.NINA_TargetDir)System.Numerics.Vectors.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="System.Buffers.dll" Guid="dfd779ff-7ec4-49b2-8c7e-cb0cf908a5ae">
+        <File Id="System.Buffers.dll" Name="System.Buffers.dll" Source="$(var.NINA_TargetDir)System.Buffers.dll" />
+      </Component>
+      <Component Id="NINA.Astrometry.pdb" Guid="4f23f02d-3dc9-4d2a-b3fb-6aa07fc34319">
+        <File Id="NINA.Astrometry.pdb" Name="NINA.Astrometry.pdb" Source="$(var.NINA_TargetDir)NINA.Astrometry.pdb" />
+      </Component>
+      <Component Id="NINA.Plugin.pdb" Guid="be798686-d8c0-434f-ba18-c21a57c7434c">
+        <File Id="NINA.Plugin.pdb" Name="NINA.Plugin.pdb" Source="$(var.NINA_TargetDir)NINA.Plugin.pdb" />
+      </Component>
+      <Component Id="NINA.Core.pdb" Guid="05b731b1-024b-4ee4-b8b2-b371eb13d71e">
+        <File Id="NINA.Core.pdb" Name="NINA.Core.pdb" Source="$(var.NINA_TargetDir)NINA.Core.pdb" />
+      </Component>
+      <Component Id="NINA.WPF.Base.pdb" Guid="cd72322e-043f-4b0d-868b-eeaadd0a01bc">
+        <File Id="NINA.WPF.Base.pdb" Name="NINA.WPF.Base.pdb" Source="$(var.NINA_TargetDir)NINA.WPF.Base.pdb" />
+      </Component>
+      <Component Id="NINA.Equipment.pdb" Guid="3acb1e79-9202-43fa-a7eb-4b0817b74e30">
+        <File Id="NINA.Equipment.pdb" Name="NINA.Equipment.pdb" Source="$(var.NINA_TargetDir)NINA.Equipment.pdb" />
+      </Component>
+      <Component Id="NINA.Image.pdb" Guid="03cc8311-faf7-405c-af35-ffde35687c1d">
+        <File Id="NINA.Image.pdb" Name="NINA.Image.pdb" Source="$(var.NINA_TargetDir)NINA.Image.pdb" />
+      </Component>
+      <Component Id="NINA.MGEN.pdb" Guid="b04fe244-bbe5-430b-9915-d696517a9859">
+        <File Id="NINA.MGEN.pdb" Name="NINA.MGEN.pdb" Source="$(var.NINA_TargetDir)NINA.MGEN.pdb" />
+      </Component>
+      <Component Id="NINACustomControlLibrary.pdb" Guid="067fa782-5602-4b4d-833f-5ee92506bc8c">
+        <File Id="NINACustomControlLibrary.pdb" Name="NINACustomControlLibrary.pdb" Source="$(var.NINA_TargetDir)NINACustomControlLibrary.pdb" />
+      </Component>
+      <Component Id="NINA.PlateSolving.pdb" Guid="908e8f97-67aa-4ada-bd41-785cdc57d3a3">
+        <File Id="NINA.PlateSolving.pdb" Name="NINA.PlateSolving.pdb" Source="$(var.NINA_TargetDir)NINA.PlateSolving.pdb" />
+      </Component>
+      <Component Id="NINA.Profile.pdb" Guid="4463dd0e-01e0-4714-bdab-478eb6d3f210">
+        <File Id="NINA.Profile.pdb" Name="NINA.Profile.pdb" Source="$(var.NINA_TargetDir)NINA.Profile.pdb" />
+      </Component>
+      <Component Id="NINA.pdb" Guid="be3502d5-c1f2-4672-a6ff-51730392f7dc">
+        <File Id="NINA.pdb" Name="NINA.pdb" Source="$(var.NINA_TargetDir)NINA.pdb" />
+      </Component>
+      <Component Id="nikoncswrapper.pdb" Guid="a8b2668c-be0b-4007-9bca-521c973d1eec">
+        <File Id="nikoncswrapper.pdb" Name="nikoncswrapper.pdb" Source="$(var.NINA_TargetDir)nikoncswrapper.pdb" />
+      </Component>
+      <Component Id="NINA.Sequencer.pdb" Guid="d1f1818e-82b6-4fb3-92cb-2701c5cd8d0c">
+        <File Id="NINA.Sequencer.pdb" Name="NINA.Sequencer.pdb" Source="$(var.NINA_TargetDir)NINA.Sequencer.pdb" />
       </Component>
     </ComponentGroup>
   </Fragment>
@@ -778,6 +865,9 @@
       <Component Id="cs_CZ_NINA.Core.resources.dll" Guid="f634385f-5004-45ca-ad5f-33e1817a0a97">
         <File Id="cs_CZ_NINA.Core.resources.dll" Name="NINA.Core.resources.dll" Source="$(var.NINA.Core_TargetDir)cs-CZ\NINA.Core.resources.dll" />
       </Component>
+      <Component Id="cs_CZ_AvalonDock.resources.dll" Guid="4f8a317e-b8dc-4874-b7df-ba6938ad3be1">
+        <File Id="cs_CZ_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)cs-CZ\AvalonDock.resources.dll" />
+      </Component>
     </ComponentGroup>
   </Fragment>
   <Fragment>
@@ -791,6 +881,9 @@
     <ComponentGroup Id="ca_ES_files" Directory="ca_ES">
       <Component Id="ca_ES_NINA.Core.resources.dll" Guid="280cb5d9-f401-447d-af57-6fd1c37eb3c2">
         <File Id="ca_ES_NINA.Core.resources.dll" Name="NINA.Core.resources.dll" Source="$(var.NINA.Core_TargetDir)ca-ES\NINA.Core.resources.dll" />
+      </Component>
+      <Component Id="ca_ES_AvalonDock.resources.dll" Guid="d2ebfe07-35d9-4d5c-a937-d70d68796528">
+        <File Id="ca_ES_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ca-ES\AvalonDock.resources.dll" />
       </Component>
     </ComponentGroup>
   </Fragment>
@@ -817,195 +910,6 @@
       </Component>
     </ComponentGroup>
   </Fragment>
-  <!--<Fragment>
-    <ComponentGroup Id="Documentation_images_files" Directory="Documentation_images">
-      <Component Win64="$(var.Win64)" Id="Documentation_images_nina_logo.png" Guid="6442988e-c67a-4438-ba88-8dc6d333f6aa">
-        <File Id="Documentation_images_nina_logo.png" Name="nina-logo.png" Source="$(var.NINA_TargetDir)Documentation\images\nina-logo.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_autofocus.png" Guid="3213b831-f2b8-480f-98d8-4d2d523f638b">
-        <File Id="Documentation_images_panel_autofocus.png" Name="panel-autofocus.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-autofocus.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_camera.png" Guid="2ff727ee-3846-44c8-adb8-e5d239144e2e">
-        <File Id="Documentation_images_panel_camera.png" Name="panel-camera.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-camera.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_customization_1.png" Guid="63006f9a-3a18-4778-ac74-41bddecfdf7a">
-        <File Id="Documentation_images_panel_customization_1.png" Name="panel-customization_1.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-customization_1.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_customization_2.png" Guid="691bab4b-e0b3-483b-bb4d-a754b2bef38d">
-        <File Id="Documentation_images_panel_customization_2.png" Name="panel-customization_2.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-customization_2.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_customization_3.png" Guid="d5341b8b-7e32-41a2-8464-40f028cd2134">
-        <File Id="Documentation_images_panel_customization_3.png" Name="panel-customization_3.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-customization_3.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_customization_4.png" Guid="4087e75e-a7bf-4240-a07e-b6765a5b283e">
-        <File Id="Documentation_images_panel_customization_4.png" Name="panel-customization_4.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-customization_4.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_filterwheel.png" Guid="6f886977-1677-4ad3-a45e-20ae72d4453b">
-        <File Id="Documentation_images_panel_filterwheel.png" Name="panel-filterwheel.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-filterwheel.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_focuser.png" Guid="48000d26-905d-4779-807c-9e3bb8039941">
-        <File Id="Documentation_images_panel_focuser.png" Name="panel-focuser.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-focuser.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_guiding.png" Guid="0788ed25-05aa-4547-8dee-ca51b4476cc4">
-        <File Id="Documentation_images_panel_guiding.png" Name="panel-guiding.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-guiding.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_hfrhistory.png" Guid="39c946b1-4e12-48e1-a54b-1945be4dd1bd">
-        <File Id="Documentation_images_panel_hfrhistory.png" Name="panel-hfrhistory.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-hfrhistory.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_image.png" Guid="1bf96364-5e0b-4cd4-9f84-2b9cda4bcfe5">
-        <File Id="Documentation_images_panel_image.png" Name="panel-image.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-image.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_imagehistory.png" Guid="e95b78d8-fcef-47f8-ba68-baacff2c5c4d">
-        <File Id="Documentation_images_panel_imagehistory.png" Name="panel-imagehistory.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-imagehistory.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_imaging.png" Guid="6eeeb68c-b3f2-4a91-b645-3457bef764a7">
-        <File Id="Documentation_images_panel_imaging.png" Name="panel-imaging.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-imaging.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_platesolving.png" Guid="74177c73-b83f-4ee6-87a3-88a7e15dc331">
-        <File Id="Documentation_images_panel_platesolving.png" Name="panel-platesolving.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-platesolving.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_polaralignment.png" Guid="9da8d957-be17-4fbb-b26c-1bf353f87306">
-        <File Id="Documentation_images_panel_polaralignment.png" Name="panel-polaralignment.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-polaralignment.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_sequence_running.png" Guid="d85d0d7e-53fc-41fb-b4d3-4887e8a2f14b">
-        <File Id="Documentation_images_panel_sequence_running.png" Name="panel-sequence-running.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-sequence-running.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_sequence.png" Guid="923ed34d-07af-41d0-8f04-2763e388edde">
-        <File Id="Documentation_images_panel_sequence.png" Name="panel-sequence.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-sequence.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_statistics.png" Guid="b6b674f4-f6a7-416f-afd9-05131c6bc7e3">
-        <File Id="Documentation_images_panel_statistics.png" Name="panel-statistics.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-statistics.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_telescope.png" Guid="3b051340-f0f8-48e0-a654-c0f76f5da2b3">
-        <File Id="Documentation_images_panel_telescope.png" Name="panel-telescope.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-telescope.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_weather.png" Guid="3af8b6a3-ce6e-4811-ac57-832b8c714210">
-        <File Id="Documentation_images_panel_weather.png" Name="panel-weather.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-weather.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_camera.png" Guid="89c0495d-c4d3-48cf-97fc-545ea6dc2cc6">
-        <File Id="Documentation_images_quickstart_camera.png" Name="quickstart-camera.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-camera.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_defocusedstarfield.png" Guid="69b4e432-7ef8-4637-8061-4058aabad364">
-        <File Id="Documentation_images_quickstart_defocusedstarfield.png" Name="quickstart-defocusedstarfield.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-defocusedstarfield.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_disablepanels.png" Guid="a9e7a39f-961f-4c97-b8dc-cdbc89ff2118">
-        <File Id="Documentation_images_quickstart_disablepanels.png" Name="quickstart-disablepanels.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-disablepanels.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_focusedstarfield.png" Guid="0cb1b00c-66d8-42e9-a631-6a6ab8f26502">
-        <File Id="Documentation_images_quickstart_focusedstarfield.png" Name="quickstart-focusedstarfield.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-focusedstarfield.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_focusing.png" Guid="26c15a31-040b-4241-ba2d-ef9a82a5ac76">
-        <File Id="Documentation_images_quickstart_focusing.png" Name="quickstart-focusing.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-focusing.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_imaging.png" Guid="8cacd339-5f37-46d8-80d2-57981287fe67">
-        <File Id="Documentation_images_quickstart_imaging.png" Name="quickstart-imaging.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-imaging.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_running_sequence.png" Guid="e489120b-ccff-44b5-9c5f-aa3c9b2dcb19">
-        <File Id="Documentation_images_quickstart_running_sequence.png" Name="quickstart-running-sequence.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-running-sequence.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_sequence.png" Guid="c8eb4d0d-cb0d-412b-9d89-3e0661fc4231">
-        <File Id="Documentation_images_quickstart_sequence.png" Name="quickstart-sequence.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-sequence.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_settings_equipment.png" Guid="8c679337-120f-4510-98dd-a6d649215491">
-        <File Id="Documentation_images_quickstart_settings_equipment.png" Name="quickstart-settings-equipment.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-settings-equipment.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_settings_imaging.png" Guid="c91dc0d3-1df4-45f5-8651-7020b7acb85e">
-        <File Id="Documentation_images_quickstart_settings_imaging.png" Name="quickstart-settings-imaging.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-settings-imaging.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_telescope.png" Guid="713ca114-2330-488d-a8cb-10a8ec0a8970">
-        <File Id="Documentation_images_quickstart_telescope.png" Name="quickstart-telescope.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-telescope.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_quickstart_ui_overview.png" Guid="14b20e54-22fd-45d3-940c-04820bbcbcfe">
-        <File Id="Documentation_images_quickstart_ui_overview.png" Name="quickstart-ui-overview.png" Source="$(var.NINA_TargetDir)Documentation\images\quickstart-ui-overview.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_camera.png" Guid="fd14f0b2-0243-40ab-ad22-93d7a4f7fab1">
-        <File Id="Documentation_images_tab_camera.png" Name="tab-camera.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-camera.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_framingassistant.png" Guid="c72fcbcd-70ce-489b-8b65-5a4e521f1f70">
-        <File Id="Documentation_images_tab_framingassistant.png" Name="tab-framingassistant.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-framingassistant.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_filterwheelfocuser.png" Guid="18329909-39c1-4cdc-ab26-72560604e767">
-        <File Id="Documentation_images_tab_filterwheelfocuser.png" Name="tab-filterwheelfocuser.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-filterwheelfocuser.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_imaging.png" Guid="777f1c7f-603b-42e1-a772-69017e73f2f6">
-        <File Id="Documentation_images_tab_imaging.png" Name="tab-imaging.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-imaging.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_objectbrowser.png" Guid="926b8d18-8274-4d14-9ada-ca49a3cbfd2c">
-        <File Id="Documentation_images_tab_objectbrowser.png" Name="tab-objectbrowser.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-objectbrowser.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_phd2.png" Guid="a4ad8676-17f1-4be7-86b8-25925ebecac6">
-        <File Id="Documentation_images_tab_phd2.png" Name="tab-phd2.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-phd2.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_sequencing.png" Guid="c6e4dcff-79ee-469f-90ba-4a425759c2b6">
-        <File Id="Documentation_images_tab_sequencing.png" Name="tab-sequencing.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-sequencing.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_settings_equipment.png" Guid="4a2f7421-88fb-4559-821d-92470bc07fba">
-        <File Id="Documentation_images_tab_settings_equipment.png" Name="tab-settings-equipment.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-settings-equipment.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_settings_general.png" Guid="c1d8bb03-73ba-4067-9c7c-ad93eb734a33">
-        <File Id="Documentation_images_tab_settings_general.png" Name="tab-settings-general.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-settings-general.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_settings_imaging.png" Guid="67985e06-14d3-4e46-8910-73485dac1e3b">
-        <File Id="Documentation_images_tab_settings_imaging.png" Name="tab-settings-imaging.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-settings-imaging.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_settings_platesolving_astrometry.png" Guid="4cf47b5f-4bce-4019-ac59-6c173b76a3e3">
-        <File Id="Documentation_images_tab_settings_platesolving_astrometry.png" Name="tab-settings-platesolving-astrometry.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-settings-platesolving-astrometry.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_settings_platesolving_localplatesolver_indexfiles.png" Guid="80e4c10c-ce12-424d-850c-baff8348bd5e">
-        <File Id="Documentation_images_tab_settings_platesolving_localplatesolver_indexfiles.png" Name="tab-settings-platesolving-localplatesolver-indexfiles.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-settings-platesolving-localplatesolver-indexfiles.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_settings_platesolving_localplatesolver.png" Guid="af2e4c50-9533-4ce1-9ad0-c01fb0eb3e81">
-        <File Id="Documentation_images_tab_settings_platesolving_localplatesolver.png" Name="tab-settings-platesolving-localplatesolver.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-settings-platesolving-localplatesolver.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_settings_platesolving_platesolve2.png" Guid="b00cb66d-7bdd-4953-bf39-de8a4cdff4f5">
-        <File Id="Documentation_images_tab_settings_platesolving_platesolve2.png" Name="tab-settings-platesolving-platesolve2.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-settings-platesolving-platesolve2.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_tab_telescope.png" Guid="df869bcd-59f6-4c00-b263-2a6ad8a3e288">
-        <File Id="Documentation_images_tab_telescope.png" Name="tab-telescope.png" Source="$(var.NINA_TargetDir)Documentation\images\tab-telescope.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_image_bahtinov.png" Guid="f6063c5a-152c-443b-9a6e-9bcc01dd809d">
-        <File Id="Documentation_images_panel_image_bahtinov.png" Name="panel-image-bahtinov.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-image-bahtinov.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_panel_image_subsampling.png" Guid="270d3562-1258-45d7-9bc3-015aaaafe6ef">
-        <File Id="Documentation_images_panel_image_subsampling.png" Name="panel-image-subsampling.png" Source="$(var.NINA_TargetDir)Documentation\images\panel-image-subsampling.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_usage_autoflip_settings.png" Guid="e9780c24-49ed-4354-a1b2-c44b60f42003">
-        <File Id="Documentation_images_usage_autoflip_settings.png" Name="usage-autoflip-settings.png" Source="$(var.NINA_TargetDir)Documentation\images\usage-autoflip-settings.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_usage_bulbshutter_mountsnapport.png" Guid="88c9ab54-7a1e-4cbd-be75-127fb5dee7d6">
-        <File Id="Documentation_images_usage_bulbshutter_mountsnapport.png" Name="usage-bulbshutter-mountsnapport.png" Source="$(var.NINA_TargetDir)Documentation\images\usage-bulbshutter-mountsnapport.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_usage_bulbshutter_serial.png" Guid="dbd21ace-47d5-40ca-9a2d-ab55d74450cf">
-        <File Id="Documentation_images_usage_bulbshutter_serial.png" Name="usage-bulbshutter-serial.png" Source="$(var.NINA_TargetDir)Documentation\images\usage-bulbshutter-serial.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_usage_bulbshutter_settings.png" Guid="a7ce7649-3a0d-4461-9b1e-39eed576c71e">
-        <File Id="Documentation_images_usage_bulbshutter_settings.png" Name="usage-bulbshutter-settings.png" Source="$(var.NINA_TargetDir)Documentation\images\usage-bulbshutter-settings.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_usage_bulbshutter_snapport.png" Guid="bd65402e-3898-4d69-b70f-429140e70fad">
-        <File Id="Documentation_images_usage_bulbshutter_snapport.png" Name="usage-bulbshutter-snapport.png" Source="$(var.NINA_TargetDir)Documentation\images\usage-bulbshutter-snapport.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_usage_dithering_sequence.png" Guid="515333ed-1140-424d-977d-273288e1c82f">
-        <File Id="Documentation_images_usage_dithering_sequence.png" Name="usage-dithering-sequence.png" Source="$(var.NINA_TargetDir)Documentation\images\usage-dithering-sequence.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_usage_dithering_settings_phd2.png" Guid="53aa368b-f3cb-4cf3-b461-bcde913cdb7d">
-        <File Id="Documentation_images_usage_dithering_settings_phd2.png" Name="usage-dithering-settings-phd2.png" Source="$(var.NINA_TargetDir)Documentation\images\usage-dithering-settings-phd2.png" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_images_usage_objectbrowser_object.png" Guid="68aaa389-0df3-46db-8361-3131af86a154">
-        <File Id="Documentation_images_usage_objectbrowser_object.png" Name="usage-objectbrowser-object.png" Source="$(var.NINA_TargetDir)Documentation\images\usage-objectbrowser-object.png" />
-      </Component>
-    </ComponentGroup>
-  </Fragment>
-
-  <Fragment>
-    <ComponentGroup Id="Documentation_files" Directory="Documentation">
-      <Component Win64="$(var.Win64)" Id="Documentation_modest.css" Guid="d6c51ec1-42f2-46d7-94d2-42ce2b654e17">
-        <File Id="Documentation_modest.css" Name="modest.css" Source="$(var.NINA_TargetDir)Documentation\modest.css" />
-      </Component>
-      <Component Win64="$(var.Win64)" Id="Documentation_NINA.html" Guid="8be1a4d2-6812-400c-9a78-f875df6266dd">
-        <File Id="Documentation_NINA.html" Name="NINA.html" Source="$(var.NINA_TargetDir)Documentation\NINA.html" />
-      </Component>
-    </ComponentGroup>
-  </Fragment>-->
 
   <!-- x64 Dependencies -->
 
@@ -2053,4 +1957,111 @@
     <SetProperty Id="API_Firewall_add_urlacl" Sequence="execute" Value="&quot;[SystemFolder]netsh.exe&quot; http add urlacl url=http://+:59590/ user=Everyone" Before="API_Firewall_add_urlacl" />
     <CustomAction Id="API_Firewall_add_urlacl" BinaryKey="WixCA" DllEntry="WixQuietExec" Execute="deferred" Return="asyncWait" Impersonate="no" />
   </Fragment>
+  <!-- Avalondock localization Start -->
+  <Fragment>
+    <ComponentGroup Id="ja_files" Directory="ja">
+      <Component Win64="$(var.Win64)" Id="ja_AvalonDock.resources.dll" Guid="06f56ded-f230-426c-b7f2-036a06655c85">
+        <File Id="ja_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ja\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="ro_files" Directory="ro">
+      <Component Win64="$(var.Win64)" Id="ro_AvalonDock.resources.dll" Guid="03b55e29-615c-496c-9a45-1b44a09dbc64">
+        <File Id="ro_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ro\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="pt_BR_files" Directory="pt_BR">
+      <Component Win64="$(var.Win64)" Id="pt_BR_AvalonDock.resources.dll" Guid="59821195-a89d-4da8-b389-2fad46e7d407">
+        <File Id="pt_BR_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)pt-BR\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="pl_files" Directory="pl">
+      <Component Win64="$(var.Win64)" Id="pl_AvalonDock.resources.dll" Guid="8805be93-7e64-4832-bf64-58dfca8f6f8f">
+        <File Id="pl_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)pl\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="nl_BE_files" Directory="nl_BE">
+      <Component Win64="$(var.Win64)" Id="nl_BE_AvalonDock.resources.dll" Guid="5be0855d-24c6-46b6-a1c5-b484e8214f93">
+        <File Id="nl_BE_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)nl-BE\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="ko_files" Directory="ko">
+      <Component Win64="$(var.Win64)" Id="ko_AvalonDock.resources.dll" Guid="f39357ea-8b59-4f54-93f9-e7c69060c14f">
+        <File Id="ko_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ko\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="it_files" Directory="it">
+      <Component Win64="$(var.Win64)" Id="it_AvalonDock.resources.dll" Guid="873ff0f7-5396-4b52-b166-220e34ae5ad1">
+        <File Id="it_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)it\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="hu_files" Directory="hu">
+      <Component Win64="$(var.Win64)" Id="hu_AvalonDock.resources.dll" Guid="aa01082a-6186-45e9-a194-b5ae54726266">
+        <File Id="hu_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)hu\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="fr_files" Directory="fr">
+      <Component Win64="$(var.Win64)" Id="fr_AvalonDock.resources.dll" Guid="9387a889-d3c7-4fcc-8ae2-bee1c1595109">
+        <File Id="fr_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)fr\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="es_files" Directory="es">
+      <Component Win64="$(var.Win64)" Id="es_AvalonDock.resources.dll" Guid="30c0e67b-c519-4485-8eeb-1145ab8309b6">
+        <File Id="es_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)es\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="ru_files" Directory="ru">
+      <Component Win64="$(var.Win64)" Id="ru_AvalonDock.resources.dll" Guid="15c32777-45ab-49fb-8825-6c2ef5f22ef6">
+        <File Id="ru_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ru\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="sv_files" Directory="sv">
+      <Component Win64="$(var.Win64)" Id="sv_AvalonDock.resources.dll" Guid="9b14096a-7fb7-4c9d-b592-97deae0c57a4">
+        <File Id="sv_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)sv\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="zh_Hans_files" Directory="zh_Hans">
+      <Component Win64="$(var.Win64)" Id="zh_Hans_AvalonDock.resources.dll" Guid="3f493e60-2c7a-4484-9efb-2345588329e6">
+        <File Id="zh_Hans_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)zh-Hans\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="zh_Hant_files" Directory="zh_Hant">
+      <Component Win64="$(var.Win64)" Id="zh_Hant_AvalonDock.resources.dll" Guid="f6d3ceb2-da61-4f9c-8197-b0b55d1842cd">
+        <File Id="zh_Hant_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)zh-Hant\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <Fragment>
+    <ComponentGroup Id="de_files" Directory="de">
+      <Component Win64="$(var.Win64)" Id="de_AvalonDock.resources.dll" Guid="6cac1f41-904f-47bd-bafa-6557ab859a08">
+        <File Id="de_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)de\AvalonDock.resources.dll" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+  <!-- Avalondock localization End -->
 </Wix>
