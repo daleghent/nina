@@ -5752,4 +5752,7 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="LblUnableToSetMountLatLong" xml:space="preserve">
     <value>Unable to set mount latitude to {0} and longitude to {1}!</value>
   </data>
+  <data name="LblMGENDitherSettleTime" xml:space="preserve">
+    <value>Dither settling time</value>
+  </data>
 </root>
