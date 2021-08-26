@@ -169,7 +169,6 @@
     <Compile Include="Container\StartAreaContainer.cs" />
     <Compile Include="Container\TargetAreaContainer.cs" />
     <Compile Include="Container\UnknownSequenceContainer.cs" />
-    <Compile Include="Converters\IsLightImageTypeToVisibilityConverter.cs" />
     <Compile Include="DropInParameters.cs" />
     <Compile Include="Interfaces\DragDrop\IDropContainer.cs" />
     <Compile Include="Interfaces\DragDrop\IDroppable.cs" />
@@ -370,6 +369,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Resources\Styles\ProgressStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="SequenceItem\Autofocus\Datatemplates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -504,6 +507,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Converters\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Accord.3.8.0\build\Accord.targets" Condition="Exists('..\packages\Accord.3.8.0\build\Accord.targets')" />

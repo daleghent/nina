@@ -15,10 +15,23 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:sequencer="clr-namespace:NINA.View.Sequencer.MiniSequencer;assembly=NINA.Sequencer"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     xmlns:xceed="http://schemas.xceed.com/wpf/xaml/toolkit"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/ProfileService.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/SVGDictionary.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Brushes.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Converters.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.Sequencer;component/Resources/Styles/ProgressStyle.xaml" />
+                <wpfutil:SharedResourceDictionary Source="Resources\Styles\SplitButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -28,18 +41,6 @@
             Grid.Row="1"
             Height="30"
             Margin="10">
-            <!--<ninactrl:AsyncProcessButton
-                    Grid.Row="1"
-                    Height="30"
-                    Margin="10"
-                    ButtonForegroundBrush="{StaticResource ButtonForegroundBrush}"
-                    ButtonImage="{StaticResource PlaySVG}"
-                    CancelButtonImage="{StaticResource CancelSVG}"
-                    CancelCommand="{Binding CancelSequenceCommand}"
-                    CancelToolTip="{ns:Loc LblCancelSequence}"
-                    Command="{Binding StartSequenceCommand}"
-                    LoadingImageBrush="{StaticResource PrimaryBrush}"
-                    ToolTip="{ns:Loc LblTooltipStartSequence}" />-->
 
             <Grid>
                 <Grid Visibility="{Binding StartSequenceCommand.Execution, Converter={StaticResource NullToVisibilityConverter}}">

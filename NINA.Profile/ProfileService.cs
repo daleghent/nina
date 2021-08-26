@@ -27,7 +27,7 @@ using NINA.Profile.Interfaces;
 
 namespace NINA.Profile {
 
-    public partial class ProfileService : BaseINPC, IProfileService {
+    public class ProfileService : BaseINPC, IProfileService {
         private static object lockobj = new object();
 
         public static string PROFILEFOLDER = Path.Combine(CoreUtil.APPLICATIONTEMPPATH, "Profiles");

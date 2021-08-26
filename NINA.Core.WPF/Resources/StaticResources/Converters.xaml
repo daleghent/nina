@@ -11,9 +11,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:astroConverters="clr-namespace:NINA.Astrometry.Converters;assembly=NINA.Astrometry"
     xmlns:converters="clr-namespace:NINA.Core.Utility.Converters;assembly=NINA.Core"
-    xmlns:equipmentConverters="clr-namespace:NINA.Equipment.Converter;assembly=NINA.Equipment"
-    xmlns:seqConverters="clr-namespace:NINA.Sequencer.Converters;assembly=NINA.Sequencer"
-    xmlns:thumb="clr-namespace:NINA.View.Thumbnail">
+    xmlns:equipmentConverters="clr-namespace:NINA.Equipment.Converter;assembly=NINA.Equipment">
 
     <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
     <converters:AutoFocusContrastDetectionToCollapsedVisibilityConverter x:Key="AutoFocusContrastDetectionToCollapsedVisibilityConverter" />
@@ -70,7 +68,6 @@
     <converters:InverseZeroToVisibilityConverter x:Key="InverseZeroToVisibilityConverter" />
     <converters:AFFittingToColorConverter x:Key="AFFittingToColorConverter" />
     <converters:AFFittingToVisibilityConverter x:Key="AFFittingToVisibilityConverter" />
-    <seqConverters:IsLightImageTypeToVisibilityConverter x:Key="IsLightImageTypeToVisibilityConverter" />
     <converters:FilterWheelFilterConverter x:Key="FilterWheelFilterConverter" />
     <converters:DecDegreeConverter x:Key="DecDegreeConverter" />
     <converters:ImagePatternToTextConverter x:Key="ImagePatternToTextConverter" />
@@ -92,8 +89,6 @@
     <converters:InverseMultiBooleanORConverter x:Key="InverseMultiBooleanORConverter" />
     <converters:NullOrEmptyStringToVisibilityCollapsedConverter x:Key="NullOrEmptyStringToVisibilityCollapsedConverter" />
     <converters:CameraDefaultValueConverter x:Key="CameraDefaultValueConverter" />
-    <thumb:ThumbnailGradeToImageConverter x:Key="ThumbnailGradeToImageConverter" />
-    <thumb:ThumbnailGradeToButtonImageConverter x:Key="ThumbnailGradeToButtonImageConverter" />
     <converters:NullImageConverter x:Key="NullImageConverter" />
     <converters:AllNullOrEmptyStringToVisibilityCollapsedMultiConverter x:Key="AllNullOrEmptyStringToVisibilityCollapsedMultiConverter" />
     <converters:StringCollectionToStringConverter x:Key="StringCollectionToStringConverter" />

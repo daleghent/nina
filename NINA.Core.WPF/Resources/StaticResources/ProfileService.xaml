@@ -1,4 +1,4 @@
-<!--
+﻿<!--
     Copyright © 2016 - 2021 Stefan Berg <isbeorn86+NINA@googlemail.com> and the N.I.N.A. contributors
 
     This file is part of N.I.N.A. - Nighttime Imaging 'N' Astronomy.
@@ -9,8 +9,6 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:profile="clr-namespace:NINA.Profile;assembly=NINA.Profile"
-    xmlns:vm="clr-namespace:NINA.ViewModel">
-
+    xmlns:profile="clr-namespace:NINA.Profile;assembly=NINA.Profile">
     <profile:ProfileService x:Key="ProfileService" />
 </ResourceDictionary>

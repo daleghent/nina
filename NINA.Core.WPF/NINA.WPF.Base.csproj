@@ -245,6 +245,7 @@
     <Compile Include="Utility\AutoFocus\QuadraticFitting.cs" />
     <Compile Include="Utility\AutoFocus\Trendline.cs" />
     <Compile Include="Utility\AutoFocus\TrendlineFitting.cs" />
+    <Compile Include="Utility\SharedResourceDictionary.cs" />
     <Compile Include="ViewModel\AutoFocusVMFactory.cs" />
     <Compile Include="ViewModel\AutoFocus\AutoFocusVM.cs" />
     <Compile Include="ViewModel\AutoFocus\FocusPointComparer.cs" />
@@ -336,6 +337,21 @@
     </Page>
     <Page Include="Model\Equipment\MySafetyMonitor\Simulator\SafetyMonitorSimulatorSetup.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StaticResources\Brushes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StaticResources\Converters.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\StaticResources\ProfileService.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\StaticResources\SVGDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\AltitudeChart.xaml">

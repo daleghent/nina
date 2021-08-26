@@ -27,6 +27,7 @@
     xmlns:sequencerUtil="clr-namespace:NINA.Sequencer.SequenceItem.Utility"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:t="clr-namespace:NINA.Sequencer.Trigger"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     xmlns:utility="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     x:Name="UC"
     Margin="0,0,0,0"
@@ -34,220 +35,231 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <UserControl.Resources>
-        <utility:BindingProxy x:Key="Context" Data="{Binding}" />
-        <utility:BindingProxy x:Key="ViewModel" Data="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SequenceView}}, Path=DataContext}" />
-        <CollectionViewSource x:Key="GroupedItems" Source="{Binding Source={StaticResource ViewModel}, Path=Data.SequencerFactory.Items}">
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Category" />
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
-        <converter:DroppableToDropIntoParametersConverter x:Key="DroppableToDropIntoParametersConverter" />
-        <converter:StrategyEvaluatesConditionsAndTriggersToVisibilityConverter x:Key="StrategyEvaluatesConditionsAndTriggersToVisibilityConverter" />
-
-        <Border
-            x:Key="MenuHeader"
-            MinHeight="30"
-            x:Shared="false"
-            Background="Transparent">
-            <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
-        </Border>
-        <Border
-            x:Key="TemplateMenuHeader"
-            MinHeight="30"
-            x:Shared="false"
-            Background="Transparent">
-            <TextBlock VerticalAlignment="Center" Text="{Binding Container.Name}" />
-        </Border>
-        <Path
-            x:Key="MenuIcon"
-            Width="20"
-            Height="20"
-            Margin="5"
-            x:Shared="false"
-            Data="{Binding Icon}"
-            Fill="{StaticResource PrimaryBrush}"
-            Stretch="Uniform" />
-        <Path
-            x:Key="TemplateMenuIcon"
-            Width="20"
-            Height="20"
-            Margin="5"
-            x:Shared="false"
-            Data="{Binding Container.Icon}"
-            Fill="{StaticResource PrimaryBrush}"
-            Stretch="Uniform" />
-
-        <Style x:Key="ContainerStyle" TargetType="{x:Type GroupItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                        <MenuItem
-                            local:GroupMenuBehavior.Dummy="True"
-                            Header="{StaticResource MenuHeader}"
-                            ItemsSource="{Binding Items}">
-                            <MenuItem.ItemContainerStyle>
-                                <Style TargetType="MenuItem">
-                                    <Setter Property="Header" Value="{StaticResource MenuHeader}" />
-                                    <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
-                                    <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoCommand}" />
-                                    <Setter Property="CommandParameter" Value="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
-                                </Style>
-                            </MenuItem.ItemContainerStyle>
-                        </MenuItem>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="SequenceContainerHeaderExpanderStyle" TargetType="ToggleButton">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ToggleButton}">
-                        <StackPanel>
-                            <Border Height="10" BorderBrush="Transparent" />
-                            <Border
-                                x:Name="topBorder"
-                                BorderBrush="{StaticResource SecondaryBackgroundBrush}"
-                                BorderThickness="1,1,0,0">
-                                <Grid
-                                    x:Name="Head"
-                                    Background="{StaticResource SecondaryBackgroundBrush}"
-                                    SnapsToDevicePixels="True">
-                                    <Grid.Resources>
-                                        <Path
-                                            x:Key="TelescopeIcon"
-                                            Width="20"
-                                            Height="20"
-                                            Margin="5,0,0,0"
-                                            Data="{StaticResource TelescopeSVG}"
-                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                            Stretch="Uniform" />
-                                    </Grid.Resources>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30" />
-                                        <ColumnDefinition Width="30" />
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Path
-                                        x:Name="iconarrow"
-                                        Grid.Column="0"
-                                        Width="10"
-                                        Height="10"
-                                        Margin="10,0,10,0"
-                                        Data="{StaticResource ArrowRightSVG}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
-                                    <Path
-                                        x:Name="icon"
-                                        Grid.Column="1"
-                                        Margin="5,0,3,0"
-                                        Data="{StaticResource BoxClosedSVG}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
-                                    <Path
-                                        Grid.Column="2"
-                                        Width="20"
-                                        Height="20"
-                                        Margin="5,0,3,0"
-                                        Data="{Binding Icon}"
-                                        Fill="{StaticResource ButtonForegroundBrush}"
-                                        Stretch="Uniform" />
-                                    <ContentPresenter
-                                        Grid.Column="3"
-                                        Margin="4,0,0,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        RecognizesAccessKey="True"
-                                        SnapsToDevicePixels="True">
-                                        <i:Interaction.Behaviors>
-                                            <behaviors:DragDropBehavior />
-                                        </i:Interaction.Behaviors>
-                                    </ContentPresenter>
-                                </Grid>
-                            </Border>
-                        </StackPanel>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsChecked" Value="true">
-                                <Setter TargetName="icon" Property="Data" Value="{StaticResource BoxSVG}" />
-                                <Setter TargetName="iconarrow" Property="Data" Value="{StaticResource ArrowDownSVG}" />
-                                <Setter TargetName="iconarrow" Property="Margin" Value="5,0,10,0" />
-                            </Trigger>
-
-                            <Trigger Property="IsChecked" Value="false">
-                                <Setter TargetName="topBorder" Property="BorderThickness" Value="1,1,1,1" />
-                            </Trigger>
-
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Head" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="SequenceContainerExpander" TargetType="ninactrl:DetachingExpander">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ninactrl:DetachingExpander">
-                        <Border
-                            Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}"
-                            Focusable="False"
-                            SnapsToDevicePixels="true">
-                            <DockPanel>
-                                <ToggleButton
-                                    x:Name="HeaderSite"
-                                    MinWidth="0"
-                                    MinHeight="0"
-                                    Padding="{TemplateBinding Padding}"
-                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                    Content="{TemplateBinding Header}"
-                                    ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                    ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
-                                    DockPanel.Dock="Top"
-                                    FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
-                                    FontFamily="{TemplateBinding FontFamily}"
-                                    FontSize="{TemplateBinding FontSize}"
-                                    FontStretch="{TemplateBinding FontStretch}"
-                                    FontStyle="{TemplateBinding FontStyle}"
-                                    FontWeight="{TemplateBinding FontWeight}"
-                                    Foreground="{TemplateBinding Foreground}"
-                                    IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                    Style="{StaticResource SequenceContainerHeaderExpanderStyle}" />
-                                <StackPanel DockPanel.Dock="Bottom">
-                                    <Border
-                                        Height="10"
-                                        Margin="0,0,0,0"
-                                        HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}"
-                                        Background="Transparent" />
-                                </StackPanel>
-                                <Border BorderBrush="{StaticResource SecondaryBackgroundBrush}" BorderThickness="3,0,0,3">
-                                    <ContentPresenter
-                                        x:Name="ExpandSite"
-                                        Margin="{TemplateBinding Padding}"
-                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        Focusable="false"
-                                        Visibility="Collapsed" />
-                                </Border>
-                            </DockPanel>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsExpanded" Value="true">
-                                <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
-                            </Trigger>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/ProfileService.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/SVGDictionary.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Brushes.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/StaticResources/Converters.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.Sequencer;component/Resources/Styles/ProgressStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </UserControl.Resources>
     <ContentPresenter x:Name="Content" Content="{Binding}">
+        <ContentPresenter.Resources>
+            <utility:BindingProxy x:Key="Context" Data="{Binding}" />
+            <utility:BindingProxy x:Key="ViewModel" Data="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:SequenceView}}, Path=DataContext}" />
+            <CollectionViewSource x:Key="GroupedItems" Source="{Binding Source={StaticResource ViewModel}, Path=Data.SequencerFactory.Items}">
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="Category" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+            <converter:DroppableToDropIntoParametersConverter x:Key="DroppableToDropIntoParametersConverter" />
+            <converter:StrategyEvaluatesConditionsAndTriggersToVisibilityConverter x:Key="StrategyEvaluatesConditionsAndTriggersToVisibilityConverter" />
+
+            <Border
+                x:Key="MenuHeader"
+                MinHeight="30"
+                x:Shared="false"
+                Background="Transparent">
+                <TextBlock VerticalAlignment="Center" Text="{Binding Name}" />
+            </Border>
+            <Border
+                x:Key="TemplateMenuHeader"
+                MinHeight="30"
+                x:Shared="false"
+                Background="Transparent">
+                <TextBlock VerticalAlignment="Center" Text="{Binding Container.Name}" />
+            </Border>
+            <Path
+                x:Key="MenuIcon"
+                Width="20"
+                Height="20"
+                Margin="5"
+                x:Shared="false"
+                Data="{Binding Icon}"
+                Fill="{StaticResource PrimaryBrush}"
+                Stretch="Uniform" />
+            <Path
+                x:Key="TemplateMenuIcon"
+                Width="20"
+                Height="20"
+                Margin="5"
+                x:Shared="false"
+                Data="{Binding Container.Icon}"
+                Fill="{StaticResource PrimaryBrush}"
+                Stretch="Uniform" />
+
+            <Style x:Key="ContainerStyle" TargetType="{x:Type GroupItem}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                            <MenuItem
+                                local:GroupMenuBehavior.Dummy="True"
+                                Header="{StaticResource MenuHeader}"
+                                ItemsSource="{Binding Items}">
+                                <MenuItem.ItemContainerStyle>
+                                    <Style TargetType="MenuItem">
+                                        <Setter Property="Header" Value="{StaticResource MenuHeader}" />
+                                        <Setter Property="Icon" Value="{StaticResource MenuIcon}" />
+                                        <Setter Property="Command" Value="{Binding Source={StaticResource Context}, Path=Data.DropIntoCommand}" />
+                                        <Setter Property="CommandParameter" Value="{Binding Converter={StaticResource DroppableToDropIntoParametersConverter}}" />
+                                    </Style>
+                                </MenuItem.ItemContainerStyle>
+                            </MenuItem>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SequenceContainerHeaderExpanderStyle" TargetType="ToggleButton">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <StackPanel>
+                                <Border Height="10" BorderBrush="Transparent" />
+                                <Border
+                                    x:Name="topBorder"
+                                    BorderBrush="{StaticResource SecondaryBackgroundBrush}"
+                                    BorderThickness="1,1,0,0">
+                                    <Grid
+                                        x:Name="Head"
+                                        Background="{StaticResource SecondaryBackgroundBrush}"
+                                        SnapsToDevicePixels="True">
+                                        <Grid.Resources>
+                                            <Path
+                                                x:Key="TelescopeIcon"
+                                                Width="20"
+                                                Height="20"
+                                                Margin="5,0,0,0"
+                                                Data="{StaticResource TelescopeSVG}"
+                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                Stretch="Uniform" />
+                                        </Grid.Resources>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Path
+                                            x:Name="iconarrow"
+                                            Grid.Column="0"
+                                            Width="10"
+                                            Height="10"
+                                            Margin="10,0,10,0"
+                                            Data="{StaticResource ArrowRightSVG}"
+                                            Fill="{StaticResource ButtonForegroundBrush}"
+                                            Stretch="Uniform" />
+                                        <Path
+                                            x:Name="icon"
+                                            Grid.Column="1"
+                                            Margin="5,0,3,0"
+                                            Data="{StaticResource BoxClosedSVG}"
+                                            Fill="{StaticResource ButtonForegroundBrush}"
+                                            Stretch="Uniform" />
+                                        <Path
+                                            Grid.Column="2"
+                                            Width="20"
+                                            Height="20"
+                                            Margin="5,0,3,0"
+                                            Data="{Binding Icon}"
+                                            Fill="{StaticResource ButtonForegroundBrush}"
+                                            Stretch="Uniform" />
+                                        <ContentPresenter
+                                            Grid.Column="3"
+                                            Margin="4,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            RecognizesAccessKey="True"
+                                            SnapsToDevicePixels="True">
+                                            <i:Interaction.Behaviors>
+                                                <behaviors:DragDropBehavior />
+                                            </i:Interaction.Behaviors>
+                                        </ContentPresenter>
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter TargetName="icon" Property="Data" Value="{StaticResource BoxSVG}" />
+                                    <Setter TargetName="iconarrow" Property="Data" Value="{StaticResource ArrowDownSVG}" />
+                                    <Setter TargetName="iconarrow" Property="Margin" Value="5,0,10,0" />
+                                </Trigger>
+
+                                <Trigger Property="IsChecked" Value="false">
+                                    <Setter TargetName="topBorder" Property="BorderThickness" Value="1,1,1,1" />
+                                </Trigger>
+
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Head" Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style x:Key="SequenceContainerExpander" TargetType="ninactrl:DetachingExpander">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ninactrl:DetachingExpander">
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Focusable="False"
+                                SnapsToDevicePixels="true">
+                                <DockPanel>
+                                    <ToggleButton
+                                        x:Name="HeaderSite"
+                                        MinWidth="0"
+                                        MinHeight="0"
+                                        Padding="{TemplateBinding Padding}"
+                                        HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        Content="{TemplateBinding Header}"
+                                        ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                        ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                        DockPanel.Dock="Top"
+                                        FocusVisualStyle="{StaticResource ExpanderHeaderFocusVisual}"
+                                        FontFamily="{TemplateBinding FontFamily}"
+                                        FontSize="{TemplateBinding FontSize}"
+                                        FontStretch="{TemplateBinding FontStretch}"
+                                        FontStyle="{TemplateBinding FontStyle}"
+                                        FontWeight="{TemplateBinding FontWeight}"
+                                        Foreground="{TemplateBinding Foreground}"
+                                        IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                        Style="{StaticResource SequenceContainerHeaderExpanderStyle}" />
+                                    <StackPanel DockPanel.Dock="Bottom">
+                                        <Border
+                                            Height="10"
+                                            Margin="0,0,0,0"
+                                            HorizontalAlignment="{Binding HorizontalAlignment, RelativeSource={RelativeSource AncestorType=ContentPresenter}, Mode=OneWayToSource}"
+                                            Background="Transparent" />
+                                    </StackPanel>
+                                    <Border BorderBrush="{StaticResource SecondaryBackgroundBrush}" BorderThickness="3,0,0,3">
+                                        <ContentPresenter
+                                            x:Name="ExpandSite"
+                                            Margin="{TemplateBinding Padding}"
+                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                            Focusable="false"
+                                            Visibility="Collapsed" />
+                                    </Border>
+                                </DockPanel>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsExpanded" Value="true">
+                                    <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ContentPresenter.Resources>
         <ContentPresenter.ContentTemplate>
             <DataTemplate DataType="{x:Type cont:SequenceContainer}">
                 <ninactrl:DetachingExpander
