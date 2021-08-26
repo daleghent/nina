@@ -27,7 +27,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="3*" />
-                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -189,13 +189,14 @@
                 <Button
                     Grid.Row="3"
                     Grid.Column="2"
-                    Width="30"
-                    Height="30"
+                    Width="20"
+                    Height="20"
+                    Margin="5,0,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Command="{Binding DataContext.OpenImageFileDiagCommand, ElementName=UC}">
                     <Path
-                        Margin="4,17,4,4"
+                        Margin="2,10,2,0"
                         Data="{StaticResource DotsSVG}"
                         Fill="{StaticResource ButtonForegroundBrush}"
                         Stretch="Uniform" />
@@ -538,11 +539,11 @@
                                 ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:NoiseReductionEnum}}}"
                                 SelectedItem="{Binding NoiseReduction}" />
                         </StackPanel>
-                        <Grid>
+                        <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="200" />
                                 <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock
                                 Grid.Column="0"
@@ -558,13 +559,14 @@
                                 Text="{Binding SharpCapSensorAnalysisFolder}" />
                             <Button
                                 Grid.Column="2"
-                                Width="30"
-                                Height="30"
+                                Width="20"
+                                Height="20"
+                                Margin="5,0,0,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Command="{Binding DataContext.OpenSharpCapSensorAnalysisFolderDiagCommand, ElementName=UC}">
                                 <Path
-                                    Margin="4,17,4,4"
+                                    Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
                                     Stretch="Uniform" />
@@ -581,7 +583,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="230" />
                                 <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock
                                 Grid.Column="0"
@@ -593,13 +595,14 @@
                                 Text="{Binding DefaultSequenceFolder}" />
                             <Button
                                 Grid.Column="2"
-                                Width="30"
-                                Height="30"
+                                Width="20"
+                                Height="20"
+                                Margin="5,0,0,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Command="{Binding DataContext.OpenSequenceFolderDiagCommand, ElementName=UC}">
                                 <Path
-                                    Margin="4,17,4,4"
+                                    Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
                                     Stretch="Uniform" />
@@ -608,11 +611,11 @@
                                 </Button.ToolTip>
                             </Button>
                         </Grid>
-                        <Grid>
+                        <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="230" />
                                 <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock
                                 Grid.Column="0"
@@ -624,13 +627,14 @@
                                 Text="{Binding SequencerTemplatesFolder}" />
                             <Button
                                 Grid.Column="2"
-                                Width="30"
-                                Height="30"
+                                Width="20"
+                                Height="20"
+                                Margin="5,0,0,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Command="{Binding DataContext.OpenSequenceTemplateFolderDiagCommand, ElementName=UC}">
                                 <Path
-                                    Margin="4,17,4,4"
+                                    Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
                                     Stretch="Uniform" />
@@ -639,11 +643,11 @@
                                 </Button.ToolTip>
                             </Button>
                         </Grid>
-                        <Grid>
+                        <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="230" />
                                 <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock
                                 Grid.Column="0"
@@ -655,13 +659,14 @@
                                 Text="{Binding TemplatePath}" />
                             <Button
                                 Grid.Column="2"
-                                Width="30"
-                                Height="30"
+                                Width="20"
+                                Height="20"
+                                Margin="5,0,0,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Command="{Binding DataContext.OpenSequenceTemplateDiagCommand, ElementName=UC}">
                                 <Path
-                                    Margin="4,17,4,4"
+                                    Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
                                     Stretch="Uniform" />
@@ -670,11 +675,11 @@
                                 </Button.ToolTip>
                             </Button>
                         </Grid>
-                        <Grid>
+                        <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="230" />
                                 <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock
                                 Grid.Column="0"
@@ -686,13 +691,14 @@
                                 Text="{Binding StartupSequenceTemplate}" />
                             <Button
                                 Grid.Column="2"
-                                Width="30"
-                                Height="30"
+                                Width="20"
+                                Height="20"
+                                Margin="5,0,0,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Command="{Binding DataContext.OpenStartupSequenceTemplateDiagCommand, ElementName=UC}">
                                 <Path
-                                    Margin="4,17,4,4"
+                                    Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
                                     Stretch="Uniform" />
@@ -701,11 +707,11 @@
                                 </Button.ToolTip>
                             </Button>
                         </Grid>
-                        <Grid>
+                        <Grid Margin="0,5,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="230" />
                                 <ColumnDefinition Width="3*" />
-                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
                             <TextBlock
                                 Grid.Column="0"
@@ -717,13 +723,14 @@
                                 Text="{Binding SequencerTargetsFolder}" />
                             <Button
                                 Grid.Column="2"
-                                Width="30"
-                                Height="30"
+                                Width="20"
+                                Height="20"
+                                Margin="5,0,0,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 Command="{Binding DataContext.OpenTargetsFolderDiagCommand, ElementName=UC}">
                                 <Path
-                                    Margin="4,17,4,4"
+                                    Margin="2,10,2,0"
                                     Data="{StaticResource DotsSVG}"
                                     Fill="{StaticResource ButtonForegroundBrush}"
                                     Stretch="Uniform" />

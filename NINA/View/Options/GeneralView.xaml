@@ -264,14 +264,14 @@
 
                         <Button
                             Grid.Column="2"
-                            Width="30"
-                            Height="30"
+                            Width="20"
+                            Height="20"
                             Margin="5,0,0,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Command="{Binding OpenSkyAtlasImageRepositoryDiagCommand}">
                             <Path
-                                Margin="4,17,4,4"
+                                Margin="2,10,2,0"
                                 Data="{StaticResource DotsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
                                 Stretch="Uniform" />
@@ -303,13 +303,14 @@
 
                         <Button
                             Grid.Column="2"
-                            Width="30"
+                            Width="20"
+                            Height="20"
                             Margin="5,0,0,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Command="{Binding OpenSkySurveyCacheDirectoryDiagCommand}">
                             <Path
-                                Margin="4,17,4,4"
+                                Margin="2,10,2,0"
                                 Data="{StaticResource DotsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
                                 Stretch="Uniform" />
@@ -328,14 +329,14 @@
                             ItemsSource="{Binding Source={util:EnumBindingSource {x:Type enum:LogLevelEnum}}}"
                             SelectedItem="{Binding LogLevel}" />
                         <Button
-                            Width="30"
-                            Height="30"
+                            Width="40"
+                            Height="20"
                             Margin="5,0,0,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Command="{Binding OpenLogFolderCommand}">
                             <Path
-                                Margin="5"
+                                Margin="2"
                                 Data="{StaticResource PreviewSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
                                 Stretch="Uniform" />
@@ -488,7 +489,7 @@
                                     SelectedColor="{Binding ColorSchema.NotificationWarningTextColor}" />
                             </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                        <StackPanel Margin="5,0,0,0" Orientation="Vertical">
                             <Button
                                 Width="40"
                                 Height="30"
@@ -517,7 +518,7 @@
                                 <TextBlock
                                     Width="170"
                                     VerticalAlignment="Center"
-                                   Text="{ns:Loc LblBackground}" />
+                                    Text="{ns:Loc LblBackground}" />
                                 <xceed:ColorPicker
                                     Width="80"
                                     HorizontalAlignment="Stretch"
@@ -528,7 +529,7 @@
                                 <TextBlock
                                     Width="170"
                                     VerticalAlignment="Center"
-                                   Text="{ns:Loc LblTertiaryBackground}" />
+                                    Text="{ns:Loc LblTertiaryBackground}" />
                                 <xceed:ColorPicker
                                     Width="80"
                                     HorizontalAlignment="Stretch"
@@ -682,7 +683,7 @@
                                     SelectedColor="{Binding AltColorSchema.NotificationWarningTextColor}" />
                             </StackPanel>
                         </StackPanel>
-                        <StackPanel Orientation="Vertical" Margin="5,0,0,0">
+                        <StackPanel Margin="5,0,0,0" Orientation="Vertical">
                             <Button
                                 Width="40"
                                 Height="30"
@@ -877,14 +878,14 @@
 
                         <Button
                             Grid.Column="2"
-                            Width="30"
-                            Height="30"
+                            Width="20"
+                            Height="20"
                             Margin="5,0,0,0"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Command="{Binding OpenHorizonFilePathDiagCommand}">
                             <Path
-                                Margin="4,17,4,4"
+                                Margin="2,10,2,0"
                                 Data="{StaticResource DotsSVG}"
                                 Fill="{StaticResource ButtonForegroundBrush}"
                                 Stretch="Uniform" />

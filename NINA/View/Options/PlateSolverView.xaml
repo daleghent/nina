@@ -387,14 +387,14 @@
 
                                 <Button
                                     Grid.Column="3"
-                                    Width="30"
-                                    Height="30"
+                                    Width="20"
+                                    Height="20"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Command="{Binding DataContext.OpenCygwinFileDiagCommand, ElementName=UC}">
                                     <Path
-                                        Margin="4,17,4,4"
+                                        Margin="2,10,2,0"
                                         Data="{StaticResource DotsSVG}"
                                         Fill="{StaticResource ButtonForegroundBrush}"
                                         Stretch="Uniform" />
@@ -564,14 +564,14 @@
 
                                 <Button
                                     Grid.Column="3"
-                                    Width="30"
-                                    Height="30"
+                                    Width="20"
+                                    Height="20"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Command="{Binding DataContext.OpenPS2FileDiagCommand, ElementName=UC}">
                                     <Path
-                                        Margin="4,17,4,4"
+                                        Margin="2,10,2,0"
                                         Data="{StaticResource DotsSVG}"
                                         Fill="{StaticResource ButtonForegroundBrush}"
                                         Stretch="Uniform" />
@@ -659,14 +659,14 @@
 
                                 <Button
                                     Grid.Column="3"
-                                    Width="30"
-                                    Height="30"
+                                    Width="20"
+                                    Height="20"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Command="{Binding DataContext.OpenASPSFileDiagCommand, ElementName=UC}">
                                     <Path
-                                        Margin="4,17,4,4"
+                                        Margin="2,10,2,0"
                                         Data="{StaticResource DotsSVG}"
                                         Fill="{StaticResource ButtonForegroundBrush}"
                                         Stretch="Uniform" />
@@ -753,14 +753,14 @@
 
                                 <Button
                                     Grid.Column="3"
-                                    Width="30"
-                                    Height="30"
+                                    Width="20"
+                                    Height="20"
                                     Margin="5,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     Command="{Binding DataContext.OpenASTAPFileDiagCommand, ElementName=UC}">
                                     <Path
-                                        Margin="4,17,4,4"
+                                        Margin="2,10,2,0"
                                         Data="{StaticResource DotsSVG}"
                                         Fill="{StaticResource ButtonForegroundBrush}"
                                         Stretch="Uniform" />

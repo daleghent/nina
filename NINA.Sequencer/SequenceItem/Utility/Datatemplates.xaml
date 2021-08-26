@@ -202,15 +202,15 @@
                         TextAlignment="Left" />
                     <Button
                         Grid.Column="2"
-                        Width="25"
-                        Height="25"
+                        Width="20"
+                        Height="20"
                         Margin="5,0,0,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Command="{Binding OpenDialogCommand}"
                         Style="{StaticResource BackgroundButton}">
                         <Path
-                            Margin="4,17,4,4"
+                            Margin="2,10,2,0"
                             Data="{StaticResource DotsSVG}"
                             Fill="{StaticResource ButtonForegroundBrush}"
                             Stretch="Uniform" />
