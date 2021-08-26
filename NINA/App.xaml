@@ -52,7 +52,7 @@
                 <ResourceDictionary Source="Resources\Styles\Window.xaml" />
                 <ResourceDictionary Source="Resources\Styles\ToggleSwitch.xaml" />
                 <ResourceDictionary Source="Resources\Styles\ContextMenu.xaml" />
-                <wpfutil:SharedResourceDictionary Source="Resources\Styles\SplitButton.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA;component/Resources/Styles/SplitButton.xaml" />
                 <ResourceDictionary Source="Resources\Styles\Markdown.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/ToastNotifications.Messages;component/Themes/Default.xaml" />
             </ResourceDictionary.MergedDictionaries>
