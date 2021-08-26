@@ -5758,6 +5758,6 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Zeměpisnou šířku {0} a {1} délku montáže nelze upravit!</value>
   </data>
   <data name="LblMGENDitherSettleTime" xml:space="preserve">
-    <value>Dither settling time</value>
+    <value>Čas stabilizace ditheringu</value>
   </data>
 </root>
