@@ -26,35 +26,35 @@
                 <ResourceDictionary Source="Resources\StaticResources\DataTemplates.xaml" />
 
                 <!--  UI Styles  -->
-                <ResourceDictionary Source="Resources\Styles\Button.xaml" />
-                <ResourceDictionary Source="Resources\Styles\Path.xaml" />
-                <ResourceDictionary Source="Resources\Styles\TextBlock.xaml" />
-                <ResourceDictionary Source="Resources\Styles\TextBox.xaml" />
-                <ResourceDictionary Source="Resources\Styles\TabControl.xaml" />
-                <ResourceDictionary Source="Resources\Styles\CheckBox.xaml" />
-                <ResourceDictionary Source="Resources\Styles\DataGrid.xaml" />
-                <ResourceDictionary Source="Resources\Styles\ListView.xaml" />
-                <ResourceDictionary Source="Resources\Styles\GroupBox.xaml" />
-                <ResourceDictionary Source="Resources\Styles\RepeatButton.xaml" />
-                <ResourceDictionary Source="Resources\Styles\ToggleButton.xaml" />
-                <ResourceDictionary Source="Resources\Styles\Slider.xaml" />
-                <ResourceDictionary Source="Resources\Styles\Expander.xaml" />
-                <ResourceDictionary Source="Resources\Styles\ScrollViewer.xaml" />
-                <ResourceDictionary Source="Resources\Styles\ComboBox.xaml" />
-                <ResourceDictionary Source="Resources\Styles\GridSplitter.xaml" />
-                <ResourceDictionary Source="Resources\Styles\ProgressBar.xaml" />
-                <ResourceDictionary Source="Resources\Styles\AvalonDock.xaml" />
-                <ResourceDictionary Source="Resources\Styles\Tooltip.xaml" />
-                <ResourceDictionary Source="Resources\Styles\CancellableButton.xaml" />
-                <ResourceDictionary Source="Resources\Styles\Oxyplot.xaml" />
-                <ResourceDictionary Source="Resources\Styles\DatePicker.xaml" />
-                <ResourceDictionary Source="Resources\Styles\StepperControl.xaml" />
-                <ResourceDictionary Source="Resources\Styles\Window.xaml" />
-                <ResourceDictionary Source="Resources\Styles\ToggleSwitch.xaml" />
-                <ResourceDictionary Source="Resources\Styles\ContextMenu.xaml" />
-                <wpfutil:SharedResourceDictionary Source="/NINA;component/Resources/Styles/SplitButton.xaml" />
-                <ResourceDictionary Source="Resources\Styles\Markdown.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Button.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Path.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TextBlock.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TextBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/TabControl.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/CheckBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/DataGrid.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ListView.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/GroupBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/RepeatButton.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ToggleButton.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Slider.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Expander.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ScrollViewer.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ComboBox.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/GridSplitter.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ProgressBar.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/Tooltip.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/CancellableButton.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/DatePicker.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/StepperControl.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ToggleSwitch.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/ContextMenu.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA.WPF.Base;component/Resources/Styles/SplitButton.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/ToastNotifications.Messages;component/Themes/Default.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA;component/Resources/Styles/Window.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA;component/Resources/Styles/AvalonDock.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA;component/Resources/Styles/Oxyplot.xaml" />
+                <wpfutil:SharedResourceDictionary Source="/NINA;component/Resources/Styles/Markdown.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
