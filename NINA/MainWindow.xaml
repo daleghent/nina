@@ -74,6 +74,7 @@
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding AppVM.CheckProfileCommand}" />
             <i:InvokeCommandAction Command="{Binding VersionCheckVM.CheckUpdateCommand}" />
+            <i:InvokeCommandAction Command="{Binding AppVM.CheckWindowsVersionCommand}" />
             <i:InvokeCommandAction Command="{Binding AppVM.CheckASCOMPlatformVersionCommand}" />
         </i:EventTrigger>
         <i:EventTrigger EventName="Closing">

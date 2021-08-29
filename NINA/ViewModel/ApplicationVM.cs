@@ -26,6 +26,7 @@ using NINA.Utility;
 using NINA.View.About;
 using NINA.WPF.Base.Interfaces.Mediator;
 using System;
+using System.Management;
 using System.Windows;
 using System.Windows.Input;
 using NINA.Equipment.Equipment;
@@ -53,6 +54,7 @@ namespace NINA.ViewModel {
             OpenManualCommand = new RelayCommand(OpenManual);
             OpenAboutCommand = new RelayCommand(OpenAbout);
             CheckASCOMPlatformVersionCommand = new RelayCommand(CheckASCOMPlatformVersion);
+            CheckWindowsVersionCommand = new RelayCommand(CheckWindowsVersion);
 
             profileService.ProfileChanged += ProfileService_ProfileChanged;
         }
@@ -66,6 +68,27 @@ namespace NINA.ViewModel {
                 }
             } catch (Exception) {
                 Logger.Info($"No ASCOM Platform installed");
+            }
+        }
+
+        private void CheckWindowsVersion(object obj) {
+            // Minimum support Windows version is (curently) Windows 8 (6.2)
+            var minimumVersion = new Version(6, 2);
+            string friendlyName = "Windows";
+
+            if (Environment.OSVersion.Version < minimumVersion) {
+                try {
+                    var searcher = new ManagementObjectSearcher("SELECT Caption FROM Win32_OperatingSystem");
+
+                    foreach (ManagementObject os in searcher.Get()) {
+                        friendlyName = os["Caption"].ToString().Trim();
+                        break;
+                    }
+                } catch (Exception ex) {
+                    Logger.Info($"Error getting Windows name: {ex.Message}");
+                } finally {
+                    Notification.ShowError(string.Format(Loc.Instance["LblYourWindowsIsTooOld"], friendlyName));
+                }
             }
         }
 
@@ -183,5 +206,6 @@ namespace NINA.ViewModel {
         public ICommand ExitCommand { get; private set; }
         public ICommand ClosingCommand { get; private set; }
         public ICommand CheckASCOMPlatformVersionCommand { get; private set; }
+        public ICommand CheckWindowsVersionCommand { get; private set; }
     }
 }

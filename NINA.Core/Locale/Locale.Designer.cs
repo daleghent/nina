@@ -16753,6 +16753,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is no longer supported by Microsoft and the N.I.N.A. project. You will encounter application malfunctions or crashes as a result of using N.I.N.A. on an unsupported version of Windows. N.I.N.A.&apos;s current system requirements are listed in the online documentation..
+        /// </summary>
+        internal static string LblYourWindowsIsTooOld {
+            get {
+                return ResourceManager.GetString("LblYourWindowsIsTooOld", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Zoom in by 25%.
         /// </summary>
         internal static string LblZoomIn {

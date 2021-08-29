@@ -5786,4 +5786,7 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
     <value>The ASCOM driver that reads from this server should have the same pipe name configured</value>
   </data>
+  <data name="LblYourWindowsIsTooOld" xml:space="preserve">
+    <value>{0} is no longer supported by Microsoft and the N.I.N.A. project. You will encounter application malfunctions or crashes as a result of using N.I.N.A. on an unsupported version of Windows. N.I.N.A.'s current system requirements are listed in the online documentation.</value>
+  </data>
 </root>
