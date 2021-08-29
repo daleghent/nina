@@ -58,6 +58,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock FontWeight="Bold">Library</TextBlock>
@@ -365,6 +366,17 @@
                 <Hyperlink NavigateUri="https://github.com/castleproject/Core" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/castleproject/Core</Hyperlink>
             </TextBlock>
             <TextBlock Grid.Row="27" Grid.Column="2">
+                <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">Apache 2.0</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="28"
+                Grid.Column="0"
+                Text="MdXaml" />
+            <TextBlock Grid.Row="28" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/serilog/serilog" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/serilog/serilog</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="28" Grid.Column="2">
                 <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">Apache 2.0</Hyperlink>
             </TextBlock>
         </Grid>

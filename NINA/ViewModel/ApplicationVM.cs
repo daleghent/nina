@@ -160,6 +160,7 @@ namespace NINA.ViewModel {
         }
 
         private void ClosingApplication(object o) {
+            Logger.CloseAndFlush();
             Notification.Dispose();
         }
 
