@@ -22,12 +22,14 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         public SBIG.DeviceType DeviceId;
         public SBIG.CameraType CameraType;
         public CcdCameraInfo? CameraInfo;
+        public CcdCameraInfo? TrackingCameraInfo;
         public FilterWheelInfo? FilterWheelInfo;
     }
 
     public struct ReadoutMode {
         public ushort RawMode;
         public SBIG.ReadoutMode Mode;
+
         public static ReadoutMode Create(int binning) {
             if (binning < 1 || binning > 3) {
                 throw new NotSupportedException($"Only binning modes 1-3 are supported");
@@ -144,23 +146,23 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
 
         DeviceQueryInfo[] QueryUsbDevices();
 
-        CcdCameraInfo GetCameraInfo(SBIG.DeviceType deviceId);
+        CcdCameraInfo GetCameraInfo(SBIG.DeviceType deviceId, SBIG.CCD ccd);
 
         FilterWheelInfo? GetFilterWheelInfo(SBIG.DeviceType deviceId);
 
         SBIG.QueryTemperatureStatusResults2 QueryTemperatureStatus(SBIG.DeviceType deviceId);
 
-        void RegulateTemperature(SBIG.DeviceType deviceId, double celcius);
+        void RegulateTemperature(SBIG.DeviceType deviceId, SBIG.CCD ccd, double celcius);
 
-        void DisableTemperatureRegulation(SBIG.DeviceType deviceId);
+        void DisableTemperatureRegulation(SBIG.DeviceType deviceId, SBIG.CCD ccd);
 
-        CommandState GetExposureState(SBIG.DeviceType deviceId);
+        CommandState GetExposureState(SBIG.DeviceType deviceId, SBIG.CCD ccd);
 
-        void StartExposure(SBIG.DeviceType deviceId, ReadoutMode readoutMode, bool darkFrame, double exposureTimeSecs, Point exposureStart, Size exposureSize);
+        void StartExposure(SBIG.DeviceType deviceId, SBIG.CCD ccd, ReadoutMode readoutMode, bool darkFrame, double exposureTimeSecs, Point exposureStart, Size exposureSize);
 
-        void EndExposure(SBIG.DeviceType deviceId);
+        void EndExposure(SBIG.DeviceType deviceId, SBIG.CCD ccd);
 
-        SBIGExposureData DownloadExposure(SBIG.DeviceType deviceId, CancellationToken ct);
+        SBIGExposureData DownloadExposure(SBIG.DeviceType deviceId, SBIG.CCD ccd, CancellationToken ct);
 
         void SetFilterWheelPosition(SBIG.DeviceType deviceId, ushort position);
 

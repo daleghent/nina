@@ -510,6 +510,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Protobuf Include="Protos\API\ASCOM\Camera\CameraService.proto" />
     <None Include="Utility\ColorSchema\ColorSchemas.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -533,6 +534,23 @@
     </PackageReference>
     <PackageReference Include="Dirkster.AvalonDock">
       <Version>4.51.1</Version>
+    </PackageReference>
+    <PackageReference Include="Google.Protobuf">
+      <Version>3.17.3</Version>
+    </PackageReference>
+    <PackageReference Include="Google.Protobuf.Tools">
+      <Version>3.17.2</Version>
+    </PackageReference>
+    <PackageReference Include="Grpc.Core.Api">
+      <Version>2.39.1</Version>
+    </PackageReference>
+    <PackageReference Include="Grpc.Tools">
+      <Version>2.39.1</Version>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="GrpcDotNetNamedPipes">
+      <Version>1.4.2</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.1</Version>

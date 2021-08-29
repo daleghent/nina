@@ -18,23 +18,23 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
     /// Encapsulates SBIG driver access primitives
     /// </summary>
     public class SbigSdk : ISbigSdk {
-
         private object driverLock = new object();
         private IMicroCache<SBIG.QueryTemperatureStatusResults2> queryTemperatureStatusCache;
 
         private class ConnectedDevice {
             public DeviceInfo deviceInfo;
             public SBIG.StartExposureParams2 latestStartExposureParams;
+            public SBIG.StartExposureParams2 latestStartTrackingExposureParams;
             public byte refCount = 0;
             public short handle;
         }
+
         private Dictionary<SBIG.DeviceType, ConnectedDevice> connectedDevices = new Dictionary<SBIG.DeviceType, ConnectedDevice>();
 
         /// <summary>
         /// An RAII contain for open driver handles that restores the previous driver instance on release, and additionally closes the driver instance if it owns (created) it
         /// </summary>
         private class DriverInstance : IDisposable {
-
             private readonly ISbigSdk sbigSdk;
 
             private readonly short previousHandle;
@@ -127,8 +127,12 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                         UnivDrvCommand(SBIG.Cmd.CC_OPEN_DEVICE, new SBIG.OpenDeviceParams { deviceType = deviceId });
                         var linkResult = UnivDrvCommand<SBIG.EstablishLinkParams, SBIG.EstablishLinkResults>(SBIG.Cmd.CC_ESTABLISH_LINK, new SBIG.EstablishLinkParams());
                         CcdCameraInfo? cameraInfo = null;
+                        CcdCameraInfo? trackingCameraInfo = null;
                         if (linkResult.cameraType != SBIG.CameraType.NoCamera) {
-                            cameraInfo = GetCameraInfoAlreadyActive();
+                            cameraInfo = GetCameraInfoAlreadyActive(SBIG.CCD.Imaging);
+                            try {
+                                trackingCameraInfo = GetCameraInfoAlreadyActive(SBIG.CCD.Tracking);
+                            } catch (Exception) { }
                         }
 
                         var filterWheelInfo = GetFilterWheelInfoAlreadyActive();
@@ -137,15 +141,14 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                                 DeviceId = deviceId,
                                 CameraType = linkResult.cameraType,
                                 FilterWheelInfo = filterWheelInfo,
-                                CameraInfo = cameraInfo
+                                CameraInfo = cameraInfo,
+                                TrackingCameraInfo = trackingCameraInfo
                             },
                             handle = driver.Handle,
                             refCount = 1
                         };
                         connectedDevices.Add(deviceId, connectedDevice);
                         driver.ReleaseOwnership();
-
-                        Logger.Trace($"SBIGSDK: Opened device {deviceId}, cameraType={linkResult.cameraType}");
                     }
                 }
                 return connectedDevice.deviceInfo;
@@ -202,7 +205,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                     }
 
                     Logger.Trace($"SBIGSDK: Closed device {deviceId}");
-                }                
+                }
             }
         }
 
@@ -226,11 +229,12 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// Gets a unified set of camera settings and information for the connected imaging device
         /// </summary>
         /// <param name="deviceId">The connected device to operate on</param>
+        /// <param name="ccd">Type of CCD to connect to</param>
         /// <returns>A struct containing a union of all relevant camera information</returns>
-        public CcdCameraInfo GetCameraInfo(SBIG.DeviceType deviceId) {
+        public CcdCameraInfo GetCameraInfo(SBIG.DeviceType deviceId, SBIG.CCD ccd) {
             lock (driverLock) {
                 using (var driver = EnsureActiveDriver(deviceId)) {
-                    return GetCameraInfoAlreadyActive();
+                    return GetCameraInfoAlreadyActive(ccd);
                 }
             }
         }
@@ -272,15 +276,18 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// <summary>
         /// Gets camera info for a device that's already active. This is useful during initial device connection
         /// </summary>
+        /// <param name="ccd">Type of CCD to connect to</param>
         /// <returns>A struct containing a union of all relevant camera information</returns>
-        private CcdCameraInfo GetCameraInfoAlreadyActive() {             
+        private CcdCameraInfo GetCameraInfoAlreadyActive(SBIG.CCD ccd) {
             var cameraInfo = new CcdCameraInfo();
+            var ccdInfo01Type = ccd == SBIG.CCD.Imaging ? SBIG.CcdInfoRequest.ImagingCcdStandard : SBIG.CcdInfoRequest.TrackingCcdStandard;
             var ccdInfo01 = UnivDrvCommand<SBIG.GetCcdInfoParams, SBIG.GetCcdInfoResults01>(
-                SBIG.Cmd.CC_GET_CCD_INFO, new SBIG.GetCcdInfoParams(SBIG.CcdInfoRequest.ImagingCcdStandard));
+                SBIG.Cmd.CC_GET_CCD_INFO, new SBIG.GetCcdInfoParams(ccdInfo01Type));
             var ccdInfo2 = UnivDrvCommand<SBIG.GetCcdInfoParams, SBIG.GetCcdInfoResults2>(
                 SBIG.Cmd.CC_GET_CCD_INFO, new SBIG.GetCcdInfoParams(SBIG.CcdInfoRequest.CameraInfoExtended));
+            var ccdInfo45Type = ccd == SBIG.CCD.Imaging ? SBIG.CcdInfoRequest.ImagingCcdSecondaryExtended : SBIG.CcdInfoRequest.TrackingCcdSecondaryExtended;
             var ccdInfo45 = UnivDrvCommand<SBIG.GetCcdInfoParams, SBIG.GetCcdInfoResults45>(
-                SBIG.Cmd.CC_GET_CCD_INFO, new SBIG.GetCcdInfoParams(SBIG.CcdInfoRequest.ImagingCcdSecondaryExtended));
+                SBIG.Cmd.CC_GET_CCD_INFO, new SBIG.GetCcdInfoParams(ccdInfo45Type));
             var ccdInfo6 = UnivDrvCommand<SBIG.GetCcdInfoParams, SBIG.GetCcdInfoResults6>(
                 SBIG.Cmd.CC_GET_CCD_INFO, new SBIG.GetCcdInfoParams(SBIG.CcdInfoRequest.CcdCameraExtended));
 
@@ -304,36 +311,46 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                     case SBIG.ReadoutMode.NoBinning:
                         binX = binY = 1;
                         break;
+
                     case SBIG.ReadoutMode.Bin2x2:
                         binX = binY = 2;
                         break;
+
                     case SBIG.ReadoutMode.Bin3x3:
                         binX = binY = 3;
                         break;
+
                     case SBIG.ReadoutMode.BinNx1:
                         binX = 1;
                         break;
+
                     case SBIG.ReadoutMode.BinNx2:
                         binX = 2;
                         break;
+
                     case SBIG.ReadoutMode.BinNx3:
                         binX = 3;
                         break;
+
                     case SBIG.ReadoutMode.NoBinning2:
                         binX = binY = 1;
                         binOffChip = true;
                         break;
+
                     case SBIG.ReadoutMode.Bin2x2VertOffChip:
                         binX = binY = 2;
                         binOffChip = true;
                         break;
+
                     case SBIG.ReadoutMode.Bin3x3VertOffChip:
                         binX = binY = 3;
                         binOffChip = true;
                         break;
+
                     case SBIG.ReadoutMode.Bin9x9:
                         binX = binY = 9;
                         break;
+
                     case SBIG.ReadoutMode.BinNxN:
                         break;
                 }
@@ -421,20 +438,16 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// <param name="deviceId">The connected device to operate on</param>
         /// <returns>The queried temperature status</returns>
         public SBIG.QueryTemperatureStatusResults2 QueryTemperatureStatus(SBIG.DeviceType deviceId) {
-            lock (driverLock) {
-                var connectedDevice = GetConnectedDevice(deviceId);
-                var serialNumber = connectedDevice.deviceInfo.CameraInfo.Value.SerialNumber;
-                return this.queryTemperatureStatusCache.GetOrAdd(
-                    serialNumber,
-                    () => { 
-                        using (var driver = EnsureActiveDriver(deviceId)) {
-                            return UnivDrvCommand<SBIG.QueryTemperatureStatusParams, SBIG.QueryTemperatureStatusResults2>(
-                                SBIG.Cmd.CC_QUERY_TEMPERATURE_STATUS,
-                                new SBIG.QueryTemperatureStatusParams(SBIG.TempStatusRequest.TEMP_STATUS_ADVANCED2));
-                         }
-                    },
-                    TimeSpan.FromSeconds(5));
-            }
+            return this.queryTemperatureStatusCache.GetOrAdd(
+                deviceId.ToString(),
+                () => {
+                    using (var driver = EnsureActiveDriver(deviceId)) {
+                        return UnivDrvCommand<SBIG.QueryTemperatureStatusParams, SBIG.QueryTemperatureStatusResults2>(
+                            SBIG.Cmd.CC_QUERY_TEMPERATURE_STATUS,
+                            new SBIG.QueryTemperatureStatusParams(SBIG.TempStatusRequest.TEMP_STATUS_ADVANCED2));
+                    }
+                },
+                TimeSpan.FromSeconds(5));
         }
 
         /// <summary>
@@ -520,7 +533,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                 using (var driver = DriverInstance.Create(this)) {
                     var queryResults = UnivDrvCommand<object, SBIG.QueryUsbResults>(SBIG.Cmd.CC_QUERY_USB, (object)null);
 
-                    // Queried USB devices excludes already connected devices, so we have to manually append them to the list so devices that comprise multiple equipment can 
+                    // Queried USB devices excludes already connected devices, so we have to manually append them to the list so devices that comprise multiple equipment can
                     // be independently connected
                     var queryInfos = new DeviceQueryInfo[queryResults.camerasFound + connectedDevices.Count];
                     for (int i = 0; i < queryResults.camerasFound; i++) {
@@ -555,8 +568,9 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// Enables temperature regulation at the given set point. If temperature regulation is already enabled, it updates the set point
         /// </summary>
         /// <param name="deviceId">The connected device to operate on</param>
+        /// <param name="ccd">The CCD to use for the exposure</param>
         /// <param name="celcius">The set point</param>
-        public void RegulateTemperature(SBIG.DeviceType deviceId, double celcius) {
+        public void RegulateTemperature(SBIG.DeviceType deviceId, SBIG.CCD ccd, double celcius) {
             lock (driverLock) {
                 using (var driver = EnsureActiveDriver(deviceId)) {
                     var connectedDevice = GetConnectedDevice(deviceId);
@@ -564,9 +578,10 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
 
                     // CONSIDER: AutoFreeze is an option for guiding cameras to reduce readout noise. It would be easy to support as an equipment option, but probably
                     // won't be needed for regular imaging
+                    // NOTE: There doesn't seem to be a way in the SDK to differentiate between tracking and CCD regulation
                     var tempRegulationParams = new SBIG.SetTemperatureRegulationParams2 {
                         state = SBIG.TemperatureRegulation.On,
-                        ccdSetpointCelcius = celcius
+                        ccdSetpointCelcius = celcius,
                     };
                     UnivDrvCommand(SBIG.Cmd.CC_SET_TEMPERATURE_REGULATION2, tempRegulationParams);
                     this.queryTemperatureStatusCache.Remove(serialNumber);
@@ -578,7 +593,8 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// Disables temperature regulation if it is enabled, or does nothing otherwise
         /// </summary>
         /// <param name="deviceId">The connected device to operate on</param>
-        public void DisableTemperatureRegulation(SBIG.DeviceType deviceId) {
+        /// <param name="ccd">The CCD to use for the exposure</param>
+        public void DisableTemperatureRegulation(SBIG.DeviceType deviceId, SBIG.CCD ccd) {
             lock (driverLock) {
                 using (var driver = EnsureActiveDriver(deviceId)) {
                     var connectedDevice = GetConnectedDevice(deviceId);
@@ -589,21 +605,28 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                     UnivDrvCommand(SBIG.Cmd.CC_SET_TEMPERATURE_REGULATION2, tempRegulationParams);
                     this.queryTemperatureStatusCache.Remove(serialNumber);
                 }
-            }            
+            }
         }
 
         /// <summary>
         /// Gets the exposure state (Idle/In Progress/Complete), which is useful for polling to determine when to download the exposure
         /// </summary>
         /// <param name="deviceId">The connected device to operate on</param>
+        /// <param name="ccd">The CCD to use for the exposure</param>
         /// <returns>A CommandState representing the exposure state</returns>
-        public CommandState GetExposureState(SBIG.DeviceType deviceId) {
+        public CommandState GetExposureState(SBIG.DeviceType deviceId, SBIG.CCD ccd) {
             lock (driverLock) {
                 using (var driver = EnsureActiveDriver(deviceId)) {
                     var status = UnivDrvCommand<SBIG.QueryCommandStatusParams, SBIG.QueryCommandStatusResults>(
-                        SBIG.Cmd.CC_QUERY_COMMAND_STATUS, 
+                        SBIG.Cmd.CC_QUERY_COMMAND_STATUS,
                         new SBIG.QueryCommandStatusParams(SBIG.Cmd.CC_START_EXPOSURE));
-                    var rawState = ((ushort)status.status & 0x3);
+                    int rawState;
+                    if (ccd == SBIG.CCD.Imaging) {
+                        rawState = ((ushort)status.status & 0x3);
+                    } else {
+                        rawState = ((ushort)status.status & 0xF) >> 2;
+                    }
+
                     // The 2 least significant bits represent Ccd camera status. Bit 0 is "Complete" if set, and "In Progress" otherwise. Bit 1 is "Command Active" if set, and "Idle" otherwise.
                     if ((rawState & 0x2) == 0) {
                         return CommandState.IDLE;
@@ -620,19 +643,27 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// Starts an exposure. EndExposure must be called to either abort, or after the exposure is complete (use GetExposureState)
         /// </summary>
         /// <param name="deviceId">The connected device to operate on</param>
+        /// <param name="ccd">The CCD to use for the exposure</param>
         /// <param name="readoutMode">The readout mode</param>
         /// <param name="darkFrame">Whether this is a dark frame. This will be used to close/open the internal shutter if one is available</param>
         /// <param name="exposureTimeSecs">Exposure time in seconds. The SDK supports hundredths of a second, so any additional precision is ignored</param>
         /// <param name="exposureStart">The X,Y coordinates representing a bounding box for the exposure. Unless ROI is used, this should be 0, 0</param>
         /// <param name="exposureSize">The width, height of a bounding box for the exposure. This should account for the amount of binning represented in the readout mode</param>
-        public void StartExposure(SBIG.DeviceType deviceId, ReadoutMode readoutMode, bool darkFrame, double exposureTimeSecs, Point exposureStart, Size exposureSize) {
+        public void StartExposure(
+            SBIG.DeviceType deviceId,
+            SBIG.CCD ccd,
+            ReadoutMode readoutMode,
+            bool darkFrame,
+            double exposureTimeSecs,
+            Point exposureStart,
+            Size exposureSize) {
             lock (driverLock) {
                 var connectedDevice = GetConnectedDevice(deviceId);
                 using (var driver = EnsureActiveDriver(deviceId)) {
                     var targetShutterState = darkFrame ? SBIG.ShutterState.Close : SBIG.ShutterState.Open;
                     var exposureTimeHundredths = (uint)Math.Round(exposureTimeSecs * 100.0f);
                     var exposureParams = new SBIG.StartExposureParams2() {
-                        ccd = SBIG.CCD.Imaging,
+                        ccd = ccd,
                         readoutMode = readoutMode.RawMode,
                         abgState = SBIG.AbgState.Off,
                         openShutter = targetShutterState,
@@ -644,18 +675,24 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                     };
 
                     UnivDrvCommand(SBIG.Cmd.CC_START_EXPOSURE2, exposureParams);
-                    connectedDevice.latestStartExposureParams = exposureParams;
+                    if (ccd == SBIG.CCD.Imaging) {
+                        connectedDevice.latestStartExposureParams = exposureParams;
+                    } else {
+                        connectedDevice.latestStartTrackingExposureParams = exposureParams;
+                    }
                 }
-            }            
+            }
         }
 
         /// <summary>
         /// Ends an exposure. This must be called before downloading an exposure (readout). This method is also used for aborting an exposure
         /// </summary>
-        public void EndExposure(SBIG.DeviceType deviceId) {
+        /// <param name="deviceId">The connected device to operate on</param>
+        /// <param name="ccd">The CCD to use for the exposure</param>
+        public void EndExposure(SBIG.DeviceType deviceId, SBIG.CCD ccd) {
             lock (driverLock) {
                 using (var driver = EnsureActiveDriver(deviceId)) {
-                    UnivDrvCommand(SBIG.Cmd.CC_END_EXPOSURE, new SBIG.EndExposureParams(SBIG.CCD.Imaging));
+                    UnivDrvCommand(SBIG.Cmd.CC_END_EXPOSURE, new SBIG.EndExposureParams(ccd));
                 }
             }
         }
@@ -664,16 +701,17 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
         /// Downloads an exposure. EndExposure must have been called already
         /// </summary>
         /// <param name="deviceId">The connected device to operate on</param>
+        /// <param name="ccd">The CCD to use for the exposure</param>
         /// <param name="ct">The cancellation token</param>
         /// <returns>Object containing flat array of 16-bit pixel data and other metadata</returns>
-        public SBIGExposureData DownloadExposure(SBIG.DeviceType deviceId, CancellationToken ct) {
+        public SBIGExposureData DownloadExposure(SBIG.DeviceType deviceId, SBIG.CCD ccd, CancellationToken ct) {
             // Only one exposure can be readout at a time, so the entire driver should be locked during exposure download
             lock (driverLock) {
                 var connectedDevice = GetConnectedDevice(deviceId);
-                var exposureParams = connectedDevice.latestStartExposureParams;
+                var exposureParams = ccd == SBIG.CCD.Imaging ? connectedDevice.latestStartExposureParams : connectedDevice.latestStartTrackingExposureParams;
                 using (var driver = EnsureActiveDriver(deviceId)) {
                     var readoutParams = new SBIG.StartReadoutParams() {
-                        ccd = SBIG.CCD.Imaging,
+                        ccd = ccd,
                         readoutMode = exposureParams.readoutMode,
                         left = exposureParams.left,
                         top = exposureParams.top,
@@ -686,7 +724,7 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                     var dataGcHandle = GCHandle.Alloc(data, GCHandleType.Pinned);
                     var pinnedPtr = dataGcHandle.AddrOfPinnedObject();
                     var readoutLineParams = new SBIG.ReadoutLineParams() {
-                        ccd = SBIG.CCD.Imaging,
+                        ccd = ccd,
                         pixelStart = exposureParams.left,
                         pixelLength = exposureParams.width,
                         readoutMode = exposureParams.readoutMode

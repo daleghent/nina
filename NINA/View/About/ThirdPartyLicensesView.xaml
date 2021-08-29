@@ -334,6 +334,39 @@
             <TextBlock Grid.Row="24" Grid.Column="2">
                 <Hyperlink NavigateUri="https://opensource.org/licenses/MIT" RequestNavigate="Hyperlink_RequestNavigate">The MIT License</Hyperlink>
             </TextBlock>
+
+            <TextBlock
+                Grid.Row="25"
+                Grid.Column="0"
+                Text="Protocol Buffers" />
+            <TextBlock Grid.Row="25" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/protocolbuffers/protobuf" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/protocolbuffers/protobuf</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="25" Grid.Column="2">
+                <Hyperlink NavigateUri="https://github.com/protocolbuffers/protobuf/blob/master/LICENSE" RequestNavigate="Hyperlink_RequestNavigate">Google Open Source License</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="26"
+                Grid.Column="0"
+                Text="gRPC Named Pipes" />
+            <TextBlock Grid.Row="26" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/cyanfish/grpc-dotnet-namedpipes" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/cyanfish/grpc-dotnet-namedpipes</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="26" Grid.Column="2">
+                <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">Apache 2.0</Hyperlink>
+            </TextBlock>
+
+            <TextBlock
+                Grid.Row="27"
+                Grid.Column="0"
+                Text="Castle Core" />
+            <TextBlock Grid.Row="27" Grid.Column="1">
+                <Hyperlink NavigateUri="https://github.com/castleproject/Core" RequestNavigate="Hyperlink_RequestNavigate">https://github.com/castleproject/Core</Hyperlink>
+            </TextBlock>
+            <TextBlock Grid.Row="27" Grid.Column="2">
+                <Hyperlink NavigateUri="https://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="Hyperlink_RequestNavigate">Apache 2.0</Hyperlink>
+            </TextBlock>
         </Grid>
     </Grid>
 </UserControl>

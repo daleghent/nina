@@ -53,6 +53,8 @@ namespace NINA.Profile {
             ascomAllowUnevenPixelSize = true;
 
             binAverageEnabled = false;
+            trackingCameraASCOMServerEnabled = false;
+            trackingCameraASCOMServerPipeName = "NINA.ASCOM.Camera.SBIG.Tracker";
         }
 
         private string id;
@@ -509,6 +511,32 @@ namespace NINA.Profile {
             set {
                 if (binAverageEnabled != value) {
                     binAverageEnabled = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool? trackingCameraASCOMServerEnabled;
+
+        [DataMember]
+        public bool? TrackingCameraASCOMServerEnabled {
+            get => trackingCameraASCOMServerEnabled;
+            set {
+                if (trackingCameraASCOMServerEnabled != value) {
+                    trackingCameraASCOMServerEnabled = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private string trackingCameraASCOMServerPipeName;
+
+        [DataMember]
+        public string TrackingCameraASCOMServerPipeName {
+            get => trackingCameraASCOMServerPipeName;
+            set {
+                if (trackingCameraASCOMServerPipeName != value) {
+                    trackingCameraASCOMServerPipeName = value;
                     RaisePropertyChanged();
                 }
             }

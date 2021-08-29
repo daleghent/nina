@@ -14,6 +14,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace NINA.Equipment.Equipment.MyFilterWheel {
+
     public class SBIGFilterWheel : BaseINPC, IFilterWheel {
         private readonly DeviceQueryInfo queriedDeviceInfo;
         private readonly SDK.CameraSDKs.SBIGSDK.FilterWheelInfo sbigFilterWheelInfo;
@@ -97,6 +98,7 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         }
 
         private bool _connected = false;
+
         public bool Connected {
             get => _connected;
             set {
@@ -108,7 +110,8 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         }
 
         private short lastSetPosition = -1;
-        public short Position { 
+
+        public short Position {
             get {
                 if (!Connected) {
                     Logger.Debug($"SBIGFW: Can't get Position. Device is not connected");
@@ -221,11 +224,13 @@ namespace NINA.Equipment.Equipment.MyFilterWheel {
         }
 
         #region Unsupported Operations
+
         public bool HasSetupDialog => false;
 
         public void SetupDialog() {
             throw new NotImplementedException();
         }
-        #endregion
+
+        #endregion Unsupported Operations
     }
 }

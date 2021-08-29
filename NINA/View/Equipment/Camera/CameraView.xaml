@@ -322,7 +322,8 @@
                                     x:Key="ContentSelector"
                                     Default="{StaticResource Default}"
                                     QhyCcd="{StaticResource QhyCcd}"
-                                    Touptek="{StaticResource Default}" />
+                                    Touptek="{StaticResource Default}"
+                                    LegacySbig="{StaticResource Default}" />
                             </Border.Resources>
                             <ContentControl
                                 Content="{Binding}"
@@ -555,11 +556,50 @@
                                     </CheckBox>
                                 </DockPanel>
                             </DataTemplate>
+                            <DataTemplate x:Key="LegacySbig">
+                                <StackPanel Orientation="Vertical">
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasTrackingCcd, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblTrackingASCOMServerEnabled}" />
+                                        <CheckBox
+                                            Width="200"
+                                            HorizontalAlignment="Right"
+                                            IsChecked="{Binding TrackingCcdAscomServerEnabled}">
+                                            <CheckBox.ToolTip>
+                                                <ToolTip ToolTipService.ShowOnDisabled="False">
+                                                    <TextBlock Text="{ns:Loc LblTrackingASCOMServerEnabledTooltip}" />
+                                                </ToolTip>
+                                            </CheckBox.ToolTip>
+                                        </CheckBox>
+                                    </DockPanel>
+                                    <DockPanel Margin="0,0,0,6" Visibility="{Binding HasTrackingCcd, Converter={StaticResource BooleanToVisibilityHiddenConverter}}">
+                                        <TextBlock
+                                            MinWidth="100"
+                                            VerticalAlignment="Center"
+                                            Text="{ns:Loc LblTrackingASCOMServerPipeName}" />
+                                        <TextBox
+                                            Width="250"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Right">
+                                            <TextBox.Text>
+                                                <Binding
+                                                    Path="ActiveProfile.CameraSettings.TrackingCameraASCOMServerPipeName"
+                                                    Source="{StaticResource ProfileService}"
+                                                    UpdateSourceTrigger="LostFocus">
+                                                </Binding>
+                                            </TextBox.Text>
+                                        </TextBox>
+                                    </DockPanel>
+                                </StackPanel>
+                            </DataTemplate>
                             <local:CameraTemplateSelector
                                 x:Key="ContentSelector"
                                 Default="{StaticResource Default}"
                                 QhyCcd="{StaticResource QhyCcd}"
-                                Touptek="{StaticResource Altair}" />
+                                Touptek="{StaticResource Altair}" 
+                                LegacySbig="{StaticResource LegacySbig}" />
                         </Grid.Resources>
                         <ContentControl
                             Content="{Binding}"

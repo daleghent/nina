@@ -654,6 +654,21 @@
       <Component Win64="$(var.Win64)" Id="System.Buffers.dll" Guid="dfd779ff-7ec4-49b2-8c7e-cb0cf908a5ae">
         <File Id="System.Buffers.dll" Name="System.Buffers.dll" Source="$(var.NINA_TargetDir)System.Buffers.dll" />
       </Component>
+      <Component Win64="$(var.Win64)" Id="Castle.Core.AsyncInterceptor.dll" Guid="b75476aa-e2cd-425a-8556-7f148faae0e3">
+        <File Id="Castle.Core.AsyncInterceptor.dll" Name="Castle.Core.AsyncInterceptor.dll" Source="$(var.NINA_TargetDir)Castle.Core.AsyncInterceptor.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="Castle.Core.dll" Guid="fa300086-73c6-4791-80e1-15fcfcfc1797">
+        <File Id="Castle.Core.dll" Name="Castle.Core.dll" Source="$(var.NINA_TargetDir)Castle.Core.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="Google.Protobuf.dll" Guid="48efb59c-8605-4a27-b22c-6dc5eef42339">
+        <File Id="Google.Protobuf.dll" Name="Google.Protobuf.dll" Source="$(var.NINA_TargetDir)Google.Protobuf.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="Grpc.Core.Api.dll" Guid="7a95df86-1596-4cc5-8c01-bc56aa9296c6">
+        <File Id="Grpc.Core.Api.dll" Name="Grpc.Core.Api.dll" Source="$(var.NINA_TargetDir)Grpc.Core.Api.dll" />
+      </Component>
+      <Component Win64="$(var.Win64)" Id="GrpcDotNetNamedPipes.dll" Guid="12a557ca-8315-4984-81e8-7d5b8830e3f3">
+        <File Id="GrpcDotNetNamedPipes.dll" Name="GrpcDotNetNamedPipes.dll" Source="$(var.NINA_TargetDir)GrpcDotNetNamedPipes.dll" />
+      </Component>
       <Component Id="NINA.Astrometry.pdb" Guid="4f23f02d-3dc9-4d2a-b3fb-6aa07fc34319">
         <File Id="NINA.Astrometry.pdb" Name="NINA.Astrometry.pdb" Source="$(var.NINA_TargetDir)NINA.Astrometry.pdb" />
       </Component>

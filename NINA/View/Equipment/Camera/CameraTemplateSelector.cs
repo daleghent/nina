@@ -22,12 +22,15 @@ namespace NINA.View.Equipment {
         public DataTemplate Default { get; set; }
         public DataTemplate QhyCcd { get; set; }
         public DataTemplate Touptek { get; set; }
+        public DataTemplate LegacySbig { get; set; }
 
         public override DataTemplate SelectTemplate(object item, DependencyObject container) {
             if (item is ToupTekAlikeCamera) {
                 return Touptek;
             } else if (item is QHYCamera) {
                 return QhyCcd;
+            } else if (item is SBIGCamera) {
+                return LegacySbig;
             } else {
                 return Default;
             }

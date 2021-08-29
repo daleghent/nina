@@ -15433,6 +15433,69 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tracking CCD ASCOM Server Enabled.
+        /// </summary>
+        internal static string LblTrackingASCOMServerEnabled {
+            get {
+                return ResourceManager.GetString("LblTrackingASCOMServerEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Runs a server in the background to control the built-in tracking camera from other applications.
+        /// </summary>
+        internal static string LblTrackingASCOMServerEnabledTooltip {
+            get {
+                return ResourceManager.GetString("LblTrackingASCOMServerEnabledTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server Pipe Name.
+        /// </summary>
+        internal static string LblTrackingASCOMServerPipeName {
+            get {
+                return ResourceManager.GetString("LblTrackingASCOMServerPipeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The ASCOM driver that reads from this server should have the same pipe name configured.
+        /// </summary>
+        internal static string LblTrackingASCOMServerPipeNameTooltip {
+            get {
+                return ResourceManager.GetString("LblTrackingASCOMServerPipeNameTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracking CCD ASCOM server started.
+        /// </summary>
+        internal static string LblTrackingASCOMServerStarted {
+            get {
+                return ResourceManager.GetString("LblTrackingASCOMServerStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to start tracking CCD ASCOM server. {0}.
+        /// </summary>
+        internal static string LblTrackingASCOMServerStartFailed {
+            get {
+                return ResourceManager.GetString("LblTrackingASCOMServerStartFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracking CCD ASCOM server stopped.
+        /// </summary>
+        internal static string LblTrackingASCOMServerStopped {
+            get {
+                return ResourceManager.GetString("LblTrackingASCOMServerStopped", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Custom.
         /// </summary>
         internal static string LblTrackingCustom {

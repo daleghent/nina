@@ -172,7 +172,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
 
                 /* SBIG */
                 try {
-                    var provider = new SBIGCameraProvider(sbigSdk);
+                    var provider = new SBIGCameraProvider(sbigSdk, profileService);
                     devices.AddRange(provider.GetEquipment());
                 } catch (Exception ex) {
                     Logger.Error(ex);

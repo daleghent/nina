@@ -53,5 +53,7 @@ namespace NINA.Profile.Interfaces {
         bool? DewHeaterOn { get; set; }
         bool ASCOMAllowUnevenPixelDimension { get; set; }
         bool? BinAverageEnabled { get; set; }
+        bool? TrackingCameraASCOMServerEnabled { get; set; }
+        string TrackingCameraASCOMServerPipeName { get; set; }
     }
 }
