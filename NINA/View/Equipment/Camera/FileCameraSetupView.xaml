@@ -68,6 +68,10 @@
                 <TextBlock Text="{ns:Loc LblIsBayered}" />
                 <CheckBox IsChecked="{Binding IsBayered}" />
             </UniformGrid>
+            <UniformGrid Margin="0,5,0,0" Columns="2">
+                <TextBlock VerticalAlignment="Center" Text="Always listen to file changes" />
+                <CheckBox IsChecked="{Binding AlwaysListen}" />
+            </UniformGrid>
         </StackPanel>
         <Button
             Grid.Row="1"

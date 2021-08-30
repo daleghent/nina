@@ -40,6 +40,7 @@ namespace NINA.Profile {
             minFlatExposureTime = 0.2;
             maxFlatExposureTime = 20;
             fileCameraFolder = string.Empty;
+            fileCameraAlwaysListen = false;
             bitScaling = true;
             timeout = 60;
             dewHeaterOn = false;
@@ -537,6 +538,19 @@ namespace NINA.Profile {
             set {
                 if (trackingCameraASCOMServerPipeName != value) {
                     trackingCameraASCOMServerPipeName = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private bool fileCameraAlwaysListen;
+
+        [DataMember]
+        public bool FileCameraAlwaysListen {
+            get => fileCameraAlwaysListen;
+            set {
+                if (fileCameraAlwaysListen != value) {
+                    fileCameraAlwaysListen = value;
                     RaisePropertyChanged();
                 }
             }

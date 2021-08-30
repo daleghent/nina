@@ -465,6 +465,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public Task<bool> Connect(CancellationToken token) {
             folderWatcher = new FileCameraFolderWatcher(FolderPath, SelectedFileExtension);
+            if (AlwaysListen) {
+                folderWatcher.Start();
+            }
             Connected = true;
             return Task.FromResult(true);
         }
@@ -499,6 +502,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
         };
 
         public void Disconnect() {
+            if (AlwaysListen) {
+                folderWatcher.Suspend();
+            }
             folderWatcher?.Dispose();
             serialPortInteraction?.Dispose();
             serialRelayInteraction?.Dispose();
@@ -569,6 +575,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 if (Connected) {
                     folderWatcher?.Dispose();
                     folderWatcher = new FileCameraFolderWatcher(FolderPath, SelectedFileExtension);
+                    if (AlwaysListen) {
+                        folderWatcher.Start();
+                    }
                 }
             });
         }
@@ -577,6 +586,14 @@ namespace NINA.Equipment.Equipment.MyCamera {
             get => profileService.ActiveProfile.CameraSettings.FileCameraIsBayered;
             set {
                 profileService.ActiveProfile.CameraSettings.FileCameraIsBayered = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public bool AlwaysListen {
+            get => profileService.ActiveProfile.CameraSettings.FileCameraAlwaysListen;
+            set {
+                profileService.ActiveProfile.CameraSettings.FileCameraAlwaysListen = value;
                 RaisePropertyChanged();
             }
         }
@@ -593,7 +610,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
         private TimeSpan exposureTime;
 
         public void StartExposure(CaptureSequence captureSequence) {
-            folderWatcher.Start();
+            if (!AlwaysListen) {
+                folderWatcher.Start();
+            }
             exposureStart = DateTime.Now;
             exposureTime = TimeSpan.FromSeconds(captureSequence.ExposureTime);
             if (UseBulbMode) {
@@ -617,7 +636,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void StopExposure() {
-            folderWatcher.Suspend();
+            if (!AlwaysListen) {
+                folderWatcher.Suspend();
+            }
         }
 
         private void BulbCapture(double exposureTime, Action capture, Action stopCapture) {
