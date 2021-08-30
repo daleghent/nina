@@ -741,6 +741,12 @@ namespace NINA.Equipment.SDK.CameraSDKs.SBIGSDK {
                     } finally {
                         pinnedParams.Free();
                         dataGcHandle.Free();
+
+                        try {
+                            UnivDrvCommand(SBIG.Cmd.CC_END_READOUT, readoutParams);
+                        } catch (Exception e) {
+                            Logger.Error($"SBIGSDK: Failed to end readout for {deviceId} {ccd}", e);
+                        }
                     }
 
                     return new SBIGExposureData() {

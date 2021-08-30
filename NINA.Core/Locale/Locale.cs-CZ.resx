@@ -5760,4 +5760,28 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
   <data name="LblMGENDitherSettleTime" xml:space="preserve">
     <value>Čas stabilizace ditheringu</value>
   </data>
+  <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
+    <value>Nepodařilo se spustit sledování CCD ASCOM serveru. {0}</value>
+  </data>
+  <data name="LblTrackingASCOMServerStarted" xml:space="preserve">
+    <value>Sledování CCD ASCOM serveru spuštěno</value>
+  </data>
+  <data name="LblTrackingASCOMServerStopped" xml:space="preserve">
+    <value>Sledování CCD ASCOM serveru zastaveno</value>
+  </data>
+  <data name="LblTrackingASCOMServerEnabled" xml:space="preserve">
+    <value>Sledování CCD ASCOM Serveru Povoleno</value>
+  </data>
+  <data name="LblTrackingASCOMServerEnabledTooltip" xml:space="preserve">
+    <value>Spustí server na pozadí pro ovládání vestavěné sledovací kamery z jiných aplikací</value>
+  </data>
+  <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
+    <value>Název Kanálu Serveru</value>
+  </data>
+  <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
+    <value>Ovladač ASCOM, který čte z tohoto serveru, by měl mít nakonfigurován stejný název kanálu</value>
+  </data>
+  <data name="LblYourWindowsIsTooOld" xml:space="preserve">
+    <value>Aplikace {0} již není podporována společností Microsoft a projektem N.I.N.A.V důsledku používání může dojít k chybným funkcím nebo haváriím N.I.N.A. nepodporované verze systému Windows jsou uvedeny v online  N.I.N.A dokumentaci.</value>
+  </data>
 </root>

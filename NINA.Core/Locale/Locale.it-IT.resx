@@ -5763,4 +5763,28 @@ The default behavior is to continue on errors, however for some instructions it 
   <data name="LblMGENDitherSettleTime" xml:space="preserve">
     <value>Dither settling time</value>
   </data>
+  <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
+    <value>Failed to start tracking CCD ASCOM server. {0}</value>
+  </data>
+  <data name="LblTrackingASCOMServerStarted" xml:space="preserve">
+    <value>Tracking CCD ASCOM server started</value>
+  </data>
+  <data name="LblTrackingASCOMServerStopped" xml:space="preserve">
+    <value>Tracking CCD ASCOM server stopped</value>
+  </data>
+  <data name="LblTrackingASCOMServerEnabled" xml:space="preserve">
+    <value>Tracking CCD ASCOM Server Enabled</value>
+  </data>
+  <data name="LblTrackingASCOMServerEnabledTooltip" xml:space="preserve">
+    <value>Runs a server in the background to control the built-in tracking camera from other applications</value>
+  </data>
+  <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
+    <value>Server Pipe Name</value>
+  </data>
+  <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
+    <value>The ASCOM driver that reads from this server should have the same pipe name configured</value>
+  </data>
+  <data name="LblYourWindowsIsTooOld" xml:space="preserve">
+    <value>{0} is no longer supported by Microsoft and the N.I.N.A. project. You will encounter application malfunctions or crashes as a result of using N.I.N.A. on an unsupported version of Windows. N.I.N.A.'s current system requirements are listed in the online documentation.</value>
+  </data>
 </root>
