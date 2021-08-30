@@ -5755,4 +5755,28 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
   <data name="LblMGENDitherSettleTime" xml:space="preserve">
     <value>Dither settling time</value>
   </data>
+  <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
+    <value>Error al iniciar el servidor seguimiento del CCD ASCOM. {0}</value>
+  </data>
+  <data name="LblTrackingASCOMServerStarted" xml:space="preserve">
+    <value>Iniciado servidor de seguimiento CCD ASCOM</value>
+  </data>
+  <data name="LblTrackingASCOMServerStopped" xml:space="preserve">
+    <value>Detenido el servidor de seguimiento CCD ASCOM</value>
+  </data>
+  <data name="LblTrackingASCOMServerEnabled" xml:space="preserve">
+    <value>Habilitado el servidor de seguimiento CCD ASCOM</value>
+  </data>
+  <data name="LblTrackingASCOMServerEnabledTooltip" xml:space="preserve">
+    <value>Ejecuta un servidor en segundo plano para controlar la cámara de seguimiento desde otras aplicaciones</value>
+  </data>
+  <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
+    <value>Nombre del servidor de canalización (Server Pepe)</value>
+  </data>
+  <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
+    <value>El controlador ASCOM que lee desde este servidor debe tener configurado el mismo nombre de canalización (pipa name)</value>
+  </data>
+  <data name="LblYourWindowsIsTooOld" xml:space="preserve">
+    <value>{0} ya no cuenta con soporte de Microsoft ni del proyecto N.I.N.A. Encontrará mal funcionamiento o errores en la aplicación como resultado del uso de N.I.N.A. en una versión de windows desfasada. Los actuales requisitos mínimos de N.I.N.A. están disponibles en la documentación online.</value>
+  </data>
 </root>
