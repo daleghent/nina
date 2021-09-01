@@ -528,7 +528,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
                     await CoreUtil.Wait(TimeSpan.FromSeconds(1), token);
                 }
 
-                folderWatcher.Suspend();
+                if (!AlwaysListen) {
+                    folderWatcher.Suspend();
+                }
 
                 CameraState = "Loading from file";
                 var tries = 0;
