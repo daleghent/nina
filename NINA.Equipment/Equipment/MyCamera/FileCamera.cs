@@ -460,7 +460,9 @@ namespace NINA.Equipment.Equipment.MyCamera {
         }
 
         public void AbortExposure() {
-            folderWatcher.Suspend();
+            if (!AlwaysListen) {
+                folderWatcher.Suspend();
+            }
         }
 
         public Task<bool> Connect(CancellationToken token) {
