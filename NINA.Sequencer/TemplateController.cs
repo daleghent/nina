@@ -176,6 +176,8 @@ namespace NINA.Sequencer {
 
         public void AddNewUserTemplate(ISequenceContainer sequenceContainer) {
             try {
+                var existingTemplate = UserTemplates.FirstOrDefault(t => t.Container.Name == sequenceContainer.Name);
+
                 if (sequenceContainer is IDeepSkyObjectContainer) {
                     var dso = (sequenceContainer as IDeepSkyObjectContainer);
                     dso.Target.TargetName = string.Empty;
@@ -184,8 +186,10 @@ namespace NINA.Sequencer {
                     dso.Target = dso.Target;
                 }
 
+                var path = existingTemplate == null ? userTemplatePath : Path.Combine(userTemplatePath, Path.Combine(existingTemplate.SubGroups));
+
                 var jsonContainer = sequenceJsonConverter.Serialize(sequenceContainer);
-                File.WriteAllText(Path.Combine(userTemplatePath, GetTemplateFileName(sequenceContainer)), jsonContainer);
+                File.WriteAllText(Path.Combine(path, GetTemplateFileName(sequenceContainer)), jsonContainer);
             } catch (Exception ex) {
                 Logger.Error(ex);
                 Notification.ShowError(Loc.Instance["Lbl_SequenceTemplateController_AddNewTemplateFailed"]);

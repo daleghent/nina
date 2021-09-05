@@ -190,7 +190,7 @@ namespace NINA.ViewModel.Sequencer {
             clonedContainer.ResetAll();
 
             bool addTemplate = true;
-            var templateExists = TemplateController.UserTemplates.Any(t => t.Container.Name == clonedContainer.Name && t.SubGroups.Count() == 0);
+            var templateExists = TemplateController.UserTemplates.Any(t => t.Container.Name == clonedContainer.Name);
             if (templateExists) {
                 var result = MyMessageBox.Show(string.Format(Loc.Instance["LblTemplate_OverwriteTemplateMessageBox_Text"], clonedContainer.Name),
                     Loc.Instance["LblTemplate_OverwriteTemplateMessageBox_Caption"], System.Windows.MessageBoxButton.OKCancel, System.Windows.MessageBoxResult.Cancel);

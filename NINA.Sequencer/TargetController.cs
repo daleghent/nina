@@ -151,13 +151,17 @@ namespace NINA.Sequencer {
 
         public void AddTarget(IDeepSkyObjectContainer deepSkyObjectContainer) {
             try {
-                var jsonContainer = sequenceJsonConverter.Serialize(deepSkyObjectContainer);
-                File.WriteAllText(Path.Combine(targetPath, NINA.Core.Utility.CoreUtil.ReplaceAllInvalidFilenameChars(deepSkyObjectContainer.Name) + ".json"), jsonContainer);
-
                 var existingTarget = Targets.FirstOrDefault(x => x.Name == deepSkyObjectContainer.Name);
+
+                var jsonContainer = sequenceJsonConverter.Serialize(deepSkyObjectContainer);
+
+                var path = existingTarget == null ? targetPath : Path.Combine(targetPath, Path.Combine(existingTarget.SubGroups));
+
+                File.WriteAllText(Path.Combine(path, NINA.Core.Utility.CoreUtil.ReplaceAllInvalidFilenameChars(deepSkyObjectContainer.Name) + ".json"), jsonContainer);
+
                 if (existingTarget != null) {
                     Targets.Remove(existingTarget);
-                    Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer));
+                    Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer) { SubGroups = existingTarget.SubGroups });
                 } else {
                     Targets.Add(new TargetSequenceContainer(profileService, deepSkyObjectContainer));
                 }
