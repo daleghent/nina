@@ -86,7 +86,12 @@ namespace NINA.Sequencer.Trigger.Autofocus {
             }
         }
 
-        public FilterInfo LastAutoFocusFilter { get; private set; }
+        private FilterInfo lastFilter;
+
+        public FilterInfo LastAutoFocusFilter {
+            get => lastFilter;
+            private set { lastFilter = value; RaisePropertyChanged(); }
+        }
 
         public override async Task Execute(ISequenceContainer context, IProgress<ApplicationStatus> progress, CancellationToken token) {
             await TriggerRunner.Run(progress, token);
