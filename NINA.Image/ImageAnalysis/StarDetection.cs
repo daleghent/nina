@@ -148,6 +148,7 @@ namespace NINA.Image.ImageAnalysis {
             private List<PixelData> pixelData;
             public double Average { get; private set; } = 0;
             public double SurroundingMean { get; set; } = 0;
+            public double maxPixelValue { get; set; } = 0;
 
             public Rectangle Rectangle;
 
@@ -486,6 +487,7 @@ namespace NINA.Image.ImageAnalysis {
                 }
 
                 s.meanBrightness = starPixelSum / (double)starPixelCount;
+                s.maxPixelValue = innerStarPixelValues.Max();
                 double largeRectPixelCount = largeRect.Height * largeRect.Width - rect.Height * rect.Width;
                 double largeRectMean = largeRectPixelSum / largeRectPixelCount;
                 s.SurroundingMean = largeRectMean;
