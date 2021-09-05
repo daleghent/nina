@@ -114,6 +114,9 @@ namespace NINA.Equipment.Equipment.MyDome {
 
         public ShutterState ShutterStatus {
             get {
+                if (!CanSetShutter) {
+                    return ShutterState.ShutterNone;
+                }
                 var ascomState = GetProperty(nameof(Dome.ShutterStatus), ASCOM.DeviceInterface.ShutterState.shutterError);
                 return ascomState.FromASCOM();
             }

@@ -369,7 +369,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                 Logger.Info("Parking dome");
                 await DisableFollowing(cancellationToken);
                 if (profileService.ActiveProfile.DomeSettings.FindHomeBeforePark && Dome.CanFindHome) {
-                    Logger.Info("Fionding home before parking");
+                    Logger.Info("Finding home before parking");
                     await Dome.FindHome(cancellationToken);
                 }
                 await Dome.Park(cancellationToken);
@@ -471,6 +471,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         private async Task<bool> FindHome(object obj) {
             Logger.Info($"Finding dome home position");
+            await DisableFollowing(CancellationToken.None);
             await Dome?.FindHome(CancellationToken.None);
             return true;
         }
