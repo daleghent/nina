@@ -217,7 +217,7 @@ namespace NINA.ViewModel.Sequencer {
             }
             Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog();
             dialog.Multiselect = false;
-            dialog.Title = Loc.Instance["LblLoad"];
+            dialog.Title = Loc.Instance["LblLoadSequence"];
             if (string.IsNullOrEmpty(SavePath) || Path.GetExtension(SavePath) != ".json") {
                 dialog.InitialDirectory = initialDirectory;
                 dialog.FileName = "";
