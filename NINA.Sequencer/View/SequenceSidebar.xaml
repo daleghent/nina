@@ -21,6 +21,7 @@
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:sequenceItem="clr-namespace:NINA.Sequencer.SequenceItem"
     xmlns:sequencer="clr-namespace:NINA.Sequencer"
+    xmlns:util="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
     xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -427,6 +428,18 @@
             </Grid>
         </TabItem>
         <TabItem>
+            <TabItem.Style>
+                <Style BasedOn="{StaticResource TopTabItem}" TargetType="TabItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Content" Value="{Binding Path=(util:DeferredContent.Content), RelativeSource={RelativeSource Self}}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter Property="Content" Value="{Binding Content, RelativeSource={RelativeSource Self}}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TabItem.Style>
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Path
@@ -453,225 +466,239 @@
                         Text="{ns:Loc LblTemplates}" />
                 </StackPanel>
             </TabItem.Header>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <ninactrl:HintTextBox
-                    Margin="0,5,0,5"
-                    VerticalAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Foreground="{StaticResource PrimaryBrush}"
-                    HintText="{ns:Loc LblSearch}"
-                    Text="{Binding TemplateController.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
-                    <ninactrl:HintTextBox.Background>
-                        <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
-                    </ninactrl:HintTextBox.Background>
-                </ninactrl:HintTextBox>
-                <Border
-                    Grid.Row="1"
-                    Margin="10,10,10,10"
-                    Background="{StaticResource SecondaryBackgroundBrush}"
-                    BorderThickness="0"
-                    DockPanel.Dock="Top">
-                    <TextBlock
-                        Padding="10"
+            <util:DeferredContent.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ninactrl:HintTextBox
+                        Margin="0,5,0,5"
                         VerticalAlignment="Center"
-                        Foreground="{StaticResource ButtonForegroundBrush}"
-                        Text="{ns:Loc LblTemplate_DropTemplateHere}"
-                        TextAlignment="Center"
-                        TextBlock.FontStyle="Italic"
-                        TextWrapping="Wrap" />
-                </Border>
-                <ScrollViewer
-                    Grid.Row="2"
-                    VerticalAlignment="Stretch"
-                    HorizontalScrollBarVisibility="Disabled"
-                    VerticalScrollBarVisibility="Auto">
-                    <ItemsControl Panel.ZIndex="10" ItemsSource="{Binding TemplateController.TemplatesView}">
-                        <ItemsControl.GroupStyle>
-                            <GroupStyle ContainerStyle="{StaticResource ContainerStyle}" />
-                        </ItemsControl.GroupStyle>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type sequencer:TemplatedSequenceContainer}">
-                                <Border MinHeight="30" Margin="5,5,5,0">
-                                    <i:Interaction.Behaviors>
-                                        <behaviors:DragDropBehavior />
-                                    </i:Interaction.Behaviors>
-                                    <Border>
-                                        <ninactrl:DetachingExpander
-                                            x:Name="expander"
-                                            Margin="5,0,5,0"
-                                            HorizontalContentAlignment="Stretch"
-                                            Background="Transparent"
-                                            Template="{StaticResource DownExpander}">
-                                            <ninactrl:DetachingExpander.Resources>
-                                                <DataTemplate x:Key="SequenceContainerTemplate" DataType="{x:Type cont:SequenceContainer}">
-                                                    <Grid DataContext="{Binding}">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition />
-                                                            <RowDefinition />
-                                                        </Grid.RowDefinitions>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="20" />
-                                                            <ColumnDefinition />
-                                                        </Grid.ColumnDefinitions>
-                                                        <Path
-                                                            Grid.Row="0"
-                                                            Grid.Column="0"
-                                                            Width="10"
-                                                            Height="10"
-                                                            Margin="5,0,5,0"
-                                                            Data="{Binding Icon}"
-                                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
+                        VerticalContentAlignment="Center"
+                        Foreground="{StaticResource PrimaryBrush}"
+                        HintText="{ns:Loc LblSearch}"
+                        Text="{Binding TemplateController.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
+                        <ninactrl:HintTextBox.Background>
+                            <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
+                        </ninactrl:HintTextBox.Background>
+                    </ninactrl:HintTextBox>
+                    <Border
+                        Grid.Row="1"
+                        Margin="10,10,10,10"
+                        Background="{StaticResource SecondaryBackgroundBrush}"
+                        BorderThickness="0"
+                        DockPanel.Dock="Top">
+                        <TextBlock
+                            Padding="10"
+                            VerticalAlignment="Center"
+                            Foreground="{StaticResource ButtonForegroundBrush}"
+                            Text="{ns:Loc LblTemplate_DropTemplateHere}"
+                            TextAlignment="Center"
+                            TextBlock.FontStyle="Italic"
+                            TextWrapping="Wrap" />
+                    </Border>
+                    <ScrollViewer
+                        Grid.Row="2"
+                        VerticalAlignment="Stretch"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto">
+                        <ItemsControl Panel.ZIndex="10" ItemsSource="{Binding TemplateController.TemplatesView}">
+                            <ItemsControl.GroupStyle>
+                                <GroupStyle ContainerStyle="{StaticResource ContainerStyle}" />
+                            </ItemsControl.GroupStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type sequencer:TemplatedSequenceContainer}">
+                                    <Border MinHeight="30" Margin="5,5,5,0">
+                                        <i:Interaction.Behaviors>
+                                            <behaviors:DragDropBehavior />
+                                        </i:Interaction.Behaviors>
+                                        <Border>
+                                            <ninactrl:DetachingExpander
+                                                x:Name="expander"
+                                                Margin="5,0,5,0"
+                                                HorizontalContentAlignment="Stretch"
+                                                Background="Transparent"
+                                                Template="{StaticResource DownExpander}">
+                                                <ninactrl:DetachingExpander.Resources>
+                                                    <DataTemplate x:Key="SequenceContainerTemplate" DataType="{x:Type cont:SequenceContainer}">
+                                                        <Grid DataContext="{Binding}">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="20" />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Path
+                                                                Grid.Row="0"
+                                                                Grid.Column="0"
+                                                                Width="10"
+                                                                Height="10"
+                                                                Margin="5,0,5,0"
+                                                                Data="{Binding Icon}"
+                                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                                Stretch="Uniform" />
+                                                            <TextBlock
+                                                                Grid.Row="0"
+                                                                Grid.Column="1"
+                                                                Foreground="{StaticResource ButtonForegroundBrush}"
+                                                                Text="{Binding Name}" />
+                                                            <ItemsControl
+                                                                Grid.Row="1"
+                                                                Grid.Column="1"
+                                                                ItemTemplateSelector="{DynamicResource TemplateSelector}"
+                                                                ItemsSource="{Binding Items}" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                    <DataTemplate x:Key="DeepSkyObjectContainerTemplate" DataType="{x:Type cont:DeepSkyObjectContainer}">
+                                                        <Grid DataContext="{Binding}">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="20" />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Path
+                                                                Grid.Row="0"
+                                                                Grid.Column="0"
+                                                                Width="10"
+                                                                Height="10"
+                                                                Margin="5,0,5,0"
+                                                                Data="{Binding Icon}"
+                                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                                Stretch="Uniform" />
+                                                            <TextBlock
+                                                                Grid.Row="0"
+                                                                Grid.Column="1"
+                                                                Foreground="{StaticResource ButtonForegroundBrush}"
+                                                                Text="{Binding Name}" />
+                                                            <ItemsControl
+                                                                Grid.Row="1"
+                                                                Grid.Column="1"
+                                                                ItemsSource="{Binding Items}" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                    <DataTemplate x:Key="SequenceItemTemplate" DataType="{x:Type sequenceItem:SequenceItem}">
+                                                        <Grid DataContext="{Binding}">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="20" />
+                                                                <ColumnDefinition />
+                                                            </Grid.ColumnDefinitions>
+                                                            <Path
+                                                                Grid.Row="0"
+                                                                Grid.Column="0"
+                                                                Width="10"
+                                                                Height="10"
+                                                                Margin="5,0,5,0"
+                                                                Data="{Binding Icon}"
+                                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                                Stretch="Uniform" />
+                                                            <TextBlock
+                                                                Grid.Column="1"
+                                                                Foreground="{StaticResource ButtonForegroundBrush}"
+                                                                Text="{Binding Name}" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                    <local:SequenceDataTemplateSelector
+                                                        x:Key="TemplateSelector"
+                                                        DeepSkyObjectContainer="{StaticResource DeepSkyObjectContainerTemplate}"
+                                                        SequenceContainer="{StaticResource SequenceContainerTemplate}"
+                                                        SequenceItem="{StaticResource SequenceItemTemplate}" />
+                                                </ninactrl:DetachingExpander.Resources>
+                                                <ninactrl:DetachingExpander.Header>
+                                                    <DockPanel
+                                                        Margin="0,5,0,5"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="Transparent">
+                                                        <i:Interaction.Behaviors>
+                                                            <behaviors:DragDropBehavior />
+                                                        </i:Interaction.Behaviors>
+                                                        <DockPanel DockPanel.Dock="Left">
+                                                            <Path
+                                                                x:Name="icon"
+                                                                Width="20"
+                                                                Height="20"
+                                                                Margin="5,0,0,0"
+                                                                Data="{StaticResource BoxClosedSVG}"
+                                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                                Stretch="Uniform" />
+                                                            <Path
+                                                                Grid.Column="1"
+                                                                Width="20"
+                                                                Height="20"
+                                                                Margin="5,0,0,0"
+                                                                Data="{Binding Container.Icon}"
+                                                                Fill="{StaticResource ButtonForegroundBrush}"
+                                                                Stretch="Uniform" />
+                                                        </DockPanel>
                                                         <TextBlock
-                                                            Grid.Row="0"
-                                                            Grid.Column="1"
-                                                            Foreground="{StaticResource ButtonForegroundBrush}"
-                                                            Text="{Binding Name}" />
-                                                        <ItemsControl
-                                                            Grid.Row="1"
-                                                            Grid.Column="1"
-                                                            ItemTemplateSelector="{DynamicResource TemplateSelector}"
-                                                            ItemsSource="{Binding Items}" />
-                                                    </Grid>
-                                                </DataTemplate>
-                                                <DataTemplate x:Key="DeepSkyObjectContainerTemplate" DataType="{x:Type cont:DeepSkyObjectContainer}">
-                                                    <Grid DataContext="{Binding}">
-                                                        <Grid.RowDefinitions>
-                                                            <RowDefinition />
-                                                            <RowDefinition />
-                                                        </Grid.RowDefinitions>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="20" />
-                                                            <ColumnDefinition />
-                                                        </Grid.ColumnDefinitions>
-                                                        <Path
-                                                            Grid.Row="0"
-                                                            Grid.Column="0"
-                                                            Width="10"
-                                                            Height="10"
-                                                            Margin="5,0,5,0"
-                                                            Data="{Binding Icon}"
-                                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
-                                                        <TextBlock
-                                                            Grid.Row="0"
-                                                            Grid.Column="1"
-                                                            Foreground="{StaticResource ButtonForegroundBrush}"
-                                                            Text="{Binding Name}" />
-                                                        <ItemsControl
-                                                            Grid.Row="1"
-                                                            Grid.Column="1"
-                                                            ItemsSource="{Binding Items}" />
-                                                    </Grid>
-                                                </DataTemplate>
-                                                <DataTemplate x:Key="SequenceItemTemplate" DataType="{x:Type sequenceItem:SequenceItem}">
-                                                    <Grid DataContext="{Binding}">
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="20" />
-                                                            <ColumnDefinition />
-                                                        </Grid.ColumnDefinitions>
-                                                        <Path
-                                                            Grid.Row="0"
-                                                            Grid.Column="0"
-                                                            Width="10"
-                                                            Height="10"
-                                                            Margin="5,0,5,0"
-                                                            Data="{Binding Icon}"
-                                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
-                                                        <TextBlock
-                                                            Grid.Column="1"
-                                                            Foreground="{StaticResource ButtonForegroundBrush}"
-                                                            Text="{Binding Name}" />
-                                                    </Grid>
-                                                </DataTemplate>
-                                                <local:SequenceDataTemplateSelector
-                                                    x:Key="TemplateSelector"
-                                                    DeepSkyObjectContainer="{StaticResource DeepSkyObjectContainerTemplate}"
-                                                    SequenceContainer="{StaticResource SequenceContainerTemplate}"
-                                                    SequenceItem="{StaticResource SequenceItemTemplate}" />
-                                            </ninactrl:DetachingExpander.Resources>
-                                            <ninactrl:DetachingExpander.Header>
-                                                <DockPanel
-                                                    Margin="0,5,0,5"
-                                                    HorizontalAlignment="Stretch"
-                                                    Background="Transparent">
-                                                    <i:Interaction.Behaviors>
-                                                        <behaviors:DragDropBehavior />
-                                                    </i:Interaction.Behaviors>
-                                                    <DockPanel DockPanel.Dock="Left">
-                                                        <Path
-                                                            x:Name="icon"
-                                                            Width="20"
-                                                            Height="20"
                                                             Margin="5,0,0,0"
-                                                            Data="{StaticResource BoxClosedSVG}"
-                                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
-                                                        <Path
-                                                            Grid.Column="1"
-                                                            Width="20"
-                                                            Height="20"
-                                                            Margin="5,0,0,0"
-                                                            Data="{Binding Container.Icon}"
-                                                            Fill="{StaticResource ButtonForegroundBrush}"
-                                                            Stretch="Uniform" />
+                                                            VerticalAlignment="Center"
+                                                            FontWeight="Bold"
+                                                            Foreground="{StaticResource ButtonForegroundBrush}"
+                                                            Text="{Binding Container.Name}" />
                                                     </DockPanel>
-                                                    <TextBlock
-                                                        Margin="5,0,0,0"
-                                                        VerticalAlignment="Center"
-                                                        FontWeight="Bold"
-                                                        Foreground="{StaticResource ButtonForegroundBrush}"
-                                                        Text="{Binding Container.Name}" />
-                                                </DockPanel>
-                                            </ninactrl:DetachingExpander.Header>
-                                            <ninactrl:DetachingExpander.Content>
-                                                <ItemsControl
-                                                    Margin="0,5,0,5"
-                                                    ItemTemplateSelector="{StaticResource TemplateSelector}"
-                                                    ItemsSource="{Binding Container.Items}" />
-                                            </ninactrl:DetachingExpander.Content>
-                                        </ninactrl:DetachingExpander>
+                                                </ninactrl:DetachingExpander.Header>
+                                                <ninactrl:DetachingExpander.Content>
+                                                    <ItemsControl
+                                                        Margin="0,5,0,5"
+                                                        ItemTemplateSelector="{StaticResource TemplateSelector}"
+                                                        ItemsSource="{Binding Container.Items}" />
+                                                </ninactrl:DetachingExpander.Content>
+                                            </ninactrl:DetachingExpander>
 
-                                        <Border.Style>
-                                            <Style TargetType="Border">
-                                                <Setter Property="Background" Value="White" />
-                                                <Style.Triggers>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                                                    </Trigger>
-                                                    <Trigger Property="IsMouseOver" Value="False">
-                                                        <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
-                                                    </Trigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </Border.Style>
-                                        <Border.ToolTip>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
-                                        </Border.ToolTip>
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="White" />
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                                        </Trigger>
+                                                        <Trigger Property="IsMouseOver" Value="False">
+                                                            <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <Border.ToolTip>
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding Description}" />
+                                            </Border.ToolTip>
+                                        </Border>
                                     </Border>
-                                </Border>
-                                <DataTemplate.Triggers>
-                                    <Trigger SourceName="expander" Property="IsExpanded" Value="true">
-                                        <Setter TargetName="icon" Property="Data" Value="{StaticResource BoxSVG}" />
-                                    </Trigger>
-                                </DataTemplate.Triggers>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-                <i:Interaction.Behaviors>
-                    <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc LblDragOver_AddTemplate}" DragOverDisplayAnchor="Left" />
-                    <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.SequenceContainer" OnDropCommand="{Binding AddTemplateCommand}" />
-                </i:Interaction.Behaviors>
-            </Grid>
+                                    <DataTemplate.Triggers>
+                                        <Trigger SourceName="expander" Property="IsExpanded" Value="true">
+                                            <Setter TargetName="icon" Property="Data" Value="{StaticResource BoxSVG}" />
+                                        </Trigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <i:Interaction.Behaviors>
+                        <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc LblDragOver_AddTemplate}" DragOverDisplayAnchor="Left" />
+                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.SequenceContainer" OnDropCommand="{Binding AddTemplateCommand}" />
+                    </i:Interaction.Behaviors>
+                </Grid>
+            </util:DeferredContent.Content>
         </TabItem>
         <TabItem>
+            <TabItem.Style>
+                <Style BasedOn="{StaticResource TopTabItem}" TargetType="TabItem">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Content" Value="{Binding Path=(util:DeferredContent.Content), RelativeSource={RelativeSource Self}}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter Property="Content" Value="{Binding Content, RelativeSource={RelativeSource Self}}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TabItem.Style>
             <TabItem.Header>
                 <StackPanel Orientation="Horizontal">
                     <Path
@@ -698,178 +725,180 @@
                         Text="{ns:Loc LblTargets}" />
                 </StackPanel>
             </TabItem.Header>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <ninactrl:HintTextBox
-                    Margin="0,5,0,5"
-                    VerticalAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    Foreground="{StaticResource PrimaryBrush}"
-                    HintText="{ns:Loc LblSearch}"
-                    Text="{Binding TargetController.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
-                    <ninactrl:HintTextBox.Background>
-                        <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
-                    </ninactrl:HintTextBox.Background>
-                </ninactrl:HintTextBox>
-                <Grid Grid.Row="1" Margin="0,5,0,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <ToggleButton
-                        Margin="0,0,1,0"
-                        Command="{Binding TargetController.ToggleSortCommand}"
-                        IsChecked="{Binding TargetController.SortByName}"
-                        Style="{StaticResource TB}">
-                        <TextBlock Text="{ns:Loc LblByName}" />
-                    </ToggleButton>
-                    <ToggleButton
-                        Grid.Column="1"
-                        Margin="1,0,0,0"
-                        Command="{Binding TargetController.ToggleSortCommand}"
-                        IsChecked="{Binding TargetController.SortByRelevance}"
-                        Style="{StaticResource TB}">
-                        <TextBlock Text="{ns:Loc LblByRelevance}" />
-                    </ToggleButton>
-                </Grid>
-                <Border
-                    Grid.Row="2"
-                    Margin="10,10,10,10"
-                    Background="{StaticResource SecondaryBackgroundBrush}"
-                    BorderThickness="0"
-                    DockPanel.Dock="Top">
-                    <TextBlock
-                        Padding="10"
+            <util:DeferredContent.Content>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <ninactrl:HintTextBox
+                        Margin="0,5,0,5"
                         VerticalAlignment="Center"
-                        Foreground="{StaticResource ButtonForegroundBrush}"
-                        Text="{ns:Loc Lbl_Sequencer_TargetSidebar_DropTargetHere}"
-                        TextAlignment="Center"
-                        TextBlock.FontStyle="Italic"
-                        TextWrapping="Wrap" />
-                </Border>
-                <ScrollViewer
-                    Grid.Row="3"
-                    VerticalAlignment="Stretch"
-                    HorizontalScrollBarVisibility="Disabled"
-                    VerticalScrollBarVisibility="Auto">
-                    <ItemsControl
-                        Margin="5,0,0,0"
-                        Panel.ZIndex="10"
-                        ItemsSource="{Binding TargetController.TargetsView}">
-                        <ItemsControl.GroupStyle>
-                            <GroupStyle ContainerStyle="{StaticResource ContainerStyle}" />
-                        </ItemsControl.GroupStyle>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type sequencer:TargetSequenceContainer}">
-                                <Border Margin="0,5,0,0">
-                                    <i:Interaction.Behaviors>
-                                        <behaviors:DragDropBehavior />
-                                    </i:Interaction.Behaviors>
-                                    <Grid x:Name="PART_Grid">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto" />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition />
-                                            <ColumnDefinition Width="2*" />
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel
-                                            Grid.ColumnSpan="2"
-                                            Margin="5"
-                                            DataContext="{Binding Container}"
-                                            Orientation="Vertical">
-                                            <TextBlock
-                                                FontWeight="Bold"
-                                                Foreground="{StaticResource ButtonForegroundBrush}"
-                                                Text="{Binding Name}" />
-                                        </StackPanel>
-                                        <StackPanel
-                                            Grid.Row="1"
-                                            Margin="10,0,0,0"
-                                            DataContext="{Binding Container}"
-                                            Orientation="Vertical">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    MinWidth="50"
-                                                    Foreground="{StaticResource ButtonForegroundBrush}"
-                                                    Text="{ns:Loc LblRA}" />
-                                                <TextBlock
-                                                    Margin="5,0,0,0"
-                                                    Foreground="{StaticResource ButtonForegroundBrush}"
-                                                    Text="{Binding Target.InputCoordinates.RAHours}" />
-                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
-                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RAMinutes}" />
-                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
-                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RASeconds}" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    MinWidth="50"
-                                                    Foreground="{StaticResource ButtonForegroundBrush}"
-                                                    Text="{ns:Loc LblDec}" />
-                                                <TextBlock
-                                                    Margin="5,0,0,0"
-                                                    Foreground="{StaticResource ButtonForegroundBrush}"
-                                                    Text="{Binding Target.InputCoordinates.DecDegrees}" />
-                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
-                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecMinutes}" />
-                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
-                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecSeconds}" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    MinWidth="50"
-                                                    Foreground="{StaticResource ButtonForegroundBrush}"
-                                                    Text="{ns:Loc LblRotation}" />
-                                                <TextBlock
-                                                    Margin="5,0,0,0"
-                                                    Foreground="{StaticResource ButtonForegroundBrush}"
-                                                    Text="{Binding Target.Rotation}" />
-                                                <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="°" />
-                                            </StackPanel>
-                                        </StackPanel>
+                        VerticalContentAlignment="Center"
+                        Foreground="{StaticResource PrimaryBrush}"
+                        HintText="{ns:Loc LblSearch}"
+                        Text="{Binding TargetController.ViewFilter, UpdateSourceTrigger=PropertyChanged}">
+                        <ninactrl:HintTextBox.Background>
+                            <SolidColorBrush Opacity="0.05" Color="{Binding Color, Source={StaticResource PrimaryBrush}}" />
+                        </ninactrl:HintTextBox.Background>
+                    </ninactrl:HintTextBox>
+                    <Grid Grid.Row="1" Margin="0,5,0,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                                        <altitude:AltitudeChart
-                                            Grid.Row="1"
-                                            Grid.Column="1"
-                                            Margin="5,0,5,5"
-                                            HorizontalAlignment="Stretch"
-                                            HorizontalContentAlignment="Stretch"
-                                            AnnotateAltitudeAxis="False"
-                                            AnnotateTimeAxis="False"
-                                            DataContext="{Binding Container.Target.DeepSkyObject}"
-                                            NighttimeData="{Binding DataContext.Container.NighttimeData, ElementName=PART_Grid}" />
-                                    </Grid>
-                                    <Border.Style>
-                                        <Style TargetType="Border">
-                                            <Setter Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
-                                            <Style.Triggers>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
-                                                </Trigger>
-                                                <Trigger Property="IsMouseOver" Value="False">
-                                                    <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
-                                                </Trigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Border.Style>
-                                </Border>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </ScrollViewer>
-                <i:Interaction.Behaviors>
-                    <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc Lbl_Sequencer_TargetSidebar_DragOver_AddTarget}" DragOverDisplayAnchor="Left" />
-                    <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.IDeepSkyObjectContainer" OnDropCommand="{Binding AddTargetToControllerCommand}" />
-                </i:Interaction.Behaviors>
-            </Grid>
+                        <ToggleButton
+                            Margin="0,0,1,0"
+                            Command="{Binding TargetController.ToggleSortCommand}"
+                            IsChecked="{Binding TargetController.SortByName}"
+                            Style="{StaticResource TB}">
+                            <TextBlock Text="{ns:Loc LblByName}" />
+                        </ToggleButton>
+                        <ToggleButton
+                            Grid.Column="1"
+                            Margin="1,0,0,0"
+                            Command="{Binding TargetController.ToggleSortCommand}"
+                            IsChecked="{Binding TargetController.SortByRelevance}"
+                            Style="{StaticResource TB}">
+                            <TextBlock Text="{ns:Loc LblByRelevance}" />
+                        </ToggleButton>
+                    </Grid>
+                    <Border
+                        Grid.Row="2"
+                        Margin="10,10,10,10"
+                        Background="{StaticResource SecondaryBackgroundBrush}"
+                        BorderThickness="0"
+                        DockPanel.Dock="Top">
+                        <TextBlock
+                            Padding="10"
+                            VerticalAlignment="Center"
+                            Foreground="{StaticResource ButtonForegroundBrush}"
+                            Text="{ns:Loc Lbl_Sequencer_TargetSidebar_DropTargetHere}"
+                            TextAlignment="Center"
+                            TextBlock.FontStyle="Italic"
+                            TextWrapping="Wrap" />
+                    </Border>
+                    <ScrollViewer
+                        Grid.Row="3"
+                        VerticalAlignment="Stretch"
+                        HorizontalScrollBarVisibility="Disabled"
+                        VerticalScrollBarVisibility="Auto">
+                        <ItemsControl
+                            Margin="5,0,0,0"
+                            Panel.ZIndex="10"
+                            ItemsSource="{Binding TargetController.TargetsView}">
+                            <ItemsControl.GroupStyle>
+                                <GroupStyle ContainerStyle="{StaticResource ContainerStyle}" />
+                            </ItemsControl.GroupStyle>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type sequencer:TargetSequenceContainer}">
+                                    <Border Margin="0,5,0,0">
+                                        <i:Interaction.Behaviors>
+                                            <behaviors:DragDropBehavior />
+                                        </i:Interaction.Behaviors>
+                                        <Grid x:Name="PART_Grid">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="2*" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel
+                                                Grid.ColumnSpan="2"
+                                                Margin="5"
+                                                DataContext="{Binding Container}"
+                                                Orientation="Vertical">
+                                                <TextBlock
+                                                    FontWeight="Bold"
+                                                    Foreground="{StaticResource ButtonForegroundBrush}"
+                                                    Text="{Binding Name}" />
+                                            </StackPanel>
+                                            <StackPanel
+                                                Grid.Row="1"
+                                                Margin="10,0,0,0"
+                                                DataContext="{Binding Container}"
+                                                Orientation="Vertical">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock
+                                                        MinWidth="50"
+                                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                                        Text="{ns:Loc LblRA}" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                                        Text="{Binding Target.InputCoordinates.RAHours}" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RAMinutes}" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.RASeconds}" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock
+                                                        MinWidth="50"
+                                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                                        Text="{ns:Loc LblDec}" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                                        Text="{Binding Target.InputCoordinates.DecDegrees}" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecMinutes}" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text=":" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="{Binding Target.InputCoordinates.DecSeconds}" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <TextBlock
+                                                        MinWidth="50"
+                                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                                        Text="{ns:Loc LblRotation}" />
+                                                    <TextBlock
+                                                        Margin="5,0,0,0"
+                                                        Foreground="{StaticResource ButtonForegroundBrush}"
+                                                        Text="{Binding Target.Rotation}" />
+                                                    <TextBlock Foreground="{StaticResource ButtonForegroundBrush}" Text="°" />
+                                                </StackPanel>
+                                            </StackPanel>
+
+                                            <altitude:AltitudeChart
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Margin="5,0,5,5"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Stretch"
+                                                AnnotateAltitudeAxis="False"
+                                                AnnotateTimeAxis="False"
+                                                DataContext="{Binding Container.Target.DeepSkyObject}"
+                                                NighttimeData="{Binding DataContext.Container.NighttimeData, ElementName=PART_Grid}" />
+                                        </Grid>
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="Background" Value="{StaticResource SecondaryBackgroundBrush}" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="Background" Value="{StaticResource ButtonBackgroundSelectedBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="False">
+                                                        <Setter Property="Background" Value="{StaticResource TertiaryBackgroundBrush}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                    <i:Interaction.Behaviors>
+                        <behaviors:DragOverBehavior DragOverCenterText="{ns:Loc Lbl_Sequencer_TargetSidebar_DragOver_AddTarget}" DragOverDisplayAnchor="Left" />
+                        <behaviors:DropIntoBehavior AllowedDragDropTypesString="NINA.Sequencer.Container.IDeepSkyObjectContainer" OnDropCommand="{Binding AddTargetToControllerCommand}" />
+                    </i:Interaction.Behaviors>
+                </Grid>
+            </util:DeferredContent.Content>
         </TabItem>
     </TabControl>
 </UserControl>
