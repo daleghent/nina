@@ -320,6 +320,8 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                 });
             } catch (OperationCanceledException) {
                 Settling = false;
+            } finally {
+                progress?.Report(new ApplicationStatus { Status = string.Empty });
             }
         }
 
