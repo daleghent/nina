@@ -245,12 +245,12 @@
                         Margin="0,5,0,0"
                         BorderBrush="{StaticResource BorderBrush}"
                         BorderThickness="0"
-                        DataContext="{Binding ActiveTarget}"
-                        Visibility="{Binding MeridianFlipTrigger, Converter={StaticResource NullToVisibilityCollapsedConverter}}">
+                        DataContext="{Binding}"
+                        Visibility="{Binding DoMeridianFlip, Converter={StaticResource BooleanToVisibilityCollapsedConverter}}">
                         <UniformGrid
                             VerticalAlignment="Center"
                             Columns="2"
-                            DataContext="{Binding MeridianFlipTrigger}">
+                            DataContext="{Binding FlipTrigger}">
                             <TextBlock
                                 Grid.Row="1"
                                 VerticalAlignment="Top"

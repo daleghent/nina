@@ -138,7 +138,7 @@ namespace NINA.ViewModel {
                         rootContainer
                     );
 
-                    this.flipTrigger = factory.GetTrigger<MeridianFlipTrigger>();
+                    this.FlipTrigger = factory.GetTrigger<MeridianFlipTrigger>();
                     DoMeridianFlip = profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
 
                     EstimatedDownloadTime = profileService.ActiveProfile.SequenceSettings.EstimatedDownloadTime;
@@ -244,14 +244,22 @@ namespace NINA.ViewModel {
 
         private MeridianFlipTrigger flipTrigger;
 
+        public MeridianFlipTrigger FlipTrigger {
+            get => flipTrigger;
+            set {
+                flipTrigger = value;
+                RaisePropertyChanged();
+            }
+        }
+
         public bool DoMeridianFlip {
             get => profileService.ActiveProfile.SequenceSettings.DoMeridianFlip;
             set {
                 profileService.ActiveProfile.SequenceSettings.DoMeridianFlip = value;
                 if (value) {
-                    (Sequencer.MainContainer as ITriggerable).Add(flipTrigger);
+                    (Sequencer.MainContainer as ITriggerable).Add(FlipTrigger);
                 } else {
-                    (Sequencer.MainContainer as ITriggerable).Remove(flipTrigger);
+                    (Sequencer.MainContainer as ITriggerable).Remove(FlipTrigger);
                 }
                 RaisePropertyChanged();
             }
