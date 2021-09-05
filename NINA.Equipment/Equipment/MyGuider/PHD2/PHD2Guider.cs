@@ -275,7 +275,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     return false;
                 }
 
-                await WaitForSettling(default, ct);
+                await WaitForSettling(progress, ct);
 
                 var ditherMsg = new Phd2Dither() {
                     Parameters = new Phd2DitherParameter() {
@@ -295,7 +295,7 @@ namespace NINA.Equipment.Equipment.MyGuider.PHD2 {
                     return false;
                 }
                 Settling = true;
-                await WaitForSettling(default, ct);
+                await WaitForSettling(progress, ct);
             }
             return true;
         }
