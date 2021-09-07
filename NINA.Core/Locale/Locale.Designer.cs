@@ -2296,6 +2296,24 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A trigger to limit dome synchronization movements to between sequence steps in order to reduce vibrations during exposures. This should not be used with Dome Following enabled, which runs continuously in the background..
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Synchronize Dome.
+        /// </summary>
+        internal static string Lbl_SequenceTrigger_SynchronizeDomeTrigger_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceTrigger_SynchronizeDomeTrigger_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to E.
         /// </summary>
         internal static string LblAbbrEast {
@@ -6367,6 +6385,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dome cannot set azimuth.
+        /// </summary>
+        internal static string LblDomeCannotSetAzimuth {
+            get {
+                return ResourceManager.GetString("LblDomeCannotSetAzimuth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dome cannot set park position.
         /// </summary>
         internal static string LblDomeCannotSetPark {
@@ -6597,6 +6624,15 @@ namespace NINA.Core.Locale {
         internal static string LblDomeFindHomeBeforeParkTooltip {
             get {
                 return ResourceManager.GetString("LblDomeFindHomeBeforeParkTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Turn dome following off to use the Synchronize Dome Trigger.
+        /// </summary>
+        internal static string LblDomeFollowerEnabledError {
+            get {
+                return ResourceManager.GetString("LblDomeFollowerEnabledError", resourceCulture);
             }
         }
         
@@ -6966,6 +7002,24 @@ namespace NINA.Core.Locale {
         internal static string LblDomeSyncTimeoutTooltip {
             get {
                 return ResourceManager.GetString("LblDomeSyncTimeoutTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Altitude.
+        /// </summary>
+        internal static string LblDomeTargetAltitude {
+            get {
+                return ResourceManager.GetString("LblDomeTargetAltitude", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Azimuth.
+        /// </summary>
+        internal static string LblDomeTargetAzimuth {
+            get {
+                return ResourceManager.GetString("LblDomeTargetAzimuth", resourceCulture);
             }
         }
         

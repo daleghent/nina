@@ -34,7 +34,7 @@ namespace NINA.Equipment.Equipment.MyDome {
         }
 
         /// <summary>
-        /// Gets the dome azimuth required so the scope points directly out of the shutter. This works for Alt-Az, EQ mounts, and fork mounts on a wedge
+        /// Gets the dome coordinates required so the scope points directly out of the shutter. This works for Alt-Az, EQ mounts, and fork mounts on a wedge
         /// and depends on careful user measurements including:
         ///  1) Dome radius, in mm
         ///  2) GEM axis length, in mm - starting from where the RA and DEC axes intersect, measured laterally to the center of the scope aperture
@@ -56,8 +56,8 @@ namespace NINA.Equipment.Equipment.MyDome {
         /// <param name="siteLatitude">The site latitude</param>
         /// <param name="siteLongitude">The site longitude</param>
         /// <param name="sideOfPier">The side of pier. If this is unknown, this method will throw an exception</param>
-        /// <returns>An angle representing the Dome Azimuth that lines up with the scope coordinates</returns>
-        public Angle TargetDomeAzimuth(
+        /// <returns>Topocentric Coordinates representing the altitude and azimuth for the Dome that lines us with the scope axis</returns>
+        public TopocentricCoordinates TargetDomeCoordinates(
             Coordinates scopeCoordinates,
             double localSiderealTime,
             Angle siteLatitude,
@@ -98,13 +98,18 @@ namespace NINA.Equipment.Equipment.MyDome {
             var intersection = scopeApertureOrigin + scopeDirection * (float)distance;
 
             // Finally, calculate the azimuth of that intersection point, and ensure it is within [0, 2PI)
-            // Similar trigonometry can get the altitude, but we don't need it at this time
             var domeAzimuthRadians = (-Math.Atan2(intersection.Y, intersection.X) + TWO_PI) % TWO_PI;
             // For the southern hemisphere, we inverted all rotations to emulate being north-facing. We now take the final result and add 180 degrees
             if (siteLatitude.Radians < 0) {
                 domeAzimuthRadians = (domeAzimuthRadians + Math.PI) % TWO_PI;
             }
-            return Angle.ByRadians(domeAzimuthRadians);
+
+            var domeAltitudeRadians = Math.Atan2(Math.Abs(intersection.Z), Math.Abs(intersection.X));
+            return new TopocentricCoordinates(
+                azimuth: Angle.ByRadians(domeAzimuthRadians), 
+                altitude: Angle.ByRadians(domeAltitudeRadians),
+                latitude: siteLatitude, 
+                longitude: siteLongitude);
         }
 
         private Matrix4x4 CalculateForkOnWedge(

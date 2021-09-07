@@ -19,7 +19,7 @@ namespace NINA.Equipment.Interfaces {
 
     public interface IDomeSynchronization {
 
-        Angle TargetDomeAzimuth(
+        TopocentricCoordinates TargetDomeCoordinates(
             Coordinates scopeCoordinates,
             double localSiderealTime,
             Angle siteLatitude,

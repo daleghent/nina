@@ -45,6 +45,7 @@ namespace NINATest.Dome {
         private bool domeCanFindHome;
         private double domeAzimuth;
         private Angle domeTargetAzimuth;
+        private Angle domeTargetAltitude;
         private bool domeAtPark;
         private bool domeAtHome;
         private bool domeSlewing;
@@ -64,6 +65,7 @@ namespace NINATest.Dome {
             domeCanFindHome = true;
             domeAzimuth = 0.0;
             domeTargetAzimuth = Angle.ByDegree(0.0);
+            domeTargetAltitude = Angle.ByDegree(0.0);
             domeAtPark = true;
             domeAtHome = false;
             domeSlewing = false;
@@ -76,7 +78,8 @@ namespace NINATest.Dome {
             mockTelescopeMediator = new Mock<ITelescopeMediator>();
             mockSafetyMonitorMediator = new Mock<ISafetyMonitorMediator>();
             mockDomeFollower = new Mock<IDomeFollower>();
-            mockDomeFollower.Setup(x => x.GetSynchronizedPosition(It.IsAny<TelescopeInfo>())).Returns(() => domeTargetAzimuth);
+            mockDomeFollower.Setup(x => x.GetSynchronizedDomeCoordinates(It.IsAny<TelescopeInfo>())).Returns(
+                () => new TopocentricCoordinates(azimuth: domeTargetAzimuth, altitude: domeTargetAltitude, latitude: Angle.ByDegree(0), longitude: Angle.ByDegree(0)));
             mockDeviceUpdateTimer = new Mock<IDeviceUpdateTimer>();
             mockDeviceUpdateTimerFactory = new Mock<IDeviceUpdateTimerFactory>();
             mockDeviceUpdateTimerFactory

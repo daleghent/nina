@@ -24,6 +24,7 @@ namespace NINATest.Dome {
         private Angle siteLatitude;
         private Angle siteLongitude;
         private Angle domeTargetAzimuth;
+        private Angle domeTargetAltitude;
         private double domeAzimuth;
         private bool synchronizeDuringMountSlew;
         private double domeAzimuthToleranceDegrees;
@@ -39,6 +40,8 @@ namespace NINATest.Dome {
             synchronizeDuringMountSlew = false;
             domeAzimuthToleranceDegrees = 1.0;
             domeTargetAzimuth = Angle.ByDegree(0.0);
+            domeTargetAltitude = Angle.ByDegree(0.0);
+
             siteLatitude = Angle.ByDegree(41.5);
             siteLongitude = Angle.ByDegree(-23.2);
             useSideOfPier = true;
@@ -47,8 +50,8 @@ namespace NINATest.Dome {
             mockProfileService.SetupGet(p => p.ActiveProfile.DomeSettings.SynchronizeDuringMountSlew).Returns(() => synchronizeDuringMountSlew);
             mockProfileService.SetupGet(p => p.ActiveProfile.MeridianFlipSettings.UseSideOfPier).Returns(() => useSideOfPier);
             mockDomeSynchronization
-                .Setup(x => x.TargetDomeAzimuth(It.IsAny<Coordinates>(), It.IsAny<double>(), It.IsAny<Angle>(), It.IsAny<Angle>(), It.IsAny<PierSide>()))
-                .Returns(() => domeTargetAzimuth);
+                .Setup(x => x.TargetDomeCoordinates(It.IsAny<Coordinates>(), It.IsAny<double>(), It.IsAny<Angle>(), It.IsAny<Angle>(), It.IsAny<PierSide>()))
+                .Returns(() => new TopocentricCoordinates(azimuth: domeTargetAzimuth, altitude: domeTargetAltitude, latitude: siteLatitude, longitude: siteLongitude));
         }
 
         private DomeFollower CreateSUT() {
@@ -74,7 +77,7 @@ namespace NINATest.Dome {
             sut.UpdateDeviceInfo(t1);
             sut.UpdateDeviceInfo(d1);
             sut.TriggerTelescopeSync();
-            mockDomeSynchronization.Verify(x => x.TargetDomeAzimuth(t1.Coordinates, t1.SiderealTime, siteLatitude, siteLongitude, t1.SideOfPier), Times.Once);
+            mockDomeSynchronization.Verify(x => x.TargetDomeCoordinates(t1.Coordinates, t1.SiderealTime, siteLatitude, siteLongitude, t1.SideOfPier), Times.Once);
         }
 
         [Test]

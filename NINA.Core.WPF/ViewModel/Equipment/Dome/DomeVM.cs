@@ -478,8 +478,8 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         private void SyncAzimuth(object obj) {
             if (CanSyncAzimuth) {
-                var calculatedTargetAzimuth = this.domeFollower.GetSynchronizedPosition(TelescopeInfo);
-                Dome.SyncToAzimuth(calculatedTargetAzimuth.Degree);
+                var calculatedTargetCoordinates = this.domeFollower.GetSynchronizedDomeCoordinates(TelescopeInfo);
+                Dome.SyncToAzimuth(calculatedTargetCoordinates.Azimuth.Degree);
             }
         }
 

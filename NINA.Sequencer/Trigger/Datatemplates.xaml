@@ -18,6 +18,7 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:p="clr-namespace:NINA.Sequencer.Trigger.Platesolving"
+    xmlns:d="clr-namespace:NINA.Sequencer.Trigger.Dome"
     xmlns:rules="clr-namespace:NINA.Core.Utility.ValidationRules;assembly=NINA.Core"
     xmlns:view="clr-namespace:NINA.View.Sequencer">
 
@@ -365,6 +366,43 @@
                         Text="{Binding ProgressExposures}" />
                     <TextBlock Text="/" />
                     <TextBlock VerticalAlignment="Center" Text="{Binding AfterExposures}" />
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemProgressContent>
+        </view:SequenceBlockView>
+    </DataTemplate>
+
+    <DataTemplate x:Key="NINA.Sequencer.Trigger.Dome.SynchronizeDomeTrigger_Mini">
+        <mini:MiniTrigger DataContext="{Binding}">
+            <mini:MiniTrigger.TriggerProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CurrentAzimuth, StringFormat={}{0:0.00}}" />
+                    <TextBlock VerticalAlignment="Center" Text="° / " />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding TargetAzimuth, StringFormat={}{0:0.00}}" />
+                    <TextBlock VerticalAlignment="Center" Text="°" />
+                </StackPanel>
+            </mini:MiniTrigger.TriggerProgressContent>
+        </mini:MiniTrigger>
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type d:SynchronizeDomeTrigger}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeTargetAzimuth}" />
+                        <TextBlock VerticalAlignment="Center" Text=" " />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding CurrentAzimuth, StringFormat={}{0:0.00}}" />
+                        <TextBlock VerticalAlignment="Center" Text="° / " />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding TargetAzimuth, StringFormat={}{0:0.00}}" />
+                        <TextBlock VerticalAlignment="Center" Text="°" />
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal"
+                        Margin="5,0,0,0">
+                        <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblDomeTargetAltitude}" />
+                        <TextBlock VerticalAlignment="Center" Text=" " />
+                        <TextBlock VerticalAlignment="Center" Text="{Binding TargetAltitude, StringFormat={}{0:0.00}}" />
+                        <TextBlock VerticalAlignment="Center" Text="°" />
+                    </StackPanel>
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>

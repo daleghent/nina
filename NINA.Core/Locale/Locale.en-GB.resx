@@ -4887,7 +4887,7 @@ If the position above it is an instruction set that is not currently expanded, i
     <value>Ensures the dome remains synchronised with the telescope</value>
   </data>
   <data name="Lbl_SequenceItem_Dome_EnableDomeSynchronization_Name" xml:space="preserve">
-    <value>Enable some sync</value>
+    <value>Enable Dome Sync</value>
   </data>
   <data name="Lbl_OldSequencer_HasSkippedRows" xml:space="preserve">
     <value>The Sequence contains rows which are either disabled or where the progress exposure count is equals to the total exposure count. These items are skipped and no items for these rows are generated for the sequencer.</value>

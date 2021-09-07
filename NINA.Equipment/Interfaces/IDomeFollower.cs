@@ -32,6 +32,8 @@ namespace NINA.Equipment.Interfaces {
 
         Task WaitForDomeSynchronization(CancellationToken cancellationToken);
 
-        Angle GetSynchronizedPosition(TelescopeInfo telescopeInfo);
+        TopocentricCoordinates GetSynchronizedDomeCoordinates(TelescopeInfo telescopeInfo);
+
+        bool IsDomeWithinTolerance(Angle currentDomeAzimuth, TopocentricCoordinates targetDomeCoordinates);
     }
 }

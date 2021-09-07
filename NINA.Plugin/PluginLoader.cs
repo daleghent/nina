@@ -72,7 +72,8 @@ namespace NINA.Plugin {
                               IApplicationMediator applicationMediator,
                               IFramingAssistantVM framingAssistantVM,
                               IPlateSolverFactory plateSolverFactory,
-                              IWindowServiceFactory windowServiceFactory) {
+                              IWindowServiceFactory windowServiceFactory,
+                              IDomeFollower domeFollower) {
             this.profileService = profileService;
             this.cameraMediator = cameraMediator;
             this.telescopeMediator = telescopeMediator;
@@ -97,6 +98,7 @@ namespace NINA.Plugin {
             this.framingAssistantVM = framingAssistantVM;
             this.platesolverFactory = plateSolverFactory;
             this.windowServiceFactory = windowServiceFactory;
+            this.domeFollower = domeFollower;
 
             DateTimeProviders = new List<IDateTimeProvider>() {
                 new TimeProvider(),
@@ -361,6 +363,7 @@ namespace NINA.Plugin {
             container.ComposeExportedValue(framingAssistantVM);
             container.ComposeExportedValue(platesolverFactory);
             container.ComposeExportedValue(windowServiceFactory);
+            container.ComposeExportedValue(domeFollower);
 
             return container;
         }
@@ -400,6 +403,7 @@ namespace NINA.Plugin {
         private readonly IFramingAssistantVM framingAssistantVM;
         private readonly IPlateSolverFactory platesolverFactory;
         private readonly IWindowServiceFactory windowServiceFactory;
+        private readonly IDomeFollower domeFollower;
 
         private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args) {
             return this.Assemblies.FirstOrDefault(x => x.GetName().Name == args.Name);

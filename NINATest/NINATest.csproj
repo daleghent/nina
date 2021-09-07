@@ -381,6 +381,7 @@
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterTemperatureChangeTriggerTest.cs" />
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterTimeTriggerTest.cs" />
     <Compile Include="Sequencer\Trigger\Autofocus\AutofocusAfterFilterChangeTest.cs" />
+    <Compile Include="Sequencer\Trigger\Dome\SynchronizeDomeTriggerTest.cs" />
     <Compile Include="Sequencer\Trigger\Guider\RestoreGuidingTest.cs" />
     <Compile Include="Sequencer\Trigger\Guider\DitherAfterExposuresTest.cs" />
     <Compile Include="Sequencer\Trigger\MeridianFlip\MeridianFlipTriggerTest.cs" />
