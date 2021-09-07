@@ -1241,6 +1241,9 @@ cara atrás; cando as liñas non están aliñadas hai algún erro de aliñación
   <data name="LblDomeCannotSetShutter" xml:space="preserve">
     <value>A cúpula non pode axustar a apertura</value>
   </data>
+  <data name="LblDomeCannotSetAzimuth" xml:space="preserve">
+    <value>Dome cannot set azimuth</value>
+  </data>
   <data name="LblDomeCannotSyncAzimuth" xml:space="preserve">
     <value>A cúpula non pode sincronizar acimut</value>
   </data>
@@ -5789,5 +5792,27 @@ O comportamento predeterminado é continuar con erros, pero para algunhas instru
   </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
     <value>{0} is no longer supported by Microsoft and the N.I.N.A. project. You will encounter application malfunctions or crashes as a result of using N.I.N.A. on an unsupported version of Windows. N.I.N.A.'s current system requirements are listed in the online documentation.</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Name" xml:space="preserve">
+    <value>Synchronize Dome</value>
+  </data>
+  <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
+    <value>A trigger to limit dome synchronization movements to between sequence steps in order to reduce vibrations during exposures. This should not be used with Dome Following enabled, which runs continuously in the background.</value>
+  </data>
+  <data name="LblDomeTargetAzimuth" xml:space="preserve">
+    <value>Azimuth</value>
+  </data>
+  <data name="LblDomeTargetAltitude" xml:space="preserve">
+    <value>Altitude</value>
+  </data>
+  <data name="LblDomeFollowerEnabledError" xml:space="preserve">
+    <value>Turn dome following off to use the Synchronize Dome Trigger</value>
+  </data>
+  <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Description" xml:space="preserve">
+    <value>A condition that checks the connected Safety Monitor device if it is unsafe and loops the instruction set as long as the safety monior reports to be unsafe. If the device returns to be safe the current instruction set is stopped.
+Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays unsafe.</value>
+  </data>
+  <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
+    <value>Loop while unsafe</value>
   </data>
 </root>
