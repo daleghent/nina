@@ -49,7 +49,16 @@ namespace NINA.Sequencer.Conditions {
             this.profileService = profileService;
             Coordinates = new InputCoordinates();
             Altitude = 30;
-            ConditionWatchdog = new ConditionWatchdog(() => { CalculateCurrentAltitude(); return Task.CompletedTask; }, TimeSpan.FromSeconds(5));
+            ConditionWatchdog = new ConditionWatchdog(InterruptWhenTargetBelowAltitude, TimeSpan.FromSeconds(5));
+        }
+
+        private async Task InterruptWhenTargetBelowAltitude() {
+            if (!Check(null, null)) {
+                if (this.Parent != null) {
+                    Logger.Info("Target is below altitude - Interrupting current Instruction Set");
+                    await this.Parent.Interrupt();
+                }
+            }
         }
 
         private AltitudeCondition(AltitudeCondition cloneMe) : this(cloneMe.profileService) {

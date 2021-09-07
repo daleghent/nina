@@ -39,18 +39,24 @@ namespace NINA.Sequencer.Conditions {
         private IDateTimeProvider selectedProvider;
 
         [ImportingConstructor]
-        public TimeCondition(IList<IDateTimeProvider> dateTimeProviders) {
-            DateTime = new SystemDateTime();
-            this.DateTimeProviders = dateTimeProviders;
-            this.SelectedProvider = DateTimeProviders?.FirstOrDefault();
-            ConditionWatchdog = new ConditionWatchdog(() => { Tick(); return Task.CompletedTask; }, TimeSpan.FromSeconds(1));
+        public TimeCondition(IList<IDateTimeProvider> dateTimeProviders) : this(dateTimeProviders, dateTimeProviders?.FirstOrDefault()) {
         }
 
         public TimeCondition(IList<IDateTimeProvider> dateTimeProviders, IDateTimeProvider selectedProvider) {
             DateTime = new SystemDateTime();
             this.DateTimeProviders = dateTimeProviders;
             this.SelectedProvider = selectedProvider;
-            ConditionWatchdog = new ConditionWatchdog(() => { Tick(); return Task.CompletedTask; }, TimeSpan.FromSeconds(1));
+            ConditionWatchdog = new ConditionWatchdog(InterruptWhenTimeIsUp, TimeSpan.FromSeconds(1));
+        }
+
+        private async Task InterruptWhenTimeIsUp() {
+            Tick();
+            if (!Check(null, null)) {
+                if (this.Parent != null) {
+                    Logger.Info("Time limit exceeded - Interrupting current Instruction Set");
+                    await this.Parent.Interrupt();
+                }
+            }
         }
 
         private TimeCondition(TimeCondition cloneMe) : this(cloneMe.DateTimeProviders, cloneMe.SelectedProvider) {

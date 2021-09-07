@@ -45,7 +45,17 @@ namespace NINA.Sequencer.Conditions {
             Comparator = ComparisonOperatorEnum.GREATER_THAN;
 
             CalculateCurrentMoonState();
-            ConditionWatchdog = new ConditionWatchdog(() => { CalculateCurrentMoonState(); return Task.CompletedTask; }, TimeSpan.FromSeconds(5));
+            ConditionWatchdog = new ConditionWatchdog(InterruptWhenMoonOutsideOfBounds, TimeSpan.FromSeconds(5));
+        }
+
+        private async Task InterruptWhenMoonOutsideOfBounds() {
+            CalculateCurrentMoonState();
+            if (!Check(null, null)) {
+                if (this.Parent != null) {
+                    Logger.Info("Moon is outside of the specified illumination range - Interrupting current Instruction Set");
+                    await this.Parent.Interrupt();
+                }
+            }
         }
 
         private MoonIlluminationCondition(MoonIlluminationCondition cloneMe) : this() {

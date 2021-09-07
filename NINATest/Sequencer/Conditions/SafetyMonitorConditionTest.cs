@@ -149,4 +149,126 @@ namespace NINATest.Sequencer.Conditions {
             parentMock.Verify(x => x.Interrupt(), Times.AtLeastOnce);
         }
     }
+
+    [TestFixture]
+    public class LoopWhileUnsafeTest {
+        private Mock<ISafetyMonitorMediator> monitorMock;
+
+        [SetUp]
+        public void Setup() {
+            monitorMock = new Mock<ISafetyMonitorMediator>();
+        }
+
+        [Test]
+        public void LoopWhileUnsafeTest_Clone_GoodClone() {
+            var sut = new LoopWhileUnsafe(monitorMock.Object);
+            sut.Icon = new System.Windows.Media.GeometryGroup();
+            var item2 = (LoopWhileUnsafe)sut.Clone();
+
+            item2.Should().NotBeSameAs(sut);
+            item2.Icon.Should().BeSameAs(sut.Icon);
+        }
+
+        [Test]
+        public void Check_True_WhenConnectedAndSafe() {
+            var sut = new LoopWhileUnsafe(monitorMock.Object);
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = true });
+
+            sut.Check(null, null).Should().BeFalse();
+            sut.IsSafe.Should().BeTrue();
+        }
+
+        [Test]
+        public void Check_False_WhenNotConnected() {
+            var sut = new LoopWhileUnsafe(monitorMock.Object);
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = false });
+
+            sut.Check(null, null).Should().BeTrue();
+            sut.IsSafe.Should().BeFalse();
+        }
+
+        [Test]
+        public void Check_False_WhenConnectedAndNotSafe() {
+            var sut = new LoopWhileUnsafe(monitorMock.Object);
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = false });
+
+            sut.Check(null, null).Should().BeTrue();
+            sut.IsSafe.Should().BeFalse();
+        }
+
+        [Test]
+        public void ToString_Test() {
+            var sut = new LoopWhileUnsafe(monitorMock.Object);
+            sut.ToString().Should().Be("Condition: LoopWhileUnsafe");
+        }
+
+        [Test]
+        public void SequenceBlockInitialize_NoParent_WatchdogNotStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+
+            var sut = new LoopWhileUnsafe(monitorMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+
+            sut.SequenceBlockInitialize();
+
+            watchdogMock.Verify(x => x.Start(), Times.Once);
+            watchdogMock.Verify(x => x.Cancel(), Times.Never);
+        }
+
+        [Test]
+        public void SequenceBlockTeardown_NoParent_WatchdogNotStarted() {
+            var watchdogMock = new Mock<IConditionWatchdog>();
+
+            var sut = new LoopWhileUnsafe(monitorMock.Object);
+            sut.ConditionWatchdog = watchdogMock.Object;
+
+            sut.SequenceBlockTeardown();
+
+            watchdogMock.Verify(x => x.Start(), Times.Never);
+            watchdogMock.Verify(x => x.Cancel(), Times.Once);
+        }
+
+        [Test]
+        public void Validate_MonitorNotConnected_OneIssue() {
+            var sut = new LoopWhileUnsafe(monitorMock.Object);
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = false, IsSafe = true });
+
+            var valid = sut.Validate();
+
+            valid.Should().BeFalse();
+            sut.Issues.Count.Should().Be(1);
+        }
+
+        [Test]
+        public void Validate_MonitorConnected_IsSafeAssigned() {
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = true });
+
+            var sut = new LoopWhileUnsafe(monitorMock.Object);
+
+            var valid = sut.Validate();
+
+            valid.Should().BeTrue();
+            sut.Issues.Count.Should().Be(0);
+            sut.IsSafe.Should().BeTrue();
+        }
+
+        [Test]
+        public async Task MonitorIsUnsafe_InterruptParent() {
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = false });
+            var parentMock = new Mock<ISequenceContainer>();
+            parentMock.Setup(x => x.Interrupt()).Returns(Task.CompletedTask);
+
+            var sut = new LoopWhileUnsafe(monitorMock.Object);
+            sut.Parent = parentMock.Object;
+            sut.ConditionWatchdog.Delay = TimeSpan.FromMilliseconds(10);
+
+            sut.SequenceBlockInitialize();
+
+            monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = true });
+
+            await Task.Delay(50);
+
+            parentMock.Verify(x => x.Interrupt(), Times.AtLeastOnce);
+        }
+    }
 }

@@ -53,7 +53,16 @@ namespace NINA.Sequencer.Conditions {
             this.profileService = profileService;
             altitudeOffset = 0;
             Coordinates = new InputCoordinates();
-            ConditionWatchdog = new ConditionWatchdog(() => { CalculateCurrentAltitude(); return Task.CompletedTask; }, TimeSpan.FromSeconds(5));
+            ConditionWatchdog = new ConditionWatchdog(InterruptWhenTargetBelowHorizon, TimeSpan.FromSeconds(5));
+        }
+
+        private async Task InterruptWhenTargetBelowHorizon() {
+            if (!Check(null, null)) {
+                if (this.Parent != null) {
+                    Logger.Info("Target is below horizon - Interrupting current Instruction Set");
+                    await this.Parent.Interrupt();
+                }
+            }
         }
 
         private AboveHorizonCondition(AboveHorizonCondition cloneMe) : this(cloneMe.profileService) {

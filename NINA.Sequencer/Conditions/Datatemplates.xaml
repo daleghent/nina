@@ -288,18 +288,57 @@
         </view:SequenceBlockView>
     </DataTemplate>
 
+    <DataTemplate x:Key="NINA.Sequencer.Conditions.LoopWhileUnsafe_Mini">
+        <mini:MiniCondition DataContext="{Binding}">
+            <mini:MiniCondition.ConditionProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsSafe}" />
+                    <CheckBox
+                        Height="20"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding IsSafe, Mode=OneWay, FallbackValue=False}"
+                        IsEnabled="False"
+                        Style="{StaticResource CheckmarkCheckbox}" />
+                </StackPanel>
+            </mini:MiniCondition.ConditionProgressContent>
+        </mini:MiniCondition>
+    </DataTemplate>
+
     <DataTemplate x:Key="NINA.Sequencer.Conditions.SafetyMonitorCondition_Mini">
         <mini:MiniCondition DataContext="{Binding}">
             <mini:MiniCondition.ConditionProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsSafe}" />
-                    <TextBlock
+                    <CheckBox
+                        Height="20"
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding IsSafe}" />
+                        IsChecked="{Binding IsSafe, Mode=OneWay, FallbackValue=False}"
+                        IsEnabled="False"
+                        Style="{StaticResource CheckmarkCheckbox}" />
                 </StackPanel>
             </mini:MiniCondition.ConditionProgressContent>
         </mini:MiniCondition>
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type local:LoopWhileUnsafe}">
+        <view:SequenceBlockView DataContext="{Binding}">
+            <view:SequenceBlockView.SequenceItemContent>
+                <Grid />
+            </view:SequenceBlockView.SequenceItemContent>
+            <view:SequenceBlockView.SequenceItemProgressContent>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsSafe}" />
+                    <CheckBox
+                        Height="20"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        IsChecked="{Binding IsSafe, Mode=OneWay, FallbackValue=False}"
+                        IsEnabled="False"
+                        Style="{StaticResource CheckmarkCheckbox}" />
+                </StackPanel>
+            </view:SequenceBlockView.SequenceItemProgressContent>
+        </view:SequenceBlockView>
     </DataTemplate>
     <DataTemplate DataType="{x:Type local:SafetyMonitorCondition}">
         <view:SequenceBlockView DataContext="{Binding}">
@@ -309,10 +348,13 @@
             <view:SequenceBlockView.SequenceItemProgressContent>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock VerticalAlignment="Center" Text="{ns:Loc LblIsSafe}" />
-                    <TextBlock
+                    <CheckBox
+                        Height="20"
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
-                        Text="{Binding IsSafe}" />
+                        IsChecked="{Binding IsSafe, Mode=OneWay, FallbackValue=False}"
+                        IsEnabled="False"
+                        Style="{StaticResource CheckmarkCheckbox}" />
                 </StackPanel>
             </view:SequenceBlockView.SequenceItemProgressContent>
         </view:SequenceBlockView>

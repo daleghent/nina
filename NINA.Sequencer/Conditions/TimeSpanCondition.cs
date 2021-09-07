@@ -41,7 +41,17 @@ namespace NINA.Sequencer.Conditions {
         public TimeSpanCondition() {
             DateTime = new SystemDateTime();
             Minutes = 1;
-            ConditionWatchdog = new ConditionWatchdog(() => { Tick(); return Task.CompletedTask; }, TimeSpan.FromSeconds(1));
+            ConditionWatchdog = new ConditionWatchdog(InterruptWhenTimeIsUp, TimeSpan.FromSeconds(1));
+        }
+
+        private async Task InterruptWhenTimeIsUp() {
+            Tick();
+            if (!Check(null, null)) {
+                if (this.Parent != null) {
+                    Logger.Info("Time limit exceeded - Interrupting current Instruction Set");
+                    await this.Parent.Interrupt();
+                }
+            }
         }
 
         private TimeSpanCondition(TimeSpanCondition cloneMe) : this() {

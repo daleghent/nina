@@ -414,6 +414,25 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A condition that checks the connected Safety Monitor device if it is unsafe and loops the instruction set as long as the safety monior reports to be unsafe. If the device returns to be safe the current instruction set is stopped.
+        ///Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays unsafe..
+        /// </summary>
+        internal static string Lbl_SequenceCondition_LoopWhileUnsafe_Description {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_LoopWhileUnsafe_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loop while unsafe.
+        /// </summary>
+        internal static string Lbl_SequenceCondition_LoopWhileUnsafe_Name {
+            get {
+                return ResourceManager.GetString("Lbl_SequenceCondition_LoopWhileUnsafe_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Exits the loop when the moon&apos;s altitude matches the specified parameters..
         /// </summary>
         internal static string Lbl_SequenceCondition_MoonAltitudeCondition_Description {

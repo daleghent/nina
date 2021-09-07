@@ -47,7 +47,17 @@ namespace NINA.Sequencer.Conditions {
             Comparator = ComparisonOperatorEnum.GREATER_THAN;
 
             CalculateCurrentSunState();
-            ConditionWatchdog = new ConditionWatchdog(() => { CalculateCurrentSunState(); return Task.CompletedTask; }, TimeSpan.FromSeconds(5));
+            ConditionWatchdog = new ConditionWatchdog(InterruptWhenSunOutsideOfBounds, TimeSpan.FromSeconds(5));
+        }
+
+        private async Task InterruptWhenSunOutsideOfBounds() {
+            CalculateCurrentSunState();
+            if (!Check(null, null)) {
+                if (this.Parent != null) {
+                    Logger.Info("Sun is outside of the specified range - Interrupting current Instruction Set");
+                    await this.Parent.Interrupt();
+                }
+            }
         }
 
         private SunAltitudeCondition(SunAltitudeCondition cloneMe) : this(cloneMe.profileService) {

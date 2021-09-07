@@ -34,7 +34,7 @@ namespace NINA.Sequencer.Conditions {
     [ExportMetadata("Category", "Lbl_SequenceCategory_Condition")]
     [Export(typeof(ISequenceCondition))]
     public class SafetyMonitorCondition : SequenceCondition, IValidatable {
-        private ISafetyMonitorMediator safetyMonitorMediator;
+        protected ISafetyMonitorMediator safetyMonitorMediator;
 
         [ImportingConstructor]
         public SafetyMonitorCondition(ISafetyMonitorMediator safetyMonitorMediator) {
@@ -42,7 +42,7 @@ namespace NINA.Sequencer.Conditions {
             ConditionWatchdog = new ConditionWatchdog(InterruptWhenUnsafe, TimeSpan.FromSeconds(5));
         }
 
-        private SafetyMonitorCondition(SafetyMonitorCondition cloneMe) : this(cloneMe.safetyMonitorMediator) {
+        protected SafetyMonitorCondition(SafetyMonitorCondition cloneMe) : this(cloneMe.safetyMonitorMediator) {
             CopyMetaData(cloneMe);
         }
 
@@ -54,7 +54,7 @@ namespace NINA.Sequencer.Conditions {
 
         public bool IsSafe {
             get => isSafe;
-            private set {
+            protected set {
                 isSafe = value;
                 RaisePropertyChanged();
             }
@@ -119,6 +119,35 @@ namespace NINA.Sequencer.Conditions {
 
         public override string ToString() {
             return $"Condition: {nameof(SafetyMonitorCondition)}";
+        }
+    }
+
+    [ExportMetadata("Name", "Lbl_SequenceCondition_LoopWhileUnsafe_Name")]
+    [ExportMetadata("Description", "Lbl_SequenceCondition_LoopWhileUnsafe_Description")]
+    [ExportMetadata("Icon", "UnshieldSVG")]
+    [ExportMetadata("Category", "Lbl_SequenceCategory_Condition")]
+    [Export(typeof(ISequenceCondition))]
+    public class LoopWhileUnsafe : SafetyMonitorCondition {
+
+        [ImportingConstructor]
+        public LoopWhileUnsafe(ISafetyMonitorMediator safetyMonitorMediator) : base(safetyMonitorMediator) {
+        }
+
+        public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
+            var info = safetyMonitorMediator.GetInfo();
+            IsSafe = info.Connected && info.IsSafe;
+            return !IsSafe;
+        }
+
+        protected LoopWhileUnsafe(LoopWhileUnsafe cloneMe) : base(cloneMe) {
+        }
+
+        public override object Clone() {
+            return new LoopWhileUnsafe(this);
+        }
+
+        public override string ToString() {
+            return $"Condition: {nameof(LoopWhileUnsafe)}";
         }
     }
 }
