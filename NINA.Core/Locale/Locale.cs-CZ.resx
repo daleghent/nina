@@ -1235,7 +1235,7 @@ V případě, že je nutné provádět chlazení déle, lze určit čas trvání
     <value>Nelze nastavit štěrbinu kopule</value>
   </data>
   <data name="LblDomeCannotSetAzimuth" xml:space="preserve">
-    <value>Dome cannot set azimuth</value>
+    <value>Kopule nemůže nastavit azimut</value>
   </data>
   <data name="LblDomeCannotSyncAzimuth" xml:space="preserve">
     <value>Kopule nemůže synchronizovat azimut</value>
@@ -5788,25 +5788,25 @@ Výchozí chování je pokračovat v chybách, ale pro některé instrukce můž
     <value>Aplikace {0} již není podporována společností Microsoft a projektem N.I.N.A.V důsledku používání může dojít k chybným funkcím nebo haváriím N.I.N.A. nepodporované verze systému Windows jsou uvedeny v online  N.I.N.A dokumentaci.</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Name" xml:space="preserve">
-    <value>Synchronize Dome</value>
+    <value>Synchronizovat Kopuli</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
-    <value>A trigger to limit dome synchronization movements to between sequence steps in order to reduce vibrations during exposures. This should not be used with Dome Following enabled, which runs continuously in the background.</value>
+    <value>Spouštěč pro omezení synchronizačních pohybů kopule mezi kroky sekvence za účelem snížení vibrací během expozic. To by nemělo být použito s povolenou funkcí Kopule Sledování, která běží nepřetržitě na pozadí.</value>
   </data>
   <data name="LblDomeTargetAzimuth" xml:space="preserve">
-    <value>Azimuth</value>
+    <value>Azimut</value>
   </data>
   <data name="LblDomeTargetAltitude" xml:space="preserve">
-    <value>Altitude</value>
+    <value>Nadmořská výška</value>
   </data>
   <data name="LblDomeFollowerEnabledError" xml:space="preserve">
-    <value>Turn dome following off to use the Synchronize Dome Trigger</value>
+    <value>Chcete -li použít Spouštěč Synchronizace Kopule, deaktivujte sledování kopule</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Description" xml:space="preserve">
-    <value>A condition that checks the connected Safety Monitor device if it is unsafe and loops the instruction set as long as the safety monior reports to be unsafe. If the device returns to be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays unsafe.</value>
+    <value>Podmínka, která zkontroluje, zda je připojené zařízení pro řízení Bezpečnosti nebezpečné, a řetězí sadu pokynů, kdykoli bezpečnost nahlásí, že není bezpečný. Pokud je zařízení opět zabezpečené, aktuální sada instrukcí se zastaví.
+Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v nekonečné smyčce, když je monitor zabezpečení nebezpečný.</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
-    <value>Loop while unsafe</value>
+    <value>Opakovat, dokud není bezpečno</value>
   </data>
 </root>
