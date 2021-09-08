@@ -222,8 +222,13 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             bool success = false;
             Logger.Info("Telescope ordered to unpark");
 
+            if (!Telescope.Connected) {
+                Logger.Error("Telescope is not connected");
+                return false;
+            }
+
             await Task.Run(async () => {
-                if (Telescope.Connected && Telescope.AtPark) {
+                if (Telescope.AtPark) {
                     if (Telescope.CanUnpark) {
                         try {
                             progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblWaitingForTelescopeToUnpark"] });
@@ -247,6 +252,9 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
                             progress?.Report(new ApplicationStatus { Status = string.Empty });
                         }
                     }
+                } else {
+                    Logger.Info("Telescope is already unparked");
+                    success = true;
                 }
             });
 
