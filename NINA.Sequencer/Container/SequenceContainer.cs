@@ -545,7 +545,9 @@ namespace NINA.Sequencer.Container {
 
         public virtual async Task Interrupt() {
             if (localCTS != null) {
-                localCTS.Cancel();
+                try {
+                    localCTS.Cancel();
+                } catch (Exception) { }
 
                 if (executionTask != null) {
                     await executionTask;
