@@ -33,6 +33,7 @@ using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.Equipment.Model;
 using NINA.WPF.Base.Interfaces.ViewModel;
 using NINA.WPF.Base.Interfaces;
+using NINA.Equipment.Interfaces;
 
 namespace NINA.WPF.Base.ViewModel {
 
@@ -45,12 +46,16 @@ namespace NINA.WPF.Base.ViewModel {
                 IGuiderMediator guiderMediator,
                 IFocuserMediator focuserMediator,
                 IImagingMediator imagingMediator,
+                IDomeMediator domeMediator,
+                IDomeFollower domeFollower,
                 IApplicationStatusMediator applicationStatusMediator,
                 IFilterWheelMediator filterWheelMediator,
                 IImageHistoryVM history) : base(profileService) {
             this.telescopeMediator = telescopeMediator;
             this.guiderMediator = guiderMediator;
             this.imagingMediator = imagingMediator;
+            this.domeMediator = domeMediator;
+            this.domeFollower = domeFollower;
             this.applicationStatusMediator = applicationStatusMediator;
             this.filterWheelMediator = filterWheelMediator;
             this.history = history;
@@ -71,12 +76,14 @@ namespace NINA.WPF.Base.ViewModel {
         private Coordinates _targetCoordinates;
 
         private CancellationTokenSource internalCancellationToken;
-        private ITelescopeMediator telescopeMediator;
-        private IGuiderMediator guiderMediator;
-        private IImagingMediator imagingMediator;
-        private IApplicationStatusMediator applicationStatusMediator;
-        private IFilterWheelMediator filterWheelMediator;
-        private IImageHistoryVM history;
+        private readonly ITelescopeMediator telescopeMediator;
+        private readonly IGuiderMediator guiderMediator;
+        private readonly IImagingMediator imagingMediator;
+        private readonly IDomeMediator domeMediator;
+        private readonly IDomeFollower domeFollower;
+        private readonly IApplicationStatusMediator applicationStatusMediator;
+        private readonly IFilterWheelMediator filterWheelMediator;
+        private readonly IImageHistoryVM history;
 
         public ICommand CancelCommand {
             get {
@@ -131,6 +138,14 @@ namespace NINA.WPF.Base.ViewModel {
             Logger.Trace($"Meridian Flip - Successful flip: {flipsuccess}");
 
             await Settle(token, progress);
+
+            var domeInfo = domeMediator.GetInfo();
+            if (domeInfo.Connected && domeInfo.CanSetAzimuth && !domeFollower.IsFollowing) {
+                progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSynchronizingDome"] });
+                Logger.Info($"Meridian Flip - Synchronize dome to scope since dome following is not enabled");
+                domeFollower.TriggerTelescopeSync();
+                await domeFollower.WaitForDomeSynchronization(token);
+            }
 
             return flipsuccess;
         }

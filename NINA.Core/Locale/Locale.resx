@@ -3888,6 +3888,9 @@ In case a longer duration is needed, a duration can be specified and the applica
   <data name="LblDomeSynchronization" xml:space="preserve">
     <value>Synchronization</value>
   </data>
+  <data name="LblSynchronizingDome" xml:space="preserve">
+    <value>Synchronizing Dome</value>
+  </data>
   <data name="LblDomeSyncAzimuth" xml:space="preserve">
     <value>Sync</value>
   </data>

@@ -14531,6 +14531,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Synchronizing Dome.
+        /// </summary>
+        internal static string LblSynchronizingDome {
+            get {
+                return ResourceManager.GetString("LblSynchronizingDome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Synchronize Latitude/Longitude.
         /// </summary>
         internal static string LblSyncLatLong {

@@ -16,6 +16,7 @@ using FluentAssertions;
 using Moq;
 using NINA.Astrometry;
 using NINA.Equipment.Equipment.MyTelescope;
+using NINA.Equipment.Interfaces;
 using NINA.Equipment.Interfaces.Mediator;
 using NINA.Profile.Interfaces;
 using NINA.Sequencer.Container;
@@ -208,6 +209,8 @@ namespace NINATest.Sequencer.Utility {
             var applicationStatusMediatorMock = new Mock<IApplicationStatusMediator>();
             var filterMediatorMock = new Mock<IFilterWheelMediator>();
             var cameraMediatorMock = new Mock<ICameraMediator>();
+            var domeMediatorMock = new Mock<IDomeMediator>();
+            var domeFollowerMock = new Mock<IDomeFollower>();
             var focuserMediatorMock = new Mock<IFocuserMediator>();
             var historyMock = new Mock<IImageHistoryVM>();
 
@@ -218,7 +221,7 @@ namespace NINATest.Sequencer.Utility {
             });
             profileServiceMock.SetupGet(x => x.ActiveProfile.MeridianFlipSettings.UseSideOfPier).Returns(false);
 
-            var flip = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var flip = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
 
             flip.ShouldTrigger(null, null);
 

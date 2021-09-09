@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using NINA.Core.Enum;
 using NINA.WPF.Base.Interfaces.Mediator;
 using NINA.WPF.Base.Interfaces.ViewModel;
+using NINA.Equipment.Interfaces;
 
 namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
@@ -43,6 +44,8 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
         private Mock<IFilterWheelMediator> filterMediatorMock;
         private Mock<IFocuserMediator> focuserMediatorMock;
         private Mock<ICameraMediator> cameraMediatorMock;
+        private Mock<IDomeMediator> domeMediatorMock;
+        private Mock<IDomeFollower> domeFollowerMock;
         private Mock<IImageHistoryVM> historyMock;
 
         [SetUp]
@@ -55,12 +58,18 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             filterMediatorMock = new Mock<IFilterWheelMediator>();
             cameraMediatorMock = new Mock<ICameraMediator>();
             focuserMediatorMock = new Mock<IFocuserMediator>();
+            domeMediatorMock = new Mock<IDomeMediator>();
+            domeFollowerMock = new Mock<IDomeFollower>();
             historyMock = new Mock<IImageHistoryVM>();
+        }
+
+        private MeridianFlipTrigger CreateSUT() {
+            return new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, domeMediatorMock.Object, domeFollowerMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
         }
 
         [Test]
         public void CloneTest() {
-            var initial = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var initial = CreateSUT();
             initial.Icon = new System.Windows.Media.GeometryGroup();
 
             var sut = (MeridianFlipTrigger)initial.Clone();
@@ -71,7 +80,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
         [Test]
         public void ShouldTrigger_TimeToMeridianZero_True() {
-            var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var sut = CreateSUT();
 
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() {
                 Connected = true,
@@ -91,7 +100,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
         [Test]
         public void ShouldTrigger_TimeToMeridianLarge_ButSequenceItemDurationLarger_True() {
-            var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var sut = CreateSUT();
 
             telescopeMediatorMock.Setup(x => x.GetInfo()).Returns(new TelescopeInfo() {
                 Connected = true,
@@ -111,7 +120,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
         [Test]
         public void ShouldFlip_NoTelescopeConnected_UnableToFlip() {
-            var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var sut = CreateSUT();
             profileServiceMock.SetupGet(m => m.ActiveProfile.MeridianFlipSettings).Returns(new Mock<IMeridianFlipSettings>().Object);
 
             var telescopeInfo = new TelescopeInfo() {
@@ -128,7 +137,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
 
         [Test]
         public void ShouldFlip_TelescopeConnectedButNaNTime_UnableToFlip() {
-            var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var sut = CreateSUT();
             profileServiceMock.SetupGet(m => m.ActiveProfile.MeridianFlipSettings).Returns(new Mock<IMeridianFlipSettings>().Object);
 
             var telescopeInfo = new TelescopeInfo() {
@@ -159,7 +168,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
         [TestCase(5, 10, 10, false)]
         [TestCase(5, 10, 11, false)]
         public void ShouldFlip_BetweenMinimumAndMaximumTime_NoPause_NoPierSide_FlipWhenExpected(double minTimeToFlip, double maxTimeToFlip, double remainingTimeToFlip, bool expectToFlip) {
-            var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var sut = CreateSUT();
 
             var settings = new Mock<IMeridianFlipSettings>();
             settings.SetupGet(m => m.MinutesAfterMeridian).Returns(minTimeToFlip);
@@ -224,7 +233,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             PierSide pierSide,
             PierSide targetPierSide,
             bool expectToFlip) {
-            var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var sut = CreateSUT();
 
             var settings = new Mock<IMeridianFlipSettings>();
             settings.SetupGet(m => m.MinutesAfterMeridian).Returns(minTimeToFlip);
@@ -282,7 +291,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
             PierSide pierSide,
             PierSide targetPierSide,
             bool expectToFlip) {
-            var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var sut = CreateSUT();
 
             var rightAscension = 12.9;
             var localSiderealTime = 13.0;
@@ -337,7 +346,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
         /* Same Test as before, but pier side is already correct, however the pier side should not be considered and a flip is required*/
         [TestCase(9, 5, 10, 8, PierSide.pierEast, true)]
         public void ShouldFlip_BeforeMinimumTime_NoPause_PierSideIsNOTUsed_EvaluateIfFlipIsNecessary(double nextItemExpectedTime, double minTimeToFlip, double maxTimeToFlip, double remainingTimeToFlip, PierSide pierSide, bool expectToFlip) {
-            var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var sut = CreateSUT();
 
             var settings = new Mock<IMeridianFlipSettings>();
             settings.SetupGet(m => m.MinutesAfterMeridian).Returns(minTimeToFlip);
@@ -387,7 +396,7 @@ namespace NINATest.Sequencer.Trigger.MeridianFlip {
            PierSide pierSide,
            PierSide targetPierSide,
            bool expectToFlip) {
-            var sut = new MeridianFlipTrigger(profileServiceMock.Object, cameraMediatorMock.Object, telescopeMediatorMock.Object, guiderMediatorMock.Object, focuserMediatorMock.Object, imagingMediatorMock.Object, applicationStatusMediatorMock.Object, filterMediatorMock.Object, historyMock.Object);
+            var sut = CreateSUT();
 
             var rightAscension = 12.9;
             var localSiderealTime = 13.0;
