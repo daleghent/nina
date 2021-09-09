@@ -183,6 +183,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
             try {
                 double currentTemp = Cam.Temperature;
                 var totalDeltaTemp = Math.Abs(currentTemp - temperature);
+                var cooling = currentTemp < temperature;
 
                 if (duration > TimeSpan.Zero) {
                     // Stepped temp change
@@ -213,17 +214,22 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                 // Wait for final step
                 var timeout = TimeSpan.FromMinutes(1);
                 var idleTime = TimeSpan.Zero;
-                while (Math.Abs(currentTemp - temperature) > 1) {
+                var progressThreshold = 0.5d;
+                var previousTemperature = currentTemp;
+                while ((cooling && currentTemp > (temperature + 1)) || (!cooling && currentTemp < (temperature - 1))) {
                     var progressTemp = Math.Abs(currentTemp - temperature);
                     progress.Report((totalDeltaTemp - progressTemp) / totalDeltaTemp);
 
                     var t = await CoreUtil.Wait(TimeSpan.FromSeconds(5), ct);
                     currentTemp = Cam.Temperature;
-
                     var coolerPower = Cam.CoolerPower;
-                    if (coolerPower < 1 || coolerPower > 99) {
-                        //if cooler power is 100% and target lower it over a minute cannot reach target
-                        //if cooler power is 0% and target is higher over a minute it cannot reach target
+                    var deltaTemp = currentTemp - previousTemperature;
+                    previousTemperature = currentTemp;
+                    if (coolerPower < 1 && deltaTemp < progressThreshold) {
+                        // if cooler power is 0% and temperature is not increasing enough over a 5 second period (0.5C) then bill towards the timeout
+                        idleTime += t;
+                    } else if (coolerPower > 99 && deltaTemp > -progressThreshold) {
+                        // if cooler power is 100% and temperature is not decreasing enough over a 5 second period (0.5C) then bill towards the timeout
                         idleTime += t;
                     } else {
                         idleTime = TimeSpan.Zero;
@@ -233,7 +239,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Camera {
                         throw new CannotReachTargetTemperatureException();
                     }
                 }
-            } catch (OperationCanceledException ex) {
+            } catch (OperationCanceledException) {
                 if (Cam != null) {
                     Cam.TemperatureSetPoint = Cam.Temperature;
                 }
