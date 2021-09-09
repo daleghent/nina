@@ -5817,4 +5817,7 @@ Best used in conjunction with another loop condition to not end up in an infinit
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
     <value>Loop while unsafe</value>
   </data>
+  <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
+    <value>Failed to resume guiding after a filter change that caused focuser movement</value>
+  </data>
 </root>

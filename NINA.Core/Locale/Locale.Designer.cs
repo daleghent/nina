@@ -7651,6 +7651,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to resume guiding after a filter change that caused focuser movement.
+        /// </summary>
+        internal static string LblFilterChangeResumeGuidingFailed {
+            get {
+                return ResourceManager.GetString("LblFilterChangeResumeGuidingFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter Name.
         /// </summary>
         internal static string LblFilterName {

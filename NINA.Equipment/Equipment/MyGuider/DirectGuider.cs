@@ -74,6 +74,8 @@ namespace NINA.Equipment.Equipment.MyGuider {
             return arcsecPerSecond;
         }
 
+        private bool guiding = false;
+
         private bool _connected;
 
         public bool Connected {
@@ -192,14 +194,26 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public Task<bool> Pause(bool pause, CancellationToken ct) {
+            if (!Connected || !this.guiding) {
+                return Task.FromResult(false);
+            }
+            this.guiding = false;
             return Task.FromResult(true);
         }
 
         public Task<bool> StartGuiding(bool forceCalibration, IProgress<ApplicationStatus> progress, CancellationToken ct) {
+            if (!Connected) {
+                return Task.FromResult(false);
+            }
+            this.guiding = true;
             return Task.FromResult(true);
         }
 
         public Task<bool> StopGuiding(CancellationToken ct) {
+            if (!Connected || !this.guiding) {
+                return Task.FromResult(false);
+            }
+            this.guiding = false;
             return Task.FromResult(true);
         }
 

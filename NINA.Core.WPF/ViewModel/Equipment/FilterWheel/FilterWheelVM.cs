@@ -41,6 +41,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             IProfileService profileService,
             IFilterWheelMediator filterWheelMediator,
             IFocuserMediator focuserMediator,
+            IGuiderMediator guiderMediator,
             IDeviceChooserVM filterWheelChooserVM,
             IApplicationStatusMediator applicationStatusMediator) : base(profileService) {
             Title = Loc.Instance["LblFilterWheel"];
@@ -52,6 +53,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             _ = Rescan();
 
             this.focuserMediator = focuserMediator;
+            this.guiderMediator = guiderMediator;
             this.applicationStatusMediator = applicationStatusMediator;
 
             ChooseFWCommand = new AsyncCommand<bool>(() => ChooseFW());
@@ -100,17 +102,30 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                         Logger.Info($"Moving to Filter {filter.Name} at Position {filter.Position}");
                         FilterWheelInfo.IsMoving = true;
                         Task changeFocus = null;
+                        bool activeGuidingStopped = false;
                         if (profileService.ActiveProfile.FocuserSettings.UseFilterWheelOffsets) {
                             if (prevFilter != null) {
                                 var newFilter = profileService.ActiveProfile.FilterWheelSettings.FilterWheelFilters.Where(x => x.Position == filter.Position).FirstOrDefault();
                                 if (newFilter != null) {
                                     int offset = newFilter.FocusOffset - prevFilter.FocusOffset;
                                     if (offset != 0) {
+                                        if (profileService.ActiveProfile.FocuserSettings.AutoFocusDisableGuiding) {
+                                            // AutoFocusDisableGuiding is typically used with OAGs which are affected when focus changes. We repurpose that setting here for regular
+                                            // filter changes that can happen in the middle of a sequence, but only if the focus is actually changing
+
+                                            // This codepath is also hit during auto focus, but guiding should already be disabled by the time it gets here. StopGuiding returns false 
+                                            // if it isn't currently guiding, so this indicates FilterWheelVM is "responsible" for resuming guiding afterwards
+                                            activeGuidingStopped = await this.guiderMediator.StopGuiding(token);
+                                            if (activeGuidingStopped) {
+                                                Logger.Info($"Disabled guiding during filter change that caused focuser movement");
+                                            }
+                                        }
+
                                         changeFocus = focuserMediator.MoveFocuserRelative(offset, token);
                                     }
                                 }
                             }
-                        }
+                        }                        
 
                         FW.Position = filter.Position;
                         var changeFilter = Task.Run(async () => {
@@ -119,7 +134,6 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                                 token.ThrowIfCancellationRequested();
                             }
                         });
-
                         progress?.Report(new ApplicationStatus() { Status = Loc.Instance["LblSwitchingFilter"] });
 
                         if (changeFocus != null) {
@@ -127,6 +141,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                         }
 
                         await changeFilter;
+                        if (activeGuidingStopped) {
+                            var resumedGuiding = await this.guiderMediator.StartGuiding(false, progress, token);
+                            if (resumedGuiding) {
+                                Logger.Info($"Resumed guiding after filter change");
+                            } else {
+                                Logger.Error($"Failed to resume guiding after filter change");
+                                Notification.ShowError(Loc.Instance["LblFilterChangeResumeGuidingFailed"]);
+                            }
+                        }
                     }
                     FilterWheelInfo.SelectedFilter = filter;
                 } else {
@@ -276,10 +299,11 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             return Task.CompletedTask;
         }
 
-        private FilterWheelChooserVM _filterWheelChooserVM;
-        private IFilterWheelMediator filterWheelMediator;
-        private IFocuserMediator focuserMediator;
-        private IApplicationStatusMediator applicationStatusMediator;
+        private readonly FilterWheelChooserVM _filterWheelChooserVM;
+        private readonly IFilterWheelMediator filterWheelMediator;
+        private readonly IFocuserMediator focuserMediator;
+        private readonly IGuiderMediator guiderMediator;
+        private readonly IApplicationStatusMediator applicationStatusMediator;
         private FilterWheelInfo filterWheelInfo;
 
         public FilterWheelInfo FilterWheelInfo {

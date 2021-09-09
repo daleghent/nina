@@ -366,7 +366,7 @@ namespace NINA.Equipment.Equipment.MyGuider {
         }
 
         public async Task<bool> StopGuiding(CancellationToken ct) {
-            if (!Connected) {
+            if (!Connected || !this.IsGuiding) {
                 return false;
             }
 
