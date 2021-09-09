@@ -63,7 +63,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
             ChangeFilterCommand = new AsyncCommand<bool>(async () => {
                 _changeFilterCancellationSource?.Dispose();
                 _changeFilterCancellationSource = new CancellationTokenSource();
-                await ChangeFilter(TargetFilter, _changeFilterCancellationSource.Token);
+                await ChangeFilter(TargetFilter, _changeFilterCancellationSource.Token, new Progress<ApplicationStatus>(x => { x.Source = this.Title; applicationStatusMediator.StatusUpdate(x); }));
                 return true;
             }, (object o) => FilterWheelInfo.Connected && !FilterWheelInfo.IsMoving);
 
@@ -113,7 +113,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                                             // AutoFocusDisableGuiding is typically used with OAGs which are affected when focus changes. We repurpose that setting here for regular
                                             // filter changes that can happen in the middle of a sequence, but only if the focus is actually changing
 
-                                            // This codepath is also hit during auto focus, but guiding should already be disabled by the time it gets here. StopGuiding returns false 
+                                            // This codepath is also hit during auto focus, but guiding should already be disabled by the time it gets here. StopGuiding returns false
                                             // if it isn't currently guiding, so this indicates FilterWheelVM is "responsible" for resuming guiding afterwards
                                             activeGuidingStopped = await this.guiderMediator.StopGuiding(token);
                                             if (activeGuidingStopped) {
@@ -125,7 +125,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.FilterWheel {
                                     }
                                 }
                             }
-                        }                        
+                        }
 
                         FW.Position = filter.Position;
                         var changeFilter = Task.Run(async () => {

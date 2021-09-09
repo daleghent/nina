@@ -251,7 +251,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     this.applicationStatusMediator.StatusUpdate(p);
                 });
                 try {
-                    progress.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"] });
+                    progress?.Report(new ApplicationStatus { Status = Loc.Instance["LblStartGuiding"] });
                     var guiding = await Guider.StartGuiding(forceCalibration, prog, token);
                     return guiding;
                 } catch (OperationCanceledException ex) {
@@ -260,7 +260,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Guider {
                     Logger.Error(ex);
                     return false;
                 } finally {
-                    progress.Report(new ApplicationStatus { Status = string.Empty });
+                    progress?.Report(new ApplicationStatus { Status = string.Empty });
                 }
             } else {
                 return false;
