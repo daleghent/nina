@@ -38,6 +38,7 @@ namespace NINA.Profile {
             AzimuthTolerance_degrees = 2.0;
             FindHomeBeforePark = false;
             DomeSyncTimeoutSeconds = 120;
+            SettleTimeSeconds = 1;
         }
 
         private string id = string.Empty;
@@ -260,6 +261,21 @@ namespace NINA.Profile {
             set {
                 if (decOffsetHorizontal_mm != value) {
                     decOffsetHorizontal_mm = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
+        private int settleTimeSeconds = 0;
+
+        [DataMember]
+        public int SettleTimeSeconds {
+            get {
+                return settleTimeSeconds;
+            }
+            set {
+                if (settleTimeSeconds != value) {
+                    settleTimeSeconds = value;
                     RaisePropertyChanged();
                 }
             }

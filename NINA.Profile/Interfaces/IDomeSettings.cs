@@ -32,5 +32,6 @@ namespace NINA.Profile.Interfaces {
         bool CloseOnUnsafe { get; set; }
         MountTypeEnum MountType { get; set; }
         double DecOffsetHorizontal_mm { get; set; }
+        int SettleTimeSeconds { get; set; }
     }
 }

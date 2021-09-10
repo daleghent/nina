@@ -6890,7 +6890,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close.
+        ///   Looks up a localized string similar to Close Shutter.
         /// </summary>
         internal static string LblDomeShutterClose {
             get {
@@ -6899,7 +6899,7 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open.
+        ///   Looks up a localized string similar to Open Shutter.
         /// </summary>
         internal static string LblDomeShutterOpen {
             get {
@@ -14536,15 +14536,6 @@ namespace NINA.Core.Locale {
         internal static string LblSynchronizedPHD2ServiceCrashed {
             get {
                 return ResourceManager.GetString("LblSynchronizedPHD2ServiceCrashed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Synchronizing Dome.
-        /// </summary>
-        internal static string LblSynchronizingDome {
-            get {
-                return ResourceManager.GetString("LblSynchronizingDome", resourceCulture);
             }
         }
         

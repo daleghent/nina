@@ -271,6 +271,30 @@
                         VerticalAlignment="Center"
                         Columns="2">
                         <TextBlock
+                            Width="130"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Text="{ns:Loc LblSettleTimeAfterSlew}" />
+                        <ninactrl:UnitTextBox
+                            MinWidth="80"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            Unit="s">
+                            <TextBox.Text>
+                                <Binding Path="SettleTimeSeconds" UpdateSourceTrigger="LostFocus">
+                                    <Binding.ValidationRules>
+                                        <rules:GreaterZeroRule />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </ninactrl:UnitTextBox>
+                    </UniformGrid>
+                    <UniformGrid
+                        Margin="0,5,0,0"
+                        VerticalAlignment="Center"
+                        Columns="2">
+                        <TextBlock
                             MinWidth="200"
                             VerticalAlignment="Center"
                             Text="{ns:Loc LblDomeSyncDuringMountSlew}"

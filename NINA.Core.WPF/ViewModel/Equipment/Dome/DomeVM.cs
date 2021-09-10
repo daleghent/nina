@@ -63,6 +63,10 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
             _ = Rescan();
             this.domeFollower = domeFollower;
             this.domeFollower.PropertyChanged += DomeFollower_PropertyChanged;
+            this.progress = new Progress<ApplicationStatus>(p => {
+                p.Source = this.Title;
+                this.applicationStatusMediator.StatusUpdate(p);
+            });
 
             ChooseDomeCommand = new AsyncCommand<bool>(() => ChooseDome());
             CancelChooseDomeCommand = new RelayCommand(CancelChooseDome);
@@ -334,10 +338,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
                     return false;
                 }
 
-                Logger.Info($"Opening dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
-                await Dome.OpenShutter(cancellationToken);
-                Logger.Info($"Opened dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
-                return true;
+                try {
+                    Logger.Info($"Opening dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
+                    progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDomeShutterOpen"] });
+                    await Dome.OpenShutter(cancellationToken);
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), cancellationToken, progress, Loc.Instance["LblSettle"]);
+                    Logger.Info($"Opened dome shutter. Shutter state after opening {DomeInfo.ShutterStatus}");
+                    return true;
+                } finally {
+                    progress.Report(new ApplicationStatus() { Status = string.Empty });
+                }
             } else {
                 Logger.Warning("Cannot open shutter. Dome does not support it.");
                 return false;
@@ -350,10 +360,16 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         public async Task<bool> CloseShutter(CancellationToken cancellationToken) {
             if (Dome.CanSetShutter) {
-                Logger.Info($"Closing dome shutter. Shutter state before closing {DomeInfo.ShutterStatus}");
-                await Dome.CloseShutter(cancellationToken);
-                Logger.Info($"Closed dome shutter. Shutter state after closing {DomeInfo.ShutterStatus}");
-                return true;
+                try {
+                    Logger.Info($"Closing dome shutter. Shutter state before closing {DomeInfo.ShutterStatus}");
+                    progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblDomeShutterClose"] });
+                    await Dome.CloseShutter(cancellationToken);
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), cancellationToken, progress, Loc.Instance["LblSettle"]);
+                    Logger.Info($"Closed dome shutter. Shutter state after closing {DomeInfo.ShutterStatus}");
+                    return true;
+                } finally {
+                    progress.Report(new ApplicationStatus() { Status = string.Empty });
+                }
             } else {
                 Logger.Warning("Cannot close shutter. Dome does not support it.");
                 return false;
@@ -441,9 +457,15 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
 
         public async Task<bool> SlewToAzimuth(double degrees, CancellationToken token) {
             if (Dome?.Connected == true) {
-                Logger.Info($"Slewing dome to azimuth {degrees}°");
-                await Dome?.SlewToAzimuth(degrees, token);
-                return true;
+                try {
+                    Logger.Info($"Slewing dome to azimuth {degrees}°");
+                    progress.Report(new ApplicationStatus() { Status = Loc.Instance["LblSlew"] });
+                    await Dome?.SlewToAzimuth(degrees, token);
+                    await CoreUtil.Wait(TimeSpan.FromSeconds(this.profileService.ActiveProfile.DomeSettings.SettleTimeSeconds), token, progress, Loc.Instance["LblSettle"]);
+                    return true;
+                } finally {
+                    progress.Report(new ApplicationStatus() { Status = string.Empty });
+                }
             }
             return false;
         }
@@ -597,6 +619,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Dome {
         private readonly IDomeMediator domeMediator;
         private readonly IApplicationStatusMediator applicationStatusMediator;
         private readonly IDomeFollower domeFollower;
+        private readonly IProgress<ApplicationStatus> progress;
         private ITelescopeMediator telescopeMediator;
         private ISafetyMonitorMediator safetyMonitorMediator;
         public IAsyncCommand ChooseDomeCommand { get; private set; }
