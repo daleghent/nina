@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using NINA.Core.Locale;
 using NINA.Core.Enum;
+using NINA.Sequencer.Utility;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -111,8 +112,10 @@ namespace NINA.Sequencer.Conditions {
         private async Task InterruptWhenUnsafe() {
             if (!Check(null, null)) {
                 if (this.Parent != null) {
-                    Logger.Info("Unsafe conditions detected - Interrupting current Instruction Set");
-                    await this.Parent.Interrupt();
+                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING) {
+                        Logger.Info("Unsafe conditions detected - Interrupting current Instruction Set");
+                        await this.Parent.Interrupt();
+                    }
                 }
             }
         }

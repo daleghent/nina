@@ -133,8 +133,10 @@ namespace NINATest.Sequencer.Conditions {
         [Test]
         public async Task MonitorIsUnsafe_InterruptParent() {
             monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = true });
-            var parentMock = new Mock<ISequenceContainer>();
+            var parentMock = new Mock<ISequenceRootContainer>();
             parentMock.Setup(x => x.Interrupt()).Returns(Task.CompletedTask);
+            parentMock.SetupGet(x => x.Parent).Returns(new Mock<ISequenceRootContainer>().Object);
+            parentMock.SetupGet(x => x.Status).Returns(NINA.Core.Enum.SequenceEntityStatus.RUNNING);
 
             var sut = new SafetyMonitorCondition(monitorMock.Object);
             sut.Parent = parentMock.Object;
@@ -257,9 +259,11 @@ namespace NINATest.Sequencer.Conditions {
             monitorMock.Setup(x => x.GetInfo()).Returns(new SafetyMonitorInfo() { Connected = true, IsSafe = false });
             var parentMock = new Mock<ISequenceContainer>();
             parentMock.Setup(x => x.Interrupt()).Returns(Task.CompletedTask);
+            parentMock.SetupGet(x => x.Parent).Returns(new Mock<ISequenceRootContainer>().Object);
+            parentMock.SetupGet(x => x.Status).Returns(NINA.Core.Enum.SequenceEntityStatus.RUNNING);
 
             var sut = new LoopWhileUnsafe(monitorMock.Object);
-            sut.Parent = parentMock.Object;
+            sut.AttachNewParent(parentMock.Object);
             sut.ConditionWatchdog.Delay = TimeSpan.FromMilliseconds(10);
 
             sut.SequenceBlockInitialize();

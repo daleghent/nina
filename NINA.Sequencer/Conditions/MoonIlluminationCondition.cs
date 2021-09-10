@@ -52,8 +52,10 @@ namespace NINA.Sequencer.Conditions {
             CalculateCurrentMoonState();
             if (!Check(null, null)) {
                 if (this.Parent != null) {
-                    Logger.Info("Moon is outside of the specified illumination range - Interrupting current Instruction Set");
-                    await this.Parent.Interrupt();
+                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING) {
+                        Logger.Info("Moon is outside of the specified illumination range - Interrupting current Instruction Set");
+                        await this.Parent.Interrupt();
+                    }
                 }
             }
         }

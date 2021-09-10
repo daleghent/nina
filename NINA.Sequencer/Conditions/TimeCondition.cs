@@ -21,6 +21,8 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Threading.Tasks;
+using NINA.Sequencer.Utility;
+using NINA.Core.Enum;
 
 namespace NINA.Sequencer.Conditions {
 
@@ -53,8 +55,10 @@ namespace NINA.Sequencer.Conditions {
             Tick();
             if (!Check(null, null)) {
                 if (this.Parent != null) {
-                    Logger.Info("Time limit exceeded - Interrupting current Instruction Set");
-                    await this.Parent.Interrupt();
+                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING) {
+                        Logger.Info("Time limit exceeded - Interrupting current Instruction Set");
+                        await this.Parent.Interrupt();
+                    }
                 }
             }
         }

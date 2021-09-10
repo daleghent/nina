@@ -55,8 +55,10 @@ namespace NINA.Sequencer.Conditions {
         private async Task InterruptWhenTargetBelowAltitude() {
             if (!Check(null, null)) {
                 if (this.Parent != null) {
-                    Logger.Info("Target is below altitude - Interrupting current Instruction Set");
-                    await this.Parent.Interrupt();
+                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING) {
+                        Logger.Info("Target is below altitude - Interrupting current Instruction Set");
+                        await this.Parent.Interrupt();
+                    }
                 }
             }
         }

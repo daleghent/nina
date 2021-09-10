@@ -54,8 +54,10 @@ namespace NINA.Sequencer.Conditions {
             CalculateCurrentSunState();
             if (!Check(null, null)) {
                 if (this.Parent != null) {
-                    Logger.Info("Sun is outside of the specified range - Interrupting current Instruction Set");
-                    await this.Parent.Interrupt();
+                    if (ItemUtility.IsInRootContainer(Parent) && this.Parent.Status == SequenceEntityStatus.RUNNING) {
+                        Logger.Info("Sun is outside of the specified range - Interrupting current Instruction Set");
+                        await this.Parent.Interrupt();
+                    }
                 }
             }
         }
