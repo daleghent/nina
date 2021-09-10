@@ -1237,7 +1237,7 @@ Quan les marques no estan alineades, significa que hi ha un error d'Alineació P
     <value>La cúpula (dome) no pot ajustar l'obturador</value>
   </data>
   <data name="LblDomeCannotSetAzimuth" xml:space="preserve">
-    <value>Dome cannot set azimuth</value>
+    <value>La cúpula no pot sincronitzar l'azimut</value>
   </data>
   <data name="LblDomeCannotSyncAzimuth" xml:space="preserve">
     <value>La cúpula (dome) no pot sincronitzar l'azimut</value>
@@ -3865,10 +3865,10 @@ En cas que calgui una durada més llarga, es pot especificar una durada i l’ap
     <value>Obturador</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Tancar</value>
+    <value>Close Shutter</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Obrir</value>
+    <value>Open Shutter</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Rotar en sentit horari</value>
@@ -5760,49 +5760,52 @@ El comportament per defecte és continuar amb els errors, tot i que per a algune
     <value>Temps d'estabilització del dither</value>
   </data>
   <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
-    <value>Failed to start tracking CCD ASCOM server. {0}</value>
+    <value>No s'ha pogut iniciar el seguiment del servidor ASCOM CCD. {0}</value>
   </data>
   <data name="LblTrackingASCOMServerStarted" xml:space="preserve">
-    <value>Tracking CCD ASCOM server started</value>
+    <value>S'ha iniciat el seguiment del servidor ASCOM CCD</value>
   </data>
   <data name="LblTrackingASCOMServerStopped" xml:space="preserve">
-    <value>Tracking CCD ASCOM server stopped</value>
+    <value>S'ha aturat el seguiment del servidor ASCOM CCD</value>
   </data>
   <data name="LblTrackingASCOMServerEnabled" xml:space="preserve">
-    <value>Tracking CCD ASCOM Server Enabled</value>
+    <value>Activat el seguiment del servidor ASCOM CCD</value>
   </data>
   <data name="LblTrackingASCOMServerEnabledTooltip" xml:space="preserve">
-    <value>Runs a server in the background to control the built-in tracking camera from other applications</value>
+    <value>Executa un servidor en segon pla per a controlar la càmera de seguiment des d'altres aplicacions</value>
   </data>
   <data name="LblTrackingASCOMServerPipeName" xml:space="preserve">
-    <value>Server Pipe Name</value>
+    <value>Nom del servidor del tub (Server Pipe)</value>
   </data>
   <data name="LblTrackingASCOMServerPipeNameTooltip" xml:space="preserve">
-    <value>The ASCOM driver that reads from this server should have the same pipe name configured</value>
+    <value>El controlador ASCOM que llegeix des d’aquest servidor hauria de tenir el mateix nom del tub configurat</value>
   </data>
   <data name="LblYourWindowsIsTooOld" xml:space="preserve">
-    <value>{0} is no longer supported by Microsoft and the N.I.N.A. project. You will encounter application malfunctions or crashes as a result of using N.I.N.A. on an unsupported version of Windows. N.I.N.A.'s current system requirements are listed in the online documentation.</value>
+    <value>{0} ja no és compatible amb Microsoft i el projecte N.I.N.A. Trobareu un mal funcionament o errors de l’aplicació com a conseqüència de l’ús de N.I.N.A. en una versió de Windows no compatible. Els requisits actuals del sistema de N.I.N.A. apareixen a la documentació en línia.</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Name" xml:space="preserve">
-    <value>Synchronize Dome</value>
+    <value>Sincronitzar la Cúpula</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
-    <value>A trigger to limit dome synchronization movements to between sequence steps in order to reduce vibrations during exposures. This should not be used with Dome Following enabled, which runs continuously in the background.</value>
+    <value>Un disparador per limitar els moviments de sincronització de la cúpula entre passos de seqüència per tal de reduir les vibracions durant les exposicions. Això no s’ha d’utilitzar amb Dome Following activat, que s’executa contínuament en segon pla.</value>
   </data>
   <data name="LblDomeTargetAzimuth" xml:space="preserve">
-    <value>Azimuth</value>
+    <value>Azimut</value>
   </data>
   <data name="LblDomeTargetAltitude" xml:space="preserve">
-    <value>Altitude</value>
+    <value>Altitud</value>
   </data>
   <data name="LblDomeFollowerEnabledError" xml:space="preserve">
-    <value>Turn dome following off to use the Synchronize Dome Trigger</value>
+    <value>Desactiveu el seguiment de la cúpula per utilitzar l'activador de la sincronització de la cúpula</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Description" xml:space="preserve">
-    <value>A condition that checks the connected Safety Monitor device if it is unsafe and loops the instruction set as long as the safety monior reports to be unsafe. If the device returns to be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays unsafe.</value>
+    <value>Una condició que comprova el Dispositiu de Control de Seguretat connectat si no és segur i repeteix el conjunt d'instruccions sempre que el Control de Seguretat informi que sigui insegur. Si el dispositiu torna a estar segur, el conjunt d’instruccions actuals s’aturarà.
+S’utilitza millor juntament amb una altra condició de bucle per no acabar en un bucle infinit quan el monitor de seguretat es manté insegur.</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
-    <value>Loop while unsafe</value>
+    <value>Repetir mentre sigui insegur</value>
+  </data>
+  <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
+    <value>No s'ha pogut reprendre la guia després d'un canvi de filtre que ha provocat el moviment del centrat</value>
   </data>
 </root>

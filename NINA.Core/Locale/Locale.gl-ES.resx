@@ -3875,10 +3875,10 @@ No caso de que se precise unha duración máis longa, pódese especificar a dura
     <value>Persiana</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Pechar</value>
+    <value>Close Shutter</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Abrir</value>
+    <value>Open Shutter</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Rotar en sentido horario</value>
@@ -5814,5 +5814,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
     <value>Loop while unsafe</value>
+  </data>
+  <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
+    <value>Failed to resume guiding after a filter change that caused focuser movement</value>
   </data>
 </root>

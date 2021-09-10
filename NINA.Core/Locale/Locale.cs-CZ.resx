@@ -3869,10 +3869,10 @@ V případě potřeby delší doby trvání lze zadat dobu trvání a aplikace p
     <value>Štěrbina</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Zavřít</value>
+    <value>Zavřít Štěrbinu</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Otevřít</value>
+    <value>Otevřít Štěrbinu</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Otáčet pravotočivě</value>
@@ -5808,5 +5808,8 @@ Nejlépe se používá ve spojení s jinou podmínkou smyčky, aby neskončila v
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
     <value>Opakovat, dokud není bezpečno</value>
+  </data>
+  <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
+    <value>Obnovení pointace se nezdařilo po změně filtru, která způsobila pohyb ostření</value>
   </data>
 </root>

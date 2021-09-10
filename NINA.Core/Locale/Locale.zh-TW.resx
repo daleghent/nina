@@ -3874,10 +3874,10 @@ In case a longer duration is needed, a duration can be specified and the applica
     <value>Shutter</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>關閉</value>
+    <value>Close Shutter</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>打開</value>
+    <value>Open Shutter</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Rotate clockwise</value>
@@ -5813,5 +5813,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
     <value>Loop while unsafe</value>
+  </data>
+  <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
+    <value>Failed to resume guiding after a filter change that caused focuser movement</value>
   </data>
 </root>

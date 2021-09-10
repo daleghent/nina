@@ -1233,7 +1233,7 @@ En caso de que se necesite una duración mas larga, se puede especificar esa dur
     <value>La cúpula no puede ajustar la apertura</value>
   </data>
   <data name="LblDomeCannotSetAzimuth" xml:space="preserve">
-    <value>Dome cannot set azimuth</value>
+    <value>La cúpula no puede establecer el azimut</value>
   </data>
   <data name="LblDomeCannotSyncAzimuth" xml:space="preserve">
     <value>La cúpula no puede sincronizar azimut</value>
@@ -3864,10 +3864,10 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Obturador</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Cerrar</value>
+    <value>Close Shutter</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Abrir</value>
+    <value>Open Shutter</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Girar en sentido horario</value>
@@ -5756,7 +5756,7 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
     <value>¡No se puede establecer la latitud de la montura a {0} y la longitud a {1}!</value>
   </data>
   <data name="LblMGENDitherSettleTime" xml:space="preserve">
-    <value>Dither settling time</value>
+    <value>Tiempo de ajuste tras el dither</value>
   </data>
   <data name="LblTrackingASCOMServerStartFailed" xml:space="preserve">
     <value>Error al iniciar el servidor seguimiento del CCD ASCOM. {0}</value>
@@ -5783,25 +5783,28 @@ El comportamiento por defecto es continuar en caso de error, sin embargo para al
     <value>{0} ya no cuenta con soporte de Microsoft ni del proyecto N.I.N.A. Encontrará mal funcionamiento o errores en la aplicación como resultado del uso de N.I.N.A. en una versión de windows desfasada. Los actuales requisitos mínimos de N.I.N.A. están disponibles en la documentación online.</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Name" xml:space="preserve">
-    <value>Synchronize Dome</value>
+    <value>Sincronizar la cúpula</value>
   </data>
   <data name="Lbl_SequenceTrigger_SynchronizeDomeTrigger_Description" xml:space="preserve">
-    <value>A trigger to limit dome synchronization movements to between sequence steps in order to reduce vibrations during exposures. This should not be used with Dome Following enabled, which runs continuously in the background.</value>
+    <value>Un activador para limitar los movimientos de sincronización de la cúpula entre los pasos de la secuencia para reducir las vibraciones durante las exposiciones. No debe utilizarse con la función de Seguimiento de Cúpula (Dome Following) activado, que se ejecuta continuamente en segundo plano.</value>
   </data>
   <data name="LblDomeTargetAzimuth" xml:space="preserve">
-    <value>Azimuth</value>
+    <value>Azimut</value>
   </data>
   <data name="LblDomeTargetAltitude" xml:space="preserve">
-    <value>Altitude</value>
+    <value>Altitud</value>
   </data>
   <data name="LblDomeFollowerEnabledError" xml:space="preserve">
-    <value>Turn dome following off to use the Synchronize Dome Trigger</value>
+    <value>Desactiva el seguimiento de la cúpula para usar el activador de sincronizado de la cúpula</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Description" xml:space="preserve">
-    <value>A condition that checks the connected Safety Monitor device if it is unsafe and loops the instruction set as long as the safety monior reports to be unsafe. If the device returns to be safe the current instruction set is stopped.
-Best used in conjunction with another loop condition to not end up in an infinite loop when the safety monitor stays unsafe.</value>
+    <value>Una condición que comprueba si el dispositivo de monitorización de seguridad conectado (Safety Monitor) no es seguro y realiza un bucle en el conjunto de instrucciones mientras el monitor de seguridad informe que sigue sin ser seguro. Si el dispositivo vuelve a ser seguro, el conjunto de instrucciones actual se detiene.
+Es mejor usarlo junto con otra condición de bucle para no terminar en un bucle infinito cuando el monitor de seguridad permanece como no seguro.</value>
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
-    <value>Loop while unsafe</value>
+    <value>Repetir mientras no sea seguro</value>
+  </data>
+  <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
+    <value>Error al reanudar el autoguiado después de que un cambio de filtro causara un desplazamiento en el enfocador</value>
   </data>
 </root>

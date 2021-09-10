@@ -3861,10 +3861,10 @@ Daha uzun bir süre gerekirse bir süre belirtilebilir ve uygulama, verilen sür
     <value>Panjur</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Kapat</value>
+    <value>Close Shutter</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
-    <value>Aç</value>
+    <value>Open Shutter</value>
   </data>
   <data name="LblDomeRotateCW" xml:space="preserve">
     <value>Saat yönünde döndür</value>
@@ -5800,5 +5800,8 @@ Best used in conjunction with another loop condition to not end up in an infinit
   </data>
   <data name="Lbl_SequenceCondition_LoopWhileUnsafe_Name" xml:space="preserve">
     <value>Loop while unsafe</value>
+  </data>
+  <data name="LblFilterChangeResumeGuidingFailed" xml:space="preserve">
+    <value>Failed to resume guiding after a filter change that caused focuser movement</value>
   </data>
 </root>
