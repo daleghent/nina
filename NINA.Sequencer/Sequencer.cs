@@ -187,7 +187,8 @@ namespace NINA.Sequencer {
                     issues.AddRange(v.Issues);
                 }
 
-                if (item is ISequenceContainer) {
+                if (item is ISequenceContainer && !(item is IImmutableContainer)) {
+                    // The immutablecontainer is excluded as it will itself validate the things of its children
                     issues.AddRange(Validate(item as ISequenceContainer));
                 }
             }
