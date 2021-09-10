@@ -41,10 +41,10 @@ namespace NINA.Sequencer.Serialization {
                     return (ISequenceItem)obj;
                 } catch (Exception e) {
                     Logger.Error($"Encountered unknown sequence item: {token?.ToString()}");
-                    return new UnknownSequenceItem();
+                    return new UnknownSequenceItem(token?.ToString());
                 }
             } else {
-                return new UnknownSequenceItem();
+                return new UnknownSequenceItem(token?.ToString());
             }
         }
     }

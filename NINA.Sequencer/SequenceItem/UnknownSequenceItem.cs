@@ -14,6 +14,7 @@
 
 using NINA.Core.Locale;
 using NINA.Core.Model;
+using NINA.Sequencer.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace NINA.Sequencer.SequenceItem {
 
-    internal class UnknownSequenceItem : SequenceItem {
+    internal class UnknownSequenceItem : SequenceItem, IValidatable {
 
         public new string Name {
             get => $"<{Loc.Instance["LblUnknownInstruction"]} - {base.Name}> ";
@@ -32,7 +33,13 @@ namespace NINA.Sequencer.SequenceItem {
             }
         }
 
+        public IList<string> Issues => new List<string>() { Loc.Instance["LblUnknownInstructionValidation"] };
+
         public UnknownSequenceItem() {
+        }
+
+        public UnknownSequenceItem(string token) {
+            base.Name = token;
         }
 
         public override object Clone() {
@@ -43,6 +50,10 @@ namespace NINA.Sequencer.SequenceItem {
 
         public override Task Execute(IProgress<ApplicationStatus> progress, CancellationToken token) {
             throw new SequenceItemSkippedException();
+        }
+
+        public bool Validate() {
+            return false;
         }
     }
 }

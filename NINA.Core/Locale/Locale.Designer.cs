@@ -15857,6 +15857,15 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unknown instruction detected! Please double check your sequence and inspect which instructions became invalid. Furthermore validate that everything is up to date..
+        /// </summary>
+        internal static string LblUnknownInstructionValidation {
+            get {
+                return ResourceManager.GetString("LblUnknownInstructionValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unlinked Stretch.
         /// </summary>
         internal static string LblUnlinkedStretch {

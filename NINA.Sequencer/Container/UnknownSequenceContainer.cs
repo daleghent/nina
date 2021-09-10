@@ -15,6 +15,7 @@
 using NINA.Core.Locale;
 using NINA.Core.Model;
 using NINA.Sequencer.Container.ExecutionStrategy;
+using NINA.Sequencer.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,13 @@ using System.Threading.Tasks;
 
 namespace NINA.Sequencer.Container {
 
-    internal class UnknownSequenceContainer : SequenceContainer {
+    internal class UnknownSequenceContainer : SequenceContainer, IValidatable {
 
         public UnknownSequenceContainer() : base(new SequentialStrategy()) {
+        }
+
+        public UnknownSequenceContainer(string token) : base(new SequentialStrategy()) {
+            base.Name = token;
         }
 
         public new string Name {
@@ -44,6 +49,11 @@ namespace NINA.Sequencer.Container {
             return new UnknownSequenceContainer() {
                 Name = base.Name
             };
+        }
+
+        public override bool Validate() {
+            Issues = new List<string>() { Loc.Instance["LblUnknownInstructionValidation"] };
+            return false;
         }
     }
 }

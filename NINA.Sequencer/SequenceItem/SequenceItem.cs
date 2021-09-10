@@ -57,7 +57,6 @@ namespace NINA.Sequencer.SequenceItem {
         public ICommand MoveDownCommand => new RelayCommand((o) => MoveDown());
         public ICommand MoveUpCommand => new RelayCommand((o) => MoveUp());
 
-        [JsonProperty]
         public string Name {
             get => name;
             set {

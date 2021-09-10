@@ -16,6 +16,7 @@ using NINA.Core.Locale;
 using NINA.Core.Model;
 using NINA.Sequencer.Container;
 using NINA.Sequencer.SequenceItem;
+using NINA.Sequencer.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,14 @@ using System.Threading.Tasks;
 
 namespace NINA.Sequencer.Trigger {
 
-    internal class UnknownSequenceTrigger : SequenceTrigger {
+    internal class UnknownSequenceTrigger : SequenceTrigger, IValidatable {
+
+        public UnknownSequenceTrigger() {
+        }
+
+        public UnknownSequenceTrigger(string token) {
+            base.Name = token;
+        }
 
         public new string Name {
             get => $"<{Loc.Instance["LblUnknownInstruction"]} - {base.Name}> ";
@@ -33,6 +41,8 @@ namespace NINA.Sequencer.Trigger {
                 base.Name = value;
             }
         }
+
+        public IList<string> Issues => new List<string>() { Loc.Instance["LblUnknownInstructionValidation"] };
 
         public override object Clone() {
             return new UnknownSequenceTrigger() {
@@ -45,6 +55,10 @@ namespace NINA.Sequencer.Trigger {
         }
 
         public override bool ShouldTrigger(ISequenceItem previousItem, ISequenceItem nextItem) {
+            return false;
+        }
+
+        public bool Validate() {
             return false;
         }
     }

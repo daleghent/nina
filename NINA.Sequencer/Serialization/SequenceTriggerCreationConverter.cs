@@ -35,10 +35,10 @@ namespace NINA.Sequencer.Serialization {
                     return (ISequenceTrigger)obj;
                 } catch (Exception e) {
                     Logger.Error($"Encountered unknown sequence trigger: {token?.ToString()}");
-                    return new UnknownSequenceTrigger();
+                    return new UnknownSequenceTrigger(token?.ToString());
                 }
             } else {
-                return new UnknownSequenceTrigger();
+                return new UnknownSequenceTrigger(token?.ToString());
             }
         }
     }

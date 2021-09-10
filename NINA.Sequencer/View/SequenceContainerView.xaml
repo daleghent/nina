@@ -22,13 +22,15 @@
     xmlns:ninactrl="clr-namespace:NINACustomControlLibrary;assembly=NINACustomControlLibrary"
     xmlns:ns="clr-namespace:NINA.Core.Locale;assembly=NINA.Core"
     xmlns:seq="clr-namespace:NINA.Sequencer"
+    xmlns:seqCond="clr-namespace:NINA.Sequencer.Conditions"
     xmlns:seqItem="clr-namespace:NINA.Sequencer.SequenceItem"
+    xmlns:seqTrig="clr-namespace:NINA.Sequencer.Trigger"
     xmlns:sequencerPlatesolve="clr-namespace:NINA.Sequencer.SequenceItem.Platesolving"
     xmlns:sequencerUtil="clr-namespace:NINA.Sequencer.SequenceItem.Utility"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:t="clr-namespace:NINA.Sequencer.Trigger"
-    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     xmlns:utility="clr-namespace:NINA.Core.Utility;assembly=NINA.Core"
+    xmlns:wpfutil="clr-namespace:NINA.WPF.Base.Utility;assembly=NINA.WPF.Base"
     x:Name="UC"
     Margin="0,0,0,0"
     d:DesignHeight="450"
@@ -602,7 +604,16 @@
                                                     <ItemsControl
                                                         Margin="0,0,0,0"
                                                         VerticalAlignment="Top"
-                                                        ItemsSource="{Binding Triggers}" />
+                                                        ItemsSource="{Binding Triggers}">
+
+                                                        <ItemsControl.Resources>
+                                                            <ResourceDictionary>
+                                                                <DataTemplate DataType="{x:Type seqTrig:SequenceTrigger}">
+                                                                    <local:SequenceBlockView DataContext="{Binding}" />
+                                                                </DataTemplate>
+                                                            </ResourceDictionary>
+                                                        </ItemsControl.Resources>
+                                                    </ItemsControl>
                                                 </ninactrl:HitTestGroupBox>
                                             </Grid>
 
@@ -693,7 +704,16 @@
                                                     <ItemsControl
                                                         Margin="0,0,0,0"
                                                         VerticalAlignment="Top"
-                                                        ItemsSource="{Binding Conditions}" />
+                                                        ItemsSource="{Binding Conditions}">
+
+                                                        <ItemsControl.Resources>
+                                                            <ResourceDictionary>
+                                                                <DataTemplate DataType="{x:Type seqCond:SequenceCondition}">
+                                                                    <local:SequenceBlockView DataContext="{Binding}" />
+                                                                </DataTemplate>
+                                                            </ResourceDictionary>
+                                                        </ItemsControl.Resources>
+                                                    </ItemsControl>
                                                 </ninactrl:HitTestGroupBox>
                                             </Grid>
                                         </Grid>

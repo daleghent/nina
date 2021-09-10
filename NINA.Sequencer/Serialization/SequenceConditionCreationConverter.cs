@@ -35,10 +35,10 @@ namespace NINA.Sequencer.Serialization {
                     return (ISequenceCondition)obj;
                 } catch (Exception e) {
                     Logger.Error($"Encountered unknown sequence condition: {token?.ToString()}");
-                    return new UnknownSequenceCondition();
+                    return new UnknownSequenceCondition(token?.ToString());
                 }
             } else {
-                return new UnknownSequenceCondition();
+                return new UnknownSequenceCondition(token?.ToString());
             }
         }
     }

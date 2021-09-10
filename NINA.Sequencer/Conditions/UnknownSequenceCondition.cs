@@ -14,6 +14,7 @@
 
 using NINA.Core.Locale;
 using NINA.Sequencer.SequenceItem;
+using NINA.Sequencer.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,14 @@ using System.Threading.Tasks;
 
 namespace NINA.Sequencer.Conditions {
 
-    internal class UnknownSequenceCondition : SequenceCondition {
+    internal class UnknownSequenceCondition : SequenceCondition, IValidatable {
+
+        public UnknownSequenceCondition() {
+        }
+
+        public UnknownSequenceCondition(string token) {
+            base.Name = token;
+        }
 
         public new string Name {
             get => $"<{Loc.Instance["LblUnknownInstruction"]} - {base.Name}> ";
@@ -30,6 +38,8 @@ namespace NINA.Sequencer.Conditions {
                 base.Name = value;
             }
         }
+
+        public IList<string> Issues => new List<string>() { Loc.Instance["LblUnknownInstructionValidation"] };
 
         public override bool Check(ISequenceItem previousItem, ISequenceItem nextItem) {
             return false;
@@ -39,6 +49,10 @@ namespace NINA.Sequencer.Conditions {
             return new UnknownSequenceCondition() {
                 Name = base.Name
             };
+        }
+
+        public bool Validate() {
+            return false;
         }
     }
 }
