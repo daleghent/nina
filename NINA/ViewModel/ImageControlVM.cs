@@ -163,7 +163,7 @@ namespace NINA.ViewModel {
                     rectY = height - rectHeight;
                 }
 
-                var rect = new Int32Rect(rectX, rectY, rectWidth, rectHeight);
+                var rect = new Int32Rect(Math.Max(0, rectX), Math.Max(0, rectY), Math.Min(this.Image.PixelWidth, rectWidth), Math.Min(this.Image.PixelHeight, rectHeight));
                 var crop = new CroppedBitmap(this.Image, rect);
                 PixelPeepImage = new WriteableBitmap(crop);
             }
