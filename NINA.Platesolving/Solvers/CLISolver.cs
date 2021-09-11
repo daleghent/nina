@@ -109,10 +109,12 @@ namespace NINA.PlateSolving.Solvers {
 
             process.OutputDataReceived += (object sender, System.Diagnostics.DataReceivedEventArgs e) => {
                 progress?.Report(new ApplicationStatus() { Status = e.Data });
+                Logger.Debug(e.Data);
             };
 
             process.ErrorDataReceived += (object sender, System.Diagnostics.DataReceivedEventArgs e) => {
                 progress?.Report(new ApplicationStatus() { Status = e.Data });
+                Logger.Error(e.Data);
             };
             Logger.Debug($"Starting process '{executableLocation}' with args '{startInfo.Arguments}'");
             process.Start();
