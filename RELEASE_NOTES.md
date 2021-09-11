@@ -150,6 +150,7 @@ To identify what has changed in between nightly builds, please refer to the [bit
 ## Application Improvements
 ### General
 - The application distribution is now code signed
+- Application window will now remember its placing and state
 - Application initialization is utilizing more parallel processing to startup faster.
 - Application logs are vastly improved to log a lot more info of what is happening at the various levels. INFO level will also contain a lot more info of what is happening at a high level.
 - It is now possible to change the application font in the options

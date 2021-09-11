@@ -183,6 +183,9 @@ namespace NINA.ViewModel {
         }
 
         private void ClosingApplication(object o) {
+            try {
+                Properties.Settings.Default.Save();
+            } catch (Exception) { }
             Logger.CloseAndFlush();
             Notification.Dispose();
         }
