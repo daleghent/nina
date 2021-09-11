@@ -154,7 +154,7 @@ namespace NINA.Equipment.Equipment.MyRotator {
             }
         }
 
-        public float MechanicalPosition => Position;
+        public float MechanicalPosition { get => Position; }
 
         public void Sync(float skyAngle) {
             Position = skyAngle;
