@@ -780,70 +780,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
             }
         }
 
-        private int _targetDeclinationDegrees;
-
-        public int TargetDeclinationDegrees {
-            get {
-                return _targetDeclinationDegrees;
-            }
-
-            set {
-                _targetDeclinationDegrees = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private int _targetDeclinationMinutes;
-
-        public int TargetDeclinationMinutes {
-            get {
-                return _targetDeclinationMinutes;
-            }
-
-            set {
-                _targetDeclinationMinutes = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private double _targetDeclinationSeconds;
-
-        public double TargetDeclinationSeconds {
-            get {
-                return _targetDeclinationSeconds;
-            }
-
-            set {
-                _targetDeclinationSeconds = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private int _targetRightAscencionHours;
-
-        public int TargetRightAscencionHours {
-            get {
-                return _targetRightAscencionHours;
-            }
-
-            set {
-                _targetRightAscencionHours = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private int _targetRightAscencionMinutes;
-
-        public int TargetRightAscencionMinutes {
-            get {
-                return _targetRightAscencionMinutes;
-            }
-
-            set {
-                _targetRightAscencionMinutes = value;
-                RaisePropertyChanged();
-            }
-        }
+        public InputCoordinates InputCoordinates { get; set; } = new InputCoordinates();
 
         private double _targetRightAscencionSeconds;
         private ITelescopeMediator telescopeMediator;
@@ -927,10 +864,7 @@ namespace NINA.WPF.Base.ViewModel.Equipment.Telescope {
         }
 
         private Task<bool> SlewToCoordinatesInternal(object obj) {
-            var targetRightAscencion = TargetRightAscencionHours + AstroUtil.ArcminToDegree(TargetRightAscencionMinutes) + AstroUtil.ArcsecToDegree(TargetRightAscencionSeconds);
-            var targetDeclination = TargetDeclinationDegrees + Math.Sign(TargetDeclinationDegrees) * AstroUtil.ArcminToDegree(TargetDeclinationMinutes) + Math.Sign(TargetDeclinationDegrees) * AstroUtil.ArcsecToDegree(TargetDeclinationSeconds);
-
-            var coords = new Coordinates(targetRightAscencion, targetDeclination, Epoch.J2000, Coordinates.RAType.Hours);
+            var coords = InputCoordinates.Coordinates;
             coords = coords.Transform(TelescopeInfo.EquatorialSystem);
             return SlewToCoordinatesAsync(coords, CancellationToken.None);
         }
