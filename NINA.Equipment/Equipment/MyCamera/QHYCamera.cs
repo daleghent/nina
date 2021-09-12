@@ -223,7 +223,10 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
                 return false;
             }
-            private set => Info.HasReadoutSpeed = value;
+            private set {
+                Logger.Debug($"QHYCCD: Setting CanFastReadout to {value}");
+                Info.HasReadoutSpeed = value;
+            }
         }
 
         public bool CanShowLiveView => false;
@@ -740,8 +743,11 @@ namespace NINA.Equipment.Equipment.MyCamera {
                 /*
                  * See if the camera offers a fast readout speed
                  * Readout speeds and readout modes are mutually exclusive and no camera should have both.
+                 * There is a special case for the QHY42 Pro. This can have both speeds and modes, but the speeds are not relevant in single exposure mode, so we ignore the advertisement of CONTROL_SPEED
                  */
-                if ((CanFastReadout = Sdk.IsControl(QhySdk.CONTROL_ID.CONTROL_SPEED)) == true) {
+                CanFastReadout = Sdk.IsControl(QhySdk.CONTROL_ID.CONTROL_SPEED) && !Name.Equals("QHY42PRO");
+
+                if (CanFastReadout) {
                     ThrowOnFailure("GetQHYCCDParamMinMaxStep", Sdk.GetParamMinMaxStep(QhySdk.CONTROL_ID.CONTROL_SPEED, ref min, ref max, ref step));
 
                     Info.ReadoutSpeedMin = (uint)min;
