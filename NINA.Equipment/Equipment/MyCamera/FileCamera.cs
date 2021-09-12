@@ -641,22 +641,28 @@ namespace NINA.Equipment.Equipment.MyCamera {
 
         public void StopExposure() {
             if (!AlwaysListen) {
-                folderWatcher.Suspend();
+                try {
+                    folderWatcher.Suspend();
+                    bulbCompletionCTS?.Cancel();
+                } catch (Exception ex) { };
             }
         }
+
+        private CancellationTokenSource bulbCompletionCTS = null;
 
         private void BulbCapture(double exposureTime, Action capture, Action stopCapture) {
             Logger.Debug("Starting bulb capture");
             capture();
 
-            /*Stop Exposure after exposure time */
+            /**Stop Exposure after exposure time or upon cancellation*/
+            bulbCompletionCTS?.Cancel();
+            bulbCompletionCTS = new CancellationTokenSource();
             Task.Run(async () => {
-                await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime));
-
-                stopCapture();
-
-                Logger.Debug("Restore previous shutter speed");
-            });
+                await CoreUtil.Wait(TimeSpan.FromSeconds(exposureTime), bulbCompletionCTS.Token);
+                if (!bulbCompletionCTS.IsCancellationRequested) {
+                    stopCapture();
+                }
+            }, bulbCompletionCTS.Token);
         }
 
         private void StartSerialRelayCapture() {
