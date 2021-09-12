@@ -181,7 +181,6 @@
 			<ComponentGroupRef Id="ca_ES_files" />
 			<ComponentGroupRef Id="ja_files" />
 			<ComponentGroupRef Id="ro_files" />
-			<ComponentGroupRef Id="pt_BR_files" />
 			<ComponentGroupRef Id="pl_files" />
 			<ComponentGroupRef Id="nl_BE_files" />
 			<ComponentGroupRef Id="ko_files" />
@@ -368,7 +367,6 @@
 					<Directory Id="ko" Name="ko" />
 					<Directory Id="nl_BE" Name="nl-BE" />
 					<Directory Id="pl" Name="pl" />
-					<Directory Id="pt_BR" Name="pt-BR" />
 					<Directory Id="ro" Name="ro" />
 					<Directory Id="ru" Name="ru" />
 					<Directory Id="sv" Name="sv" />
@@ -1993,13 +1991,6 @@
 		<ComponentGroup Id="ro_files" Directory="ro">
 			<Component Win64="$(var.Win64)" Id="ro_AvalonDock.resources.dll" Guid="03b55e29-615c-496c-9a45-1b44a09dbc64">
 				<File Id="ro_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)ro\AvalonDock.resources.dll" />
-			</Component>
-		</ComponentGroup>
-	</Fragment>
-	<Fragment>
-		<ComponentGroup Id="pt_BR_files" Directory="pt_BR">
-			<Component Win64="$(var.Win64)" Id="pt_BR_AvalonDock.resources.dll" Guid="59821195-a89d-4da8-b389-2fad46e7d407">
-				<File Id="pt_BR_AvalonDock.resources.dll" Name="AvalonDock.resources.dll" Source="$(var.NINA_TargetDir)pt-BR\AvalonDock.resources.dll" />
 			</Component>
 		</ComponentGroup>
 	</Fragment>
