@@ -3864,7 +3864,7 @@ En caso de que se necesite una duración más larga, se puede especificar ese ti
     <value>Obturador</value>
   </data>
   <data name="LblDomeShutterClose" xml:space="preserve">
-    <value>Close Shutter</value>
+    <value>Cerrar ventana de la cúpula</value>
   </data>
   <data name="LblDomeShutterOpen" xml:space="preserve">
     <value>Open Shutter</value>
