@@ -939,7 +939,7 @@ namespace NINA.ViewModel.FlatWizard {
                 time = tiPlus1 - (ti + trot).TotalMilliseconds / 1000d;
 
                 //TODO: Move this to Trace, once confirmed working well
-                Logger.Error($"ti:{ti}, trot:{trot}, tiPlus1:{tiPlus1}, eiPlus1:{time}");
+                Logger.Info($"ti:{ti}, trot:{trot}, tiPlus1:{tiPlus1}, eiPlus1:{time}");
             }
             skyFlatTimes.Add(filter, exposureTimes);
         }
