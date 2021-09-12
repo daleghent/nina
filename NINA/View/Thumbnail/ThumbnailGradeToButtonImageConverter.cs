@@ -26,10 +26,10 @@ namespace NINA.View.Thumbnail {
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture) {
             switch (value as string) {
-                case "":
+                case "BAD":
                     return (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["DislikeSVG"];
 
-                case "BAD":
+                case "":
                     return (System.Windows.Media.GeometryGroup)System.Windows.Application.Current.Resources["LikeSVG"];
             }
             return null;
