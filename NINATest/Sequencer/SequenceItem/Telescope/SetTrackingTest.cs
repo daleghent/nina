@@ -51,7 +51,7 @@ namespace NINATest.Sequencer.SequenceItem.Telescope {
             item2.Name.Should().BeSameAs(sut.Name);
             item2.Description.Should().BeSameAs(sut.Description);
             item2.Icon.Should().BeSameAs(sut.Icon);
-            item2.TrackingMode.Should().BeEquivalentTo(sut.TrackingMode);
+            item2.TrackingMode.Should().Be(sut.TrackingMode);
         }
 
         [Test]

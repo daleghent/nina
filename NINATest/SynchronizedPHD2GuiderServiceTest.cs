@@ -103,7 +103,7 @@ namespace NINATest {
             };
 
             // assert
-            act.Should().Throw<FaultException<PHD2Fault>>();
+            await act.Should().ThrowAsync<FaultException<PHD2Fault>>();
         }
 
         [Test]

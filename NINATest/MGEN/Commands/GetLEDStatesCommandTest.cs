@@ -47,9 +47,9 @@ namespace NINATest.MGEN.Commands {
         [TestCase(LEDS.BLUE | LEDS.DOWN_RED)]
         [TestCase(LEDS.UP_RED | LEDS.GREEN | LEDS.RIGHT_RED)]
         [TestCase(LEDS.UP_RED)]
-        public void Successful_Scenario_Test(byte expectedLEDs) {
+        public void Successful_Scenario_Test(LEDS expectedLEDs) {
             SetupWrite(ftdiMock, new byte[] { 0x5d }, new byte[] { 0x0a }, new byte[] { 1 });
-            SetupRead(ftdiMock, new byte[] { 0x5d }, new byte[] { expectedLEDs });
+            SetupRead(ftdiMock, new byte[] { 0x5d }, new byte[] { (byte)expectedLEDs });
 
             var sut = new GetLEDStatesCommand();
             var result = sut.Execute(ftdiMock.Object);
