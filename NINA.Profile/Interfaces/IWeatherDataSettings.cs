@@ -16,8 +16,6 @@ namespace NINA.Profile.Interfaces {
 
     public interface IWeatherDataSettings : ISettings {
         string Id { get; set; }
-        bool DisplayFahrenheit { get; set; }
-        bool DisplayImperial { get; set; }
         string OpenWeatherMapAPIKey { get; set; }
         string TheWeatherCompanyAPIKey { get; set; }
         string WeatherUndergroundAPIKey { get; set; }

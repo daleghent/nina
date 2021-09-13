@@ -563,46 +563,6 @@
                             VerticalAlignment="Center"
                             Columns="2">
                             <TextBlock
-                                Width="130"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblWeatherDisplayFahrenheit}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblWeatherDisplayFahrenheitTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            <CheckBox
-                                Height="25"
-                                HorizontalAlignment="Left"
-                                IsChecked="{Binding DisplayFahrenheit}" />
-                        </UniformGrid>
-                    </UniformGrid>
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,5,0,0"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock
-                                Width="130"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{ns:Loc LblWeatherDisplayImperial}">
-                                <TextBlock.ToolTip>
-                                    <TextBlock Text="{ns:Loc LblWeatherDisplayImperialTooltip}" />
-                                </TextBlock.ToolTip>
-                            </TextBlock>
-                            <CheckBox
-                                Height="25"
-                                HorizontalAlignment="Left"
-                                IsChecked="{Binding DisplayImperial}" />
-                        </UniformGrid>
-                    </UniformGrid>
-                    <UniformGrid Columns="2">
-                        <UniformGrid
-                            Margin="0,5,0,0"
-                            VerticalAlignment="Center"
-                            Columns="2">
-                            <TextBlock
                                 Width="160"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"

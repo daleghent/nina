@@ -59,11 +59,6 @@
     <converters:NaNToVisibilityConverter x:Key="NaNToVisibilityConverter" />
     <converters:NaNToVisibilityCollapsedConverter x:Key="NaNToVisibilityCollapsedConverter" />
     <converters:NaNToEmptyTextConverter x:Key="NaNToEmptyTextConverter" />
-    <converters:WeatherTemperatureConverter x:Key="WeatherTemperatureConverter" />
-    <converters:WeatherPressureConverter x:Key="WeatherPressureConverter" />
-    <converters:WeatherVelocityConverter x:Key="WeatherVelocityConverter" />
-    <converters:WeatherRainRateConverter x:Key="WeatherRainRateConverter" />
-    <converters:WeatherBrightnessConverter x:Key="WeatherBrightnessConverter" />
     <converters:ZeroToVisibilityConverter x:Key="ZeroToVisibilityConverter" />
     <converters:InverseZeroToVisibilityConverter x:Key="InverseZeroToVisibilityConverter" />
     <converters:AFFittingToColorConverter x:Key="AFFittingToColorConverter" />

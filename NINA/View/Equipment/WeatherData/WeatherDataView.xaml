@@ -108,14 +108,10 @@
                                 Columns="2"
                                 Visibility="{Binding WeatherDataInfo.Temperature, Converter={StaticResource NaNToVisibilityConverter}, FallbackValue=Collapsed}">
                                 <TextBlock Text="{ns:Loc LblTemperature}" />
-                                <TextBlock Margin="5,0,0,0" TextWrapping="WrapWithOverflow">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource WeatherTemperatureConverter}">
-                                            <Binding Path="WeatherDataInfo.Temperature" />
-                                            <Binding Path="ActiveProfile.WeatherDataSettings.DisplayFahrenheit" Source="{StaticResource ProfileService}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding WeatherDataInfo.Temperature, StringFormat=\{0:0.00\} °C}"
+                                    TextWrapping="WrapWithOverflow" />
                             </UniformGrid>
                             <UniformGrid
                                 Margin="0,6,0,6"
@@ -138,14 +134,10 @@
                                 Columns="2"
                                 Visibility="{Binding WeatherDataInfo.DewPoint, Converter={StaticResource NaNToVisibilityConverter}, FallbackValue=Collapsed}">
                                 <TextBlock Text="{ns:Loc LblDewpoint}" />
-                                <TextBlock Margin="5,0,0,0" TextWrapping="WrapWithOverflow">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource WeatherTemperatureConverter}">
-                                            <Binding Path="WeatherDataInfo.DewPoint" />
-                                            <Binding Path="ActiveProfile.WeatherDataSettings.DisplayFahrenheit" Source="{StaticResource ProfileService}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding WeatherDataInfo.DewPoint, StringFormat=\{0:0.00\} °C}"
+                                    TextWrapping="WrapWithOverflow" />
                             </UniformGrid>
                             <UniformGrid
                                 Margin="0,6,0,6"
@@ -153,14 +145,10 @@
                                 Columns="2"
                                 Visibility="{Binding WeatherDataInfo.Pressure, Converter={StaticResource NaNToVisibilityConverter}, FallbackValue=Collapsed}">
                                 <TextBlock Text="{ns:Loc LblPressure}" />
-                                <TextBlock Margin="5,0,0,0" TextWrapping="WrapWithOverflow">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource WeatherPressureConverter}">
-                                            <Binding Path="WeatherDataInfo.Pressure" />
-                                            <Binding Path="ActiveProfile.WeatherDataSettings.DisplayImperial" Source="{StaticResource ProfileService}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding WeatherDataInfo.Pressure, StringFormat=\{0:0.00\} hPa}"
+                                    TextWrapping="WrapWithOverflow" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
@@ -183,14 +171,10 @@
                                 Columns="2"
                                 Visibility="{Binding WeatherDataInfo.RainRate, Converter={StaticResource NaNToVisibilityConverter}, FallbackValue=Collapsed}">
                                 <TextBlock Text="{ns:Loc LblRainRate}" />
-                                <TextBlock Margin="5,0,0,0" TextWrapping="WrapWithOverflow">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource WeatherRainRateConverter}">
-                                            <Binding Path="WeatherDataInfo.RainRate" />
-                                            <Binding Path="ActiveProfile.WeatherDataSettings.DisplayImperial" Source="{StaticResource ProfileService}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding WeatherDataInfo.RainRate, StringFormat=\{0:0.00\} mm/h}"
+                                    TextWrapping="WrapWithOverflow" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
@@ -213,14 +197,10 @@
                                 Columns="2"
                                 Visibility="{Binding WeatherDataInfo.WindGust, Converter={StaticResource NaNToVisibilityConverter}, FallbackValue=Collapsed}">
                                 <TextBlock Text="{ns:Loc LblWindGust}" />
-                                <TextBlock Margin="5,0,0,0" TextWrapping="WrapWithOverflow">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource WeatherVelocityConverter}">
-                                            <Binding Path="WeatherDataInfo.WindGust" />
-                                            <Binding Path="ActiveProfile.WeatherDataSettings.DisplayImperial" Source="{StaticResource ProfileService}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding WeatherDataInfo.WindGust, StringFormat=\{0:0.00\} m/s}"
+                                    TextWrapping="WrapWithOverflow" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
@@ -232,14 +212,10 @@
                                 Columns="2"
                                 Visibility="{Binding WeatherDataInfo.WindSpeed, Converter={StaticResource NaNToVisibilityConverter}, FallbackValue=Collapsed}">
                                 <TextBlock Text="{ns:Loc LblWindSpeed}" />
-                                <TextBlock Margin="5,0,0,0" TextWrapping="WrapWithOverflow">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource WeatherVelocityConverter}">
-                                            <Binding Path="WeatherDataInfo.WindSpeed" />
-                                            <Binding Path="ActiveProfile.WeatherDataSettings.DisplayImperial" Source="{StaticResource ProfileService}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding WeatherDataInfo.WindSpeed, StringFormat=\{0:0.00\} m/s}"
+                                    TextWrapping="WrapWithOverflow" />
                             </UniformGrid>
                             <UniformGrid
                                 Margin="0,6,0,6"
@@ -273,14 +249,10 @@
                                 Columns="2"
                                 Visibility="{Binding WeatherDataInfo.SkyBrightness, Converter={StaticResource NaNToVisibilityConverter}, FallbackValue=Collapsed}">
                                 <TextBlock Text="{ns:Loc LblSkyBrightness}" />
-                                <TextBlock Margin="5,0,0,0" TextWrapping="WrapWithOverflow">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource WeatherBrightnessConverter}">
-                                            <Binding Path="WeatherDataInfo.SkyBrightness" />
-                                            <Binding Path="ActiveProfile.WeatherDataSettings.DisplayImperial" Source="{StaticResource ProfileService}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding WeatherDataInfo.SkyBrightness, StringFormat=\{0:0.00\} lx}"
+                                    TextWrapping="WrapWithOverflow" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>
@@ -292,14 +264,10 @@
                                 Columns="2"
                                 Visibility="{Binding WeatherDataInfo.SkyTemperature, Converter={StaticResource NaNToVisibilityConverter}, FallbackValue=Collapsed}">
                                 <TextBlock Text="{ns:Loc LblSkyTemperature}" />
-                                <TextBlock Margin="5,0,0,0" TextWrapping="WrapWithOverflow">
-                                    <TextBlock.Text>
-                                        <MultiBinding Converter="{StaticResource WeatherTemperatureConverter}">
-                                            <Binding Path="WeatherDataInfo.SkyTemperature" />
-                                            <Binding Path="ActiveProfile.WeatherDataSettings.DisplayFahrenheit" Source="{StaticResource ProfileService}" />
-                                        </MultiBinding>
-                                    </TextBlock.Text>
-                                </TextBlock>
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    Text="{Binding WeatherDataInfo.SkyTemperature, StringFormat=\{0:0.00\} °C}"
+                                    TextWrapping="WrapWithOverflow" />
                             </UniformGrid>
                         </UniformGrid>
                     </Border>

@@ -29,8 +29,6 @@ namespace NINA.Profile {
 
         protected override void SetDefaultValues() {
             Id = "No_Device";
-            DisplayFahrenheit = false;
-            DisplayImperial = false;
             OpenWeatherMapAPIKey = string.Empty;
             TheWeatherCompanyAPIKey = string.Empty;
             WeatherUndergroundAPIKey = string.Empty;
@@ -46,32 +44,6 @@ namespace NINA.Profile {
             }
             set {
                 id = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool displayFahrenheit = false;
-
-        [DataMember]
-        public bool DisplayFahrenheit {
-            get {
-                return displayFahrenheit;
-            }
-            set {
-                displayFahrenheit = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        private bool displayImperial = false;
-
-        [DataMember]
-        public bool DisplayImperial {
-            get {
-                return displayImperial;
-            }
-            set {
-                displayImperial = value;
                 RaisePropertyChanged();
             }
         }

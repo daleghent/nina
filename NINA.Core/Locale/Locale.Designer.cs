@@ -16592,42 +16592,6 @@ namespace NINA.Core.Locale {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fahrenheit Temperatures.
-        /// </summary>
-        internal static string LblWeatherDisplayFahrenheit {
-            get {
-                return ResourceManager.GetString("LblWeatherDisplayFahrenheit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Display temperatures in Fahrenheit.
-        /// </summary>
-        internal static string LblWeatherDisplayFahrenheitTooltip {
-            get {
-                return ResourceManager.GetString("LblWeatherDisplayFahrenheitTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Imperial Units.
-        /// </summary>
-        internal static string LblWeatherDisplayImperial {
-            get {
-                return ResourceManager.GetString("LblWeatherDisplayImperial", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Display non-temperature weather data in Imperial units.
-        /// </summary>
-        internal static string LblWeatherDisplayImperialTooltip {
-            get {
-                return ResourceManager.GetString("LblWeatherDisplayImperialTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No Weather Data Source.
         /// </summary>
         internal static string LblWeatherNoSource {

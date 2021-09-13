@@ -304,11 +304,6 @@
     <Compile Include="Utility\Converters\SubstractConverter.cs" />
     <Compile Include="Utility\Converters\SubtractHalfConverter.cs" />
     <Compile Include="Utility\Converters\ValueToLocaleConverter.cs" />
-    <Compile Include="Utility\Converters\WeatherBrightnessConverter.cs" />
-    <Compile Include="Utility\Converters\WeatherPressureConverter.cs" />
-    <Compile Include="Utility\Converters\WeatherRainRateConverter.cs" />
-    <Compile Include="Utility\Converters\WeatherTemperatureConverter.cs" />
-    <Compile Include="Utility\Converters\WeatherVelocityConverter.cs" />
     <Compile Include="Utility\Converters\WidthAndValueToWidthConverter.cs" />
     <Compile Include="Utility\Converters\ZeroToVisibilityConverter.cs" />
     <Compile Include="Utility\CustomDateTime.cs" />
