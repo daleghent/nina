@@ -221,7 +221,7 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Grid Grid.Column="0" Visibility="{Binding PauseSequenceCommand, Converter={StaticResource NullToVisibilityConverter}}">
+                            <Grid Grid.Column="0">
                                 <xceed:SplitButton
                                     HorizontalAlignment="Stretch"
                                     Command="{Binding SkipCurrentItemCommand}"
